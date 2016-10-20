@@ -1,0 +1,88 @@
+# This is the main configuration file of your application. It stores all the
+# common options for every execution environment ('prod', 'dev', 'test').
+
+# To avoid creating configuration files that are too long, we first import some
+# files that define the values for important parts of the application,
+# such as the security component and the dependency injection services
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+
+# These are the configuration parameters that define the application's behavior
+# and which are independent from the underlying technical infrastructure
+# See http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    # This parameter defines the codes of the locales (languages) enabled in the application
+    app_locales: en|de
+    app.notifications.email_sender: "%mailer_from%"
+
+# Basic configuration for the Symfony framework features
+framework:
+    # Uncomment the 'ide' option to turn all of the file paths in an exception
+    # page into clickable links that open the given file using your favorite IDE.
+    # Supported values are 'textmate', 'macvim', 'emacs' and 'sublime' shortcuts
+    # and any custom configuration string, such as: "phpstorm://open?file=%%f&line=%%l"
+    # See http://symfony.com/doc/current/reference/configuration/framework.html#ide
+    ide: sublime
+
+    # When using the HTTP Cache, ESI allows to render page fragments separately
+    # and with different cache configurations for each fragment
+    # http://symfony.com/doc/current/book/http_cache.html#edge-side-includes
+    esi:             { enabled: true }
+    translator:      { fallback: "%locale%" }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        handler_id:  session.handler.native_file
+        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+    fragments:       ~
+    http_method_override: true
+    assets: ~
+
+# Twig Configuration (used for rendering application templates)
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    form_themes:
+        - "bootstrap_3_layout.html.twig"
+        - "form/fields.html.twig"
+
+# Assetic Configuration (used for managing web assets: CSS, JavaScript, Sass, etc.)
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: false
+    bundles:        [ ]
+    filters:
+        cssrewrite: ~
+        jsqueeze: ~
+        scssphp:
+            # the formatter must be the FQCN (don't use the 'compressed' value)
+            formatter: "Leafo\\ScssPhp\\Formatter\\Compressed"
+
+# Doctrine Configuration (used to access databases and manipulate their information)
+doctrine:
+    dbal:
+        url: "%database_url%"
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_mapping: true
+
+# Swiftmailer Configuration (used to send emails)
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    spool:     { type: memory }

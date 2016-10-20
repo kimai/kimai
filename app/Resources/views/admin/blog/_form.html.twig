@@ -1,0 +1,25 @@
+{#
+    By default, forms enable client-side validation. This means that you can't
+    test the server-side validation errors from the browser. To temporarily
+    disable this validation, add the 'novalidate' attribute:
+
+    {{ form_start(form, { attr: { novalidate: 'novalidate' } }) }}
+#}
+
+{% if show_confirmation|default(false) %}
+    {% set attr = {'data-confirmation': 'true'} %}
+    {{ include('blog/_delete_post_confirmation.html.twig') }}
+{% endif %}
+
+{{ form_start(form, { attr: attr|default({}) }) }}
+    {{ form_widget(form) }}
+
+    <input type="submit" value="{{ button_label|default('label.create_post'|trans) }}"
+           class="{{ button_css|default("btn btn-primary") }}" />
+
+    {% if include_back_to_home_link|default(false) %}
+        <a href="{{ path('admin_post_index') }}" class="btn btn-link">
+            {{ 'action.back_to_list'|trans }}
+        </a>
+    {% endif %}
+{{ form_end(form) }}

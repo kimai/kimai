@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file date="2016-10-19T21:46:45Z" source-language="en" target-language="de" datatype="plaintext" original="not.available">
+    <body>
+      <trans-unit resname="action.browse_admin">
+        <source>action.browse_admin</source>
+        <target>Zum Backend</target>
+      </trans-unit>
+      <trans-unit resname="help.browse_admin">
+        <source>help.browse_admin</source>
+        <target>Zum Backend</target>
+      </trans-unit>
+      <trans-unit resname="action.browse_app">
+        <source>action.browse_app</source>
+        <target>Zum Frontend</target>
+      </trans-unit>
+      <trans-unit resname="help.browse_app">
+        <source>help.browse_app</source>
+        <target>Zum Frontend</target>
+      </trans-unit>
+      <trans-unit resname="title.login">
+        <source>title.login</source>
+        <target>Anmelden</target>
+      </trans-unit>
+      <trans-unit resname="label.username">
+        <source>label.username</source>
+        <target>Benutzername</target>
+      </trans-unit>
+      <trans-unit resname="label.password">
+        <source>label.password</source>
+        <target>Passwort</target>
+      </trans-unit>
+      <trans-unit resname="action.sign_in">
+        <source>action.sign_in</source>
+        <target>Los geht's</target>
+      </trans-unit>
+      <trans-unit resname="menu.logout">
+        <source>menu.logout</source>
+        <target>Abmelden</target>
+      </trans-unit>
+      <trans-unit resname="menu.homepage">
+        <source>menu.homepage</source>
+        <target>Blog</target>
+      </trans-unit>
+      <trans-unit resname="menu.admin">
+        <source>menu.admin</source>
+        <target>Backend</target>
+      </trans-unit>
+      <trans-unit resname="menu.timesheet">
+        <source>menu.timesheet</source>
+        <target>Zeiterfassung</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

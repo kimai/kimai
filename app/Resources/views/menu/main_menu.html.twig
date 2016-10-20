@@ -1,0 +1,18 @@
+{% extends 'knp_menu.html.twig' %}
+
+{% block linkElement %}
+    <a href="{{ item.uri }}"{{ knp_menu.attributes(item.linkAttributes) }}>
+        {% if item.childrenAttributes.icon is defined %}
+            <i class="fa fa-{{ item.childrenAttributes.icon }} }}"></i>
+        {% endif %}
+        {{ block('label') }}
+    </a>
+{% endblock %}
+
+{% block label %}
+    {% if options.allow_safe_labels and item.getExtra('safe_label', false) %}
+        {{ item.label|raw }}
+    {% else %}
+        {{ item.label|trans }}
+    {% endif %}
+{% endblock %}

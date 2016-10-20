@@ -1,0 +1,301 @@
+/*!
+ *  Symfony Demo Application by @symfony
+ *  License: MIT License
+ */
+
+@import "bootswatch-flatly/variables";
+
+//
+// Typography
+// --------------------------------------------------
+
+p, ul, ol {
+    font-size: $font-size-large;
+    margin-bottom: 1.5em;
+}
+
+li {
+    margin-bottom: .5em;
+}
+
+// Code
+code {
+    background: $gray-lighter;
+    color: $brand-primary;
+}
+
+// Text labels
+.text-danger,
+.text-danger:hover {
+    color: $brand-danger;
+}
+
+//
+// Icons
+// --------------------------------------------------
+
+i {
+    margin-right: .25em;
+}
+
+//
+// Page elements
+// --------------------------------------------------
+
+body {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+// Header
+header {
+    margin-bottom: 2em;
+
+    ul.nav li {
+        margin-bottom: 0;
+    }
+
+    .locales a {
+        padding-right: 10px;
+    }
+}
+
+// Body contents
+.body-container {
+    -webkit-flex: 1;
+    flex: 1;
+
+    // needed to prevent pages with a very small height and browsers not supporting flex
+    min-height: 600px;
+
+    #main h1,
+    #main h2 {
+        margin-top: 0;
+    }
+}
+
+// Sidebar
+#sidebar {
+    .section {
+        margin-bottom: 2em;
+    }
+
+    p {
+        font-size: $font-size-base;
+
+        & + p {
+            margin: 1.5em 0 0;
+        }
+    }
+}
+
+// Footer
+footer {
+    background: $gray-lighter;
+    margin-top: 2em;
+    padding-top: 2em;
+    padding-bottom: 2em;
+
+    p {
+        color: $gray-dark;
+        font-size: $font-size-small;
+        margin-bottom: .25em;
+    }
+
+    #footer-resources {
+        text-align: right;
+
+        i {
+            color: $gray-dark;
+            font-size: 1.5 * $font-size-large;
+            margin-left: .5em;
+        }
+    }
+}
+
+// Source Code Modal Window
+#sourceCodeModal {
+    h3 {
+        font-size: $font-size-large;
+        margin-top: 0;
+
+        small {
+            color: $gray-dark;
+            font-size: 80%;
+        }
+    }
+
+    pre {
+        margin-bottom: 2em;
+        padding: 0;
+    }
+}
+
+// Confirmation Modal Window
+#confirmationModal {
+    .modal-dialog {
+        width: 500px;
+    }
+
+    .modal-footer {
+        button {
+            min-width: 75px;
+        }
+    }
+}
+
+//
+// Forms
+// --------------------------------------------------
+
+// Form errors
+.form-group.has-error .form-control {
+    border-color: $brand-danger;
+}
+.form-group.has-error .control-label {
+    color: $brand-danger;
+}
+.form-group.has-error .help-block {
+    background-color: $brand-danger;
+    color: #FFF;
+    font-size: $font-size-base;
+    padding: 1em;
+
+    ul {
+        margin-bottom: 0;
+    }
+}
+
+textarea {
+    max-width: 100%;
+}
+
+//
+// Page: 'Technical Requirements Checker'
+// --------------------------------------------------
+body#requirements_checker {
+    header h1 {
+        margin-bottom: 0;
+        margin-top: 0;
+
+        span {
+            font-size: 120%;
+            opacity: .7;
+            padding: 0 5px;
+        }
+    }
+
+    .panel li {
+        margin-bottom: 1em;
+    }
+}
+
+//
+// Page: 'homepage'
+// --------------------------------------------------
+body#homepage {
+    text-align: center;
+}
+
+//
+// Page: 'login'
+// --------------------------------------------------
+body#login {
+    #login-users-help p {
+        font-size: $font-size-base;
+        line-height: $line-height-base;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        .label {
+            margin-right: 5px;
+        }
+
+        .console {
+            display: block;
+            margin: 5px 0;
+            padding: 10px;
+        }
+    }
+}
+
+//
+// Page: 'blog_index'
+// --------------------------------------------------
+body#blog_index {
+    h1 {
+        margin-bottom: .5em;
+    }
+
+    article.post {
+        margin-bottom: 3em;
+    }
+}
+
+//
+// Page: 'blog_post_show'
+// --------------------------------------------------
+body#blog_post_show {
+    h3 {
+        margin-bottom: .75em;
+    }
+
+    #post-add-comment {
+        margin: 2em 0;
+
+        p {
+            margin-bottom: 0;
+
+            a.btn {
+                margin-right: .5em;
+            }
+        }
+    }
+
+    .post-comment {
+        margin-bottom: 2em;
+
+        h4 {
+            font-size: $font-size-small;
+            line-height: $line-height-base;
+            margin-top: 0;
+
+            strong {
+                display: block;
+            }
+        }
+    }
+}
+
+//
+// Page: 'comment_form_error'
+// --------------------------------------------------
+body#comment_form_error {
+    h1.text-danger {
+        margin-bottom: 1em;
+    }
+}
+
+//
+// Page: 'admin_post_index'
+// --------------------------------------------------
+body#admin_post_index {
+    .item-actions {
+        white-space: nowrap;
+
+        a.btn + a.btn {
+            margin-left: 4px;
+        }
+    }
+}
+
+//
+// Page: 'admin_post_show'
+// --------------------------------------------------
+body#admin_post_show {
+}

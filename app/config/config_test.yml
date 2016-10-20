@@ -1,0 +1,31 @@
+imports:
+    - { resource: config_dev.yml }
+
+framework:
+    test: ~
+    session:
+        storage_id: session.storage.mock_file
+    profiler:
+        collect: false
+
+web_profiler:
+    toolbar: false
+    intercept_redirects: false
+
+swiftmailer:
+    disable_delivery: true
+
+# It's recommended to use a separate database for tests. This allows to have a
+# fixed and known set of data fixtures, it simplifies the code of tests and it
+# makes them more robust.
+# In this case we just need to define a different path for the application database.
+doctrine:
+    dbal:
+        database_url: 'sqlite:///%kernel.root_dir%/data/timesheet_test.sqlite'
+
+# this configuration simplifies testing URLs protected by the security mechanism
+# See http://symfony.com/doc/current/cookbook/testing/http_authentication.html
+security:
+    firewalls:
+        secured_area:
+            http_basic: ~

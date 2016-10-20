@@ -1,0 +1,26 @@
+# this imports the routes used to display the web debug toolbar at the bottom of each page
+_wdt:
+    resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"
+    prefix:   /_wdt
+
+# this imports the routes needed to display the Symfony Profiler information
+_profiler:
+    resource: "@WebProfilerBundle/Resources/config/routing/profiler.xml"
+    prefix:   /_profiler
+
+# this imports the route used to test error pages. Just browse the following URL:
+# /{_locale}/_error/{status_code}.{format}
+# (e.g. /en/_error/404, /en/_error/403.json, /fr/_error/500.xml)
+# See http://symfony.com/doc/current/cookbook/controller/error_pages.html#testing-error-pages-during-development
+_errors:
+    resource: "@TwigBundle/Resources/config/routing/errors.xml"
+    prefix:   /{_locale}/_error
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+# this loads the main routing file, which usually defines the routes available
+# in any environment (production, development, etc.)
+_main:
+    resource: routing.yml

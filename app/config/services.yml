@@ -1,0 +1,63 @@
+services:
+    # First we define some basic services to make these utilities available in
+    # the entire application
+    slugger:
+        class: AppBundle\Utils\Slugger
+
+    markdown:
+        class: AppBundle\Utils\Markdown
+
+    # Twig extensions that create new filters and functions for our views
+    app.twig.app_extension:
+        public:    false
+        class:     AppBundle\Twig\Extensions
+        arguments: ['@markdown', '%app_locales%']
+        tags:
+            - { name: twig.extension }
+
+    app.twig.intl_extension:
+        public: false
+        class:  Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
+
+    app.redirect_to_preferred_locale_listener:
+        class: AppBundle\EventListener\RedirectToPreferredLocaleListener
+        arguments: ['@router', '%app_locales%', '%locale%']
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    app.menu_builder:
+        class: AppBundle\Menu\MenuBuilder
+        arguments: ["@knp_menu.factory", "@event_dispatcher", "@security.authorization_checker"]
+        tags:
+            - { name: knp_menu.menu_builder, method: createMainMenu, alias: main }
+            - { name: knp_menu.menu_builder, method: createAdminMenu, alias: admin }
+
+    app.tableprefix_subscriber:
+        class: AppBundle\Doctrine\TablePrefixSubscriber
+        arguments: [%database_prefix%]
+        tags:
+            - { name: doctrine.event_subscriber }
+
+    timesheet.configure_menu_listener:
+        class: TimesheetBundle\EventListener\Menu
+        tags:
+          - { name: kernel.event_listener, event: app.main_menu_configure, method: onMainMenuConfigure }
+          - { name: kernel.event_listener, event: app.admin_menu_configure, method: onAdminMenuConfigure }
+
+    # Uncomment the following lines to define a service for the Post Doctrine repository.
+    # It's not mandatory to create these services, but if you use repositories a lot,
+    # these services simplify your code:
+    #
+    # app.post_repository:
+    #     class:     Doctrine\ORM\EntityRepository
+    #     factory:   ['@doctrine.orm.entity_manager', getRepository]
+    #     arguments: [AppBundle\Entity\Post]
+    #
+    # // traditional code inside a controller
+    # $entityManager = $this->getDoctrine()->getManager();
+    # $posts = $entityManager->getRepository('AppBundle:Post')->findAll();
+    #
+    # // same code using repository services
+    # $posts = $this->get('app.post_repository')->findAll();

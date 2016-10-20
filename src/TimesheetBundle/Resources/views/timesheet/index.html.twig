@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'timesheet_index' %}
+
+{% block main %}
+
+    {% if entries %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th><i class="fa fa-calendar"></i> {{ 'label.date'|trans }}</th>
+            <th><i class="fa fa-circle-o"></i> {{ 'label.start'|trans }}</th>
+            <th><i class="fa fa-circle"></i> {{ 'label.end'|trans }}</th>
+            <th><i class="fa fa-clock-o"></i> {{ 'label.duration'|trans }}</th>
+            <th><i class="fa fa-user"></i> {{ 'label.user'|trans }}</th>
+            <th>{{ 'label.description'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entry in entries %}
+            <tr>
+                <td>{{ entry.start|date("m/d/Y") }}</td>
+                <td>{{ entry.start|date("H:i") }}</td>
+                <td>{{ entry.end|date("H:i") }}</td>
+                <td>{{ entry.duration|gmdate }}</td>
+                <td>{{ entry.userid }}</td>
+                <td>{{ entry.description }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <div class="well">{{ 'post.no_posts_found'|trans }}</div>
+    {% endif %}
+
+    <div class="navigation text-center">
+        {{ pagerfanta(entries, 'twitter_bootstrap3_translated', { routeName: 'timesheet_paginated' }) }}
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+    {{ parent() }}
+{% endblock %}

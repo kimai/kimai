@@ -1,0 +1,57 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body_id 'admin_post_index' %}
+
+{% block main %}
+    <h1>{{ 'title.post_list'|trans }}</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ 'label.title'|trans }}</th>
+                <th><i class="fa fa-user"></i> {{ 'label.author'|trans }}</th>
+                <th><i class="fa fa-calendar"></i> {{ 'label.published_at'|trans }}</th>
+                <th><i class="fa fa-cogs"></i> {{ 'label.actions'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+            <tr>
+                <td>{{ post.title }}</td>
+                <td>{{ post.authorEmail }}</td>
+                {# it's not mandatory to set the timezone in localizeddate(). This is done to
+                   avoid errors when the 'intl' PHP extension is not available and the application
+                   is forced to use the limited "intl polyfill", which only supports UTC and GMT #}
+                <td>{% if post.publishedAt %}{{ post.publishedAt|localizeddate('short', 'short', null, 'UTC') }}{% endif %}</td>
+                <td>
+                    <div class="item-actions">
+                        <a href="{{ path('admin_post_show', { id: post.id }) }}" class="btn btn-sm btn-default">
+                            {{ 'action.show'|trans }}
+                        </a>
+
+                        {% if post.isAuthor(app.user) %}
+                            <a href="{{ path('admin_post_edit', { id: post.id }) }}" class="btn btn-sm btn-primary">
+                                <i class="fa fa-edit"></i> {{ 'action.edit'|trans }}
+                            </a>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4" align="center">{{ 'post.no_posts_found'|trans }}</td>
+           </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block sidebar %}
+    <div class="section actions">
+        <a href="{{ path('admin_post_new') }}" class="btn btn-lg btn-block btn-success">
+            <i class="fa fa-plus"></i> {{ 'action.create_post'|trans }}
+        </a>
+    </div>
+
+    {{ parent() }}
+{% endblock %}

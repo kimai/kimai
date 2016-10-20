@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="file.ext">
+        <body>
+        <trans-unit id="post.blank_summary">
+            <source>post.blank_summary</source>
+            <target>Gib deinem Beitrag eine Zusammenfassung!</target>
+        </trans-unit>
+        <trans-unit id="post.blank_content">
+            <source>post.blank_content</source>
+            <target>Dein Beitrag sollte einen Inhalt haben!</target>
+        </trans-unit>
+        <trans-unit id="post.too_short_content">
+            <source>post.too_short_content</source>
+            <target>Der Beitragsinhalt ist zu kurz (mindestens {{ limit }} Zeichen)</target>
+        </trans-unit>
+        <trans-unit id="comment.blank">
+            <source>comment.blank</source>
+            <target>Bitte gib einen Kommentar ein!</target>
+        </trans-unit>
+        <trans-unit id="comment.too_short">
+            <source>comment.too_short</source>
+            <target>Der Kommentar ist zu kurz (mindestens {{ limit }} Zeichen)</target>
+        </trans-unit>
+        <trans-unit id="comment.too_long">
+            <source>comment.too_long</source>
+            <target>Der Kommentar ist zu lang (maximal {{ limit }} Zeichen)</target>
+        </trans-unit>
+        <trans-unit id="comment.is_spam">
+            <source>comment.is_spam</source>
+            <target>Der Inhalt des Kommentars wird als Spam eingestuft.</target>
+        </trans-unit>
+        </body>
+    </file>
+</xliff>

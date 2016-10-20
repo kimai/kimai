@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'blog_post_show' %}
+
+{% block main %}
+    <h1>{{ post.title }}</h1>
+
+    {{ post.content|md2html }}
+
+    <div id="post-add-comment" class="well">
+        {# The 'IS_AUTHENTICATED_FULLY' role ensures that the user has entered
+        his/her credentials (login + password) during this session. If he/she
+        is automatically logged via the 'Remember Me' functionality, he/she won't
+        be able to add a comment.
+        See http://symfony.com/doc/current/cookbook/security/remember_me.html#forcing-the-user-to-re-authenticate-before-accessing-certain-resources
+        #}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {{ render(controller('AppBundle:Blog:commentForm', { 'id': post.id })) }}
+        {% else %}
+            <p>
+                <a class="btn btn-success" href="{{ path('security_login') }}">
+                    <i class="fa fa-sign-in"></i> {{ 'action.sign_in'|trans }}
+                </a>
+                {{ 'post.to_publish_a_comment'|trans }}
+            </p>
+        {% endif %}
+    </div>
+
+    <h3>{{ 'post.num_comments'|transchoice(post.comments|length) }}</h3>
+
+    {% for comment in post.comments %}
+        <div class="row post-comment">
+            <h4 class="col-sm-3">
+                <strong>{{ comment.authorEmail }}</strong> {{ 'post.commented_on'|trans }}
+                {# it's not mandatory to set the timezone in localizeddate(). This is done to
+                   avoid errors when the 'intl' PHP extension is not available and the application
+                   is forced to use the limited "intl polyfill", which only supports UTC and GMT #}
+                <strong>{{ comment.publishedAt|localizeddate('medium', 'short', null, 'UTC') }}</strong>
+            </h4>
+            <div class="col-sm-9">
+                {{ comment.content|md2html }}
+            </div>
+        </div>
+    {% else %}
+        <div class="post-comment">
+            <p>{{ 'post.no_comments'|trans }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block sidebar %}
+    {% if app.user and post.isAuthor(app.user) %}
+        <div class="section">
+            <a class="btn btn-lg btn-block btn-success" href="{{ path('admin_post_edit', { id: post.id }) }}">
+                <i class="fa fa-edit"></i> {{ 'action.edit_post'|trans }}
+            </a>
+        </div>
+    {% endif %}
+
+    {# the parent() function includes the contents defined by the parent template
+      ('base.html.twig') for this block ('sidebar'). This is a very convenient way
+      to share common contents in different templates #}
+    {{ parent() }}
+{% endblock %}

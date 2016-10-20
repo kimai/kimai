@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'login' %}
+
+{% block main %}
+    {% if error %}
+        <div class="alert alert-danger">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            <div class="well">
+                <form action="{{ path('security_login') }}" method="post">
+                    <fieldset>
+                        <legend><i class="fa fa-lock"></i> {{ 'title.login'|trans }}</legend>
+                        <div class="form-group">
+                            <label for="username">{{ 'label.username'|trans }}</label>
+                            <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">{{ 'label.password'|trans }}</label>
+                            <input type="password" id="password" name="_password" class="form-control" />
+                        </div>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-sign-in"></i> {{ 'action.sign_in'|trans }}
+                        </button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $(document).ready(function() {
+            var usernameEl = $('#username');
+            var passwordEl = $('#password');
+            // in a real application, hardcoding the user/password would be idiotic
+            // but for the demo application it's very convenient to do so
+            if (!usernameEl.val() && !passwordEl.val()) {
+                usernameEl.val('anna_admin');
+                passwordEl.val('kitten');
+            }
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,34 @@
+# These first lines load the all routes defined as @Route() annotations in any
+# controller defined inside the src/AppBundle/Controller/ directory. Controllers
+# are loaded recursively, so you can separate them into subdirectories.
+# If you don't like to add annotations in your applications, you can also define
+# the routes in YAML, XML or PHP files.
+# See http://symfony.com/doc/current/book/routing.html
+app:
+    resource: '@AppBundle/Controller/'
+    type:     annotation
+    prefix:   /{_locale}
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+timesheet:
+    resource: '@TimesheetBundle/Controller/'
+    type:     annotation
+    prefix:   /{_locale}
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+# These lines define a route using YAML configuration. The controller used by
+# the route (FrameworkBundle:Template:template) is a convenient shortcut when
+# the template can be rendered without executing any logic in your own controller.
+# See http://symfony.com/doc/current/cookbook/templating/render_without_controller.html
+homepage:
+    path: /{_locale}
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: timesheet
+        permanent: true

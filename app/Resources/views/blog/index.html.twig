@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'blog_index' %}
+
+{% block main %}
+    {% for post in posts %}
+        <article class="post">
+            <h2>
+                <a href="{{ path('blog_post', { slug: post.slug }) }}">
+                    {{ post.title }}
+                </a>
+            </h2>
+
+            {{ post.summary|md2html }}
+        </article>
+    {% else %}
+        <div class="well">{{ 'post.no_posts_found'|trans }}</div>
+    {% endfor %}
+
+    <div class="navigation text-center">
+        {{ pagerfanta(posts, 'twitter_bootstrap3_translated', { routeName: 'blog_index_paginated' }) }}
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+    {{ parent() }}
+{% endblock %}
