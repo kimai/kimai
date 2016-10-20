@@ -2,53 +2,61 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file date="2016-10-19T21:46:45Z" source-language="en" target-language="de" datatype="plaintext" original="not.available">
     <body>
-      <trans-unit resname="action.browse_admin">
+      <trans-unit id="action.browse_admin">
         <source>action.browse_admin</source>
         <target>Zum Backend</target>
       </trans-unit>
-      <trans-unit resname="help.browse_admin">
+      <trans-unit id="help.browse_admin">
         <source>help.browse_admin</source>
         <target>Zum Backend</target>
       </trans-unit>
-      <trans-unit resname="action.browse_app">
+      <trans-unit id="action.browse_app">
         <source>action.browse_app</source>
         <target>Zum Frontend</target>
       </trans-unit>
-      <trans-unit resname="help.browse_app">
+      <trans-unit id="help.browse_app">
         <source>help.browse_app</source>
         <target>Zum Frontend</target>
       </trans-unit>
-      <trans-unit resname="title.login">
+      <trans-unit id="title.login">
         <source>title.login</source>
         <target>Anmelden</target>
       </trans-unit>
-      <trans-unit resname="label.username">
+      <trans-unit id="label.username">
         <source>label.username</source>
         <target>Benutzername</target>
       </trans-unit>
-      <trans-unit resname="label.password">
+      <trans-unit id="label.password">
         <source>label.password</source>
         <target>Passwort</target>
       </trans-unit>
-      <trans-unit resname="action.sign_in">
+      <trans-unit id="action.sign_in">
         <source>action.sign_in</source>
         <target>Los geht's</target>
       </trans-unit>
-      <trans-unit resname="menu.logout">
+      <trans-unit id="menu.logout">
         <source>menu.logout</source>
         <target>Abmelden</target>
       </trans-unit>
-      <trans-unit resname="menu.homepage">
+      <trans-unit id="menu.homepage">
         <source>menu.homepage</source>
         <target>Blog</target>
       </trans-unit>
-      <trans-unit resname="menu.admin">
+      <trans-unit id="menu.admin">
         <source>menu.admin</source>
         <target>Backend</target>
       </trans-unit>
-      <trans-unit resname="menu.timesheet">
+      <trans-unit id="menu.timesheet">
         <source>menu.timesheet</source>
         <target>Zeiterfassung</target>
+      </trans-unit>
+      <trans-unit id="kimai.license">
+        <source>kimai.license</source>
+        <target>Copyright Kevin Papst. Alle Rechte vorbehalten.</target>
+      </trans-unit>
+      <trans-unit id="kimai.footer">
+        <source>kimai.footer</source>
+        <target>Kimai Time-Tracking</target>
       </trans-unit>
     </body>
   </file>

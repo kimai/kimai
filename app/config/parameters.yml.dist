@@ -32,4 +32,4 @@ parameters:
     # used internally by Symfony in several places (CSRF tokens, URI signing,
     # 'Remember Me' functionality, etc.)
     # see: http://symfony.com/doc/current/reference/configuration/framework.html#secret
-    secret: 'some_secret_not_really_secure_change_this_later'
+    secret: 'please_change_this_secret_to_something_unique'

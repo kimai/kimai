@@ -36,7 +36,7 @@ services:
 
     app.tableprefix_subscriber:
         class: AppBundle\Doctrine\TablePrefixSubscriber
-        arguments: [%database_prefix%]
+        arguments: ["%database_prefix%"]
         tags:
             - { name: doctrine.event_subscriber }
 
