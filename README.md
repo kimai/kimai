@@ -29,6 +29,21 @@ $ cd kimai2/
 $ composer install
 ```
 
+This was the basic task of the installation. If you have not yet setup a database, you 
+can create it and import example data by executing these commands: 
+```bash
+$ cd kimai2/
+$ php bin/console doctrine:database:create
+$ php bin/console doctrine:schema:create
+$ php bin/console doctrine:fixtures:load
+```
+If you have imported the example data, you can login with two accounts:
+
+- Username: *clara_customer* / Password: *kitten* / Role: Customer
+- Username: *john_user* / Password: *kitten* / Role: User
+- Username: *tony_teamlead* / Password: *kitten* / Role: Teamlead
+- Username: *anna_admin* / Password: *kitten* / Role: Administrator
+
 Usage
 -----
 

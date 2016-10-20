@@ -49,16 +49,33 @@ class LoadFixtures implements FixtureInterface, ContainerAwareInterface
     {
         $passwordEncoder = $this->container->get('security.password_encoder');
 
+        $claraCustomer = new User();
+        $claraCustomer->setUsername('clara_customer');
+        $claraCustomer->setEmail('clara_customer@example.com');
+        $claraCustomer->setRoles(['ROLE_CUSTOMER']);
+        $encodedPassword = $passwordEncoder->encodePassword($claraCustomer, 'kitten');
+        $claraCustomer->setPassword($encodedPassword);
+        $manager->persist($claraCustomer);
+
         $johnUser = new User();
         $johnUser->setUsername('john_user');
-        $johnUser->setEmail('john_user@symfony.com');
+        $johnUser->setEmail('john_user@example.com');
+        $johnUser->setRoles(['ROLE_USER']);
         $encodedPassword = $passwordEncoder->encodePassword($johnUser, 'kitten');
         $johnUser->setPassword($encodedPassword);
         $manager->persist($johnUser);
 
+        $tonyTeamlead = new User();
+        $tonyTeamlead->setUsername('tony_teamlead');
+        $tonyTeamlead->setEmail('tony_teamlead@example.com');
+        $tonyTeamlead->setRoles(['ROLE_TEAMLEAD']);
+        $encodedPassword = $passwordEncoder->encodePassword($tonyTeamlead, 'kitten');
+        $tonyTeamlead->setPassword($encodedPassword);
+        $manager->persist($tonyTeamlead);
+
         $annaAdmin = new User();
         $annaAdmin->setUsername('anna_admin');
-        $annaAdmin->setEmail('anna_admin@symfony.com');
+        $annaAdmin->setEmail('anna_admin@example.com');
         $annaAdmin->setRoles(['ROLE_ADMIN']);
         $encodedPassword = $passwordEncoder->encodePassword($annaAdmin, 'kitten');
         $annaAdmin->setPassword($encodedPassword);
@@ -76,13 +93,13 @@ class LoadFixtures implements FixtureInterface, ContainerAwareInterface
             $post->setSummary($this->getRandomPostSummary());
             $post->setSlug($this->container->get('slugger')->slugify($post->getTitle()));
             $post->setContent($this->getPostContent());
-            $post->setAuthorEmail('anna_admin@symfony.com');
+            $post->setAuthorEmail(array_rand(['anna_admin@example.com', 'tony_teamlead@example.com'], 1));
             $post->setPublishedAt(new \DateTime('now - '.$i.'days'));
 
             foreach (range(1, 5) as $j) {
                 $comment = new Comment();
 
-                $comment->setAuthorEmail('john_user@symfony.com');
+                $comment->setAuthorEmail(array_rand(['clara_customer@example.com', 'john_user@example.com'], 1));
                 $comment->setPublishedAt(new \DateTime('now + '.($i + $j).'seconds'));
                 $comment->setContent($this->getRandomCommentContent());
                 $comment->setPost($post);
