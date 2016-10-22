@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the Symfony package.
+ * This file is part of the Kimai package.
  *
- * (c) Fabien Potencier <fabien@symfony.com>
+ * (c) Kevin Papst <kevin@kevinpapst.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,23 +12,15 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\User;
-use AppBundle\Entity\Post;
-use AppBundle\Entity\Comment;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Defines the sample data to load in the database when running the unit and
- * functional tests. Execute this command to load the data:
+ * Sample data to load in the database when running tests or for development
  *
- *   $ php bin/console doctrine:fixtures:load
- *
- * See http://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
- *
- * @author Ryan Weaver <weaverryan@gmail.com>
- * @author Javier Eguiluz <javier.eguiluz@gmail.com>
+ * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class LoadFixtures implements FixtureInterface, ContainerAwareInterface
 {
@@ -40,9 +32,8 @@ class LoadFixtures implements FixtureInterface, ContainerAwareInterface
      */
     public function load(ObjectManager $manager)
     {
-        // FIXME CAN BE REMOVED
         $this->loadUsers($manager);
-        $this->loadPosts($manager);
+        //$this->loadPosts($manager);
     }
 
     private function loadUsers(ObjectManager $manager)
@@ -84,8 +75,19 @@ class LoadFixtures implements FixtureInterface, ContainerAwareInterface
         $manager->flush();
     }
 
+    /**
+     * FIXME CAN BE REMOVED
+     *
+     * @param ObjectManager $manager
+     */
     private function loadPosts(ObjectManager $manager)
     {
+        $authors = [
+            'anna_admin@example.com',
+            'tony_teamlead@example.com',
+            'clara_customer@example.com',
+            'john_user@example.com'
+        ];
         foreach (range(1, 30) as $i) {
             $post = new Post();
 
@@ -93,13 +95,13 @@ class LoadFixtures implements FixtureInterface, ContainerAwareInterface
             $post->setSummary($this->getRandomPostSummary());
             $post->setSlug($this->container->get('slugger')->slugify($post->getTitle()));
             $post->setContent($this->getPostContent());
-            $post->setAuthorEmail(array_rand(['anna_admin@example.com', 'tony_teamlead@example.com'], 1));
+            $post->setAuthorEmail($authors[array_rand($authors, 1)]);
             $post->setPublishedAt(new \DateTime('now - '.$i.'days'));
 
             foreach (range(1, 5) as $j) {
                 $comment = new Comment();
 
-                $comment->setAuthorEmail(array_rand(['clara_customer@example.com', 'john_user@example.com'], 1));
+                $comment->setAuthorEmail($authors[array_rand($authors, 1)]);
                 $comment->setPublishedAt(new \DateTime('now + '.($i + $j).'seconds'));
                 $comment->setContent($this->getRandomCommentContent());
                 $comment->setPost($post);

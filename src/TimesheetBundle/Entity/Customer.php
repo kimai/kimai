@@ -1,44 +1,44 @@
 <?php
 
-namespace AppBundle\Entity;
+/*
+ * This file is part of the Kimai package.
+ *
+ * (c) Kevin Papst <kevin@kevinpapst.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace TimesheetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * KimaiCustomers
+ * Customer
  *
  * @ORM\Table(name="customers")
  * @ORM\Entity
+ *
+ * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class KimaiCustomers
+class Customer
 {
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="customerID", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $customerid;
+
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=255, nullable=true)
-     */
-    private $password;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="passwordResetHash", type="string", length=32, nullable=true)
-     */
-    private $passwordresethash;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="secure", type="string", length=60, nullable=false)
-     */
-    private $secure = '0';
 
     /**
      * @var string
@@ -160,22 +160,11 @@ class KimaiCustomers
     private $trash = '0';
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="customerID", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $customerid;
-
-
-
-    /**
      * Set name
      *
      * @param string $name
      *
-     * @return KimaiCustomers
+     * @return Customer
      */
     public function setName($name)
     {
@@ -199,7 +188,7 @@ class KimaiCustomers
      *
      * @param string $password
      *
-     * @return KimaiCustomers
+     * @return Customer
      */
     public function setPassword($password)
     {
@@ -223,7 +212,7 @@ class KimaiCustomers
      *
      * @param string $passwordresethash
      *
-     * @return KimaiCustomers
+     * @return Customer
      */
     public function setPasswordresethash($passwordresethash)
     {
@@ -247,7 +236,7 @@ class KimaiCustomers
      *
      * @param string $secure
      *
-     * @return KimaiCustomers
+     * @return Customer
      */
     public function setSecure($secure)
     {
@@ -271,7 +260,7 @@ class KimaiCustomers
      *
      * @param string $comment
      *
-     * @return KimaiCustomers
+     * @return Customer
      */
     public function setComment($comment)
     {
@@ -295,7 +284,7 @@ class KimaiCustomers
      *
      * @param boolean $visible
      *
-     * @return KimaiCustomers
+     * @return Customer
      */
     public function setVisible($visible)
     {
@@ -319,7 +308,7 @@ class KimaiCustomers
      *
      * @param boolean $filter
      *
-     * @return KimaiCustomers
+     * @return Customer
      */
     public function setFilter($filter)
     {
@@ -343,7 +332,7 @@ class KimaiCustomers
      *
      * @param string $company
      *
-     * @return KimaiCustomers
+     * @return Customer
      */
     public function setCompany($company)
     {
@@ -367,7 +356,7 @@ class KimaiCustomers
      *
      * @param string $vat
      *
-     * @return KimaiCustomers
+     * @return Customer
      */
     public function setVat($vat)
     {
@@ -391,7 +380,7 @@ class KimaiCustomers
      *
      * @param string $contact
      *
-     * @return KimaiCustomers
+     * @return Customer
      */
     public function setContact($contact)
     {
@@ -415,7 +404,7 @@ class KimaiCustomers
      *
      * @param string $street
      *
-     * @return KimaiCustomers
+     * @return Customer
      */
     public function setStreet($street)
     {
@@ -439,7 +428,7 @@ class KimaiCustomers
      *
      * @param string $zipcode
      *
-     * @return KimaiCustomers
+     * @return Customer
      */
     public function setZipcode($zipcode)
     {
@@ -463,7 +452,7 @@ class KimaiCustomers
      *
      * @param string $city
      *
-     * @return KimaiCustomers
+     * @return Customer
      */
     public function setCity($city)
     {
@@ -487,7 +476,7 @@ class KimaiCustomers
      *
      * @param string $country
      *
-     * @return KimaiCustomers
+     * @return Customer
      */
     public function setCountry($country)
     {
@@ -511,7 +500,7 @@ class KimaiCustomers
      *
      * @param string $phone
      *
-     * @return KimaiCustomers
+     * @return Customer
      */
     public function setPhone($phone)
     {
@@ -535,7 +524,7 @@ class KimaiCustomers
      *
      * @param string $fax
      *
-     * @return KimaiCustomers
+     * @return Customer
      */
     public function setFax($fax)
     {
@@ -559,7 +548,7 @@ class KimaiCustomers
      *
      * @param string $mobile
      *
-     * @return KimaiCustomers
+     * @return Customer
      */
     public function setMobile($mobile)
     {
@@ -583,7 +572,7 @@ class KimaiCustomers
      *
      * @param string $mail
      *
-     * @return KimaiCustomers
+     * @return Customer
      */
     public function setMail($mail)
     {
@@ -607,7 +596,7 @@ class KimaiCustomers
      *
      * @param string $homepage
      *
-     * @return KimaiCustomers
+     * @return Customer
      */
     public function setHomepage($homepage)
     {
@@ -631,7 +620,7 @@ class KimaiCustomers
      *
      * @param string $timezone
      *
-     * @return KimaiCustomers
+     * @return Customer
      */
     public function setTimezone($timezone)
     {
@@ -655,7 +644,7 @@ class KimaiCustomers
      *
      * @param boolean $trash
      *
-     * @return KimaiCustomers
+     * @return Customer
      */
     public function setTrash($trash)
     {

@@ -1,22 +1,29 @@
-# Kimai - Time Tracking Application
+# Kimai v2 - Time Tracking
 
-Kimai v2 - the reloaded open source Time-Tracking application, based on Symfony and powered by PHP.
+Kimai v2 - the reloaded open source Time-Tracking application.
 
 [![Build Status](https://travis-ci.org/kevinpapst/kimai2.svg?branch=master)](https://travis-ci.org/kevinpapst/kimai2)
 
-Requirements
-------------
+## Introduction
+
+This is the reloaded version of the open source time-tracking application [Kimai](http://www.kimai.org).
+
+It is based on the following components:
+ - Symfony Framework 2.x
+ - AdminLTE Control Panel Template (through the AdminThemeBundle)
+
+## Requirements
 
   * PHP 5.5.9 or higher;
   * One PHP extension of PDO-SQLite and/or PDO-MySQL enabled;
   * and the [usual Symfony application requirements](http://symfony.com/doc/current/reference/requirements.html).
+  * bower (through npm)
 
 If unsure about meeting these requirements, download the demo application and
 browse the `http://localhost:8000/config.php` script to get more detailed
 information.
 
-Installation
-------------
+## Installation
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
@@ -28,6 +35,13 @@ $ git clone https://github.com/kevinpapst/kimai2.git
 $ cd kimai2/
 $ composer install
 ```
+
+Lets prepare the environment 
+```bash
+$ php bin/console assets:install --symlink
+$ php bin/console avanzu:admin:fetch-vendor
+```
+
 
 This was the basic task of the installation. If you have not yet setup a database, you 
 can create it and import example data by executing these commands: 
@@ -44,8 +58,7 @@ If you have imported the example data, you can login with two accounts:
 - Username: *tony_teamlead* / Password: *kitten* / Role: Teamlead
 - Username: *anna_admin* / Password: *kitten* / Role: Administrator
 
-Usage
------
+## Usage
 
 There is no need to configure a virtual host in your web server to access the application.
 Just use the built-in web server:
@@ -65,3 +78,10 @@ terminal.
 > Kimai, configure it to point at the `web/` directory of the project.
 > For more details, see:
 > http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html
+
+## Troubleshooting
+
+Cannot see any assets (like images) and/or missing styles? Try executing:
+```bash
+$ php bin/console assets:install --symlink
+```

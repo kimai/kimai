@@ -13,9 +13,12 @@ namespace TimesheetBundle\EventListener;
 
 use AppBundle\Event\ConfigureMainMenuEvent;
 use AppBundle\Event\ConfigureAdminMenuEvent;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Avanzu\AdminThemeBundle\Model\MenuItemModel;
+use Avanzu\AdminThemeBundle\Event\SidebarMenuEvent;
 
 /**
- * Class Menu
+ * Menus for timesheet
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
@@ -27,10 +30,18 @@ class Menu
     public function onMainMenuConfigure(ConfigureMainMenuEvent $event)
     {
         $menu = $event->getMenu();
+        $auth = $event->getAuth();
 
-        $item = $menu->addChild('Timesheet', array('route' => 'timesheet'));
-        $item->setLabel('menu.timesheet');
-        $item->setChildrenAttribute('icon', 'clock-o');
+        $isLoggedIn = $auth->isGranted('IS_AUTHENTICATED_FULLY');
+        $isAdmin = $isLoggedIn && $auth->isGranted('ROLE_ADMIN');
+
+        if (!$isLoggedIn) {
+            return;
+        }
+
+        $menu->addItem(
+            new MenuItemModel('timesheet', 'menu.timesheet', 'timesheet', [], 'fa fa-clock-o')
+        );
     }
 
     /**
@@ -38,10 +49,18 @@ class Menu
      */
     public function onAdminMenuConfigure(ConfigureAdminMenuEvent $event)
     {
-        $menu = $event->getMenu();
+        $menu = $event->getAdminMenu();
+        $auth = $event->getAuth();
 
-        $item = $menu->addChild('TimeAdmin', array('route' => 'timesheet'));
-        //$item->setLabel('menu.admin_timesheet');
-        $item->setChildrenAttribute('icon', 'clock-o');
+        $isLoggedIn = $auth->isGranted('IS_AUTHENTICATED_FULLY');
+        $isAdmin = $isLoggedIn && $auth->isGranted('ROLE_ADMIN');
+
+        if (!$isAdmin) {
+            return;
+        }
+
+        $menu->addChild(
+            new MenuItemModel('timesheet_admin', 'menu.admin_timesheet', 'admin_timesheet_index', [], 'fa fa-clock-o')
+        );
     }
 }

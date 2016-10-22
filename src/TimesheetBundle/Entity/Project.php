@@ -1,17 +1,38 @@
 <?php
 
-namespace AppBundle\Entity;
+/*
+ * This file is part of the Kimai package.
+ *
+ * (c) Kevin Papst <kevin@kevinpapst.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace TimesheetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * KimaiProjects
+ * Project
  *
  * @ORM\Table(name="projects", indexes={@ORM\Index(name="customerID", columns={"customerID"})})
  * @ORM\Entity
+ *
+ * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class KimaiProjects
+class Project
 {
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="projectID", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $projectid;
+
     /**
      * @var integer
      *
@@ -81,17 +102,6 @@ class KimaiProjects
      * @ORM\Column(name="internal", type="boolean", nullable=false)
      */
     private $internal = '0';
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="projectID", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $projectid;
-
-
 
     /**
      * Set customerid

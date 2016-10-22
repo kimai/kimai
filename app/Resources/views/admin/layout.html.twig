@@ -1,9 +1,0 @@
-{#
-   This is the base template of the all backend pages.
-   See http://symfony.com/doc/current/book/templating.html#template-inheritance-and-layouts
-#}
-{% extends 'base.html.twig' %}
-
-{% block header_navigation_links %}
-    {{ knp_menu_render('admin', {'template': 'menu/admin_menu.html.twig'}) }}
-{% endblock %}

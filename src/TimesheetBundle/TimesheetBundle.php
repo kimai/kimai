@@ -12,6 +12,7 @@
 namespace TimesheetBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use TimesheetBundle\EventListener\Menu as MenuListener;
 
 /**
  * This class defines the Bundle for all Timesheet related topics
@@ -20,4 +21,14 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class TimesheetBundle extends Bundle
 {
+
+    /**
+     * Boots the Bundle.
+     */
+    public function boot()
+    {
+        $listener = new MenuListener();
+        /* @var $dispatcher \Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher */
+        $dispatcher = $this->container->get('event_dispatcher');
+    }
 }

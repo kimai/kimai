@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>{% block title %}{{ 'browser.title'|trans }}{% endblock %}</title>
+
+    {% block stylesheets %}
+        {# uncomment the following lines to compile SCSS assets with Assetic
+
+            {% stylesheets filter="scssphp" output="css/app.css"
+                "%kernel.root_dir%/Resources/assets/scss/bootstrap-flatly.scss"
+                "%kernel.root_dir%/Resources/assets/scss/font-awesome.scss"
+                "%kernel.root_dir%/Resources/assets/css/*.css"
+                "%kernel.root_dir%/Resources/assets/scss/main.scss"
+            %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+        #}
+
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+
+<body id="{% block body_id %}{% endblock %}">
+
+{% block header %}
+    <header>
+        <div class="navbar navbar-default navbar-static-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{{ path('homepage') }}">
+                        {{ 'app.title'|trans }}
+                    </a>
+
+                    <button type="button" class="navbar-toggle"
+                            data-toggle="collapse"
+                            data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse">
+                    {#
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-globe"></i> <span class="caret"></span></a>
+                            <ul class="dropdown-menu locales" role="menu">
+                                {% for locale in locales() %}
+                                    <li {% if app.request.locale == locale.code %}class="active"{% endif %}><a href="{{ path(app.request.get('_route', 'blog_index'), app.request.get('_route_params', [])|merge({ _locale: locale.code })) }}">{{ locale.name|capitalize }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    #}
+
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+<div class="container body-container">
+    {% block body %}
+        <div class="row">
+            <div id="main" class="col-sm-12">
+                {{ include('default/_flash_messages.html.twig') }}
+
+                {% block main %}{% endblock %}
+            </div>
+        </div>
+    {% endblock %}
+</div>
+
+{% block footer %}
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div id="footer-copyright" class="col-md-6">
+                    <p>&copy; {{ 'now'|date('Y') }} - {{ 'kimai.footer'|trans }}</p>
+                    <p>{{ 'kimai.license'|trans }}</p>
+                </div>
+                <div id="footer-resources" class="col-md-6">
+                    {#
+                    <p>
+                        <a href="https://twitter.com/symfony"><i class="fa fa-twitter"></i></a>
+                        <a href="https://www.facebook.com/SensioLabs"><i class="fa fa-facebook"></i></a>
+                        <a href="https://symfony.com/blog/"><i class="fa fa-rss"></i></a>
+                    </p>
+                    #}
+                </div>
+            </div>
+        </div>
+    </footer>
+{% endblock %}
+
+{% block javascripts %}
+    {# uncomment the following lines to combine and minimize JavaScript assets with Assetic
+        {% javascripts filter="?jsqueeze" output="js/app.js"
+            "%kernel.root_dir%/Resources/assets/js/jquery-2.1.4.js"
+            "%kernel.root_dir%/Resources/assets/js/moment.min.js"
+            "%kernel.root_dir%/Resources/assets/js/bootstrap-3.3.4.js"
+            "%kernel.root_dir%/Resources/assets/js/highlight.pack.js"
+            "%kernel.root_dir%/Resources/assets/js/bootstrap-datetimepicker.min.js"
+            "%kernel.root_dir%/Resources/assets/js/main.js" %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    #}
+
+    <script src="{{ asset('js/app.js') }}"></script>
+{% endblock %}
+
+{# it's not mandatory to set the timezone in localizeddate(). This is done to
+   avoid errors when the 'intl' PHP extension is not available and the application
+   is forced to use the limited "intl polyfill", which only supports UTC and GMT #}
+<!-- Page rendered on {{ 'now'|localizeddate('long', 'long', null, 'UTC') }} -->
+</body>
+</html>

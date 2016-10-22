@@ -32,3 +32,8 @@ homepage:
         _controller: FrameworkBundle:Redirect:redirect
         route: timesheet
         permanent: true
+
+avanzu_admin_profile:
+    path: /profile/{userid}/
+avanzu_admin_logout:
+    path: /logout

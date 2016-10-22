@@ -11,13 +11,14 @@
 
 namespace TimesheetBundle\Entity;
 
+use AppBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Timesheet entity.
  *
  * @ORM\Entity(repositoryClass="TimesheetBundle\Repository\TimesheetRepository")
- * @ORM\Table(name="timeSheet", indexes={@ORM\Index(name="userID", columns={"userID"}), @ORM\Index(name="projectID", columns={"projectID"}), @ORM\Index(name="activityID", columns={"activityID"})})
+ * @ORM\Table(name="timeSheet", indexes={@ORM\Index(columns={"userID"}), @ORM\Index(columns={"projectID"}), @ORM\Index(name="activityID", columns={"activityID"})})
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
@@ -47,9 +48,10 @@ class Timesheet
     /**
      * @var integer
      *
-     * @ORM\Column(name="userID", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumn(name="userID", referencedColumnName="userID")
      */
-    private $userid;
+    private $user;
 
     /**
      * @var integer
@@ -165,7 +167,7 @@ class Timesheet
      *
      * @param integer $start
      *
-     * @return KimaiTimesheet
+     * @return Timesheet
      */
     public function setStart($start)
     {
@@ -189,7 +191,7 @@ class Timesheet
      *
      * @param integer $end
      *
-     * @return KimaiTimesheet
+     * @return Timesheet
      */
     public function setEnd($end)
     {
@@ -213,7 +215,7 @@ class Timesheet
      *
      * @param integer $duration
      *
-     * @return KimaiTimesheet
+     * @return Timesheet
      */
     public function setDuration($duration)
     {
@@ -233,27 +235,27 @@ class Timesheet
     }
 
     /**
-     * Set userid
+     * Set user
      *
-     * @param integer $userid
+     * @param User $user
      *
-     * @return KimaiTimesheet
+     * @return Timesheet
      */
-    public function setUserid($userid)
+    public function setUser(User $user)
     {
-        $this->userid = $userid;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get userid
+     * Get user
      *
-     * @return integer
+     * @return User
      */
-    public function getUserid()
+    public function getUser()
     {
-        return $this->userid;
+        return $this->user;
     }
 
     /**
@@ -261,7 +263,7 @@ class Timesheet
      *
      * @param integer $projectid
      *
-     * @return KimaiTimesheet
+     * @return Timesheet
      */
     public function setProjectid($projectid)
     {
@@ -285,7 +287,7 @@ class Timesheet
      *
      * @param integer $activityid
      *
-     * @return KimaiTimesheet
+     * @return Timesheet
      */
     public function setActivityid($activityid)
     {
@@ -309,7 +311,7 @@ class Timesheet
      *
      * @param string $description
      *
-     * @return KimaiTimesheet
+     * @return Timesheet
      */
     public function setDescription($description)
     {
@@ -333,7 +335,7 @@ class Timesheet
      *
      * @param string $comment
      *
-     * @return KimaiTimesheet
+     * @return Timesheet
      */
     public function setComment($comment)
     {
@@ -357,7 +359,7 @@ class Timesheet
      *
      * @param boolean $commenttype
      *
-     * @return KimaiTimesheet
+     * @return Timesheet
      */
     public function setCommenttype($commenttype)
     {
@@ -381,7 +383,7 @@ class Timesheet
      *
      * @param boolean $cleared
      *
-     * @return KimaiTimesheet
+     * @return Timesheet
      */
     public function setCleared($cleared)
     {
@@ -405,7 +407,7 @@ class Timesheet
      *
      * @param string $location
      *
-     * @return KimaiTimesheet
+     * @return Timesheet
      */
     public function setLocation($location)
     {
@@ -429,7 +431,7 @@ class Timesheet
      *
      * @param string $trackingnumber
      *
-     * @return KimaiTimesheet
+     * @return Timesheet
      */
     public function setTrackingnumber($trackingnumber)
     {
@@ -453,7 +455,7 @@ class Timesheet
      *
      * @param string $rate
      *
-     * @return KimaiTimesheet
+     * @return Timesheet
      */
     public function setRate($rate)
     {
@@ -477,7 +479,7 @@ class Timesheet
      *
      * @param string $fixedrate
      *
-     * @return KimaiTimesheet
+     * @return Timesheet
      */
     public function setFixedrate($fixedrate)
     {
@@ -501,7 +503,7 @@ class Timesheet
      *
      * @param string $budget
      *
-     * @return KimaiTimesheet
+     * @return Timesheet
      */
     public function setBudget($budget)
     {
@@ -525,7 +527,7 @@ class Timesheet
      *
      * @param string $approved
      *
-     * @return KimaiTimesheet
+     * @return Timesheet
      */
     public function setApproved($approved)
     {
@@ -549,7 +551,7 @@ class Timesheet
      *
      * @param integer $statusid
      *
-     * @return KimaiTimesheet
+     * @return Timesheet
      */
     public function setStatusid($statusid)
     {
@@ -573,7 +575,7 @@ class Timesheet
      *
      * @param boolean $billable
      *
-     * @return KimaiTimesheet
+     * @return Timesheet
      */
     public function setBillable($billable)
     {

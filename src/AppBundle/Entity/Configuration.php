@@ -5,19 +5,13 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * KimaiConfiguration
+ * Configuration
  *
  * @ORM\Table(name="configuration")
  * @ORM\Entity
  */
-class KimaiConfiguration
+class Configuration
 {
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="value", type="string", length=255, nullable=false)
-     */
-    private $value;
 
     /**
      * @var string
@@ -28,14 +22,19 @@ class KimaiConfiguration
      */
     private $option;
 
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="value", type="string", length=255, nullable=false)
+     */
+    private $value;
 
     /**
      * Set value
      *
      * @param string $value
      *
-     * @return KimaiConfiguration
+     * @return Configuration
      */
     public function setValue($value)
     {

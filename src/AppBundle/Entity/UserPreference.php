@@ -5,13 +5,30 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * KimaiPreferences
+ * UserPreference
  *
- * @ORM\Table(name="preferences")
+ * @ORM\Table(name="preferences",indexes={@ORM\Index(name="option_idx", columns={"userid", "option"})}))
  * @ORM\Entity
  */
-class KimaiPreferences
+class UserPreference
 {
+
+    /**
+     * @var integer
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(name="userID", type="integer")
+     */
+    private $userid;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="option", type="string", length=255)
+     */
+    private $option;
+
     /**
      * @var string
      *
@@ -20,31 +37,11 @@ class KimaiPreferences
     private $value;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="option", type="string", length=255)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     */
-    private $option;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="userID", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     */
-    private $userid;
-
-
-
-    /**
      * Set value
      *
      * @param string $value
      *
-     * @return KimaiPreferences
+     * @return UserPreference
      */
     public function setValue($value)
     {
@@ -68,7 +65,7 @@ class KimaiPreferences
      *
      * @param string $option
      *
-     * @return KimaiPreferences
+     * @return UserPreference
      */
     public function setOption($option)
     {
@@ -92,7 +89,7 @@ class KimaiPreferences
      *
      * @param integer $userid
      *
-     * @return KimaiPreferences
+     * @return UserPreference
      */
     public function setUserid($userid)
     {

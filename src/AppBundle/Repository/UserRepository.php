@@ -14,7 +14,6 @@ namespace AppBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * FIXME CAN BE REMOVED
  *
  * This custom Doctrine repository is empty because so far we don't need any custom
  * method to query for application user information. But it's always a good practice

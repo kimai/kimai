@@ -55,6 +55,7 @@ class DefaultControllerTest extends WebTestCase
      */
     public function testSecureUrls($url)
     {
+        $this->markTestSkipped('No admin URLs for testing');
         $client = self::createClient();
         $client->request('GET', $url);
 
@@ -70,16 +71,11 @@ class DefaultControllerTest extends WebTestCase
     public function getPublicUrls()
     {
         yield ['/'];
-        yield ['/en/blog/'];
-        yield ['/en/blog/posts/morbi-tempus-commodo-mattis'];
         yield ['/en/login'];
     }
 
     public function getSecureUrls()
     {
         yield ['/en/admin/post/'];
-        yield ['/en/admin/post/new'];
-        yield ['/en/admin/post/1'];
-        yield ['/en/admin/post/1/edit'];
     }
 }

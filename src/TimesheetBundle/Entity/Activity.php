@@ -1,17 +1,38 @@
 <?php
 
-namespace AppBundle\Entity;
+/*
+ * This file is part of the Kimai package.
+ *
+ * (c) Kevin Papst <kevin@kevinpapst.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace TimesheetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * KimaiActivities
+ * Activity
  *
  * @ORM\Table(name="activities")
  * @ORM\Entity
+ *
+ * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class KimaiActivities
+class Activity
 {
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="activityID", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $activityid;
+
     /**
      * @var string
      *
@@ -48,22 +69,11 @@ class KimaiActivities
     private $trash = '0';
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="activityID", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $activityid;
-
-
-
-    /**
      * Set name
      *
      * @param string $name
      *
-     * @return KimaiActivities
+     * @return Activity
      */
     public function setName($name)
     {
@@ -87,7 +97,7 @@ class KimaiActivities
      *
      * @param string $comment
      *
-     * @return KimaiActivities
+     * @return Activity
      */
     public function setComment($comment)
     {
@@ -111,7 +121,7 @@ class KimaiActivities
      *
      * @param boolean $visible
      *
-     * @return KimaiActivities
+     * @return Activity
      */
     public function setVisible($visible)
     {
@@ -135,7 +145,7 @@ class KimaiActivities
      *
      * @param boolean $filter
      *
-     * @return KimaiActivities
+     * @return Activity
      */
     public function setFilter($filter)
     {
@@ -159,7 +169,7 @@ class KimaiActivities
      *
      * @param boolean $trash
      *
-     * @return KimaiActivities
+     * @return Activity
      */
     public function setTrash($trash)
     {

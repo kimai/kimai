@@ -2,6 +2,52 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file date="2016-10-19T21:46:45Z" source-language="en" target-language="de" datatype="plaintext" original="not.available">
     <body>
+      <trans-unit id="browser.title">
+        <source>browser.title</source>
+        <target>Kimai - Time Tracking</target>
+      </trans-unit>
+      <trans-unit id="app.title">
+        <source>app.title</source>
+        <target>Kimai</target>
+      </trans-unit>
+
+      <trans-unit id="http_error.name">
+        <source>http_error.name</source>
+        <target>Error</target>
+      </trans-unit>
+      <trans-unit id="http_error.description">
+        <source>http_error.description</source>
+        <target>Error</target>
+      </trans-unit>
+      <trans-unit id="http_error.suggestion">
+        <source>http_error.suggestion</source>
+        <target>Error</target>
+      </trans-unit>
+      <trans-unit id="http_error_403.description">
+        <source>http_error_403.description</source>
+        <target>Error</target>
+      </trans-unit>
+      <trans-unit id="http_error_403.suggestion">
+        <source>http_error_403.suggestion</source>
+        <target>Error</target>
+      </trans-unit>
+      <trans-unit id="http_error_404.description">
+        <source>http_error_404.description</source>
+        <target>Error</target>
+      </trans-unit>
+      <trans-unit id="http_error_404.suggestion">
+        <source>http_error_404.suggestion</source>
+        <target>Error</target>
+      </trans-unit>
+      <trans-unit id="http_error_405.description">
+        <source>http_error_405.description</source>
+        <target>Error</target>
+      </trans-unit>
+      <trans-unit id="http_error_405.suggestion">
+        <source>http_error_405.suggestion</source>
+        <target>Error</target>
+      </trans-unit>
+
       <trans-unit id="action.browse_admin">
         <source>action.browse_admin</source>
         <target>Zum Backend</target>
@@ -37,10 +83,6 @@
       <trans-unit id="menu.logout">
         <source>menu.logout</source>
         <target>Abmelden</target>
-      </trans-unit>
-      <trans-unit id="menu.homepage">
-        <source>menu.homepage</source>
-        <target>Blog</target>
       </trans-unit>
       <trans-unit id="menu.admin">
         <source>menu.admin</source>

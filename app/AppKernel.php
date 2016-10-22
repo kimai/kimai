@@ -32,9 +32,9 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
-            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new AppBundle\AppBundle(),
             new TimesheetBundle\TimesheetBundle(),
+            new Avanzu\AdminThemeBundle\AvanzuAdminThemeBundle(),
         ];
 
         // Bundles only used for development or unit and functional tests

@@ -11,45 +11,26 @@
 
 namespace AppBundle\Event;
 
-use Knp\Menu\FactoryInterface;
-use Knp\Menu\ItemInterface;
-use Symfony\Component\EventDispatcher\Event;
+use Avanzu\AdminThemeBundle\Model\MenuItemModel;
 
 /**
  * The ConfigureAdminMenuEvent is used for populating the administration navigation.
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class ConfigureAdminMenuEvent extends Event
+class ConfigureAdminMenuEvent extends ConfigureMenuEvent
 {
     const CONFIGURE = 'app.admin_menu_configure';
 
-    private $factory;
-    private $menu;
-
     /**
-     * @param \Knp\Menu\FactoryInterface $factory
-     * @param \Knp\Menu\ItemInterface $menu
+     * This function will either return a MenuItem or null.
+     *
+     * In case this returns null, the user has not the ROLE_ADMIN.
+     *
+     * @return MenuItemModel|null
      */
-    public function __construct(FactoryInterface $factory, ItemInterface $menu)
+    public function getAdminMenu()
     {
-        $this->factory = $factory;
-        $this->menu = $menu;
-    }
-
-    /**
-     * @return \Knp\Menu\FactoryInterface
-     */
-    public function getFactory()
-    {
-        return $this->factory;
-    }
-
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
-    public function getMenu()
-    {
-        return $this->menu;
+        return $this->getMenu()->getRootItem('admin');
     }
 }

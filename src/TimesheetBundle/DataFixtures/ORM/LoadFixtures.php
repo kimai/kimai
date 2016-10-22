@@ -44,7 +44,12 @@ class LoadFixtures extends AppBundleLoadFixtures
 
     private function loadTimesheet(ObjectManager $manager)
     {
-        $amountUsers = count($manager->getRepository(User::class)->findAll());
+        $allUsers = [];
+        $users = $manager->getRepository(User::class)->findAll();
+        foreach ($users as $user) {
+            $allUsers[$user->getId()] = $user;
+        }
+        $amountUsers = count($allUsers);
 
         for ($i = 0; $i <= self::AMOUNT_TIMESHEET; $i++) {
 
@@ -67,7 +72,7 @@ class LoadFixtures extends AppBundleLoadFixtures
             $entry->setStart($start->getTimestamp());
             $entry->setEnd($end->getTimestamp());
             $entry->setDuration($end->modify('- ' . $start->getTimestamp() . ' seconds')->getTimestamp());
-            $entry->setUserid(rand(1, $amountUsers));
+            $entry->setUser($allUsers[rand(1, $amountUsers)]);
             //$entry->setApproved(false); // TODO
             //$entry->setFixedrate(); // TODO
             //$entry->setRate(); // TODO

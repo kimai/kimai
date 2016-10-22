@@ -57,6 +57,8 @@ twig:
     form_themes:
         - "bootstrap_3_layout.html.twig"
         - "form/fields.html.twig"
+    globals:
+        admin_skin: skin-blue
 
 # Assetic Configuration (used for managing web assets: CSS, JavaScript, Sass, etc.)
 assetic:
@@ -86,3 +88,6 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+#avanzu_admin_theme:
+#    use_assetic: false

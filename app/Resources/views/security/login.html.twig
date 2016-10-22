@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'bootstrap.html.twig' %}
 
 {% block body_id 'login' %}
 
@@ -40,6 +40,7 @@
     {{ parent() }}
 
     <script>
+        // FIXME remove me
         $(document).ready(function() {
             var usernameEl = $('#username');
             var passwordEl = $('#password');

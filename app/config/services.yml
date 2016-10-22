@@ -1,6 +1,4 @@
 services:
-    # First we define some basic services to make these utilities available in
-    # the entire application
     slugger:
         class: AppBundle\Utils\Slugger
 
@@ -21,19 +19,21 @@ services:
         tags:
             - { name: twig.extension }
 
+    # a route listener, that injects the locale through a URL directory
     app.redirect_to_preferred_locale_listener:
         class: AppBundle\EventListener\RedirectToPreferredLocaleListener
         arguments: ['@router', '%app_locales%', '%locale%']
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
+    # event-listener to populate the navigation
     app.menu_builder:
-        class: AppBundle\Menu\MenuBuilder
-        arguments: ["@knp_menu.factory", "@event_dispatcher", "@security.authorization_checker"]
+        class: AppBundle\EventListener\MenuBuilder
+        arguments: ["@event_dispatcher", "@security.authorization_checker"]
         tags:
-            - { name: knp_menu.menu_builder, method: createMainMenu, alias: main }
-            - { name: knp_menu.menu_builder, method: createAdminMenu, alias: admin }
+            - { name: kernel.event_listener, event:theme.sidebar_setup_menu, method:onSetupNavbar }
 
+    # service that prefixes every database table
     app.tableprefix_subscriber:
         class: AppBundle\Doctrine\TablePrefixSubscriber
         arguments: ["%database_prefix%"]
