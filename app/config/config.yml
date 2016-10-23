@@ -58,7 +58,9 @@ twig:
         - "bootstrap_3_layout.html.twig"
         - "form/fields.html.twig"
     globals:
-        admin_skin: skin-blue
+        kimai_context:
+            date_1: "d.m.Y"     # used for display in timesheets
+            box_color: "green"
 
 # Assetic Configuration (used for managing web assets: CSS, JavaScript, Sass, etc.)
 assetic:
@@ -89,5 +91,13 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
-#avanzu_admin_theme:
-#    use_assetic: false
+avanzu_admin_theme:
+    use_twig   : true
+    theme:
+        default_avatar   : avatars/default.png
+        skin             : skin-blue
+        fixed_layout     : false
+        boxed_layout     : false
+        collapsed_sidebar: true
+        mini_sidebar     : true
+        control_sidebar  : false

@@ -7,7 +7,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 
 /**
- * KimaiUsers
+ * User
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"}), @ORM\UniqueConstraint(name="apikey", columns={"apikey"})})
@@ -46,6 +46,8 @@ class User implements UserInterface
     private $alias;
 
     /**
+     * FIXME remove me
+     *
      * @var boolean
      *
      * @ORM\Column(name="trash", type="boolean", nullable=false)
@@ -67,6 +69,8 @@ class User implements UserInterface
     private $passwordresethash;
 
     /**
+     * FIXME remove me
+     *
      * @var integer
      *
      * @ORM\Column(name="ban", type="integer", nullable=false)
@@ -74,6 +78,7 @@ class User implements UserInterface
     private $ban = '0';
 
     /**
+     * FIXME remove me
      * @var integer
      *
      * @ORM\Column(name="banTime", type="integer", nullable=false)
@@ -88,7 +93,7 @@ class User implements UserInterface
     private $secure = '0';
 
     /**
-     * FIXME
+     * FIXME manytoone relation
      *
      * @var integer
      *
@@ -97,7 +102,7 @@ class User implements UserInterface
     private $lastproject = '1';
 
     /**
-     * FIXME
+     * FIXME manytoone
      *
      * @var integer
      *
@@ -133,17 +138,32 @@ class User implements UserInterface
      */
     private $apikey;
 
+    // ======= new columns for kimai 2 =======
     /**
      * @ORM\Column(type="json_array")
      */
     private $roles = [];
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=50, nullable=true)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="avatar", type="string", length=50, nullable=true)
+     */
+    private $avatar;
+
+    /**
      * Set alias
      *
      * @param string $alias
      *
-     * @return KimaiUsers
+     * @return User
      */
     public function setAlias($alias)
     {
@@ -167,7 +187,7 @@ class User implements UserInterface
      *
      * @param boolean $trash
      *
-     * @return KimaiUsers
+     * @return User
      */
     public function setTrash($trash)
     {
@@ -191,7 +211,7 @@ class User implements UserInterface
      *
      * @param boolean $active
      *
-     * @return KimaiUsers
+     * @return User
      */
     public function setActive($active)
     {
@@ -215,7 +235,7 @@ class User implements UserInterface
      *
      * @param string $password
      *
-     * @return KimaiUsers
+     * @return User
      */
     public function setPassword($password)
     {
@@ -239,7 +259,7 @@ class User implements UserInterface
      *
      * @param string $passwordresethash
      *
-     * @return KimaiUsers
+     * @return User
      */
     public function setPasswordresethash($passwordresethash)
     {
@@ -263,7 +283,7 @@ class User implements UserInterface
      *
      * @param integer $ban
      *
-     * @return KimaiUsers
+     * @return User
      */
     public function setBan($ban)
     {
@@ -287,7 +307,7 @@ class User implements UserInterface
      *
      * @param integer $bantime
      *
-     * @return KimaiUsers
+     * @return User
      */
     public function setBantime($bantime)
     {
@@ -311,7 +331,7 @@ class User implements UserInterface
      *
      * @param string $secure
      *
-     * @return KimaiUsers
+     * @return User
      */
     public function setSecure($secure)
     {
@@ -335,7 +355,7 @@ class User implements UserInterface
      *
      * @param integer $lastproject
      *
-     * @return KimaiUsers
+     * @return User
      */
     public function setLastproject($lastproject)
     {
@@ -359,7 +379,7 @@ class User implements UserInterface
      *
      * @param integer $lastactivity
      *
-     * @return KimaiUsers
+     * @return User
      */
     public function setLastactivity($lastactivity)
     {
@@ -383,7 +403,7 @@ class User implements UserInterface
      *
      * @param integer $lastrecord
      *
-     * @return KimaiUsers
+     * @return User
      */
     public function setLastrecord($lastrecord)
     {
@@ -407,7 +427,7 @@ class User implements UserInterface
      *
      * @param string $timeframebegin
      *
-     * @return KimaiUsers
+     * @return User
      */
     public function setTimeframebegin($timeframebegin)
     {
@@ -431,7 +451,7 @@ class User implements UserInterface
      *
      * @param string $timeframeend
      *
-     * @return KimaiUsers
+     * @return User
      */
     public function setTimeframeend($timeframeend)
     {
@@ -455,7 +475,7 @@ class User implements UserInterface
      *
      * @param string $apikey
      *
-     * @return KimaiUsers
+     * @return User
      */
     public function setApikey($apikey)
     {
@@ -472,30 +492,6 @@ class User implements UserInterface
     public function getApikey()
     {
         return $this->apikey;
-    }
-
-    /**
-     * Set globalroleid
-     *
-     * @param integer $globalroleid
-     *
-     * @return KimaiUsers
-     */
-    public function setGlobalroleid($globalroleid)
-    {
-        $this->globalroleid = $globalroleid;
-
-        return $this;
-    }
-
-    /**
-     * Get globalroleid
-     *
-     * @return integer
-     */
-    public function getGlobalroleid()
-    {
-        return $this->globalroleid;
     }
 
     public function getId()
@@ -565,8 +561,40 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param string $avatar
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+    }
+
     public function __toString()
     {
-        return $this->getUsername();
+        return $this->getAlias() ?: $this->getUsername();
     }
 }

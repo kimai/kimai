@@ -1,7 +1,53 @@
 {% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
 
 {% block page_title %}Dashboard{% endblock %}
 {% block page_subtitle %}Welcome!{% endblock %}
 
 {% block main %}
+
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            {{ widgets.info_box_counter('Bla blub', 300, 'bar-chart', 'blue') }}
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            {{ widgets.info_box_counter('Steigerungsrate', 80, 'line-chart', 'red') }}
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            {{ widgets.info_box_counter('Anzahl Tage', 27, 'calendar', 'yellow') }}
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            {{ widgets.info_box_counter('Stunden total / Monat', 460, 'clock-o', 'green') }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            {{ widgets.info_box_progress('Bewilligte Stunden', 'Stunden zur Abrechnung bewilligt', 120, 10, 'star-o') }}
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            {{ widgets.info_box_progress('Umsatz / Monat', '70% Increase in 30 Days', 6830, 30, 'credit-card', 'black') }}
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            {{ widgets.info_box_progress('Stunden persönlich', 'Das ist noch nicht genug', 135, 60, 'hourglass-o') }}
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            {{ widgets.info_box_progress('Anzahl Benutzer', 'Mehr ist besser!', 5, 90, 'user') }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            {{ widgets.info_box_more('Bewilligte Stunden', 120, 'h', 'star-o', 'purple') }}
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            {{ widgets.info_box_more('Umsatz / Monat', 6830, '$', '', 'yellow') }}
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            {{ widgets.info_box_more('Stunden persönlich', 135, '€', 'hourglass-o', 'red') }}
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            {{ widgets.info_box_more('Anzahl Benutzer', 5, '', 'user') }}
+        </div>
+    </div>
 {% endblock %}

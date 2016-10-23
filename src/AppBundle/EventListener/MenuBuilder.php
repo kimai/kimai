@@ -75,7 +75,7 @@ class MenuBuilder
 
         if ($isAdmin) {
             $event->addItem(
-                new MenuItemModel('admin', 'menu.admin_dashboard', '', [], 'fa fa-dashboard')
+                new MenuItemModel('admin', 'menu.admin', '', [], 'fa fa-dashboard')
             );
 
             $this->eventDispatcher->dispatch(

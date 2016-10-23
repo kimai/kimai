@@ -34,6 +34,6 @@ homepage:
         permanent: true
 
 avanzu_admin_profile:
-    path: /profile/{userid}/
-avanzu_admin_logout:
-    path: /logout
+  path: /{_locale}/profile/{ident}/
+  options:
+    avanzu_admin_route: profile

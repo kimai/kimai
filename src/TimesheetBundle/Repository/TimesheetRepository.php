@@ -11,6 +11,7 @@
 
 namespace TimesheetBundle\Repository;
 
+use AppBundle\Entity\User;
 use TimesheetBundle\Entity\Timesheet;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
@@ -26,16 +27,33 @@ class TimesheetRepository extends EntityRepository
 {
 
     /**
+     * @param User $user
      * @return Query
      */
-    public function queryLatest()
+    public function queryLatest(User $user = null)
     {
-        return $this->getEntityManager()
-            ->createQuery('
-                SELECT p
-                FROM TimesheetBundle:Timesheet p
-                ORDER BY p.start DESC
-            ');
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('p')
+            ->from('TimesheetBundle:Timesheet', 'p')
+            ->orderBy('p.start', 'DESC');
+
+        if (null !== $user) {
+            $qb->where('p.user = :user')
+                ->setParameter('user', $user);
+        }
+
+        return $qb->getQuery();
+    }
+
+    /**
+     * @param User $user
+     * @param int $page
+     * @return Pagerfanta
+     */
+    public function findLatest(User $user, $page = 1)
+    {
+        return $this->getPager($this->queryLatest($user), $page);
     }
 
     /**
@@ -43,9 +61,19 @@ class TimesheetRepository extends EntityRepository
      *
      * @return Pagerfanta
      */
-    public function findLatest($page = 1)
+    public function findAll($page = 1)
     {
-        $paginator = new Pagerfanta(new DoctrineORMAdapter($this->queryLatest(), false));
+        return $this->getPager($this->queryLatest(), $page);
+    }
+
+    /**
+     * @param Query $query
+     * @param int $page
+     * @return Pagerfanta
+     */
+    protected function getPager(Query $query, $page = 1)
+    {
+        $paginator = new Pagerfanta(new DoctrineORMAdapter($query, false));
         $paginator->setMaxPerPage(25);
         $paginator->setCurrentPage($page);
 

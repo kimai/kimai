@@ -61,3 +61,31 @@ services:
     #
     # // same code using repository services
     # $posts = $this->get('app.post_repository')->findAll();
+
+    avanzu_admin_theme.navbar_user_listener:
+        class: AppBundle\EventListener\NavbarShowUserListener
+        arguments: ["@security.token_storage"]
+        tags:
+          - { name: kernel.event_listener, event: theme.navbar_user, method: onShowUser }
+          - { name: kernel.event_listener, event: theme.sidebar_user, method: onShowUser }
+
+#    avanzu_admin_theme.navbar_task_listener:
+#        class: "%avanzu_admin_theme.navbar_task_listener.class%"
+#        tags:
+#          - { name: kernel.event_listener, event: theme.tasks, method: onListTasks }
+#
+#    avanzu_admin_theme.navbar_notify_listener:
+#        class: "%avanzu_admin_theme.navbar_notify_listener.class%"
+#        tags:
+#          - { name: kernel.event_listener, event: theme.notifications, method: onListNotifications }
+#
+#    avanzu_admin_theme.navbar_msg_listener:
+#        class: "%avanzu_admin_theme.navbar_msg_listener.class%"
+#        tags:
+#          - { name: kernel.event_listener, event: theme.messages, method: onListMessages }
+#
+#    avanzu_admin_theme.setup_menu_listener:
+#        class: "%avanzu_admin_theme.setup_menu_listener.class%"
+#        tags:
+#          - { name: kernel.event_listener, event: theme.sidebar_setup_menu, method: onSetupMenu }
+#          - { name: kernel.event_listener, event: theme.breadcrumb, method: onSetupMenu }

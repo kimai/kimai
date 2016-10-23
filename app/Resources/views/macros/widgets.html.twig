@@ -1,0 +1,94 @@
+
+{% macro profile_list(user, items, color) %}
+    {% import "AvanzuAdminThemeBundle:layout:macros.html.twig" as macro %}
+    <div class="box box-widget widget-user-2">
+        <!-- Add the bg color to the header using any of the bg-* classes -->
+        <div class="widget-user-header bg-{{ color|default(kimai_context.box_color) }}">
+            <div class="widget-user-image">
+                {{ macro.avatar(user.avatar, user.username) }}
+            </div>
+            <!-- /.widget-user-image -->
+            <h3 class="widget-user-username">{{ user.alias }} ({{ user.username }})</h3>
+            <h5 class="widget-user-desc">{{ user.title }}</h5>
+        </div>
+        <div class="box-footer no-padding">
+            <ul class="nav nav-stacked">
+                {% for entry in items %}
+                <li><a href="{{ entry.url }}">{{ entry.title|trans }} <span class="pull-right badge bg-{{ entry.color }}">{{ entry.amount }}</span></a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro profile_box(user, items) %}
+    {% import "AvanzuAdminThemeBundle:layout:macros.html.twig" as macro %}
+
+    <div class="box box-widget widget-user">
+        <!-- Add the bg color to the header using any of the bg-* classes -->
+        <div class="widget-user-header bg-{{ color|default(kimai_context.box_color) }}">
+            <h3 class="widget-user-username">{{ user.alias }} ({{ user.username }})</h3>
+            <h5 class="widget-user-desc">{{ user.title }}</h5>
+        </div>
+        <div class="widget-user-image">
+            {{ macro.avatar(user.avatar, user.username) }}
+        </div>
+        <div class="box-footer">
+            <div class="row">
+                {% for entry in items|slice(0, 3) %}
+                    <div class="col-sm-4 border-right">
+                        <div class="description-block">
+                            <h5 class="description-header">{{ entry.amount }}</h5>
+                            <span class="description-text">{{ entry.title|trans }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro info_box_counter(title, amount, icon, color) %}
+<div class="info-box">
+    <span class="info-box-icon bg-{{ color|default(kimai_context.box_color) }}"><i class="fa fa-{{ icon|default('flag-o') }}"></i></span>
+
+    <div class="info-box-content">
+        <span class="info-box-text">{{ title|trans }}</span>
+        <span class="info-box-number">{{ amount }}</span>
+    </div>
+</div>
+{% endmacro %}
+
+{% macro info_box_progress(title, description, amount, percentage, icon, color) %}
+    <div class="info-box bg-{{ color|default(kimai_context.box_color) }}">
+        <span class="info-box-icon"><i class="fa fa-{{ icon|default('thumbs-o-up') }}"></i></span>
+
+        <div class="info-box-content">
+            <span class="info-box-text">{{ title|trans }}</span>
+            <span class="info-box-number">{{ amount }}</span>
+
+            <div class="progress">
+                <div class="progress-bar" style="width: {{ percentage }}%"></div>
+            </div>
+            <span class="progress-description">
+                    {{ description }}
+            </span>
+        </div>
+        <!-- /.info-box-content -->
+    </div>
+{% endmacro %}
+
+{% macro info_box_more(title, amount, unit, icon, color) %}
+    <div class="small-box bg-{{ color|default(kimai_context.box_color) }}">
+        <div class="inner">
+            <h3>{{ amount }}<sup style="font-size: 20px">{{ unit|default('%') }}</sup></h3>
+            <p>{{ title|trans }}</p>
+        </div>
+        <div class="icon">
+            <i class="fa fa-{{ icon|default('bar-chart') }}"></i>
+        </div>
+        <a href="#" class="small-box-footer">
+            {{ 'more.info.link'|trans }} <i class="fa fa-arrow-circle-right"></i>
+        </a>
+    </div>
+{% endmacro %}

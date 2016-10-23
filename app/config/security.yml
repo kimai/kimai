@@ -37,7 +37,7 @@ security:
                 # The route name the user can go to in order to logout
                 path: security_logout
                 # The name of the route to redirect to after logging out
-                target: timesheet
+                target: homepage
 
     role_hierarchy:
         ROLE_USER:        ROLE_CUSTOMER

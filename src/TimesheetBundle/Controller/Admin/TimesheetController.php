@@ -36,7 +36,7 @@ class TimesheetController extends Controller
      */
     public function indexAction($page)
     {
-        $entries = $this->getDoctrine()->getRepository(Timesheet::class)->findLatest($page);
+        $entries = $this->getDoctrine()->getRepository(Timesheet::class)->findAll($page);
 
         return $this->render('TimesheetBundle:timesheet:index.html.twig', ['entries' => $entries]);
     }

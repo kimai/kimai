@@ -15,18 +15,18 @@
             <div class="well">
                 <form action="{{ path('security_login') }}" method="post">
                     <fieldset>
-                        <legend><i class="fa fa-lock"></i> {{ 'title.login'|trans }}</legend>
+                        <legend><i class="fa fa-lock"></i> {{ 'security.title.login'|trans }}</legend>
                         <div class="form-group">
-                            <label for="username">{{ 'label.username'|trans }}</label>
+                            <label for="username">{{ 'security.label.username'|trans }}</label>
                             <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control"/>
                         </div>
                         <div class="form-group">
-                            <label for="password">{{ 'label.password'|trans }}</label>
+                            <label for="password">{{ 'security.label.password'|trans }}</label>
                             <input type="password" id="password" name="_password" class="form-control" />
                         </div>
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
                         <button type="submit" class="btn btn-primary">
-                            <i class="fa fa-sign-in"></i> {{ 'action.sign_in'|trans }}
+                            <i class="fa fa-sign-in"></i> {{ 'security.action.sign_in'|trans }}
                         </button>
                     </fieldset>
                 </form>

@@ -41,6 +41,8 @@ class LoadFixtures implements FixtureInterface, ContainerAwareInterface
         $passwordEncoder = $this->container->get('security.password_encoder');
 
         $claraCustomer = new User();
+        $claraCustomer->setAlias('Clara Haynes');
+        $claraCustomer->setTitle('CFO');
         $claraCustomer->setUsername('clara_customer');
         $claraCustomer->setEmail('clara_customer@example.com');
         $claraCustomer->setRoles(['ROLE_CUSTOMER']);
@@ -49,6 +51,8 @@ class LoadFixtures implements FixtureInterface, ContainerAwareInterface
         $manager->persist($claraCustomer);
 
         $johnUser = new User();
+        $johnUser->setAlias('John Doe');
+        $johnUser->setTitle('Lead Developer');
         $johnUser->setUsername('john_user');
         $johnUser->setEmail('john_user@example.com');
         $johnUser->setRoles(['ROLE_USER']);
@@ -57,6 +61,8 @@ class LoadFixtures implements FixtureInterface, ContainerAwareInterface
         $manager->persist($johnUser);
 
         $tonyTeamlead = new User();
+        $tonyTeamlead->setAlias('Tony Maier');
+        $tonyTeamlead->setTitle('Head of Development');
         $tonyTeamlead->setUsername('tony_teamlead');
         $tonyTeamlead->setEmail('tony_teamlead@example.com');
         $tonyTeamlead->setRoles(['ROLE_TEAMLEAD']);
@@ -65,6 +71,8 @@ class LoadFixtures implements FixtureInterface, ContainerAwareInterface
         $manager->persist($tonyTeamlead);
 
         $annaAdmin = new User();
+        $annaAdmin->setAlias('Anna Smith');
+        $annaAdmin->setTitle('Administrator');
         $annaAdmin->setUsername('anna_admin');
         $annaAdmin->setEmail('anna_admin@example.com');
         $annaAdmin->setRoles(['ROLE_ADMIN']);

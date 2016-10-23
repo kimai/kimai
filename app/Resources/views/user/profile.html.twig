@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+
+{% block page_title %}Profile{% endblock %}
+{% block page_subtitle %}manage your settings{% endblock %}
+
+{% block main %}
+    {{ widgets.profile_list(user, items, 'aqua-active') }}
+    {{ widgets.profile_box(user, items, 'aqua-active') }}
+{% endblock %}

@@ -1,18 +1,68 @@
-{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
+{% extends 'AvanzuAdminThemeBundle:layout:default-layout.html.twig' %}
 
-{% block page_content %}
-    {% block main %}
-    {% endblock %}
+{% block avanzu_page_content %}
+    {% block main %}{% endblock %}
+{% endblock %}
+
+{% block avanzu_document_title %}
+    {% block title %}{{ 'browser.title'|trans }}{% endblock %}
+{% endblock %}
+
+{% block avanzu_sidebar_search %}
+    <!-- right now we simply deactivate that box -->
+{% endblock %}
+
+{% block avanzu_page_title %}
+    {% block page_title %}{% endblock %}
+{% endblock %}
+
+{% block avanzu_page_subtitle %}
+    {% block page_subtitle %}{% endblock %}
+{% endblock %}
+
+{% block avanzu_logo_path %}
+    {{ path('dashboard') }}
+{% endblock %}
+
+{% block avanzu_logo_mini %}
+    <b>K</b>TT
+{% endblock %}
+
+{% block avanzu_logo_lg %}
+    <b>Kimai</b> - Time Tracking
 {% endblock %}
 
 {% block flash_messages %}
     {{ include('default/_flash_messages.html.twig') }}
 {% endblock %}
 
+{% block avanzu_footer %}
+    {% block footer %}
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>Version</b> 2.0
+        </div>
+        <strong>Copyright &copy; {{ 'now'|date('Y') }} - <a href="http://www.kevinpapst.de">Kevin Papst</a></strong>.
+        {{ 'footer.license'|trans }}
+    </footer>
+    {% endblock %}
+{% endblock %}
 
 {#
-        <title>{% block title %}{{ 'browser.title'|trans }}{% endblock %}</title>
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+avanzu_head
+avanzu_navbar_toggle
+avanzu_navbar_messages
+avanzu_navbar_notifications
+avanzu_navbar_tasks
+avanzu_navbar_user
+avanzu_navbar_control_sidebar_toggle
+avanzu_sidebar_user
+avanzu_sidebar_nav
+avanzu_breadcrumb
+avanzu_control_sidebar
+avanzu_javascripts
+avanzu_javascripts_inline
 
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-globe"></i> <span class="caret"></span></a>
@@ -22,11 +72,6 @@
                 {% endfor %}
             </ul>
         </li>
-
-
-
-        <p>&copy; {{ 'now'|date('Y') }} - {{ 'kimai.footer'|trans }}</p>
-        <p>{{ 'kimai.license'|trans }}</p>
 
 <!-- Page rendered on {{ 'now'|localizeddate('long', 'long', null, 'UTC') }} -->
 

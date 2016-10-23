@@ -38,8 +38,8 @@ $ composer install
 
 Lets prepare the environment 
 ```bash
-$ php bin/console assets:install --symlink
-$ php bin/console avanzu:admin:fetch-vendor
+$ php bin/console assets:install --symlink --relative
+$ php bin/console avanzu:admin:initialize --symlink --relative
 ```
 
 

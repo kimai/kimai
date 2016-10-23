@@ -2,6 +2,9 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file date="2016-10-19T21:46:45Z" source-language="en" target-language="de" datatype="plaintext" original="not.available">
     <body>
+      <!--
+        Global template keys
+      -->
       <trans-unit id="browser.title">
         <source>browser.title</source>
         <target>Kimai - Time Tracking</target>
@@ -11,6 +14,57 @@
         <target>Kimai</target>
       </trans-unit>
 
+      <!--
+        Login / Security
+      -->
+      <trans-unit id="security.title.login">
+        <source>security.title.login</source>
+        <target>Anmelden</target>
+      </trans-unit>
+      <trans-unit id="security.label.username">
+        <source>security.label.username</source>
+        <target>Benutzername</target>
+      </trans-unit>
+      <trans-unit id="security.label.password">
+        <source>security.label.password</source>
+        <target>Passwort</target>
+      </trans-unit>
+      <trans-unit id="security.action.sign_in">
+        <source>security.action.sign_in</source>
+        <target>Los geht's</target>
+      </trans-unit>
+
+      <!--
+        Menu / Navbar items
+      -->
+      <trans-unit id="menu.homepage">
+        <source>menu.homepage</source>
+        <target>Dashboard</target>
+      </trans-unit>
+      <trans-unit id="menu.admin">
+        <source>menu.admin</source>
+        <target>Administration</target>
+      </trans-unit>
+      <trans-unit id="menu.logout">
+        <source>menu.logout</source>
+        <target>Abmelden</target>
+      </trans-unit>
+      <trans-unit id="menu.timesheet">
+        <source>menu.timesheet</source>
+        <target>Zeiterfassung</target>
+      </trans-unit>
+
+      <!--
+        Footer
+      -->
+      <trans-unit id="footer.license">
+        <source>footer.license</source>
+        <target>Alle Rechte vorbehalten.</target>
+      </trans-unit>
+
+      <!--
+        Error templates
+      -->
       <trans-unit id="http_error.name">
         <source>http_error.name</source>
         <target>Error</target>
@@ -48,58 +102,34 @@
         <target>Error</target>
       </trans-unit>
 
-      <trans-unit id="action.browse_admin">
-        <source>action.browse_admin</source>
-        <target>Zum Backend</target>
+      <!--
+        General labels
+      -->
+      <trans-unit id="label.date">
+        <source>label.date</source>
+        <target>Datum</target>
       </trans-unit>
-      <trans-unit id="help.browse_admin">
-        <source>help.browse_admin</source>
-        <target>Zum Backend</target>
+      <trans-unit id="label.starttime">
+        <source>label.starttime</source>
+        <target>Begin</target>
       </trans-unit>
-      <trans-unit id="action.browse_app">
-        <source>action.browse_app</source>
-        <target>Zum Frontend</target>
+      <trans-unit id="label.endtime">
+        <source>label.endtime</source>
+        <target>Ende</target>
       </trans-unit>
-      <trans-unit id="help.browse_app">
-        <source>help.browse_app</source>
-        <target>Zum Frontend</target>
-      </trans-unit>
-      <trans-unit id="title.login">
-        <source>title.login</source>
-        <target>Anmelden</target>
+      <trans-unit id="label.duration">
+        <source>label.duration</source>
+        <target>Dauer</target>
       </trans-unit>
       <trans-unit id="label.username">
         <source>label.username</source>
-        <target>Benutzername</target>
+        <target>Benutzer</target>
       </trans-unit>
-      <trans-unit id="label.password">
-        <source>label.password</source>
-        <target>Passwort</target>
+      <trans-unit id="label.description">
+        <source>label.description</source>
+        <target>Beschreibung</target>
       </trans-unit>
-      <trans-unit id="action.sign_in">
-        <source>action.sign_in</source>
-        <target>Los geht's</target>
-      </trans-unit>
-      <trans-unit id="menu.logout">
-        <source>menu.logout</source>
-        <target>Abmelden</target>
-      </trans-unit>
-      <trans-unit id="menu.admin">
-        <source>menu.admin</source>
-        <target>Backend</target>
-      </trans-unit>
-      <trans-unit id="menu.timesheet">
-        <source>menu.timesheet</source>
-        <target>Zeiterfassung</target>
-      </trans-unit>
-      <trans-unit id="kimai.license">
-        <source>kimai.license</source>
-        <target>Copyright Kevin Papst. Alle Rechte vorbehalten.</target>
-      </trans-unit>
-      <trans-unit id="kimai.footer">
-        <source>kimai.footer</source>
-        <target>Kimai Time-Tracking</target>
-      </trans-unit>
+
     </body>
   </file>
 </xliff>

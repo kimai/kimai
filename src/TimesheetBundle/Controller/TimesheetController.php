@@ -30,13 +30,14 @@ class TimesheetController extends Controller
 {
     /**
      * @Route("/", defaults={"page": 1}, name="timesheet")
-     * @Route("/timesheet/{page}", requirements={"page": "[1-9]\d*"}, name="timesheet_paginated")
+     * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="timesheet_paginated")
      * @Method("GET")
      * @Cache(smaxage="10")
      */
     public function indexAction($page)
     {
-        $entries = $this->getDoctrine()->getRepository(Timesheet::class)->findLatest($page);
+        $user = $this->getUser();
+        $entries = $this->getDoctrine()->getRepository(Timesheet::class)->findLatest($user, $page);
 
         return $this->render('TimesheetBundle:timesheet:index.html.twig', ['entries' => $entries]);
     }
