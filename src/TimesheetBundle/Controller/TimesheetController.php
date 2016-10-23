@@ -22,7 +22,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
  * Controller used to manage timesheet contents in the public part of the site.
  *
  * @Route("/timesheet")
- * @Security("has_role('ROLE_CUSTOMER')")
+ * @Security("has_role('ROLE_USER')")
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
@@ -37,6 +37,7 @@ class TimesheetController extends Controller
     public function indexAction($page)
     {
         $user = $this->getUser();
+        /* @var $entries Pagerfanta */
         $entries = $this->getDoctrine()->getRepository(Timesheet::class)->findLatest($user, $page);
 
         return $this->render('TimesheetBundle:timesheet:index.html.twig', ['entries' => $entries]);

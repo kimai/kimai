@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Activity
  *
  * @ORM\Table(name="activities")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="TimesheetBundle\Repository\ActivityRepository")
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
@@ -53,20 +53,6 @@ class Activity
      * @ORM\Column(name="visible", type="boolean", nullable=false)
      */
     private $visible = '1';
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="filter", type="boolean", nullable=false)
-     */
-    private $filter = '0';
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="trash", type="boolean", nullable=false)
-     */
-    private $trash = '0';
 
     /**
      * Set name
@@ -141,59 +127,11 @@ class Activity
     }
 
     /**
-     * Set filter
-     *
-     * @param boolean $filter
-     *
-     * @return Activity
-     */
-    public function setFilter($filter)
-    {
-        $this->filter = $filter;
-
-        return $this;
-    }
-
-    /**
-     * Get filter
-     *
-     * @return boolean
-     */
-    public function getFilter()
-    {
-        return $this->filter;
-    }
-
-    /**
-     * Set trash
-     *
-     * @param boolean $trash
-     *
-     * @return Activity
-     */
-    public function setTrash($trash)
-    {
-        $this->trash = $trash;
-
-        return $this;
-    }
-
-    /**
-     * Get trash
-     *
-     * @return boolean
-     */
-    public function getTrash()
-    {
-        return $this->trash;
-    }
-
-    /**
      * Get activityid
      *
      * @return integer
      */
-    public function getActivityid()
+    public function getActivityId()
     {
         return $this->activityid;
     }

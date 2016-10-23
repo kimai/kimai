@@ -11,6 +11,8 @@
 
 namespace TimesheetBundle\Controller\Admin;
 
+use Pagerfanta\Pagerfanta;
+use TimesheetBundle\Entity\Project;
 use TimesheetBundle\Entity\Timesheet;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -19,26 +21,26 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
 /**
- * Controller used for manage timesheet entries in the admin part of the site.
+ * Controller used to manage projects in the admin part of the site.
  *
- * @Route("/admin/timesheet")
+ * @Route("/admin/project")
  * @Security("has_role('ROLE_ADMIN')")
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class TimesheetController extends Controller
+class ProjectController extends Controller
 {
     /**
-     * @Route("/", defaults={"page": 1}, name="admin_timesheet")
-     * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_timesheet_paginated")
+     * @Route("/", defaults={"page": 1}, name="admin_project")
+     * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_project_paginated")
      * @Method("GET")
      * @Cache(smaxage="10")
      */
     public function indexAction($page)
     {
         /* @var $entries Pagerfanta */
-        $entries = $this->getDoctrine()->getRepository(Timesheet::class)->findAll($page);
+        $entries = $this->getDoctrine()->getRepository(Project::class)->findAll($page);
 
-        return $this->render('TimesheetBundle:admin:timesheet.html.twig', ['entries' => $entries]);
+        return $this->render('TimesheetBundle:admin:project.html.twig', ['entries' => $entries]);
     }
 }

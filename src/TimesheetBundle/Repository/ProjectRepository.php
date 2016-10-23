@@ -19,11 +19,11 @@ use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 
 /**
- * Class TimesheetRepository
+ * Class ProjectRepository
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class TimesheetRepository extends EntityRepository
+class ProjectRepository extends EntityRepository
 {
 
     /**
@@ -34,14 +34,9 @@ class TimesheetRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('t')
-            ->from('TimesheetBundle:Timesheet', 't')
-            ->orderBy('t.start', 'DESC');
-
-        if (null !== $user) {
-            $qb->where('t.user = :user')
-                ->setParameter('user', $user);
-        }
+        $qb->select('p')
+            ->from('TimesheetBundle:Project', 'p')
+            ->orderBy('p.name', 'DESC');
 
         return $qb->getQuery();
     }

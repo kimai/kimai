@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Project
  *
  * @ORM\Table(name="projects", indexes={@ORM\Index(name="customerID", columns={"customerID"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="TimesheetBundle\Repository\ProjectRepository")
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
@@ -62,20 +62,6 @@ class Project
     private $visible = '1';
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="filter", type="boolean", nullable=false)
-     */
-    private $filter = '0';
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="trash", type="boolean", nullable=false)
-     */
-    private $trash = '0';
-
-    /**
      * @var string
      *
      * @ORM\Column(name="budget", type="decimal", precision=10, scale=2, nullable=true)
@@ -83,34 +69,13 @@ class Project
     private $budget = '0.00';
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="effort", type="decimal", precision=10, scale=2, nullable=true)
-     */
-    private $effort;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="approved", type="decimal", precision=10, scale=2, nullable=true)
-     */
-    private $approved;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="internal", type="boolean", nullable=false)
-     */
-    private $internal = '0';
-
-    /**
      * Set customerid
      *
      * @param integer $customerid
      *
-     * @return KimaiProjects
+     * @return Project
      */
-    public function setCustomerid($customerid)
+    public function setCustomerId($customerid)
     {
         $this->customerid = $customerid;
 
@@ -122,7 +87,7 @@ class Project
      *
      * @return integer
      */
-    public function getCustomerid()
+    public function getCustomerId()
     {
         return $this->customerid;
     }
@@ -132,7 +97,7 @@ class Project
      *
      * @param string $name
      *
-     * @return KimaiProjects
+     * @return Project
      */
     public function setName($name)
     {
@@ -156,7 +121,7 @@ class Project
      *
      * @param string $comment
      *
-     * @return KimaiProjects
+     * @return Project
      */
     public function setComment($comment)
     {
@@ -180,7 +145,7 @@ class Project
      *
      * @param boolean $visible
      *
-     * @return KimaiProjects
+     * @return Project
      */
     public function setVisible($visible)
     {
@@ -200,59 +165,11 @@ class Project
     }
 
     /**
-     * Set filter
-     *
-     * @param boolean $filter
-     *
-     * @return KimaiProjects
-     */
-    public function setFilter($filter)
-    {
-        $this->filter = $filter;
-
-        return $this;
-    }
-
-    /**
-     * Get filter
-     *
-     * @return boolean
-     */
-    public function getFilter()
-    {
-        return $this->filter;
-    }
-
-    /**
-     * Set trash
-     *
-     * @param boolean $trash
-     *
-     * @return KimaiProjects
-     */
-    public function setTrash($trash)
-    {
-        $this->trash = $trash;
-
-        return $this;
-    }
-
-    /**
-     * Get trash
-     *
-     * @return boolean
-     */
-    public function getTrash()
-    {
-        return $this->trash;
-    }
-
-    /**
      * Set budget
      *
      * @param string $budget
      *
-     * @return KimaiProjects
+     * @return Project
      */
     public function setBudget($budget)
     {
@@ -272,83 +189,11 @@ class Project
     }
 
     /**
-     * Set effort
-     *
-     * @param string $effort
-     *
-     * @return KimaiProjects
-     */
-    public function setEffort($effort)
-    {
-        $this->effort = $effort;
-
-        return $this;
-    }
-
-    /**
-     * Get effort
-     *
-     * @return string
-     */
-    public function getEffort()
-    {
-        return $this->effort;
-    }
-
-    /**
-     * Set approved
-     *
-     * @param string $approved
-     *
-     * @return KimaiProjects
-     */
-    public function setApproved($approved)
-    {
-        $this->approved = $approved;
-
-        return $this;
-    }
-
-    /**
-     * Get approved
-     *
-     * @return string
-     */
-    public function getApproved()
-    {
-        return $this->approved;
-    }
-
-    /**
-     * Set internal
-     *
-     * @param boolean $internal
-     *
-     * @return KimaiProjects
-     */
-    public function setInternal($internal)
-    {
-        $this->internal = $internal;
-
-        return $this;
-    }
-
-    /**
-     * Get internal
-     *
-     * @return boolean
-     */
-    public function getInternal()
-    {
-        return $this->internal;
-    }
-
-    /**
      * Get projectid
      *
      * @return integer
      */
-    public function getProjectid()
+    public function getProjectId()
     {
         return $this->projectid;
     }

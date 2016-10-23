@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 
-{% block page_title %}Dashboard{% endblock %}
-{% block page_subtitle %}Welcome!{% endblock %}
+{% block page_title %}{{ 'dashboard.title'|trans }}{% endblock %}
+{% block page_subtitle %}{{ 'dashboard.subtitle'|trans }}{% endblock %}
 
 {% block main %}
 

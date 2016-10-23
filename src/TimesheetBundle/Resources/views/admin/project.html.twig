@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+
+{% block page_title %}{{ 'admin_project.title'|trans }}{% endblock %}
+{% block page_subtitle %}{{ 'admin_project.subtitle'|trans }}{% endblock %}
+
+{% block main %}
+    {% if entries.count > 0 %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><i class="fa fa-calendar"></i> {{ 'label.name'|trans }}</th>
+                <th><i class="fa fa-hourglass-start"></i> {{ 'label.comment'|trans }}</th>
+                <th><i class="fa fa-hourglass-end"></i> {{ 'label.visible'|trans }}</th>
+                <th><i class="fa fa-clock-o"></i> {{ 'label.id'|trans }}</th>
+                <th><i class="fa fa-credit-card"></i> {{ 'label.budget'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entry in entries %}
+                <tr>
+                    <td>{{ entry.name }}</td>
+                    <td>{{ entry.comment }}</td>
+                    <td>{{ entry.visible }}</td>
+                    <td>{{ entry.projectId }}</td>
+                    <td>{{ entry.budget}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="navigation text-center">
+            {{ pagerfanta(entries, 'twitter_bootstrap3_translated', { routeName: 'timesheet_paginated' }) }}
+        </div>
+    {% else %}
+        {{ widgets.callout('warning', 'error.no_entries_found') }}
+    {% endif %}
+{% endblock %}

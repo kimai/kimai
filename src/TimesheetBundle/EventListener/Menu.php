@@ -29,16 +29,16 @@ class Menu
      */
     public function onMainMenuConfigure(ConfigureMainMenuEvent $event)
     {
-        $menu = $event->getMenu();
         $auth = $event->getAuth();
 
         $isLoggedIn = $auth->isGranted('IS_AUTHENTICATED_FULLY');
-        $isAdmin = $isLoggedIn && $auth->isGranted('ROLE_ADMIN');
+        $isUser = $isLoggedIn && $auth->isGranted('ROLE_USER');
 
-        if (!$isLoggedIn) {
+        if (!$isLoggedIn || !$isUser) {
             return;
         }
 
+        $menu = $event->getMenu();
         $menu->addItem(
             new MenuItemModel('timesheet', 'menu.timesheet', 'timesheet', [], 'fa fa-clock-o')
         );
@@ -60,7 +60,12 @@ class Menu
         }
 
         $menu->addChild(
-            new MenuItemModel('timesheet_admin', 'menu.admin_timesheet', 'admin_timesheet_index', [], 'fa fa-clock-o')
-        );
+            new MenuItemModel('timesheet_admin', 'menu.admin_timesheet', 'admin_timesheet', [], 'fa fa-clock-o')
+        )->addChild(
+            new MenuItemModel('project_admin', 'menu.admin_project', 'admin_project', [], 'fa fa-object-group')
+        )->addChild(
+            new MenuItemModel('activity_admin', 'menu.admin_activity', 'admin_activity', [], 'fa fa-tasks')
+        )
+        ;
     }
 }

@@ -9,10 +9,6 @@
         <source>browser.title</source>
         <target>Kimai - Time Tracking</target>
       </trans-unit>
-      <trans-unit id="app.title">
-        <source>app.title</source>
-        <target>Kimai</target>
-      </trans-unit>
 
       <!--
         Login / Security
@@ -52,6 +48,18 @@
       <trans-unit id="menu.timesheet">
         <source>menu.timesheet</source>
         <target>Zeiterfassung</target>
+      </trans-unit>
+      <trans-unit id="menu.admin_timesheet">
+        <source>menu.admin_timesheet</source>
+        <target>Mitarbeiter Zeiten</target>
+      </trans-unit>
+      <trans-unit id="menu.admin_project">
+        <source>menu.admin_project</source>
+        <target>Projekte</target>
+      </trans-unit>
+      <trans-unit id="menu.admin_activity">
+        <source>menu.admin_activity</source>
+        <target>Aktivitäten</target>
       </trans-unit>
 
       <!--
@@ -101,6 +109,10 @@
         <source>http_error_405.suggestion</source>
         <target>Error</target>
       </trans-unit>
+      <trans-unit id="error.no_entries_found">
+        <source>error.no_entries_found</source>
+        <target>Keine Einträge vorhanden</target>
+      </trans-unit>
 
       <!--
         General labels
@@ -129,7 +141,86 @@
         <source>label.description</source>
         <target>Beschreibung</target>
       </trans-unit>
+      <trans-unit id="label.name">
+        <source>label.name</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="label.comment">
+        <source>label.comment</source>
+        <target>Kommentar</target>
+      </trans-unit>
+      <trans-unit id="label.id">
+        <source>label.id</source>
+        <target>ID</target>
+      </trans-unit>
+      <trans-unit id="label.visible">
+        <source>label.visible</source>
+        <target>Sichtbar</target>
+      </trans-unit>
+      <trans-unit id="label.budget">
+        <source>label.budget</source>
+        <target>Budget</target>
+      </trans-unit>
 
+      <!--
+        Dashboard
+      -->
+      <trans-unit id="dashboard.title">
+        <source>dashboard.title</source>
+        <target>Dashboard</target>
+      </trans-unit>
+      <trans-unit id="dashboard.subtitle">
+        <source>dashboard.subtitle</source>
+        <target>Willkommen!</target>
+      </trans-unit>
+
+      <!--
+        Timesheet
+      -->
+      <trans-unit id="timesheet.title">
+        <source>timesheet.title</source>
+        <target>Zeiterfassung</target>
+      </trans-unit>
+      <trans-unit id="timesheet.subtitle">
+        <source>timesheet.subtitle</source>
+        <target>Verwalten Sie Ihre Zeiteinträge</target>
+      </trans-unit>
+
+      <!--
+        Admin: Timesheet
+      -->
+      <trans-unit id="admin_timesheet.title">
+        <source>admin_timesheet.title</source>
+        <target>Mitarbeiter Zeiterfassung</target>
+      </trans-unit>
+      <trans-unit id="admin_timesheet.subtitle">
+        <source>admin_timesheet.subtitle</source>
+        <target>Zeiten aller Benutzer</target>
+      </trans-unit>
+
+      <!--
+        Admin: Projects
+      -->
+      <trans-unit id="admin_project.title">
+        <source>admin_project.title</source>
+        <target>Projekte</target>
+      </trans-unit>
+      <trans-unit id="admin_project.subtitle">
+        <source>admin_project.subtitle</source>
+        <target>Alle vorhandenen Projekte</target>
+      </trans-unit>
+
+      <!--
+        Admin: Activity
+      -->
+      <trans-unit id="admin_activity.title">
+        <source>admin_activity.title</source>
+        <target>Aktivitäten</target>
+      </trans-unit>
+      <trans-unit id="admin_activity.subtitle">
+        <source>admin_activity.subtitle</source>
+        <target>Aufgaben zur Zeiterfassung</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
