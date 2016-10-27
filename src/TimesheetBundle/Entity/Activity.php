@@ -27,11 +27,18 @@ class Activity
     /**
      * @var integer
      *
-     * @ORM\Column(name="activityID", type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $activityid;
+    private $id;
+
+    /**
+     * @var Project
+     *
+     * @ORM\ManyToOne(targetEntity="TimesheetBundle\Entity\Project", inversedBy="activities")
+     */
+    private $project;
 
     /**
      * @var string
@@ -52,7 +59,23 @@ class Activity
      *
      * @ORM\Column(name="visible", type="boolean", nullable=false)
      */
-    private $visible = '1';
+    private $visible = true;
+
+    /**
+     * @return Project
+     */
+    public function getProject()
+    {
+        return $this->project;
+    }
+
+    /**
+     * @param int $project
+     */
+    public function setProject($project)
+    {
+        $this->project = $project;
+    }
 
     /**
      * Set name
@@ -131,8 +154,16 @@ class Activity
      *
      * @return integer
      */
-    public function getActivityId()
+    public function getId()
     {
-        return $this->activityid;
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

@@ -36,7 +36,18 @@ class ProjectRepository extends EntityRepository
 
         $qb->select('p')
             ->from('TimesheetBundle:Project', 'p')
-            ->orderBy('p.name', 'DESC');
+            ->orderBy('p.id', 'DESC');
+
+        return $qb->getQuery();
+    }
+
+    public function queryAll($orderBy = 'id')
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('p')
+            ->from('TimesheetBundle:Project', 'p')
+            ->orderBy('p.' . $orderBy, 'ASC');
 
         return $qb->getQuery();
     }
@@ -58,7 +69,7 @@ class ProjectRepository extends EntityRepository
      */
     public function findAll($page = 1)
     {
-        return $this->getPager($this->queryLatest(), $page);
+        return $this->getPager($this->queryAll(), $page);
     }
 
     /**

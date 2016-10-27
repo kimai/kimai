@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Timesheet entity.
  *
  * @ORM\Entity(repositoryClass="TimesheetBundle\Repository\TimesheetRepository")
- * @ORM\Table(name="timeSheet", indexes={@ORM\Index(columns={"userID"}), @ORM\Index(columns={"projectID"}), @ORM\Index(name="activityID", columns={"activityID"})})
+ * @ORM\Table(name="timeSheet", indexes={@ORM\Index(columns={"userID"}), @ORM\Index(name="activity", columns={"activity"})})
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
@@ -46,7 +46,7 @@ class Timesheet
     private $duration = '0';
 
     /**
-     * @var integer
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="userID", referencedColumnName="userID")
@@ -56,16 +56,10 @@ class Timesheet
     /**
      * @var integer
      *
-     * @ORM\Column(name="projectID", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="TimesheetBundle\Entity\Activity")
+     * @ORM\JoinColumn(name="activity", referencedColumnName="id")
      */
-    private $projectid;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="activityID", type="integer", nullable=false)
-     */
-    private $activityid;
+    private $activity;
 
     /**
      * @var string
@@ -259,39 +253,15 @@ class Timesheet
     }
 
     /**
-     * Set projectid
-     *
-     * @param integer $projectid
-     *
-     * @return Timesheet
-     */
-    public function setProjectid($projectid)
-    {
-        $this->projectid = $projectid;
-
-        return $this;
-    }
-
-    /**
-     * Get projectid
-     *
-     * @return integer
-     */
-    public function getProjectid()
-    {
-        return $this->projectid;
-    }
-
-    /**
      * Set activityid
      *
-     * @param integer $activityid
+     * @param integer $activity
      *
      * @return Timesheet
      */
-    public function setActivityid($activityid)
+    public function setActivity($activity)
     {
-        $this->activityid = $activityid;
+        $this->activity = $activity;
 
         return $this;
     }
@@ -301,9 +271,9 @@ class Timesheet
      *
      * @return integer
      */
-    public function getActivityid()
+    public function getActivity()
     {
-        return $this->activityid;
+        return $this->activity;
     }
 
     /**

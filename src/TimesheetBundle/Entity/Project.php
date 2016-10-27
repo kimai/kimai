@@ -27,13 +27,14 @@ class Project
     /**
      * @var integer
      *
-     * @ORM\Column(name="projectID", type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $projectid;
+    private $id;
 
     /**
+     * FIXME
      * @var integer
      *
      * @ORM\Column(name="customerID", type="integer", nullable=false)
@@ -59,14 +60,21 @@ class Project
      *
      * @ORM\Column(name="visible", type="boolean", nullable=false)
      */
-    private $visible = '1';
+    private $visible = true;
 
     /**
      * @var string
      *
      * @ORM\Column(name="budget", type="decimal", precision=10, scale=2, nullable=true)
      */
-    private $budget = '0.00';
+    private $budget = 0.00;
+
+    /**
+     * @var Activity[]
+     *
+     * @ORM\OneToMany(targetEntity="TimesheetBundle\Entity\Activity", mappedBy="project")
+     */
+    private $activities;
 
     /**
      * Set customerid
@@ -193,8 +201,24 @@ class Project
      *
      * @return integer
      */
-    public function getProjectId()
+    public function getId()
     {
-        return $this->projectid;
+        return $this->id;
+    }
+
+    /**
+     * @return Activity[]
+     */
+    public function getActivities()
+    {
+        return $this->activities;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

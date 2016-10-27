@@ -69,23 +69,6 @@ class User implements UserInterface
     private $passwordresethash;
 
     /**
-     * FIXME remove me
-     *
-     * @var integer
-     *
-     * @ORM\Column(name="ban", type="integer", nullable=false)
-     */
-    private $ban = '0';
-
-    /**
-     * FIXME remove me
-     * @var integer
-     *
-     * @ORM\Column(name="banTime", type="integer", nullable=false)
-     */
-    private $bantime = '0';
-
-    /**
      * @var string
      *
      * @ORM\Column(name="secure", type="string", length=60, nullable=false)
@@ -111,6 +94,8 @@ class User implements UserInterface
     private $lastactivity = '1';
 
     /**
+     * FIXME manytoone
+     *
      * @var integer
      *
      * @ORM\Column(name="lastRecord", type="integer", nullable=false)

@@ -32,7 +32,7 @@
         </table>
 
         <div class="navigation text-center">
-            {{ pagerfanta(entries, 'twitter_bootstrap3_translated', { routeName: 'timesheet_paginated' }) }}
+            {{ pagerfanta(entries, 'twitter_bootstrap3_translated', { routeName: 'admin_timesheet_paginated' }) }}
         </div>
     {% else %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}

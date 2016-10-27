@@ -161,6 +161,14 @@
         <source>label.budget</source>
         <target>Budget</target>
       </trans-unit>
+      <trans-unit id="label.activity">
+        <source>label.activity</source>
+        <target>Aktivität</target>
+      </trans-unit>
+      <trans-unit id="label.project">
+        <source>label.project</source>
+        <target>Projekt</target>
+      </trans-unit>
 
       <!--
         Dashboard
@@ -172,6 +180,22 @@
       <trans-unit id="dashboard.subtitle">
         <source>dashboard.subtitle</source>
         <target>Willkommen!</target>
+      </trans-unit>
+
+      <!--
+        Widgets
+      -->
+      <trans-unit id="more.info.link">
+        <source>more.info.link</source>
+        <target>Mehr Infos</target>
+      </trans-unit>
+      <trans-unit id="badge.visible">
+        <source>badge.visible</source>
+        <target>Ja</target>
+      </trans-unit>
+      <trans-unit id="badge.invisible">
+        <source>badge.invisible</source>
+        <target>Nein</target>
       </trans-unit>
 
       <!--

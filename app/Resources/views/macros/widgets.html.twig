@@ -1,4 +1,25 @@
 
+{% macro badge_visible(visible) %}
+    {% import _self as macro %}
+    {% if visible %}
+        {{ macro.badge('badge.visible', 'green') }}
+    {% else %}
+        {{ macro.badge('badge.invisible', 'red') }}
+    {% endif %}
+{% endmacro %}
+
+{% macro badge_counter(count, url) %}
+    {% if url %}
+        <a href="{{ url }}"><span class="badge bg-blue">{{ count }}</span></a>
+    {% else %}
+        <span class="badge bg-blue">{{ count }}</span>
+    {% endif %}
+{% endmacro %}
+
+{% macro badge(title, color) %}
+    <span class="badge bg-{{ color|default('red') }}">{{ title|trans }}</span>
+{% endmacro %}
+
 {% macro alert(type, description, title, icon) %}
     <div class="alert alert-{{ type|default('danger') }} alert-dismissible">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
