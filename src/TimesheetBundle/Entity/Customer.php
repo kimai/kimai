@@ -27,11 +27,11 @@ class Customer
     /**
      * @var integer
      *
-     * @ORM\Column(name="customerID", type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $customerid;
+    private $id;
 
     /**
      * @var string
@@ -52,14 +52,7 @@ class Customer
      *
      * @ORM\Column(name="visible", type="boolean", nullable=false)
      */
-    private $visible = '1';
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="filter", type="boolean", nullable=false)
-     */
-    private $filter = '0';
+    private $visible = true;
 
     /**
      * @var string
@@ -153,11 +146,12 @@ class Customer
     private $timezone;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="trash", type="boolean", nullable=false)
+     * @return int
      */
-    private $trash = '0';
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set name
@@ -181,78 +175,6 @@ class Customer
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set password
-     *
-     * @param string $password
-     *
-     * @return Customer
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * Set passwordresethash
-     *
-     * @param string $passwordresethash
-     *
-     * @return Customer
-     */
-    public function setPasswordresethash($passwordresethash)
-    {
-        $this->passwordresethash = $passwordresethash;
-
-        return $this;
-    }
-
-    /**
-     * Get passwordresethash
-     *
-     * @return string
-     */
-    public function getPasswordresethash()
-    {
-        return $this->passwordresethash;
-    }
-
-    /**
-     * Set secure
-     *
-     * @param string $secure
-     *
-     * @return Customer
-     */
-    public function setSecure($secure)
-    {
-        $this->secure = $secure;
-
-        return $this;
-    }
-
-    /**
-     * Get secure
-     *
-     * @return string
-     */
-    public function getSecure()
-    {
-        return $this->secure;
     }
 
     /**
@@ -301,30 +223,6 @@ class Customer
     public function getVisible()
     {
         return $this->visible;
-    }
-
-    /**
-     * Set filter
-     *
-     * @param boolean $filter
-     *
-     * @return Customer
-     */
-    public function setFilter($filter)
-    {
-        $this->filter = $filter;
-
-        return $this;
-    }
-
-    /**
-     * Get filter
-     *
-     * @return boolean
-     */
-    public function getFilter()
-    {
-        return $this->filter;
     }
 
     /**
@@ -637,39 +535,5 @@ class Customer
     public function getTimezone()
     {
         return $this->timezone;
-    }
-
-    /**
-     * Set trash
-     *
-     * @param boolean $trash
-     *
-     * @return Customer
-     */
-    public function setTrash($trash)
-    {
-        $this->trash = $trash;
-
-        return $this;
-    }
-
-    /**
-     * Get trash
-     *
-     * @return boolean
-     */
-    public function getTrash()
-    {
-        return $this->trash;
-    }
-
-    /**
-     * Get customerid
-     *
-     * @return integer
-     */
-    public function getCustomerid()
-    {
-        return $this->customerid;
     }
 }

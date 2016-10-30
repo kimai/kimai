@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% import "macros/datatables.html.twig" as tables %}
+{% import "macros/widgets.html.twig" as widgets %}
+{% import "AvanzuAdminThemeBundle:layout:macros.html.twig" as macro %}
+
+{% block page_title %}{{ 'admin_user.title'|trans }}{% endblock %}
+{% block page_subtitle %}{{ 'admin_user.subtitle'|trans }}{% endblock %}
+
+{% block main %}
+    {% if entries.count > 0 %}
+        {{ tables.data_table_header({
+            'label.id': '',
+            'label.username': 'user',
+            'label.alias': 'comment-o',
+            'label.email': 'envelope-o',
+            'label.title': 'graduation-cap',
+            'label.active': 'lock',
+            'label.roles': 'users',
+        }) }}
+
+        {% for entry in entries %}
+            <tr>
+                <td>{{ entry.id }}</td>
+                <td>{{ entry.username }}</td>
+                <td>{{ entry.alias }}</td>
+                <td>{{ entry.email }}</td>
+                <td>{{ entry.title }}</td>
+                <td>{{ widgets.label_visible(entry.active) }}</td>
+                <td>{{ entry.roles|join(',')|trans }}</td>
+            </tr>
+        {% endfor %}
+
+        {{ tables.data_table_footer(entries, 'admin_user_paginated') }}
+    {% else %}
+        {{ widgets.callout('warning', 'error.no_entries_found') }}
+    {% endif %}
+{% endblock %}

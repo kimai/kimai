@@ -1,10 +1,14 @@
 
-{% macro badge_visible(visible) %}
+{% macro page_header(title) %}
+    <h2 class="page-header">{{ title|trans }}</h2>
+{% endmacro %}
+
+{% macro label_visible(visible) %}
     {% import _self as macro %}
     {% if visible %}
-        {{ macro.badge('badge.visible', 'green') }}
+        {{ macro.label('badge.visible', 'success') }}
     {% else %}
-        {{ macro.badge('badge.invisible', 'red') }}
+        {{ macro.label('badge.invisible', 'warning') }}
     {% endif %}
 {% endmacro %}
 
@@ -16,7 +20,13 @@
     {% endif %}
 {% endmacro %}
 
+{% macro label(title, type) %}
+    {# success, warning, danger, primary #}
+    <span class="label label-{{ type|default('success') }}">{{ title|trans }}</span>
+{% endmacro %}
+
 {% macro badge(title, color) %}
+    {# black, green, blue, yellow #}
     <span class="badge bg-{{ color|default('red') }}">{{ title|trans }}</span>
 {% endmacro %}
 
@@ -32,55 +42,6 @@
     <div class="callout callout-{{ type|default('danger') }} lead">
         {% if title %}<h4>{{ title|trans }}</h4>{% endif %}
         <p>{{ description|trans }}</p>
-    </div>
-{% endmacro %}
-
-{% macro profile_list(user, items, color) %}
-    {% import "AvanzuAdminThemeBundle:layout:macros.html.twig" as macro %}
-    <div class="box box-widget widget-user-2">
-        <!-- Add the bg color to the header using any of the bg-* classes -->
-        <div class="widget-user-header bg-{{ color|default(kimai_context.box_color) }}">
-            <div class="widget-user-image">
-                {{ macro.avatar(user.avatar, user.username) }}
-            </div>
-            <!-- /.widget-user-image -->
-            <h3 class="widget-user-username">{{ user.alias }} ({{ user.username }})</h3>
-            <h5 class="widget-user-desc">{{ user.title }}</h5>
-        </div>
-        <div class="box-footer no-padding">
-            <ul class="nav nav-stacked">
-                {% for entry in items %}
-                <li><a href="{{ entry.url }}">{{ entry.title|trans }} <span class="pull-right badge bg-{{ entry.color }}">{{ entry.amount }}</span></a></li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-{% endmacro %}
-
-{% macro profile_box(user, items) %}
-    {% import "AvanzuAdminThemeBundle:layout:macros.html.twig" as macro %}
-
-    <div class="box box-widget widget-user">
-        <!-- Add the bg color to the header using any of the bg-* classes -->
-        <div class="widget-user-header bg-{{ color|default(kimai_context.box_color) }}">
-            <h3 class="widget-user-username">{{ user.alias }} ({{ user.username }})</h3>
-            <h5 class="widget-user-desc">{{ user.title }}</h5>
-        </div>
-        <div class="widget-user-image">
-            {{ macro.avatar(user.avatar, user.username) }}
-        </div>
-        <div class="box-footer">
-            <div class="row">
-                {% for entry in items|slice(0, 3) %}
-                    <div class="col-sm-4 border-right">
-                        <div class="description-block">
-                            <h5 class="description-header">{{ entry.amount }}</h5>
-                            <span class="description-text">{{ entry.title|trans }}</span>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
     </div>
 {% endmacro %}
 
@@ -114,16 +75,16 @@
     </div>
 {% endmacro %}
 
-{% macro info_box_more(title, amount, unit, icon, color) %}
+{% macro info_box_more(title, amount, unit, url, icon, color) %}
     <div class="small-box bg-{{ color|default(kimai_context.box_color) }}">
         <div class="inner">
-            <h3>{{ amount }}<sup style="font-size: 20px">{{ unit|default('%') }}</sup></h3>
+            <h3>{{ amount }}<sup style="font-size: 20px">{{ unit|default('') }}</sup></h3>
             <p>{{ title|trans }}</p>
         </div>
         <div class="icon">
             <i class="fa fa-{{ icon|default('bar-chart') }}"></i>
         </div>
-        <a href="#" class="small-box-footer">
+        <a href="{{ url }}" class="small-box-footer">
             {{ 'more.info.link'|trans }} <i class="fa fa-arrow-circle-right"></i>
         </a>
     </div>

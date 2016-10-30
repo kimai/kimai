@@ -6,21 +6,10 @@
 
 {% block main %}
 
-    <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12">
-            {{ widgets.info_box_counter('Bla blub', 300, 'bar-chart', 'blue') }}
-        </div>
-        <div class="col-md-3 col-sm-6 col-xs-12">
-            {{ widgets.info_box_counter('Steigerungsrate', 80, 'line-chart', 'red') }}
-        </div>
-        <div class="col-md-3 col-sm-6 col-xs-12">
-            {{ widgets.info_box_counter('Anzahl Tage', 27, 'calendar', 'yellow') }}
-        </div>
-        <div class="col-md-3 col-sm-6 col-xs-12">
-            {{ widgets.info_box_counter('Stunden total / Monat', 460, 'clock-o', 'green') }}
-        </div>
-    </div>
-
+    {# FIXME Übersetzungen hinzufügen #}
+    {# blue / yellow / purple / green / black #}
+    {# bar-chart / line-chart / calendar / clock-o #}
+    {#
     <div class="row">
         <div class="col-md-3 col-sm-6 col-xs-12">
             {{ widgets.info_box_progress('Bewilligte Stunden', 'Stunden zur Abrechnung bewilligt', 120, 10, 'star-o') }}
@@ -35,19 +24,79 @@
             {{ widgets.info_box_progress('Anzahl Benutzer', 'Mehr ist besser!', 5, 90, 'user') }}
         </div>
     </div>
+    #}
 
-    <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12">
-            {{ widgets.info_box_more('Bewilligte Stunden', 120, 'h', 'star-o', 'purple') }}
+    {% if is_granted('ROLE_USER') %}
+        {{ widgets.page_header('dashboard.you') }}
+        <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                {{ widgets.info_box_counter('stats.durationThisMonth', timesheetUser.durationThisMonth|duration(true), 'hourglass-o', 'blue') }}
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                {{ widgets.info_box_counter('stats.amountThisMonth', timesheetUser.amountThisMonth|money, 'money', 'green') }}
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                {{ widgets.info_box_counter('stats.durationTotal', timesheetUser.durationTotal|duration(true), 'hourglass-o', 'yellow') }}
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                {{ widgets.info_box_counter('stats.amountTotal', timesheetUser.amountTotal|money, 'money', 'red') }}
+            </div>
         </div>
-        <div class="col-md-3 col-sm-6 col-xs-12">
-            {{ widgets.info_box_more('Umsatz / Monat', 6830, '$', '', 'yellow') }}
+    {% endif %}
+
+    {% if is_granted('ROLE_TEAMLEAD') %}
+        {{ widgets.page_header('dashboard.all') }}
+        <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                {{ widgets.info_box_counter('Arbeitszeit diesen Monat', timesheetGlobal.durationThisMonth|duration(true), 'hourglass-o', 'blue') }}
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                {{ widgets.info_box_counter('Umsatz diesen Monat', timesheetGlobal.amountThisMonth|money, 'money', 'green') }}
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                {{ widgets.info_box_counter('Arbeitszeit total', timesheetGlobal.durationTotal|duration(true), 'hourglass-o', 'yellow') }}
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                {{ widgets.info_box_counter('Umsatz total', timesheetGlobal.amountTotal|money, 'money', 'red') }}
+            </div>
         </div>
-        <div class="col-md-3 col-sm-6 col-xs-12">
-            {{ widgets.info_box_more('Stunden persönlich', 135, '€', 'hourglass-o', 'red') }}
+    {% endif %}
+
+    {% if is_granted('ROLE_TEAMLEAD') %}
+        <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                {{ widgets.info_box_counter('Anzahl Benutzer', user.totalAmount, 'users', 'blue') }}
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                {{ widgets.info_box_counter('Aktive Benutzer diesen Monat', timesheetGlobal.activeThisMonth, 'users', 'yellow') }}
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                {{ widgets.info_box_counter('Aktive Benutzer jemals', timesheetGlobal.activeTotal, 'users', 'red') }}
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                {{ widgets.info_box_counter('Momentan aktiv', timesheetGlobal.activeCurrently, 'users', 'green') }}
+            </div>
         </div>
-        <div class="col-md-3 col-sm-6 col-xs-12">
-            {{ widgets.info_box_more('Anzahl Benutzer', 5, '', 'user') }}
+    {% endif %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        {{ widgets.page_header('dashboard.admin') }}
+        <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                {{ widgets.info_box_more('Anzahl Aktivitäten', activity.totalAmount, '', path('admin_activity'), 'tasks', 'purple') }}
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                {{ widgets.info_box_more('Anzahl Projekte', project.totalAmount, '', path('admin_project'), 'book', 'yellow') }}
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                {{ widgets.info_box_more('Anzahl Benutzer', user.totalAmount, ' ', path('admin_user'), 'users') }}
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                {# FIXME #}
+                {{ widgets.info_box_more('Momentan aktiv', timesheetGlobal.activeCurrently, '', '#', 'hourglass-o', 'red') }}
+            </div>
+
         </div>
-    </div>
+    {% endif %}
+
 {% endblock %}

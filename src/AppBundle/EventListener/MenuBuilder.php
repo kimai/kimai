@@ -61,7 +61,7 @@ class MenuBuilder
         $isAdmin = $isLoggedIn && $this->security->isGranted('ROLE_ADMIN');
 
         $event->addItem(
-            new MenuItemModel('dashboard', 'menu.homepage', 'dashboard', [], 'fa fa-home')
+            new MenuItemModel('dashboard', 'menu.homepage', 'dashboard', [], 'fa fa-dashboard') // fa-home
         );
 
         $this->eventDispatcher->dispatch(
@@ -74,8 +74,10 @@ class MenuBuilder
         );
 
         if ($isAdmin) {
-            $event->addItem(
-                new MenuItemModel('admin', 'menu.admin', '', [], 'fa fa-dashboard')
+            $admin = new MenuItemModel('admin', 'menu.admin', '', [], 'fa fa-wrench');
+            $event->addItem($admin);
+            $admin->addChild(
+                new MenuItemModel('user_admin', 'menu.admin_user', 'admin_user', [], 'fa fa-user')
             );
 
             $this->eventDispatcher->dispatch(

@@ -4,34 +4,75 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8c9fa238b0d9190a97312f91782fb7a2",
-    "content-hash": "5c5c4734f4e8e74afdfd434661f75a7d",
+    "hash": "4987a4da3f291b8e0bb1b3af06a5cfa6",
+    "content-hash": "287d1663444888a10331136287c4269b",
     "packages": [
         {
-            "name": "avanzu/admin-theme-bundle",
-            "version": "1.3.4",
+            "name": "almasaeed2010/adminlte",
+            "version": "v2.3.7",
             "source": {
                 "type": "git",
-                "url": "https://github.com/avanzu/AdminThemeBundle.git",
-                "reference": "24a1ac93ace744b5e8cffe6681009a4cc8f3a133"
+                "url": "https://github.com/almasaeed2010/AdminLTE.git",
+                "reference": "797b65b3ca90525a4e048de5b8d02ba6878ea239"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/avanzu/AdminThemeBundle/zipball/24a1ac93ace744b5e8cffe6681009a4cc8f3a133",
-                "reference": "24a1ac93ace744b5e8cffe6681009a4cc8f3a133",
+                "url": "https://api.github.com/repos/almasaeed2010/AdminLTE/zipball/797b65b3ca90525a4e048de5b8d02ba6878ea239",
+                "reference": "797b65b3ca90525a4e048de5b8d02ba6878ea239",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Abdullah Almsaeed",
+                    "email": "abdullah@almsaeedstudio.com"
+                }
+            ],
+            "description": "AdminLTE - admin control panel and dashboard that's based on Bootstrap 3",
+            "homepage": "http://almsaeedstudio.com/",
+            "keywords": [
+                "JS",
+                "admin",
+                "back-end",
+                "css",
+                "less",
+                "responsive",
+                "template",
+                "theme",
+                "web"
+            ],
+            "time": "2016-10-19 15:34:25"
+        },
+        {
+            "name": "avanzu/admin-theme-bundle",
+            "version": "dev-feature/2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/avanzu/AdminThemeBundle.git",
+                "reference": "b2728cd76434cafd5f37dd0b75fe133429d2b1e0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/avanzu/AdminThemeBundle/zipball/b2728cd76434cafd5f37dd0b75fe133429d2b1e0",
+                "reference": "b2728cd76434cafd5f37dd0b75fe133429d2b1e0",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0",
-                "symfony/assetic-bundle": ">=2.3",
+                "almasaeed2010/adminlte": "^2.3",
+                "php": ">=5.5.9",
                 "symfony/event-dispatcher": ">=2.3",
                 "symfony/http-foundation": ">=2.3",
-                "symfony/http-kernel": ">=2.3",
-                "symfony/twig-bundle": ">=2.3"
+                "symfony/http-kernel": ">=2.3"
             },
             "require-dev": {
-                "hamcrest/hamcrest-php": "dev-master",
-                "mockery/mockery": "0.9.*@dev"
+                "phpspec/prophecy": "^1.6"
+            },
+            "suggest": {
+                "knplabs/knp-menu-bundle": "Allows easy menu integration."
             },
             "type": "library",
             "autoload": {
@@ -50,7 +91,7 @@
                 }
             ],
             "description": "Admin Theme based on the AdminLTE Template for easy integration into symfony",
-            "time": "2015-12-29 23:17:55"
+            "time": "2016-08-26 08:28:19"
         },
         {
             "name": "doctrine/annotations",
@@ -2681,7 +2722,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "avanzu/admin-theme-bundle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

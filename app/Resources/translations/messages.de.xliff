@@ -61,6 +61,10 @@
         <source>menu.admin_activity</source>
         <target>Aktivitäten</target>
       </trans-unit>
+      <trans-unit id="menu.admin_user">
+        <source>menu.admin_user</source>
+        <target>Benutzer</target>
+      </trans-unit>
 
       <!--
         Footer
@@ -181,6 +185,18 @@
         <source>dashboard.subtitle</source>
         <target>Willkommen!</target>
       </trans-unit>
+      <trans-unit id="dashboard.you">
+        <source>dashboard.you</source>
+        <target>Deine Statistiken</target>
+      </trans-unit>
+      <trans-unit id="dashboard.all">
+        <source>dashboard.all</source>
+        <target>Alle Benutzer</target>
+      </trans-unit>
+      <trans-unit id="dashboard.admin">
+        <source>dashboard.admin</source>
+        <target>Administrator</target>
+      </trans-unit>
 
       <!--
         Widgets
@@ -208,6 +224,18 @@
       <trans-unit id="timesheet.subtitle">
         <source>timesheet.subtitle</source>
         <target>Verwalten Sie Ihre Zeiteinträge</target>
+      </trans-unit>
+
+      <!--
+        User profile
+      -->
+      <trans-unit id="profile.title">
+        <source>profile.title</source>
+        <target>Benutzerprofil</target>
+      </trans-unit>
+      <trans-unit id="profile.subtitle">
+        <source>profile.subtitle</source>
+        <target>Verwalte Deine Einstellungen</target>
       </trans-unit>
 
       <!--
@@ -245,6 +273,80 @@
         <source>admin_activity.subtitle</source>
         <target>Aufgaben zur Zeiterfassung</target>
       </trans-unit>
+
+      <!--
+        Admin: User
+      -->
+      <trans-unit id="admin_user.title">
+        <source>admin_user.title</source>
+        <target>Benutzer</target>
+      </trans-unit>
+      <trans-unit id="admin_user.subtitle">
+        <source>admin_user.subtitle</source>
+        <target>Alle registrierten Nutzer</target>
+      </trans-unit>
+      <trans-unit id="label.alias">
+        <source>label.alias</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="label.email">
+        <source>label.email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="label.title">
+        <source>label.title</source>
+        <target>Titel</target>
+      </trans-unit>
+      <trans-unit id="label.active">
+        <source>label.active</source>
+        <target>Aktiv</target>
+      </trans-unit>
+      <trans-unit id="label.roles">
+        <source>label.roles</source>
+        <target>Rolle</target>
+      </trans-unit>
+
+      <!--
+        ROLES
+      -->
+      <trans-unit id="ROLE_ADMIN">
+        <source>ROLE_ADMIN</source>
+        <target>Administrator</target>
+      </trans-unit>
+      <trans-unit id="ROLE_TEAMLEAD">
+        <source>ROLE_TEAMLEAD</source>
+        <target>Teamleiter</target>
+      </trans-unit>
+      <trans-unit id="ROLE_USER">
+        <source>ROLE_USER</source>
+        <target>Benutzer</target>
+      </trans-unit>
+      <trans-unit id="ROLE_CUSTOMER">
+        <source>ROLE_CUSTOMER</source>
+        <target>Kunde</target>
+      </trans-unit>
+
+      <!--
+        Statistics
+      -->
+      <trans-unit id="stats.durationThisMonth">
+        <source>stats.durationThisMonth</source>
+        <target>Arbeitszeit diesen Monat</target>
+      </trans-unit>
+      <trans-unit id="stats.amountThisMonth">
+        <source>stats.amountThisMonth</source>
+        <target>Umsatz diesen Monat</target>
+      </trans-unit>
+      <trans-unit id="stats.durationTotal">
+        <source>stats.durationTotal</source>
+        <target>Arbeitszeit total</target>
+      </trans-unit>
+      <trans-unit id="stats.amountTotal">
+        <source>stats.amountTotal</source>
+        <target>Umsatz total</target>
+      </trans-unit>
+
+
     </body>
   </file>
 </xliff>

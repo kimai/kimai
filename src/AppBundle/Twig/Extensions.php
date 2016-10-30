@@ -13,11 +13,11 @@ namespace AppBundle\Twig;
 
 use AppBundle\Utils\Markdown;
 use Symfony\Component\Intl\Intl;
+use DateTime;
+use DateInterval;
 
 /**
- * This Twig extension adds new filters:
- * - 'md2html' to transform Markdown contents into HTML contents
- * - 'gmdate' to transform timestamps into a gmdate() formatted string
+ * Multiple Twig extensions: filters and functions
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
@@ -51,7 +51,8 @@ class Extensions extends \Twig_Extension
     {
         return [
             new \Twig_SimpleFilter('md2html', [$this, 'markdownToHtml'], ['is_safe' => ['html']]),
-            new \Twig_SimpleFilter('gmdate', array($this, 'gmdate')),
+            new \Twig_SimpleFilter('duration', array($this, 'duration')),
+            new \Twig_SimpleFilter('money', array($this, 'money')),
         ];
     }
 
@@ -66,15 +67,37 @@ class Extensions extends \Twig_Extension
     }
 
     /**
-     * Transform a timestamp into a gmdate() formatted string.
+     * Transforms seconds into a duration string.
      *
      * @param $seconds
-     * @param string $format
-     * @return false|string
+     * @param bool $includeSeconds
+     * @return string
      */
-    public function gmdate($seconds, $format = 'H:i')
+    public function duration($seconds, $includeSeconds = false)
     {
-        return gmdate($format, $seconds);
+        $hour = floor($seconds / 3600);
+        $minute = floor(($seconds / 60) % 60);
+
+        $hour = $hour > 9 ? $hour : '0' . $hour;
+        $minute = $minute > 9 ? $minute : '0' . $minute;
+
+        if (!$includeSeconds) {
+            return $hour . ':' . $minute;
+        }
+
+        $second = $seconds % 60;
+        $second = $second > 9 ? $second : '0' . $second;
+
+        return $hour . ':' . $minute  . ':' . $second;
+    }
+
+    /**
+     * @param float $amount
+     * @return string
+     */
+    public function money($amount)
+    {
+        return round($amount) . ' €';
     }
 
     /**

@@ -11,6 +11,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\User;
+use TimesheetBundle\Entity\Activity;
+use TimesheetBundle\Entity\Project;
 use TimesheetBundle\Entity\Timesheet;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -34,6 +37,22 @@ class DashboardController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('dashboard/index.html.twig', []);
+        $user = $this->getUser();
+
+        $timesheetRepo = $this->getDoctrine()->getRepository(Timesheet::class);
+        $timesheetUserStats = $timesheetRepo->getUserStatistics($user);
+        $timesheetGlobalStats = $timesheetRepo->getGlobalStatistics();
+
+        $activityStats = $this->getDoctrine()->getRepository(Activity::class)->getGlobalStatistics();
+        $projectStats = $this->getDoctrine()->getRepository(Project::class)->getGlobalStatistics();
+        $userStats = $this->getDoctrine()->getRepository(User::class)->getGlobalStatistics();
+
+        return $this->render('dashboard/index.html.twig', [
+            'timesheetGlobal' => $timesheetGlobalStats,
+            'timesheetUser' => $timesheetUserStats,
+            'activity' => $activityStats,
+            'project' => $projectStats,
+            'user' => $userStats,
+        ]);
     }
 }

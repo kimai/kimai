@@ -61,6 +61,7 @@ twig:
         kimai_context:
             date_1: "d.m.Y"     # used for display in timesheets
             box_color: "green"
+            table_icons: false
 
 # Assetic Configuration (used for managing web assets: CSS, JavaScript, Sass, etc.)
 assetic:

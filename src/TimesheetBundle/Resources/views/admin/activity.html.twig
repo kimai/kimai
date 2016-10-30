@@ -1,37 +1,31 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
+{% import "macros/datatables.html.twig" as tables %}
 
 {% block page_title %}{{ 'admin_activity.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_activity.subtitle'|trans }}{% endblock %}
 
 {% block main %}
     {% if entries.count > 0 %}
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>{{ 'label.id'|trans }}</th>
-                <th><i class="fa fa-bookmark-o"></i> {{ 'label.name'|trans }}</th>
-                <th><i class="fa fa-book"></i> {{ 'label.project'|trans }}</th>
-                <th><i class="fa fa-comment-o"></i> {{ 'label.comment'|trans }}</th>
-                <th><i class="fa fa-eye"></i> {{ 'label.visible'|trans }}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for entry in entries %}
-                <tr>
-                    <td>{{ entry.id }}</td>
-                    <td>{{ entry.name }}</td>
-                    <td>{{ entry.project }}</td>
-                    <td>{{ entry.comment }}</td>
-                    <td>{{ widgets.badge_visible(entry.visible) }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        {{ tables.data_table_header({
+            'label.id': '',
+            'label.name': 'bookmark-o',
+            'label.project': 'book',
+            'label.comment': 'comment-o',
+            'label.visible': 'eye',
+        }) }}
 
-        <div class="navigation text-center">
-            {{ pagerfanta(entries, 'twitter_bootstrap3_translated', { routeName: 'admin_activity_paginated' }) }}
-        </div>
+        {% for entry in entries %}
+            <tr>
+                <td>{{ entry.id }}</td>
+                <td>{{ entry.name }}</td>
+                <td>{{ entry.project }}</td>
+                <td>{{ entry.comment }}</td>
+                <td>{{ widgets.label_visible(entry.visible) }}</td>
+            </tr>
+        {% endfor %}
+
+        {{ tables.data_table_footer(entries, 'admin_activity_paginated') }}
     {% else %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% endif %}

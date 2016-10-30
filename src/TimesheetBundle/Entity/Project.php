@@ -34,7 +34,7 @@ class Project
     private $id;
 
     /**
-     * FIXME
+     * FIXME manytoone
      * @var integer
      *
      * @ORM\Column(name="customerID", type="integer", nullable=false)
@@ -75,6 +75,16 @@ class Project
      * @ORM\OneToMany(targetEntity="TimesheetBundle\Entity\Activity", mappedBy="project")
      */
     private $activities;
+
+    /**
+     * Get projectid
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set customerid
@@ -194,16 +204,6 @@ class Project
     public function getBudget()
     {
         return $this->budget;
-    }
-
-    /**
-     * Get projectid
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

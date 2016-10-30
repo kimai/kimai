@@ -17,6 +17,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
+use TimesheetBundle\Model\ActivityStatistic;
 
 /**
  * Class ActivityRepository
@@ -27,16 +28,47 @@ class ActivityRepository extends EntityRepository
 {
 
     /**
+     * Return statistic data for all user.
+     *
+     * @return ActivityStatistic
+     */
+    public function getGlobalStatistics()
+    {
+        $countAll = $this->getEntityManager()
+            ->createQuery('SELECT COUNT(a.id) FROM TimesheetBundle:Activity a')
+            ->getSingleScalarResult();
+
+        $stats = new ActivityStatistic();
+        $stats->setTotalAmount($countAll);
+        return $stats;
+    }
+
+    /**
      * @param User $user
      * @return Query
      */
-    public function queryLatest(User $user = null)
+    protected function queryLatest(User $user = null)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb->select('a')
             ->from('TimesheetBundle:Activity', 'a')
-            ->orderBy('a.name', 'DESC');
+            ->orderBy('a.id', 'DESC');
+
+        return $qb->getQuery();
+    }
+
+    /**
+     * @param string $orderBy
+     * @return Query
+     */
+    protected function queryAll($orderBy = 'id')
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('a')
+            ->from('TimesheetBundle:Activity', 'a')
+            ->orderBy('a.' . $orderBy, 'ASC');
 
         return $qb->getQuery();
     }

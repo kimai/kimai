@@ -36,6 +36,25 @@
     {{ include('default/_flash_messages.html.twig') }}
 {% endblock %}
 
+{% block avanzu_head %}
+    <link rel="stylesheet" href="{{ asset('css/kimai.css') }}">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="{{ asset('js/kimai.js') }}"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $(document).kimai({imagePath: '{{ asset('images') }}'});
+        $(document).kimai('ticktac', 'a#ticktac');
+    });
+    </script>
+{% endblock %}
+
+{% block avanzu_sidebar_user %}
+    {% if app.user is not null and is_granted('IS_AUTHENTICATED_FULLY') %}
+        {{ render(controller('TimesheetBundle:Timesheet:statusEntry')) }}
+    {% endif %}
+{% endblock %}
+
 {% block avanzu_footer %}
     {% block footer %}
     <footer class="main-footer">
@@ -49,8 +68,6 @@
 {% endblock %}
 
 {#
-
-avanzu_head
 avanzu_navbar_toggle
 avanzu_navbar_messages
 avanzu_navbar_notifications

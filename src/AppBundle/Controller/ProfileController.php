@@ -35,37 +35,39 @@ class ProfileController extends Controller
      */
     public function indexAction($ident)
     {
+        $user = $this->getUser();
+
+        $isAdmin = false;
+        if ($isAdmin) {
+        } else {
+        }
+
+        $timesheetRepo = $this->getDoctrine()->getRepository(Timesheet::class);
+        $userStats = $timesheetRepo->getUserStatistics($user);
+
         // FIXME fetch values dynamically and add trans filter to macros
         $items = [
             [
-                'title' => 'Projects',
+                'title' => 'Stundenlohn',
                 'url' => '#',
-                'color' => 'blue',
-                'amount' => 12
+                'color' => 'blue', // aqua, red, green
+                'value' => 70
             ],
             [
-                'title' => 'Tasks',
+                'title' => 'Sprache',
                 'url' => '#',
-                'color' => 'aqua',
-                'amount' => 5
-            ],
-            [
-                'title' => 'Projects',
-                'url' => '#',
-                'color' => 'red',
-                'amount' => 27
-            ],
-            [
-                'title' => 'Einträge',
-                'url' => '#',
-                'color' => 'green',
-                'amount' => 842
+                'color' => 'green', // aqua, red, green
+                'value' => 'deutsch'
             ],
         ];
 
         return $this->render(
             'user/profile.html.twig',
-            ['user' => $this->getUser(), 'items' => $items]
+            [
+                'user' => $this->getUser(),
+                'settings' => $items,
+                'stats' => $userStats
+            ]
         );
     }
 }

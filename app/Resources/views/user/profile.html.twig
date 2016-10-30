@@ -1,10 +1,81 @@
 {% extends 'base.html.twig' %}
-{% import "macros/widgets.html.twig" as widgets %}
 
-{% block page_title %}Profile{% endblock %}
-{% block page_subtitle %}manage your settings{% endblock %}
+{% block page_title %}{{ 'profile.title'|trans }}{% endblock %}
+{% block page_subtitle %}{{ 'profile.subtitle'|trans }}{% endblock %}
 
 {% block main %}
-    {{ widgets.profile_list(user, items, 'aqua-active') }}
-    {{ widgets.profile_box(user, items, 'aqua-active') }}
+    {% import _self as widgets %}
+    <div class="row">
+        <div class="col-md-6 col-sm-12 col-xs-12">
+            {{ widgets.profile_list(user, settings, 'aqua-active') }}
+        </div>
+        <div class="col-md-6 col-sm-12 col-xs-12">
+            {{ widgets.profile_box(user, stats, 'aqua-active') }}
+        </div>
+    </div>
 {% endblock %}
+
+{% macro profile_list(user, items, color) %}
+    {% import "AvanzuAdminThemeBundle:layout:macros.html.twig" as macro %}
+    <div class="box box-widget widget-user-2">
+        <!-- Add the bg color to the header using any of the bg-* classes -->
+        <div class="widget-user-header bg-{{ color|default(kimai_context.box_color) }}">
+            <div class="widget-user-image">
+                {{ macro.avatar(user.avatar, user.username) }}
+            </div>
+            <!-- /.widget-user-image -->
+            <h3 class="widget-user-username">{{ user.alias }} ({{ user.username }})</h3>
+            <h5 class="widget-user-desc">{{ user.title }}</h5>
+        </div>
+        <div class="box-footer no-padding">
+            <ul class="nav nav-stacked">
+                {% for entry in items %}
+                    <li><a href="{{ entry.url }}">{{ entry.title|trans }} <span class="pull-right badge bg-{{ entry.color }}">{{ entry.value }}</span></a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro profile_box(user, stats, color) %}
+    {% import "AvanzuAdminThemeBundle:layout:macros.html.twig" as macro %}
+
+    <div class="box box-widget widget-user">
+        <!-- Add the bg color to the header using any of the bg-* classes -->
+        <div class="widget-user-header bg-{{ color|default(kimai_context.box_color) }}">
+            <h3 class="widget-user-username">{{ user.alias }} ({{ user.username }})</h3>
+            <h5 class="widget-user-desc">{{ user.title }}</h5>
+        </div>
+        <div class="widget-user-image">
+            {{ macro.avatar(user.avatar, user.username) }}
+        </div>
+        <div class="box-footer">
+            <div class="row">
+                <div class="col-sm-3 border-right">
+                    <div class="description-block">
+                        <h5 class="description-header">{{ stats.durationTotal|duration }}</h5>
+                        <span class="description-text">{{ 'stats.durationTotal'|trans }}</span>
+                    </div>
+                </div>
+                <div class="col-sm-3 border-right">
+                    <div class="description-block">
+                        <h5 class="description-header">{{ stats.amountTotal|money }}</h5>
+                        <span class="description-text">{{ 'stats.amountTotal'|trans }}</span>
+                    </div>
+                </div>
+                <div class="col-sm-3 border-right">
+                    <div class="description-block">
+                        <h5 class="description-header">{{ stats.durationThisMonth|duration }}</h5>
+                        <span class="description-text">{{ 'stats.durationThisMonth'|trans }}</span>
+                    </div>
+                </div>
+                <div class="col-sm-3 border-right">
+                    <div class="description-block">
+                        <h5 class="description-header">{{ stats.amountThisMonth|money }}</h5>
+                        <span class="description-text">{{ 'stats.amountThisMonth'|trans }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}

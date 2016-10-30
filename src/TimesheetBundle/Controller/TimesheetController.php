@@ -42,4 +42,16 @@ class TimesheetController extends Controller
 
         return $this->render('TimesheetBundle:timesheet:index.html.twig', ['entries' => $entries]);
     }
+
+    public function statusEntryAction()
+    {
+        $user = $this->getUser();
+        $activeEntry = $this->getDoctrine()->getRepository(Timesheet::class)->getActiveEntry($user);
+
+        $activeEntry = null;
+        return $this->render(
+            'TimesheetBundle:Sidebar:navbar-panel.html.twig',
+            ['entry' => $activeEntry]
+        );
+    }
 }

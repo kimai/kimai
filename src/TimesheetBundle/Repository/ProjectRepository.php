@@ -17,6 +17,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
+use TimesheetBundle\Model\ProjectStatistic;
 
 /**
  * Class ProjectRepository
@@ -27,10 +28,26 @@ class ProjectRepository extends EntityRepository
 {
 
     /**
+     * Return statistic data for all user.
+     *
+     * @return ProjectStatistic
+     */
+    public function getGlobalStatistics()
+    {
+        $countAll = $this->getEntityManager()
+            ->createQuery('SELECT COUNT(p.id) FROM TimesheetBundle:Project p')
+            ->getSingleScalarResult();
+
+        $stats = new ProjectStatistic();
+        $stats->setTotalAmount($countAll);
+        return $stats;
+    }
+
+    /**
      * @param User $user
      * @return Query
      */
-    public function queryLatest(User $user = null)
+    protected function queryLatest(User $user = null)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -41,7 +58,11 @@ class ProjectRepository extends EntityRepository
         return $qb->getQuery();
     }
 
-    public function queryAll($orderBy = 'id')
+    /**
+     * @param string $orderBy
+     * @return Query
+     */
+    protected function queryAll($orderBy = 'id')
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 

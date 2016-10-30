@@ -10,30 +10,37 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * User
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
- * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"}), @ORM\UniqueConstraint(name="apikey", columns={"apikey"})})
- * @ORM\Entity
+ * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"})})
  */
 class User implements UserInterface
 {
 
     /**
+     * @var int
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
-     * @ORM\Column(name="userID", type="integer")
+     * @ORM\Column(name="id", type="integer")
      */
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(name="name", type="string", length=160, nullable=false, unique=true)
      */
     private $username;
 
     /**
+     * @var string
+     *
      * @ORM\Column(name="mail", type="string", length=160, nullable=false, unique=true)
      */
     private $email;
 
     /**
+     * @var string
+     *
      * @ORM\Column(name="password", type="string", length=254, nullable=true)
      */
     private $password;
@@ -46,88 +53,25 @@ class User implements UserInterface
     private $alias;
 
     /**
-     * FIXME remove me
-     *
-     * @var boolean
-     *
-     * @ORM\Column(name="trash", type="boolean", nullable=false)
-     */
-    private $trash = '0';
-
-    /**
      * @var boolean
      *
      * @ORM\Column(name="active", type="boolean", nullable=false)
      */
-    private $active = '1';
+    private $active = true;
 
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="passwordResetHash", type="string", length=32, nullable=true)
+     * @ORM\Column(name="start_timeframe", type="datetime", nullable=true)
      */
-    private $passwordresethash;
+    private $timeframeBegin;
 
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="secure", type="string", length=60, nullable=false)
+     * @ORM\Column(name="end_timeframe", type="datetime", nullable=true)
      */
-    private $secure = '0';
-
-    /**
-     * FIXME manytoone relation
-     *
-     * @var integer
-     *
-     * @ORM\Column(name="lastProject", type="integer", nullable=false)
-     */
-    private $lastproject = '1';
-
-    /**
-     * FIXME manytoone
-     *
-     * @var integer
-     *
-     * @ORM\Column(name="lastActivity", type="integer", nullable=false)
-     */
-    private $lastactivity = '1';
-
-    /**
-     * FIXME manytoone
-     *
-     * @var integer
-     *
-     * @ORM\Column(name="lastRecord", type="integer", nullable=false)
-     */
-    private $lastrecord = '0';
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="timeframeBegin", type="string", length=60, nullable=false)
-     */
-    private $timeframebegin = '0';
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="timeframeEnd", type="string", length=60, nullable=false)
-     */
-    private $timeframeend = '0';
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="apikey", type="string", length=30, nullable=true)
-     */
-    private $apikey;
-
-    // ======= new columns for kimai 2 =======
-    /**
-     * @ORM\Column(type="json_array")
-     */
-    private $roles = [];
+    private $timeframeEnd;
 
     /**
      * @var string
@@ -144,11 +88,55 @@ class User implements UserInterface
     private $avatar;
 
     /**
-     * Set alias
+     * @var string[]
      *
+     * @ORM\Column(type="json_array")
+     */
+    private $roles = [];
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTimeframeBegin()
+    {
+        return $this->timeframeBegin;
+    }
+
+    /**
+     * @param string $timeframeBegin
+     */
+    public function setTimeframeBegin($timeframeBegin)
+    {
+        $this->timeframeBegin = $timeframeBegin;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTimeframeEnd()
+    {
+        return $this->timeframeEnd;
+    }
+
+    /**
+     * @param string $timeframeEnd
+     */
+    public function setTimeframeEnd($timeframeEnd)
+    {
+        $this->timeframeEnd = $timeframeEnd;
+    }
+
+    /**
      * @param string $alias
-     *
-     * @return User
+     * @return $this
      */
     public function setAlias($alias)
     {
@@ -158,8 +146,6 @@ class User implements UserInterface
     }
 
     /**
-     * Get alias
-     *
      * @return string
      */
     public function getAlias()
@@ -168,35 +154,8 @@ class User implements UserInterface
     }
 
     /**
-     * Set trash
-     *
-     * @param boolean $trash
-     *
-     * @return User
-     */
-    public function setTrash($trash)
-    {
-        $this->trash = $trash;
-
-        return $this;
-    }
-
-    /**
-     * Get trash
-     *
-     * @return boolean
-     */
-    public function getTrash()
-    {
-        return $this->trash;
-    }
-
-    /**
-     * Set active
-     *
      * @param boolean $active
-     *
-     * @return User
+     * @return $this
      */
     public function setActive($active)
     {
@@ -206,8 +165,6 @@ class User implements UserInterface
     }
 
     /**
-     * Get active
-     *
      * @return boolean
      */
     public function getActive()
@@ -216,11 +173,8 @@ class User implements UserInterface
     }
 
     /**
-     * Set password
-     *
      * @param string $password
-     *
-     * @return User
+     * @return $this
      */
     public function setPassword($password)
     {
@@ -240,273 +194,82 @@ class User implements UserInterface
     }
 
     /**
-     * Set passwordresethash
-     *
-     * @param string $passwordresethash
-     *
-     * @return User
-     */
-    public function setPasswordresethash($passwordresethash)
-    {
-        $this->passwordresethash = $passwordresethash;
-
-        return $this;
-    }
-
-    /**
-     * Get passwordresethash
-     *
      * @return string
-     */
-    public function getPasswordresethash()
-    {
-        return $this->passwordresethash;
-    }
-
-    /**
-     * Set ban
-     *
-     * @param integer $ban
-     *
-     * @return User
-     */
-    public function setBan($ban)
-    {
-        $this->ban = $ban;
-
-        return $this;
-    }
-
-    /**
-     * Get ban
-     *
-     * @return integer
-     */
-    public function getBan()
-    {
-        return $this->ban;
-    }
-
-    /**
-     * Set bantime
-     *
-     * @param integer $bantime
-     *
-     * @return User
-     */
-    public function setBantime($bantime)
-    {
-        $this->bantime = $bantime;
-
-        return $this;
-    }
-
-    /**
-     * Get bantime
-     *
-     * @return integer
-     */
-    public function getBantime()
-    {
-        return $this->bantime;
-    }
-
-    /**
-     * Set secure
-     *
-     * @param string $secure
-     *
-     * @return User
-     */
-    public function setSecure($secure)
-    {
-        $this->secure = $secure;
-
-        return $this;
-    }
-
-    /**
-     * Get secure
-     *
-     * @return string
-     */
-    public function getSecure()
-    {
-        return $this->secure;
-    }
-
-    /**
-     * Set lastproject
-     *
-     * @param integer $lastproject
-     *
-     * @return User
-     */
-    public function setLastproject($lastproject)
-    {
-        $this->lastproject = $lastproject;
-
-        return $this;
-    }
-
-    /**
-     * Get lastproject
-     *
-     * @return integer
-     */
-    public function getLastproject()
-    {
-        return $this->lastproject;
-    }
-
-    /**
-     * Set lastactivity
-     *
-     * @param integer $lastactivity
-     *
-     * @return User
-     */
-    public function setLastactivity($lastactivity)
-    {
-        $this->lastactivity = $lastactivity;
-
-        return $this;
-    }
-
-    /**
-     * Get lastactivity
-     *
-     * @return integer
-     */
-    public function getLastactivity()
-    {
-        return $this->lastactivity;
-    }
-
-    /**
-     * Set lastrecord
-     *
-     * @param integer $lastrecord
-     *
-     * @return User
-     */
-    public function setLastrecord($lastrecord)
-    {
-        $this->lastrecord = $lastrecord;
-
-        return $this;
-    }
-
-    /**
-     * Get lastrecord
-     *
-     * @return integer
-     */
-    public function getLastrecord()
-    {
-        return $this->lastrecord;
-    }
-
-    /**
-     * Set timeframebegin
-     *
-     * @param string $timeframebegin
-     *
-     * @return User
-     */
-    public function setTimeframebegin($timeframebegin)
-    {
-        $this->timeframebegin = $timeframebegin;
-
-        return $this;
-    }
-
-    /**
-     * Get timeframebegin
-     *
-     * @return string
-     */
-    public function getTimeframebegin()
-    {
-        return $this->timeframebegin;
-    }
-
-    /**
-     * Set timeframeend
-     *
-     * @param string $timeframeend
-     *
-     * @return User
-     */
-    public function setTimeframeend($timeframeend)
-    {
-        $this->timeframeend = $timeframeend;
-
-        return $this;
-    }
-
-    /**
-     * Get timeframeend
-     *
-     * @return string
-     */
-    public function getTimeframeend()
-    {
-        return $this->timeframeend;
-    }
-
-    /**
-     * Set apikey
-     *
-     * @param string $apikey
-     *
-     * @return User
-     */
-    public function setApikey($apikey)
-    {
-        $this->apikey = $apikey;
-
-        return $this;
-    }
-
-    /**
-     * Get apikey
-     *
-     * @return string
-     */
-    public function getApikey()
-    {
-        return $this->apikey;
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * {@inheritdoc}
      */
     public function getUsername()
     {
         return $this->username;
     }
+
+    /**
+     * @param string $username
+     * @return $this
+     */
     public function setUsername($username)
     {
         $this->username = $username;
+
+        return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getEmail()
     {
         return $this->email;
     }
+
+    /**
+     * @param string $email
+     * @return $this
+     */
     public function setEmail($email)
     {
         $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     * @return $this
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param string $avatar
+     * @return $this
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+        return $this;
     }
 
     /**
      * Returns the roles or permissions granted to the user for security.
+     *
+     * @return string[]
      */
     public function getRoles()
     {
@@ -520,9 +283,14 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @param string[] $roles
+     * @return $this
+     */
     public function setRoles(array $roles)
     {
         $this->roles = $roles;
+        return $this;
     }
 
     /**
@@ -549,35 +317,6 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * @param string $title
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAvatar()
-    {
-        return $this->avatar;
-    }
-
-    /**
-     * @param string $avatar
-     */
-    public function setAvatar($avatar)
-    {
-        $this->avatar = $avatar;
-    }
-
     public function __toString()
     {
         return $this->getAlias() ?: $this->getUsername();
