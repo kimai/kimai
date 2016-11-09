@@ -13,6 +13,7 @@
             'label.project': 'book',
             'label.comment': 'comment-o',
             'label.visible': 'eye',
+            'label.actions': 'pencil-square-o',
         }) }}
 
         {% for entry in entries %}
@@ -22,6 +23,9 @@
                 <td>{{ entry.project }}</td>
                 <td>{{ entry.comment }}</td>
                 <td>{{ widgets.label_visible(entry.visible) }}</td>
+                <td>
+                    {{ widgets.button_group({'edit': '#', 'trash': '#'}) }}
+                </td>
             </tr>
         {% endfor %}
 

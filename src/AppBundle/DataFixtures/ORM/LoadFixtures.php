@@ -84,47 +84,6 @@ class LoadFixtures implements FixtureInterface, ContainerAwareInterface
     }
 
     /**
-     * FIXME CAN BE REMOVED
-     *
-     * @param ObjectManager $manager
-     */
-    private function loadPosts(ObjectManager $manager)
-    {
-        $authors = [
-            'anna_admin@example.com',
-            'tony_teamlead@example.com',
-            'clara_customer@example.com',
-            'john_user@example.com'
-        ];
-        foreach (range(1, 30) as $i) {
-            $post = new Post();
-
-            $post->setTitle($this->getRandomPostTitle());
-            $post->setSummary($this->getRandomPostSummary());
-            $post->setSlug($this->container->get('slugger')->slugify($post->getTitle()));
-            $post->setContent($this->getPostContent());
-            $post->setAuthorEmail($authors[array_rand($authors, 1)]);
-            $post->setPublishedAt(new \DateTime('now - '.$i.'days'));
-
-            foreach (range(1, 5) as $j) {
-                $comment = new Comment();
-
-                $comment->setAuthorEmail($authors[array_rand($authors, 1)]);
-                $comment->setPublishedAt(new \DateTime('now + '.($i + $j).'seconds'));
-                $comment->setContent($this->getRandomCommentContent());
-                $comment->setPost($post);
-
-                $manager->persist($comment);
-                $post->addComment($comment);
-            }
-
-            $manager->persist($post);
-        }
-
-        $manager->flush();
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function setContainer(ContainerInterface $container = null)

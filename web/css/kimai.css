@@ -2,6 +2,10 @@
     width: 30px;
 }
 
+.user-panel>.info {
+    left: 40px;
+    padding-top: 0px;
+}
 /*
 #ticktac img {
     width: 100%;

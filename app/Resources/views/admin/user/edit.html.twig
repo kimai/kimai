@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title %}{{ 'edit_profile.title'|trans }}{% endblock %}
+{% block page_subtitle %}{{ 'edit_profile.subtitle'|trans({'%username%': user.username}) }}{% endblock %}
+
+{% block main %}
+    {{ include('default/_flash_messages.html.twig') }}
+
+    {{ include('admin/user/_form.html.twig', {
+        user: user,
+        form: form,
+    }, with_context = false) }}
+{% endblock %}

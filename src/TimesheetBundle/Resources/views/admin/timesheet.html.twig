@@ -1,32 +1,45 @@
 {% extends 'base.html.twig' %}
-{% import "macros/datatables.html.twig" as widgets %}
+{% import "macros/widgets.html.twig" as widgets %}
+{% import "macros/datatables.html.twig" as datatables %}
 
 {% block page_title %}{{ 'admin_timesheet.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_timesheet.subtitle'|trans }}{% endblock %}
 
 {% block main %}
     {% if entries.count > 0 %}
-        {{ widgets.data_table_header({
+        {{ datatables.data_table_header({
             'label.date': 'calendar',
             'label.starttime': 'hourglass-start',
             'label.endtime': 'hourglass-end',
             'label.duration': 'clock-o',
+            'label.rate': 'money',
             'label.username': 'user',
-            'label.description': 'pencil-square-o',
+            'label.description': 'comment-o',
+            'label.actions': 'pencil-square-o',
         }) }}
 
         {% for entry in entries %}
             <tr>
                 <td>{{ entry.begin|date(kimai_context.date_1) }}</td>
                 <td>{{ entry.begin|date("H:i") }}</td>
-                <td>{{ entry.end|date("H:i") }}</td>
-                <td>{{ entry.duration|duration }}</td>
-                <td>{{ entry.user.username }}</td>
+                {% if entry.end %}
+                    <td>{{ entry.end|date("H:i") }}</td>
+                    <td>{{ entry.duration|duration }}</td>
+                    <td>{{ entry.rate|money }}</td>
+                {% else %}
+                    <td>&dash;</td>
+                    <td>&dash;</td>
+                    <td>&dash;</td>
+                {% endif %}
+                <td><a href="{{ path('profile'|route_alias, {'username' : entry.user.username}) }}">{{ entry.user.username }}</a></td>
                 <td>{{ entry.description }}</td>
+                <td>
+                    {{ widgets.button_group({'edit': '#', 'trash': '#'}) }}
+                </td>
             </tr>
         {% endfor %}
 
-        {{ widgets.data_table_footer(entries, 'admin_timesheet_paginated') }}
+        {{ datatables.data_table_footer(entries, 'admin_timesheet_paginated') }}
     {% else %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% endif %}

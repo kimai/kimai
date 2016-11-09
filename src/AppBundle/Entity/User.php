@@ -4,7 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -28,6 +28,8 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=160, nullable=false, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=6, max=160)
      */
     private $username;
 
@@ -35,6 +37,8 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="mail", type="string", length=160, nullable=false, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private $email;
 
@@ -48,9 +52,24 @@ class User implements UserInterface
     /**
      * @var string
      *
+     * @Assert\NotBlank(groups={"registration", "passwordUpdate"})
+     * @Assert\Length(min=6, max=4096, groups={"registration", "passwordUpdate"})
+     */
+    private $plainPassword;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="alias", type="string", length=160, nullable=true)
      */
     private $alias;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="language", type="string", length=5, nullable=true)
+     */
+    private $language = 'de';
 
     /**
      * @var boolean
@@ -62,16 +81,9 @@ class User implements UserInterface
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="start_timeframe", type="datetime", nullable=true)
+     * @ORM\Column(name="registration_date", type="datetime", nullable=true)
      */
-    private $timeframeBegin;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="end_timeframe", type="datetime", nullable=true)
-     */
-    private $timeframeEnd;
+    private $registeredAt;
 
     /**
      * @var string
@@ -95,6 +107,14 @@ class User implements UserInterface
     private $roles = [];
 
     /**
+     * User constructor.
+     */
+    public function __construct()
+    {
+        $this->registeredAt = new \DateTime();
+    }
+
+    /**
      * @return int
      */
     public function getId()
@@ -103,35 +123,22 @@ class User implements UserInterface
     }
 
     /**
-     * @return string
+     * @return \DateTime
      */
-    public function getTimeframeBegin()
+    public function getRegisteredAt()
     {
-        return $this->timeframeBegin;
+        return $this->registeredAt;
     }
 
     /**
-     * @param string $timeframeBegin
+     * @param $registeredAt
+     * @return $this
      */
-    public function setTimeframeBegin($timeframeBegin)
+    public function setRegisteredAt($registeredAt)
     {
-        $this->timeframeBegin = $timeframeBegin;
-    }
+        $this->registeredAt = $registeredAt;
 
-    /**
-     * @return string
-     */
-    public function getTimeframeEnd()
-    {
-        return $this->timeframeEnd;
-    }
-
-    /**
-     * @param string $timeframeEnd
-     */
-    public function setTimeframeEnd($timeframeEnd)
-    {
-        $this->timeframeEnd = $timeframeEnd;
+        return $this;
     }
 
     /**
@@ -191,6 +198,28 @@ class User implements UserInterface
     public function getPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * Only for form editing, you don't need this method!
+     *
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * Only for form editing, you don't need this method!
+     *
+     * @param string $password
+     * @return $this
+     */
+    public function setPlainPassword($password)
+    {
+        $this->plainPassword = $password;
+        return $this;
     }
 
     /**
@@ -264,6 +293,22 @@ class User implements UserInterface
     {
         $this->avatar = $avatar;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * @param string $language
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
     }
 
     /**

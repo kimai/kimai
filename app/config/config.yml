@@ -64,16 +64,16 @@ twig:
             table_icons: false
 
 # Assetic Configuration (used for managing web assets: CSS, JavaScript, Sass, etc.)
-assetic:
-    debug:          "%kernel.debug%"
-    use_controller: false
-    bundles:        [ ]
-    filters:
-        cssrewrite: ~
-        jsqueeze: ~
-        scssphp:
-            # the formatter must be the FQCN (don't use the 'compressed' value)
-            formatter: "Leafo\\ScssPhp\\Formatter\\Compressed"
+#assetic:
+#    debug:          "%kernel.debug%"
+#    use_controller: false
+#    bundles:        [ ]
+#    filters:
+#        cssrewrite: ~
+#        jsqueeze: ~
+#        scssphp:
+#            # the formatter must be the FQCN (don't use the 'compressed' value)
+#            formatter: "Leafo\\ScssPhp\\Formatter\\Compressed"
 
 # Doctrine Configuration (used to access databases and manipulate their information)
 doctrine:
@@ -85,12 +85,12 @@ doctrine:
         auto_mapping: true
 
 # Swiftmailer Configuration (used to send emails)
-swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
-    spool:     { type: memory }
+#swiftmailer:
+#    transport: "%mailer_transport%"
+#    host:      "%mailer_host%"
+#    username:  "%mailer_user%"
+#    password:  "%mailer_password%"
+#    spool:     { type: memory }
 
 avanzu_admin_theme:
     use_twig   : true

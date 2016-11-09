@@ -7,6 +7,7 @@
 {% block main %}
 
     {# FIXME Übersetzungen hinzufügen #}
+
     {# blue / yellow / purple / green / black #}
     {# bar-chart / line-chart / calendar / clock-o #}
     {#
@@ -30,16 +31,16 @@
         {{ widgets.page_header('dashboard.you') }}
         <div class="row">
             <div class="col-md-3 col-sm-6 col-xs-12">
-                {{ widgets.info_box_counter('stats.durationThisMonth', timesheetUser.durationThisMonth|duration(true), 'hourglass-o', 'blue') }}
+                {{ widgets.info_box_counter('stats.durationThisMonth', timesheetUser.durationThisMonth|duration(true), 'hourglass-o', 'green') }}
             </div>
             <div class="col-md-3 col-sm-6 col-xs-12">
-                {{ widgets.info_box_counter('stats.amountThisMonth', timesheetUser.amountThisMonth|money, 'money', 'green') }}
+                {{ widgets.info_box_counter('stats.amountThisMonth', timesheetUser.amountThisMonth|money, 'money', 'blue') }}
             </div>
             <div class="col-md-3 col-sm-6 col-xs-12">
-                {{ widgets.info_box_counter('stats.durationTotal', timesheetUser.durationTotal|duration(true), 'hourglass-o', 'yellow') }}
+                {{ widgets.info_box_counter('stats.durationTotal', timesheetUser.durationTotal|duration(true), 'hourglass-o', 'red') }}
             </div>
             <div class="col-md-3 col-sm-6 col-xs-12">
-                {{ widgets.info_box_counter('stats.amountTotal', timesheetUser.amountTotal|money, 'money', 'red') }}
+                {{ widgets.info_box_counter('stats.amountTotal', timesheetUser.amountTotal|money, 'money', 'yellow') }}
             </div>
         </div>
     {% endif %}
@@ -65,13 +66,13 @@
     {% if is_granted('ROLE_TEAMLEAD') %}
         <div class="row">
             <div class="col-md-3 col-sm-6 col-xs-12">
-                {{ widgets.info_box_counter('Anzahl Benutzer', user.totalAmount, 'users', 'blue') }}
+                {{ widgets.info_box_counter('Anzahl Benutzer', user.totalAmount, 'users', 'red') }}
             </div>
             <div class="col-md-3 col-sm-6 col-xs-12">
                 {{ widgets.info_box_counter('Aktive Benutzer diesen Monat', timesheetGlobal.activeThisMonth, 'users', 'yellow') }}
             </div>
             <div class="col-md-3 col-sm-6 col-xs-12">
-                {{ widgets.info_box_counter('Aktive Benutzer jemals', timesheetGlobal.activeTotal, 'users', 'red') }}
+                {{ widgets.info_box_counter('Aktive Benutzer jemals', timesheetGlobal.activeTotal, 'users', 'blue') }}
             </div>
             <div class="col-md-3 col-sm-6 col-xs-12">
                 {{ widgets.info_box_counter('Momentan aktiv', timesheetGlobal.activeCurrently, 'users', 'green') }}

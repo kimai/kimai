@@ -4,6 +4,9 @@
 # See http://symfony.com/doc/current/best_practices/configuration.html#canonical-parameters
 parameters:
 
+    # used to load additional doctrine functions (possible values: mysql, sqlite)
+    database_engine: sqlite
+
     # Define the database connection string
     database_url: 'sqlite:///%kernel.root_dir%/data/timesheet.sqlite'
     # database_url: 'mysql://root:pass@127.0.0.1:3306/timesheet'

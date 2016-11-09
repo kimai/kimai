@@ -57,7 +57,7 @@ class UserRepository extends EntityRepository
 
     public function findByUsername($username)
     {
-        return $this->findOneBy(['']);
+        return $this->findOneBy(['username' => $username]);
     }
 
     /**

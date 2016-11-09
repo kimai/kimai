@@ -89,3 +89,33 @@
         </a>
     </div>
 {% endmacro %}
+
+{% macro button_group_dropdown(title, actions) %}
+    <div class="btn-group">
+        <button type="button" class="btn btn-default">{{ title|trans }}</button>
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">{{ 'label.toggle_dropdown'|trans }}</span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            {% for url, entry in actions %}
+                <li><a href="{{ url }}">{{ entry|trans }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endmacro %}
+
+{% macro button_group(actions) %}
+    {% import _self as macro %}
+    <div class="btn-group">
+        {% for icon, url in actions %}
+            {{ macro.button_action(icon, url) }}
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{% macro button_action(icon, url) %}
+    <a href="{{ url }}" class="btn btn-default">
+        <i class="fa fa-{{ icon }}"></i>
+    </a>
+{% endmacro %}

@@ -5,17 +5,165 @@
 
 {% block main %}
     {% import _self as widgets %}
+
+    {{ include('default/_flash_messages.html.twig') }}
+
     <div class="row">
-        <div class="col-md-6 col-sm-12 col-xs-12">
-            {{ widgets.profile_list(user, settings, 'aqua-active') }}
+        <div class="col-md-3">
+            {{ widgets.profile_box(user, stats) }}
+            {{ widgets.profile_infos(user, stats) }}
         </div>
-        <div class="col-md-6 col-sm-12 col-xs-12">
-            {{ widgets.profile_box(user, stats, 'aqua-active') }}
+        <div class="col-md-9">
+
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li {% if tab == "charts" %}class="active"{% endif %}><a href="#charts" data-toggle="tab" aria-expanded="true">{{ 'profile.tab_monthly'|trans }}</a></li>
+                    <li {% if tab == "profile" %}class="active"{% endif %}><a href="#profile" data-toggle="tab" aria-expanded="false">{{ 'profile.settings'|trans }}</a></li>
+                    <li {% if tab == "password" %}class="active"{% endif %}><a href="#password" data-toggle="tab" aria-expanded="false">{{ 'profile.password'|trans }}</a></li>
+
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane {% if tab == "charts" %}active{% endif %}" id="charts">
+                        <script type="text/javascript">
+                                var barChartOptions = {
+                                    scaleBeginAtZero: true,
+                                    scaleShowGridLines: true,
+                                    scaleGridLineColor: "rgba(0,0,0,.05)",
+                                    scaleGridLineWidth: 1,
+                                    scaleShowHorizontalLines: true,
+                                    scaleShowVerticalLines: true,
+                                    barShowStroke: true,
+                                    barStrokeWidth: 2,
+                                    barValueSpacing: 5,
+                                    barDatasetSpacing: 1,
+                                    responsive: true,
+                                    maintainAspectRatio: true,
+                                    tooltipTemplate: "{% raw %}<%= value %>{% endraw %} {{ 'label.hours'|trans }}",
+                                };
+                                var barChartLabels = [
+                                    {% for i in 1..11 %}
+                                    "{{ ('month.' ~i)|trans }}",
+                                    {% endfor %}
+                                    "{{ 'month.12'|trans }}"
+                                ];
+                        </script>
+
+                        {% for year,yearStat in years %}
+                            <h2>{{ year }}</h2>
+                            <div class="chart">
+                                <canvas id="barChart{{ year }}" style="height: 230px;"></canvas>
+                            </div>
+                            <script type="text/javascript">
+                                var barChartData{{ year }} = {
+                                    labels: barChartLabels,
+                                    datasets: [
+                                        {
+                                            {# label: '# hours',#}
+                                            fillColor: "#00a65a",
+                                            strokeColor: "#00a65a",
+                                            pointColor: "#00a65a",
+                                            pointStrokeColor: "#c1c7d1",
+                                            pointHighlightFill: "#fff",
+                                            pointHighlightStroke: "rgba(220,220,220,1)",
+                                            data: [
+                                                {% for i in 1..11 %}
+                                                {{ (yearStat.month(i).totalDuration / 3600)|round }},
+                                                {% endfor %}
+                                                {{ (yearStat.month(12).totalDuration / 3600)|round }}
+                                            ]
+                                        }
+                                    ]
+                                };
+                                {% if tab == "charts" %}
+                                $(function () {
+                                    var barChartCanvas{{ year }} = $("#barChart{{ year }}").get(0).getContext("2d");
+                                    var barChart = new Chart(barChartCanvas{{ year }});
+                                    barChart.Bar(barChartData{{ year }}, barChartOptions);
+                                });
+                                {% endif %}
+                                $('a[href="#charts"]').on('shown.bs.tab', function(e){
+                                    var barChartCanvas{{ year }} = $("#barChart{{ year }}").get(0).getContext("2d");
+                                    var barChart = new Chart(barChartCanvas{{ year }});
+                                    barChart.Bar(barChartData{{ year }}, barChartOptions);
+                                });
+                            </script>
+                        {% endfor %}
+
+                    </div>
+                    <div class="tab-pane {% if tab == "profile" %}active{% endif %}" id="profile">
+                        {{ form_start(form) }}
+                            {{ form_widget(form) }}
+                            <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
+                        {{ form_end(form) }}
+                    </div>
+                    <div class="tab-pane {% if tab == "password" %}active{% endif %}" id="password">
+                        {{ form_start(form_password) }}
+                        {{ form_widget(form_password) }}
+                        <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
+                        {{ form_end(form_password) }}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
 
-{% macro profile_list(user, items, color) %}
+{% macro profile_infos(user, stats) %}
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">{{ 'profile.about_me'|trans }}</h3>
+        </div>
+        <div class="box-body">
+            <ul class="nav nav-stacked">
+                {# colors = purple, blue, aqua, red, green #}
+                {# FIXME hourly rate must be dynamic <li><a href="#">{{ 'label.hourly_rate'|trans }} <span class="pull-right badge bg-blue">70</span></a></li> #}
+                <li><a href="#">{{ 'label.id'|trans }} <span class="pull-right badge bg-aqua">{{ user.id }}</span></a></li>
+                <li><a href="#">{{ 'label.username'|trans }} <span class="pull-right badge bg-blue">{{ user.username }}</span></a></li>
+                <li><a href="#">{{ 'label.language'|trans }} <span class="pull-right badge bg-green">{{ user.language }}</span></a></li>
+                <li><a href="#">{{ 'profile.first_entry'|trans }} <span class="pull-right badge bg-purple">{{ stats.firstEntry|date }}</span></a></li>
+            </ul>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro profile_box(user, stats) %}
+    {% import "AvanzuAdminThemeBundle:layout:macros.html.twig" as macro %}
+
+    <div class="box box-primary">
+        <div class="box-body box-profile">
+            {{ macro.avatar(user.avatar, user.username, 'profile-user-img img-responsive img-circle') }}
+            <h3 class="profile-username text-center">{{ user.alias }}</h3>
+
+            <p class="text-muted text-center">{{ user.title }}</p>
+
+            <ul class="list-group list-group-unbordered">
+
+                <li class="list-group-item">
+                    <b>{{ 'stats.durationThisMonth'|trans }}</b> <a class="pull-right">{{ stats.durationThisMonth|duration }}</a>
+                </li>
+
+                <li class="list-group-item">
+                    <b>{{ 'stats.amountThisMonth'|trans }}</b> <a class="pull-right">{{ stats.amountThisMonth|money }}</a>
+                </li>
+
+                <li class="list-group-item">
+                    <b>{{ 'stats.durationTotal'|trans }}</b> <a class="pull-right">{{ stats.durationTotal|duration }}</a>
+                </li>
+
+                <li class="list-group-item">
+                    <b>{{ 'stats.amountTotal'|trans }}</b> <a class="pull-right">{{ stats.amountTotal|money }}</a>
+                </li>
+
+            </ul>
+
+            {# <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> #}
+        </div>
+        <!-- /.box-body -->
+    </div>
+{% endmacro %}
+
+{# -------------------------------- UNUSED FOR NOW -------------------------------- #}
+{% macro profile_list_unused(user, items, color) %}
     {% import "AvanzuAdminThemeBundle:layout:macros.html.twig" as macro %}
     <div class="box box-widget widget-user-2">
         <!-- Add the bg color to the header using any of the bg-* classes -->
@@ -37,11 +185,11 @@
     </div>
 {% endmacro %}
 
-{% macro profile_box(user, stats, color) %}
+{# -------------------------------- UNUSED FOR NOW -------------------------------- #}
+{% macro profile_box_unused(user, stats, color) %}
     {% import "AvanzuAdminThemeBundle:layout:macros.html.twig" as macro %}
 
     <div class="box box-widget widget-user">
-        <!-- Add the bg color to the header using any of the bg-* classes -->
         <div class="widget-user-header bg-{{ color|default(kimai_context.box_color) }}">
             <h3 class="widget-user-username">{{ user.alias }} ({{ user.username }})</h3>
             <h5 class="widget-user-desc">{{ user.title }}</h5>

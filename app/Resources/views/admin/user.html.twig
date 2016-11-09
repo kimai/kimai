@@ -16,17 +16,24 @@
             'label.title': 'graduation-cap',
             'label.active': 'lock',
             'label.roles': 'users',
+            'label.actions': 'pencil-square-o',
         }) }}
 
         {% for entry in entries %}
             <tr>
                 <td>{{ entry.id }}</td>
-                <td>{{ entry.username }}</td>
+                <td><a href="{{ path('user_profile', {'username' : entry.username}) }}">{{ entry.username }}</a></td>
                 <td>{{ entry.alias }}</td>
                 <td>{{ entry.email }}</td>
                 <td>{{ entry.title }}</td>
                 <td>{{ widgets.label_visible(entry.active) }}</td>
                 <td>{{ entry.roles|join(',')|trans }}</td>
+                <td>
+                    {{ widgets.button_group({
+                        'edit': path('user_profile', {'username' : entry.username}),
+                        'trash': path('user_profile_delete', {'username' : entry.username})
+                    }) }}
+                </td>
             </tr>
         {% endfor %}
 

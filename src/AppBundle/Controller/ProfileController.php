@@ -11,12 +11,22 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\User;
+use AppBundle\Form\UserEditType;
+use AppBundle\Form\UserPasswordType;
+use AppBundle\Repository\UserRepository;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TimesheetBundle\Entity\Timesheet;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use TimesheetBundle\Model\TimesheetStatistic;
+use TimesheetBundle\Repository\TimesheetRepository;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * User profile controller
@@ -29,45 +39,189 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 class ProfileController extends Controller
 {
     /**
-     * @Route("/", defaults={"ident": null}, name="user_profile")
-     * @Route("/{ident}/", requirements={"ident": "[a-zA-Z0-9\-].*"}, name="user_profile_ident")
+     * @Route("/{username}", name="user_profile")
      * @Method("GET")
      */
-    public function indexAction($ident)
+    public function indexAction($username)
     {
-        $user = $this->getUser();
+        $user = $this->getUserByUsername($username);
 
-        $isAdmin = false;
-        if ($isAdmin) {
-        } else {
-        }
+        return $this->getProfileView($user);
+    }
 
+    /**
+     * @param User $user
+     * @param Form $editForm
+     * @param Form $pwdForm
+     * @param string $tab
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function getProfileView(User $user, Form $editForm = null, Form $pwdForm = null, $tab = 'charts')
+    {
+        /* @var $timesheetRepo TimesheetRepository */
         $timesheetRepo = $this->getDoctrine()->getRepository(Timesheet::class);
         $userStats = $timesheetRepo->getUserStatistics($user);
+        $monthlyStats = $timesheetRepo->getMonthlyStats($user);
 
-        // FIXME fetch values dynamically and add trans filter to macros
-        $items = [
-            [
-                'title' => 'Stundenlohn',
-                'url' => '#',
-                'color' => 'blue', // aqua, red, green
-                'value' => 70
-            ],
-            [
-                'title' => 'Sprache',
-                'url' => '#',
-                'color' => 'green', // aqua, red, green
-                'value' => 'deutsch'
-            ],
-        ];
+        $editForm = $editForm !== null ? $editForm : $this->createEditForm($user);
+        $pwdForm = $pwdForm !== null ? $pwdForm : $this->createPasswordForm($user);
 
         return $this->render(
             'user/profile.html.twig',
             [
-                'user' => $this->getUser(),
-                'settings' => $items,
-                'stats' => $userStats
+                'tab' => $tab,
+                'user' => $user,
+                'stats' => $userStats,
+                'years' => $monthlyStats,
+                'form' => $editForm->createView(),
+                'form_password' => $pwdForm->createView(),
             ]
         );
+    }
+
+    /**
+     * @Route("/{username}/edit", name="user_profile_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editAction($username, Request $request)
+    {
+        $user = $this->getUserByUsername($username);
+        $editForm = $this->createEditForm($user);
+
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'action.updated_successfully');
+
+            return $this->redirectToRoute(
+                'user_profile', ['username' => $user->getUsername()]
+            );
+        }
+
+        return $this->getProfileView($user, $editForm, null, 'profile');
+    }
+
+    /**
+     * @Route("/{username}/password", name="user_profile_password")
+     * @Method({"GET", "POST"})
+     */
+    public function passwordAction($username, Request $request)
+    {
+        $user = $this->getUserByUsername($username);
+        $pwdForm = $this->createPasswordForm($user);
+
+        $pwdForm->handleRequest($request);
+
+        if ($pwdForm->isSubmitted() && $pwdForm->isValid()) {
+            $password = $this->get('security.password_encoder')
+                ->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($password);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'action.updated_successfully');
+
+            return $this->redirectToRoute(
+                'user_profile', ['username' => $user->getUsername()]
+            );
+        }
+
+        return $this->getProfileView($user, null, $pwdForm, 'password');
+    }
+
+    /**
+     * FIXME
+     * @Route("/{username}/delete", name="user_profile_delete")
+     * @Method({"GET", "POST"})
+     */
+    public function deleteAction($username, Request $request)
+    {
+        $user = $this->getUserByUsername($username);
+        $deleteForm = $this->createDeleteForm($user);
+
+        throw new \Exception('Delete not implemented yet');
+    }
+
+    /**
+     * @param $username
+     * @return User
+     * @throws NotFoundHttpException
+     */
+    protected function getUserByUsername($username)
+    {
+        $user = $this->getUser();
+
+        // access to own profile always allowed
+        if (null === $username) {
+            $username = $user->getUsername();
+        }
+
+        if ($username !== $user->getUsername()) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page'); // TODO translation
+        }
+
+        if ($username !== $user->getUsername()) {
+            /* @var $userRepo UserRepository */
+            $userRepo = $this->getDoctrine()->getRepository(User::class);
+            $user = $userRepo->findByUsername($username);
+            if (null === $user) {
+                throw new NotFoundHttpException('User "'.$username.'" does not exist');
+            }
+        }
+
+        return $user;
+    }
+
+    /**
+     * @param User $user
+     * @return \Symfony\Component\Form\Form
+     */
+    private function createEditForm(User $user)
+    {
+        return $this->createForm(
+            UserEditType::class,
+            $user,
+            [
+                'action' => $this->generateUrl('user_profile_edit', ['username' => $user->getUsername()]),
+                'method' => 'POST'
+            ]
+        );
+    }
+
+    /**
+     * @param User $user
+     * @return \Symfony\Component\Form\Form
+     */
+    private function createPasswordForm(User $user)
+    {
+        return $this->createForm(
+            UserPasswordType::class,
+            $user,
+            [
+                'validation_groups' => array('passwordUpdate'),
+                'action' => $this->generateUrl('user_profile_password', ['username' => $user->getUsername()]),
+                'method' => 'POST'
+            ]
+        );
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm(User $user)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('user_profile_delete', ['username' => $user->getUsername()]))
+            ->setMethod('DELETE')
+            ->getForm()
+            ;
     }
 }

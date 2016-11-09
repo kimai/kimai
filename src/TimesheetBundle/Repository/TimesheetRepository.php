@@ -18,6 +18,8 @@ use Doctrine\ORM\Query;
 use Doctrine\DBAL\Types\Type;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
+use TimesheetBundle\Model\Statistic\Month;
+use TimesheetBundle\Model\Statistic\Year;
 use TimesheetBundle\Model\TimesheetGlobalStatistic;
 use TimesheetBundle\Model\TimesheetStatistic;
 use DateTime;
@@ -30,13 +32,29 @@ use DateTime;
 class TimesheetRepository extends EntityRepository
 {
 
+    /**
+     * @param $select
+     * @param User|null $user
+     * @return \Doctrine\ORM\QueryBuilder
+     */
     protected function queryThisMonth($select, User $user = null)
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-
-        // FIXME
         $end = new DateTime();
-        $begin = $end->sub(new \DateInterval("P30D"));
+        $begin = $end->sub(new \DateInterval("P30D"));  // FIXME last month is not last 30 days
+
+        return $this->queryTimeRange($select, $begin, $end, $user);
+    }
+
+    /**
+     * @param $select
+     * @param DateTime $begin
+     * @param DateTime $end
+     * @param User|null $user
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function queryTimeRange($select, DateTime $begin, DateTime $end, User $user = null)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb->select($select)
             ->from('TimesheetBundle:Timesheet', 't')
@@ -52,6 +70,7 @@ class TimesheetRepository extends EntityRepository
 
         return $qb;
     }
+
     /**
      * Fetch statistic data for one user.
      *
@@ -74,14 +93,65 @@ class TimesheetRepository extends EntityRepository
         $durationMonth = $this->queryThisMonth('SUM(t.duration)', $user)
             ->getQuery()
             ->getSingleScalarResult();
+        $firstEntry = $this->getEntityManager()
+            ->createQuery('SELECT MIN(t.begin) FROM TimesheetBundle:Timesheet t WHERE t.user = :user')
+            ->setParameter('user', $user)
+            ->getSingleScalarResult();
 
         $stats = new TimesheetStatistic();
         $stats->setAmountTotal($rateTotal);
         $stats->setDurationTotal($durationTotal);
         $stats->setAmountThisMonth($amountMonth);
         $stats->setDurationThisMonth($durationMonth);
+        $stats->setFirstEntry(new DateTime($firstEntry));
 
         return $stats;
+    }
+
+    /**
+     * Returns an array of Year statistics.
+     *
+     * @param User|null $user
+     * @return Year[]
+     */
+    public function getMonthlyStats(User $user = null)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('SUM(t.rate) as totalRate, SUM(t.duration) as totalDuration, MONTH(t.begin) as month, YEAR(t.begin) as year')
+            ->from('TimesheetBundle:Timesheet', 't')
+            ->where($qb->expr()->gt('t.begin', '0'))
+            ->andWhere($qb->expr()->isNotNull('t.end'))
+            ->orderBy('year', 'DESC')
+            ->addOrderBy('month', 'ASC')
+            ->groupBy('year')
+            ->addGroupBy('month');
+
+        if (null !== $user) {
+            $qb->where('t.user = :user')
+                ->setParameter('user', $user);
+        }
+
+        $years = [];
+        foreach($qb->getQuery()->execute() as $statRow) {
+            $curYear = $statRow['year'];
+
+            if (!isset($years[$curYear])) {
+                $year = new Year($curYear);
+                for ($i = 1; $i < 13; $i++) {
+                    $month = $i < 10 ? '0' . $i : (string)$i;
+                    $year->setMonth(new Month($month));
+                }
+                $years[$curYear] = $year;
+            }
+
+            $month = new Month($statRow['month']);
+            $month->setTotalDuration($statRow['totalDuration'])
+                ->setTotalRate($statRow['totalRate']);
+            $years[$curYear]->setMonth($month);
+        }
+
+        return $years;
     }
 
     /**
@@ -133,8 +203,8 @@ class TimesheetRepository extends EntityRepository
 
         $qb->select('t')
             ->from('TimesheetBundle:Timesheet', 't')
-            ->where('t.begin > 0')
-            ->andWhere('t.end is NULL');
+            ->where($qb->expr()->gt('t.begin', '0'))
+            ->andWhere($qb->expr()->isNull('t.end'));
 
         $params = [];
 

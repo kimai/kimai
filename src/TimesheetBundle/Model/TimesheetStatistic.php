@@ -11,6 +11,8 @@
 
 namespace TimesheetBundle\Model;
 
+use \DateTime;
+
 /**
  * Timesheet statistics
  *
@@ -34,6 +36,10 @@ class TimesheetStatistic
      * @var int
      */
     protected $amountTotal = 0;
+    /**
+     * @var \DateTime
+     */
+    protected $firstEntry;
 
     /**
      * @return int
@@ -97,5 +103,21 @@ class TimesheetStatistic
     public function setAmountThisMonth($amountThisMonth)
     {
         $this->amountThisMonth = $amountThisMonth;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getFirstEntry()
+    {
+        return $this->firstEntry;
+    }
+
+    /**
+     * @param DateTime $firstEntry
+     */
+    public function setFirstEntry(DateTime $firstEntry)
+    {
+        $this->firstEntry = $firstEntry;
     }
 }

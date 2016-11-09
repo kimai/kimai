@@ -1,0 +1,13 @@
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">{{ user.username }}</h3>
+    </div>
+    {{ form_start(form) }}
+    <div class="box-body">
+         {{ form_widget(form) }}
+    </div>
+    <div class="box-footer">
+        <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
+    </div>
+    {{ form_end(form) }}
+</div>

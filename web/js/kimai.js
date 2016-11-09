@@ -10,7 +10,6 @@ $(document).ready(function() {
             },
             hook: function(name) {
                 alert('Hook: ' + name);
-                console.log($.fn.kimai.settings);
             },
             subscribe: function() {
                 pubSub.on.apply(pubSub, arguments);
@@ -31,9 +30,6 @@ $(document).ready(function() {
         };
 
         $.fn.kimai = function(options) {
-            console.log('#');
-            console.log(options);
-            console.log('#');
             if (methods[options]) {
                 return methods[options].apply( this, Array.prototype.slice.call(arguments, 1));
             } else if (typeof options === 'object') {

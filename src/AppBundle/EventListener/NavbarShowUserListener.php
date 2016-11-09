@@ -29,11 +29,18 @@ class NavbarShowUserListener
      */
     protected $storage;
 
+    /**
+     * NavbarShowUserListener constructor.
+     * @param TokenStorageInterface $tokenStorage
+     */
     public function __construct(TokenStorageInterface $tokenStorage)
     {
         $this->storage = $tokenStorage;
     }
 
+    /**
+     * @param ShowUserEvent $event
+     */
     public function onShowUser(ShowUserEvent $event)
     {
         /* @var $myUser User */
@@ -51,8 +58,7 @@ class NavbarShowUserListener
             ->setIsOnline(true)
             ->setTitle($myUser->getTitle())
             ->setAvatar($myUser->getAvatar())
-            ->setMemberSince(new \DateTime()) // FIXME add column to entity
-        ;
+            ->setMemberSince(new \DateTime());
 
         $event->setUser($user);
     }
