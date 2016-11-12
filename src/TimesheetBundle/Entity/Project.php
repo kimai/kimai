@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Project
  *
- * @ORM\Table(name="projects", indexes={@ORM\Index(name="customerID", columns={"customerID"})})
+ * @ORM\Table(name="projects")
  * @ORM\Entity(repositoryClass="TimesheetBundle\Repository\ProjectRepository")
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
@@ -34,12 +34,11 @@ class Project
     private $id;
 
     /**
-     * FIXME manytoone
-     * @var integer
+     * @var Customer
      *
-     * @ORM\Column(name="customerID", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="TimesheetBundle\Entity\Customer", inversedBy="projects")
      */
-    private $customerid;
+    private $customer;
 
     /**
      * @var string
@@ -87,27 +86,21 @@ class Project
     }
 
     /**
-     * Set customerid
-     *
-     * @param integer $customerid
-     *
-     * @return Project
+     * @return Customer
      */
-    public function setCustomerId($customerid)
+    public function getCustomer()
     {
-        $this->customerid = $customerid;
-
-        return $this;
+        return $this->customer;
     }
 
     /**
-     * Get customerid
-     *
-     * @return integer
+     * @param $customer
+     * @return $this
      */
-    public function getCustomerId()
+    public function setCustomer($customer)
     {
-        return $this->customerid;
+        $this->customer = $customer;
+        return $this;
     }
 
     /**

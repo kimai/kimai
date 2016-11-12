@@ -9,6 +9,14 @@
         <source>browser.title</source>
         <target>Kimai - Time Tracking</target>
       </trans-unit>
+      <trans-unit id="yes">
+        <source>yes</source>
+        <target>Ja</target>
+      </trans-unit>
+      <trans-unit id="no">
+        <source>no</source>
+        <target>Nein</target>
+      </trans-unit>
 
       <!--
         Login / Security
@@ -220,6 +228,10 @@
       <trans-unit id="action.save">
         <source>action.save</source>
         <target>Speichern</target>
+      </trans-unit>
+      <trans-unit id="action.back">
+        <source>action.back</source>
+        <target>Zurück</target>
       </trans-unit>
       <trans-unit id="action.updated_successfully">
         <source>action.updated_successfully</source>

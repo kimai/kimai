@@ -88,7 +88,7 @@ class Extensions extends \Twig_Extension
         $second = $seconds % 60;
         $second = $second > 9 ? $second : '0' . $second;
 
-        return $hour . ':' . $minute  . ':' . $second;
+        return $hour . ':' . $minute  . ':' . $second . 'h';
     }
 
     /**

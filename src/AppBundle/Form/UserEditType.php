@@ -12,8 +12,9 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\User;
+use AppBundle\Form\Type\LanguageType;
+use AppBundle\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -47,8 +48,13 @@ class UserEditType extends AbstractType
             // string - length 5
             ->add('language', LanguageType::class, [
                 'label' => 'label.language',
-                'choices' => array('Deutsch' => 'de') // FIXME translation
             ])
+            // boolean
+            ->add('active', YesNoType::class, [
+                'label' => 'label.active',
+            ])
+            // TODO avatar
+            // TODO roles - see ProfileController::getRoles()
         ;
     }
 

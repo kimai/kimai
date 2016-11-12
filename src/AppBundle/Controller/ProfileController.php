@@ -79,6 +79,19 @@ class ProfileController extends Controller
         );
     }
 
+    protected function getRoles()
+    {
+        $roles = array();
+        foreach ($this->getParameter('security.role_hierarchy.roles') as $key => $value) {
+            $roles[] = $key;
+            foreach ($value as $value2) {
+                $roles[] = $value2;
+            }
+        }
+        $roles = array_unique($roles);
+        return $roles;
+    }
+
     /**
      * @Route("/{username}/edit", name="user_profile_edit")
      * @Method({"GET", "POST"})

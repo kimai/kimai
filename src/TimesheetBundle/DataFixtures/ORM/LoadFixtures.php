@@ -13,12 +13,10 @@ namespace TimesheetBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\User;
 use TimesheetBundle\Entity\Activity;
+use TimesheetBundle\Entity\Customer;
 use TimesheetBundle\Entity\Project;
 use TimesheetBundle\Entity\Timesheet;
-use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use AppBundle\DataFixtures\ORM\LoadFixtures as AppBundleLoadFixtures;
 
 /**
@@ -43,6 +41,7 @@ class LoadFixtures extends AppBundleLoadFixtures
      */
     public function load(ObjectManager $manager)
     {
+        $this->loadCustomers($manager);
         $this->loadProjects($manager);
         $this->loadActivities($manager);
         $this->loadTimesheet($manager);
@@ -57,6 +56,21 @@ class LoadFixtures extends AppBundleLoadFixtures
         $all = [];
         /* @var User[] $entries */
         $entries = $manager->getRepository(User::class)->findAll();
+        foreach ($entries as $temp) {
+            $all[$temp->getId()] = $temp;
+        }
+        return $all;
+    }
+
+    /**
+     * @param ObjectManager $manager
+     * @return Customer[]
+     */
+    protected function getAllCustomers(ObjectManager $manager)
+    {
+        $all = [];
+        /* @var Customer[] $entries */
+        $entries = $manager->getRepository(Customer::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
         }
@@ -131,15 +145,37 @@ class LoadFixtures extends AppBundleLoadFixtures
         $manager->flush();
     }
 
+    private function loadCustomers(ObjectManager $manager)
+    {
+        $allTimezones = \DateTimeZone::listIdentifiers();
+        $amountTimezone = count($allTimezones);
+
+        for ($i = 0; $i <= self::AMOUNT_CUSTOMER; $i++) {
+
+            $entry = new Customer();
+            $entry->setName($this->getRandomCustomer());
+            $entry->setCity($this->getRandomLocation());
+            $entry->setComment($this->getRandomPhrase());
+            $entry->setVisible($i % 3 != 0);
+            $entry->setTimezone($allTimezones[rand(1, $amountTimezone)]);
+
+            $manager->persist($entry);
+        }
+        $manager->flush();
+    }
+
     private function loadProjects(ObjectManager $manager)
     {
+        $allCustomer = $this->getAllCustomers($manager);
+        $amountCustomer = count($allCustomer);
+
         for ($i = 0; $i <= self::AMOUNT_PROJECTS; $i++) {
 
             $entry = new Project();
             $entry->setName($this->getRandomProject());
             $entry->setBudget(rand(1000, 100000));
             $entry->setComment($this->getRandomPhrase());
-            $entry->setCustomerId(rand(1, self::AMOUNT_CUSTOMER));          // TODO should be a user object
+            $entry->setCustomer($allCustomer[rand(1, $amountCustomer)]);
             $entry->setVisible($i % 3 != 0);
 
             $manager->persist($entry);
@@ -225,6 +261,28 @@ class LoadFixtures extends AppBundleLoadFixtures
     private function getRandomLocation()
     {
         $all = $this->getLocations();
+        return $all[array_rand($all)];
+    }
+
+    private function getCustomers()
+    {
+        return [
+            'Acme University',
+            'Snake Oil',
+            'Apple',
+            'Microsoft',
+            'Google',
+            'Oracle',
+            'Yahoo',
+            'Twitter',
+            'Zend',
+            'SensioLabs',
+        ];
+    }
+
+    private function getRandomCustomer()
+    {
+        $all = $this->getCustomers();
         return $all[array_rand($all)];
     }
 }

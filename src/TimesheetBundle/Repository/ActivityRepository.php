@@ -12,6 +12,7 @@
 namespace TimesheetBundle\Repository;
 
 use AppBundle\Entity\User;
+use TimesheetBundle\Entity\Activity;
 use TimesheetBundle\Entity\Timesheet;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
@@ -27,6 +28,15 @@ use TimesheetBundle\Model\ActivityStatistic;
 class ActivityRepository extends EntityRepository
 {
 
+    /**
+     * @param $id
+     * @return null|Activity
+     */
+    public function getById($id)
+    {
+        return $this->find($id);
+    }
+    
     /**
      * Return statistic data for all user.
      *

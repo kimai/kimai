@@ -5,9 +5,5 @@
 
 {% block main %}
     {{ include('default/_flash_messages.html.twig') }}
-
-    {{ include('admin/user/_form.html.twig', {
-        user: user,
-        form: form,
-    }, with_context = false) }}
+    {{ include('default/_form.html.twig', {'title': user.username, 'form': form}) }}
 {% endblock %}

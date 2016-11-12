@@ -6,6 +6,8 @@
 {% block page_subtitle %}{{ 'admin_activity.subtitle'|trans }}{% endblock %}
 
 {% block main %}
+    {{ include('default/_flash_messages.html.twig') }}
+
     {% if entries.count > 0 %}
         {{ tables.data_table_header({
             'label.id': '',
@@ -24,7 +26,10 @@
                 <td>{{ entry.comment }}</td>
                 <td>{{ widgets.label_visible(entry.visible) }}</td>
                 <td>
-                    {{ widgets.button_group({'edit': '#', 'trash': '#'}) }}
+                    {{ widgets.button_group({
+                        'edit': path('admin_activity_edit', {'id': entry.id}),
+                        'trash': '#'}
+                    ) }}
                 </td>
             </tr>
         {% endfor %}

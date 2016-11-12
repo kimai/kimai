@@ -48,6 +48,13 @@ class Customer
     private $comment;
 
     /**
+     * @var Project[]
+     *
+     * @ORM\OneToMany(targetEntity="TimesheetBundle\Entity\Project", mappedBy="customer")
+     */
+    private $projects;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="visible", type="boolean", nullable=false)
