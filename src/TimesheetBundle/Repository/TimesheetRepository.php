@@ -39,8 +39,10 @@ class TimesheetRepository extends EntityRepository
      */
     protected function queryThisMonth($select, User $user = null)
     {
-        $end = new DateTime();
-        $begin = $end->sub(new \DateInterval("P30D"));  // FIXME last month is not last 30 days
+        $end = new DateTime('last day of this month');
+        $end->setTime(23, 59, 59);
+        $begin = new DateTime('first day of this month');
+        $begin->setTime(0,0,0);
 
         return $this->queryTimeRange($select, $begin, $end, $user);
     }
@@ -59,7 +61,7 @@ class TimesheetRepository extends EntityRepository
         $qb->select($select)
             ->from('TimesheetBundle:Timesheet', 't')
             ->where($qb->expr()->gt('t.begin', ':from'))
-            ->andWhere($qb->expr()->gt('t.end', ':to'))
+            ->andWhere($qb->expr()->lt('t.end', ':to'))
             ->setParameter('from', $begin, Type::DATETIME)
             ->setParameter('to', $end, Type::DATETIME);
 

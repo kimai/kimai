@@ -12,6 +12,12 @@
             "app/AppCache.php"
         ]
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/kevinpapst/AdminThemeBundle"
+        }
+    ],
     "require": {
         "php": ">=5.5.9",
         "ext-pdo_sqlite": "*",
@@ -31,7 +37,7 @@
         "symfony/symfony": "^3.1",
         "twig/extensions": "^1.3",
         "white-october/pagerfanta-bundle": "^1.0",
-        "avanzu/admin-theme-bundle": "dev-feature/2.0",
+        "avanzu/admin-theme-bundle": "dev-feature/2.0-advanced",
         "beberlei/DoctrineExtensions": "^1.0"
     },
     "require-dev": {

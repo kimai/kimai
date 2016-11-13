@@ -6,10 +6,13 @@
 {% block page_subtitle %}{{ 'admin_project.subtitle'|trans }}{% endblock %}
 
 {% block main %}
+    {{ include('default/_flash_messages.html.twig') }}
+
     {% if entries.count > 0 %}
         {{ tables.data_table_header({
             'label.id': '',
             'label.name': 'bookmark-o',
+            'label.customer': 'address-card-o',
             'label.comment': 'comment-o',
             'label.activity': 'tasks',
             'label.budget': 'credit-card',
@@ -21,12 +24,16 @@
             <tr>
                 <td>{{ entry.id }}</td>
                 <td>{{ entry.name }}</td>
+                <td>{{ entry.customer.name }}</td>
                 <td>{{ entry.comment }}</td>
                 <td>{{ widgets.badge_counter(entry.activities.count) }}</td>
-                <td>{{ entry.budget|money}}</td>
+                <td>{{ entry.budget|money(entry.currency) }}</td>
                 <td>{{ widgets.label_visible(entry.visible) }}</td>
                 <td>
-                    {{ widgets.button_group({'edit': '#', 'trash': '#'}) }}
+                    {{ widgets.button_group({
+                        'edit': path('admin_project_edit', {'id': entry.id}),
+                        'trash': '#'
+                    }) }}
                 </td>
             </tr>
         {% endfor %}

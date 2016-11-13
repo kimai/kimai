@@ -12,7 +12,7 @@
 namespace TimesheetBundle\Repository;
 
 use AppBundle\Entity\User;
-use TimesheetBundle\Entity\Timesheet;
+use TimesheetBundle\Entity\Project;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
@@ -26,6 +26,15 @@ use TimesheetBundle\Model\ProjectStatistic;
  */
 class ProjectRepository extends EntityRepository
 {
+
+    /**
+     * @param $id
+     * @return null|Project
+     */
+    public function getById($id)
+    {
+        return $this->find($id);
+    }
 
     /**
      * Return statistic data for all user.

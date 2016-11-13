@@ -1,26 +1,26 @@
 <?php
 
 /*
- * This file is part of the Symfony package.
+ * This file is part of the Kimai package.
  *
- * (c) Fabien Potencier <fabien@symfony.com>
+ * (c) Kevin Papst <kevin@kevinpapst.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace AppBundle\Form\Type;
+namespace TimesheetBundle\Form\Type;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Custom form field type to select between Yes and No.
+ * Custom form field type to select a customer.
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class YesNoType extends AbstractType
+class CustomerType extends AbstractType
 {
 
     /**
@@ -29,9 +29,8 @@ class YesNoType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'choices' => ['yes' => true, 'no' => false],
-            'multiple' => false,
-            'expanded' => true,
+            'class' => 'TimesheetBundle:Customer',
+            'choice_label' => 'name',
         ]);
     }
 
@@ -40,6 +39,6 @@ class YesNoType extends AbstractType
      */
     public function getParent()
     {
-        return ChoiceType::class;
+        return EntityType::class;
     }
 }

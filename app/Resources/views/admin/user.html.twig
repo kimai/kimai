@@ -10,8 +10,8 @@
     {% if entries.count > 0 %}
         {{ tables.data_table_header({
             'label.id': '',
+            'label.alias': 'bookmark-o',
             'label.username': 'user',
-            'label.alias': 'comment-o',
             'label.email': 'envelope-o',
             'label.title': 'graduation-cap',
             'label.active': 'lock',
@@ -22,8 +22,8 @@
         {% for entry in entries %}
             <tr>
                 <td>{{ entry.id }}</td>
-                <td><a href="{{ path('user_profile', {'username' : entry.username}) }}">{{ entry.username }}</a></td>
                 <td>{{ entry.alias }}</td>
+                <td>{{ entry.username }}</td>
                 <td>{{ entry.email }}</td>
                 <td>{{ entry.title }}</td>
                 <td>{{ widgets.label_visible(entry.active) }}</td>

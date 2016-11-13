@@ -12,6 +12,7 @@
 namespace TimesheetBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\User;
+use Symfony\Component\Intl\Intl;
 use TimesheetBundle\Entity\Activity;
 use TimesheetBundle\Entity\Customer;
 use TimesheetBundle\Entity\Project;
@@ -173,6 +174,7 @@ class LoadFixtures extends AppBundleLoadFixtures
 
             $entry = new Project();
             $entry->setName($this->getRandomProject());
+            $entry->setCurrency($this->getRandomCurrency());
             $entry->setBudget(rand(1000, 100000));
             $entry->setComment($this->getRandomPhrase());
             $entry->setCustomer($allCustomer[rand(1, $amountCustomer)]);
@@ -202,6 +204,9 @@ class LoadFixtures extends AppBundleLoadFixtures
         $manager->flush();
     }
 
+    /**
+     * @return string[]
+     */
     private function getActivities()
     {
         return [
@@ -213,33 +218,51 @@ class LoadFixtures extends AppBundleLoadFixtures
             'Internal',
             'Research',
             'Meeting',
+            'Hosting',
+            'Relaunch',
+            'Support',
+            'Refactoring',
+            'Interview',
         ];
     }
 
+    /**
+     * @return string
+     */
     private function getRandomActivity()
     {
         $all = $this->getActivities();
         return $all[array_rand($all)];
     }
 
+    /**
+     * @return string[]
+     */
     private function getProjects()
     {
         return [
-            'FooBar',
-            'Relaunch',
-            'Refactoring',
+            'User Experience',
+            'Database Migration',
             'Test Automatisation',
-            'Website redesign',
-            'Services',
+            'Website Redesign',
+            'API Development',
+            'Hosting & Server',
+            'Customer Relations',
         ];
     }
 
+    /**
+     * @return string
+     */
     private function getRandomProject()
     {
         $all = $this->getProjects();
         return $all[array_rand($all)];
     }
 
+    /**
+     * @return string[]
+     */
     private function getLocations()
     {
         return [
@@ -258,12 +281,18 @@ class LoadFixtures extends AppBundleLoadFixtures
         ];
     }
 
+    /**
+     * @return string
+     */
     private function getRandomLocation()
     {
         $all = $this->getLocations();
         return $all[array_rand($all)];
     }
 
+    /**
+     * @return string[]
+     */
     private function getCustomers()
     {
         return [
@@ -280,9 +309,37 @@ class LoadFixtures extends AppBundleLoadFixtures
         ];
     }
 
+    /**
+     * @return string
+     */
     private function getRandomCustomer()
     {
         $all = $this->getCustomers();
+        return $all[array_rand($all)];
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getCurrencies()
+    {
+        return [
+            'EUR',
+            'GBP',
+            'USD',
+            'RUB',
+            'JPY',
+            'CNY',
+            'INR'
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    private function getRandomCurrency()
+    {
+        $all = $this->getCurrencies();
         return $all[array_rand($all)];
     }
 }

@@ -100,7 +100,7 @@ class ActivityRepository extends EntityRepository
      */
     public function findAll($page = 1)
     {
-        return $this->getPager($this->queryLatest(), $page);
+        return $this->getPager($this->queryAll(), $page);
     }
 
     /**

@@ -69,9 +69,16 @@ class Project
     private $budget = 0.00;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="currency", type="string", length=3, nullable=false)
+     */
+    private $currency = 'EUR';
+
+    /**
      * @var Activity[]
      *
-     * @ORM\OneToMany(targetEntity="TimesheetBundle\Entity\Activity", mappedBy="project")
+     * @ORM\OneToMany(targetEntity="TimesheetBundle\Entity\Activity", mappedBy="project", cascade={"persist", "merge", "remove"})
      */
     private $activities;
 
@@ -83,6 +90,25 @@ class Project
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+
+    /**
+     * @param string $currency
+     * @return $this
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
+
+        return $this;
     }
 
     /**
@@ -197,6 +223,17 @@ class Project
     public function getBudget()
     {
         return $this->budget;
+    }
+
+    /**
+     * @param Activity[] $activities
+     * @return $this
+     */
+    public function setActivities($activities)
+    {
+        $this->activities = $activities;
+
+        return $this;
     }
 
     /**

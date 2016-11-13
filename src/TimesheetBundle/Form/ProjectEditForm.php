@@ -12,20 +12,22 @@
 namespace TimesheetBundle\Form;
 
 use AppBundle\Form\Type\YesNoType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Intl\Intl;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use TimesheetBundle\Entity\Activity;
-use TimesheetBundle\Form\Type\ProjectType;
+use TimesheetBundle\Entity\Project;
+use TimesheetBundle\Form\Type\CustomerType;
 
 /**
- * Defines the form used to manipulate Activities.
+ * Defines the form used to manipulate Projects.
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class ActivityEditForm extends AbstractType
+class ProjectEditForm extends AbstractType
 {
 
     /**
@@ -35,22 +37,38 @@ class ActivityEditForm extends AbstractType
     {
         $builder
             // string - length 255
-            ->add('name', TextType::class, [
+            ->add('name', null, [
                 'label' => 'label.name',
             ])
             // text
             ->add('comment', TextareaType::class, [
                 'label' => 'label.comment',
-                'required' => false,
             ])
-            // entity type: project
-            ->add('project', ProjectType::class, [
-                'label' => 'label.project',
+            // customer
+            ->add('customer', CustomerType::class, [
+                'label' => 'label.customer',
             ])
             // boolean
             ->add('visible', YesNoType::class, [
                 'label' => 'label.visible',
             ])
+            // string
+            ->add('budget', MoneyType::class, [
+                'label' => 'label.budget',
+                'currency' => $builder->getOption('currency'),
+            ])
+            // FIXME add budget
+            // do not allow activity selection as this causes headaches:
+            // 1. it is a bad UX
+            // 2. what should happen if they are detached?
+            /*
+            ->add('activities', EntityType::class, [
+                'label' => 'label.activity',
+                'class' => 'TimesheetBundle:Activity',
+                'multiple' => true,
+                'expanded' => true
+            ])
+            */
         ;
     }
 
@@ -60,10 +78,11 @@ class ActivityEditForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Activity::class,
+            'data_class' => Project::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'admin_activity_edit',
+            'currency' => 'EUR,'
         ]);
     }
 }

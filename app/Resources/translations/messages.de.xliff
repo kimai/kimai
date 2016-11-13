@@ -209,6 +209,10 @@
         <source>label.language</source>
         <target>Sprache</target>
       </trans-unit>
+      <trans-unit id="label.customer">
+        <source>label.customer</source>
+        <target>Kunde</target>
+      </trans-unit>
 
       <!--
         Buttons & Actions

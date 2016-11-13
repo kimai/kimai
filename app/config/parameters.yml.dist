@@ -1,6 +1,5 @@
 # This file defines the canonical configuration parameters of the application.
-# Symfony uses this file as a template to generate the real app/config/parameters.yml
-# used by the application.
+# Symfony uses this file as a template to generate the real app/config/parameters.yml used by the application.
 # See http://symfony.com/doc/current/best_practices/configuration.html#canonical-parameters
 parameters:
 
@@ -28,8 +27,8 @@ parameters:
     mailer_password:   ~
     mailer_from:       anonymous@example.com
 
-    # The code of the default language used by the application ('en' = English)
-    locale: en
+    # The code of the default language used by the application ('en' = English, 'de' = German)
+    locale: de
 
     # The 'secret' value is a random string of characters, numbers and symbols
     # used internally by Symfony in several places (CSRF tokens, URI signing,

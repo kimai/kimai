@@ -82,22 +82,23 @@ class Extensions extends \Twig_Extension
         $minute = $minute > 9 ? $minute : '0' . $minute;
 
         if (!$includeSeconds) {
-            return $hour . ':' . $minute;
+            return $hour . ':' . $minute . ' h';
         }
 
         $second = $seconds % 60;
         $second = $second > 9 ? $second : '0' . $second;
 
-        return $hour . ':' . $minute  . ':' . $second . 'h';
+        return $hour . ':' . $minute  . ':' . $second . ' h';
     }
 
     /**
      * @param float $amount
+     * @param string $currency
      * @return string
      */
-    public function money($amount)
+    public function money($amount, $currency = 'EUR')
     {
-        return round($amount) . ' €';
+        return round($amount) . ' ' . Intl::getCurrencyBundle()->getCurrencySymbol($currency);
     }
 
     /**

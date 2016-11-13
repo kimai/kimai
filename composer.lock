@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d5aa01779571420f9166199f60fa2a17",
-    "content-hash": "20dda7356ab7c685ada168dd7e9b7593",
+    "hash": "6823aa58cef4fcd853f97ddd207c7cbd",
+    "content-hash": "a88a2b7ecf31f6e57be9ee123efac828",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
-            "version": "v2.3.7",
+            "version": "v2.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/almasaeed2010/AdminLTE.git",
-                "reference": "797b65b3ca90525a4e048de5b8d02ba6878ea239"
+                "reference": "ced14b133daed8c163863a497c43dcf69eea4340"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/almasaeed2010/AdminLTE/zipball/797b65b3ca90525a4e048de5b8d02ba6878ea239",
-                "reference": "797b65b3ca90525a4e048de5b8d02ba6878ea239",
+                "url": "https://api.github.com/repos/almasaeed2010/AdminLTE/zipball/ced14b133daed8c163863a497c43dcf69eea4340",
+                "reference": "ced14b133daed8c163863a497c43dcf69eea4340",
                 "shasum": ""
             },
             "type": "library",
@@ -45,20 +45,20 @@
                 "theme",
                 "web"
             ],
-            "time": "2016-10-19 15:34:25"
+            "time": "2016-11-04 14:42:55"
         },
         {
             "name": "avanzu/admin-theme-bundle",
-            "version": "dev-feature/2.0",
+            "version": "dev-feature/2.0-advanced",
             "source": {
                 "type": "git",
-                "url": "https://github.com/avanzu/AdminThemeBundle.git",
-                "reference": "b2728cd76434cafd5f37dd0b75fe133429d2b1e0"
+                "url": "https://github.com/kevinpapst/AdminThemeBundle.git",
+                "reference": "9332a142b271d5eccd0d69e71de6b290cc133ae8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/avanzu/AdminThemeBundle/zipball/b2728cd76434cafd5f37dd0b75fe133429d2b1e0",
-                "reference": "b2728cd76434cafd5f37dd0b75fe133429d2b1e0",
+                "url": "https://api.github.com/repos/kevinpapst/AdminThemeBundle/zipball/9332a142b271d5eccd0d69e71de6b290cc133ae8",
+                "reference": "9332a142b271d5eccd0d69e71de6b290cc133ae8",
                 "shasum": ""
             },
             "require": {
@@ -80,7 +80,6 @@
                     "Avanzu\\AdminThemeBundle\\": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -91,7 +90,10 @@
                 }
             ],
             "description": "Admin Theme based on the AdminLTE Template for easy integration into symfony",
-            "time": "2016-08-26 08:28:19"
+            "support": {
+                "source": "https://github.com/kevinpapst/AdminThemeBundle/tree/feature/2.0-advanced"
+            },
+            "time": "2016-11-13 10:50:00"
         },
         {
             "name": "beberlei/DoctrineExtensions",
