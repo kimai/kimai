@@ -26,9 +26,8 @@
                     <table class="table table-striped table-hover dataTable" role="grid">
                         <thead>
                         <tr>
-                            {% for title, icon in entries %}
-                            <th>
-                                {% if kimai_context.table_icons and icon %}<i class="fa fa-{{ icon }}"></i>{% endif %}
+                            {% for title, class in entries %}
+                            <th{% if class %} class="{{ class }}"{% endif %}>
                                 {{ title|trans }}
                             </th>
                             {% endfor %}

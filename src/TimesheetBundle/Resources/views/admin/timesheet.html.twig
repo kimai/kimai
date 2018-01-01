@@ -8,31 +8,31 @@
 {% block main %}
     {% if entries.count > 0 %}
         {{ datatables.data_table_header({
-            'label.date': 'calendar',
-            'label.starttime': 'hourglass-start',
-            'label.endtime': 'hourglass-end',
-            'label.duration': 'clock-o',
-            'label.rate': 'money',
-            'label.username': 'user',
-            'label.description': 'comment-o',
-            'label.actions': 'pencil-square-o',
+            'label.date': '',
+            'label.starttime': 'hidden-xs',
+            'label.endtime': 'hidden-xs',
+            'label.duration': '',
+            'label.rate': '',
+            'label.username': 'hidden-xs',
+            'label.description': 'hidden-xs hidden-sm',
+            'label.actions': '',
         }) }}
 
         {% for entry in entries %}
             <tr>
                 <td>{{ entry.begin|date(kimai_context.date_1) }}</td>
-                <td>{{ entry.begin|date("H:i") }}</td>
+                <td class="hidden-xs">{{ entry.begin|date("H:i") }}</td>
                 {% if entry.end %}
-                    <td>{{ entry.end|date("H:i") }}</td>
+                    <td class="hidden-xs">{{ entry.end|date("H:i") }}</td>
                     <td>{{ entry.duration|duration }}</td>
                     <td>{{ entry.rate|money }}</td>
                 {% else %}
-                    <td>&dash;</td>
+                    <td class="hidden-xs">&dash;</td>
                     <td>&dash;</td>
                     <td>&dash;</td>
                 {% endif %}
-                <td><a href="{{ path('profile'|route_alias, {'username' : entry.user.username}) }}">{{ entry.user.username }}</a></td>
-                <td>{{ entry.description }}</td>
+                <td class="hidden-xs"><a href="{{ path('profile'|route_alias, {'username' : entry.user.username}) }}">{{ entry.user.username }}</a></td>
+                <td class="hidden-xs hidden-sm">{{ entry.description }}</td>
                 <td>
                     {{ widgets.button_group({'edit': '#', 'trash': '#'}) }}
                 </td>

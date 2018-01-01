@@ -10,24 +10,24 @@
 
     {% if entries.count > 0 %}
         {{ tables.data_table_header({
-            'label.id': '',
-            'label.name': 'bookmark-o',
-            'label.customer': 'address-card-o',
-            'label.comment': 'comment-o',
-            'label.activity': 'tasks',
-            'label.budget': 'credit-card',
-            'label.visible': 'eye',
-            'label.actions': 'pencil-square-o',
+            'label.id': 'hidden-xs',
+            'label.name': '',
+            'label.customer': '',
+            'label.comment': 'hidden-xs hidden-sm',
+            'label.activity': 'hidden-xs hidden-sm',
+            'label.budget': 'hidden-xs',
+            'label.visible': '',
+            'label.actions': '',
         }) }}
 
         {% for entry in entries %}
             <tr>
-                <td>{{ entry.id }}</td>
+                <td class="hidden-xs">{{ entry.id }}</td>
                 <td>{{ entry.name }}</td>
                 <td>{{ entry.customer.name }}</td>
-                <td>{{ entry.comment }}</td>
-                <td>{{ widgets.badge_counter(entry.activities.count) }}</td>
-                <td>{{ entry.budget|money(entry.currency) }}</td>
+                <td class="hidden-xs hidden-sm">{{ entry.comment }}</td>
+                <td class="hidden-xs hidden-sm">{{ widgets.badge_counter(entry.activities.count) }}</td>
+                <td class="hidden-xs">{{ entry.budget|money(entry.currency) }}</td>
                 <td>{{ widgets.label_visible(entry.visible) }}</td>
                 <td>
                     {{ widgets.button_group({

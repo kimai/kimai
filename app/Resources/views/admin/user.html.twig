@@ -9,23 +9,23 @@
 {% block main %}
     {% if entries.count > 0 %}
         {{ tables.data_table_header({
-            'label.id': '',
-            'label.alias': 'bookmark-o',
-            'label.username': 'user',
-            'label.email': 'envelope-o',
-            'label.title': 'graduation-cap',
-            'label.active': 'lock',
-            'label.roles': 'users',
-            'label.actions': 'pencil-square-o',
+            'label.id': 'hidden-xs',
+            'label.alias': '',
+            'label.username': 'hidden-xs',
+            'label.email': 'hidden-xs hidden-sm',
+            'label.title': 'hidden-xs',
+            'label.active': '',
+            'label.roles': '',
+            'label.actions': '',
         }) }}
 
         {% for entry in entries %}
             <tr>
-                <td>{{ entry.id }}</td>
+                <td class="hidden-xs">{{ entry.id }}</td>
                 <td>{{ entry.alias }}</td>
-                <td>{{ entry.username }}</td>
-                <td>{{ entry.email }}</td>
-                <td>{{ entry.title }}</td>
+                <td class="hidden-xs">{{ entry.username }}</td>
+                <td class="hidden-xs hidden-sm">{{ entry.email }}</td>
+                <td class="hidden-xs">{{ entry.title }}</td>
                 <td>{{ widgets.label_visible(entry.active) }}</td>
                 <td>{{ entry.roles|join(',')|trans }}</td>
                 <td>

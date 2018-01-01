@@ -8,13 +8,13 @@
 {% block main %}
     {% if entries.count > 0 %}
         {{ datatables.data_table_header({
-            'label.date': 'calendar',
-            'label.starttime': 'hourglass-start',
-            'label.endtime': 'hourglass-end',
-            'label.duration': 'clock-o',
-            'label.rate': 'money',
-            'label.description': 'comment-o',
-            'label.actions': 'pencil-square-o',
+            'label.date': '',
+            'label.starttime': '',
+            'label.endtime': '',
+            'label.duration': 'hidden-xs',
+            'label.rate': 'hidden-xs',
+            'label.description': 'hidden-xs hidden-sm',
+            'label.actions': '',
         }) }}
 
         {% for entry in entries %}
@@ -23,14 +23,14 @@
                 <td>{{ entry.begin|date("H:i") }}</td>
                 {% if entry.end %}
                     <td>{{ entry.end|date("H:i") }}</td>
-                    <td>{{ entry.duration|duration }}</td>
-                    <td>{{ entry.rate|money }}</td>
+                    <td class="hidden-xs">{{ entry.duration|duration }}</td>
+                    <td class="hidden-xs">{{ entry.rate|money }}</td>
                 {% else %}
                     <td>&dash;</td>
-                    <td>&dash;</td>
-                    <td>&dash;</td>
+                    <td class="hidden-xs">&dash;</td>
+                    <td class="hidden-xs">&dash;</td>
                 {% endif %}
-                <td>{{ entry.description }}</td>
+                <td class="hidden-xs hidden-sm">{{ entry.description }}</td>
                 <td>
                     {{ widgets.button_group({'repeat': '#', 'edit': '#', 'trash': '#'}) }}
                 </td>

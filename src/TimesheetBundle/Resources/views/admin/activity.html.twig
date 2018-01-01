@@ -10,20 +10,20 @@
 
     {% if entries.count > 0 %}
         {{ tables.data_table_header({
-            'label.id': '',
-            'label.name': 'bookmark-o',
-            'label.project': 'book',
-            'label.comment': 'comment-o',
-            'label.visible': 'eye',
-            'label.actions': 'pencil-square-o',
+            'label.id': 'hidden-xs',
+            'label.name': '',
+            'label.project': '',
+            'label.comment': 'hidden-xs',
+            'label.visible': '',
+            'label.actions': '',
         }) }}
 
         {% for entry in entries %}
             <tr>
-                <td>{{ entry.id }}</td>
+                <td class="hidden-xs">{{ entry.id }}</td>
                 <td>{{ entry.name }}</td>
                 <td>{{ entry.project }}</td>
-                <td>{{ entry.comment }}</td>
+                <td class="hidden-xs">{{ entry.comment }}</td>
                 <td>{{ widgets.label_visible(entry.visible) }}</td>
                 <td>
                     {{ widgets.button_group({
