@@ -46,3 +46,12 @@
 
 # Backup entities generated with doctrine:generate:entities command
 */Entity/*~
+
+# IDE
+.idea/
+
+# SQLite files
+/app/data/timesheet.sqlite
+
+# generated install and setup files
+/web/theme/
