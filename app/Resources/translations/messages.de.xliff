@@ -2,6 +2,7 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file date="2016-10-19T21:46:45Z" source-language="en" target-language="de" datatype="plaintext" original="not.available">
     <body>
+
       <!--
         Global template keys
       -->
@@ -321,10 +322,6 @@
         <source>profile.tab_monthly</source>
         <target>Jahresstatistik</target>
       </trans-unit>
-      <trans-unit id="profile.avatar">
-        <source>profile.avatar</source>
-        <target>Profilbild</target>
-      </trans-unit>
       <trans-unit id="profile.settings">
         <source>profile.settings</source>
         <target>Einstellungen</target>
@@ -400,6 +397,10 @@
       <trans-unit id="label.title">
         <source>label.title</source>
         <target>Titel</target>
+      </trans-unit>
+      <trans-unit id="label.avatar">
+        <source>label.avatar</source>
+        <target>Profilbild</target>
       </trans-unit>
       <trans-unit id="label.active">
         <source>label.active</source>
@@ -500,6 +501,18 @@
       <trans-unit id="month.12">
         <source>month.12</source>
         <target>Dezember</target>
+      </trans-unit>
+
+       <!--
+        Running time entries top menu
+       -->
+      <trans-unit id="tracking.active">
+        <source>tracking.active</source>
+        <target>Sie haben %count% aktive Einträge</target>
+      </trans-unit>
+      <trans-unit id="tracking.all">
+        <source>tracking.all</source>
+        <target>Alle Einträge anzeigen</target>
       </trans-unit>
 
     </body>
