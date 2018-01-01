@@ -41,6 +41,10 @@ class UserEditType extends AbstractType
                 //'attr' => ['autofocus' => true],
                 'label' => 'label.title',
             ])
+            // string - length 255
+            ->add('avatar', null, [
+                'label' => 'label.avatar',
+            ])
             // string - length 160
             ->add('email', null, [
                 'label' => 'label.email',
@@ -53,7 +57,6 @@ class UserEditType extends AbstractType
             ->add('active', YesNoType::class, [
                 'label' => 'label.active',
             ])
-            // TODO avatar
             // TODO roles - see ProfileController::getRoles()
         ;
     }
