@@ -68,7 +68,7 @@ $ php bin/console server:run
 ```
 
 This command will start a web server for Kimai. Now you can
-access the application in your browser at <http://localhost:8000>. You can
+access the application in your browser at <http://127.0.0.1:8000/en>. You can
 stop the built-in web server by pressing `Ctrl + C` while you're in the
 terminal.
 
