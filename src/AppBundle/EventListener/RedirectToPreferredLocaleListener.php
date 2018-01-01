@@ -57,7 +57,6 @@ class RedirectToPreferredLocaleListener
         if (empty($this->locales)) {
             throw new \UnexpectedValueException('The list of supported locales must not be empty.');
         }
-
         $this->defaultLocale = $defaultLocale ?: $this->locales[0];
 
         if (!in_array($this->defaultLocale, $this->locales)) {
@@ -79,7 +78,7 @@ class RedirectToPreferredLocaleListener
         $request = $event->getRequest();
 
         // Ignore sub-requests and all URLs but the homepage
-        if (!$event->isMasterRequest() || '/' !== $request->getPathInfo()) {
+        if ('/' !== $request->getPathInfo()) {
             return;
         }
         // Ignore requests from referrers with the same HTTP host in order to prevent
@@ -90,9 +89,7 @@ class RedirectToPreferredLocaleListener
 
         $preferredLanguage = $request->getPreferredLanguage($this->locales);
 
-        if ($preferredLanguage !== $this->defaultLocale) {
-            $response = new RedirectResponse($this->urlGenerator->generate('homepage', ['_locale' => $preferredLanguage]));
-            $event->setResponse($response);
-        }
+        $response = new RedirectResponse($this->urlGenerator->generate('homepage', ['_locale' => $preferredLanguage]));
+        $event->setResponse($response);
     }
 }
