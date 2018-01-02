@@ -4,7 +4,7 @@
 {% import "AvanzuAdminThemeBundle:layout:macros.html.twig" as macro %}
 
 {% block page_title %}{{ 'admin_user.title'|trans }}{% endblock %}
-{% block page_subtitle %}{{ 'admin_user.subtitle'|trans }}{% endblock %}
+{% block page_subtitle %}{{ 'admin_user.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
 
 {% block main %}
     {% if entries.count > 0 %}

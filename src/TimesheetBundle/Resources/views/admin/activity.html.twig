@@ -3,7 +3,7 @@
 {% import "macros/datatables.html.twig" as tables %}
 
 {% block page_title %}{{ 'admin_activity.title'|trans }}{% endblock %}
-{% block page_subtitle %}{{ 'admin_activity.subtitle'|trans }}{% endblock %}
+{% block page_subtitle %}{{ 'admin_activity.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
 
 {% block main %}
     {{ include('default/_flash_messages.html.twig') }}
@@ -13,6 +13,7 @@
             'label.id': 'hidden-xs',
             'label.name': '',
             'label.project': '',
+            'label.customer': '',
             'label.comment': 'hidden-xs',
             'label.visible': '',
             'label.actions': '',
@@ -22,7 +23,12 @@
             <tr>
                 <td class="hidden-xs">{{ entry.id }}</td>
                 <td>{{ entry.name }}</td>
-                <td>{{ entry.project }}</td>
+                <td>
+                    <a href="{{ path('admin_project_edit', {'id' : entry.project.id}) }}">{{ widgets.label_project(entry.project) }}</a>
+                </td>
+                <td>
+                    <a href="{{ path('admin_customer_edit', {'id' : entry.project.customer.id}) }}">{{ widgets.label_customer(entry.project.customer) }}</a>
+                </td>
                 <td class="hidden-xs">{{ entry.comment }}</td>
                 <td>{{ widgets.label_visible(entry.visible) }}</td>
                 <td>
