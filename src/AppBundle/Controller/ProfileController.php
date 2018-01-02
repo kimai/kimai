@@ -22,10 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use TimesheetBundle\Model\TimesheetStatistic;
 use TimesheetBundle\Repository\TimesheetRepository;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -175,10 +172,12 @@ class ProfileController extends Controller
             $username = $user->getUsername();
         }
 
+        // only administrator can bypass that part if the requested user is not the current user
         if ($username !== $user->getUsername()) {
             $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page'); // TODO translation
         }
 
+        // if the user is not the current use, load the requested one
         if ($username !== $user->getUsername()) {
             /* @var $userRepo UserRepository */
             $userRepo = $this->getDoctrine()->getRepository(User::class);
