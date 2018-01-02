@@ -32,8 +32,6 @@ class LoadFixtures extends AppBundleLoadFixtures
 {
     const AMOUNT_ACTIVITIES = 10;       // maximum activites per project
     const AMOUNT_TIMESHEET = 1000;      // timesheet entries total
-    const AMOUNT_PROJECTS = 20;         // projects entries total
-    const AMOUNT_CUSTOMER = 10;         // customer entries total
     const RATE_MIN = 10;                // minimum rate for one hour
     const RATE_MAX = 80;                // maximum rate for one hour
 
@@ -115,35 +113,57 @@ class LoadFixtures extends AppBundleLoadFixtures
         $allActivity = $this->getAllActivities($manager);
 
         for ($i = 0; $i <= self::AMOUNT_TIMESHEET; $i++) {
-
-            $startDay = round($i / 2);
-            $start = new \DateTime();
-            $start = $start->modify('- ' . (rand(1, $startDay)) . ' days');
-            $start = $start->modify('- ' . (rand(1, 86400)) . ' seconds');
-
-            $end = clone $start;
-            $end = $end->modify('+ '.(rand(1, 43200)).' seconds');
-
-            //$duration = $end->modify('- ' . $start->getTimestamp() . ' seconds')->getTimestamp();
-            $duration = $end->getTimestamp() - $start->getTimestamp();
-            $rate = rand(self::RATE_MIN, self::RATE_MAX);
-
-            $entry = new Timesheet();
-            $entry->setActivity($allActivity[array_rand($allActivity)]);
-            $entry->setDescription($this->getRandomPhrase());
-            $entry->setUser($allUser[rand(1, $amountUser)]);
-            $entry->setRate(round(($duration / 3600) * $rate));
-            $entry->setBegin($start);
-
-            // leave one running time entry
-            if ($i < self::AMOUNT_TIMESHEET) {
-                $entry->setEnd($end);
-                $entry->setDuration($duration);
-            }
+            $entry = $this->createTimesheetEntry(
+                $allUser[rand(1, $amountUser)],
+                $allActivity[array_rand($allActivity)],
+                round($i / 2),
+                true
+            );
 
             $manager->persist($entry);
         }
+
+        // leave one running time entry for each user
+        for ($i = 1; $i <= $amountUser; $i++) {
+            $entry = $this->createTimesheetEntry(
+                $allUser[$i],
+                $allActivity[array_rand($allActivity)]
+            );
+
+            $manager->persist($entry);
+        }
+
         $manager->flush();
+    }
+
+    private function createTimesheetEntry(User $user, Activity $activity, $startDay = 0, $setEndDate = false)
+    {
+        $start = new \DateTime();
+        if ($startDay > 0) {
+            $start = $start->modify('- ' . (rand(1, $startDay)) . ' days');
+        }
+        $start = $start->modify('- ' . (rand(1, 86400)) . ' seconds');
+
+        $end = clone $start;
+        $end = $end->modify('+ ' . (rand(1, 43200)) . ' seconds');
+
+        //$duration = $end->modify('- ' . $start->getTimestamp() . ' seconds')->getTimestamp();
+        $duration = $end->getTimestamp() - $start->getTimestamp();
+        $rate = rand(self::RATE_MIN, self::RATE_MAX);
+
+        $entry = new Timesheet();
+        $entry->setActivity($activity);
+        $entry->setDescription($this->getRandomPhrase());
+        $entry->setUser($user);
+        $entry->setRate(round(($duration / 3600) * $rate));
+        $entry->setBegin($start);
+
+        if ($setEndDate) {
+            $entry->setEnd($end);
+            $entry->setDuration($duration);
+        }
+
+        return $entry;
     }
 
     private function loadCustomers(ObjectManager $manager)
@@ -151,10 +171,12 @@ class LoadFixtures extends AppBundleLoadFixtures
         $allTimezones = \DateTimeZone::listIdentifiers();
         $amountTimezone = count($allTimezones);
 
-        for ($i = 0; $i <= self::AMOUNT_CUSTOMER; $i++) {
+        $allCustomer = $this->getCustomers();
+        $amountCustomer = count($allCustomer);
 
+        for ($i = 0; $i < $amountCustomer; $i++) {
             $entry = new Customer();
-            $entry->setName($this->getRandomCustomer());
+            $entry->setName($allCustomer[$i]);
             $entry->setCity($this->getRandomLocation());
             $entry->setComment($this->getRandomPhrase());
             $entry->setVisible($i % 3 != 0);
@@ -170,14 +192,14 @@ class LoadFixtures extends AppBundleLoadFixtures
         $allCustomer = $this->getAllCustomers($manager);
         $amountCustomer = count($allCustomer);
 
-        for ($i = 0; $i <= self::AMOUNT_PROJECTS; $i++) {
+        for ($i = 0; $i < $amountCustomer * 2; $i++) {
 
             $entry = new Project();
             $entry->setName($this->getRandomProject());
             $entry->setCurrency($this->getRandomCurrency());
             $entry->setBudget(rand(1000, 100000));
             $entry->setComment($this->getRandomPhrase());
-            $entry->setCustomer($allCustomer[rand(1, $amountCustomer)]);
+            $entry->setCustomer($allCustomer[($i % $amountCustomer) + 1]);
             $entry->setVisible($i % 3 != 0);
 
             $manager->persist($entry);
@@ -223,6 +245,11 @@ class LoadFixtures extends AppBundleLoadFixtures
             'Support',
             'Refactoring',
             'Interview',
+            'Administration',
+            'DevOps',
+            'Management',
+            'Setup',
+            'Planning',
         ];
     }
 
@@ -248,6 +275,9 @@ class LoadFixtures extends AppBundleLoadFixtures
             'API Development',
             'Hosting & Server',
             'Customer Relations',
+            'Infrastructure',
+            'Software Upgrade',
+            'Office Managemenr',
         ];
     }
 
