@@ -151,7 +151,12 @@ class Timesheet
      */
     public function getDuration()
     {
-        return $this->duration;
+        if ($this->duration !== 0 || $this->begin === null) {
+            return $this->duration;
+        }
+
+        $current = new \DateTime();
+        return $current->getTimestamp() - $this->begin->getTimestamp();
     }
 
     /**
