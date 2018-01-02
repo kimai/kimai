@@ -1,9 +1,0 @@
-{% extends 'base.html.twig' %}
-
-{% block page_title %}{{ 'edit_profile.title'|trans }}{% endblock %}
-{% block page_subtitle %}{{ 'edit_profile.subtitle'|trans({'%username%': user.username}) }}{% endblock %}
-
-{% block main %}
-    {{ include('default/_flash_messages.html.twig') }}
-    {{ include('default/_form.html.twig', {'title': user.username, 'form': form}) }}
-{% endblock %}
