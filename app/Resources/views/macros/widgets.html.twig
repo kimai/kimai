@@ -12,6 +12,16 @@
     {% endif %}
 {% endmacro %}
 
+{% macro label_project(project) %}
+    {% import _self as macro %}
+    {{ macro.label(project.name, 'primary') }}
+{% endmacro %}
+
+{% macro label_customer(customer) %}
+    {% import _self as macro %}
+    {{ macro.label(customer.name, 'primary') }}
+{% endmacro %}
+
 {% macro badge_counter(count, url) %}
     {% if url %}
         <a href="{{ url }}"><span class="badge bg-blue">{{ count }}</span></a>

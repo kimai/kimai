@@ -62,6 +62,8 @@ class Menu
         $menu->addChild(
             new MenuItemModel('timesheet_admin', 'menu.admin_timesheet', 'admin_timesheet', [], 'fa fa-clock-o')
         )->addChild(
+            new MenuItemModel('customer_admin', 'menu.admin_customer', 'admin_customer', [], 'fa fa-users')
+        )->addChild(
             new MenuItemModel('project_admin', 'menu.admin_project', 'admin_project', [], 'fa fa-book')
         )->addChild(
             new MenuItemModel('activity_admin', 'menu.admin_activity', 'admin_activity', [], 'fa fa-tasks')

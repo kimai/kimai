@@ -12,12 +12,13 @@
 namespace TimesheetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Customer
  *
  * @ORM\Table(name="customers")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="TimesheetBundle\Repository\CustomerRepository")
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
@@ -69,9 +70,11 @@ class Customer
     private $company;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="vat", type="string", length=255, nullable=true)
+     * @ORM\Column(name="vat", type="integer", length=2, nullable=true)
+     * @Assert\Range(min = 0, max = 99)
+     *
      */
     private $vat;
 
@@ -85,28 +88,15 @@ class Customer
     /**
      * @var string
      *
-     * @ORM\Column(name="street", type="string", length=255, nullable=true)
+     * @ORM\Column(name="street", type="text", length=65535, nullable=true)
      */
-    private $street;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="zipcode", type="string", length=255, nullable=true)
-     */
-    private $zipcode;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="city", type="string", length=255, nullable=true)
-     */
-    private $city;
+    private $address;
 
     /**
      * @var string
      *
      * @ORM\Column(name="country", type="string", length=2, nullable=true)
+     * @Assert\NotBlank()
      */
     private $country;
 
@@ -149,6 +139,7 @@ class Customer
      * @var string
      *
      * @ORM\Column(name="timezone", type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
      */
     private $timezone;
 
@@ -259,7 +250,7 @@ class Customer
     /**
      * Set vat
      *
-     * @param string $vat
+     * @param integer $vat
      *
      * @return Customer
      */
@@ -273,7 +264,7 @@ class Customer
     /**
      * Get vat
      *
-     * @return string
+     * @return integer
      */
     public function getVat()
     {
@@ -305,75 +296,23 @@ class Customer
     }
 
     /**
-     * Set street
-     *
-     * @param string $street
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param string $address
      *
      * @return Customer
      */
-    public function setStreet($street)
+    public function setAddress($address)
     {
-        $this->street = $street;
+        $this->address = $address;
 
         return $this;
-    }
-
-    /**
-     * Get street
-     *
-     * @return string
-     */
-    public function getStreet()
-    {
-        return $this->street;
-    }
-
-    /**
-     * Set zipcode
-     *
-     * @param string $zipcode
-     *
-     * @return Customer
-     */
-    public function setZipcode($zipcode)
-    {
-        $this->zipcode = $zipcode;
-
-        return $this;
-    }
-
-    /**
-     * Get zipcode
-     *
-     * @return string
-     */
-    public function getZipcode()
-    {
-        return $this->zipcode;
-    }
-
-    /**
-     * Set city
-     *
-     * @param string $city
-     *
-     * @return Customer
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    /**
-     * Get city
-     *
-     * @return string
-     */
-    public function getCity()
-    {
-        return $this->city;
     }
 
     /**
@@ -542,5 +481,32 @@ class Customer
     public function getTimezone()
     {
         return $this->timezone;
+    }
+
+    /**
+     * @param Project[] $projects
+     * @return $this
+     */
+    public function setProjects($projects)
+    {
+        $this->projects = $projects;
+
+        return $this;
+    }
+
+    /**
+     * @return Project[]
+     */
+    public function getProjects()
+    {
+        return $this->projects;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

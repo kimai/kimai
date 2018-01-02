@@ -18,6 +18,10 @@
         <source>no</source>
         <target>Nein</target>
       </trans-unit>
+      <trans-unit id="subtitle.amount">
+        <source>subtitle.amount</source>
+        <target> (insgesamt %count%)</target>
+      </trans-unit>
 
       <!--
         Login / Security
@@ -73,6 +77,10 @@
       <trans-unit id="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target>Mitarbeiter Zeiten</target>
+      </trans-unit>
+      <trans-unit id="menu.admin_customer">
+        <source>menu.admin_customer</source>
+        <target>Kunden</target>
       </trans-unit>
       <trans-unit id="menu.admin_project">
         <source>menu.admin_project</source>
@@ -214,6 +222,10 @@
         <source>label.customer</source>
         <target>Kunde</target>
       </trans-unit>
+      <trans-unit id="label.email">
+        <source>label.email</source>
+        <target>Email</target>
+      </trans-unit>
 
       <!--
         Buttons & Actions
@@ -352,7 +364,7 @@
       </trans-unit>
       <trans-unit id="admin_project.subtitle">
         <source>admin_project.subtitle</source>
-        <target>Alle vorhandenen Projekte</target>
+        <target>Ein Projekt fasst Tätigkeiten für jeweils einen Kunden in einer Gruppe zusammen</target>
       </trans-unit>
 
       <!--
@@ -364,7 +376,59 @@
       </trans-unit>
       <trans-unit id="admin_activity.subtitle">
         <source>admin_activity.subtitle</source>
-        <target>Aufgaben zur Zeiterfassung</target>
+        <target>Aufgaben die zur Zeiterfassung genutzt werden können</target>
+      </trans-unit>
+
+      <!--
+        Admin: Customer
+      -->
+      <trans-unit id="admin_customer.title">
+        <source>admin_customer.title</source>
+        <target>Kunden</target>
+      </trans-unit>
+      <trans-unit id="admin_customer.subtitle">
+        <source>admin_customer.subtitle</source>
+        <target>Ihre Kunden stellen die Basis dar, auf der Sie Projekte und Tätigkeiten anlegen können</target>
+      </trans-unit>
+      <trans-unit id="label.company">
+        <source>label.company</source>
+        <target>Unternehmensbezeichnung</target>
+      </trans-unit>
+      <trans-unit id="label.vat">
+        <source>label.vat</source>
+        <target>Umsatzsteuer</target>
+      </trans-unit>
+      <trans-unit id="label.contact">
+        <source>label.contact</source>
+        <target>Kontakt</target>
+      </trans-unit>
+      <trans-unit id="label.address">
+        <source>label.address</source>
+        <target>Adresse</target>
+      </trans-unit>
+      <trans-unit id="label.country">
+        <source>label.country</source>
+        <target>Land</target>
+      </trans-unit>
+      <trans-unit id="label.phone">
+        <source>label.phone</source>
+        <target>Telefon</target>
+      </trans-unit>
+      <trans-unit id="label.fax">
+        <source>label.fax</source>
+        <target>Fax</target>
+      </trans-unit>
+      <trans-unit id="label.mobile">
+        <source>label.mobile</source>
+        <target>Handy</target>
+      </trans-unit>
+      <trans-unit id="label.homepage">
+        <source>label.homepage</source>
+        <target>Homepage</target>
+      </trans-unit>
+      <trans-unit id="label.timezone">
+        <source>label.timezone</source>
+        <target>Zeitzone</target>
       </trans-unit>
 
       <!--
@@ -378,21 +442,9 @@
         <source>admin_user.subtitle</source>
         <target>Alle registrierten Nutzer</target>
       </trans-unit>
-      <trans-unit id="edit_profile.title">
-        <source>edit_profile.title</source>
-        <target>Profil editieren</target>
-      </trans-unit>
-      <trans-unit id="edit_profile.subtitle">
-        <source>edit_profile.subtitle</source>
-        <target>Einstellungen von %username% ändern</target>
-      </trans-unit>
       <trans-unit id="label.alias">
         <source>label.alias</source>
         <target>Name</target>
-      </trans-unit>
-      <trans-unit id="label.email">
-        <source>label.email</source>
-        <target>Email</target>
       </trans-unit>
       <trans-unit id="label.title">
         <source>label.title</source>
