@@ -14,7 +14,7 @@ namespace TimesheetBundle\Model;
 use \DateTime;
 
 /**
- * Timesheet statistics
+ * Timesheet statistics for one user.
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */

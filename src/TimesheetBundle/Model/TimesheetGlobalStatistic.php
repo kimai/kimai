@@ -12,7 +12,7 @@
 namespace TimesheetBundle\Model;
 
 /**
- * Timesheet statistics
+ * Timesheet statistics for all user.
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
