@@ -31,6 +31,17 @@ li.open .ticktac i.running{
 }
 */
 
+/* ================================ TOOLBAR ================================ */
+
+.toolbar form input,
+.toolbar form select {
+    display: inline-block;
+    width: inherit;
+}
+
+.toolbar form .form-group {
+    display: inline;
+}
 
 /* ================================ SIDEBAR ================================ */
 

@@ -19,6 +19,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use TimesheetBundle\Entity\Customer;
 use TimesheetBundle\Entity\Timesheet;
+use TimesheetBundle\Form\Type\ActivityGroupedWithCustomerNameType;
 
 /**
  * Defines the form used to manipulate Timesheet entries.
@@ -47,18 +48,15 @@ class TimesheetEditForm extends AbstractType
             ])
             // integer
             /*
-            ->add('duration', RangeType::class, [
-                'label' => 'label.duration',
-            ])
             // User
             ->add('user', UserType::class, [
                 'label' => 'label.user',
             ])
+            */
             // Activity
-            ->add('activity', ActivityType::class, [
+            ->add('activity', ActivityGroupedWithCustomerNameType::class, [
                 'label' => 'label.activity',
             ])
-            */
             // customer
             ->add('description', TextareaType::class, [
                 'label' => 'label.description',
@@ -81,7 +79,7 @@ class TimesheetEditForm extends AbstractType
             'data_class' => Timesheet::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
-            'csrf_token_id' => 'timsheet_edit',
+            'csrf_token_id' => 'timesheet_edit',
             'currency' => Customer::DEFAULT_CURRENCY,
         ]);
     }

@@ -21,7 +21,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Component\HttpFoundation\Request;
 use TimesheetBundle\Form\TimesheetEditForm;
-use TimesheetBundle\Repository\TimesheetRepository;
 
 /**
  * Controller used to manage timesheet contents in the public part of the site.
@@ -33,13 +32,7 @@ use TimesheetBundle\Repository\TimesheetRepository;
  */
 class TimesheetController extends AbstractController
 {
-    /**
-     * @return TimesheetRepository
-     */
-    protected function getRepository()
-    {
-        return $this->getDoctrine()->getRepository(Timesheet::class);
-    }
+    use TimesheetControllerTrait;
 
     /**
      * @Route("/", defaults={"page": 1}, name="timesheet")
@@ -47,15 +40,20 @@ class TimesheetController extends AbstractController
      * @Method("GET")
      * @Cache(smaxage="10")
      */
-    public function indexAction($page)
+    public function indexAction($page, Request $request)
     {
-        $user = $this->getUser();
+        $query = $this->getQueryForRequest($request);
+        $query->setUser($this->getUser());
+        $query->setPage($page);
+
         /* @var $entries Pagerfanta */
-        $entries = $this->getRepository()->findLatest($user, $page);
+        $entries = $this->getRepository()->findByQuery($query);
 
         return $this->render('TimesheetBundle:timesheet:index.html.twig', [
             'entries' => $entries,
-            'page' => $page
+            'page' => $page,
+            'query' => $query,
+            'toolbarForm' => $this->getToolbarForm($query)->createView(),
         ]);
     }
 

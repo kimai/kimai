@@ -1,0 +1,9 @@
+{% import "macros/toolbar.html.twig" as toolbar %}
+
+{{ toolbar.start() }}
+    {{ form_start(form) }}
+        <div class="box-body">
+            {{ form_widget(form) }}
+        </div>
+    {{ form_end(form) }}
+{{ toolbar.end() }}

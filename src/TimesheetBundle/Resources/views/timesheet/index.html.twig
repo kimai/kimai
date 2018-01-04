@@ -4,8 +4,13 @@
 
 {% block page_title %}{{ 'timesheet.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'timesheet.subtitle'|trans }}{% endblock %}
+{% block javascript_imports %}<script src="{{ asset('js/timesheet.js') }}"></script>{% endblock %}
 
 {% block main %}
+    {% if toolbarForm %}
+        {{ include('default/_toolbar_form.html.twig', {'form': toolbarForm}) }}
+    {% endif %}
+
     {% if entries.count > 0 %}
         {{ datatables.data_table_header({
             'label.date': '',

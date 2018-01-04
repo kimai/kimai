@@ -22,6 +22,10 @@
         <source>subtitle.amount</source>
         <target> (insgesamt %count%)</target>
       </trans-unit>
+      <trans-unit id="This is a mandatory field">
+        <source>This is a mandatory field</source>
+        <target>Pflichtfeld</target>
+      </trans-unit>
 
       <!--
         Login / Security
@@ -478,6 +482,10 @@
       <!--
         ROLES
       -->
+      <trans-unit id="ROLE_SUPER_ADMIN">
+        <source>ROLE_SUPER_ADMIN</source>
+        <target>System-Admin</target>
+      </trans-unit>
       <trans-unit id="ROLE_ADMIN">
         <source>ROLE_ADMIN</source>
         <target>Administrator</target>
