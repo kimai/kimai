@@ -80,7 +80,7 @@ class ProjectEditForm extends AbstractType
             'data_class' => Project::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
-            'csrf_token_id' => 'admin_activity_edit',
+            'csrf_token_id' => 'admin_project_edit',
             'currency' => Customer::DEFAULT_CURRENCY,
         ]);
     }
