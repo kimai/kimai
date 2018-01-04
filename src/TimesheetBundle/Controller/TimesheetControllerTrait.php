@@ -47,7 +47,9 @@ trait TimesheetControllerTrait
         $project = !empty(trim($project)) ? trim($project) : null;
         $customer = $request->get('customer');
         $customer = !empty(trim($customer)) ? trim($customer) : null;
-        $pageSize = $request->get('pageSize');
+        $state = $request->get('state');
+        $state = !empty(trim($state)) ? trim($state) : null;
+        $pageSize = (int) $request->get('pageSize');
 
         if ($activity !== null) {
             $repo = $this->getDoctrine()->getRepository(Activity::class);
@@ -79,7 +81,8 @@ trait TimesheetControllerTrait
             ->setActivity($activity)
             ->setProject($project)
             ->setCustomer($customer)
-            ->setPageSize($pageSize);
+            ->setPageSize($pageSize)
+            ->setState($state);
 
         return $query ;
     }

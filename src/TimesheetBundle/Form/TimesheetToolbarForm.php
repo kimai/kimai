@@ -43,11 +43,22 @@ class TimesheetToolbarForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var TimesheetQuery $query */
+        $query = $options['data'];
+
         $builder
             ->add('pageSize', ChoiceType::class, [
                 'label' => 'label.pageSize',
                 'choices' => [10 => 10, 25 => 25, 50 => 50, 75 => 75, 100 => 100],
                 'required' => false,
+            ])
+            ->add('state', ChoiceType::class, [
+                'label' => 'label.entryState',
+                'choices' => [
+                    'entryState.all' => TimesheetQuery::STATE_ALL,
+                    'entryState.running' => TimesheetQuery::STATE_RUNNING,
+                    'entryState.stopped' => TimesheetQuery::STATE_STOPPED
+                ],
             ])
             ->add('customer', CustomerType::class, [
                 'label' => 'label.customer',
@@ -55,8 +66,6 @@ class TimesheetToolbarForm extends AbstractType
             ])
         ;
 
-        /** @var TimesheetQuery $query */
-        $query = $options['data'];
         $this->addProjectChoice($builder, $query);
         $this->addActivityChoice($builder, $query);
     }

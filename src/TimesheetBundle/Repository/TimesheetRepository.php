@@ -306,6 +306,12 @@ class TimesheetRepository extends EntityRepository
                 ->setParameter('user', $query->getUser());
         }
 
+        if ($query->getState() == TimesheetQuery::STATE_RUNNING) {
+            $qb->andWhere($qb->expr()->isNull('t.end'));
+        } elseif ($query->getState() == TimesheetQuery::STATE_STOPPED) {
+            $qb->andWhere($qb->expr()->isNotNull('t.end'));
+        }
+
         if ($query->getActivity() !== null) {
             $qb->andWhere('t.activity = :activity')
                 ->setParameter('activity', $query->getActivity());

@@ -27,6 +27,10 @@ class Timesheet
     const DEFAULT_PAGESIZE = 25;
     const DEFAULT_PAGE = 1;
 
+    const STATE_ALL = 0;
+    const STATE_RUNNING = 1;
+    const STATE_STOPPED = 2;
+
     /**
      * @var User
      */
@@ -50,7 +54,11 @@ class Timesheet
     /**
      * @var int
      */
-    protected $maxPerPage = self::DEFAULT_PAGESIZE;
+    protected $pageSize = self::DEFAULT_PAGESIZE;
+    /**
+     * @var int
+     */
+    protected $state = self::STATE_ALL;
 
     /**
      * @return User
@@ -155,17 +163,37 @@ class Timesheet
      */
     public function getPageSize()
     {
-        return $this->maxPerPage;
+        return $this->pageSize;
     }
 
     /**
-     * @param int $maxPerPage
+     * @param int $pageSize
      * @return Timesheet
      */
-    public function setPageSize($maxPerPage)
+    public function setPageSize($pageSize)
     {
-        if (!empty($maxPerPage) && $maxPerPage > 0) {
-            $this->maxPerPage = (int) $maxPerPage;
+        if (!empty($pageSize) && (int) $pageSize > 0) {
+            $this->pageSize = (int) $pageSize;
+        }
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param int $state
+     * @return Timesheet
+     */
+    public function setState($state)
+    {
+        if (in_array($state, [self::STATE_ALL, self::STATE_RUNNING, self::STATE_STOPPED])) {
+            $this->state = $state;
         }
         return $this;
     }
