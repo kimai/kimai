@@ -33,7 +33,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class ProfileController extends Controller
+class ProfileController extends AbstractController
 {
     /**
      * @Route("/{username}", name="user_profile")
@@ -48,10 +48,11 @@ class ProfileController extends Controller
 
     /**
      * @param User $user
-     * @param Form $editForm
-     * @param Form $pwdForm
+     * @param Form|null $editForm
+     * @param Form|null $pwdForm
      * @param string $tab
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     protected function getProfileView(User $user, Form $editForm = null, Form $pwdForm = null, $tab = 'charts')
     {
@@ -105,7 +106,7 @@ class ProfileController extends Controller
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash('success', 'action.updated_successfully');
+            $this->flashSuccess('action.updated_successfully');
 
             return $this->redirectToRoute(
                 'user_profile', ['username' => $user->getUsername()]
@@ -135,7 +136,7 @@ class ProfileController extends Controller
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash('success', 'action.updated_successfully');
+            $this->flashSuccess('action.updated_successfully');
 
             return $this->redirectToRoute(
                 'user_profile', ['username' => $user->getUsername()]
@@ -146,7 +147,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * FIXME
+     * FIXME implement profile deletion
      * @Route("/{username}/delete", name="user_profile_delete")
      * @Method({"GET", "POST"})
      */
@@ -174,7 +175,7 @@ class ProfileController extends Controller
 
         // only administrator can bypass that part if the requested user is not the current user
         if ($username !== $user->getUsername()) {
-            $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page'); // TODO translation
+            $this->denyUnlessGranted('ROLE_ADMIN');
         }
 
         // if the user is not the current use, load the requested one
@@ -192,7 +193,7 @@ class ProfileController extends Controller
 
     /**
      * @param User $user
-     * @return \Symfony\Component\Form\Form
+     * @return \Symfony\Component\Form\FormInterface
      */
     private function createEditForm(User $user)
     {
@@ -208,7 +209,7 @@ class ProfileController extends Controller
 
     /**
      * @param User $user
-     * @return \Symfony\Component\Form\Form
+     * @return \Symfony\Component\Form\FormInterface
      */
     private function createPasswordForm(User $user)
     {
@@ -225,8 +226,7 @@ class ProfileController extends Controller
 
     /**
      * @param User $user
-     *
-     * @return \Symfony\Component\Form\Form The form
+     * @return \Symfony\Component\Form\FormInterface
      */
     private function createDeleteForm(User $user)
     {

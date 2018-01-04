@@ -43,3 +43,7 @@ services:
 
 avanzu_admin_theme:
     enable_demo: false
+
+web_profiler:
+    toolbar: true
+    intercept_redirects: false

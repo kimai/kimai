@@ -12,6 +12,7 @@
 namespace TimesheetBundle\Repository;
 
 use AppBundle\Entity\User;
+use TimesheetBundle\Entity\Activity;
 use TimesheetBundle\Entity\Timesheet;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
@@ -31,6 +32,51 @@ use DateTime;
  */
 class TimesheetRepository extends EntityRepository
 {
+
+    /**
+     * @param Timesheet $entry
+     * @return bool
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function stopRecording(Timesheet $entry)
+    {
+        $end = new DateTime();
+        $begin = $entry->getBegin();
+
+        $entry->setEnd($end);
+        $entry->setDuration($end->getTimestamp() - $begin->getTimestamp());
+
+        // TODO calculate rate by users hourly rate
+
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($entry);
+        $entityManager->flush();
+
+        return true;
+    }
+
+    /**
+     * @param User $user
+     * @param Activity $activity
+     * @return bool
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function startRecording(User $user, Activity $activity)
+    {
+        $entry = new Timesheet();
+        $entry
+            ->setBegin(new DateTime())
+            ->setUser($user)
+            ->setActivity($activity);
+
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($entry);
+        $entityManager->flush();
+
+        return true;
+    }
 
     /**
      * @param $select
@@ -78,6 +124,7 @@ class TimesheetRepository extends EntityRepository
      *
      * @param User $user
      * @return TimesheetStatistic
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getUserStatistics(User $user)
     {
@@ -159,7 +206,8 @@ class TimesheetRepository extends EntityRepository
     /**
      * Fetch statistic data for all user.
      *
-     * @return TimesheetStatistic
+     * @return TimesheetGlobalStatistic
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getGlobalStatistics()
     {
@@ -172,7 +220,7 @@ class TimesheetRepository extends EntityRepository
         $userTotal = $this->getEntityManager()
             ->createQuery('SELECT COUNT(DISTINCT(t.user)) FROM TimesheetBundle:Timesheet t')
             ->getSingleScalarResult();
-        $activeNow = $this->getActiveEntry();
+        $activeNow = $this->getActiveEntries();
         $amountMonth = $this->queryThisMonth('SUM(t.rate)')
             ->getQuery()
             ->getSingleScalarResult();
@@ -197,16 +245,20 @@ class TimesheetRepository extends EntityRepository
 
     /**
      * @param User $user
-     * @return Query
+     * @return Timesheet[]|null
      */
-    public function getActiveEntry(User $user = null)
+    public function getActiveEntries(User $user = null)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('t')
+        $qb->select('t', 'a', 'p', 'c')
             ->from('TimesheetBundle:Timesheet', 't')
+            ->join('t.activity', 'a')
+            ->join('a.project', 'p')
+            ->join('p.customer', 'c')
             ->where($qb->expr()->gt('t.begin', '0'))
-            ->andWhere($qb->expr()->isNull('t.end'));
+            ->andWhere($qb->expr()->isNull('t.end'))
+            ->orderBy('t.begin', 'DESC');
 
         $params = [];
 
@@ -226,8 +278,9 @@ class TimesheetRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('t')
+        $qb->select('t', 'a')
             ->from('TimesheetBundle:Timesheet', 't')
+            ->join('t.activity', 'a')
             ->orderBy('t.begin', 'DESC');
 
         if (null !== $user) {

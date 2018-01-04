@@ -1,0 +1,23 @@
+{% if activities is not empty %}
+    <li class="dropdown notifications-menu">
+        <a href="#" class="dropdown-toggle ddt-large" data-toggle="dropdown">
+            <i class="fa fa-tasks fa-2x"></i>
+            <span class="label label-success">{{ activities|length }}</span>
+        </a>
+        <ul class="dropdown-menu">
+            <li class="header">{{ 'recent.activities'|transchoice(activities|length) }}</li>
+            <li>
+                <ul class="menu">
+                    {% for activity in activities %}
+                        <li>
+                            <a href="{{ path('timesheet_start', {'id' : activity.id}) }}">
+                                <i class="fa fa-play-circle text-green"></i> {{ 'recent.activities.format'|trans({'%activity%': activity.name, '%project%': activity.project.name, '%customer%': activity.project.customer.name}) }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <li class="footer"><a href="{{ url('timesheet') }}">{{ 'timesheet.all'|trans }}</a></li>
+        </ul>
+    </li>
+{% endif %}

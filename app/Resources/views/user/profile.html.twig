@@ -6,8 +6,6 @@
 {% block main %}
     {% import _self as widgets %}
 
-    {{ include('default/_flash_messages.html.twig') }}
-
     <div class="row">
         <div class="col-md-3">
             {{ widgets.profile_box(user, stats) }}

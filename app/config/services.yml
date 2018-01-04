@@ -1,6 +1,4 @@
 services:
-    slugger:
-        class: AppBundle\Utils\Slugger
 
     markdown:
         class: AppBundle\Utils\Markdown
@@ -31,7 +29,7 @@ services:
         class: AppBundle\EventListener\MenuBuilder
         arguments: ["@event_dispatcher", "@security.authorization_checker"]
         tags:
-            - { name: kernel.event_listener, event:theme.sidebar_setup_menu, method:onSetupNavbar }
+            - { name: kernel.event_listener, event: theme.sidebar_setup_menu, method: onSetupNavbar }
 
     # service that prefixes every database table
     app.tableprefix_subscriber:
@@ -40,6 +38,7 @@ services:
         tags:
             - { name: doctrine.event_subscriber }
 
+    # additional menu entries for the timesheet bundle
     timesheet.configure_menu_listener:
         class: TimesheetBundle\EventListener\Menu
         tags:

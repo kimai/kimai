@@ -6,8 +6,6 @@
 {% block page_subtitle %}{{ 'admin_project.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
 
 {% block main %}
-    {{ include('default/_flash_messages.html.twig') }}
-
     {% if entries.count > 0 %}
         {{ tables.data_table_header({
             'label.id': 'hidden-xs',
@@ -29,7 +27,7 @@
                 </td>
                 <td class="hidden-xs hidden-sm">{{ entry.comment }}</td>
                 <td class="hidden-xs hidden-sm">{{ widgets.badge_counter(entry.activities.count) }}</td>
-                <td class="hidden-xs">{{ entry.budget|money(entry.currency) }}</td>
+                <td class="hidden-xs">{{ entry.budget|money(entry.customer.currency) }}</td>
                 <td>{{ widgets.label_visible(entry.visible) }}</td>
                 <td>
                     {{ widgets.button_group({

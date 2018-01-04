@@ -17,6 +17,9 @@ security:
             # this firewall applies to all URLs
             pattern: ^/
 
+            # does what it says
+            logout_on_user_change: true
+
             # but the firewall does not require login on every page
             # denying access is done in access_control or in your controllers
             anonymous: ~

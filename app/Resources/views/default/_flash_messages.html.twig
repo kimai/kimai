@@ -1,16 +1,9 @@
-{% if app.session.started and app.session.flashBag.peekAll is not empty %}
-    <div class="messages">
-        {% for type, messages in app.session.flashBag.all %}
-            {% for message in messages %}
-                {# Bootstrap alert, see http://getbootstrap.com/components/#alerts #}
-                <div class="alert alert-dismissible alert-{{ type }}" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+{% import "AvanzuAdminThemeBundle:layout:macros.html.twig" as macro %}
 
-                    {{ message|trans }}
-                </div>
-            {% endfor %}
-        {% endfor %}
+{% if app.session.started and app.session.flashbag.peekAll|length > 0 %}
+    <div class="row">
+        <div class="col-sm-12">
+            {{ macro.session_flash(avanzu_adminlte_close_alert|default(true), false, '', 'flashmessages') }}
+        </div>
     </div>
 {% endif %}

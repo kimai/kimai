@@ -2,13 +2,13 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
 
-{% block page_title %}{{ 'admin_activity.title'|trans }}{% endblock %}
-{% block page_subtitle %}{{ 'admin_activity.subtitle'|trans }}{% endblock %}
+{% block page_title %}{{ 'timesheet.title'|trans }}{% endblock %}
+{% block page_subtitle %}{{ 'timesheet.subtitle'|trans }}{% endblock %}
 
 {% block main %}
     {{ include('default/_form.html.twig', {
-        'title': activity.name,
+        'title': 'timesheet.edit'|trans,
         'form': form,
-        'back': path('admin_activity')
+        'back': path('timesheet')
     }) }}
 {% endblock %}

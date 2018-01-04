@@ -1,12 +1,12 @@
 # this imports the routes used to display the web debug toolbar at the bottom of each page
-#_wdt:
-#    resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"
-#    prefix:   /_wdt
+_wdt:
+    resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"
+    prefix:   /_wdt
 
 # this imports the routes needed to display the Symfony Profiler information
-#_profiler:
-#    resource: "@WebProfilerBundle/Resources/config/routing/profiler.xml"
-#    prefix:   /_profiler
+_profiler:
+    resource: "@WebProfilerBundle/Resources/config/routing/profiler.xml"
+    prefix:   /_profiler
 
 # this imports the route used to test error pages. Just browse the following URL:
 # /{_locale}/_error/{status_code}.{format}

@@ -6,7 +6,6 @@
 {% block page_subtitle %}{{ 'admin_customer.subtitle'|trans }}{% endblock %}
 
 {% block main %}
-    {{ include('default/_flash_messages.html.twig') }}
     {{ include('default/_form.html.twig', {
         'title': customer.name,
         'form': form,

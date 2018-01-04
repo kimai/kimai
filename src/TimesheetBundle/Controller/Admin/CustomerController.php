@@ -11,10 +11,11 @@
 
 namespace TimesheetBundle\Controller\Admin;
 
+use AppBundle\Controller\AbstractController;
+use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TimesheetBundle\Entity\Customer;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -30,7 +31,7 @@ use TimesheetBundle\Repository\CustomerRepository;
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class CustomerController extends Controller
+class CustomerController extends AbstractController
 {
     /**
      * @Route("/", defaults={"page": 1}, name="admin_customer")
@@ -49,48 +50,36 @@ class CustomerController extends Controller
     /**
      * @Route("/{id}/edit", name="admin_customer_edit")
      * @Method({"GET", "POST"})
+     *
+     * @param Customer $customer
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAction($id, Request $request)
+    public function editAction(Customer $customer, Request $request)
     {
-        $entity = $this->getById($id);
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($customer);
 
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($entity);
+            $entityManager->persist($customer);
             $entityManager->flush();
 
-            $this->addFlash('success', 'action.updated_successfully');
+            $this->flashSuccess('action.updated_successfully');
 
             return $this->redirectToRoute(
-                'admin_customer', ['id' => $entity->getId()]
+                'admin_customer', ['id' => $customer->getId()]
             );
         }
 
         return $this->render(
             'TimesheetBundle:admin:customer_edit.html.twig',
             [
-                'customer' => $entity,
+                'customer' => $customer,
                 'form' => $editForm->createView()
             ]
         );
-    }
-
-    /**
-     * @param $id
-     * @return null|Customer
-     */
-    protected function getById($id)
-    {
-        /* @var $repo CustomerRepository */
-        $repo = $this->getDoctrine()->getRepository(Customer::class);
-        $activity = $repo->getById($id);
-        if (null === $activity) {
-            throw new NotFoundHttpException('Customer "'.$id.'" does not exist');
-        }
-        return $activity;
     }
 
     /**

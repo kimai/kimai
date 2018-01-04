@@ -70,18 +70,20 @@ class Activity
     }
 
     /**
-     * @param int $project
+     * @param Project $project
+     * @return Activity
      */
     public function setProject($project)
     {
         $this->project = $project;
+
+        return $this;
     }
 
     /**
      * Set name
      *
      * @param string $name
-     *
      * @return Activity
      */
     public function setName($name)
@@ -105,13 +107,11 @@ class Activity
      * Set comment
      *
      * @param string $comment
-     *
      * @return Activity
      */
     public function setComment($comment)
     {
         $this->comment = $comment;
-
         return $this;
     }
 
@@ -150,7 +150,7 @@ class Activity
     }
 
     /**
-     * Get activityid
+     * Get activity id
      *
      * @return integer
      */

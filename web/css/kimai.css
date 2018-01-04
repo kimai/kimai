@@ -1,28 +1,57 @@
-#ticktac img {
-    width: 30px;
+/* ================================ NAVBAR ================================ */
+
+.navbar-nav>li>a.ddt-large {
+    padding-top: 12px;
+    padding-bottom: 9px;
 }
 
+li.messages-menu ul.menu li:hover .pull-left i {
+    color: #dd4b39;
+
+}
+/*
+.ticktac:hover i.running{
+    color: #4ff131;
+}
+
+li.open .ticktac i.running{
+    color: #4ff131;
+}
+
+.ticktac i.stopped{
+    color: #fff;
+}
+
+.ticktac:hover i.stopped{
+    color: #4ff131;
+}
 .user-panel>.info {
     left: 40px;
     padding-top: 0px;
 }
-/*
-#ticktac img {
-    width: 100%;
-}
+*/
+
+
+/* ================================ SIDEBAR ================================ */
+
+/* Used for the Sidebar UserPanel (which is deactivated right now) */
 .user-panel>.info {
     left: 80px;
 }
-*/
+
+/* ================================ FOOTER ================================ */
+
 footer.main-footer {
     padding: 5px;
     font-size: 80%;
 }
 
+
+/* ================================ DATA-TABLES ================================ */
+
 /*
-    TODO
-    "display:hidden" regel für dataTable - spalten - mobile ansicht
-    "display:hidden" regel für dataTable - header icon - mobile ansicht
+    TODO "display:hidden" regel für dataTable - spalten - mobile ansicht
+    TODO "display:hidden" regel für dataTable - header icon - mobile ansicht
 
 */
 

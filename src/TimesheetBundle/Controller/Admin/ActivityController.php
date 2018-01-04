@@ -11,10 +11,11 @@
 
 namespace TimesheetBundle\Controller\Admin;
 
+use AppBundle\Controller\AbstractController;
+use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TimesheetBundle\Entity\Activity;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -30,7 +31,7 @@ use TimesheetBundle\Repository\ActivityRepository;
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class ActivityController extends Controller
+class ActivityController extends AbstractController
 {
     /**
      * @Route("/", defaults={"page": 1}, name="admin_activity")
@@ -50,9 +51,8 @@ class ActivityController extends Controller
      * @Route("/{id}/edit", name="admin_activity_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction($id, Request $request)
+    public function editAction(Activity $activity, Request $request)
     {
-        $activity = $this->getById($id);
         $editForm = $this->createEditForm($activity);
 
         $editForm->handleRequest($request);
@@ -62,7 +62,7 @@ class ActivityController extends Controller
             $entityManager->persist($activity);
             $entityManager->flush();
 
-            $this->addFlash('success', 'action.updated_successfully');
+            $this->flashSuccess('action.updated_successfully');
 
             return $this->redirectToRoute(
                 'admin_activity', ['id' => $activity->getId()]
@@ -76,21 +76,6 @@ class ActivityController extends Controller
                 'form' => $editForm->createView()
             ]
         );
-    }
-
-    /**
-     * @param $id
-     * @return null|Activity
-     */
-    protected function getById($id)
-    {
-        /* @var $repo ActivityRepository */
-        $repo = $this->getDoctrine()->getRepository(Activity::class);
-        $activity = $repo->getById($id);
-        if (null === $activity) {
-            throw new NotFoundHttpException('Activity "'.$id.'" does not exist');
-        }
-        return $activity;
     }
 
     /**

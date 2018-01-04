@@ -1,15 +1,12 @@
 {% extends 'AvanzuAdminThemeBundle:layout:default-layout.html.twig' %}
 
 {% block avanzu_page_content %}
+    {{ include('default/_flash_messages.html.twig') }}
     {% block main %}{% endblock %}
 {% endblock %}
 
 {% block avanzu_document_title %}
     {% block title %}{{ 'browser.title'|trans }}{% endblock %}
-{% endblock %}
-
-{% block avanzu_sidebar_search %}
-    <!-- right now we simply deactivate that box -->
 {% endblock %}
 
 {% block avanzu_page_title %}
@@ -32,10 +29,6 @@
     <b>Kimai</b> - Time Tracking
 {% endblock %}
 
-{% block flash_messages %}
-    {{ include('default/_flash_messages.html.twig') }}
-{% endblock %}
-
 {% block avanzu_head %}
     <link rel="stylesheet" href="{{ asset('css/kimai.css') }}">
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
@@ -47,15 +40,9 @@
     $(document).ready(function() {
         $('.dropdown-toggle').dropdown();
         $(document).kimai({imagePath: '{{ asset('images') }}'});
-        $(document).kimai('ticktac', 'a#ticktac');
+        //$(document).kimai('pauseRecord', 'li.messages-menu ul.menu li');
     });
     </script>
-{% endblock %}
-
-{% block avanzu_sidebar_user %}
-    {% if app.user is not null and is_granted('IS_AUTHENTICATED_FULLY') %}
-        {{ render(controller('TimesheetBundle:Timesheet:statusEntry')) }}
-    {% endif %}
 {% endblock %}
 
 {% block avanzu_footer %}
@@ -67,32 +54,42 @@
         <strong>Copyright &copy; {{ 'now'|date('Y') }} - <a href="http://www.kevinpapst.de">Kevin Papst</a></strong>.
         {{ 'footer.license'|trans }}
     </footer>
+    <!-- Page rendered on {{ 'now'|localizeddate('long', 'long', null, 'UTC') }} -->
     {% endblock %}
 {% endblock %}
 
-{#
-avanzu_navbar_toggle
-avanzu_navbar_messages
-avanzu_navbar_notifications
-avanzu_navbar_tasks
-avanzu_navbar_user
-avanzu_navbar_control_sidebar_toggle
-avanzu_sidebar_user
-avanzu_sidebar_nav
-avanzu_breadcrumb
-avanzu_control_sidebar
-avanzu_javascripts
-avanzu_javascripts_inline
+{% block avanzu_navbar_messages %}
+    {% if app.user is not null and is_granted('IS_AUTHENTICATED_FULLY') %}
+        {{ render(controller('TimesheetBundle:Timesheet:activeEntries')) }}
+    {% endif %}
+{% endblock %}
 
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-globe"></i> <span class="caret"></span></a>
-            <ul class="dropdown-menu locales" role="menu">
-                {% for locale in locales() %}
-                    <li {% if app.request.locale == locale.code %}class="active"{% endif %}><a href="{{ path(app.request.get('_route', 'homepage'), app.request.get('_route_params', [])|merge({ _locale: locale.code })) }}">{{ locale.name|capitalize }}</a></li>
-                {% endfor %}
-            </ul>
-        </li>
+{% block avanzu_navbar_notifications %}
+    {% if app.user is not null and is_granted('IS_AUTHENTICATED_FULLY') %}
+        {{ render(controller('TimesheetBundle:Activity:recentActivities')) }}
+    {% endif %}
+    {#
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-globe"></i> <span class="caret"></span></a>
+        <ul class="dropdown-menu locales" role="menu">
+            {% for locale in locales() %}
+                <li {% if app.request.locale == locale.code %}class="active"{% endif %}><a href="{{ path(app.request.get('_route', 'homepage'), app.request.get('_route_params', [])|merge({ _locale: locale.code })) }}">{{ locale.name|capitalize }}</a></li>
+            {% endfor %}
+        </ul>
+    </li>
+    #}
+{% endblock %}
 
-<!-- Page rendered on {{ 'now'|localizeddate('long', 'long', null, 'UTC') }} -->
+{% block avanzu_navbar_toggle %}{{ parent() }}{% endblock %}
+{% block avanzu_navbar_tasks %}{{ parent() }}{% endblock %}
+{% block avanzu_navbar_user %}{{ parent() }}{% endblock %}
+{% block avanzu_navbar_control_sidebar_toggle %}{{ parent() }}{% endblock %}
 
-#}
+{% block avanzu_sidebar_user %}{# right now we simply deactivate that box #}{% endblock %}
+{% block avanzu_sidebar_search %}{# right now we simply deactivate that box #}{% endblock %}
+{% block avanzu_sidebar_nav %}{{ parent() }}{% endblock %}
+
+{% block avanzu_breadcrumb %}{{ parent() }}{% endblock %}
+{% block avanzu_control_sidebar %}{{ parent() }}{% endblock %}
+{% block avanzu_javascripts %}{{ parent() }}{% endblock %}
+{% block avanzu_javascripts_inline %}{{ parent() }}{% endblock %}

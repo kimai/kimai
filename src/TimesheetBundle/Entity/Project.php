@@ -64,16 +64,9 @@ class Project
     /**
      * @var string
      *
-     * @ORM\Column(name="budget", type="decimal", precision=10, scale=2, nullable=true)
+     * @ORM\Column(name="budget", type="decimal", precision=10, scale=2, nullable=false)
      */
     private $budget = 0.00;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="currency", type="string", length=3, nullable=false)
-     */
-    private $currency = 'EUR';
 
     /**
      * @var Activity[]
@@ -90,25 +83,6 @@ class Project
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCurrency()
-    {
-        return $this->currency;
-    }
-
-    /**
-     * @param string $currency
-     * @return $this
-     */
-    public function setCurrency($currency)
-    {
-        $this->currency = $currency;
-
-        return $this;
     }
 
     /**

@@ -14,6 +14,7 @@ namespace TimesheetBundle\Form;
 use AppBundle\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
@@ -83,9 +84,13 @@ class CustomerEditForm extends AbstractType
                 'label' => 'label.address',
                 'required' => false,
             ])
-            // TODO string - length 2
+            // string - length 2
             ->add('country', CountryType::class, [
                 'label' => 'label.country',
+            ])
+            // string - length 3
+            ->add('currency', CurrencyType::class, [
+                'label' => 'label.currency',
             ])
             // string - length 255
             ->add('phone', TelType::class, [

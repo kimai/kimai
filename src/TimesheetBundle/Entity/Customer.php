@@ -25,6 +25,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Customer
 {
 
+    const DEFAULT_CURRENCY = 'EUR';
+
     /**
      * @var integer
      *
@@ -99,6 +101,13 @@ class Customer
      * @Assert\NotBlank()
      */
     private $country;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="currency", type="string", length=3, nullable=false)
+     */
+    private $currency = self::DEFAULT_CURRENCY;
 
     /**
      * @var string
@@ -337,6 +346,25 @@ class Customer
     public function getCountry()
     {
         return $this->country;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+
+    /**
+     * @param string $currency
+     * @return $this
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
+
+        return $this;
     }
 
     /**

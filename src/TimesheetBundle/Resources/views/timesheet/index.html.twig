@@ -13,6 +13,7 @@
             'label.endtime': '',
             'label.duration': 'hidden-xs',
             'label.rate': 'hidden-xs',
+            'label.activity': 'hidden-xs hidden-sm',
             'label.description': 'hidden-xs hidden-sm',
             'label.actions': '',
         }) }}
@@ -27,12 +28,17 @@
                     <td class="hidden-xs">{{ entry.rate|money }}</td>
                 {% else %}
                     <td>&dash;</td>
-                    <td class="hidden-xs">&dash;</td>
+                    <td class="hidden-xs"><i>{{ entry.duration|duration }}</i></td>
                     <td class="hidden-xs">&dash;</td>
                 {% endif %}
+                <td class="hidden-xs hidden-sm">{{ entry.activity.name }}</td>
                 <td class="hidden-xs hidden-sm">{{ entry.description }}</td>
                 <td>
-                    {{ widgets.button_group({'repeat': '#', 'edit': '#', 'trash': '#'}) }}
+                    {% if entry.end %}
+                        {{ widgets.button_group({'repeat': '#', 'edit': path('timesheet_edit', {'id' : entry.id, 'page': page}), 'trash': '#'}) }}
+                    {% else %}
+                        {{ widgets.button_group({'stop': path('timesheet_stop', {'id' : entry.id}), 'edit': path('timesheet_edit', {'id' : entry.id, 'page': page}), 'trash': '#'}) }}
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}

@@ -12,18 +12,18 @@
 namespace TimesheetBundle\Form;
 
 use AppBundle\Form\Type\YesNoType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Intl\Intl;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use TimesheetBundle\Entity\Customer;
 use TimesheetBundle\Entity\Project;
 use TimesheetBundle\Form\Type\CustomerType;
 
 /**
- * Defines the form used to manipulate Projects.
+ * Defines the form used to edit Projects.
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
@@ -37,7 +37,7 @@ class ProjectEditForm extends AbstractType
     {
         $builder
             // string - length 255
-            ->add('name', null, [
+            ->add('name', TextType::class, [
                 'label' => 'label.name',
             ])
             // text
@@ -57,7 +57,6 @@ class ProjectEditForm extends AbstractType
                 'label' => 'label.budget',
                 'currency' => $builder->getOption('currency'),
             ])
-            // FIXME add budget
             // do not allow activity selection as this causes headaches:
             // 1. it is a bad UX
             // 2. what should happen if they are detached?
@@ -82,7 +81,7 @@ class ProjectEditForm extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'admin_activity_edit',
-            'currency' => 'EUR,'
+            'currency' => Customer::DEFAULT_CURRENCY,
         ]);
     }
 }

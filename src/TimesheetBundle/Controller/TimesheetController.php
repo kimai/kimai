@@ -11,12 +11,17 @@
 
 namespace TimesheetBundle\Controller;
 
+use AppBundle\Controller\AbstractController;
+use Pagerfanta\Pagerfanta;
+use TimesheetBundle\Entity\Activity;
 use TimesheetBundle\Entity\Timesheet;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Symfony\Component\HttpFoundation\Request;
+use TimesheetBundle\Form\TimesheetEditForm;
+use TimesheetBundle\Repository\TimesheetRepository;
 
 /**
  * Controller used to manage timesheet contents in the public part of the site.
@@ -26,8 +31,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class TimesheetController extends Controller
+class TimesheetController extends AbstractController
 {
+    /**
+     * @return TimesheetRepository
+     */
+    protected function getRepository()
+    {
+        return $this->getDoctrine()->getRepository(Timesheet::class);
+    }
+
     /**
      * @Route("/", defaults={"page": 1}, name="timesheet")
      * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="timesheet_paginated")
@@ -38,20 +51,144 @@ class TimesheetController extends Controller
     {
         $user = $this->getUser();
         /* @var $entries Pagerfanta */
-        $entries = $this->getDoctrine()->getRepository(Timesheet::class)->findLatest($user, $page);
+        $entries = $this->getRepository()->findLatest($user, $page);
 
-        return $this->render('TimesheetBundle:timesheet:index.html.twig', ['entries' => $entries]);
+        return $this->render('TimesheetBundle:timesheet:index.html.twig', [
+            'entries' => $entries,
+            'page' => $page
+        ]);
     }
 
-    public function statusEntryAction()
+    /**
+     * The "main button and flyout" for displaying (and stopping) active entries.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function activeEntriesAction()
     {
         $user = $this->getUser();
-        $activeEntry = $this->getDoctrine()->getRepository(Timesheet::class)->getActiveEntry($user);
+        $activeEntries = $this->getRepository()->getActiveEntries($user);
 
-        $activeEntry = null;
         return $this->render(
-            'TimesheetBundle:Sidebar:navbar-panel.html.twig',
-            ['entry' => $activeEntry]
+            'TimesheetBundle:Navbar:active-entries.html.twig',
+            ['entries' => $activeEntries]
+        );
+    }
+
+    /**
+     * The route to stop a running entry.
+     *
+     * @Route("/{id}/stop", name="timesheet_stop")
+     * @Method({"GET"})
+     *
+     * @param Timesheet $entry
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function stopAction(Timesheet $entry, Request $request)
+    {
+        $user = $this->getUser();
+
+        // make sure only ADMIN can stop other users entries
+        if ($user->getId() !== $entry->getUser()->getId()) {
+            $this->denyUnlessGranted('ROLE_ADMIN', null, 'timesheet.access.denied', ['%user%' => $user->getId(), '%entry%' => $entry->getId()]);
+        }
+
+        try {
+            $this->getRepository()->stopRecording($entry);
+            $this->flashSuccess('timesheet.stop.success');
+        } catch (\Exception $ex) {
+            $this->flashError('timesheet.stop.error', ['%reason%' => $ex->getMessage()]);
+        }
+
+        return $this->redirectToRoute('timesheet');
+    }
+
+    /**
+     * The route to stop a running entry.
+     *
+     * @Route("/start/{id}", name="timesheet_start", requirements={"id" = "\d+"})
+     * @Method({"GET", "POST"})
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function startAction(Activity $activity, Request $request)
+    {
+        $user = $this->getUser();
+
+        try {
+            $this->getRepository()->startRecording($user, $activity);
+            $this->flashSuccess('timesheet.start.success');
+        } catch (\Exception $ex) {
+            $this->flashError('timesheet.start.error', ['%reason%' => $ex->getMessage()]);
+        }
+
+        return $this->redirectToRoute('timesheet');
+    }
+
+    /**
+     * The route to edit an existing entry or to create a complete new entry.
+     *
+     * @Route("/{id}/edit", name="timesheet_edit")
+     * @Method({"GET", "POST"})
+     *
+     * @param Timesheet $entry
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editAction(Timesheet $entry, Request $request)
+    {
+        $user = $this->getUser();
+
+        // make sure only ADMIN can edit other users entries
+        if ($user->getId() !== $entry->getUser()->getId()) {
+            $this->denyUnlessGranted('ROLE_ADMIN', null, 'timesheet.access.denied', ['%user%' => $user->getId(), '%entry%' => $entry->getId()]);
+        }
+
+        $editForm = $this->createEditForm($entry, $request->get('page'));
+
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($entry);
+            $entityManager->flush();
+
+            $this->flashSuccess('action.updated_successfully');
+
+            return $this->redirectToRoute(
+                'timesheet_paginated', ['page' => $request->get('page')]
+            );
+        }
+
+        return $this->render(
+            'TimesheetBundle:timesheet:edit.html.twig',
+            [
+                'entry' => $entry,
+                'form' => $editForm->createView(),
+            ]
+        );
+    }
+
+    /**
+     * @param Timesheet $entry
+     * @param string $page
+     * @return \Symfony\Component\Form\Form
+     */
+    private function createEditForm(Timesheet $entry, $page)
+    {
+        return $this->createForm(
+            TimesheetEditForm::class,
+            $entry,
+            [
+                'action' => $this->generateUrl('timesheet_edit', [
+                    'id' => $entry->getId(),
+                    'page' => $page
+                ]),
+                'method' => 'POST',
+                'currency' => $entry->getActivity()->getProject()->getCustomer()->getCurrency(),
+            ]
         );
     }
 }

@@ -15,6 +15,8 @@ use AppBundle\Utils\Markdown;
 use Symfony\Component\Intl\Intl;
 use DateTime;
 use DateInterval;
+use TimesheetBundle\Entity\Customer;
+use TimesheetBundle\Entity\Timesheet;
 
 /**
  * Multiple Twig extensions: filters and functions
@@ -52,7 +54,10 @@ class Extensions extends \Twig_Extension
         return [
             new \Twig_SimpleFilter('md2html', [$this, 'markdownToHtml'], ['is_safe' => ['html']]),
             new \Twig_SimpleFilter('duration', array($this, 'duration')),
+            new \Twig_SimpleFilter('durationForEntry', array($this, 'durationForEntry')),
             new \Twig_SimpleFilter('money', array($this, 'money')),
+            new \Twig_SimpleFilter('currency', array($this, 'currency')),
+            new \Twig_SimpleFilter('country', array($this, 'country')),
         ];
     }
 
@@ -64,6 +69,18 @@ class Extensions extends \Twig_Extension
         return [
             new \Twig_SimpleFunction('locales', [$this, 'getLocales']),
         ];
+    }
+
+    /**
+     * Returns the formatted duration for a Timesheet entry.
+     *
+     * @param Timesheet $entry
+     * @param bool $includeSeconds
+     * @return string
+     */
+    public function durationForEntry(Timesheet $entry, $includeSeconds = false)
+    {
+        return $this->duration($entry->getDuration(), $includeSeconds);
     }
 
     /**
@@ -92,12 +109,31 @@ class Extensions extends \Twig_Extension
     }
 
     /**
+     * @param string $currency
+     * @return string
+     */
+    public function currency($currency)
+    {
+        return Intl::getCurrencyBundle()->getCurrencySymbol($currency);
+    }
+
+    /**
+     * @param string $country
+     * @return string
+     */
+    public function country($country)
+    {
+        return Intl::getRegionBundle()->getCountryName($country);
+    }
+
+    /**
      * @param float $amount
      * @param string $currency
      * @return string
      */
-    public function money($amount, $currency = 'EUR')
+    public function money($amount, $currency = null)
     {
+        $currency = $currency ?: Customer::DEFAULT_CURRENCY;
         return round($amount) . ' ' . Intl::getCurrencyBundle()->getCurrencySymbol($currency);
     }
 

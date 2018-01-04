@@ -212,7 +212,7 @@
       </trans-unit>
       <trans-unit id="label.rate">
         <source>label.rate</source>
-        <target>Umsatz</target>
+        <target>Lohn</target>
       </trans-unit>
       <trans-unit id="label.language">
         <source>label.language</source>
@@ -249,10 +249,6 @@
       <trans-unit id="action.back">
         <source>action.back</source>
         <target>Zurück</target>
-      </trans-unit>
-      <trans-unit id="action.updated_successfully">
-        <source>action.updated_successfully</source>
-        <target>Änderungen erfolgreich gespeichert</target>
       </trans-unit>
 
       <!--
@@ -309,6 +305,18 @@
       <trans-unit id="timesheet.subtitle">
         <source>timesheet.subtitle</source>
         <target>Verwalten Sie Ihre Zeiteinträge</target>
+      </trans-unit>
+      <trans-unit id="timesheet.edit">
+        <source>timesheet.edit</source>
+        <target>Eintrag bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="label.begin">
+        <source>label.begin</source>
+        <target>Von</target>
+      </trans-unit>
+      <trans-unit id="label.end">
+        <source>label.end</source>
+        <target>Bis</target>
       </trans-unit>
 
       <!--
@@ -429,6 +437,10 @@
       <trans-unit id="label.timezone">
         <source>label.timezone</source>
         <target>Zeitzone</target>
+      </trans-unit>
+      <trans-unit id="label.currency">
+        <source>label.currency</source>
+        <target>Währung</target>
       </trans-unit>
 
       <!--
@@ -556,15 +568,27 @@
       </trans-unit>
 
        <!--
-        Running time entries top menu
+        Navbar - recent entries and activities
        -->
-      <trans-unit id="tracking.active">
-        <source>tracking.active</source>
-        <target>Sie haben %count% aktive Einträge</target>
+      <trans-unit id="active.entries">
+        <source>active.entries</source>
+        <target>Sie haben %count% aktiven Eintrag|Sie haben %count% aktive Einträge</target>
       </trans-unit>
-      <trans-unit id="tracking.all">
-        <source>tracking.all</source>
+      <trans-unit id="timesheet.all">
+        <source>timesheet.all</source>
         <target>Alle Einträge anzeigen</target>
+      </trans-unit>
+      <trans-unit id="recent.activities">
+        <source>recent.activities</source>
+        <target>Ihr %count% zuletzt bearbeitete Aktivität|Eine ihrer %count% letzten Aktivitäten neustarten</target>
+      </trans-unit>
+      <trans-unit id="recent.activities.format">
+        <source>recent.activities.format</source>
+        <target>%activity% in %project% für %customer%</target>
+      </trans-unit>
+      <trans-unit id="timesheet.start">
+        <source>timesheet.start</source>
+        <target>Neue Zeitmessung starten</target>
       </trans-unit>
 
     </body>

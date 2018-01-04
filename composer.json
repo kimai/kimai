@@ -32,7 +32,7 @@
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0",
         "symfony/assetic-bundle": "^2.8",
-        "symfony/monolog-bundle": "^2.8",
+        "symfony/monolog-bundle": "^3.1",
         "symfony/swiftmailer-bundle": "^2.3",
         "symfony/symfony": "~3.4",
         "twig/extensions": "^1.3",

@@ -64,7 +64,7 @@ class Timesheet
     private $user;
 
     /**
-     * @var integer
+     * @var Activity
      *
      * @ORM\ManyToOne(targetEntity="TimesheetBundle\Entity\Activity")
      * @ORM\JoinColumn(name="activity", referencedColumnName="id")
@@ -128,6 +128,10 @@ class Timesheet
     public function setEnd($end)
     {
         $this->end = $end;
+        if ($end === null) {
+            $this->duration = 0;
+        }
+
         return $this;
     }
 
@@ -151,12 +155,16 @@ class Timesheet
      */
     public function getDuration()
     {
-        if ($this->duration !== 0 || $this->begin === null) {
-            return $this->duration;
+        if ($this->begin === null) {
+            return 0;
         }
 
-        $current = new \DateTime();
-        return $current->getTimestamp() - $this->begin->getTimestamp();
+        if ($this->end === null) {
+            $current = new \DateTime();
+            return $current->getTimestamp() - $this->begin->getTimestamp();
+        }
+
+        return $this->duration;
     }
 
     /**
@@ -183,9 +191,9 @@ class Timesheet
     }
 
     /**
-     * Set activityid
+     * Set activity
      *
-     * @param integer $activity
+     * @param Activity $activity
      *
      * @return Timesheet
      */
@@ -196,9 +204,9 @@ class Timesheet
     }
 
     /**
-     * Get activityid
+     * Get Activity
      *
-     * @return integer
+     * @return Activity
      */
     public function getActivity()
     {

@@ -20,11 +20,15 @@ $(document).ready(function() {
             publish: function() {
                 pubSub.trigger.apply(pubSub, arguments);
             },
-            ticktac: function(selector) {
-                $(selector + ' img').hover(function () {
-                    $(this).attr('src', $.fn.kimai.settings.imagePath + '/buzzer-on-hover.png');
+            pauseRecord: function(selector) {
+                $(selector + ' .pull-left i').hover(function () {
+                    var link = $(this).parents('a');
+                    link.attr('href', link.attr('href').replace('/stop', '/pause'));
+                    $(this).removeClass('fa-stop-circle').addClass('fa-pause-circle').addClass('text-orange');
                 },function () {
-                    $(this).attr('src', $.fn.kimai.settings.imagePath + '/buzzer-on.png');
+                    var link = $(this).parents('a');
+                    link.attr('href', link.attr('href').replace('/pause', '/stop'));
+                    $(this).removeClass('fa-pause-circle').removeClass('text-orange').addClass('fa-stop-circle');
                 });
             }
         };

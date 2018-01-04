@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file date="2016-10-19T21:46:45Z" source-language="en" target-language="de" datatype="plaintext" original="not.available">
+    <body>
+
+      <trans-unit id="access.denied">
+        <source>access.denied</source>
+        <target>Der Zugriff wurde verweigert</target>
+      </trans-unit>
+      <trans-unit id="timesheet.access.denied">
+        <source>timesheet.deny.stop</source>
+        <target>Der Benutzer "%user%" darf den Zeiteintrag "%entry%" nicht aufrufen</target>
+      </trans-unit>
+
+    </body>
+  </file>
+</xliff>

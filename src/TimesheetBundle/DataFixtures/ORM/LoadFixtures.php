@@ -152,15 +152,17 @@ class LoadFixtures extends AppBundleLoadFixtures
         $rate = rand(self::RATE_MIN, self::RATE_MAX);
 
         $entry = new Timesheet();
-        $entry->setActivity($activity);
-        $entry->setDescription($this->getRandomPhrase());
-        $entry->setUser($user);
-        $entry->setRate(round(($duration / 3600) * $rate));
-        $entry->setBegin($start);
+        $entry
+            ->setActivity($activity)
+            ->setDescription($this->getRandomPhrase())
+            ->setUser($user)
+            ->setRate(round(($duration / 3600) * $rate))
+            ->setBegin($start);
 
         if ($setEndDate) {
-            $entry->setEnd($end);
-            $entry->setDuration($duration);
+            $entry
+                ->setEnd($end)
+                ->setDuration($duration);
         }
 
         return $entry;
@@ -176,11 +178,14 @@ class LoadFixtures extends AppBundleLoadFixtures
 
         for ($i = 0; $i < $amountCustomer; $i++) {
             $entry = new Customer();
-            $entry->setName($allCustomer[$i]);
-            $entry->setCity($this->getRandomLocation());
-            $entry->setComment($this->getRandomPhrase());
-            $entry->setVisible($i % 3 != 0);
-            $entry->setTimezone($allTimezones[rand(1, $amountTimezone)]);
+            $entry
+                ->setCurrency($this->getRandomCurrency())
+                ->setVat(rand(0, 30))
+                ->setName($allCustomer[$i])
+                ->setAddress($this->getRandomLocation())
+                ->setComment($this->getRandomPhrase())
+                ->setVisible($i % 3 != 0)
+                ->setTimezone($allTimezones[rand(1, $amountTimezone)]);
 
             $manager->persist($entry);
         }
@@ -195,12 +200,12 @@ class LoadFixtures extends AppBundleLoadFixtures
         for ($i = 0; $i < $amountCustomer * 2; $i++) {
 
             $entry = new Project();
-            $entry->setName($this->getRandomProject());
-            $entry->setCurrency($this->getRandomCurrency());
-            $entry->setBudget(rand(1000, 100000));
-            $entry->setComment($this->getRandomPhrase());
-            $entry->setCustomer($allCustomer[($i % $amountCustomer) + 1]);
-            $entry->setVisible($i % 3 != 0);
+            $entry
+                ->setName($this->getRandomProject())
+                ->setBudget(rand(1000, 100000))
+                ->setComment($this->getRandomPhrase())
+                ->setCustomer($allCustomer[($i % $amountCustomer) + 1])
+                ->setVisible($i % 3 != 0);
 
             $manager->persist($entry);
         }
@@ -215,10 +220,11 @@ class LoadFixtures extends AppBundleLoadFixtures
             $activityCount = rand(1, self::AMOUNT_ACTIVITIES);
             for ($i = 0; $i < $activityCount; $i++) {
                 $entry = new Activity();
-                $entry->setProject($project);
-                $entry->setName($this->getRandomActivity());
-                $entry->setComment($this->getRandomPhrase());
-                $entry->setVisible($i % 3 != 0);
+                $entry
+                    ->setProject($project)
+                    ->setName($this->getRandomActivity())
+                    ->setComment($this->getRandomPhrase())
+                    ->setVisible($i % 3 != 0);
 
                 $manager->persist($entry);
             }

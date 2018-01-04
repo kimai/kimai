@@ -11,10 +11,10 @@
 
 namespace TimesheetBundle\Controller\Admin;
 
+use AppBundle\Controller\AbstractController;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
 use TimesheetBundle\Entity\Project;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -30,7 +30,7 @@ use TimesheetBundle\Repository\ProjectRepository;
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class ProjectController extends Controller
+class ProjectController extends AbstractController
 {
     /**
      * @Route("/", defaults={"page": 1}, name="admin_project")
@@ -53,13 +53,12 @@ class ProjectController extends Controller
      * @Route("/{id}/edit", name="admin_project_edit")
      * @Method({"GET", "POST"})
      *
-     * @param $id
+     * @param Project $project
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAction($id, Request $request)
+    public function editAction(Project $project, Request $request)
     {
-        $project = $this->getById($id);
         $editForm = $this->createEditForm($project);
 
         $editForm->handleRequest($request);
@@ -69,7 +68,7 @@ class ProjectController extends Controller
             $entityManager->persist($project);
             $entityManager->flush();
 
-            $this->addFlash('success', 'action.updated_successfully');
+            $this->flashSuccess('action.updated_successfully');
 
             return $this->redirectToRoute(
                 'admin_project', ['id' => $project->getId()]
@@ -86,23 +85,8 @@ class ProjectController extends Controller
     }
 
     /**
-     * @param $id
-     * @return null|Project
-     */
-    protected function getById($id)
-    {
-        /* @var $repo ProjectRepository */
-        $repo = $this->getDoctrine()->getRepository(Project::class);
-        $activity = $repo->getById($id);
-        if (null === $activity) {
-            throw new NotFoundHttpException('Project "'.$id.'" does not exist');
-        }
-        return $activity;
-    }
-
-    /**
      * @param Project $project
-     * @return \Symfony\Component\Form\Form
+     * @return \Symfony\Component\Form\FormInterface
      */
     private function createEditForm(Project $project)
     {
@@ -112,7 +96,7 @@ class ProjectController extends Controller
             [
                 'action' => $this->generateUrl('admin_project_edit', ['id' => $project->getId()]),
                 'method' => 'POST',
-                'currency' => $project->getCurrency()
+                'currency' => $project->getCustomer()->getCurrency()
             ]
         );
     }

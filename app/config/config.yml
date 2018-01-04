@@ -42,7 +42,6 @@ framework:
         engines: ['twig']
     default_locale:  "%locale%"
     trusted_hosts:   ~
-    trusted_proxies: ~
     session:
         handler_id:  session.handler.native_file
         save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
@@ -59,8 +58,9 @@ twig:
 #        - "form/fields.html.twig"
     globals:
         kimai_context:
-            date_1: "d.m.Y"     # used for display in timesheets
-            box_color: "green"
+            date_1: "d.m.Y"         # used for display in timesheets
+            box_color: "green"      # a color for ???
+            active_warning: 3       # display a warning color if the user has at least X active recordings
 
 # Assetic Configuration (used for managing web assets: CSS, JavaScript, Sass, etc.)
 #assetic:
@@ -100,4 +100,5 @@ avanzu_admin_theme:
         boxed_layout     : false
         collapsed_sidebar: true
         mini_sidebar     : true
+        # TODO support options like: language and skin via sidebar menu
         control_sidebar  : false

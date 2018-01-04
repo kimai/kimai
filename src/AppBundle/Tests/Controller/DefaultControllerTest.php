@@ -14,7 +14,7 @@ namespace AppBundle\Tests\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * FIXME CAN BE REMOVED
+ * TODO adjust to actual app
  *
  * Functional test that implements a "smoke test" of all the public and secure
  * URLs of the application.

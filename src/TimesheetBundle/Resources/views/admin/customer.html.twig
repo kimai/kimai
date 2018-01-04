@@ -6,22 +6,7 @@
 {% block page_subtitle %}{{ 'admin_customer.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
 
 {% block main %}
-    {{ include('default/_flash_messages.html.twig') }}
-
-    {#
-    private $vat;
-    private $contact;
-    private $street;
-    private $zipcode;
-    private $city;
-    private $country;
-    private $phone;
-    private $fax;
-    private $mobile;
-    private $mail;
-    private $homepage;
-    private $timezone;
-    #}
+    {# Available fields: vat; contact; address; country; phone; fax; mobile; mail; homepage; timezone; #}
 
     {% if entries.count > 0 %}
         {{ tables.data_table_header({
@@ -29,6 +14,8 @@
             'label.name': '',
             'label.project': '',
             'label.comment': 'hidden-xs',
+            'label.country': 'hidden-xs',
+            'label.currency': 'hidden-xs',
             'label.visible': '',
             'label.actions': '',
         }) }}
@@ -43,6 +30,8 @@
                     {% endfor %}
                 </td>
                 <td class="hidden-xs">{{ entry.comment }}</td>
+                <td class="hidden-xs">{{ entry.country|country }}</td>
+                <td class="hidden-xs">{{ entry.currency }} {{ entry.currency|currency }}</td>
                 <td>{{ widgets.label_visible(entry.visible) }}</td>
                 <td>
                     {{ widgets.button_group({
