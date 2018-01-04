@@ -283,7 +283,7 @@ class LoadFixtures extends AppBundleLoadFixtures
             'Customer Relations',
             'Infrastructure',
             'Software Upgrade',
-            'Office Managemenr',
+            'Office Management',
         ];
     }
 
