@@ -14,11 +14,9 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserEditType;
 use AppBundle\Form\UserPasswordType;
-use AppBundle\Repository\UserRepository;
+use AppBundle\Form\UserRolesType;
 use Symfony\Component\Form\Form;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TimesheetBundle\Entity\Timesheet;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -38,67 +36,21 @@ class ProfileController extends AbstractController
     /**
      * @Route("/{username}", name="user_profile")
      * @Method("GET")
+     * @Security("is_granted('view', user)")
      */
-    public function indexAction($username)
+    public function indexAction(User $user)
     {
-        $user = $this->getUserByUsername($username);
-
         return $this->getProfileView($user);
-    }
-
-    /**
-     * @param User $user
-     * @param Form|null $editForm
-     * @param Form|null $pwdForm
-     * @param string $tab
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    protected function getProfileView(User $user, Form $editForm = null, Form $pwdForm = null, $tab = 'charts')
-    {
-        /* @var $timesheetRepo TimesheetRepository */
-        $timesheetRepo = $this->getDoctrine()->getRepository(Timesheet::class);
-        $userStats = $timesheetRepo->getUserStatistics($user);
-        $monthlyStats = $timesheetRepo->getMonthlyStats($user);
-
-        $editForm = $editForm !== null ? $editForm : $this->createEditForm($user);
-        $pwdForm = $pwdForm !== null ? $pwdForm : $this->createPasswordForm($user);
-
-        return $this->render(
-            'user/profile.html.twig',
-            [
-                'tab' => $tab,
-                'user' => $user,
-                'stats' => $userStats,
-                'years' => $monthlyStats,
-                'form' => $editForm->createView(),
-                'form_password' => $pwdForm->createView(),
-            ]
-        );
-    }
-
-    protected function getRoles()
-    {
-        $roles = array();
-        foreach ($this->getParameter('security.role_hierarchy.roles') as $key => $value) {
-            $roles[] = $key;
-            foreach ($value as $value2) {
-                $roles[] = $value2;
-            }
-        }
-        $roles = array_unique($roles);
-        return $roles;
     }
 
     /**
      * @Route("/{username}/edit", name="user_profile_edit")
      * @Method({"GET", "POST"})
+     * @Security("is_granted('edit', user)")
      */
-    public function editAction($username, Request $request)
+    public function editAction(User $user, Request $request)
     {
-        $user = $this->getUserByUsername($username);
         $editForm = $this->createEditForm($user);
-
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -113,18 +65,17 @@ class ProfileController extends AbstractController
             );
         }
 
-        return $this->getProfileView($user, $editForm, null, 'profile');
+        return $this->getProfileView($user, $editForm, null, null, 'profile');
     }
 
     /**
      * @Route("/{username}/password", name="user_profile_password")
      * @Method({"GET", "POST"})
+     * @Security("is_granted('password', user)")
      */
-    public function passwordAction($username, Request $request)
+    public function passwordAction(User $user, Request $request)
     {
-        $user = $this->getUserByUsername($username);
         $pwdForm = $this->createPasswordForm($user);
-
         $pwdForm->handleRequest($request);
 
         if ($pwdForm->isSubmitted() && $pwdForm->isValid()) {
@@ -143,52 +94,88 @@ class ProfileController extends AbstractController
             );
         }
 
-        return $this->getProfileView($user, null, $pwdForm, 'password');
+        return $this->getProfileView($user, null, $pwdForm, null, 'password');
+    }
+
+    /**
+     * @Route("/{username}/roles", name="user_profile_roles")
+     * @Method({"GET", "POST"})
+     * @Security("is_granted('roles', user)")
+     */
+    public function rolesAction(User $user, Request $request)
+    {
+        $rolesForm = $this->createRolesForm($user);
+        $rolesForm->handleRequest($request);
+
+        if ($rolesForm->isSubmitted() && $rolesForm->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->flashSuccess('action.updated_successfully');
+
+            return $this->redirectToRoute(
+                'user_profile', ['username' => $user->getUsername()]
+            );
+        }
+
+        return $this->getProfileView($user, null, null, $rolesForm, 'roles');
     }
 
     /**
      * FIXME implement profile deletion
+     *
      * @Route("/{username}/delete", name="user_profile_delete")
      * @Method({"GET", "POST"})
+     * @Security("is_granted('delete', user)")
      */
-    public function deleteAction($username, Request $request)
+    public function deleteAction(User $user, Request $request)
     {
-        $user = $this->getUserByUsername($username);
         $deleteForm = $this->createDeleteForm($user);
 
         throw new \Exception('Delete not implemented yet');
     }
 
     /**
-     * @param $username
-     * @return User
-     * @throws NotFoundHttpException
+     * @param User $user
+     * @param Form|null $editForm
+     * @param Form|null $pwdForm
+     * @param Form|null $rolesForm
+     * @param string $tab
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    protected function getUserByUsername($username)
+    protected function getProfileView(User $user, Form $editForm = null, Form $pwdForm = null, Form $rolesForm = null, $tab = 'charts')
     {
-        $user = $this->getUser();
+        /* @var $timesheetRepo TimesheetRepository */
+        $timesheetRepo = $this->getDoctrine()->getRepository(Timesheet::class);
+        $userStats = $timesheetRepo->getUserStatistics($user);
+        $monthlyStats = $timesheetRepo->getMonthlyStats($user);
 
-        // access to own profile always allowed
-        if (null === $username) {
-            $username = $user->getUsername();
+        $viewVars = [
+            'tab' => $tab,
+            'user' => $user,
+            'stats' => $userStats,
+            'years' => $monthlyStats,
+            'form' => null,
+            'form_password' => null,
+            'form_roles' => null,
+        ];
+
+        if ($this->isGranted('edit', $user)) {
+            $editForm = $editForm ?: $this->createEditForm($user);
+            $viewVars['form'] = $editForm->createView();
+        }
+        if ($this->isGranted('password', $user)) {
+            $pwdForm = $pwdForm ?: $this->createPasswordForm($user);
+            $viewVars['form_password'] = $pwdForm->createView();
+        }
+        if ($this->isGranted('roles', $user)) {
+            $rolesForm = $rolesForm ?: $this->createRolesForm($user);
+            $viewVars['form_roles'] = $rolesForm->createView();
         }
 
-        // only administrator can bypass that part if the requested user is not the current user
-        if ($username !== $user->getUsername()) {
-            $this->denyUnlessGranted('ROLE_ADMIN');
-        }
-
-        // if the user is not the current use, load the requested one
-        if ($username !== $user->getUsername()) {
-            /* @var $userRepo UserRepository */
-            $userRepo = $this->getDoctrine()->getRepository(User::class);
-            $user = $userRepo->findByUsername($username);
-            if (null === $user) {
-                throw new NotFoundHttpException('User "'.$username.'" does not exist');
-            }
-        }
-
-        return $user;
+        return $this->render('user/profile.html.twig', $viewVars);
     }
 
     /**
@@ -203,6 +190,22 @@ class ProfileController extends AbstractController
             [
                 'action' => $this->generateUrl('user_profile_edit', ['username' => $user->getUsername()]),
                 'method' => 'POST'
+            ]
+        );
+    }
+
+    /**
+     * @param User $user
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    private function createRolesForm(User $user)
+    {
+        return $this->createForm(
+            UserRolesType::class,
+            $user,
+            [
+                'action' => $this->generateUrl('user_profile_roles', ['username' => $user->getUsername()]),
+                'method' => 'POST',
             ]
         );
     }

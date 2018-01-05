@@ -16,9 +16,15 @@
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li {% if tab == "charts" %}class="active"{% endif %}><a href="#charts" data-toggle="tab" aria-expanded="true">{{ 'profile.tab_monthly'|trans }}</a></li>
+                    {% if form %}
                     <li {% if tab == "profile" %}class="active"{% endif %}><a href="#profile" data-toggle="tab" aria-expanded="false">{{ 'profile.settings'|trans }}</a></li>
-                    <li {% if tab == "password" %}class="active"{% endif %}><a href="#password" data-toggle="tab" aria-expanded="false">{{ 'profile.password'|trans }}</a></li>
-
+                    {% endif %}
+                    {% if form_password %}
+                        <li {% if tab == "password" %}class="active"{% endif %}><a href="#password" data-toggle="tab" aria-expanded="false">{{ 'profile.password'|trans }}</a></li>
+                    {% endif %}
+                    {% if form_roles %}
+                        <li {% if tab == "roles" %}class="active"{% endif %}><a href="#roles" data-toggle="tab" aria-expanded="false">{{ 'profile.roles'|trans }}</a></li>
+                    {% endif %}
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane {% if tab == "charts" %}active{% endif %}" id="charts">
@@ -88,18 +94,30 @@
                         {% endfor %}
 
                     </div>
-                    <div class="tab-pane {% if tab == "profile" %}active{% endif %}" id="profile">
-                        {{ form_start(form) }}
-                            {{ form_widget(form) }}
+                    {% if form %}
+                        <div class="tab-pane {% if tab == "profile" %}active{% endif %}" id="profile">
+                            {{ form_start(form) }}
+                                {{ form_widget(form) }}
+                                <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
+                            {{ form_end(form) }}
+                        </div>
+                    {% endif %}
+                    {% if form_password %}
+                        <div class="tab-pane {% if tab == "password" %}active{% endif %}" id="password">
+                            {{ form_start(form_password) }}
+                            {{ form_widget(form_password) }}
                             <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
-                        {{ form_end(form) }}
-                    </div>
-                    <div class="tab-pane {% if tab == "password" %}active{% endif %}" id="password">
-                        {{ form_start(form_password) }}
-                        {{ form_widget(form_password) }}
-                        <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
-                        {{ form_end(form_password) }}
-                    </div>
+                            {{ form_end(form_password) }}
+                        </div>
+                    {% endif %}
+                    {% if form_roles %}
+                        <div class="tab-pane {% if tab == "roles" %}active{% endif %}" id="roles">
+                            {{ form_start(form_roles) }}
+                            {{ form_widget(form_roles) }}
+                            <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
+                            {{ form_end(form_roles) }}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

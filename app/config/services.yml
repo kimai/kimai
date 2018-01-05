@@ -24,6 +24,20 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
+    # security voter to check user-profile access
+    app.voter.user:
+        class: AppBundle\Voter\UserVoter
+        arguments: ["@security.access.decision_manager"]
+        tags:
+            - { name: security.voter }
+
+    # form to edit user roles
+    app.admin.user_profile_roles:
+        class: AppBundle\Form\UserRolesType
+        arguments: ["%security.role_hierarchy.roles%"]
+        tags:
+            - { name: form.type }
+
     # event-listener to populate the navigation
     app.menu_builder:
         class: AppBundle\EventListener\MenuBuilder
