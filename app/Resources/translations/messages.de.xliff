@@ -354,6 +354,10 @@
         <source>profile.password</source>
         <target>Passwort</target>
       </trans-unit>
+      <trans-unit id="profile.roles">
+        <source>profile.roles</source>
+        <target>Rollen</target>
+      </trans-unit>
 
       <!--
         Admin: Timesheet

@@ -15,11 +15,12 @@ use AppBundle\Entity\User;
 use AppBundle\Form\Type\LanguageType;
 use AppBundle\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Defines the form used to create and manipulate Users.
+ * Defines the form used to edit the profile of a User.
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
@@ -33,20 +34,22 @@ class UserEditType extends AbstractType
     {
         $builder
             // string - length 160
-            ->add('alias', null, [
+            ->add('alias', TextType::class, [
                 'label' => 'label.alias',
+                'required' => false,
             ])
             // string - length 50
-            ->add('title', null, [
-                //'attr' => ['autofocus' => true],
+            ->add('title', TextType::class, [
                 'label' => 'label.title',
+                'required' => false,
             ])
             // string - length 255
-            ->add('avatar', null, [
+            ->add('avatar', TextType::class, [
                 'label' => 'label.avatar',
+                'required' => false,
             ])
             // string - length 160
-            ->add('email', null, [
+            ->add('email', TextType::class, [
                 'label' => 'label.email',
             ])
             // string - length 5
@@ -57,7 +60,6 @@ class UserEditType extends AbstractType
             ->add('active', YesNoType::class, [
                 'label' => 'label.active',
             ])
-            // TODO roles - see ProfileController::getRoles()
         ;
     }
 
