@@ -11,7 +11,6 @@
 
 namespace AppBundle;
 
-use AppBundle\DependencyInjection\AppBundleExtension;
 use AppBundle\DependencyInjection\CompilerPass;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

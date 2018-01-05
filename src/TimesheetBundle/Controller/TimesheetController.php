@@ -171,8 +171,8 @@ class TimesheetController extends AbstractController
 
     /**
      * @param Timesheet $entry
-     * @param string $page
-     * @return \Symfony\Component\Form\Form
+     * @param int $page
+     * @return \Symfony\Component\Form\FormInterface
      */
     private function createEditForm(Timesheet $entry, $page)
     {
