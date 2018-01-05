@@ -528,6 +528,34 @@
       </trans-unit>
 
       <!--
+        Dashboard
+      -->
+      <trans-unit id="stats.userTotal">
+        <source>stats.userTotal</source>
+        <target>Anzahl Benutzer</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveThisMoth">
+        <source>stats.userActiveThisMoth</source>
+        <target>Aktive Benutzer diesen Monat</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveEver">
+        <source>stats.userActiveEver</source>
+        <target>Aktive Benutzer jemals</target>
+      </trans-unit>
+      <trans-unit id="stats.userActiveNow">
+        <source>stats.userActiveNow</source>
+        <target>Momentan aktiv</target>
+      </trans-unit>
+      <trans-unit id="stats.activitiesTotal">
+        <source>stats.activitiesTotal</source>
+        <target>Anzahl Aktivitäten</target>
+      </trans-unit>
+      <trans-unit id="stats.projectsTotal">
+        <source>stats.projectsTotal</source>
+        <target>Anzahl Projekte</target>
+      </trans-unit>
+
+      <!--
         Month names
       -->
       <trans-unit id="month.1">

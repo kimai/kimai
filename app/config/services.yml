@@ -11,6 +11,12 @@ services:
         tags:
             - { name: twig.extension }
 
+    # twig function: template_from_string()
+    app.twig.loader_extension:
+        class: Twig_Extension_StringLoader
+        tags:
+             - { name: 'twig.extension' }
+
     app.twig.intl_extension:
         public: false
         class:  Twig_Extensions_Extension_Intl
