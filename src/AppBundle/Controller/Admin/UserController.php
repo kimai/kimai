@@ -23,7 +23,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
  * Controller used to manage users in the admin part of the site.
  *
  * @Route("/admin/user")
- * @Security("has_role('ROLE_ADMIN')")
+ * @Security("has_role('ROLE_SUPER_ADMIN')")
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */

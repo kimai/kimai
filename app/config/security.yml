@@ -46,7 +46,7 @@ security:
         ROLE_USER:        ROLE_CUSTOMER
         ROLE_TEAMLEAD:    ROLE_USER
         ROLE_ADMIN:       ROLE_TEAMLEAD
-        ROLE_SUPER_ADMIN: [ROLE_ADMIN]
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     access_control:
         # this is a catch-all for the admin area
