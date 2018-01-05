@@ -133,7 +133,7 @@ class CustomerEditForm extends AbstractType
             'data_class' => Customer::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
-            'csrf_token_id' => 'admin_activity_edit',
+            'csrf_token_id' => 'admin_customer_edit',
         ]);
     }
 }

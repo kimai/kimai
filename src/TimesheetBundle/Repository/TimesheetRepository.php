@@ -22,6 +22,7 @@ use Pagerfanta\Pagerfanta;
 use TimesheetBundle\Model\Statistic\Month;
 use TimesheetBundle\Model\Statistic\Year;
 use TimesheetBundle\Model\TimesheetGlobalStatistic;
+use TimesheetBundle\Model\Query\Timesheet as TimesheetQuery;
 use TimesheetBundle\Model\TimesheetStatistic;
 use DateTime;
 
@@ -291,6 +292,42 @@ class TimesheetRepository extends EntityRepository
         return $qb->getQuery();
     }
 
+    public function findByQuery(TimesheetQuery $query)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('t', 'a')
+            ->from('TimesheetBundle:Timesheet', 't')
+            ->join('t.activity', 'a')
+            ->orderBy('t.begin', 'DESC');
+
+        if ($query->getUser() !== null) {
+            $qb->andWhere('t.user = :user')
+                ->setParameter('user', $query->getUser());
+        }
+
+        if ($query->getState() == TimesheetQuery::STATE_RUNNING) {
+            $qb->andWhere($qb->expr()->isNull('t.end'));
+        } elseif ($query->getState() == TimesheetQuery::STATE_STOPPED) {
+            $qb->andWhere($qb->expr()->isNotNull('t.end'));
+        }
+
+        if ($query->getActivity() !== null) {
+            $qb->andWhere('t.activity = :activity')
+                ->setParameter('activity', $query->getActivity());
+        } elseif ($query->getProject() !== null) {
+            $qb->andWhere('a.project = :project')
+                ->setParameter('project', $query->getProject());
+        } elseif ($query->getCustomer() !== null) {
+            $qb->join('a.project', 'p')
+                ->join('p.customer', 'c')
+                ->andWhere('p.customer = :customer')
+                ->setParameter('customer', $query->getCustomer());
+        }
+
+        return $this->getPager($qb->getQuery(), $query->getPage(), $query->getPageSize());
+    }
+
     /**
      * @param User $user
      * @param int $page
@@ -314,12 +351,13 @@ class TimesheetRepository extends EntityRepository
     /**
      * @param Query $query
      * @param int $page
+     * @param int $maxPerPage
      * @return Pagerfanta
      */
-    protected function getPager(Query $query, $page = 1)
+    protected function getPager(Query $query, $page = 1, $maxPerPage = 25)
     {
         $paginator = new Pagerfanta(new DoctrineORMAdapter($query, false));
-        $paginator->setMaxPerPage(25);
+        $paginator->setMaxPerPage($maxPerPage);
         $paginator->setCurrentPage($page);
 
         return $paginator;

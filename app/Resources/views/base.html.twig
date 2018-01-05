@@ -32,17 +32,6 @@
 {% block avanzu_head %}
     <link rel="stylesheet" href="{{ asset('css/kimai.css') }}">
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script src="{{ asset('theme/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/kimai.js') }}"></script>
-    <script src="{{ asset('js/Chart.min.js') }}"></script>
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $('.dropdown-toggle').dropdown();
-        $(document).kimai({imagePath: '{{ asset('images') }}'});
-        //$(document).kimai('pauseRecord', 'li.messages-menu ul.menu li');
-    });
-    </script>
 {% endblock %}
 
 {% block avanzu_footer %}
@@ -91,5 +80,21 @@
 
 {% block avanzu_breadcrumb %}{{ parent() }}{% endblock %}
 {% block avanzu_control_sidebar %}{{ parent() }}{% endblock %}
-{% block avanzu_javascripts %}{{ parent() }}{% endblock %}
-{% block avanzu_javascripts_inline %}{{ parent() }}{% endblock %}
+
+{% block avanzu_javascripts %}
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="{{ asset('theme/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/kimai.js') }}"></script>
+    <script src="{{ asset('js/Chart.min.js') }}"></script>
+    {% block javascript_imports %}{% endblock %}
+{% endblock %}
+
+{% block avanzu_javascripts_inline %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.dropdown-toggle').dropdown();
+            $(document).kimai({imagePath: '{{ asset('images') }}'});
+            //$(document).kimai('pauseRecord', 'li.messages-menu ul.menu li');
+        });
+    </script>
+{% endblock %}

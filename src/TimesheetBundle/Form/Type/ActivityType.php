@@ -11,18 +11,29 @@
 
 namespace TimesheetBundle\Form\Type;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use TimesheetBundle\Entity\Project;
+use TimesheetBundle\Entity\Activity;
 
 /**
- * Custom form field type to select a project.
+ * Custom form field type to select an activity.
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class ProjectType extends AbstractType
+class ActivityType extends AbstractType
 {
+
+    /**
+     * @param Activity $activity
+     * @param $key
+     * @param $index
+     * @return string
+     */
+    public function groupBy(Activity $activity, $key, $index)
+    {
+        return $activity->getProject()->getName();
+    }
 
     /**
      * {@inheritdoc}
@@ -30,12 +41,10 @@ class ProjectType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'class' => 'TimesheetBundle:Project',
+            'class' => 'TimesheetBundle:Activity',
             'choice_label' => 'name',
             'choice_value' => 'id',
-            'group_by' => function(Project $project, $key, $index) {
-                return $project->getCustomer()->getName();
-            },
+            'group_by' => array($this, 'groupBy'),
         ]);
     }
 
@@ -44,6 +53,6 @@ class ProjectType extends AbstractType
      */
     public function getParent()
     {
-        return ChoiceType::class;
+        return EntityType::class;
     }
 }
