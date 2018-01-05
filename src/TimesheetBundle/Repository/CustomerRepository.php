@@ -13,6 +13,7 @@ namespace TimesheetBundle\Repository;
 
 use TimesheetBundle\Entity\Customer;
 use TimesheetBundle\Model\CustomerStatistic;
+use TimesheetBundle\Model\Query\CustomerQuery;
 
 /**
  * Class CustomerRepository
@@ -46,5 +47,26 @@ class CustomerRepository extends AbstractRepository
         $stats = new CustomerStatistic();
         $stats->setTotalAmount($countAll);
         return $stats;
+    }
+
+    /**
+     * @param CustomerQuery $query
+     * @return \Pagerfanta\Pagerfanta
+     */
+    public function findByQuery(CustomerQuery $query)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('c')
+            ->from('TimesheetBundle:Customer', 'c')
+            ->orderBy('c.' . $query->getOrderBy(), 'ASC');
+
+        if ($query->getVisibility() === CustomerQuery::SHOW_VISIBLE) {
+            $qb->andWhere('c.visible = 1');
+        } elseif ($query->getVisibility() === CustomerQuery::SHOW_HIDDEN) {
+            $qb->andWhere('c.visible = 0');
+        }
+
+        return $this->getPager($qb->getQuery(), $query->getPage(), $query->getPageSize());
     }
 }

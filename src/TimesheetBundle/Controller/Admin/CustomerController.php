@@ -14,14 +14,13 @@ namespace TimesheetBundle\Controller\Admin;
 use AppBundle\Controller\AbstractController;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TimesheetBundle\Entity\Customer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use TimesheetBundle\Form\CustomerEditForm;
-use TimesheetBundle\Repository\CustomerRepository;
+use TimesheetBundle\Model\Query\CustomerQuery;
 
 /**
  * Controller used to manage activities in the admin part of the site.
@@ -41,21 +40,40 @@ class CustomerController extends AbstractController
      */
     public function indexAction($page)
     {
+        $query = new CustomerQuery();
+        $query->setVisibility(CustomerQuery::SHOW_BOTH);
+        $query->setPage($page);
+
         /* @var $entries Pagerfanta */
-        $entries = $this->getDoctrine()->getRepository(Customer::class)->findAll($page);
+        $entries = $this->getDoctrine()->getRepository(Customer::class)->findByQuery($query);
 
         return $this->render('TimesheetBundle:admin:customer.html.twig', ['entries' => $entries]);
     }
 
     /**
+     * @Route("/create", name="admin_customer_create")
+     * @Method({"GET", "POST"})
+     */
+    public function createAction(Request $request)
+    {
+        return $this->renderCustomerForm(new Customer(), $request);
+    }
+
+    /**
      * @Route("/{id}/edit", name="admin_customer_edit")
      * @Method({"GET", "POST"})
-     *
+     */
+    public function editAction(Customer $customer, Request $request)
+    {
+        return $this->renderCustomerForm($customer, $request);
+    }
+
+    /**
      * @param Customer $customer
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Customer $customer, Request $request)
+    protected function renderCustomerForm(Customer $customer, Request $request)
     {
         $editForm = $this->createEditForm($customer);
 
@@ -84,15 +102,21 @@ class CustomerController extends AbstractController
 
     /**
      * @param Customer $customer
-     * @return \Symfony\Component\Form\Form
+     * @return \Symfony\Component\Form\FormInterface
      */
     private function createEditForm(Customer $customer)
     {
+        if ($customer->getId() === null) {
+            $url = $this->generateUrl('admin_customer_create');
+        } else {
+            $url = $this->generateUrl('admin_customer_edit', ['id' => $customer->getId()]);
+        }
+
         return $this->createForm(
             CustomerEditForm::class,
             $customer,
             [
-                'action' => $this->generateUrl('admin_customer_edit', ['id' => $customer->getId()]),
+                'action' => $url,
                 'method' => 'POST'
             ]
         );
