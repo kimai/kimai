@@ -7,7 +7,7 @@
 
 {% block main %}
     {{ include('default/_form.html.twig', {
-        'title': customer.name,
+        'title': customer.name|default('create'|trans),
         'form': form,
         'back': path('admin_customer')
     }) }}

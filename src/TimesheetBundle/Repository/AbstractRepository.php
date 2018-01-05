@@ -56,12 +56,13 @@ abstract class AbstractRepository extends EntityRepository
     /**
      * @param Query $query
      * @param int $page
+     * @param int $maxPerPage
      * @return Pagerfanta
      */
-    protected function getPager(Query $query, $page = 1)
+    protected function getPager(Query $query, $page = 1, $maxPerPage = 25)
     {
         $paginator = new Pagerfanta(new DoctrineORMAdapter($query, false));
-        $paginator->setMaxPerPage(25);
+        $paginator->setMaxPerPage($maxPerPage);
         $paginator->setCurrentPage($page);
 
         return $paginator;
