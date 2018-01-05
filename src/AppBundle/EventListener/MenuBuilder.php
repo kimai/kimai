@@ -58,6 +58,7 @@ class MenuBuilder
     {
         $request = $event->getRequest();
         $isLoggedIn = $this->security->isGranted('IS_AUTHENTICATED_FULLY');
+        $isTeamlead = $isLoggedIn && $this->security->isGranted('ROLE_TEAMLEAD');
         $isAdmin = $isLoggedIn && $this->security->isGranted('ROLE_ADMIN');
 
         $event->addItem(
@@ -73,12 +74,15 @@ class MenuBuilder
             )
         );
 
-        if ($isAdmin) {
+        if ($isTeamlead) {
             $admin = new MenuItemModel('admin', 'menu.admin', '', [], 'fa fa-wrench');
             $event->addItem($admin);
-            $admin->addChild(
-                new MenuItemModel('user_admin', 'menu.admin_user', 'admin_user', [], 'fa fa-user')
-            );
+
+            if ($isAdmin) {
+                $admin->addChild(
+                    new MenuItemModel('user_admin', 'menu.admin_user', 'admin_user', [], 'fa fa-user')
+                );
+            }
 
             $this->eventDispatcher->dispatch(
                 ConfigureAdminMenuEvent::CONFIGURE,

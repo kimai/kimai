@@ -52,16 +52,23 @@ class Menu
         $menu = $event->getAdminMenu();
         $auth = $event->getAuth();
 
-        $isLoggedIn = $auth->isGranted('IS_AUTHENTICATED_FULLY');
-        $isAdmin = $isLoggedIn && $auth->isGranted('ROLE_ADMIN');
+        if (!$auth->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return;
+        }
 
-        if (!$isAdmin) {
+        if (!$auth->isGranted('ROLE_TEAMLEAD')) {
             return;
         }
 
         $menu->addChild(
             new MenuItemModel('timesheet_admin', 'menu.admin_timesheet', 'admin_timesheet', [], 'fa fa-clock-o')
-        )->addChild(
+        );
+
+        if (!$auth->isGranted('ROLE_ADMIN')) {
+            return;
+        }
+
+        $menu->addChild(
             new MenuItemModel('customer_admin', 'menu.admin_customer', 'admin_customer', [], 'fa fa-users')
         )->addChild(
             new MenuItemModel('project_admin', 'menu.admin_project', 'admin_project', [], 'fa fa-book')

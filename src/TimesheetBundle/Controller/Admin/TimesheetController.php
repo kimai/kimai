@@ -11,6 +11,7 @@
 
 namespace TimesheetBundle\Controller\Admin;
 
+use Pagerfanta\Pagerfanta;
 use TimesheetBundle\Entity\Timesheet;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -21,8 +22,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 /**
  * Controller used for manage timesheet entries in the admin part of the site.
  *
- * @Route("/admin/timesheet")
- * @Security("has_role('ROLE_ADMIN')")
+ * @Route("/team/timesheet")
+ * @Security("has_role('ROLE_TEAMLEAD')")
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
