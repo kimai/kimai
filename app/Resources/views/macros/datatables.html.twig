@@ -1,24 +1,24 @@
 
 {% macro data_table_header(entries, form, tools) %}
-<div class="box">
+<div class="box data_table">
     {% if form or tools %}
     <div class="box-header with-border">
-        {% if form %}
-            <div class="box-title toolbar">
+        <div class="box-title toolbar">
+            {% if form %}
                 {{ form_start(form) }}
                 {{ form_widget(form) }}
                 {{ form_end(form) }}
-            </div>
-        {% endif %}
-        {% if tools %}
-            <div class="box-tools">
+            {% endif %}
+        </div>
+        <div class="box-tools">
+            {% if tools %}
                 <div class="btn-group">
-                    {% for url,icon in tools  %}
+                    {% for icon,url in tools  %}
                         <a class="btn btn-default" href="{{ url }}"><i class="fa fa-{{ icon }}"></i></a>
                     {% endfor %}
                 </div>
-            </div>
-        {% endif %}
+            {% endif %}
+        </div>
     </div>
     {% endif %}
     <div class="box-body no-padding">

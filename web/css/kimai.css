@@ -33,6 +33,10 @@ li.open .ticktac i.running{
 
 /* ================================ TOOLBAR ================================ */
 
+.data_table .box-header>.box-tools {
+    top: 3px;
+}
+
 .box-header .box-title.toolbar form {
     font-size: 13px;
 }
