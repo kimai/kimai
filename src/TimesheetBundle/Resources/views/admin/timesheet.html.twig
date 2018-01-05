@@ -1,56 +1,52 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "macros/datatables.html.twig" as datatables %}
+{% import "macros/datatables.html.twig" as tables %}
 
 {% block page_title %}{{ 'admin_timesheet.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_timesheet.subtitle'|trans }}{% endblock %}
 {% block javascript_imports %}<script src="{{ asset('js/timesheet.js') }}"></script>{% endblock %}
 
 {% block main %}
-    {% if toolbarForm %}
-        {{ include('default/_toolbar_form.html.twig', {'form': toolbarForm}) }}
-    {% endif %}
-
-    {% if entries.count > 0 %}
-        {{ datatables.data_table_header({
-            'label.date': '',
-            'label.starttime': 'hidden-xs',
-            'label.endtime': 'hidden-xs',
-            'label.duration': '',
-            'label.rate': '',
-            'label.username': 'hidden-xs',
-            'label.description': 'hidden-xs hidden-sm',
-            'label.actions': '',
-        }) }}
-
-        {% for entry in entries %}
-            <tr>
-                <td>{{ entry.begin|date(kimai_context.date_1) }}</td>
-                <td class="hidden-xs">{{ entry.begin|date("H:i") }}</td>
-                {% if entry.end %}
-                    <td class="hidden-xs">{{ entry.end|date("H:i") }}</td>
-                    <td>{{ entry.duration|duration }}</td>
-                    <td>{{ entry.rate|money(entry.activity.project.customer.currency) }}</td>
-                {% else %}
-                    <td class="hidden-xs">&dash;</td>
-                    <td>&dash;</td>
-                    <td>&dash;</td>
-                {% endif %}
-                <td class="hidden-xs"><a href="{{ path('profile'|route_alias, {'username' : entry.user.username}) }}">{{ entry.user.username }}</a></td>
-                <td class="hidden-xs hidden-sm">{{ entry.description }}</td>
-                <td>
-                    {% if entry.end %}
-                        {{ widgets.button_group({'edit': '#', 'trash': '#'}) }}
-                    {% else %}
-                        {{ widgets.button_group({'stop': path('admin_timesheet_stop', {'id' : entry.id}), 'edit': '#', 'trash': '#'}) }}
-                    {% endif %}
-
-                </td>
-            </tr>
-        {% endfor %}
-
-        {{ datatables.data_table_footer(entries, 'admin_timesheet_paginated') }}
-    {% else %}
+    {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% endif %}
+
+    {{ tables.data_table_header({
+        'label.date': '',
+        'label.starttime': 'hidden-xs',
+        'label.endtime': 'hidden-xs',
+        'label.duration': '',
+        'label.rate': '',
+        'label.username': 'hidden-xs',
+        'label.description': 'hidden-xs hidden-sm',
+        'label.actions': '',
+    }, toolbarForm) }}
+
+    {% for entry in entries %}
+        <tr>
+            <td>{{ entry.begin|date(kimai_context.date_1) }}</td>
+            <td class="hidden-xs">{{ entry.begin|date("H:i") }}</td>
+            {% if entry.end %}
+                <td class="hidden-xs">{{ entry.end|date("H:i") }}</td>
+                <td>{{ entry.duration|duration }}</td>
+                <td>{{ entry.rate|money(entry.activity.project.customer.currency) }}</td>
+            {% else %}
+                <td class="hidden-xs">&dash;</td>
+                <td>&dash;</td>
+                <td>&dash;</td>
+            {% endif %}
+            <td class="hidden-xs"><a href="{{ path('profile'|route_alias, {'username' : entry.user.username}) }}">{{ entry.user.username }}</a></td>
+            <td class="hidden-xs hidden-sm">{{ entry.description }}</td>
+            <td>
+                {% if entry.end %}
+                    {{ widgets.button_group({'edit': '#', 'trash': '#'}) }}
+                {% else %}
+                    {{ widgets.button_group({'stop': path('admin_timesheet_stop', {'id' : entry.id}), 'edit': '#', 'trash': '#'}) }}
+                {% endif %}
+
+            </td>
+        </tr>
+    {% endfor %}
+
+    {{ tables.data_table_footer(entries, 'admin_timesheet_paginated') }}
 {% endblock %}

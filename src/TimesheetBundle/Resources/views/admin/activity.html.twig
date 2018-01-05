@@ -6,40 +6,40 @@
 {% block page_subtitle %}{{ 'admin_activity.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
 
 {% block main %}
-    {% if entries.count > 0 %}
-        {{ tables.data_table_header({
-            'label.id': 'hidden-xs',
-            'label.name': '',
-            'label.project': '',
-            'label.customer': '',
-            'label.comment': 'hidden-xs',
-            'label.visible': '',
-            'label.actions': '',
-        }) }}
-
-        {% for entry in entries %}
-            <tr>
-                <td class="hidden-xs">{{ entry.id }}</td>
-                <td>{{ entry.name }}</td>
-                <td>
-                    <a href="{{ path('admin_project_edit', {'id' : entry.project.id}) }}">{{ widgets.label_project(entry.project) }}</a>
-                </td>
-                <td>
-                    <a href="{{ path('admin_customer_edit', {'id' : entry.project.customer.id}) }}">{{ widgets.label_customer(entry.project.customer) }}</a>
-                </td>
-                <td class="hidden-xs">{{ entry.comment }}</td>
-                <td>{{ widgets.label_visible(entry.visible) }}</td>
-                <td>
-                    {{ widgets.button_group({
-                        'edit': path('admin_activity_edit', {'id': entry.id}),
-                        'trash': '#'
-                    }) }}
-                </td>
-            </tr>
-        {% endfor %}
-
-        {{ tables.data_table_footer(entries, 'admin_activity_paginated') }}
-    {% else %}
+    {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% endif %}
+
+    {{ tables.data_table_header({
+        'label.id': 'hidden-xs',
+        'label.name': '',
+        'label.project': '',
+        'label.customer': '',
+        'label.comment': 'hidden-xs',
+        'label.visible': '',
+        'label.actions': '',
+    }) }}
+
+    {% for entry in entries %}
+        <tr>
+            <td class="hidden-xs">{{ entry.id }}</td>
+            <td>{{ entry.name }}</td>
+            <td>
+                <a href="{{ path('admin_project_edit', {'id' : entry.project.id}) }}">{{ widgets.label_project(entry.project) }}</a>
+            </td>
+            <td>
+                <a href="{{ path('admin_customer_edit', {'id' : entry.project.customer.id}) }}">{{ widgets.label_customer(entry.project.customer) }}</a>
+            </td>
+            <td class="hidden-xs">{{ entry.comment }}</td>
+            <td>{{ widgets.label_visible(entry.visible) }}</td>
+            <td>
+                {{ widgets.button_group({
+                    'edit': path('admin_activity_edit', {'id': entry.id}),
+                    'trash': '#'
+                }) }}
+            </td>
+        </tr>
+    {% endfor %}
+
+    {{ tables.data_table_footer(entries, 'admin_activity_paginated') }}
 {% endblock %}

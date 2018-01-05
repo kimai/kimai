@@ -1,55 +1,51 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "macros/datatables.html.twig" as datatables %}
+{% import "macros/datatables.html.twig" as tables %}
 
 {% block page_title %}{{ 'timesheet.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'timesheet.subtitle'|trans }}{% endblock %}
 {% block javascript_imports %}<script src="{{ asset('js/timesheet.js') }}"></script>{% endblock %}
 
 {% block main %}
-    {% if toolbarForm %}
-        {{ include('default/_toolbar_form.html.twig', {'form': toolbarForm}) }}
-    {% endif %}
-
-    {% if entries.count > 0 %}
-        {{ datatables.data_table_header({
-            'label.date': '',
-            'label.starttime': '',
-            'label.endtime': '',
-            'label.duration': 'hidden-xs',
-            'label.rate': 'hidden-xs',
-            'label.activity': 'hidden-xs hidden-sm',
-            'label.description': 'hidden-xs hidden-sm',
-            'label.actions': '',
-        }) }}
-
-        {% for entry in entries %}
-            <tr>
-                <td>{{ entry.begin|date(kimai_context.date_1) }}</td>
-                <td>{{ entry.begin|date("H:i") }}</td>
-                {% if entry.end %}
-                    <td>{{ entry.end|date("H:i") }}</td>
-                    <td class="hidden-xs">{{ entry.duration|duration }}</td>
-                    <td class="hidden-xs">{{ entry.rate|money(entry.activity.project.customer.currency) }}</td>
-                {% else %}
-                    <td>&dash;</td>
-                    <td class="hidden-xs"><i>{{ entry.duration|duration }}</i></td>
-                    <td class="hidden-xs">&dash;</td>
-                {% endif %}
-                <td class="hidden-xs hidden-sm">{{ entry.activity.name }}</td>
-                <td class="hidden-xs hidden-sm">{{ entry.description }}</td>
-                <td>
-                    {% if entry.end %}
-                        {{ widgets.button_group({'repeat': '#', 'edit': path('timesheet_edit', {'id' : entry.id, 'page': page}), 'trash': '#'}) }}
-                    {% else %}
-                        {{ widgets.button_group({'stop': path('timesheet_stop', {'id' : entry.id}), 'edit': path('timesheet_edit', {'id' : entry.id, 'page': page}), 'trash': '#'}) }}
-                    {% endif %}
-                </td>
-            </tr>
-        {% endfor %}
-
-        {{ datatables.data_table_footer(entries, 'timesheet_paginated') }}
-    {% else %}
+    {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% endif %}
+
+    {{ tables.data_table_header({
+        'label.date': '',
+        'label.starttime': '',
+        'label.endtime': '',
+        'label.duration': 'hidden-xs',
+        'label.rate': 'hidden-xs',
+        'label.activity': 'hidden-xs hidden-sm',
+        'label.description': 'hidden-xs hidden-sm',
+        'label.actions': '',
+    }, toolbarForm) }}
+
+    {% for entry in entries %}
+        <tr>
+            <td>{{ entry.begin|date(kimai_context.date_1) }}</td>
+            <td>{{ entry.begin|date("H:i") }}</td>
+            {% if entry.end %}
+                <td>{{ entry.end|date("H:i") }}</td>
+                <td class="hidden-xs">{{ entry.duration|duration }}</td>
+                <td class="hidden-xs">{{ entry.rate|money(entry.activity.project.customer.currency) }}</td>
+            {% else %}
+                <td>&dash;</td>
+                <td class="hidden-xs"><i>{{ entry.duration|duration }}</i></td>
+                <td class="hidden-xs">&dash;</td>
+            {% endif %}
+            <td class="hidden-xs hidden-sm">{{ entry.activity.name }}</td>
+            <td class="hidden-xs hidden-sm">{{ entry.description }}</td>
+            <td>
+                {% if entry.end %}
+                    {{ widgets.button_group({'repeat': '#', 'edit': path('timesheet_edit', {'id' : entry.id, 'page': page}), 'trash': '#'}) }}
+                {% else %}
+                    {{ widgets.button_group({'stop': path('timesheet_stop', {'id' : entry.id}), 'edit': path('timesheet_edit', {'id' : entry.id, 'page': page}), 'trash': '#'}) }}
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+
+    {{ tables.data_table_footer(entries, 'timesheet_paginated') }}
 {% endblock %}

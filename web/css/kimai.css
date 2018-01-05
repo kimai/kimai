@@ -33,6 +33,9 @@ li.open .ticktac i.running{
 
 /* ================================ TOOLBAR ================================ */
 
+.box-header .box-title.toolbar form {
+    font-size: 13px;
+}
 .toolbar form input,
 .toolbar form select {
     display: inline-block;
@@ -41,6 +44,10 @@ li.open .ticktac i.running{
 
 .toolbar form .form-group {
     display: inline;
+}
+
+.box-header .toolbar form .form-control {
+    height: 25px;
 }
 
 /* ================================ SIDEBAR ================================ */
