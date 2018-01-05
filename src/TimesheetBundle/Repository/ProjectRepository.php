@@ -40,6 +40,7 @@ class ProjectRepository extends EntityRepository
      * Return statistic data for all user.
      *
      * @return ProjectStatistic
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getGlobalStatistics()
     {
