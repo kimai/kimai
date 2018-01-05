@@ -296,9 +296,11 @@ class TimesheetRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('t', 'a')
+        $qb->select('t', 'a', 'p', 'c')
             ->from('TimesheetBundle:Timesheet', 't')
             ->join('t.activity', 'a')
+            ->join('a.project', 'p')
+            ->join('p.customer', 'c')
             ->orderBy('t.begin', 'DESC');
 
         if ($query->getUser() !== null) {
@@ -319,9 +321,7 @@ class TimesheetRepository extends EntityRepository
             $qb->andWhere('a.project = :project')
                 ->setParameter('project', $query->getProject());
         } elseif ($query->getCustomer() !== null) {
-            $qb->join('a.project', 'p')
-                ->join('p.customer', 'c')
-                ->andWhere('p.customer = :customer')
+            $qb->andWhere('p.customer = :customer')
                 ->setParameter('customer', $query->getCustomer());
         }
 

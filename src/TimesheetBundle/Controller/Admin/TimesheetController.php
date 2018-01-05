@@ -11,9 +11,11 @@
 
 namespace TimesheetBundle\Controller\Admin;
 
+use AppBundle\Controller\AbstractController;
 use Pagerfanta\Pagerfanta;
+use Symfony\Component\HttpFoundation\Request;
+use TimesheetBundle\Controller\TimesheetControllerTrait;
 use TimesheetBundle\Entity\Timesheet;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -27,19 +29,51 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class TimesheetController extends Controller
+class TimesheetController extends AbstractController
 {
+    use TimesheetControllerTrait;
+
     /**
      * @Route("/", defaults={"page": 1}, name="admin_timesheet")
      * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_timesheet_paginated")
      * @Method("GET")
      * @Cache(smaxage="10")
      */
-    public function indexAction($page)
+    public function indexAction($page, Request $request)
     {
-        /* @var $entries Pagerfanta */
-        $entries = $this->getDoctrine()->getRepository(Timesheet::class)->findAll($page);
+        $query = $this->getQueryForRequest($request);
+        $query->setPage($page);
 
-        return $this->render('TimesheetBundle:admin:timesheet.html.twig', ['entries' => $entries]);
+        /* @var $entries Pagerfanta */
+        $entries = $this->getRepository()->findByQuery($query);
+
+        return $this->render('TimesheetBundle:admin:timesheet.html.twig', [
+            'entries' => $entries,
+            'page' => $page,
+            'query' => $query,
+            'toolbarForm' => $this->getToolbarForm($query, 'admin_timesheet')->createView(),
+        ]);
+    }
+
+    /**
+     * The route to stop a running entry.
+     *
+     * @Route("/{id}/stop", name="admin_timesheet_stop")
+     * @Method({"GET"})
+     *
+     * @param Timesheet $entry
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function stopAction(Timesheet $entry, Request $request)
+    {
+        try {
+            $this->getRepository()->stopRecording($entry);
+            $this->flashSuccess('timesheet.stop.success');
+        } catch (\Exception $ex) {
+            $this->flashError('timesheet.stop.error', ['%reason%' => $ex->getMessage()]);
+        }
+
+        return $this->redirectToRoute('admin_timesheet');
     }
 }

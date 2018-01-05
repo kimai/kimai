@@ -30,7 +30,7 @@
                 {% if entry.end %}
                     <td>{{ entry.end|date("H:i") }}</td>
                     <td class="hidden-xs">{{ entry.duration|duration }}</td>
-                    <td class="hidden-xs">{{ entry.rate|money }}</td>
+                    <td class="hidden-xs">{{ entry.rate|money(entry.activity.project.customer.currency) }}</td>
                 {% else %}
                     <td>&dash;</td>
                     <td class="hidden-xs"><i>{{ entry.duration|duration }}</i></td>

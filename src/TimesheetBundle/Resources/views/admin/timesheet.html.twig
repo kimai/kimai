@@ -4,8 +4,13 @@
 
 {% block page_title %}{{ 'admin_timesheet.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_timesheet.subtitle'|trans }}{% endblock %}
+{% block javascript_imports %}<script src="{{ asset('js/timesheet.js') }}"></script>{% endblock %}
 
 {% block main %}
+    {% if toolbarForm %}
+        {{ include('default/_toolbar_form.html.twig', {'form': toolbarForm}) }}
+    {% endif %}
+
     {% if entries.count > 0 %}
         {{ datatables.data_table_header({
             'label.date': '',
@@ -25,7 +30,7 @@
                 {% if entry.end %}
                     <td class="hidden-xs">{{ entry.end|date("H:i") }}</td>
                     <td>{{ entry.duration|duration }}</td>
-                    <td>{{ entry.rate|money }}</td>
+                    <td>{{ entry.rate|money(entry.activity.project.customer.currency) }}</td>
                 {% else %}
                     <td class="hidden-xs">&dash;</td>
                     <td>&dash;</td>
@@ -34,7 +39,12 @@
                 <td class="hidden-xs"><a href="{{ path('profile'|route_alias, {'username' : entry.user.username}) }}">{{ entry.user.username }}</a></td>
                 <td class="hidden-xs hidden-sm">{{ entry.description }}</td>
                 <td>
-                    {{ widgets.button_group({'edit': '#', 'trash': '#'}) }}
+                    {% if entry.end %}
+                        {{ widgets.button_group({'edit': '#', 'trash': '#'}) }}
+                    {% else %}
+                        {{ widgets.button_group({'stop': path('admin_timesheet_stop', {'id' : entry.id}), 'edit': '#', 'trash': '#'}) }}
+                    {% endif %}
+
                 </td>
             </tr>
         {% endfor %}
