@@ -36,90 +36,90 @@ class ProfileController extends AbstractController
     /**
      * @Route("/{username}", name="user_profile")
      * @Method("GET")
-     * @Security("is_granted('view', user)")
+     * @Security("is_granted('view', profile)")
      */
-    public function indexAction(User $user)
+    public function indexAction(User $profile)
     {
-        return $this->getProfileView($user);
+        return $this->getProfileView($profile);
     }
 
     /**
      * @Route("/{username}/edit", name="user_profile_edit")
      * @Method({"GET", "POST"})
-     * @Security("is_granted('edit', user)")
+     * @Security("is_granted('edit', profile)")
      */
-    public function editAction(User $user, Request $request)
+    public function editAction(User $profile, Request $request)
     {
-        $editForm = $this->createEditForm($user);
+        $editForm = $this->createEditForm($profile);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
+            $entityManager->persist($profile);
             $entityManager->flush();
 
             $this->flashSuccess('action.updated_successfully');
 
             return $this->redirectToRoute(
-                'user_profile', ['username' => $user->getUsername()]
+                'user_profile', ['username' => $profile->getUsername()]
             );
         }
 
-        return $this->getProfileView($user, $editForm, null, null, 'profile');
+        return $this->getProfileView($profile, $editForm, null, null, 'profile');
     }
 
     /**
      * @Route("/{username}/password", name="user_profile_password")
      * @Method({"GET", "POST"})
-     * @Security("is_granted('password', user)")
+     * @Security("is_granted('password', profile)")
      */
-    public function passwordAction(User $user, Request $request)
+    public function passwordAction(User $profile, Request $request)
     {
-        $pwdForm = $this->createPasswordForm($user);
+        $pwdForm = $this->createPasswordForm($profile);
         $pwdForm->handleRequest($request);
 
         if ($pwdForm->isSubmitted() && $pwdForm->isValid()) {
             $password = $this->get('security.password_encoder')
-                ->encodePassword($user, $user->getPlainPassword());
-            $user->setPassword($password);
+                ->encodePassword($profile, $profile->getPlainPassword());
+            $profile->setPassword($password);
 
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
+            $entityManager->persist($profile);
             $entityManager->flush();
 
             $this->flashSuccess('action.updated_successfully');
 
             return $this->redirectToRoute(
-                'user_profile', ['username' => $user->getUsername()]
+                'user_profile', ['username' => $profile->getUsername()]
             );
         }
 
-        return $this->getProfileView($user, null, $pwdForm, null, 'password');
+        return $this->getProfileView($profile, null, $pwdForm, null, 'password');
     }
 
     /**
      * @Route("/{username}/roles", name="user_profile_roles")
      * @Method({"GET", "POST"})
-     * @Security("is_granted('roles', user)")
+     * @Security("is_granted('roles', profile)")
      */
-    public function rolesAction(User $user, Request $request)
+    public function rolesAction(User $profile, Request $request)
     {
-        $rolesForm = $this->createRolesForm($user);
+        $rolesForm = $this->createRolesForm($profile);
         $rolesForm->handleRequest($request);
 
         if ($rolesForm->isSubmitted() && $rolesForm->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
+            $entityManager->persist($profile);
             $entityManager->flush();
 
             $this->flashSuccess('action.updated_successfully');
 
             return $this->redirectToRoute(
-                'user_profile', ['username' => $user->getUsername()]
+                'user_profile', ['username' => $profile->getUsername()]
             );
         }
 
-        return $this->getProfileView($user, null, null, $rolesForm, 'roles');
+        return $this->getProfileView($profile, null, null, $rolesForm, 'roles');
     }
 
     /**
@@ -127,11 +127,11 @@ class ProfileController extends AbstractController
      *
      * @Route("/{username}/delete", name="user_profile_delete")
      * @Method({"GET", "POST"})
-     * @Security("is_granted('delete', user)")
+     * @Security("is_granted('delete', profile)")
      */
-    public function deleteAction(User $user, Request $request)
+    public function deleteAction(User $profile, Request $request)
     {
-        $deleteForm = $this->createDeleteForm($user);
+        $deleteForm = $this->createDeleteForm($profile);
 
         throw new \Exception('Delete not implemented yet');
     }
