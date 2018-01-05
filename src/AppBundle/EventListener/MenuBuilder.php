@@ -59,10 +59,10 @@ class MenuBuilder
         $request = $event->getRequest();
         $isLoggedIn = $this->security->isGranted('IS_AUTHENTICATED_FULLY');
         $isTeamlead = $isLoggedIn && $this->security->isGranted('ROLE_TEAMLEAD');
-        $isAdmin = $isLoggedIn && $this->security->isGranted('ROLE_ADMIN');
+        $isSuperAdmin = $isLoggedIn && $this->security->isGranted('ROLE_SUPER_ADMIN');
 
         $event->addItem(
-            new MenuItemModel('dashboard', 'menu.homepage', 'dashboard', [], 'fa fa-dashboard') // fa-home
+            new MenuItemModel('dashboard', 'menu.homepage', 'dashboard', [], 'fa fa-dashboard')
         );
 
         $this->eventDispatcher->dispatch(
@@ -78,7 +78,7 @@ class MenuBuilder
             $admin = new MenuItemModel('admin', 'menu.admin', '', [], 'fa fa-wrench');
             $event->addItem($admin);
 
-            if ($isAdmin) {
+            if ($isSuperAdmin) {
                 $admin->addChild(
                     new MenuItemModel('user_admin', 'menu.admin_user', 'admin_user', [], 'fa fa-user')
                 );
