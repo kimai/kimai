@@ -29,6 +29,7 @@ class UserRepository extends EntityRepository
      * Return statistic data for all user.
      *
      * @return UserStatistic
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getGlobalStatistics()
     {
