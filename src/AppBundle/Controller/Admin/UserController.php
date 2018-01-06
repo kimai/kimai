@@ -11,13 +11,15 @@
 
 namespace AppBundle\Controller\Admin;
 
+use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\User;
+use AppBundle\Form\UserCreateType;
 use Pagerfanta\Pagerfanta;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Controller used to manage users in the admin part of the site.
@@ -27,7 +29,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class UserController extends Controller
+class UserController extends AbstractController
 {
     /**
      * @Route("/", defaults={"page": 1}, name="admin_user")
@@ -41,5 +43,59 @@ class UserController extends Controller
         $entries = $this->getDoctrine()->getRepository(User::class)->findAll($page);
 
         return $this->render('admin/user.html.twig', ['entries' => $entries]);
+    }
+
+    /**
+     * @Route("/create", name="admin_user_create")
+     * @Method({"GET", "POST"})
+     */
+    public function createAction(Request $request)
+    {
+        $user = new User();
+        $editForm = $this->createEditForm($user);
+
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $password = $this->get('security.password_encoder')
+                ->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($password);
+            $user->setRoles([User::DEFAULT_ROLE]);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->flashSuccess('action.updated_successfully');
+
+            return $this->redirectToRoute(
+                'user_profile_edit', ['username' => $user->getUsername()]
+            );
+        }
+
+        return $this->render(
+            'admin/user_edit.html.twig',
+            [
+                'user' => $user,
+                'form' => $editForm->createView()
+            ]
+        );
+
+    }
+
+    /**
+     * @param User $user
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    private function createEditForm(User $user)
+    {
+        return $this->createForm(
+            UserCreateType::class,
+            $user,
+            [
+                'action' => $this->generateUrl('admin_user_create'),
+                'method' => 'POST'
+            ]
+        );
     }
 }
