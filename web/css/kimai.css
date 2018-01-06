@@ -50,10 +50,6 @@ li.open .ticktac i.running{
     display: inline;
 }
 
-.box-header .toolbar form .form-control {
-    height: 25px;
-}
-
 .box-header .tools-left {
     margin-right: 10px;
 }
