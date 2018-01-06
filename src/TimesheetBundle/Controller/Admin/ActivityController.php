@@ -59,6 +59,7 @@ class ActivityController extends AbstractController
     /**
      * @Route("/{id}/edit", name="admin_activity_edit")
      * @Method({"GET", "POST"})
+     * @Security("is_granted('edit', activity)")
      */
     public function editAction(Activity $activity, Request $request)
     {

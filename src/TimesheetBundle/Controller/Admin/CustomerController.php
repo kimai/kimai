@@ -62,6 +62,7 @@ class CustomerController extends AbstractController
     /**
      * @Route("/{id}/edit", name="admin_customer_edit")
      * @Method({"GET", "POST"})
+     * @Security("is_granted('edit', customer)")
      */
     public function editAction(Customer $customer, Request $request)
     {
