@@ -7,7 +7,7 @@
 
 {% block main %}
     {{ include('default/_form.html.twig', {
-        'title': project.name,
+        'title': project.name|default('create'|trans),
         'form': form,
         'back': path('admin_project')
     }) }}
