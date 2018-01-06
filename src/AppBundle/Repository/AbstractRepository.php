@@ -29,31 +29,6 @@ abstract class AbstractRepository extends EntityRepository
 {
 
     /**
-     * @param string $orderBy
-     * @return Query
-     */
-    protected function queryAll($orderBy = 'id')
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-
-        $qb->select('a')
-            ->from($this->getEntityName(), 'a')
-            ->orderBy('a.' . $orderBy, 'ASC');
-
-        return $qb->getQuery();
-    }
-
-    /**
-     * @param int $page
-     *
-     * @return Pagerfanta
-     */
-    public function findAll($page = 1)
-    {
-        return $this->getPager($this->queryAll(), $page);
-    }
-
-    /**
      * @param Query $query
      * @param int $page
      * @param int $maxPerPage
