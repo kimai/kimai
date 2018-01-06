@@ -54,6 +54,10 @@ li.open .ticktac i.running{
     height: 25px;
 }
 
+.box-header .tools-left {
+    margin-right: 10px;
+}
+
 /* ================================ SIDEBAR ================================ */
 
 /* Used for the Sidebar UserPanel (which is deactivated right now) */
