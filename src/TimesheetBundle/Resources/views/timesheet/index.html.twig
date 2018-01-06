@@ -39,7 +39,7 @@
             <td class="hidden-xs hidden-sm">{{ entry.description }}</td>
             <td>
                 {% if entry.end %}
-                    {{ widgets.button_group({'repeat': '#', 'edit': path('timesheet_edit', {'id' : entry.id, 'page': page}), 'trash': '#'}) }}
+                    {{ widgets.button_group({'repeat': path('timesheet_start', {'id' : entry.activity.id}), 'edit': path('timesheet_edit', {'id' : entry.id, 'page': page}), 'trash': '#'}) }}
                 {% else %}
                     {{ widgets.button_group({'stop': path('timesheet_stop', {'id' : entry.id}), 'edit': path('timesheet_edit', {'id' : entry.id, 'page': page}), 'trash': '#'}) }}
                 {% endif %}
