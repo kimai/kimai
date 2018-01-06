@@ -59,6 +59,7 @@ class ProjectController extends AbstractController
     /**
      * @Route("/{id}/edit", name="admin_project_edit")
      * @Method({"GET", "POST"})
+     * @Security("is_granted('edit', project)")
      */
     public function editAction(Project $project, Request $request)
     {

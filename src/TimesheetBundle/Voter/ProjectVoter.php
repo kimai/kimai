@@ -9,25 +9,23 @@
  * file that was distributed with this source code.
  */
 
-namespace AppBundle\Voter;
+namespace TimesheetBundle\Voter;
 
 use AppBundle\Entity\User;
+use AppBundle\Voter\AbstractVoter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use TimesheetBundle\Entity\Project;
 
 /**
- * A voter to check permissions on user profiles.
+ * A voter to check permissions on Projects.
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class UserVoter extends AbstractVoter
+class ProjectVoter extends AbstractVoter
 {
     const VIEW = 'view';
     const EDIT = 'edit';
-    const CREATE = 'create';
     const DELETE = 'delete';
-    const PASSWORD = 'password';
-    const ROLES = 'roles';
-    const VIEW_ALL = 'view_all';
 
     /**
      * @param string $attribute
@@ -36,11 +34,11 @@ class UserVoter extends AbstractVoter
      */
     protected function supports($attribute, $subject)
     {
-        if (!in_array($attribute, [self::VIEW, self::VIEW_ALL, self::EDIT, self::CREATE, self::ROLES, self::PASSWORD, self::DELETE])) {
+        if (!in_array($attribute, array(self::VIEW, self::EDIT, self::DELETE))) {
             return false;
         }
 
-        if (!$subject instanceof User) {
+        if (!$subject instanceof Project) {
             return false;
         }
 
@@ -49,7 +47,7 @@ class UserVoter extends AbstractVoter
 
     /**
      * @param string $attribute
-     * @param User $subject
+     * @param Project $subject
      * @param TokenInterface $token
      * @return bool
      */
@@ -65,54 +63,48 @@ class UserVoter extends AbstractVoter
             case self::VIEW:
                 return $this->canView($subject, $user, $token);
             case self::EDIT:
-            case self::PASSWORD:
                 return $this->canEdit($subject, $user, $token);
-            case self::VIEW_ALL:
-            case self::CREATE:
-                // create actually passes in the current user as $subject, not the new one
             case self::DELETE:
-                // if we ever allow to delete user for ADMIN we have to check if the user to be deleted is not in a higher level
-            case self::ROLES:
-                return $this->canAdminUsers($token);
+                return $this->canDelete($token);
         }
 
         return false;
     }
 
     /**
-     * @param User $profile
+     * @param Project $project
      * @param User $user
      * @return bool
      */
-    protected function canView(User $profile, User $user, TokenInterface $token)
+    protected function canView(Project $project, User $user, TokenInterface $token)
     {
-        if ($this->canEdit($profile, $user, $token)) {
+        if ($this->canEdit($project, $user, $token)) {
             return true;
         }
 
-        return $profile->getId() == $user->getId();
+        return false;
     }
 
     /**
-     * @param User $profile
+     * @param Project $project
      * @param User $user
      * @return bool
      */
-    protected function canEdit(User $profile, User $user, TokenInterface $token)
+    protected function canEdit(Project $project, User $user, TokenInterface $token)
     {
-        if ($this->canAdminUsers($token)) {
+        if ($this->canDelete($token)) {
             return true;
         }
 
-        return $profile->getId() == $user->getId();
+        return false;
     }
 
     /**
      * @param TokenInterface $token
      * @return bool
      */
-    protected function canAdminUsers(TokenInterface $token)
+    protected function canDelete(TokenInterface $token)
     {
-        return $this->hasRole('ROLE_SUPER_ADMIN', $token);
+        return $this->hasRole('ROLE_ADMIN', $token);
     }
 }

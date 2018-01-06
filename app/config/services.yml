@@ -3,7 +3,10 @@ services:
     markdown:
         class: AppBundle\Utils\Markdown
 
-    # Twig extensions that create new filters and functions for our views
+# ================================================================================
+# TWIG
+# ================================================================================
+
     app.twig.app_extension:
         public:    false
         class:     AppBundle\Twig\Extensions
@@ -23,12 +26,9 @@ services:
         tags:
             - { name: twig.extension }
 
-    # a route listener, that injects the locale through a URL directory
-    app.redirect_to_preferred_locale_listener:
-        class: AppBundle\EventListener\RedirectToPreferredLocaleListener
-        arguments: ['@router', '%app_locales%', '%locale%']
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+# ================================================================================
+# SECURITY
+# ================================================================================
 
     # security voter to check user-profile access
     app.voter.user:
@@ -36,6 +36,31 @@ services:
         arguments: ["@security.access.decision_manager"]
         tags:
             - { name: security.voter }
+
+    # security voter to check customer access
+    timesheet.voter.customer:
+        class: TimesheetBundle\Voter\CustomerVoter
+        arguments: ["@security.access.decision_manager"]
+        tags:
+            - { name: security.voter }
+
+    # security voter to check project access
+    timesheet.voter.project:
+        class: TimesheetBundle\Voter\ProjectVoter
+        arguments: ["@security.access.decision_manager"]
+        tags:
+            - { name: security.voter }
+
+    # security voter to check activity access
+    timesheet.voter.activity:
+        class: TimesheetBundle\Voter\ActivityVoter
+        arguments: ["@security.access.decision_manager"]
+        tags:
+            - { name: security.voter }
+
+# ================================================================================
+# FORMS
+# ================================================================================
 
     # form to edit user roles
     app.admin.user_profile_roles:
@@ -51,19 +76,16 @@ services:
         tags:
             - { name: kernel.event_listener, event: theme.sidebar_setup_menu, method: onSetupNavbar }
 
+# ================================================================================
+# DATABASE
+# ================================================================================
+
     # service that prefixes every database table
     app.tableprefix_subscriber:
         class: AppBundle\Doctrine\TablePrefixSubscriber
         arguments: ["%database_prefix%"]
         tags:
             - { name: doctrine.event_subscriber }
-
-    # additional menu entries for the timesheet bundle
-    timesheet.configure_menu_listener:
-        class: TimesheetBundle\EventListener\Menu
-        tags:
-          - { name: kernel.event_listener, event: app.main_menu_configure, method: onMainMenuConfigure }
-          - { name: kernel.event_listener, event: app.admin_menu_configure, method: onAdminMenuConfigure }
 
     # Uncomment the following lines to define a service for the Post Doctrine repository.
     # It's not mandatory to create these services, but if you use repositories a lot,
@@ -80,6 +102,10 @@ services:
     #
     # // same code using repository services
     # $posts = $this->get('app.post_repository')->findAll();
+
+# ================================================================================
+# THEME
+# ================================================================================
 
     avanzu_admin_theme.navbar_user_listener:
         class: AppBundle\EventListener\NavbarShowUserListener
@@ -108,3 +134,30 @@ services:
 #        tags:
 #          - { name: kernel.event_listener, event: theme.sidebar_setup_menu, method: onSetupMenu }
 #          - { name: kernel.event_listener, event: theme.breadcrumb, method: onSetupMenu }
+
+# ================================================================================
+# APPLICATION CORE
+# ================================================================================
+
+    # a route listener, that injects the locale through a URL directory
+    app.redirect_to_preferred_locale_listener:
+        class: AppBundle\EventListener\RedirectToPreferredLocaleListener
+        arguments: ['@router', '%app_locales%', '%locale%']
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    # additional menu entries for the timesheet bundle
+    timesheet.configure_menu_listener:
+        class: TimesheetBundle\EventListener\Menu
+        tags:
+          - { name: kernel.event_listener, event: app.main_menu_configure, method: onMainMenuConfigure }
+          - { name: kernel.event_listener, event: app.admin_menu_configure, method: onAdminMenuConfigure }
+
+# ================================================================================
+# CONSOLE COMMANDS
+# ================================================================================
+    app.command.create_user:
+        class: AppBundle\Command\CreateUserCommand
+        arguments: ["@security.password_encoder", "@doctrine", "@validator"]
+        tags:
+            - { name: console.command, command: kimai:create-user }

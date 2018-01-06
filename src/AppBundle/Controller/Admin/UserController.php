@@ -36,6 +36,7 @@ class UserController extends AbstractController
      * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_user_paginated")
      * @Method("GET")
      * @Cache(smaxage="10")
+     * @Security("is_granted('view_all', user)")
      */
     public function indexAction($page)
     {
@@ -48,6 +49,7 @@ class UserController extends AbstractController
     /**
      * @Route("/create", name="admin_user_create")
      * @Method({"GET", "POST"})
+     * @Security("is_granted('create', user)")
      */
     public function createAction(Request $request)
     {
