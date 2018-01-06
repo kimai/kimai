@@ -83,7 +83,6 @@ class TimesheetToolbarForm extends AbstractType
         $choices = [];
         foreach ($query->getCustomer()->getProjects() as $project) {
             $choices[] = $project;
-            //$choices[$project->getName()] = $project->getId();
         }
 
         $builder
