@@ -48,10 +48,29 @@ class ActivityController extends AbstractController
     }
 
     /**
+     * @Route("/create", name="admin_activity_create")
+     * @Method({"GET", "POST"})
+     */
+    public function createAction(Request $request)
+    {
+        return $this->renderActivityForm(new Activity(), $request);
+    }
+
+    /**
      * @Route("/{id}/edit", name="admin_activity_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Activity $activity, Request $request)
+    {
+        return $this->renderActivityForm($activity, $request);
+    }
+
+    /**
+     * @param Activity $activity
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    protected function renderActivityForm(Activity $activity, Request $request)
     {
         $editForm = $this->createEditForm($activity);
 
@@ -84,11 +103,17 @@ class ActivityController extends AbstractController
      */
     private function createEditForm(Activity $activity)
     {
+        if ($activity->getId() === null) {
+            $url = $this->generateUrl('admin_activity_create');
+        } else {
+            $url = $this->generateUrl('admin_activity_edit', ['id' => $activity->getId()]);
+        }
+
         return $this->createForm(
             ActivityEditForm::class,
             $activity,
             [
-                'action' => $this->generateUrl('admin_activity_edit', ['id' => $activity->getId()]),
+                'action' => $url,
                 'method' => 'POST'
             ]
         );
