@@ -9,9 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace TimesheetBundle\Model\Query;
+namespace TimesheetBundle\Repository\Query;
 
 use AppBundle\Entity\User;
+use AppBundle\Repository\Query\BaseQuery;
 use TimesheetBundle\Entity\Activity;
 use TimesheetBundle\Entity\Customer;
 use TimesheetBundle\Entity\Project;
@@ -21,16 +22,22 @@ use TimesheetBundle\Entity\Project;
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class TimesheetQuery
+class TimesheetQuery extends BaseQuery
 {
-
-    const DEFAULT_PAGESIZE = 25;
-    const DEFAULT_PAGE = 1;
 
     const STATE_ALL = 0;
     const STATE_RUNNING = 1;
     const STATE_STOPPED = 2;
-
+    /**
+     * Overwritten for different default order
+     * @var string
+     */
+    protected $order = 'DESC';
+    /**
+     * Overwritten for different default order
+     * @var string
+     */
+    protected $orderBy = 'begin';
     /**
      * @var User
      */
@@ -50,14 +57,6 @@ class TimesheetQuery
     /**
      * @var int
      */
-    protected $page = self::DEFAULT_PAGE;
-    /**
-     * @var int
-     */
-    protected $pageSize = self::DEFAULT_PAGESIZE;
-    /**
-     * @var int
-     */
     protected $state = self::STATE_ALL;
 
     /**
@@ -70,7 +69,7 @@ class TimesheetQuery
 
     /**
      * @param User $user
-     * @return Timesheet
+     * @return TimesheetQuery
      */
     public function setUser(User $user = null)
     {
@@ -90,7 +89,7 @@ class TimesheetQuery
 
     /**
      * @param Activity $activity
-     * @return Timesheet
+     * @return TimesheetQuery
      */
     public function setActivity(Activity $activity = null)
     {
@@ -111,7 +110,7 @@ class TimesheetQuery
      * Is overwritten by: setActivity()
      *
      * @param Project $project
-     * @return Timesheet
+     * @return TimesheetQuery
      */
     public function setProject(Project $project = null)
     {
@@ -132,49 +131,11 @@ class TimesheetQuery
      * Is overwritten by: setActivity() and setProject()
      *
      * @param Customer $customer
-     * @return Timesheet
+     * @return TimesheetQuery
      */
     public function setCustomer(Customer $customer = null)
     {
         $this->customer = $customer;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPage()
-    {
-        return $this->page;
-    }
-
-    /**
-     * @param int $page
-     * @return Timesheet
-     */
-    public function setPage($page)
-    {
-        $this->page = $page;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPageSize()
-    {
-        return $this->pageSize;
-    }
-
-    /**
-     * @param int $pageSize
-     * @return Timesheet
-     */
-    public function setPageSize($pageSize)
-    {
-        if (!empty($pageSize) && (int) $pageSize > 0) {
-            $this->pageSize = (int) $pageSize;
-        }
         return $this;
     }
 
@@ -188,7 +149,7 @@ class TimesheetQuery
 
     /**
      * @param int $state
-     * @return Timesheet
+     * @return TimesheetQuery
      */
     public function setState($state)
     {

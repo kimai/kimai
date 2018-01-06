@@ -22,6 +22,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use TimesheetBundle\Form\ActivityEditForm;
 use TimesheetBundle\Repository\ActivityRepository;
+use TimesheetBundle\Repository\Query\ActivityQuery;
 
 /**
  * Controller used to manage activities in the admin part of the site.
@@ -41,8 +42,12 @@ class ActivityController extends AbstractController
      */
     public function indexAction($page)
     {
+        $query = new ActivityQuery();
+        $query->setVisibility(ActivityQuery::SHOW_BOTH);
+        $query->setPage($page);
+
         /* @var $entries Pagerfanta */
-        $entries = $this->getDoctrine()->getRepository(Activity::class)->findAll($page);
+        $entries = $this->getDoctrine()->getRepository(Activity::class)->findByQuery($query);
 
         return $this->render('TimesheetBundle:admin:activity.html.twig', ['entries' => $entries]);
     }

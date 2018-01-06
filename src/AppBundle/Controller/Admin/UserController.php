@@ -14,6 +14,7 @@ namespace AppBundle\Controller\Admin;
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserCreateType;
+use AppBundle\Repository\Query\UserQuery;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -40,8 +41,12 @@ class UserController extends AbstractController
      */
     public function indexAction($page)
     {
+        $query = new UserQuery();
+        $query->setVisibility(UserQuery::SHOW_BOTH);
+        $query->setPage($page);
+
         /* @var $entries Pagerfanta */
-        $entries = $this->getDoctrine()->getRepository(User::class)->findAll($page);
+        $entries = $this->getDoctrine()->getRepository(User::class)->findByQuery($query);
 
         return $this->render('admin/user.html.twig', ['entries' => $entries]);
     }

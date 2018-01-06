@@ -21,7 +21,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use TimesheetBundle\Form\ProjectEditForm;
-use TimesheetBundle\Repository\ProjectRepository;
+use TimesheetBundle\Repository\Query\ProjectQuery;
 
 /**
  * Controller used to manage projects in the admin part of the site.
@@ -41,8 +41,12 @@ class ProjectController extends AbstractController
      */
     public function indexAction($page)
     {
+        $query = new ProjectQuery();
+        $query->setVisibility(ProjectQuery::SHOW_BOTH);
+        $query->setPage($page);
+
         /* @var $entries Pagerfanta */
-        $entries = $this->getDoctrine()->getRepository(Project::class)->findAll($page);
+        $entries = $this->getDoctrine()->getRepository(Project::class)->findByQuery($query);
 
         return $this->render('TimesheetBundle:admin:project.html.twig', ['entries' => $entries]);
     }

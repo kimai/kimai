@@ -9,19 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace TimesheetBundle\Model\Query;
+namespace AppBundle\Repository\Query;
 
 /**
- * Can be used for advanced queries with the: CustomerRepository
+ * Can be used for advanced queries with the: UserRepository
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class CustomerQuery extends BaseQuery
+trait VisibilityTrait
 {
-    const SHOW_VISIBLE = 1;
-    const SHOW_HIDDEN = 0;
-    const SHOW_BOTH = 2;
-
     protected $visibility = self::SHOW_VISIBLE;
 
     /**
@@ -34,7 +30,7 @@ class CustomerQuery extends BaseQuery
 
     /**
      * @param int $visibility
-     * @return CustomerQuery
+     * @return ProjectQuery
      */
     public function setVisibility($visibility)
     {

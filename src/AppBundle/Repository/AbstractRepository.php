@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace TimesheetBundle\Repository;
+namespace AppBundle\Repository;
 
 use AppBundle\Entity\User;
 use TimesheetBundle\Entity\Activity;

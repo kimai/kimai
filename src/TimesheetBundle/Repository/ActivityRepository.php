@@ -12,20 +12,18 @@
 namespace TimesheetBundle\Repository;
 
 use AppBundle\Entity\User;
-use Doctrine\ORM\Query;
+use AppBundle\Repository\AbstractRepository;
 use TimesheetBundle\Entity\Activity;
 use TimesheetBundle\Entity\Timesheet;
-use Doctrine\ORM\EntityRepository;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Pagerfanta;
 use TimesheetBundle\Model\ActivityStatistic;
+use TimesheetBundle\Repository\Query\ActivityQuery;
 
 /**
  * Class ActivityRepository
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class ActivityRepository extends EntityRepository
+class ActivityRepository extends AbstractRepository
 {
 
     /**
@@ -95,67 +93,29 @@ class ActivityRepository extends EntityRepository
         return $stats;
     }
 
+
     /**
-     * @param User $user
-     * @return Query
+     * @param ActivityQuery $query
+     * @return \Pagerfanta\Pagerfanta
      */
-    protected function queryLatest(User $user = null)
+    public function findByQuery(ActivityQuery $query)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('a')
+        $qb->select('a', 'p', 'c')
             ->from('TimesheetBundle:Activity', 'a')
-            ->orderBy('a.id', 'DESC');
+            ->join('a.project', 'p')
+            ->join('p.customer', 'c')
+            ->orderBy('a.' . $query->getOrderBy(), $query->getOrder());
 
-        return $qb->getQuery();
-    }
+        if ($query->getVisibility() === ActivityQuery::SHOW_VISIBLE) {
+            $qb->andWhere('a.visible = 1');
+            // TODO check for visibility of customer and project
+        } elseif ($query->getVisibility() === ActivityQuery::SHOW_HIDDEN) {
+            $qb->andWhere('a.visible = 0');
+            // TODO check for visibility of customer and project
+        }
 
-    /**
-     * @param string $orderBy
-     * @return Query
-     */
-    protected function queryAll($orderBy = 'id')
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-
-        $qb->select('a')
-            ->from('TimesheetBundle:Activity', 'a')
-            ->orderBy('a.' . $orderBy, 'ASC');
-
-        return $qb->getQuery();
-    }
-
-    /**
-     * @param User $user
-     * @param int $page
-     * @return Pagerfanta
-     */
-    public function findLatest(User $user, $page = 1)
-    {
-        return $this->getPager($this->queryLatest($user), $page);
-    }
-
-    /**
-     * @param int $page
-     *
-     * @return Pagerfanta
-     */
-    public function findAll($page = 1)
-    {
-        return $this->getPager($this->queryAll(), $page);
-    }
-
-    /**
-     * @param Query $query
-     * @param int $page
-     * @return Pagerfanta
-     */
-    protected function getPager(Query $query, $page = 1)
-    {
-        $paginator = new Pagerfanta(new DoctrineORMAdapter($query, false));
-        $paginator->setMaxPerPage(25);
-        $paginator->setCurrentPage($page);
-
-        return $paginator;
+        return $this->getPager($qb->getQuery(), $query->getPage(), $query->getPageSize());
     }
 }

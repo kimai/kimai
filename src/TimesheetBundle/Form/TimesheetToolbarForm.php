@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use TimesheetBundle\Form\Type\ActivityType;
 use TimesheetBundle\Form\Type\CustomerType;
 use TimesheetBundle\Form\Type\ProjectType;
-use TimesheetBundle\Model\Query\TimesheetQuery;
+use TimesheetBundle\Repository\Query\TimesheetQuery;
 
 /**
  * Defines the form used for filtering the timesheet.

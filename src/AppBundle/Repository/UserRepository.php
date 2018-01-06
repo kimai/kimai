@@ -12,17 +12,14 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Model\UserStatistic;
-use Doctrine\ORM\Query;
-use Doctrine\ORM\EntityRepository;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Pagerfanta;
+use AppBundle\Repository\Query\UserQuery;
 
 /**
  * Class UserRepository
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class UserRepository extends EntityRepository
+class UserRepository extends AbstractRepository
 {
 
     /**
@@ -42,46 +39,30 @@ class UserRepository extends EntityRepository
         return $stats;
     }
 
-    /**
-     * @return Query
-     */
-    protected function queryAll()
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-
-        $qb->select('u')
-            ->from('AppBundle:User', 'u')
-            ->orderBy('u.id', 'ASC');
-
-        return $qb->getQuery();
-    }
-
     public function findByUsername($username)
     {
         return $this->findOneBy(['username' => $username]);
     }
 
     /**
-     * @param int $page
-     *
-     * @return Pagerfanta
+     * @param UserQuery $query
+     * @return \Pagerfanta\Pagerfanta
      */
-    public function findAll($page = 1)
+    public function findByQuery(UserQuery $query)
     {
-        return $this->getPager($this->queryAll(), $page);
-    }
+        $qb = $this->getEntityManager()->createQueryBuilder();
 
-    /**
-     * @param Query $query
-     * @param int $page
-     * @return Pagerfanta
-     */
-    protected function getPager(Query $query, $page = 1)
-    {
-        $paginator = new Pagerfanta(new DoctrineORMAdapter($query, false));
-        $paginator->setMaxPerPage(25);
-        $paginator->setCurrentPage($page);
+        // if we join activities, the maxperpage limit will limit the list to the amount or projects + activties
+        $qb->select('u')
+            ->from('AppBundle:User', 'u')
+            ->orderBy('u.' . $query->getOrderBy(), $query->getOrder());
 
-        return $paginator;
+        if ($query->getVisibility() === UserQuery::SHOW_VISIBLE) {
+            $qb->andWhere('u.visible = 1');
+        } elseif ($query->getVisibility() === UserQuery::SHOW_HIDDEN) {
+            $qb->andWhere('u.visible = 0');
+        }
+
+        return $this->getPager($qb->getQuery(), $query->getPage(), $query->getPageSize());
     }
 }

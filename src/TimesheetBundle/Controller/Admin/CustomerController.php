@@ -20,7 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use TimesheetBundle\Form\CustomerEditForm;
-use TimesheetBundle\Model\Query\CustomerQuery;
+use TimesheetBundle\Repository\Query\CustomerQuery;
 
 /**
  * Controller used to manage activities in the admin part of the site.
