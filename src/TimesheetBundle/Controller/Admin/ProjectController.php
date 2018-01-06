@@ -14,6 +14,7 @@ namespace TimesheetBundle\Controller\Admin;
 use AppBundle\Controller\AbstractController;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
+use TimesheetBundle\Entity\Customer;
 use TimesheetBundle\Entity\Project;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -37,9 +38,6 @@ class ProjectController extends AbstractController
      * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_project_paginated")
      * @Method("GET")
      * @Cache(smaxage="10")
-     *
-     * @param $page
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction($page)
     {
@@ -50,14 +48,29 @@ class ProjectController extends AbstractController
     }
 
     /**
+     * @Route("/create", name="admin_project_create")
+     * @Method({"GET", "POST"})
+     */
+    public function createAction(Request $request)
+    {
+        return $this->renderProjectForm(new Project(), $request);
+    }
+
+    /**
      * @Route("/{id}/edit", name="admin_project_edit")
      * @Method({"GET", "POST"})
-     *
+     */
+    public function editAction(Project $project, Request $request)
+    {
+        return $this->renderProjectForm($project, $request);
+    }
+
+    /**
      * @param Project $project
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Project $project, Request $request)
+    protected function renderProjectForm(Project $project, Request $request)
     {
         $editForm = $this->createEditForm($project);
 
@@ -90,13 +103,21 @@ class ProjectController extends AbstractController
      */
     private function createEditForm(Project $project)
     {
+        if ($project->getId() === null) {
+            $url = $this->generateUrl('admin_project_create');
+            $currency = Customer::DEFAULT_CURRENCY;
+        } else {
+            $url = $this->generateUrl('admin_project_edit', ['id' => $project->getId()]);
+            $currency = $project->getCustomer()->getCurrency();
+        }
+
         return $this->createForm(
             ProjectEditForm::class,
             $project,
             [
-                'action' => $this->generateUrl('admin_project_edit', ['id' => $project->getId()]),
+                'action' => $url,
                 'method' => 'POST',
-                'currency' => $project->getCustomer()->getCurrency()
+                'currency' => $currency,
             ]
         );
     }
