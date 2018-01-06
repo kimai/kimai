@@ -21,7 +21,7 @@ use TimesheetBundle\Entity\Project;
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class Timesheet
+class TimesheetQuery
 {
 
     const DEFAULT_PAGESIZE = 25;

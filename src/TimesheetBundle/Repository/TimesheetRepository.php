@@ -22,7 +22,7 @@ use Pagerfanta\Pagerfanta;
 use TimesheetBundle\Model\Statistic\Month;
 use TimesheetBundle\Model\Statistic\Year;
 use TimesheetBundle\Model\TimesheetGlobalStatistic;
-use TimesheetBundle\Model\Query\Timesheet as TimesheetQuery;
+use TimesheetBundle\Model\Query\TimesheetQuery;
 use TimesheetBundle\Model\TimesheetStatistic;
 use DateTime;
 
