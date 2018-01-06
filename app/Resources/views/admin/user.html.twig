@@ -17,17 +17,21 @@
             'label.active': '',
             'label.roles': '',
             'label.actions': '',
-        }) }}
+        }, null, {'plus-square': path('admin_user_create')}) }}
 
         {% for entry in entries %}
             <tr>
                 <td class="hidden-xs">{{ entry.id }}</td>
-                <td>{{ entry.alias }}</td>
+                <td>{{ entry.alias|default(entry.username) }}</td>
                 <td class="hidden-xs">{{ entry.username }}</td>
                 <td class="hidden-xs hidden-sm">{{ entry.email }}</td>
                 <td class="hidden-xs">{{ entry.title }}</td>
                 <td>{{ widgets.label_visible(entry.active) }}</td>
-                <td>{{ entry.roles|join(',')|trans }}</td>
+                <td>
+                    {% for role in entry.roles %}
+                        {{ widgets.label_role(role) }}
+                    {% endfor %}
+                </td>
                 <td>
                     {{ widgets.button_group({
                         'edit': path('user_profile', {'username' : entry.username}),

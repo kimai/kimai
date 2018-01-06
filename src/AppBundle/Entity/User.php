@@ -2,18 +2,27 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Validator\Constraints as KimaiAssert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * User
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
- * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"})})
+ * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"}), @ORM\UniqueConstraint(name="email", columns={"email"})})
+ * @UniqueEntity("username")
+ * @UniqueEntity("email")
+ *
+ * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class User implements UserInterface
 {
+
+    const DEFAULT_ROLE = 'ROLE_USER';
+    const DEFAULT_LANGUAGE = 'de';
 
     /**
      * @var int
@@ -27,7 +36,7 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=160, nullable=false, unique=true)
+     * @ORM\Column(name="name", type="string", length=60, nullable=false, unique=true)
      * @Assert\NotBlank()
      * @Assert\Length(min=6, max=160)
      */
@@ -60,7 +69,8 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="alias", type="string", length=160, nullable=true)
+     * @ORM\Column(name="alias", type="string", length=60, nullable=true)
+     * @Assert\Length(max=160)
      */
     private $alias;
 
@@ -68,13 +78,15 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="language", type="string", length=5, nullable=true)
+     * @Assert\Language()
      */
-    private $language = 'de';
+    private $language = self::DEFAULT_LANGUAGE;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="active", type="boolean", nullable=false)
+     * @Assert\NotNull()
      */
     private $active = true;
 
@@ -103,6 +115,7 @@ class User implements UserInterface
      * @var string[]
      *
      * @ORM\Column(type="json_array")
+     * @KimaiAssert\Role()
      */
     private $roles = [];
 
@@ -166,7 +179,7 @@ class User implements UserInterface
      */
     public function setActive($active)
     {
-        $this->active = $active;
+        $this->active = (bool) $active;
 
         return $this;
     }
@@ -305,10 +318,12 @@ class User implements UserInterface
 
     /**
      * @param string $language
+     * @return $this
      */
     public function setLanguage($language)
     {
         $this->language = $language;
+        return $this;
     }
 
     /**
