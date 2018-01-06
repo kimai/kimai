@@ -18,7 +18,7 @@ use TimesheetBundle\Entity\Timesheet;
 use Symfony\Component\HttpFoundation\Request;
 use TimesheetBundle\Form\TimesheetToolbarForm;
 use TimesheetBundle\Repository\TimesheetRepository;
-use TimesheetBundle\Model\Query\Timesheet as TimesheetQuery;
+use TimesheetBundle\Model\Query\TimesheetQuery;
 
 /**
  * Helper functions for Timesheet controller
