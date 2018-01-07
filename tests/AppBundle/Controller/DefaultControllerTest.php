@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace AppBundle\Tests\Controller;
+namespace KimaiTest\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -25,6 +25,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  *     $ cd your-symfony-project/
  *     $ phpunit -c app
  *
+ * @group integration
  */
 class DefaultControllerTest extends WebTestCase
 {

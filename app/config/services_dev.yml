@@ -1,0 +1,26 @@
+imports:
+    - { resource: services.yml }
+
+services:
+
+    # ================================================================================
+    # CONSOLE COMMANDS
+    # ================================================================================
+
+    app.command.run_phpcs:
+        class: AppBundle\Command\RunCodeSnifferCommand
+        arguments: ["%kernel.root_dir%"]
+        tags:
+            - { name: console.command, command: kimai:dev:phpcs }
+
+    app.command.run_unit_tests:
+        class: AppBundle\Command\RunUnitTestsCommand
+        arguments: ["%kernel.root_dir%"]
+        tags:
+            - { name: console.command, command: kimai:dev:test-unit }
+
+    app.command.run_integration_tests:
+        class: AppBundle\Command\RunIntegrationTestsCommand
+        arguments: ["%kernel.root_dir%"]
+        tags:
+            - { name: console.command, command: kimai:dev:test-integration }
