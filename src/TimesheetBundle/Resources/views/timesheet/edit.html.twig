@@ -7,7 +7,7 @@
 
 {% block main %}
     {{ include('default/_form.html.twig', {
-        'title': 'timesheet.edit'|trans,
+        'title': (entry.id ? 'timesheet.edit'|trans : 'create'|trans),
         'form': form,
         'back': path('timesheet')
     }) }}

@@ -40,13 +40,7 @@ class TimesheetRepository extends AbstractRepository
      */
     public function stopRecording(Timesheet $entry)
     {
-        $end = new DateTime();
-        $begin = $entry->getBegin();
-
-        $entry->setEnd($end);
-        $entry->setDuration($end->getTimestamp() - $begin->getTimestamp());
-
-        // TODO calculate rate by users hourly rate
+        $entry->setEnd(new DateTime());
 
         $entityManager = $this->getEntityManager();
         $entityManager->persist($entry);

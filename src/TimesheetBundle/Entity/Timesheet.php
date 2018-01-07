@@ -13,6 +13,7 @@ namespace TimesheetBundle\Entity;
 
 use AppBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Timesheet entity.
@@ -25,6 +26,7 @@ use Doctrine\ORM\Mapping as ORM;
  *          @ORM\Index(name="activity", columns={"activity"})
  *     }
  * )
+ * @ORM\HasLifecycleCallbacks()
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
@@ -44,6 +46,7 @@ class Timesheet
      * @var \DateTime
      *
      * @ORM\Column(name="start_time", type="datetime", nullable=false)
+     * @Assert\NotNull()
      */
     private $begin;
 
@@ -66,6 +69,7 @@ class Timesheet
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="user", referencedColumnName="id")
+     * @Assert\NotNull()
      */
     private $user;
 
@@ -74,6 +78,7 @@ class Timesheet
      *
      * @ORM\ManyToOne(targetEntity="TimesheetBundle\Entity\Activity")
      * @ORM\JoinColumn(name="activity", referencedColumnName="id")
+     * @Assert\NotNull()
      */
     private $activity;
 

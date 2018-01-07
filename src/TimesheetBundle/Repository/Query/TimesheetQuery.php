@@ -32,7 +32,7 @@ class TimesheetQuery extends BaseQuery
      * Overwritten for different default order
      * @var string
      */
-    protected $order = 'DESC';
+    protected $order = self::ORDER_DESC;
     /**
      * Overwritten for different default order
      * @var string

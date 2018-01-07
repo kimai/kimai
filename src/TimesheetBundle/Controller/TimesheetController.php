@@ -14,6 +14,7 @@ namespace TimesheetBundle\Controller;
 use AppBundle\Controller\AbstractController;
 use Pagerfanta\Pagerfanta;
 use TimesheetBundle\Entity\Activity;
+use TimesheetBundle\Entity\Customer;
 use TimesheetBundle\Entity\Timesheet;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -121,7 +122,7 @@ class TimesheetController extends AbstractController
     }
 
     /**
-     * The route to edit an existing entry or to create a complete new entry.
+     * The route to edit an existing entry.
      *
      * @Route("/{id}/edit", name="timesheet_edit")
      * @Method({"GET", "POST"})
@@ -151,6 +152,53 @@ class TimesheetController extends AbstractController
             [
                 'entry' => $entry,
                 'form' => $editForm->createView(),
+            ]
+        );
+    }
+
+    /**
+     * The route to create a new entry by form.
+     *
+     * @Route("/create", name="timesheet_create")
+     * @Method({"GET", "POST"})
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function createAction(Request $request)
+    {
+        $entry = new Timesheet();
+        $entry->setUser($this->getUser());
+        $entry->setBegin(new \DateTime());
+
+        $createForm = $this->createForm(
+            TimesheetEditForm::class,
+            $entry,
+            [
+                'action' => $this->generateUrl('timesheet_create'),
+                'method' => 'POST',
+                'currency' => Customer::DEFAULT_CURRENCY,
+            ]
+        );
+
+        $createForm->handleRequest($request);
+
+        if ($createForm->isSubmitted() && $createForm->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($entry);
+
+            $entityManager->flush();
+
+            $this->flashSuccess('action.updated_successfully');
+
+            return $this->redirectToRoute('timesheet');
+        }
+
+        return $this->render(
+            'TimesheetBundle:timesheet:edit.html.twig',
+            [
+                'entry' => $entry,
+                'form' => $createForm->createView(),
             ]
         );
     }

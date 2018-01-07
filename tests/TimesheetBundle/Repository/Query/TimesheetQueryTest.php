@@ -1,72 +1,42 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: kevin
- * Date: 07.01.18
- * Time: 11:12
+
+/*
+ * This file is part of the Kimai package.
+ *
+ * (c) Kevin Papst <kevin@kevinpapst.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace KimaiTest\TimesheetBundle\Repository\Query;
 
 use AppBundle\Repository\Query\BaseQuery;
 use \PHPUnit\Framework\TestCase;
+use TimesheetBundle\Repository\Query\TimesheetQuery;
 
+/**
+ * @covers \TimesheetBundle\Repository\Query\TimesheetQuery
+ * @author Kevin Papst <kevin@kevinpapst.de>
+ */
 class TimesheetQueryTest extends TestCase
 {
-    public function testBaseQueryHasOverwrittenFields()
+
+    public function testSetOrder()
     {
         $class = new \ReflectionClass(new BaseQuery());
         $this->assertTrue($class->hasProperty('order'));
         $this->assertTrue($class->hasProperty('orderBy'));
-    }
 
-    public function testGetUser()
-    {
-        $this->markTestIncomplete(__METHOD__);
-    }
+        $sut = new TimesheetQuery();
 
-    public function testSetUser()
-    {
-        $this->markTestIncomplete(__METHOD__);
-    }
+        $this->assertEquals(TimesheetQuery::ORDER_DESC, $sut->getOrder());
+        $this->assertEquals('begin', $sut->getOrderBy());
 
-    public function testGetActivity()
-    {
-        $this->markTestIncomplete(__METHOD__);
-    }
+        $sut->setOrder(TimesheetQuery::ORDER_ASC);
+        $sut->setOrderBy('id');
 
-    public function testSetActivity()
-    {
-        $this->markTestIncomplete(__METHOD__);
-    }
-
-    public function testGetProject()
-    {
-        $this->markTestIncomplete(__METHOD__);
-    }
-
-    public function testSetProject()
-    {
-        $this->markTestIncomplete(__METHOD__);
-    }
-
-    public function testGetCustomer()
-    {
-        $this->markTestIncomplete(__METHOD__);
-    }
-
-    public function testSetCustomer()
-    {
-        $this->markTestIncomplete(__METHOD__);
-    }
-
-    public function testGetState()
-    {
-        $this->markTestIncomplete(__METHOD__);
-    }
-
-    public function testSetState()
-    {
-        $this->markTestIncomplete(__METHOD__);
+        $this->assertEquals(TimesheetQuery::ORDER_ASC, $sut->getOrder());
+        $this->assertEquals('id', $sut->getOrderBy());
     }
 }

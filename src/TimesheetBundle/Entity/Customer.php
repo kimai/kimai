@@ -40,6 +40,7 @@ class Customer
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -61,6 +62,7 @@ class Customer
      * @var boolean
      *
      * @ORM\Column(name="visible", type="boolean", nullable=false)
+     * @Assert\NotNull()
      */
     private $visible = true;
 
@@ -106,6 +108,7 @@ class Customer
      * @var string
      *
      * @ORM\Column(name="currency", type="string", length=3, nullable=false)
+     * @Assert\NotBlank()
      */
     private $currency = self::DEFAULT_CURRENCY;
 
