@@ -31,6 +31,7 @@ class CustomerType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'label' => 'label.customer',
             'class' => 'TimesheetBundle:Customer',
             'choice_label' => 'name',
             'query_builder' => function (CustomerRepository $repo) {
