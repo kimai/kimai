@@ -58,6 +58,13 @@ services:
         tags:
             - { name: security.voter }
 
+    # security voter to check activity access
+    timesheet.voter.timesheet:
+        class: TimesheetBundle\Voter\TimesheetVoter
+        arguments: ["@security.access.decision_manager"]
+        tags:
+            - { name: security.voter }
+
     # ================================================================================
     # FORMS
     # ================================================================================

@@ -78,6 +78,7 @@ class TimesheetController extends AbstractController
      *
      * @Route("/{id}/stop", name="timesheet_stop")
      * @Method({"GET"})
+     * @Security("is_granted('stop', entry)")
      *
      * @param Timesheet $entry
      * @param Request $request
@@ -85,19 +86,6 @@ class TimesheetController extends AbstractController
      */
     public function stopAction(Timesheet $entry, Request $request)
     {
-        $user = $this->getUser();
-
-        // make sure only ADMIN can stop other users entries
-        if ($user->getId() !== $entry->getUser()->getId()) {
-            // TODO move me to a voter
-            $this->denyUnlessGranted(
-                'ROLE_ADMIN',
-                null,
-                'timesheet.access.denied',
-                ['%user%' => $user->getId(), '%entry%' => $entry->getId()]
-            );
-        }
-
         try {
             $this->getRepository()->stopRecording($entry);
             $this->flashSuccess('timesheet.stop.success');
@@ -113,6 +101,7 @@ class TimesheetController extends AbstractController
      *
      * @Route("/start/{id}", name="timesheet_start", requirements={"id" = "\d+"})
      * @Method({"GET", "POST"})
+     * @Security("is_granted('start', activity)")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -136,6 +125,7 @@ class TimesheetController extends AbstractController
      *
      * @Route("/{id}/edit", name="timesheet_edit")
      * @Method({"GET", "POST"})
+     * @Security("is_granted('edit', entry)")
      *
      * @param Timesheet $entry
      * @param Request $request
@@ -143,21 +133,7 @@ class TimesheetController extends AbstractController
      */
     public function editAction(Timesheet $entry, Request $request)
     {
-        $user = $this->getUser();
-
-        // make sure only ADMIN can edit other users entries
-        if ($user->getId() !== $entry->getUser()->getId()) {
-            // TODO move me to a voter
-            $this->denyUnlessGranted(
-                'ROLE_ADMIN',
-                null,
-                'timesheet.access.denied',
-                ['%user%' => $user->getId(), '%entry%' => $entry->getId()]
-            );
-        }
-
         $editForm = $this->createEditForm($entry, $request->get('page'));
-
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
