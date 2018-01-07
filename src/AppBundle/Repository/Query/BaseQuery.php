@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace TimesheetBundle\Model\Query;
+namespace AppBundle\Repository\Query;
 
 /**
  * Base class for advanced Repository queries.
@@ -34,6 +34,10 @@ class BaseQuery
      * @var string
      */
     protected $orderBy = 'id';
+    /**
+     * @var string
+     */
+    protected $order = 'ASC';
 
     /**
      * @return int
@@ -90,6 +94,26 @@ class BaseQuery
     public function setOrderBy($orderBy)
     {
         $this->orderBy = $orderBy;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param string $order
+     * @return BaseQuery
+     */
+    public function setOrder($order)
+    {
+        if (in_array($order, ['ASC', 'DESC'])) {
+            $this->order = $order;
+        }
         return $this;
     }
 }

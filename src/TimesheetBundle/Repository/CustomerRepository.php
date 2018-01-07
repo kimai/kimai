@@ -11,9 +11,10 @@
 
 namespace TimesheetBundle\Repository;
 
+use AppBundle\Repository\AbstractRepository;
 use TimesheetBundle\Entity\Customer;
 use TimesheetBundle\Model\CustomerStatistic;
-use TimesheetBundle\Model\Query\CustomerQuery;
+use TimesheetBundle\Repository\Query\CustomerQuery;
 
 /**
  * Class CustomerRepository
@@ -41,7 +42,7 @@ class CustomerRepository extends AbstractRepository
     public function getGlobalStatistics()
     {
         $countAll = $this->getEntityManager()
-            ->createQuery('SELECT COUNT(a.id) FROM TimesheetBundle:Customer c')
+            ->createQuery('SELECT COUNT(c.id) FROM TimesheetBundle:Customer c')
             ->getSingleScalarResult();
 
         $stats = new CustomerStatistic();
@@ -59,7 +60,7 @@ class CustomerRepository extends AbstractRepository
 
         $qb->select('c')
             ->from('TimesheetBundle:Customer', 'c')
-            ->orderBy('c.' . $query->getOrderBy(), 'ASC');
+            ->orderBy('c.' . $query->getOrderBy(), $query->getOrder());
 
         if ($query->getVisibility() === CustomerQuery::SHOW_VISIBLE) {
             $qb->andWhere('c.visible = 1');

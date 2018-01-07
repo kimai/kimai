@@ -22,9 +22,9 @@ use Pagerfanta\Pagerfanta;
 use TimesheetBundle\Model\Statistic\Month;
 use TimesheetBundle\Model\Statistic\Year;
 use TimesheetBundle\Model\TimesheetGlobalStatistic;
-use TimesheetBundle\Model\Query\TimesheetQuery;
 use TimesheetBundle\Model\TimesheetStatistic;
 use DateTime;
+use TimesheetBundle\Repository\Query\TimesheetQuery;
 
 /**
  * Class TimesheetRepository
@@ -245,6 +245,8 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
+     * TODO replace me by a findByQuery() call
+     *
      * @param User $user
      * @return Timesheet[]|null
      */
@@ -272,26 +274,9 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
-     * @param User $user
-     * @return Query
+     * @param TimesheetQuery $query
+     * @return Pagerfanta
      */
-    public function queryLatest(User $user = null)
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-
-        $qb->select('t', 'a')
-            ->from('TimesheetBundle:Timesheet', 't')
-            ->join('t.activity', 'a')
-            ->orderBy('t.begin', 'DESC');
-
-        if (null !== $user) {
-            $qb->where('t.user = :user')
-                ->setParameter('user', $user);
-        }
-
-        return $qb->getQuery();
-    }
-
     public function findByQuery(TimesheetQuery $query)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -301,7 +286,7 @@ class TimesheetRepository extends EntityRepository
             ->join('t.activity', 'a')
             ->join('a.project', 'p')
             ->join('p.customer', 'c')
-            ->orderBy('t.begin', 'DESC');
+            ->orderBy('t.' . $query->getOrderBy(), $query->getOrder());
 
         if ($query->getUser() !== null) {
             $qb->andWhere('t.user = :user')
@@ -326,26 +311,6 @@ class TimesheetRepository extends EntityRepository
         }
 
         return $this->getPager($qb->getQuery(), $query->getPage(), $query->getPageSize());
-    }
-
-    /**
-     * @param User $user
-     * @param int $page
-     * @return Pagerfanta
-     */
-    public function findLatest(User $user, $page = 1)
-    {
-        return $this->getPager($this->queryLatest($user), $page);
-    }
-
-    /**
-     * @param int $page
-     *
-     * @return Pagerfanta
-     */
-    public function findAll($page = 1)
-    {
-        return $this->getPager($this->queryLatest(), $page);
     }
 
     /**
