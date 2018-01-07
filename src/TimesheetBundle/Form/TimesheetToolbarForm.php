@@ -11,6 +11,7 @@
 
 namespace TimesheetBundle\Form;
 
+use AppBundle\Form\Type\PageSizeType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -47,9 +48,7 @@ class TimesheetToolbarForm extends AbstractType
         $query = $options['data'];
 
         $builder
-            ->add('pageSize', ChoiceType::class, [
-                'label' => 'label.pageSize',
-                'choices' => [10 => 10, 25 => 25, 50 => 50, 75 => 75, 100 => 100],
+            ->add('pageSize', PageSizeType::class, [
                 'required' => false,
             ])
             ->add('state', ChoiceType::class, [
