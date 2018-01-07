@@ -6,21 +6,20 @@
 
 {% block main %}
 
-    {# blue / yellow / purple / green / black #}
-    {# bar-chart / line-chart / calendar / clock-o #}
-
     {% for settings in dashboard_widgets %}
         {% if settings.header %}
             {{ widgets.page_header(settings.header) }}
         {% endif %}
 
-        {%  set columnWidth = 12 / (settings.widgets|length) %}
+        {% set width = settings.widgets|length %}
+        {% set rawWidth = 12 / width %}
+        {% set columnWidth = rawWidth|round(0, 'floor') %}
         <div class="row">
             {% for widgetTemplate in settings.widgets %}
-            <div class="col-md-{{ columnWidth }} col-sm-{{ columnWidth * 2 }} col-xs-{{ columnWidth * 4 }}">
-                {% set widgetString = '{% import "macros/widgets.html.twig" as widgets %}' ~ widgetTemplate %}
-                {{ include(template_from_string(widgetString)) }}
-            </div>
+                <div class="col-md-{{ columnWidth }} col-sm-{{ columnWidth * 2 }} col-xs-{{ columnWidth * 4 }}">
+                    {% set widgetString = '{% import "macros/widgets.html.twig" as widgets %}' ~ widgetTemplate %}
+                    {{ include(template_from_string(widgetString)) }}
+                </div>
             {% endfor %}
         </div>
     {% endfor %}
