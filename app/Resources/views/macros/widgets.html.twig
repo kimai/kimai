@@ -60,13 +60,20 @@
     </div>
 {% endmacro %}
 
-{% macro info_box_counter(title, amount, icon, color) %}
+{% macro info_box_counter(title, amount, icon, color, url) %}
 <div class="info-box">
     <span class="info-box-icon bg-{{ color|default(kimai_context.box_color) }}"><i class="fa fa-{{ icon|default('flag-o') }}"></i></span>
 
     <div class="info-box-content">
+        {# this is a ugly hack, make me look nicely (dashboard widget with link) #}
+        {% if url %}
+            <a href="{{ url }}" class="small-box-footer">
+        {% endif %}
         <span class="info-box-text">{{ title|trans }}</span>
         <span class="info-box-number">{{ amount }}</span>
+        {% if url %}
+            </a>
+        {% endif %}
     </div>
 </div>
 {% endmacro %}
