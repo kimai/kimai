@@ -20,6 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use TimesheetBundle\Form\CustomerEditForm;
+use TimesheetBundle\Form\CustomerToolbarForm;
 use TimesheetBundle\Repository\Query\CustomerQuery;
 
 /**
@@ -32,22 +33,49 @@ use TimesheetBundle\Repository\Query\CustomerQuery;
  */
 class CustomerController extends AbstractController
 {
+
+    /**
+     * @param Request $request
+     * @return CustomerQuery
+     */
+    protected function getQueryForRequest(Request $request)
+    {
+        $visibility = $request->get('visibility');
+        if (strlen($visibility) == 0 || (int)$visibility != $visibility) {
+            $visibility = CustomerQuery::SHOW_BOTH;
+        }
+        $pageSize = (int) $request->get('pageSize');
+
+        $query = new CustomerQuery();
+        $query
+            ->setPageSize($pageSize)
+            ->setVisibility($visibility);
+
+        return $query ;
+    }
+
     /**
      * @Route("/", defaults={"page": 1}, name="admin_customer")
      * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_customer_paginated")
      * @Method("GET")
      * @Cache(smaxage="10")
      */
-    public function indexAction($page)
+    public function indexAction($page, Request $request)
     {
-        $query = new CustomerQuery();
-        $query->setVisibility(CustomerQuery::SHOW_BOTH);
+        $query = $this->getQueryForRequest($request);
         $query->setPage($page);
 
         /* @var $entries Pagerfanta */
         $entries = $this->getDoctrine()->getRepository(Customer::class)->findByQuery($query);
 
-        return $this->render('TimesheetBundle:admin:customer.html.twig', ['entries' => $entries]);
+        return $this->render(
+            'TimesheetBundle:admin:customer.html.twig',
+            [
+                'entries' => $entries,
+                'query' => $query,
+                'toolbarForm' => $this->getToolbarForm($query)->createView(),
+            ]
+        );
     }
 
     /**
@@ -95,6 +123,24 @@ class CustomerController extends AbstractController
             [
                 'customer' => $customer,
                 'form' => $editForm->createView()
+            ]
+        );
+    }
+
+    /**
+     * @param CustomerQuery $query
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function getToolbarForm(CustomerQuery $query)
+    {
+        return $this->createForm(
+            CustomerToolbarForm::class,
+            $query,
+            [
+                'action' => $this->generateUrl('admin_customer_paginated', [
+                    'page' => $query->getPage(),
+                ]),
+                'method' => 'GET',
             ]
         );
     }
