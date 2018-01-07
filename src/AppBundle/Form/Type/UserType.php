@@ -9,20 +9,19 @@
  * file that was distributed with this source code.
  */
 
-namespace TimesheetBundle\Form\Type;
+namespace AppBundle\Form\Type;
 
+use AppBundle\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use TimesheetBundle\Repository\CustomerRepository;
-use TimesheetBundle\Repository\Query\CustomerQuery;
 
 /**
- * Custom form field type to select a customer.
+ * Custom form field type to select a user.
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class CustomerType extends AbstractType
+class UserType extends AbstractType
 {
 
     /**
@@ -31,13 +30,12 @@ class CustomerType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'class' => 'TimesheetBundle:Customer',
-            'choice_label' => 'name',
-            'query_builder' => function (CustomerRepository $repo) {
-                $query = new CustomerQuery();
-                $query->setVisibility(CustomerQuery::SHOW_BOTH);
-                $query->setResultType(CustomerQuery::RESULT_TYPE_QUERYBUILDER);
-                return $repo->findByQuery($query);
+            'class' => 'AppBundle:User',
+            'choice_label' => function (User $user) {
+                if (!empty($user->getAlias())) {
+                    return $user->getAlias() . ' (' . $user->getUsername() . ')';
+                }
+                return $user->getUsername();
             },
         ]);
     }

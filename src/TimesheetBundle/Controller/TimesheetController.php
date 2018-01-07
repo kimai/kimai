@@ -87,14 +87,7 @@ class TimesheetController extends AbstractController
      */
     public function stopAction(Timesheet $entry, Request $request)
     {
-        try {
-            $this->getRepository()->stopRecording($entry);
-            $this->flashSuccess('timesheet.stop.success');
-        } catch (\Exception $ex) {
-            $this->flashError('timesheet.stop.error', ['%reason%' => $ex->getMessage()]);
-        }
-
-        return $this->redirectToRoute('timesheet');
+        return $this->stop($entry, 'timesheet');
     }
 
     /**
@@ -134,26 +127,7 @@ class TimesheetController extends AbstractController
      */
     public function editAction(Timesheet $entry, Request $request)
     {
-        $editForm = $this->createEditForm($entry, $request->get('page'));
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($entry);
-            $entityManager->flush();
-
-            $this->flashSuccess('action.updated_successfully');
-
-            return $this->redirectToRoute('timesheet_paginated', ['page' => $request->get('page')]);
-        }
-
-        return $this->render(
-            'TimesheetBundle:timesheet:edit.html.twig',
-            [
-                'entry' => $entry,
-                'form' => $editForm->createView(),
-            ]
-        );
+        return $this->edit($entry, $request, 'timesheet_paginated', 'TimesheetBundle:timesheet:edit.html.twig');
     }
 
     /**
@@ -167,38 +141,22 @@ class TimesheetController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $entry = new Timesheet();
-        $entry->setUser($this->getUser());
-        $entry->setBegin(new \DateTime());
+        return $this->create($request, 'timesheet', 'TimesheetBundle:timesheet:edit.html.twig');
+    }
 
-        $createForm = $this->createForm(
+    /**
+     * @param Timesheet $entry
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function getCreateForm(Timesheet $entry)
+    {
+        return $this->createForm(
             TimesheetEditForm::class,
             $entry,
             [
                 'action' => $this->generateUrl('timesheet_create'),
                 'method' => 'POST',
                 'currency' => Customer::DEFAULT_CURRENCY,
-            ]
-        );
-
-        $createForm->handleRequest($request);
-
-        if ($createForm->isSubmitted() && $createForm->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($entry);
-
-            $entityManager->flush();
-
-            $this->flashSuccess('action.updated_successfully');
-
-            return $this->redirectToRoute('timesheet');
-        }
-
-        return $this->render(
-            'TimesheetBundle:timesheet:edit.html.twig',
-            [
-                'entry' => $entry,
-                'form' => $createForm->createView(),
             ]
         );
     }
@@ -208,7 +166,7 @@ class TimesheetController extends AbstractController
      * @param int $page
      * @return \Symfony\Component\Form\FormInterface
      */
-    private function createEditForm(Timesheet $entry, $page)
+    protected function getEditForm(Timesheet $entry, $page)
     {
         return $this->createForm(
             TimesheetEditForm::class,

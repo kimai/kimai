@@ -21,7 +21,7 @@
         'label.username': 'hidden-xs',
         'label.description': 'hidden-xs hidden-sm',
         'label.actions': '',
-    }, toolbarForm) }}
+    }, toolbarForm, {'plus-square': path('admin_timesheet_create')}) }}
 
     {% for entry in entries %}
         <tr>
@@ -41,9 +41,9 @@
             <td class="hidden-xs hidden-sm">{{ entry.description }}</td>
             <td>
                 {% if entry.end %}
-                    {{ widgets.button_group({'edit': '#', 'trash': '#'}) }}
+                    {{ widgets.button_group({'edit': path('admin_timesheet_edit', {'id' : entry.id, 'page': page}), 'trash': '#'}) }}
                 {% else %}
-                    {{ widgets.button_group({'stop': path('admin_timesheet_stop', {'id' : entry.id}), 'edit': '#', 'trash': '#'}) }}
+                    {{ widgets.button_group({'stop': path('admin_timesheet_stop', {'id' : entry.id}), 'edit': path('admin_timesheet_edit', {'id' : entry.id, 'page': page}), 'trash': '#'}) }}
                 {% endif %}
 
             </td>

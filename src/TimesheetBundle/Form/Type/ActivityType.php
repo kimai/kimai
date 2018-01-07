@@ -34,12 +34,12 @@ class ActivityType extends AbstractType
         $resolver->setDefaults([
             'class' => 'TimesheetBundle:Activity',
             'choice_label' => 'name',
-            'choice_value' => 'id',
             'group_by' => function (Activity $activity, $key, $index) {
-                return $activity->getProject()->getName();
+                return '[' . $activity->getProject()->getId() . '] ' . $activity->getProject()->getName();
             },
             'query_builder' => function (ActivityRepository $repo) {
                 $query = new ActivityQuery();
+                $query->setVisibility(ActivityQuery::SHOW_BOTH);
                 $query->setResultType(ActivityQuery::RESULT_TYPE_QUERYBUILDER);
                 return $repo->findByQuery($query);
             },
