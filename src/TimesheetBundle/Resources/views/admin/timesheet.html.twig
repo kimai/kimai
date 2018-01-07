@@ -17,6 +17,7 @@
         'label.endtime': 'hidden-xs',
         'label.duration': '',
         'label.rate': '',
+        'label.activity': 'hidden-xs hidden-sm',
         'label.username': 'hidden-xs',
         'label.description': 'hidden-xs hidden-sm',
         'label.actions': '',
@@ -35,6 +36,7 @@
                 <td>&dash;</td>
                 <td>&dash;</td>
             {% endif %}
+            <td class="hidden-xs hidden-sm">{{ widgets.label_activity(entry.activity.name) }}</td>
             <td class="hidden-xs"><a href="{{ path('profile'|route_alias, {'username' : entry.user.username}) }}">{{ entry.user.username }}</a></td>
             <td class="hidden-xs hidden-sm">{{ entry.description }}</td>
             <td>

@@ -279,9 +279,10 @@ class TimesheetRepository extends AbstractRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('t', 'a', 'p', 'c')
+        $qb->select('t', 'a', 'p', 'c', 'u')
             ->from('TimesheetBundle:Timesheet', 't')
             ->join('t.activity', 'a')
+            ->join('t.user', 'u')
             ->join('a.project', 'p')
             ->join('p.customer', 'c')
             ->orderBy('t.' . $query->getOrderBy(), $query->getOrder());

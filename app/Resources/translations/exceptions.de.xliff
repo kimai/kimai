@@ -7,10 +7,6 @@
         <source>access.denied</source>
         <target>Der Zugriff wurde verweigert</target>
       </trans-unit>
-      <trans-unit id="timesheet.access.denied">
-        <source>timesheet.deny.stop</source>
-        <target>Der Benutzer "%user%" darf den Zeiteintrag "%entry%" nicht aufrufen</target>
-      </trans-unit>
 
     </body>
   </file>

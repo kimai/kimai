@@ -17,6 +17,11 @@
     {{ macro.label(role, 'primary') }}
 {% endmacro %}
 
+{% macro label_activity(role) %}
+    {% import _self as macro %}
+    {{ macro.label(role, 'primary') }}
+{% endmacro %}
+
 {% macro label_project(project) %}
     {% import _self as macro %}
     {{ macro.label(project.name, 'primary') }}

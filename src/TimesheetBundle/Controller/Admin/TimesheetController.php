@@ -66,6 +66,7 @@ class TimesheetController extends AbstractController
      *
      * @Route("/{id}/stop", name="admin_timesheet_stop")
      * @Method({"GET"})
+     * @Security("is_granted('stop', entry)")
      *
      * @param Timesheet $entry
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
