@@ -4,6 +4,7 @@
 
 {% block page_title %}{{ 'admin_project.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_project.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
+{% block javascript_imports %}<script src="{{ asset('js/timesheet.js') }}"></script>{% endblock %}
 
 {% block main %}
     {% if entries.count == 0 %}
@@ -19,7 +20,7 @@
         'label.budget': 'hidden-xs',
         'label.visible': '',
         'label.actions': '',
-    }, null, {'plus-square': path('admin_project_create')}) }}
+    }, toolbarForm, {'plus-square': path('admin_project_create')}) }}
 
     {% for entry in entries %}
         <tr>

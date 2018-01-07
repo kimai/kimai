@@ -14,6 +14,7 @@ namespace TimesheetBundle\Repository\Query;
 use AppBundle\Repository\Query\BaseQuery;
 use AppBundle\Repository\Query\VisibilityInterface;
 use AppBundle\Repository\Query\VisibilityTrait;
+use TimesheetBundle\Entity\Customer;
 
 /**
  * Can be used for advanced queries with the: ProjectRepository
@@ -23,4 +24,27 @@ use AppBundle\Repository\Query\VisibilityTrait;
 class ProjectQuery extends BaseQuery implements VisibilityInterface
 {
     use VisibilityTrait;
+
+    /**
+     * @var Customer
+     */
+    protected $customer;
+
+    /**
+     * @return Customer
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
+    }
+
+    /**
+     * @param Customer $customer
+     * @return $this
+     */
+    public function setCustomer(Customer $customer = null)
+    {
+        $this->customer = $customer;
+        return $this;
+    }
 }

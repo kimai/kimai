@@ -14,6 +14,7 @@ namespace TimesheetBundle\Controller\Admin;
 use AppBundle\Controller\AbstractController;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
+use TimesheetBundle\Entity\Activity;
 use TimesheetBundle\Entity\Customer;
 use TimesheetBundle\Entity\Project;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -21,6 +22,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use TimesheetBundle\Form\ProjectEditForm;
+use TimesheetBundle\Form\ProjectToolbarForm;
 use TimesheetBundle\Repository\Query\ProjectQuery;
 
 /**
@@ -34,21 +36,53 @@ use TimesheetBundle\Repository\Query\ProjectQuery;
 class ProjectController extends AbstractController
 {
     /**
+     * @param Request $request
+     * @return ProjectQuery
+     */
+    protected function getQueryForRequest(Request $request)
+    {
+        $visibility = $request->get('visibility');
+        if (strlen($visibility) == 0 || (int)$visibility != $visibility) {
+            $visibility = ProjectQuery::SHOW_BOTH;
+        }
+        $pageSize = (int) $request->get('pageSize');
+        $customer = $request->get('customer');
+        $customer = !empty(trim($customer)) ? trim($customer) : null;
+
+        if ($customer !== null) {
+            $repo = $this->getDoctrine()->getRepository(Customer::class);
+            $customer = $repo->getById($customer);
+        }
+
+        $query = new ProjectQuery();
+        $query
+            ->setPageSize($pageSize)
+            ->setVisibility($visibility)
+            ->setCustomer($customer)
+        ;
+
+        return $query ;
+    }
+
+    /**
      * @Route("/", defaults={"page": 1}, name="admin_project")
      * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_project_paginated")
      * @Method("GET")
      * @Cache(smaxage="10")
      */
-    public function indexAction($page)
+    public function indexAction($page, Request $request)
     {
-        $query = new ProjectQuery();
-        $query->setVisibility(ProjectQuery::SHOW_BOTH);
+        $query = $this->getQueryForRequest($request);
         $query->setPage($page);
 
         /* @var $entries Pagerfanta */
         $entries = $this->getDoctrine()->getRepository(Project::class)->findByQuery($query);
 
-        return $this->render('TimesheetBundle:admin:project.html.twig', ['entries' => $entries]);
+        return $this->render('TimesheetBundle:admin:project.html.twig', [
+            'entries' => $entries,
+            'query' => $query,
+            'toolbarForm' => $this->getToolbarForm($query)->createView(),
+        ]);
     }
 
     /**
@@ -96,6 +130,24 @@ class ProjectController extends AbstractController
             [
                 'project' => $project,
                 'form' => $editForm->createView()
+            ]
+        );
+    }
+
+    /**
+     * @param ProjectQuery $query
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function getToolbarForm(ProjectQuery $query)
+    {
+        return $this->createForm(
+            ProjectToolbarForm::class,
+            $query,
+            [
+                'action' => $this->generateUrl('admin_project_paginated', [
+                    'page' => $query->getPage(),
+                ]),
+                'method' => 'GET',
             ]
         );
     }

@@ -73,6 +73,11 @@ class ProjectRepository extends AbstractRepository
             // TODO check for visibility of customer
         }
 
+        if ($query->getCustomer() !== null) {
+            $qb->andWhere('p.customer = :customer')
+                ->setParameter('customer', $query->getCustomer());
+        }
+
         return $this->getBaseQueryResult($qb, $query);
     }
 }
