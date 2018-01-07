@@ -12,6 +12,7 @@
 namespace TimesheetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Project
@@ -37,6 +38,7 @@ class Project
      * @var Customer
      *
      * @ORM\ManyToOne(targetEntity="TimesheetBundle\Entity\Customer", inversedBy="projects")
+     * @Assert\NotNull()
      */
     private $customer;
 
@@ -44,6 +46,7 @@ class Project
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @Assert\NotNull()
      */
     private $name;
 
@@ -58,6 +61,7 @@ class Project
      * @var boolean
      *
      * @ORM\Column(name="visible", type="boolean", nullable=false)
+     * @Assert\NotNull()
      */
     private $visible = true;
 
@@ -65,6 +69,7 @@ class Project
      * @var string
      *
      * @ORM\Column(name="budget", type="decimal", precision=10, scale=2, nullable=false)
+     * @Assert\NotNull()
      */
     private $budget = 0.00;
 
