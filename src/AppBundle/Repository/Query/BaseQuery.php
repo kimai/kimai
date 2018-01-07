@@ -19,6 +19,9 @@ namespace AppBundle\Repository\Query;
 class BaseQuery
 {
 
+    const ORDER_ASC = 'ASC';
+    const ORDER_DESC = 'DESC';
+
     const DEFAULT_PAGESIZE = 25;
     const DEFAULT_PAGE = 1;
 
@@ -118,7 +121,7 @@ class BaseQuery
      */
     public function setOrder($order)
     {
-        if (in_array($order, ['ASC', 'DESC'])) {
+        if (in_array($order, [self::ORDER_ASC, self::ORDER_DESC])) {
             $this->order = $order;
         }
         return $this;

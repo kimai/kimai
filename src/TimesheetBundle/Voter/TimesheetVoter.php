@@ -66,11 +66,6 @@ class TimesheetVoter extends AbstractVoter
             return false;
         }
 
-        // Customer cannot do anything with timesheet entries
-        if (!$this->hasRole('ROLE_USER', $token)) {
-            return false;
-        }
-
         switch ($attribute) {
             case self::STOP:
                 return $this->canStop($subject, $user, $token);

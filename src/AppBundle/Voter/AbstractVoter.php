@@ -41,7 +41,7 @@ abstract class AbstractVoter extends Voter
      * @param TokenInterface $token
      * @return bool
      */
-    public function hasRole($role, TokenInterface $token)
+    protected function hasRole($role, TokenInterface $token)
     {
         if ($this->decisionManager->decide($token, array($role))) {
             return true;
