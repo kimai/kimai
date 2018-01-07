@@ -62,9 +62,9 @@ class CustomerRepository extends AbstractRepository
             ->from('TimesheetBundle:Customer', 'c')
             ->orderBy('c.' . $query->getOrderBy(), $query->getOrder());
 
-        if ($query->getVisibility() === CustomerQuery::SHOW_VISIBLE) {
+        if ($query->getVisibility() == CustomerQuery::SHOW_VISIBLE) {
             $qb->andWhere('c.visible = 1');
-        } elseif ($query->getVisibility() === CustomerQuery::SHOW_HIDDEN) {
+        } elseif ($query->getVisibility() == CustomerQuery::SHOW_HIDDEN) {
             $qb->andWhere('c.visible = 0');
         }
 

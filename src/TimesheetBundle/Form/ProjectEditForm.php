@@ -11,7 +11,7 @@
 
 namespace TimesheetBundle\Form;
 
-use AppBundle\Form\Type\YesNoType;
+use AppBundle\Form\Type\VisibilityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -49,7 +49,7 @@ class ProjectEditForm extends AbstractType
                 'label' => 'label.customer',
             ])
             // boolean
-            ->add('visible', YesNoType::class, [
+            ->add('visible', VisibilityType::class, [
                 'label' => 'label.visible',
             ])
             // string

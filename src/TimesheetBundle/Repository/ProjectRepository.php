@@ -65,10 +65,10 @@ class ProjectRepository extends AbstractRepository
             ->join('p.customer', 'c')
             ->orderBy('p.' . $query->getOrderBy(), $query->getOrder());
 
-        if ($query->getVisibility() === ProjectQuery::SHOW_VISIBLE) {
+        if ($query->getVisibility() == ProjectQuery::SHOW_VISIBLE) {
             $qb->andWhere('p.visible = 1');
             // TODO check for visibility of customer
-        } elseif ($query->getVisibility() === ProjectQuery::SHOW_HIDDEN) {
+        } elseif ($query->getVisibility() == ProjectQuery::SHOW_HIDDEN) {
             $qb->andWhere('p.visible = 0');
             // TODO check for visibility of customer
         }

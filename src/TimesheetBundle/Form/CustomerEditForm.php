@@ -11,7 +11,7 @@
 
 namespace TimesheetBundle\Form;
 
-use AppBundle\Form\Type\YesNoType;
+use AppBundle\Form\Type\VisibilityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
@@ -61,7 +61,7 @@ class CustomerEditForm extends AbstractType
             ])
             */
             // boolean
-            ->add('visible', YesNoType::class, [
+            ->add('visible', VisibilityType::class, [
                 'label' => 'label.visible',
             ])
             // string - length 255

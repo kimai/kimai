@@ -30,11 +30,13 @@ trait VisibilityTrait
 
     /**
      * @param int $visibility
-     * @return ProjectQuery
+     * @return self
      */
     public function setVisibility($visibility)
     {
-        $this->visibility = $visibility;
+        if (in_array($visibility, [self::SHOW_BOTH, self::SHOW_VISIBLE, self::SHOW_HIDDEN])) {
+            $this->visibility = $visibility;
+        }
         return $this;
     }
 }
