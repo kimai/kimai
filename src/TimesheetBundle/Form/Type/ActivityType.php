@@ -15,6 +15,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use TimesheetBundle\Entity\Activity;
+use TimesheetBundle\Repository\ActivityRepository;
+use TimesheetBundle\Repository\Query\ActivityQuery;
 
 /**
  * Custom form field type to select an activity.
@@ -25,17 +27,6 @@ class ActivityType extends AbstractType
 {
 
     /**
-     * @param Activity $activity
-     * @param $key
-     * @param $index
-     * @return string
-     */
-    public function groupBy(Activity $activity, $key, $index)
-    {
-        return $activity->getProject()->getName();
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
@@ -44,7 +35,14 @@ class ActivityType extends AbstractType
             'class' => 'TimesheetBundle:Activity',
             'choice_label' => 'name',
             'choice_value' => 'id',
-            'group_by' => array($this, 'groupBy'),
+            'group_by' => function (Activity $activity, $key, $index) {
+                return $activity->getProject()->getName();
+            },
+            'query_builder' => function (ActivityRepository $repo) {
+                $query = new ActivityQuery();
+                $query->setResultType(ActivityQuery::RESULT_TYPE_QUERYBUILDER);
+                return $repo->findByQuery($query);
+            },
         ]);
     }
 

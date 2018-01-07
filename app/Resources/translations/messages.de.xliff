@@ -464,7 +464,7 @@
       </trans-unit>
       <trans-unit id="admin_user.subtitle">
         <source>admin_user.subtitle</source>
-        <target>Alle registrierten Nutzer</target>
+        <target>Alle registrierten Benutzer der Zeitverwaltung</target>
       </trans-unit>
       <trans-unit id="label.alias">
         <source>label.alias</source>
@@ -546,9 +546,9 @@
         <source>stats.userActiveEver</source>
         <target>Aktive Benutzer jemals</target>
       </trans-unit>
-      <trans-unit id="stats.userActiveNow">
-        <source>stats.userActiveNow</source>
-        <target>Momentan aktiv</target>
+      <trans-unit id="stats.activeRecordings">
+        <source>stats.activeRecordings</source>
+        <target>Momentan aktive Zeitmessungen</target>
       </trans-unit>
       <trans-unit id="stats.activitiesTotal">
         <source>stats.activitiesTotal</source>
@@ -557,6 +557,10 @@
       <trans-unit id="stats.projectsTotal">
         <source>stats.projectsTotal</source>
         <target>Anzahl Projekte</target>
+      </trans-unit>
+      <trans-unit id="stats.customerTotal">
+        <source>stats.customerTotal</source>
+        <target>Anzahl Kunden</target>
       </trans-unit>
 
       <!--

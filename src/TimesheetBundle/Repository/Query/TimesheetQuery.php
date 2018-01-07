@@ -158,5 +158,4 @@ class TimesheetQuery extends BaseQuery
         }
         return $this;
     }
-
 }

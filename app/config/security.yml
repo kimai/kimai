@@ -6,19 +6,18 @@ security:
 
     providers:
         # in this example, users are stored via Doctrine in the database
-        # To see the users at src/AppBundle/DataFixtures/ORM/LoadFixtures.php
-        # To load users from somewhere else: http://symfony.com/doc/current/cookbook/security/custom_provider.html
+        # demo users can be found at src/AppBundle/DataFixtures/ORM/LoadFixtures.php
         database_users:
             entity: { class: AppBundle:User, property: username }
 
     # http://symfony.com/doc/current/book/security.html#firewalls-authentication
     firewalls:
         secured_area:
-            # this firewall applies to all URLs
-            pattern: ^/
-
             # does what it says
             logout_on_user_change: true
+
+            # this firewall applies to all URLs
+            pattern: ^/
 
             # but the firewall does not require login on every page
             # denying access is done in access_control or in your controllers

@@ -36,7 +36,10 @@ class UserVoter extends AbstractVoter
      */
     protected function supports($attribute, $subject)
     {
-        if (!in_array($attribute, [self::VIEW, self::VIEW_ALL, self::EDIT, self::CREATE, self::ROLES, self::PASSWORD, self::DELETE])) {
+        if (!in_array(
+            $attribute,
+            [self::VIEW, self::VIEW_ALL, self::EDIT, self::CREATE, self::ROLES, self::PASSWORD, self::DELETE]
+        )) {
             return false;
         }
 
@@ -71,7 +74,7 @@ class UserVoter extends AbstractVoter
             case self::CREATE:
                 // create actually passes in the current user as $subject, not the new one
             case self::DELETE:
-                // if we ever allow to delete user for ADMIN we have to check if the user to be deleted is not in a higher level
+                // if we allow to delete user for ADMIN: make sure the user to be deleted is not in a higher level
             case self::ROLES:
                 return $this->canAdminUsers($token);
         }

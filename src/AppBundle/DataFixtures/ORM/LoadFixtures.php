@@ -24,6 +24,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class LoadFixtures implements FixtureInterface, ContainerAwareInterface
 {
+
+    const DEFAULT_PASSWORD = 'kitten';
+
     /** @var ContainerInterface */
     private $container;
 
@@ -45,18 +48,18 @@ class LoadFixtures implements FixtureInterface, ContainerAwareInterface
         $claraCustomer->setUsername('clara_customer');
         $claraCustomer->setEmail('clara_customer@example.com');
         $claraCustomer->setRoles(['ROLE_CUSTOMER']);
-        $encodedPassword = $passwordEncoder->encodePassword($claraCustomer, 'kitten');
-        $claraCustomer->setPassword($encodedPassword);
+        $claraCustomer->setAvatar('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=monsterid&f=y');
+        $claraCustomer->setPassword($passwordEncoder->encodePassword($claraCustomer, self::DEFAULT_PASSWORD));
         $manager->persist($claraCustomer);
 
         $johnUser = new User();
         $johnUser->setAlias('John Doe');
-        $johnUser->setTitle('Lead Developer');
+        $johnUser->setTitle('Developer');
         $johnUser->setUsername('john_user');
         $johnUser->setEmail('john_user@example.com');
         $johnUser->setRoles(['ROLE_USER']);
-        $encodedPassword = $passwordEncoder->encodePassword($johnUser, 'kitten');
-        $johnUser->setPassword($encodedPassword);
+        $johnUser->setAvatar('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y');
+        $johnUser->setPassword($passwordEncoder->encodePassword($claraCustomer, self::DEFAULT_PASSWORD));
         $manager->persist($johnUser);
 
         $tonyTeamlead = new User();
@@ -65,8 +68,8 @@ class LoadFixtures implements FixtureInterface, ContainerAwareInterface
         $tonyTeamlead->setUsername('tony_teamlead');
         $tonyTeamlead->setEmail('tony_teamlead@example.com');
         $tonyTeamlead->setRoles(['ROLE_TEAMLEAD']);
-        $encodedPassword = $passwordEncoder->encodePassword($tonyTeamlead, 'kitten');
-        $tonyTeamlead->setPassword($encodedPassword);
+        $tonyTeamlead->setAvatar('https://en.gravatar.com/userimage/3533186/bf2163b1dd23f3107a028af0195624e9.jpeg');
+        $tonyTeamlead->setPassword($passwordEncoder->encodePassword($claraCustomer, self::DEFAULT_PASSWORD));
         $manager->persist($tonyTeamlead);
 
         $annaAdmin = new User();
@@ -75,8 +78,8 @@ class LoadFixtures implements FixtureInterface, ContainerAwareInterface
         $annaAdmin->setUsername('anna_admin');
         $annaAdmin->setEmail('anna_admin@example.com');
         $annaAdmin->setRoles(['ROLE_ADMIN']);
-        $encodedPassword = $passwordEncoder->encodePassword($annaAdmin, 'kitten');
-        $annaAdmin->setPassword($encodedPassword);
+        // no avatar to test default image!
+        $annaAdmin->setPassword($passwordEncoder->encodePassword($claraCustomer, self::DEFAULT_PASSWORD));
         $manager->persist($annaAdmin);
 
         $susanSuper = new User();
@@ -85,8 +88,8 @@ class LoadFixtures implements FixtureInterface, ContainerAwareInterface
         $susanSuper->setUsername('susan_super');
         $susanSuper->setEmail('susan_super@example.com');
         $susanSuper->setRoles(['ROLE_SUPER_ADMIN']);
-        $encodedPassword = $passwordEncoder->encodePassword($susanSuper, 'kitten');
-        $susanSuper->setPassword($encodedPassword);
+        $susanSuper->setAvatar('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=wavatar&f=y');
+        $susanSuper->setPassword($passwordEncoder->encodePassword($claraCustomer, self::DEFAULT_PASSWORD));
         $manager->persist($susanSuper);
 
         $manager->flush();

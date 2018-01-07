@@ -43,6 +43,8 @@ class UserRolesType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $roles = [];
+
         foreach ($this->roles as $key => $value) {
             $roles[$key] = $key;
             foreach ($value as $value2) {

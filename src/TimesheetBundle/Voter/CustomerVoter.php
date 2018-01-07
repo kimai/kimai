@@ -74,6 +74,7 @@ class CustomerVoter extends AbstractVoter
     /**
      * @param Customer $customer
      * @param User $user
+     * @param TokenInterface $token
      * @return bool
      */
     protected function canView(Customer $customer, User $user, TokenInterface $token)
@@ -88,6 +89,7 @@ class CustomerVoter extends AbstractVoter
     /**
      * @param Customer $customer
      * @param User $user
+     * @param TokenInterface $token
      * @return bool
      */
     protected function canEdit(Customer $customer, User $user, TokenInterface $token)

@@ -12,12 +12,10 @@
 namespace TimesheetBundle\Repository;
 
 use AppBundle\Entity\User;
+use AppBundle\Repository\AbstractRepository;
 use TimesheetBundle\Entity\Activity;
 use TimesheetBundle\Entity\Timesheet;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query;
 use Doctrine\DBAL\Types\Type;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use TimesheetBundle\Model\Statistic\Month;
 use TimesheetBundle\Model\Statistic\Year;
@@ -31,7 +29,7 @@ use TimesheetBundle\Repository\Query\TimesheetQuery;
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class TimesheetRepository extends EntityRepository
+class TimesheetRepository extends AbstractRepository
 {
 
     /**
@@ -89,7 +87,7 @@ class TimesheetRepository extends EntityRepository
         $end = new DateTime('last day of this month');
         $end->setTime(23, 59, 59);
         $begin = new DateTime('first day of this month');
-        $begin->setTime(0,0,0);
+        $begin->setTime(0, 0, 0);
 
         return $this->queryTimeRange($select, $begin, $end, $user);
     }
@@ -168,7 +166,7 @@ class TimesheetRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('SUM(t.rate) as totalRate, SUM(t.duration) as totalDuration, MONTH(t.begin) as month, YEAR(t.begin) as year')
+        $qb->select('SUM(t.rate) as rate, SUM(t.duration) as duration, MONTH(t.begin) as month, YEAR(t.begin) as year')
             ->from('TimesheetBundle:Timesheet', 't')
             ->where($qb->expr()->gt('t.begin', '0'))
             ->andWhere($qb->expr()->isNotNull('t.end'))
@@ -183,7 +181,7 @@ class TimesheetRepository extends EntityRepository
         }
 
         $years = [];
-        foreach($qb->getQuery()->execute() as $statRow) {
+        foreach ($qb->getQuery()->execute() as $statRow) {
             $curYear = $statRow['year'];
 
             if (!isset($years[$curYear])) {
@@ -196,8 +194,8 @@ class TimesheetRepository extends EntityRepository
             }
 
             $month = new Month($statRow['month']);
-            $month->setTotalDuration($statRow['totalDuration'])
-                ->setTotalRate($statRow['totalRate']);
+            $month->setTotalDuration($statRow['duration'])
+                ->setTotalRate($statRow['rate']);
             $years[$curYear]->setMonth($month);
         }
 
@@ -310,21 +308,6 @@ class TimesheetRepository extends EntityRepository
                 ->setParameter('customer', $query->getCustomer());
         }
 
-        return $this->getPager($qb->getQuery(), $query->getPage(), $query->getPageSize());
-    }
-
-    /**
-     * @param Query $query
-     * @param int $page
-     * @param int $maxPerPage
-     * @return Pagerfanta
-     */
-    protected function getPager(Query $query, $page = 1, $maxPerPage = 25)
-    {
-        $paginator = new Pagerfanta(new DoctrineORMAdapter($query, false));
-        $paginator->setMaxPerPage($maxPerPage);
-        $paginator->setCurrentPage($page);
-
-        return $paginator;
+        return $this->getBaseQueryResult($qb, $query);
     }
 }

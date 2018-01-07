@@ -44,7 +44,8 @@ class ActivityController extends Controller
     public function recentActivitiesAction()
     {
         $user = $this->getUser();
-        $activeEntries = $this->getRepository()->getRecentActivities($user, new \DateTime('-30 days')); // TODO make days configurable
+        // TODO make days configurable
+        $activeEntries = $this->getRepository()->getRecentActivities($user, new \DateTime('-30 days'));
 
         return $this->render(
             'TimesheetBundle:Navbar:recent-activities.html.twig',

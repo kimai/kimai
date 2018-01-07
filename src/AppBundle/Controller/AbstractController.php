@@ -43,13 +43,13 @@ abstract class AbstractController extends Controller
      *
      * @param $attributes
      * @param null $subject
-     * @param string $translationKey
+     * @param string $translation
      * @param array $parameter
      * @throws AccessDeniedException
      */
-    protected function denyUnlessGranted($attributes, $subject = null, $translationKey = 'access.denied', $parameter = [])
+    protected function denyUnlessGranted($attributes, $subject = null, $translation = 'access.denied', $parameter = [])
     {
-        $error = $this->getTranslator()->trans($translationKey, $parameter, self::DOMAIN_ERROR);
+        $error = $this->getTranslator()->trans($translation, $parameter, self::DOMAIN_ERROR);
         // TODO try & catch and add to audit log?
         $this->denyAccessUnlessGranted($attributes, $subject, $error);
     }

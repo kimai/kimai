@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * Class Configuration
+ * Class CompilerPass, dynamically loads additional doctrine functions for the configured database engine.
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */

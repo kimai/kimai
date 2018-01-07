@@ -11,14 +11,12 @@
 
 namespace AppBundle\Repository;
 
-use AppBundle\Entity\User;
-use TimesheetBundle\Entity\Activity;
-use TimesheetBundle\Entity\Timesheet;
+use AppBundle\Repository\Query\BaseQuery;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
-use TimesheetBundle\Model\ActivityStatistic;
 
 /**
  * Class AbstractRepository
@@ -27,6 +25,19 @@ use TimesheetBundle\Model\ActivityStatistic;
  */
 abstract class AbstractRepository extends EntityRepository
 {
+    /**
+     * @param QueryBuilder $qb
+     * @param BaseQuery $query
+     * @return QueryBuilder|Pagerfanta
+     */
+    protected function getBaseQueryResult(QueryBuilder $qb, BaseQuery $query)
+    {
+        if ($query->getResultType() == BaseQuery::RESULT_TYPE_PAGER) {
+            return $this->getPager($qb->getQuery(), $query->getPage(), $query->getPageSize());
+        }
+
+        return $qb;
+    }
 
     /**
      * @param Query $query

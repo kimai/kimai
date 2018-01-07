@@ -11,7 +11,7 @@ parameters:
     # database_url: 'mysql://root:pass@127.0.0.1:3306/timesheet'
 
     # You can prefix all your tables to pevent collision with other software
-    database_prefix: kimai_
+    database_prefix: kimai2_
 
     # You can create the database and load the sample data from the command line:
     #

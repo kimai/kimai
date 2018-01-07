@@ -15,6 +15,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use TimesheetBundle\Entity\Project;
+use TimesheetBundle\Repository\ProjectRepository;
+use TimesheetBundle\Repository\Query\ProjectQuery;
 
 /**
  * Custom form field type to select a project.
@@ -33,8 +35,13 @@ class ProjectType extends AbstractType
             'class' => 'TimesheetBundle:Project',
             'choice_label' => 'name',
             'choice_value' => 'id',
-            'group_by' => function(Project $project, $key, $index) {
+            'group_by' => function (Project $project, $key, $index) {
                 return $project->getCustomer()->getName();
+            },
+            'query_builder' => function (ProjectRepository $repo) {
+                $query = new ProjectQuery();
+                $query->setResultType(ProjectQuery::RESULT_TYPE_QUERYBUILDER);
+                return $repo->findByQuery($query);
             },
         ]);
     }

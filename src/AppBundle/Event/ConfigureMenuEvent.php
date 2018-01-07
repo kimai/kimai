@@ -11,7 +11,6 @@
 
 namespace AppBundle\Event;
 
-use Avanzu\AdminThemeBundle\Model\MenuItemModel;
 use Avanzu\AdminThemeBundle\Event\SidebarMenuEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\EventDispatcher\Event;
@@ -41,14 +40,13 @@ abstract class ConfigureMenuEvent extends Event
      * ConfigureMenuEvent constructor.
      * @param AuthorizationChecker $auth
      * @param Request $request
-     * @param MenuItemModel $menuModel
+     * @param SidebarMenuEvent $event
      */
     public function __construct(
         AuthorizationChecker $auth,
         Request $request,
         SidebarMenuEvent $event
-    )
-    {
+    ) {
         $this->auth = $auth;
         $this->request = $request;
         $this->event = $event;

@@ -60,9 +60,7 @@ class ProfileController extends AbstractController
 
             $this->flashSuccess('action.updated_successfully');
 
-            return $this->redirectToRoute(
-                'user_profile', ['username' => $profile->getUsername()]
-            );
+            return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
         }
 
         return $this->getProfileView($profile, $editForm, null, null, 'profile');
@@ -89,9 +87,7 @@ class ProfileController extends AbstractController
 
             $this->flashSuccess('action.updated_successfully');
 
-            return $this->redirectToRoute(
-                'user_profile', ['username' => $profile->getUsername()]
-            );
+            return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
         }
 
         return $this->getProfileView($profile, null, $pwdForm, null, 'password');
@@ -114,9 +110,7 @@ class ProfileController extends AbstractController
 
             $this->flashSuccess('action.updated_successfully');
 
-            return $this->redirectToRoute(
-                'user_profile', ['username' => $profile->getUsername()]
-            );
+            return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
         }
 
         return $this->getProfileView($profile, null, null, $rolesForm, 'roles');
@@ -145,8 +139,13 @@ class ProfileController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    protected function getProfileView(User $user, Form $editForm = null, Form $pwdForm = null, Form $rolesForm = null, $tab = 'charts')
-    {
+    protected function getProfileView(
+        User $user,
+        Form $editForm = null,
+        Form $pwdForm = null,
+        Form $rolesForm = null,
+        $tab = 'charts'
+    ) {
         /* @var $timesheetRepo TimesheetRepository */
         $timesheetRepo = $this->getDoctrine()->getRepository(Timesheet::class);
         $userStats = $timesheetRepo->getUserStatistics($user);

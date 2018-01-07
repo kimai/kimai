@@ -12,18 +12,14 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
-use AppBundle\Model\UserStatistic;
 use TimesheetBundle\Entity\Activity;
+use TimesheetBundle\Entity\Customer;
 use TimesheetBundle\Entity\Project;
 use TimesheetBundle\Entity\Timesheet;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use TimesheetBundle\Model\ActivityStatistic;
-use TimesheetBundle\Model\ProjectStatistic;
-use TimesheetBundle\Model\TimesheetGlobalStatistic;
-use TimesheetBundle\Model\TimesheetStatistic;
 
 /**
  * Dashboard controller for the admin area.
@@ -49,25 +45,29 @@ class DashboardController extends Controller
 
         $activityStats = $this->getDoctrine()->getRepository(Activity::class)->getGlobalStatistics();
         $projectStats = $this->getDoctrine()->getRepository(Project::class)->getGlobalStatistics();
+        $customerStats = $this->getDoctrine()->getRepository(Customer::class)->getGlobalStatistics();
         $userStats = $this->getDoctrine()->getRepository(User::class)->getGlobalStatistics();
 
         return $this->render('dashboard/index.html.twig', [
-            'dashboard_widgets' => $this->getWidgets($timesheetUserStats, $timesheetGlobalStats, $activityStats, $projectStats, $userStats),
+            'dashboard_widgets' => $this->getWidgets(),
             'timesheetGlobal' => $timesheetGlobalStats,
             'timesheetUser' => $timesheetUserStats,
             'activity' => $activityStats,
             'project' => $projectStats,
+            'customer' => $customerStats,
             'user' => $userStats,
         ]);
     }
 
-    protected function getWidgets(
-        TimesheetStatistic $timesheetUserStats,
-        TimesheetGlobalStatistic $timesheetGlobalStats,
-        ActivityStatistic $activityStats,
-        ProjectStatistic $projectStats,
-        UserStatistic $userStats
-    ) {
+    /**
+     * colors: blue / yellow / purple / green / black
+     * icons: bar-chart / line-chart / calendar / clock-o
+     *
+     * @return array
+     */
+    protected function getWidgets()
+    {
+        // @codingStandardsIgnoreStart
         $widgets = [
             /*
             [
@@ -104,6 +104,7 @@ class DashboardController extends Controller
                 //"{{ widgets.info_box_counter('stats.amountThisMonth', timesheetGlobal.amountThisMonth|money, 'money', 'green') }}",
                 "{{ widgets.info_box_counter('stats.durationTotal', timesheetGlobal.durationTotal|duration(true), 'hourglass-o', 'yellow') }}",
                 //"{{ widgets.info_box_counter('stats.amountTotal', timesheetGlobal.amountTotal|money, 'money', 'red') }}",
+                "{{ widgets.info_box_counter('stats.activeRecordings', timesheetGlobal.activeCurrently, 'hourglass-o', 'red', path('admin_timesheet', {'state': 1})) }}",
             ],
         ];
 
@@ -111,10 +112,9 @@ class DashboardController extends Controller
             'id' => 'user.stats',
             'header' => '',
             'widgets' => [
-                "{{ widgets.info_box_counter('stats.userTotal', user.totalAmount, 'users', 'red') }}",
-                "{{ widgets.info_box_counter('stats.userActiveThisMoth', timesheetGlobal.activeThisMonth, 'users', 'yellow') }}",
-                "{{ widgets.info_box_counter('stats.userActiveEver', timesheetGlobal.activeTotal, 'users', 'blue') }}",
-                "{{ widgets.info_box_counter('stats.userActiveNow', timesheetGlobal.activeCurrently, 'users', 'green') }}",
+                "{{ widgets.info_box_counter('stats.userTotal', user.totalAmount, 'user', 'red') }}",
+                "{{ widgets.info_box_counter('stats.userActiveThisMoth', timesheetGlobal.activeThisMonth, 'user', 'yellow') }}",
+                "{{ widgets.info_box_counter('stats.userActiveEver', timesheetGlobal.activeTotal, 'user', 'blue') }}",
             ],
         ];
 
@@ -126,12 +126,13 @@ class DashboardController extends Controller
             'id' => 'admin.stats',
             'header' => 'dashboard.admin',
             'widgets' => [
-                "{{ widgets.info_box_more('stats.activitiesTotal', activity.totalAmount, '', path('admin_activity'), 'tasks', 'purple') }}",
+                "{{ widgets.info_box_more('stats.userTotal', user.totalAmount, ' ', path('admin_user'), 'user') }}",
+                "{{ widgets.info_box_more('stats.customerTotal', customer.totalAmount, '', path('admin_customer'), 'users', 'blue') }}",
                 "{{ widgets.info_box_more('stats.projectsTotal', project.totalAmount, '', path('admin_project'), 'book', 'yellow') }}",
-                "{{ widgets.info_box_more('stats.userTotal', user.totalAmount, ' ', path('admin_user'), 'users') }}",
-                "{{ widgets.info_box_more('stats.userActiveNow', timesheetGlobal.activeCurrently, '', path('admin_timesheet', {'state': 1}), 'hourglass-o', 'red') }}", // FIXME ???
+                "{{ widgets.info_box_more('stats.activitiesTotal', activity.totalAmount, '', path('admin_activity'), 'tasks', 'purple') }}",
             ],
         ];
+        // @codingStandardsIgnoreEnd
 
         return $widgets;
     }

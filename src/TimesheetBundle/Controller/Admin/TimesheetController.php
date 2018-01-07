@@ -34,10 +34,16 @@ class TimesheetController extends AbstractController
     use TimesheetControllerTrait;
 
     /**
+     * This route shows all users timesheet entries.
+     *
      * @Route("/", defaults={"page": 1}, name="admin_timesheet")
      * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_timesheet_paginated")
      * @Method("GET")
      * @Cache(smaxage="10")
+     *
+     * @param $page
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction($page, Request $request)
     {
@@ -62,10 +68,9 @@ class TimesheetController extends AbstractController
      * @Method({"GET"})
      *
      * @param Timesheet $entry
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function stopAction(Timesheet $entry, Request $request)
+    public function stopAction(Timesheet $entry)
     {
         try {
             $this->getRepository()->stopRecording($entry);

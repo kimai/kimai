@@ -74,6 +74,7 @@ class ActivityVoter extends AbstractVoter
     /**
      * @param Activity $activity
      * @param User $user
+     * @param TokenInterface $token
      * @return bool
      */
     protected function canView(Activity $activity, User $user, TokenInterface $token)
@@ -88,6 +89,7 @@ class ActivityVoter extends AbstractVoter
     /**
      * @param Activity $activity
      * @param User $user
+     * @param TokenInterface $token
      * @return bool
      */
     protected function canEdit(Activity $activity, User $user, TokenInterface $token)
