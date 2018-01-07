@@ -30,8 +30,7 @@ use AppBundle\DataFixtures\ORM\LoadFixtures as AppBundleLoadFixtures;
  */
 class LoadFixtures extends AppBundleLoadFixtures
 {
-    const AMOUNT_ACTIVITIES = 10;       // maximum activites per project
-    const AMOUNT_TIMESHEET = 1000;      // timesheet entries total
+    const AMOUNT_TIMESHEET = 5000;      // timesheet entries total
     const RATE_MIN = 10;                // minimum rate for one hour
     const RATE_MAX = 80;                // maximum rate for one hour
 
@@ -109,8 +108,10 @@ class LoadFixtures extends AppBundleLoadFixtures
     {
         $allUser = $this->getAllUsers($manager);
         $amountUser = count($allUser);
-
         $allActivity = $this->getAllActivities($manager);
+
+        // by using array_pop we make sure that at least one activity has NO entry!
+        array_pop($allActivity);
 
         for ($i = 0; $i <= self::AMOUNT_TIMESHEET; $i++) {
             $entry = $this->createTimesheetEntry(
@@ -123,14 +124,18 @@ class LoadFixtures extends AppBundleLoadFixtures
             $manager->persist($entry);
         }
 
-        // leave one running time entry for each user
-        for ($i = 1; $i <= $amountUser; $i++) {
-            $entry = $this->createTimesheetEntry(
-                $allUser[$i],
-                $allActivity[array_rand($allActivity)]
-            );
+        // by using array_pop we make sure that at least one user has NO running entry!
+        array_pop($allUser);
 
-            $manager->persist($entry);
+        // create active recodinge for test user
+        foreach ($allUser as $id => $user) {
+            for ($i = 0; $i < rand(1, 4); $i++) {
+                $entry = $this->createTimesheetEntry(
+                    $user,
+                    $allActivity[array_rand($allActivity)]
+                );
+                $manager->persist($entry);
+            }
         }
 
         $manager->flush();
@@ -174,17 +179,18 @@ class LoadFixtures extends AppBundleLoadFixtures
         $amountTimezone = count($allTimezones);
 
         $allCustomer = $this->getCustomers();
-        $amountCustomer = count($allCustomer);
+        shuffle($allCustomer);
+        $i = 0;
 
-        for ($i = 0; $i < $amountCustomer; $i++) {
+        foreach ($allCustomer as $customerName) {
             $entry = new Customer();
             $entry
                 ->setCurrency($this->getRandomCurrency())
                 ->setVat(rand(0, 30))
-                ->setName($allCustomer[$i])
+                ->setName($customerName)
                 ->setAddress($this->getRandomLocation())
                 ->setComment($this->getRandomPhrase())
-                ->setVisible($i % 3 != 0)
+                ->setVisible($i++ % 3 != 0)
                 ->setTimezone($allTimezones[rand(1, $amountTimezone)]);
 
             $manager->persist($entry);
@@ -195,19 +201,21 @@ class LoadFixtures extends AppBundleLoadFixtures
     private function loadProjects(ObjectManager $manager)
     {
         $allCustomer = $this->getAllCustomers($manager);
-        $amountCustomer = count($allCustomer);
 
-        for ($i = 0; $i < $amountCustomer * 2; $i++) {
+        foreach ($allCustomer as $id => $customer) {
+            $projectForCustomer = rand(0, 7);
+            for($i = 0; $i < $projectForCustomer; $i++) {
+                $entry = new Project();
 
-            $entry = new Project();
-            $entry
-                ->setName($this->getRandomProject())
-                ->setBudget(rand(1000, 100000))
-                ->setComment($this->getRandomPhrase())
-                ->setCustomer($allCustomer[($i % $amountCustomer) + 1])
-                ->setVisible($i % 3 != 0);
+                $entry
+                    ->setName($this->getRandomProject())
+                    ->setBudget(rand(500, 100000))
+                    ->setComment($this->getRandomPhrase())
+                    ->setCustomer($customer)
+                    ->setVisible($i % 3 != 0);
 
-            $manager->persist($entry);
+                $manager->persist($entry);
+            }
         }
         $manager->flush();
     }
@@ -217,7 +225,7 @@ class LoadFixtures extends AppBundleLoadFixtures
         $allProject = $this->getAllProjects($manager);
 
         foreach ($allProject as $projectId => $project) {
-            $activityCount = rand(1, self::AMOUNT_ACTIVITIES);
+            $activityCount = rand(0, 10);
             for ($i = 0; $i < $activityCount; $i++) {
                 $entry = new Activity();
                 $entry
@@ -238,12 +246,11 @@ class LoadFixtures extends AppBundleLoadFixtures
     private function getActivities()
     {
         return [
-            'Design',
+            'Designing',
             'Programming',
             'Testing',
             'Documentation',
             'Pause',
-            'Internal',
             'Research',
             'Meeting',
             'Hosting',
@@ -256,6 +263,11 @@ class LoadFixtures extends AppBundleLoadFixtures
             'Management',
             'Setup',
             'Planning',
+            'Skiing',
+            'Eating',
+            'Watching TV',
+            'Talking',
+            'Cooking'
         ];
     }
 
@@ -282,8 +294,10 @@ class LoadFixtures extends AppBundleLoadFixtures
             'Hosting & Server',
             'Customer Relations',
             'Infrastructure',
+            'Princess Cat',
             'Software Upgrade',
             'Office Management',
+            'Project X',
         ];
     }
 
@@ -310,10 +324,20 @@ class LoadFixtures extends AppBundleLoadFixtures
             'Amsterdam',
             'London',
             'San Francisco',
-            'Tokio',
+            'Tokyo',
             'Berlin',
             'Sao Paulo',
             'Mexico City',
+            'Moscow',
+            'Sankt Petersburg',
+            'Taiwan',
+            'Perth',
+            'Sydney',
+            'Mumbai',
+            'Lagos',
+            'Karachi',
+            'Shanghai',
+            'Delhi',
         ];
     }
 
@@ -342,16 +366,32 @@ class LoadFixtures extends AppBundleLoadFixtures
             'Twitter',
             'Zend',
             'SensioLabs',
+            'Samsung',
+            'Huawai',
+            'Yandex',
+            'Baidu',
+            'Alphabet',
+            'Amazon.com',
+            'Berkshire Hathaway',
+            'Facebook',
+            'ExxonMobil',
+            'Nestle',
+            'Johnson & Johnson',
+            'Alibaba',
+            'General Electric',
+            'Procter & Gamble',
+            'Wal-Mart Stores',
+            'Novartis',
+            'Coca-Cola',
+            'Wikipedia',
+            'Walt Disney',
+            'Merck',
+            'Pfizer',
+            "L'Oréal Group",
+            "McDonald's",
+            'China Petroleum & Chemical',
+            'GlaxoSmithKline'
         ];
-    }
-
-    /**
-     * @return string
-     */
-    private function getRandomCustomer()
-    {
-        $all = $this->getCustomers();
-        return $all[array_rand($all)];
     }
 
     /**
