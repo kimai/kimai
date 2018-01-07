@@ -18,7 +18,13 @@ use Doctrine\ORM\Mapping as ORM;
  * Timesheet entity.
  *
  * @ORM\Entity(repositoryClass="TimesheetBundle\Repository\TimesheetRepository")
- * @ORM\Table(name="timesheet", indexes={@ORM\Index(columns={"user"}), @ORM\Index(name="activity", columns={"activity"})})
+ * @ORM\Table(
+ *     name="timesheet",
+ *     indexes={
+ *          @ORM\Index(columns={"user"}),
+ *          @ORM\Index(name="activity", columns={"activity"})
+ *     }
+ * )
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */

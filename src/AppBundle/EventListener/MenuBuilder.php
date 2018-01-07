@@ -13,7 +13,6 @@ namespace AppBundle\EventListener;
 
 use AppBundle\Event\ConfigureMainMenuEvent;
 use AppBundle\Event\ConfigureAdminMenuEvent;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Avanzu\AdminThemeBundle\Model\MenuItemModel;
@@ -40,10 +39,7 @@ class MenuBuilder
      * @param EventDispatcherInterface $dispatcher
      * @param AuthorizationChecker $security
      */
-    public function __construct(
-        EventDispatcherInterface $dispatcher,
-        AuthorizationChecker $security
-    )
+    public function __construct(EventDispatcherInterface $dispatcher, AuthorizationChecker $security)
     {
         $this->eventDispatcher = $dispatcher;
         $this->security = $security;
@@ -102,7 +98,6 @@ class MenuBuilder
             $event->getRequest()->get('_route'),
             $event->getItems()
         );
-
     }
 
     /**
@@ -111,16 +106,14 @@ class MenuBuilder
      */
     protected function activateByRoute($route, $items)
     {
-        foreach($items as $item) {
-            if($item->hasChildren()) {
+        foreach ($items as $item) {
+            if ($item->hasChildren()) {
                 $this->activateByRoute($route, $item->getChildren());
-            }
-            else {
-                if($item->getRoute() == $route) {
+            } else {
+                if ($item->getRoute() == $route) {
                     $item->setIsActive(true);
                 }
             }
         }
-
     }
 }

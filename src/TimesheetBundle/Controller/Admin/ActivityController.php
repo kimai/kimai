@@ -14,14 +14,12 @@ namespace TimesheetBundle\Controller\Admin;
 use AppBundle\Controller\AbstractController;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TimesheetBundle\Entity\Activity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use TimesheetBundle\Form\ActivityEditForm;
-use TimesheetBundle\Repository\ActivityRepository;
 use TimesheetBundle\Repository\Query\ActivityQuery;
 
 /**
@@ -89,9 +87,7 @@ class ActivityController extends AbstractController
 
             $this->flashSuccess('action.updated_successfully');
 
-            return $this->redirectToRoute(
-                'admin_activity', ['id' => $activity->getId()]
-            );
+            return $this->redirectToRoute('admin_activity', ['id' => $activity->getId()]);
         }
 
         return $this->render(
@@ -105,7 +101,7 @@ class ActivityController extends AbstractController
 
     /**
      * @param Activity $activity
-     * @return \Symfony\Component\Form\Form
+     * @return \Symfony\Component\Form\FormInterface
      */
     private function createEditForm(Activity $activity)
     {

@@ -88,9 +88,7 @@ class ProjectController extends AbstractController
 
             $this->flashSuccess('action.updated_successfully');
 
-            return $this->redirectToRoute(
-                'admin_project', ['id' => $project->getId()]
-            );
+            return $this->redirectToRoute('admin_project', ['id' => $project->getId()]);
         }
 
         return $this->render(

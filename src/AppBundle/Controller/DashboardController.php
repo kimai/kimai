@@ -67,6 +67,7 @@ class DashboardController extends Controller
      */
     protected function getWidgets()
     {
+        // @codingStandardsIgnoreStart
         $widgets = [
             /*
             [
@@ -131,6 +132,7 @@ class DashboardController extends Controller
                 "{{ widgets.info_box_more('stats.activitiesTotal', activity.totalAmount, '', path('admin_activity'), 'tasks', 'purple') }}",
             ],
         ];
+        // @codingStandardsIgnoreEnd
 
         return $widgets;
     }

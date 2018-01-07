@@ -89,7 +89,13 @@ class TimesheetController extends AbstractController
 
         // make sure only ADMIN can stop other users entries
         if ($user->getId() !== $entry->getUser()->getId()) {
-            $this->denyUnlessGranted('ROLE_ADMIN', null, 'timesheet.access.denied', ['%user%' => $user->getId(), '%entry%' => $entry->getId()]);
+            // TODO move me to a voter
+            $this->denyUnlessGranted(
+                'ROLE_ADMIN',
+                null,
+                'timesheet.access.denied',
+                ['%user%' => $user->getId(), '%entry%' => $entry->getId()]
+            );
         }
 
         try {
@@ -141,7 +147,13 @@ class TimesheetController extends AbstractController
 
         // make sure only ADMIN can edit other users entries
         if ($user->getId() !== $entry->getUser()->getId()) {
-            $this->denyUnlessGranted('ROLE_ADMIN', null, 'timesheet.access.denied', ['%user%' => $user->getId(), '%entry%' => $entry->getId()]);
+            // TODO move me to a voter
+            $this->denyUnlessGranted(
+                'ROLE_ADMIN',
+                null,
+                'timesheet.access.denied',
+                ['%user%' => $user->getId(), '%entry%' => $entry->getId()]
+            );
         }
 
         $editForm = $this->createEditForm($entry, $request->get('page'));
@@ -155,9 +167,7 @@ class TimesheetController extends AbstractController
 
             $this->flashSuccess('action.updated_successfully');
 
-            return $this->redirectToRoute(
-                'timesheet_paginated', ['page' => $request->get('page')]
-            );
+            return $this->redirectToRoute('timesheet_paginated', ['page' => $request->get('page')]);
         }
 
         return $this->render(

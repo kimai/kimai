@@ -48,8 +48,11 @@ class CreateUserCommand extends Command
      * @param RegistryInterface $registry
      * @param ValidatorInterface $validator
      */
-    public function __construct(UserPasswordEncoderInterface $encoder, RegistryInterface $registry, ValidatorInterface $validator)
-    {
+    public function __construct(
+        UserPasswordEncoderInterface $encoder,
+        RegistryInterface $registry,
+        ValidatorInterface $validator
+    ) {
         $this->encoder = $encoder;
         $this->doctrine = $registry;
         $this->validator = $validator;
@@ -70,7 +73,7 @@ class CreateUserCommand extends Command
             ->addArgument('email', InputArgument::REQUIRED, 'Users email address (must be unique)')
             ->addArgument('password', InputArgument::REQUIRED, 'Users password')
             ->addArgument('language', InputArgument::OPTIONAL, 'Users language', User::DEFAULT_LANGUAGE)
-            ->addArgument('role', InputArgument::OPTIONAL, 'Users role (can be a comma separated list)', User::DEFAULT_ROLE)
+            ->addArgument('role', InputArgument::OPTIONAL, 'Users role (comma separated list)', User::DEFAULT_ROLE)
         ;
     }
 
@@ -104,10 +107,11 @@ class CreateUserCommand extends Command
         $errors = $this->validator->validate($user);
         if ($errors->count() > 0) {
             /** @var \Symfony\Component\Validator\ConstraintViolation $error */
-            foreach($errors as $error) {
+            foreach ($errors as $error) {
+                $value = $error->getInvalidValue();
                 $io->error(
                     $error->getPropertyPath()
-                    . " (" . (is_array($error->getInvalidValue()) ? implode(',', $error->getInvalidValue()) : $error->getInvalidValue()).")"
+                    . " (" . (is_array($value) ? implode(',', $value) : $value) .")"
                     . "\n    "
                     . $error->getMessage()
                 );

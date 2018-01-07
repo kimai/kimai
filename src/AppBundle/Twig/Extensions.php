@@ -13,8 +13,6 @@ namespace AppBundle\Twig;
 
 use AppBundle\Utils\Markdown;
 use Symfony\Component\Intl\Intl;
-use DateTime;
-use DateInterval;
 use TimesheetBundle\Entity\Customer;
 use TimesheetBundle\Entity\Timesheet;
 
@@ -31,19 +29,19 @@ class Extensions extends \Twig_Extension
     private $parser;
 
     /**
-     * @var array
+     * @var string[]
      */
     private $locales;
 
     /**
      * Extensions constructor.
      * @param Markdown $parser
-     * @param $locales
+     * @param string $locales
      */
     public function __construct(Markdown $parser, $locales)
     {
         $this->parser = $parser;
-        $this->locales = $locales;
+        $this->locales = explode('|', $locales);
     }
 
     /**
@@ -158,11 +156,9 @@ class Extensions extends \Twig_Extension
      */
     public function getLocales()
     {
-        $localeCodes = explode('|', $this->locales);
-
         $locales = [];
-        foreach ($localeCodes as $localeCode) {
-            $locales[] = ['code' => $localeCode, 'name' => Intl::getLocaleBundle()->getLocaleName($localeCode, $localeCode)];
+        foreach ($this->locales as $locale) {
+            $locales[] = ['code' => $locale, 'name' => Intl::getLocaleBundle()->getLocaleName($locale, $locale)];
         }
 
         return $locales;

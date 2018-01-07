@@ -40,11 +40,12 @@ class TablePrefixSubscriber implements \Doctrine\Common\EventSubscriber
             return;
         }
 
-        $classMetadata->setTableName($this->prefix . $classMetadata->getTableName());
+        $classMetadata->setPrimaryTable(['name' => $this->prefix . $classMetadata->getTableName()]);
 
         foreach ($classMetadata->getAssociationMappings() as $fieldName => $mapping) {
             if ($mapping['type'] == \Doctrine\ORM\Mapping\ClassMetadataInfo::MANY_TO_MANY
-                // Check if "joinTable" exists, it can be null if this field is the reverse side of a ManyToMany relationship
+                // Check if "joinTable" exists:
+                // it can be null if this field is the reverse side of a ManyToMany relationship
                 && array_key_exists('name', $classMetadata->associationMappings[$fieldName]['joinTable']) ) {
                 $mappedTableName = $classMetadata->associationMappings[$fieldName]['joinTable']['name'];
                 $classMetadata->associationMappings[$fieldName]['joinTable']['name'] = $this->prefix . $mappedTableName;

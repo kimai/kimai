@@ -38,7 +38,7 @@ class RoleValidator extends ConstraintValidator
             $roles = [$roles];
         }
 
-        foreach($roles as $role) {
+        foreach ($roles as $role) {
             if (!is_string($role) || !in_array($role, $this->allowedRoles)) {
                 $this->context->buildViolation($constraint->message)
                     ->setParameter('{{ value }}', $this->formatValue($role))

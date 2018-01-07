@@ -12,7 +12,6 @@
 namespace TimesheetBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\User;
-use Symfony\Component\Intl\Intl;
 use TimesheetBundle\Entity\Activity;
 use TimesheetBundle\Entity\Customer;
 use TimesheetBundle\Entity\Project;
@@ -204,7 +203,7 @@ class LoadFixtures extends AppBundleLoadFixtures
 
         foreach ($allCustomer as $id => $customer) {
             $projectForCustomer = rand(0, 7);
-            for($i = 0; $i < $projectForCustomer; $i++) {
+            for ($i = 0; $i < $projectForCustomer; $i++) {
                 $entry = new Project();
 
                 $entry

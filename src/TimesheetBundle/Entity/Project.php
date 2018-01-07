@@ -71,7 +71,11 @@ class Project
     /**
      * @var Activity[]
      *
-     * @ORM\OneToMany(targetEntity="TimesheetBundle\Entity\Activity", mappedBy="project", cascade={"persist", "merge", "remove"})
+     * @ORM\OneToMany(
+     *     targetEntity="TimesheetBundle\Entity\Activity",
+     *     mappedBy="project",
+     *     cascade={"persist", "merge", "remove"}
+     * )
      */
     private $activities;
 

@@ -71,7 +71,7 @@ trait TimesheetControllerTrait
             } else {
                 $customer = null;
             }
-        } else if ($customer !== null) {
+        } elseif ($customer !== null) {
             $repo = $this->getDoctrine()->getRepository(Customer::class);
             $customer = $repo->getById($customer);
         }

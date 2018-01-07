@@ -87,9 +87,7 @@ class CustomerController extends AbstractController
 
             $this->flashSuccess('action.updated_successfully');
 
-            return $this->redirectToRoute(
-                'admin_customer', ['id' => $customer->getId()]
-            );
+            return $this->redirectToRoute('admin_customer', ['id' => $customer->getId()]);
         }
 
         return $this->render(

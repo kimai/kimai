@@ -75,9 +75,7 @@ class UserController extends AbstractController
 
             $this->flashSuccess('action.updated_successfully');
 
-            return $this->redirectToRoute(
-                'user_profile_edit', ['username' => $user->getUsername()]
-            );
+            return $this->redirectToRoute('user_profile_edit', ['username' => $user->getUsername()]);
         }
 
         return $this->render(
@@ -87,7 +85,6 @@ class UserController extends AbstractController
                 'form' => $editForm->createView()
             ]
         );
-
     }
 
     /**

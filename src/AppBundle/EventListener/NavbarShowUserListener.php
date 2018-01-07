@@ -15,7 +15,6 @@ use AppBundle\Entity\User;
 use Avanzu\AdminThemeBundle\Event\ShowUserEvent;
 use Avanzu\AdminThemeBundle\Model\UserModel;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class NavbarShowUserListener

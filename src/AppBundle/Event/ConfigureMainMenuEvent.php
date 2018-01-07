@@ -11,10 +11,6 @@
 
 namespace AppBundle\Event;
 
-use Knp\Menu\FactoryInterface;
-use Knp\Menu\ItemInterface;
-use Symfony\Component\EventDispatcher\Event;
-
 /**
  * The ConfigureMainMenuEvent is used for populating the main navigation.
  *

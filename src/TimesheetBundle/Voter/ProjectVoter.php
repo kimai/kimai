@@ -74,6 +74,7 @@ class ProjectVoter extends AbstractVoter
     /**
      * @param Project $project
      * @param User $user
+     * @param TokenInterface $token
      * @return bool
      */
     protected function canView(Project $project, User $user, TokenInterface $token)
@@ -88,6 +89,7 @@ class ProjectVoter extends AbstractVoter
     /**
      * @param Project $project
      * @param User $user
+     * @param TokenInterface $token
      * @return bool
      */
     protected function canEdit(Project $project, User $user, TokenInterface $token)
