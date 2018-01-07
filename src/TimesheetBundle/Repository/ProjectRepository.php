@@ -52,13 +52,14 @@ class ProjectRepository extends AbstractRepository
 
     /**
      * @param ProjectQuery $query
-     * @return \Pagerfanta\Pagerfanta
+     * @return \Doctrine\ORM\QueryBuilder|\Pagerfanta\Pagerfanta
      */
     public function findByQuery(ProjectQuery $query)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        // if we join activities, the maxperpage limit will limit the list due to the raised amount of rows by projects * activities
+        // if we join activities, the maxperpage limit will limit the list
+        // due to the raised amount of rows by projects * activities
         $qb->select('p', 'c')
             ->from('TimesheetBundle:Project', 'p')
             ->join('p.customer', 'c')
@@ -72,6 +73,6 @@ class ProjectRepository extends AbstractRepository
             // TODO check for visibility of customer
         }
 
-        return $this->getPager($qb->getQuery(), $query->getPage(), $query->getPageSize());
+        return $this->getBaseQueryResult($qb, $query);
     }
 }

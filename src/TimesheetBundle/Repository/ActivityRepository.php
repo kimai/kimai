@@ -69,7 +69,7 @@ class ActivityRepository extends AbstractRepository
 
         $activities = [];
         /* @var Timesheet $entry */
-        foreach($results as $entry) {
+        foreach ($results as $entry) {
             $activities[] = $entry->getActivity();
         }
 
@@ -93,10 +93,9 @@ class ActivityRepository extends AbstractRepository
         return $stats;
     }
 
-
     /**
      * @param ActivityQuery $query
-     * @return \Pagerfanta\Pagerfanta
+     * @return \Doctrine\ORM\QueryBuilder|\Pagerfanta\Pagerfanta
      */
     public function findByQuery(ActivityQuery $query)
     {
@@ -116,6 +115,6 @@ class ActivityRepository extends AbstractRepository
             // TODO check for visibility of customer and project
         }
 
-        return $this->getPager($qb->getQuery(), $query->getPage(), $query->getPageSize());
+        return $this->getBaseQueryResult($qb, $query);
     }
 }

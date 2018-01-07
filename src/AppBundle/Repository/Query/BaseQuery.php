@@ -22,6 +22,9 @@ class BaseQuery
     const DEFAULT_PAGESIZE = 25;
     const DEFAULT_PAGE = 1;
 
+    const RESULT_TYPE_PAGER = 'PagerFanta';
+    const RESULT_TYPE_QUERYBUILDER = 'QueryBuilder';
+
     /**
      * @var int
      */
@@ -38,6 +41,10 @@ class BaseQuery
      * @var string
      */
     protected $order = 'ASC';
+    /**
+     * @var string
+     */
+    protected $resultType = self::RESULT_TYPE_PAGER;
 
     /**
      * @return int
@@ -113,6 +120,26 @@ class BaseQuery
     {
         if (in_array($order, ['ASC', 'DESC'])) {
             $this->order = $order;
+        }
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResultType()
+    {
+        return $this->resultType;
+    }
+
+    /**
+     * @param string $resultType
+     * @return BaseQuery
+     */
+    public function setResultType($resultType)
+    {
+        if (in_array($resultType, [self::RESULT_TYPE_PAGER, self::RESULT_TYPE_QUERYBUILDER])) {
+            $this->resultType = $resultType;
         }
         return $this;
     }

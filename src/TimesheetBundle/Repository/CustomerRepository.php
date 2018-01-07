@@ -52,7 +52,7 @@ class CustomerRepository extends AbstractRepository
 
     /**
      * @param CustomerQuery $query
-     * @return \Pagerfanta\Pagerfanta
+     * @return \Doctrine\ORM\QueryBuilder|\Pagerfanta\Pagerfanta
      */
     public function findByQuery(CustomerQuery $query)
     {
@@ -68,6 +68,6 @@ class CustomerRepository extends AbstractRepository
             $qb->andWhere('c.visible = 0');
         }
 
-        return $this->getPager($qb->getQuery(), $query->getPage(), $query->getPageSize());
+        return $this->getBaseQueryResult($qb, $query);
     }
 }
