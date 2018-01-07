@@ -32,6 +32,7 @@ class ActivityType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'label' => 'label.activity',
             'class' => 'TimesheetBundle:Activity',
             'choice_label' => 'name',
             'group_by' => function (Activity $activity, $key, $index) {

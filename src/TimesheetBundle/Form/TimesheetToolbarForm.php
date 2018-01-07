@@ -60,7 +60,6 @@ class TimesheetToolbarForm extends AbstractType
                 ],
             ])
             ->add('customer', CustomerType::class, [
-                'label' => 'label.customer',
                 'required' => false,
             ])
         ;
@@ -86,7 +85,6 @@ class TimesheetToolbarForm extends AbstractType
 
         $builder
             ->add('project', ProjectType::class, [
-                'label' => 'label.project',
                 'required' => false,
                 'choices' => $choices,
             ]);
@@ -110,7 +108,6 @@ class TimesheetToolbarForm extends AbstractType
 
         $builder
             ->add('activity', ActivityType::class, [
-                'label' => 'label.activity',
                 'required' => false,
                 'choices' => $choices,
             ]);

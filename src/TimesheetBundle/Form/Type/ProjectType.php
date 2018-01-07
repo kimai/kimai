@@ -32,6 +32,7 @@ class ProjectType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'label' => 'label.project',
             'class' => 'TimesheetBundle:Project',
             'choice_label' => 'name',
             'group_by' => function (Project $project, $key, $index) {
