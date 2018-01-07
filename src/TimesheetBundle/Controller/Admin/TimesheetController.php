@@ -15,11 +15,13 @@ use AppBundle\Controller\AbstractController;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
 use TimesheetBundle\Controller\TimesheetControllerTrait;
+use TimesheetBundle\Entity\Customer;
 use TimesheetBundle\Entity\Timesheet;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use TimesheetBundle\Form\TimesheetAdminForm;
 
 /**
  * Controller used for manage timesheet entries in the admin part of the site.
@@ -73,13 +75,74 @@ class TimesheetController extends AbstractController
      */
     public function stopAction(Timesheet $entry)
     {
-        try {
-            $this->getRepository()->stopRecording($entry);
-            $this->flashSuccess('timesheet.stop.success');
-        } catch (\Exception $ex) {
-            $this->flashError('timesheet.stop.error', ['%reason%' => $ex->getMessage()]);
-        }
+        return $this->stop($entry, 'admin_timesheet');
+    }
 
-        return $this->redirectToRoute('admin_timesheet');
+    /**
+     * The route to edit an existing entry.
+     *
+     * @Route("/{id}/edit", name="admin_timesheet_edit")
+     * @Method({"GET", "POST"})
+     * @Security("is_granted('edit', entry)")
+     *
+     * @param Timesheet $entry
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editAction(Timesheet $entry, Request $request)
+    {
+        return $this->edit($entry, $request, 'admin_timesheet_paginated', 'TimesheetBundle:admin:timesheet_edit.html.twig');
+    }
+
+    /**
+     * The route to create a new entry by form.
+     *
+     * @Route("/create", name="admin_timesheet_create")
+     * @Method({"GET", "POST"})
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function createAction(Request $request)
+    {
+        return $this->create($request, 'admin_timesheet', 'TimesheetBundle:admin:timesheet_edit.html.twig');
+    }
+
+    /**
+     * @param Timesheet $entry
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function getCreateForm(Timesheet $entry)
+    {
+        return $this->createForm(
+            TimesheetAdminForm::class,
+            $entry,
+            [
+                'action' => $this->generateUrl('admin_timesheet_create'),
+                'method' => 'POST',
+                'currency' => Customer::DEFAULT_CURRENCY,
+            ]
+        );
+    }
+
+    /**
+     * @param Timesheet $entry
+     * @param int $page
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function getEditForm(Timesheet $entry, $page)
+    {
+        return $this->createForm(
+            TimesheetAdminForm::class,
+            $entry,
+            [
+                'action' => $this->generateUrl('admin_timesheet_edit', [
+                    'id' => $entry->getId(),
+                    'page' => $page
+                ]),
+                'method' => 'POST',
+                'currency' => $entry->getActivity()->getProject()->getCustomer()->getCurrency(),
+            ]
+        );
     }
 }

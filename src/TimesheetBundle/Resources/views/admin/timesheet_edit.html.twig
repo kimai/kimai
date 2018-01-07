@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+{% import "macros/datatables.html.twig" as tables %}
+
+{% block page_title %}{{ 'timesheet.title'|trans }}{% endblock %}
+{% block page_subtitle %}{{ 'timesheet.subtitle'|trans }}{% endblock %}
+
+{% block main %}
+    {{ include('default/_form.html.twig', {
+        'title': (entry.id ? 'timesheet.edit'|trans : 'create'|trans),
+        'form': form,
+        'back': path('admin_timesheet')
+    }) }}
+{% endblock %}
