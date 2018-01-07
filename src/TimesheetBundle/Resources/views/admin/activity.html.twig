@@ -4,6 +4,7 @@
 
 {% block page_title %}{{ 'admin_activity.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_activity.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
+{% block javascript_imports %}<script src="{{ asset('js/toolbar.js') }}"></script>{% endblock %}
 
 {% block main %}
     {% if entries.count == 0 %}
@@ -13,22 +14,22 @@
     {{ tables.data_table_header({
         'label.id': 'hidden-xs',
         'label.name': '',
-        'label.project': '',
         'label.customer': '',
+        'label.project': '',
         'label.comment': 'hidden-xs',
         'label.visible': '',
         'label.actions': '',
-    }, null, {'plus-square': path('admin_activity_create')}) }}
+    }, toolbarForm, {'plus-square': path('admin_activity_create')}) }}
 
     {% for entry in entries %}
         <tr>
             <td class="hidden-xs">{{ entry.id }}</td>
             <td>{{ entry.name }}</td>
             <td>
-                <a href="{{ path('admin_project_edit', {'id' : entry.project.id}) }}">{{ widgets.label_project(entry.project) }}</a>
+                <a href="{{ path('admin_customer_edit', {'id' : entry.project.customer.id}) }}">{{ widgets.label_customer(entry.project.customer) }}</a>
             </td>
             <td>
-                <a href="{{ path('admin_customer_edit', {'id' : entry.project.customer.id}) }}">{{ widgets.label_customer(entry.project.customer) }}</a>
+                <a href="{{ path('admin_project_edit', {'id' : entry.project.id}) }}">{{ widgets.label_project(entry.project) }}</a>
             </td>
             <td class="hidden-xs">{{ entry.comment }}</td>
             <td>{{ widgets.label_visible(entry.visible) }}</td>

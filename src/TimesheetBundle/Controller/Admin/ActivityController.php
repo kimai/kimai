@@ -19,7 +19,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use TimesheetBundle\Entity\Customer;
+use TimesheetBundle\Entity\Project;
 use TimesheetBundle\Form\ActivityEditForm;
+use TimesheetBundle\Form\ActivityToolbarForm;
 use TimesheetBundle\Repository\Query\ActivityQuery;
 
 /**
@@ -33,21 +36,64 @@ use TimesheetBundle\Repository\Query\ActivityQuery;
 class ActivityController extends AbstractController
 {
     /**
+     * @param Request $request
+     * @return ActivityQuery
+     */
+    protected function getQueryForRequest(Request $request)
+    {
+        $visibility = $request->get('visibility');
+        if (strlen($visibility) == 0 || (int)$visibility != $visibility) {
+            $visibility = ActivityQuery::SHOW_BOTH;
+        }
+        $pageSize = (int) $request->get('pageSize');
+        $customer = $request->get('customer');
+        $customer = !empty(trim($customer)) ? trim($customer) : null;
+        $project = $request->get('project');
+        $project = !empty(trim($project)) ? trim($project) : null;
+
+        if ($project !== null) {
+            $repo = $this->getDoctrine()->getRepository(Project::class);
+            $project = $repo->getById($project);
+            if ($project !== null) {
+                $customer = $project->getCustomer();
+            } else {
+                $customer = null;
+            }
+        } elseif ($customer !== null) {
+            $repo = $this->getDoctrine()->getRepository(Customer::class);
+            $customer = $repo->getById($customer);
+        }
+
+        $query = new ActivityQuery();
+        $query
+            ->setPageSize($pageSize)
+            ->setVisibility($visibility)
+            ->setCustomer($customer)
+            ->setProject($project)
+        ;
+
+        return $query ;
+    }
+
+    /**
      * @Route("/", defaults={"page": 1}, name="admin_activity")
      * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_activity_paginated")
      * @Method("GET")
      * @Cache(smaxage="10")
      */
-    public function indexAction($page)
+    public function indexAction($page, Request $request)
     {
-        $query = new ActivityQuery();
-        $query->setVisibility(ActivityQuery::SHOW_BOTH);
+        $query = $this->getQueryForRequest($request);
         $query->setPage($page);
 
         /* @var $entries Pagerfanta */
         $entries = $this->getDoctrine()->getRepository(Activity::class)->findByQuery($query);
 
-        return $this->render('TimesheetBundle:admin:activity.html.twig', ['entries' => $entries]);
+        return $this->render('TimesheetBundle:admin:activity.html.twig', [
+            'entries' => $entries,
+            'query' => $query,
+            'toolbarForm' => $this->getToolbarForm($query)->createView(),
+        ]);
     }
 
     /**
@@ -95,6 +141,24 @@ class ActivityController extends AbstractController
             [
                 'activity' => $activity,
                 'form' => $editForm->createView()
+            ]
+        );
+    }
+
+    /**
+     * @param ActivityQuery $query
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function getToolbarForm(ActivityQuery $query)
+    {
+        return $this->createForm(
+            ActivityToolbarForm::class,
+            $query,
+            [
+                'action' => $this->generateUrl('admin_activity_paginated', [
+                    'page' => $query->getPage(),
+                ]),
+                'method' => 'GET',
             ]
         );
     }
