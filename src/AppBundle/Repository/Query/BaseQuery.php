@@ -59,7 +59,7 @@ class BaseQuery
 
     /**
      * @param int $page
-     * @return BaseQuery
+     * @return $this
      */
     public function setPage($page)
     {
@@ -77,7 +77,7 @@ class BaseQuery
 
     /**
      * @param int $pageSize
-     * @return BaseQuery
+     * @return $this
      */
     public function setPageSize($pageSize)
     {
@@ -99,7 +99,7 @@ class BaseQuery
      * You need to validate carefully if this value is used from a user-input.
      *
      * @param string $orderBy
-     * @return BaseQuery
+     * @return $this
      */
     public function setOrderBy($orderBy)
     {
@@ -117,7 +117,7 @@ class BaseQuery
 
     /**
      * @param string $order
-     * @return BaseQuery
+     * @return $this
      */
     public function setOrder($order)
     {
@@ -137,7 +137,7 @@ class BaseQuery
 
     /**
      * @param string $resultType
-     * @return BaseQuery
+     * @return $this
      */
     public function setResultType($resultType)
     {
