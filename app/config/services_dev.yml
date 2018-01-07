@@ -24,3 +24,9 @@ services:
         arguments: ["%kernel.root_dir%"]
         tags:
             - { name: console.command, command: kimai:dev:test-integration }
+
+    app.command.dev_reset:
+        class: AppBundle\Command\DevResetCommand
+        arguments: ["%kernel.root_dir%"]
+        tags:
+            - { name: console.command, command: kimai:dev:reset }
