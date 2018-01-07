@@ -107,10 +107,10 @@ class ActivityRepository extends AbstractRepository
             ->join('p.customer', 'c')
             ->orderBy('a.' . $query->getOrderBy(), $query->getOrder());
 
-        if ($query->getVisibility() === ActivityQuery::SHOW_VISIBLE) {
+        if ($query->getVisibility() == ActivityQuery::SHOW_VISIBLE) {
             $qb->andWhere('a.visible = 1');
             // TODO check for visibility of customer and project
-        } elseif ($query->getVisibility() === ActivityQuery::SHOW_HIDDEN) {
+        } elseif ($query->getVisibility() == ActivityQuery::SHOW_HIDDEN) {
             $qb->andWhere('a.visible = 0');
             // TODO check for visibility of customer and project
         }
