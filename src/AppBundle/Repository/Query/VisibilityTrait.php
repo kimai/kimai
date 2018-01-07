@@ -30,7 +30,7 @@ trait VisibilityTrait
 
     /**
      * @param int $visibility
-     * @return self
+     * @return $this
      */
     public function setVisibility($visibility)
     {

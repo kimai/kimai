@@ -68,14 +68,11 @@ class CustomerController extends AbstractController
         /* @var $entries Pagerfanta */
         $entries = $this->getDoctrine()->getRepository(Customer::class)->findByQuery($query);
 
-        return $this->render(
-            'TimesheetBundle:admin:customer.html.twig',
-            [
-                'entries' => $entries,
-                'query' => $query,
-                'toolbarForm' => $this->getToolbarForm($query)->createView(),
-            ]
-        );
+        return $this->render('TimesheetBundle:admin:customer.html.twig', [
+            'entries' => $entries,
+            'query' => $query,
+            'toolbarForm' => $this->getToolbarForm($query)->createView(),
+        ]);
     }
 
     /**
