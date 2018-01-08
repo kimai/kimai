@@ -53,4 +53,3 @@ security:
         - { path: '^/(%app_locales%)$', role: IS_AUTHENTICATED_FULLY }
         - { path: '^/(%app_locales%)/login', role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/(%app_locales%)/admin', roles: ROLE_ADMIN }
-
