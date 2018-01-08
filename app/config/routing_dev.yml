@@ -21,77 +21,15 @@ _errors:
     defaults:
         _locale: '%locale%'
 
-
-# ======================================================================
-# Template routes, that we need once we use those features
-# ======================================================================
-
-#avanzu_admin_login:
-#    path: /{_locale}/login
-#    options:
-#        avanzu_admin_route: login
-#
-#avanzu_admin_logout:
-#  path: /logout
-#  options:
-#    avanzu_admin_route: logout
-#
-#avanzu_admin_all_tasks:
-#  path: /tasks/
-#  options:
-#      avanzu_admin_route: all_tasks
-#
-#avanzu_admin_show_task:
-#  path: /tasks/{ident}/
-#  options:
-#      avanzu_admin_route: task
-#
-#avanzu_admin_all_notifications:
-#  path: /notifications/
-#  options:
-#      avanzu_admin_route: all_notifications
-#
-#avanzu_admin_show_notification:
-#  path: /notifications/{ident}/
-#  options:
-#      avanzu_admin_route: notification
-#
-#avanzu_admin_all_messages:
-#  path: /messages/
-#  options:
-#      avanzu_admin_route: all_messages
-#
-#avanzu_admin_show_message:
-#  path: /messages/{ident}/
-#  options:
-#      avanzu_admin_route: message
-
-# ======================================================================
-# Template demo screen
-# Activate full demo mode by setting "enable_demo" in config_dev.xml
-# ======================================================================
-
-avanzu_admin_home:
-  path: /{_locale}/demo-admin/
-  defaults: {_controller: AvanzuAdminThemeBundle:Default:index}
-  options:
-    avanzu_admin_route: welcome
-
-avanzu_admin_form_demo:
-  path: /{_locale}/demo-admin/form-demo/
-  defaults: {_controller: AvanzuAdminThemeBundle:Default:form}
-
-avanzu_admin_login_demo:
-  path: /{_locale}/demo-admin/login/
-  defaults: {_controller: AvanzuAdminThemeBundle:Default:login}
-
-avanzu_admin_dash_demo:
-  path: /{_locale}/demo-admin/dashboard/
-  defaults: {_controller: AvanzuAdminThemeBundle:Default:dashboard}
-
-# ======================================================================
-
 # this loads the main routing file, which usually defines the routes available
 # in any environment (production, development, etc.)
 _main:
     resource: routing.yml
+
+# ========================================================================
+# Demo routes, only work with "avanzu_admin_theme/enable_demo: true"
+# ========================================================================
+
+#avanzu_admin:
+#    prefix: /admin
+#    resource: "@AvanzuAdminThemeBundle/Resources/config/routes.yml"
