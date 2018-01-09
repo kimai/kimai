@@ -153,7 +153,7 @@ class TimesheetQuery extends BaseQuery
      */
     public function setState($state)
     {
-        if (in_array($state, [self::STATE_ALL, self::STATE_RUNNING, self::STATE_STOPPED])) {
+        if (in_array($state, [self::STATE_ALL, self::STATE_RUNNING, self::STATE_STOPPED], true)) {
             $this->state = $state;
         }
         return $this;

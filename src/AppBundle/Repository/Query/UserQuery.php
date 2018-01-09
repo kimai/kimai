@@ -39,7 +39,9 @@ class UserQuery extends BaseQuery implements VisibilityInterface
      */
     public function setRole($role)
     {
-        $this->role = $role;
+        if (strpos($role, 'ROLE_') !== false || $role === null) {
+            $this->role = $role;
+        }
         return $this;
     }
 }

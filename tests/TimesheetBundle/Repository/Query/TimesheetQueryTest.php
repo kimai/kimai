@@ -11,32 +11,91 @@
 
 namespace KimaiTest\TimesheetBundle\Repository\Query;
 
-use AppBundle\Repository\Query\BaseQuery;
-use \PHPUnit\Framework\TestCase;
+use AppBundle\Entity\User;
+use KimaiTest\AppBundle\Repository\Query\BaseQueryTest;
+use TimesheetBundle\Entity\Activity;
+use TimesheetBundle\Entity\Customer;
+use TimesheetBundle\Entity\Project;
 use TimesheetBundle\Repository\Query\TimesheetQuery;
 
 /**
  * @covers \TimesheetBundle\Repository\Query\TimesheetQuery
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class TimesheetQueryTest extends TestCase
+class TimesheetQueryTest extends BaseQueryTest
 {
-
-    public function testSetOrder()
+    public function testQuery()
     {
-        $class = new \ReflectionClass(new BaseQuery());
-        $this->assertTrue($class->hasProperty('order'));
-        $this->assertTrue($class->hasProperty('orderBy'));
-
         $sut = new TimesheetQuery();
 
-        $this->assertEquals(TimesheetQuery::ORDER_DESC, $sut->getOrder());
-        $this->assertEquals('begin', $sut->getOrderBy());
+        $this->assertResultType($sut);
+        $this->assertHiddenEntity($sut);
+        $this->assertPage($sut);
+        $this->assertPageSize($sut);
+        $this->assertOrderBy($sut, 'begin');
+        $this->assertOrder($sut, TimesheetQuery::ORDER_DESC);
 
-        $sut->setOrder(TimesheetQuery::ORDER_ASC);
-        $sut->setOrderBy('id');
+        $this->assertUser($sut);
+        $this->assertCustomer($sut);
+        $this->assertProject($sut);
+        $this->assertActivity($sut);
+        $this->assertState($sut);
+    }
 
-        $this->assertEquals(TimesheetQuery::ORDER_ASC, $sut->getOrder());
-        $this->assertEquals('id', $sut->getOrderBy());
+    protected function assertUser(TimesheetQuery $sut)
+    {
+        $this->assertNull($sut->getUser());
+
+        $expected = new User();
+        $expected->setUsername('foo-bar');
+        $sut->setUser($expected);
+        $this->assertEquals($expected, $sut->getUser());
+    }
+
+    protected function assertCustomer(TimesheetQuery $sut)
+    {
+        $this->assertNull($sut->getCustomer());
+
+        $expected = new Customer();
+        $expected->setName('foo-bar');
+        $sut->setCustomer($expected);
+        $this->assertEquals($expected, $sut->getCustomer());
+    }
+
+    protected function assertProject(TimesheetQuery $sut)
+    {
+        $this->assertNull($sut->getProject());
+
+        $expected = new Project();
+        $expected->setName('foo-bar');
+        $sut->setProject($expected);
+        $this->assertEquals($expected, $sut->getProject());
+    }
+
+    protected function assertActivity(TimesheetQuery $sut)
+    {
+        $this->assertNull($sut->getActivity());
+
+        $expected = new Activity();
+        $expected->setName('foo-bar');
+        $sut->setActivity($expected);
+        $this->assertEquals($expected, $sut->getActivity());
+    }
+
+    protected function assertState(TimesheetQuery $sut)
+    {
+        $this->assertEquals(TimesheetQuery::STATE_ALL, $sut->getState());
+
+        $sut->setState('foo-bar');
+        $this->assertEquals(TimesheetQuery::STATE_ALL, $sut->getState());
+
+        $sut->setState(TimesheetQuery::STATE_STOPPED);
+        $this->assertEquals(TimesheetQuery::STATE_STOPPED, $sut->getState());
+
+        $sut->setState(TimesheetQuery::STATE_RUNNING);
+        $this->assertEquals(TimesheetQuery::STATE_RUNNING, $sut->getState());
+
+        $sut->setState(TimesheetQuery::STATE_ALL);
+        $this->assertEquals(TimesheetQuery::STATE_ALL, $sut->getState());
     }
 }
