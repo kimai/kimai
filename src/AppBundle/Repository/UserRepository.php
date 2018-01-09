@@ -63,6 +63,10 @@ class UserRepository extends AbstractRepository
             $qb->andWhere('u.active = 0');
         }
 
+        if ($query->getRole() !== null) {
+            $qb->andWhere('u.roles LIKE :role')->setParameter('role', '%' . $query->getRole() . '%');
+        }
+
         return $this->getPager($qb->getQuery(), $query->getPage(), $query->getPageSize());
     }
 }

@@ -45,11 +45,14 @@ class UserController extends AbstractController
             $visibility = UserQuery::SHOW_BOTH;
         }
         $pageSize = (int) $request->get('pageSize');
+        $userRole = $request->get('role');
 
         $query = new UserQuery();
         $query
             ->setPageSize($pageSize)
-            ->setVisibility($visibility);
+            ->setVisibility($visibility)
+            ->setRole($userRole)
+        ;
 
         return $query ;
     }

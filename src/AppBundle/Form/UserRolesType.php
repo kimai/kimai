@@ -12,8 +12,8 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\User;
+use AppBundle\Form\Type\UserRoleType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,39 +25,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class UserRolesType extends AbstractType
 {
     /**
-     * @var string[]
-     */
-    protected $roles = [];
-
-    /**
-     * UserRolesType constructor.
-     * @param string[] $roles
-     */
-    public function __construct(array $roles)
-    {
-        $this->roles = $roles;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $roles = [];
-
-        foreach ($this->roles as $key => $value) {
-            $roles[$key] = $key;
-            foreach ($value as $value2) {
-                $roles[$value2] = $value2;
-            }
-        }
-
         $builder
             // string[]
-            ->add('roles', ChoiceType::class, [
+            ->add('roles', UserRoleType::class, [
                 'label' => 'label.roles',
                 'multiple' => true,
-                'choices' => $roles,
             ])
         ;
     }

@@ -11,7 +11,9 @@
 
 namespace AppBundle\Form\Toolbar;
 
+use AppBundle\Form\Type\UserRoleType;
 use AppBundle\Repository\Query\UserQuery;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -21,6 +23,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UserToolbarForm extends VisibilityToolbarForm
 {
+
+    /**
+     * {@inheritdoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        parent::buildForm($builder, $options);
+
+        $builder
+            ->add('role', UserRoleType::class, [
+                'required' => false,
+            ])
+        ;
+    }
 
     /**
      * {@inheritdoc}
