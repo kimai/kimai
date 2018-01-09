@@ -108,6 +108,12 @@ class TimesheetVoter extends AbstractVoter
         if (!$activity->getVisible()) {
             return false;
         }
+        if (!$activity->getProject()->getVisible()) {
+            return false;
+        }
+        if (!$activity->getProject()->getCustomer()->getVisible()) {
+            return false;
+        }
 
         return true;
     }

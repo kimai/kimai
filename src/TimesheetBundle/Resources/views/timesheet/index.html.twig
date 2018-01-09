@@ -38,11 +38,18 @@
             <td class="hidden-xs hidden-sm">{{ widgets.label_activity(entry.activity) }}</td>
             <td class="hidden-xs hidden-sm">{{ entry.description }}</td>
             <td>
-                {% set actionButtons = {'edit': path('timesheet_edit', {'id' : entry.id, 'page': page})} %}
+                {% set actionButtons = {} %}
+                {% if is_granted('edit', entry) %}
+                    {% set actionButtons = {'edit': path('timesheet_edit', {'id' : entry.id, 'page': page})}|merge(actionButtons) %}
+                {% endif %}
                 {% if entry.end %}
-                    {% set actionButtons = {'repeat': path('timesheet_start', {'id' : entry.activity.id})}|merge(actionButtons) %}
+                    {% if is_granted('start', entry.activity) %}
+                        {% set actionButtons = {'repeat': path('timesheet_start', {'id' : entry.activity.id})}|merge(actionButtons) %}
+                    {% endif %}
                 {% else %}
-                    {% set actionButtons = {'stop': path('timesheet_stop', {'id' : entry.id})}|merge(actionButtons) %}
+                    {% if is_granted('stop', entry) %}
+                        {% set actionButtons = {'stop': path('timesheet_stop', {'id' : entry.id})}|merge(actionButtons) %}
+                    {% endif %}
                 {% endif %}
                 {% if is_granted('delete', entry) %}
                     {% set actionButtons = actionButtons|merge({'trash': path('timesheet_delete', {'id' : entry.id, 'page': page})}) %}
