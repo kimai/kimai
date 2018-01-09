@@ -51,6 +51,20 @@ class ProjectRepository extends AbstractRepository
     }
 
     /**
+     * Returns a query builder that is used for ProjectType and your own 'query_builder' option.
+     *
+     * @param Project|null $entity
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function builderForEntityType(Project $entity = null)
+    {
+        $query = new ProjectQuery();
+        $query->setHiddenEntity($entity);
+        $query->setResultType(ProjectQuery::RESULT_TYPE_QUERYBUILDER);
+        return $this->findByQuery($query);
+    }
+
+    /**
      * @param ProjectQuery $query
      * @return \Doctrine\ORM\QueryBuilder|\Pagerfanta\Pagerfanta
      */
@@ -66,7 +80,17 @@ class ProjectRepository extends AbstractRepository
             ->orderBy('p.' . $query->getOrderBy(), $query->getOrder());
 
         if ($query->getVisibility() == ProjectQuery::SHOW_VISIBLE) {
+            if (!$query->isExclusiveVisibility()) {
+                $qb->andWhere('c.visible = 1');
+            }
             $qb->andWhere('p.visible = 1');
+
+            /** @var Project $entity */
+            $entity = $query->getHiddenEntity();
+            if ($entity !== null) {
+                $qb->orWhere('p.id = :project')->setParameter('project', $entity);
+            }
+
             // TODO check for visibility of customer
         } elseif ($query->getVisibility() == ProjectQuery::SHOW_HIDDEN) {
             $qb->andWhere('p.visible = 0');

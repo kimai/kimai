@@ -36,13 +36,10 @@ class ProjectType extends AbstractType
             'class' => 'TimesheetBundle:Project',
             'choice_label' => 'name',
             'group_by' => function (Project $project, $key, $index) {
-                return '[' . $project->getCustomer()->getId() . '] ' . $project->getCustomer()->getName();
+                return $project->getCustomer()->getName();
             },
             'query_builder' => function (ProjectRepository $repo) {
-                $query = new ProjectQuery();
-                $query->setVisibility(ProjectQuery::SHOW_BOTH);
-                $query->setResultType(ProjectQuery::RESULT_TYPE_QUERYBUILDER);
-                return $repo->findByQuery($query);
+                return $repo->builderForEntityType(null);
             },
         ]);
     }

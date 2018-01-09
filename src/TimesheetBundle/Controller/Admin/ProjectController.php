@@ -14,7 +14,6 @@ namespace TimesheetBundle\Controller\Admin;
 use AppBundle\Controller\AbstractController;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
-use TimesheetBundle\Entity\Activity;
 use TimesheetBundle\Entity\Customer;
 use TimesheetBundle\Entity\Project;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -22,7 +21,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use TimesheetBundle\Form\ProjectEditForm;
-use TimesheetBundle\Form\ProjectToolbarForm;
+use TimesheetBundle\Form\Toolbar\ProjectToolbarForm;
 use TimesheetBundle\Repository\Query\ProjectQuery;
 
 /**
@@ -41,7 +40,7 @@ class ProjectController extends AbstractController
      */
     protected function getQueryForRequest(Request $request)
     {
-        $visibility = $request->get('visibility');
+        $visibility = $request->get('visibility', ProjectQuery::SHOW_VISIBLE);
         if (strlen($visibility) == 0 || (int)$visibility != $visibility) {
             $visibility = ProjectQuery::SHOW_BOTH;
         }
@@ -59,6 +58,7 @@ class ProjectController extends AbstractController
             ->setPageSize($pageSize)
             ->setVisibility($visibility)
             ->setCustomer($customer)
+            ->setExclusiveVisibility(true)
         ;
 
         return $query ;

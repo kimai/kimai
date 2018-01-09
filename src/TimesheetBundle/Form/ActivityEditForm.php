@@ -19,6 +19,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use TimesheetBundle\Entity\Activity;
 use TimesheetBundle\Form\Type\ProjectType;
+use TimesheetBundle\Repository\ProjectRepository;
 
 /**
  * Defines the form used to manipulate Activities.
@@ -33,6 +34,14 @@ class ActivityEditForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var Activity $entry */
+        $entry = $options['data'];
+
+        $project = null;
+        if ($entry->getId() !== null) {
+            $project = $entry->getProject();
+        }
+
         $builder
             // string - length 255
             ->add('name', TextType::class, [
@@ -46,6 +55,9 @@ class ActivityEditForm extends AbstractType
             // entity type: project
             ->add('project', ProjectType::class, [
                 'label' => 'label.project',
+                'query_builder' => function (ProjectRepository $repo) use ($project) {
+                    return $repo->builderForEntityType($project);
+                },
             ])
             // boolean
             ->add('visible', VisibilityType::class, [
