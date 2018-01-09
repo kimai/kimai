@@ -59,34 +59,42 @@ class InstallCommand extends Command
             ];
         }
 
-        $this->installAssets($output, $io, 'avanzu:admin:initialize', $arguments);
-        $this->installAssets($output, $io, 'assets:install', $arguments);
-        $this->installAssets($output, $io, 'avanzu:admin:fetch-vendor', []);
-    }
-
-    /**
-     * @param OutputInterface $output
-     * @param SymfonyStyle $io
-     * @param string $cmdName
-     * @param array $args
-     * @return bool
-     */
-    protected function installAssets(OutputInterface $output, SymfonyStyle $io, $cmdName, $args = [])
-    {
-        $command = $this->getApplication()->find($cmdName);
+        try {
+            $command = $this->getApplication()->find('doctrine:database:create');
+            $command->run(new ArrayInput([]), $output);
+        } catch (\Exception $ex) {
+            $io->error('Failed to create database: ' . $ex->getMessage());
+            return 1;
+        }
 
         try {
-            $returnCode = $command->run(new ArrayInput($args), $output);
+            $command = $this->getApplication()->find('doctrine:schema:create');
+            $command->run(new ArrayInput([]), $output);
         } catch (\Exception $ex) {
-            $io->error('Failed to install assets via "'.$cmdName.'": ' . $ex->getMessage());
-            return false;
+            $io->error('Failed to create database schema: ' . $ex->getMessage());
+            return 2;
         }
 
-        if ($returnCode != 0) {
-            $io->error('Failed to install assets via "'.$cmdName.'"');
-            return false;
+        try {
+            $command = $this->getApplication()->find('avanzu:admin:initialize');
+            $command->run(new ArrayInput($arguments), $output);
+        } catch (\Exception $ex) {
+            $io->error('Failed to initialize avanzu theme: ' . $ex->getMessage());
+            return 3;
         }
-
-        return true;
+        try {
+            $command = $this->getApplication()->find('assets:install');
+            $command->run(new ArrayInput($arguments), $output);
+        } catch (\Exception $ex) {
+            $io->error('Failed to install assets: ' . $ex->getMessage());
+            return 4;
+        }
+        try {
+            $command = $this->getApplication()->find('avanzu:admin:fetch-vendor');
+            $command->run(new ArrayInput([]), $output);
+        } catch (\Exception $ex) {
+            $io->error('Failed to fetch vendors for avanzu theme: ' . $ex->getMessage());
+            return 5;
+        }
     }
 }
