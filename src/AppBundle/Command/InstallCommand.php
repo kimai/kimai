@@ -59,9 +59,9 @@ class InstallCommand extends Command
             ];
         }
 
-        if ($this->installAssets($output, $io, 'assets:install', $arguments)) {
-            $this->installAssets($output, $io, 'avanzu:admin:initialize', $arguments);
-        }
+        $this->installAssets($output, $io, 'avanzu:admin:initialize', $arguments);
+        $this->installAssets($output, $io, 'assets:install', $arguments);
+        $this->installAssets($output, $io, 'avanzu:admin:fetch-vendor', []);
     }
 
     /**

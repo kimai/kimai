@@ -12,12 +12,6 @@
             "app/AppCache.php"
         ]
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/kevinpapst/AdminThemeBundle"
-        }
-    ],
     "require": {
         "php": ">=7.0.8",
         "ext-pdo_sqlite": "*",
@@ -39,8 +33,7 @@
         "white-october/pagerfanta-bundle": "^1.0",
         "beberlei/DoctrineExtensions": "^1.0",
         "symfony/web-server-bundle": "3.4",
-        "avanzu/admin-theme-bundle": "dev-feature/2.0",
-        "almasaeed2010/adminlte": "~2.3.0"
+        "avanzu/admin-theme-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",

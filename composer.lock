@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1353056aae6cd3e256368e770737274f",
+    "content-hash": "1108364ff698c0ff8298c5c660985cb6",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -48,24 +48,27 @@
         },
         {
             "name": "avanzu/admin-theme-bundle",
-            "version": "dev-feature/2.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/kevinpapst/AdminThemeBundle.git",
-                "reference": "a7b4a59ae178de1507a9090573b8bd70362518c9"
+                "url": "https://github.com/avanzu/AdminThemeBundle.git",
+                "reference": "eb80bd51fca844cabedae397c9c48c4529b06748"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/AdminThemeBundle/zipball/a7b4a59ae178de1507a9090573b8bd70362518c9",
-                "reference": "a7b4a59ae178de1507a9090573b8bd70362518c9",
+                "url": "https://api.github.com/repos/avanzu/AdminThemeBundle/zipball/eb80bd51fca844cabedae397c9c48c4529b06748",
+                "reference": "eb80bd51fca844cabedae397c9c48c4529b06748",
                 "shasum": ""
             },
             "require": {
-                "almasaeed2010/adminlte": "^2.3",
+                "almasaeed2010/adminlte": "~2.3.0",
                 "php": ">=5.5.9",
+                "symfony/console": ">=2.3",
                 "symfony/event-dispatcher": ">=2.3",
                 "symfony/http-foundation": ">=2.3",
-                "symfony/http-kernel": ">=2.3"
+                "symfony/http-kernel": ">=2.3",
+                "symfony/options-resolver": ">=2.3",
+                "symfony/process": ">=2.3"
             },
             "require-dev": {
                 "phpspec/prophecy": "^1.6"
@@ -73,26 +76,32 @@
             "suggest": {
                 "knplabs/knp-menu-bundle": "Allows easy menu integration."
             },
-            "type": "library",
+            "type": "symfony-bundle",
             "autoload": {
                 "psr-4": {
                     "Avanzu\\AdminThemeBundle\\": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "authors": [
                 {
                     "name": "Marc Bach",
-                    "email": "mail@avanzu.de"
+                    "email": "mail@avanzu.de",
+                    "homepage": "http://www.avanzu.de",
+                    "role": "Original Author"
+                },
+                {
+                    "name": "Ángel Guzmán Maeso",
+                    "email": "shakaran@gmail.com",
+                    "homepage": "https://shakaran.net/blog",
+                    "role": "Developer Collaborator"
                 }
             ],
             "description": "Admin Theme based on the AdminLTE Template for easy integration into symfony",
-            "support": {
-                "source": "https://github.com/kevinpapst/AdminThemeBundle/tree/feature/2.0"
-            },
-            "time": "2017-09-17T10:50:56+00:00"
+            "time": "2017-12-29T18:13:35+00:00"
         },
         {
             "name": "beberlei/DoctrineExtensions",
