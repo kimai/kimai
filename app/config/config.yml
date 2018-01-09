@@ -24,7 +24,7 @@ framework:
     # Supported values are 'textmate', 'macvim', 'emacs' and 'sublime' shortcuts
     # and any custom configuration string, such as: "phpstorm://open?file=%%f&line=%%l"
     # See http://symfony.com/doc/current/reference/configuration/framework.html#ide
-    ide: sublime
+    #ide: sublime
 
     # When using the HTTP Cache, ESI allows to render page fragments separately
     # and with different cache configurations for each fragment
@@ -92,13 +92,14 @@ doctrine:
 #    spool:     { type: memory }
 
 avanzu_admin_theme:
-    use_twig   : true
-    theme:
-        default_avatar   : avatars/default.png
-        skin             : skin-blue
-        fixed_layout     : false
-        boxed_layout     : false
+    use_twig: true
+    use_assetic: true
+    bower_bin: "/usr/local/bin/bower"
+    options:
+        default_avatar: avatars/default.png
+        skin: skin-green-light
+        fixed_layout: false
+        boxed_layout: false
         collapsed_sidebar: true
-        mini_sidebar     : true
-        # TODO support options like: language and skin via sidebar menu
-        control_sidebar  : false
+        mini_sidebar: true
+        control_sidebar: false

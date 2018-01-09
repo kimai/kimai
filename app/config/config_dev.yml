@@ -8,10 +8,6 @@ framework:
         strict_requirements: true
     profiler: { only_exceptions: false }
 
-#web_profiler:
-#    toolbar: '%kernel.debug%'
-#    intercept_redirects: false
-
 monolog:
     handlers:
         main:
@@ -42,9 +38,10 @@ services:
         tags:
             - name: twig.extension
 
-avanzu_admin_theme:
-    enable_demo: false
-
 web_profiler:
-    toolbar: true
+    toolbar: '%kernel.debug%'
     intercept_redirects: false
+
+# See routing_dev.yml
+#avanzu_admin_theme:
+#   enable_demo: false

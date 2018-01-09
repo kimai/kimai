@@ -37,7 +37,7 @@ class AppKernel extends Kernel
         // Bundles only used for development or unit and functional tests
         if (in_array($this->getEnvironment(), ['dev', 'test'])) {
             //$bundles[] = new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle();
-            //$bundles[] = new Symfony\Bundle\AsseticBundle\AsseticBundle();
+            $bundles[] = new Symfony\Bundle\AsseticBundle\AsseticBundle();
             $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
