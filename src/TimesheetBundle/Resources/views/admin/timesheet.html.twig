@@ -36,8 +36,10 @@
                 <td>&dash;</td>
                 <td>&dash;</td>
             {% endif %}
-            <td class="hidden-xs hidden-sm">{{ widgets.label_activity(entry.activity.name) }}</td>
-            <td class="hidden-xs"><a href="{{ path('profile'|route_alias, {'username' : entry.user.username}) }}">{{ entry.user.username }}</a></td>
+            <td class="hidden-xs hidden-sm">
+                <a href="{{ path('admin_activity_edit', {'id': entry.activity.id}) }}">{{ widgets.label_activity(entry.activity) }}</a>
+            </td>
+            <td class="hidden-xs"><a href="{{ path('profile'|route_alias, {'username' : entry.user.username}) }}">{{ widgets.label_user(entry.user) }}</a></td>
             <td class="hidden-xs hidden-sm">{{ entry.description }}</td>
             <td>
                 {% if entry.end %}

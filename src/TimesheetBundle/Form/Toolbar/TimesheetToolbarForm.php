@@ -9,16 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace TimesheetBundle\Form;
+namespace TimesheetBundle\Form\Toolbar;
 
-use AppBundle\Form\Type\PageSizeType;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use TimesheetBundle\Form\Type\ActivityType;
-use TimesheetBundle\Form\Type\CustomerType;
-use TimesheetBundle\Form\Type\ProjectType;
 use TimesheetBundle\Repository\Query\TimesheetQuery;
 
 /**
@@ -26,31 +22,15 @@ use TimesheetBundle\Repository\Query\TimesheetQuery;
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class TimesheetToolbarForm extends AbstractType
+class TimesheetToolbarForm extends ActivityToolbarForm
 {
-    /**
-     * Dirty hack to enable easy handling of GET form in controller and javascript.
-     *Cleans up the name of all form elents (and unfortunately of the form itself).
-     *
-     * @return null|string
-     */
-    public function getBlockPrefix()
-    {
-        return '';
-    }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var TimesheetQuery $query */
-        $query = $options['data'];
-
         $builder
-            ->add('pageSize', PageSizeType::class, [
-                'required' => false,
-            ])
             ->add('state', ChoiceType::class, [
                 'label' => 'label.entryState',
                 'choices' => [
@@ -59,35 +39,11 @@ class TimesheetToolbarForm extends AbstractType
                     'entryState.stopped' => TimesheetQuery::STATE_STOPPED
                 ],
             ])
-            ->add('customer', CustomerType::class, [
-                'required' => false,
-            ])
         ;
+        parent::buildForm($builder, $options);
+        $this->addActivityChoice($builder, $options['data']);
 
-        $this->addProjectChoice($builder, $query);
-        $this->addActivityChoice($builder, $query);
-    }
-
-    /**
-     * @param FormBuilderInterface $builder
-     * @param TimesheetQuery $query
-     */
-    protected function addProjectChoice(FormBuilderInterface $builder, TimesheetQuery $query)
-    {
-        if ($query->getCustomer() === null) {
-            return;
-        }
-
-        $choices = [];
-        foreach ($query->getCustomer()->getProjects() as $project) {
-            $choices[] = $project;
-        }
-
-        $builder
-            ->add('project', ProjectType::class, [
-                'required' => false,
-                'choices' => $choices,
-            ]);
+        $builder->remove('visibility');
     }
 
     /**
@@ -103,7 +59,6 @@ class TimesheetToolbarForm extends AbstractType
         $choices = [];
         foreach ($query->getProject()->getActivities() as $activity) {
             $choices[] = $activity;
-            //$choices[$activity->getName()] = $activity->getId();
         }
 
         $builder

@@ -14,22 +14,47 @@
 
 {% macro label_role(role) %}
     {% import _self as macro %}
-    {{ macro.label(role, 'primary') }}
+    {% if role == 'ROLE_SUPER_ADMIN' %}
+        {{ macro.label(role, 'danger') }}
+    {% else %}
+        {{ macro.label(role, 'primary') }}
+    {% endif %}
 {% endmacro %}
 
-{% macro label_activity(role) %}
+{% macro username(user) %}
+    {{ user.alias|default(user.username) }}
+{% endmacro %}
+
+{% macro label_user(user) %}
     {% import _self as macro %}
-    {{ macro.label(role, 'primary') }}
+    {{ macro.label(macro.username(user), 'primary') }}
+{% endmacro %}
+
+{% macro label_activity(activity) %}
+    {% import _self as macro %}
+    {% if activity.visible and activity.project.visible and activity.project.customer.visible %}
+        {{ macro.label(activity.name, 'primary', activity.project.customer.name ~ ': ' ~ activity.project.name) }}
+    {% else %}
+        {{ macro.label(activity.name, 'warning', activity.project.customer.name ~ ': ' ~ activity.project.name) }}
+    {% endif %}
 {% endmacro %}
 
 {% macro label_project(project) %}
     {% import _self as macro %}
-    {{ macro.label(project.name, 'primary') }}
+    {% if project.visible and project.customer.visible %}
+        {{ macro.label(project.name, 'primary', project.customer.name) }}
+    {% else %}
+        {{ macro.label(project.name, 'warning', project.customer.name) }}
+    {% endif %}
 {% endmacro %}
 
 {% macro label_customer(customer) %}
     {% import _self as macro %}
-    {{ macro.label(customer.name, 'primary') }}
+    {% if customer.visible %}
+        {{ macro.label(customer.name, 'primary') }}
+    {% else %}
+        {{ macro.label(customer.name, 'warning') }}
+    {% endif %}
 {% endmacro %}
 
 {% macro badge_counter(count, url) %}
@@ -40,9 +65,9 @@
     {% endif %}
 {% endmacro %}
 
-{% macro label(title, type) %}
+{% macro label(title, type, tooltip) %}
     {# success, warning, danger, primary #}
-    <span class="label label-{{ type|default('success') }}">{{ title|trans }}</span>
+    <span {%  if tooltip %}title="{{ tooltip }}" {% endif %}class="label label-{{ type|default('success') }}">{{ title|trans }}</span>
 {% endmacro %}
 
 {% macro badge(title, color) %}

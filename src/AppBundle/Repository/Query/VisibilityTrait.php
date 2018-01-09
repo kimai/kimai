@@ -18,7 +18,14 @@ namespace AppBundle\Repository\Query;
  */
 trait VisibilityTrait
 {
+    /**
+     * @var integer
+     */
     protected $visibility = self::SHOW_VISIBLE;
+    /**
+     * @var bool
+     */
+    protected $exclusiveVisibility = false;
 
     /**
      * @return int
@@ -39,4 +46,25 @@ trait VisibilityTrait
         }
         return $this;
     }
+
+    /**
+     * @return bool
+     */
+    public function isExclusiveVisibility()
+    {
+        return $this->exclusiveVisibility;
+    }
+
+    /**
+     * If set to true, this will ONLY filter the visibility on the main queried object.
+     *
+     * @param bool $exclusiveVisibility
+     * @return VisibilityTrait
+     */
+    public function setExclusiveVisibility($exclusiveVisibility)
+    {
+        $this->exclusiveVisibility = (bool) $exclusiveVisibility;
+        return $this;
+    }
+
 }

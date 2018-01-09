@@ -179,17 +179,18 @@ class LoadFixtures extends AppBundleLoadFixtures
 
         $allCustomer = $this->getCustomers();
         shuffle($allCustomer);
-        $i = 0;
+        $i = 1;
 
         foreach ($allCustomer as $customerName) {
+            $visible = $i++ % 6 != 0;
             $entry = new Customer();
             $entry
                 ->setCurrency($this->getRandomCurrency())
                 ->setVat(rand(0, 30))
-                ->setName($customerName)
+                ->setName($customerName . ($visible ? '' : '.'))
                 ->setAddress($this->getRandomLocation())
                 ->setComment($this->getRandomPhrase())
-                ->setVisible($i++ % 3 != 0)
+                ->setVisible($visible)
                 ->setTimezone($allTimezones[rand(1, $amountTimezone)]);
 
             $manager->persist($entry);
@@ -203,15 +204,16 @@ class LoadFixtures extends AppBundleLoadFixtures
 
         foreach ($allCustomer as $id => $customer) {
             $projectForCustomer = rand(0, 7);
-            for ($i = 0; $i < $projectForCustomer; $i++) {
+            for ($i = 1; $i <= $projectForCustomer; $i++) {
+                $visible = $i % 5 != 0;
                 $entry = new Project();
 
                 $entry
-                    ->setName($this->getRandomProject())
+                    ->setName($this->getRandomProject() . ($visible ? '' : '.'))
                     ->setBudget(rand(500, 100000))
                     ->setComment($this->getRandomPhrase())
                     ->setCustomer($customer)
-                    ->setVisible($i % 3 != 0);
+                    ->setVisible($visible);
 
                 $manager->persist($entry);
             }
@@ -225,13 +227,14 @@ class LoadFixtures extends AppBundleLoadFixtures
 
         foreach ($allProject as $projectId => $project) {
             $activityCount = rand(0, 10);
-            for ($i = 0; $i < $activityCount; $i++) {
+            for ($i = 1; $i <= $activityCount; $i++) {
+                $visible = $i % 4 != 0;
                 $entry = new Activity();
                 $entry
+                    ->setName($this->getRandomActivity() . ($visible ? '' : '.'))
                     ->setProject($project)
-                    ->setName($this->getRandomActivity())
                     ->setComment($this->getRandomPhrase())
-                    ->setVisible($i % 3 != 0);
+                    ->setVisible($visible);
 
                 $manager->persist($entry);
             }
@@ -266,7 +269,11 @@ class LoadFixtures extends AppBundleLoadFixtures
             'Eating',
             'Watching TV',
             'Talking',
-            'Cooking'
+            'Cooking',
+            'Writing',
+            'Reading',
+            'Brainstroming',
+            'Post Processing',
         ];
     }
 
@@ -297,6 +304,14 @@ class LoadFixtures extends AppBundleLoadFixtures
             'Software Upgrade',
             'Office Management',
             'Project X',
+            'Customer Excellence',
+            'Crazy Monkey',
+            'Interface Design',
+            'Human Ressources',
+            'Book Release',
+            'Studio Photography',
+            'Professional Art',
+            'Video Production',
         ];
     }
 

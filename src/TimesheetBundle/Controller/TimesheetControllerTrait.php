@@ -16,7 +16,7 @@ use TimesheetBundle\Entity\Customer;
 use TimesheetBundle\Entity\Project;
 use TimesheetBundle\Entity\Timesheet;
 use Symfony\Component\HttpFoundation\Request;
-use TimesheetBundle\Form\TimesheetToolbarForm;
+use TimesheetBundle\Form\Toolbar\TimesheetToolbarForm;
 use TimesheetBundle\Repository\Query\TimesheetQuery;
 use TimesheetBundle\Repository\TimesheetRepository;
 

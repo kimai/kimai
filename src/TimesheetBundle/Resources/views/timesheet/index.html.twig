@@ -35,7 +35,7 @@
                 <td class="hidden-xs"><i>{{ entry.duration|duration }}</i></td>
                 <td class="hidden-xs">&dash;</td>
             {% endif %}
-            <td class="hidden-xs hidden-sm">{{ widgets.label_activity(entry.activity.name) }}</td>
+            <td class="hidden-xs hidden-sm">{{ widgets.label_activity(entry.activity) }}</td>
             <td class="hidden-xs hidden-sm">{{ entry.description }}</td>
             <td>
                 {% if entry.end %}

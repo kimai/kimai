@@ -29,6 +29,15 @@ class ActivityGroupedWithCustomerNameType extends ActivityType
      */
     public function groupBy(Activity $activity, $key, $index)
     {
-        return $activity->getProject()->getCustomer()->getName() . ': ' . $activity->getProject()->getName();
+        return $activity->getProject()->getCustomer()->getName();
+    }
+
+    /**
+     * @param Activity $activity
+     * @return string
+     */
+    public function choiceLabel(Activity $activity)
+    {
+        return $activity->getProject()->getName() . ': ' . $activity->getName();
     }
 }
