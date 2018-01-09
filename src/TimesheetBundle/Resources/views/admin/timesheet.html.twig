@@ -42,12 +42,14 @@
             <td class="hidden-xs"><a href="{{ path('profile'|route_alias, {'username' : entry.user.username}) }}">{{ widgets.label_user(entry.user) }}</a></td>
             <td class="hidden-xs hidden-sm">{{ entry.description }}</td>
             <td>
+                {% set actionButtons = {'edit': path('admin_timesheet_edit', {'id' : entry.id, 'page': page})} %}
                 {% if entry.end %}
-                    {{ widgets.button_group({'edit': path('admin_timesheet_edit', {'id' : entry.id, 'page': page}), 'trash': '#'}) }}
-                {% else %}
-                    {{ widgets.button_group({'stop': path('admin_timesheet_stop', {'id' : entry.id}), 'edit': path('admin_timesheet_edit', {'id' : entry.id, 'page': page}), 'trash': '#'}) }}
+                    {% set actionButtons = {'stop': path('admin_timesheet_stop', {'id' : entry.id})}|merge(actionButtons) %}
                 {% endif %}
-
+                {% if is_granted('delete', entry) %}
+                    {% set actionButtons = actionButtons|merge({'trash': path('admin_timesheet_delete', {'id' : entry.id, 'page': page})}) %}
+                {% endif %}
+                {{ widgets.button_group(actionButtons) }}
             </td>
         </tr>
     {% endfor %}
