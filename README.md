@@ -12,6 +12,7 @@ It is based on the following PHP components:
 - [Symfony Framework 3.4](https://github.com/symfony/symfony)
 - [AdminThemeBundle](https://github.com/avanzu/AdminThemeBundle/) (based on [AdminLTE](https://github.com/almasaeed2010/AdminLTE/))
 - [Doctrine](https://github.com/doctrine/)
+- Bower
 
 ## Requirements
 
@@ -23,7 +24,7 @@ If unsure about meeting these requirements, download the demo application and
 browse the `http://localhost:8000/config.php` script to get more detailed
 information.
 
-## Installation
+## Installation (dev)
 
 First, install Git and [Composer](https://getcomposer.org/doc/00-intro.md)
 if you haven't already. Then, clone this repo and execute this command in the cloned directory:
@@ -31,26 +32,23 @@ if you haven't already. Then, clone this repo and execute this command in the cl
 ```bash
 $ git clone https://github.com/kevinpapst/kimai2.git
 $ cd kimai2/
+```
+
+Lets prepare the environment by installing all dependencies. You will be asked for your application parameter,
+like the database connection afterwards (if you don't have a app/config/parameters.yml yet):
+
+```bash
 $ composer install
 ```
 
-Lets prepare the environment 
+The next command will create the database, the schema and install all web assets:
 ```bash
-$ php bin/console assets:install --symlink --relative
-$ php bin/console avanzu:admin:initialize --symlink --relative
+$ php bin/console kimai:install --relative
 ```
 
-This was the basic task of the installation. If you have not yet setup a database, you 
-can create it and import example data by executing these commands: 
-```bash
-$ cd kimai2/
-$ php bin/console doctrine:database:create
-$ php bin/console doctrine:schema:create
-```
+### Installation (live)
 
-### Creating your first user
-
-As there is currently no full-fledged installer, you need to create the first user via command-line:
+All thats left to do is to create your first user:
 
 ```bash
 $ php bin/console kimai:create-user admin admin@example.com password en ROLE_SUPER_ADMIN
@@ -58,33 +56,38 @@ $ php bin/console kimai:create-user admin admin@example.com password en ROLE_SUP
 
 For available roles, please refer to [the user documentation](app/Resources/docs/users.md).
 
+### Installation (dev)
 
-### Demo data
-
-You can also import demo data, to test the application in its full beauty and with several different user accounts and permission sets.
-
+Lets boostrap your dev environment by executing this commands: 
 ```bash
-$ php bin/console doctrine:fixtures:load
+$ php bin/console kimai:dev:reset
 ```
 
-If you have imported the example data, you can login with these accounts:
+You just imported demo data, to test the application in its full beauty and with several different user accounts and permission sets!
+
+You can now login with these accounts:
 
 - Username: *clara_customer* / Password: *kitten* / Role: Customer
 - Username: *john_user* / Password: *kitten* / Role: User
+- Username: *chris_user* / Password: *kitten* / Role: User (deactivated for login tests) 
 - Username: *tony_teamlead* / Password: *kitten* / Role: Teamlead
 - Username: *anna_admin* / Password: *kitten* / Role: Administrator
 - Username: *susan_super* / Password: *kitten* / Role: Super-Administrator
 
-Demo data can always be deleted by dropping the schema and re-creating it (ATTENTION: this will erase all your data!):
+Demo data can always be deleted by dropping the schema and re-creating it.
+ATTENTION - this will erase all your data:
 
 ```bash
 $ php bin/console doctrine:schema:drop --force
 $ php bin/console doctrine:schema:create
 ```
 
+The `kimai:dev:reset` command can always be executed later on to reset your dev database and cache. I use it very frequently.
+
+
 ## Usage
 
-There is no need to configure a virtual host in your web server to access the application.
+There is no need to configure a virtual host in your web server to access the application for testing.
 Just use the built-in web server for your first tests:
 
 ```bash

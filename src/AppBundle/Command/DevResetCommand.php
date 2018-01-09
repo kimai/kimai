@@ -64,32 +64,32 @@ EOT
             }
         }
 
-        $command = $this->getApplication()->find('doctrine:database:create');
         try {
+            $command = $this->getApplication()->find('doctrine:database:create');
             $command->run(new ArrayInput([]), $output);
         } catch (\Exception $ex) {
             $io->error('Failed to create database: ' . $ex->getMessage());
             return 1;
         }
 
-        $command = $this->getApplication()->find('doctrine:schema:drop');
         try {
+            $command = $this->getApplication()->find('doctrine:schema:drop');
             $command->run(new ArrayInput(['--force' => true]), $output);
         } catch (\Exception $ex) {
             $io->error('Failed to drop database schema: ' . $ex->getMessage());
             return 2;
         }
 
-        $command = $this->getApplication()->find('doctrine:schema:create');
         try {
+            $command = $this->getApplication()->find('doctrine:schema:create');
             $command->run(new ArrayInput([]), $output);
         } catch (\Exception $ex) {
             $io->error('Failed to create database schema: ' . $ex->getMessage());
             return 3;
         }
 
-        $command = $this->getApplication()->find('doctrine:fixtures:load');
         try {
+            $command = $this->getApplication()->find('doctrine:fixtures:load');
             $cmdInput = new ArrayInput([]);
             $cmdInput->setInteractive(false);
             $command->run($cmdInput, $output);
