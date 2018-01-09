@@ -22,7 +22,7 @@
         {% for entry in entries %}
             <tr>
                 <td class="hidden-xs">{{ entry.id }}</td>
-                <td>{{ entry.alias|default(entry.username) }}</td>
+                <td>{{ widgets.username(entry) }}</td>
                 <td class="hidden-xs">{{ entry.username }}</td>
                 <td class="hidden-xs hidden-sm">{{ entry.email }}</td>
                 <td class="hidden-xs">{{ entry.title }}</td>

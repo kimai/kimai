@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use AppBundle\Validator\Constraints as KimaiAssert;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -24,7 +25,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class User implements UserInterface
+class User implements UserInterface, AdvancedUserInterface
 {
 
     const DEFAULT_ROLE = 'ROLE_USER';
@@ -193,9 +194,18 @@ class User implements UserInterface
     /**
      * @return boolean
      */
-    public function getActive()
+    public function isActive()
     {
         return $this->active;
+    }
+
+    /**
+     * @deprecated
+     * @return boolean
+     */
+    public function getActive()
+    {
+        return $this->isActive();
     }
 
     /**
@@ -357,6 +367,38 @@ class User implements UserInterface
     {
         $this->roles = $roles;
         return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isAccountNonExpired()
+    {
+        return $this->isEnabled();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isAccountNonLocked()
+    {
+        return $this->isEnabled();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isCredentialsNonExpired()
+    {
+        return $this->isEnabled();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        return $this->isActive();
     }
 
     /**
