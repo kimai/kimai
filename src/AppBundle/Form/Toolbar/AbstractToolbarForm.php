@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace TimesheetBundle\Form\Toolbar;
+namespace AppBundle\Form\Toolbar;
 
 use Symfony\Component\Form\AbstractType;
 

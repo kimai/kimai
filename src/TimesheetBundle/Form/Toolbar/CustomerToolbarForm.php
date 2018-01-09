@@ -11,6 +11,7 @@
 
 namespace TimesheetBundle\Form\Toolbar;
 
+use AppBundle\Form\Toolbar\VisibilityToolbarForm;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use TimesheetBundle\Repository\Query\CustomerQuery;
 

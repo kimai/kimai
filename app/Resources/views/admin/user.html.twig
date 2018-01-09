@@ -1,48 +1,48 @@
 {% extends 'base.html.twig' %}
 {% import "macros/datatables.html.twig" as tables %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "AvanzuAdminThemeBundle:layout:macros.html.twig" as macro %}
 
 {% block page_title %}{{ 'admin_user.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_user.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
+{% block javascript_imports %}<script src="{{ asset('js/toolbar.js') }}"></script>{% endblock %}
 
 {% block main %}
-    {% if entries.count > 0 %}
-        {{ tables.data_table_header({
-            'label.id': 'hidden-xs',
-            'label.alias': '',
-            'label.username': 'hidden-xs',
-            'label.email': 'hidden-xs hidden-sm',
-            'label.title': 'hidden-xs',
-            'label.active': '',
-            'label.roles': '',
-            'label.actions': '',
-        }, null, {'plus-square': path('admin_user_create')}) }}
-
-        {% for entry in entries %}
-            <tr>
-                <td class="hidden-xs">{{ entry.id }}</td>
-                <td>{{ widgets.username(entry) }}</td>
-                <td class="hidden-xs">{{ entry.username }}</td>
-                <td class="hidden-xs hidden-sm">{{ entry.email }}</td>
-                <td class="hidden-xs">{{ entry.title }}</td>
-                <td>{{ widgets.label_visible(entry.active) }}</td>
-                <td>
-                    {% for role in entry.roles %}
-                        {{ widgets.label_role(role) }}
-                    {% endfor %}
-                </td>
-                <td>
-                    {{ widgets.button_group({
-                        'edit': path('user_profile', {'username' : entry.username}),
-                        'trash': path('user_profile_delete', {'username' : entry.username})
-                    }) }}
-                </td>
-            </tr>
-        {% endfor %}
-
-        {{ tables.data_table_footer(entries, 'admin_user_paginated') }}
-    {% else %}
+    {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% endif %}
+
+    {{ tables.data_table_header({
+        'label.id': 'hidden-xs',
+        'label.alias': '',
+        'label.username': 'hidden-xs',
+        'label.email': 'hidden-xs hidden-sm',
+        'label.title': 'hidden-xs',
+        'label.active': '',
+        'label.roles': '',
+        'label.actions': '',
+    }, toolbarForm, {'plus-square': path('admin_user_create')}) }}
+
+    {% for entry in entries %}
+        <tr>
+            <td class="hidden-xs">{{ entry.id }}</td>
+            <td>{{ widgets.username(entry) }}</td>
+            <td class="hidden-xs">{{ entry.username }}</td>
+            <td class="hidden-xs hidden-sm">{{ entry.email }}</td>
+            <td class="hidden-xs">{{ entry.title }}</td>
+            <td>{{ widgets.label_visible(entry.active) }}</td>
+            <td>
+                {% for role in entry.roles %}
+                    {{ widgets.label_role(role) }}
+                {% endfor %}
+            </td>
+            <td>
+                {{ widgets.button_group({
+                    'edit': path('user_profile', {'username' : entry.username}),
+                    'trash': path('user_profile_delete', {'username' : entry.username})
+                }) }}
+            </td>
+        </tr>
+    {% endfor %}
+
+    {{ tables.data_table_footer(entries, 'admin_user_paginated') }}
 {% endblock %}

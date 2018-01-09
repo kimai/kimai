@@ -9,18 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace TimesheetBundle\Form\Toolbar;
+namespace AppBundle\Form\Toolbar;
 
-use AppBundle\Form\Type\PageSizeType;
+use AppBundle\Form\Type\VisibilityType;
 use Symfony\Component\Form\FormBuilderInterface;
-use TimesheetBundle\Repository\Query\CustomerQuery;
 
 /**
- * Defines the base form used for all toolbars with pageSizes.
+ * Defines the form used for filtering entities with a "visibility" field.
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class PagedToolbarForm extends AbstractToolbarForm
+class VisibilityToolbarForm extends PagedToolbarForm
 {
 
     /**
@@ -28,11 +27,10 @@ class PagedToolbarForm extends AbstractToolbarForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var CustomerQuery $query */
-        $query = $options['data'];
+        parent::buildForm($builder, $options);
 
         $builder
-            ->add('pageSize', PageSizeType::class, [
+            ->add('visibility', VisibilityType::class, [
                 'required' => false,
             ])
         ;

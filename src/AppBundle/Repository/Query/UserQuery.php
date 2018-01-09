@@ -19,4 +19,29 @@ namespace AppBundle\Repository\Query;
 class UserQuery extends BaseQuery implements VisibilityInterface
 {
     use VisibilityTrait;
+
+    /**
+     * @var string
+     */
+    protected $role;
+
+    /**
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param string $role
+     * @return UserQuery
+     */
+    public function setRole($role)
+    {
+        if (strpos($role, 'ROLE_') !== false || $role === null) {
+            $this->role = $role;
+        }
+        return $this;
+    }
 }

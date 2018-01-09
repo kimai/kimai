@@ -41,7 +41,7 @@ trait VisibilityTrait
      */
     public function setVisibility($visibility)
     {
-        if (in_array($visibility, [self::SHOW_BOTH, self::SHOW_VISIBLE, self::SHOW_HIDDEN])) {
+        if (in_array($visibility, [self::SHOW_BOTH, self::SHOW_VISIBLE, self::SHOW_HIDDEN], true)) {
             $this->visibility = $visibility;
         }
         return $this;

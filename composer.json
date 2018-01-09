@@ -5,7 +5,8 @@
     "description": "Kimai Time Tracking reloaded",
     "autoload": {
         "psr-4": {
-            "": "src/"
+            "": "src/",
+            "KimaiTest\\": "tests/"
         },
         "classmap": [
             "app/AppKernel.php",

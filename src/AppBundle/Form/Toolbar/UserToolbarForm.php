@@ -9,31 +9,31 @@
  * file that was distributed with this source code.
  */
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\Toolbar;
 
-use AppBundle\Entity\User;
 use AppBundle\Form\Type\UserRoleType;
-use Symfony\Component\Form\AbstractType;
+use AppBundle\Repository\Query\UserQuery;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Defines the form used to set roles for a User.
+ * Defines the form used for filtering the user.
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class UserRolesType extends AbstractType
+class UserToolbarForm extends VisibilityToolbarForm
 {
+
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        parent::buildForm($builder, $options);
+
         $builder
-            // string[]
-            ->add('roles', UserRoleType::class, [
-                'label' => 'label.roles',
-                'multiple' => true,
+            ->add('role', UserRoleType::class, [
+                'required' => false,
             ])
         ;
     }
@@ -44,10 +44,8 @@ class UserRolesType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
-            'csrf_protection' => true,
-            'csrf_field_name' => '_token',
-            'csrf_token_id' => 'edit_user_roles',
+            'data_class' => UserQuery::class,
+            'csrf_protection' => false,
         ]);
     }
 }
