@@ -11,6 +11,7 @@
 
 namespace TimesheetBundle\Form\Toolbar;
 
+use AppBundle\Form\Toolbar\VisibilityToolbarForm;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use TimesheetBundle\Form\Type\CustomerType;

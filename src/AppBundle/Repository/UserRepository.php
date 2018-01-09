@@ -57,10 +57,10 @@ class UserRepository extends AbstractRepository
             ->from('AppBundle:User', 'u')
             ->orderBy('u.' . $query->getOrderBy(), $query->getOrder());
 
-        if ($query->getVisibility() === UserQuery::SHOW_VISIBLE) {
-            $qb->andWhere('u.visible = 1');
-        } elseif ($query->getVisibility() === UserQuery::SHOW_HIDDEN) {
-            $qb->andWhere('u.visible = 0');
+        if ($query->getVisibility() == UserQuery::SHOW_VISIBLE) {
+            $qb->andWhere('u.active = 1');
+        } elseif ($query->getVisibility() == UserQuery::SHOW_HIDDEN) {
+            $qb->andWhere('u.active = 0');
         }
 
         return $this->getPager($qb->getQuery(), $query->getPage(), $query->getPageSize());

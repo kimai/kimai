@@ -9,18 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace TimesheetBundle\Form\Toolbar;
+namespace AppBundle\Form\Toolbar;
 
-use AppBundle\Form\Toolbar\VisibilityToolbarForm;
+use AppBundle\Repository\Query\UserQuery;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use TimesheetBundle\Repository\Query\CustomerQuery;
 
 /**
- * Defines the form used for filtering the customer.
+ * Defines the form used for filtering the user.
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class CustomerToolbarForm extends VisibilityToolbarForm
+class UserToolbarForm extends VisibilityToolbarForm
 {
 
     /**
@@ -29,7 +28,7 @@ class CustomerToolbarForm extends VisibilityToolbarForm
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => CustomerQuery::class,
+            'data_class' => UserQuery::class,
             'csrf_protection' => false,
         ]);
     }

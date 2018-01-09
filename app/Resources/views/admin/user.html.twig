@@ -5,6 +5,7 @@
 
 {% block page_title %}{{ 'admin_user.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_user.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
+{% block javascript_imports %}<script src="{{ asset('js/toolbar.js') }}"></script>{% endblock %}
 
 {% block main %}
     {% if entries.count > 0 %}
@@ -17,7 +18,7 @@
             'label.active': '',
             'label.roles': '',
             'label.actions': '',
-        }, null, {'plus-square': path('admin_user_create')}) }}
+        }, toolbarForm, {'plus-square': path('admin_user_create')}) }}
 
         {% for entry in entries %}
             <tr>
