@@ -50,6 +50,9 @@ class ActivityRepository extends AbstractRepository
             ->join('a.project', 'p')
             ->join('p.customer', 'c')
             ->where($qb->expr()->isNotNull('t.end'))
+            ->andWhere('a.visible = 1')
+            ->andWhere('p.visible = 1')
+            ->andWhere('c.visible = 1')
             ->groupBy('a.id')
             ->orderBy('t.end', 'DESC')
             ->setMaxResults(10)
@@ -94,6 +97,20 @@ class ActivityRepository extends AbstractRepository
     }
 
     /**
+     * Returns a query builder that is used for ActivityType and your own 'query_builder' option.
+     *
+     * @param Activity|null $entity
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function builderForEntityType(Activity $entity = null)
+    {
+        $query = new ActivityQuery();
+        $query->setHiddenEntity($entity);
+        $query->setResultType(ActivityQuery::RESULT_TYPE_QUERYBUILDER);
+        return $this->findByQuery($query);
+    }
+
+    /**
      * @param ActivityQuery $query
      * @return \Doctrine\ORM\QueryBuilder|\Pagerfanta\Pagerfanta
      */
@@ -108,11 +125,19 @@ class ActivityRepository extends AbstractRepository
             ->orderBy('a.' . $query->getOrderBy(), $query->getOrder());
 
         if ($query->getVisibility() == ActivityQuery::SHOW_VISIBLE) {
+            if (!$query->isExclusiveVisibility()) {
+                $qb->andWhere('c.visible = 1');
+                $qb->andWhere('p.visible = 1');
+            }
             $qb->andWhere('a.visible = 1');
-            // TODO check for visibility of customer and project
+
+            /** @var Activity $entity */
+            $entity = $query->getHiddenEntity();
+            if ($entity !== null) {
+                $qb->orWhere('a.id = :activity')->setParameter('activity', $entity);
+            }
         } elseif ($query->getVisibility() == ActivityQuery::SHOW_HIDDEN) {
             $qb->andWhere('a.visible = 0');
-            // TODO check for visibility of customer and project
         }
 
         if ($query->getProject() !== null) {

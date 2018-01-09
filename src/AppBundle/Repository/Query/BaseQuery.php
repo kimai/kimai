@@ -29,6 +29,10 @@ class BaseQuery
     const RESULT_TYPE_QUERYBUILDER = 'QueryBuilder';
 
     /**
+     * @var \stdClass
+     */
+    protected $hiddenEntity;
+    /**
      * @var int
      */
     protected $page = self::DEFAULT_PAGE;
@@ -146,4 +150,23 @@ class BaseQuery
         }
         return $this;
     }
+
+    /**
+     * @return \stdClass
+     */
+    public function getHiddenEntity()
+    {
+        return $this->hiddenEntity;
+    }
+
+    /**
+     * @param \stdClass $hiddenEntity
+     * @return BaseQuery
+     */
+    public function setHiddenEntity($hiddenEntity)
+    {
+        $this->hiddenEntity = $hiddenEntity;
+        return $this;
+    }
+
 }

@@ -22,7 +22,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use TimesheetBundle\Entity\Customer;
 use TimesheetBundle\Entity\Project;
 use TimesheetBundle\Form\ActivityEditForm;
-use TimesheetBundle\Form\ActivityToolbarForm;
+use TimesheetBundle\Form\Toolbar\ActivityToolbarForm;
 use TimesheetBundle\Repository\Query\ActivityQuery;
 
 /**
@@ -41,7 +41,7 @@ class ActivityController extends AbstractController
      */
     protected function getQueryForRequest(Request $request)
     {
-        $visibility = $request->get('visibility');
+        $visibility = $request->get('visibility', ActivityQuery::SHOW_VISIBLE);
         if (strlen($visibility) == 0 || (int)$visibility != $visibility) {
             $visibility = ActivityQuery::SHOW_BOTH;
         }
@@ -70,6 +70,7 @@ class ActivityController extends AbstractController
             ->setVisibility($visibility)
             ->setCustomer($customer)
             ->setProject($project)
+            ->setExclusiveVisibility(true)
         ;
 
         return $query ;

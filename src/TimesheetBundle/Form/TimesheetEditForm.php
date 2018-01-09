@@ -20,6 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use TimesheetBundle\Entity\Customer;
 use TimesheetBundle\Entity\Timesheet;
 use TimesheetBundle\Form\Type\ActivityGroupedWithCustomerNameType;
+use TimesheetBundle\Repository\ActivityRepository;
 
 /**
  * Defines the form used to manipulate Timesheet entries.
@@ -34,6 +35,14 @@ class TimesheetEditForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var Timesheet $entry */
+        $entry = $options['data'];
+
+        $activity = null;
+        if ($entry->getId() !== null) {
+            $activity = $entry->getActivity();
+        }
+
         $builder
             // datetime
             ->add('begin', DateTimeType::class, [
@@ -46,16 +55,12 @@ class TimesheetEditForm extends AbstractType
                 'date_widget' => 'single_text',
                 'required' => false,
             ])
-            // integer
-            /*
-            // User
-            ->add('user', UserType::class, [
-                'label' => 'label.user',
-            ])
-            */
             // Activity
             ->add('activity', ActivityGroupedWithCustomerNameType::class, [
                 'label' => 'label.activity',
+                'query_builder' => function (ActivityRepository $repo) use ($activity) {
+                    return $repo->builderForEntityType($activity);
+                },
             ])
             // customer
             ->add('description', TextareaType::class, [

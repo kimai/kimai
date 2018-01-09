@@ -16,7 +16,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use TimesheetBundle\Entity\Activity;
 use TimesheetBundle\Repository\ActivityRepository;
-use TimesheetBundle\Repository\Query\ActivityQuery;
 
 /**
  * Custom form field type to select an activity.
@@ -29,20 +28,31 @@ class ActivityType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    public function groupBy(Activity $activity, $key, $index)
+    {
+        return '[' . $activity->getProject()->getId() . '] ' . $activity->getProject()->getName();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function choiceLabel(Activity $activity)
+    {
+        return $activity->getName();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'label' => 'label.activity',
             'class' => 'TimesheetBundle:Activity',
-            'choice_label' => 'name',
-            'group_by' => function (Activity $activity, $key, $index) {
-                return '[' . $activity->getProject()->getId() . '] ' . $activity->getProject()->getName();
-            },
+            'choice_label' => [$this, 'choiceLabel'],
+            'group_by' => [$this, 'groupBy'],
             'query_builder' => function (ActivityRepository $repo) {
-                $query = new ActivityQuery();
-                $query->setVisibility(ActivityQuery::SHOW_BOTH);
-                $query->setResultType(ActivityQuery::RESULT_TYPE_QUERYBUILDER);
-                return $repo->findByQuery($query);
+                return $repo->builderForEntityType(null);
             },
         ]);
     }
