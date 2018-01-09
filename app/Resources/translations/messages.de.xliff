@@ -30,6 +30,10 @@
         <source>create</source>
         <target>Erstellen</target>
       </trans-unit>
+      <trans-unit id="confirm.delete">
+        <source>confirm.delete</source>
+        <target>Wollen Sie das wirklich löschen?</target>
+      </trans-unit>
 
       <!--
         Login / Security

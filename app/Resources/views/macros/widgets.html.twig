@@ -167,7 +167,7 @@
 {% endmacro %}
 
 {% macro button_action(icon, url) %}
-    <a href="{{ url }}" class="btn btn-default">
+    <a href="{{ url }}" class="btn btn-default btn-{{ icon }}">
         <i class="fa fa-{{ icon }}"></i>
     </a>
 {% endmacro %}

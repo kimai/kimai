@@ -7,6 +7,11 @@ $(document).ready(function() {
         var methods = {
             init : function(options) {
                 $.fn.kimai.settings = $.extend( {}, $.fn.kimai.defaults, options );
+
+                // ask before a delete call is executed
+                $('a.btn-trash').click(function (event) {
+                    return confirm($.fn.kimai.settings['confirmDelete']);
+                });
             },
             hook: function(name) {
                 alert('Hook: ' + name);
@@ -45,7 +50,8 @@ $(document).ready(function() {
         // default values
         $.fn.kimai.defaults = {
             baseUrl: '/',
-            imagePath: '/images'
+            imagePath: '/images',
+            confirmDelete: 'Really delete?'
         };
 
         // once initialized, here are all values

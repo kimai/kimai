@@ -38,11 +38,14 @@
             <td class="hidden-xs hidden-sm">{{ widgets.label_activity(entry.activity) }}</td>
             <td class="hidden-xs hidden-sm">{{ entry.description }}</td>
             <td>
+                {% set actionButtons = {'repeat': path('timesheet_start', {'id' : entry.activity.id}), 'edit': path('timesheet_edit', {'id' : entry.id, 'page': page})} %}
                 {% if entry.end %}
-                    {{ widgets.button_group({'repeat': path('timesheet_start', {'id' : entry.activity.id}), 'edit': path('timesheet_edit', {'id' : entry.id, 'page': page}), 'trash': '#'}) }}
-                {% else %}
-                    {{ widgets.button_group({'stop': path('timesheet_stop', {'id' : entry.id}), 'edit': path('timesheet_edit', {'id' : entry.id, 'page': page}), 'trash': '#'}) }}
+                    {% set actionButtons = {'stop': path('timesheet_stop', {'id' : entry.id}), 'edit': path('timesheet_edit', {'id' : entry.id, 'page': page})} %}
                 {% endif %}
+                {% if is_granted('delete', entry) %}
+                    {% set actionButtons = actionButtons|merge({'trash': path('timesheet_delete', {'id' : entry.id, 'page': page})}) %}
+                {% endif %}
+                {{ widgets.button_group(actionButtons) }}
             </td>
         </tr>
     {% endfor %}
