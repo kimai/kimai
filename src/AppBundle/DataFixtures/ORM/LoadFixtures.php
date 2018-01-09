@@ -43,53 +43,77 @@ class LoadFixtures implements FixtureInterface, ContainerAwareInterface
         $passwordEncoder = $this->container->get('security.password_encoder');
 
         $claraCustomer = new User();
-        $claraCustomer->setAlias('Clara Haynes');
-        $claraCustomer->setTitle('CFO');
-        $claraCustomer->setUsername('clara_customer');
-        $claraCustomer->setEmail('clara_customer@example.com');
-        $claraCustomer->setRoles(['ROLE_CUSTOMER']);
-        $claraCustomer->setAvatar('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=monsterid&f=y');
-        $claraCustomer->setPassword($passwordEncoder->encodePassword($claraCustomer, self::DEFAULT_PASSWORD));
+        $claraCustomer
+            ->setAlias('Clara Haynes')
+            ->setTitle('CFO')
+            ->setUsername('clara_customer')
+            ->setEmail('clara_customer@example.com')
+            ->setRoles(['ROLE_CUSTOMER'])
+            ->setAvatar('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=monsterid&f=y')
+            ->setPassword($passwordEncoder->encodePassword($claraCustomer, self::DEFAULT_PASSWORD))
+        ;
         $manager->persist($claraCustomer);
 
         $johnUser = new User();
-        $johnUser->setAlias('John Doe');
-        $johnUser->setTitle('Developer');
-        $johnUser->setUsername('john_user');
-        $johnUser->setEmail('john_user@example.com');
-        $johnUser->setRoles(['ROLE_USER']);
-        $johnUser->setAvatar('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y');
-        $johnUser->setPassword($passwordEncoder->encodePassword($claraCustomer, self::DEFAULT_PASSWORD));
+        $johnUser
+            ->setAlias('John Doe')
+            ->setTitle('Developer')
+            ->setUsername('john_user')
+            ->setEmail('john_user@example.com')
+            ->setRoles(['ROLE_USER'])
+            ->setAvatar('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y')
+            ->setPassword($passwordEncoder->encodePassword($claraCustomer, self::DEFAULT_PASSWORD))
+        ;
         $manager->persist($johnUser);
 
+        $deactiveUser = new User();
+        $deactiveUser
+            ->setAlias('Chris Deactive')
+            ->setTitle('Developer (left company)')
+            ->setUsername('chris_user')
+            ->setEmail('chris_user@example.com')
+            ->setRoles(['ROLE_USER'])
+            ->setAvatar('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y')
+            ->setPassword($passwordEncoder->encodePassword($claraCustomer, self::DEFAULT_PASSWORD))
+            // inactive for testing user login and UI
+            ->setActive(false)
+        ;
+        $manager->persist($deactiveUser);
+
         $tonyTeamlead = new User();
-        $tonyTeamlead->setAlias('Tony Maier');
-        $tonyTeamlead->setTitle('Head of Development');
-        $tonyTeamlead->setUsername('tony_teamlead');
-        $tonyTeamlead->setEmail('tony_teamlead@example.com');
-        $tonyTeamlead->setRoles(['ROLE_TEAMLEAD']);
-        $tonyTeamlead->setAvatar('https://en.gravatar.com/userimage/3533186/bf2163b1dd23f3107a028af0195624e9.jpeg');
-        $tonyTeamlead->setPassword($passwordEncoder->encodePassword($claraCustomer, self::DEFAULT_PASSWORD));
+        $tonyTeamlead
+            ->setAlias('Tony Maier')
+            ->setTitle('Head of Development')
+            ->setUsername('tony_teamlead')
+            ->setEmail('tony_teamlead@example.com')
+            ->setRoles(['ROLE_TEAMLEAD'])
+            ->setAvatar('https://en.gravatar.com/userimage/3533186/bf2163b1dd23f3107a028af0195624e9.jpeg')
+            ->setPassword($passwordEncoder->encodePassword($claraCustomer, self::DEFAULT_PASSWORD))
+        ;
         $manager->persist($tonyTeamlead);
 
         $annaAdmin = new User();
-        $annaAdmin->setAlias('Anna Smith');
-        $annaAdmin->setTitle('Administrator');
-        $annaAdmin->setUsername('anna_admin');
-        $annaAdmin->setEmail('anna_admin@example.com');
-        $annaAdmin->setRoles(['ROLE_ADMIN']);
-        // no avatar to test default image!
-        $annaAdmin->setPassword($passwordEncoder->encodePassword($claraCustomer, self::DEFAULT_PASSWORD));
+        $annaAdmin
+            ->setAlias('Anna Smith')
+            ->setTitle('Administrator')
+            ->setUsername('anna_admin')
+            ->setEmail('anna_admin@example.com')
+            ->setRoles(['ROLE_ADMIN'])
+            // no avatar to test default image!
+            ->setPassword($passwordEncoder->encodePassword($claraCustomer, self::DEFAULT_PASSWORD))
+        ;
         $manager->persist($annaAdmin);
 
         $susanSuper = new User();
-        $susanSuper->setAlias('Susan Sanchez');
-        $susanSuper->setTitle('Super Administrator');
-        $susanSuper->setUsername('susan_super');
-        $susanSuper->setEmail('susan_super@example.com');
-        $susanSuper->setRoles(['ROLE_SUPER_ADMIN']);
-        $susanSuper->setAvatar('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=wavatar&f=y');
-        $susanSuper->setPassword($passwordEncoder->encodePassword($claraCustomer, self::DEFAULT_PASSWORD));
+        $susanSuper
+            // no alias to test the username macros
+            ->setTitle('Super Administrator')
+            ->setUsername('susan_super')
+            ->setEmail('susan_super@example.com')
+            ->setRoles(['ROLE_SUPER_ADMIN'])
+            ->setAvatar('/bundles/avanzuadmintheme/img/avatar.png')
+            ->setPassword($passwordEncoder->encodePassword($claraCustomer, self::DEFAULT_PASSWORD))
+        ;
         $manager->persist($susanSuper);
 
         $manager->flush();
