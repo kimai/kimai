@@ -21,6 +21,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use TimesheetBundle\Entity\Customer;
 use TimesheetBundle\Entity\Project;
 use TimesheetBundle\Form\Type\CustomerType;
+use TimesheetBundle\Repository\CustomerRepository;
 
 /**
  * Defines the form used to edit Projects.
@@ -35,6 +36,14 @@ class ProjectEditForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var Project $entry */
+        $entry = $options['data'];
+
+        $customer = null;
+        if ($entry->getId() !== null) {
+            $customer = $entry->getCustomer();
+        }
+
         $builder
             // string - length 255
             ->add('name', TextType::class, [
@@ -47,6 +56,9 @@ class ProjectEditForm extends AbstractType
             // customer
             ->add('customer', CustomerType::class, [
                 'label' => 'label.customer',
+                'query_builder' => function (CustomerRepository $repo) use ($customer) {
+                    return $repo->builderForEntityType($customer);
+                },
             ])
             // boolean
             ->add('visible', VisibilityType::class, [
@@ -57,17 +69,6 @@ class ProjectEditForm extends AbstractType
                 'label' => 'label.budget',
                 'currency' => $builder->getOption('currency'),
             ])
-            // do not allow activity selection as this causes headaches:
-            // 1. it is a bad UX
-            // 2. what should happen if they are detached?
-            /*
-            ->add('activities', EntityType::class, [
-                'label' => 'label.activity',
-                'class' => 'TimesheetBundle:Activity',
-                'multiple' => true,
-                'expanded' => true
-            ])
-            */
         ;
     }
 

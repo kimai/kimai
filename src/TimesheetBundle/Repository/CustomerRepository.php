@@ -51,6 +51,20 @@ class CustomerRepository extends AbstractRepository
     }
 
     /**
+     * Returns a query builder that is used for CustomerType and your own 'query_builder' option.
+     *
+     * @param Customer|null $entity
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function builderForEntityType(Customer $entity = null)
+    {
+        $query = new CustomerQuery();
+        $query->setHiddenEntity($entity);
+        $query->setResultType(CustomerQuery::RESULT_TYPE_QUERYBUILDER);
+        return $this->findByQuery($query);
+    }
+
+    /**
      * @param CustomerQuery $query
      * @return \Doctrine\ORM\QueryBuilder|\Pagerfanta\Pagerfanta
      */
@@ -64,6 +78,12 @@ class CustomerRepository extends AbstractRepository
 
         if ($query->getVisibility() == CustomerQuery::SHOW_VISIBLE) {
             $qb->andWhere('c.visible = 1');
+
+            /** @var Customer $entity */
+            $entity = $query->getHiddenEntity();
+            if ($entity!== null) {
+                $qb->orWhere('c.id = :customer')->setParameter('customer', $entity);
+            }
         } elseif ($query->getVisibility() == CustomerQuery::SHOW_HIDDEN) {
             $qb->andWhere('c.visible = 0');
         }
