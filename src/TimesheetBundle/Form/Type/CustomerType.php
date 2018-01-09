@@ -35,10 +35,7 @@ class CustomerType extends AbstractType
             'class' => 'TimesheetBundle:Customer',
             'choice_label' => 'name',
             'query_builder' => function (CustomerRepository $repo) {
-                $query = new CustomerQuery();
-                $query->setVisibility(CustomerQuery::SHOW_BOTH);
-                $query->setResultType(CustomerQuery::RESULT_TYPE_QUERYBUILDER);
-                return $repo->findByQuery($query);
+                return $repo->builderForEntityType(null);
             },
         ]);
     }

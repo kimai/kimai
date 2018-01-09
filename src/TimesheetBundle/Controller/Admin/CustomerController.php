@@ -20,7 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use TimesheetBundle\Form\CustomerEditForm;
-use TimesheetBundle\Form\CustomerToolbarForm;
+use TimesheetBundle\Form\Toolbar\CustomerToolbarForm;
 use TimesheetBundle\Repository\Query\CustomerQuery;
 
 /**
@@ -40,7 +40,7 @@ class CustomerController extends AbstractController
      */
     protected function getQueryForRequest(Request $request)
     {
-        $visibility = $request->get('visibility');
+        $visibility = $request->get('visibility', CustomerQuery::SHOW_VISIBLE);
         if (strlen($visibility) == 0 || (int)$visibility != $visibility) {
             $visibility = CustomerQuery::SHOW_BOTH;
         }
