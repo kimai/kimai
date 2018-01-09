@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace TimesheetBundle\Form;
+namespace TimesheetBundle\Form\Toolbar;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -29,10 +29,10 @@ class ActivityToolbarForm extends ProjectToolbarForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        parent::buildForm($builder, $options);
+
         /** @var ActivityQuery $query */
         $query = $options['data'];
-
-        parent::buildForm($builder, $options);
 
         if ($query->getCustomer() === null) {
             return;

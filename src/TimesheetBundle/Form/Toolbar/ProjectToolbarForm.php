@@ -9,47 +9,39 @@
  * file that was distributed with this source code.
  */
 
-namespace TimesheetBundle\Form;
+namespace TimesheetBundle\Form\Toolbar;
 
-use AppBundle\Form\Type\PageSizeType;
-use AppBundle\Form\Type\VisibilityType;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use TimesheetBundle\Form\Type\CustomerType;
+use TimesheetBundle\Repository\CustomerRepository;
 use TimesheetBundle\Repository\Query\CustomerQuery;
+use TimesheetBundle\Repository\Query\ProjectQuery;
 
 /**
- * Defines the form used for filtering the customer.
+ * Defines the form used for filtering the projects.
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class CustomerToolbarForm extends AbstractType
+class ProjectToolbarForm extends VisibilityToolbarForm
 {
-    /**
-     * Dirty hack to enable easy handling of GET form in controller and javascript.
-     *Cleans up the name of all form elents (and unfortunately of the form itself).
-     *
-     * @return null|string
-     */
-    public function getBlockPrefix()
-    {
-        return '';
-    }
 
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var CustomerQuery $query */
-        $query = $options['data'];
+        parent::buildForm($builder, $options);
 
         $builder
-            ->add('pageSize', PageSizeType::class, [
+            ->add('customer', CustomerType::class, [
                 'required' => false,
-            ])
-            ->add('visibility', VisibilityType::class, [
-                'required' => false,
+                'query_builder' => function (CustomerRepository $repo) {
+                    $query = new CustomerQuery();
+                    $query->setVisibility(CustomerQuery::SHOW_BOTH); // this field is the reason for the query here
+                    $query->setResultType(CustomerQuery::RESULT_TYPE_QUERYBUILDER);
+                    return $repo->findByQuery($query);
+                },
             ])
         ;
     }
@@ -60,7 +52,7 @@ class CustomerToolbarForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => CustomerQuery::class,
+            'data_class' => ProjectQuery::class,
             'csrf_protection' => false,
         ]);
     }
