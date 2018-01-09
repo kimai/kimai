@@ -93,7 +93,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('.dropdown-toggle').dropdown();
-            $(document).kimai({imagePath: '{{ asset('images') }}'});
+            $(document).kimai({imagePath: '{{ asset('images') }}', confirmDelete: '{{ 'confirm.delete'|trans }}'});
             //$(document).kimai('pauseRecord', 'li.messages-menu ul.menu li');
         });
     </script>

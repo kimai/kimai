@@ -145,6 +145,26 @@ class TimesheetController extends AbstractController
     }
 
     /**
+     * The route to delete an existing entry.
+     *
+     * @Route("/{id}/delete", name="timesheet_delete")
+     * @Method({"GET", "POST"})
+     * @Security("is_granted('delete', entry)")
+     *
+     * @param Timesheet $entry
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteAction(Timesheet $entry, Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($entry);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('timesheet_paginated', ['page' => $request->get('page')]);
+    }
+
+    /**
      * @param Timesheet $entry
      * @return \Symfony\Component\Form\FormInterface
      */
