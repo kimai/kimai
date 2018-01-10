@@ -19,6 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use TimesheetBundle\Form\CustomerDeleteForm;
 use TimesheetBundle\Form\CustomerEditForm;
 use TimesheetBundle\Form\Toolbar\CustomerToolbarForm;
 use TimesheetBundle\Repository\Query\CustomerQuery;
@@ -33,6 +34,14 @@ use TimesheetBundle\Repository\Query\CustomerQuery;
  */
 class CustomerController extends AbstractController
 {
+
+    /**
+     * @return \TimesheetBundle\Repository\CustomerRepository
+     */
+    protected function getRepository()
+    {
+        return $this->getDoctrine()->getRepository(Customer::class);
+    }
 
     /**
      * @param Request $request
@@ -66,7 +75,7 @@ class CustomerController extends AbstractController
         $query->setPage($page);
 
         /* @var $entries Pagerfanta */
-        $entries = $this->getDoctrine()->getRepository(Customer::class)->findByQuery($query);
+        $entries = $this->getRepository()->findByQuery($query);
 
         return $this->render('TimesheetBundle:admin:customer.html.twig', [
             'entries' => $entries,
@@ -115,13 +124,49 @@ class CustomerController extends AbstractController
             return $this->redirectToRoute('admin_customer', ['id' => $customer->getId()]);
         }
 
-        return $this->render(
-            'TimesheetBundle:admin:customer_edit.html.twig',
-            [
-                'customer' => $customer,
-                'form' => $editForm->createView()
-            ]
-        );
+        return $this->render('TimesheetBundle:admin:customer_edit.html.twig', [
+            'customer' => $customer,
+            'form' => $editForm->createView()
+        ]);
+    }
+
+    /**
+     * The route to delete an existing entry.
+     *
+     * @Route("/{id}/delete", name="admin_customer_delete")
+     * @Method({"GET", "POST"})
+     * @Security("is_granted('delete', customer)")
+     *
+     * @param Customer $customer
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteAction(Customer $customer, Request $request)
+    {
+        $stats = $this->getRepository()->getCustomerStatistics($customer);
+
+        $deleteForm = $this->createForm(CustomerDeleteForm::class, $customer, [
+            'action' => $this->generateUrl('admin_customer_delete', ['id' => $customer->getId()]),
+            'method' => 'POST'
+        ]);
+
+        $deleteForm->handleRequest($request);
+
+        if ($stats->getRecordAmount() == 0 || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($customer);
+            $entityManager->flush();
+
+            $this->flashSuccess('action.deleted_successfully');
+
+            return $this->redirectToRoute('admin_customer', ['id' => $customer->getId()]);
+        }
+
+        return $this->render('TimesheetBundle:admin:customer_delete.html.twig', [
+            'customer' => $customer,
+            'stats' => $stats,
+            'form' => $deleteForm->createView(),
+        ]);
     }
 
     /**
@@ -130,16 +175,12 @@ class CustomerController extends AbstractController
      */
     protected function getToolbarForm(CustomerQuery $query)
     {
-        return $this->createForm(
-            CustomerToolbarForm::class,
-            $query,
-            [
-                'action' => $this->generateUrl('admin_customer_paginated', [
-                    'page' => $query->getPage(),
-                ]),
-                'method' => 'GET',
-            ]
-        );
+        return $this->createForm(CustomerToolbarForm::class, $query, [
+            'action' => $this->generateUrl('admin_customer_paginated', [
+                'page' => $query->getPage(),
+            ]),
+            'method' => 'GET',
+        ]);
     }
 
     /**
@@ -154,13 +195,9 @@ class CustomerController extends AbstractController
             $url = $this->generateUrl('admin_customer_edit', ['id' => $customer->getId()]);
         }
 
-        return $this->createForm(
-            CustomerEditForm::class,
-            $customer,
-            [
-                'action' => $url,
-                'method' => 'POST'
-            ]
-        );
+        return $this->createForm(CustomerEditForm::class, $customer, [
+            'action' => $url,
+            'method' => 'POST'
+        ]);
     }
 }

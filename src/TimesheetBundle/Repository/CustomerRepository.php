@@ -12,6 +12,7 @@
 namespace TimesheetBundle\Repository;
 
 use AppBundle\Repository\AbstractRepository;
+use Doctrine\ORM\Query;
 use TimesheetBundle\Entity\Customer;
 use TimesheetBundle\Model\CustomerStatistic;
 use TimesheetBundle\Repository\Query\CustomerQuery;
@@ -46,7 +47,47 @@ class CustomerRepository extends AbstractRepository
             ->getSingleScalarResult();
 
         $stats = new CustomerStatistic();
-        $stats->setTotalAmount($countAll);
+        $stats->setCount($countAll);
+        return $stats;
+    }
+
+    /**
+     * Retrieves statistics for one customer.
+     *
+     * @param Customer $customer
+     * @return CustomerStatistic
+     */
+    public function getCustomerStatistics(Customer $customer)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('COUNT(t.id) as recordAmount', 'SUM(t.duration) as recordDuration, COUNT(DISTINCT(a.id)) as activityAmount, COUNT(DISTINCT(p.id)) as projectAmount')
+            ->from('TimesheetBundle:Timesheet', 't')
+            ->join('TimesheetBundle:Activity', 'a')
+            ->join('TimesheetBundle:Project', 'p')
+            ->join('TimesheetBundle:Customer', 'c')
+            ->andWhere('t.activity = a.id')
+            ->andWhere('a.project = p.id')
+            ->andWhere('p.customer = c.id')
+            ->andWhere('c.id = :customer')
+        ;
+
+//        dump($qb->getQuery()->getSQL());exit;
+
+        $result = $qb->getQuery()->execute(['customer' => $customer], Query::HYDRATE_ARRAY);
+
+        $stats = new CustomerStatistic();
+
+        if (isset($result[0])) {
+            $dbStats = $result[0];
+
+            $stats->setCount(1);
+            $stats->setRecordAmount($dbStats['recordAmount']);
+            $stats->setRecordDuration($dbStats['recordDuration']);
+            $stats->setActivityAmount($dbStats['activityAmount']);
+            $stats->setProjectAmount($dbStats['projectAmount']);
+        }
+
         return $stats;
     }
 

@@ -16,7 +16,6 @@
         'label.name': '',
         'label.customer': '',
         'label.comment': 'hidden-xs hidden-sm',
-        'label.activity': 'hidden-xs hidden-sm',
         'label.budget': 'hidden-xs',
         'label.visible': '',
         'label.actions': '',
@@ -30,7 +29,6 @@
                 <a href="{{ path('admin_customer_edit', {'id' : entry.customer.id}) }}">{{ widgets.label_customer(entry.customer) }}</a>
             </td>
             <td class="hidden-xs hidden-sm">{{ entry.comment }}</td>
-            <td class="hidden-xs hidden-sm">{{ widgets.badge_counter(entry.activities.count) }}</td>
             <td class="hidden-xs">{{ entry.budget|money(entry.customer.currency) }}</td>
             <td>{{ widgets.label_visible(entry.visible) }}</td>
             <td>

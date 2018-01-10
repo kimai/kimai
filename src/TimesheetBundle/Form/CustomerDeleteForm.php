@@ -13,14 +13,14 @@ namespace TimesheetBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use TimesheetBundle\Entity\Activity;
+use TimesheetBundle\Entity\Customer;
 
 /**
- * The form used to delete Activities.
+ * The form used to delete Customers.
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class ActivityDeleteForm extends AbstractType
+class CustomerDeleteForm extends AbstractType
 {
 
     /**
@@ -29,10 +29,10 @@ class ActivityDeleteForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Activity::class,
+            'data_class' => Customer::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
-            'csrf_token_id' => 'admin_activity_delete',
+            'csrf_token_id' => 'admin_customer_delete',
         ]);
     }
 }
