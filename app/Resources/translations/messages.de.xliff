@@ -396,7 +396,7 @@
       </trans-unit>
       <trans-unit id="admin_project.delete_confirm">
         <source>admin_project.delete_confirm</source>
-        <target>Momentan existieren für das Projekt %project% des Kunden %customer% insgesamt %activities% Aktivitäten und %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen. Alle Aktivitäten und Zeiteinträge werden ebenfalls mit gelöscht!</target>
+        <target>Momentan existieren für das Projekt %project% des Kunden %customer% insgesamt %activities% Aktivitäten und %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen. Diese Aktivitäten und Zeiteinträge werden ebenfalls mit gelöscht!</target>
       </trans-unit>
 
       <!--
@@ -412,7 +412,7 @@
       </trans-unit>
       <trans-unit id="admin_activity.delete_confirm">
         <source>admin_activity.delete_confirm</source>
-        <target>Momentan existieren für die Aktivität %activity% im Projekt %project% für den Kunden %customer% insgesamt %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen. Alle Zeiteinträge werden ebenfalls mit gelöscht!</target>
+        <target>Momentan existieren für die Aktivität %activity% im Projekt %project% für den Kunden %customer% insgesamt %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen. Diese Zeiteinträge werden ebenfalls mit gelöscht!</target>
       </trans-unit>
 
       <!--
@@ -469,6 +469,10 @@
       <trans-unit id="label.currency">
         <source>label.currency</source>
         <target>Währung</target>
+      </trans-unit>
+      <trans-unit id="admin_customer.delete_confirm">
+        <source>admin_customer.delete_confirm</source>
+        <target>Momentan existieren für den Kunden %customer% insgesamt %project%  Projekte mit %activity% Aktivitäten, die sich in %records% Zeiteinträgen auf eine Gesamtdauer von %duration% belaufen. Diese Projekte, Aktivitäten und Zeiteinträge werden ebenfalls mit gelöscht!</target>
       </trans-unit>
 
       <!--
