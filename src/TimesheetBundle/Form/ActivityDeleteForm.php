@@ -32,7 +32,7 @@ class ActivityDeleteForm extends AbstractType
             'data_class' => Activity::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
-            'csrf_token_id' => 'admin_activity_edit',
+            'csrf_token_id' => 'admin_activity_delete',
         ]);
     }
 }
