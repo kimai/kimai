@@ -34,10 +34,14 @@
             <td class="hidden-xs">{{ entry.budget|money(entry.customer.currency) }}</td>
             <td>{{ widgets.label_visible(entry.visible) }}</td>
             <td>
-                {{ widgets.button_group({
-                    'edit': path('admin_project_edit', {'id': entry.id}),
-                    'trash': '#'
-                }) }}
+                {% set actionButtons = {} %}
+                {% if is_granted('edit', entry) %}
+                    {% set actionButtons = {'edit': path('admin_project_edit', {'id': entry.id})}|merge(actionButtons) %}
+                {% endif %}
+                {% if is_granted('delete', entry) %}
+                    {% set actionButtons = actionButtons|merge({'trash': path('admin_project_delete', {'id': entry.id})}) %}
+                {% endif %}
+                {{ widgets.button_group(actionButtons) }}
             </td>
         </tr>
     {% endfor %}

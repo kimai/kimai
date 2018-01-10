@@ -12,6 +12,7 @@
 namespace TimesheetBundle\Repository;
 
 use AppBundle\Repository\AbstractRepository;
+use Doctrine\ORM\Query;
 use TimesheetBundle\Entity\Project;
 use TimesheetBundle\Model\ProjectStatistic;
 use TimesheetBundle\Repository\Query\ProjectQuery;
@@ -46,7 +47,40 @@ class ProjectRepository extends AbstractRepository
             ->getSingleScalarResult();
 
         $stats = new ProjectStatistic();
-        $stats->setTotalAmount($countAll);
+        $stats->setCount($countAll);
+        return $stats;
+    }
+
+    /**
+     * Retrieves statistics for one activity.
+     *
+     * @param Project $project
+     * @return ProjectStatistic
+     */
+    public function getProjectStatistics(Project $project)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('COUNT(t.id) as recordAmount', 'SUM(t.duration) as recordDuration, COUNT(DISTINCT(a.id)) as activityAmount')
+            ->from('TimesheetBundle:Activity', 'a')
+            ->join('TimesheetBundle:Timesheet', 't')
+            ->where('a.project = :project')
+            ->andWhere('t.activity = a.id')
+        ;
+
+        $result = $qb->getQuery()->execute(['project' => $project], Query::HYDRATE_ARRAY);
+
+        $stats = new ProjectStatistic();
+
+        if (isset($result[0])) {
+            $dbStats = $result[0];
+
+            $stats->setCount(1);
+            $stats->setRecordAmount($dbStats['recordAmount']);
+            $stats->setRecordDuration($dbStats['recordDuration']);
+            $stats->setActivityAmount($dbStats['activityAmount']);
+        }
+
         return $stats;
     }
 

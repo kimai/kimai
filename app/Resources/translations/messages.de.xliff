@@ -394,6 +394,10 @@
         <source>admin_project.subtitle</source>
         <target>Ein Projekt fasst Tätigkeiten für jeweils einen Kunden in einer Gruppe zusammen</target>
       </trans-unit>
+      <trans-unit id="admin_project.delete_confirm">
+        <source>admin_project.delete_confirm</source>
+        <target>Momentan existieren für das Projekt %project% des Kunden %customer% insgesamt %activities% Aktivitäten und %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen. Alle Aktivitäten und Zeiteinträge werden ebenfalls mit gelöscht!</target>
+      </trans-unit>
 
       <!--
         Admin: Activity
@@ -408,7 +412,7 @@
       </trans-unit>
       <trans-unit id="admin_activity.delete_confirm">
         <source>admin_activity.delete_confirm</source>
-        <target>Momentan existieren für die Aktivität %activity% im Projekt %project% für den Kunden %customer% insgesamt %count% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen. Alle Zeiteinträge werden ebenfalls mit gelöscht!</target>
+        <target>Momentan existieren für die Aktivität %activity% im Projekt %project% für den Kunden %customer% insgesamt %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen. Alle Zeiteinträge werden ebenfalls mit gelöscht!</target>
       </trans-unit>
 
       <!--
