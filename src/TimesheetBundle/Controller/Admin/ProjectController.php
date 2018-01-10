@@ -59,7 +59,7 @@ class ProjectController extends AbstractController
         $customer = !empty(trim($customer)) ? trim($customer) : null;
 
         if ($customer !== null) {
-            $repo = $this->getRepository();
+            $repo = $this->getDoctrine()->getRepository(Customer::class);
             $customer = $repo->getById($customer);
         }
 
