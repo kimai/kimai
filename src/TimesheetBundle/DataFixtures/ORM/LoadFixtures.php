@@ -191,6 +191,7 @@ class LoadFixtures extends AppBundleLoadFixtures
                 ->setAddress($this->getRandomLocation())
                 ->setComment($this->getRandomPhrase())
                 ->setVisible($visible)
+                ->setCountry('Germany') // TODO randomize country ?
                 ->setTimezone($allTimezones[rand(1, $amountTimezone)]);
 
             $manager->persist($entry);
