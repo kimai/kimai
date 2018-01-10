@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+{% import "macros/datatables.html.twig" as tables %}
+
+{% block page_title %}{{ 'admin_activity.title'|trans }}{% endblock %}
+{% block page_subtitle %}{{ 'admin_activity.subtitle'|trans }}{% endblock %}
+
+{% block main %}
+
+    {% set params = {
+        '%activity%': '<strong>' ~ activity.name ~ '</strong>',
+        '%project%': '<strong>' ~ activity.project.name ~ '</strong>',
+        '%customer%': '<strong>' ~ activity.project.customer.name ~ '</strong>',
+        '%count%': '<strong>' ~ stats.recordAmount ~ '</strong>',
+        '%duration%': '<strong>' ~ stats.recordDuration|duration ~ '</strong>'
+    } %}
+
+    {{ include('default/_form_delete.html.twig', {
+        'message': "admin_activity.delete_confirm"|trans(params)|raw,
+        'form': form,
+        'back': path('admin_activity')
+    }) }}
+
+{% endblock %}

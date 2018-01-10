@@ -1,0 +1,20 @@
+<div class="box box-solid box-danger">
+    <div class="box-header">
+        <h3 class="box-title">{{ title|default('confirm.delete'|trans) }}</h3>
+    </div>
+    <div class="box-body">
+        {{ message|default('confirm.delete_message'|trans)|raw }}
+    </div>
+    {{ form_start(form) }}
+    <div class="box-body">
+        {{ form_widget(form) }}
+    </div>
+    <div class="box-footer">
+        <input type="submit" value="{{ 'action.delete'|trans }}" class="btn btn-danger" />
+        {% if back %}
+            <a href="{{ back }}" class="btn btn-primary">{{ 'action.back'|trans }}</a>
+        {% endif %}
+    </div>
+    {{ form_end(form) }}
+</div>
+

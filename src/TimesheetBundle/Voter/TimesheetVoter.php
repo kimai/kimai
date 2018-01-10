@@ -103,9 +103,18 @@ class TimesheetVoter extends AbstractVoter
     protected function canStart(Activity $activity, User $user, TokenInterface $token)
     {
         // we could check the amount of active entries
-        // TODO limit to activities that are not hidden
-
         // if a teamlead starts an entry for another user, check that this user is part of his team
+
+        if (!$activity->getVisible()) {
+            return false;
+        }
+        if (!$activity->getProject()->getVisible()) {
+            return false;
+        }
+        if (!$activity->getProject()->getCustomer()->getVisible()) {
+            return false;
+        }
+
         return true;
     }
 

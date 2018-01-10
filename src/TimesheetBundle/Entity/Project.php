@@ -38,6 +38,7 @@ class Project
      * @var Customer
      *
      * @ORM\ManyToOne(targetEntity="TimesheetBundle\Entity\Customer", inversedBy="projects")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @Assert\NotNull()
      */
     private $customer;
@@ -76,11 +77,7 @@ class Project
     /**
      * @var Activity[]
      *
-     * @ORM\OneToMany(
-     *     targetEntity="TimesheetBundle\Entity\Activity",
-     *     mappedBy="project",
-     *     cascade={"persist", "merge", "remove"}
-     * )
+     * @ORM\OneToMany(targetEntity="TimesheetBundle\Entity\Activity", mappedBy="project")
      */
     private $activities;
 

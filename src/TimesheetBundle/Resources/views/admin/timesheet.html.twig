@@ -42,8 +42,11 @@
             <td class="hidden-xs"><a href="{{ path('profile'|route_alias, {'username' : entry.user.username}) }}">{{ widgets.label_user(entry.user) }}</a></td>
             <td class="hidden-xs hidden-sm">{{ entry.description }}</td>
             <td>
-                {% set actionButtons = {'edit': path('admin_timesheet_edit', {'id' : entry.id, 'page': page})} %}
-                {% if entry.end %}
+                {% set actionButtons = {} %}
+                {% if is_granted('edit', entry) %}
+                    {% set actionButtons = {'edit': path('admin_timesheet_edit', {'id' : entry.id, 'page': page})}|merge(actionButtons) %}
+                {% endif %}
+                {% if not entry.end and is_granted('stop', entry) %}
                     {% set actionButtons = {'stop': path('admin_timesheet_stop', {'id' : entry.id})}|merge(actionButtons) %}
                 {% endif %}
                 {% if is_granted('delete', entry) %}

@@ -21,21 +21,73 @@ class ActivityStatistic
     /**
      * @var int
      */
-    protected $totalAmount = 0;
+    protected $count = 0;
+    /**
+     * @var int
+     */
+    protected $recordAmount = 0;
+    /**
+     * @var int
+     */
+    protected $recordDuration = 0;
 
     /**
+     * Returns the total amount of included timesheet records.
+     *
      * @return int
      */
-    public function getTotalAmount()
+    public function getRecordAmount()
     {
-        return $this->totalAmount;
+        return $this->recordAmount;
     }
 
     /**
-     * @param int $totalAmount
+     * @param int $recordAmount
+     * @return ActivityStatistic
      */
-    public function setTotalAmount($totalAmount)
+    public function setRecordAmount($recordAmount)
     {
-        $this->totalAmount = $totalAmount;
+        $this->recordAmount = (int) $recordAmount;
+        return $this;
+    }
+
+    /**
+     * Returns the total duration of all included timesheet records.
+     *
+     * @return int
+     */
+    public function getRecordDuration()
+    {
+        return $this->recordDuration;
+    }
+
+    /**
+     * @param int $recordDuration
+     * @return ActivityStatistic
+     */
+    public function setRecordDuration($recordDuration)
+    {
+        $this->recordDuration = (int) $recordDuration;
+        return $this;
+    }
+
+    /**
+     * Returns the amount of activities that are included in the statistic result.
+     *
+     * @return int
+     */
+    public function getCount()
+    {
+        return $this->count;
+    }
+
+    /**
+     * @param int $count
+     * @return ActivityStatistic
+     */
+    public function setCount($count)
+    {
+        $this->count = (int) $count;
+        return $this;
     }
 }

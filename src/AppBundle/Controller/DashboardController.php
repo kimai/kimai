@@ -39,6 +39,11 @@ class DashboardController extends Controller
     {
         $user = $this->getUser();
 
+        $userStats = $this->getDoctrine()->getRepository(User::class)->getGlobalStatistics();
+
+        // FIXME move the other widgets to the TimesheetBundle, the inheritence is wrong as AppBundle
+        // shouldn't know about Timesheets
+
         $timesheetRepo = $this->getDoctrine()->getRepository(Timesheet::class);
         $timesheetUserStats = $timesheetRepo->getUserStatistics($user);
         $timesheetGlobalStats = $timesheetRepo->getGlobalStatistics();
@@ -46,7 +51,6 @@ class DashboardController extends Controller
         $activityStats = $this->getDoctrine()->getRepository(Activity::class)->getGlobalStatistics();
         $projectStats = $this->getDoctrine()->getRepository(Project::class)->getGlobalStatistics();
         $customerStats = $this->getDoctrine()->getRepository(Customer::class)->getGlobalStatistics();
-        $userStats = $this->getDoctrine()->getRepository(User::class)->getGlobalStatistics();
 
         return $this->render('dashboard/index.html.twig', [
             'dashboard_widgets' => $this->getWidgets(),
@@ -129,7 +133,7 @@ class DashboardController extends Controller
                 "{{ widgets.info_box_more('stats.userTotal', user.totalAmount, ' ', path('admin_user'), 'user') }}",
                 "{{ widgets.info_box_more('stats.customerTotal', customer.totalAmount, '', path('admin_customer'), 'users', 'blue') }}",
                 "{{ widgets.info_box_more('stats.projectsTotal', project.totalAmount, '', path('admin_project'), 'book', 'yellow') }}",
-                "{{ widgets.info_box_more('stats.activitiesTotal', activity.totalAmount, '', path('admin_activity'), 'tasks', 'purple') }}",
+                "{{ widgets.info_box_more('stats.activitiesTotal', activity.count, '', path('admin_activity'), 'tasks', 'purple') }}",
             ],
         ];
         // @codingStandardsIgnoreEnd
