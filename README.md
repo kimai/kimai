@@ -16,15 +16,14 @@ It is based on the following PHP components:
 
 ## Requirements
 
-- PHP 7 or higher;
-- One PHP extension of PDO-SQLite and/or PDO-MySQL enabled;
+- PHP 7 or higher
+- One PHP extension of PDO-SQLite and/or PDO-MySQL enabled
 - and the [usual Symfony application requirements](http://symfony.com/doc/current/reference/requirements.html)
 
 If unsure about meeting these requirements, download the demo application and
-browse the `http://localhost:8000/config.php` script to get more detailed
-information.
+browse to the <http://localhost:8000/config.php> script to get more detailed information.
 
-## Installation (dev)
+## Installation
 
 First, install Git and [Composer](https://getcomposer.org/doc/00-intro.md)
 if you haven't already. Then, clone this repo and execute this command in the cloned directory:
@@ -35,7 +34,7 @@ $ cd kimai2/
 ```
 
 Lets prepare the environment by installing all dependencies. You will be asked for your application parameter,
-like the database connection afterwards (if you don't have a app/config/parameters.yml yet):
+like the database connection afterwards (if you don't have a [app/config/parameters.yml](blob/master/app/config/parameters.yml.dist) yet):
 
 ```bash
 $ composer install
@@ -43,7 +42,7 @@ $ composer install
 
 The next command will create the database, the schema and install all web assets:
 ```bash
-$ php bin/console kimai:install --relative
+$ bin/console kimai:install --relative
 ```
 
 ### Installation (live)
@@ -51,35 +50,37 @@ $ php bin/console kimai:install --relative
 All thats left to do is to create your first user:
 
 ```bash
-$ php bin/console kimai:create-user admin admin@example.com password en ROLE_SUPER_ADMIN
+$ bin/console kimai:create-user admin admin@example.com password en ROLE_SUPER_ADMIN
 ```
 
 For available roles, please refer to [the user documentation](app/Resources/docs/users.md).
 
-### Installation (dev)
+### Installation (development / demo)
 
-Lets boostrap your dev environment by executing this commands: 
+Lets boostrap your environment by executing this commands (which is only available in dev environment): 
 ```bash
-$ php bin/console kimai:dev:reset
+$ bin/console kimai:dev:reset
 ```
 
-You just imported demo data, to test the application in its full beauty and with several different user accounts and permission sets!
+You just imported demo data, to test the application in its full beauty and with several different user accounts and permission sets.
 
 You can now login with these accounts:
 
-- Username: *clara_customer* / Password: *kitten* / Role: Customer
-- Username: *john_user* / Password: *kitten* / Role: User
-- Username: *chris_user* / Password: *kitten* / Role: User (deactivated for login tests) 
-- Username: *tony_teamlead* / Password: *kitten* / Role: Teamlead
-- Username: *anna_admin* / Password: *kitten* / Role: Administrator
-- Username: *susan_super* / Password: *kitten* / Role: Super-Administrator
+| Username | Password | Role |
+|---|:---:|---|
+| clara_customer | kitten | Customer |
+| john_user | kitten | User |
+| chris_user | kitten | User (deactivated) |
+| tony_teamlead | kitten | Teamlead |
+| anna_admin | kitten | Administrator |
+| susan_super | kitten | Super-Administrator |
 
 Demo data can always be deleted by dropping the schema and re-creating it.
 ATTENTION - this will erase all your data:
 
 ```bash
-$ php bin/console doctrine:schema:drop --force
-$ php bin/console doctrine:schema:create
+$ bin/console doctrine:schema:drop --force
+$ bin/console doctrine:schema:create
 ```
 
 The `kimai:dev:reset` command can always be executed later on to reset your dev database and cache. I use it very frequently.
@@ -91,11 +92,10 @@ There is no need to configure a virtual host in your web server to access the ap
 Just use the built-in web server for your first tests:
 
 ```bash
-$ php bin/console server:run
+$ APP_FRONT_CONTROLLER=app.php bin/console server:run
 ```
 
-This command will start a web server for Kimai. Now you can
-access the application in your browser at <http://127.0.0.1:8000/en> and <http://127.0.0.1:8000/de>. 
+This command will start a web server for Kimai. Now you can access the application in your browser at <http://127.0.0.1:8000/>. 
 You can stop the built-in web server by pressing `Ctrl + C` while you're in the terminal.
 
 > **NOTE**
