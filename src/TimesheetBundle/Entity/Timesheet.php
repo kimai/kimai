@@ -18,14 +18,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Timesheet entity.
  *
- * @ORM\Entity(repositoryClass="TimesheetBundle\Repository\TimesheetRepository")
  * @ORM\Table(
  *     name="timesheet",
  *     indexes={
  *          @ORM\Index(columns={"user"}),
- *          @ORM\Index(name="activity", columns={"activity"})
+ *          @ORM\Index(columns={"activity_id"})
  *     }
  * )
+ * @ORM\Entity(repositoryClass="TimesheetBundle\Repository\TimesheetRepository")
  * @ORM\HasLifecycleCallbacks()
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
@@ -76,8 +76,8 @@ class Timesheet
     /**
      * @var Activity
      *
-     * @ORM\ManyToOne(targetEntity="TimesheetBundle\Entity\Activity")
-     * @ORM\JoinColumn(name="activity", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="TimesheetBundle\Entity\Activity", inversedBy="timesheets")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @Assert\NotNull()
      */
     private $activity;

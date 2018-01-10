@@ -13,6 +13,7 @@ namespace TimesheetBundle\Repository;
 
 use AppBundle\Entity\User;
 use AppBundle\Repository\AbstractRepository;
+use Doctrine\ORM\Query;
 use TimesheetBundle\Entity\Activity;
 use TimesheetBundle\Entity\Timesheet;
 use TimesheetBundle\Model\ActivityStatistic;
@@ -80,7 +81,7 @@ class ActivityRepository extends AbstractRepository
     }
 
     /**
-     * Return statistic data for all user.
+     * Return global statistic data for all user.
      *
      * @return ActivityStatistic
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -92,7 +93,38 @@ class ActivityRepository extends AbstractRepository
             ->getSingleScalarResult();
 
         $stats = new ActivityStatistic();
-        $stats->setTotalAmount($countAll);
+        $stats->setCount($countAll);
+
+        return $stats;
+    }
+
+    /**
+     * Retrieves statistics for one activity.
+     *
+     * @param Activity $activity
+     * @return ActivityStatistic
+     */
+    public function getActivityStatistics(Activity $activity)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('COUNT(t.id) as totalRecords', 'SUM(t.duration) as totalDuration')
+            ->from('TimesheetBundle:Timesheet', 't')
+            ->where('t.activity = :activity')
+        ;
+
+        $result = $qb->getQuery()->execute(['activity' => $activity], Query::HYDRATE_ARRAY);
+
+        $stats = new ActivityStatistic();
+
+        if (isset($result[0])) {
+            $dbStats = $result[0];
+
+            $stats->setCount(1);
+            $stats->setRecordAmount($dbStats['totalRecords']);
+            $stats->setRecordDuration($dbStats['totalDuration']);
+        }
+
         return $stats;
     }
 

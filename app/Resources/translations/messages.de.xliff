@@ -34,6 +34,10 @@
         <source>confirm.delete</source>
         <target>Wollen Sie das wirklich löschen?</target>
       </trans-unit>
+      <trans-unit id="confirm.delete_message">
+        <source>confirm.delete_message</source>
+        <target>Sie müssen das Löschen erneut bestätigen, da verknüpfte Objekte existieren welche ebenfalls mit gelöscht werden.</target>
+      </trans-unit>
 
       <!--
         Login / Security
@@ -401,6 +405,10 @@
       <trans-unit id="admin_activity.subtitle">
         <source>admin_activity.subtitle</source>
         <target>Aufgaben die zur Zeiterfassung genutzt werden können</target>
+      </trans-unit>
+      <trans-unit id="admin_activity.delete_confirm">
+        <source>admin_activity.delete_confirm</source>
+        <target>Momentan existieren für die Aktivität %activity% im Projekt %project% für den Kunden %customer% insgesamt %count% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen. Alle Zeiteinträge werden ebenfalls mit gelöscht!</target>
       </trans-unit>
 
       <!--

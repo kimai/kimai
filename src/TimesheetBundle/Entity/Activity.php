@@ -38,6 +38,7 @@ class Activity
      * @var Project
      *
      * @ORM\ManyToOne(targetEntity="TimesheetBundle\Entity\Project", inversedBy="activities")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @Assert\NotNull()
      */
     private $project;
@@ -66,6 +67,31 @@ class Activity
     private $visible = true;
 
     /**
+     * @var Timesheet[]
+     *
+     * @ORM\OneToMany(targetEntity="TimesheetBundle\Entity\Timesheet", mappedBy="activity")
+     */
+    private $timesheets;
+
+    /**
+     * @return Timesheet[]
+     */
+    public function getTimesheets()
+    {
+        return $this->timesheets;
+    }
+
+    /**
+     * @param Timesheet[] $timesheets
+     * @return Activity
+     */
+    public function setTimesheets($timesheets)
+    {
+        $this->timesheets = $timesheets;
+        return $this;
+    }
+
+    /**
      * @return Project
      */
     public function getProject()
@@ -80,7 +106,6 @@ class Activity
     public function setProject($project)
     {
         $this->project = $project;
-
         return $this;
     }
 
@@ -93,7 +118,6 @@ class Activity
     public function setName($name)
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -139,7 +163,6 @@ class Activity
     public function setVisible($visible)
     {
         $this->visible = $visible;
-
         return $this;
     }
 

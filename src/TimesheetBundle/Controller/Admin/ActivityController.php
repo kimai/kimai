@@ -21,6 +21,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use TimesheetBundle\Entity\Customer;
 use TimesheetBundle\Entity\Project;
+use TimesheetBundle\Form\ActivityDeleteForm;
 use TimesheetBundle\Form\ActivityEditForm;
 use TimesheetBundle\Form\Toolbar\ActivityToolbarForm;
 use TimesheetBundle\Repository\Query\ActivityQuery;
@@ -35,6 +36,15 @@ use TimesheetBundle\Repository\Query\ActivityQuery;
  */
 class ActivityController extends AbstractController
 {
+
+    /**
+     * @return \TimesheetBundle\Repository\ActivityRepository
+     */
+    protected function getRepository()
+    {
+        return $this->getDoctrine()->getRepository(Activity::class);
+    }
+
     /**
      * @param Request $request
      * @return ActivityQuery
@@ -88,7 +98,7 @@ class ActivityController extends AbstractController
         $query->setPage($page);
 
         /* @var $entries Pagerfanta */
-        $entries = $this->getDoctrine()->getRepository(Activity::class)->findByQuery($query);
+        $entries = $this->getRepository()->findByQuery($query);
 
         return $this->render('TimesheetBundle:admin:activity.html.twig', [
             'entries' => $entries,
@@ -114,6 +124,48 @@ class ActivityController extends AbstractController
     public function editAction(Activity $activity, Request $request)
     {
         return $this->renderActivityForm($activity, $request);
+    }
+
+    /**
+     * The route to delete an existing entry.
+     *
+     * @Route("/{id}/delete", name="admin_activity_delete")
+     * @Method({"GET", "POST"})
+     * @Security("is_granted('delete', activity)")
+     *
+     * @param Activity $activity
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteAction(Activity $activity, Request $request)
+    {
+        $stats = $this->getRepository()->getActivityStatistics($activity);
+
+        $deleteForm = $this->createForm(ActivityDeleteForm::class, $activity, [
+            'action' => $this->generateUrl('admin_activity_delete', ['id' => $activity->getId()]),
+            'method' => 'POST'
+        ]);
+
+        $deleteForm->handleRequest($request);
+
+        if ($stats->getRecordAmount() == 0 || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($activity);
+            $entityManager->flush();
+
+            $this->flashSuccess('action.deleted_successfully');
+
+            return $this->redirectToRoute('admin_activity', ['id' => $activity->getId()]);
+        }
+
+        return $this->render(
+            'TimesheetBundle:admin:activity_delete.html.twig',
+            [
+                'activity' => $activity,
+                'stats' => $stats,
+                'form' => $deleteForm->createView(),
+            ]
+        );
     }
 
     /**

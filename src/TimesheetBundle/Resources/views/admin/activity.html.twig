@@ -12,7 +12,6 @@
     {% endif %}
 
     {{ tables.data_table_header({
-        'label.id': 'hidden-xs',
         'label.name': '',
         'label.customer': '',
         'label.project': '',
@@ -23,7 +22,6 @@
 
     {% for entry in entries %}
         <tr>
-            <td class="hidden-xs">{{ entry.id }}</td>
             <td>{{ entry.name }}</td>
             <td>
                 <a href="{{ path('admin_customer_edit', {'id' : entry.project.customer.id}) }}">{{ widgets.label_customer(entry.project.customer) }}</a>
@@ -34,10 +32,14 @@
             <td class="hidden-xs">{{ entry.comment }}</td>
             <td>{{ widgets.label_visible(entry.visible) }}</td>
             <td>
-                {{ widgets.button_group({
-                    'edit': path('admin_activity_edit', {'id': entry.id}),
-                    'trash': '#'
-                }) }}
+                {% set actionButtons = {} %}
+                {% if is_granted('edit', entry) %}
+                    {% set actionButtons = {'edit': path('admin_activity_edit', {'id': entry.id})}|merge(actionButtons) %}
+                {% endif %}
+                {% if is_granted('delete', entry) %}
+                    {% set actionButtons = actionButtons|merge({'trash': path('admin_activity_delete', {'id': entry.id})}) %}
+                {% endif %}
+                {{ widgets.button_group(actionButtons) }}
             </td>
         </tr>
     {% endfor %}

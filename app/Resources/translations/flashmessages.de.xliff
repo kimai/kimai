@@ -23,6 +23,10 @@
         <source>action.updated_successfully</source>
         <target>Änderungen erfolgreich gespeichert</target>
       </trans-unit>
+      <trans-unit id="action.deleted_successfully">
+        <source>action.deleted_successfully</source>
+        <target>Eintrag wurde erfolgreich gelöscht</target>
+      </trans-unit>
 
     </body>
   </file>
