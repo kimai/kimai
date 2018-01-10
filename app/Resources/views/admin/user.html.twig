@@ -36,10 +36,14 @@
                 {% endfor %}
             </td>
             <td>
-                {{ widgets.button_group({
-                    'edit': path('user_profile', {'username' : entry.username}),
-                    'trash': path('user_profile_delete', {'username' : entry.username})
-                }) }}
+                {% set actionButtons = {} %}
+                {% if is_granted('edit', entry) %}
+                    {% set actionButtons = {'edit': path('user_profile', {'username' : entry.username})}|merge(actionButtons) %}
+                {% endif %}
+                {% if is_granted('delete', entry) %}
+                    {% set actionButtons = actionButtons|merge({'trash': '#'}) %}
+                {% endif %}
+                {{ widgets.button_group(actionButtons) }}
             </td>
         </tr>
     {% endfor %}

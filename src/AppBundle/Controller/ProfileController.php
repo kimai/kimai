@@ -117,20 +117,6 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * FIXME implement profile deletion
-     *
-     * @Route("/{username}/delete", name="user_profile_delete")
-     * @Method({"GET", "POST"})
-     * @Security("is_granted('delete', profile)")
-     */
-    public function deleteAction(User $profile, Request $request)
-    {
-        $deleteForm = $this->createDeleteForm($profile);
-
-        throw new \Exception('Delete not implemented yet');
-    }
-
-    /**
      * @param User $user
      * @param Form|null $editForm
      * @param Form|null $pwdForm
@@ -224,18 +210,5 @@ class ProfileController extends AbstractController
                 'method' => 'POST'
             ]
         );
-    }
-
-    /**
-     * @param User $user
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    private function createDeleteForm(User $user)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('user_profile_delete', ['username' => $user->getUsername()]))
-            ->setMethod('DELETE')
-            ->getForm()
-            ;
     }
 }
