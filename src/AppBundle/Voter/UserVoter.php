@@ -70,11 +70,10 @@ class UserVoter extends AbstractVoter
             case self::EDIT:
             case self::PASSWORD:
                 return $this->canEdit($subject, $user, $token);
-            case self::VIEW_ALL:
-            case self::CREATE:
-                // create actually passes in the current user as $subject, not the new one
             case self::DELETE:
-                // if we allow to delete user for ADMIN: make sure the user to be deleted is not in a higher level
+                return $this->canDelete($subject, $user, $token);
+            case self::VIEW_ALL:
+            case self::CREATE: // create actually passes in the current user as $subject, not the new one
             case self::ROLES:
                 return $this->canAdminUsers($token);
         }
@@ -108,6 +107,16 @@ class UserVoter extends AbstractVoter
         }
 
         return $profile->getId() == $user->getId();
+    }
+
+    /**
+     * @param User $profile
+     * @param User $user
+     * @return bool
+     */
+    protected function canDelete(User $profile, User $user, TokenInterface $token)
+    {
+        return false;
     }
 
     /**

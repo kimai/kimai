@@ -19,7 +19,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use TimesheetBundle\Form\CustomerDeleteForm;
 use TimesheetBundle\Form\CustomerEditForm;
 use TimesheetBundle\Form\Toolbar\CustomerToolbarForm;
 use TimesheetBundle\Repository\Query\CustomerQuery;
@@ -145,10 +144,10 @@ class CustomerController extends AbstractController
     {
         $stats = $this->getRepository()->getCustomerStatistics($customer);
 
-        $deleteForm = $this->createForm(CustomerDeleteForm::class, $customer, [
-            'action' => $this->generateUrl('admin_customer_delete', ['id' => $customer->getId()]),
-            'method' => 'POST'
-        ]);
+        $deleteForm = $this->createFormBuilder()
+            ->setAction($this->generateUrl('admin_customer_delete', ['id' => $customer->getId()]))
+            ->setMethod('POST')
+            ->getForm();
 
         $deleteForm->handleRequest($request);
 

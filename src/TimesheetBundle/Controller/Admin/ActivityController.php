@@ -21,7 +21,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use TimesheetBundle\Entity\Customer;
 use TimesheetBundle\Entity\Project;
-use TimesheetBundle\Form\ActivityDeleteForm;
 use TimesheetBundle\Form\ActivityEditForm;
 use TimesheetBundle\Form\Toolbar\ActivityToolbarForm;
 use TimesheetBundle\Repository\Query\ActivityQuery;
@@ -141,10 +140,10 @@ class ActivityController extends AbstractController
     {
         $stats = $this->getRepository()->getActivityStatistics($activity);
 
-        $deleteForm = $this->createForm(ActivityDeleteForm::class, $activity, [
-            'action' => $this->generateUrl('admin_activity_delete', ['id' => $activity->getId()]),
-            'method' => 'POST'
-        ]);
+        $deleteForm = $this->createFormBuilder()
+            ->setAction($this->generateUrl('admin_activity_delete', ['id' => $activity->getId()]))
+            ->setMethod('POST')
+            ->getForm();
 
         $deleteForm->handleRequest($request);
 

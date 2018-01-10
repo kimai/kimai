@@ -20,7 +20,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use TimesheetBundle\Form\ProjectDeleteForm;
 use TimesheetBundle\Form\ProjectEditForm;
 use TimesheetBundle\Form\Toolbar\ProjectToolbarForm;
 use TimesheetBundle\Repository\Query\ProjectQuery;
@@ -129,10 +128,10 @@ class ProjectController extends AbstractController
     {
         $stats = $this->getRepository()->getProjectStatistics($project);
 
-        $deleteForm = $this->createForm(ProjectDeleteForm::class, $project, [
-            'action' => $this->generateUrl('admin_project_delete', ['id' => $project->getId()]),
-            'method' => 'POST'
-        ]);
+        $deleteForm = $this->createFormBuilder()
+            ->setAction($this->generateUrl('admin_project_delete', ['id' => $project->getId()]))
+            ->setMethod('POST')
+            ->getForm();
 
         $deleteForm->handleRequest($request);
 
