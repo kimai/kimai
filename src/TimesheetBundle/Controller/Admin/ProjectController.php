@@ -20,6 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use TimesheetBundle\Form\ProjectDeleteForm;
 use TimesheetBundle\Form\ProjectEditForm;
 use TimesheetBundle\Form\Toolbar\ProjectToolbarForm;
 use TimesheetBundle\Repository\Query\ProjectQuery;
@@ -34,6 +35,15 @@ use TimesheetBundle\Repository\Query\ProjectQuery;
  */
 class ProjectController extends AbstractController
 {
+
+    /**
+     * @return \TimesheetBundle\Repository\ProjectRepository
+     */
+    protected function getRepository()
+    {
+        return $this->getDoctrine()->getRepository(Project::class);
+    }
+
     /**
      * @param Request $request
      * @return ProjectQuery
@@ -49,7 +59,7 @@ class ProjectController extends AbstractController
         $customer = !empty(trim($customer)) ? trim($customer) : null;
 
         if ($customer !== null) {
-            $repo = $this->getDoctrine()->getRepository(Customer::class);
+            $repo = $this->getRepository();
             $customer = $repo->getById($customer);
         }
 
@@ -105,6 +115,45 @@ class ProjectController extends AbstractController
     }
 
     /**
+     * The route to delete an existing entry.
+     *
+     * @Route("/{id}/delete", name="admin_project_delete")
+     * @Method({"GET", "POST"})
+     * @Security("is_granted('delete', project)")
+     *
+     * @param Project $project
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteAction(Project $project, Request $request)
+    {
+        $stats = $this->getRepository()->getProjectStatistics($project);
+
+        $deleteForm = $this->createForm(ProjectDeleteForm::class, $project, [
+            'action' => $this->generateUrl('admin_project_delete', ['id' => $project->getId()]),
+            'method' => 'POST'
+        ]);
+
+        $deleteForm->handleRequest($request);
+
+        if ($stats->getRecordAmount() == 0 || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($project);
+            $entityManager->flush();
+
+            $this->flashSuccess('action.deleted_successfully');
+
+            return $this->redirectToRoute('admin_project', ['id' => $project->getId()]);
+        }
+
+        return $this->render('TimesheetBundle:admin:project_delete.html.twig', [
+            'project' => $project,
+            'stats' => $stats,
+            'form' => $deleteForm->createView(),
+        ]);
+    }
+
+    /**
      * @param Project $project
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -125,13 +174,10 @@ class ProjectController extends AbstractController
             return $this->redirectToRoute('admin_project', ['id' => $project->getId()]);
         }
 
-        return $this->render(
-            'TimesheetBundle:admin:project_edit.html.twig',
-            [
-                'project' => $project,
-                'form' => $editForm->createView()
-            ]
-        );
+        return $this->render('TimesheetBundle:admin:project_edit.html.twig', [
+            'project' => $project,
+            'form' => $editForm->createView()
+        ]);
     }
 
     /**
@@ -140,16 +186,12 @@ class ProjectController extends AbstractController
      */
     protected function getToolbarForm(ProjectQuery $query)
     {
-        return $this->createForm(
-            ProjectToolbarForm::class,
-            $query,
-            [
-                'action' => $this->generateUrl('admin_project_paginated', [
-                    'page' => $query->getPage(),
-                ]),
-                'method' => 'GET',
-            ]
-        );
+        return $this->createForm(ProjectToolbarForm::class, $query, [
+            'action' => $this->generateUrl('admin_project_paginated', [
+                'page' => $query->getPage(),
+            ]),
+            'method' => 'GET',
+        ]);
     }
 
     /**

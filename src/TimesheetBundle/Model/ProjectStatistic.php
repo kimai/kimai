@@ -21,21 +21,95 @@ class ProjectStatistic
     /**
      * @var int
      */
-    protected $totalAmount = 0;
+    protected $count = 0;
+    /**
+     * @var int
+     */
+    protected $recordAmount = 0;
+    /**
+     * @var int
+     */
+    protected $recordDuration = 0;
+    /**
+     * @var int
+     */
+    protected $activityAmount = 0;
+
+    /**
+     * Returns the total amount of included timesheet records.
+     *
+     * @return int
+     */
+    public function getRecordAmount()
+    {
+        return $this->recordAmount;
+    }
+
+    /**
+     * @param int $recordAmount
+     * @return ProjectStatistic
+     */
+    public function setRecordAmount($recordAmount)
+    {
+        $this->recordAmount = (int) $recordAmount;
+        return $this;
+    }
+
+    /**
+     * Returns the total duration of all included timesheet records.
+     *
+     * @return int
+     */
+    public function getRecordDuration()
+    {
+        return $this->recordDuration;
+    }
+
+    /**
+     * @param int $recordDuration
+     * @return ProjectStatistic
+     */
+    public function setRecordDuration($recordDuration)
+    {
+        $this->recordDuration = (int) $recordDuration;
+        return $this;
+    }
+
+    /**
+     * Returns the amount of activities that are included in the statistic result.
+     *
+     * @return int
+     */
+    public function getCount()
+    {
+        return $this->count;
+    }
+
+    /**
+     * @param int $count
+     * @return ProjectStatistic
+     */
+    public function setCount($count)
+    {
+        $this->count = (int) $count;
+        return $this;
+    }
 
     /**
      * @return int
      */
-    public function getTotalAmount()
+    public function getActivityAmount()
     {
-        return $this->totalAmount;
+        return $this->activityAmount;
     }
 
     /**
-     * @param int $totalAmount
+     * @param int $activityAmount
+     * @return ProjectStatistic
      */
-    public function setTotalAmount($totalAmount)
+    public function setActivityAmount($activityAmount)
     {
-        $this->totalAmount = $totalAmount;
+        $this->activityAmount = (int) $activityAmount;
+        return $this;
     }
 }

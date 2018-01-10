@@ -132,7 +132,7 @@ class DashboardController extends Controller
             'widgets' => [
                 "{{ widgets.info_box_more('stats.userTotal', user.totalAmount, ' ', path('admin_user'), 'user') }}",
                 "{{ widgets.info_box_more('stats.customerTotal', customer.totalAmount, '', path('admin_customer'), 'users', 'blue') }}",
-                "{{ widgets.info_box_more('stats.projectsTotal', project.totalAmount, '', path('admin_project'), 'book', 'yellow') }}",
+                "{{ widgets.info_box_more('stats.projectsTotal', project.count, '', path('admin_project'), 'book', 'yellow') }}",
                 "{{ widgets.info_box_more('stats.activitiesTotal', activity.count, '', path('admin_activity'), 'tasks', 'purple') }}",
             ],
         ];
