@@ -6,7 +6,7 @@
     "require": {
         "php": "^7.1.3",
         "ext-pdo_sqlite": "*",
-        "avanzu/admin-theme-bundle": "dev-master",
+        "avanzu/admin-theme-bundle": "dev-symfony4",
         "beberlei/DoctrineExtensions": "^1.0",
         "dama/doctrine-test-bundle": "^4.0",
         "sensio/framework-extra-bundle": "^5.1",
@@ -83,5 +83,11 @@
             "id": "01C3FWRDJJEX9K6Y3A4XDFXPBR",
             "allow-contrib": false
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/kevinpapst/AdminThemeBundle"
+        }
+    ]
 }

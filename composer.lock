@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2399d7e65f36c5579d419f3b66f2d08a",
+    "content-hash": "8138f6fcbab7203332de143d5b442541",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -48,16 +48,16 @@
         },
         {
             "name": "avanzu/admin-theme-bundle",
-            "version": "dev-master",
+            "version": "dev-symfony4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/avanzu/AdminThemeBundle.git",
-                "reference": "eb80bd51fca844cabedae397c9c48c4529b06748"
+                "url": "https://github.com/kevinpapst/AdminThemeBundle.git",
+                "reference": "f007e946f56295f447d0f1b75e5a7cf55145cf7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/avanzu/AdminThemeBundle/zipball/eb80bd51fca844cabedae397c9c48c4529b06748",
-                "reference": "eb80bd51fca844cabedae397c9c48c4529b06748",
+                "url": "https://api.github.com/repos/kevinpapst/AdminThemeBundle/zipball/f007e946f56295f447d0f1b75e5a7cf55145cf7c",
+                "reference": "f007e946f56295f447d0f1b75e5a7cf55145cf7c",
                 "shasum": ""
             },
             "require": {
@@ -82,7 +82,14 @@
                     "Avanzu\\AdminThemeBundle\\": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "scripts": {
+                "post-install-cmd": [
+                    "Avanzu\\AdminThemeBundle\\Composer\\ScriptHandler::fetchThemeVendors"
+                ],
+                "post-update-cmd": [
+                    "Avanzu\\AdminThemeBundle\\Composer\\ScriptHandler::fetchThemeVendors"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -101,7 +108,10 @@
                 }
             ],
             "description": "Admin Theme based on the AdminLTE Template for easy integration into symfony",
-            "time": "2017-12-29T18:13:35+00:00"
+            "support": {
+                "source": "https://github.com/kevinpapst/AdminThemeBundle/tree/symfony4"
+            },
+            "time": "2018-01-12T20:01:56+00:00"
         },
         {
             "name": "beberlei/DoctrineExtensions",
@@ -3973,49 +3983,6 @@
             "time": "2017-10-23T15:15:11+00:00"
         },
         {
-            "name": "symfony/thanks",
-            "version": "v1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/thanks.git",
-                "reference": "b637913a92664571afd1067fc645ecb30c9cf5b2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/thanks/zipball/b637913a92664571afd1067fc645ecb30c9cf5b2",
-                "reference": "b637913a92664571afd1067fc645ecb30c9cf5b2",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.1",
-                "php": "^5.5.9|^7.0.8"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                },
-                "class": "Symfony\\Thanks\\Thanks"
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Thanks\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                }
-            ],
-            "description": "Give thanks (in the form of a GitHub ⭐) to your fellow PHP package maintainers (not limited to Symfony components)!",
-            "time": "2018-01-03T09:30:52+00:00"
-        },
-        {
             "name": "symfony/translation",
             "version": "v4.0.3",
             "source": {
@@ -6861,6 +6828,49 @@
             "description": "Symfony PHPUnit Bridge",
             "homepage": "https://symfony.com",
             "time": "2018-01-04T17:20:09+00:00"
+        },
+        {
+            "name": "symfony/thanks",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/thanks.git",
+                "reference": "b637913a92664571afd1067fc645ecb30c9cf5b2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/thanks/zipball/b637913a92664571afd1067fc645ecb30c9cf5b2",
+                "reference": "b637913a92664571afd1067fc645ecb30c9cf5b2",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.1",
+                "php": "^5.5.9|^7.0.8"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "class": "Symfony\\Thanks\\Thanks"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Thanks\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                }
+            ],
+            "description": "Give thanks (in the form of a GitHub ⭐) to your fellow PHP package maintainers (not limited to Symfony components)!",
+            "time": "2018-01-03T09:30:52+00:00"
         },
         {
             "name": "symfony/web-server-bundle",

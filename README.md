@@ -49,7 +49,7 @@ $ bin/console kimai:install --relative
 All thats left to do is to create your first user:
 
 ```bash
-$ bin/console kimai:create-user admin admin@example.com password en ROLE_SUPER_ADMIN
+$ bin/console kimai:create-user username admin@example.com password en ROLE_SUPER_ADMIN
 ```
 
 For available roles, please refer to [the user documentation](var/docs/users.md).
@@ -91,7 +91,7 @@ There is no need to configure a virtual host in your web server to access the ap
 Just use the built-in web server for your first tests:
 
 ```bash
-$ APP_FRONT_CONTROLLER=app.php bin/console server:run
+$ bin/console server:run
 ```
 
 This command will start a web server for Kimai. Now you can access the application in your browser at <http://127.0.0.1:8000/>. 

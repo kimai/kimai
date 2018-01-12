@@ -27,6 +27,21 @@ class InstallCommand extends Command
 {
 
     /**
+     * @var string
+     */
+    protected $rootDir;
+
+    /**
+     * RunCodeSnifferCommand constructor.
+     * @param string $projectDirectory
+     */
+    public function __construct($projectDirectory)
+    {
+        $this->rootDir = realpath($projectDirectory);
+        parent::__construct();
+    }
+
+    /**
      * @inheritdoc
      */
     protected function configure()
@@ -77,14 +92,22 @@ class InstallCommand extends Command
 
         try {
             $command = $this->getApplication()->find('avanzu:admin:fetch-vendor');
-            $command->run([], $output);
+            $command->run(new ArrayInput([]), $output);
         } catch (\Exception $ex) {
             $io->error('Failed to fetch vendors for avanzu-admin-theme: ' . $ex->getMessage());
             return 3;
         }
         try {
             $command = $this->getApplication()->find('avanzu:admin:initialize');
-            $command->run(new ArrayInput(array_merge(['--web-dir' => 'public'], $arguments)), $output);
+            $command->run(
+                new ArrayInput(
+                    array_merge([
+                        '--web-dir' => $this->rootDir . '/public',
+                        '--vendor-dir' => $this->rootDir . '/vendor',
+                    ], $arguments)
+                ),
+                $output
+            );
         } catch (\Exception $ex) {
             $io->error('Failed to initialize avanzu-admin-theme: ' . $ex->getMessage());
             return 4;

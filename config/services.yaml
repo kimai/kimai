@@ -120,6 +120,11 @@ services:
         arguments:
             $projectDirectory: "%kernel.project_dir%"
 
+    App\Command\InstallCommand:
+        class: App\Command\InstallCommand
+        arguments:
+            $projectDirectory: "%kernel.project_dir%"
+
     # ================================================================================
     # THEME
     # ================================================================================
