@@ -38,6 +38,7 @@ class DefaultControllerTest extends WebTestCase
      */
     public function testPublicUrls($url)
     {
+        $this->markTestIncomplete(__METHOD__);
         $client = self::createClient();
         $client->request('GET', $url);
 
