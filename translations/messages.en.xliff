@@ -183,6 +183,10 @@
                 <source>label.duration</source>
                 <target>Duration</target>
             </trans-unit>
+            <trans-unit id="label.usern">
+                <source>label.user</source>
+                <target>User</target>
+            </trans-unit>
             <trans-unit id="label.username">
                 <source>label.username</source>
                 <target>Username</target>

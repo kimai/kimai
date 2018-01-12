@@ -30,7 +30,7 @@ class UserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'class' => 'Kimai:User',
+            'class' => User::class,
             'choice_label' => function (User $user) {
                 if (!empty($user->getAlias())) {
                     return $user->getAlias() . ' (' . $user->getUsername() . ')';

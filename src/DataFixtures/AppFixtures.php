@@ -59,7 +59,6 @@ class AppFixtures extends Fixture
             ->setPassword($passwordEncoder->encodePassword($claraCustomer, self::DEFAULT_PASSWORD))
         ;
         $manager->persist($claraCustomer);
-        var_dump($passwordEncoder->encodePassword($claraCustomer, self::DEFAULT_PASSWORD));
 
         $johnUser = new User();
         $johnUser

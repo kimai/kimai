@@ -74,8 +74,6 @@ class CustomerRepository extends AbstractRepository
             ->andWhere('c.id = :customer')
         ;
 
-//        dump($qb->getQuery()->getSQL());exit;
-
         $result = $qb->getQuery()->execute(['customer' => $customer], Query::HYDRATE_ARRAY);
 
         $stats = new CustomerStatistic();

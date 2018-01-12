@@ -95,8 +95,8 @@ services:
     # FORMS
     # ================================================================================
 
-    # form to edit user roles
-    app.admin.user_role:
+    # form type to edit user roles
+    App\Form\Type\UserRoleType:
         class: App\Form\Type\UserRoleType
         arguments: ["%security.role_hierarchy.roles%"]
         tags:
