@@ -1,0 +1,8 @@
+
+# ========================================================================
+# Demo routes, only work with "avanzu_admin_theme/enable_demo: true"
+# ========================================================================
+
+#avanzu_admin:
+#    prefix: /admin
+#    resource: "@AvanzuAdminThemeBundle/Resources/config/routes.yml"

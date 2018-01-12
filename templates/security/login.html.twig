@@ -1,0 +1,40 @@
+{% extends '@AvanzuAdminTheme/layout/login-layout.html.twig' %}
+
+{% block avanzu_login_title %}{{ 'browser.title'|trans }}{% endblock %}
+{% block avanzu_logo_login %}<b>Kimai</b><br>TimeTracking{% endblock %}
+{% block avanzu_login_box_msg %}
+    {{ 'security.title.login'|trans }}
+
+    {% if error|default(false) %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+{% endblock %}
+{% block avanzu_login_form %}
+    <form action="{{ path('security_login') }}" method="post">
+        <div class="form-group has-feedback">
+            <input type="text" name="_username" class="form-control" placeholder="{{ 'security.label.username'|trans }}" value="{{ last_username }}">
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+            <input name="_password" type="password" class="form-control" placeholder="{{ 'security.label.password'|trans }}">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="row">
+            <div class="col-xs-8">
+                {#
+                    <div class="checkbox icheck">
+                        <label>
+                            <input type="checkbox"> {{ 'Remember Me'|trans({}, 'AvanzuAdminTheme') }}
+                        </label>
+                    </div>
+                #}
+            </div>
+            <div class="col-xs-4">
+                <button type="submit" class="btn btn-primary btn-block btn-flat">{{ 'security.action.sign_in'|trans }}</button>
+            </div>
+        </div>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+    </form>
+{% endblock %}
+{% block avanzu_login_social_auth %}{% endblock %}
+{% block avanzu_login_actions %}{% endblock %}

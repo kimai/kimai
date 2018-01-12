@@ -1,0 +1,9 @@
+{% import "@AvanzuAdminTheme/layout/macros.html.twig" as macro %}
+
+{% if app.session.started and app.session.flashbag.peekAll|length > 0 %}
+    <div class="row">
+        <div class="col-sm-12">
+            {{ macro.session_flash(avanzu_adminlte_close_alert|default(true), false, '', 'flashmessages') }}
+        </div>
+    </div>
+{% endif %}

@@ -9,14 +9,13 @@ Kimai v2 - the reloaded open source Time-Tracking application.
 This is (or will be in the future, currently a lot of features are still missing) the reloaded version of the open source time-tracking application [Kimai](http://www.kimai.org).
 
 It is based on the following PHP components:
-- [Symfony Framework 3.4](https://github.com/symfony/symfony)
+- [Symfony Framework 4](https://github.com/symfony/symfony)
 - [AdminThemeBundle](https://github.com/avanzu/AdminThemeBundle/) (based on [AdminLTE](https://github.com/almasaeed2010/AdminLTE/))
 - [Doctrine](https://github.com/doctrine/)
-- Bower
 
 ## Requirements
 
-- PHP 7 or higher
+- PHP 7.1 or higher
 - One PHP extension of PDO-SQLite and/or PDO-MySQL enabled
 - and the [usual Symfony application requirements](http://symfony.com/doc/current/reference/requirements.html)
 
@@ -53,13 +52,13 @@ All thats left to do is to create your first user:
 $ bin/console kimai:create-user admin admin@example.com password en ROLE_SUPER_ADMIN
 ```
 
-For available roles, please refer to [the user documentation](app/Resources/docs/users.md).
+For available roles, please refer to [the user documentation](var/docs/users.md).
 
 ### Installation (development / demo)
 
 Lets boostrap your environment by executing this commands (which is only available in dev environment): 
 ```bash
-$ bin/console kimai:dev:reset
+$ bin/console kimai:reset-dev
 ```
 
 You just imported demo data, to test the application in its full beauty and with several different user accounts and permission sets.
@@ -83,7 +82,7 @@ $ bin/console doctrine:schema:drop --force
 $ bin/console doctrine:schema:create
 ```
 
-The `kimai:dev:reset` command can always be executed later on to reset your dev database and cache. I use it very frequently.
+The `kimai:reset-dev` command can always be executed later on to reset your dev database and cache. I use it very frequently.
 
 
 ## Usage

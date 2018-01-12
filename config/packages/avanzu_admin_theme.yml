@@ -1,0 +1,14 @@
+avanzu_admin_theme:
+    use_twig: true
+    use_assetic: true
+    bower_bin: "/usr/local/bin/bower"
+    options:
+        default_avatar: images/default_avatar.png
+        skin: skin-green-light
+        fixed_layout: false
+        boxed_layout: false
+        collapsed_sidebar: true
+        mini_sidebar: true
+        control_sidebar: false
+    knp_menu:
+        enable: false
