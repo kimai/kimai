@@ -1,0 +1,100 @@
+{% extends '@AvanzuAdminTheme/layout/default-layout.html.twig' %}
+
+{% block avanzu_page_content %}
+    {{ include('default/_flash_messages.html.twig') }}
+    {% block main %}{% endblock %}
+{% endblock %}
+
+{% block avanzu_document_title %}
+    {% block title %}{{ 'browser.title'|trans }}{% endblock %}
+{% endblock %}
+
+{% block avanzu_page_title %}
+    {% block page_title %}{% endblock %}
+{% endblock %}
+
+{% block avanzu_page_subtitle %}
+    {% block page_subtitle %}{% endblock %}
+{% endblock %}
+
+{% block avanzu_logo_path %}
+    {{ path('dashboard') }}
+{% endblock %}
+
+{% block avanzu_logo_mini %}
+    <b>K</b>TT
+{% endblock %}
+
+{% block avanzu_logo_lg %}
+    <b>Kimai</b> - Time Tracking
+{% endblock %}
+
+{% block avanzu_head %}
+    <link rel="stylesheet" href="{{ asset('css/kimai.css') }}">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+{% endblock %}
+
+{% block avanzu_footer %}
+    {% block footer %}
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>Version</b> 2.0
+        </div>
+        <strong>Copyright &copy; {{ 'now'|date('Y') }} - <a href="http://www.kevinpapst.de">Kevin Papst</a></strong>.
+        {{ 'footer.license'|trans }}
+    </footer>
+    <!-- Page rendered on {{ 'now'|localizeddate('long', 'long', null, 'UTC') }} -->
+    {% endblock %}
+{% endblock %}
+
+{% block avanzu_navbar_messages %}
+    {% if app.user is not null and is_granted('IS_AUTHENTICATED_FULLY') %}
+        {{ render(controller('App\\Controller\\TimesheetController::activeEntriesAction')) }}
+    {% endif %}
+{% endblock %}
+
+{% block avanzu_navbar_notifications %}
+    {% if app.user is not null and is_granted('IS_AUTHENTICATED_FULLY') %}
+        {{ render(controller('App\\Controller\\ActivityController::recentActivitiesAction')) }}
+    {% endif %}
+    {#
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-globe"></i> <span class="caret"></span></a>
+        <ul class="dropdown-menu locales" role="menu">
+            {% for locale in locales() %}
+                <li {% if app.request.locale == locale.code %}class="active"{% endif %}><a href="{{ path(app.request.get('_route', 'homepage'), app.request.get('_route_params', [])|merge({ _locale: locale.code })) }}">{{ locale.name|capitalize }}</a></li>
+            {% endfor %}
+        </ul>
+    </li>
+    #}
+{% endblock %}
+
+{% block avanzu_navbar_toggle %}{{ parent() }}{% endblock %}
+{% block avanzu_navbar_tasks %}{{ parent() }}{% endblock %}
+{% block avanzu_navbar_user %}{{ parent() }}{% endblock %}
+{% block avanzu_navbar_control_sidebar_toggle %}{{ parent() }}{% endblock %}
+
+{% block avanzu_sidebar_user %}{# right now we simply deactivate that box #}{% endblock %}
+{% block avanzu_sidebar_search %}{# right now we simply deactivate that box #}{% endblock %}
+{% block avanzu_sidebar_nav %}{{ parent() }}{% endblock %}
+
+{% block avanzu_breadcrumb %}{{ parent() }}{% endblock %}
+{% block avanzu_control_sidebar %}{{ parent() }}{% endblock %}
+
+{% block avanzu_javascripts %}
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="{{ asset('theme/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/kimai.js') }}"></script>
+    <script src="{{ asset('js/Chart.min.js') }}"></script>
+    {% block javascript_imports %}{% endblock %}
+{% endblock %}
+
+{% block avanzu_javascripts_inline %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.dropdown-toggle').dropdown();
+            $(document).kimai({imagePath: '{{ asset('images') }}', confirmDelete: '{{ 'confirm.delete'|trans }}'});
+            //$(document).kimai('pauseRecord', 'li.messages-menu ul.menu li');
+        });
+    </script>
+{% endblock %}

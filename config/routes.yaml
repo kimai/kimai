@@ -1,0 +1,11 @@
+homepage:
+    path: /{_locale}
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: timesheet
+        permanent: true
+
+avanzu_admin_profile:
+  path: /{_locale}/profile/{username}
+  options:
+    avanzu_admin_route: profile

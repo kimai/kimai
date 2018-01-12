@@ -1,0 +1,7 @@
+_errors:
+    resource: '@TwigBundle/Resources/config/routing/errors.xml'
+    prefix: /_error
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'

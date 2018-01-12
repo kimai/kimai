@@ -1,81 +1,87 @@
 {
-    "name": "keleo/kimai",
+    "name": "kimai/kimai",
     "license": "MIT",
     "type": "project",
     "description": "Kimai Time Tracking reloaded",
-    "autoload": {
-        "psr-4": {
-            "": "src/",
-            "KimaiTest\\": "tests/"
-        },
-        "classmap": [
-            "app/AppKernel.php",
-            "app/AppCache.php"
-        ]
-    },
     "require": {
-        "php": ">=7.0.8",
+        "php": "^7.1.3",
         "ext-pdo_sqlite": "*",
-        "doctrine/doctrine-bundle": "^1.6",
-        "doctrine/doctrine-fixtures-bundle": "^2.2",
-        "doctrine/orm": "^2.5",
-        "erusev/parsedown": "^1.5",
-        "ezyang/htmlpurifier": "^4.7",
-        "incenteev/composer-parameter-handler": "^2.0",
-        "leafo/scssphp": "^0.5",
-        "patchwork/jsqueeze": "^2.0",
-        "sensio/distribution-bundle": "^5.0",
-        "sensio/framework-extra-bundle": "^3.0",
-        "symfony/assetic-bundle": "^2.8",
-        "symfony/monolog-bundle": "^3.1",
-        "symfony/swiftmailer-bundle": "^2.3",
-        "symfony/symfony": "~3.4",
-        "twig/extensions": "^1.3",
-        "white-october/pagerfanta-bundle": "^1.0",
+        "avanzu/admin-theme-bundle": "dev-master",
         "beberlei/DoctrineExtensions": "^1.0",
-        "symfony/web-server-bundle": "3.4",
-        "avanzu/admin-theme-bundle": "dev-master"
+        "dama/doctrine-test-bundle": "^4.0",
+        "sensio/framework-extra-bundle": "^5.1",
+        "symfony/asset": "^4.0",
+        "symfony/console": "^4.0",
+        "symfony/expression-language": "^4.0",
+        "symfony/flex": "^1.0",
+        "symfony/form": "^4.0",
+        "symfony/framework-bundle": "^4.0",
+        "symfony/lts": "^4@dev",
+        "symfony/monolog-bundle": "^3.1",
+        "symfony/orm-pack": "^1.0",
+        "symfony/profiler-pack": "^1.0",
+        "symfony/security-bundle": "^4.0",
+        "symfony/security-csrf": "^4.0",
+        "symfony/swiftmailer-bundle": "^3.1",
+        "symfony/translation": "^4.0",
+        "symfony/twig-bundle": "^4.0",
+        "symfony/validator": "^4.0",
+        "symfony/yaml": "^4.0",
+        "twig/extensions": "^1.5",
+        "white-october/pagerfanta-bundle": "^1.1"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~3.0",
-        "symfony/phpunit-bridge": "^3.0",
-        "squizlabs/php_codesniffer": "3.*",
-        "phpunit/phpunit": "^6"
-    },
-    "scripts": {
-        "post-install-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
-        ],
-        "post-update-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
-        ]
+        "doctrine/doctrine-fixtures-bundle": "^3.0",
+        "friendsofphp/php-cs-fixer": "^2.10",
+        "phpunit/phpunit": "^6.5",
+        "squizlabs/php_codesniffer": "^3.2",
+        "symfony/debug-pack": "^1.0",
+        "symfony/dotenv": "^4.0",
+        "symfony/maker-bundle": "^1.0",
+        "symfony/phpunit-bridge": "^4.0",
+        "symfony/web-server-bundle": "^4.0"
     },
     "config": {
-        "bin-dir": "bin"
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "tests/"
+        }
+    },
+    "replace": {
+        "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-php71": "*",
+        "symfony/polyfill-php70": "*",
+        "symfony/polyfill-php56": "*"
+    },
+    "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd"
+        },
+        "post-install-cmd": [
+            "@auto-scripts"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts"
+        ]
+    },
+    "conflict": {
+        "symfony/symfony": "*"
     },
     "extra": {
-        "symfony-app-dir": "app",
-        "symfony-bin-dir": "bin",
-        "symfony-var-dir": "var",
-        "symfony-web-dir": "web",
-        "symfony-tests-dir": "tests",
-        "symfony-assets-install": "relative",
-        "incenteev-parameters": {
-            "file": "app/config/parameters.yml",
-            "env-map": {
-                "database_url": "DATABASE_URL",
-                "secret": "SYMFONY_SECRET"
-            }
+        "symfony": {
+            "id": "01C3FWRDJJEX9K6Y3A4XDFXPBR",
+            "allow-contrib": false
         }
     }
 }

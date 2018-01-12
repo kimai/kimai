@@ -1,57 +1,39 @@
-# Cache and logs (Symfony2)
-/app/cache/*
-/app/logs/*
-!app/cache/.gitkeep
-!app/logs/.gitkeep
+###> symfony/framework-bundle ###
+.env
+/public/bundles/
+/vendor/
+###< symfony/framework-bundle ###
 
-# Email spool folder
-/app/spool/*
+###> symfony/web-server-bundle ###
+.web-server-pid
+###< symfony/web-server-bundle ###
 
-# Cache, session files and logs (Symfony3)
-/var/cache/*
-/var/logs/*
-/var/sessions/*
-!var/cache/.gitkeep
-!var/logs/.gitkeep
-!var/sessions/.gitkeep
-
-# Parameters
-/app/config/parameters.yml
-/app/config/parameters.ini
-
-# Managed by Composer
-/app/bootstrap.php.cache
-/var/bootstrap.php.cache
+# ========== KIMAI ==========
 /bin/*
 !bin/console
-!bin/symfony_requirements
-/vendor/
 
-# Assets and user uploads
-/web/bundles/
-/web/uploads/
+/public/theme/
 
-# Assets managed by Bower
-/web/assets/vendor/
+/var/data/*.sqlite
 
-# PHPUnit
-/app/phpunit.xml
-/phpunit.xml
+/var/cache/*
+!var/cache/.gitkeep
 
-# Build data
-/build/
+/var/log/*
+!var/log/.gitkeep
 
-# Composer PHAR
-/composer.phar
-
-# Backup entities generated with doctrine:generate:entities command
-*/Entity/*~
+/var/sessions/*
+!var/sessions/.gitkeep
+# ========== KIMAI ==========
 
 # IDE
 .idea/
 
-# SQLite files
-/app/data/timesheet.sqlite
+###> phpunit/phpunit ###
+/phpunit.xml
+###< phpunit/phpunit ###
 
-# generated install and setup files
-/web/theme/
+###> friendsofphp/php-cs-fixer ###
+.php_cs
+.php_cs.cache
+###< friendsofphp/php-cs-fixer ###
