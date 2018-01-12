@@ -1,712 +1,722 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file date="2016-10-19T21:46:45Z" source-language="en" target-language="de" datatype="plaintext" original="not.available">
-    <body>
+    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="de" datatype="plaintext" original="messages.en.xliff">
+        <body>
+            <!--
+              Global template keys
+            -->
+            <trans-unit id="browser.title">
+                <source>browser.title</source>
+                <target>Kimai - Zeiterfassung</target>
+            </trans-unit>
+            <trans-unit id="yes">
+                <source>yes</source>
+                <target>Ja</target>
+            </trans-unit>
+            <trans-unit id="no">
+                <source>no</source>
+                <target>Nein</target>
+            </trans-unit>
+            <trans-unit id="subtitle.amount">
+                <source>subtitle.amount</source>
+                <target>(insgesamt %count%)</target>
+            </trans-unit>
+            <trans-unit id="This is a mandatory field">
+                <source>This is a mandatory field</source>
+                <target>Pflichtfeld</target>
+            </trans-unit>
+            <trans-unit id="create">
+                <source>create</source>
+                <target>Erstellen</target>
+            </trans-unit>
+            <trans-unit id="confirm.delete">
+                <source>confirm.delete</source>
+                <target>Wollen Sie das wirklich löschen?</target>
+            </trans-unit>
+            <trans-unit id="confirm.delete_message">
+                <source>confirm.delete_message</source>
+                <target>Sie müssen das Löschen erneut bestätigen, da verknüpfte Objekte existieren welche ebenfalls mit gelöscht werden.</target>
+            </trans-unit>
 
-      <!--
-        Global template keys
-      -->
-      <trans-unit id="browser.title">
-        <source>browser.title</source>
-        <target>Kimai - Time Tracking</target>
-      </trans-unit>
-      <trans-unit id="yes">
-        <source>yes</source>
-        <target>Ja</target>
-      </trans-unit>
-      <trans-unit id="no">
-        <source>no</source>
-        <target>Nein</target>
-      </trans-unit>
-      <trans-unit id="subtitle.amount">
-        <source>subtitle.amount</source>
-        <target> (insgesamt %count%)</target>
-      </trans-unit>
-      <trans-unit id="This is a mandatory field">
-        <source>This is a mandatory field</source>
-        <target>Pflichtfeld</target>
-      </trans-unit>
-      <trans-unit id="create">
-        <source>create</source>
-        <target>Erstellen</target>
-      </trans-unit>
-      <trans-unit id="confirm.delete">
-        <source>confirm.delete</source>
-        <target>Wollen Sie das wirklich löschen?</target>
-      </trans-unit>
-      <trans-unit id="confirm.delete_message">
-        <source>confirm.delete_message</source>
-        <target>Sie müssen das Löschen erneut bestätigen, da verknüpfte Objekte existieren welche ebenfalls mit gelöscht werden.</target>
-      </trans-unit>
+            <!--
+              Login / Security
+            -->
+            <trans-unit id="security.title.login">
+                <source>security.title.login</source>
+                <target>Anmelden</target>
+            </trans-unit>
+            <trans-unit id="security.label.username">
+                <source>security.label.username</source>
+                <target>Benutzername</target>
+            </trans-unit>
+            <trans-unit id="security.label.password">
+                <source>security.label.password</source>
+                <target>Passwort</target>
+            </trans-unit>
+            <trans-unit id="security.label.password_repeat">
+                <source>security.label.password_repeat</source>
+                <target>Passwort wiederholen</target>
+            </trans-unit>
+            <trans-unit id="security.action.sign_in">
+                <source>security.action.sign_in</source>
+                <target>Los geht's</target>
+            </trans-unit>
+            <trans-unit id="label.logout">
+                <source>label.logout</source>
+                <target>Abmelden</target>
+            </trans-unit>
+            <trans-unit id="label.user_profile">
+                <source>label.user_profile</source>
+                <target>Mein Profil</target>
+            </trans-unit>
 
-      <!--
-        Login / Security
-      -->
-      <trans-unit id="security.title.login">
-        <source>security.title.login</source>
-        <target>Anmelden</target>
-      </trans-unit>
-      <trans-unit id="security.label.username">
-        <source>security.label.username</source>
-        <target>Benutzername</target>
-      </trans-unit>
-      <trans-unit id="security.label.password">
-        <source>security.label.password</source>
-        <target>Passwort</target>
-      </trans-unit>
-      <trans-unit id="security.label.password_repeat">
-        <source>security.label.password_repeat</source>
-        <target>Passwort wiederholen</target>
-      </trans-unit>
-      <trans-unit id="security.action.sign_in">
-        <source>security.action.sign_in</source>
-        <target>Los geht's</target>
-      </trans-unit>
-      <trans-unit id="label.logout">
-        <source>label.logout</source>
-        <target>Abmelden</target>
-      </trans-unit>
-      <trans-unit id="label.user_profile">
-        <source>label.user_profile</source>
-        <target>Mein Profil</target>
-      </trans-unit>
+            <!--
+              Menu / Navbar items
+            -->
+            <trans-unit id="menu.homepage">
+                <source>menu.homepage</source>
+                <target>Dashboard</target>
+            </trans-unit>
+            <trans-unit id="menu.admin">
+                <source>menu.admin</source>
+                <target>Administration</target>
+            </trans-unit>
+            <trans-unit id="menu.logout">
+                <source>menu.logout</source>
+                <target>Abmelden</target>
+            </trans-unit>
+            <trans-unit id="menu.timesheet">
+                <source>menu.timesheet</source>
+                <target>Zeiterfassung</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_timesheet">
+                <source>menu.admin_timesheet</source>
+                <target>Mitarbeiter Zeiten</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_customer">
+                <source>menu.admin_customer</source>
+                <target>Kunden</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_project">
+                <source>menu.admin_project</source>
+                <target>Projekte</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_activity">
+                <source>menu.admin_activity</source>
+                <target>Aktivitäten</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_user">
+                <source>menu.admin_user</source>
+                <target>Benutzer</target>
+            </trans-unit>
 
-      <!--
-        Menu / Navbar items
-      -->
-      <trans-unit id="menu.homepage">
-        <source>menu.homepage</source>
-        <target>Dashboard</target>
-      </trans-unit>
-      <trans-unit id="menu.admin">
-        <source>menu.admin</source>
-        <target>Administration</target>
-      </trans-unit>
-      <trans-unit id="menu.logout">
-        <source>menu.logout</source>
-        <target>Abmelden</target>
-      </trans-unit>
-      <trans-unit id="menu.timesheet">
-        <source>menu.timesheet</source>
-        <target>Zeiterfassung</target>
-      </trans-unit>
-      <trans-unit id="menu.admin_timesheet">
-        <source>menu.admin_timesheet</source>
-        <target>Mitarbeiter Zeiten</target>
-      </trans-unit>
-      <trans-unit id="menu.admin_customer">
-        <source>menu.admin_customer</source>
-        <target>Kunden</target>
-      </trans-unit>
-      <trans-unit id="menu.admin_project">
-        <source>menu.admin_project</source>
-        <target>Projekte</target>
-      </trans-unit>
-      <trans-unit id="menu.admin_activity">
-        <source>menu.admin_activity</source>
-        <target>Aktivitäten</target>
-      </trans-unit>
-      <trans-unit id="menu.admin_user">
-        <source>menu.admin_user</source>
-        <target>Benutzer</target>
-      </trans-unit>
+            <!--
+              Footer
+            -->
+            <trans-unit id="footer.license">
+                <source>footer.license</source>
+                <target>Alle Rechte vorbehalten.</target>
+            </trans-unit>
 
-      <!--
-        Footer
-      -->
-      <trans-unit id="footer.license">
-        <source>footer.license</source>
-        <target>Alle Rechte vorbehalten.</target>
-      </trans-unit>
+            <!--
+              Error templates
+            -->
+            <trans-unit id="http_error.name">
+                <source>http_error.name</source>
+                <target>Error</target>
+            </trans-unit>
+            <trans-unit id="http_error.description">
+                <source>http_error.description</source>
+                <target>Error</target>
+            </trans-unit>
+            <trans-unit id="http_error.suggestion">
+                <source>http_error.suggestion</source>
+                <target>Error</target>
+            </trans-unit>
+            <trans-unit id="http_error_403.description">
+                <source>http_error_403.description</source>
+                <target>Error</target>
+            </trans-unit>
+            <trans-unit id="http_error_403.suggestion">
+                <source>http_error_403.suggestion</source>
+                <target>Error</target>
+            </trans-unit>
+            <trans-unit id="http_error_404.description">
+                <source>http_error_404.description</source>
+                <target>Error</target>
+            </trans-unit>
+            <trans-unit id="http_error_404.suggestion">
+                <source>http_error_404.suggestion</source>
+                <target>Error</target>
+            </trans-unit>
+            <trans-unit id="http_error_405.description">
+                <source>http_error_405.description</source>
+                <target>Error</target>
+            </trans-unit>
+            <trans-unit id="http_error_405.suggestion">
+                <source>http_error_405.suggestion</source>
+                <target>Error</target>
+            </trans-unit>
+            <trans-unit id="error.no_entries_found">
+                <source>error.no_entries_found</source>
+                <target>Keine Einträge vorhanden</target>
+            </trans-unit>
 
-      <!--
-        Error templates
-      -->
-      <trans-unit id="http_error.name">
-        <source>http_error.name</source>
-        <target>Error</target>
-      </trans-unit>
-      <trans-unit id="http_error.description">
-        <source>http_error.description</source>
-        <target>Error</target>
-      </trans-unit>
-      <trans-unit id="http_error.suggestion">
-        <source>http_error.suggestion</source>
-        <target>Error</target>
-      </trans-unit>
-      <trans-unit id="http_error_403.description">
-        <source>http_error_403.description</source>
-        <target>Error</target>
-      </trans-unit>
-      <trans-unit id="http_error_403.suggestion">
-        <source>http_error_403.suggestion</source>
-        <target>Error</target>
-      </trans-unit>
-      <trans-unit id="http_error_404.description">
-        <source>http_error_404.description</source>
-        <target>Error</target>
-      </trans-unit>
-      <trans-unit id="http_error_404.suggestion">
-        <source>http_error_404.suggestion</source>
-        <target>Error</target>
-      </trans-unit>
-      <trans-unit id="http_error_405.description">
-        <source>http_error_405.description</source>
-        <target>Error</target>
-      </trans-unit>
-      <trans-unit id="http_error_405.suggestion">
-        <source>http_error_405.suggestion</source>
-        <target>Error</target>
-      </trans-unit>
-      <trans-unit id="error.no_entries_found">
-        <source>error.no_entries_found</source>
-        <target>Keine Einträge vorhanden</target>
-      </trans-unit>
+            <!--
+              General labels
+            -->
+            <trans-unit id="label.date">
+                <source>label.date</source>
+                <target>Datum</target>
+            </trans-unit>
+            <trans-unit id="label.starttime">
+                <source>label.starttime</source>
+                <target>Beginn</target>
+            </trans-unit>
+            <trans-unit id="label.endtime">
+                <source>label.endtime</source>
+                <target>Ende</target>
+            </trans-unit>
+            <trans-unit id="label.duration">
+                <source>label.duration</source>
+                <target>Dauer</target>
+            </trans-unit>
+            <trans-unit id="label.username">
+                <source>label.username</source>
+                <target>Benutzer</target>
+            </trans-unit>
+            <trans-unit id="label.description">
+                <source>label.description</source>
+                <target>Beschreibung</target>
+            </trans-unit>
+            <trans-unit id="label.name">
+                <source>label.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="label.comment">
+                <source>label.comment</source>
+                <target>Kommentar</target>
+            </trans-unit>
+            <trans-unit id="label.id">
+                <source>label.id</source>
+                <target>ID</target>
+            </trans-unit>
+            <trans-unit id="label.visible">
+                <source>label.visible</source>
+                <target>Sichtbar</target>
+            </trans-unit>
+            <trans-unit id="label.budget">
+                <source>label.budget</source>
+                <target>Budget</target>
+            </trans-unit>
+            <trans-unit id="label.activity">
+                <source>label.activity</source>
+                <target>Aktivität</target>
+            </trans-unit>
+            <trans-unit id="label.project">
+                <source>label.project</source>
+                <target>Projekt</target>
+            </trans-unit>
+            <trans-unit id="label.hourly_rate">
+                <source>label.hourly_rate</source>
+                <target>Stundenlohn</target>
+            </trans-unit>
+            <trans-unit id="label.hours">
+                <source>label.hours</source>
+                <target>Stunden</target>
+            </trans-unit>
+            <trans-unit id="label.rate">
+                <source>label.rate</source>
+                <target>Lohn</target>
+            </trans-unit>
+            <trans-unit id="label.language">
+                <source>label.language</source>
+                <target>Sprache</target>
+            </trans-unit>
+            <trans-unit id="label.customer">
+                <source>label.customer</source>
+                <target>Kunde</target>
+            </trans-unit>
+            <trans-unit id="label.email">
+                <source>label.email</source>
+                <target>Email</target>
+            </trans-unit>
 
-      <!--
-        General labels
-      -->
-      <trans-unit id="label.date">
-        <source>label.date</source>
-        <target>Datum</target>
-      </trans-unit>
-      <trans-unit id="label.starttime">
-        <source>label.starttime</source>
-        <target>Begin</target>
-      </trans-unit>
-      <trans-unit id="label.endtime">
-        <source>label.endtime</source>
-        <target>Ende</target>
-      </trans-unit>
-      <trans-unit id="label.duration">
-        <source>label.duration</source>
-        <target>Dauer</target>
-      </trans-unit>
-      <trans-unit id="label.username">
-        <source>label.username</source>
-        <target>Benutzer</target>
-      </trans-unit>
-      <trans-unit id="label.description">
-        <source>label.description</source>
-        <target>Beschreibung</target>
-      </trans-unit>
-      <trans-unit id="label.name">
-        <source>label.name</source>
-        <target>Name</target>
-      </trans-unit>
-      <trans-unit id="label.comment">
-        <source>label.comment</source>
-        <target>Kommentar</target>
-      </trans-unit>
-      <trans-unit id="label.id">
-        <source>label.id</source>
-        <target>ID</target>
-      </trans-unit>
-      <trans-unit id="label.visible">
-        <source>label.visible</source>
-        <target>Sichtbar</target>
-      </trans-unit>
-      <trans-unit id="label.budget">
-        <source>label.budget</source>
-        <target>Budget</target>
-      </trans-unit>
-      <trans-unit id="label.activity">
-        <source>label.activity</source>
-        <target>Aktivität</target>
-      </trans-unit>
-      <trans-unit id="label.project">
-        <source>label.project</source>
-        <target>Projekt</target>
-      </trans-unit>
-      <trans-unit id="label.hourly_rate">
-        <source>label.hourly_rate</source>
-        <target>Stundenlohn</target>
-      </trans-unit>
-      <trans-unit id="label.hours">
-        <source>label.hours</source>
-        <target>Stunden</target>
-      </trans-unit>
-      <trans-unit id="label.rate">
-        <source>label.rate</source>
-        <target>Lohn</target>
-      </trans-unit>
-      <trans-unit id="label.language">
-        <source>label.language</source>
-        <target>Sprache</target>
-      </trans-unit>
-      <trans-unit id="label.customer">
-        <source>label.customer</source>
-        <target>Kunde</target>
-      </trans-unit>
-      <trans-unit id="label.email">
-        <source>label.email</source>
-        <target>Email</target>
-      </trans-unit>
+            <!--
+              Buttons & Actions
+            -->
+            <trans-unit id="label.actions">
+                <source>label.actions</source>
+                <target>Aktionen</target>
+            </trans-unit>
+            <trans-unit id="action.edit">
+                <source>action.edit</source>
+                <target>Bearbeiten</target>
+            </trans-unit>
+            <trans-unit id="action.delete">
+                <source>action.delete</source>
+                <target>Löschen</target>
+            </trans-unit>
+            <trans-unit id="action.save">
+                <source>action.save</source>
+                <target>Speichern</target>
+            </trans-unit>
+            <trans-unit id="action.back">
+                <source>action.back</source>
+                <target>Zurück</target>
+            </trans-unit>
 
-      <!--
-        Buttons & Actions
-      -->
-      <trans-unit id="label.actions">
-        <source>label.actions</source>
-        <target>Aktionen</target>
-      </trans-unit>
-      <trans-unit id="action.edit">
-        <source>action.edit</source>
-        <target>Bearbeiten</target>
-      </trans-unit>
-      <trans-unit id="action.delete">
-        <source>action.delete</source>
-        <target>Löschen</target>
-      </trans-unit>
-      <trans-unit id="action.save">
-        <source>action.save</source>
-        <target>Speichern</target>
-      </trans-unit>
-      <trans-unit id="action.back">
-        <source>action.back</source>
-        <target>Zurück</target>
-      </trans-unit>
+            <!--
+              Dashboard
+            -->
+            <trans-unit id="dashboard.title">
+                <source>dashboard.title</source>
+                <target>Dashboard</target>
+            </trans-unit>
+            <trans-unit id="dashboard.subtitle">
+                <source>dashboard.subtitle</source>
+                <target>Willkommen!</target>
+            </trans-unit>
+            <trans-unit id="dashboard.you">
+                <source>dashboard.you</source>
+                <target>Deine Statistiken</target>
+            </trans-unit>
+            <trans-unit id="dashboard.all">
+                <source>dashboard.all</source>
+                <target>Alle Benutzer</target>
+            </trans-unit>
+            <trans-unit id="dashboard.admin">
+                <source>dashboard.admin</source>
+                <target>Administrator</target>
+            </trans-unit>
 
-      <!--
-        Dashboard
-      -->
-      <trans-unit id="dashboard.title">
-        <source>dashboard.title</source>
-        <target>Dashboard</target>
-      </trans-unit>
-      <trans-unit id="dashboard.subtitle">
-        <source>dashboard.subtitle</source>
-        <target>Willkommen!</target>
-      </trans-unit>
-      <trans-unit id="dashboard.you">
-        <source>dashboard.you</source>
-        <target>Deine Statistiken</target>
-      </trans-unit>
-      <trans-unit id="dashboard.all">
-        <source>dashboard.all</source>
-        <target>Alle Benutzer</target>
-      </trans-unit>
-      <trans-unit id="dashboard.admin">
-        <source>dashboard.admin</source>
-        <target>Administrator</target>
-      </trans-unit>
+            <!--
+              Widgets
+            -->
+            <trans-unit id="more.info.link">
+                <source>more.info.link</source>
+                <target>Mehr Infos</target>
+            </trans-unit>
+            <trans-unit id="badge.visible">
+                <source>badge.visible</source>
+                <target>Ja</target>
+            </trans-unit>
+            <trans-unit id="badge.invisible">
+                <source>badge.invisible</source>
+                <target>Nein</target>
+            </trans-unit>
+            <trans-unit id="label.toggle_dropdown">
+                <source>label.toggle_dropdown</source>
+                <target>Menü anzeigen</target>
+            </trans-unit>
 
-      <!--
-        Widgets
-      -->
-      <trans-unit id="more.info.link">
-        <source>more.info.link</source>
-        <target>Mehr Infos</target>
-      </trans-unit>
-      <trans-unit id="badge.visible">
-        <source>badge.visible</source>
-        <target>Ja</target>
-      </trans-unit>
-      <trans-unit id="badge.invisible">
-        <source>badge.invisible</source>
-        <target>Nein</target>
-      </trans-unit>
-      <trans-unit id="label.toggle_dropdown">
-        <source>label.toggle_dropdown</source>
-        <target>Menü anzeigen</target>
-      </trans-unit>
+            <!--
+              Timesheet
+            -->
+            <trans-unit id="timesheet.title">
+                <source>timesheet.title</source>
+                <target>Zeiterfassung</target>
+            </trans-unit>
+            <trans-unit id="timesheet.subtitle">
+                <source>timesheet.subtitle</source>
+                <target>Verwalten Sie Ihre Zeiteinträge</target>
+            </trans-unit>
+            <trans-unit id="timesheet.edit">
+                <source>timesheet.edit</source>
+                <target>Eintrag bearbeiten</target>
+            </trans-unit>
+            <trans-unit id="label.begin">
+                <source>label.begin</source>
+                <target>Von</target>
+            </trans-unit>
+            <trans-unit id="label.end">
+                <source>label.end</source>
+                <target>Bis</target>
+            </trans-unit>
 
-      <!--
-        Timesheet
-      -->
-      <trans-unit id="timesheet.title">
-        <source>timesheet.title</source>
-        <target>Zeiterfassung</target>
-      </trans-unit>
-      <trans-unit id="timesheet.subtitle">
-        <source>timesheet.subtitle</source>
-        <target>Verwalten Sie Ihre Zeiteinträge</target>
-      </trans-unit>
-      <trans-unit id="timesheet.edit">
-        <source>timesheet.edit</source>
-        <target>Eintrag bearbeiten</target>
-      </trans-unit>
-      <trans-unit id="label.begin">
-        <source>label.begin</source>
-        <target>Von</target>
-      </trans-unit>
-      <trans-unit id="label.end">
-        <source>label.end</source>
-        <target>Bis</target>
-      </trans-unit>
+            <!--
+              User profile
+            -->
+            <trans-unit id="profile.title">
+                <source>profile.title</source>
+                <target>Benutzerprofil</target>
+            </trans-unit>
+            <trans-unit id="profile.subtitle">
+                <source>profile.subtitle</source>
+                <target>Verwalte Deine Einstellungen</target>
+            </trans-unit>
+            <trans-unit id="profile.about_me">
+                <source>profile.about_me</source>
+                <target>Über mich</target>
+            </trans-unit>
+            <trans-unit id="profile.first_entry">
+                <source>profile.first_entry</source>
+                <target>Arbeitet seit</target>
+            </trans-unit>
+            <trans-unit id="profile.tab_monthly">
+                <source>profile.tab_monthly</source>
+                <target>Jahresstatistik</target>
+            </trans-unit>
+            <trans-unit id="profile.settings">
+                <source>profile.settings</source>
+                <target>Einstellungen</target>
+            </trans-unit>
+            <trans-unit id="profile.password">
+                <source>profile.password</source>
+                <target>Passwort</target>
+            </trans-unit>
+            <trans-unit id="profile.roles">
+                <source>profile.roles</source>
+                <target>Rollen</target>
+            </trans-unit>
 
-      <!--
-        User profile
-      -->
-      <trans-unit id="profile.title">
-        <source>profile.title</source>
-        <target>Benutzerprofil</target>
-      </trans-unit>
-      <trans-unit id="profile.subtitle">
-        <source>profile.subtitle</source>
-        <target>Verwalte Deine Einstellungen</target>
-      </trans-unit>
-      <trans-unit id="profile.about_me">
-        <source>profile.about_me</source>
-        <target>Über mich</target>
-      </trans-unit>
-      <trans-unit id="profile.first_entry">
-        <source>profile.first_entry</source>
-        <target>Arbeitet seit</target>
-      </trans-unit>
-      <trans-unit id="profile.tab_monthly">
-        <source>profile.tab_monthly</source>
-        <target>Jahresstatistik</target>
-      </trans-unit>
-      <trans-unit id="profile.settings">
-        <source>profile.settings</source>
-        <target>Einstellungen</target>
-      </trans-unit>
-      <trans-unit id="profile.password">
-        <source>profile.password</source>
-        <target>Passwort</target>
-      </trans-unit>
-      <trans-unit id="profile.roles">
-        <source>profile.roles</source>
-        <target>Rollen</target>
-      </trans-unit>
+            <!--
+              Admin: Timesheet
+            -->
+            <trans-unit id="admin_timesheet.title">
+                <source>admin_timesheet.title</source>
+                <target>Mitarbeiter Zeiterfassung</target>
+            </trans-unit>
+            <trans-unit id="admin_timesheet.subtitle">
+                <source>admin_timesheet.subtitle</source>
+                <target>Zeiten aller Benutzer</target>
+            </trans-unit>
 
-      <!--
-        Admin: Timesheet
-      -->
-      <trans-unit id="admin_timesheet.title">
-        <source>admin_timesheet.title</source>
-        <target>Mitarbeiter Zeiterfassung</target>
-      </trans-unit>
-      <trans-unit id="admin_timesheet.subtitle">
-        <source>admin_timesheet.subtitle</source>
-        <target>Zeiten aller Benutzer</target>
-      </trans-unit>
+            <!--
+              Admin: Projects
+            -->
+            <trans-unit id="admin_project.title">
+                <source>admin_project.title</source>
+                <target>Projekte</target>
+            </trans-unit>
+            <trans-unit id="admin_project.subtitle">
+                <source>admin_project.subtitle</source>
+                <target>Ein Projekt fasst Tätigkeiten für jeweils einen Kunden in einer Gruppe zusammen</target>
+            </trans-unit>
+            <trans-unit id="admin_project.delete_confirm">
+                <source>admin_project.delete_confirm</source>
+                <target>
+                    Momentan existieren für das Projekt %project% des Kunden %customer% insgesamt %activities%
+                    Aktivitäten und %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen.
+                    Diese Aktivitäten und Zeiteinträge werden ebenfalls mit gelöscht!
+                </target>
+            </trans-unit>
 
-      <!--
-        Admin: Projects
-      -->
-      <trans-unit id="admin_project.title">
-        <source>admin_project.title</source>
-        <target>Projekte</target>
-      </trans-unit>
-      <trans-unit id="admin_project.subtitle">
-        <source>admin_project.subtitle</source>
-        <target>Ein Projekt fasst Tätigkeiten für jeweils einen Kunden in einer Gruppe zusammen</target>
-      </trans-unit>
-      <trans-unit id="admin_project.delete_confirm">
-        <source>admin_project.delete_confirm</source>
-        <target>Momentan existieren für das Projekt %project% des Kunden %customer% insgesamt %activities% Aktivitäten und %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen. Diese Aktivitäten und Zeiteinträge werden ebenfalls mit gelöscht!</target>
-      </trans-unit>
+            <!--
+              Admin: Activity
+            -->
+            <trans-unit id="admin_activity.title">
+                <source>admin_activity.title</source>
+                <target>Aktivitäten</target>
+            </trans-unit>
+            <trans-unit id="admin_activity.subtitle">
+                <source>admin_activity.subtitle</source>
+                <target>Aufgaben die zur Zeiterfassung genutzt werden können</target>
+            </trans-unit>
+            <trans-unit id="admin_activity.delete_confirm">
+                <source>admin_activity.delete_confirm</source>
+                <target>
+                    Momentan existieren für die Aktivität %activity% im Projekt %project% für den Kunden %customer%
+                    insgesamt %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen. Diese
+                    Zeiteinträge werden ebenfalls mit gelöscht!
+                </target>
+            </trans-unit>
 
-      <!--
-        Admin: Activity
-      -->
-      <trans-unit id="admin_activity.title">
-        <source>admin_activity.title</source>
-        <target>Aktivitäten</target>
-      </trans-unit>
-      <trans-unit id="admin_activity.subtitle">
-        <source>admin_activity.subtitle</source>
-        <target>Aufgaben die zur Zeiterfassung genutzt werden können</target>
-      </trans-unit>
-      <trans-unit id="admin_activity.delete_confirm">
-        <source>admin_activity.delete_confirm</source>
-        <target>Momentan existieren für die Aktivität %activity% im Projekt %project% für den Kunden %customer% insgesamt %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen. Diese Zeiteinträge werden ebenfalls mit gelöscht!</target>
-      </trans-unit>
+            <!--
+              Admin: Customer
+            -->
+            <trans-unit id="admin_customer.title">
+                <source>admin_customer.title</source>
+                <target>Kunden</target>
+            </trans-unit>
+            <trans-unit id="admin_customer.subtitle">
+                <source>admin_customer.subtitle</source>
+                <target>Ihre Kunden stellen die Basis dar, auf der Sie Projekte und Tätigkeiten anlegen können</target>
+            </trans-unit>
+            <trans-unit id="label.company">
+                <source>label.company</source>
+                <target>Unternehmensbezeichnung</target>
+            </trans-unit>
+            <trans-unit id="label.vat">
+                <source>label.vat</source>
+                <target>Umsatzsteuer</target>
+            </trans-unit>
+            <trans-unit id="label.contact">
+                <source>label.contact</source>
+                <target>Kontakt</target>
+            </trans-unit>
+            <trans-unit id="label.address">
+                <source>label.address</source>
+                <target>Adresse</target>
+            </trans-unit>
+            <trans-unit id="label.country">
+                <source>label.country</source>
+                <target>Land</target>
+            </trans-unit>
+            <trans-unit id="label.phone">
+                <source>label.phone</source>
+                <target>Telefon</target>
+            </trans-unit>
+            <trans-unit id="label.fax">
+                <source>label.fax</source>
+                <target>Fax</target>
+            </trans-unit>
+            <trans-unit id="label.mobile">
+                <source>label.mobile</source>
+                <target>Handy</target>
+            </trans-unit>
+            <trans-unit id="label.homepage">
+                <source>label.homepage</source>
+                <target>Homepage</target>
+            </trans-unit>
+            <trans-unit id="label.timezone">
+                <source>label.timezone</source>
+                <target>Zeitzone</target>
+            </trans-unit>
+            <trans-unit id="label.currency">
+                <source>label.currency</source>
+                <target>Währung</target>
+            </trans-unit>
+            <trans-unit id="admin_customer.delete_confirm">
+                <source>admin_customer.delete_confirm</source>
+                <target>
+                    Momentan existieren für den Kunden %customer% insgesamt %project% Projekte mit %activity%
+                    Aktivitäten, die sich in %records% Zeiteinträgen auf eine Gesamtdauer von %duration% belaufen. Diese
+                    Projekte, Aktivitäten und Zeiteinträge werden ebenfalls mit gelöscht!
+                </target>
+            </trans-unit>
 
-      <!--
-        Admin: Customer
-      -->
-      <trans-unit id="admin_customer.title">
-        <source>admin_customer.title</source>
-        <target>Kunden</target>
-      </trans-unit>
-      <trans-unit id="admin_customer.subtitle">
-        <source>admin_customer.subtitle</source>
-        <target>Ihre Kunden stellen die Basis dar, auf der Sie Projekte und Tätigkeiten anlegen können</target>
-      </trans-unit>
-      <trans-unit id="label.company">
-        <source>label.company</source>
-        <target>Unternehmensbezeichnung</target>
-      </trans-unit>
-      <trans-unit id="label.vat">
-        <source>label.vat</source>
-        <target>Umsatzsteuer</target>
-      </trans-unit>
-      <trans-unit id="label.contact">
-        <source>label.contact</source>
-        <target>Kontakt</target>
-      </trans-unit>
-      <trans-unit id="label.address">
-        <source>label.address</source>
-        <target>Adresse</target>
-      </trans-unit>
-      <trans-unit id="label.country">
-        <source>label.country</source>
-        <target>Land</target>
-      </trans-unit>
-      <trans-unit id="label.phone">
-        <source>label.phone</source>
-        <target>Telefon</target>
-      </trans-unit>
-      <trans-unit id="label.fax">
-        <source>label.fax</source>
-        <target>Fax</target>
-      </trans-unit>
-      <trans-unit id="label.mobile">
-        <source>label.mobile</source>
-        <target>Handy</target>
-      </trans-unit>
-      <trans-unit id="label.homepage">
-        <source>label.homepage</source>
-        <target>Homepage</target>
-      </trans-unit>
-      <trans-unit id="label.timezone">
-        <source>label.timezone</source>
-        <target>Zeitzone</target>
-      </trans-unit>
-      <trans-unit id="label.currency">
-        <source>label.currency</source>
-        <target>Währung</target>
-      </trans-unit>
-      <trans-unit id="admin_customer.delete_confirm">
-        <source>admin_customer.delete_confirm</source>
-        <target>Momentan existieren für den Kunden %customer% insgesamt %project%  Projekte mit %activity% Aktivitäten, die sich in %records% Zeiteinträgen auf eine Gesamtdauer von %duration% belaufen. Diese Projekte, Aktivitäten und Zeiteinträge werden ebenfalls mit gelöscht!</target>
-      </trans-unit>
+            <!--
+              Admin: User
+            -->
+            <trans-unit id="admin_user.title">
+                <source>admin_user.title</source>
+                <target>Benutzer</target>
+            </trans-unit>
+            <trans-unit id="admin_user.subtitle">
+                <source>admin_user.subtitle</source>
+                <target>Alle registrierten Benutzer der Zeitverwaltung</target>
+            </trans-unit>
+            <trans-unit id="label.alias">
+                <source>label.alias</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="label.title">
+                <source>label.title</source>
+                <target>Titel</target>
+            </trans-unit>
+            <trans-unit id="label.avatar">
+                <source>label.avatar</source>
+                <target>Profilbild</target>
+            </trans-unit>
+            <trans-unit id="label.active">
+                <source>label.active</source>
+                <target>Aktiv</target>
+            </trans-unit>
+            <trans-unit id="label.roles">
+                <source>label.roles</source>
+                <target>Rolle</target>
+            </trans-unit>
 
-      <!--
-        Admin: User
-      -->
-      <trans-unit id="admin_user.title">
-        <source>admin_user.title</source>
-        <target>Benutzer</target>
-      </trans-unit>
-      <trans-unit id="admin_user.subtitle">
-        <source>admin_user.subtitle</source>
-        <target>Alle registrierten Benutzer der Zeitverwaltung</target>
-      </trans-unit>
-      <trans-unit id="label.alias">
-        <source>label.alias</source>
-        <target>Name</target>
-      </trans-unit>
-      <trans-unit id="label.title">
-        <source>label.title</source>
-        <target>Titel</target>
-      </trans-unit>
-      <trans-unit id="label.avatar">
-        <source>label.avatar</source>
-        <target>Profilbild</target>
-      </trans-unit>
-      <trans-unit id="label.active">
-        <source>label.active</source>
-        <target>Aktiv</target>
-      </trans-unit>
-      <trans-unit id="label.roles">
-        <source>label.roles</source>
-        <target>Rolle</target>
-      </trans-unit>
+            <!--
+              ROLES
+            -->
+            <trans-unit id="ROLE_SUPER_ADMIN">
+                <source>ROLE_SUPER_ADMIN</source>
+                <target>System-Admin</target>
+            </trans-unit>
+            <trans-unit id="ROLE_ADMIN">
+                <source>ROLE_ADMIN</source>
+                <target>Administrator</target>
+            </trans-unit>
+            <trans-unit id="ROLE_TEAMLEAD">
+                <source>ROLE_TEAMLEAD</source>
+                <target>Teamleiter</target>
+            </trans-unit>
+            <trans-unit id="ROLE_USER">
+                <source>ROLE_USER</source>
+                <target>Benutzer</target>
+            </trans-unit>
+            <trans-unit id="ROLE_CUSTOMER">
+                <source>ROLE_CUSTOMER</source>
+                <target>Kunde</target>
+            </trans-unit>
 
-      <!--
-        ROLES
-      -->
-      <trans-unit id="ROLE_SUPER_ADMIN">
-        <source>ROLE_SUPER_ADMIN</source>
-        <target>System-Admin</target>
-      </trans-unit>
-      <trans-unit id="ROLE_ADMIN">
-        <source>ROLE_ADMIN</source>
-        <target>Administrator</target>
-      </trans-unit>
-      <trans-unit id="ROLE_TEAMLEAD">
-        <source>ROLE_TEAMLEAD</source>
-        <target>Teamleiter</target>
-      </trans-unit>
-      <trans-unit id="ROLE_USER">
-        <source>ROLE_USER</source>
-        <target>Benutzer</target>
-      </trans-unit>
-      <trans-unit id="ROLE_CUSTOMER">
-        <source>ROLE_CUSTOMER</source>
-        <target>Kunde</target>
-      </trans-unit>
+            <!--
+              Statistics
+            -->
+            <trans-unit id="stats.durationThisMonth">
+                <source>stats.durationThisMonth</source>
+                <target>Arbeitszeit diesen Monat</target>
+            </trans-unit>
+            <trans-unit id="stats.amountThisMonth">
+                <source>stats.amountThisMonth</source>
+                <target>Umsatz diesen Monat</target>
+            </trans-unit>
+            <trans-unit id="stats.durationTotal">
+                <source>stats.durationTotal</source>
+                <target>Arbeitszeit total</target>
+            </trans-unit>
+            <trans-unit id="stats.amountTotal">
+                <source>stats.amountTotal</source>
+                <target>Umsatz total</target>
+            </trans-unit>
 
-      <!--
-        Statistics
-      -->
-      <trans-unit id="stats.durationThisMonth">
-        <source>stats.durationThisMonth</source>
-        <target>Arbeitszeit diesen Monat</target>
-      </trans-unit>
-      <trans-unit id="stats.amountThisMonth">
-        <source>stats.amountThisMonth</source>
-        <target>Umsatz diesen Monat</target>
-      </trans-unit>
-      <trans-unit id="stats.durationTotal">
-        <source>stats.durationTotal</source>
-        <target>Arbeitszeit total</target>
-      </trans-unit>
-      <trans-unit id="stats.amountTotal">
-        <source>stats.amountTotal</source>
-        <target>Umsatz total</target>
-      </trans-unit>
+            <!--
+              Dashboard
+            -->
+            <trans-unit id="stats.userTotal">
+                <source>stats.userTotal</source>
+                <target>Anzahl Benutzer</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveThisMoth">
+                <source>stats.userActiveThisMoth</source>
+                <target>Aktive Benutzer diesen Monat</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveEver">
+                <source>stats.userActiveEver</source>
+                <target>Aktive Benutzer jemals</target>
+            </trans-unit>
+            <trans-unit id="stats.activeRecordings">
+                <source>stats.activeRecordings</source>
+                <target>Momentan aktive Zeitmessungen</target>
+            </trans-unit>
+            <trans-unit id="stats.activitiesTotal">
+                <source>stats.activitiesTotal</source>
+                <target>Anzahl Aktivitäten</target>
+            </trans-unit>
+            <trans-unit id="stats.projectsTotal">
+                <source>stats.projectsTotal</source>
+                <target>Anzahl Projekte</target>
+            </trans-unit>
+            <trans-unit id="stats.customerTotal">
+                <source>stats.customerTotal</source>
+                <target>Anzahl Kunden</target>
+            </trans-unit>
 
-      <!--
-        Dashboard
-      -->
-      <trans-unit id="stats.userTotal">
-        <source>stats.userTotal</source>
-        <target>Anzahl Benutzer</target>
-      </trans-unit>
-      <trans-unit id="stats.userActiveThisMoth">
-        <source>stats.userActiveThisMoth</source>
-        <target>Aktive Benutzer diesen Monat</target>
-      </trans-unit>
-      <trans-unit id="stats.userActiveEver">
-        <source>stats.userActiveEver</source>
-        <target>Aktive Benutzer jemals</target>
-      </trans-unit>
-      <trans-unit id="stats.activeRecordings">
-        <source>stats.activeRecordings</source>
-        <target>Momentan aktive Zeitmessungen</target>
-      </trans-unit>
-      <trans-unit id="stats.activitiesTotal">
-        <source>stats.activitiesTotal</source>
-        <target>Anzahl Aktivitäten</target>
-      </trans-unit>
-      <trans-unit id="stats.projectsTotal">
-        <source>stats.projectsTotal</source>
-        <target>Anzahl Projekte</target>
-      </trans-unit>
-      <trans-unit id="stats.customerTotal">
-        <source>stats.customerTotal</source>
-        <target>Anzahl Kunden</target>
-      </trans-unit>
+            <!--
+              Month names
+            -->
+            <trans-unit id="month.1">
+                <source>month.1</source>
+                <target>Januar</target>
+            </trans-unit>
+            <trans-unit id="month.2">
+                <source>month.2</source>
+                <target>Februar</target>
+            </trans-unit>
+            <trans-unit id="month.3">
+                <source>month.3</source>
+                <target>März</target>
+            </trans-unit>
+            <trans-unit id="month.4">
+                <source>month.4</source>
+                <target>April</target>
+            </trans-unit>
+            <trans-unit id="month.5">
+                <source>month.5</source>
+                <target>Mai</target>
+            </trans-unit>
+            <trans-unit id="month.6">
+                <source>month.6</source>
+                <target>Juni</target>
+            </trans-unit>
+            <trans-unit id="month.7">
+                <source>month.7</source>
+                <target>Juli</target>
+            </trans-unit>
+            <trans-unit id="month.8">
+                <source>month.8</source>
+                <target>August</target>
+            </trans-unit>
+            <trans-unit id="month.9">
+                <source>month.9</source>
+                <target>September</target>
+            </trans-unit>
+            <trans-unit id="month.10">
+                <source>month.10</source>
+                <target>Oktober</target>
+            </trans-unit>
+            <trans-unit id="month.11">
+                <source>month.11</source>
+                <target>November</target>
+            </trans-unit>
+            <trans-unit id="month.12">
+                <source>month.12</source>
+                <target>Dezember</target>
+            </trans-unit>
 
-      <!--
-        Month names
-      -->
-      <trans-unit id="month.1">
-        <source>month.1</source>
-        <target>Januar</target>
-      </trans-unit>
-      <trans-unit id="month.2">
-        <source>month.2</source>
-        <target>Februar</target>
-      </trans-unit>
-      <trans-unit id="month.3">
-        <source>month.3</source>
-        <target>März</target>
-      </trans-unit>
-      <trans-unit id="month.4">
-        <source>month.4</source>
-        <target>April</target>
-      </trans-unit>
-      <trans-unit id="month.5">
-        <source>month.5</source>
-        <target>Mai</target>
-      </trans-unit>
-      <trans-unit id="month.6">
-        <source>month.6</source>
-        <target>Juni</target>
-      </trans-unit>
-      <trans-unit id="month.7">
-        <source>month.7</source>
-        <target>Juli</target>
-      </trans-unit>
-      <trans-unit id="month.8">
-        <source>month.8</source>
-        <target>August</target>
-      </trans-unit>
-      <trans-unit id="month.9">
-        <source>month.9</source>
-        <target>September</target>
-      </trans-unit>
-      <trans-unit id="month.10">
-        <source>month.10</source>
-        <target>Oktober</target>
-      </trans-unit>
-      <trans-unit id="month.11">
-        <source>month.11</source>
-        <target>November</target>
-      </trans-unit>
-      <trans-unit id="month.12">
-        <source>month.12</source>
-        <target>Dezember</target>
-      </trans-unit>
+            <!--
+             Navbar - recent entries and activities
+            -->
+            <trans-unit id="active.entries">
+                <source>active.entries</source>
+                <target>Sie haben %count% aktiven Eintrag|Sie haben %count% aktive Einträge</target>
+            </trans-unit>
+            <trans-unit id="timesheet.all">
+                <source>timesheet.all</source>
+                <target>Alle Einträge anzeigen</target>
+            </trans-unit>
+            <trans-unit id="recent.activities">
+                <source>recent.activities</source>
+                <target>Ihr %count% zuletzt bearbeitete Aktivität|Eine ihrer %count% letzten Aktivitäten neustarten</target>
+            </trans-unit>
+            <trans-unit id="recent.activities.format">
+                <source>recent.activities.format</source>
+                <target>%activity% in %project% für %customer%</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start">
+                <source>timesheet.start</source>
+                <target>Neue Zeitmessung starten</target>
+            </trans-unit>
 
-       <!--
-        Navbar - recent entries and activities
-       -->
-      <trans-unit id="active.entries">
-        <source>active.entries</source>
-        <target>Sie haben %count% aktiven Eintrag|Sie haben %count% aktive Einträge</target>
-      </trans-unit>
-      <trans-unit id="timesheet.all">
-        <source>timesheet.all</source>
-        <target>Alle Einträge anzeigen</target>
-      </trans-unit>
-      <trans-unit id="recent.activities">
-        <source>recent.activities</source>
-        <target>Ihr %count% zuletzt bearbeitete Aktivität|Eine ihrer %count% letzten Aktivitäten neustarten</target>
-      </trans-unit>
-      <trans-unit id="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target>%activity% in %project% für %customer%</target>
-      </trans-unit>
-      <trans-unit id="timesheet.start">
-        <source>timesheet.start</source>
-        <target>Neue Zeitmessung starten</target>
-      </trans-unit>
-
-      <!--
-        TOOLBARS
-      -->
-      <trans-unit id="label.pageSize">
-        <source>label.pageSize</source>
-        <target>Anzahl Einträge</target>
-      </trans-unit>
-      <trans-unit id="label.entryState">
-        <source>label.entryState</source>
-        <target>Zeiten</target>
-      </trans-unit>
-      <trans-unit id="entryState.all">
-        <source>entryState.all</source>
-        <target>Alle</target>
-      </trans-unit>
-      <trans-unit id="entryState.running">
-        <source>entryState.running</source>
-        <target>Laufende</target>
-      </trans-unit>
-      <trans-unit id="entryState.stopped">
-        <source>entryState.stopped</source>
-        <target>Beendete</target>
-      </trans-unit>
-      <trans-unit id="0">
-        <source>0</source>
-        <target>0</target>
-      </trans-unit>
-      <trans-unit id="10">
-        <source>10</source>
-        <target>10</target>
-      </trans-unit>
-      <trans-unit id="25">
-        <source>25</source>
-        <target>25</target>
-      </trans-unit>
-      <trans-unit id="50">
-        <source>50</source>
-        <target>50</target>
-      </trans-unit>
-      <trans-unit id="75">
-        <source>75</source>
-        <target>75</target>
-      </trans-unit>
-      <trans-unit id="100">
-        <source>100</source>
-        <target>100</target>
-      </trans-unit>
-
-    </body>
-  </file>
+            <!--
+              TOOLBARS
+            -->
+            <trans-unit id="label.pageSize">
+                <source>label.pageSize</source>
+                <target>Anzahl Einträge</target>
+            </trans-unit>
+            <trans-unit id="label.entryState">
+                <source>label.entryState</source>
+                <target>Zeiten</target>
+            </trans-unit>
+            <trans-unit id="entryState.all">
+                <source>entryState.all</source>
+                <target>Alle</target>
+            </trans-unit>
+            <trans-unit id="entryState.running">
+                <source>entryState.running</source>
+                <target>Laufende</target>
+            </trans-unit>
+            <trans-unit id="entryState.stopped">
+                <source>entryState.stopped</source>
+                <target>Beendete</target>
+            </trans-unit>
+            <trans-unit id="0">
+                <source>0</source>
+                <target>0</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>10</source>
+                <target>10</target>
+            </trans-unit>
+            <trans-unit id="25">
+                <source>25</source>
+                <target>25</target>
+            </trans-unit>
+            <trans-unit id="50">
+                <source>50</source>
+                <target>50</target>
+            </trans-unit>
+            <trans-unit id="75">
+                <source>75</source>
+                <target>75</target>
+            </trans-unit>
+            <trans-unit id="100">
+                <source>100</source>
+                <target>100</target>
+            </trans-unit>
+        </body>
+    </file>
 </xliff>

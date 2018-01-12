@@ -1,33 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file date="2016-10-19T21:46:45Z" source-language="en" target-language="de" datatype="plaintext" original="not.available">
-    <body>
-
-      <trans-unit id="timesheet.stop.success">
-        <source>timesheet.stop.success</source>
-        <target>Zeitmessung wurde gestoppt</target>
-      </trans-unit>
-      <trans-unit id="timesheet.stop.error">
-        <source>timesheet.stop.error</source>
-        <target>Zeitmessung konnte nicht gestoppt werden: %reason%</target>
-      </trans-unit>
-      <trans-unit id="timesheet.start.success">
-        <source>timesheet.start.success</source>
-        <target>Zeitmessung wurde gestartet</target>
-      </trans-unit>
-      <trans-unit id="timesheet.start.error">
-        <source>timesheet.start.error</source>
-        <target>Zeitmessung konnte nicht gestartet werden: %reason%</target>
-      </trans-unit>
-      <trans-unit id="action.updated_successfully">
-        <source>action.updated_successfully</source>
-        <target>Änderungen erfolgreich gespeichert</target>
-      </trans-unit>
-      <trans-unit id="action.deleted_successfully">
-        <source>action.deleted_successfully</source>
-        <target>Eintrag wurde erfolgreich gelöscht</target>
-      </trans-unit>
-
-    </body>
-  </file>
+    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="de" datatype="plaintext" original="flashmessages.en.xliff">
+        <body>
+            <trans-unit id="timesheet.stop.success">
+                <source>timesheet.stop.success</source>
+                <target>Zeitmessung wurde gestoppt</target>
+            </trans-unit>
+            <trans-unit id="timesheet.stop.error">
+                <source>timesheet.stop.error</source>
+                <target>Zeitmessung konnte nicht gestoppt werden: %reason%</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.success">
+                <source>timesheet.start.success</source>
+                <target>Zeitmessung wurde gestartet</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.error">
+                <source>timesheet.start.error</source>
+                <target>Zeitmessung konnte nicht gestartet werden: %reason%</target>
+            </trans-unit>
+            <trans-unit id="action.updated_successfully">
+                <source>action.updated_successfully</source>
+                <target>Änderungen erfolgreich gespeichert</target>
+            </trans-unit>
+            <trans-unit id="action.deleted_successfully">
+                <source>action.deleted_successfully</source>
+                <target>Eintrag wurde erfolgreich gelöscht</target>
+            </trans-unit>
+        </body>
+    </file>
 </xliff>
