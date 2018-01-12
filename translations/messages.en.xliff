@@ -1,41 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="de" datatype="plaintext" original="messages.en.xliff">
+    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="en" datatype="plaintext" original="none">
         <body>
             <!--
               Global template keys
             -->
             <trans-unit id="browser.title">
                 <source>browser.title</source>
-                <target>Kimai - Zeiterfassung</target>
+                <target>Kimai - Time Tracking</target>
             </trans-unit>
             <trans-unit id="yes">
                 <source>yes</source>
-                <target>Ja</target>
+                <target>Yes</target>
             </trans-unit>
             <trans-unit id="no">
                 <source>no</source>
-                <target>Nein</target>
+                <target>No</target>
             </trans-unit>
             <trans-unit id="subtitle.amount">
                 <source>subtitle.amount</source>
-                <target>(insgesamt %count%)</target>
+                <target>(total %count%)</target>
             </trans-unit>
             <trans-unit id="This is a mandatory field">
                 <source>This is a mandatory field</source>
-                <target>Pflichtfeld</target>
+                <target>Mandatory</target>
             </trans-unit>
             <trans-unit id="create">
                 <source>create</source>
-                <target>Erstellen</target>
+                <target>Create</target>
             </trans-unit>
             <trans-unit id="confirm.delete">
                 <source>confirm.delete</source>
-                <target>Wollen Sie das wirklich löschen?</target>
+                <target>Do you really want to delete it?</target>
             </trans-unit>
             <trans-unit id="confirm.delete_message">
                 <source>confirm.delete_message</source>
-                <target>Sie müssen das Löschen erneut bestätigen, da verknüpfte Objekte existieren welche ebenfalls mit gelöscht werden.</target>
+                <target>
+                    You have to confirm the deletion, as there are linked objects which will be deleted as well.
+                </target>
             </trans-unit>
 
             <!--
@@ -43,31 +45,31 @@
             -->
             <trans-unit id="security.title.login">
                 <source>security.title.login</source>
-                <target>Anmelden</target>
+                <target>Login</target>
             </trans-unit>
             <trans-unit id="security.label.username">
                 <source>security.label.username</source>
-                <target>Benutzername</target>
+                <target>Username</target>
             </trans-unit>
             <trans-unit id="security.label.password">
                 <source>security.label.password</source>
-                <target>Passwort</target>
+                <target>Password</target>
             </trans-unit>
             <trans-unit id="security.label.password_repeat">
                 <source>security.label.password_repeat</source>
-                <target>Passwort wiederholen</target>
+                <target>Repeat password</target>
             </trans-unit>
             <trans-unit id="security.action.sign_in">
                 <source>security.action.sign_in</source>
-                <target>Los geht's</target>
+                <target>Let's go</target>
             </trans-unit>
             <trans-unit id="label.logout">
                 <source>label.logout</source>
-                <target>Abmelden</target>
+                <target>Logout</target>
             </trans-unit>
             <trans-unit id="label.user_profile">
                 <source>label.user_profile</source>
-                <target>Mein Profil</target>
+                <target>My profile</target>
             </trans-unit>
 
             <!--
@@ -83,31 +85,31 @@
             </trans-unit>
             <trans-unit id="menu.logout">
                 <source>menu.logout</source>
-                <target>Abmelden</target>
+                <target>Logout</target>
             </trans-unit>
             <trans-unit id="menu.timesheet">
                 <source>menu.timesheet</source>
-                <target>Zeiterfassung</target>
+                <target>Timesheet</target>
             </trans-unit>
             <trans-unit id="menu.admin_timesheet">
                 <source>menu.admin_timesheet</source>
-                <target>Mitarbeiter Zeiten</target>
+                <target>User timesheets</target>
             </trans-unit>
             <trans-unit id="menu.admin_customer">
                 <source>menu.admin_customer</source>
-                <target>Kunden</target>
+                <target>Customer</target>
             </trans-unit>
             <trans-unit id="menu.admin_project">
                 <source>menu.admin_project</source>
-                <target>Projekte</target>
+                <target>Projects</target>
             </trans-unit>
             <trans-unit id="menu.admin_activity">
                 <source>menu.admin_activity</source>
-                <target>Aktivitäten</target>
+                <target>Activities</target>
             </trans-unit>
             <trans-unit id="menu.admin_user">
                 <source>menu.admin_user</source>
-                <target>Benutzer</target>
+                <target>User</target>
             </trans-unit>
 
             <!--
@@ -115,7 +117,7 @@
             -->
             <trans-unit id="footer.license">
                 <source>footer.license</source>
-                <target>Alle Rechte vorbehalten.</target>
+                <target>All rights reserved.</target>
             </trans-unit>
 
             <!--
@@ -159,7 +161,7 @@
             </trans-unit>
             <trans-unit id="error.no_entries_found">
                 <source>error.no_entries_found</source>
-                <target>Keine Einträge vorhanden</target>
+                <target>No entries existing</target>
             </trans-unit>
 
             <!--
@@ -167,27 +169,27 @@
             -->
             <trans-unit id="label.date">
                 <source>label.date</source>
-                <target>Datum</target>
+                <target>Date</target>
             </trans-unit>
             <trans-unit id="label.starttime">
                 <source>label.starttime</source>
-                <target>Beginn</target>
+                <target>Begin</target>
             </trans-unit>
             <trans-unit id="label.endtime">
                 <source>label.endtime</source>
-                <target>Ende</target>
+                <target>End</target>
             </trans-unit>
             <trans-unit id="label.duration">
                 <source>label.duration</source>
-                <target>Dauer</target>
+                <target>Duration</target>
             </trans-unit>
             <trans-unit id="label.username">
                 <source>label.username</source>
-                <target>Benutzer</target>
+                <target>Username</target>
             </trans-unit>
             <trans-unit id="label.description">
                 <source>label.description</source>
-                <target>Beschreibung</target>
+                <target>Description</target>
             </trans-unit>
             <trans-unit id="label.name">
                 <source>label.name</source>
@@ -195,7 +197,7 @@
             </trans-unit>
             <trans-unit id="label.comment">
                 <source>label.comment</source>
-                <target>Kommentar</target>
+                <target>Comment</target>
             </trans-unit>
             <trans-unit id="label.id">
                 <source>label.id</source>
@@ -203,7 +205,7 @@
             </trans-unit>
             <trans-unit id="label.visible">
                 <source>label.visible</source>
-                <target>Sichtbar</target>
+                <target>Visible</target>
             </trans-unit>
             <trans-unit id="label.budget">
                 <source>label.budget</source>
@@ -211,31 +213,31 @@
             </trans-unit>
             <trans-unit id="label.activity">
                 <source>label.activity</source>
-                <target>Aktivität</target>
+                <target>Activity</target>
             </trans-unit>
             <trans-unit id="label.project">
                 <source>label.project</source>
-                <target>Projekt</target>
+                <target>Project</target>
             </trans-unit>
             <trans-unit id="label.hourly_rate">
                 <source>label.hourly_rate</source>
-                <target>Stundenlohn</target>
+                <target>Hourly rate</target>
             </trans-unit>
             <trans-unit id="label.hours">
                 <source>label.hours</source>
-                <target>Stunden</target>
+                <target>Hours</target>
             </trans-unit>
             <trans-unit id="label.rate">
                 <source>label.rate</source>
-                <target>Lohn</target>
+                <target>Rate</target>
             </trans-unit>
             <trans-unit id="label.language">
                 <source>label.language</source>
-                <target>Sprache</target>
+                <target>Language</target>
             </trans-unit>
             <trans-unit id="label.customer">
                 <source>label.customer</source>
-                <target>Kunde</target>
+                <target>Customer</target>
             </trans-unit>
             <trans-unit id="label.email">
                 <source>label.email</source>
@@ -247,23 +249,23 @@
             -->
             <trans-unit id="label.actions">
                 <source>label.actions</source>
-                <target>Aktionen</target>
+                <target>Actions</target>
             </trans-unit>
             <trans-unit id="action.edit">
                 <source>action.edit</source>
-                <target>Bearbeiten</target>
+                <target>Edit</target>
             </trans-unit>
             <trans-unit id="action.delete">
                 <source>action.delete</source>
-                <target>Löschen</target>
+                <target>Delete</target>
             </trans-unit>
             <trans-unit id="action.save">
                 <source>action.save</source>
-                <target>Speichern</target>
+                <target>Save</target>
             </trans-unit>
             <trans-unit id="action.back">
                 <source>action.back</source>
-                <target>Zurück</target>
+                <target>Back</target>
             </trans-unit>
 
             <!--
@@ -275,15 +277,15 @@
             </trans-unit>
             <trans-unit id="dashboard.subtitle">
                 <source>dashboard.subtitle</source>
-                <target>Willkommen!</target>
+                <target>Welcome!</target>
             </trans-unit>
             <trans-unit id="dashboard.you">
                 <source>dashboard.you</source>
-                <target>Deine Statistiken</target>
+                <target>Your statistics</target>
             </trans-unit>
             <trans-unit id="dashboard.all">
                 <source>dashboard.all</source>
-                <target>Alle Benutzer</target>
+                <target>All user</target>
             </trans-unit>
             <trans-unit id="dashboard.admin">
                 <source>dashboard.admin</source>
@@ -295,19 +297,19 @@
             -->
             <trans-unit id="more.info.link">
                 <source>more.info.link</source>
-                <target>Mehr Infos</target>
+                <target>More infos</target>
             </trans-unit>
             <trans-unit id="badge.visible">
                 <source>badge.visible</source>
-                <target>Ja</target>
+                <target>Yes</target>
             </trans-unit>
             <trans-unit id="badge.invisible">
                 <source>badge.invisible</source>
-                <target>Nein</target>
+                <target>No</target>
             </trans-unit>
             <trans-unit id="label.toggle_dropdown">
                 <source>label.toggle_dropdown</source>
-                <target>Menü anzeigen</target>
+                <target>Show menu</target>
             </trans-unit>
 
             <!--
@@ -315,23 +317,23 @@
             -->
             <trans-unit id="timesheet.title">
                 <source>timesheet.title</source>
-                <target>Zeiterfassung</target>
+                <target>Time-tracking</target>
             </trans-unit>
             <trans-unit id="timesheet.subtitle">
                 <source>timesheet.subtitle</source>
-                <target>Verwalten Sie Ihre Zeiteinträge</target>
+                <target>Administrate your time-recordings</target>
             </trans-unit>
             <trans-unit id="timesheet.edit">
                 <source>timesheet.edit</source>
-                <target>Eintrag bearbeiten</target>
+                <target>Edit record</target>
             </trans-unit>
             <trans-unit id="label.begin">
                 <source>label.begin</source>
-                <target>Von</target>
+                <target>From</target>
             </trans-unit>
             <trans-unit id="label.end">
                 <source>label.end</source>
-                <target>Bis</target>
+                <target>To</target>
             </trans-unit>
 
             <!--
@@ -339,35 +341,35 @@
             -->
             <trans-unit id="profile.title">
                 <source>profile.title</source>
-                <target>Benutzerprofil</target>
+                <target>User profile</target>
             </trans-unit>
             <trans-unit id="profile.subtitle">
                 <source>profile.subtitle</source>
-                <target>Verwalte Deine Einstellungen</target>
+                <target>Edit your settings</target>
             </trans-unit>
             <trans-unit id="profile.about_me">
                 <source>profile.about_me</source>
-                <target>Über mich</target>
+                <target>About me</target>
             </trans-unit>
             <trans-unit id="profile.first_entry">
                 <source>profile.first_entry</source>
-                <target>Arbeitet seit</target>
+                <target>Working since</target>
             </trans-unit>
             <trans-unit id="profile.tab_monthly">
                 <source>profile.tab_monthly</source>
-                <target>Jahresstatistik</target>
+                <target>Yearly statistic</target>
             </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>
-                <target>Einstellungen</target>
+                <target>Settings</target>
             </trans-unit>
             <trans-unit id="profile.password">
                 <source>profile.password</source>
-                <target>Passwort</target>
+                <target>Password</target>
             </trans-unit>
             <trans-unit id="profile.roles">
                 <source>profile.roles</source>
-                <target>Rollen</target>
+                <target>Roles</target>
             </trans-unit>
 
             <!--
@@ -375,11 +377,11 @@
             -->
             <trans-unit id="admin_timesheet.title">
                 <source>admin_timesheet.title</source>
-                <target>Mitarbeiter Zeiterfassung</target>
+                <target>Staff timesheets</target>
             </trans-unit>
             <trans-unit id="admin_timesheet.subtitle">
                 <source>admin_timesheet.subtitle</source>
-                <target>Zeiten aller Benutzer</target>
+                <target>Records of all user</target>
             </trans-unit>
 
             <!--
@@ -387,18 +389,18 @@
             -->
             <trans-unit id="admin_project.title">
                 <source>admin_project.title</source>
-                <target>Projekte</target>
+                <target>Projects</target>
             </trans-unit>
             <trans-unit id="admin_project.subtitle">
                 <source>admin_project.subtitle</source>
-                <target>Ein Projekt fasst Tätigkeiten für jeweils einen Kunden in einer Gruppe zusammen</target>
+                <target>A project combines activities for a customer in a group</target>
             </trans-unit>
             <trans-unit id="admin_project.delete_confirm">
                 <source>admin_project.delete_confirm</source>
                 <target>
-                    Momentan existieren für das Projekt %project% des Kunden %customer% insgesamt %activities%
-                    Aktivitäten und %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen.
-                    Diese Aktivitäten und Zeiteinträge werden ebenfalls mit gelöscht!
+                    Currently the project %project% for the customer %customer% has %activities%
+                    activities and %records% time-records, which count up to a total of %duration%.
+                    These activities and time-records will be deleted as well!
                 </target>
             </trans-unit>
 
@@ -407,18 +409,18 @@
             -->
             <trans-unit id="admin_activity.title">
                 <source>admin_activity.title</source>
-                <target>Aktivitäten</target>
+                <target>Activities</target>
             </trans-unit>
             <trans-unit id="admin_activity.subtitle">
                 <source>admin_activity.subtitle</source>
-                <target>Aufgaben die zur Zeiterfassung genutzt werden können</target>
+                <target>Tasks that can be chosen for time-records</target>
             </trans-unit>
             <trans-unit id="admin_activity.delete_confirm">
                 <source>admin_activity.delete_confirm</source>
                 <target>
-                    Momentan existieren für die Aktivität %activity% im Projekt %project% für den Kunden %customer%
-                    insgesamt %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen. Diese
-                    Zeiteinträge werden ebenfalls mit gelöscht!
+                    Currently the activity %activity% in the project %project% for the customer %customer%
+                    has %records% time-records, which count up to a total of %duration%.
+                    These time-records will be deleted as well!
                 </target>
             </trans-unit>
 
@@ -427,35 +429,35 @@
             -->
             <trans-unit id="admin_customer.title">
                 <source>admin_customer.title</source>
-                <target>Kunden</target>
+                <target>Customer</target>
             </trans-unit>
             <trans-unit id="admin_customer.subtitle">
                 <source>admin_customer.subtitle</source>
-                <target>Ihre Kunden stellen die Basis dar, auf der Sie Projekte und Tätigkeiten anlegen können</target>
+                <target>Your customer are the base for creating projects and activities</target>
             </trans-unit>
             <trans-unit id="label.company">
                 <source>label.company</source>
-                <target>Unternehmensbezeichnung</target>
+                <target>Company name</target>
             </trans-unit>
             <trans-unit id="label.vat">
                 <source>label.vat</source>
-                <target>Umsatzsteuer</target>
+                <target>Tax</target>
             </trans-unit>
             <trans-unit id="label.contact">
                 <source>label.contact</source>
-                <target>Kontakt</target>
+                <target>Contact</target>
             </trans-unit>
             <trans-unit id="label.address">
                 <source>label.address</source>
-                <target>Adresse</target>
+                <target>Address</target>
             </trans-unit>
             <trans-unit id="label.country">
                 <source>label.country</source>
-                <target>Land</target>
+                <target>Country</target>
             </trans-unit>
             <trans-unit id="label.phone">
                 <source>label.phone</source>
-                <target>Telefon</target>
+                <target>Phone</target>
             </trans-unit>
             <trans-unit id="label.fax">
                 <source>label.fax</source>
@@ -463,7 +465,7 @@
             </trans-unit>
             <trans-unit id="label.mobile">
                 <source>label.mobile</source>
-                <target>Handy</target>
+                <target>Mobile</target>
             </trans-unit>
             <trans-unit id="label.homepage">
                 <source>label.homepage</source>
@@ -471,18 +473,18 @@
             </trans-unit>
             <trans-unit id="label.timezone">
                 <source>label.timezone</source>
-                <target>Zeitzone</target>
+                <target>Timezone</target>
             </trans-unit>
             <trans-unit id="label.currency">
                 <source>label.currency</source>
-                <target>Währung</target>
+                <target>Currency</target>
             </trans-unit>
             <trans-unit id="admin_customer.delete_confirm">
                 <source>admin_customer.delete_confirm</source>
                 <target>
-                    Momentan existieren für den Kunden %customer% insgesamt %project% Projekte mit %activity%
-                    Aktivitäten, die sich in %records% Zeiteinträgen auf eine Gesamtdauer von %duration% belaufen. Diese
-                    Projekte, Aktivitäten und Zeiteinträge werden ebenfalls mit gelöscht!
+                    Currently the customer %customer% has %project% projects with %activity% activities, which count up
+                    in %records% time-records to a total of %duration%.
+                    These projects, activities and time-records will be deleted as well!
                 </target>
             </trans-unit>
 
@@ -491,11 +493,11 @@
             -->
             <trans-unit id="admin_user.title">
                 <source>admin_user.title</source>
-                <target>Benutzer</target>
+                <target>User</target>
             </trans-unit>
             <trans-unit id="admin_user.subtitle">
                 <source>admin_user.subtitle</source>
-                <target>Alle registrierten Benutzer der Zeitverwaltung</target>
+                <target>All registered user of your Kimai installation</target>
             </trans-unit>
             <trans-unit id="label.alias">
                 <source>label.alias</source>
@@ -503,19 +505,19 @@
             </trans-unit>
             <trans-unit id="label.title">
                 <source>label.title</source>
-                <target>Titel</target>
+                <target>Title</target>
             </trans-unit>
             <trans-unit id="label.avatar">
                 <source>label.avatar</source>
-                <target>Profilbild</target>
+                <target>Profile image</target>
             </trans-unit>
             <trans-unit id="label.active">
                 <source>label.active</source>
-                <target>Aktiv</target>
+                <target>Active</target>
             </trans-unit>
             <trans-unit id="label.roles">
                 <source>label.roles</source>
-                <target>Rolle</target>
+                <target>Role</target>
             </trans-unit>
 
             <!--
@@ -531,15 +533,15 @@
             </trans-unit>
             <trans-unit id="ROLE_TEAMLEAD">
                 <source>ROLE_TEAMLEAD</source>
-                <target>Teamleiter</target>
+                <target>Teamlead</target>
             </trans-unit>
             <trans-unit id="ROLE_USER">
                 <source>ROLE_USER</source>
-                <target>Benutzer</target>
+                <target>User</target>
             </trans-unit>
             <trans-unit id="ROLE_CUSTOMER">
                 <source>ROLE_CUSTOMER</source>
-                <target>Kunde</target>
+                <target>Customer</target>
             </trans-unit>
 
             <!--
@@ -547,19 +549,19 @@
             -->
             <trans-unit id="stats.durationThisMonth">
                 <source>stats.durationThisMonth</source>
-                <target>Arbeitszeit diesen Monat</target>
+                <target>Working hours this month</target>
             </trans-unit>
             <trans-unit id="stats.amountThisMonth">
                 <source>stats.amountThisMonth</source>
-                <target>Umsatz diesen Monat</target>
+                <target>Revenue this month</target>
             </trans-unit>
             <trans-unit id="stats.durationTotal">
                 <source>stats.durationTotal</source>
-                <target>Arbeitszeit total</target>
+                <target>Working hourstotal</target>
             </trans-unit>
             <trans-unit id="stats.amountTotal">
                 <source>stats.amountTotal</source>
-                <target>Umsatz total</target>
+                <target>Revenue total</target>
             </trans-unit>
 
             <!--
@@ -567,31 +569,31 @@
             -->
             <trans-unit id="stats.userTotal">
                 <source>stats.userTotal</source>
-                <target>Anzahl Benutzer</target>
+                <target>Amount users</target>
             </trans-unit>
             <trans-unit id="stats.userActiveThisMoth">
                 <source>stats.userActiveThisMoth</source>
-                <target>Aktive Benutzer diesen Monat</target>
+                <target>Active users this month</target>
             </trans-unit>
             <trans-unit id="stats.userActiveEver">
                 <source>stats.userActiveEver</source>
-                <target>Aktive Benutzer jemals</target>
+                <target>Active users ever</target>
             </trans-unit>
             <trans-unit id="stats.activeRecordings">
                 <source>stats.activeRecordings</source>
-                <target>Momentan aktive Zeitmessungen</target>
+                <target>Currently active records</target>
             </trans-unit>
             <trans-unit id="stats.activitiesTotal">
                 <source>stats.activitiesTotal</source>
-                <target>Anzahl Aktivitäten</target>
+                <target>Amount activities</target>
             </trans-unit>
             <trans-unit id="stats.projectsTotal">
                 <source>stats.projectsTotal</source>
-                <target>Anzahl Projekte</target>
+                <target>Amount projects</target>
             </trans-unit>
             <trans-unit id="stats.customerTotal">
                 <source>stats.customerTotal</source>
-                <target>Anzahl Kunden</target>
+                <target>Amount customers</target>
             </trans-unit>
 
             <!--
@@ -599,15 +601,15 @@
             -->
             <trans-unit id="month.1">
                 <source>month.1</source>
-                <target>Januar</target>
+                <target>January</target>
             </trans-unit>
             <trans-unit id="month.2">
                 <source>month.2</source>
-                <target>Februar</target>
+                <target>February</target>
             </trans-unit>
             <trans-unit id="month.3">
                 <source>month.3</source>
-                <target>März</target>
+                <target>March</target>
             </trans-unit>
             <trans-unit id="month.4">
                 <source>month.4</source>
@@ -615,15 +617,15 @@
             </trans-unit>
             <trans-unit id="month.5">
                 <source>month.5</source>
-                <target>Mai</target>
+                <target>May</target>
             </trans-unit>
             <trans-unit id="month.6">
                 <source>month.6</source>
-                <target>Juni</target>
+                <target>June</target>
             </trans-unit>
             <trans-unit id="month.7">
                 <source>month.7</source>
-                <target>Juli</target>
+                <target>July</target>
             </trans-unit>
             <trans-unit id="month.8">
                 <source>month.8</source>
@@ -635,7 +637,7 @@
             </trans-unit>
             <trans-unit id="month.10">
                 <source>month.10</source>
-                <target>Oktober</target>
+                <target>October</target>
             </trans-unit>
             <trans-unit id="month.11">
                 <source>month.11</source>
@@ -643,7 +645,7 @@
             </trans-unit>
             <trans-unit id="month.12">
                 <source>month.12</source>
-                <target>Dezember</target>
+                <target>December</target>
             </trans-unit>
 
             <!--
@@ -651,23 +653,25 @@
             -->
             <trans-unit id="active.entries">
                 <source>active.entries</source>
-                <target>Sie haben %count% aktiven Eintrag|Sie haben %count% aktive Einträge</target>
+                <target>You have %count% active record|You have %count% active records</target>
             </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
-                <target>Alle Einträge anzeigen</target>
+                <target>Show all records</target>
             </trans-unit>
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
-                <target>Ihr %count% zuletzt bearbeitete Aktivität|Eine ihrer %count% letzten Aktivitäten neustarten</target>
+                <target>
+                    Restart your %count% last recorded activity|Restart your %count% last recorded activities
+                </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>
-                <target>%activity% in %project% für %customer%</target>
+                <target>%activity% in %project% for %customer%</target>
             </trans-unit>
             <trans-unit id="timesheet.start">
                 <source>timesheet.start</source>
-                <target>Neue Zeitmessung starten</target>
+                <target>Create new time-record</target>
             </trans-unit>
 
             <!--
@@ -675,23 +679,23 @@
             -->
             <trans-unit id="label.pageSize">
                 <source>label.pageSize</source>
-                <target>Anzahl Einträge</target>
+                <target>Page size</target>
             </trans-unit>
             <trans-unit id="label.entryState">
                 <source>label.entryState</source>
-                <target>Zeiten</target>
+                <target>Records</target>
             </trans-unit>
             <trans-unit id="entryState.all">
                 <source>entryState.all</source>
-                <target>Alle</target>
+                <target>All</target>
             </trans-unit>
             <trans-unit id="entryState.running">
                 <source>entryState.running</source>
-                <target>Laufende</target>
+                <target>Active</target>
             </trans-unit>
             <trans-unit id="entryState.stopped">
                 <source>entryState.stopped</source>
-                <target>Beendete</target>
+                <target>Stopped</target>
             </trans-unit>
             <trans-unit id="0">
                 <source>0</source>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="de" datatype="plaintext" original="exceptions.en.xliff">
+    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="en" datatype="plaintext" original="none">
         <body>
             <trans-unit id="access.denied">
                 <source>access.denied</source>
-                <target>Der Zugriff wurde verweigert</target>
+                <target>Access was denied</target>
             </trans-unit>
         </body>
     </file>

@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="de" datatype="plaintext" original="flashmessages.en.xliff">
+    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="en" datatype="plaintext" original="none">
         <body>
             <trans-unit id="timesheet.stop.success">
                 <source>timesheet.stop.success</source>
-                <target>Zeitmessung wurde gestoppt</target>
+                <target>Time-recording was stopped</target>
             </trans-unit>
             <trans-unit id="timesheet.stop.error">
                 <source>timesheet.stop.error</source>
-                <target>Zeitmessung konnte nicht gestoppt werden: %reason%</target>
+                <target>Time-recording could not be stopped: %reason%</target>
             </trans-unit>
             <trans-unit id="timesheet.start.success">
                 <source>timesheet.start.success</source>
-                <target>Zeitmessung wurde gestartet</target>
+                <target>Time-recording was started</target>
             </trans-unit>
             <trans-unit id="timesheet.start.error">
                 <source>timesheet.start.error</source>
-                <target>Zeitmessung konnte nicht gestartet werden: %reason%</target>
+                <target>Time-recording could not be started: %reason%</target>
             </trans-unit>
             <trans-unit id="action.updated_successfully">
                 <source>action.updated_successfully</source>
-                <target>Änderungen erfolgreich gespeichert</target>
+                <target>Saved changes successful</target>
             </trans-unit>
             <trans-unit id="action.deleted_successfully">
                 <source>action.deleted_successfully</source>
-                <target>Eintrag wurde erfolgreich gelöscht</target>
+                <target>Entry was deleted successful</target>
             </trans-unit>
         </body>
     </file>
