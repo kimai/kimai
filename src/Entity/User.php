@@ -122,7 +122,7 @@ class User implements UserInterface, AdvancedUserInterface
     /**
      * @var UserPreference[]|Collection
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\UserPreference", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\UserPreference", mappedBy="user", cascade={"persist"})
      */
     private $preferences;
 
