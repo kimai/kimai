@@ -27,7 +27,19 @@ class UserVoter extends AbstractVoter
     const DELETE = 'delete';
     const PASSWORD = 'password';
     const ROLES = 'roles';
+    const PREFERENCES = 'preferences';
     const VIEW_ALL = 'view_all';
+
+    const ALLOWED_ATTRIBUTES = [
+        self::VIEW,
+        self::VIEW_ALL,
+        self::EDIT,
+        self::CREATE,
+        self::ROLES,
+        self::PASSWORD,
+        self::DELETE,
+        self::PREFERENCES
+    ];
 
     /**
      * @param string $attribute
@@ -36,10 +48,7 @@ class UserVoter extends AbstractVoter
      */
     protected function supports($attribute, $subject)
     {
-        if (!in_array(
-            $attribute,
-            [self::VIEW, self::VIEW_ALL, self::EDIT, self::CREATE, self::ROLES, self::PASSWORD, self::DELETE]
-        )) {
+        if (!in_array($attribute, self::ALLOWED_ATTRIBUTES)) {
             return false;
         }
 
@@ -69,6 +78,7 @@ class UserVoter extends AbstractVoter
                 return $this->canView($subject, $user, $token);
             case self::EDIT:
             case self::PASSWORD:
+            case self::PREFERENCES:
                 return $this->canEdit($subject, $user, $token);
             case self::DELETE:
                 return $this->canDelete($subject, $user, $token);

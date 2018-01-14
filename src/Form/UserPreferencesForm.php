@@ -12,18 +12,18 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Form\Type\UserPreferenceType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Defines the form used to create and manipulate Users.
+ * Defines the form used to edit the user preferences.
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class UserPasswordType extends AbstractType
+class UserPreferencesForm extends AbstractType
 {
 
     /**
@@ -31,13 +31,13 @@ class UserPasswordType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('plainPassword', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'first_options'  => array('label' => 'label.password'),
-                'second_options' => array('label' => 'label.password_repeat'),
-            ])
-        ;
+        $builder->add('preferences', CollectionType::class, [
+            'entry_type' => UserPreferenceType::class,
+            'entry_options' => array('label' => false),
+            'allow_add' => false,
+            'allow_delete' => false,
+            'label' => false,
+        ]);
     }
 
     /**
@@ -49,7 +49,8 @@ class UserPasswordType extends AbstractType
             'data_class' => User::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
-            'csrf_token_id' => 'edit_user_password',
+            'csrf_token_id' => 'edit_user_preferences',
+
         ]);
     }
 }

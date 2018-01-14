@@ -12,13 +12,14 @@
 namespace App\Doctrine;
 
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
+use Doctrine\Common\EventSubscriber;
 
 /**
  * Adds a prefix to every doctrine entity AKA database table
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class TablePrefixSubscriber implements \Doctrine\Common\EventSubscriber
+class TablePrefixSubscriber implements EventSubscriber
 {
     protected $prefix = '';
 

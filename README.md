@@ -99,7 +99,7 @@ $ bin/console doctrine:schema:create
 And finally create your first user:
 
 ```bash
-$ bin/console kimai:create-user username admin@example.com password en ROLE_SUPER_ADMIN
+$ bin/console kimai:create-user username password admin@example.com ROLE_SUPER_ADMIN
 ```
 
 For available roles, please refer to [the user documentation](var/docs/users.md).

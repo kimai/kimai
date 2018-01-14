@@ -11,6 +11,7 @@
 
 namespace App\EventListener;
 
+use App\Entity\UserPreference;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -59,11 +60,23 @@ class TimesheetListener implements EventSubscriber
         $entity = $args->getObject();
 
         if ($entity instanceof Timesheet) {
+            $duration = 0;
             if ($entity->getEnd() !== null) {
-                $entity->setDuration($entity->getEnd()->getTimestamp() - $entity->getBegin()->getTimestamp());
-            }
+                $duration = $entity->getEnd()->getTimestamp() - $entity->getBegin()->getTimestamp();
+                $entity->setDuration($duration);
 
-            // TODO calculate hourly rate
+                // TODO allow to set hourly rate on activity, project and customer and prefer these
+
+                $hourlyRate = 0;
+                foreach ($entity->getUser()->getPreferences() as $preference) {
+                    if ($preference->getName() == UserPreference::HOURLY_RATE) {
+                        $hourlyRate = (int) $preference->getValue();
+                    }
+                }
+
+                $rate = $hourlyRate * ($duration / 3600);
+                $entity->setRate($rate);
+            }
         }
     }
 }

@@ -70,9 +70,8 @@ class CreateUserCommand extends Command
             ->setDescription('Create a new user')
             ->setHelp('This command allows you to create a new user.')
             ->addArgument('username', InputArgument::REQUIRED, 'New username (must be unique)')
-            ->addArgument('email', InputArgument::REQUIRED, 'Users email address (must be unique)')
             ->addArgument('password', InputArgument::REQUIRED, 'Users password')
-            ->addArgument('language', InputArgument::OPTIONAL, 'Users language', User::DEFAULT_LANGUAGE)
+            ->addArgument('email', InputArgument::REQUIRED, 'Users email address (must be unique)')
             ->addArgument('role', InputArgument::OPTIONAL, 'Users role (comma separated list)', User::DEFAULT_ROLE)
         ;
     }
@@ -87,17 +86,14 @@ class CreateUserCommand extends Command
         $username = $input->getArgument('username');
         $email = $input->getArgument('email');
         $password = $input->getArgument('password');
-        $language = $input->getArgument('language');
         $role = $input->getArgument('role');
 
-        $language = $language ?: User::DEFAULT_LANGUAGE;
         $role = $role ?: User::DEFAULT_ROLE;
 
         $user = new User();
         $user->setUsername($username)
             ->setPlainPassword($password)
             ->setEmail($email)
-            ->setLanguage($language)
             ->setRoles(explode(',', $role))
         ;
 

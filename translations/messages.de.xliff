@@ -45,20 +45,16 @@
                 <source>security.title.login</source>
                 <target>Anmelden</target>
             </trans-unit>
-            <trans-unit id="security.label.username">
-                <source>security.label.username</source>
-                <target>Benutzername</target>
-            </trans-unit>
-            <trans-unit id="security.label.password">
-                <source>security.label.password</source>
+            <trans-unit id="label.password">
+                <source>label.password</source>
                 <target>Passwort</target>
             </trans-unit>
-            <trans-unit id="security.label.password_repeat">
-                <source>security.label.password_repeat</source>
+            <trans-unit id="label.password_repeat">
+                <source>label.password_repeat</source>
                 <target>Passwort wiederholen</target>
             </trans-unit>
-            <trans-unit id="security.action.sign_in">
-                <source>security.action.sign_in</source>
+            <trans-unit id="action.sign_in">
+                <source>action.sign_in</source>
                 <target>Los geht's</target>
             </trans-unit>
             <trans-unit id="label.logout">
@@ -225,6 +221,10 @@
                 <source>label.hourly_rate</source>
                 <target>Stundenlohn</target>
             </trans-unit>
+            <trans-unit id="label.skin">
+                <source>label.skin</source>
+                <target>Kimai-Theme</target>
+            </trans-unit>
             <trans-unit id="label.hours">
                 <source>label.hours</source>
                 <target>Stunden</target>
@@ -363,7 +363,7 @@
             </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>
-                <target>Einstellungen</target>
+                <target>Profil</target>
             </trans-unit>
             <trans-unit id="profile.password">
                 <source>profile.password</source>
@@ -372,6 +372,10 @@
             <trans-unit id="profile.roles">
                 <source>profile.roles</source>
                 <target>Rollen</target>
+            </trans-unit>
+            <trans-unit id="profile.preferences">
+                <source>profile.preferences</source>
+                <target>Einstellungen</target>
             </trans-unit>
 
             <!--

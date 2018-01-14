@@ -52,10 +52,6 @@ class UserEditType extends AbstractType
             ->add('email', TextType::class, [
                 'label' => 'label.email',
             ])
-            // string - length 5
-            ->add('language', LanguageType::class, [
-                'label' => 'label.language',
-            ])
             // boolean
             ->add('active', YesNoType::class, [
                 'label' => 'label.active',
