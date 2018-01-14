@@ -82,7 +82,7 @@ You can configure your database through your environment (e.g. Webserver, Cloud-
 $ cp .env.dist .env
 ```
 
-You have to adjust the these following ENV values to your needs:
+You have to adjust the following ENV values to your needs:
 ```
 DATABASE_PREFIX=kimai2_
 DATABASE_ENGINE=sqlite
@@ -96,7 +96,7 @@ Now create the database schemas:
 $ bin/console doctrine:schema:create
 ```
 
-All thats left to do is to create your first user:
+And finally create your first user:
 
 ```bash
 $ bin/console kimai:create-user username admin@example.com password en ROLE_SUPER_ADMIN
