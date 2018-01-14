@@ -7,3 +7,10 @@ twig:
             date_1: "d.m.Y"         # used for display in timesheets
             box_color: "green"      # a color for ???
             active_warning: 3       # display a warning color if the user has at least X active recordings
+            control_sidebar:
+                settings:
+                    icon: gears
+                    controller: 'App\Controller\SidebarController::settingsAction'
+                home:
+                    icon: question-circle-o
+                    template: sidebar/home.html.twig

@@ -25,32 +25,5 @@ use Pagerfanta\Pagerfanta;
  */
 abstract class AbstractRepository extends EntityRepository
 {
-    /**
-     * @param QueryBuilder $qb
-     * @param BaseQuery $query
-     * @return QueryBuilder|Pagerfanta
-     */
-    protected function getBaseQueryResult(QueryBuilder $qb, BaseQuery $query)
-    {
-        if ($query->getResultType() == BaseQuery::RESULT_TYPE_PAGER) {
-            return $this->getPager($qb->getQuery(), $query->getPage(), $query->getPageSize());
-        }
-
-        return $qb;
-    }
-
-    /**
-     * @param Query $query
-     * @param int $page
-     * @param int $maxPerPage
-     * @return Pagerfanta
-     */
-    protected function getPager(Query $query, $page = 1, $maxPerPage = 25)
-    {
-        $paginator = new Pagerfanta(new DoctrineORMAdapter($query, false));
-        $paginator->setMaxPerPage($maxPerPage);
-        $paginator->setCurrentPage($page);
-
-        return $paginator;
-    }
+    use RepositoryTrait;
 }

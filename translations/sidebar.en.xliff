@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="en" datatype="plaintext" original="none">
+        <body>
+            <trans-unit id="home.title">
+                <source>home.title</source>
+                <target>Kimai v2 - Pre-Version</target>
+            </trans-unit>
+            <trans-unit id="home.betainfo">
+                <source>home.betainfo</source>
+                <target><![CDATA[Thank you for using the open source time-tracker <strong>Kimai</strong>.
+
+                    This new version 2 is currently in an early stage of development and has been published in advance to collect feedback from its users and integrate their ideas into further planning.
+
+                    To help me improve <strong>Kimai</strong>, please send your message on the linked website. Whether you have questions, error messages or ideas for enhancements, your feedback is valuable!
+
+                    Further information on the:
+                ]]></target>
+            </trans-unit>
+            <trans-unit id="home.link.issues">
+                <source>home.link.issues</source>
+                <target>GitHub Project-Website</target>
+            </trans-unit>
+            <trans-unit id="preferences.title">
+                <source>preferences.title</source>
+                <target>Your preferences</target>
+            </trans-unit>
+            <trans-unit id="preferences.label.language">
+                <source>preferences.label.language</source>
+                <target>Language</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

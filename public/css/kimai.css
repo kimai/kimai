@@ -39,6 +39,11 @@ li.open .ticktac i.running{
 
 /* ================================ TOOLBAR ================================ */
 
+.control-sidebar select {
+    color: #000;
+}
+/* ================================ TOOLBAR ================================ */
+
 .data_table .box-header>.box-tools {
     top: 3px;
 }

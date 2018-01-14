@@ -44,16 +44,6 @@ The next command will create the database, the schema and install all web assets
 $ bin/console kimai:install --relative
 ```
 
-### Installation (live)
-
-All thats left to do is to create your first user:
-
-```bash
-$ bin/console kimai:create-user username admin@example.com password en ROLE_SUPER_ADMIN
-```
-
-For available roles, please refer to [the user documentation](var/docs/users.md).
-
 ### Installation (development / demo)
 
 Lets boostrap your environment by executing this commands (which is only available in dev environment): 
@@ -82,8 +72,37 @@ $ bin/console doctrine:schema:drop --force
 $ bin/console doctrine:schema:create
 ```
 
-The `kimai:reset-dev` command can always be executed later on to reset your dev database and cache. I use it very frequently.
+The `kimai:reset-dev` command can always be executed later on to reset your dev database and cache.
 
+### Installation (live)
+
+The default installation uses a SQLite database, which is not recommended for production usage.
+You can configure your database through your environment (e.g. Webserver, Cloud-Provider) or in your `.env file:
+```bash
+$ cp .env.dist .env
+```
+
+You have to adjust the following ENV values to your needs:
+```
+DATABASE_PREFIX=kimai2_
+DATABASE_ENGINE=sqlite
+DATABASE_URL=sqlite:///%kernel.project_dir%/var/data/kimai.sqlite
+APP_ENV=dev
+APP_SECRET=some_random_secret_string_for_your_installation
+```
+
+Now create the database schemas:
+```bash
+$ bin/console doctrine:schema:create
+```
+
+And finally create your first user:
+
+```bash
+$ bin/console kimai:create-user username admin@example.com password en ROLE_SUPER_ADMIN
+```
+
+For available roles, please refer to [the user documentation](var/docs/users.md).
 
 ## Usage
 

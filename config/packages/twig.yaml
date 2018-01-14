@@ -2,10 +2,3 @@ twig:
     #paths: ['%kernel.project_dir%/templates']
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
-    # TODO move me to kimai config
-    globals:
-        kimai_context:
-            date_1: "d.m.Y"         # used for display in timesheets
-            box_color: "green"      # a color for ???
-            active_warning: 3       # display a warning color if the user has at least X active recordings
-
