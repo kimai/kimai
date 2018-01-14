@@ -13,15 +13,14 @@ namespace App\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Intl\Intl;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Custom form field type to select the language.
+ * Custom form field type to select the themes skin.
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class LanguageType extends AbstractType
+class SkinType extends AbstractType
 {
 
     /**
@@ -30,9 +29,20 @@ class LanguageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'required' => true,
             'choices' => array(
-                Intl::getLocaleBundle()->getLocaleName('de', 'de') => 'de',
-                Intl::getLocaleBundle()->getLocaleName('en', 'en') => 'en',
+                'blue' => 'blue',
+                'black' => 'black',
+                'green' => 'green',
+                'purple' => 'purple',
+                'red' => 'red',
+                'yellow' => 'yellow',
+                'blue-light' => 'blue-light',
+                'black-light' => 'black-light',
+                'green-light' => 'green-light',
+                'purple-light' => 'purple-light',
+                'red-light' => 'red-light',
+                'yellow-light' => 'yellow-light',
             )
         ]);
     }

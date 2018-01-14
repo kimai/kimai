@@ -47,20 +47,16 @@
                 <source>security.title.login</source>
                 <target>Login</target>
             </trans-unit>
-            <trans-unit id="security.label.username">
-                <source>security.label.username</source>
-                <target>Username</target>
-            </trans-unit>
-            <trans-unit id="security.label.password">
-                <source>security.label.password</source>
+            <trans-unit id="label.password">
+                <source>label.password</source>
                 <target>Password</target>
             </trans-unit>
-            <trans-unit id="security.label.password_repeat">
-                <source>security.label.password_repeat</source>
+            <trans-unit id="label.password_repeat">
+                <source>label.password_repeat</source>
                 <target>Repeat password</target>
             </trans-unit>
-            <trans-unit id="security.action.sign_in">
-                <source>security.action.sign_in</source>
+            <trans-unit id="action.sign_in">
+                <source>action.sign_in</source>
                 <target>Let's go</target>
             </trans-unit>
             <trans-unit id="label.logout">
@@ -227,6 +223,10 @@
                 <source>label.hourly_rate</source>
                 <target>Hourly rate</target>
             </trans-unit>
+            <trans-unit id="label.skin">
+                <source>label.skin</source>
+                <target>Kimai-Theme</target>
+            </trans-unit>
             <trans-unit id="label.hours">
                 <source>label.hours</source>
                 <target>Hours</target>
@@ -365,7 +365,7 @@
             </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>
-                <target>Settings</target>
+                <target>Profile</target>
             </trans-unit>
             <trans-unit id="profile.password">
                 <source>profile.password</source>
@@ -374,6 +374,10 @@
             <trans-unit id="profile.roles">
                 <source>profile.roles</source>
                 <target>Roles</target>
+            </trans-unit>
+            <trans-unit id="profile.preferences">
+                <source>profile.preferences</source>
+                <target>Preferences</target>
             </trans-unit>
 
             <!--

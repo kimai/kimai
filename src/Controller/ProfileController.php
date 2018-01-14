@@ -14,7 +14,9 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserEditType;
 use App\Form\UserPasswordType;
+use App\Form\UserPreferencesForm;
 use App\Form\UserRolesType;
+use App\Voter\UserVoter;
 use Symfony\Component\Form\Form;
 use App\Entity\Timesheet;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -40,7 +42,7 @@ class ProfileController extends AbstractController
      */
     public function indexAction(User $profile)
     {
-        return $this->getProfileView($profile);
+        return $this->getProfileView($profile, 'charts');
     }
 
     /**
@@ -50,10 +52,10 @@ class ProfileController extends AbstractController
      */
     public function editAction(User $profile, Request $request)
     {
-        $editForm = $this->createEditForm($profile);
-        $editForm->handleRequest($request);
+        $form = $this->createEditForm($profile);
+        $form->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($profile);
             $entityManager->flush();
@@ -63,7 +65,7 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
         }
 
-        return $this->getProfileView($profile, $editForm, null, null, 'profile');
+        return $this->getProfileView($profile, 'settings', $form);
     }
 
     /**
@@ -73,10 +75,10 @@ class ProfileController extends AbstractController
      */
     public function passwordAction(User $profile, Request $request)
     {
-        $pwdForm = $this->createPasswordForm($profile);
-        $pwdForm->handleRequest($request);
+        $form = $this->createPasswordForm($profile);
+        $form->handleRequest($request);
 
-        if ($pwdForm->isSubmitted() && $pwdForm->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $password = $this->get('security.password_encoder')
                 ->encodePassword($profile, $profile->getPlainPassword());
             $profile->setPassword($password);
@@ -90,7 +92,7 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
         }
 
-        return $this->getProfileView($profile, null, $pwdForm, null, 'password');
+        return $this->getProfileView($profile, 'password', null, $form);
     }
 
     /**
@@ -100,10 +102,10 @@ class ProfileController extends AbstractController
      */
     public function rolesAction(User $profile, Request $request)
     {
-        $rolesForm = $this->createRolesForm($profile);
-        $rolesForm->handleRequest($request);
+        $form = $this->createRolesForm($profile);
+        $form->handleRequest($request);
 
-        if ($rolesForm->isSubmitted() && $rolesForm->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($profile);
             $entityManager->flush();
@@ -113,24 +115,73 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
         }
 
-        return $this->getProfileView($profile, null, null, $rolesForm, 'roles');
+        return $this->getProfileView($profile, 'roles', null, null, $form);
+    }
+
+    /**
+     * @Route("/{username}/prefs", name="user_profile_preferences")
+     * @Method({"GET", "POST"})
+     * @Security("is_granted('preferences', profile)")
+     */
+    public function savePreferencesAction(User $profile, Request $request)
+    {
+        $original = [];
+        foreach ($profile->getPreferences() as $preference) {
+            $original[$preference->getName()] = $preference;
+        }
+
+        $form = $this->createPreferencesForm($profile);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $preferences = $profile->getPreferences();
+
+            // do not allow to add unknown preferences
+            foreach ($preferences as $preference) {
+                if (!isset($original[$preference->getName()])) {
+                    $preferences->removeElement($preference);
+                }
+            }
+
+            // but allow to delete already saved settings
+            foreach ($original as $name => $preference) {
+                if (false === $profile->getPreferences()->contains($preference)) {
+                    $entityManager->remove($preference);
+                }
+            }
+
+            foreach ($preferences as $preference) {
+                $preference->setUser($profile);
+                $entityManager->persist($preference);
+                $entityManager->flush();
+            }
+
+            $this->flashSuccess('action.updated_successfully');
+
+            return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
+        }
+
+        return $this->getProfileView($profile, 'preferences', null, null, null, $form);
     }
 
     /**
      * @param User $user
+     * @param string $tab
      * @param Form|null $editForm
      * @param Form|null $pwdForm
      * @param Form|null $rolesForm
-     * @param string $tab
+     * @param Form|null $prefsForm
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     protected function getProfileView(
         User $user,
+        string $tab,
         Form $editForm = null,
         Form $pwdForm = null,
         Form $rolesForm = null,
-        $tab = 'charts'
+        Form $prefsForm = null
     ) {
         /* @var $timesheetRepo TimesheetRepository */
         $timesheetRepo = $this->getDoctrine()->getRepository(Timesheet::class);
@@ -142,25 +193,43 @@ class ProfileController extends AbstractController
             'user' => $user,
             'stats' => $userStats,
             'years' => $monthlyStats,
-            'form' => null,
-            'form_password' => null,
-            'form_roles' => null,
+            'forms' => []
         ];
 
-        if ($this->isGranted('edit', $user)) {
+        if ($this->isGranted(UserVoter::EDIT, $user)) {
             $editForm = $editForm ?: $this->createEditForm($user);
-            $viewVars['form'] = $editForm->createView();
+            $viewVars['forms']['settings'] = $editForm->createView();
         }
-        if ($this->isGranted('password', $user)) {
+        if ($this->isGranted(UserVoter::PASSWORD, $user)) {
             $pwdForm = $pwdForm ?: $this->createPasswordForm($user);
-            $viewVars['form_password'] = $pwdForm->createView();
+            $viewVars['forms']['password'] = $pwdForm->createView();
         }
-        if ($this->isGranted('roles', $user)) {
+        if ($this->isGranted(UserVoter::ROLES, $user)) {
             $rolesForm = $rolesForm ?: $this->createRolesForm($user);
-            $viewVars['form_roles'] = $rolesForm->createView();
+            $viewVars['forms']['roles'] = $rolesForm->createView();
+        }
+        if ($this->isGranted(UserVoter::PREFERENCES, $user)) {
+            $prefsForm = $prefsForm ?: $this->createPreferencesForm($user);
+            $viewVars['forms']['preferences'] = $prefsForm->createView();
         }
 
         return $this->render('user/profile.html.twig', $viewVars);
+    }
+
+    /**
+     * @param User $user
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    private function createPreferencesForm(User $user)
+    {
+        return $this->createForm(
+            UserPreferencesForm::class,
+            $user,
+            [
+                'action' => $this->generateUrl('user_profile_preferences', ['username' => $user->getUsername()]),
+                'method' => 'POST'
+            ]
+        );
     }
 
     /**

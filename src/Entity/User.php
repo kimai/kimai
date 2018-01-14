@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Validator\Constraints as KimaiAssert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -29,7 +31,6 @@ class User implements UserInterface, AdvancedUserInterface
 {
 
     const DEFAULT_ROLE = 'ROLE_USER';
-    const DEFAULT_LANGUAGE = 'de';
 
     /**
      * @var int
@@ -82,14 +83,6 @@ class User implements UserInterface, AdvancedUserInterface
     private $alias;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="language", type="string", length=5, nullable=true)
-     * @Assert\Language()
-     */
-    private $language = self::DEFAULT_LANGUAGE;
-
-    /**
      * @var boolean
      *
      * @ORM\Column(name="active", type="boolean", nullable=false)
@@ -127,7 +120,7 @@ class User implements UserInterface, AdvancedUserInterface
     private $roles = [];
 
     /**
-     * @var UserPreference[]
+     * @var UserPreference[]|Collection
      *
      * @ORM\OneToMany(targetEntity="App\Entity\UserPreference", mappedBy="user")
      */
@@ -139,6 +132,7 @@ class User implements UserInterface, AdvancedUserInterface
     public function __construct()
     {
         $this->registeredAt = new \DateTime();
+        $this->preferences = new ArrayCollection();
     }
 
     /**
@@ -158,10 +152,10 @@ class User implements UserInterface, AdvancedUserInterface
     }
 
     /**
-     * @param $registeredAt
+     * @param \DateTime $registeredAt
      * @return $this
      */
-    public function setRegisteredAt($registeredAt)
+    public function setRegisteredAt(\DateTime $registeredAt)
     {
         $this->registeredAt = $registeredAt;
 
@@ -204,15 +198,6 @@ class User implements UserInterface, AdvancedUserInterface
     public function isActive()
     {
         return $this->active;
-    }
-
-    /**
-     * @deprecated
-     * @return boolean
-     */
-    public function getActive()
-    {
-        return $this->isActive();
     }
 
     /**
@@ -332,24 +317,6 @@ class User implements UserInterface, AdvancedUserInterface
     }
 
     /**
-     * @return string
-     */
-    public function getLanguage()
-    {
-        return $this->language;
-    }
-
-    /**
-     * @param string $language
-     * @return $this
-     */
-    public function setLanguage($language)
-    {
-        $this->language = $language;
-        return $this;
-    }
-
-    /**
      * Returns the roles or permissions granted to the user for security.
      *
      * @return string[]
@@ -377,20 +344,33 @@ class User implements UserInterface, AdvancedUserInterface
     }
 
     /**
-     * @return UserPreference[]
+     * @return UserPreference[]|Collection
      */
-    public function getPreferences(): array
+    public function getPreferences(): Collection
     {
         return $this->preferences;
     }
 
     /**
-     * @param UserPreference[] $preferences
+     * @param UserPreference[]|Collection<UserPreference> $preferences
      * @return User
      */
     public function setPreferences(array $preferences)
     {
+        if (!($preferences instanceof Collection) && is_array($preferences)) {
+            $preferences = new ArrayCollection($preferences);
+        }
         $this->preferences = $preferences;
+        return $this;
+    }
+
+    /**
+     * @param UserPreference $preference
+     * @return User
+     */
+    public function addPreference(UserPreference $preference)
+    {
+        $this->preferences->add($preference);
         return $this;
     }
 

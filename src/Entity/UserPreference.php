@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -18,6 +20,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class UserPreference
 {
+    const HOURLY_RATE = 'hourly_rate';
+    const SKIN = 'skin';
 
     /**
      * @var int
@@ -51,6 +55,16 @@ class UserPreference
      * @ORM\Column(name="value", type="string", length=255, nullable=true)
      */
     private $value;
+
+    /**
+     * @var string
+     */
+    protected $type = TextType::class;
+
+    /**
+     * @var Constraint[]
+     */
+    protected $constraints = [];
 
     /**
      * @return int
@@ -122,5 +136,57 @@ class UserPreference
     {
         $this->value = $value;
         return $this;
+    }
+
+    /**
+     * Sets the form type to edit that setting.
+     *
+     * @param string $type
+     * @return UserPreference
+     */
+    public function setType(string $type)
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set the constraints which are used for validation of the value.
+     *
+     * @param Constraint[] $constraints
+     * @return $this
+     */
+    public function setConstraints(array $constraints)
+    {
+        $this->constraints = $constraints;
+        return $this;
+    }
+
+    /**
+     * Adds a constraint which is used for validation of the value.
+     *
+     * @param Constraint $constraint
+     * @return $this
+     */
+    public function addConstraint(Constraint $constraint)
+    {
+        $this->constraints[] = $constraint;
+        return $this;
+    }
+
+    /**
+     * @return Constraint[]
+     */
+    public function getConstraints()
+    {
+        return $this->constraints;
     }
 }

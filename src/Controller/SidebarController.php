@@ -11,6 +11,7 @@
 
 namespace App\Controller;
 
+use App\Form\UserPreferencesForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
@@ -22,13 +23,32 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
  */
 class SidebarController extends AbstractController
 {
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function homeAction()
     {
         return $this->render('sidebar/home.html.twig', []);
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function settingsAction()
     {
         return $this->render('sidebar/settings.html.twig', []);
+
+        /*
+        $user = $this->getUser();
+
+        $form = $this->createForm(UserPreferencesForm::class, $user, [
+            'action' => $this->generateUrl('user_profile_preferences', ['username' => $user->getUsername()]),
+            'method' => 'POST',
+        ]);
+
+        return $this->render('sidebar/settings.html.twig', [
+            'form' => $form->createView(),
+        ]);
+        */
     }
 }
