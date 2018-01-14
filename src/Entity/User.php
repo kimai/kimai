@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * User
+ * Application main User entity.
  *
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(
@@ -125,6 +125,13 @@ class User implements UserInterface, AdvancedUserInterface
      * @KimaiAssert\Role()
      */
     private $roles = [];
+
+    /**
+     * @var UserPreference[]
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\UserPreference", mappedBy="user")
+     */
+    private $preferences;
 
     /**
      * User constructor.
@@ -366,6 +373,24 @@ class User implements UserInterface, AdvancedUserInterface
     public function setRoles(array $roles)
     {
         $this->roles = $roles;
+        return $this;
+    }
+
+    /**
+     * @return UserPreference[]
+     */
+    public function getPreferences(): array
+    {
+        return $this->preferences;
+    }
+
+    /**
+     * @param UserPreference[] $preferences
+     * @return User
+     */
+    public function setPreferences(array $preferences)
+    {
+        $this->preferences = $preferences;
         return $this;
     }
 
