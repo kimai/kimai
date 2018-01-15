@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c8bbb84ec7e932d13852eab55f0306e2",
+    "content-hash": "fcf570204034bd83c84fd7f92fc3fab4",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -48,16 +48,16 @@
         },
         {
             "name": "avanzu/admin-theme-bundle",
-            "version": "dev-symfony4",
+            "version": "dev-kevinpapst",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/AdminThemeBundle.git",
-                "reference": "f007e946f56295f447d0f1b75e5a7cf55145cf7c"
+                "reference": "1aa9b1637b2f827fe79ca1edff26092840e30716"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/AdminThemeBundle/zipball/f007e946f56295f447d0f1b75e5a7cf55145cf7c",
-                "reference": "f007e946f56295f447d0f1b75e5a7cf55145cf7c",
+                "url": "https://api.github.com/repos/kevinpapst/AdminThemeBundle/zipball/1aa9b1637b2f827fe79ca1edff26092840e30716",
+                "reference": "1aa9b1637b2f827fe79ca1edff26092840e30716",
                 "shasum": ""
             },
             "require": {
@@ -109,9 +109,9 @@
             ],
             "description": "Admin Theme based on the AdminLTE Template for easy integration into symfony",
             "support": {
-                "source": "https://github.com/kevinpapst/AdminThemeBundle/tree/symfony4"
+                "source": "https://github.com/kevinpapst/AdminThemeBundle/tree/kevinpapst"
             },
-            "time": "2018-01-12T20:01:56+00:00"
+            "time": "2018-01-15T19:14:46+00:00"
         },
         {
             "name": "beberlei/DoctrineExtensions",
@@ -177,16 +177,16 @@
         },
         {
             "name": "dama/doctrine-test-bundle",
-            "version": "v4.0.1",
+            "version": "v4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dmaicher/doctrine-test-bundle.git",
-                "reference": "8567a6ebfc73822f1d105ce852edec1b06748d8f"
+                "reference": "438346b3380cc7675e37fbcdca912fdc33471d32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dmaicher/doctrine-test-bundle/zipball/8567a6ebfc73822f1d105ce852edec1b06748d8f",
-                "reference": "8567a6ebfc73822f1d105ce852edec1b06748d8f",
+                "url": "https://api.github.com/repos/dmaicher/doctrine-test-bundle/zipball/438346b3380cc7675e37fbcdca912fdc33471d32",
+                "reference": "438346b3380cc7675e37fbcdca912fdc33471d32",
                 "shasum": ""
             },
             "require": {
@@ -230,7 +230,7 @@
                 "symfony 2",
                 "tests"
             ],
-            "time": "2017-10-19T11:52:38+00:00"
+            "time": "2018-01-13T13:14:27+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -1714,16 +1714,16 @@
         },
         {
             "name": "sensio/framework-extra-bundle",
-            "version": "v5.1.3",
+            "version": "v5.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioFrameworkExtraBundle.git",
-                "reference": "0696496cb3e2d23add645d424699e5c723238aad"
+                "reference": "072c00c52b947e88a1e619e9ff426cee6c8c482b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/0696496cb3e2d23add645d424699e5c723238aad",
-                "reference": "0696496cb3e2d23add645d424699e5c723238aad",
+                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/072c00c52b947e88a1e619e9ff426cee6c8c482b",
+                "reference": "072c00c52b947e88a1e619e9ff426cee6c8c482b",
                 "shasum": ""
             },
             "require": {
@@ -1779,7 +1779,7 @@
                 "annotations",
                 "controllers"
             ],
-            "time": "2017-12-04T18:33:55+00:00"
+            "time": "2018-01-12T13:08:16+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -2508,16 +2508,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.0.60",
+            "version": "v1.0.61",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "066fe955b1a134841cdcc068a9f843594fdb1adc"
+                "reference": "f872f8faccf5ff95678e1e428f460a333ba1e5d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/066fe955b1a134841cdcc068a9f843594fdb1adc",
-                "reference": "066fe955b1a134841cdcc068a9f843594fdb1adc",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/f872f8faccf5ff95678e1e428f460a333ba1e5d0",
+                "reference": "f872f8faccf5ff95678e1e428f460a333ba1e5d0",
                 "shasum": ""
             },
             "require": {
@@ -2550,7 +2550,7 @@
                     "email": "fabien.potencier@gmail.com"
                 }
             ],
-            "time": "2018-01-10T07:00:13+00:00"
+            "time": "2018-01-12T13:09:44+00:00"
         },
         {
             "name": "symfony/form",
@@ -3981,6 +3981,49 @@
             "description": "Symfony SwiftmailerBundle",
             "homepage": "http://symfony.com",
             "time": "2017-10-23T15:15:11+00:00"
+        },
+        {
+            "name": "symfony/thanks",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/thanks.git",
+                "reference": "b637913a92664571afd1067fc645ecb30c9cf5b2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/thanks/zipball/b637913a92664571afd1067fc645ecb30c9cf5b2",
+                "reference": "b637913a92664571afd1067fc645ecb30c9cf5b2",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.1",
+                "php": "^5.5.9|^7.0.8"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "class": "Symfony\\Thanks\\Thanks"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Thanks\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                }
+            ],
+            "description": "Give thanks (in the form of a GitHub ⭐) to your fellow PHP package maintainers (not limited to Symfony components)!",
+            "time": "2018-01-03T09:30:52+00:00"
         },
         {
             "name": "symfony/translation",
@@ -5990,16 +6033,16 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "2.1.1",
+            "version": "2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "b11c729f95109b56a0fe9650c6a63a0fcd8c439f"
+                "reference": "11c07feade1d65453e06df3b3b90171d6d982087"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/b11c729f95109b56a0fe9650c6a63a0fcd8c439f",
-                "reference": "b11c729f95109b56a0fe9650c6a63a0fcd8c439f",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/11c07feade1d65453e06df3b3b90171d6d982087",
+                "reference": "11c07feade1d65453e06df3b3b90171d6d982087",
                 "shasum": ""
             },
             "require": {
@@ -6050,7 +6093,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2017-12-22T14:50:35+00:00"
+            "time": "2018-01-12T06:34:42+00:00"
         },
         {
             "name": "sebastian/diff",
@@ -6941,49 +6984,6 @@
             "description": "Symfony PHPUnit Bridge",
             "homepage": "https://symfony.com",
             "time": "2018-01-04T17:20:09+00:00"
-        },
-        {
-            "name": "symfony/thanks",
-            "version": "v1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/thanks.git",
-                "reference": "b637913a92664571afd1067fc645ecb30c9cf5b2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/thanks/zipball/b637913a92664571afd1067fc645ecb30c9cf5b2",
-                "reference": "b637913a92664571afd1067fc645ecb30c9cf5b2",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.1",
-                "php": "^5.5.9|^7.0.8"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                },
-                "class": "Symfony\\Thanks\\Thanks"
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Thanks\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                }
-            ],
-            "description": "Give thanks (in the form of a GitHub ⭐) to your fellow PHP package maintainers (not limited to Symfony components)!",
-            "time": "2018-01-03T09:30:52+00:00"
         },
         {
             "name": "symfony/web-server-bundle",

@@ -14,8 +14,10 @@ namespace App\EventSubscriber;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\UserPreferenceEvent;
+use App\Form\Type\SkinType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\HttpKernel\Event\KernelEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -39,7 +41,7 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
     protected $storage;
 
     /**
-     * PreferenceService constructor.
+     * UserPreferenceSubscriber constructor.
      * @param EventDispatcherInterface $dispatcher
      * @param TokenStorageInterface $storage
      */
@@ -55,7 +57,7 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::CONTROLLER => ['onKernelEvent', -1],
+            KernelEvents::CONTROLLER => ['loadUserPreferences', 200]
         ];
     }
 
@@ -70,11 +72,33 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setValue(0)
                 ->setType(IntegerType::class)
                 ->addConstraint(new Range(['min' => 0])),
-            /*
+
             (new UserPreference())
                 ->setName(UserPreference::SKIN)
-                ->setValue('blue')
+                ->setValue('green')
                 ->setType(SkinType::class),
+
+            (new UserPreference())
+                ->setName('theme.fixed_layout')
+                ->setValue(true)
+                ->setType(CheckboxType::class),
+
+            (new UserPreference())
+                ->setName('theme.boxed_layout')
+                ->setValue(false)
+                ->setType(CheckboxType::class),
+
+            (new UserPreference())
+                ->setName('theme.collapsed_sidebar')
+                ->setValue(false)
+                ->setType(CheckboxType::class),
+
+            (new UserPreference())
+                ->setName('theme.mini_sidebar')
+                ->setValue(true)
+                ->setType(CheckboxType::class),
+
+            /*
             (new UserPreference())
                 ->setName('language')
                 ->setValue('de')
@@ -84,11 +108,17 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param User $user
-     * @return User
+     * @param KernelEvent $event
      */
-    public function setupUserPreferences(User $user)
+    public function loadUserPreferences(KernelEvent $event)
     {
+        if (!$this->canHandleEvent($event)) {
+            return;
+        }
+
+        /** @var User $user */
+        $user = $this->storage->getToken()->getUser();
+
         $prefs = [];
         foreach ($user->getPreferences() as $preference) {
             $prefs[$preference->getName()] = $preference;
@@ -110,32 +140,27 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
         }
 
         $user->setPreferences(array_values($prefs));
-
-        return $user;
     }
 
     /**
      * @param KernelEvent $event
+     * @return bool
      */
-    public function onKernelEvent(KernelEvent $event): void
+    protected function canHandleEvent(KernelEvent $event): bool
     {
         // Ignore sub-requests
         if (!$event->isMasterRequest()) {
-            return;
+            return false;
         }
 
         // ignore events like the toolbar where we do not have a token
         if ($this->storage->getToken() === null) {
-            return;
+            return false;
         }
 
         /** @var User $user */
         $user = $this->storage->getToken()->getUser();
 
-        if (!($user instanceof User)) {
-            return;
-        }
-
-        $this->setupUserPreferences($user);
+        return ($user instanceof User);
     }
 }

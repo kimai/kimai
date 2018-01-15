@@ -3,7 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -59,7 +60,7 @@ class UserPreference
     /**
      * @var string
      */
-    protected $type = TextType::class;
+    protected $type;
 
     /**
      * @var Constraint[]
@@ -121,18 +122,25 @@ class UserPreference
     }
 
     /**
-     * @return string
+     * @return string|int|bool
      */
     public function getValue()
     {
+        switch ($this->type) {
+            case CheckboxType::class:
+                return (bool) $this->value;
+            case IntegerType::class:
+                return (int) $this->value;
+        }
+
         return $this->value;
     }
 
     /**
-     * @param string $value
+     * @param string|int|bool $value
      * @return UserPreference
      */
-    public function setValue(string $value): UserPreference
+    public function setValue($value): UserPreference
     {
         $this->value = $value;
         return $this;

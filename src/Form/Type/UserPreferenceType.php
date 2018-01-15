@@ -13,6 +13,7 @@ namespace App\Form\Type;
 
 use App\Entity\UserPreference;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -45,9 +46,15 @@ class UserPreferenceType extends AbstractType
                         return;
                     }
 
+                    $required = true;
+                    if ($preference->getType() == CheckboxType::class) {
+                        $required = false;
+                    }
+
                     $event->getForm()->add('value', $preference->getType(), [
                         'label' => 'label.' . $preference->getName(),
-                        'constraints' => $preference->getConstraints()
+                        'constraints' => $preference->getConstraints(),
+                        'required' => $required,
                     ]);
                 }
             }
