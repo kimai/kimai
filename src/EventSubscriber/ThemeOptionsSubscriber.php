@@ -52,7 +52,7 @@ class ThemeOptionsSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::CONTROLLER => [['setThemeOptions', 100]],
+            KernelEvents::CONTROLLER => ['setThemeOptions', 100]
         ];
     }
 
