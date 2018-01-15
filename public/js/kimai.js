@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    // $.AdminLTE.pushMenu.expandOnHover();
+
     (function( $ ) {
 
         var pubSub = $({});

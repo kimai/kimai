@@ -41,17 +41,6 @@ class UserRepository extends AbstractRepository
     }
 
     /**
-     * Fetch a user by his username.
-     *
-     * @param $username
-     * @return null|User
-     */
-    public function findByUsername($username)
-    {
-        return $this->findOneBy(['username' => $username]);
-    }
-
-    /**
      * @param UserQuery $query
      * @return \Pagerfanta\Pagerfanta
      */

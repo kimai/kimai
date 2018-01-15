@@ -377,6 +377,22 @@
                 <source>profile.preferences</source>
                 <target>Einstellungen</target>
             </trans-unit>
+            <trans-unit id="label.theme.fixed_layout">
+                <source>label.theme.fixed_layout</source>
+                <target>Aktiviert das "statische Layout" (linke Navigationsleiste und Header bleiben beim Scrollen an ihrer Stelle)</target>
+            </trans-unit>
+            <trans-unit id="label.theme.boxed_layout">
+                <source>label.theme.boxed_layout</source>
+                <target>Aktiviert das "Boxlayout" (gut für große Bildschirme, lässt sich aber nicht mit dem "statischen Layout" gemeinsam verwenden)</target>
+            </trans-unit>
+            <trans-unit id="label.theme.collapsed_sidebar">
+                <source>label.theme.collapsed_sidebar</source>
+                <target>Steuert den Status der linken Navigationsleiste (zugeklappt oder geöffnet)</target>
+            </trans-unit>
+            <trans-unit id="label.theme.mini_sidebar">
+                <source>label.theme.mini_sidebar</source>
+                <target>Aktiviert die minimierte Version der linken Navigationsleiste</target>
+            </trans-unit>
 
             <!--
               Admin: Timesheet

@@ -4,11 +4,6 @@ avanzu_admin_theme:
     bower_bin: "/usr/local/bin/bower"
     options:
         default_avatar: images/default_avatar.png
-        skin: skin-green-light
-        fixed_layout: false
-        boxed_layout: false
-        collapsed_sidebar: true
-        mini_sidebar: true
         control_sidebar: true
     knp_menu:
         enable: false

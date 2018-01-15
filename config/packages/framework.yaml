@@ -24,3 +24,8 @@ framework:
 
         # APCu (not recommended with heavy random-write workloads as memory fragmentation can cause perf issues)
         #app: cache.adapter.apcu
+
+    #available with Symfony 4.1
+    #validation:
+        # possible values: 'loose', 'strict', 'html5'
+        #email_validation_mode: 'html5'
