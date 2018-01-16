@@ -202,5 +202,4 @@ trait TimesheetControllerTrait
      * @return \Symfony\Component\Form\FormInterface
      */
     abstract protected function getEditForm(Timesheet $entry, $page);
-
 }

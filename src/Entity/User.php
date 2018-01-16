@@ -30,7 +30,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class User implements UserInterface, AdvancedUserInterface
 {
 
-    const DEFAULT_ROLE = 'ROLE_USER';
+    const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
+    const ROLE_USER = 'ROLE_USER';
+    const ROLE_TEAMLEAD = 'ROLE_TEAMLEAD';
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+    const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+    const DEFAULT_ROLE = self::ROLE_USER;
 
     /**
      * @var int

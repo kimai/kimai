@@ -62,7 +62,9 @@ class ProjectRepository extends AbstractRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('COUNT(t.id) as recordAmount', 'SUM(t.duration) as recordDuration, COUNT(DISTINCT(a.id)) as activityAmount')
+        $qb->select('COUNT(t.id) as recordAmount')
+            ->addSelect('SUM(t.duration) as recordDuration')
+            ->addSelect('COUNT(DISTINCT(a.id)) as activityAmount')
             ->from(Activity::class, 'a')
             ->join(Timesheet::class, 't')
             ->where('a.project = :project')

@@ -168,5 +168,4 @@ class BaseQuery
         $this->hiddenEntity = $hiddenEntity;
         return $this;
     }
-
 }

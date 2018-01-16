@@ -36,5 +36,4 @@ class TimesheetAdminForm extends TimesheetEditForm
             ])
         ;
     }
-
 }
