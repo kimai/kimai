@@ -82,10 +82,9 @@ You can configure your database through your environment (e.g. Webserver, Cloud-
 $ cp .env.dist .env
 ```
 
-You have to adjust the following ENV values to your needs:
+You can adjust the following ENV values to your needs:
 ```
 DATABASE_PREFIX=kimai2_
-DATABASE_ENGINE=sqlite
 DATABASE_URL=sqlite:///%kernel.project_dir%/var/data/kimai.sqlite
 APP_ENV=dev
 APP_SECRET=some_random_secret_string_for_your_installation

@@ -14,13 +14,14 @@ namespace App\Repository;
 use App\Entity\User;
 use App\Model\UserStatistic;
 use App\Repository\Query\UserQuery;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
 /**
  * Class UserRepository
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class UserRepository extends AbstractRepository
+class UserRepository extends AbstractRepository implements UserLoaderInterface
 {
 
     /**
@@ -64,5 +65,21 @@ class UserRepository extends AbstractRepository
         }
 
         return $this->getPager($qb->getQuery(), $query->getPage(), $query->getPageSize());
+    }
+
+    /**
+     * @param string $username
+     * @return mixed|null|\Symfony\Component\Security\Core\User\UserInterface
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function loadUserByUsername($username)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.username = :username')
+            ->orWhere('u.email = :username')
+            ->setParameter('username', $username)
+            ->getQuery()
+            ->getSingleResult();
     }
 }

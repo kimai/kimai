@@ -25,9 +25,10 @@ use App\Entity\Project;
 class TimesheetQuery extends BaseQuery
 {
 
-    const STATE_ALL = 0;
-    const STATE_RUNNING = 1;
-    const STATE_STOPPED = 2;
+    const STATE_ALL = 1;
+    const STATE_RUNNING = 2;
+    const STATE_STOPPED = 3;
+
     /**
      * Overwritten for different default order
      * @var string
@@ -153,9 +154,15 @@ class TimesheetQuery extends BaseQuery
      */
     public function setState($state)
     {
+        if (!is_int($state) && $state != (int) $state) {
+            return $this;
+        }
+
+        $state = (int) $state;
         if (in_array($state, [self::STATE_ALL, self::STATE_RUNNING, self::STATE_STOPPED], true)) {
             $this->state = $state;
         }
+
         return $this;
     }
 }
