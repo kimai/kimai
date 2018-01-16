@@ -45,12 +45,6 @@ class NavbarShowUserListener
         /* @var $myUser User */
         $myUser = $this->storage->getToken()->getUser();
 
-        $titles = [];
-        $roles = $this->storage->getToken()->getRoles();
-        foreach ($roles as $role) {
-            $titles[] = ucfirst(strtolower(str_replace('ROLE_', '', $role->getRole())));
-        }
-
         $user = new UserModel();
         $user->setName($myUser->getAlias() ?: $myUser->getUsername())
             ->setUsername($myUser->getUsername())

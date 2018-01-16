@@ -63,7 +63,10 @@ class CustomerRepository extends AbstractRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('COUNT(t.id) as recordAmount', 'SUM(t.duration) as recordDuration, COUNT(DISTINCT(a.id)) as activityAmount, COUNT(DISTINCT(p.id)) as projectAmount')
+        $qb->select('COUNT(t.id) as recordAmount')
+            ->addSelect('SUM(t.duration) as recordDuration')
+            ->addSelect('COUNT(DISTINCT(a.id)) as activityAmount')
+            ->addSelect('COUNT(DISTINCT(p.id)) as projectAmount')
             ->from(Timesheet::class, 't')
             ->join(Activity::class, 'a')
             ->join(Project::class, 'p')

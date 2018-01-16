@@ -67,5 +67,4 @@ class ActivityQuery extends VisibilityQuery
         $this->project = $project;
         return $this;
     }
-
 }

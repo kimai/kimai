@@ -34,7 +34,7 @@ class ActivityVoter extends AbstractVoter
      */
     protected function supports($attribute, $subject)
     {
-            if (!in_array($attribute, array(self::VIEW, self::EDIT, self::DELETE))) {
+        if (!in_array($attribute, array(self::VIEW, self::EDIT, self::DELETE))) {
             return false;
         }
 

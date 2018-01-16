@@ -11,6 +11,7 @@
 
 namespace App\Validator\Constraints;
 
+use App\Entity\User;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -21,7 +22,16 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class RoleValidator extends ConstraintValidator
 {
 
-    protected $allowedRoles = ['ROLE_CUSTOMER', 'ROLE_USER', 'ROLE_TEAMLEAD', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'];
+    /**
+     * @var string[]
+     */
+    protected $allowedRoles = [
+        User::ROLE_CUSTOMER,
+        User::ROLE_USER,
+        User::ROLE_TEAMLEAD,
+        User::ROLE_ADMIN,
+        User::ROLE_SUPER_ADMIN
+    ];
 
     /**
      * {@inheritdoc}
