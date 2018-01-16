@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\EventListener;
+namespace App\Doctrine;
 
 use App\Entity\UserPreference;
 use Doctrine\Common\EventSubscriber;
@@ -22,7 +22,7 @@ use App\Entity\Timesheet;
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class TimesheetListener implements EventSubscriber
+class TimesheetSubscriber implements EventSubscriber
 {
 
     /**

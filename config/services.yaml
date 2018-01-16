@@ -59,7 +59,7 @@ services:
 
     # updates timesheet records, to make sure they are calculated and can't be manipulated by the users
     app.database_listener.timesheet:
-        class: App\EventListener\TimesheetListener
+        class: App\Doctrine\TimesheetSubscriber
         tags:
             - { name: doctrine.event_listener, event: prePersist, lazy: true }
             - { name: doctrine.event_listener, event: preUpdate, lazy: true }
