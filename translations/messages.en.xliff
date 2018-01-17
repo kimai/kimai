@@ -686,7 +686,7 @@
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
                 <target>
-                    Restart your %count% last recorded activity|Restart your %count% last recorded activities
+                    Restart your last recorded activity|Restart one of your %count% last activities
                 </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
@@ -720,30 +720,6 @@
             <trans-unit id="entryState.stopped">
                 <source>entryState.stopped</source>
                 <target>Stopped</target>
-            </trans-unit>
-            <trans-unit id="0">
-                <source>0</source>
-                <target>0</target>
-            </trans-unit>
-            <trans-unit id="10">
-                <source>10</source>
-                <target>10</target>
-            </trans-unit>
-            <trans-unit id="25">
-                <source>25</source>
-                <target>25</target>
-            </trans-unit>
-            <trans-unit id="50">
-                <source>50</source>
-                <target>50</target>
-            </trans-unit>
-            <trans-unit id="75">
-                <source>75</source>
-                <target>75</target>
-            </trans-unit>
-            <trans-unit id="100">
-                <source>100</source>
-                <target>100</target>
             </trans-unit>
         </body>
     </file>
