@@ -2,6 +2,10 @@
 
 {% block avanzu_login_title %}{{ 'browser.title'|trans }}{% endblock %}
 {% block avanzu_logo_login %}<b>Kimai</b><br>TimeTracking{% endblock %}
+{% block avanzu_head %}
+    <link rel="stylesheet" href="{{ asset('css/kimai.css') }}">
+{% endblock %}
+
 {% block avanzu_login_box_msg %}
     {{ 'security.title.login'|trans }}
 
@@ -21,13 +25,12 @@
         </div>
         <div class="row">
             <div class="col-xs-8">
-                {#
-                    <div class="checkbox icheck">
-                        <label>
-                            <input type="checkbox"> {{ 'Remember Me'|trans({}, 'AvanzuAdminTheme') }}
-                        </label>
-                    </div>
-                #}
+                <div class="checkbox icheck">
+                    <label>
+                        <input id="remember_me" name="_remember_me" type="checkbox">
+                        <label for="remember_me">{{ 'Remember Me'|trans({}, 'AvanzuAdminTheme') }}</label>
+                    </label>
+                </div>
             </div>
             <div class="col-xs-4">
                 <button type="submit" class="btn btn-primary btn-block btn-flat">{{ 'action.sign_in'|trans }}</button>

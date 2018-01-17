@@ -24,6 +24,11 @@ security:
             # denying access is done in access_control or in your controllers
             anonymous: ~
 
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 604800
+                path:     /
+
             # This allows the user to login by submitting a username and password
             # Reference: http://symfony.com/doc/current/cookbook/security/form_login_setup.html
             form_login:
