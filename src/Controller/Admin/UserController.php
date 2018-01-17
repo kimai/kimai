@@ -28,6 +28,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/admin/user")
  * @Security("has_role('ROLE_SUPER_ADMIN')")
+ * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
@@ -61,7 +62,6 @@ class UserController extends AbstractController
      * @Route("/", defaults={"page": 1}, name="admin_user")
      * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_user_paginated")
      * @Method("GET")
-     * @Security("is_granted('view_all', user)")
      */
     public function indexAction($page, Request $request)
     {

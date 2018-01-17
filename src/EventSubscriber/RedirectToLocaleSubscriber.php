@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\EventListener;
+namespace App\EventSubscriber;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  *
  * @author Oleg Voronkovich <oleg-voronkovich@yandex.ru>
  */
-class RedirectToPreferredLocaleListener
+class RedirectToLocaleSubscriber
 {
     /**
      * @var UrlGeneratorInterface

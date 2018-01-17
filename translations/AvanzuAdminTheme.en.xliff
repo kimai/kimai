@@ -6,6 +6,10 @@
                 <source>Toggle navigation</source>
                 <target>Toggle navigation</target>
             </trans-unit>
+            <trans-unit id="Remember Me">
+                <source>Remember Me</source>
+                <target>Remember Me</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

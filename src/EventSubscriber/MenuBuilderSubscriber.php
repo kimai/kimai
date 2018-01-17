@@ -9,40 +9,51 @@
  * file that was distributed with this source code.
  */
 
-namespace App\EventListener;
+namespace App\EventSubscriber;
 
 use App\Event\ConfigureMainMenuEvent;
 use App\Event\ConfigureAdminMenuEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Avanzu\AdminThemeBundle\Model\MenuItemModel;
 use Avanzu\AdminThemeBundle\Event\SidebarMenuEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class MenuBuilder configures the main navigation.
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class MenuBuilder
+class MenuBuilderSubscriber implements EventSubscriberInterface
 {
     /**
      * @var EventDispatcherInterface
      */
     private $eventDispatcher;
     /**
-     * @var AuthorizationChecker
+     * @var AuthorizationCheckerInterface
      */
     private $security;
 
     /**
-     * MenuBuilder constructor.
+     * MenuBuilderSubscriber constructor.
      * @param EventDispatcherInterface $dispatcher
-     * @param AuthorizationChecker $security
+     * @param AuthorizationCheckerInterface $security
      */
-    public function __construct(EventDispatcherInterface $dispatcher, AuthorizationChecker $security)
+    public function __construct(EventDispatcherInterface $dispatcher, AuthorizationCheckerInterface $security)
     {
         $this->eventDispatcher = $dispatcher;
         $this->security = $security;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            'theme.sidebar_setup_menu' => ['onSetupNavbar', 100],
+        ];
     }
 
     /**
@@ -53,9 +64,8 @@ class MenuBuilder
     public function onSetupNavbar(SidebarMenuEvent $event)
     {
         $request = $event->getRequest();
-        $isLoggedIn = $this->security->isGranted('IS_AUTHENTICATED_FULLY');
+        $isLoggedIn = $this->security->isGranted('IS_AUTHENTICATED_REMEMBERED');
         $isTeamlead = $isLoggedIn && $this->security->isGranted('ROLE_TEAMLEAD');
-        $isSuperAdmin = $isLoggedIn && $this->security->isGranted('ROLE_SUPER_ADMIN');
 
         $event->addItem(
             new MenuItemModel('dashboard', 'menu.homepage', 'dashboard', [], 'fa fa-dashboard')
@@ -64,7 +74,6 @@ class MenuBuilder
         $this->eventDispatcher->dispatch(
             ConfigureMainMenuEvent::CONFIGURE,
             new ConfigureMainMenuEvent(
-                $this->security,
                 $request,
                 $event
             )
@@ -74,16 +83,9 @@ class MenuBuilder
             $admin = new MenuItemModel('admin', 'menu.admin', '', [], 'fa fa-wrench');
             $event->addItem($admin);
 
-            if ($isSuperAdmin) {
-                $admin->addChild(
-                    new MenuItemModel('user_admin', 'menu.admin_user', 'admin_user', [], 'fa fa-user')
-                );
-            }
-
             $this->eventDispatcher->dispatch(
                 ConfigureAdminMenuEvent::CONFIGURE,
                 new ConfigureAdminMenuEvent(
-                    $this->security,
                     $request,
                     $event
                 )

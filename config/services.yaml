@@ -1,7 +1,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: 'en'
+    locale: en
     app_locales: en|de
 
 services:
@@ -33,18 +33,11 @@ services:
     # ================================================================================
 
     # a route listener, that injects the locale through a URL directory
-    app.redirect_to_preferred_locale_listener:
-        class: App\EventListener\RedirectToPreferredLocaleListener
+    App\EventSubscriber\RedirectToLocaleSubscriber:
+        class: App\EventSubscriber\RedirectToLocaleSubscriber
         arguments: ['@router', '%app_locales%', '%locale%']
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-
-    # additional menu entries for the timesheet bundle
-    timesheet.configure_menu_listener:
-        class: App\EventListener\Menu
-        tags:
-          - { name: kernel.event_listener, event: app.main_menu_configure, method: onMainMenuConfigure }
-          - { name: kernel.event_listener, event: app.admin_menu_configure, method: onAdminMenuConfigure }
 
     # ================================================================================
     # DATABASE
@@ -79,17 +72,6 @@ services:
     #
     # // same code using repository services
     # $posts = $this->get('app.user_repository')->findAll();
-
-    # ================================================================================
-    # EVENTS and LISTENER / SUBSCRIBER
-    # ================================================================================
-
-    # event-listener to populate the navigation
-    app.menu_builder:
-        class: App\EventListener\MenuBuilder
-        arguments: ["@event_dispatcher", "@security.authorization_checker"]
-        tags:
-            - { name: kernel.event_listener, event: theme.sidebar_setup_menu, method: onSetupNavbar }
 
     # ================================================================================
     # FORMS
@@ -131,13 +113,6 @@ services:
 
     App\Twig\Extensions:
         arguments: ['%app_locales%']
-
-    avanzu_admin_theme.navbar_user_listener:
-        class: App\EventListener\NavbarShowUserListener
-        arguments: ["@security.token_storage"]
-        tags:
-          - { name: kernel.event_listener, event: theme.navbar_user, method: onShowUser }
-          - { name: kernel.event_listener, event: theme.sidebar_user, method: onShowUser }
 
     #    avanzu_admin_theme.navbar_task_listener:
     #        class: "%avanzu_admin_theme.navbar_task_listener.class%"

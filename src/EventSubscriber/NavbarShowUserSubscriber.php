@@ -9,19 +9,20 @@
  * file that was distributed with this source code.
  */
 
-namespace App\EventListener;
+namespace App\EventSubscriber;
 
 use App\Entity\User;
 use Avanzu\AdminThemeBundle\Event\ShowUserEvent;
 use Avanzu\AdminThemeBundle\Model\UserModel;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
- * Class NavbarShowUserListener
+ * Class NavbarShowUserSubscriber
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class NavbarShowUserListener
+class NavbarShowUserSubscriber implements EventSubscriberInterface
 {
     /**
      * @var TokenStorageInterface
@@ -35,6 +36,17 @@ class NavbarShowUserListener
     public function __construct(TokenStorageInterface $tokenStorage)
     {
         $this->storage = $tokenStorage;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            'theme.navbar_user' => ['onShowUser', 100],
+            'theme.sidebar_user' => ['onShowUser', 100],
+        ];
     }
 
     /**

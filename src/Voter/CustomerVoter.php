@@ -27,6 +27,12 @@ class CustomerVoter extends AbstractVoter
     const EDIT = 'edit';
     const DELETE = 'delete';
 
+    const ALLOWED_ATTRIBUTES = [
+        self::VIEW,
+        self::EDIT,
+        self::DELETE
+    ];
+
     /**
      * @param string $attribute
      * @param mixed $subject
@@ -34,7 +40,7 @@ class CustomerVoter extends AbstractVoter
      */
     protected function supports($attribute, $subject)
     {
-        if (!in_array($attribute, array(self::VIEW, self::EDIT, self::DELETE))) {
+        if (!in_array($attribute, self::ALLOWED_ATTRIBUTES)) {
             return false;
         }
 
@@ -107,6 +113,6 @@ class CustomerVoter extends AbstractVoter
      */
     protected function canDelete(TokenInterface $token)
     {
-        return $this->hasRole('ROLE_ADMIN', $token);
+        return $this->isFullyAuthenticated($token) && $this->hasRole('ROLE_ADMIN', $token);
     }
 }

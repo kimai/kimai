@@ -28,6 +28,7 @@ use App\Repository\Query\CustomerQuery;
  *
  * @Route("/admin/customer")
  * @Security("has_role('ROLE_ADMIN')")
+ * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
