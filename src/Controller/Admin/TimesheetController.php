@@ -20,7 +20,6 @@ use App\Entity\Timesheet;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use App\Form\TimesheetAdminForm;
 
 /**
@@ -28,6 +27,7 @@ use App\Form\TimesheetAdminForm;
  *
  * @Route("/team/timesheet")
  * @Security("has_role('ROLE_TEAMLEAD')")
+ * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
@@ -41,7 +41,6 @@ class TimesheetController extends AbstractController
      * @Route("/", defaults={"page": 1}, name="admin_timesheet")
      * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_timesheet_paginated")
      * @Method("GET")
-     * @Cache(smaxage="10")
      *
      * @param $page
      * @param Request $request

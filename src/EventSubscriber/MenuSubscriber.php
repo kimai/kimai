@@ -9,29 +9,55 @@
  * file that was distributed with this source code.
  */
 
-namespace App\EventListener;
+namespace App\EventSubscriber;
 
 use App\Event\ConfigureMainMenuEvent;
 use App\Event\ConfigureAdminMenuEvent;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Avanzu\AdminThemeBundle\Model\MenuItemModel;
-use Avanzu\AdminThemeBundle\Event\SidebarMenuEvent;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
- * Menus for timesheet
+ * Menu event subscriber for timesheet, customer, projects, activities.
+ * This is a sample implementation for developer who want to add new navigation entries in their bundles.
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class Menu
+class MenuSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @var AuthorizationCheckerInterface
+     */
+    private $security;
+
+    /**
+     * MenuSubscriber constructor.
+     * @param AuthorizationCheckerInterface $security
+     */
+    public function __construct(AuthorizationCheckerInterface $security)
+    {
+        $this->security = $security;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            ConfigureMainMenuEvent::CONFIGURE => ['onMainMenuConfigure', 100],
+            ConfigureAdminMenuEvent::CONFIGURE => ['onAdminMenuConfigure', 100],
+        ];
+    }
+
     /**
      * @param \App\Event\ConfigureMainMenuEvent $event
      */
     public function onMainMenuConfigure(ConfigureMainMenuEvent $event)
     {
-        $auth = $event->getAuth();
+        $auth = $this->security;
 
-        $isLoggedIn = $auth->isGranted('IS_AUTHENTICATED_FULLY');
+        $isLoggedIn = $auth->isGranted('IS_AUTHENTICATED_REMEMBERED');
         $isUser = $isLoggedIn && $auth->isGranted('ROLE_USER');
 
         if (!$isLoggedIn || !$isUser) {
@@ -50,13 +76,9 @@ class Menu
     public function onAdminMenuConfigure(ConfigureAdminMenuEvent $event)
     {
         $menu = $event->getAdminMenu();
-        $auth = $event->getAuth();
+        $auth = $this->security;
 
-        if (!$auth->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return;
-        }
-
-        if (!$auth->isGranted('ROLE_TEAMLEAD')) {
+        if (!$auth->isGranted('IS_AUTHENTICATED_REMEMBERED') || !$auth->isGranted('ROLE_TEAMLEAD')) {
             return;
         }
 
@@ -68,13 +90,18 @@ class Menu
             return;
         }
 
+        if ($auth->isGranted('ROLE_SUPER_ADMIN')) {
+            $menu->addChild(
+                new MenuItemModel('user_admin', 'menu.admin_user', 'admin_user', [], 'fa fa-user')
+            );
+        }
+
         $menu->addChild(
             new MenuItemModel('customer_admin', 'menu.admin_customer', 'admin_customer', [], 'fa fa-users')
         )->addChild(
             new MenuItemModel('project_admin', 'menu.admin_project', 'admin_project', [], 'fa fa-book')
         )->addChild(
             new MenuItemModel('activity_admin', 'menu.admin_activity', 'admin_activity', [], 'fa fa-tasks')
-        )
-        ;
+        );
     }
 }

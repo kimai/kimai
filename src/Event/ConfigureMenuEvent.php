@@ -31,23 +31,16 @@ abstract class ConfigureMenuEvent extends Event
      * @var SidebarMenuEvent
      */
     private $event;
-    /**
-     * @var AuthorizationChecker
-     */
-    private $auth;
 
     /**
      * ConfigureMenuEvent constructor.
-     * @param AuthorizationChecker $auth
      * @param Request $request
      * @param SidebarMenuEvent $event
      */
     public function __construct(
-        AuthorizationChecker $auth,
         Request $request,
         SidebarMenuEvent $event
     ) {
-        $this->auth = $auth;
         $this->request = $request;
         $this->event = $event;
     }
@@ -66,13 +59,5 @@ abstract class ConfigureMenuEvent extends Event
     public function getMenu()
     {
         return $this->event;
-    }
-
-    /**
-     * @return AuthorizationChecker
-     */
-    public function getAuth()
-    {
-        return $this->auth;
     }
 }

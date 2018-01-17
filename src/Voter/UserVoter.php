@@ -28,11 +28,9 @@ class UserVoter extends AbstractVoter
     const PASSWORD = 'password';
     const ROLES = 'roles';
     const PREFERENCES = 'preferences';
-    const VIEW_ALL = 'view_all';
 
     const ALLOWED_ATTRIBUTES = [
         self::VIEW,
-        self::VIEW_ALL,
         self::EDIT,
         self::CREATE,
         self::ROLES,
@@ -82,7 +80,6 @@ class UserVoter extends AbstractVoter
                 return $this->canEdit($subject, $user, $token);
             case self::DELETE:
                 return $this->canDelete($subject, $user, $token);
-            case self::VIEW_ALL:
             case self::CREATE: // create actually passes in the current user as $subject, not the new one
             case self::ROLES:
                 return $this->canAdminUsers($token);
@@ -135,6 +132,6 @@ class UserVoter extends AbstractVoter
      */
     protected function canAdminUsers(TokenInterface $token)
     {
-        return $this->hasRole('ROLE_SUPER_ADMIN', $token);
+        return $this->isFullyAuthenticated($token) && $this->hasRole('ROLE_SUPER_ADMIN', $token);
     }
 }

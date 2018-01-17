@@ -48,13 +48,13 @@
 {% endblock %}
 
 {% block avanzu_navbar_messages %}
-    {% if app.user is not null and is_granted('IS_AUTHENTICATED_FULLY') %}
+    {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         {{ render(controller('App\\Controller\\TimesheetController::activeEntriesAction')) }}
     {% endif %}
 {% endblock %}
 
 {% block avanzu_navbar_notifications %}
-    {% if app.user is not null and is_granted('IS_AUTHENTICATED_FULLY') %}
+    {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         {{ render(controller('App\\Controller\\ActivityController::recentActivitiesAction')) }}
     {% endif %}
 {% endblock %}

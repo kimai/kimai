@@ -30,6 +30,14 @@ class TimesheetVoter extends AbstractVoter
     const EDIT = 'edit';
     const DELETE = 'delete';
 
+    const ALLOWED_ATTRIBUTES = [
+        self::START,
+        self::STOP,
+        self::VIEW,
+        self::EDIT,
+        self::DELETE
+    ];
+
     /**
      * @param string $attribute
      * @param mixed $subject
@@ -37,7 +45,7 @@ class TimesheetVoter extends AbstractVoter
      */
     protected function supports($attribute, $subject)
     {
-        if (!in_array($attribute, array(self::START, self::STOP, self::VIEW, self::EDIT, self::DELETE))) {
+        if (!in_array($attribute, self::ALLOWED_ATTRIBUTES)) {
             return false;
         }
 
@@ -146,6 +154,10 @@ class TimesheetVoter extends AbstractVoter
      */
     protected function canDelete(Timesheet $timesheet, User $user, TokenInterface $token)
     {
+        if (!$this->isFullyAuthenticated($token)) {
+            return false;
+        }
+
         return $this->isOwnOrAdmin($timesheet, $user, $token);
     }
 

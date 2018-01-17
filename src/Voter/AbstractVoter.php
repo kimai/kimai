@@ -37,13 +37,26 @@ abstract class AbstractVoter extends Voter
     }
 
     /**
+     * @param TokenInterface $token
+     * @return bool
+     */
+    protected function isFullyAuthenticated(TokenInterface $token)
+    {
+        if ($this->decisionManager->decide($token, ['IS_AUTHENTICATED_FULLY'])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * @param string $role
      * @param TokenInterface $token
      * @return bool
      */
     protected function hasRole($role, TokenInterface $token)
     {
-        if ($this->decisionManager->decide($token, array($role))) {
+        if ($this->decisionManager->decide($token, [$role])) {
             return true;
         }
 
