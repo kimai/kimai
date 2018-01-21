@@ -1,28 +1,31 @@
-{#
-    This template is used to render errors of type HTTP 403 (Forbidden)
-
-    This is the simplest way to customize error pages in Symfony applications.
-    In case you need it, you can also hook into the internal exception handling
-    made by Symfony. This allows you to perform advanced tasks and even recover
-    your application from some errors.
-    See http://symfony.com/doc/current/cookbook/controller/error_pages.html
-#}
-
 {% extends 'base.html.twig' %}
-
-{% block body_id 'error' %}
+{% block page_title %}{{ 'http_error.title'|trans({}, 'exceptions') }}{% endblock %}
+{% block page_subtitle %}{{ status_code }}{% endblock %}
 
 {% block main %}
-    <h1 class="text-danger"><i class="fa fa-unlock-alt"></i> {{ 'http_error.name'|trans({ '%status_code%': 403 }) }}</h1>
+    {% set errorTitleKey = "http_error_#{status_code}.description" %}
+    {% set errorTitleTrans = errorTitleKey|trans({ '%status_code%': status_code }, 'exceptions') %}
+    {% if errorTitleKey == errorTitleTrans %}
+        {% set errorTitleKey = 'http_error.description' %}
+        {% set errorTitleTrans = errorTitleKey|trans({ '%status_code%': status_code }, 'exceptions') %}
+    {% endif %}
 
-    <p class="lead">
-        {{ 'http_error_403.description'|trans }}
-    </p>
-    <p>
-        {{ 'http_error_403.suggestion'|trans }}
-    </p>
+    {% set errorMessageKey = "http_error_#{status_code}.suggestion" %}
+    {% set errorMessageTrans = errorMessageKey|trans({ '%status_code%': status_code }, 'exceptions') %}
+    {% if errorMessageKey == errorMessageTrans %}
+        {% set errorMessageKey = 'http_error.suggestion' %}
+        {% set errorMessageTrans = errorMessageKey|trans({ '%status_code%': status_code }, 'exceptions') %}
+    {% endif %}
+
+    <div class="error-page">
+        <h2 class="headline text-yellow"> {{ status_code }}</h2>
+
+        <div class="error-content">
+            <h3><i class="fa fa-unlock-alt text-yellow"></i> {{ errorTitleTrans }}</h3>
+            <p>{{ errorMessageTrans }}</p>
+        </div>
+    </div>
 {% endblock %}
 
-{% block sidebar %}
-    {{ parent() }}
-{% endblock %}
+{% block avanzu_control_sidebar %}{% endblock %}
+{% block avanzu_navbar_control_sidebar_toggle %}{% endblock %}

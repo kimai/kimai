@@ -161,7 +161,7 @@ class CustomerController extends AbstractController
     protected function getToolbarForm(CustomerQuery $query)
     {
         return $this->createForm(CustomerToolbarForm::class, $query, [
-            'action' => $this->generateUrl('admin_customer_paginated', [
+            'action' => $this->generateUrl('admin_customer', [
                 'page' => $query->getPage(),
             ]),
             'method' => 'GET',

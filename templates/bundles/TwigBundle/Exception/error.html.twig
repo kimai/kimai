@@ -7,22 +7,33 @@
     your application from some errors.
     See http://symfony.com/doc/current/cookbook/controller/error_pages.html
 #}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="{{ _charset }}" />
+    <title>{{ 'http_error.title'|trans({}, 'exceptions') }}: {{ status_text }}</title>
+</head>
+<body>
 
-{% extends 'base.html.twig' %}
+{% set errorTitleKey = "http_error_#{status_code}.description" %}
+{% set errorTitleTrans = errorTitleKey|trans({ '%status_code%': status_code }, 'exceptions') %}
+{% if errorTitleKey == errorTitleTrans %}
+    {% set errorTitleKey = 'http_error.description' %}
+    {% set errorTitleTrans = errorTitleKey|trans({ '%status_code%': status_code }, 'exceptions') %}
+{% endif %}
 
-{% block body_id 'error' %}
+{% set errorMessageKey = "http_error_#{status_code}.suggestion" %}
+{% set errorMessageTrans = errorMessageKey|trans({ '%status_code%': status_code }, 'exceptions') %}
+{% if errorMessageKey == errorMessageTrans %}
+    {% set errorMessageKey = 'http_error.suggestion' %}
+    {% set errorMessageTrans = errorMessageKey|trans({ '%status_code%': status_code }, 'exceptions') %}
+{% endif %}
 
-{% block main %}
-    <h1 class="text-danger">{{ 'http_error.name'|trans({ '%status_code%': status_code }) }}</h1>
+<h1>{{ errorTitleTrans }}</h1>
+<h2>{{ status_code }}: {{ status_text }}</h2>
 
-    <p class="lead">
-        {{ 'http_error.description'|trans({ '%status_code%': status_code }) }}
-    </p>
-    <p>
-        {{ 'http_error.suggestion'|trans({ '%url%': path('homepage') })|raw }}
-    </p>
-{% endblock %}
-
-{% block sidebar %}
-    {{ parent() }}
-{% endblock %}
+<div>
+    {{ errorMessageTrans }}
+</div>
+</body>
+</html>

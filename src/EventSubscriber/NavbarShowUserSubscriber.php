@@ -54,6 +54,10 @@ class NavbarShowUserSubscriber implements EventSubscriberInterface
      */
     public function onShowUser(ShowUserEvent $event)
     {
+        if ($this->storage->getToken() === null) {
+            return;
+        }
+
         /* @var $myUser User */
         $myUser = $this->storage->getToken()->getUser();
 

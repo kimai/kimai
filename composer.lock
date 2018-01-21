@@ -2508,24 +2508,24 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.0.61",
+            "version": "v1.0.66",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "f872f8faccf5ff95678e1e428f460a333ba1e5d0"
+                "reference": "b366e902710c8dc8d8be97ed8d64ef574d9bffcb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/f872f8faccf5ff95678e1e428f460a333ba1e5d0",
-                "reference": "f872f8faccf5ff95678e1e428f460a333ba1e5d0",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/b366e902710c8dc8d8be97ed8d64ef574d9bffcb",
+                "reference": "b366e902710c8dc8d8be97ed8d64ef574d9bffcb",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^1.1",
+                "composer-plugin-api": "^1.0",
                 "php": "^7.0"
             },
             "require-dev": {
-                "composer/composer": "^1.4",
+                "composer/composer": "^1.0.2",
                 "symfony/phpunit-bridge": "^3.2.8"
             },
             "type": "composer-plugin",
@@ -2550,7 +2550,7 @@
                     "email": "fabien.potencier@gmail.com"
                 }
             ],
-            "time": "2018-01-12T13:09:44+00:00"
+            "time": "2018-01-21T09:15:48+00:00"
         },
         {
             "name": "symfony/form",
@@ -3984,21 +3984,21 @@
         },
         {
             "name": "symfony/thanks",
-            "version": "v1.0.1",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/thanks.git",
-                "reference": "b637913a92664571afd1067fc645ecb30c9cf5b2"
+                "reference": "8c12bbe4baabcb8e640efaaaab40e3a4497c9fb4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/thanks/zipball/b637913a92664571afd1067fc645ecb30c9cf5b2",
-                "reference": "b637913a92664571afd1067fc645ecb30c9cf5b2",
+                "url": "https://api.github.com/repos/symfony/thanks/zipball/8c12bbe4baabcb8e640efaaaab40e3a4497c9fb4",
+                "reference": "8c12bbe4baabcb8e640efaaaab40e3a4497c9fb4",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^1.1",
-                "php": "^5.5.9|^7.0.8"
+                "composer-plugin-api": "^1.0",
+                "php": "^5.5.9|^7.0.0"
             },
             "type": "composer-plugin",
             "extra": {
@@ -4023,7 +4023,7 @@
                 }
             ],
             "description": "Give thanks (in the form of a GitHub ⭐) to your fellow PHP package maintainers (not limited to Symfony components)!",
-            "time": "2018-01-03T09:30:52+00:00"
+            "time": "2018-01-19T16:12:41+00:00"
         },
         {
             "name": "symfony/translation",

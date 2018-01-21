@@ -104,7 +104,7 @@ class UserController extends AbstractController
     protected function getToolbarForm(UserQuery $query)
     {
         return $this->createForm(UserToolbarForm::class, $query, [
-            'action' => $this->generateUrl('admin_user_paginated', [
+            'action' => $this->generateUrl('admin_user', [
                 'page' => $query->getPage(),
             ]),
             'method' => 'GET',
