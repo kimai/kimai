@@ -2,33 +2,8 @@
 {% macro data_table_header(entries, form, tools, toolsRight) %}
 <div class="box data_table">
     {% if form or tools or toolsRight %}
-    <div class="box-header with-border">
-        {% if tools %}
-            <div class="btn-group tools-left">
-                {% for icon,url in tools  %}
-                    <a class="btn btn-default" href="{{ url }}"><i class="fa fa-{{ icon }}"></i></a>
-                {% endfor %}
-            </div>
-        {% endif %}
-
-        {% if form %}
-            <div class="box-title toolbar">
-                {{ form_start(form) }}
-                {{ form_widget(form) }}
-                {{ form_end(form) }}
-            </div>
-        {% endif %}
-
-        {% if toolsRight %}
-            <div class="box-tools">
-                <div class="btn-group">
-                    {% for icon,url in tools  %}
-                        <a class="btn btn-default" href="{{ url }}"><i class="fa fa-{{ icon }}"></i></a>
-                    {% endfor %}
-                </div>
-            </div>
-        {% endif %}
-    </div>
+        {% import "macros/toolbar.html.twig" as macro %}
+        {{ macro.toolbar(form, tools, toolsRight) }}
     {% endif %}
     <div class="box-body no-padding">
         <div class="dataTables_wrapper form-inline dt-bootstrap">
@@ -72,7 +47,7 @@
     </div>
 </div>
 
-<div class="navigation text-center">
+<div class="navigation text-center no-print">
     {{ pagerfanta(entries, 'twitter_bootstrap3_translated', { routeName: route }) }}
 </div>
 {% endmacro %}

@@ -1,0 +1,81 @@
+<?php
+
+/*
+ * This file is part of the Kimai package.
+ *
+ * (c) Kevin Papst <kevin@kevinpapst.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace App\Form;
+
+use App\Entity\InvoiceTemplate;
+use App\Form\Type\InvoiceCalculatorType;
+use App\Form\Type\InvoiceNumberGeneratorType;
+use App\Form\Type\InvoiceRendererType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PercentType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+/**
+ * Defines the form used to manipulate invoice templates.
+ *
+ * @author Kevin Papst <kevin@kevinpapst.de>
+ */
+class InvoiceTemplateForm extends AbstractType
+{
+
+    /**
+     * {@inheritdoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('name', TextType::class, [
+                'label' => 'label.name',
+            ])
+            ->add('title', TextType::class, [
+                'label' => 'label.title',
+            ])
+            ->add('company', TextType::class, [
+                'label' => 'label.company',
+            ])
+            ->add('address', TextareaType::class, [
+                'label' => 'label.address',
+                'required' => false,
+            ])
+            ->add('paymentTerms', TextareaType::class, [
+                'label' => 'label.payment_terms',
+                'required' => false,
+            ])
+            ->add('dueDays', TextType::class, [
+                'label' => 'label.due_days',
+            ])
+            ->add('vat', PercentType::class, [
+                'label' => 'label.vat',
+                'type' => 'integer',
+            ])
+            ->add('renderer', InvoiceRendererType::class, [])
+            ->add('calculator', InvoiceCalculatorType::class, [])
+            ->add('numberGenerator', InvoiceNumberGeneratorType::class, [])
+        ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => InvoiceTemplate::class,
+            'csrf_protection' => true,
+            'csrf_field_name' => '_token',
+            'csrf_token_id' => 'admin_invoice_template',
+        ]);
+    }
+}

@@ -1,5 +1,9 @@
 $(document).ready(function () {
 
+    $('.toolbar form input').change(function (event) {
+        $('.toolbar form').submit();
+    });
+
     $('.toolbar form select').change(function (event) {
         switch (event.target.id) {
             case 'customer':

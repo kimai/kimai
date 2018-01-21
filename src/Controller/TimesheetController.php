@@ -11,7 +11,8 @@
 
 namespace App\Controller;
 
-use App\Controller\AbstractController;
+use App\Form\Toolbar\TimesheetToolbarForm;
+use App\Repository\Query\TimesheetQuery;
 use Pagerfanta\Pagerfanta;
 use App\Entity\Activity;
 use App\Entity\Customer;
@@ -43,9 +44,17 @@ class TimesheetController extends AbstractController
      */
     public function indexAction($page, Request $request)
     {
-        $query = $this->getQueryForRequest($request);
-        $query->setUser($this->getUser());
+        $query = new TimesheetQuery();
         $query->setPage($page);
+
+        $form = $this->getToolbarForm($query);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var TimesheetQuery $query */
+            $query = $form->getData();
+        }
+
+        $query->setUser($this->getUser());
 
         /* @var $entries Pagerfanta */
         $entries = $this->getRepository()->findByQuery($query);
@@ -54,7 +63,7 @@ class TimesheetController extends AbstractController
             'entries' => $entries,
             'page' => $page,
             'query' => $query,
-            'toolbarForm' => $this->getToolbarForm($query)->createView(),
+            'toolbarForm' => $form->createView(),
         ]);
     }
 
@@ -200,5 +209,19 @@ class TimesheetController extends AbstractController
                 'currency' => $entry->getActivity()->getProject()->getCustomer()->getCurrency(),
             ]
         );
+    }
+
+    /**
+     * @param TimesheetQuery $query
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function getToolbarForm(TimesheetQuery $query)
+    {
+        return $this->createForm(TimesheetToolbarForm::class, $query, [
+            'action' => $this->generateUrl('timesheet', [
+                'page' => $query->getPage(),
+            ]),
+            'method' => 'GET',
+        ]);
     }
 }

@@ -1,0 +1,31 @@
+
+{% macro toolbar(form, tools, toolsRight) %}
+    <div class="box-header">
+        {% if tools %}
+            <div class="btn-group tools-left no-print">
+                {% for icon,url in tools  %}
+                    <a class="btn btn-default" href="{{ url }}"><i class="fa fa-{{ icon }}"></i></a>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if form %}
+            <div class="box-title toolbar no-print">
+                {% form_theme form 'form/toolbar-theme.html.twig' %}
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
+        {% endif %}
+
+        {% if toolsRight %}
+            <div class="box-tools">
+                <div class="btn-group">
+                    {% for icon,url in tools  %}
+                        <a class="btn btn-default" href="{{ url }}"><i class="fa fa-{{ icon }}"></i></a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}

@@ -16,7 +16,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Project;
 use App\Repository\ProjectRepository;
-use App\Repository\Query\ProjectQuery;
 
 /**
  * Custom form field type to select a project.
@@ -33,7 +32,7 @@ class ProjectType extends AbstractType
     {
         $resolver->setDefaults([
             'label' => 'label.project',
-            'class' => 'Kimai:Project',
+            'class' => Project::class,
             'choice_label' => 'name',
             'group_by' => function (Project $project, $key, $index) {
                 return $project->getCustomer()->getName();

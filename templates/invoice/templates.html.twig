@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+{% import "macros/datatables.html.twig" as tables %}
+
+{% block page_title %}{{ 'admin_invoice_template.title'|trans }}{% endblock %}
+{% block page_subtitle %}{{ 'admin_invoice_template.subtitle'|trans }}{% endblock %}
+
+{% block main %}
+    {% if entries.count == 0 %}
+        {{ widgets.callout('warning', 'error.no_entries_found') }}
+    {% endif %}
+
+    {{ tables.data_table_header({
+        'label.name': '',
+        'label.title': '',
+        'label.due_days': 'hidden-xs',
+        'label.vat': 'hidden-xs',
+        'label.invoice_renderer': 'hidden-xs',
+        'label.actions': '',
+    }) }}
+
+    {% for entry in entries %}
+        <tr>
+            <td>{{ entry.name }}</td>
+            <td>{{ entry.title }}</td>
+            <td class="hidden-xs hidden-sm">{{ entry.dueDays }}</td>
+            <td class="hidden-xs hidden-sm">{{ entry.vat }}</td>
+            <td class="hidden-xs hidden-sm">{{ "invoice_renderer.#{entry.renderer}"|trans }}</td>
+            <td>
+                {% set actionButtons = {'edit': path('admin_invoice_template_edit', {'id' : entry.id, 'page': page})} %}
+                {{ widgets.button_group(actionButtons) }}
+            </td>
+        </tr>
+    {% endfor %}
+
+    {{ tables.data_table_footer(entries, 'admin_invoice_template_paginated') }}
+{% endblock %}

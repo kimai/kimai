@@ -32,6 +32,7 @@ class VisibilityType extends AbstractType
         $resolver->setDefaults([
             'label' => 'label.visible',
             'choices' => [
+                'both' => VisibilityQuery::SHOW_BOTH,
                 'yes' => VisibilityQuery::SHOW_VISIBLE,
                 'no' => VisibilityQuery::SHOW_HIDDEN,
             ],

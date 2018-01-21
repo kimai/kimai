@@ -8,10 +8,10 @@ Kimai v2 - the reloaded open source Time-Tracking application.
 
 This is (or will be in the future, currently a lot of features are still missing) the reloaded version of the open source time-tracking application [Kimai](http://www.kimai.org).
 
-It is based on the following PHP components:
+It is based on a lot of great PHP components. Special thanks to:
 - [Symfony Framework 4](https://github.com/symfony/symfony)
-- [AdminThemeBundle](https://github.com/avanzu/AdminThemeBundle/) (based on [AdminLTE](https://github.com/almasaeed2010/AdminLTE/))
 - [Doctrine](https://github.com/doctrine/)
+- [AdminThemeBundle](https://github.com/avanzu/AdminThemeBundle/) (based on [AdminLTE](https://github.com/almasaeed2010/AdminLTE/))
 
 ## Requirements
 

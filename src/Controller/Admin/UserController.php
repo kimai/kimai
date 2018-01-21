@@ -20,7 +20,6 @@ use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -36,37 +35,21 @@ class UserController extends AbstractController
 {
 
     /**
-     * @param Request $request
-     * @return UserQuery
-     */
-    protected function getQueryForRequest(Request $request)
-    {
-        $visibility = $request->get('visibility', UserQuery::SHOW_VISIBLE);
-        if (strlen($visibility) == 0 || (int)$visibility != $visibility) {
-            $visibility = UserQuery::SHOW_BOTH;
-        }
-        $pageSize = (int) $request->get('pageSize');
-        $userRole = $request->get('role');
-
-        $query = new UserQuery();
-        $query
-            ->setPageSize($pageSize)
-            ->setVisibility($visibility)
-            ->setRole($userRole)
-        ;
-
-        return $query;
-    }
-
-    /**
      * @Route("/", defaults={"page": 1}, name="admin_user")
      * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_user_paginated")
      * @Method("GET")
      */
     public function indexAction($page, Request $request)
     {
-        $query = $this->getQueryForRequest($request);
+        $query = new UserQuery();
         $query->setPage($page);
+
+        $form = $this->getToolbarForm($query);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UserQuery $query */
+            $query = $form->getData();
+        }
 
         /* @var $entries Pagerfanta */
         $entries = $this->getDoctrine()->getRepository(User::class)->findByQuery($query);
@@ -74,7 +57,7 @@ class UserController extends AbstractController
         return $this->render('admin/user.html.twig', [
             'entries' => $entries,
             'query' => $query,
-            'toolbarForm' => $this->getToolbarForm($query)->createView(),
+            'toolbarForm' => $form->createView(),
         ]);
     }
 
@@ -120,16 +103,12 @@ class UserController extends AbstractController
      */
     protected function getToolbarForm(UserQuery $query)
     {
-        return $this->createForm(
-            UserToolbarForm::class,
-            $query,
-            [
-                'action' => $this->generateUrl('admin_user_paginated', [
-                    'page' => $query->getPage(),
-                ]),
-                'method' => 'GET',
-            ]
-        );
+        return $this->createForm(UserToolbarForm::class, $query, [
+            'action' => $this->generateUrl('admin_user_paginated', [
+                'page' => $query->getPage(),
+            ]),
+            'method' => 'GET',
+        ]);
     }
 
     /**
@@ -138,13 +117,9 @@ class UserController extends AbstractController
      */
     private function createEditForm(User $user)
     {
-        return $this->createForm(
-            UserCreateType::class,
-            $user,
-            [
-                'action' => $this->generateUrl('admin_user_create'),
-                'method' => 'POST'
-            ]
-        );
+        return $this->createForm(UserCreateType::class, $user, [
+            'action' => $this->generateUrl('admin_user_create'),
+            'method' => 'POST'
+        ]);
     }
 }

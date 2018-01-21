@@ -11,9 +11,7 @@
 
 namespace App\Twig;
 
-use App\Utils\Markdown;
 use Symfony\Component\Intl\Intl;
-use App\Entity\Customer;
 use App\Entity\Timesheet;
 
 /**
@@ -123,8 +121,11 @@ class Extensions extends \Twig_Extension
      */
     public function money($amount, $currency = null)
     {
-        $currency = $currency ?: Customer::DEFAULT_CURRENCY;
-        return round($amount) . ' ' . Intl::getCurrencyBundle()->getCurrencySymbol($currency);
+        $result = round($amount, 2);
+        if ($currency !== null) {
+            $result .= ' ' . Intl::getCurrencyBundle()->getCurrencySymbol($currency);
+        }
+        return $result;
     }
 
     /**

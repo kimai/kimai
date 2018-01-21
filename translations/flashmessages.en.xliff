@@ -26,6 +26,10 @@
                 <source>action.deleted_successfully</source>
                 <target>Entry was deleted successful</target>
             </trans-unit>
+            <trans-unit id="invoice.first_template">
+                <source>invoice.first_template</source>
+                <target>You have to create your first template invoice before you can proceed</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

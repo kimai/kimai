@@ -1,5 +1,15 @@
 {% extends '@AvanzuAdminTheme/layout/default-layout.html.twig' %}
 
+{% block avanzu_page_content_before %}
+    <div class="pad margin no-print">
+        {% block main_before %}{% endblock %}
+    </div>
+{% endblock %}
+
+{% block avanzu_page_content_after %}
+    {% block main_after %}{% endblock %}
+{% endblock %}
+
 {% block avanzu_page_content %}
     {{ include('default/_flash_messages.html.twig') }}
     {% block main %}{% endblock %}
@@ -31,16 +41,17 @@
 
 {% block avanzu_head %}
     <link rel="stylesheet" href="{{ asset('css/kimai.css') }}">
+    {#<link rel="stylesheet" href="{{ asset('theme/plugins/datepicker/datepicker3.css') }}">#}
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 {% endblock %}
 
 {% block avanzu_footer %}
     {% block footer %}
-    <footer class="main-footer">
+    <footer class="main-footer no-print">
         <div class="pull-right hidden-xs">
-            <b>Version</b> 2.0
+            <b>Version</b> 2.0 dev
         </div>
-        <strong>Copyright &copy; {{ 'now'|date('Y') }} - <a href="http://www.kevinpapst.de">Kevin Papst</a></strong>.
+        Made with ♥ by <a href="http://www.kevinpapst.de">Kevin Papst</a>.
         {{ 'footer.license'|trans }}
     </footer>
     <!-- Page rendered on {{ 'now'|localizeddate('long', 'long', null, 'UTC') }} -->
@@ -74,6 +85,8 @@
 {% block avanzu_javascripts %}
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="{{ asset('theme/bootstrap/js/bootstrap.min.js') }}"></script>
+    {#<script src="{{ asset('theme/plugins/daterangepicker/moment.min.js') }}"></script>
+    <script src="{{ asset('theme/plugins/datepicker/bootstrap-datepicker.js') }}"></script>#}
     <script src="{{ asset('js/kimai.js') }}"></script>
     <script src="{{ asset('theme/plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('js/Chart.min.js') }}"></script>

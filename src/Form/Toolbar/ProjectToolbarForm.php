@@ -11,12 +11,8 @@
 
 namespace App\Form\Toolbar;
 
-use App\Form\Toolbar\VisibilityToolbarForm;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Form\Type\CustomerType;
-use App\Repository\CustomerRepository;
-use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\ProjectQuery;
 
 /**
@@ -24,7 +20,7 @@ use App\Repository\Query\ProjectQuery;
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class ProjectToolbarForm extends VisibilityToolbarForm
+class ProjectToolbarForm extends AbstractToolbarForm
 {
 
     /**
@@ -32,19 +28,9 @@ class ProjectToolbarForm extends VisibilityToolbarForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($builder, $options);
-
-        $builder
-            ->add('customer', CustomerType::class, [
-                'required' => false,
-                'query_builder' => function (CustomerRepository $repo) {
-                    $query = new CustomerQuery();
-                    $query->setVisibility(CustomerQuery::SHOW_BOTH); // this field is the reason for the query here
-                    $query->setResultType(CustomerQuery::RESULT_TYPE_QUERYBUILDER);
-                    return $repo->findByQuery($query);
-                },
-            ])
-        ;
+        $this->addPageSizeChoice($builder);
+        $this->addVisibilityChoice($builder);
+        $this->addCustomerChoice($builder);
     }
 
     /**

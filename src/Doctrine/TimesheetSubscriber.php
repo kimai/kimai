@@ -60,23 +60,25 @@ class TimesheetSubscriber implements EventSubscriber
         $entity = $args->getObject();
 
         if ($entity instanceof Timesheet) {
-            $duration = 0;
             if ($entity->getEnd() !== null) {
                 $duration = $entity->getEnd()->getTimestamp() - $entity->getBegin()->getTimestamp();
                 $entity->setDuration($duration);
 
                 // TODO allow to set hourly rate on activity, project and customer and prefer these
 
-                $hourlyRate = 0;
-                foreach ($entity->getUser()->getPreferences() as $preference) {
-                    if ($preference->getName() == UserPreference::HOURLY_RATE) {
-                        $hourlyRate = (int) $preference->getValue();
-                    }
-                }
-
-                $rate = $hourlyRate * ($duration / 3600);
+                $rate = $this->calculateRate($entity);
                 $entity->setRate($rate);
             }
         }
+    }
+
+    /**
+     * @param Timesheet $entity
+     * @return float
+     */
+    protected function calculateRate(Timesheet $entity)
+    {
+        $hourlyRate = (float) $entity->getUser()->getPreferenceValue(UserPreference::HOURLY_RATE, 0);
+        return (float) $hourlyRate * ($entity->getDuration() / 3600);
     }
 }

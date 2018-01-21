@@ -11,11 +11,9 @@
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% endif %}
 
-    {# Available fields: vat; contact; address; country; phone; fax; mobile; mail; homepage; timezone; #}
-
     {{ tables.data_table_header({
-        'label.id': 'hidden-xs',
         'label.name': '',
+        'label.customer_number': 'hidden-xs',
         'label.project': '',
         'label.comment': 'hidden-xs',
         'label.country': 'hidden-xs',
@@ -26,8 +24,8 @@
 
     {% for entry in entries %}
         <tr>
-            <td class="hidden-xs">{{ entry.id }}</td>
             <td>{{ entry.name }} {% if entry.company is not empty %}({{ entry.company }}){% endif %}</td>
+            <td class="hidden-xs">{{ entry.number }}</td>
             <td>
                 {% for project in entry.projects %}
                     <a href="{{ path('admin_project_edit', {'id' : project.id}) }}">{{ widgets.label_project(project) }}</a>

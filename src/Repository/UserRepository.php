@@ -23,6 +23,14 @@ use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
  */
 class UserRepository extends AbstractRepository implements UserLoaderInterface
 {
+    /**
+     * @param $id
+     * @return null|User
+     */
+    public function getById($id)
+    {
+        return $this->find($id);
+    }
 
     /**
      * Return statistic data for all user.

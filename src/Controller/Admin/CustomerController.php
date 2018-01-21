@@ -18,7 +18,6 @@ use App\Entity\Customer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use App\Form\CustomerEditForm;
 use App\Form\Toolbar\CustomerToolbarForm;
 use App\Repository\Query\CustomerQuery;
@@ -44,35 +43,21 @@ class CustomerController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @return CustomerQuery
-     */
-    protected function getQueryForRequest(Request $request)
-    {
-        $visibility = $request->get('visibility', CustomerQuery::SHOW_VISIBLE);
-        if (strlen($visibility) == 0 || (int)$visibility != $visibility) {
-            $visibility = CustomerQuery::SHOW_BOTH;
-        }
-        $pageSize = (int) $request->get('pageSize');
-
-        $query = new CustomerQuery();
-        $query
-            ->setPageSize($pageSize)
-            ->setVisibility($visibility);
-
-        return $query ;
-    }
-
-    /**
      * @Route("/", defaults={"page": 1}, name="admin_customer")
      * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_customer_paginated")
      * @Method("GET")
-     * @Cache(smaxage="10")
      */
     public function indexAction($page, Request $request)
     {
-        $query = $this->getQueryForRequest($request);
+        $query = new CustomerQuery();
         $query->setPage($page);
+
+        $form = $this->getToolbarForm($query);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var CustomerQuery $query */
+            $query = $form->getData();
+        }
 
         /* @var $entries Pagerfanta */
         $entries = $this->getRepository()->findByQuery($query);
@@ -80,7 +65,7 @@ class CustomerController extends AbstractController
         return $this->render('admin/customer.html.twig', [
             'entries' => $entries,
             'query' => $query,
-            'toolbarForm' => $this->getToolbarForm($query)->createView(),
+            'toolbarForm' => $form->createView(),
         ]);
     }
 

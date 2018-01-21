@@ -29,16 +29,46 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('kimai');
 
-        // FIXME add kimai config
         $rootNode
             ->children()
                 ->arrayNode('timesheet')
-                ->children()
-                    ->integerNode('round_record')->end()
+                    ->children()
+                        ->integerNode('rounding')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('invoice')
+                    ->children()
+                        ->arrayNode('renderer')
+                            ->requiresAtLeastOneElement()
+                            ->useAttributeAsKey('key')
+                            ->isRequired()
+                            ->prototype('scalar')->end()
+                            ->defaultValue(array(
+                                'default' => 'App\Controller\InvoiceController::invoiceAction',
+                            ))
+                        ->end()
+                        ->arrayNode('calculator')
+                            ->requiresAtLeastOneElement()
+                            ->useAttributeAsKey('key')
+                            ->isRequired()
+                            ->prototype('scalar')->end()
+                            ->defaultValue(array(
+                                'default' => 'App\Invoice\DefaultCalculator',
+                            ))
+                        ->end()
+                        ->arrayNode('number_generator')
+                            ->requiresAtLeastOneElement()
+                            ->useAttributeAsKey('key')
+                            ->isRequired()
+                            ->prototype('scalar')->end()
+                            ->defaultValue(array(
+                                'default' => 'App\Invoice\DateNumberGenerator',
+                            ))
+                        ->end()
+                    ->end()
                 ->end()
             ->end()
-        ->end()
-        ;
+        ->end();
 
         return $treeBuilder;
     }

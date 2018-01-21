@@ -11,7 +11,6 @@
 
 namespace App\Form\Toolbar;
 
-use App\Form\Type\UserRoleType;
 use App\Repository\Query\UserQuery;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class UserToolbarForm extends VisibilityToolbarForm
+class UserToolbarForm extends AbstractToolbarForm
 {
 
     /**
@@ -29,13 +28,9 @@ class UserToolbarForm extends VisibilityToolbarForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($builder, $options);
-
-        $builder
-            ->add('role', UserRoleType::class, [
-                'required' => false,
-            ])
-        ;
+        $this->addPageSizeChoice($builder);
+        $this->addVisibilityChoice($builder);
+        $this->addUserRoleChoice($builder);
     }
 
     /**
