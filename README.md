@@ -90,12 +90,13 @@ APP_ENV=dev
 APP_SECRET=some_random_secret_string_for_your_installation
 ```
 
-Now create the database schemas:
+Now create the database schemas and warm up the cache:
 ```bash
 $ bin/console doctrine:schema:create
+$ bin/console cache:warmup --env=prod
 ```
 
-And finally create your first user:
+Finally create your first user:
 
 ```bash
 $ bin/console kimai:create-user username password admin@example.com ROLE_SUPER_ADMIN

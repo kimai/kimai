@@ -165,7 +165,7 @@ class ProjectController extends AbstractController
     protected function getToolbarForm(ProjectQuery $query)
     {
         return $this->createForm(ProjectToolbarForm::class, $query, [
-            'action' => $this->generateUrl('admin_project_paginated', [
+            'action' => $this->generateUrl('admin_project', [
                 'page' => $query->getPage(),
             ]),
             'method' => 'GET',

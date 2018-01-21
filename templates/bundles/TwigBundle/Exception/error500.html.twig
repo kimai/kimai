@@ -7,22 +7,4 @@
     your application from some errors.
     See http://symfony.com/doc/current/cookbook/controller/error_pages.html
 #}
-
-{% extends 'base.html.twig' %}
-
-{% block body_id 'error' %}
-
-{% block main %}
-    <h1 class="text-danger">{{ 'http_error.name'|trans({ '%status_code%': 500 }) }}</h1>
-
-    <p class="lead">
-        {{ 'http_error_500.description'|trans }}
-    </p>
-    <p>
-        {{ 'http_error_500.suggestion'|trans({ '%url%': path('homepage') })|raw }}
-    </p>
-{% endblock %}
-
-{% block sidebar %}
-    {{ parent() }}
-{% endblock %}
+{% extends '@Twig/Exception/error.html.twig' %}
