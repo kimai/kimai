@@ -11,30 +11,26 @@
 
 namespace App\Form\Toolbar;
 
-use App\Form\Type\PageSizeType;
 use Symfony\Component\Form\FormBuilderInterface;
-use App\Repository\Query\CustomerQuery;
 
 /**
- * Defines the base form used for all toolbars with pageSizes.
+ * Defines the form used for filtering the admin timesheet.
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class PagedToolbarForm extends AbstractToolbarForm
+class TimesheetAdminToolbarForm extends TimesheetToolbarForm
 {
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var CustomerQuery $query */
-        $query = $options['data'];
-
-        $builder
-            ->add('pageSize', PageSizeType::class, [
-                'required' => false,
-            ])
-        ;
+        $this->addTimesheetStateChoice($builder);
+        $this->addPageSizeChoice($builder);
+        $this->addUserChoice($builder);
+        $this->addCustomerChoice($builder);
+        $this->addProjectChoice($builder);
+        $this->addActivityChoice($builder);
     }
 }

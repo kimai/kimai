@@ -19,36 +19,13 @@ use App\Entity\Project;
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class ActivityQuery extends VisibilityQuery
+class ActivityQuery extends ProjectQuery
 {
 
     /**
      * @var Project
      */
     protected $project;
-
-    /**
-     * @var Customer
-     */
-    protected $customer;
-
-    /**
-     * @return Customer
-     */
-    public function getCustomer()
-    {
-        return $this->customer;
-    }
-
-    /**
-     * @param Customer $customer
-     * @return $this
-     */
-    public function setCustomer(Customer $customer = null)
-    {
-        $this->customer = $customer;
-        return $this;
-    }
 
     /**
      * @return Project

@@ -19,8 +19,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use App\Entity\Customer;
-use App\Entity\Project;
 use App\Form\ActivityEditForm;
 use App\Form\Toolbar\ActivityToolbarForm;
 use App\Repository\Query\ActivityQuery;
@@ -46,47 +44,6 @@ class ActivityController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @return ActivityQuery
-     */
-    protected function getQueryForRequest(Request $request)
-    {
-        $visibility = $request->get('visibility', ActivityQuery::SHOW_VISIBLE);
-        if (strlen($visibility) == 0 || (int)$visibility != $visibility) {
-            $visibility = ActivityQuery::SHOW_BOTH;
-        }
-        $pageSize = (int) $request->get('pageSize');
-        $customer = $request->get('customer');
-        $customer = !empty(trim($customer)) ? trim($customer) : null;
-        $project = $request->get('project');
-        $project = !empty(trim($project)) ? trim($project) : null;
-
-        if ($project !== null) {
-            $repo = $this->getDoctrine()->getRepository(Project::class);
-            $project = $repo->getById($project);
-            if ($project !== null) {
-                $customer = $project->getCustomer();
-            } else {
-                $customer = null;
-            }
-        } elseif ($customer !== null) {
-            $repo = $this->getDoctrine()->getRepository(Customer::class);
-            $customer = $repo->getById($customer);
-        }
-
-        $query = new ActivityQuery();
-        $query
-            ->setPageSize($pageSize)
-            ->setVisibility($visibility)
-            ->setCustomer($customer)
-            ->setProject($project)
-            ->setExclusiveVisibility(true)
-        ;
-
-        return $query ;
-    }
-
-    /**
      * @Route("/", defaults={"page": 1}, name="admin_activity")
      * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_activity_paginated")
      * @Method("GET")
@@ -94,8 +51,16 @@ class ActivityController extends AbstractController
      */
     public function indexAction($page, Request $request)
     {
-        $query = $this->getQueryForRequest($request);
+        $query = new ActivityQuery();
+        $query->setExclusiveVisibility(true);
         $query->setPage($page);
+
+        $form = $this->getToolbarForm($query);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var ActivityQuery $query */
+            $query = $form->getData();
+        }
 
         /* @var $entries Pagerfanta */
         $entries = $this->getRepository()->findByQuery($query);
@@ -103,13 +68,16 @@ class ActivityController extends AbstractController
         return $this->render('admin/activity.html.twig', [
             'entries' => $entries,
             'query' => $query,
-            'toolbarForm' => $this->getToolbarForm($query)->createView(),
+            'toolbarForm' => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/create", name="admin_activity_create")
      * @Method({"GET", "POST"})
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createAction(Request $request)
     {
@@ -120,6 +88,10 @@ class ActivityController extends AbstractController
      * @Route("/{id}/edit", name="admin_activity_edit")
      * @Method({"GET", "POST"})
      * @Security("is_granted('edit', activity)")
+     *
+     * @param Activity $activity
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Activity $activity, Request $request)
     {
@@ -204,16 +176,12 @@ class ActivityController extends AbstractController
      */
     protected function getToolbarForm(ActivityQuery $query)
     {
-        return $this->createForm(
-            ActivityToolbarForm::class,
-            $query,
-            [
-                'action' => $this->generateUrl('admin_activity_paginated', [
-                    'page' => $query->getPage(),
-                ]),
-                'method' => 'GET',
-            ]
-        );
+        return $this->createForm(ActivityToolbarForm::class, $query, [
+            'action' => $this->generateUrl('admin_activity', [
+                'page' => $query->getPage(),
+            ]),
+            'method' => 'GET',
+        ]);
     }
 
     /**
@@ -228,13 +196,9 @@ class ActivityController extends AbstractController
             $url = $this->generateUrl('admin_activity_edit', ['id' => $activity->getId()]);
         }
 
-        return $this->createForm(
-            ActivityEditForm::class,
-            $activity,
-            [
-                'action' => $url,
-                'method' => 'POST'
-            ]
-        );
+        return $this->createForm(ActivityEditForm::class, $activity, [
+            'action' => $url,
+            'method' => 'POST'
+        ]);
     }
 }

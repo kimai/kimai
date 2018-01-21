@@ -13,7 +13,6 @@ namespace App\Form\Toolbar;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Form\Type\ProjectType;
 use App\Repository\Query\ActivityQuery;
 
 /**
@@ -21,7 +20,7 @@ use App\Repository\Query\ActivityQuery;
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class ActivityToolbarForm extends ProjectToolbarForm
+class ActivityToolbarForm extends AbstractToolbarForm
 {
 
     /**
@@ -29,25 +28,10 @@ class ActivityToolbarForm extends ProjectToolbarForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($builder, $options);
-
-        /** @var ActivityQuery $query */
-        $query = $options['data'];
-
-        if ($query->getCustomer() === null) {
-            return;
-        }
-
-        $choices = [];
-        foreach ($query->getCustomer()->getProjects() as $project) {
-            $choices[] = $project;
-        }
-
-        $builder
-            ->add('project', ProjectType::class, [
-                'required' => false,
-                'choices' => $choices,
-            ]);
+        $this->addPageSizeChoice($builder);
+        $this->addVisibilityChoice($builder);
+        $this->addCustomerChoice($builder);
+        $this->addProjectChoice($builder);
     }
 
     /**

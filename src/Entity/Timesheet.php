@@ -90,7 +90,7 @@ class Timesheet
     private $description;
 
     /**
-     * @var string
+     * @var float
      *
      * @ORM\Column(name="rate", type="decimal", precision=10, scale=2, nullable=false)
      */
@@ -150,7 +150,6 @@ class Timesheet
      * Set duration
      *
      * @param integer $duration
-     *
      * @return Timesheet
      */
     public function setDuration($duration)
@@ -182,7 +181,6 @@ class Timesheet
      * Set user
      *
      * @param User $user
-     *
      * @return Timesheet
      */
     public function setUser(User $user)
@@ -205,7 +203,6 @@ class Timesheet
      * Set activity
      *
      * @param Activity $activity
-     *
      * @return Timesheet
      */
     public function setActivity($activity)
@@ -228,7 +225,6 @@ class Timesheet
      * Set description
      *
      * @param string $description
-     *
      * @return Timesheet
      */
     public function setDescription($description)
@@ -250,8 +246,7 @@ class Timesheet
     /**
      * Set rate
      *
-     * @param string $rate
-     *
+     * @param float $rate
      * @return Timesheet
      */
     public function setRate($rate)
@@ -263,7 +258,7 @@ class Timesheet
     /**
      * Get rate
      *
-     * @return string
+     * @return float
      */
     public function getRate()
     {

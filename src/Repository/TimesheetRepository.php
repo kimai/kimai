@@ -15,6 +15,7 @@ use App\Entity\User;
 use App\Entity\Activity;
 use App\Entity\Timesheet;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 use App\Model\Statistic\Month;
 use App\Model\Statistic\Year;
@@ -266,7 +267,7 @@ class TimesheetRepository extends AbstractRepository
 
     /**
      * @param TimesheetQuery $query
-     * @return Pagerfanta
+     * @return QueryBuilder|Pagerfanta
      */
     public function findByQuery(TimesheetQuery $query)
     {
@@ -289,6 +290,15 @@ class TimesheetRepository extends AbstractRepository
             $qb->andWhere($qb->expr()->isNull('t.end'));
         } elseif ($query->getState() == TimesheetQuery::STATE_STOPPED) {
             $qb->andWhere($qb->expr()->isNotNull('t.end'));
+        }
+
+        if ($query->getBegin() !== null) {
+            $qb->andWhere('t.begin >= :begin')
+                ->setParameter('begin', $query->getBegin());
+        }
+        if ($query->getEnd() !== null) {
+            $qb->andWhere('t.end <= :end')
+                ->setParameter('end', $query->getEnd());
         }
 
         if ($query->getActivity() !== null) {

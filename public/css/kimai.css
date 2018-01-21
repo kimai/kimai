@@ -1,3 +1,8 @@
+
+.error-page {
+    margin-bottom: 50px;
+}
+
 /* ================================ NAVBAR ================================ */
 
 .navbar-nav>li>a.ddt-large {
@@ -42,6 +47,7 @@ li.open .ticktac i.running{
 .control-sidebar select {
     color: #000;
 }
+
 /* ================================ TOOLBAR ================================ */
 
 .data_table .box-header>.box-tools {
@@ -61,7 +67,7 @@ li.open .ticktac i.running{
     display: inline;
 }
 
-.box-header .tools-left {
+.tools-left {
     margin-right: 10px;
 }
 
@@ -83,6 +89,11 @@ footer.main-footer {
 
 .login-page form label {
     padding-left: 5px;
+}
+/* ================================ PRINT ================================ */
+
+@media print{
+    .sf-toolbar, .control-sidebar {display: none !important;}
 }
 
 /* ================================ DATA-TABLES ================================ */

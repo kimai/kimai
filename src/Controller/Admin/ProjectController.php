@@ -45,36 +45,6 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @return ProjectQuery
-     */
-    protected function getQueryForRequest(Request $request)
-    {
-        $visibility = $request->get('visibility', ProjectQuery::SHOW_VISIBLE);
-        if (strlen($visibility) == 0 || (int)$visibility != $visibility) {
-            $visibility = ProjectQuery::SHOW_BOTH;
-        }
-        $pageSize = (int) $request->get('pageSize');
-        $customer = $request->get('customer');
-        $customer = !empty(trim($customer)) ? trim($customer) : null;
-
-        if ($customer !== null) {
-            $repo = $this->getDoctrine()->getRepository(Customer::class);
-            $customer = $repo->getById($customer);
-        }
-
-        $query = new ProjectQuery();
-        $query
-            ->setPageSize($pageSize)
-            ->setVisibility($visibility)
-            ->setCustomer($customer)
-            ->setExclusiveVisibility(true)
-        ;
-
-        return $query ;
-    }
-
-    /**
      * @Route("/", defaults={"page": 1}, name="admin_project")
      * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_project_paginated")
      * @Method("GET")
@@ -82,8 +52,16 @@ class ProjectController extends AbstractController
      */
     public function indexAction($page, Request $request)
     {
-        $query = $this->getQueryForRequest($request);
+        $query = new ProjectQuery();
+        $query->setExclusiveVisibility(true);
         $query->setPage($page);
+
+        $form = $this->getToolbarForm($query);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var ProjectQuery $query */
+            $query = $form->getData();
+        }
 
         /* @var $entries Pagerfanta */
         $entries = $this->getDoctrine()->getRepository(Project::class)->findByQuery($query);
@@ -91,7 +69,7 @@ class ProjectController extends AbstractController
         return $this->render('admin/project.html.twig', [
             'entries' => $entries,
             'query' => $query,
-            'toolbarForm' => $this->getToolbarForm($query)->createView(),
+            'toolbarForm' => $form->createView(),
         ]);
     }
 

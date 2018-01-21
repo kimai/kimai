@@ -370,6 +370,35 @@ class User implements UserInterface, AdvancedUserInterface
     }
 
     /**
+     * @param string $name
+     * @return UserPreference|null
+     */
+    public function getPreference(string $name)
+    {
+        foreach ($this->preferences as $preference) {
+            if ($preference->getName() == $name) {
+                return $preference;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param $name
+     * @param null $default
+     * @return bool|int|null|string
+     */
+    public function getPreferenceValue($name, $default = null)
+    {
+        $preference = $this->getPreference($name);
+        if ($preference === null) {
+            return $default;
+        }
+        return $preference->getValue();
+    }
+
+    /**
      * @param UserPreference $preference
      * @return User
      */

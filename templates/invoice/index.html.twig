@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+{% import "macros/toolbar.html.twig" as macro %}
+
+{% block page_title %}{{ 'invoice.title'|trans }}{% endblock %}
+{% block page_subtitle %}{{ 'invoice.subtitle'|trans }}{% endblock %}
+{% block javascript_imports %}<script src="{{ asset('js/toolbar.js') }}"></script>{% endblock %}
+
+{% block avanzu_page_content_class %}invoice{% endblock %}
+
+{% block main_before %}
+    {{ macro.toolbar(form, {'plus-square': path('admin_invoice_template_create'), 'list': path('admin_invoice_template')}) }}
+{% endblock %}
+
+{% block main_after %}
+    <div class="clearfix"></div>
+{% endblock %}
+
+{% block main %}
+
+    {% if model.entries is empty or action is empty %}
+        {{ widgets.callout('warning', 'invoice.select_filter') }}
+    {% else %}
+        {{ render(controller(action, {'model': model})) }}
+    {% endif %}
+
+{% endblock %}

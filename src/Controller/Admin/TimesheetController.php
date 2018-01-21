@@ -12,6 +12,8 @@
 namespace App\Controller\Admin;
 
 use App\Controller\AbstractController;
+use App\Form\Toolbar\TimesheetAdminToolbarForm;
+use App\Repository\Query\TimesheetQuery;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
 use App\Controller\TimesheetControllerTrait;
@@ -48,8 +50,15 @@ class TimesheetController extends AbstractController
      */
     public function indexAction($page, Request $request)
     {
-        $query = $this->getQueryForRequest($request);
+        $query = new TimesheetQuery();
         $query->setPage($page);
+
+        $form = $this->getToolbarForm($query);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var TimesheetQuery $query */
+            $query = $form->getData();
+        }
 
         /* @var $entries Pagerfanta */
         $entries = $this->getRepository()->findByQuery($query);
@@ -58,7 +67,7 @@ class TimesheetController extends AbstractController
             'entries' => $entries,
             'page' => $page,
             'query' => $query,
-            'toolbarForm' => $this->getToolbarForm($query, 'admin_timesheet')->createView(),
+            'toolbarForm' => $form->createView(),
         ]);
     }
 
@@ -133,15 +142,11 @@ class TimesheetController extends AbstractController
      */
     protected function getCreateForm(Timesheet $entry)
     {
-        return $this->createForm(
-            TimesheetAdminForm::class,
-            $entry,
-            [
-                'action' => $this->generateUrl('admin_timesheet_create'),
-                'method' => 'POST',
-                'currency' => Customer::DEFAULT_CURRENCY,
-            ]
-        );
+        return $this->createForm(TimesheetAdminForm::class, $entry, [
+            'action' => $this->generateUrl('admin_timesheet_create'),
+            'method' => 'POST',
+            'currency' => Customer::DEFAULT_CURRENCY,
+        ]);
     }
 
     /**
@@ -151,17 +156,27 @@ class TimesheetController extends AbstractController
      */
     protected function getEditForm(Timesheet $entry, $page)
     {
-        return $this->createForm(
-            TimesheetAdminForm::class,
-            $entry,
-            [
-                'action' => $this->generateUrl('admin_timesheet_edit', [
-                    'id' => $entry->getId(),
-                    'page' => $page
-                ]),
-                'method' => 'POST',
-                'currency' => $entry->getActivity()->getProject()->getCustomer()->getCurrency(),
-            ]
-        );
+        return $this->createForm(TimesheetAdminForm::class, $entry, [
+            'action' => $this->generateUrl('admin_timesheet_edit', [
+                'id' => $entry->getId(),
+                'page' => $page
+            ]),
+            'method' => 'POST',
+            'currency' => $entry->getActivity()->getProject()->getCustomer()->getCurrency(),
+        ]);
+    }
+
+    /**
+     * @param TimesheetQuery $query
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function getToolbarForm(TimesheetQuery $query)
+    {
+        return $this->createForm(TimesheetAdminToolbarForm::class, $query, [
+            'action' => $this->generateUrl('admin_timesheet', [
+                'page' => $query->getPage(),
+            ]),
+            'method' => 'GET',
+        ]);
     }
 }

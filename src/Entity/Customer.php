@@ -47,6 +47,14 @@ class Customer
     /**
      * @var string
      *
+     * @ORM\Column(name="number", type="string", length=50, nullable=false)
+     * @Assert\NotBlank()
+     */
+    private $number;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="comment", type="text", length=65535, nullable=true)
      */
     private $comment;
@@ -74,15 +82,6 @@ class Customer
     private $company;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="vat", type="integer", length=2, nullable=true)
-     * @Assert\Range(min = 0, max = 99)
-     *
-     */
-    private $vat;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="contact", type="string", length=255, nullable=true)
@@ -92,7 +91,7 @@ class Customer
     /**
      * @var string
      *
-     * @ORM\Column(name="street", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="address", type="text", length=65535, nullable=true)
      */
     private $address;
 
@@ -167,13 +166,11 @@ class Customer
      * Set name
      *
      * @param string $name
-     *
      * @return Customer
      */
     public function setName($name)
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -182,22 +179,38 @@ class Customer
      *
      * @return string
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
+    }
+
+    /**
+     * @param string $number
+     * @return Customer
+     */
+    public function setNumber(string $number)
+    {
+        $this->number = $number;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNumber(): ?string
+    {
+        return $this->number;
     }
 
     /**
      * Set comment
      *
      * @param string $comment
-     *
      * @return Customer
      */
     public function setComment($comment)
     {
         $this->comment = $comment;
-
         return $this;
     }
 
@@ -215,13 +228,11 @@ class Customer
      * Set visible
      *
      * @param boolean $visible
-     *
      * @return Customer
      */
     public function setVisible($visible)
     {
         $this->visible = $visible;
-
         return $this;
     }
 
@@ -239,13 +250,11 @@ class Customer
      * Set company
      *
      * @param string $company
-     *
      * @return Customer
      */
     public function setCompany($company)
     {
         $this->company = $company;
-
         return $this;
     }
 
@@ -260,40 +269,14 @@ class Customer
     }
 
     /**
-     * Set vat
-     *
-     * @param integer $vat
-     *
-     * @return Customer
-     */
-    public function setVat($vat)
-    {
-        $this->vat = $vat;
-
-        return $this;
-    }
-
-    /**
-     * Get vat
-     *
-     * @return integer
-     */
-    public function getVat()
-    {
-        return $this->vat;
-    }
-
-    /**
      * Set contact
      *
      * @param string $contact
-     *
      * @return Customer
      */
     public function setContact($contact)
     {
         $this->contact = $contact;
-
         return $this;
     }
 
@@ -308,6 +291,16 @@ class Customer
     }
 
     /**
+     * @param string $address
+     * @return Customer
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getAddress()
@@ -316,28 +309,14 @@ class Customer
     }
 
     /**
-     * @param string $address
-     *
-     * @return Customer
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    /**
      * Set country
      *
      * @param string $country
-     *
      * @return Customer
      */
     public function setCountry($country)
     {
         $this->country = $country;
-
         return $this;
     }
 
@@ -352,6 +331,16 @@ class Customer
     }
 
     /**
+     * @param string $currency
+     * @return Customer
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getCurrency()
@@ -360,27 +349,14 @@ class Customer
     }
 
     /**
-     * @param string $currency
-     * @return $this
-     */
-    public function setCurrency($currency)
-    {
-        $this->currency = $currency;
-
-        return $this;
-    }
-
-    /**
      * Set phone
      *
      * @param string $phone
-     *
      * @return Customer
      */
     public function setPhone($phone)
     {
         $this->phone = $phone;
-
         return $this;
     }
 
@@ -398,13 +374,11 @@ class Customer
      * Set fax
      *
      * @param string $fax
-     *
      * @return Customer
      */
     public function setFax($fax)
     {
         $this->fax = $fax;
-
         return $this;
     }
 
@@ -422,13 +396,11 @@ class Customer
      * Set mobile
      *
      * @param string $mobile
-     *
      * @return Customer
      */
     public function setMobile($mobile)
     {
         $this->mobile = $mobile;
-
         return $this;
     }
 
@@ -446,13 +418,11 @@ class Customer
      * Set mail
      *
      * @param string $mail
-     *
      * @return Customer
      */
     public function setMail($mail)
     {
         $this->mail = $mail;
-
         return $this;
     }
 
@@ -470,13 +440,11 @@ class Customer
      * Set homepage
      *
      * @param string $homepage
-     *
      * @return Customer
      */
     public function setHomepage($homepage)
     {
         $this->homepage = $homepage;
-
         return $this;
     }
 
@@ -494,13 +462,11 @@ class Customer
      * Set timezone
      *
      * @param string $timezone
-     *
      * @return Customer
      */
     public function setTimezone($timezone)
     {
         $this->timezone = $timezone;
-
         return $this;
     }
 
@@ -516,12 +482,11 @@ class Customer
 
     /**
      * @param Project[] $projects
-     * @return $this
+     * @return Customer
      */
     public function setProjects($projects)
     {
         $this->projects = $projects;
-
         return $this;
     }
 

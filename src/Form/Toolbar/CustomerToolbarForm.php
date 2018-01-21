@@ -11,7 +11,7 @@
 
 namespace App\Form\Toolbar;
 
-use App\Form\Toolbar\VisibilityToolbarForm;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Repository\Query\CustomerQuery;
 
@@ -20,8 +20,17 @@ use App\Repository\Query\CustomerQuery;
  *
  * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class CustomerToolbarForm extends VisibilityToolbarForm
+class CustomerToolbarForm extends AbstractToolbarForm
 {
+
+    /**
+     * {@inheritdoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $this->addPageSizeChoice($builder);
+        $this->addVisibilityChoice($builder);
+    }
 
     /**
      * {@inheritdoc}

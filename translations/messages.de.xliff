@@ -17,6 +17,10 @@
                 <source>no</source>
                 <target>Nein</target>
             </trans-unit>
+            <trans-unit id="both">
+                <source>both</source>
+                <target></target>
+            </trans-unit>
             <trans-unit id="subtitle.amount">
                 <source>subtitle.amount</source>
                 <target>(insgesamt %count%)</target>
@@ -35,7 +39,9 @@
             </trans-unit>
             <trans-unit id="confirm.delete_message">
                 <source>confirm.delete_message</source>
-                <target>Sie müssen das Löschen erneut bestätigen, da verknüpfte Objekte existieren welche ebenfalls mit gelöscht werden.</target>
+                <target>
+                    Sie müssen das Löschen erneut bestätigen, da verknüpfte Objekte existieren welche ebenfalls mit gelöscht werden.
+                </target>
             </trans-unit>
 
             <!--
@@ -85,6 +91,10 @@
                 <source>menu.timesheet</source>
                 <target>Zeiterfassung</target>
             </trans-unit>
+            <trans-unit id="menu.invoice">
+                <source>menu.invoice</source>
+                <target>Rechnungen</target>
+            </trans-unit>
             <trans-unit id="menu.admin_timesheet">
                 <source>menu.admin_timesheet</source>
                 <target>Mitarbeiter Zeiten</target>
@@ -99,7 +109,7 @@
             </trans-unit>
             <trans-unit id="menu.admin_activity">
                 <source>menu.admin_activity</source>
-                <target>Aktivitäten</target>
+                <target>Tätigkeiten</target>
             </trans-unit>
             <trans-unit id="menu.admin_user">
                 <source>menu.admin_user</source>
@@ -117,42 +127,6 @@
             <!--
               Error templates
             -->
-            <trans-unit id="http_error.name">
-                <source>http_error.name</source>
-                <target>Error</target>
-            </trans-unit>
-            <trans-unit id="http_error.description">
-                <source>http_error.description</source>
-                <target>Error</target>
-            </trans-unit>
-            <trans-unit id="http_error.suggestion">
-                <source>http_error.suggestion</source>
-                <target>Error</target>
-            </trans-unit>
-            <trans-unit id="http_error_403.description">
-                <source>http_error_403.description</source>
-                <target>Error</target>
-            </trans-unit>
-            <trans-unit id="http_error_403.suggestion">
-                <source>http_error_403.suggestion</source>
-                <target>Error</target>
-            </trans-unit>
-            <trans-unit id="http_error_404.description">
-                <source>http_error_404.description</source>
-                <target>Error</target>
-            </trans-unit>
-            <trans-unit id="http_error_404.suggestion">
-                <source>http_error_404.suggestion</source>
-                <target>Error</target>
-            </trans-unit>
-            <trans-unit id="http_error_405.description">
-                <source>http_error_405.description</source>
-                <target>Error</target>
-            </trans-unit>
-            <trans-unit id="http_error_405.suggestion">
-                <source>http_error_405.suggestion</source>
-                <target>Error</target>
-            </trans-unit>
             <trans-unit id="error.no_entries_found">
                 <source>error.no_entries_found</source>
                 <target>Keine Einträge vorhanden</target>
@@ -211,7 +185,7 @@
             </trans-unit>
             <trans-unit id="label.activity">
                 <source>label.activity</source>
-                <target>Aktivität</target>
+                <target>Tätigkeit</target>
             </trans-unit>
             <trans-unit id="label.project">
                 <source>label.project</source>
@@ -421,8 +395,8 @@
                 <source>admin_project.delete_confirm</source>
                 <target>
                     Momentan existieren für das Projekt %project% des Kunden %customer% insgesamt %activities%
-                    Aktivitäten und %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen.
-                    Diese Aktivitäten und Zeiteinträge werden ebenfalls mit gelöscht!
+                    Tätigkeiten und %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen.
+                    Diese Tätigkeiten und Zeiteinträge werden ebenfalls mit gelöscht!
                 </target>
             </trans-unit>
 
@@ -431,7 +405,7 @@
             -->
             <trans-unit id="admin_activity.title">
                 <source>admin_activity.title</source>
-                <target>Aktivitäten</target>
+                <target>Tätigkeiten</target>
             </trans-unit>
             <trans-unit id="admin_activity.subtitle">
                 <source>admin_activity.subtitle</source>
@@ -440,7 +414,7 @@
             <trans-unit id="admin_activity.delete_confirm">
                 <source>admin_activity.delete_confirm</source>
                 <target>
-                    Momentan existieren für die Aktivität %activity% im Projekt %project% für den Kunden %customer%
+                    Momentan existieren für die Tätigkeit %activity% im Projekt %project% für den Kunden %customer%
                     insgesamt %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen. Diese
                     Zeiteinträge werden ebenfalls mit gelöscht!
                 </target>
@@ -456,6 +430,10 @@
             <trans-unit id="admin_customer.subtitle">
                 <source>admin_customer.subtitle</source>
                 <target>Ihre Kunden stellen die Basis dar, auf der Sie Projekte und Tätigkeiten anlegen können</target>
+            </trans-unit>
+            <trans-unit id="label.customer_number">
+                <source>label.customer_number</source>
+                <target>Kundennummer</target>
             </trans-unit>
             <trans-unit id="label.company">
                 <source>label.company</source>
@@ -505,8 +483,8 @@
                 <source>admin_customer.delete_confirm</source>
                 <target>
                     Momentan existieren für den Kunden %customer% insgesamt %project% Projekte mit %activity%
-                    Aktivitäten, die sich in %records% Zeiteinträgen auf eine Gesamtdauer von %duration% belaufen. Diese
-                    Projekte, Aktivitäten und Zeiteinträge werden ebenfalls mit gelöscht!
+                    Tätigkeiten, die sich in %records% Zeiteinträgen auf eine Gesamtdauer von %duration% belaufen. Diese
+                    Projekte, Tätigkeiten und Zeiteinträge werden ebenfalls mit gelöscht!
                 </target>
             </trans-unit>
 
@@ -607,7 +585,7 @@
             </trans-unit>
             <trans-unit id="stats.activitiesTotal">
                 <source>stats.activitiesTotal</source>
-                <target>Anzahl Aktivitäten</target>
+                <target>Anzahl Tätigkeiten</target>
             </trans-unit>
             <trans-unit id="stats.projectsTotal">
                 <source>stats.projectsTotal</source>
@@ -616,6 +594,106 @@
             <trans-unit id="stats.customerTotal">
                 <source>stats.customerTotal</source>
                 <target>Anzahl Kunden</target>
+            </trans-unit>
+
+            <!--
+              Invoice
+            -->
+            <trans-unit id="admin_invoice_template.title">
+                <source>admin_invoice_template.title</source>
+                <target>Rechnungsvorlagen</target>
+            </trans-unit>
+            <trans-unit id="admin_invoice_template.subtitle">
+                <source>admin_invoice_template.subtitle</source>
+                <target>Verwalten Sie Ihre Rechnungsvorlagen, mit deren Hilfe Sie ihre Daten exportieren können.</target>
+            </trans-unit>
+            <trans-unit id="invoice.title">
+                <source>invoice.title</source>
+                <target>Rechnungen</target>
+            </trans-unit>
+            <trans-unit id="invoice.subtitle">
+                <source>invoice.subtitle</source>
+                <target>Hier erstellen Sie Rechnungen für ihre aufgezeichneten Zeiten.</target>
+            </trans-unit>
+            <trans-unit id="invoice.select_filter">
+                <source>invoice.select_filter</source>
+                <target>Bevor Sie eine Rechnung erstellen können, müssen Sie mindestens einen Kunden-Filter auswählen.</target>
+            </trans-unit>
+            <trans-unit id="button.print">
+                <source>button.print</source>
+                <target>Drucken</target>
+            </trans-unit>
+            <trans-unit id="invoice_print">
+                <source>invoice_print</source>
+                <target>Rechnung</target>
+            </trans-unit>
+            <trans-unit id="label.template">
+                <source>label.template</source>
+                <target>Vorlage</target>
+            </trans-unit>
+            <trans-unit id="label.due_days">
+                <source>label.due_days</source>
+                <target>Zahlungsziel in Tagen</target>
+            </trans-unit>
+            <trans-unit id="invoice.due_days">
+                <source>invoice.due_days</source>
+                <target>Zahlungsziel</target>
+            </trans-unit>
+            <trans-unit id="invoice.from">
+                <source>invoice.from</source>
+                <target>Von</target>
+            </trans-unit>
+            <trans-unit id="invoice.to">
+                <source>invoice.to</source>
+                <target>An</target>
+            </trans-unit>
+            <trans-unit id="invoice.number">
+                <source>invoice.number</source>
+                <target>Rechnung</target>
+            </trans-unit>
+            <trans-unit id="invoice.subtotal">
+                <source>invoice.subtotal</source>
+                <target>Netto</target>
+            </trans-unit>
+            <trans-unit id="invoice.tax">
+                <source>invoice.tax</source>
+                <target>Umsatzsteuer</target>
+            </trans-unit>
+            <trans-unit id="invoice.total">
+                <source>invoice.total</source>
+                <target>Rechnungsbetrag</target>
+            </trans-unit>
+            <trans-unit id="label.payment_terms">
+                <source>label.payment_terms</source>
+                <target>Zahlungsinformationen</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_renderer">
+                <source>label.invoice_renderer</source>
+                <target>Rechnungsvorlage</target>
+            </trans-unit>
+            <trans-unit id="invoice_renderer.default">
+                <source>invoice_renderer.default</source>
+                <target>HTML Rechnung (Standard)</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_number_generator">
+                <source>label.invoice_number_generator</source>
+                <target>Rechnungsnummern-Generator</target>
+            </trans-unit>
+            <trans-unit id="invoice_number_generator.default">
+                <source>invoice_number_generator.default</source>
+                <target>Datum (Standard)</target>
+            </trans-unit>
+            <trans-unit id="invoice_number_generator.random">
+                <source>invoice_number_generator.random</source>
+                <target>Zufallszahl (nur zum Testen)</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_calculator">
+                <source>label.invoice_calculator</source>
+                <target>Zahlungsberechnung</target>
+            </trans-unit>
+            <trans-unit id="invoice_calculator.default">
+                <source>invoice_calculator.default</source>
+                <target>Stundenbasiert (Standard)</target>
             </trans-unit>
 
             <!--
@@ -683,7 +761,9 @@
             </trans-unit>
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
-                <target>Ihr %count% zuletzt bearbeitete Aktivität|Eine ihrer %count% letzten Aktivitäten neustarten</target>
+                <target>
+                    Ihr %count% zuletzt bearbeitete Tätigkeit|Eine ihrer %count% letzten Tätigkeiten neustarten
+                </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>

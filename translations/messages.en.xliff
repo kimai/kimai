@@ -17,6 +17,10 @@
                 <source>no</source>
                 <target>No</target>
             </trans-unit>
+            <trans-unit id="both">
+                <source>both</source>
+                <target></target>
+            </trans-unit>
             <trans-unit id="subtitle.amount">
                 <source>subtitle.amount</source>
                 <target>(total %count%)</target>
@@ -87,6 +91,10 @@
                 <source>menu.timesheet</source>
                 <target>Timesheet</target>
             </trans-unit>
+            <trans-unit id="menu.invoice">
+                <source>menu.invoice</source>
+                <target>Invoices</target>
+            </trans-unit>
             <trans-unit id="menu.admin_timesheet">
                 <source>menu.admin_timesheet</source>
                 <target>User timesheets</target>
@@ -119,42 +127,6 @@
             <!--
               Error templates
             -->
-            <trans-unit id="http_error.name">
-                <source>http_error.name</source>
-                <target>Error</target>
-            </trans-unit>
-            <trans-unit id="http_error.description">
-                <source>http_error.description</source>
-                <target>Error</target>
-            </trans-unit>
-            <trans-unit id="http_error.suggestion">
-                <source>http_error.suggestion</source>
-                <target>Error</target>
-            </trans-unit>
-            <trans-unit id="http_error_403.description">
-                <source>http_error_403.description</source>
-                <target>Error</target>
-            </trans-unit>
-            <trans-unit id="http_error_403.suggestion">
-                <source>http_error_403.suggestion</source>
-                <target>Error</target>
-            </trans-unit>
-            <trans-unit id="http_error_404.description">
-                <source>http_error_404.description</source>
-                <target>Error</target>
-            </trans-unit>
-            <trans-unit id="http_error_404.suggestion">
-                <source>http_error_404.suggestion</source>
-                <target>Error</target>
-            </trans-unit>
-            <trans-unit id="http_error_405.description">
-                <source>http_error_405.description</source>
-                <target>Error</target>
-            </trans-unit>
-            <trans-unit id="http_error_405.suggestion">
-                <source>http_error_405.suggestion</source>
-                <target>Error</target>
-            </trans-unit>
             <trans-unit id="error.no_entries_found">
                 <source>error.no_entries_found</source>
                 <target>No entries existing</target>
@@ -179,7 +151,7 @@
                 <source>label.duration</source>
                 <target>Duration</target>
             </trans-unit>
-            <trans-unit id="label.usern">
+            <trans-unit id="label.user">
                 <source>label.user</source>
                 <target>User</target>
             </trans-unit>
@@ -459,6 +431,10 @@
                 <source>admin_customer.subtitle</source>
                 <target>Your customer are the base for creating projects and activities</target>
             </trans-unit>
+            <trans-unit id="label.customer_number">
+                <source>label.customer_number</source>
+                <target>Account</target>
+            </trans-unit>
             <trans-unit id="label.company">
                 <source>label.company</source>
                 <target>Company name</target>
@@ -618,6 +594,106 @@
             <trans-unit id="stats.customerTotal">
                 <source>stats.customerTotal</source>
                 <target>Amount customers</target>
+            </trans-unit>
+
+            <!--
+              Invoice
+            -->
+            <trans-unit id="admin_invoice_template.title">
+                <source>admin_invoice_template.title</source>
+                <target>Invoice template</target>
+            </trans-unit>
+            <trans-unit id="admin_invoice_template.subtitle">
+                <source>admin_invoice_template.subtitle</source>
+                <target>Administrate your invoice templates which can be used to data export.</target>
+            </trans-unit>
+            <trans-unit id="invoice.title">
+                <source>invoice.title</source>
+                <target>Invoices</target>
+            </trans-unit>
+            <trans-unit id="invoice.subtitle">
+                <source>invoice.subtitle</source>
+                <target>Create invoices from your recorded timesheet entries.</target>
+            </trans-unit>
+            <trans-unit id="invoice.select_filter">
+                <source>invoice.select_filter</source>
+                <target>Before you can create an invoice, you have to select at least a customer filter.</target>
+            </trans-unit>
+            <trans-unit id="button.print">
+                <source>button.print</source>
+                <target>Print</target>
+            </trans-unit>
+            <trans-unit id="invoice_print">
+                <source>invoice_print</source>
+                <target>Invoice</target>
+            </trans-unit>
+            <trans-unit id="label.template">
+                <source>label.template</source>
+                <target>Template</target>
+            </trans-unit>
+            <trans-unit id="label.due_days">
+                <source>label.due_days</source>
+                <target>Payment term in days</target>
+            </trans-unit>
+            <trans-unit id="invoice.due_days">
+                <source>invoice.due_days</source>
+                <target>Payment target</target>
+            </trans-unit>
+            <trans-unit id="invoice.from">
+                <source>invoice.from</source>
+                <target>From</target>
+            </trans-unit>
+            <trans-unit id="invoice.to">
+                <source>invoice.to</source>
+                <target>To</target>
+            </trans-unit>
+            <trans-unit id="invoice.number">
+                <source>invoice.number</source>
+                <target>Invoice</target>
+            </trans-unit>
+            <trans-unit id="invoice.subtotal">
+                <source>invoice.subtotal</source>
+                <target>Subtotal</target>
+            </trans-unit>
+            <trans-unit id="invoice.tax">
+                <source>invoice.tax</source>
+                <target>Tax</target>
+            </trans-unit>
+            <trans-unit id="invoice.total">
+                <source>invoice.total</source>
+                <target>Total</target>
+            </trans-unit>
+            <trans-unit id="label.payment_terms">
+                <source>label.payment_terms</source>
+                <target>Terms of payment</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_renderer">
+                <source>label.invoice_renderer</source>
+                <target>Invoice template</target>
+            </trans-unit>
+            <trans-unit id="invoice_renderer.default">
+                <source>invoice_renderer.default</source>
+                <target>HTML Invoice (default)</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_number_generator">
+                <source>label.invoice_number_generator</source>
+                <target>Invoicenumber-Generator</target>
+            </trans-unit>
+            <trans-unit id="invoice_number_generator.default">
+                <source>invoice_number_generator.default</source>
+                <target>Date (default)</target>
+            </trans-unit>
+            <trans-unit id="invoice_number_generator.random">
+                <source>invoice_number_generator.random</source>
+                <target>Random number (only for testing)</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_calculator">
+                <source>label.invoice_calculator</source>
+                <target>Amount calculator</target>
+            </trans-unit>
+            <trans-unit id="invoice_calculator.default">
+                <source>invoice_calculator.default</source>
+                <target>Hourly rates (default)</target>
             </trans-unit>
 
             <!--

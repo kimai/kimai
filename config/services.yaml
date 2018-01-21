@@ -12,6 +12,8 @@ services:
         public: false       # Allows optimizing the container by removing unused services; this also means
                             # fetching services directly from the container via $container->get() won't work.
                             # The best practice is to be explicit about your dependencies anyway.
+        bind:
+            $projectDirectory: "%kernel.project_dir%"
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -25,12 +27,13 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
-
     # ================================================================================
     # APPLICATION CORE
     # ================================================================================
+
+    App\Invoice\ServiceInvoice:
+        class: App\Invoice\ServiceInvoice
+        arguments: ['%kimai.invoice%', '@service_container']
 
     # a route listener, that injects the locale through a URL directory
     App\EventSubscriber\RedirectToLocaleSubscriber:
@@ -44,34 +47,25 @@ services:
     # ================================================================================
 
     # service that prefixes every database table
-    app.tableprefix_subscriber:
+    App\Doctrine\TablePrefixSubscriber:
         class: App\Doctrine\TablePrefixSubscriber
         arguments: ["%env(resolve:DATABASE_PREFIX)%"]
         tags:
             - { name: doctrine.event_subscriber }
 
     # updates timesheet records, to make sure they are calculated and can't be manipulated by the users
-    app.database_listener.timesheet:
+    App\Doctrine\TimesheetSubscriber:
         class: App\Doctrine\TimesheetSubscriber
         tags:
             - { name: doctrine.event_listener, event: prePersist, lazy: true }
             - { name: doctrine.event_listener, event: preUpdate, lazy: true }
 
-    # Uncomment the following lines to define a service for the Timesheet Doctrine repository.
-    # It's not mandatory to create these services, but if you use repositories a lot,
-    # these services can simplify your code:
+    # Uncomment the following lines to define a service for the Timesheet Doctrine repository
     #
-    # app.post_repository:
+    # app.timesheet_repository:
     #     class:     Doctrine\ORM\EntityRepository
     #     factory:   ['@doctrine.orm.entity_manager', getRepository]
     #     arguments: [App\Entity\Timesheet]
-    #
-    # // traditional code inside a controller
-    # $entityManager = $this->getDoctrine()->getManager();
-    # $posts = $entityManager->getRepository('KimaiBundle:User')->findAll();
-    #
-    # // same code using repository services
-    # $posts = $this->get('app.user_repository')->findAll();
 
     # ================================================================================
     # FORMS
@@ -83,29 +77,6 @@ services:
         arguments: ["%security.role_hierarchy.roles%"]
         tags:
             - { name: form.type }
-
-    # ================================================================================
-    # CONSOLE COMMANDS
-    # ================================================================================
-
-    App\Command\RunCodeSnifferCommand:
-        arguments:
-            $projectDirectory: "%kernel.project_dir%"
-
-    App\Command\RunUnitTestsCommand:
-        class: App\Command\RunUnitTestsCommand
-        arguments:
-            $projectDirectory: "%kernel.project_dir%"
-
-    App\Command\RunIntegrationTestsCommand:
-        class: App\Command\RunIntegrationTestsCommand
-        arguments:
-            $projectDirectory: "%kernel.project_dir%"
-
-    App\Command\InstallCommand:
-        class: App\Command\InstallCommand
-        arguments:
-            $projectDirectory: "%kernel.project_dir%"
 
     # ================================================================================
     # THEME
@@ -128,9 +99,3 @@ services:
     #        class: "%avanzu_admin_theme.navbar_msg_listener.class%"
     #        tags:
     #          - { name: kernel.event_listener, event: theme.messages, method: onListMessages }
-    #
-    #    avanzu_admin_theme.setup_menu_listener:
-    #        class: "%avanzu_admin_theme.setup_menu_listener.class%"
-    #        tags:
-    #          - { name: kernel.event_listener, event: theme.sidebar_setup_menu, method: onSetupMenu }
-    #          - { name: kernel.event_listener, event: theme.breadcrumb, method: onSetupMenu }

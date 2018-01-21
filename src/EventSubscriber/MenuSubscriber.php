@@ -59,6 +59,7 @@ class MenuSubscriber implements EventSubscriberInterface
 
         $isLoggedIn = $auth->isGranted('IS_AUTHENTICATED_REMEMBERED');
         $isUser = $isLoggedIn && $auth->isGranted('ROLE_USER');
+        $isTeamlead = $isLoggedIn && $auth->isGranted('ROLE_USER');
 
         if (!$isLoggedIn || !$isUser) {
             return;
@@ -67,6 +68,14 @@ class MenuSubscriber implements EventSubscriberInterface
         $menu = $event->getMenu();
         $menu->addItem(
             new MenuItemModel('timesheet', 'menu.timesheet', 'timesheet', [], 'fa fa-clock-o')
+        );
+
+        if (!$isTeamlead) {
+            return;
+        }
+
+        $menu->addItem(
+            new MenuItemModel('invoice', 'menu.invoice', 'invoice', [], 'fa fa-print')
         );
     }
 
