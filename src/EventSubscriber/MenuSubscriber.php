@@ -59,7 +59,7 @@ class MenuSubscriber implements EventSubscriberInterface
 
         $isLoggedIn = $auth->isGranted('IS_AUTHENTICATED_REMEMBERED');
         $isUser = $isLoggedIn && $auth->isGranted('ROLE_USER');
-        $isTeamlead = $isLoggedIn && $auth->isGranted('ROLE_USER');
+        $isTeamlead = $isLoggedIn && $auth->isGranted('ROLE_TEAMLEAD');
 
         if (!$isLoggedIn || !$isUser) {
             return;

@@ -41,14 +41,14 @@ class Customer
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      * @Assert\NotBlank()
+     * @Assert\Length(min=2, max=255)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="number", type="string", length=50, nullable=false)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="number", type="string", length=50, nullable=true)
      */
     private $number;
 
@@ -98,7 +98,7 @@ class Customer
     /**
      * @var string
      *
-     * @ORM\Column(name="country", type="string", length=2, nullable=true)
+     * @ORM\Column(name="country", type="string", length=2, nullable=false)
      * @Assert\NotBlank()
      */
     private $country;

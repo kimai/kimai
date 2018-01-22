@@ -48,6 +48,7 @@ class Project
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      * @Assert\NotNull()
+     * @Assert\Length(min=2, max=255)
      */
     private $name;
 

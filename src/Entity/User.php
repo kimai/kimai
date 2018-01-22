@@ -51,7 +51,7 @@ class User implements UserInterface, AdvancedUserInterface
      *
      * @ORM\Column(name="name", type="string", length=60, nullable=false, unique=true)
      * @Assert\NotBlank()
-     * @Assert\Length(min=6, max=160)
+     * @Assert\Length(min=5, max=60)
      */
     private $username;
 
