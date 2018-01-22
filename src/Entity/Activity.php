@@ -48,6 +48,7 @@ class Activity
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      * @Assert\NotBlank()
+     * @Assert\Length(min=2, max=255)
      */
     private $name;
 
@@ -72,24 +73,6 @@ class Activity
      * @ORM\OneToMany(targetEntity="App\Entity\Timesheet", mappedBy="activity")
      */
     private $timesheets;
-
-    /**
-     * @return Timesheet[]
-     */
-    public function getTimesheets()
-    {
-        return $this->timesheets;
-    }
-
-    /**
-     * @param Timesheet[] $timesheets
-     * @return Activity
-     */
-    public function setTimesheets($timesheets)
-    {
-        $this->timesheets = $timesheets;
-        return $this;
-    }
 
     /**
      * @return Project
