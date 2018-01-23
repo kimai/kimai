@@ -1,0 +1,94 @@
+{% import "macros/widgets.html.twig" as widgets %}
+
+<div class="row">
+    <div class="col-xs-12">
+        <h2 class="page-header">
+           <span contenteditable="true">{{ model.template.title|default('invoice_renderer.timesheet'|trans) }}</span>
+        </h2>
+    </div>
+</div>
+
+<div class="row invoice-info" style="padding: 10px 0 20px 0">
+    <div class="col-sm-12 invoice-col">
+        <table>
+            <tr>
+                <th>{{ 'invoice.from'|trans }}</th>
+                <td contenteditable="true">
+                    {% if model.query.user is not empty %}
+                        {{ widgets.username(model.query.user) }}
+                    {% else %}
+                        {{ model.template.company }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th style="width:50%">{{ 'label.date'|trans }}</th>
+                <td contenteditable="true">{{ model.invoiceDate|date('F Y') }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.customer'|trans }}</th>
+                <td contenteditable="true">
+                    {% if model.customer.number is not empty %}[{{ model.customer.number }}]{% endif %}
+                    {{ model.customer.name }} / {{ model.customer.contact }}
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{{ 'label.date'|trans }}</th>
+                <th>{{ 'label.activity'|trans }}</th>
+                <th>{{ 'label.hours'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entry in model.calculator.entries %}
+            <tr>
+                <td>{{ entry.begin|date(kimai_context.date_1) }}</td>
+                <td>{{ entry.activity.name }} / {{ entry.activity.project.name }}</td>
+                <td>{{ entry.duration|duration }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row" style="padding: 60px 0">
+    <div class="col-xs-12">
+        {% if model.template.paymentTerms is not empty %}
+            <p class="lead">{{ 'label.payment_terms'|trans }}</p>
+
+            <p class="text-muted well well-sm no-shadow" contenteditable="true">
+                {{ model.template.paymentTerms|trim|nl2br }}
+            </p>
+        {% endif %}
+
+
+        <div class="table-responsive">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th style="width:50%;padding-bottom: 60px">{{ 'invoice.signature_user'|trans }}</th>
+                </tr>
+                <tr>
+                    <th>{{ 'invoice.signature_customer'|trans }}</th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row no-print">
+    <div class="col-xs-12">
+        <button type="button" class="btn btn-success pull-right" onclick="window.print();return false;" style="margin-right: 5px;">
+            <i class="fa fa-print"></i> {{ 'button.print'|trans }}
+        </button>
+    </div>
+</div>

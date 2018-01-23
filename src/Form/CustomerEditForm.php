@@ -44,6 +44,7 @@ class CustomerEditForm extends AbstractType
             ])
             ->add('number', TextType::class, [
                 'label' => 'label.customer_number',
+                'required' => false,
             ])
             ->add('comment', TextareaType::class, [
                 'label' => 'label.comment',

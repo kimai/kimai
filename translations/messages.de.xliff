@@ -673,7 +673,11 @@
             </trans-unit>
             <trans-unit id="invoice_renderer.default">
                 <source>invoice_renderer.default</source>
-                <target>HTML Rechnung (Standard)</target>
+                <target>Rechnung (Standard)</target>
+            </trans-unit>
+            <trans-unit id="invoice_renderer.timesheet">
+                <source>invoice_renderer.timesheet</source>
+                <target>Stundenzettel</target>
             </trans-unit>
             <trans-unit id="label.invoice_number_generator">
                 <source>label.invoice_number_generator</source>
@@ -694,6 +698,18 @@
             <trans-unit id="invoice_calculator.default">
                 <source>invoice_calculator.default</source>
                 <target>Stundenbasiert (Standard)</target>
+            </trans-unit>
+            <trans-unit id="invoice_calculator.short">
+                <source>invoice_calculator.short</source>
+                <target>Stundenbasiert - Kurzversion (nur ein Eintrag)</target>
+            </trans-unit>
+            <trans-unit id="invoice.signature_user">
+                <source>invoice.signature_user</source>
+                <target>Leistungsbestätigung: Datum / Name Berater / Unterschrift</target>
+            </trans-unit>
+            <trans-unit id="invoice.signature_customer">
+                <source>invoice.signature_customer</source>
+                <target>Leistungsbestätigung: Datum / Name Kunde / Unterschrift</target>
             </trans-unit>
 
             <!--
