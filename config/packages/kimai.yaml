@@ -4,8 +4,10 @@ kimai:
     invoice:
         renderer:
             default: 'App\Controller\InvoiceController::invoiceAction'
+            timesheet: 'App\Controller\InvoiceController::timesheetAction'
         calculator:
             default: 'App\Invoice\DefaultCalculator'
+            short: 'App\Invoice\ShortInvoiceCalculator'
         number_generator:
             default: 'App\Invoice\DateNumberGenerator'
             #random: 'App\Invoice\RandomNumberGenerator'

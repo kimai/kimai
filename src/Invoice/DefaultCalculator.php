@@ -11,6 +11,7 @@
 
 namespace App\Invoice;
 
+use App\Entity\Timesheet;
 use App\Model\InvoiceModel;
 
 /**
@@ -33,6 +34,14 @@ class DefaultCalculator implements CalculatorInterface
      * @var InvoiceModel
      */
     protected $model;
+
+    /**
+     * @return Timesheet[]
+     */
+    public function getEntries()
+    {
+        return $this->model->getEntries();
+    }
 
     /**
      * @param InvoiceModel $model

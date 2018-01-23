@@ -33,11 +33,11 @@
     </div>
     <div class="col-sm-4 invoice-col">
         <p contenteditable="true">
-            <b>{{ 'invoice.number'|trans }} {{ model.numberGenerator.invoiceNumber }}</b>
+            <b>{{ 'invoice.number'|trans }}: {{ model.numberGenerator.invoiceNumber }}</b>
         </p>
         <p contenteditable="true">
             <b>{{ 'invoice.due_days'|trans }}:</b> {{ model.dueDate|date(kimai_context.date_1) }}<br>
-            <b>{{ 'label.customer_number'|trans }}:</b> {{ model.customer.number }}<br>
+            {% if model.customer.number is not empty %}<b>{{ 'label.customer_number'|trans }}:</b> {{ model.customer.number }}<br>{% endif %}
         </p>
     </div>
 </div>
@@ -54,7 +54,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for entry in model.entries %}
+            {% for entry in model.calculator.entries %}
             <tr>
                 <td>{{ entry.begin|date(kimai_context.date_1) }}</td>
                 <td>{{ entry.activity.name }} / {{ entry.activity.project.name }}</td>

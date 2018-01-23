@@ -232,6 +232,17 @@ class InvoiceController extends AbstractController
     }
 
     /**
+     * @param InvoiceModel $model
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function timesheetAction(InvoiceModel $model)
+    {
+        return $this->render('invoice/timesheet.html.twig', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
      * @param InvoiceQuery $query
      * @return \Symfony\Component\Form\FormInterface
      */
