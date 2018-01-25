@@ -45,29 +45,30 @@ class ProjectEditForm extends AbstractType
         }
 
         $builder
-            // string - length 255
             ->add('name', TextType::class, [
                 'label' => 'label.name',
             ])
-            // text
             ->add('comment', TextareaType::class, [
                 'label' => 'label.comment',
+                'required' => false,
             ])
-            // customer
+            ->add('orderNumber', TextType::class, [
+                'label' => 'label.order_number',
+                'required' => false,
+            ])
             ->add('customer', CustomerType::class, [
                 'label' => 'label.customer',
                 'query_builder' => function (CustomerRepository $repo) use ($customer) {
                     return $repo->builderForEntityType($customer);
                 },
             ])
-            // boolean
             ->add('visible', VisibilityType::class, [
                 'label' => 'label.visible',
             ])
-            // string
             ->add('budget', MoneyType::class, [
                 'label' => 'label.budget',
-                'currency' => $builder->getOption('currency'),
+                'currency' => $customer ? $customer->getCurrency() : $builder->getOption('currency'),
+                'required' => false,
             ])
         ;
     }

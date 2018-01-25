@@ -32,6 +32,14 @@
                     {{ model.customer.name }} / {{ model.customer.contact }}
                 </td>
             </tr>
+            {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
+                <tr>
+                    <th>{{ 'label.order_number'|trans }}</th>
+                    <td contenteditable="true">
+                        {{ model.query.project.orderNumber }}
+                    </td>
+                </tr>
+            {% endif %}
         </table>
     </div>
 </div>

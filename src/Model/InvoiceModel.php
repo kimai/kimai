@@ -77,6 +77,8 @@ class InvoiceModel
     }
 
     /**
+     * Do not use this method for rendering the invoice, use InvoiceModel::getCalculator()->getEntries() instead.
+     *
      * @return Timesheet[]
      */
     public function getEntries(): array
@@ -147,17 +149,6 @@ class InvoiceModel
     }
 
     /**
-     * @param CalculatorInterface $calculator
-     * @return InvoiceModel
-     */
-    public function setCalculator(CalculatorInterface $calculator)
-    {
-        $this->calculator = $calculator;
-        $this->calculator->setModel($this);
-        return $this;
-    }
-
-    /**
      * @param NumberGeneratorInterface $generator
      * @return InvoiceModel
      */
@@ -174,6 +165,17 @@ class InvoiceModel
     public function getNumberGenerator(): NumberGeneratorInterface
     {
         return $this->generator;
+    }
+
+    /**
+     * @param CalculatorInterface $calculator
+     * @return InvoiceModel
+     */
+    public function setCalculator(CalculatorInterface $calculator)
+    {
+        $this->calculator = $calculator;
+        $this->calculator->setModel($this);
+        return $this;
     }
 
     /**

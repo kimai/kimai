@@ -36,8 +36,13 @@
             <b>{{ 'invoice.number'|trans }}: {{ model.numberGenerator.invoiceNumber }}</b>
         </p>
         <p contenteditable="true">
-            <b>{{ 'invoice.due_days'|trans }}:</b> {{ model.dueDate|date(kimai_context.date_1) }}<br>
-            {% if model.customer.number is not empty %}<b>{{ 'label.customer_number'|trans }}:</b> {{ model.customer.number }}<br>{% endif %}
+            <b>{{ 'invoice.due_days'|trans }}:</b> {{ model.dueDate|date(kimai_context.date_1) }}
+            {% if model.customer.number is not empty %}
+                <br><b>{{ 'label.customer_number'|trans }}:</b> {{ model.customer.number }}
+            {% endif %}
+            {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
+                <br><b>{{ 'label.order_number'|trans }}:</b> {{ model.query.project.orderNumber }}
+            {% endif %}
         </p>
     </div>
 </div>

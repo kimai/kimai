@@ -226,7 +226,7 @@ class InvoiceController extends AbstractController
      */
     public function invoiceAction(InvoiceModel $model)
     {
-        return $this->render('invoice/print.html.twig', [
+        return $this->render('invoice/renderer/print.html.twig', [
             'model' => $model,
         ]);
     }
@@ -237,7 +237,7 @@ class InvoiceController extends AbstractController
      */
     public function timesheetAction(InvoiceModel $model)
     {
-        return $this->render('invoice/timesheet.html.twig', [
+        return $this->render('invoice/renderer/timesheet.html.twig', [
             'model' => $model,
         ]);
     }
