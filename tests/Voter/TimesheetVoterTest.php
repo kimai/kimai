@@ -30,7 +30,7 @@ class TimesheetVoterTest extends TestCase
     /**
      * @dataProvider getTestData
      */
-    public function testCustomerIsDisallowed($user, $allow, $subject, $attributes, $result)
+    public function testCustomerIsDisallowed(User $user, $allow, $subject, $attributes, $result)
     {
         $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
 

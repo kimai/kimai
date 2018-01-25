@@ -687,10 +687,6 @@
                 <source>invoice_number_generator.default</source>
                 <target>Datum (Standard)</target>
             </trans-unit>
-            <trans-unit id="invoice_number_generator.random">
-                <source>invoice_number_generator.random</source>
-                <target>Zufallszahl (nur zum Testen)</target>
-            </trans-unit>
             <trans-unit id="label.invoice_calculator">
                 <source>label.invoice_calculator</source>
                 <target>Zahlungsberechnung</target>
@@ -710,6 +706,10 @@
             <trans-unit id="invoice.signature_customer">
                 <source>invoice.signature_customer</source>
                 <target>Leistungsbestätigung: Datum / Name Kunde / Unterschrift</target>
+            </trans-unit>
+            <trans-unit id="label.order_number">
+                <source>label.order_number</source>
+                <target>Bestellnummer</target>
             </trans-unit>
 
             <!--

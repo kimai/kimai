@@ -10,7 +10,6 @@ kimai:
             short: 'App\Invoice\ShortInvoiceCalculator'
         number_generator:
             default: 'App\Invoice\DateNumberGenerator'
-            #random: 'App\Invoice\RandomNumberGenerator'
 
 twig:
     globals:

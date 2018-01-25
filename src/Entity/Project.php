@@ -55,6 +55,14 @@ class Project
     /**
      * @var string
      *
+     * @ORM\Column(name="order_number", type="text", length=20, nullable=true)
+     * @Assert\Length(max=20)
+     */
+    private $orderNumber;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="comment", type="text", length=65535, nullable=true)
      */
     private $comment;
@@ -68,7 +76,7 @@ class Project
     private $visible = true;
 
     /**
-     * @var string
+     * @var float
      *
      * @ORM\Column(name="budget", type="decimal", precision=10, scale=2, nullable=false)
      * @Assert\NotNull()
@@ -114,13 +122,11 @@ class Project
      * Set name
      *
      * @param string $name
-     *
      * @return Project
      */
     public function setName($name)
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -138,13 +144,11 @@ class Project
      * Set comment
      *
      * @param string $comment
-     *
      * @return Project
      */
     public function setComment($comment)
     {
         $this->comment = $comment;
-
         return $this;
     }
 
@@ -162,13 +166,11 @@ class Project
      * Set visible
      *
      * @param boolean $visible
-     *
      * @return Project
      */
     public function setVisible($visible)
     {
         $this->visible = $visible;
-
         return $this;
     }
 
@@ -185,21 +187,19 @@ class Project
     /**
      * Set budget
      *
-     * @param string $budget
-     *
+     * @param float $budget
      * @return Project
      */
     public function setBudget($budget)
     {
         $this->budget = $budget;
-
         return $this;
     }
 
     /**
      * Get budget
      *
-     * @return string
+     * @return float
      */
     public function getBudget()
     {
@@ -208,12 +208,11 @@ class Project
 
     /**
      * @param Activity[] $activities
-     * @return $this
+     * @return Project
      */
     public function setActivities($activities)
     {
         $this->activities = $activities;
-
         return $this;
     }
 
@@ -223,6 +222,24 @@ class Project
     public function getActivities()
     {
         return $this->activities;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrderNumber(): ?string
+    {
+        return $this->orderNumber;
+    }
+
+    /**
+     * @param string $orderNumber
+     * @return Project
+     */
+    public function setOrderNumber($orderNumber)
+    {
+        $this->orderNumber = $orderNumber;
+        return $this;
     }
 
     /**
