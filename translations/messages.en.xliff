@@ -689,7 +689,7 @@
             </trans-unit>
             <trans-unit id="label.invoice_calculator">
                 <source>label.invoice_calculator</source>
-                <target>Amount calculator</target>
+                <target>Sum calculation</target>
             </trans-unit>
             <trans-unit id="invoice_calculator.default">
                 <source>invoice_calculator.default</source>

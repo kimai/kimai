@@ -16,11 +16,8 @@ It is based on a lot of great PHP components. Special thanks to:
 ## Requirements
 
 - PHP 7.1 or higher
-- One PHP extension of PDO-SQLite and/or PDO-MySQL enabled (it might work with PostgreSQL and Oracle as well, but that wasn't tested and is not officially supported)
+- One PHP extension of PDO-SQLite or PDO-MySQL enabled (it might work with PostgreSQL and Oracle as well, but that wasn't tested and is not officially supported)
 - and the [usual Symfony application requirements](http://symfony.com/doc/current/reference/requirements.html)
-
-If unsure about meeting these requirements, download the demo application and
-browse to the <http://localhost:8000/config.php> script to get more detailed information.
 
 ## Installation
 
@@ -43,6 +40,21 @@ The next command will create the database, the schema and install all web assets
 ```bash
 $ bin/console kimai:install --relative
 ```
+
+The default installation uses a SQLite database, so there is no need to create your own database for first tests.
+You can configure your database through your environment (e.g. Webserver, Cloud-Provider) or in your `.env file:
+```bash
+$ cp .env.dist .env
+```
+
+You can adjust the following ENV values to your needs:
+```
+DATABASE_PREFIX=kimai2_
+DATABASE_URL=sqlite:///%kernel.project_dir%/var/data/kimai.sqlite
+APP_ENV=dev
+APP_SECRET=some_random_secret_string_for_your_installation
+```
+
 
 ### Installation (development / demo)
 
@@ -74,35 +86,49 @@ $ bin/console doctrine:schema:create
 
 The `kimai:reset-dev` command can always be executed later on to reset your dev database and cache.
 
+There is no need to configure a virtual host in your web server to access the application for testing.
+Just use the built-in web server for your first tests:
+
+```bash
+$ bin/console server:run
+```
+
+This command will start a web server for Kimai. Now you can access the application in your browser at <http://127.0.0.1:8000/>. 
+You can stop the built-in web server by pressing `Ctrl + C` while you're in the terminal.
+
+
 ### Installation (live)
 
-The default installation uses a SQLite database, which is not recommended for production usage.
-You can configure your database through your environment (e.g. Webserver, Cloud-Provider) or in your `.env file:
-```bash
-$ cp .env.dist .env
+The database to use is up to you, but we would not recommend using the default SQLite database for production usage. 
+Please create your database and configure the connection string in your environment, e.g. with the `.env` file:
+```
+APP_ENV=prod
+DATABASE_URL=sqlitemysql://db_user:db_password@127.0.0.1:3306/db_name
+APP_SECRET=insert_a_random_secret_string_for_production
 ```
 
-You can adjust the following ENV values to your needs:
-```
-DATABASE_PREFIX=kimai2_
-DATABASE_URL=sqlite:///%kernel.project_dir%/var/data/kimai.sqlite
-APP_ENV=dev
-APP_SECRET=some_random_secret_string_for_your_installation
-```
-
-Now create the database schemas and warm up the cache:
+Create the database schemas and warm up the cache:
 ```bash
 $ bin/console doctrine:schema:create
 $ bin/console cache:warmup --env=prod
 ```
 
-Finally create your first user:
+Create your first user:
 
 ```bash
 $ bin/console kimai:create-user username password admin@example.com ROLE_SUPER_ADMIN
 ```
 
 For available roles, please refer to [the user documentation](var/docs/users.md).
+
+> **NOTE**
+>
+> If you want to use a fully-featured web server (like Nginx or Apache) to run
+> Kimai, configure it to point at the `public/` directory of the project.
+> For more details, see:
+> http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html
+
+That's it, you can start time-tracking :-)
 
 ### Importing data from Kimai v1
 
@@ -117,38 +143,26 @@ Before importing your data from a Kimai v1 installation, please read the followi
 - You have to supply the default password that is used for every imported user, as their password will be resetted
 - Data that was deleted in Kimai v1 (user, customer, projects, activities) will be imported and set to `invisible` (if you don't want that, you have to delete all entries that have the value `1` in the `trash` column before importing)
 
-The full command for import:
+A possible full command for import:
 ```bash
 $ bin/console kimai:import-v1 "mysql://user:password@127.0.0.1:3306/database?charset=utf8" "db_prefix" "password" "country"
 ```
 
-It is recommended to test the import in a fresh database without any required data! Then you can test your import as often as you like and fix possible problems in your installation.
+It is recommended to test the import in a fresh database. You can test your import as often as you like and fix possible problems in your installation.
 A sample command could look like that:
 ```bash
 $ bin/console doctrine:schema:drop --force && bin/console doctrine:schema:create && bin/console kimai:import-v1 "mysql://kimai:test@127.0.0.1:3306/kimai?charset=latin1" "kimai_" "test123" "de"
 ```
-That will drop the configured Kimai v2 database schema and re-create it, before importing the data from the `mysql` database at `127.0.0.1` authenticating the user `kimai` with the password `test` for import.
+That will drop the configured Kimai v2 database schema and re-create it, before importing the data from the `mysql` database at `127.0.0.1` on port `3306` authenticating the user `kimai` with the password `test` for import.
 The connection will use the charset `latin1` and the default table prefix `kimai_` for reading data. Imported users can login with the password `test123` and all customer will have the country `de` assigned.
-  
 
-## Usage
+## Extending Kimai 2 with Bundles
 
-There is no need to configure a virtual host in your web server to access the application for testing.
-Just use the built-in web server for your first tests:
+As Kimai 2 was built with extendability in mind, it can be extended like every other Symfony application.
+A first example on how to extend Kimai 2 can be found in this [GitHub repository](https://github.com/kevinpapst/kimai2-invoice).
 
-```bash
-$ bin/console server:run
-```
-
-This command will start a web server for Kimai. Now you can access the application in your browser at <http://127.0.0.1:8000/>. 
-You can stop the built-in web server by pressing `Ctrl + C` while you're in the terminal.
-
-> **NOTE**
->
-> If you want to use a fully-featured web server (like Nginx or Apache) to run
-> Kimai, configure it to point at the `web/` directory of the project.
-> For more details, see:
-> http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html
+There are more options, for example events to hook your own pages into the navigation tree.
+As we don't have documentation on this by now, please ask in the issues track or have a look at [this class](https://github.com/kevinpapst/kimai2/blob/master/src/EventSubscriber/MenuSubscriber.php).  
 
 ## Troubleshooting
 
@@ -156,4 +170,3 @@ Cannot see any assets (like images) and/or missing styles? Try executing:
 ```bash
 $ php bin/console assets:install --symlink
 ```
-
