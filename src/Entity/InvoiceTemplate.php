@@ -175,7 +175,7 @@ class InvoiceTemplate
      * @param string $address
      * @return InvoiceTemplate
      */
-    public function setAddress(string $address)
+    public function setAddress($address)
     {
         $this->address = $address;
         return $this;

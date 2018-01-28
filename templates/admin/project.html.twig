@@ -12,7 +12,6 @@
     {% endif %}
 
     {{ tables.data_table_header({
-        'label.id': 'hidden-xs',
         'label.name': '',
         'label.customer': '',
         'label.comment': 'hidden-xs hidden-sm',
@@ -23,7 +22,6 @@
 
     {% for entry in entries %}
         <tr>
-            <td class="hidden-xs">{{ entry.id }}</td>
             <td>{{ entry.name }}</td>
             <td>
                 <a href="{{ path('admin_customer_edit', {'id' : entry.customer.id}) }}">{{ widgets.label_customer(entry.customer) }}</a>

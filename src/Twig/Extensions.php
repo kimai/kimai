@@ -121,7 +121,7 @@ class Extensions extends \Twig_Extension
      */
     public function money($amount, $currency = null)
     {
-        $result = round($amount, 2);
+        $result = number_format(round($amount, 2), 2);
         if ($currency !== null) {
             $result .= ' ' . Intl::getCurrencyBundle()->getCurrencySymbol($currency);
         }
