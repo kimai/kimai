@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -16,8 +14,6 @@ use Doctrine\Common\EventSubscriber;
 
 /**
  * Adds a prefix to every doctrine entity AKA database table
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class TablePrefixSubscriber implements EventSubscriber
 {
@@ -47,7 +43,7 @@ class TablePrefixSubscriber implements EventSubscriber
             if ($mapping['type'] == \Doctrine\ORM\Mapping\ClassMetadataInfo::MANY_TO_MANY
                 // Check if "joinTable" exists:
                 // it can be null if this field is the reverse side of a ManyToMany relationship
-                && array_key_exists('name', $classMetadata->associationMappings[$fieldName]['joinTable']) ) {
+                && array_key_exists('name', $classMetadata->associationMappings[$fieldName]['joinTable'])) {
                 $mappedTableName = $classMetadata->associationMappings[$fieldName]['joinTable']['name'];
                 $classMetadata->associationMappings[$fieldName]['joinTable']['name'] = $this->prefix . $mappedTableName;
             }

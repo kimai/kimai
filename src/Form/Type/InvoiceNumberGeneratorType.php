@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -18,8 +16,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Custom form field type to select an invoice number generator.
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class InvoiceNumberGeneratorType extends AbstractType
 {
@@ -50,7 +46,7 @@ class InvoiceNumberGeneratorType extends AbstractType
         $resolver->setDefaults([
             'label' => 'label.invoice_number_generator',
             'choices' => $renderer,
-            'choice_label' => function($renderer) {
+            'choice_label' => function ($renderer) {
                 return 'invoice_number_generator.' . $renderer;
             }
         ]);

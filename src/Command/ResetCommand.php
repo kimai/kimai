@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -21,8 +19,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Command used to execute all the basic application bootstrapping AFTER "composer install" was executed.
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class ResetCommand extends Command
 {
@@ -35,7 +31,8 @@ class ResetCommand extends Command
         $this
             ->setName('kimai:reset-dev')
             ->setDescription('Resets the dev environment')
-            ->setHelp(<<<EOT
+            ->setHelp(
+                <<<EOT
     This command will drop and re-create the database and its schemas, load development fixtures and clear the cache.
     Use the <info>-n</info> switch to skip the question.
 EOT

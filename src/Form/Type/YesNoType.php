@@ -17,8 +17,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Custom form field type to select between Yes and No.
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class YesNoType extends AbstractType
 {
