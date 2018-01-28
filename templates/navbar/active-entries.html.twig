@@ -9,22 +9,28 @@
             {{ 'active.entries'|transchoice(entries|length) }}
         </li>
         <li>
-            <ul class="menu">
-                {% for entry in entries %}
-                <li>
-                    <a href="{{ path('timesheet_stop', {'id' : entry.id}) }}">
-                        <div class="pull-left">
-                            <i class="fa fa-stop-circle fa-2x"></i>
-                        </div>
-                        <h4>
-                            {{ entry.activity.name }}
-                            <small><i class="fa fa-clock-o"></i> {{ entry|durationForEntry }}</small>
-                        </h4>
-                        <p>{{ entry.activity.project.name }} ({{ entry.activity.project.customer.name }})</p>
-                    </a>
-                </li>
-                {% endfor %}
-            </ul>
+            {% if entries is not empty %}
+                <ul class="menu">
+                    {% for entry in entries %}
+                    <li>
+                        <a href="{{ path('timesheet_stop', {'id' : entry.id}) }}">
+                            <div class="pull-left">
+                                <i class="fa fa-stop-circle fa-2x"></i>
+                            </div>
+                            <h4>
+                                {{ entry.activity.name }}
+                                <small><i class="fa fa-clock-o"></i> {{ entry|durationForEntry }}</small>
+                            </h4>
+                            <p>{{ entry.activity.project.name }} ({{ entry.activity.project.customer.name }})</p>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="start_record">
+                    <a href="{{ path('timesheet_create') }}"><i class="fa fa-play-circle-o fa-5x"></i></a>
+                </div>
+            {% endif %}
         </li>
         <li class="footer"><a href="{{ path('timesheet_create') }}">{{ 'timesheet.start'|trans }}</a></li>
     </ul>

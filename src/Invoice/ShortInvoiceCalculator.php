@@ -30,6 +30,7 @@ class ShortInvoiceCalculator extends DefaultCalculator
         $timesheet = new Timesheet();
 
         foreach ($this->model->getEntries() as $entry) {
+            $timesheet->setRate($timesheet->getRate() + $entry->getRate());
             $timesheet->setDuration($timesheet->getDuration() + $entry->getDuration());
             if ($timesheet->getActivity() === null) {
                 $timesheet->setActivity($entry->getActivity());

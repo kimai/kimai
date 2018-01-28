@@ -156,13 +156,16 @@ $ bin/console doctrine:schema:drop --force && bin/console doctrine:schema:create
 That will drop the configured Kimai v2 database schema and re-create it, before importing the data from the `mysql` database at `127.0.0.1` on port `3306` authenticating the user `kimai` with the password `test` for import.
 The connection will use the charset `latin1` and the default table prefix `kimai_` for reading data. Imported users can login with the password `test123` and all customer will have the country `de` assigned.
 
-## Extending Kimai 2 with Bundles
+## Extensions for Kimai 2
 
-As Kimai 2 was built with extendability in mind, it can be extended like every other Symfony application.
-A first example on how to extend Kimai 2 can be found in this [GitHub repository](https://github.com/kevinpapst/kimai2-invoice).
+As Kimai 2 was built on top of Symfony, it can be extended like every other Symfony application.  
+We call these extensions bundles, but you might also know them as add-ons, extensions or plugins.
+ 
+All available Kimai 2 bundles can be found at the repository [Kimai recipes](https://github.com/kimai/recipes).
 
-There are more options, for example events to hook your own pages into the navigation tree.
-As we don't have documentation on this by now, please ask in the issues track or have a look at [this class](https://github.com/kevinpapst/kimai2/blob/master/src/EventSubscriber/MenuSubscriber.php).  
+An example on how to extend Kimai 2 can be found in this [GitHub repository](https://github.com/kevinpapst/kimai2-invoice). 
+There are more options, for example events to hook your own links into the navigation tree.
+But we don't have documentation on this by now, so please ask in the [issue tracker](https://github.com/kevinpapst/kimai2) or have a look at [this class](https://github.com/kevinpapst/kimai2/blob/master/src/EventSubscriber/MenuSubscriber.php).  
 
 ## Troubleshooting
 
