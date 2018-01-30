@@ -3,7 +3,7 @@ avanzu_admin_theme:
     use_assetic: true
     bower_bin: "/usr/local/bin/bower"
     options:
-        default_avatar: images/default_avatar.png
+        default_avatar: build/images/default_avatar.png
         control_sidebar: true
     knp_menu:
         enable: false

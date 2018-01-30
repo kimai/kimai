@@ -4,7 +4,6 @@
 
 {% block page_title %}{{ 'admin_activity.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_activity.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
-{% block javascript_imports %}<script src="{{ asset('js/toolbar.js') }}"></script>{% endblock %}
 
 {% block main %}
     {% if entries.count == 0 %}

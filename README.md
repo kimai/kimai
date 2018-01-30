@@ -42,12 +42,14 @@ $ bin/console kimai:install --relative
 ```
 
 The default installation uses a SQLite database, so there is no need to create your own database for first tests.
-You can configure your database through your environment (e.g. Webserver, Cloud-Provider) or in your `.env file:
+You can configure your database through your environment (e.g. Webserver, Cloud-Provider) or in your `.env` file.
+
+If the file was not created during `composer install` please create it manually: 
 ```bash
 $ cp .env.dist .env
 ```
 
-You can adjust the following ENV values to your needs:
+Default settings will work out-of-the-box, but you can adjust the following ENV values to your needs:
 ```
 DATABASE_PREFIX=kimai2_
 DATABASE_URL=sqlite:///%kernel.project_dir%/var/data/kimai.sqlite
@@ -119,7 +121,7 @@ Create your first user:
 $ bin/console kimai:create-user username password admin@example.com ROLE_SUPER_ADMIN
 ```
 
-For available roles, please refer to [the user documentation](var/docs/users.md).
+For available roles, please refer to the [user documentation](var/docs/users.md).
 
 > **NOTE**
 >
@@ -158,14 +160,17 @@ The connection will use the charset `latin1` and the default table prefix `kimai
 
 ## Extensions for Kimai 2
 
-As Kimai 2 was built on top of Symfony, it can be extended like every other Symfony application.  
+As Kimai 2 was built on top of Symfony, it can be extended like every other Symfony application.
 We call these extensions bundles, but you might also know them as add-ons, extensions or plugins.
- 
-All available Kimai 2 bundles can be found at the repository [Kimai recipes](https://github.com/kimai/recipes).
 
-An example on how to extend Kimai 2 can be found in this [GitHub repository](https://github.com/kevinpapst/kimai2-invoice). 
-There are more options, for example events to hook your own links into the navigation tree.
-But we don't have documentation on this by now, so please ask in the [issue tracker](https://github.com/kevinpapst/kimai2) or have a look at [this class](https://github.com/kevinpapst/kimai2/blob/master/src/EventSubscriber/MenuSubscriber.php).  
+All available Kimai 2 bundles can be found at the [Kimai recipes](https://github.com/kimai/recipes) repository.
+
+## Developer
+
+If you want to develop for Kimai 2 please read the following documentation:
+
+- an example on how to extend Kimai 2 can be found in this [GitHub repository](https://github.com/kevinpapst/kimai2-invoice)
+- the developer documentation can be found at [var/docs/developers.md](var/docs/developers.md) 
 
 ## Troubleshooting
 
