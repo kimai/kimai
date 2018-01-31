@@ -1,43 +1,82 @@
-{% extends '@AvanzuAdminTheme/layout/login-layout.html.twig' %}
-
-{% block avanzu_login_title %}{{ 'browser.title'|trans }}{% endblock %}
-{% block avanzu_logo_login %}<b>Kimai</b><br>TimeTracking{% endblock %}
-{% block avanzu_head %}
-    <link rel="stylesheet" href="{{ asset('css/kimai.css') }}">
-{% endblock %}
-
-{% block avanzu_login_box_msg %}
-    {{ 'security.title.login'|trans }}
-
-    {% if error|default(false) %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-{% endblock %}
-{% block avanzu_login_form %}
-    <form action="{{ path('security_login') }}" method="post">
-        <div class="form-group has-feedback">
-            <input type="text" name="_username" class="form-control" placeholder="{{ 'label.username'|trans }}" value="{{ last_username }}">
-            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+<!DOCTYPE html{% block avanzu_html_start %}{% endblock %}>
+<html>
+<head>
+    {% include('@AvanzuAdminTheme/Partials/_head.html.twig') %}
+    <title>{{ 'browser.title'|trans }}</title>
+</head>
+<body{% block avanzu_body_start %}{% endblock %} class="hold-transition login-page">
+{% block avanzu_after_body_start %}{% endblock %}
+{% block avanzu_login_box %}
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="{{ path('homepage') }}"><b>Kimai</b><br>TimeTracking</a>
         </div>
-        <div class="form-group has-feedback">
-            <input name="_password" type="password" class="form-control" placeholder="{{ 'label.password'|trans }}">
-            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-        </div>
-        <div class="row">
-            <div class="col-xs-8">
-                <div class="checkbox icheck">
-                    <label>
-                        <input id="remember_me" name="_remember_me" type="checkbox">
-                        <label for="remember_me">{{ 'Remember Me'|trans({}, 'AvanzuAdminTheme') }}</label>
-                    </label>
+        <div class="login-box-body">
+            <p class="login-box-msg">
+                {{ 'security.title.login'|trans }}
+
+                {% if error|default(false) %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+            </p>
+
+            {% block avanzu_login_form %}
+                <form action="{{ path('security_login') }}" method="post">
+                    <div class="form-group has-feedback">
+                        <input type="text" name="_username" class="form-control" placeholder="{{ 'label.username'|trans }}" value="{{ last_username }}">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input name="_password" type="password" class="form-control" placeholder="{{ 'label.password'|trans }}">
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <div class="checkbox icheck">
+                                <label>
+                                    <input id="remember_me" name="_remember_me" type="checkbox">
+                                    <label for="remember_me">{{ 'Remember Me'|trans({}, 'AvanzuAdminTheme') }}</label>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <button type="submit" class="btn btn-primary btn-block btn-flat">{{ 'action.sign_in'|trans }}</button>
+                        </div>
+                    </div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+                </form>
+            {% endblock %}
+            {#% block avanzu_login_social_auth %}
+                <div class="social-auth-links text-center">
+                    <p>{{ '- OR -'|trans({}, 'AvanzuAdminTheme') }}</p>
+                    <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i>
+                        {{ 'Sign in using Facebook'|trans({}, 'AvanzuAdminTheme') }}
+                    </a>
+                    <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i>
+                        {{ 'Sign in usingGoogle+'|trans({}, 'AvanzuAdminTheme') }}
+                    </a>
                 </div>
-            </div>
-            <div class="col-xs-4">
-                <button type="submit" class="btn btn-primary btn-block btn-flat">{{ 'action.sign_in'|trans }}</button>
-            </div>
+            {% endblock %}
+            {% block avanzu_login_actions %}
+                <a href="#">
+                    {{ 'I forgot my password'|trans({}, 'AvanzuAdminTheme') }}
+                </a>
+                <br>
+                <a href="register.html" class="text-center">
+                    {{ 'Register a new membership'|trans({}, 'AvanzuAdminTheme') }}
+                </a>
+            {% endblock %#}
         </div>
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
-    </form>
+    </div>
 {% endblock %}
-{% block avanzu_login_social_auth %}{% endblock %}
-{% block avanzu_login_actions %}{% endblock %}
+<script>
+    $(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' // optional
+        });
+    });
+</script>
+</body>
+</html>

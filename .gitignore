@@ -1,11 +1,10 @@
+
 # ========== KIMAI ==========
 # IDE
 .idea/
 
 /bin/*
 !bin/console
-
-/public/theme/
 
 /var/data/*.sqlite
 
@@ -42,3 +41,8 @@
 /node_modules/
 /public/build/
 ###< symfony/webpack-encore-pack ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+/phpunit.xml
+###< symfony/phpunit-bridge ###

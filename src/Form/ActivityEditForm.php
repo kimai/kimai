@@ -11,15 +11,15 @@
 
 namespace App\Form;
 
-use App\Form\Type\VisibilityType;
+use App\Form\Type\YesNoType;
+use App\Entity\Activity;
+use App\Form\Type\ProjectType;
+use App\Repository\ProjectRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Entity\Activity;
-use App\Form\Type\ProjectType;
-use App\Repository\ProjectRepository;
 
 /**
  * Defines the form used to manipulate Activities.
@@ -60,7 +60,7 @@ class ActivityEditForm extends AbstractType
                 },
             ])
             // boolean
-            ->add('visible', VisibilityType::class, [
+            ->add('visible', YesNoType::class, [
                 'label' => 'label.visible',
             ])
         ;
