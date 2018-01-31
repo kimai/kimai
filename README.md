@@ -36,20 +36,15 @@ like the database connection afterwards (if you don't have a [app/config/paramet
 $ composer install
 ```
 
-The next command will create the database, the schema and install all web assets:
-```bash
-$ bin/console kimai:install --relative
-```
-
-The default installation uses a SQLite database, so there is no need to create your own database for first tests.
-You can configure your database through your environment (e.g. Webserver, Cloud-Provider) or in your `.env` file.
+The default installation uses a SQLite database, so there is no need to create a database for your first tests.
 
 If the file was not created during `composer install` please create it manually: 
 ```bash
 $ cp .env.dist .env
 ```
 
-Default settings will work out-of-the-box, but you can adjust the following ENV values to your needs:
+The default settings will work out-of-the-box, but you might want to adjust the `.env` values to your needs.
+You can configure your database through your environment (e.g. Webserver, Cloud-Provider) or in your `.env` file:
 ```
 DATABASE_PREFIX=kimai2_
 DATABASE_URL=sqlite:///%kernel.project_dir%/var/data/kimai.sqlite
@@ -57,6 +52,17 @@ APP_ENV=dev
 APP_SECRET=some_random_secret_string_for_your_installation
 ```
 
+The next command will create the database and the schema:
+```bash
+$ bin/console doctrine:database:create
+$ bin/console doctrine:schema:create
+```
+
+To generate the frontend assets ([more information here](var/docs/developers.md)), execute:
+```bash
+$ yarn install
+$ ./node_modules/.bin/encore production
+```
 
 ### Installation (development / demo)
 

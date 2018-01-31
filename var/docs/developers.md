@@ -18,9 +18,10 @@ You could even test PostgreSQL and tell us how it works!
 
 If you want to make changes to CSS / Javascripts, you need:
 
-- NodeJS
-- Yarn Package Manager
-- Webpack Encore
+- [NodeJS](https://www.npmjs.com/)
+- [Yarn Package Manager](https://yarnpkg.com/en/)
+- [Webpack](https://webpack.js.org/)
+- [Webpack Encore](https://github.com/symfony/webpack-encore)
 
 Please [install Yarn for your OS](https://yarnpkg.com/lang/en/docs/install/) and then:
 
