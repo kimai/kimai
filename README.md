@@ -17,7 +17,8 @@ It is based on a lot of great PHP components. Special thanks to:
 
 - PHP 7.1 or higher
 - One PHP extension of PDO-SQLite or PDO-MySQL enabled (it might work with PostgreSQL and Oracle as well, but that wasn't tested and is not officially supported)
-- and the [usual Symfony application requirements](http://symfony.com/doc/current/reference/requirements.html)
+- the [usual Symfony application requirements](http://symfony.com/doc/current/reference/requirements.html)
+- either a free subdomain or the will to recompile the frontend assets ([read more](var/docs/developers.md))
 
 ## Installation
 
@@ -25,22 +26,22 @@ First, install Git and [Composer](https://getcomposer.org/doc/00-intro.md)
 if you haven't already. Then, clone this repo and execute this command in the cloned directory:
 
 ```bash
-$ git clone https://github.com/kevinpapst/kimai2.git
-$ cd kimai2/
+git clone https://github.com/kevinpapst/kimai2.git
+cd kimai2/
 ```
 
 Lets prepare the environment by installing all dependencies. You will be asked for your application parameter,
 like the database connection afterwards (if you don't have a [app/config/parameters.yml](blob/master/app/config/parameters.yml.dist) yet):
 
 ```bash
-$ composer install
+composer install
 ```
 
 The default installation uses a SQLite database, so there is no need to create a database for your first tests.
 
 If the file was not created during `composer install` please create it manually: 
 ```bash
-$ cp .env.dist .env
+cp .env.dist .env
 ```
 
 The default settings will work out-of-the-box, but you might want to adjust the `.env` values to your needs.
@@ -54,21 +55,21 @@ APP_SECRET=some_random_secret_string_for_your_installation
 
 The next command will create the database and the schema:
 ```bash
-$ bin/console doctrine:database:create
-$ bin/console doctrine:schema:create
+bin/console doctrine:database:create
+bin/console doctrine:schema:create
 ```
 
 To generate the frontend assets ([more information here](var/docs/developers.md)), execute:
 ```bash
-$ yarn install
-$ ./node_modules/.bin/encore production
+yarn install
+./node_modules/.bin/encore production
 ```
 
 ### Installation (development / demo)
 
 Lets boostrap your environment by executing this commands (which is only available in dev environment): 
 ```bash
-$ bin/console kimai:reset-dev
+bin/console kimai:reset-dev
 ```
 
 You just imported demo data, to test the application in its full beauty and with several different user accounts and permission sets.
@@ -88,8 +89,8 @@ Demo data can always be deleted by dropping the schema and re-creating it.
 ATTENTION - this will erase all your data:
 
 ```bash
-$ bin/console doctrine:schema:drop --force
-$ bin/console doctrine:schema:create
+bin/console doctrine:schema:drop --force
+bin/console doctrine:schema:create
 ```
 
 The `kimai:reset-dev` command can always be executed later on to reset your dev database and cache.
@@ -98,7 +99,7 @@ There is no need to configure a virtual host in your web server to access the ap
 Just use the built-in web server for your first tests:
 
 ```bash
-$ bin/console server:run
+bin/console server:run
 ```
 
 This command will start a web server for Kimai. Now you can access the application in your browser at <http://127.0.0.1:8000/>. 
@@ -117,14 +118,14 @@ APP_SECRET=insert_a_random_secret_string_for_production
 
 Create the database schemas and warm up the cache:
 ```bash
-$ bin/console doctrine:schema:create
-$ bin/console cache:warmup --env=prod
+bin/console doctrine:schema:create
+bin/console cache:warmup --env=prod
 ```
 
 Create your first user:
 
 ```bash
-$ bin/console kimai:create-user username password admin@example.com ROLE_SUPER_ADMIN
+bin/console kimai:create-user username password admin@example.com ROLE_SUPER_ADMIN
 ```
 
 For available roles, please refer to the [user documentation](var/docs/users.md).
@@ -153,13 +154,13 @@ Before importing your data from a Kimai v1 installation, please read the followi
 
 A possible full command for import:
 ```bash
-$ bin/console kimai:import-v1 "mysql://user:password@127.0.0.1:3306/database?charset=utf8" "db_prefix" "password" "country"
+bin/console kimai:import-v1 "mysql://user:password@127.0.0.1:3306/database?charset=utf8" "db_prefix" "password" "country"
 ```
 
 It is recommended to test the import in a fresh database. You can test your import as often as you like and fix possible problems in your installation.
 A sample command could look like that:
 ```bash
-$ bin/console doctrine:schema:drop --force && bin/console doctrine:schema:create && bin/console kimai:import-v1 "mysql://kimai:test@127.0.0.1:3306/kimai?charset=latin1" "kimai_" "test123" "de"
+bin/console doctrine:schema:drop --force && bin/console doctrine:schema:create && bin/console kimai:import-v1 "mysql://kimai:test@127.0.0.1:3306/kimai?charset=latin1" "kimai_" "test123" "de"
 ```
 That will drop the configured Kimai v2 database schema and re-create it, before importing the data from the `mysql` database at `127.0.0.1` on port `3306` authenticating the user `kimai` with the password `test` for import.
 The connection will use the charset `latin1` and the default table prefix `kimai_` for reading data. Imported users can login with the password `test123` and all customer will have the country `de` assigned.
@@ -177,10 +178,3 @@ If you want to develop for Kimai 2 please read the following documentation:
 
 - an example on how to extend Kimai 2 can be found in this [GitHub repository](https://github.com/kevinpapst/kimai2-invoice)
 - the developer documentation can be found at [var/docs/developers.md](var/docs/developers.md) 
-
-## Troubleshooting
-
-Cannot see any assets (like images) and/or missing styles? Try executing:
-```bash
-$ php bin/console assets:install --symlink
-```

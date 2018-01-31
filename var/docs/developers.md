@@ -30,11 +30,11 @@ yarn install
 ```
 
 To rebuild all assets you have to execute:
-```
+```bash
 ./node_modules/.bin/encore dev
 ```
 or
-```
+```bash
 ./node_modules/.bin/encore production
 ```
 
@@ -42,6 +42,16 @@ You can find more information at:
 
 - https://symfony.com/doc/current/frontend/encore/installation.html
 - https://symfony.com/doc/current/frontend.html
+
+### Rebuilding assets for use in subdirectory
+
+If you want to run Kimai in a subdirectory, you have to rebuild the frontend assets with a different webpack configuration.
+Edit the file [webpack.config.js](https://github.com/kevinpapst/kimai2/blob/master/webpack.config.js) and change `.setPublicPath('/build/')` to your needs.
+
+After that re-compile the assets with:
+```bash
+./node_modules/.bin/encore production
+```
 
 ## Extending the navigation bar
 
@@ -83,7 +93,7 @@ class MySubscriber implements EventSubscriberInterface
     }    
 }
 ```
-For more deatils check the [official menu subscriber](https://github.com/kevinpapst/kimai2/blob/master/src/EventSubscriber/MenuSubscriber.php).
+For more details check the [official menu subscriber](https://github.com/kevinpapst/kimai2/blob/master/src/EventSubscriber/MenuSubscriber.php).
 
 ## Adding tabs to the "control sidebar"
 
