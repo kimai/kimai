@@ -1,7 +1,9 @@
 {
-  "devDependencies": {
+  "scripts": {
+    "dev": "node_modules/.bin/encore dev",
+    "prod": "node_modules/.bin/encore production"
   },
-  "dependencies": {
+  "devDependencies": {
     "@symfony/webpack-encore": "git://github.com/symfony/webpack-encore.git#0.17.2",
     "bootstrap-sass": "^3.3.7",
     "font-awesome": "^4.7.0",

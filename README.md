@@ -55,7 +55,7 @@ bin/console doctrine:schema:create
 To generate the frontend assets ([more information here](var/docs/developers.md)), execute:
 ```bash
 yarn install
-./node_modules/.bin/encore production
+npm run prod
 ```
 
 ### Installation (development / demo)

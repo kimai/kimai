@@ -31,11 +31,11 @@ yarn install
 
 To rebuild all assets you have to execute:
 ```bash
-./node_modules/.bin/encore dev
+npm run dev
 ```
 or
 ```bash
-./node_modules/.bin/encore production
+npm run prod
 ```
 
 You can find more information at:
@@ -50,7 +50,7 @@ Edit the file [webpack.config.js](https://github.com/kevinpapst/kimai2/blob/mast
 
 After that re-compile the assets with:
 ```bash
-./node_modules/.bin/encore production
+npm run prod
 ```
 
 ## Extending the navigation bar
