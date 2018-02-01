@@ -11,7 +11,8 @@
 
 namespace App\Form;
 
-use App\Form\Type\VisibilityType;
+use App\Entity\Customer;
+use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
@@ -23,7 +24,6 @@ use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Entity\Customer;
 
 /**
  * Defines the form used to edit Customer entities.
@@ -50,7 +50,7 @@ class CustomerEditForm extends AbstractType
                 'label' => 'label.comment',
                 'required' => false,
             ])
-            ->add('visible', VisibilityType::class, [
+            ->add('visible', YesNoType::class, [
                 'label' => 'label.visible',
             ])
             ->add('company', TextType::class, [

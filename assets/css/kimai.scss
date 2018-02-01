@@ -1,3 +1,13 @@
+/*!
+ * Kimai Time-Tracking - kimai.scss
+ *
+ * This file is part of the Kimai package.
+ *
+ * (c) Kevin Papst <kevin@kevinpapst.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 .error-page {
     margin-bottom: 50px;
@@ -18,6 +28,10 @@ li.messages-menu ul.menu li:hover .pull-left i {
 .navbar-nav>.messages-menu>.dropdown-menu>li .menu>li>a>p {
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.navbar-nav .start_record {
+    text-align: center;
 }
 
 /*
@@ -47,8 +61,6 @@ li.open .ticktac i.running{
 .control-sidebar select {
     color: #000;
 }
-
-/* ================================ TOOLBAR ================================ */
 
 .data_table .box-header>.box-tools {
     top: 3px;
@@ -94,6 +106,28 @@ footer.main-footer {
 
 @media print{
     .sf-toolbar, .control-sidebar {display: none !important;}
+}
+
+/* ================================ INVOICES ================================ */
+
+.page-header-small{
+    font-size: 14px;
+}
+
+div.invoice-address {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+table.invoice-records {}
+table.invoice-meta th {
+    padding-right: 40px;
+}
+table.invoice-sum th {
+    width: 70%;
+}
+table.invoice-sum th, table.invoice-sum td  {
+    text-align: right;
 }
 
 /* ================================ DATA-TABLES ================================ */

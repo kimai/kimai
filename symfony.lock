@@ -362,6 +362,15 @@
     "symfony/orm-pack": {
         "version": "v1.0.5"
     },
+    "symfony/phpunit-bridge": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "179470cb6492db92dffee208cfdb436f175c93b4"
+        }
+    },
     "symfony/polyfill-intl-icu": {
         "version": "v1.6.0"
     },
@@ -459,6 +468,15 @@
             "branch": "master",
             "version": "3.3",
             "ref": "c72d107d077f1654428edaed69415d0228c1aefe"
+        }
+    },
+    "symfony/webpack-encore-pack": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "a2f276eff6e95ca94be135d2d3e5c1247c6f8807"
         }
     },
     "symfony/yaml": {

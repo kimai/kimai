@@ -11,17 +11,17 @@
 
 namespace App\Form;
 
-use App\Form\Type\VisibilityType;
+use App\Entity\Customer;
+use App\Entity\Project;
+use App\Form\Type\CustomerType;
+use App\Form\Type\YesNoType;
+use App\Repository\CustomerRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Entity\Customer;
-use App\Entity\Project;
-use App\Form\Type\CustomerType;
-use App\Repository\CustomerRepository;
 
 /**
  * Defines the form used to edit Projects.
@@ -62,7 +62,7 @@ class ProjectEditForm extends AbstractType
                     return $repo->builderForEntityType($customer);
                 },
             ])
-            ->add('visible', VisibilityType::class, [
+            ->add('visible', YesNoType::class, [
                 'label' => 'label.visible',
             ])
             ->add('budget', MoneyType::class, [

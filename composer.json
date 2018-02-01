@@ -27,6 +27,7 @@
         "symfony/translation": "^4.0",
         "symfony/twig-bundle": "^4.0",
         "symfony/validator": "^4.0",
+        "symfony/webpack-encore-pack": "^1.0",
         "symfony/yaml": "^4.0",
         "twig/extensions": "^1.5",
         "white-october/pagerfanta-bundle": "^1.1"
@@ -67,8 +68,7 @@
     },
     "scripts": {
         "auto-scripts": {
-            "cache:clear": "symfony-cmd",
-            "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd"
+            "cache:clear": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"
