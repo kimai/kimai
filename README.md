@@ -18,7 +18,7 @@ It is based on a lot of great PHP components. Special thanks to:
 - PHP 7.1 or higher
 - One PHP extension of PDO-SQLite or PDO-MySQL enabled (it might work with PostgreSQL and Oracle as well, but that wasn't tested and is not officially supported)
 - the [usual Symfony application requirements](http://symfony.com/doc/current/reference/requirements.html)
-- either a free subdomain or the will to recompile the frontend assets ([read more](var/docs/developers.md))
+- Kimai needs to be installed in the root directory of a domain or you need to recompile the frontend assets ([read more](var/docs/developers.md))
 
 ## Installation
 
@@ -30,20 +30,13 @@ git clone https://github.com/kevinpapst/kimai2.git
 cd kimai2/
 ```
 
-Lets prepare the environment by installing all dependencies. You will be asked for your application parameter,
-like the database connection afterwards (if you don't have a [app/config/parameters.yml](blob/master/app/config/parameters.yml.dist) yet):
+Lets prepare the environment by installing all dependencies:
 
 ```bash
 composer install
 ```
 
 The default installation uses a SQLite database, so there is no need to create a database for your first tests.
-
-If the file was not created during `composer install` please create it manually: 
-```bash
-cp .env.dist .env
-```
-
 The default settings will work out-of-the-box, but you might want to adjust the `.env` values to your needs.
 You can configure your database through your environment (e.g. Webserver, Cloud-Provider) or in your `.env` file:
 ```

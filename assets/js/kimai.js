@@ -28,8 +28,8 @@ $(function() {
 "use strict";
 
     $.kimai = {
-        init : function(options) {
-            if (typeof options !== "undefined") {
+        init: function(options) {
+            if (typeof options !== 'undefined') {
                 $.kimai.settings = $.extend({}, $.kimai.defaults, options);
             }
 

@@ -65,8 +65,8 @@ And that's how to use it:
 ```php
 use App\Event\ConfigureMainMenuEvent;
 use App\Event\ConfigureAdminMenuEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Avanzu\AdminThemeBundle\Model\MenuItemModel;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class MySubscriber implements EventSubscriberInterface
 {
