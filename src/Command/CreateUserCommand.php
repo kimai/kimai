@@ -18,6 +18,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -70,7 +71,6 @@ class CreateUserCommand extends Command
             ->setDescription('Create a new user')
             ->setHelp('This command allows you to create a new user.')
             ->addArgument('username', InputArgument::REQUIRED, 'New username (must be unique)')
-            ->addArgument('password', InputArgument::REQUIRED, 'Users password')
             ->addArgument('email', InputArgument::REQUIRED, 'Users email address (must be unique)')
             ->addArgument('role', InputArgument::OPTIONAL, 'Users role (comma separated list)', User::DEFAULT_ROLE)
         ;
@@ -83,9 +83,24 @@ class CreateUserCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
+        /* @var \Symfony\Component\Console\Helper\QuestionHelper $helper */
+        $helper = $this->getHelper('question');
+
+        $passwordQuestion = new Question('Please enter the password');
+        $passwordQuestion->setHidden(true);
+        $passwordQuestion->setHiddenFallback(false);
+        $passwordQuestion->setValidator(function (?string $value) {
+            if (trim($value) == '') {
+                throw new \Exception('The password cannot be empty');
+            }
+            return $value;
+        });
+        $passwordQuestion->setMaxAttempts(3);
+
+        $password = $helper->ask($input, $output, $passwordQuestion);
+
         $username = $input->getArgument('username');
         $email = $input->getArgument('email');
-        $password = $input->getArgument('password');
         $role = $input->getArgument('role');
 
         $role = $role ?: User::DEFAULT_ROLE;
@@ -107,7 +122,7 @@ class CreateUserCommand extends Command
                 $value = $error->getInvalidValue();
                 $io->error(
                     $error->getPropertyPath()
-                    . " (" . (is_array($value) ? implode(',', $value) : $value) .")"
+                    . ' (' . (is_array($value) ? implode(',', $value) : $value) . ')'
                     . "\n    "
                     . $error->getMessage()
                 );
