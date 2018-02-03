@@ -24,12 +24,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * )
  * @UniqueEntity("username")
  * @UniqueEntity("email")
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class User implements UserInterface, AdvancedUserInterface
 {
-
     const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
     const ROLE_USER = 'ROLE_USER';
     const ROLE_TEAMLEAD = 'ROLE_TEAMLEAD';

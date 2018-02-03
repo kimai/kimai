@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -18,8 +16,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Custom form field type to select a visibility.
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class VisibilityType extends AbstractType
 {

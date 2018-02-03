@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,7 +10,6 @@
 namespace App\Tests\Repository\Query;
 
 use App\Entity\User;
-use App\Tests\Repository\Query\BaseQueryTest;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -20,7 +17,6 @@ use App\Repository\Query\TimesheetQuery;
 
 /**
  * @covers \App\Repository\Query\TimesheetQuery
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class TimesheetQueryTest extends BaseQueryTest
 {

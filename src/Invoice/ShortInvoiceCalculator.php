@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -16,8 +14,6 @@ use App\Entity\Timesheet;
 /**
  * A calculator that sums up all timesheet records from the model and returns only one
  * entry for a compact invoice version.
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class ShortInvoiceCalculator extends DefaultCalculator
 {
