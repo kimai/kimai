@@ -118,7 +118,11 @@ class KimaiImporterCommand extends Command
             ->setName('kimai:import-v1')
             ->setDescription('Import data from a Kimai v1 installation')
             ->setHelp('This command allows you to import the most important data from a Kimi v1 installation.')
-            ->addArgument('connection', InputArgument::REQUIRED, 'The database connection as URL, for example: mysql://user:password@127.0.0.1:3306/kimai?charset=latin1')
+            ->addArgument(
+                'connection',
+                InputArgument::REQUIRED,
+                'The database connection as URL, e.g.: mysql://user:password@127.0.0.1:3306/kimai?charset=latin1'
+            )
             ->addArgument('prefix', InputArgument::REQUIRED, 'The database prefix for the old Kimai v1 tables')
             ->addArgument('password', InputArgument::REQUIRED, 'The new password for all imported user')
             ->addArgument('country', InputArgument::OPTIONAL, 'The default country for customer', 'de')
@@ -272,7 +276,8 @@ class KimaiImporterCommand extends Command
             'Start: ' . $this->bytesHumanReadable($bytesStart) . PHP_EOL .
             'After caching: ' . $this->bytesHumanReadable($bytesCached) . PHP_EOL .
             'After import: ' . $this->bytesHumanReadable($bytesImported) . PHP_EOL .
-            'Total consumption for importing '.$allImports.' new database entries: ' . $this->bytesHumanReadable($bytesImported - $bytesStart)
+            'Total consumption for importing '.$allImports.' new database entries: ' .
+            $this->bytesHumanReadable($bytesImported - $bytesStart)
         );
     }
 
@@ -288,8 +293,11 @@ class KimaiImporterCommand extends Command
      */
     protected function checkDatabaseVersion(SymfonyStyle $io, $requiredVersion, $requiredRevision)
     {
-        $version = $this->getImportConnection()->query('SELECT value from ' . $this->dbPrefix . 'configuration WHERE option = "version"')->fetchColumn();
-        $revision = $this->getImportConnection()->query('SELECT value from ' . $this->dbPrefix . 'configuration WHERE option = "revision"')->fetchColumn();
+        $versionQuery = 'SELECT value from ' . $this->dbPrefix . 'configuration WHERE option = "version"';
+        $revisionQuery = 'SELECT value from ' . $this->dbPrefix . 'configuration WHERE option = "revision"';
+
+        $version = $this->getImportConnection()->query($versionQuery)->fetchColumn();
+        $revision = $this->getImportConnection()->query($revisionQuery)->fetchColumn();
 
         if (version_compare($requiredVersion, $version) == 1) {
             $io->error(
@@ -645,7 +653,9 @@ class KimaiImporterCommand extends Command
                 $project = null;
 
                 if (!isset($this->projects[$projectId])) {
-                    throw new \Exception('Invalid project linked to activity ' . $oldActivity['name'] . ': ' . $projectId);
+                    throw new \Exception(
+                        'Invalid project linked to activity ' . $oldActivity['name'] . ': ' . $projectId
+                    );
                 }
 
                 $project = $this->projects[$projectId];
@@ -668,8 +678,12 @@ class KimaiImporterCommand extends Command
      * @return Activity
      * @throws \Exception
      */
-    protected function createActivity(SymfonyStyle $io, ObjectManager $entityManager, Project $project, array $oldActivity)
-    {
+    protected function createActivity(
+        SymfonyStyle $io,
+        ObjectManager $entityManager,
+        Project $project,
+        array $oldActivity
+    ) {
         $activityId = $oldActivity['activityID'];
         if (isset($this->activities[$activityId][$project->getId()])) {
             return $this->activities[$activityId][$project->getId()];
