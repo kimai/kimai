@@ -52,6 +52,8 @@ class AppExtension extends Extension
         }
 
         $container->setParameter('kimai.invoice', $config['invoice']);
+        $container->setParameter('kimai.timesheet.rates', $config['timesheet']['rates']);
+        $container->setParameter('kimai.timesheet.rounding', $config['timesheet']['rounding']);
     }
 
     /**
