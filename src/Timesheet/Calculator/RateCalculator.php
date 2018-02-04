@@ -42,26 +42,36 @@ class RateCalculator implements CalculatorInterface
         }
 
         $rate = $this->calculateRate($record);
-        $rate = $this->applyRateFactor($record, $rate);
-        $record->setRate($rate);
+        $factor = $this->getRateFactor($record);
+
+        $record->setRate($rate * $factor);
     }
 
     /**
      * @param Timesheet $record
-     * @param float $rate
      * @return float
      */
-    protected function applyRateFactor(Timesheet $record, $rate)
+    protected function getRateFactor(Timesheet $record)
     {
+        $factor = 0;
         foreach ($this->rates as $rateFactor) {
             $weekday = $record->getEnd()->format('l');
             $days = array_map('strtolower', $rateFactor['days']);
             if (in_array(strtolower($weekday), $days)) {
-                $rate = $rate * $rateFactor['factor'];
+                if ($rateFactor['factor'] <= 0) {
+                    throw new \InvalidArgumentException(
+                        'A rate factor smaller or equals 0 is not allowed, given: ' . $rateFactor['factor']
+                    );
+                }
+                $factor += $rateFactor['factor'];
             }
         }
 
-        return $rate;
+        if ($factor <= 0) {
+            $factor = 1;
+        }
+
+        return $factor;
     }
 
     /**

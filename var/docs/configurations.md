@@ -42,7 +42,7 @@ A rule which is often used is to round to a mulitple of 10:
 kimai:
     timesheet:
         rounding:
-            weekend:
+            workdays:
                 days: ['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
                 begin: 10
                 end: 10
