@@ -36,14 +36,14 @@ class HelpController extends Controller
      * HelpController constructor.
      * @param $projectDirectory
      */
-    public function __construct(string $projectDirectory)
+    public function __construct($projectDirectory)
     {
         $this->projectDirectory = $projectDirectory;
     }
 
     /**
      * @Route("/", defaults={"chapter": "README"}, name="help")
-     * @Route("/chapter/{chapter}", requirements={"chapter": "[a-zA-Z]*"}, name="help_chapter")
+     * @Route("/{chapter}", requirements={"chapter": "[a-zA-Z]*"}, name="help_chapter")
      * @Method("GET")
      */
     public function indexAction($chapter)
