@@ -3,7 +3,14 @@
     {{ 'home.betainfo'|trans({}, 'sidebar')|raw|nl2br }}
     <ul class="control-sidebar-menu">
         <li>
-            <a href="https://github.com/kevinpapst/kimai2/" target="_blank">{{ 'home.link.issues'|trans({}, 'sidebar') }}</a>
+            <a href="{{ constant('App\\Constants::GITHUB') }}" target="_blank">{{ 'home.link.issues'|trans({}, 'sidebar') }}</a>
+        </li>
+    </ul>
+
+    {{ 'help.title'|trans({}, 'sidebar')|nl2br }}
+    <ul class="control-sidebar-menu">
+        <li>
+            <a href="{{ path('help') }}">{{ 'help.link'|trans({}, 'sidebar') }}</a>
         </li>
     </ul>
 </div>

@@ -369,6 +369,18 @@
             </trans-unit>
 
             <!--
+              Help - Manual
+            -->
+            <trans-unit id="help.title">
+                <source>help.title</source>
+                <target>Hilfe</target>
+            </trans-unit>
+            <trans-unit id="help.subtitle">
+                <source>help.subtitle</source>
+                <target>Anleitung zur Benutzung und Konfiguration von Kimai (nur in englisch verfügbar)</target>
+            </trans-unit>
+
+            <!--
               Admin: Timesheet
             -->
             <trans-unit id="admin_timesheet.title">
@@ -649,11 +661,11 @@
             </trans-unit>
             <trans-unit id="invoice.number">
                 <source>invoice.number</source>
-                <target>Rechnung</target>
+                <target>Rechnungsnummer</target>
             </trans-unit>
             <trans-unit id="invoice.subtotal">
                 <source>invoice.subtotal</source>
-                <target>Netto</target>
+                <target>Rechnungsbetrag (netto)</target>
             </trans-unit>
             <trans-unit id="invoice.tax">
                 <source>invoice.tax</source>
@@ -661,7 +673,19 @@
             </trans-unit>
             <trans-unit id="invoice.total">
                 <source>invoice.total</source>
-                <target>Rechnungsbetrag</target>
+                <target>Rechnungsendbetrag</target>
+            </trans-unit>
+            <trans-unit id="invoice.service_date">
+                <source>invoice.service_date</source>
+                <target>Leistungsdatum</target>
+            </trans-unit>
+            <trans-unit id="invoice.amount">
+                <source>invoice.amount</source>
+                <target>Anzahl</target>
+            </trans-unit>
+            <trans-unit id="invoice.total_rate">
+                <source>invoice.total_rate</source>
+                <target>Gesamtpreis</target>
             </trans-unit>
             <trans-unit id="label.payment_terms">
                 <source>label.payment_terms</source>

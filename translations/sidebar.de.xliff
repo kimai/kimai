@@ -21,6 +21,14 @@
                 <source>home.link.issues</source>
                 <target>GitHub Projekt-Webseite</target>
             </trans-unit>
+            <trans-unit id="help.title">
+                <source>help.title</source>
+                <target>Erfahre mehr über Kimai im:</target>
+            </trans-unit>
+            <trans-unit id="help.link">
+                <source>help.link</source>
+                <target>Benutzer Handbuch</target>
+            </trans-unit>
             <trans-unit id="preferences.title">
                 <source>preferences.title</source>
                 <target>Deine Einstellungen</target>

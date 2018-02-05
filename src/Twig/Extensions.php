@@ -11,6 +11,7 @@ namespace App\Twig;
 
 use Symfony\Component\Intl\Intl;
 use App\Entity\Timesheet;
+use Twig\TwigFilter;
 
 /**
  * Multiple Twig extensions: filters and functions
@@ -37,11 +38,11 @@ class Extensions extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('duration', array($this, 'duration')),
-            new \Twig_SimpleFilter('durationForEntry', array($this, 'durationForEntry')),
-            new \Twig_SimpleFilter('money', array($this, 'money')),
-            new \Twig_SimpleFilter('currency', array($this, 'currency')),
-            new \Twig_SimpleFilter('country', array($this, 'country')),
+            new TwigFilter('duration', array($this, 'duration')),
+            new TwigFilter('durationForEntry', array($this, 'durationForEntry')),
+            new TwigFilter('money', array($this, 'money')),
+            new TwigFilter('currency', array($this, 'currency')),
+            new TwigFilter('country', array($this, 'country')),
         ];
     }
 
@@ -139,13 +140,5 @@ class Extensions extends \Twig_Extension
         }
 
         return $locales;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'kimai.extension';
     }
 }

@@ -43,7 +43,7 @@
     {% block footer %}
     <footer class="main-footer no-print">
         <div class="pull-right hidden-xs">
-            <b>Version</b> 2.0 dev
+            <b>Version</b> {{ constant('App\\Constants::VERSION') }}
         </div>
         Made with ♥ by <a href="http://www.kevinpapst.de">Kevin Papst</a>.
         {{ 'footer.license'|trans }}

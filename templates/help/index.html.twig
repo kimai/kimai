@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title %}{{ 'help.title'|trans }}{% endblock %}
+{% block page_subtitle %}{{ 'help.subtitle'|trans }}{% endblock %}
+
+{% block main %}
+
+    <div class="box">
+        {% if chapter != 'README' %}
+        <div class="box-header with-border">
+            <a href="{{ path('help_chapter', {'chapter': 'README'}) }}">{{ 'action.back'|trans }}</a>
+        </div>
+        {% endif %}
+        <div class="box-body">
+            {{ documentation|md2html|replace({'.md"': '"', 'href="../../': 'target="_blank" href="'~github~'blob/master/'})|raw }}
+        </div>
+    </div>
+
+{% endblock %}

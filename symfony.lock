@@ -101,6 +101,9 @@
     "egulias/email-validator": {
         "version": "2.1.3"
     },
+    "erusev/parsedown": {
+        "version": "1.6.4"
+    },
     "friendsofphp/php-cs-fixer": {
         "version": "2.2",
         "recipe": {
