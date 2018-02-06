@@ -62,4 +62,13 @@ class ControllerBaseTest extends WebTestCase
             sprintf('The %s secure URL redirects to the login form.', $url)
         );
     }
+
+    /**
+     * @param Client $client
+     */
+    protected function assertRouteNotFound(Client $client)
+    {
+        $this->assertFalse($client->getResponse()->isSuccessful());
+        $this->assertEquals(404, $client->getResponse()->getStatusCode());
+    }
 }
