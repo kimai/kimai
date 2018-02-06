@@ -23,8 +23,14 @@ class HelpControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser();
         $this->request($client, '/help/users'); // TODO remove "users" when the the file /var/docs/README.md is available
-
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertContains('<a href="/en/help/README">', $client->getResponse()->getContent());
+    }
+
+    public function testValidateRouteDoesNotAllowSpecialChars()
+    {
+        $client = $this->getClientForAuthenticatedUser();
+        $this->request($client, '/help/.users');
+        $this->assertRouteNotFound($client);
     }
 }
