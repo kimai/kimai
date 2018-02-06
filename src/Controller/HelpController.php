@@ -34,9 +34,9 @@ class HelpController extends Controller
 
     /**
      * HelpController constructor.
-     * @param $projectDirectory
+     * @param string $projectDirectory
      */
-    public function __construct($projectDirectory)
+    public function __construct(string $projectDirectory)
     {
         $this->projectDirectory = $projectDirectory;
     }
@@ -45,6 +45,9 @@ class HelpController extends Controller
      * @Route("/", defaults={"chapter": "README"}, name="help")
      * @Route("/{chapter}", requirements={"chapter": "[a-zA-Z]*"}, name="help_chapter")
      * @Method("GET")
+     *
+     * @param string $chapter
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction($chapter)
     {
