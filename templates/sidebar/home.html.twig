@@ -1,18 +1,24 @@
 <h3 class="control-sidebar-heading">{{ 'home.title'|trans({}, 'sidebar') }}</h3>
 <div class="form-group">
     {{ 'home.betainfo'|trans({}, 'sidebar')|raw|nl2br }}
-    <ul class="control-sidebar-menu">
-        <li>
-            <a href="{{ constant('App\\Constants::GITHUB') }}" target="_blank">{{ 'home.link.issues'|trans({}, 'sidebar') }}</a>
-        </li>
-    </ul>
+</div>
 
-    {{ 'help.title'|trans({}, 'sidebar')|nl2br }}
-    <ul class="control-sidebar-menu">
-        <li>
-            <a href="{{ path('help') }}">{{ 'help.link'|trans({}, 'sidebar') }}</a>
-        </li>
-    </ul>
+<h3 class="control-sidebar-heading">{{ 'help.title'|trans({}, 'sidebar') }}</h3>
+<div class="form-group">
+    <a href="{{ path('help') }}" class="btn btn-success">{{ 'help.link'|trans({}, 'sidebar') }}</a>
+</div>
+
+<h3 class="control-sidebar-heading">{{ 'about.title'|trans({}, 'sidebar') }}</h3>
+<div class="form-group">
+    <p>
+        Kimai {{ constant('App\\Constants::VERSION') }}
+    </p>
+    <p>
+        {{ 'made.by.license'|trans({'%kevin%': '<a href="http://www.kevinpapst.de" target="_blank">Kevin Papst</a>', '%simon%': '<a href="https://github.com/simonschaufi" target="_blank">Simon Schaufelberger</a>'}, 'sidebar')|raw }}
+    </p>
+    <p>
+        {{ 'github.link'|trans({'%url%': constant('App\\Constants::GITHUB')}, 'sidebar')|raw }}
+    </p>
 </div>
 {#
 <ul class="control-sidebar-menu">

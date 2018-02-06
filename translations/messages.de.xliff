@@ -117,14 +117,6 @@
             </trans-unit>
 
             <!--
-              Footer
-            -->
-            <trans-unit id="footer.license">
-                <source>footer.license</source>
-                <target>Alle Rechte vorbehalten.</target>
-            </trans-unit>
-
-            <!--
               Error templates
             -->
             <trans-unit id="error.no_entries_found">

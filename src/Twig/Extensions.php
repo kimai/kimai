@@ -38,11 +38,11 @@ class Extensions extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new TwigFilter('duration', array($this, 'duration')),
-            new TwigFilter('durationForEntry', array($this, 'durationForEntry')),
-            new TwigFilter('money', array($this, 'money')),
-            new TwigFilter('currency', array($this, 'currency')),
-            new TwigFilter('country', array($this, 'country')),
+            new TwigFilter('duration', [$this, 'duration']),
+            new TwigFilter('durationForEntry', [$this, 'durationForEntry']),
+            new TwigFilter('money', [$this, 'money']),
+            new TwigFilter('currency', [$this, 'currency']),
+            new TwigFilter('country', [$this, 'country']),
         ];
     }
 
