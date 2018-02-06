@@ -22,7 +22,7 @@ class HelpControllerTest extends ControllerBaseTest
     public function testHelpStartPage()
     {
         $client = $this->getClientForAuthenticatedUser();
-        $this->request($client, '/help/users'); // TODO remove "users" when the the file /var/docs/README.md is available
+        $this->request($client, '/help/users'); // TODO remove "users" when /var/docs/README.md is available
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertContains('<a href="/en/help/README">', $client->getResponse()->getContent());
     }
