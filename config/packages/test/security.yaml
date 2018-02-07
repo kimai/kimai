@@ -1,0 +1,11 @@
+# this configuration simplifies testing URLs protected by the security mechanism
+# See https://symfony.com/doc/current/cookbook/testing/http_authentication.html
+security:
+    encoders:
+        # to make tests much faster, BCrypt cost is changed to its minimum allowed value (4)
+        # See https://symfony.com/doc/current/reference/configuration/security.html#using-the-bcrypt-password-encoder
+        App\Entity\User: { algorithm: bcrypt, cost: 4 }
+
+    firewalls:
+        secured_area:
+            http_basic: ~
