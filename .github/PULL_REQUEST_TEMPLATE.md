@@ -6,8 +6,9 @@
 - [ ] New feature (non-breaking change which adds functionality)
 - [ ] Breaking change (fix or feature that would cause existing functionality to change)
 
-## Checklist:
+## Checklist
 - [ ] My code follows the code style
-- [ ] All methods have a docheader with type declarations
-- [ ] I have updated the documentation accordingly.
-- [ ] I have added tests to cover my changes.
+- [ ] All files have a license header 
+- [ ] All methods have a doc header with type declarations
+- [ ] I have updated the documentation accordingly
+- [ ] I have added tests to cover my changes

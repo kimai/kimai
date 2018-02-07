@@ -101,6 +101,9 @@
     "egulias/email-validator": {
         "version": "2.1.3"
     },
+    "erusev/parsedown": {
+        "version": "1.6.4"
+    },
     "friendsofphp/php-cs-fixer": {
         "version": "2.2",
         "recipe": {
@@ -259,6 +262,9 @@
             "version": "3.3",
             "ref": "9f94d3ea453cd8a3b95db7f82592d7344fe3a76a"
         }
+    },
+    "symfony/css-selector": {
+        "version": "v4.0.4"
     },
     "symfony/debug": {
         "version": "v4.0.3"

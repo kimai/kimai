@@ -6,7 +6,7 @@
 /bin/*
 !bin/console
 
-/var/data/*.sqlite
+/var/data/kimai.sqlite
 
 /var/cache/*
 !var/cache/.gitkeep
