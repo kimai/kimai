@@ -44,14 +44,16 @@ class InvoiceFixtures extends Fixture
             ->setVat(19)
             ->setDueDays(14)
             ->setPaymentTerms(
-'I would like to thank you for your confidence and will gladly be there for you in the future.
-Please transfer the total amount within 14 days to the given account and use the invoice number as reference.'
+                'I would like to thank you for your confidence and will gladly be there for you in the future.' .
+                PHP_EOL .
+                'Please transfer the total amount within 14 days to the given account and use the invoice number ' .
+                'as reference.'
             )
             ->setAddress(
-'795 Folsom Ave, Suite 600
-San Francisco, CA 94107
-Phone: (804) 123-5432
-Email: info@almasaeedstudio.com'
+                '795 Folsom Ave, Suite 600' . PHP_EOL .
+                'San Francisco, CA 94107' . PHP_EOL .
+                'Phone: (804) 123-456789' . PHP_EOL .
+                'Email: email@example.com'
             )
         ;
 

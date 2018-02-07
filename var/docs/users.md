@@ -20,7 +20,8 @@ There are multiple pre-defined roles in Kimai, which define the ACLs. A user can
 ## Remember me login
 
 If you have chosen to login with the `Remember me` option, your login will be extended to one week (default value).
-After coming back and being remembered you have access to all the following features: 
+After coming back and being remembered you have access to all the following features:
+ 
 - view your own timesheet
 - start and stop new records
 - edit existing records
@@ -29,4 +30,4 @@ If you are an administrator, you will see all your allowed options in the menu, 
 form when you try to access them. This is a security feature to prevent abuse in case you forgot to logout in public 
 environments.
 
-The default period for the `Remember me` option can be changed in the config file [security.yaml](config/packages/security.yaml). 
+Read the [configurations chapter](configurations.md) if you want to change the value. 

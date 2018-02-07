@@ -46,7 +46,7 @@ You can find more information at:
 ### Rebuilding assets for use in subdirectory
 
 If you want to run Kimai in a subdirectory, you have to rebuild the frontend assets with a different webpack configuration.
-Edit the file [webpack.config.js](https://github.com/kevinpapst/kimai2/blob/master/webpack.config.js) and change `.setPublicPath('/build/')` to your needs.
+Edit the file [webpack.config.js](../../webpack.config.js) and change `.setPublicPath('/build/')` to your needs.
 
 After that re-compile the assets with:
 ```bash
@@ -93,7 +93,7 @@ class MySubscriber implements EventSubscriberInterface
     }    
 }
 ```
-For more details check the [official menu subscriber](https://github.com/kevinpapst/kimai2/blob/master/src/EventSubscriber/MenuSubscriber.php).
+For more details check the [official menu subscriber](../../src/EventSubscriber/MenuSubscriber.php).
 
 ## Adding tabs to the "control sidebar"
 
@@ -113,6 +113,72 @@ twig:
                     template: sidebar/home.html.twig
 
 ```
-You have to define the icon to be used and then one of controller action or template. 
-Both follow the default naming syntax and you can easily link your bundle here instead of the official.
-You should NOT add them in `config/packages/kimai.yaml` but only in your own bundle config.
+You have to define the `icon` (font-awesome without the `fa-` prefix) to be used and one of `controller` action or `template`. 
+Both follow the default naming syntax and you can easily link your bundle here instead of the app controller or templates.
+You should NOT add them in `config/packages/kimai.yaml` but in your own bundle config, otherwise they might get lost in a Kimai update.
+
+## Adding invoice renderer
+
+An invoice renderer is a controller action that receives an instanceof `App\Model\InvoiceModel` and returns a HTML response.
+This HTML response is the preview inside for the invoice screen. 
+
+Adding invoice renderer can be achieved by adding keys to the configuration `kimai.invoice.renderer` like this:
+
+```
+kimai:
+    invoice:
+        renderer:
+            default: 'App\Controller\InvoiceController::invoiceAction'
+```
+
+The name of the renderer must be unique, please prefix it with your vendor or bundle name and make sure it only contains
+character as it will be stored in a database column.
+
+## Adding invoice calculator
+
+An invoice calculator is a class extending `App\Invoice\CalculatorInterface` and is responsible for calculating 
+invoice rates, taxes and such.   
+
+Adding invoice calculator can be achieved by adding keys to the configuration `kimai.invoice.calculator` like this:
+
+```
+kimai:
+    invoice:
+        calculator:
+            default: 'App\Invoice\DefaultCalculator'
+```
+
+The name of the calculator must be unique, please prefix it with your vendor or bundle name and make sure it only contains
+character as it will be stored in a database column.
+
+## Adding invoice-number generator
+
+An invoice-number generator is a class extending `App\Invoice\NumberGeneratorInterface` and its only task is to generate 
+a number for the invoice. In most cases you do not want to mix multiple invoice-number generators througout your invoice templates.   
+
+Adding invoice-number generator can be achieved by adding keys to the configuration `kimai.invoice.number_generator` like this:
+
+```
+kimai:
+    invoice:
+        number_generator:
+            default: 'App\Invoice\DateNumberGenerator'
+```
+
+The name of the number generator must be unique, please prefix it with your vendor or bundle name and make sure it only contains
+character as it will be stored in a database column.
+
+## Adding timesheet calculator
+
+A timesheet calculator will be called on stopped timesheet records. It can rewrite all values but will normally take care 
+of the columns `begin`, `end`, `duration` and `rate` but could also be used to apply a default `description`.
+
+Timesheet calculator need to implement the interface `App\Timesheet\CalculatorInterface` and will be automatically tagged 
+as `timesheet.calculator` in the service container. They will be found and used *only* if you add them to the service container.
+
+You can apply several rules in the config file [kimai.yaml](../../config/packages/kimai.yaml) for the existing 
+`DurationCalculator` and `RateCalculator` implementations.  Please read the [configurations chapter](configurations.md) to find out more. 
+
+The configuration for "rounding rules" can be fetched from the container parameter `kimai.timesheet.rounding`.
+
+The configuration for "hourly-rates multiplication factors" can be fetched from the container parameter `kimai.timesheet.rates`.

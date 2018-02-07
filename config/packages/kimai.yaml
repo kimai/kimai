@@ -1,6 +1,24 @@
 kimai:
     timesheet:
-        rounding: 15
+
+        # Rounding rules are used to round the begin & end dates and the duration for timesheet records.
+        # The "default" rule will round "begin" down and "end" up to the full minute, the "duration" will not be rounded.
+        # Please read var/docs/configurations.md to find out more about rounding rules
+        rounding:
+            default:
+                days: ['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
+                begin: 1
+                end: 1
+                duration: 0
+
+        # If you want to apply different hourly rates for specific weekdays, you can uncomment the "rates" configuration.
+        # The "weekend" rule will add 50% to each timesheet entry that will be recorded on "saturdays" or "sundays".
+        # Please read var/docs/configurations.md to find out more about rates rules
+        # rates:
+        #    weekend:
+        #        days: ['saturday','sunday']
+        #        factor: 1.5
+
     invoice:
         renderer:
             default: 'App\Controller\InvoiceController::invoiceAction'

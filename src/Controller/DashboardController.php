@@ -14,6 +14,7 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
+use App\Repository\Query\TimesheetQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -104,7 +105,7 @@ class DashboardController extends Controller
                 //"{{ widgets.info_box_counter('stats.amountThisMonth', timesheetGlobal.amountThisMonth|money, 'money', 'green') }}",
                 "{{ widgets.info_box_counter('stats.durationTotal', timesheetGlobal.durationTotal|duration(true), 'hourglass-o', 'yellow') }}",
                 //"{{ widgets.info_box_counter('stats.amountTotal', timesheetGlobal.amountTotal|money, 'money', 'red') }}",
-                "{{ widgets.info_box_counter('stats.activeRecordings', timesheetGlobal.activeCurrently, 'hourglass-o', 'red', path('admin_timesheet', {'state': 1})) }}",
+                "{{ widgets.info_box_counter('stats.activeRecordings', timesheetGlobal.activeCurrently, 'hourglass-o', 'red', path('admin_timesheet', {'state': ".TimesheetQuery::STATE_RUNNING."})) }}",
             ],
         ];
 

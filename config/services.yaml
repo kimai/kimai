@@ -33,7 +33,7 @@ services:
 
     App\Invoice\ServiceInvoice:
         class: App\Invoice\ServiceInvoice
-        arguments: ['%kimai.invoice%', '@service_container']
+        arguments: ['%kimai.invoice%']
 
     # a route listener, that injects the locale through a URL directory
     App\EventSubscriber\RedirectToLocaleSubscriber:
@@ -53,19 +53,13 @@ services:
         tags:
             - { name: doctrine.event_subscriber }
 
-    # updates timesheet records, to make sure they are calculated and can't be manipulated by the users
+    # updates timesheet records and apply configured rate & rounding rules
     App\Doctrine\TimesheetSubscriber:
         class: App\Doctrine\TimesheetSubscriber
+        arguments: [!tagged timesheet.calculator]
         tags:
             - { name: doctrine.event_listener, event: prePersist, lazy: true }
             - { name: doctrine.event_listener, event: preUpdate, lazy: true }
-
-    # Uncomment the following lines to define a service for the Timesheet Doctrine repository
-    #
-    # app.timesheet_repository:
-    #     class:     Doctrine\ORM\EntityRepository
-    #     factory:   ['@doctrine.orm.entity_manager', getRepository]
-    #     arguments: [App\Entity\Timesheet]
 
     # ================================================================================
     # FORMS
@@ -85,17 +79,12 @@ services:
     App\Twig\Extensions:
         arguments: ['%app_locales%']
 
-    #    avanzu_admin_theme.navbar_task_listener:
-    #        class: "%avanzu_admin_theme.navbar_task_listener.class%"
-    #        tags:
-    #          - { name: kernel.event_listener, event: theme.tasks, method: onListTasks }
-    #
-    #    avanzu_admin_theme.navbar_notify_listener:
-    #        class: "%avanzu_admin_theme.navbar_notify_listener.class%"
-    #        tags:
-    #          - { name: kernel.event_listener, event: theme.notifications, method: onListNotifications }
-    #
-    #    avanzu_admin_theme.navbar_msg_listener:
-    #        class: "%avanzu_admin_theme.navbar_msg_listener.class%"
-    #        tags:
-    #          - { name: kernel.event_listener, event: theme.messages, method: onListMessages }
+    # ================================================================================
+    # TIMESHEET RECORD CALCULATOR
+    # ================================================================================
+
+    App\Timesheet\Calculator\DurationCalculator:
+        arguments: ["%kimai.timesheet.rounding%"]
+
+    App\Timesheet\Calculator\RateCalculator:
+        arguments: ["%kimai.timesheet.rates%"]
