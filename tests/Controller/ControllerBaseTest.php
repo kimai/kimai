@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /**
  * ControllerBaseTest adds some useful functions for writing integration tests.
  */
-class ControllerBaseTest extends WebTestCase
+abstract class ControllerBaseTest extends WebTestCase
 {
 
     const DEFAULT_LANGUAGE = 'en';

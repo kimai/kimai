@@ -5,14 +5,21 @@
 
 {% block main %}
 
+    {% set replacer = {
+        '.md"': '"',
+        '<table>': '<table class="table">',
+        'href="../../': 'target="_blank" href="'~github~'blob/master/',
+        ('href="' ~ github): 'target="_blank" href="'~github
+    } %}
+
     <div class="box">
         {% if chapter != 'README' %}
         <div class="box-header with-border">
-            <a href="{{ path('help_chapter', {'chapter': 'README'}) }}">{{ 'action.back'|trans }}</a>
+            <a href="{{ path('help') }}">{{ 'action.back'|trans }}</a>
         </div>
         {% endif %}
         <div class="box-body">
-            {{ documentation|md2html|replace({'.md"': '"', 'href="../../': 'target="_blank" href="'~github~'blob/master/'})|raw }}
+            {{ documentation|md2html|replace(replacer)|raw }}
         </div>
     </div>
 

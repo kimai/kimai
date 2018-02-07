@@ -49,7 +49,7 @@ class HelpController extends Controller
      * @param string $chapter
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction($chapter)
+    public function indexAction(?string $chapter)
     {
         $breadcrumb = [self::README];
         if ($chapter !== self::README) {

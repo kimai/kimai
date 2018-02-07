@@ -14,15 +14,25 @@ namespace App\Tests\Controller;
  */
 class HelpControllerTest extends ControllerBaseTest
 {
+
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/help/');
     }
 
-    public function testHelpStartPage()
+    public function testReadmePage()
     {
         $client = $this->getClientForAuthenticatedUser();
-        $this->request($client, '/help/users'); // TODO remove "users" when /var/docs/README.md is available
+        $this->request($client, '/help/');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertContains('<h1>Kimai documentation</h1>', $client->getResponse()->getContent());
+        $this->assertNotContains('<a href="/en/help/README">', $client->getResponse()->getContent());
+    }
+
+    public function testUsersPage()
+    {
+        $client = $this->getClientForAuthenticatedUser();
+        $this->request($client, '/help/users');
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertContains('<a href="/en/help/README">', $client->getResponse()->getContent());
     }

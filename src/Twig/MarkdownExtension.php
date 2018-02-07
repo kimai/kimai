@@ -32,7 +32,7 @@ class MarkdownExtension extends \Twig_Extension
     }
 
     /**
-     * {@inheritdoc}
+     * @return TwigFilter[]
      */
     public function getFilters()
     {
@@ -42,7 +42,10 @@ class MarkdownExtension extends \Twig_Extension
     }
 
     /**
-     * Transforms the given Markdown content into HTML content.
+     * Transforms the given Markdown content into HTML
+     *
+     * @param string $content
+     * @return string
      */
     public function markdownToHtml(string $content): string
     {
