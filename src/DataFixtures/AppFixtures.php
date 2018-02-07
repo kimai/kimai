@@ -27,6 +27,10 @@ class AppFixtures extends Fixture
     use FixturesTrait;
 
     const DEFAULT_PASSWORD = 'kitten';
+    const USERNAME_USER = 'john_user';
+    const USERNAME_TEAMLEAD = 'tony_teamlead';
+    const USERNAME_ADMIN = 'anna_admin';
+    const USERNAME_SUPER_ADMIN = 'susan_super';
 
     /**
      * @var UserPasswordEncoderInterface
@@ -93,7 +97,7 @@ class AppFixtures extends Fixture
                 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=monsterid&f=y', true
             ],
             [
-                'John Doe', 'Developer', 'john_user', 'john_user@example.com', 'ROLE_USER',
+                'John Doe', 'Developer', self::USERNAME_USER, 'john_user@example.com', 'ROLE_USER',
                 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y', true
             ],
             // inactive user to test login
@@ -102,16 +106,16 @@ class AppFixtures extends Fixture
                 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y', false
             ],
             [
-                'Tony Maier', 'Head of Development', 'tony_teamlead', 'tony_teamlead@example.com', 'ROLE_TEAMLEAD',
+                'Tony Maier', 'Head of Development', self::USERNAME_TEAMLEAD, 'tony_teamlead@example.com', 'ROLE_TEAMLEAD',
                 'https://en.gravatar.com/userimage/3533186/bf2163b1dd23f3107a028af0195624e9.jpeg', true
             ],
             // no avatar to test default image macro
             [
-                'Anna Smith', 'Administrator', 'anna_admin', 'anna_admin@example.com', 'ROLE_ADMIN', null, true
+                'Anna Smith', 'Administrator', self::USERNAME_ADMIN, 'anna_admin@example.com', 'ROLE_ADMIN', null, true
             ],
             // no alias to test twig username macro
             [
-                null, 'Super Administrator', 'susan_super', 'susan_super@example.com', 'ROLE_SUPER_ADMIN',
+                null, 'Super Administrator', self::USERNAME_SUPER_ADMIN, 'susan_super@example.com', 'ROLE_SUPER_ADMIN',
                 '/bundles/avanzuadmintheme/img/avatar.png', true
             ]
         ];

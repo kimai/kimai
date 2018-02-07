@@ -369,6 +369,18 @@
             </trans-unit>
 
             <!--
+              Help - Manual
+            -->
+            <trans-unit id="help.title">
+                <source>help.title</source>
+                <target>Help</target>
+            </trans-unit>
+            <trans-unit id="help.subtitle">
+                <source>help.subtitle</source>
+                <target>Instructions for using and configuring Kimai</target>
+            </trans-unit>
+
+            <!--
               Admin: Timesheet
             -->
             <trans-unit id="admin_timesheet.title">
@@ -649,7 +661,7 @@
             </trans-unit>
             <trans-unit id="invoice.number">
                 <source>invoice.number</source>
-                <target>Invoice</target>
+                <target>Invoice number</target>
             </trans-unit>
             <trans-unit id="invoice.subtotal">
                 <source>invoice.subtotal</source>
@@ -662,6 +674,18 @@
             <trans-unit id="invoice.total">
                 <source>invoice.total</source>
                 <target>Total</target>
+            </trans-unit>
+            <trans-unit id="invoice.service_date">
+                <source>invoice.service_date</source>
+                <target>Service date</target>
+            </trans-unit>
+            <trans-unit id="invoice.amount">
+                <source>invoice.amount</source>
+                <target>Quantity</target>
+            </trans-unit>
+            <trans-unit id="invoice.total_rate">
+                <source>invoice.total_rate</source>
+                <target>Total price</target>
             </trans-unit>
             <trans-unit id="label.payment_terms">
                 <source>label.payment_terms</source>

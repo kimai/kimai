@@ -13,13 +13,27 @@
                     This new version 2 is currently in an early stage of development and has been published in advance to collect feedback from its users and integrate their ideas into further planning.
 
                     To help me improve <strong>Kimai</strong>, please send your message on the linked website. Whether you have questions, error messages or ideas for enhancements, your feedback is valuable!
-
-                    Further information on the:
                 ]]></target>
             </trans-unit>
-            <trans-unit id="home.link.issues">
-                <source>home.link.issues</source>
-                <target>GitHub Project-Website</target>
+            <trans-unit id="made.by.license">
+                <source>made.by.license</source>
+                <target><![CDATA[Made with ♥ by %kevin% and %simon%.]]></target>
+            </trans-unit>
+            <trans-unit id="github.link">
+                <source>github.link</source>
+                <target><![CDATA[Further information can be found on the <a href="%url%" target="_blank">Kimai Homepage</a>.]]></target>
+            </trans-unit>
+            <trans-unit id="help.title">
+                <source>help.title</source>
+                <target>Documentation</target>
+            </trans-unit>
+            <trans-unit id="help.link">
+                <source>help.link</source>
+                <target>User manual</target>
+            </trans-unit>
+            <trans-unit id="about.title">
+                <source>about.title</source>
+                <target>About Kimai</target>
             </trans-unit>
             <trans-unit id="preferences.title">
                 <source>preferences.title</source>
