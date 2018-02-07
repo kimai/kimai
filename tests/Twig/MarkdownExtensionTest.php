@@ -11,7 +11,7 @@ namespace App\Tests\Twig;
 
 use App\Twig\MarkdownExtension;
 use App\Utils\Markdown;
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Twig\MarkdownExtension

@@ -10,7 +10,7 @@
 namespace App\Tests\Utils;
 
 use App\Utils\Markdown;
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Utils\Markdown
