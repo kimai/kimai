@@ -10,31 +10,45 @@
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% endif %}
 
-    {{ tables.data_table_header({
-        'label.date': '',
-        'label.starttime': 'hidden-xs',
-        'label.endtime': 'hidden-xs',
+    {% set columns = {'label.date': ''} %}
+
+    {% if not duration_only %}
+        {% set columns = columns|merge({'label.starttime': 'hidden-xs', 'label.endtime': 'hidden-xs'}) %}
+    {% endif %}
+
+    {% set columns = columns|merge({
         'label.duration': '',
         'label.rate': '',
         'label.activity': 'hidden-xs hidden-sm',
         'label.username': 'hidden-xs',
         'label.description': 'hidden-xs hidden-sm',
         'label.actions': '',
-    }, toolbarForm, {'plus-square': path('admin_timesheet_create')}) }}
+    }) %}
+
+    {{ tables.data_table_header(columns, toolbarForm, {'plus-square': path('admin_timesheet_create')}) }}
 
     {% for entry in entries %}
         <tr>
             <td>{{ entry.begin|date(kimai_context.date_1) }}</td>
-            <td class="hidden-xs">{{ entry.begin|date("H:i") }}</td>
+
+            {% if not duration_only %}
+                <td class="hidden-xs">{{ entry.begin|date("H:i") }}</td>
+            {% endif %}
+
             {% if entry.end %}
-                <td class="hidden-xs">{{ entry.end|date("H:i") }}</td>
+                {% if not duration_only %}
+                    <td class="hidden-xs">{{ entry.end|date("H:i") }}</td>
+                {% endif %}
                 <td>{{ entry.duration|duration }}</td>
                 <td>{{ entry.rate|money(entry.activity.project.customer.currency) }}</td>
             {% else %}
-                <td class="hidden-xs">&dash;</td>
-                <td>&dash;</td>
+                {% if not duration_only %}
+                    <td class="hidden-xs">&dash;</td>
+                {% endif %}
+                <td><i>{{ entry.duration|duration }}</i></td>
                 <td>&dash;</td>
             {% endif %}
+
             <td class="hidden-xs hidden-sm">
                 <a href="{{ path('admin_activity_edit', {'id': entry.activity.id}) }}">{{ widgets.label_activity(entry.activity) }}</a>
             </td>

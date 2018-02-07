@@ -40,33 +40,24 @@ class TimesheetEditForm extends AbstractType
         }
 
         $builder
-            // datetime
             ->add('begin', DateTimeType::class, [
                 'label' => 'label.begin',
                 'date_widget' => 'single_text',
             ])
-            // datetime
             ->add('end', DateTimeType::class, [
                 'label' => 'label.end',
                 'date_widget' => 'single_text',
                 'required' => false,
             ])
-            // Activity
             ->add('activity', ActivityGroupedWithCustomerNameType::class, [
                 'label' => 'label.activity',
                 'query_builder' => function (ActivityRepository $repo) use ($activity) {
                     return $repo->builderForEntityType($activity);
                 },
             ])
-            // customer
             ->add('description', TextareaType::class, [
                 'label' => 'label.description',
                 'required' => false,
-            ])
-            // string
-            ->add('rate', MoneyType::class, [
-                'label' => 'label.rate',
-                'currency' => $builder->getOption('currency'),
             ])
         ;
     }

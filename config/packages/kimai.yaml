@@ -1,5 +1,9 @@
 kimai:
+    # All configs related to timesheet and record management
     timesheet:
+
+        # Whether we display start and end time columns (false) or durations only (true)
+        duration_only: true
 
         # Rounding rules are used to round the begin & end dates and the duration for timesheet records.
         # The "default" rule will round "begin" down and "end" up to the full minute, the "duration" will not be rounded.
@@ -19,6 +23,7 @@ kimai:
         #        days: ['saturday','sunday']
         #        factor: 1.5
 
+    # All configs related to the invoice administration
     invoice:
         renderer:
             default: 'App\Controller\InvoiceController::invoiceAction'
