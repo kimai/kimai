@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -18,8 +16,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
  * This is the class that loads and manages your bundle configuration
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class AppExtension extends Extension
 {
@@ -56,6 +52,8 @@ class AppExtension extends Extension
         }
 
         $container->setParameter('kimai.invoice', $config['invoice']);
+        $container->setParameter('kimai.timesheet.rates', $config['timesheet']['rates']);
+        $container->setParameter('kimai.timesheet.rounding', $config['timesheet']['rounding']);
     }
 
     /**

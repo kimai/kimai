@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -19,12 +17,9 @@ use App\Entity\Project;
 
 /**
  * Can be used for advanced timesheet repository queries.
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class TimesheetQuery extends ActivityQuery
 {
-
     const STATE_ALL = 1;
     const STATE_RUNNING = 2;
     const STATE_STOPPED = 3;

@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -34,8 +32,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 /**
  * Command used to import data from a Kimai v1 installation.
  * Getting help in improving this script would be fantastic, it currently only handles the most basic use-cases.
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class KimaiImporterCommand extends Command
 {
@@ -122,7 +118,11 @@ class KimaiImporterCommand extends Command
             ->setName('kimai:import-v1')
             ->setDescription('Import data from a Kimai v1 installation')
             ->setHelp('This command allows you to import the most important data from a Kimi v1 installation.')
-            ->addArgument('connection', InputArgument::REQUIRED, 'The database connection as URL, for example: mysql://user:password@127.0.0.1:3306/kimai?charset=latin1')
+            ->addArgument(
+                'connection',
+                InputArgument::REQUIRED,
+                'The database connection as URL, e.g.: mysql://user:password@127.0.0.1:3306/kimai?charset=latin1'
+            )
             ->addArgument('prefix', InputArgument::REQUIRED, 'The database prefix for the old Kimai v1 tables')
             ->addArgument('password', InputArgument::REQUIRED, 'The new password for all imported user')
             ->addArgument('country', InputArgument::OPTIONAL, 'The default country for customer', 'de')
@@ -271,11 +271,13 @@ class KimaiImporterCommand extends Command
 
         $bytesImported = memory_get_usage(true);
 
-        $io->success('Memory usage: ' . PHP_EOL .
+        $io->success(
+            'Memory usage: ' . PHP_EOL .
             'Start: ' . $this->bytesHumanReadable($bytesStart) . PHP_EOL .
             'After caching: ' . $this->bytesHumanReadable($bytesCached) . PHP_EOL .
             'After import: ' . $this->bytesHumanReadable($bytesImported) . PHP_EOL .
-            'Total consumption for importing '.$allImports.' new database entries: ' . $this->bytesHumanReadable($bytesImported - $bytesStart)
+            'Total consumption for importing '.$allImports.' new database entries: ' .
+            $this->bytesHumanReadable($bytesImported - $bytesStart)
         );
     }
 
@@ -291,8 +293,11 @@ class KimaiImporterCommand extends Command
      */
     protected function checkDatabaseVersion(SymfonyStyle $io, $requiredVersion, $requiredRevision)
     {
-        $version = $this->getImportConnection()->query('SELECT value from ' . $this->dbPrefix . 'configuration WHERE option = "version"')->fetchColumn();
-        $revision = $this->getImportConnection()->query('SELECT value from ' . $this->dbPrefix . 'configuration WHERE option = "revision"')->fetchColumn();
+        $versionQuery = 'SELECT value from ' . $this->dbPrefix . 'configuration WHERE option = "version"';
+        $revisionQuery = 'SELECT value from ' . $this->dbPrefix . 'configuration WHERE option = "revision"';
+
+        $version = $this->getImportConnection()->query($versionQuery)->fetchColumn();
+        $revision = $this->getImportConnection()->query($revisionQuery)->fetchColumn();
 
         if (version_compare($requiredVersion, $version) == 1) {
             $io->error(
@@ -321,7 +326,7 @@ class KimaiImporterCommand extends Command
     protected function deactivateLifecycleCallbacks(Connection $connection)
     {
         $allListener = $connection->getEventManager()->getListeners();
-        foreach($allListener as $name => $listener) {
+        foreach ($allListener as $name => $listener) {
             if (in_array($name, ['prePersist', 'preUpdate'])) {
                 foreach ($listener as $service => $class) {
                     if ($class === TimesheetSubscriber::class) {
@@ -340,7 +345,7 @@ class KimaiImporterCommand extends Command
     protected function bytesHumanReadable($size)
     {
         $unit=array('b','kB','MB','GB');
-        return @round($size/pow(1024,($i=floor(log($size,1024)))),2).' '.$unit[$i];
+        return @round($size/pow(1024, ($i=floor(log($size, 1024)))), 2).' '.$unit[$i];
     }
 
     /**
@@ -429,8 +434,7 @@ class KimaiImporterCommand extends Command
         $counter = 0;
         $entityManager = $this->getDoctrine()->getManager();
 
-        foreach ($users as $oldUser)
-        {
+        foreach ($users as $oldUser) {
             $isActive = (bool)$oldUser['active'] && !(bool)$oldUser['trash'] && !(bool)$oldUser['ban'];
             $role = ($oldUser['globalRoleID'] == 1) ? User::ROLE_SUPER_ADMIN : User::DEFAULT_ROLE;
 
@@ -503,8 +507,7 @@ class KimaiImporterCommand extends Command
         $counter = 0;
         $entityManager = $this->getDoctrine()->getManager();
 
-        foreach ($customers as $oldCustomer)
-        {
+        foreach ($customers as $oldCustomer) {
             $isActive = (bool)$oldCustomer['visible'] && !(bool)$oldCustomer['trash'];
             $name = $oldCustomer['name'];
             if (empty($name)) {
@@ -573,8 +576,7 @@ class KimaiImporterCommand extends Command
         $counter = 0;
         $entityManager = $this->getDoctrine()->getManager();
 
-        foreach ($projects as $oldProject)
-        {
+        foreach ($projects as $oldProject) {
             $isActive = (bool)$oldProject['visible'] && !(bool)$oldProject['trash'];
             $customer = $this->customers[$oldProject['customerID']];
             $name = $oldProject['name'];
@@ -641,20 +643,19 @@ class KimaiImporterCommand extends Command
         $counter = 0;
         $entityManager = $this->getDoctrine()->getManager();
         $oldActivityMapping = [];
-        foreach ($activityToProject as $mapping)
-        {
+        foreach ($activityToProject as $mapping) {
             $oldActivityMapping[$mapping['activityID']] = $mapping['projectID'];
         }
 
-        foreach ($activities as $oldActivity)
-        {
-            if (isset($oldActivityMapping[$oldActivity['activityID']]))
-            {
+        foreach ($activities as $oldActivity) {
+            if (isset($oldActivityMapping[$oldActivity['activityID']])) {
                 $projectId = $oldActivityMapping[$oldActivity['activityID']];
                 $project = null;
 
                 if (!isset($this->projects[$projectId])) {
-                    throw new \Exception('Invalid project linked to activity ' . $oldActivity['name'] . ': ' . $projectId);
+                    throw new \Exception(
+                        'Invalid project linked to activity ' . $oldActivity['name'] . ': ' . $projectId
+                    );
                 }
 
                 $project = $this->projects[$projectId];
@@ -677,8 +678,12 @@ class KimaiImporterCommand extends Command
      * @return Activity
      * @throws \Exception
      */
-    protected function createActivity(SymfonyStyle $io, ObjectManager $entityManager, Project $project, array $oldActivity)
-    {
+    protected function createActivity(
+        SymfonyStyle $io,
+        ObjectManager $entityManager,
+        Project $project,
+        array $oldActivity
+    ) {
         $activityId = $oldActivity['activityID'];
         if (isset($this->activities[$activityId][$project->getId()])) {
             return $this->activities[$activityId][$project->getId()];
@@ -756,8 +761,7 @@ class KimaiImporterCommand extends Command
         $activityCounter = 0;
         $entityManager = $this->getDoctrine()->getManager();
 
-        foreach ($records as $oldRecord)
-        {
+        foreach ($records as $oldRecord) {
             $activity = null;
             $project = null;
             $activityId = $oldRecord['activityID'];

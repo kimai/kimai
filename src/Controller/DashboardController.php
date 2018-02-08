@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -16,6 +14,7 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
+use App\Repository\Query\TimesheetQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -26,8 +25,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
  *
  * @Route("/dashboard")
  * @Security("has_role('ROLE_USER')")
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class DashboardController extends Controller
 {
@@ -108,7 +105,7 @@ class DashboardController extends Controller
                 //"{{ widgets.info_box_counter('stats.amountThisMonth', timesheetGlobal.amountThisMonth|money, 'money', 'green') }}",
                 "{{ widgets.info_box_counter('stats.durationTotal', timesheetGlobal.durationTotal|duration(true), 'hourglass-o', 'yellow') }}",
                 //"{{ widgets.info_box_counter('stats.amountTotal', timesheetGlobal.amountTotal|money, 'money', 'red') }}",
-                "{{ widgets.info_box_counter('stats.activeRecordings', timesheetGlobal.activeCurrently, 'hourglass-o', 'red', path('admin_timesheet', {'state': 1})) }}",
+                "{{ widgets.info_box_counter('stats.activeRecordings', timesheetGlobal.activeCurrently, 'hourglass-o', 'red', path('admin_timesheet', {'state': ".TimesheetQuery::STATE_RUNNING."})) }}",
             ],
         ];
 

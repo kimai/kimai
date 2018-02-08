@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -29,8 +27,6 @@ use App\Repository\Query\ActivityQuery;
  * @Route("/admin/activity")
  * @Security("has_role('ROLE_ADMIN')")
  * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class ActivityController extends AbstractController
 {

@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,11 +11,10 @@ namespace App\Twig;
 
 use Symfony\Component\Intl\Intl;
 use App\Entity\Timesheet;
+use Twig\TwigFilter;
 
 /**
  * Multiple Twig extensions: filters and functions
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class Extensions extends \Twig_Extension
 {
@@ -41,11 +38,11 @@ class Extensions extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('duration', array($this, 'duration')),
-            new \Twig_SimpleFilter('durationForEntry', array($this, 'durationForEntry')),
-            new \Twig_SimpleFilter('money', array($this, 'money')),
-            new \Twig_SimpleFilter('currency', array($this, 'currency')),
-            new \Twig_SimpleFilter('country', array($this, 'country')),
+            new TwigFilter('duration', [$this, 'duration']),
+            new TwigFilter('durationForEntry', [$this, 'durationForEntry']),
+            new TwigFilter('money', [$this, 'money']),
+            new TwigFilter('currency', [$this, 'currency']),
+            new TwigFilter('country', [$this, 'country']),
         ];
     }
 
@@ -143,13 +140,5 @@ class Extensions extends \Twig_Extension
         }
 
         return $locales;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'kimai.extension';
     }
 }

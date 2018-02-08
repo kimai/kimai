@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -16,8 +14,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class Configuration implements ConfigurationInterface
 {
@@ -33,7 +29,52 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('timesheet')
                     ->children()
-                        ->integerNode('rounding')->end()
+                        ->arrayNode('rounding')
+                            ->requiresAtLeastOneElement()
+                            ->useAttributeAsKey('key')
+                            ->arrayPrototype()
+                                ->children()
+                                    ->arrayNode('days')
+                                        ->requiresAtLeastOneElement()
+                                        ->useAttributeAsKey('key')
+                                        ->isRequired()
+                                        ->prototype('scalar')->end()
+                                        ->defaultValue([])
+                                    ->end()
+                                    ->integerNode('begin')
+                                        ->defaultValue(0)
+                                    ->end()
+                                    ->integerNode('end')
+                                        ->defaultValue(0)
+                                    ->end()
+                                    ->integerNode('duration')
+                                        ->defaultValue(0)
+                                    ->end()
+                                ->end()
+                            ->end()
+                            ->defaultValue(array())
+                        ->end()
+
+                        ->arrayNode('rates')
+                            ->requiresAtLeastOneElement()
+                            ->useAttributeAsKey('key')
+                            ->arrayPrototype()
+                                ->children()
+                                    ->arrayNode('days')
+                                        ->requiresAtLeastOneElement()
+                                        ->useAttributeAsKey('key')
+                                        ->isRequired()
+                                        ->prototype('scalar')->end()
+                                        ->defaultValue([])
+                                    ->end()
+                                    ->floatNode('factor')
+                                        ->isRequired()
+                                        ->defaultValue(1)
+                                    ->end()
+                                ->end()
+                            ->end()
+                            ->defaultValue([])
+                        ->end()
                     ->end()
                 ->end()
                 ->arrayNode('invoice')

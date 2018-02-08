@@ -170,4 +170,4 @@ All available Kimai 2 bundles can be found at the [Kimai recipes](https://github
 If you want to develop for Kimai 2 please read the following documentation:
 
 - an example on how to extend Kimai 2 can be found in this [GitHub repository](https://github.com/kevinpapst/kimai2-invoice)
-- the developer documentation can be found at [var/docs/developers.md](var/docs/developers.md)
+- the developer documentation can be found at [var/docs/developers.md](var/docs/developers.md) both on GitHub and your local installation

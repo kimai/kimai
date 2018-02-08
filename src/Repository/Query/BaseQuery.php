@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,12 +11,9 @@ namespace App\Repository\Query;
 
 /**
  * Base class for advanced Repository queries.
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class BaseQuery
 {
-
     const ORDER_ASC = 'ASC';
     const ORDER_DESC = 'DESC';
 
