@@ -13,6 +13,7 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -66,9 +67,10 @@ class CreateUserCommand extends Command
             ->setName('kimai:create-user')
             ->setDescription('Create a new user')
             ->setHelp('This command allows you to create a new user.')
-            ->addArgument('username', InputArgument::REQUIRED, 'New username (must be unique)')
-            ->addArgument('email', InputArgument::REQUIRED, 'Users email address (must be unique)')
-            ->addArgument('role', InputArgument::OPTIONAL, 'Users role (comma separated list)', User::DEFAULT_ROLE)
+            ->addArgument('username', InputArgument::REQUIRED, 'The username of the user to be created (must be unique)')
+            ->addArgument('email', InputArgument::REQUIRED, 'Email address of the user to be created (must be unique)')
+            ->addArgument('role', InputArgument::OPTIONAL, 'A comma separated list of roles to assign. Examples: "ROLE_USER,ROLE_SUPER_ADMIN"', User::DEFAULT_ROLE)
+            ->addArgument('password', InputArgument::OPTIONAL, 'Password of the user to be created')
         ;
     }
 
@@ -79,25 +81,15 @@ class CreateUserCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        /* @var \Symfony\Component\Console\Helper\QuestionHelper $helper */
-        $helper = $this->getHelper('question');
-
-        $passwordQuestion = new Question('Please enter the password');
-        $passwordQuestion->setHidden(true);
-        $passwordQuestion->setHiddenFallback(false);
-        $passwordQuestion->setValidator(function (?string $value) {
-            if (trim($value) == '') {
-                throw new \Exception('The password cannot be empty');
-            }
-            return $value;
-        });
-        $passwordQuestion->setMaxAttempts(3);
-
-        $password = $helper->ask($input, $output, $passwordQuestion);
-
         $username = $input->getArgument('username');
         $email = $input->getArgument('email');
         $role = $input->getArgument('role');
+
+        if ($input->getArgument('password') !== null) {
+            $password = $input->getArgument('password');
+        } else {
+            $password = $this->askForPassword($input, $output);
+        }
 
         $role = $role ?: User::DEFAULT_ROLE;
 
@@ -135,5 +127,31 @@ class CreateUserCommand extends Command
             $io->error('Failed to create user: ' . $user->getUsername());
             $io->error('Reason: ' . $ex->getMessage());
         }
+    }
+
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     *
+     * @return mixed
+     */
+    protected function askForPassword(InputInterface $input, OutputInterface $output): mixed
+    {
+        /* @var QuestionHelper $helper */
+        $helper = $this->getHelper('question');
+
+        $passwordQuestion = new Question('Please enter the password');
+        $passwordQuestion->setHidden(true);
+        $passwordQuestion->setHiddenFallback(false);
+        $passwordQuestion->setValidator(function (?string $value) {
+            if (trim($value) == '') {
+                throw new \Exception('The password cannot be empty');
+            }
+
+            return $value;
+        });
+        $passwordQuestion->setMaxAttempts(3);
+
+        return $helper->ask($input, $output, $passwordQuestion);
     }
 }
