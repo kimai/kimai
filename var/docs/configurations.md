@@ -4,7 +4,7 @@ There are several configurations that can be configured with the yaml files in `
 
 ## Duration only
 
-Kimai supports to modes for displaying and recording timesheet entries:
+Kimai supports two modes for displaying and recording timesheet entries:
 
 - `begin` and `end` time (default)
 - `date` and `duration` (the so called `duration_only` mode)
