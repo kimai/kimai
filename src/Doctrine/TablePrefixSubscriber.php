@@ -26,7 +26,7 @@ class TablePrefixSubscriber implements EventSubscriber
 
     public function getSubscribedEvents()
     {
-        return array('loadClassMetadata');
+        return ['loadClassMetadata'];
     }
 
     public function loadClassMetadata(LoadClassMetadataEventArgs $args)

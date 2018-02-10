@@ -114,13 +114,13 @@ class DoctrineCompilerPass implements CompilerPassInterface
         $ormConfig = $container->getDefinition('doctrine.orm.default_configuration');
 
         foreach ($sql['string_functions'] as $name => $function) {
-            $ormConfig->addMethodCall('addCustomStringFunction', array($name, $function));
+            $ormConfig->addMethodCall('addCustomStringFunction', [$name, $function]);
         }
         foreach ($sql['numeric_functions'] as $name => $function) {
-            $ormConfig->addMethodCall('addCustomNumericFunction', array($name, $function));
+            $ormConfig->addMethodCall('addCustomNumericFunction', [$name, $function]);
         }
         foreach ($sql['datetime_functions'] as $name => $function) {
-            $ormConfig->addMethodCall('addCustomDatetimeFunction', array($name, $function));
+            $ormConfig->addMethodCall('addCustomDatetimeFunction', [$name, $function]);
         }
     }
 }

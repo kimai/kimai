@@ -26,10 +26,10 @@ class LanguageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'choices' => array(
+            'choices' => [
                 Intl::getLocaleBundle()->getLocaleName('de', 'de') => 'de',
                 Intl::getLocaleBundle()->getLocaleName('en', 'en') => 'en',
-            )
+            ]
         ]);
     }
 

@@ -29,7 +29,7 @@ class UserPreferencesForm extends AbstractType
     {
         $builder->add('preferences', CollectionType::class, [
             'entry_type' => UserPreferenceType::class,
-            'entry_options' => array('label' => false),
+            'entry_options' => ['label' => false],
             'allow_add' => false,
             'allow_delete' => false,
             'label' => false,
@@ -46,7 +46,6 @@ class UserPreferencesForm extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'edit_user_preferences',
-
         ]);
     }
 }

@@ -270,7 +270,7 @@ class ProfileController extends AbstractController
             UserPasswordType::class,
             $user,
             [
-                'validation_groups' => array('passwordUpdate'),
+                'validation_groups' => ['passwordUpdate'],
                 'action' => $this->generateUrl('user_profile_password', ['username' => $user->getUsername()]),
                 'method' => 'POST'
             ]
