@@ -344,8 +344,8 @@ class KimaiImporterCommand extends Command
      */
     protected function bytesHumanReadable($size)
     {
-        $unit=array('b','kB','MB','GB');
-        return @round($size/pow(1024, ($i=floor(log($size, 1024)))), 2).' '.$unit[$i];
+        $unit = ['b', 'kB', 'MB', 'GB'];
+        return @round($size / pow(1024, ($i = floor(log($size, 1024)))), 2) . ' ' . $unit[$i];
     }
 
     /**

@@ -26,7 +26,7 @@ class SkinType extends AbstractType
     {
         $resolver->setDefaults([
             'required' => true,
-            'choices' => array(
+            'choices' => [
                 'blue' => 'blue',
                 'black' => 'black',
                 'green' => 'green',
@@ -39,7 +39,7 @@ class SkinType extends AbstractType
                 'purple-light' => 'purple-light',
                 'red-light' => 'red-light',
                 'yellow-light' => 'yellow-light',
-            )
+            ]
         ]);
     }
 

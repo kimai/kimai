@@ -33,8 +33,8 @@ class UserCreateType extends UserEditType
             ->add('plainPassword', RepeatedType::class, [
                 'required' => true,
                 'type' => PasswordType::class,
-                'first_options' => array('label' => 'label.password'),
-                'second_options' => array('label' => 'label.password_repeat'),
+                'first_options' => ['label' => 'label.password'],
+                'second_options' => ['label' => 'label.password_repeat'],
             ]);
 
         parent::buildForm($builder, $options);

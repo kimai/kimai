@@ -52,7 +52,7 @@ class Configuration implements ConfigurationInterface
                                     ->end()
                                 ->end()
                             ->end()
-                            ->defaultValue(array())
+                            ->defaultValue([])
                         ->end()
 
                         ->arrayNode('rates')
@@ -84,27 +84,27 @@ class Configuration implements ConfigurationInterface
                             ->useAttributeAsKey('key')
                             ->isRequired()
                             ->prototype('scalar')->end()
-                            ->defaultValue(array(
+                            ->defaultValue([
                                 'default' => 'App\Controller\InvoiceController::invoiceAction',
-                            ))
+                            ])
                         ->end()
                         ->arrayNode('calculator')
                             ->requiresAtLeastOneElement()
                             ->useAttributeAsKey('key')
                             ->isRequired()
                             ->prototype('scalar')->end()
-                            ->defaultValue(array(
+                            ->defaultValue([
                                 'default' => 'App\Invoice\DefaultCalculator',
-                            ))
+                            ])
                         ->end()
                         ->arrayNode('number_generator')
                             ->requiresAtLeastOneElement()
                             ->useAttributeAsKey('key')
                             ->isRequired()
                             ->prototype('scalar')->end()
-                            ->defaultValue(array(
+                            ->defaultValue([
                                 'default' => 'App\Invoice\DateNumberGenerator',
-                            ))
+                            ])
                         ->end()
                     ->end()
                 ->end()

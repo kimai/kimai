@@ -137,7 +137,7 @@ abstract class AbstractToolbarForm extends AbstractType
                     return;
                 }
 
-                $event->getForm()->add('project', ProjectType::class, array(
+                $event->getForm()->add('project', ProjectType::class, [
                     'group_by' => null,
                     'required' => false,
                     'query_builder' => function (ProjectRepository $repo) use ($data) {
@@ -145,7 +145,7 @@ abstract class AbstractToolbarForm extends AbstractType
                         $qb->where('p.customer = :customer')->setParameter('customer', $data['customer']);
                         return $qb;
                     },
-                ));
+                ]);
             }
         );
     }
@@ -163,7 +163,7 @@ abstract class AbstractToolbarForm extends AbstractType
                     return;
                 }
 
-                $event->getForm()->add('activity', ActivityType::class, array(
+                $event->getForm()->add('activity', ActivityType::class, [
                     'group_by' => null,
                     'required' => false,
                     'query_builder' => function (ActivityRepository $repo) use ($data) {
@@ -171,7 +171,7 @@ abstract class AbstractToolbarForm extends AbstractType
                         $qb->where('a.project = :project')->setParameter('project', $data['project']);
                         return $qb;
                     },
-                ));
+                ]);
             }
         );
     }
