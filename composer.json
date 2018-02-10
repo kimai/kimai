@@ -8,7 +8,6 @@
         "ext-pdo_sqlite": "*",
         "avanzu/admin-theme-bundle": "dev-kevinpapst",
         "beberlei/DoctrineExtensions": "^1.0",
-        "dama/doctrine-test-bundle": "^4.0",
         "erusev/parsedown": "^1.6",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "^4.0",
@@ -34,6 +33,7 @@
         "white-october/pagerfanta-bundle": "^1.1"
     },
     "require-dev": {
+        "dama/doctrine-test-bundle": "^5.0",
         "doctrine/doctrine-fixtures-bundle": "^3.0",
         "friendsofphp/php-cs-fixer": "^2.10",
         "phpunit/phpunit": "^6.5",

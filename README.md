@@ -60,7 +60,7 @@ npm run prod
 
 ### Installation (development / demo)
 
-Lets boostrap your environment by executing this commands (which is only available in dev environment): 
+Lets boostrap your environment by executing this commands (which is only available in dev environment):
 ```bash
 bin/console kimai:reset-dev
 ```
@@ -95,13 +95,13 @@ Just use the built-in web server for your first tests:
 bin/console server:run
 ```
 
-This command will start a web server for Kimai. Now you can access the application in your browser at <http://127.0.0.1:8000/>. 
+This command will start a web server for Kimai. Now you can access the application in your browser at <http://127.0.0.1:8000/>.
 You can stop the built-in web server by pressing `Ctrl + C` while you're in the terminal.
 
 
 ### Installation (live)
 
-The database to use is up to you, but we would not recommend using the default SQLite database for production usage. 
+The database to use is up to you, but we would not recommend using the default SQLite database for production usage.
 Please create your database and configure the connection string in your environment, e.g. with the `.env` file:
 ```
 APP_ENV=prod
@@ -115,10 +115,10 @@ bin/console doctrine:schema:create
 bin/console cache:warmup --env=prod
 ```
 
-Create your first user:
+Create your first user with the following command. You will be asked to enter a password afterwards.
 
 ```bash
-bin/console kimai:create-user username password admin@example.com ROLE_SUPER_ADMIN
+bin/console kimai:create-user username admin@example.com ROLE_SUPER_ADMIN
 ```
 
 For available roles, please refer to the [user documentation](var/docs/users.md).

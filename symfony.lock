@@ -416,6 +416,9 @@
             "ref": "85834af1496735f28d831489d12ab1921a875e0d"
         }
     },
+    "symfony/security-csrf": {
+        "version": "v4.0.4"
+    },
     "symfony/stopwatch": {
         "version": "v4.0.3"
     },
