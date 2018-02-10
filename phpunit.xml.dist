@@ -13,6 +13,7 @@
         <env name="APP_ENV" value="test"/>
         <env name="APP_DEBUG" value="1"/>
         <env name="APP_SECRET" value="5a79a1c866efef9ca1800f971d689f3e"/>
+        <env name="DATABASE_PREFIX" value="kimai2_"/>
         <!-- define your env variables for the test env here -->
 
         <!-- ###+ doctrine/doctrine-bundle ### -->
@@ -25,14 +26,26 @@
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
+        <testsuite name="Kimai">
             <directory>tests/</directory>
         </testsuite>
     </testsuites>
 
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src/</directory>
+            <directory suffix=".php">templates/</directory>
+            <exclude>
+                <directory suffix=".php">vendor/</directory>
+                <directory suffix=".php">tests/</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+
     <listeners>
         <!-- it begins a database transaction before every testcase and rolls it back after
              the test finished, so tests can manipulate the database without affecting other tests -->
-        <listener class="\DAMA\DoctrineTestBundle\PHPUnit\PHPUnitListener" />
+        <listener class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitListener" />
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
     </listeners>
 </phpunit>

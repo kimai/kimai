@@ -133,9 +133,9 @@ class CreateUserCommand extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      *
-     * @return mixed
+     * @return string
      */
-    protected function askForPassword(InputInterface $input, OutputInterface $output): mixed
+    protected function askForPassword(InputInterface $input, OutputInterface $output): string
     {
         /* @var QuestionHelper $helper */
         $helper = $this->getHelper('question');
@@ -144,8 +144,9 @@ class CreateUserCommand extends Command
         $passwordQuestion->setHidden(true);
         $passwordQuestion->setHiddenFallback(false);
         $passwordQuestion->setValidator(function (?string $value) {
-            if (trim($value) == '') {
-                throw new \Exception('The password cannot be empty');
+            $password = trim($value);
+            if (empty($password) || strlen($password) < 6) {
+                throw new \Exception('The password is too short, must be at least 6 character');
             }
 
             return $value;
