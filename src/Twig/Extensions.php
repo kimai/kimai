@@ -9,6 +9,7 @@
 
 namespace App\Twig;
 
+use App\Utils\Duration;
 use Symfony\Component\Intl\Intl;
 use App\Entity\Timesheet;
 use Twig\TwigFilter;
@@ -24,12 +25,18 @@ class Extensions extends \Twig_Extension
     private $locales;
 
     /**
+     * @var Duration
+     */
+    protected $durationFormatter;
+
+    /**
      * Extensions constructor.
      * @param string $locales
      */
     public function __construct($locales)
     {
         $this->locales = explode('|', $locales);
+        $this->durationFormatter = new Duration();
     }
 
     /**
@@ -77,20 +84,7 @@ class Extensions extends \Twig_Extension
      */
     public function duration($seconds, $includeSeconds = false)
     {
-        $hour = floor($seconds / 3600);
-        $minute = floor(($seconds / 60) % 60);
-
-        $hour = $hour > 9 ? $hour : '0' . $hour;
-        $minute = $minute > 9 ? $minute : '0' . $minute;
-
-        if (!$includeSeconds) {
-            return $hour . ':' . $minute . ' h';
-        }
-
-        $second = $seconds % 60;
-        $second = $second > 9 ? $second : '0' . $second;
-
-        return $hour . ':' . $minute  . ':' . $second . ' h';
+        return $this->durationFormatter->format($seconds, $includeSeconds) . ' h';
     }
 
     /**

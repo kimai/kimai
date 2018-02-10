@@ -6,38 +6,54 @@
 {% block page_subtitle %}{{ 'timesheet.subtitle'|trans }}{% endblock %}
 
 {% block main %}
+
     {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% endif %}
 
-    {{ tables.data_table_header({
-        'label.date': '',
-        'label.starttime': '',
-        'label.endtime': '',
+    {% set columns = {'label.date': ''} %}
+
+    {% if not duration_only %}
+        {% set columns = columns|merge({'label.starttime': '', 'label.endtime': ''}) %}
+    {% endif %}
+
+    {% set columns = columns|merge({
         'label.duration': 'hidden-xs',
         'label.rate': 'hidden-xs',
         'label.activity': 'hidden-xs hidden-sm',
         'label.description': 'hidden-xs hidden-sm',
         'label.actions': '',
-    }, toolbarForm, {'plus-square': path('timesheet_create')}) }}
+    }) %}
+
+    {{ tables.data_table_header(columns, toolbarForm, {'plus-square': path('timesheet_create')}) }}
 
     {% for entry in entries %}
         <tr>
             <td>{{ entry.begin|date(kimai_context.date_1) }}</td>
-            <td>{{ entry.begin|date("H:i") }}</td>
+
+            {% if not duration_only %}
+                <td>{{ entry.begin|date("H:i") }}</td>
+            {% endif %}
+
             {% if entry.end %}
-                <td>{{ entry.end|date("H:i") }}</td>
+                {% if not duration_only %}
+                    <td>{{ entry.end|date("H:i") }}</td>
+                {% endif %}
                 <td class="hidden-xs">{{ entry.duration|duration }}</td>
                 <td class="hidden-xs">{{ entry.rate|money(entry.activity.project.customer.currency) }}</td>
             {% else %}
-                <td>&dash;</td>
+                {% if not duration_only %}
+                    <td>&dash;</td>
+                {% endif %}
                 <td class="hidden-xs"><i>{{ entry.duration|duration }}</i></td>
                 <td class="hidden-xs">&dash;</td>
             {% endif %}
+
             <td class="hidden-xs hidden-sm">{{ widgets.label_activity(entry.activity) }}</td>
             <td class="hidden-xs hidden-sm">{{ entry.description }}</td>
             <td>
                 {% set actionButtons = {'edit': path('timesheet_edit', {'id' : entry.id, 'page': page})} %}
+
                 {% if entry.end %}
                     {% if is_granted('start', entry.activity) %}
                         {% set actionButtons = {'repeat': path('timesheet_start', {'id' : entry.activity.id})}|merge(actionButtons) %}
@@ -47,6 +63,7 @@
                         {% set actionButtons = {'stop': path('timesheet_stop', {'id' : entry.id})}|merge(actionButtons) %}
                     {% endif %}
                 {% endif %}
+
                 {% set actionButtons = actionButtons|merge({'trash': path('timesheet_delete', {'id' : entry.id, 'page': page})}) %}
                 {{ widgets.button_group(actionButtons) }}
             </td>
@@ -54,4 +71,5 @@
     {% endfor %}
 
     {{ tables.data_table_footer(entries, 'timesheet_paginated') }}
+
 {% endblock %}

@@ -9,18 +9,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Activity;
+use App\Entity\Timesheet;
+use App\Form\TimesheetEditForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\Query\TimesheetQuery;
 use Pagerfanta\Pagerfanta;
-use App\Entity\Activity;
-use App\Entity\Customer;
-use App\Entity\Timesheet;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Component\HttpFoundation\Request;
-use App\Form\TimesheetEditForm;
 
 /**
  * Controller used to manage timesheet contents in the public part of the site.
@@ -31,6 +30,15 @@ use App\Form\TimesheetEditForm;
 class TimesheetController extends AbstractController
 {
     use TimesheetControllerTrait;
+
+    /**
+     * TimesheetController constructor.
+     * @param bool $durationOnly
+     */
+    public function __construct(bool $durationOnly)
+    {
+        $this->setDurationMode($durationOnly);
+    }
 
     /**
      * @Route("/", defaults={"page": 1}, name="timesheet")
@@ -175,15 +183,11 @@ class TimesheetController extends AbstractController
      */
     protected function getCreateForm(Timesheet $entry)
     {
-        return $this->createForm(
-            TimesheetEditForm::class,
-            $entry,
-            [
-                'action' => $this->generateUrl('timesheet_create'),
-                'method' => 'POST',
-                'currency' => Customer::DEFAULT_CURRENCY,
-            ]
-        );
+        return $this->createForm(TimesheetEditForm::class, $entry, [
+            'action' => $this->generateUrl('timesheet_create'),
+            'method' => 'POST',
+            'duration_only' => $this->isDurationOnlyMode(),
+        ]);
     }
 
     /**
@@ -193,18 +197,14 @@ class TimesheetController extends AbstractController
      */
     protected function getEditForm(Timesheet $entry, $page)
     {
-        return $this->createForm(
-            TimesheetEditForm::class,
-            $entry,
-            [
-                'action' => $this->generateUrl('timesheet_edit', [
-                    'id' => $entry->getId(),
-                    'page' => $page
-                ]),
-                'method' => 'POST',
-                'currency' => $entry->getActivity()->getProject()->getCustomer()->getCurrency(),
-            ]
-        );
+        return $this->createForm(TimesheetEditForm::class, $entry, [
+            'action' => $this->generateUrl('timesheet_edit', [
+                'id' => $entry->getId(),
+                'page' => $page
+            ]),
+            'method' => 'POST',
+            'duration_only' => $this->isDurationOnlyMode(),
+        ]);
     }
 
     /**

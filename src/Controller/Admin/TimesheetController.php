@@ -10,17 +10,16 @@
 namespace App\Controller\Admin;
 
 use App\Controller\AbstractController;
+use App\Controller\TimesheetControllerTrait;
+use App\Entity\Timesheet;
+use App\Form\TimesheetEditForm;
 use App\Form\Toolbar\TimesheetAdminToolbarForm;
 use App\Repository\Query\TimesheetQuery;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
-use App\Controller\TimesheetControllerTrait;
-use App\Entity\Customer;
-use App\Entity\Timesheet;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use App\Form\TimesheetAdminForm;
 
 /**
  * Controller used for manage timesheet entries in the admin part of the site.
@@ -32,6 +31,15 @@ use App\Form\TimesheetAdminForm;
 class TimesheetController extends AbstractController
 {
     use TimesheetControllerTrait;
+
+    /**
+     * TimesheetController constructor.
+     * @param bool $durationOnly
+     */
+    public function __construct(bool $durationOnly)
+    {
+        $this->setDurationMode($durationOnly);
+    }
 
     /**
      * This route shows all users timesheet entries.
@@ -138,10 +146,11 @@ class TimesheetController extends AbstractController
      */
     protected function getCreateForm(Timesheet $entry)
     {
-        return $this->createForm(TimesheetAdminForm::class, $entry, [
+        return $this->createForm(TimesheetEditForm::class, $entry, [
             'action' => $this->generateUrl('admin_timesheet_create'),
             'method' => 'POST',
-            'currency' => Customer::DEFAULT_CURRENCY,
+            'duration_only' => $this->isDurationOnlyMode(),
+            'include_user' => true
         ]);
     }
 
@@ -152,13 +161,14 @@ class TimesheetController extends AbstractController
      */
     protected function getEditForm(Timesheet $entry, $page)
     {
-        return $this->createForm(TimesheetAdminForm::class, $entry, [
+        return $this->createForm(TimesheetEditForm::class, $entry, [
             'action' => $this->generateUrl('admin_timesheet_edit', [
                 'id' => $entry->getId(),
                 'page' => $page
             ]),
             'method' => 'POST',
-            'currency' => $entry->getActivity()->getProject()->getCustomer()->getCurrency(),
+            'duration_only' => $this->isDurationOnlyMode(),
+            'include_user' => true
         ]);
     }
 

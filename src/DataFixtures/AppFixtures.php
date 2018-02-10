@@ -106,7 +106,7 @@ class AppFixtures extends Fixture
                 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y', false
             ],
             [
-                'Tony Maier', 'Head of Development', self::USERNAME_TEAMLEAD, 'tony_teamlead@example.com', 'ROLE_TEAMLEAD',
+                'Tony Maier', 'Head of Sales', self::USERNAME_TEAMLEAD, 'tony_teamlead@example.com', 'ROLE_TEAMLEAD',
                 'https://en.gravatar.com/userimage/3533186/bf2163b1dd23f3107a028af0195624e9.jpeg', true
             ],
             // no avatar to test default image macro

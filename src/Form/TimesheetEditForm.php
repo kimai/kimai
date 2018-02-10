@@ -9,13 +9,13 @@
 
 namespace App\Form;
 
+use App\Form\Type\DurationType;
+use App\Form\Type\UserType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Entity\Customer;
 use App\Entity\Timesheet;
 use App\Form\Type\ActivityGroupedWithCustomerNameType;
 use App\Repository\ActivityRepository;
@@ -39,36 +39,39 @@ class TimesheetEditForm extends AbstractType
             $activity = $entry->getActivity();
         }
 
-        $builder
-            // datetime
-            ->add('begin', DateTimeType::class, [
+        if ($entry->getEnd() === null || !$options['duration_only']) {
+            $builder->add('begin', DateTimeType::class, [
                 'label' => 'label.begin',
                 'date_widget' => 'single_text',
-            ])
-            // datetime
-            ->add('end', DateTimeType::class, [
+            ]);
+        }
+
+        if ($options['duration_only']) {
+            $builder->add('duration', DurationType::class);
+        } else {
+            $builder->add('end', DateTimeType::class, [
                 'label' => 'label.end',
                 'date_widget' => 'single_text',
                 'required' => false,
-            ])
-            // Activity
+            ]);
+        }
+
+        $builder
             ->add('activity', ActivityGroupedWithCustomerNameType::class, [
                 'label' => 'label.activity',
                 'query_builder' => function (ActivityRepository $repo) use ($activity) {
                     return $repo->builderForEntityType($activity);
                 },
             ])
-            // customer
             ->add('description', TextareaType::class, [
                 'label' => 'label.description',
                 'required' => false,
             ])
-            // string
-            ->add('rate', MoneyType::class, [
-                'label' => 'label.rate',
-                'currency' => $builder->getOption('currency'),
-            ])
         ;
+
+        if ($options['include_user']) {
+            $builder->add('user', UserType::class);
+        }
     }
 
     /**
@@ -81,7 +84,8 @@ class TimesheetEditForm extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'timesheet_edit',
-            'currency' => Customer::DEFAULT_CURRENCY,
+            'duration_only' => false,
+            'include_user' => false,
         ]);
     }
 }
