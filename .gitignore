@@ -7,7 +7,7 @@
 !bin/console
 
 /var/data/kimai.sqlite
-
+/var/coverage/
 /var/cache/*
 !var/cache/.gitkeep
 
