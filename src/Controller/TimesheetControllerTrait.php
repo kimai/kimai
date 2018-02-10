@@ -18,6 +18,28 @@ use App\Repository\TimesheetRepository;
  */
 trait TimesheetControllerTrait
 {
+
+    /**
+     * @var bool
+     */
+    private $durationOnly = false;
+
+    /**
+     * @param bool $durationOnly
+     */
+    protected function setDurationMode(bool $durationOnly)
+    {
+        $this->durationOnly = $durationOnly;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDurationOnlyMode()
+    {
+        return $this->durationOnly;
+    }
+
     /**
      * @return TimesheetRepository
      */
@@ -56,6 +78,18 @@ trait TimesheetControllerTrait
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            if ($editForm->has('duration')) {
+                /** @var Timesheet $record */
+                $record = $editForm->getData();
+                $duration = $editForm->get('duration')->getData();
+                $end = null;
+                if ($duration > 0) {
+                    $end = clone $record->getBegin();
+                    $end->modify('+ ' . $duration . 'seconds');
+                }
+                $record->setEnd($end);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($entry);
             $entityManager->flush();
@@ -65,13 +99,10 @@ trait TimesheetControllerTrait
             return $this->redirectToRoute($redirectRoute, ['page' => $request->get('page')]);
         }
 
-        return $this->render(
-            $renderTemplate,
-            [
-                'entry' => $entry,
-                'form' => $editForm->createView(),
-            ]
-        );
+        return $this->render($renderTemplate, [
+            'entry' => $entry,
+            'form' => $editForm->createView(),
+        ]);
     }
 
     /**
@@ -87,10 +118,20 @@ trait TimesheetControllerTrait
         $entry->setBegin(new \DateTime());
 
         $createForm = $this->getCreateForm($entry);
-
         $createForm->handleRequest($request);
 
         if ($createForm->isSubmitted() && $createForm->isValid()) {
+            if ($createForm->has('duration')) {
+                $duration = $createForm->get('duration')->getData();
+                if ($duration > 0) {
+                    /** @var Timesheet $record */
+                    $record = $createForm->getData();
+                    $end = clone $record->getBegin();
+                    $end->modify('+ ' . $duration . 'seconds');
+                    $record->setEnd($end);
+                }
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($entry);
 
@@ -101,13 +142,10 @@ trait TimesheetControllerTrait
             return $this->redirectToRoute($redirectRoute);
         }
 
-        return $this->render(
-            $renderTemplate,
-            [
-                'entry' => $entry,
-                'form' => $createForm->createView(),
-            ]
-        );
+        return $this->render($renderTemplate, [
+            'entry' => $entry,
+            'form' => $createForm->createView(),
+        ]);
     }
 
     /**

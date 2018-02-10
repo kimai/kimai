@@ -2,8 +2,9 @@ kimai:
     # All configs related to timesheet and record management
     timesheet:
 
-        # Whether we display start and end time columns (false) or durations only (true)
-        duration_only: true
+        # Whether we display start and end time columns (false) or durations only (true).
+        # Setting this to true will also change the "edit timesheet" forms, more infos available in the confiugrations docu.
+        duration_only: false
 
         # Rounding rules are used to round the begin & end dates and the duration for timesheet records.
         # The "default" rule will round "begin" down and "end" up to the full minute, the "duration" will not be rounded.
