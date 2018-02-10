@@ -70,7 +70,7 @@ class CreateUserCommand extends Command
             ->addArgument('username', InputArgument::REQUIRED, 'The username of the user to be created (must be unique)')
             ->addArgument('email', InputArgument::REQUIRED, 'Email address of the user to be created (must be unique)')
             ->addArgument('role', InputArgument::OPTIONAL, 'A comma separated list of roles to assign. Examples: "ROLE_USER,ROLE_SUPER_ADMIN"', User::DEFAULT_ROLE)
-            ->addArgument('password', InputArgument::OPTIONAL, 'Password of the user to be created')
+            ->addArgument('password', InputArgument::OPTIONAL, 'Password for the user to be created')
         ;
     }
 

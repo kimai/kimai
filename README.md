@@ -115,7 +115,7 @@ bin/console doctrine:schema:create
 bin/console cache:warmup --env=prod
 ```
 
-Create your first user:
+Create your first user with the following command. You will be asked to enter a password afterwards.
 
 ```bash
 bin/console kimai:create-user username admin@example.com ROLE_SUPER_ADMIN
