@@ -78,7 +78,8 @@ class AppExtension extends Extension implements PrependExtensionInterface
         }
 
         $container->prependExtensionConfig(
-            'twig', [
+            'twig',
+            [
                 'globals' => [
                     'duration_only' => $config['timesheet']['duration_only'],
                 ],

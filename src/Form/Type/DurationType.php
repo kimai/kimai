@@ -73,7 +73,7 @@ class DurationType extends AbstractType
                     throw new TransformationFailedException($e->getMessage());
                 }
             },
-            function ($formatToInt) use ($formatter, $pattern)  {
+            function ($formatToInt) use ($formatter, $pattern) {
                 if (empty($formatToInt)) {
                     return 0;
                 }

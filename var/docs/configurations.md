@@ -10,7 +10,7 @@ Kimai supports to modes for displaying and recording timesheet entries:
 - `date` and `duration` (the so called `duration_only` mode)
 
 When activating the `duration_only` mode all timesheet tables will only display the `date` and `duration` of all records.
-In addition, the "edit timesheet" forms will be changed and instead of displaying the `ènd` date you will see a field for `duration`.
+In addition, the "edit timesheet" forms will be changed and instead of displaying the `end` date you will see a field for `duration`.
 The `start` date is only visible in these forms when editing an active or starting a new record. 
 
 You can activate the `duration_only` mode by switching the configuration key `kimai.timesheet.duration_only` to `true` in the file [kimai.yaml](../../config/packages/kimai.yaml).

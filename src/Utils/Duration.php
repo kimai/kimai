@@ -75,8 +75,7 @@ class Duration
 
         $seconds = 0;
 
-        switch($mode)
-        {
+        switch ($mode) {
             case self::FORMAT_COLON:
                 $parts = explode(':', $duration);
                 if (count($parts) < 2) {
