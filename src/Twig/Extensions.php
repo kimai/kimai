@@ -46,7 +46,6 @@ class Extensions extends \Twig_Extension
     {
         return [
             new TwigFilter('duration', [$this, 'duration']),
-            new TwigFilter('durationForEntry', [$this, 'durationForEntry']),
             new TwigFilter('money', [$this, 'money']),
             new TwigFilter('currency', [$this, 'currency']),
             new TwigFilter('country', [$this, 'country']),
@@ -64,26 +63,21 @@ class Extensions extends \Twig_Extension
     }
 
     /**
-     * Returns the formatted duration for a Timesheet entry.
-     *
-     * @param Timesheet $entry
-     * @param bool $includeSeconds
-     * @return string
-     */
-    public function durationForEntry(Timesheet $entry, $includeSeconds = false)
-    {
-        return $this->duration($entry->getDuration(), $includeSeconds);
-    }
-
-    /**
      * Transforms seconds into a duration string.
      *
-     * @param $seconds
+     * @param int|Timesheet $duration
      * @param bool $includeSeconds
      * @return string
      */
-    public function duration($seconds, $includeSeconds = false)
+    public function duration($duration, $includeSeconds = false)
     {
+        $seconds = $duration;
+        if ($duration instanceof Timesheet) {
+            $seconds = $duration->getDuration();
+            if ($duration->getEnd() === null) {
+                $seconds = time() - $duration->getBegin()->getTimestamp();
+            }
+        }
         return $this->durationFormatter->format($seconds, $includeSeconds) . ' h';
     }
 
