@@ -11,7 +11,6 @@ namespace App\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -60,7 +59,7 @@ class DoctrineCompilerPass implements CompilerPassInterface
         if ($engine === null) {
             throw new \Exception(
                 'Could not detect database engine. Please set the environment config DATABASE_ENGINE ' .
-                'to one ' . implode(', ', $this->allowedEngines) . ', e.g. in your .env file: DATABASE_ENGINE=sqlite'
+                'to one of: "' . implode(', ', $this->allowedEngines) . '" in your .env file: DATABASE_ENGINE=sqlite'
             );
         }
 
