@@ -15,6 +15,8 @@ The `start` date is only visible in these forms when editing an active or starti
 
 You can activate the `duration_only` mode by switching the configuration key `kimai.timesheet.duration_only` to `true` in the file [kimai.yaml](../../config/packages/kimai.yaml).
 
+For supported formats while entering the `duration` please see the [timesheet chapter](timesheet.md) 
+
 ## Remember me login
 
 The default period for the `Remember me` option can be changed in the config file [security.yaml](../../config/packages/security.yaml). 
