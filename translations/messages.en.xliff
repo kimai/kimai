@@ -311,6 +311,22 @@
                 <source>label.end</source>
                 <target>To</target>
             </trans-unit>
+            <trans-unit id="label.duration.help">
+                <source>label.duration.help</source>
+                <target>
+                    Supported formats:
+                    a. Colons   = {hours}:{minutes}[:{seconds}]
+                    b. Natural  = {hours}h{minutes}m[{seconds}s]
+                    c. Seconds  = {seconds}
+
+                    Examples:
+                    a. 2:27      (2 Hours, 27 Minutes)
+                    a. 3:143:13  (5 Hours, 23 Minutes, 13 Seconds - overflow is supported for every field)
+                    b. 2h27m     (2 Hours, 27 Minutes)
+                    b. 3h143m13s (5 Hours, 23 Minutes, 13 Seconds - overflow is supported for every field)
+                    c. 8820      (2 Hours, 27 Minutes)
+                </target>
+            </trans-unit>
 
             <!--
               User profile

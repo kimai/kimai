@@ -303,6 +303,23 @@
                 <source>label.end</source>
                 <target>Bis</target>
             </trans-unit>
+            <trans-unit id="label.duration.help">
+                <source>label.duration.help</source>
+                <target>
+                    Unterstützte Eingabeformate:
+                    a. Doppelpunkt-Notation    = {Stunden}:{Minuten}[:{Sekunden}]
+                    b. Natürliche Schreibweise = {Stunden}h{Minuten}m[{Sekunden}s]
+                    c. Sekunden                = {Sekunden}
+
+                    Beispiele:
+                    a. 2:27      (2 Stunden, 27 Minuten)
+                    a. 3:143:13  (5 Stunden, 23 Minuten, 13 Sekunden - Überlauf wird für jedes Feld unterstützt)
+                    b. 2h27m     (2 Stunden, 27 Minuten)
+                    b. 3h143m13s (5 Stunden, 23 Minuten, 13 Sekunden - Überlauf wird für jedes Feld unterstützt)
+                    c. 8820      (2 Stunden, 27 Minuten)
+                </target>
+            </trans-unit>
+
 
             <!--
               User profile

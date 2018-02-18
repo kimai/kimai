@@ -1,0 +1,11 @@
+{% extends "@AvanzuAdminTheme/layout/form-theme.html.twig" %}
+
+{% block form_label %}
+
+    {% if label_attr.help is defined and label_attr.help is not empty %}
+        {% set help = label_attr.help|trans %}
+    {% endif %}
+
+    {{ parent() }}
+
+{% endblock form_label %}
