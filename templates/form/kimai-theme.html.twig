@@ -4,6 +4,8 @@
 
     {% if label_attr.help is defined and label_attr.help is not empty %}
         {% set help = label_attr.help|trans %}
+    {% elseif label_attr.docu is defined and label_attr.docu is not empty %}
+        <a href="{{ path('help_chapter', {'chapter': label_attr.docu}) }}"><i class="fa fa-question-circle"></i></a>
     {% endif %}
 
     {{ parent() }}
