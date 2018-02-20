@@ -12,9 +12,8 @@
     <div class="box-footer">
         <input type="submit" value="{{ 'action.delete'|trans }}" class="btn btn-danger" />
         {% if back %}
-            <a href="{{ back }}" class="btn btn-primary">{{ 'action.back'|trans }}</a>
+            <a href="{{ back }}" class="btn btn-link">{{ 'action.back'|trans }}</a>
         {% endif %}
     </div>
     {{ form_end(form) }}
 </div>
-
