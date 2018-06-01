@@ -105,7 +105,7 @@ The database to use is up to you, but we would not recommend using the default S
 Please create your database and configure the connection string in your environment, e.g. with the `.env` file:
 ```
 APP_ENV=prod
-DATABASE_URL=sqlitemysql://db_user:db_password@127.0.0.1:3306/db_name
+DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
 APP_SECRET=insert_a_random_secret_string_for_production
 ```
 
