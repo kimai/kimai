@@ -116,7 +116,7 @@ class AppFixtures extends Fixture
             // no alias to test twig username macro
             [
                 null, 'Super Administrator', self::USERNAME_SUPER_ADMIN, 'susan_super@example.com', 'ROLE_SUPER_ADMIN',
-                '/bundles/avanzuadmintheme/img/avatar.png', true
+                '/build/images/default_avatar.png', true
             ]
         ];
     }

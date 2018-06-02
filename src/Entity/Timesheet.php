@@ -156,20 +156,12 @@ class Timesheet
 
     /**
      * Get duration
+     * Do not rely on the results of this method for active records.
      *
      * @return integer
      */
     public function getDuration()
     {
-        if ($this->begin === null) {
-            return 0;
-        }
-
-        if ($this->end === null) {
-            $current = new \DateTime();
-            return $current->getTimestamp() - $this->begin->getTimestamp();
-        }
-
         return $this->duration;
     }
 
