@@ -22,7 +22,7 @@ class ExtensionsTest extends TestCase
 
     public function testGetFilters()
     {
-        $filters = ['duration', 'durationForEntry', 'money', 'currency', 'country'];
+        $filters = ['duration', 'money', 'currency', 'country'];
         $sut = new Extensions('de');
         $twigFilters = $sut->getFilters();
         $this->assertCount(count($filters), $twigFilters);
@@ -110,8 +110,8 @@ class ExtensionsTest extends TestCase
         $this->assertEquals('02:37 h', $sut->duration($record->getDuration()));
         $this->assertEquals('02:37:17 h', $sut->duration($record->getDuration(), true));
 
-        $this->assertEquals('02:37 h', $sut->durationForEntry($record));
-        $this->assertEquals('02:37:17 h', $sut->durationForEntry($record, true));
+        $this->assertEquals('02:37 h', $sut->duration($record));
+        $this->assertEquals('02:37:17 h', $sut->duration($record, true));
     }
 
     protected function getTimesheet($seconds)
