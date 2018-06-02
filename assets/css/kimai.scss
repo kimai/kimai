@@ -14,10 +14,24 @@
 /* ================================ CONTENT ================================ */
 
 .content {
-    padding: 0;
+    padding: 15px 0;
+}
+.content-header {
+    h1 {
+        small {
+            display: none;
+        }
+    }
 }
 
 @media (min-width: $screen-sm-min) {
+    .content-header {
+        h1 {
+            small {
+                display: inline-block;
+            }
+        }
+    }
     .content {
         padding: 15px;
     }
@@ -118,6 +132,16 @@ footer.main-footer {
 }
 
 /* ================================ INVOICES ================================ */
+
+.invoice {
+    margin: 0;
+}
+
+@media (min-width: $screen-sm-min) {
+    .invoice {
+        margin: 10px 25px;
+    }
+}
 
 .page-header-small{
     font-size: 14px;
