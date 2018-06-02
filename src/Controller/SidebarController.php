@@ -32,10 +32,13 @@ class SidebarController extends AbstractController
      */
     public function settingsAction()
     {
-        return $this->render('sidebar/settings.html.twig', []);
+        $user = $this->getUser();
+
+        return $this->render('sidebar/settings.html.twig', [
+        	'user' => $user,
+		]);
 
         /*
-        $user = $this->getUser();
 
         $form = $this->createForm(UserPreferencesForm::class, $user, [
             'action' => $this->generateUrl('user_profile_preferences', ['username' => $user->getUsername()]),
