@@ -39,14 +39,12 @@
 
 /* ================================ NAVBAR ================================ */
 
-.main-header .navbar-custom-menu, .main-header .navbar-right
-
 .navbar-nav>li>a.ddt-large {
     padding-top: 12px;
     padding-bottom: 9px;
 }
 
-li.messages-menu ul.menu li:hover .pull-left i {
+li.messages-menu ul.menu li .pull-left i {
     color: #dd4b39;
 }
 

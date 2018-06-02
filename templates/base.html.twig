@@ -47,6 +47,21 @@
 
 {% block avanzu_navbar_messages %}
     {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        {% if is_granted('ROLE_USER') %}
+            <li class="visible-xs-inline-block">
+                <a href="{{ path('timesheet') }}" class="ddt-large">
+                    <i class="fa fa-clock-o fa-2x"></i>
+                </a>
+            </li>
+        {% endif %}
+        {% if is_granted('ROLE_TEAMLEAD') %}
+            <li class="visible-xs-inline-block">
+                <a href="{{ path('invoice') }}" class="ddt-large">
+                    <i class="fa fa-print fa-2x"></i>
+                </a>
+            </li>
+        {% endif %}
+
         {{ render(controller('App\\Controller\\TimesheetController::activeEntriesAction')) }}
     {% endif %}
 {% endblock %}
@@ -58,8 +73,8 @@
 {% endblock %}
 
 {% block avanzu_navbar_toggle %}{{ parent() }}{% endblock %}
-{% block avanzu_navbar_tasks %}{{ parent() }}{% endblock %}
-{% block avanzu_navbar_user %}{{ parent() }}{% endblock %}
+{% block avanzu_navbar_tasks %}{#{ parent() }#}{% endblock %}
+{% block avanzu_navbar_user %}{#{ parent() }#}{% endblock %}
 {% block avanzu_navbar_control_sidebar_toggle %}{{ parent() }}{% endblock %}
 
 {% block avanzu_sidebar_user %}{# right now we simply deactivate that box #}{% endblock %}
