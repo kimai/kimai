@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,15 +9,13 @@
 
 namespace App\Twig;
 
-use App\Utils\Markdown;
+use App\Utils\Duration;
 use Symfony\Component\Intl\Intl;
-use App\Entity\Customer;
 use App\Entity\Timesheet;
+use Twig\TwigFilter;
 
 /**
  * Multiple Twig extensions: filters and functions
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class Extensions extends \Twig_Extension
 {
@@ -29,12 +25,18 @@ class Extensions extends \Twig_Extension
     private $locales;
 
     /**
+     * @var Duration
+     */
+    protected $durationFormatter;
+
+    /**
      * Extensions constructor.
      * @param string $locales
      */
     public function __construct($locales)
     {
         $this->locales = explode('|', $locales);
+        $this->durationFormatter = new Duration();
     }
 
     /**
@@ -43,11 +45,10 @@ class Extensions extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('duration', array($this, 'duration')),
-            new \Twig_SimpleFilter('durationForEntry', array($this, 'durationForEntry')),
-            new \Twig_SimpleFilter('money', array($this, 'money')),
-            new \Twig_SimpleFilter('currency', array($this, 'currency')),
-            new \Twig_SimpleFilter('country', array($this, 'country')),
+            new TwigFilter('duration', [$this, 'duration']),
+            new TwigFilter('money', [$this, 'money']),
+            new TwigFilter('currency', [$this, 'currency']),
+            new TwigFilter('country', [$this, 'country']),
         ];
     }
 
@@ -62,40 +63,22 @@ class Extensions extends \Twig_Extension
     }
 
     /**
-     * Returns the formatted duration for a Timesheet entry.
-     *
-     * @param Timesheet $entry
-     * @param bool $includeSeconds
-     * @return string
-     */
-    public function durationForEntry(Timesheet $entry, $includeSeconds = false)
-    {
-        return $this->duration($entry->getDuration(), $includeSeconds);
-    }
-
-    /**
      * Transforms seconds into a duration string.
      *
-     * @param $seconds
+     * @param int|Timesheet $duration
      * @param bool $includeSeconds
      * @return string
      */
-    public function duration($seconds, $includeSeconds = false)
+    public function duration($duration, $includeSeconds = false)
     {
-        $hour = floor($seconds / 3600);
-        $minute = floor(($seconds / 60) % 60);
-
-        $hour = $hour > 9 ? $hour : '0' . $hour;
-        $minute = $minute > 9 ? $minute : '0' . $minute;
-
-        if (!$includeSeconds) {
-            return $hour . ':' . $minute . ' h';
+        $seconds = $duration;
+        if ($duration instanceof Timesheet) {
+            $seconds = $duration->getDuration();
+            if ($duration->getEnd() === null) {
+                $seconds = time() - $duration->getBegin()->getTimestamp();
+            }
         }
-
-        $second = $seconds % 60;
-        $second = $second > 9 ? $second : '0' . $second;
-
-        return $hour . ':' . $minute  . ':' . $second . ' h';
+        return $this->durationFormatter->format($seconds, $includeSeconds) . ' h';
     }
 
     /**
@@ -123,8 +106,11 @@ class Extensions extends \Twig_Extension
      */
     public function money($amount, $currency = null)
     {
-        $currency = $currency ?: Customer::DEFAULT_CURRENCY;
-        return round($amount) . ' ' . Intl::getCurrencyBundle()->getCurrencySymbol($currency);
+        $result = number_format(round($amount, 2), 2);
+        if ($currency !== null) {
+            $result .= ' ' . Intl::getCurrencyBundle()->getCurrencySymbol($currency);
+        }
+        return $result;
     }
 
     /**
@@ -142,13 +128,5 @@ class Extensions extends \Twig_Extension
         }
 
         return $locales;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'kimai.extension';
     }
 }

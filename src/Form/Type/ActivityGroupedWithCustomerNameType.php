@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,8 +13,6 @@ use App\Entity\Activity;
 
 /**
  * Custom form field type to select an activity which are grouped by their Projects, preceeded by their customer names.
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class ActivityGroupedWithCustomerNameType extends ActivityType
 {

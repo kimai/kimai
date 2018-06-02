@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -20,8 +18,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Defines the form used to edit the user preferences.
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class UserPreferencesForm extends AbstractType
 {
@@ -33,7 +29,7 @@ class UserPreferencesForm extends AbstractType
     {
         $builder->add('preferences', CollectionType::class, [
             'entry_type' => UserPreferenceType::class,
-            'entry_options' => array('label' => false),
+            'entry_options' => ['label' => false],
             'allow_add' => false,
             'allow_delete' => false,
             'label' => false,
@@ -50,7 +46,6 @@ class UserPreferencesForm extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'edit_user_preferences',
-
         ]);
     }
 }

@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -18,8 +16,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Defines the form used to create Users.
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class UserCreateType extends UserEditType
 {
@@ -37,8 +33,8 @@ class UserCreateType extends UserEditType
             ->add('plainPassword', RepeatedType::class, [
                 'required' => true,
                 'type' => PasswordType::class,
-                'first_options' => array('label' => 'label.password'),
-                'second_options' => array('label' => 'label.password_repeat'),
+                'first_options' => ['label' => 'label.password'],
+                'second_options' => ['label' => 'label.password_repeat'],
             ]);
 
         parent::buildForm($builder, $options);

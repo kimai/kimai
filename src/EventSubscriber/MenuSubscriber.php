@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -20,8 +18,6 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 /**
  * Menu event subscriber for timesheet, customer, projects, activities.
  * This is a sample implementation for developer who want to add new navigation entries in their bundles.
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class MenuSubscriber implements EventSubscriberInterface
 {
@@ -59,6 +55,7 @@ class MenuSubscriber implements EventSubscriberInterface
 
         $isLoggedIn = $auth->isGranted('IS_AUTHENTICATED_REMEMBERED');
         $isUser = $isLoggedIn && $auth->isGranted('ROLE_USER');
+        $isTeamlead = $isLoggedIn && $auth->isGranted('ROLE_TEAMLEAD');
 
         if (!$isLoggedIn || !$isUser) {
             return;
@@ -67,6 +64,14 @@ class MenuSubscriber implements EventSubscriberInterface
         $menu = $event->getMenu();
         $menu->addItem(
             new MenuItemModel('timesheet', 'menu.timesheet', 'timesheet', [], 'fa fa-clock-o')
+        );
+
+        if (!$isTeamlead) {
+            return;
+        }
+
+        $menu->addItem(
+            new MenuItemModel('invoice', 'menu.invoice', 'invoice', [], 'fa fa-print')
         );
     }
 

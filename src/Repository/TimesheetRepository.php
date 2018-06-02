@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,6 +13,7 @@ use App\Entity\User;
 use App\Entity\Activity;
 use App\Entity\Timesheet;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 use App\Model\Statistic\Month;
 use App\Model\Statistic\Year;
@@ -25,8 +24,6 @@ use App\Repository\Query\TimesheetQuery;
 
 /**
  * Class TimesheetRepository
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class TimesheetRepository extends AbstractRepository
 {
@@ -266,7 +263,7 @@ class TimesheetRepository extends AbstractRepository
 
     /**
      * @param TimesheetQuery $query
-     * @return Pagerfanta
+     * @return QueryBuilder|Pagerfanta
      */
     public function findByQuery(TimesheetQuery $query)
     {
@@ -289,6 +286,15 @@ class TimesheetRepository extends AbstractRepository
             $qb->andWhere($qb->expr()->isNull('t.end'));
         } elseif ($query->getState() == TimesheetQuery::STATE_STOPPED) {
             $qb->andWhere($qb->expr()->isNotNull('t.end'));
+        }
+
+        if ($query->getBegin() !== null) {
+            $qb->andWhere('t.begin >= :begin')
+                ->setParameter('begin', $query->getBegin());
+        }
+        if ($query->getEnd() !== null) {
+            $qb->andWhere('t.end <= :end')
+                ->setParameter('end', $query->getEnd());
         }
 
         if ($query->getActivity() !== null) {

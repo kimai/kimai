@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -19,12 +17,9 @@ use App\Entity\Project;
 
 /**
  * Can be used for advanced timesheet repository queries.
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
-class TimesheetQuery extends BaseQuery
+class TimesheetQuery extends ActivityQuery
 {
-
     const STATE_ALL = 1;
     const STATE_RUNNING = 2;
     const STATE_STOPPED = 3;
@@ -48,17 +43,17 @@ class TimesheetQuery extends BaseQuery
      */
     protected $activity;
     /**
-     * @var Project
-     */
-    protected $project;
-    /**
-     * @var Customer
-     */
-    protected $customer;
-    /**
      * @var int
      */
     protected $state = self::STATE_ALL;
+    /**
+     * @var \DateTime
+     */
+    protected $begin;
+    /**
+     * @var \DateTime
+     */
+    protected $end;
 
     /**
      * @return User
@@ -99,48 +94,6 @@ class TimesheetQuery extends BaseQuery
     }
 
     /**
-     * @return Project
-     */
-    public function getProject()
-    {
-        return $this->project;
-    }
-
-    /**
-     * Project overwrites: setCustomer()
-     * Is overwritten by: setActivity()
-     *
-     * @param Project $project
-     * @return TimesheetQuery
-     */
-    public function setProject(Project $project = null)
-    {
-        $this->project = $project;
-        return $this;
-    }
-
-    /**
-     * @return Customer
-     */
-    public function getCustomer()
-    {
-        return $this->customer;
-    }
-
-    /**
-     * Project overwrites: none
-     * Is overwritten by: setActivity() and setProject()
-     *
-     * @param Customer $customer
-     * @return TimesheetQuery
-     */
-    public function setCustomer(Customer $customer = null)
-    {
-        $this->customer = $customer;
-        return $this;
-    }
-
-    /**
      * @return int
      */
     public function getState()
@@ -163,6 +116,42 @@ class TimesheetQuery extends BaseQuery
             $this->state = $state;
         }
 
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getBegin()
+    {
+        return $this->begin;
+    }
+
+    /**
+     * @param \DateTime $begin
+     * @return TimesheetQuery
+     */
+    public function setBegin($begin)
+    {
+        $this->begin = $begin;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getEnd()
+    {
+        return $this->end;
+    }
+
+    /**
+     * @param \DateTime $end
+     * @return TimesheetQuery
+     */
+    public function setEnd($end)
+    {
+        $this->end = $end;
         return $this;
     }
 }

@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,7 +9,7 @@
 
 namespace App\Doctrine;
 
-use App\Entity\UserPreference;
+use App\Timesheet\CalculatorInterface;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -19,21 +17,40 @@ use App\Entity\Timesheet;
 
 /**
  * A listener to make sure all Timesheet entries will have a proper duration.
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class TimesheetSubscriber implements EventSubscriber
 {
+    /**
+     * @var CalculatorInterface[]
+     */
+    protected $calculator;
+
+    /**
+     * TimesheetSubscriber constructor.
+     * @param iterable $calculators
+     */
+    public function __construct(iterable $calculators)
+    {
+        foreach ($calculators as $calculator) {
+            if (!($calculator instanceof CalculatorInterface)) {
+                throw new \InvalidArgumentException(
+                    'Invalid TimesheetCalculator implementation given. Expected CalculatorInterface but received ' .
+                    get_class($calculator)
+                );
+            }
+        }
+        $this->calculator = $calculators;
+    }
 
     /**
      * @return array
      */
     public function getSubscribedEvents()
     {
-        return array(
+        return [
             'prePersist',
             'preUpdate',
-        );
+        ];
     }
 
     /**
@@ -59,24 +76,12 @@ class TimesheetSubscriber implements EventSubscriber
     {
         $entity = $args->getObject();
 
-        if ($entity instanceof Timesheet) {
-            $duration = 0;
-            if ($entity->getEnd() !== null) {
-                $duration = $entity->getEnd()->getTimestamp() - $entity->getBegin()->getTimestamp();
-                $entity->setDuration($duration);
+        if (!($entity instanceof Timesheet)) {
+            return;
+        }
 
-                // TODO allow to set hourly rate on activity, project and customer and prefer these
-
-                $hourlyRate = 0;
-                foreach ($entity->getUser()->getPreferences() as $preference) {
-                    if ($preference->getName() == UserPreference::HOURLY_RATE) {
-                        $hourlyRate = (int) $preference->getValue();
-                    }
-                }
-
-                $rate = $hourlyRate * ($duration / 3600);
-                $entity->setRate($rate);
-            }
+        foreach ($this->calculator as $calculator) {
+            $calculator->calculate($entity);
         }
     }
 }

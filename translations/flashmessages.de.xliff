@@ -26,6 +26,10 @@
                 <source>action.deleted_successfully</source>
                 <target>Eintrag wurde erfolgreich gelöscht</target>
             </trans-unit>
+            <trans-unit id="invoice.first_template">
+                <source>invoice.first_template</source>
+                <target>Sie müssen zunächst eine Rechnungsvorlage erstellen, bevor Sie fortfahren können</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

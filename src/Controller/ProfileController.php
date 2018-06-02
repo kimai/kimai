@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -30,8 +28,6 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/profile")
  * @Security("has_role('ROLE_USER')")
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class ProfileController extends AbstractController
 {
@@ -274,7 +270,7 @@ class ProfileController extends AbstractController
             UserPasswordType::class,
             $user,
             [
-                'validation_groups' => array('passwordUpdate'),
+                'validation_groups' => ['passwordUpdate'],
                 'action' => $this->generateUrl('user_profile_password', ['username' => $user->getUsername()]),
                 'method' => 'POST'
             ]

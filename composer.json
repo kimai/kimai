@@ -8,7 +8,7 @@
         "ext-pdo_sqlite": "*",
         "avanzu/admin-theme-bundle": "dev-kevinpapst",
         "beberlei/DoctrineExtensions": "^1.0",
-        "dama/doctrine-test-bundle": "^4.0",
+        "erusev/parsedown": "^1.6",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "^4.0",
         "symfony/console": "^4.0",
@@ -27,16 +27,19 @@
         "symfony/translation": "^4.0",
         "symfony/twig-bundle": "^4.0",
         "symfony/validator": "^4.0",
+        "symfony/webpack-encore-pack": "^1.0",
         "symfony/yaml": "^4.0",
         "twig/extensions": "^1.5",
         "white-october/pagerfanta-bundle": "^1.1"
     },
     "require-dev": {
+        "dama/doctrine-test-bundle": "^5.0",
         "doctrine/doctrine-fixtures-bundle": "^3.0",
         "friendsofphp/php-cs-fixer": "^2.10",
         "phpunit/phpunit": "^6.5",
         "squizlabs/php_codesniffer": "^3.2",
         "symfony/browser-kit": "^4.0",
+        "symfony/css-selector": "^4.0",
         "symfony/debug-pack": "^1.0",
         "symfony/dotenv": "^4.0",
         "symfony/maker-bundle": "^1.0",
@@ -67,8 +70,7 @@
     },
     "scripts": {
         "auto-scripts": {
-            "cache:clear": "symfony-cmd",
-            "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd"
+            "cache:clear": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"

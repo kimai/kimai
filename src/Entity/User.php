@@ -24,12 +24,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * )
  * @UniqueEntity("username")
  * @UniqueEntity("email")
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class User implements UserInterface, AdvancedUserInterface
 {
-
     const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
     const ROLE_USER = 'ROLE_USER';
     const ROLE_TEAMLEAD = 'ROLE_TEAMLEAD';
@@ -51,7 +48,7 @@ class User implements UserInterface, AdvancedUserInterface
      *
      * @ORM\Column(name="name", type="string", length=60, nullable=false, unique=true)
      * @Assert\NotBlank()
-     * @Assert\Length(min=6, max=160)
+     * @Assert\Length(min=5, max=60)
      */
     private $username;
 
@@ -367,6 +364,35 @@ class User implements UserInterface, AdvancedUserInterface
         }
         $this->preferences = $preferences;
         return $this;
+    }
+
+    /**
+     * @param string $name
+     * @return UserPreference|null
+     */
+    public function getPreference(string $name)
+    {
+        foreach ($this->preferences as $preference) {
+            if ($preference->getName() == $name) {
+                return $preference;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param $name
+     * @param null $default
+     * @return bool|int|null|string
+     */
+    public function getPreferenceValue($name, $default = null)
+    {
+        $preference = $this->getPreference($name);
+        if ($preference === null) {
+            return $default;
+        }
+        return $preference->getValue();
     }
 
     /**

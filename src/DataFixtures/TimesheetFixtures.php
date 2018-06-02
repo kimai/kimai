@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -16,18 +14,20 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * Defines the sample data to load in the database when running the unit and
- * functional tests. Execute this command to load the data:
+ * functional tests or while development.
  *
- *   $ php bin/console doctrine:fixtures:load
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
+ * Execute this command to load the data:
+ * $ php bin/console doctrine:fixtures:load
  */
-class TimesheetFixtures extends AppFixtures
+class TimesheetFixtures extends Fixture
 {
+    use FixturesTrait;
+
     const AMOUNT_TIMESHEET = 5000;      // timesheet entries total
     const RATE_MIN = 10;                // minimum rate for one hour
     const RATE_MAX = 80;                // maximum rate for one hour
@@ -185,11 +185,11 @@ class TimesheetFixtures extends AppFixtures
             $entry = new Customer();
             $entry
                 ->setCurrency($this->getRandomCurrency())
-                ->setVat(rand(0, 30))
                 ->setName($customerName . ($visible ? '' : '.'))
                 ->setAddress($this->getRandomLocation())
                 ->setComment($this->getRandomPhrase())
                 ->setVisible($visible)
+                ->setNumber('C0815-42-' . $i)
                 ->setCountry('DE') // TODO randomize country ?
                 ->setTimezone($allTimezones[rand(1, $amountTimezone)]);
 

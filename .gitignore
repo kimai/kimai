@@ -1,21 +1,13 @@
-###> symfony/framework-bundle ###
-.env
-/public/bundles/
-/vendor/
-###< symfony/framework-bundle ###
-
-###> symfony/web-server-bundle ###
-.web-server-pid
-###< symfony/web-server-bundle ###
 
 # ========== KIMAI ==========
+# IDE
+.idea/
+
 /bin/*
 !bin/console
 
-/public/theme/
-
-/var/data/*.sqlite
-
+/var/data/kimai.sqlite
+/var/coverage/
 /var/cache/*
 !var/cache/.gitkeep
 
@@ -26,8 +18,15 @@
 !var/sessions/.gitkeep
 # ========== KIMAI ==========
 
-# IDE
-.idea/
+###> symfony/framework-bundle ###
+.env
+/public/bundles/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> symfony/web-server-bundle ###
+.web-server-pid
+###< symfony/web-server-bundle ###
 
 ###> phpunit/phpunit ###
 /phpunit.xml
@@ -37,3 +36,12 @@
 .php_cs
 .php_cs.cache
 ###< friendsofphp/php-cs-fixer ###
+
+###> symfony/webpack-encore-pack ###
+/node_modules/
+###< symfony/webpack-encore-pack ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+/phpunit.xml
+###< symfony/phpunit-bridge ###

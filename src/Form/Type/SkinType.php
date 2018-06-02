@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,8 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Custom form field type to select the themes skin.
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class SkinType extends AbstractType
 {
@@ -30,7 +26,7 @@ class SkinType extends AbstractType
     {
         $resolver->setDefaults([
             'required' => true,
-            'choices' => array(
+            'choices' => [
                 'blue' => 'blue',
                 'black' => 'black',
                 'green' => 'green',
@@ -43,7 +39,7 @@ class SkinType extends AbstractType
                 'purple-light' => 'purple-light',
                 'red-light' => 'red-light',
                 'yellow-light' => 'yellow-light',
-            )
+            ]
         ]);
     }
 

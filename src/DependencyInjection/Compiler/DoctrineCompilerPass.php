@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,13 +11,10 @@ namespace App\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
 use Symfony\Component\Yaml\Yaml;
 
 /**
  * Dynamically loads additional doctrine functions for the configured database engine.
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class DoctrineCompilerPass implements CompilerPassInterface
 {
@@ -64,7 +59,7 @@ class DoctrineCompilerPass implements CompilerPassInterface
         if ($engine === null) {
             throw new \Exception(
                 'Could not detect database engine. Please set the environment config DATABASE_ENGINE ' .
-                'to one ' . implode(', ', $this->allowedEngines) . ', e.g. in your .env file: DATABASE_ENGINE=sqlite'
+                'to one of: "' . implode(', ', $this->allowedEngines) . '" in your .env file: DATABASE_ENGINE=sqlite'
             );
         }
 
@@ -118,13 +113,13 @@ class DoctrineCompilerPass implements CompilerPassInterface
         $ormConfig = $container->getDefinition('doctrine.orm.default_configuration');
 
         foreach ($sql['string_functions'] as $name => $function) {
-            $ormConfig->addMethodCall('addCustomStringFunction', array($name, $function));
+            $ormConfig->addMethodCall('addCustomStringFunction', [$name, $function]);
         }
         foreach ($sql['numeric_functions'] as $name => $function) {
-            $ormConfig->addMethodCall('addCustomNumericFunction', array($name, $function));
+            $ormConfig->addMethodCall('addCustomNumericFunction', [$name, $function]);
         }
         foreach ($sql['datetime_functions'] as $name => $function) {
-            $ormConfig->addMethodCall('addCustomDatetimeFunction', array($name, $function));
+            $ormConfig->addMethodCall('addCustomDatetimeFunction', [$name, $function]);
         }
     }
 }

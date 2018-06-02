@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -19,8 +17,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="activities")
  * @ORM\Entity(repositoryClass="App\Repository\ActivityRepository")
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class Activity
 {
@@ -48,6 +44,7 @@ class Activity
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      * @Assert\NotBlank()
+     * @Assert\Length(min=2, max=255)
      */
     private $name;
 
@@ -72,24 +69,6 @@ class Activity
      * @ORM\OneToMany(targetEntity="App\Entity\Timesheet", mappedBy="activity")
      */
     private $timesheets;
-
-    /**
-     * @return Timesheet[]
-     */
-    public function getTimesheets()
-    {
-        return $this->timesheets;
-    }
-
-    /**
-     * @param Timesheet[] $timesheets
-     * @return Activity
-     */
-    public function setTimesheets($timesheets)
-    {
-        $this->timesheets = $timesheets;
-        return $this;
-    }
 
     /**
      * @return Project

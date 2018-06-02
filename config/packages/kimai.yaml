@@ -1,0 +1,50 @@
+kimai:
+    # All configs related to timesheet and record management
+    timesheet:
+
+        # Whether we display start and end time columns (false) or durations only (true).
+        # Setting this to true will also change the "edit timesheet" forms, more infos available in the configurations docu.
+        duration_only: false
+
+        # Rounding rules are used to round the begin & end dates and the duration for timesheet records.
+        # The "default" rule will round "begin" down and "end" up to the full minute, the "duration" will not be rounded.
+        # Please read var/docs/configurations.md to find out more about rounding rules
+        rounding:
+            default:
+                days: ['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
+                begin: 1
+                end: 1
+                duration: 0
+
+        # If you want to apply different hourly rates for specific weekdays, you can uncomment the "rates" configuration.
+        # The "weekend" rule will add 50% to each timesheet entry that will be recorded on "saturdays" or "sundays".
+        # Please read var/docs/configurations.md to find out more about rates rules
+        # rates:
+        #    weekend:
+        #        days: ['saturday','sunday']
+        #        factor: 1.5
+
+    # All configs related to the invoice administration
+    invoice:
+        renderer:
+            default: 'App\Controller\InvoiceController::invoiceAction'
+            timesheet: 'App\Controller\InvoiceController::timesheetAction'
+        calculator:
+            default: 'App\Invoice\DefaultCalculator'
+            short: 'App\Invoice\ShortInvoiceCalculator'
+        number_generator:
+            default: 'App\Invoice\DateNumberGenerator'
+
+twig:
+    globals:
+        kimai_context:
+            date_1: "d.m.Y"         # used for display in timesheets
+            box_color: "green"      # a color for ???
+            active_warning: 3       # display a warning color if the user has at least X active recordings
+            control_sidebar:        # all tabs in the control sidebar
+                settings:
+                    icon: gears
+                    controller: 'App\Controller\SidebarController::settingsAction'
+                home:
+                    icon: question-circle-o
+                    template: sidebar/home.html.twig

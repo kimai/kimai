@@ -1,0 +1,21 @@
+{
+  "scripts": {
+    "dev-server": "./node_modules/.bin/encore dev-server",
+    "dev": "./node_modules/.bin/encore dev",
+    "watch": "./node_modules/.bin/encore dev --watch",
+    "build": "./node_modules/.bin/encore production",
+    "prod": "node_modules/.bin/encore production"
+  },
+  "devDependencies": {
+    "@symfony/webpack-encore": "git://github.com/symfony/webpack-encore.git#0.17.2",
+    "bootstrap-sass": "^3.3.7",
+    "font-awesome": "^4.7.0",
+    "icheck": "^1.0.2",
+    "jquery": "^3.3.1",
+    "jquery-slimscroll": "^1.3.8",
+    "jquery-ui": "^1.12.1",
+    "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.6",
+    "webpack-notifier": "^1.5.1"
+  }
+}

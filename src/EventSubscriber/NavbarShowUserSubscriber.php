@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -19,8 +17,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 /**
  * Class NavbarShowUserSubscriber
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class NavbarShowUserSubscriber implements EventSubscriberInterface
 {
@@ -54,6 +50,10 @@ class NavbarShowUserSubscriber implements EventSubscriberInterface
      */
     public function onShowUser(ShowUserEvent $event)
     {
+        if ($this->storage->getToken() === null) {
+            return;
+        }
+
         /* @var $myUser User */
         $myUser = $this->storage->getToken()->getUser();
 

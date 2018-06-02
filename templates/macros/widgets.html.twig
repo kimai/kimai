@@ -83,9 +83,9 @@
     </div>
 {% endmacro %}
 
-{% macro callout(type, description, title) %}
+{% macro callout(type, description, title, icon) %}
     <div class="callout callout-{{ type|default('danger') }} lead">
-        {% if title %}<h4>{{ title|trans }}</h4>{% endif %}
+        {% if title %}<h4>{% if icon %}<i class="fa fa-{{ icon }}">{% endif %}</i> {{ title|trans }}</h4>{% endif %}
         <p>{{ description|trans }}</p>
     </div>
 {% endmacro %}

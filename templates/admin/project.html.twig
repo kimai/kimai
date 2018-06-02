@@ -4,7 +4,6 @@
 
 {% block page_title %}{{ 'admin_project.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_project.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
-{% block javascript_imports %}<script src="{{ asset('js/toolbar.js') }}"></script>{% endblock %}
 
 {% block main %}
     {% if entries.count == 0 %}
@@ -12,7 +11,6 @@
     {% endif %}
 
     {{ tables.data_table_header({
-        'label.id': 'hidden-xs',
         'label.name': '',
         'label.customer': '',
         'label.comment': 'hidden-xs hidden-sm',
@@ -23,7 +21,6 @@
 
     {% for entry in entries %}
         <tr>
-            <td class="hidden-xs">{{ entry.id }}</td>
             <td>{{ entry.name }}</td>
             <td>
                 <a href="{{ path('admin_customer_edit', {'id' : entry.customer.id}) }}">{{ widgets.label_customer(entry.customer) }}</a>

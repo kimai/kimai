@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -27,8 +25,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\TimesheetRepository")
  * @ORM\HasLifecycleCallbacks()
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class Timesheet
 {
@@ -90,7 +86,7 @@ class Timesheet
     private $description;
 
     /**
-     * @var string
+     * @var float
      *
      * @ORM\Column(name="rate", type="decimal", precision=10, scale=2, nullable=false)
      */
@@ -150,7 +146,6 @@ class Timesheet
      * Set duration
      *
      * @param integer $duration
-     *
      * @return Timesheet
      */
     public function setDuration($duration)
@@ -161,20 +156,12 @@ class Timesheet
 
     /**
      * Get duration
+     * Do not rely on the results of this method for active records.
      *
      * @return integer
      */
     public function getDuration()
     {
-        if ($this->begin === null) {
-            return 0;
-        }
-
-        if ($this->end === null) {
-            $current = new \DateTime();
-            return $current->getTimestamp() - $this->begin->getTimestamp();
-        }
-
         return $this->duration;
     }
 
@@ -182,7 +169,6 @@ class Timesheet
      * Set user
      *
      * @param User $user
-     *
      * @return Timesheet
      */
     public function setUser(User $user)
@@ -205,7 +191,6 @@ class Timesheet
      * Set activity
      *
      * @param Activity $activity
-     *
      * @return Timesheet
      */
     public function setActivity($activity)
@@ -228,7 +213,6 @@ class Timesheet
      * Set description
      *
      * @param string $description
-     *
      * @return Timesheet
      */
     public function setDescription($description)
@@ -250,8 +234,7 @@ class Timesheet
     /**
      * Set rate
      *
-     * @param string $rate
-     *
+     * @param float $rate
      * @return Timesheet
      */
     public function setRate($rate)
@@ -263,7 +246,7 @@ class Timesheet
     /**
      * Get rate
      *
-     * @return string
+     * @return float
      */
     public function getRate()
     {

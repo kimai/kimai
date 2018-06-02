@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -19,8 +17,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="projects")
  * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class Project
 {
@@ -48,8 +44,17 @@ class Project
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      * @Assert\NotNull()
+     * @Assert\Length(min=2, max=255)
      */
     private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="order_number", type="text", length=20, nullable=true)
+     * @Assert\Length(max=20)
+     */
+    private $orderNumber;
 
     /**
      * @var string
@@ -67,7 +72,7 @@ class Project
     private $visible = true;
 
     /**
-     * @var string
+     * @var float
      *
      * @ORM\Column(name="budget", type="decimal", precision=10, scale=2, nullable=false)
      * @Assert\NotNull()
@@ -113,13 +118,11 @@ class Project
      * Set name
      *
      * @param string $name
-     *
      * @return Project
      */
     public function setName($name)
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -137,13 +140,11 @@ class Project
      * Set comment
      *
      * @param string $comment
-     *
      * @return Project
      */
     public function setComment($comment)
     {
         $this->comment = $comment;
-
         return $this;
     }
 
@@ -161,13 +162,11 @@ class Project
      * Set visible
      *
      * @param boolean $visible
-     *
      * @return Project
      */
     public function setVisible($visible)
     {
         $this->visible = $visible;
-
         return $this;
     }
 
@@ -184,21 +183,19 @@ class Project
     /**
      * Set budget
      *
-     * @param string $budget
-     *
+     * @param float $budget
      * @return Project
      */
     public function setBudget($budget)
     {
         $this->budget = $budget;
-
         return $this;
     }
 
     /**
      * Get budget
      *
-     * @return string
+     * @return float
      */
     public function getBudget()
     {
@@ -207,12 +204,11 @@ class Project
 
     /**
      * @param Activity[] $activities
-     * @return $this
+     * @return Project
      */
     public function setActivities($activities)
     {
         $this->activities = $activities;
-
         return $this;
     }
 
@@ -222,6 +218,24 @@ class Project
     public function getActivities()
     {
         return $this->activities;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrderNumber(): ?string
+    {
+        return $this->orderNumber;
+    }
+
+    /**
+     * @param string $orderNumber
+     * @return Project
+     */
+    public function setOrderNumber($orderNumber)
+    {
+        $this->orderNumber = $orderNumber;
+        return $this;
     }
 
     /**

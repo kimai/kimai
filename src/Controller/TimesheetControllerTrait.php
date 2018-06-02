@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,99 +9,43 @@
 
 namespace App\Controller;
 
-use App\Entity\Activity;
-use App\Entity\Customer;
-use App\Entity\Project;
 use App\Entity\Timesheet;
 use Symfony\Component\HttpFoundation\Request;
-use App\Form\Toolbar\TimesheetToolbarForm;
-use App\Repository\Query\TimesheetQuery;
 use App\Repository\TimesheetRepository;
 
 /**
  * Helper functions for Timesheet controller
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 trait TimesheetControllerTrait
 {
+
+    /**
+     * @var bool
+     */
+    private $durationOnly = false;
+
+    /**
+     * @param bool $durationOnly
+     */
+    protected function setDurationMode(bool $durationOnly)
+    {
+        $this->durationOnly = $durationOnly;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDurationOnlyMode()
+    {
+        return $this->durationOnly;
+    }
+
     /**
      * @return TimesheetRepository
      */
     protected function getRepository()
     {
         return $this->getDoctrine()->getRepository(Timesheet::class);
-    }
-
-    /**
-     * @param Request $request
-     * @return TimesheetQuery
-     */
-    protected function getQueryForRequest(Request $request)
-    {
-        $activity = $request->get('activity');
-        $activity = !empty(trim($activity)) ? trim($activity) : null;
-        $project = $request->get('project');
-        $project = !empty(trim($project)) ? trim($project) : null;
-        $customer = $request->get('customer');
-        $customer = !empty(trim($customer)) ? trim($customer) : null;
-        $state = $request->get('state');
-        $state = !empty(trim($state)) ? trim($state) : null;
-        $pageSize = (int) $request->get('pageSize');
-
-        if ($activity !== null) {
-            $repo = $this->getDoctrine()->getRepository(Activity::class);
-            $activity = $repo->getById($activity);
-            if ($activity !== null) {
-                $project = $activity->getProject();
-                if ($project !== null) {
-                    $customer = $project->getCustomer();
-                }
-            } else {
-                $customer = null;
-                $project = null;
-            }
-        } elseif ($project !== null) {
-            $repo = $this->getDoctrine()->getRepository(Project::class);
-            $project = $repo->getById($project);
-            if ($project !== null) {
-                $customer = $project->getCustomer();
-            } else {
-                $customer = null;
-            }
-        } elseif ($customer !== null) {
-            $repo = $this->getDoctrine()->getRepository(Customer::class);
-            $customer = $repo->getById($customer);
-        }
-
-        $query = new TimesheetQuery();
-        $query
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setCustomer($customer)
-            ->setPageSize($pageSize)
-            ->setState($state);
-
-        return $query ;
-    }
-
-    /**
-     * @param TimesheetQuery $query
-     * @param string $route
-     * @return mixed
-     */
-    protected function getToolbarForm(TimesheetQuery $query, $route = 'timesheet')
-    {
-        return $this->createForm(
-            TimesheetToolbarForm::class,
-            $query,
-            [
-                'action' => $this->generateUrl($route, [
-                    'page' => $query->getPage(),
-                ]),
-                'method' => 'GET',
-            ]
-        );
     }
 
     /**
@@ -136,6 +78,18 @@ trait TimesheetControllerTrait
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            if ($editForm->has('duration')) {
+                /** @var Timesheet $record */
+                $record = $editForm->getData();
+                $duration = $editForm->get('duration')->getData();
+                $end = null;
+                if ($duration > 0) {
+                    $end = clone $record->getBegin();
+                    $end->modify('+ ' . $duration . 'seconds');
+                }
+                $record->setEnd($end);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($entry);
             $entityManager->flush();
@@ -145,13 +99,10 @@ trait TimesheetControllerTrait
             return $this->redirectToRoute($redirectRoute, ['page' => $request->get('page')]);
         }
 
-        return $this->render(
-            $renderTemplate,
-            [
-                'entry' => $entry,
-                'form' => $editForm->createView(),
-            ]
-        );
+        return $this->render($renderTemplate, [
+            'entry' => $entry,
+            'form' => $editForm->createView(),
+        ]);
     }
 
     /**
@@ -167,10 +118,20 @@ trait TimesheetControllerTrait
         $entry->setBegin(new \DateTime());
 
         $createForm = $this->getCreateForm($entry);
-
         $createForm->handleRequest($request);
 
         if ($createForm->isSubmitted() && $createForm->isValid()) {
+            if ($createForm->has('duration')) {
+                $duration = $createForm->get('duration')->getData();
+                if ($duration > 0) {
+                    /** @var Timesheet $record */
+                    $record = $createForm->getData();
+                    $end = clone $record->getBegin();
+                    $end->modify('+ ' . $duration . 'seconds');
+                    $record->setEnd($end);
+                }
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($entry);
 
@@ -181,13 +142,10 @@ trait TimesheetControllerTrait
             return $this->redirectToRoute($redirectRoute);
         }
 
-        return $this->render(
-            $renderTemplate,
-            [
-                'entry' => $entry,
-                'form' => $createForm->createView(),
-            ]
-        );
+        return $this->render($renderTemplate, [
+            'entry' => $entry,
+            'form' => $createForm->createView(),
+        ]);
     }
 
     /**

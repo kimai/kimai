@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,15 +10,16 @@
 namespace App\Controller\Admin;
 
 use App\Controller\AbstractController;
+use App\Controller\TimesheetControllerTrait;
+use App\Entity\Timesheet;
+use App\Form\TimesheetEditForm;
+use App\Form\Toolbar\TimesheetAdminToolbarForm;
+use App\Repository\Query\TimesheetQuery;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
-use App\Controller\TimesheetControllerTrait;
-use App\Entity\Customer;
-use App\Entity\Timesheet;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use App\Form\TimesheetAdminForm;
 
 /**
  * Controller used for manage timesheet entries in the admin part of the site.
@@ -28,12 +27,19 @@ use App\Form\TimesheetAdminForm;
  * @Route("/team/timesheet")
  * @Security("has_role('ROLE_TEAMLEAD')")
  * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class TimesheetController extends AbstractController
 {
     use TimesheetControllerTrait;
+
+    /**
+     * TimesheetController constructor.
+     * @param bool $durationOnly
+     */
+    public function __construct(bool $durationOnly)
+    {
+        $this->setDurationMode($durationOnly);
+    }
 
     /**
      * This route shows all users timesheet entries.
@@ -48,8 +54,15 @@ class TimesheetController extends AbstractController
      */
     public function indexAction($page, Request $request)
     {
-        $query = $this->getQueryForRequest($request);
+        $query = new TimesheetQuery();
         $query->setPage($page);
+
+        $form = $this->getToolbarForm($query);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var TimesheetQuery $query */
+            $query = $form->getData();
+        }
 
         /* @var $entries Pagerfanta */
         $entries = $this->getRepository()->findByQuery($query);
@@ -58,7 +71,7 @@ class TimesheetController extends AbstractController
             'entries' => $entries,
             'page' => $page,
             'query' => $query,
-            'toolbarForm' => $this->getToolbarForm($query, 'admin_timesheet')->createView(),
+            'toolbarForm' => $form->createView(),
         ]);
     }
 
@@ -133,15 +146,12 @@ class TimesheetController extends AbstractController
      */
     protected function getCreateForm(Timesheet $entry)
     {
-        return $this->createForm(
-            TimesheetAdminForm::class,
-            $entry,
-            [
-                'action' => $this->generateUrl('admin_timesheet_create'),
-                'method' => 'POST',
-                'currency' => Customer::DEFAULT_CURRENCY,
-            ]
-        );
+        return $this->createForm(TimesheetEditForm::class, $entry, [
+            'action' => $this->generateUrl('admin_timesheet_create'),
+            'method' => 'POST',
+            'duration_only' => $this->isDurationOnlyMode(),
+            'include_user' => true
+        ]);
     }
 
     /**
@@ -151,17 +161,28 @@ class TimesheetController extends AbstractController
      */
     protected function getEditForm(Timesheet $entry, $page)
     {
-        return $this->createForm(
-            TimesheetAdminForm::class,
-            $entry,
-            [
-                'action' => $this->generateUrl('admin_timesheet_edit', [
-                    'id' => $entry->getId(),
-                    'page' => $page
-                ]),
-                'method' => 'POST',
-                'currency' => $entry->getActivity()->getProject()->getCustomer()->getCurrency(),
-            ]
-        );
+        return $this->createForm(TimesheetEditForm::class, $entry, [
+            'action' => $this->generateUrl('admin_timesheet_edit', [
+                'id' => $entry->getId(),
+                'page' => $page
+            ]),
+            'method' => 'POST',
+            'duration_only' => $this->isDurationOnlyMode(),
+            'include_user' => true
+        ]);
+    }
+
+    /**
+     * @param TimesheetQuery $query
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function getToolbarForm(TimesheetQuery $query)
+    {
+        return $this->createForm(TimesheetAdminToolbarForm::class, $query, [
+            'action' => $this->generateUrl('admin_timesheet', [
+                'page' => $query->getPage(),
+            ]),
+            'method' => 'GET',
+        ]);
     }
 }

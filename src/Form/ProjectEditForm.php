@@ -1,9 +1,7 @@
 <?php
 
 /*
- * This file is part of the Kimai package.
- *
- * (c) Kevin Papst <kevin@kevinpapst.de>
+ * This file is part of the Kimai time-tracking app.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,22 +9,20 @@
 
 namespace App\Form;
 
-use App\Form\Type\VisibilityType;
+use App\Entity\Customer;
+use App\Entity\Project;
+use App\Form\Type\CustomerType;
+use App\Form\Type\YesNoType;
+use App\Repository\CustomerRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Entity\Customer;
-use App\Entity\Project;
-use App\Form\Type\CustomerType;
-use App\Repository\CustomerRepository;
 
 /**
  * Defines the form used to edit Projects.
- *
- * @author Kevin Papst <kevin@kevinpapst.de>
  */
 class ProjectEditForm extends AbstractType
 {
@@ -45,29 +41,30 @@ class ProjectEditForm extends AbstractType
         }
 
         $builder
-            // string - length 255
             ->add('name', TextType::class, [
                 'label' => 'label.name',
             ])
-            // text
             ->add('comment', TextareaType::class, [
                 'label' => 'label.comment',
+                'required' => false,
             ])
-            // customer
+            ->add('orderNumber', TextType::class, [
+                'label' => 'label.order_number',
+                'required' => false,
+            ])
             ->add('customer', CustomerType::class, [
                 'label' => 'label.customer',
                 'query_builder' => function (CustomerRepository $repo) use ($customer) {
                     return $repo->builderForEntityType($customer);
                 },
             ])
-            // boolean
-            ->add('visible', VisibilityType::class, [
+            ->add('visible', YesNoType::class, [
                 'label' => 'label.visible',
             ])
-            // string
             ->add('budget', MoneyType::class, [
                 'label' => 'label.budget',
-                'currency' => $builder->getOption('currency'),
+                'currency' => $customer ? $customer->getCurrency() : $builder->getOption('currency'),
+                'required' => false,
             ])
         ;
     }
