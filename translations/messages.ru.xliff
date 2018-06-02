@@ -17,6 +17,10 @@
                 <source>no</source>
                 <target>Нет</target>
             </trans-unit>
+            <trans-unit id="both">
+                <source>both</source>
+                <target></target>
+            </trans-unit>
             <trans-unit id="subtitle.amount">
                 <source>subtitle.amount</source>
                 <target>(всего %count%)</target>
@@ -35,7 +39,9 @@
             </trans-unit>
             <trans-unit id="confirm.delete_message">
                 <source>confirm.delete_message</source>
-                <target>Требуется заново подтвердить удаление, так как это повлечет за собой удаление связанных объектов.</target>
+                <target>
+                    Требуется заново подтвердить удаление, так как это повлечет за собой удаление связанных объектов.
+                </target>
             </trans-unit>
 
             <!--
