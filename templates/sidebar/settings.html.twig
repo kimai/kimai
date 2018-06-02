@@ -1,4 +1,23 @@
+{% import "@AvanzuAdminTheme/layout/macros.html.twig" as macro %}
+{% import "macros/widgets.html.twig" as widgets %}
+
+
+<ul class="control-sidebar-menu">
+    <li>
+        <a href="{{ path('user_profile', {'username' : user.username}) }}">
+            <div class="pull-left image">
+                {{  macro.avatar(user.avatar, user.username, 'img-circle') }}
+            </div>
+            <div class="menu-info">
+                <h4 class="control-sidebar-subheading">{{ widgets.username(user) }}</h4>
+                <p>{{ user.title }}</p>
+            </div>
+        </a>
+    </li>
+</ul>
+
 <h3 class="control-sidebar-heading">{{ 'preferences.title'|trans({}, 'sidebar') }}</h3>
+
 <div class="form-group">
     <label class="control-sidebar-subheading">
         {{ 'preferences.label.language'|trans({}, 'sidebar') }}

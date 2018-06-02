@@ -39,6 +39,8 @@
 
 /* ================================ NAVBAR ================================ */
 
+.main-header .navbar-custom-menu, .main-header .navbar-right
+
 .navbar-nav>li>a.ddt-large {
     padding-top: 12px;
     padding-bottom: 9px;
@@ -81,8 +83,15 @@ li.open .ticktac i.running{
 
 /* ================================ TOOLBAR ================================ */
 
-.control-sidebar select {
-    color: #000;
+.control-sidebar {
+    select {
+        color: #000;
+    }
+    div.image {
+        img.img-circle {
+            max-width: 34px;
+        }
+    }
 }
 
 .data_table .box-header>.box-tools {
