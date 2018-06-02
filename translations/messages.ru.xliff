@@ -7,15 +7,15 @@
             -->
             <trans-unit id="browser.title">
                 <source>browser.title</source>
-                <target>Kimai - Zeiterfassung</target>
+                <target>Kimai - Учет времени</target>
             </trans-unit>
             <trans-unit id="yes">
                 <source>yes</source>
-                <target>Ja</target>
+                <target>Да</target>
             </trans-unit>
             <trans-unit id="no">
                 <source>no</source>
-                <target>Nein</target>
+                <target>Нет</target>
             </trans-unit>
             <trans-unit id="both">
                 <source>both</source>
@@ -23,24 +23,24 @@
             </trans-unit>
             <trans-unit id="subtitle.amount">
                 <source>subtitle.amount</source>
-                <target>(insgesamt %count%)</target>
+                <target>(всего %count%)</target>
             </trans-unit>
             <trans-unit id="This is a mandatory field">
                 <source>This is a mandatory field</source>
-                <target>Pflichtfeld</target>
+                <target>Обязательное поле</target>
             </trans-unit>
             <trans-unit id="create">
                 <source>create</source>
-                <target>Erstellen</target>
+                <target>Создать</target>
             </trans-unit>
             <trans-unit id="confirm.delete">
                 <source>confirm.delete</source>
-                <target>Wollen Sie das wirklich löschen?</target>
+                <target>Вы действительно хотите удалить?</target>
             </trans-unit>
             <trans-unit id="confirm.delete_message">
                 <source>confirm.delete_message</source>
                 <target>
-                    Sie müssen das Löschen erneut bestätigen, da verknüpfte Objekte existieren welche ebenfalls mit gelöscht werden.
+                    Требуется заново подтвердить удаление, так как это повлечет за собой удаление связанных объектов.
                 </target>
             </trans-unit>
 
@@ -49,27 +49,27 @@
             -->
             <trans-unit id="security.title.login">
                 <source>security.title.login</source>
-                <target>Anmelden</target>
+                <target>Логин</target>
             </trans-unit>
             <trans-unit id="label.password">
                 <source>label.password</source>
-                <target>Passwort</target>
+                <target>Пароль</target>
             </trans-unit>
             <trans-unit id="label.password_repeat">
                 <source>label.password_repeat</source>
-                <target>Passwort wiederholen</target>
+                <target>Повторить пароль</target>
             </trans-unit>
             <trans-unit id="action.sign_in">
                 <source>action.sign_in</source>
-                <target>Los geht's</target>
+                <target>Войти</target>
             </trans-unit>
             <trans-unit id="label.logout">
                 <source>label.logout</source>
-                <target>Abmelden</target>
+                <target>Выйти</target>
             </trans-unit>
             <trans-unit id="label.user_profile">
                 <source>label.user_profile</source>
-                <target>Mein Profil</target>
+                <target>Мой Профиль</target>
             </trans-unit>
 
             <!--
@@ -77,51 +77,91 @@
             -->
             <trans-unit id="menu.homepage">
                 <source>menu.homepage</source>
-                <target>Dashboard</target>
+                <target>Панель управления</target>
             </trans-unit>
             <trans-unit id="menu.admin">
                 <source>menu.admin</source>
-                <target>Administration</target>
+                <target>Администрирование</target>
             </trans-unit>
             <trans-unit id="menu.logout">
                 <source>menu.logout</source>
-                <target>Abmelden</target>
+                <target>Выйти</target>
             </trans-unit>
             <trans-unit id="menu.timesheet">
                 <source>menu.timesheet</source>
-                <target>Zeiterfassung</target>
-            </trans-unit>
-            <trans-unit id="menu.invoice">
-                <source>menu.invoice</source>
-                <target>Rechnungen</target>
+                <target>Учет времени</target>
             </trans-unit>
             <trans-unit id="menu.admin_timesheet">
                 <source>menu.admin_timesheet</source>
-                <target>Mitarbeiter Zeiten</target>
+                <target>Время работы сотрудников</target>
             </trans-unit>
             <trans-unit id="menu.admin_customer">
                 <source>menu.admin_customer</source>
-                <target>Kunden</target>
+                <target>Клиенты</target>
             </trans-unit>
             <trans-unit id="menu.admin_project">
                 <source>menu.admin_project</source>
-                <target>Projekte</target>
+                <target>Проекты</target>
             </trans-unit>
             <trans-unit id="menu.admin_activity">
                 <source>menu.admin_activity</source>
-                <target>Tätigkeiten</target>
+                <target>Активность</target>
             </trans-unit>
             <trans-unit id="menu.admin_user">
                 <source>menu.admin_user</source>
-                <target>Benutzer</target>
+                <target>Пользователи</target>
+            </trans-unit>
+
+            <!--
+              Footer
+            -->
+            <trans-unit id="footer.license">
+                <source>footer.license</source>
+                <target>Все права сохранены.</target>
             </trans-unit>
 
             <!--
               Error templates
             -->
+            <trans-unit id="http_error.name">
+                <source>http_error.name</source>
+                <target>Ошибка</target>
+            </trans-unit>
+            <trans-unit id="http_error.description">
+                <source>http_error.description</source>
+                <target>Ошибка</target>
+            </trans-unit>
+            <trans-unit id="http_error.suggestion">
+                <source>http_error.suggestion</source>
+                <target>Ошибка</target>
+            </trans-unit>
+            <trans-unit id="http_error_403.description">
+                <source>http_error_403.description</source>
+                <target>Ошибка</target>
+            </trans-unit>
+            <trans-unit id="http_error_403.suggestion">
+                <source>http_error_403.suggestion</source>
+                <target>Ошибка</target>
+            </trans-unit>
+            <trans-unit id="http_error_404.description">
+                <source>http_error_404.description</source>
+                <target>Ошибка</target>
+            </trans-unit>
+            <trans-unit id="http_error_404.suggestion">
+                <source>http_error_404.suggestion</source>
+                <target>Ошибка</target>
+            </trans-unit>
+            <trans-unit id="http_error_405.description">
+                <source>http_error_405.description</source>
+                <target>Ошибка</target>
+            </trans-unit>
+            <trans-unit id="http_error_405.suggestion">
+                <source>http_error_405.suggestion</source>
+                <target>Ошибка</target>
+            </trans-unit>
             <trans-unit id="error.no_entries_found">
                 <source>error.no_entries_found</source>
-                <target>Keine Einträge vorhanden</target>
+                <target>Записи не найдены</target>
             </trans-unit>
 
             <!--
@@ -129,39 +169,39 @@
             -->
             <trans-unit id="label.date">
                 <source>label.date</source>
-                <target>Datum</target>
+                <target>Дата</target>
             </trans-unit>
             <trans-unit id="label.starttime">
                 <source>label.starttime</source>
-                <target>Beginn</target>
+                <target>Начало</target>
             </trans-unit>
             <trans-unit id="label.endtime">
                 <source>label.endtime</source>
-                <target>Ende</target>
+                <target>Окончание</target>
             </trans-unit>
             <trans-unit id="label.duration">
                 <source>label.duration</source>
-                <target>Dauer</target>
+                <target>Продолжительность</target>
             </trans-unit>
             <trans-unit id="label.user">
                 <source>label.user</source>
-                <target>Benutzer</target>
+                <target>Пользователь</target>
             </trans-unit>
             <trans-unit id="label.username">
                 <source>label.username</source>
-                <target>Benutzername</target>
+                <target>Имя пользователя</target>
             </trans-unit>
             <trans-unit id="label.description">
                 <source>label.description</source>
-                <target>Beschreibung</target>
+                <target>Описание</target>
             </trans-unit>
             <trans-unit id="label.name">
                 <source>label.name</source>
-                <target>Name</target>
+                <target>Имя</target>
             </trans-unit>
             <trans-unit id="label.comment">
                 <source>label.comment</source>
-                <target>Kommentar</target>
+                <target>Комментарий</target>
             </trans-unit>
             <trans-unit id="label.id">
                 <source>label.id</source>
@@ -169,23 +209,23 @@
             </trans-unit>
             <trans-unit id="label.visible">
                 <source>label.visible</source>
-                <target>Sichtbar</target>
+                <target>Видимость</target>
             </trans-unit>
             <trans-unit id="label.budget">
                 <source>label.budget</source>
-                <target>Budget</target>
+                <target>Бюджет</target>
             </trans-unit>
             <trans-unit id="label.activity">
                 <source>label.activity</source>
-                <target>Tätigkeit</target>
+                <target>Активность</target>
             </trans-unit>
             <trans-unit id="label.project">
                 <source>label.project</source>
-                <target>Projekt</target>
+                <target>Проект</target>
             </trans-unit>
             <trans-unit id="label.hourly_rate">
                 <source>label.hourly_rate</source>
-                <target>Stundenlohn</target>
+                <target>Почасовая заработная плата</target>
             </trans-unit>
             <trans-unit id="label.skin">
                 <source>label.skin</source>
@@ -193,19 +233,19 @@
             </trans-unit>
             <trans-unit id="label.hours">
                 <source>label.hours</source>
-                <target>Stunden</target>
+                <target>Часы</target>
             </trans-unit>
             <trans-unit id="label.rate">
                 <source>label.rate</source>
-                <target>Lohn</target>
+                <target>Заработная плата</target>
             </trans-unit>
             <trans-unit id="label.language">
                 <source>label.language</source>
-                <target>Sprache</target>
+                <target>Язык</target>
             </trans-unit>
             <trans-unit id="label.customer">
                 <source>label.customer</source>
-                <target>Kunde</target>
+                <target>Клиент</target>
             </trans-unit>
             <trans-unit id="label.email">
                 <source>label.email</source>
@@ -217,23 +257,23 @@
             -->
             <trans-unit id="label.actions">
                 <source>label.actions</source>
-                <target>Aktionen</target>
+                <target>Действия</target>
             </trans-unit>
             <trans-unit id="action.edit">
                 <source>action.edit</source>
-                <target>Bearbeiten</target>
+                <target>Редактировать</target>
             </trans-unit>
             <trans-unit id="action.delete">
                 <source>action.delete</source>
-                <target>Löschen</target>
+                <target>Удалить</target>
             </trans-unit>
             <trans-unit id="action.save">
                 <source>action.save</source>
-                <target>Speichern</target>
+                <target>Сохранить</target>
             </trans-unit>
             <trans-unit id="action.back">
                 <source>action.back</source>
-                <target>Zurück</target>
+                <target>Назад</target>
             </trans-unit>
 
             <!--
@@ -241,23 +281,23 @@
             -->
             <trans-unit id="dashboard.title">
                 <source>dashboard.title</source>
-                <target>Dashboard</target>
+                <target>Панель управления</target>
             </trans-unit>
             <trans-unit id="dashboard.subtitle">
                 <source>dashboard.subtitle</source>
-                <target>Willkommen!</target>
+                <target>Добро пожаловать!</target>
             </trans-unit>
             <trans-unit id="dashboard.you">
                 <source>dashboard.you</source>
-                <target>Deine Statistiken</target>
+                <target>Твоя статистика</target>
             </trans-unit>
             <trans-unit id="dashboard.all">
                 <source>dashboard.all</source>
-                <target>Alle Benutzer</target>
+                <target>Все пользователи</target>
             </trans-unit>
             <trans-unit id="dashboard.admin">
                 <source>dashboard.admin</source>
-                <target>Administrator</target>
+                <target>Администратор</target>
             </trans-unit>
 
             <!--
@@ -265,19 +305,19 @@
             -->
             <trans-unit id="more.info.link">
                 <source>more.info.link</source>
-                <target>Mehr Infos</target>
+                <target>Подробнее</target>
             </trans-unit>
             <trans-unit id="badge.visible">
                 <source>badge.visible</source>
-                <target>Ja</target>
+                <target>Да</target>
             </trans-unit>
             <trans-unit id="badge.invisible">
                 <source>badge.invisible</source>
-                <target>Nein</target>
+                <target>Нет</target>
             </trans-unit>
             <trans-unit id="label.toggle_dropdown">
                 <source>label.toggle_dropdown</source>
-                <target>Menü anzeigen</target>
+                <target>Отобразить меню</target>
             </trans-unit>
 
             <!--
@@ -285,23 +325,23 @@
             -->
             <trans-unit id="timesheet.title">
                 <source>timesheet.title</source>
-                <target>Zeiterfassung</target>
+                <target>Учет времени</target>
             </trans-unit>
             <trans-unit id="timesheet.subtitle">
                 <source>timesheet.subtitle</source>
-                <target>Verwalten Sie Ihre Zeiteinträge</target>
+                <target>Управление записями временного учета</target>
             </trans-unit>
             <trans-unit id="timesheet.edit">
                 <source>timesheet.edit</source>
-                <target>Eintrag bearbeiten</target>
+                <target>Редактировать запись</target>
             </trans-unit>
             <trans-unit id="label.begin">
                 <source>label.begin</source>
-                <target>Von</target>
+                <target>С</target>
             </trans-unit>
             <trans-unit id="label.end">
                 <source>label.end</source>
-                <target>Bis</target>
+                <target>До</target>
             </trans-unit>
 
             <!--
@@ -309,67 +349,55 @@
             -->
             <trans-unit id="profile.title">
                 <source>profile.title</source>
-                <target>Benutzerprofil</target>
+                <target>Имя пользователя</target>
             </trans-unit>
             <trans-unit id="profile.subtitle">
                 <source>profile.subtitle</source>
-                <target>Verwalte Deine Einstellungen</target>
+                <target>Управление настройками</target>
             </trans-unit>
             <trans-unit id="profile.about_me">
                 <source>profile.about_me</source>
-                <target>Über mich</target>
+                <target>Обо мне</target>
             </trans-unit>
             <trans-unit id="profile.first_entry">
                 <source>profile.first_entry</source>
-                <target>Arbeitet seit</target>
+                <target>Первая запись</target>
             </trans-unit>
             <trans-unit id="profile.tab_monthly">
                 <source>profile.tab_monthly</source>
-                <target>Jahresstatistik</target>
+                <target>Годовая статистика</target>
             </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>
-                <target>Profil</target>
+                <target>Профиль</target>
             </trans-unit>
             <trans-unit id="profile.password">
                 <source>profile.password</source>
-                <target>Passwort</target>
+                <target>Пароль</target>
             </trans-unit>
             <trans-unit id="profile.roles">
                 <source>profile.roles</source>
-                <target>Rollen</target>
+                <target>Роли / Задачи</target>
             </trans-unit>
             <trans-unit id="profile.preferences">
                 <source>profile.preferences</source>
-                <target>Einstellungen</target>
+                <target>Настройки</target>
             </trans-unit>
             <trans-unit id="label.theme.fixed_layout">
                 <source>label.theme.fixed_layout</source>
-                <target>Aktiviert das "statische Layout" (linke Navigationsleiste und Header bleiben beim Scrollen an ihrer Stelle)</target>
+                <target>Активизирует "статическую раскладку" (левая панель навигации и заголовок остаются при прокрутке страницы на своих местах)</target>
             </trans-unit>
             <trans-unit id="label.theme.boxed_layout">
                 <source>label.theme.boxed_layout</source>
-                <target>Aktiviert das "Boxlayout" (gut für große Bildschirme, lässt sich aber nicht mit dem "statischen Layout" gemeinsam verwenden)</target>
+                <target>Активизирует "Сжатую раскладку" (подходит для больших экранов, но не для одновременного применения со "статичной раскладкой")</target>
             </trans-unit>
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
-                <target>Steuert den Status der linken Navigationsleiste (zugeklappt oder geöffnet)</target>
+                <target>Управление статусом левой панели навигации (скрыта или открыта)</target>
             </trans-unit>
             <trans-unit id="label.theme.mini_sidebar">
                 <source>label.theme.mini_sidebar</source>
-                <target>Aktiviert die minimierte Version der linken Navigationsleiste</target>
-            </trans-unit>
-
-            <!--
-              Help - Manual
-            -->
-            <trans-unit id="help.title">
-                <source>help.title</source>
-                <target>Hilfe</target>
-            </trans-unit>
-            <trans-unit id="help.subtitle">
-                <source>help.subtitle</source>
-                <target>Anleitung zur Benutzung und Konfiguration von Kimai (nur auf Englisch verfügbar)</target>
+                <target>Активизирует уменьшенную версию панели навигации</target>
             </trans-unit>
 
             <!--
@@ -377,11 +405,11 @@
             -->
             <trans-unit id="admin_timesheet.title">
                 <source>admin_timesheet.title</source>
-                <target>Mitarbeiter Zeiterfassung</target>
+                <target>Учет рабочего времени сотрудников</target>
             </trans-unit>
             <trans-unit id="admin_timesheet.subtitle">
                 <source>admin_timesheet.subtitle</source>
-                <target>Zeiten aller Benutzer</target>
+                <target>Отработанное время всех сотрудников</target>
             </trans-unit>
 
             <!--
@@ -389,18 +417,18 @@
             -->
             <trans-unit id="admin_project.title">
                 <source>admin_project.title</source>
-                <target>Projekte</target>
+                <target>Проекты</target>
             </trans-unit>
             <trans-unit id="admin_project.subtitle">
                 <source>admin_project.subtitle</source>
-                <target>Ein Projekt fasst Tätigkeiten für jeweils einen Kunden in einer Gruppe zusammen</target>
+                <target>Проект объединяет виды деятельности для каждого отдельного клиента в одну группу</target>
             </trans-unit>
             <trans-unit id="admin_project.delete_confirm">
                 <source>admin_project.delete_confirm</source>
                 <target>
-                    Momentan existieren für das Projekt %project% des Kunden %customer% insgesamt %activities%
-                    Tätigkeiten und %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen.
-                    Diese Tätigkeiten und Zeiteinträge werden ebenfalls mit gelöscht!
+                    На данный момент для проекта %project% клиента %customer% существует всего %activities%
+                    активностей и %records% временных записей, общая продолдительность которых составляет %duration%.
+                    Эти виды активности и временные записи также будут удалены!
                 </target>
             </trans-unit>
 
@@ -409,18 +437,18 @@
             -->
             <trans-unit id="admin_activity.title">
                 <source>admin_activity.title</source>
-                <target>Tätigkeiten</target>
+                <target>Деятельность</target>
             </trans-unit>
             <trans-unit id="admin_activity.subtitle">
                 <source>admin_activity.subtitle</source>
-                <target>Aufgaben die zur Zeiterfassung genutzt werden können</target>
+                <target>Задачи, к которым применим учет времени</target>
             </trans-unit>
             <trans-unit id="admin_activity.delete_confirm">
                 <source>admin_activity.delete_confirm</source>
                 <target>
-                    Momentan existieren für die Tätigkeit %activity% im Projekt %project% für den Kunden %customer%
-                    insgesamt %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen. Diese
-                    Zeiteinträge werden ebenfalls mit gelöscht!
+                    На данный момент для дейтельности %activity% в проекте %project% клиента %customer% существует
+                    всего %records% временных записей, общая продолдительность которых составляет %duration%. Эти
+                    временные записи также будут удалены!
                 </target>
             </trans-unit>
 
@@ -429,66 +457,62 @@
             -->
             <trans-unit id="admin_customer.title">
                 <source>admin_customer.title</source>
-                <target>Kunden</target>
+                <target>Клиенты</target>
             </trans-unit>
             <trans-unit id="admin_customer.subtitle">
                 <source>admin_customer.subtitle</source>
-                <target>Ihre Kunden stellen die Basis dar, auf der Sie Projekte und Tätigkeiten anlegen können</target>
-            </trans-unit>
-            <trans-unit id="label.customer_number">
-                <source>label.customer_number</source>
-                <target>Kundennummer</target>
+                <target>Журнал записи клиентской базы, включающий проекты и деятельность.</target>
             </trans-unit>
             <trans-unit id="label.company">
                 <source>label.company</source>
-                <target>Unternehmensbezeichnung</target>
+                <target>Название компании</target>
             </trans-unit>
             <trans-unit id="label.vat">
                 <source>label.vat</source>
-                <target>Umsatzsteuer</target>
+                <target>Налог НДС</target>
             </trans-unit>
             <trans-unit id="label.contact">
                 <source>label.contact</source>
-                <target>Kontakt</target>
+                <target>Контакт</target>
             </trans-unit>
             <trans-unit id="label.address">
                 <source>label.address</source>
-                <target>Adresse</target>
+                <target>Адресса</target>
             </trans-unit>
             <trans-unit id="label.country">
                 <source>label.country</source>
-                <target>Land</target>
+                <target>Страна</target>
             </trans-unit>
             <trans-unit id="label.phone">
                 <source>label.phone</source>
-                <target>Telefon</target>
+                <target>Телефон</target>
             </trans-unit>
             <trans-unit id="label.fax">
                 <source>label.fax</source>
-                <target>Fax</target>
+                <target>Факс</target>
             </trans-unit>
             <trans-unit id="label.mobile">
                 <source>label.mobile</source>
-                <target>Handy</target>
+                <target>Мобильный телефон</target>
             </trans-unit>
             <trans-unit id="label.homepage">
                 <source>label.homepage</source>
-                <target>Homepage</target>
+                <target>Персональная страница</target>
             </trans-unit>
             <trans-unit id="label.timezone">
                 <source>label.timezone</source>
-                <target>Zeitzone</target>
+                <target>Временная зона</target>
             </trans-unit>
             <trans-unit id="label.currency">
                 <source>label.currency</source>
-                <target>Währung</target>
+                <target>Валюта</target>
             </trans-unit>
             <trans-unit id="admin_customer.delete_confirm">
                 <source>admin_customer.delete_confirm</source>
                 <target>
-                    Momentan existieren für den Kunden %customer% insgesamt %project% Projekte mit %activity%
-                    Tätigkeiten, die sich in %records% Zeiteinträgen auf eine Gesamtdauer von %duration% belaufen. Diese
-                    Projekte, Tätigkeiten und Zeiteinträge werden ebenfalls mit gelöscht!
+                  На данный момент для дейтельности %activity% в проекте %project% клиента %customer% существует
+                  всего %records% временных записей, общая продолдительность которых составляет %duration%. Эти
+                  проекты, виды активности и временные записи также будут удалены!
                 </target>
             </trans-unit>
 
@@ -497,31 +521,31 @@
             -->
             <trans-unit id="admin_user.title">
                 <source>admin_user.title</source>
-                <target>Benutzer</target>
+                <target>Пользователь</target>
             </trans-unit>
             <trans-unit id="admin_user.subtitle">
                 <source>admin_user.subtitle</source>
-                <target>Alle registrierten Benutzer der Zeitverwaltung</target>
+                <target>Все зарегистрированные пользователи тайм-менеджмента</target>
             </trans-unit>
             <trans-unit id="label.alias">
                 <source>label.alias</source>
-                <target>Name</target>
+                <target>Имя</target>
             </trans-unit>
             <trans-unit id="label.title">
                 <source>label.title</source>
-                <target>Titel</target>
+                <target>Должность</target>
             </trans-unit>
             <trans-unit id="label.avatar">
                 <source>label.avatar</source>
-                <target>Profilbild</target>
+                <target>Изображение профиля</target>
             </trans-unit>
             <trans-unit id="label.active">
                 <source>label.active</source>
-                <target>Aktiv</target>
+                <target>Активный профиль</target>
             </trans-unit>
             <trans-unit id="label.roles">
                 <source>label.roles</source>
-                <target>Rolle</target>
+                <target>Позиция</target>
             </trans-unit>
 
             <!--
@@ -529,23 +553,23 @@
             -->
             <trans-unit id="ROLE_SUPER_ADMIN">
                 <source>ROLE_SUPER_ADMIN</source>
-                <target>System-Admin</target>
+                <target>Системный администратор</target>
             </trans-unit>
             <trans-unit id="ROLE_ADMIN">
                 <source>ROLE_ADMIN</source>
-                <target>Administrator</target>
+                <target>Администратор</target>
             </trans-unit>
             <trans-unit id="ROLE_TEAMLEAD">
                 <source>ROLE_TEAMLEAD</source>
-                <target>Teamleiter</target>
+                <target>Руководитель группы</target>
             </trans-unit>
             <trans-unit id="ROLE_USER">
                 <source>ROLE_USER</source>
-                <target>Benutzer</target>
+                <target>Пользователь</target>
             </trans-unit>
             <trans-unit id="ROLE_CUSTOMER">
                 <source>ROLE_CUSTOMER</source>
-                <target>Kunde</target>
+                <target>Клиент</target>
             </trans-unit>
 
             <!--
@@ -553,19 +577,19 @@
             -->
             <trans-unit id="stats.durationThisMonth">
                 <source>stats.durationThisMonth</source>
-                <target>Arbeitszeit diesen Monat</target>
+                <target>Отработанное время за этот месяц</target>
             </trans-unit>
             <trans-unit id="stats.amountThisMonth">
                 <source>stats.amountThisMonth</source>
-                <target>Umsatz diesen Monat</target>
+                <target>Оборот за этот месяц</target>
             </trans-unit>
             <trans-unit id="stats.durationTotal">
                 <source>stats.durationTotal</source>
-                <target>Arbeitszeit total</target>
+                <target>Общее отработанное время</target>
             </trans-unit>
             <trans-unit id="stats.amountTotal">
                 <source>stats.amountTotal</source>
-                <target>Umsatz total</target>
+                <target>Общий оборот</target>
             </trans-unit>
 
             <!--
@@ -573,159 +597,31 @@
             -->
             <trans-unit id="stats.userTotal">
                 <source>stats.userTotal</source>
-                <target>Anzahl Benutzer</target>
+                <target>Всего пользователей</target>
             </trans-unit>
             <trans-unit id="stats.userActiveThisMoth">
                 <source>stats.userActiveThisMoth</source>
-                <target>Aktive Benutzer diesen Monat</target>
+                <target>Активные пользователи в этом месяце</target>
             </trans-unit>
             <trans-unit id="stats.userActiveEver">
                 <source>stats.userActiveEver</source>
-                <target>Aktive Benutzer jemals</target>
+                <target>Когда либо активные пользователи </target>
             </trans-unit>
             <trans-unit id="stats.activeRecordings">
                 <source>stats.activeRecordings</source>
-                <target>Momentan aktive Zeitmessungen</target>
+                <target>Текущий активный хронометраж</target>
             </trans-unit>
-            <trans-unit id="stats.activitiesTotal">
+            <trans-unit id="stats.ctivitiesTotal">
                 <source>stats.activitiesTotal</source>
-                <target>Anzahl Tätigkeiten</target>
+                <target>Количество дейтельностей</target>
             </trans-unit>
             <trans-unit id="stats.projectsTotal">
                 <source>stats.projectsTotal</source>
-                <target>Anzahl Projekte</target>
+                <target>Количество проектов</target>
             </trans-unit>
             <trans-unit id="stats.customerTotal">
                 <source>stats.customerTotal</source>
-                <target>Anzahl Kunden</target>
-            </trans-unit>
-
-            <!--
-              Invoice
-            -->
-            <trans-unit id="admin_invoice_template.title">
-                <source>admin_invoice_template.title</source>
-                <target>Rechnungsvorlagen</target>
-            </trans-unit>
-            <trans-unit id="admin_invoice_template.subtitle">
-                <source>admin_invoice_template.subtitle</source>
-                <target>Verwalten Sie Ihre Rechnungsvorlagen, mit deren Hilfe Sie ihre Daten exportieren können.</target>
-            </trans-unit>
-            <trans-unit id="invoice.title">
-                <source>invoice.title</source>
-                <target>Rechnungen</target>
-            </trans-unit>
-            <trans-unit id="invoice.subtitle">
-                <source>invoice.subtitle</source>
-                <target>Hier erstellen Sie Rechnungen für ihre aufgezeichneten Zeiten.</target>
-            </trans-unit>
-            <trans-unit id="invoice.select_filter">
-                <source>invoice.select_filter</source>
-                <target>Bevor Sie eine Rechnung erstellen können, müssen Sie mindestens einen Kunden-Filter auswählen.</target>
-            </trans-unit>
-            <trans-unit id="button.print">
-                <source>button.print</source>
-                <target>Drucken</target>
-            </trans-unit>
-            <trans-unit id="invoice_print">
-                <source>invoice_print</source>
-                <target>Rechnung</target>
-            </trans-unit>
-            <trans-unit id="label.template">
-                <source>label.template</source>
-                <target>Vorlage</target>
-            </trans-unit>
-            <trans-unit id="label.due_days">
-                <source>label.due_days</source>
-                <target>Zahlungsziel in Tagen</target>
-            </trans-unit>
-            <trans-unit id="invoice.due_days">
-                <source>invoice.due_days</source>
-                <target>Zahlungsziel</target>
-            </trans-unit>
-            <trans-unit id="invoice.from">
-                <source>invoice.from</source>
-                <target>Von</target>
-            </trans-unit>
-            <trans-unit id="invoice.to">
-                <source>invoice.to</source>
-                <target>An</target>
-            </trans-unit>
-            <trans-unit id="invoice.number">
-                <source>invoice.number</source>
-                <target>Rechnungsnummer</target>
-            </trans-unit>
-            <trans-unit id="invoice.subtotal">
-                <source>invoice.subtotal</source>
-                <target>Rechnungsbetrag (netto)</target>
-            </trans-unit>
-            <trans-unit id="invoice.tax">
-                <source>invoice.tax</source>
-                <target>Umsatzsteuer</target>
-            </trans-unit>
-            <trans-unit id="invoice.total">
-                <source>invoice.total</source>
-                <target>Rechnungsendbetrag</target>
-            </trans-unit>
-            <trans-unit id="invoice.service_date">
-                <source>invoice.service_date</source>
-                <target>Leistungsdatum</target>
-            </trans-unit>
-            <trans-unit id="invoice.amount">
-                <source>invoice.amount</source>
-                <target>Anzahl</target>
-            </trans-unit>
-            <trans-unit id="invoice.total_rate">
-                <source>invoice.total_rate</source>
-                <target>Gesamtpreis</target>
-            </trans-unit>
-            <trans-unit id="label.payment_terms">
-                <source>label.payment_terms</source>
-                <target>Zahlungsinformationen</target>
-            </trans-unit>
-            <trans-unit id="label.invoice_renderer">
-                <source>label.invoice_renderer</source>
-                <target>Rechnungsvorlage</target>
-            </trans-unit>
-            <trans-unit id="invoice_renderer.default">
-                <source>invoice_renderer.default</source>
-                <target>Rechnung (Standard)</target>
-            </trans-unit>
-            <trans-unit id="invoice_renderer.timesheet">
-                <source>invoice_renderer.timesheet</source>
-                <target>Stundenzettel</target>
-            </trans-unit>
-            <trans-unit id="label.invoice_number_generator">
-                <source>label.invoice_number_generator</source>
-                <target>Rechnungsnummern-Generator</target>
-            </trans-unit>
-            <trans-unit id="invoice_number_generator.default">
-                <source>invoice_number_generator.default</source>
-                <target>Datum (Standard)</target>
-            </trans-unit>
-            <trans-unit id="label.invoice_calculator">
-                <source>label.invoice_calculator</source>
-                <target>Summen Berechnung</target>
-            </trans-unit>
-            <trans-unit id="invoice_calculator.default">
-                <source>invoice_calculator.default</source>
-                <target>Stundenbasiert (Standard)</target>
-            </trans-unit>
-            <trans-unit id="invoice_calculator.short">
-                <source>invoice_calculator.short</source>
-                <target>Stundenbasiert - Kurzversion (nur ein Eintrag)</target>
-            </trans-unit>
-            <trans-unit id="invoice.signature_user">
-                <source>invoice.signature_user</source>
-                <target>Leistungsbestätigung: Datum / Name Berater / Unterschrift</target>
-            </trans-unit>
-            <trans-unit id="invoice.signature_customer">
-                <source>invoice.signature_customer</source>
-                <target>Leistungsbestätigung: Datum / Name Kunde / Unterschrift</target>
-            </trans-unit>
-            <trans-unit id="label.order_number">
-                <source>label.order_number</source>
-                <target>Bestellnummer</target>
+                <target>Количество клиентов</target>
             </trans-unit>
 
             <!--
@@ -733,51 +629,51 @@
             -->
             <trans-unit id="month.1">
                 <source>month.1</source>
-                <target>Januar</target>
+                <target>Январь</target>
             </trans-unit>
             <trans-unit id="month.2">
                 <source>month.2</source>
-                <target>Februar</target>
+                <target>Февраль</target>
             </trans-unit>
             <trans-unit id="month.3">
                 <source>month.3</source>
-                <target>März</target>
+                <target>Март</target>
             </trans-unit>
             <trans-unit id="month.4">
                 <source>month.4</source>
-                <target>April</target>
+                <target>Апрель</target>
             </trans-unit>
             <trans-unit id="month.5">
                 <source>month.5</source>
-                <target>Mai</target>
+                <target>Май</target>
             </trans-unit>
             <trans-unit id="month.6">
                 <source>month.6</source>
-                <target>Juni</target>
+                <target>Июнь</target>
             </trans-unit>
             <trans-unit id="month.7">
                 <source>month.7</source>
-                <target>Juli</target>
+                <target>Июль</target>
             </trans-unit>
             <trans-unit id="month.8">
                 <source>month.8</source>
-                <target>August</target>
+                <target>Август</target>
             </trans-unit>
             <trans-unit id="month.9">
                 <source>month.9</source>
-                <target>September</target>
+                <target>Сентябрь</target>
             </trans-unit>
             <trans-unit id="month.10">
                 <source>month.10</source>
-                <target>Oktober</target>
+                <target>Октябрь</target>
             </trans-unit>
             <trans-unit id="month.11">
                 <source>month.11</source>
-                <target>November</target>
+                <target>Ноябрь</target>
             </trans-unit>
             <trans-unit id="month.12">
                 <source>month.12</source>
-                <target>Dezember</target>
+                <target>Декабрь</target>
             </trans-unit>
 
             <!--
@@ -785,25 +681,23 @@
             -->
             <trans-unit id="active.entries">
                 <source>active.entries</source>
-                <target>Sie haben %count% aktiven Eintrag|Sie haben %count% aktive Einträge</target>
+                <target>У Вас %count% одна активная запись|У Вас %count% активных записи|У Вас %count% активных записей</target>
             </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
-                <target>Alle Einträge anzeigen</target>
+                <target>Отобразить все записи</target>
             </trans-unit>
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
-                <target>
-                    Ihre letzte Tätigkeit wiederaufnehmen|Eine ihrer %count% letzten Tätigkeiten neustarten
-                </target>
+                <target>Ваша последняя %count% отредактированная дейтельность|Eine ihrer %count% letzten Aktivitäten neustarten|Eine ihrer %count% letzten Aktivitäten neustarten</target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>
-                <target>%activity% in %project% für %customer%</target>
+                <target>%activity% в %project% для %customer%</target>
             </trans-unit>
             <trans-unit id="timesheet.start">
                 <source>timesheet.start</source>
-                <target>Neue Zeitmessung starten</target>
+                <target>Начать новый хронометраж</target>
             </trans-unit>
 
             <!--
@@ -811,23 +705,23 @@
             -->
             <trans-unit id="label.pageSize">
                 <source>label.pageSize</source>
-                <target>Anzahl Einträge</target>
+                <target>Количество</target>
             </trans-unit>
             <trans-unit id="label.entryState">
                 <source>label.entryState</source>
-                <target>Zeiten</target>
+                <target>Записи</target>
             </trans-unit>
             <trans-unit id="entryState.all">
                 <source>entryState.all</source>
-                <target>Alle</target>
+                <target>Все</target>
             </trans-unit>
             <trans-unit id="entryState.running">
                 <source>entryState.running</source>
-                <target>Laufende</target>
+                <target>Текущие</target>
             </trans-unit>
             <trans-unit id="entryState.stopped">
                 <source>entryState.stopped</source>
-                <target>Beendete</target>
+                <target>Завершенные</target>
             </trans-unit>
         </body>
     </file>

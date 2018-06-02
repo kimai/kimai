@@ -2,7 +2,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    app_locales: en|de
+    app_locales: en|de|ru
 
 services:
     # default configuration for services in *this* file
@@ -36,7 +36,7 @@ services:
         class: App\Invoice\ServiceInvoice
         arguments: ['%kimai.invoice%']
 
-    # a route listener, that injects the locale through a URL directory
+    # a route listener, that injects the default locale into the route
     App\EventSubscriber\RedirectToLocaleSubscriber:
         class: App\EventSubscriber\RedirectToLocaleSubscriber
         arguments: ['@router', '%app_locales%', '%locale%']
