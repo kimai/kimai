@@ -4,6 +4,7 @@
 
 {% block page_title %}{{ 'timesheet.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'timesheet.subtitle'|trans }}{% endblock %}
+{% block page_actions %}{{ widgets.page_actions({'plus-square': path('timesheet_create')}) }}{% endblock %}
 
 {% block main %}
 
@@ -25,7 +26,7 @@
         'label.actions': '',
     }) %}
 
-    {{ tables.data_table_header(columns, toolbarForm, {'plus-square': path('timesheet_create')}) }}
+    {{ tables.data_table_header(columns, toolbarForm) }}
 
     {% for entry in entries %}
         <tr>
