@@ -81,6 +81,14 @@ li.open .ticktac i.running{
 
 /* ================================ TOOLBAR ================================ */
 
+@media (max-width: $screen-md-min) {
+    .content-header > .breadcrumb {
+        position: absolute;
+        float: right;
+        background: transparent;
+    }
+}
+
 .control-sidebar {
     select {
         color: #000;
