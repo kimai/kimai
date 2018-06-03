@@ -1,5 +1,7 @@
 {% extends '@AvanzuAdminTheme/layout/default-layout.html.twig' %}
 
+{% block avanzu_page_content_class %}{{ parent() }} {% block main_content_class %}{% endblock %}{% endblock %}
+
 {% block avanzu_page_content_before %}
     <div class="pad margin no-print">
         {% block main_before %}{% endblock %}
@@ -81,7 +83,12 @@
 {% block avanzu_sidebar_search %}{# right now we simply deactivate that box #}{% endblock %}
 {% block avanzu_sidebar_nav %}{{ parent() }}{% endblock %}
 
-{% block avanzu_breadcrumb %}{{ parent() }}{% endblock %}
+{% block avanzu_breadcrumb %}
+    {{ block('page_actions') }}
+{% endblock %}
+
+{% block page_actions %}{% endblock %}
+
 {% block avanzu_control_sidebar %}{{ parent() }}{% endblock %}
 
 {% block avanzu_javascripts %}

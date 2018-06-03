@@ -4,6 +4,8 @@
 {% block page_title %}{{ 'dashboard.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'dashboard.subtitle'|trans }}{% endblock %}
 
+{% block main_content_class %}dashboard{% endblock %}
+
 {% block main %}
 
     {% for settings in dashboard_widgets %}
