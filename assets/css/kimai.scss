@@ -99,10 +99,12 @@ li.open .ticktac i.running{
 .box-header .box-title.toolbar form {
     font-size: 13px;
 }
-.toolbar form input,
-.toolbar form select {
-    display: inline-block;
-    width: inherit;
+@media (min-width: $screen-sm-min) {
+    .toolbar form input,
+    .toolbar form select {
+        display: inline-block;
+        width: inherit;
+    }
 }
 
 .toolbar form .form-group {
@@ -171,13 +173,6 @@ table.invoice-sum th, table.invoice-sum td  {
 }
 
 /* ================================ DATA-TABLES ================================ */
-
-/*
-    TODO "display:hidden" regel für dataTable - spalten - mobile ansicht
-    TODO "display:hidden" regel für dataTable - header icon - mobile ansicht
-
-*/
-
 
 /*
 dataTables.bootstrap.css
@@ -373,9 +368,6 @@ table.table-bordered td:last-child {
 div.dataTables_scrollHead table.table-bordered {
     border-bottom-width: 0;
 }
-
-
-
 
 /*
  * TableTools styles

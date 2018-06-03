@@ -63,7 +63,7 @@
                 </a>
             </li>
         {% endif %}
-
+        {% block navbar_extensions %}{% endblock %}
         {{ render(controller('App\\Controller\\TimesheetController::activeEntriesAction')) }}
     {% endif %}
 {% endblock %}
