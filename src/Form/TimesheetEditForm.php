@@ -42,7 +42,11 @@ class TimesheetEditForm extends AbstractType
         if ($entry->getEnd() === null || !$options['duration_only']) {
             $builder->add('begin', DateTimeType::class, [
                 'label' => 'label.begin',
-                'date_widget' => 'single_text',
+                'widget' => 'single_text',
+				'html5' => false,
+				'format' => 'yyyy-MM-dd H:m',
+				'with_seconds' => false,
+				'attr' => ['data-datetimepicker' => 'on'],
             ]);
         }
 
@@ -51,8 +55,12 @@ class TimesheetEditForm extends AbstractType
         } else {
             $builder->add('end', DateTimeType::class, [
                 'label' => 'label.end',
-                'date_widget' => 'single_text',
+                'widget' => 'single_text',
                 'required' => false,
+				'html5' => false,
+				'format' => 'yyyy-MM-dd H:m',
+				'with_seconds' => false,
+				'attr' => ['data-datetimepicker' => 'on'],
             ]);
         }
 
