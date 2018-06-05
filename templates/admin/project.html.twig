@@ -1,10 +1,15 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
+{% import "macros/toolbar.html.twig" as toolbar %}
 
 {% block page_title %}{{ 'admin_project.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_project.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
 {% block page_actions %}{{ widgets.page_actions({'filter': '#collapseProjectAdmin', 'plus-square': path('admin_project_create')}) }}{% endblock %}
+
+{% block main_before %}
+    {{ toolbar.toolbar(toolbarForm, 'collapseProjectAdmin') }}
+{% endblock %}
 
 {% block main %}
     {% if entries.count == 0 %}
@@ -18,7 +23,7 @@
         'label.budget': 'hidden-xs',
         'label.visible': 'hidden-xs',
         'label.actions': '',
-    }, toolbarForm, 'collapseProjectAdmin') }}
+    }) }}
 
     {% for entry in entries %}
         <tr>

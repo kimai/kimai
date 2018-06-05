@@ -1,10 +1,15 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
+{% import "macros/toolbar.html.twig" as toolbar %}
 
 {% block page_title %}{{ 'admin_timesheet.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_timesheet.subtitle'|trans }}{% endblock %}
 {% block page_actions %}{{ widgets.page_actions({'filter': '#collapseTimesheetAdmin', 'plus-square': path('admin_timesheet_create')}) }}{% endblock %}
+
+{% block main_before %}
+    {{ toolbar.toolbar(toolbarForm, 'collapseTimesheetAdmin') }}
+{% endblock %}
 
 {% block main %}
     {% if entries.count == 0 %}
@@ -17,16 +22,14 @@
         {% set columns = columns|merge({'label.starttime': 'hidden-xs', 'label.endtime': 'hidden-xs'}) %}
     {% endif %}
 
-    {% set columns = columns|merge({
+    {{ tables.data_table_header(columns|merge({
         'label.duration': '',
         'label.rate': '',
         'label.activity': 'hidden-xs hidden-sm',
         'label.username': 'hidden-xs',
         'label.description': 'hidden-xs hidden-sm',
         'label.actions': '',
-    }) %}
-
-    {{ tables.data_table_header(columns, toolbarForm, 'collapseTimesheetAdmin') }}
+    })) }}
 
     {% for entry in entries %}
         <tr>
