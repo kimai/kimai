@@ -81,14 +81,13 @@ li.open .ticktac i.running{
 
 /* ================================ TOOLBAR ================================ */
 
-@media (max-width: $screen-md-min) {
-    .content-header > .breadcrumb {
-        position: absolute;
-        float: right;
-        background: transparent;
-    }
+/* Page based action buttons in the upper right corner of the content area */
+.content-header > .breadcrumb {
+    position: absolute;
+    float: right;
+    background: transparent;
 }
-
+/* Right sidebar with additional tabs for personal settings and "About Kimai" section */
 .control-sidebar {
     select {
         color: #000;
@@ -99,30 +98,10 @@ li.open .ticktac i.running{
         }
     }
 }
-
-.data_table .box-header>.box-tools {
-    top: 3px;
+/* The filter form available on most pages above the datatable */
+.toolbar form {
+    font-size: $font-size-base;
 }
-
-.box-header .box-title.toolbar form {
-    font-size: 13px;
-}
-@media (min-width: $screen-sm-min) {
-    .toolbar form input,
-    .toolbar form select {
-        display: inline-block;
-        width: inherit;
-    }
-}
-
-.toolbar form .form-group {
-    display: inline;
-}
-
-.tools-left {
-    margin-right: 10px;
-}
-
 /* ================================ SIDEBAR ================================ */
 
 /* Used for the Sidebar UserPanel (which is deactivated right now) */

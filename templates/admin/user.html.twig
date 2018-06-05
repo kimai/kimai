@@ -4,7 +4,7 @@
 
 {% block page_title %}{{ 'admin_user.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_user.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
-{% block page_actions %}{{ widgets.page_actions({'plus-square': path('admin_user_create')}) }}{% endblock %}
+{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseUserAdmin', 'plus-square': path('admin_user_create')}) }}{% endblock %}
 
 {% block main %}
     {% if entries.count == 0 %}
@@ -20,7 +20,7 @@
         'label.active': '',
         'label.roles': '',
         'label.actions': '',
-    }, toolbarForm) }}
+    }, toolbarForm, 'collapseUserAdmin') }}
 
     {% for entry in entries %}
         <tr>

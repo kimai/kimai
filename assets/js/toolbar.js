@@ -6,6 +6,8 @@
  */
 $(document).ready(function () {
 
+    //$('.navbar-form select').selectpicker({});
+
     // DateRange - TODO improve me, so users can type without reloading in between
     $('.toolbar form input').change(function (event) {
         $('.toolbar form').submit();

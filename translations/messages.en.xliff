@@ -89,7 +89,7 @@
             </trans-unit>
             <trans-unit id="menu.timesheet">
                 <source>menu.timesheet</source>
-                <target>Timesheet</target>
+                <target>My times</target>
             </trans-unit>
             <trans-unit id="menu.invoice">
                 <source>menu.invoice</source>
@@ -97,7 +97,7 @@
             </trans-unit>
             <trans-unit id="menu.admin_timesheet">
                 <source>menu.admin_timesheet</source>
-                <target>User timesheets</target>
+                <target>Timesheets</target>
             </trans-unit>
             <trans-unit id="menu.admin_customer">
                 <source>menu.admin_customer</source>
@@ -257,7 +257,7 @@
             </trans-unit>
             <trans-unit id="dashboard.you">
                 <source>dashboard.you</source>
-                <target>Your statistics</target>
+                <target>My statistics</target>
             </trans-unit>
             <trans-unit id="dashboard.all">
                 <source>dashboard.all</source>
@@ -293,11 +293,11 @@
             -->
             <trans-unit id="timesheet.title">
                 <source>timesheet.title</source>
-                <target>Time-tracking</target>
+                <target>My times</target>
             </trans-unit>
             <trans-unit id="timesheet.subtitle">
                 <source>timesheet.subtitle</source>
-                <target>Administrate your time-recordings</target>
+                <target>Administrate my time-recordings</target>
             </trans-unit>
             <trans-unit id="timesheet.edit">
                 <source>timesheet.edit</source>
@@ -321,7 +321,7 @@
             </trans-unit>
             <trans-unit id="profile.subtitle">
                 <source>profile.subtitle</source>
-                <target>Edit your settings</target>
+                <target>Edit my settings</target>
             </trans-unit>
             <trans-unit id="profile.about_me">
                 <source>profile.about_me</source>
@@ -385,7 +385,7 @@
             -->
             <trans-unit id="admin_timesheet.title">
                 <source>admin_timesheet.title</source>
-                <target>Staff timesheets</target>
+                <target>Timesheets</target>
             </trans-unit>
             <trans-unit id="admin_timesheet.subtitle">
                 <source>admin_timesheet.subtitle</source>
