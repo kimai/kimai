@@ -4,12 +4,12 @@
 
 {% block page_title %}{{ 'invoice.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'invoice.subtitle'|trans }}{% endblock %}
-{% block page_actions %}{{ widgets.page_actions({'plus-square': path('admin_invoice_template_create'), 'list': path('admin_invoice_template')}) }}{% endblock %}
+{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseInvoice', 'plus-square': path('admin_invoice_template_create'), 'list': path('admin_invoice_template')}) }}{% endblock %}
 
 {% block main_content_class %}invoice{% endblock %}
 
 {% block main_before %}
-    {{ macro.toolbar(form) }}
+    {{ macro.toolbar(form, 'collapseInvoice', true) }}
 {% endblock %}
 
 {% block main_after %}

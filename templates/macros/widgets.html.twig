@@ -4,7 +4,7 @@
         <div class="box-tools">
             <div class="btn-group">
                 {% for icon,url in tools  %}
-                    <a class="btn btn-default" href="{{ url }}"><i class="fa fa-{{ icon }}"></i></a>
+                    <a class="btn btn-default" href="{{ url }}"{% if '#collapse' in url %} data-toggle="collapse" {% endif %}><i class="fa fa-{{ icon }}"></i></a>
                 {% endfor %}
             </div>
         </div>

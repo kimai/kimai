@@ -6,6 +6,7 @@ global.$ = global.jQuery = $;
 require('jquery-ui');
 require('bootstrap-sass');
 require('jquery-slimscroll');
+require('bootstrap-select');
 
 const Moment = require('moment');
 global.moment = Moment;

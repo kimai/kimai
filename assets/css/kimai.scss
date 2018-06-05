@@ -81,12 +81,10 @@ li.open .ticktac i.running{
 
 /* ================================ TOOLBAR ================================ */
 
-@media (max-width: $screen-md-min) {
-    .content-header > .breadcrumb {
-        position: absolute;
-        float: right;
-        background: transparent;
-    }
+.content-header > .breadcrumb {
+    position: absolute;
+    float: right;
+    background: transparent;
 }
 
 .control-sidebar {
@@ -99,30 +97,9 @@ li.open .ticktac i.running{
         }
     }
 }
-
-.data_table .box-header>.box-tools {
-    top: 3px;
-}
-
-.box-header .box-title.toolbar form {
+.toolbar form {
     font-size: 13px;
 }
-@media (min-width: $screen-sm-min) {
-    .toolbar form input,
-    .toolbar form select {
-        display: inline-block;
-        width: inherit;
-    }
-}
-
-.toolbar form .form-group {
-    display: inline;
-}
-
-.tools-left {
-    margin-right: 10px;
-}
-
 /* ================================ SIDEBAR ================================ */
 
 /* Used for the Sidebar UserPanel (which is deactivated right now) */
