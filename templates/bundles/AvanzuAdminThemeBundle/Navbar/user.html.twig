@@ -14,18 +14,6 @@
                 <small>{{user.title}}</small>
             </p>
         </li>
-        {#
-        <!-- Menu Body -->
-        <li class="user-body">
-            <div class="col-xs-4 text-center">
-            </div>
-            <div class="col-xs-4 text-center">
-            </div>
-            <div class="col-xs-4 text-center">
-            </div>
-        </li>
-        #}
-        <!-- Menu Footer-->
         <li class="user-footer">
             <div class="pull-left">
                 <a href="{{ path('user_profile', {'username' : user.username}) }}" class="btn btn-default btn-flat">{{ 'label.user_profile'|trans }}</a>

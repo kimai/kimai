@@ -4,11 +4,11 @@
         <body>
             <trans-unit id="previous">
                 <source>previous</source>
-                <target>Previous</target>
+                <target></target>
             </trans-unit>
             <trans-unit id="next">
                 <source>next</source>
-                <target>Next</target>
+                <target></target>
             </trans-unit>
         </body>
     </file>

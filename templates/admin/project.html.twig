@@ -4,6 +4,7 @@
 
 {% block page_title %}{{ 'admin_project.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_project.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
+{% block page_actions %}{{ widgets.page_actions({'plus-square': path('admin_project_create')}) }}{% endblock %}
 
 {% block main %}
     {% if entries.count == 0 %}
@@ -15,9 +16,9 @@
         'label.customer': '',
         'label.comment': 'hidden-xs hidden-sm',
         'label.budget': 'hidden-xs',
-        'label.visible': '',
+        'label.visible': 'hidden-xs',
         'label.actions': '',
-    }, toolbarForm, {'plus-square': path('admin_project_create')}) }}
+    }, toolbarForm) }}
 
     {% for entry in entries %}
         <tr>
@@ -27,7 +28,7 @@
             </td>
             <td class="hidden-xs hidden-sm">{{ entry.comment }}</td>
             <td class="hidden-xs">{{ entry.budget|money(entry.customer.currency) }}</td>
-            <td>{{ widgets.label_visible(entry.visible) }}</td>
+            <td class="hidden-xs">{{ widgets.label_visible(entry.visible) }}</td>
             <td>
                 {% set actionButtons = {} %}
                 {% if is_granted('edit', entry) %}

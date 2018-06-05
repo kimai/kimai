@@ -1,5 +1,7 @@
 {% extends '@AvanzuAdminTheme/layout/default-layout.html.twig' %}
 
+{% block avanzu_page_content_class %}{{ parent() }} {% block main_content_class %}{% endblock %}{% endblock %}
+
 {% block avanzu_page_content_before %}
     <div class="pad margin no-print">
         {% block main_before %}{% endblock %}
@@ -47,6 +49,21 @@
 
 {% block avanzu_navbar_messages %}
     {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        {% if is_granted('ROLE_USER') %}
+            <li class="visible-xs-inline-block">
+                <a href="{{ path('timesheet') }}" class="ddt-large">
+                    <i class="fa fa-clock-o fa-2x"></i>
+                </a>
+            </li>
+        {% endif %}
+        {% if is_granted('ROLE_TEAMLEAD') %}
+            <li class="visible-xs-inline-block">
+                <a href="{{ path('invoice') }}" class="ddt-large">
+                    <i class="fa fa-print fa-2x"></i>
+                </a>
+            </li>
+        {% endif %}
+        {% block navbar_extensions %}{% endblock %}
         {{ render(controller('App\\Controller\\TimesheetController::activeEntriesAction')) }}
     {% endif %}
 {% endblock %}
@@ -58,15 +75,20 @@
 {% endblock %}
 
 {% block avanzu_navbar_toggle %}{{ parent() }}{% endblock %}
-{% block avanzu_navbar_tasks %}{{ parent() }}{% endblock %}
-{% block avanzu_navbar_user %}{{ parent() }}{% endblock %}
+{% block avanzu_navbar_tasks %}{#{ parent() }#}{% endblock %}
+{% block avanzu_navbar_user %}{#{ parent() }#}{% endblock %}
 {% block avanzu_navbar_control_sidebar_toggle %}{{ parent() }}{% endblock %}
 
 {% block avanzu_sidebar_user %}{# right now we simply deactivate that box #}{% endblock %}
 {% block avanzu_sidebar_search %}{# right now we simply deactivate that box #}{% endblock %}
 {% block avanzu_sidebar_nav %}{{ parent() }}{% endblock %}
 
-{% block avanzu_breadcrumb %}{{ parent() }}{% endblock %}
+{% block avanzu_breadcrumb %}
+    {{ block('page_actions') }}
+{% endblock %}
+
+{% block page_actions %}{% endblock %}
+
 {% block avanzu_control_sidebar %}{{ parent() }}{% endblock %}
 
 {% block avanzu_javascripts %}

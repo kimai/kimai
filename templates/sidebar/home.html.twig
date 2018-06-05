@@ -1,53 +1,19 @@
-<h3 class="control-sidebar-heading">{{ 'home.title'|trans({}, 'sidebar') }}</h3>
-<div class="form-group">
-    {{ 'home.betainfo'|trans({}, 'sidebar')|raw|nl2br }}
-</div>
-
-<h3 class="control-sidebar-heading">{{ 'help.title'|trans({}, 'sidebar') }}</h3>
-<div class="form-group">
-    <a href="{{ path('help') }}" class="btn btn-success">{{ 'help.link'|trans({}, 'sidebar') }}</a>
-</div>
-
-<h3 class="control-sidebar-heading">{{ 'about.title'|trans({}, 'sidebar') }}</h3>
-<div class="form-group">
-    <p>
-        Kimai {{ constant('App\\Constants::VERSION') }}
-    </p>
-    <p>
-        {{ 'made.by.license'|trans({'%kevin%': '<a href="http://www.kevinpapst.de" target="_blank">Kevin Papst</a>', '%simon%': '<a href="https://github.com/simonschaufi" target="_blank">Simon Schaufelberger</a>'}, 'sidebar')|raw }}
-    </p>
-    <p>
-        {{ 'github.link'|trans({'%url%': constant('App\\Constants::GITHUB')}, 'sidebar')|raw }}
-    </p>
-</div>
-{#
 <ul class="control-sidebar-menu">
     <li>
-        <a href="javascript:;">
-            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+        <a href="{{ path('help') }}">
+            <i class="menu-icon fa fa-book bg-yellow"></i>
 
             <div class="menu-info">
-                <h4 class="control-sidebar-subheading">{{ 'Kevin\'s Birthday'|trans({}, 'AvanzuAdminTheme') }}</h4>
-
-                <p>{{ 'Will be 23 on April 24th'|trans({}, 'AvanzuAdminTheme') }}</p>
+                <h4 class="control-sidebar-subheading">{{ 'help.title'|trans({}, 'sidebar') }}</h4>
+                <p>{{ 'help.subtitle'|trans({}, 'sidebar') }}</p>
             </div>
         </a>
     </li>
 </ul>
 
-<h3 class="control-sidebar-heading">{{ 'Tasks Progress'|trans({}, 'AvanzuAdminTheme') }}</h3>
-<ul class="control-sidebar-menu">
-    <li>
-        <a href="javascript::;">
-            <h4 class="control-sidebar-subheading">
-                {{ 'Custom Template Design'|trans({}, 'AvanzuAdminTheme') }}
-                <span class="label label-danger pull-right">70%</span>
-            </h4>
-
-            <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-            </div>
-        </a>
-    </li>
-</ul>
-#}
+<h3 class="control-sidebar-heading">{{ 'home.title'|trans({}, 'sidebar') }}</h3>
+<div class="form-group">
+    {{ 'home.betainfo'|trans({'%version%': constant('App\\Constants::VERSION'), '%url%': constant('App\\Constants::GITHUB')}, 'sidebar')|raw|nl2br }}
+    <br>
+    <a href="{{ constant('App\\Constants::GITHUB') }}graphs/contributors">{{ 'made.by.license'|trans({}, 'sidebar')|raw }}</a>
+</div>
