@@ -72,17 +72,29 @@ class UserVoter extends AbstractVoter
                 return $this->canView($subject, $user, $token);
             case self::EDIT:
             case self::PASSWORD:
-            case self::PREFERENCES:
                 return $this->canEdit($subject, $user, $token);
             case self::DELETE:
                 return $this->canDelete($subject, $user, $token);
             case self::CREATE: // create actually passes in the current user as $subject, not the new one
             case self::ROLES:
                 return $this->canAdminUsers($token);
+            case self::PREFERENCES:
+				return $this->canEditPreferences($subject, $user, $token);
         }
 
         return false;
     }
+
+	/**
+	 * @param User $profile
+	 * @param User $user
+	 * @param TokenInterface $token
+	 * @return bool
+	 */
+    protected function canEditPreferences(User $profile, User $user, TokenInterface $token)
+	{
+		return $profile->getId() == $user->getId();
+	}
 
     /**
      * @param User $profile

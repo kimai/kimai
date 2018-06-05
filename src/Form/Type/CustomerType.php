@@ -13,7 +13,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Repository\CustomerRepository;
-use App\Repository\Query\CustomerQuery;
 
 /**
  * Custom form field type to select a customer.

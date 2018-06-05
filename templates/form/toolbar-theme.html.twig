@@ -8,7 +8,7 @@
             {% set class = ' timepicker' %}
         {% endif %}
         {% set class = class ~ ' datepicker' %}
-        {% set attr = attr|merge({'class' : class, 'data-datepickerenable':'on'}) %}
+        {% set attr = attr|merge({'class' : class}) %}
         {{ block('form_widget_simple') }}
     {% else %}
         {% set date_pattern = '<div class="row">' ~ date_pattern ~ '</div>'|raw %}
@@ -21,6 +21,5 @@
             '{{ month }}': form_widget(form.month),
             '{{ day }}':   form_widget(form.day),
         })|raw }}
-
     {% endif %}
 {% endblock %}

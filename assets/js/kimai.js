@@ -36,6 +36,31 @@ $(function() {
 
             $('.dropdown-toggle').dropdown();
 
+            $('input[data-datepicker="on"]').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                locale: {
+                    format: "YYYY-MM-DD",
+                    firstDay: 1
+                }
+            });
+
+            $('input[data-datetimepicker="on"]').daterangepicker({
+                singleDatePicker: true,
+                timePicker: true,
+                timePicker24Hour: true,
+                showDropdowns: true,
+                autoUpdateInput: false,
+                locale: {
+                    cancelLabel: 'Clear',
+                    format: "YYYY-MM-DD HH:mm",
+                    firstDay: 1
+                }
+            });
+            $('input[data-datetimepicker="on"]').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm'));
+            });
+
             /*
             $('input').iCheck({
                 checkboxClass: 'icheckbox_square-blue',

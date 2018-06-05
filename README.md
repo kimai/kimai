@@ -36,6 +36,10 @@ Lets prepare the environment by installing all dependencies:
 composer install
 ```
 
+The next steps depend on where you want to use Kimai, you can choose between development or production mdoe.
+
+### Installation (development)
+
 The default installation uses a SQLite database, so there is no need to create a database for your first tests.
 The default settings will work out-of-the-box, but you might want to adjust the `.env` values to your needs.
 You can configure your database through your environment (e.g. Webserver, Cloud-Provider) or in your `.env` file:
@@ -52,15 +56,7 @@ bin/console doctrine:database:create
 bin/console doctrine:schema:create
 ```
 
-To generate the frontend assets ([more information here](var/docs/developers.md)), execute:
-```bash
-yarn install
-npm run prod
-```
-
-### Installation (development / demo)
-
-Lets boostrap your environment by executing this commands (which is only available in dev environment):
+Lets bootstrap your environment by executing this commands (which is only available in dev environment):
 ```bash
 bin/console kimai:reset-dev
 ```
@@ -98,8 +94,19 @@ bin/console server:run
 This command will start a web server for Kimai. Now you can access the application in your browser at <http://127.0.0.1:8000/>.
 You can stop the built-in web server by pressing `Ctrl + C` while you're in the terminal.
 
+To re-generate the frontend assets ([more information here](var/docs/developers.md)), execute:
+```bash
+yarn install
+npm run prod
+```
 
-### Installation (live)
+### Installation (production)
+
+Make sure the [directories are read and writable by your webserver](https://symfony.com/doc/current/setup/file_permissions.html):
+```bash
+chown -R www-data var/
+chmod -R 777 var/
+```
 
 The database to use is up to you, but we would not recommend using the default SQLite database for production usage.
 Please create your database and configure the connection string in your environment, e.g. with the `.env` file:
@@ -109,10 +116,10 @@ DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
 APP_SECRET=insert_a_random_secret_string_for_production
 ```
 
-Create the database schemas and warm up the cache:
+Create the database schemas and warm up the cache (as webserver user):
 ```bash
 bin/console doctrine:schema:create
-bin/console cache:warmup --env=prod
+sudo -u www-data bin/console cache:warmup --env=prod
 ```
 
 Create your first user with the following command. You will be asked to enter a password afterwards.
@@ -120,6 +127,7 @@ Create your first user with the following command. You will be asked to enter a 
 ```bash
 bin/console kimai:create-user username admin@example.com ROLE_SUPER_ADMIN
 ```
+_Tip: You can skip the "create user" step, if you are going to import data from Kimai v1._
 
 For available roles, please refer to the [user documentation](var/docs/users.md).
 

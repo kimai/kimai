@@ -4,6 +4,7 @@
 
 {% block page_title %}{{ 'admin_customer.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_customer.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
+{% block page_actions %}{{ widgets.page_actions({'plus-square': path('admin_customer_create')}) }}{% endblock %}
 
 {% block main %}
     {% if entries.count == 0 %}
@@ -17,9 +18,9 @@
         'label.country': 'hidden-xs',
         'label.customer_number': 'hidden-xs',
         'label.currency': 'hidden-xs',
-        'label.visible': '',
+        'label.visible': 'hidden-xs',
         'label.actions': '',
-    }, toolbarForm, {'plus-square': path('admin_customer_create')}) }}
+    }, toolbarForm) }}
 
     {% for entry in entries %}
         <tr>
@@ -27,13 +28,14 @@
             <td>
                 {% for project in entry.projects %}
                     <a href="{{ path('admin_project_edit', {'id' : project.id}) }}">{{ widgets.label_project(project) }}</a>
+                    <br class="visible-xs-block">
                 {% endfor %}
             </td>
             <td class="hidden-xs">{{ entry.comment }}</td>
             <td class="hidden-xs">{{ entry.country|country }}</td>
             <td class="hidden-xs">{{ entry.number }}</td>
             <td class="hidden-xs">{{ entry.currency }} {{ entry.currency|currency }}</td>
-            <td>{{ widgets.label_visible(entry.visible) }}</td>
+            <td class="hidden-xs">{{ widgets.label_visible(entry.visible) }}</td>
             <td>
                 {% set actionButtons = {} %}
                 {% if is_granted('edit', entry) %}
