@@ -81,12 +81,13 @@ li.open .ticktac i.running{
 
 /* ================================ TOOLBAR ================================ */
 
+/* Page based action buttons in the upper right corner of the content area */
 .content-header > .breadcrumb {
     position: absolute;
     float: right;
     background: transparent;
 }
-
+/* Right sidebar with additional tabs for personal settings and "About Kimai" section */
 .control-sidebar {
     select {
         color: #000;
@@ -97,8 +98,9 @@ li.open .ticktac i.running{
         }
     }
 }
+/* The filter form available on most pages above the datatable */
 .toolbar form {
-    font-size: 13px;
+    font-size: $font-size-base;
 }
 /* ================================ SIDEBAR ================================ */
 

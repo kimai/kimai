@@ -4,7 +4,7 @@
 
 {% block page_title %}{{ 'admin_timesheet.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_timesheet.subtitle'|trans }}{% endblock %}
-{% block page_actions %}{{ widgets.page_actions({'plus-square': path('admin_timesheet_create')}) }}{% endblock %}
+{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseTimesheetAdmin', 'plus-square': path('admin_timesheet_create')}) }}{% endblock %}
 
 {% block main %}
     {% if entries.count == 0 %}
@@ -26,7 +26,7 @@
         'label.actions': '',
     }) %}
 
-    {{ tables.data_table_header(columns, toolbarForm) }}
+    {{ tables.data_table_header(columns, toolbarForm, 'collapseTimesheetAdmin') }}
 
     {% for entry in entries %}
         <tr>
