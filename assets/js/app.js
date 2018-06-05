@@ -12,6 +12,10 @@ const Moment = require('moment');
 global.moment = Moment;
 require('daterangepicker');
 
+const Moment = require('moment');
+global.moment = Moment;
+require('daterangepicker');
+
 // ------ for charts ------
 const Chart = require('../../vendor/almasaeed2010/adminlte/plugins/chartjs/Chart.min.js');
 global.Chart = Chart;
