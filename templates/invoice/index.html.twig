@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "macros/toolbar.html.twig" as macro %}
+{% import "macros/toolbar.html.twig" as toolbar %}
 
 {% block page_title %}{{ 'invoice.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'invoice.subtitle'|trans }}{% endblock %}
@@ -9,7 +9,7 @@
 {% block main_content_class %}invoice{% endblock %}
 
 {% block main_before %}
-    {{ macro.toolbar(form, 'collapseInvoice', true) }}
+    {{ toolbar.toolbar(form, 'collapseInvoice', true) }}
 {% endblock %}
 
 {% block main_after %}

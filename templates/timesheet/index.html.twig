@@ -7,6 +7,10 @@
 {% block page_subtitle %}{{ 'timesheet.subtitle'|trans }}{% endblock %}
 {% block page_actions %}{{ widgets.page_actions({'filter': '#collapseTimesheet', 'plus-square': path('timesheet_create')}) }}{% endblock %}
 
+{% block main_before %}
+    {{ toolbar.toolbar(toolbarForm, 'collapseTimesheet') }}
+{% endblock %}
+
 {% block main %}
 
     {% if entries.count == 0 %}
@@ -27,7 +31,7 @@
         'label.actions': '',
     }) %}
 
-    {{ tables.data_table_header(columns, toolbarForm, 'collapseTimesheet') }}
+    {{ tables.data_table_header(columns) }}
 
     {% for entry in entries %}
         <tr>

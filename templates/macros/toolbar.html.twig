@@ -3,7 +3,7 @@
         <div class="toolbar no-print">
             {% if collapsible %}<div class="collapse{% if displayInitial %} collapse.show in{% endif %}" id="{{ collapsible }}">{% endif %}
                 {% form_theme form 'form/toolbar-theme.html.twig' %}
-                {{ form_start(form, { 'attr': {'class': 'navbar-form navbar-left'}}) }}
+                {{ form_start(form, { 'attr': {'class': 'navbar-form'}}) }}
                 {{ form_widget(form) }}
                 {{ form_end(form) }}
             {% if collapsible %}</div>{% endif %}
