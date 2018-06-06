@@ -14,9 +14,6 @@ security:
             security: false
 
         secured_area:
-            # does what it says
-            logout_on_user_change: true
-
             # this firewall applies to all URLs
             pattern: ^/
 
