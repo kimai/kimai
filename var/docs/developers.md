@@ -31,11 +31,11 @@ yarn install
 
 To rebuild all assets you have to execute:
 ```bash
-npm run dev
+yarn run dev
 ```
 or
 ```bash
-npm run prod
+yarn run prod
 ```
 
 You can find more information at:
@@ -43,14 +43,27 @@ You can find more information at:
 - https://symfony.com/doc/current/frontend/encore/installation.html
 - https://symfony.com/doc/current/frontend.html
 
-### Rebuilding assets for use in subdirectory
+### Rebuilding assets for use in a subdirectory
 
 If you want to run Kimai in a subdirectory, you have to rebuild the frontend assets with a different webpack configuration.
 Edit the file [webpack.config.js](../../webpack.config.js) and change `.setPublicPath('/build/')` to your needs.
+After that re-compile the assets (see above).
 
-After that re-compile the assets with:
-```bash
-npm run prod
+## Running Unit tests
+
+You can run unit and integration tests with built-in commands like that:
+
+ ```bash
+bin/console kimai:test-unit
+bin/console kimai:test-integration
+```
+
+## Check your code styles
+
+You can run the code sniffer with a built-in command like that:
+
+ ```bash
+bin/console kimai:phpcs
 ```
 
 ## Extending the navigation bar
