@@ -89,7 +89,7 @@ class ExtensionsTest extends TestCase
     public function testMoney()
     {
         $money = [
-            [2222, 'EUR', '2,222.00 €'],
+            [2222, 'EUR', '2,222.00 €1'],
             [13.75, 'USD', '13.75 $'],
         ];
 
