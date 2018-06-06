@@ -19,5 +19,5 @@ install:
   - composer install
 
 script:
-  - bin/console kimai:test-unit
-  - bin/console kimai:test-integration
+  - phpunit --exclude-group integration tests/
+  - phpunit --group integration tests/
