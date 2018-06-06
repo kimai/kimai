@@ -11,6 +11,9 @@
     "composer/semver": {
         "version": "1.4.2"
     },
+    "composer/xdebug-handler": {
+        "version": "1.1.0"
+    },
     "dama/doctrine-test-bundle": {
         "version": "4.0",
         "recipe": {
@@ -113,9 +116,6 @@
             "ref": "bb31a3bbec00a8fc8aa1c9fbf9b0ef9fc492f93d"
         }
     },
-    "gecko-packages/gecko-php-unit": {
-        "version": "v3.0"
-    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
@@ -124,6 +124,9 @@
     },
     "myclabs/deep-copy": {
         "version": "1.7.0"
+    },
+    "nikic/php-parser": {
+        "version": "v4.0.2"
     },
     "ocramius/package-versions": {
         "version": "1.2.0"
@@ -377,6 +380,9 @@
             "ref": "179470cb6492db92dffee208cfdb436f175c93b4"
         }
     },
+    "symfony/polyfill-ctype": {
+        "version": "v1.8.0"
+    },
     "symfony/polyfill-intl-icu": {
         "version": "v1.6.0"
     },
@@ -403,9 +409,6 @@
             "version": "4.0",
             "ref": "cda8b550123383d25827705d05a42acf6819fe4e"
         }
-    },
-    "symfony/security": {
-        "version": "v4.0.3"
     },
     "symfony/security-bundle": {
         "version": "3.3",
