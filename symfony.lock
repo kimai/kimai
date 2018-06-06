@@ -182,9 +182,6 @@
             "ref": "9d0927a518f631b4ae6508dac377b021761ff6d1"
         }
     },
-    "phpunit/phpunit-mock-objects": {
-        "version": "5.0.6"
-    },
     "psr/cache": {
         "version": "1.0.1"
     },
