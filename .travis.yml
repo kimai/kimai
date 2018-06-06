@@ -19,7 +19,6 @@ install:
   - composer install
 
 script:
-  - ls -la bin/
-  - phpunit --version
-  - phpunit --exclude-group integration tests/
-  - phpunit --group integration tests/
+  - vendor/bin/phpunit --version
+  - vendor/bin/phpunit --exclude-group integration tests/
+  - vendor/bin/phpunit --group integration tests/
