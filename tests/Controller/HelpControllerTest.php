@@ -27,7 +27,9 @@ class HelpControllerTest extends ControllerBaseTest
         $this->request($client, '/help/');
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertContains('<h1>Kimai documentation</h1>', $client->getResponse()->getContent());
-        $this->assertNotContains('<a href="/en/help/">', $client->getResponse()->getContent());
+        $this->assertContains('<a href="configurations">', $client->getResponse()->getContent());
+        $this->assertContains('<a href="developers">', $client->getResponse()->getContent());
+        $this->assertContains('<a href="users">', $client->getResponse()->getContent());
     }
 
     public function testUsersPage()
@@ -35,7 +37,7 @@ class HelpControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser();
         $this->request($client, '/help/users');
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertContains('<a href="/en/help/">', $client->getResponse()->getContent());
+        $this->assertContains('<a href="/en/help/">Back</a>', $client->getResponse()->getContent());
     }
 
     public function testValidateRouteDoesNotAllowSpecialChars()
