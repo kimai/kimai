@@ -2,14 +2,19 @@
 
 Kimai v2 - the reloaded open source Time-Tracking application.
 
-[![Build Status](https://travis-ci.org/kevinpapst/kimai2.svg?branch=master)](https://travis-ci.org/kevinpapst/kimai2)
+[![Travis Status](https://travis-ci.org/kevinpapst/kimai2.svg?branch=master)](https://travis-ci.org/kevinpapst/kimai2)
+[![Code Quality](https://scrutinizer-ci.com/g/kevinpapst/kimai2/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/kevinpapst/kimai2/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/kevinpapst/kimai2/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/kevinpapst/kimai2/?branch=master)
+[![Scrutinizer Status](https://scrutinizer-ci.com/g/kevinpapst/kimai2/badges/build.png?b=master)](https://scrutinizer-ci.com/g/kevinpapst/kimai2/build-status/master)
 
 ## Introduction
 
-This is (or will be in the future, currently a lot of features are still missing) the reloaded version of the open source time-tracking application [Kimai](http://www.kimai.org).
+This is the reloaded version of the open source time-tracking application [Kimai](http://www.kimai.org).
 
-It is based on a lot of great PHP components. Special thanks to:
-- [Symfony Framework 4](https://github.com/symfony/symfony)
+Right now its in an early development phase, as a some important features from Kimai v1 are missing.
+
+Kimai is based on a lot of great frameworks. Special thanks to: 
+- [Symfony v4](https://github.com/symfony/symfony) 
 - [Doctrine](https://github.com/doctrine/)
 - [AdminThemeBundle](https://github.com/avanzu/AdminThemeBundle/) (based on [AdminLTE](https://github.com/almasaeed2010/AdminLTE/))
 
@@ -178,4 +183,4 @@ All available Kimai 2 bundles can be found at the [Kimai recipes](https://github
 If you want to develop for Kimai 2 please read the following documentation:
 
 - an example on how to extend Kimai 2 can be found in this [GitHub repository](https://github.com/kevinpapst/kimai2-invoice)
-- the developer documentation can be found at [var/docs/developers.md](var/docs/developers.md) both on GitHub and your local installation
+- the [developer documentation](var/docs/developers.md) is available both on GitHub and your local installation
