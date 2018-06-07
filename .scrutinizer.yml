@@ -17,12 +17,12 @@ build:
     tests:
         override:
             -
-                command: 'vendor/bin/phpunit --testsuite unit --coverage-clover=unit'
+                command: 'vendor/bin/phpunit --exclude-group integration --coverage-clover=unit tests/'
                 coverage:
                     file: 'unit'
                     format: 'clover'
             -
-                command: 'vendor/bin/phpunit --testsuite integration --coverage-clover=integration'
+                command: 'vendor/bin/phpunit --group integration --coverage-clover=integration tests/'
                 coverage:
                     file: 'integration'
                     format: 'clover'
