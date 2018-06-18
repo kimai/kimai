@@ -41,7 +41,7 @@ class ActivityRepository extends AbstractRepository
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb->select('t', 'a', 'p', 'c')
-			->distinct()
+            ->distinct()
             ->from(Timesheet::class, 't')
             ->join('t.activity', 'a')
             ->join('a.project', 'p')
@@ -50,7 +50,7 @@ class ActivityRepository extends AbstractRepository
             ->andWhere('a.visible = 1')
             ->andWhere('p.visible = 1')
             ->andWhere('c.visible = 1')
-			->groupBy('a.id', 't.id')
+            ->groupBy('a.id', 't.id')
             ->orderBy('t.end', 'DESC')
             ->setMaxResults(10)
         ;

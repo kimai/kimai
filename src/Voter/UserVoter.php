@@ -79,22 +79,22 @@ class UserVoter extends AbstractVoter
             case self::ROLES:
                 return $this->canAdminUsers($token);
             case self::PREFERENCES:
-				return $this->canEditPreferences($subject, $user, $token);
+                return $this->canEditPreferences($subject, $user, $token);
         }
 
         return false;
     }
 
-	/**
-	 * @param User $profile
-	 * @param User $user
-	 * @param TokenInterface $token
-	 * @return bool
-	 */
+    /**
+     * @param User $profile
+     * @param User $user
+     * @param TokenInterface $token
+     * @return bool
+     */
     protected function canEditPreferences(User $profile, User $user, TokenInterface $token)
-	{
-		return $profile->getId() == $user->getId();
-	}
+    {
+        return $profile->getId() == $user->getId();
+    }
 
     /**
      * @param User $profile

@@ -25,7 +25,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity("username")
  * @UniqueEntity("email")
  */
-class User implements UserInterface, AdvancedUserInterface
+class User implements UserInterface
 {
     const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
     const ROLE_USER = 'ROLE_USER';
@@ -403,30 +403,6 @@ class User implements UserInterface, AdvancedUserInterface
     {
         $this->preferences->add($preference);
         return $this;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function isAccountNonExpired()
-    {
-        return true;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function isAccountNonLocked()
-    {
-        return true;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function isCredentialsNonExpired()
-    {
-        return true;
     }
 
     /**
