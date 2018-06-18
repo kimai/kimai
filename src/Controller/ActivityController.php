@@ -18,8 +18,7 @@ use App\Repository\ActivityRepository;
 /**
  * Controller used to manage activity contents in the public part of the site.
  *
- * @Route("/activity")
- * @Security("has_role('ROLE_USER')")
+ * @Security("is_granted('ROLE_USER')")
  */
 class ActivityController extends Controller
 {

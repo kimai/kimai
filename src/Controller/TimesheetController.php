@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
  * Controller used to manage timesheet contents in the public part of the site.
  *
  * @Route("/timesheet")
- * @Security("has_role('ROLE_USER')")
+ * @Security("is_granted('ROLE_USER')")
  */
 class TimesheetController extends AbstractController
 {

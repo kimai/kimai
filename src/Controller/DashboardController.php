@@ -24,7 +24,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
  * Dashboard controller for the admin area.
  *
  * @Route("/dashboard")
- * @Security("has_role('ROLE_USER')")
+ * @Security("is_granted('ROLE_USER')")
  */
 class DashboardController extends Controller
 {
