@@ -35,8 +35,8 @@ class SidebarController extends AbstractController
         $user = $this->getUser();
 
         return $this->render('sidebar/settings.html.twig', [
-        	'user' => $user,
-		]);
+            'user' => $user,
+        ]);
 
         /*
 

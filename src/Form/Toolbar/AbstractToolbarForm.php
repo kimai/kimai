@@ -110,7 +110,7 @@ abstract class AbstractToolbarForm extends AbstractType
             'widget' => 'single_text',
             'html5' => false,
             'required' => false,
-			'attr' => ['data-datepicker' => 'on'],
+            'attr' => ['data-datepicker' => 'on'],
         ]);
     }
 
@@ -122,9 +122,9 @@ abstract class AbstractToolbarForm extends AbstractType
         $builder->add('end', DateType::class, [
             'label' => 'label.end',
             'widget' => 'single_text',
-			'html5' => false,
+            'html5' => false,
             'required' => false,
-			'attr' => ['data-datepicker' => 'on'],
+            'attr' => ['data-datepicker' => 'on'],
         ]);
     }
 

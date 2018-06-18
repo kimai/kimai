@@ -43,10 +43,10 @@ class TimesheetEditForm extends AbstractType
             $builder->add('begin', DateTimeType::class, [
                 'label' => 'label.begin',
                 'widget' => 'single_text',
-				'html5' => false,
-				'format' => 'yyyy-MM-dd H:m',
-				'with_seconds' => false,
-				'attr' => ['data-datetimepicker' => 'on'],
+                'html5' => false,
+                'format' => 'yyyy-MM-dd H:m',
+                'with_seconds' => false,
+                'attr' => ['data-datetimepicker' => 'on'],
             ]);
         }
 
@@ -57,10 +57,10 @@ class TimesheetEditForm extends AbstractType
                 'label' => 'label.end',
                 'widget' => 'single_text',
                 'required' => false,
-				'html5' => false,
-				'format' => 'yyyy-MM-dd H:m',
-				'with_seconds' => false,
-				'attr' => ['data-datetimepicker' => 'on'],
+                'html5' => false,
+                'format' => 'yyyy-MM-dd H:m',
+                'with_seconds' => false,
+                'attr' => ['data-datetimepicker' => 'on'],
             ]);
         }
 
