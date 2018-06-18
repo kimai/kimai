@@ -34,15 +34,15 @@ git clone https://github.com/kevinpapst/kimai2.git
 cd kimai2/
 ```
 
+The next steps depend in which environment you want to use Kimai, you can choose between development or production mode.
+
+### Installation (development)
+
 Lets prepare the environment by installing all dependencies:
 
 ```bash
 composer install
 ```
-
-The next steps depend in which environment you want to use Kimai, you can choose between development or production mode.
-
-### Installation (development)
 
 The default installation uses a SQLite database, so there is no need to create a database for your first tests.
 Our default settings will work out-of-the-box, but you might want to adjust the `.env` values to your needs.
@@ -105,6 +105,12 @@ npm run prod
 ```
 
 ### Installation (production)
+
+Lets prepare the environment by installing all dependencies:
+
+```bash
+composer install --no-dev
+```
 
 Make sure the [directories are read and writable by your webserver](https://symfony.com/doc/current/setup/file_permissions.html):
 ```bash
