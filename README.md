@@ -1,6 +1,6 @@
 # Kimai v2 - Time Tracking
 
-Kimai v2 - the reloaded open source Time-Tracking application.
+Kimai v2 - the open source time-tracking application with a mobile-first approach.
 
 [![Travis Status](https://travis-ci.org/kevinpapst/kimai2.svg?branch=master)](https://travis-ci.org/kevinpapst/kimai2)
 [![Code Quality](https://scrutinizer-ci.com/g/kevinpapst/kimai2/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/kevinpapst/kimai2/?branch=master)
@@ -9,9 +9,8 @@ Kimai v2 - the reloaded open source Time-Tracking application.
 
 ## Introduction
 
-This is the reloaded version of the open source time-tracking application [Kimai](http://www.kimai.org).
-
-Right now its in an early development phase, as a some important features from Kimai v1 are missing.
+This is the reloaded version of the open source timetracker [Kimai](http://www.kimai.org).
+Right now its in an early development phase, its usable but some advanced features from Kimai v1 are missing by now.
 
 Kimai is based on a lot of great frameworks. Special thanks to: 
 - [Symfony v4](https://github.com/symfony/symfony) 
@@ -23,12 +22,12 @@ Kimai is based on a lot of great frameworks. Special thanks to:
 - PHP 7.1 or higher
 - One PHP extension of PDO-SQLite or PDO-MySQL enabled (it might work with PostgreSQL and Oracle as well, but that wasn't tested and is not officially supported)
 - the [usual Symfony application requirements](http://symfony.com/doc/current/reference/requirements.html)
-- Kimai needs to be installed in the root directory of a domain or you need to recompile the frontend assets ([read more](var/docs/developers.md))
+- Kimai needs to be installed in the root directory of a domain or you need to [recompile the frontend assets](var/docs/developers.md)
 
 ## Installation
 
 First, install Git and [Composer](https://getcomposer.org/doc/00-intro.md)
-if you haven't already. Then, clone this repo and execute this command in the cloned directory:
+if you haven't already. Then clone this repo and execute this command in the cloned directory:
 
 ```bash
 git clone https://github.com/kevinpapst/kimai2.git
@@ -41,12 +40,12 @@ Lets prepare the environment by installing all dependencies:
 composer install
 ```
 
-The next steps depend on where you want to use Kimai, you can choose between development or production mdoe.
+The next steps depend in which environment you want to use Kimai, you can choose between development or production mode.
 
 ### Installation (development)
 
 The default installation uses a SQLite database, so there is no need to create a database for your first tests.
-The default settings will work out-of-the-box, but you might want to adjust the `.env` values to your needs.
+Our default settings will work out-of-the-box, but you might want to adjust the `.env` values to your needs.
 You can configure your database through your environment (e.g. Webserver, Cloud-Provider) or in your `.env` file:
 ```
 DATABASE_PREFIX=kimai2_
