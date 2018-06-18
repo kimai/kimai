@@ -10,6 +10,7 @@
 namespace App\Tests\Controller;
 
 use App\DataFixtures\AppFixtures;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -22,14 +23,33 @@ abstract class ControllerBaseTest extends WebTestCase
     const DEFAULT_LANGUAGE = 'en';
 
     /**
+     * @param string $role
      * @return Client
      */
-    protected function getClientForAuthenticatedUser()
+    protected function getClientForAuthenticatedUser($role = User::ROLE_USER)
     {
-        $client = self::createClient([], [
-            'PHP_AUTH_USER' => AppFixtures::USERNAME_USER,
-            'PHP_AUTH_PW' => AppFixtures::DEFAULT_PASSWORD,
-        ]);
+        switch($role) {
+            case User::ROLE_ADMIN:
+                $client = self::createClient([], [
+                    'PHP_AUTH_USER' => AppFixtures::USERNAME_ADMIN,
+                    'PHP_AUTH_PW' => AppFixtures::DEFAULT_PASSWORD,
+                ]);
+                break;
+
+            case User::ROLE_TEAMLEAD:
+                $client = self::createClient([], [
+                    'PHP_AUTH_USER' => AppFixtures::USERNAME_TEAMLEAD,
+                    'PHP_AUTH_PW' => AppFixtures::DEFAULT_PASSWORD,
+                ]);
+                break;
+
+            default:
+                $client = self::createClient([], [
+                    'PHP_AUTH_USER' => AppFixtures::USERNAME_USER,
+                    'PHP_AUTH_PW' => AppFixtures::DEFAULT_PASSWORD,
+                ]);
+                break;
+        }
 
         return $client;
     }
@@ -70,5 +90,14 @@ abstract class ControllerBaseTest extends WebTestCase
     {
         $this->assertFalse($client->getResponse()->isSuccessful());
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * @param Client $client
+     * @param string $classname
+     */
+    protected function assertMainContentClass(Client $client, $classname)
+    {
+        $this->assertContains('<section class="content '.$classname.'">', $client->getResponse()->getContent());
     }
 }
