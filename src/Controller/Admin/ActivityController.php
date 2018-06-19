@@ -25,7 +25,7 @@ use App\Repository\Query\ActivityQuery;
  * Controller used to manage activities in the admin part of the site.
  *
  * @Route("/admin/activity")
- * @Security("has_role('ROLE_ADMIN')")
+ * @Security("is_granted('ROLE_ADMIN')")
  * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
  */
 class ActivityController extends AbstractController

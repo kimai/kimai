@@ -24,7 +24,7 @@ use App\Repository\Query\CustomerQuery;
  * Controller used to manage activities in the admin part of the site.
  *
  * @Route("/admin/customer")
- * @Security("has_role('ROLE_ADMIN')")
+ * @Security("is_granted('ROLE_ADMIN')")
  * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
  */
 class CustomerController extends AbstractController

@@ -27,7 +27,7 @@ use Symfony\Component\HttpFoundation\Request;
  * Controller used to manage invoices.
  *
  * @Route("/invoice")
- * @Security("has_role('ROLE_TEAMLEAD')")
+ * @Security("is_granted('ROLE_TEAMLEAD')")
  */
 class InvoiceController extends AbstractController
 {

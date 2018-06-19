@@ -27,7 +27,7 @@ use Symfony\Component\HttpFoundation\Request;
  * User profile controller
  *
  * @Route("/profile")
- * @Security("has_role('ROLE_USER')")
+ * @Security("is_granted('ROLE_USER')")
  */
 class ProfileController extends AbstractController
 {

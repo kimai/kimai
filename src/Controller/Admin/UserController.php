@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
  * Controller used to manage users in the admin part of the site.
  *
  * @Route("/admin/user")
- * @Security("has_role('ROLE_SUPER_ADMIN')")
+ * @Security("is_granted('ROLE_SUPER_ADMIN')")
  * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
  */
 class UserController extends AbstractController

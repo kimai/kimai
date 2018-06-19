@@ -25,7 +25,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
  * Controller used for manage timesheet entries in the admin part of the site.
  *
  * @Route("/team/timesheet")
- * @Security("has_role('ROLE_TEAMLEAD')")
+ * @Security("is_granted('ROLE_TEAMLEAD')")
  * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
  */
 class TimesheetController extends AbstractController
