@@ -51,9 +51,7 @@ class TimesheetEditForm extends AbstractType
         }
 
         if ($options['duration_only']) {
-            $builder->add('duration', DurationType::class, [
-                'label_attr' => ['docu' => 'timesheet']
-            ]);
+            $builder->add('duration', DurationType::class, []);
         } else {
             $builder->add('end', DateTimeType::class, [
                 'label' => 'label.end',
@@ -96,6 +94,7 @@ class TimesheetEditForm extends AbstractType
             'csrf_token_id' => 'timesheet_edit',
             'duration_only' => false,
             'include_user' => false,
+            'documentation' => 'timesheet',
         ]);
     }
 }

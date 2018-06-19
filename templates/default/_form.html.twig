@@ -1,6 +1,11 @@
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title">{{ title }}</h3>
+        <h3 class="box-title">
+            {{ title }}
+            {% if form.vars.documentation is defined and form.vars.documentation is not empty %}
+                <a href="{{ path('help_chapter', {'chapter': form.vars.documentation}) }}"><i class="fa fa-question-circle"></i></a>
+            {% endif %}
+        </h3>
     </div>
     {% form_theme form 'form/kimai-theme.html.twig' %}
     {{ form_start(form) }}
