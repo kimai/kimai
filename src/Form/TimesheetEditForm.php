@@ -51,7 +51,7 @@ class TimesheetEditForm extends AbstractType
         }
 
         if ($options['duration_only']) {
-            $builder->add('duration', DurationType::class, []);
+            $builder->add('duration', DurationType::class);
         } else {
             $builder->add('end', DateTimeType::class, [
                 'label' => 'label.end',
