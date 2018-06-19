@@ -21,6 +21,7 @@ class InvoiceControllerTest extends ControllerBaseTest
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/invoice/');
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/invoice/');
     }
 
     public function testIndexAction()

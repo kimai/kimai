@@ -26,7 +26,7 @@ use App\Repository\Query\ProjectQuery;
  * Controller used to manage projects in the admin part of the site.
  *
  * @Route("/admin/project")
- * @Security("has_role('ROLE_ADMIN')")
+ * @Security("is_granted('ROLE_ADMIN')")
  * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
  */
 class ProjectController extends AbstractController
