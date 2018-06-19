@@ -1,6 +1,8 @@
 # Configurations
 
-There are several configurations that can be configured with the yaml files in `config/packages/*.yaml
+There are several configurations that can be configured with the yaml files in `config/packages/*.yaml``
+
+Please read _Overwriting local configs_ to know where to store your own settings.
 
 ## Duration only
 
@@ -94,3 +96,25 @@ kimai:
                 days: ['saturday','sunday']
                 factor: 1.5
 ```
+
+## Overwriting local configs
+
+You can create the file `config/packages/local.yaml` and store your own settings inside. This file will NEVER be shipped with Kimai.
+
+So having your custom settings in this file allows you to easily update Kimai. This is the same concept as used for the `.env` file.
+
+An example `config/packages/local.yaml` file might look like this:
+```yaml
+kimai:
+    timesheet:
+        rounding:
+            default:
+                begin: 15
+                end: 15
+
+twig:
+    globals:
+        kimai_context:
+            date_1: "Y-m-d"
+```
+After changing the file you have to clear the cache with `bin/console cache:clear` or `bin/console cache:clear --env=prod`.

@@ -1,8 +1,8 @@
-
+{% if entries is not empty %}
 <li class="dropdown messages-menu">
     <a href="#" class="dropdown-toggle ddt-large ticktac" data-toggle="dropdown">
         <i class="fa fa-play-circle fa-2x"></i>
-        {% if entries is not empty %}<span class="label label-{% if entries|length >= kimai_context.active_warning %}danger{% else %}warning{% endif %}">{{ entries|length }}</span>{% endif %}
+        <span class="label label-{% if entries|length >= kimai_context.active_warning %}danger{% else %}warning{% endif %}">{{ entries|length }}</span>
     </a>
     <ul class="dropdown-menu">
         <li class="header">
@@ -19,7 +19,7 @@
                             </div>
                             <h4>
                                 {{ entry.activity.name }}
-                                <small><i class="fa fa-clock-o"></i> {{ entry|durationForEntry }}</small>
+                                <small><i class="fa fa-clock-o"></i> {{ entry|duration }}</small>
                             </h4>
                             <p>{{ entry.activity.project.name }} ({{ entry.activity.project.customer.name }})</p>
                         </a>
@@ -35,3 +35,10 @@
         <li class="footer"><a href="{{ path('timesheet_create') }}">{{ 'timesheet.start'|trans }}</a></li>
     </ul>
 </li>
+{% else %}
+    <li class="messages-menu">
+        <a href="{{ path('timesheet_create') }}" class="ddt-large">
+            <i class="fa fa-play-circle fa-2x"></i>
+        </a>
+    </li>
+{% endif %}

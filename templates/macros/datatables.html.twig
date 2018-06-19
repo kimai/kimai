@@ -1,9 +1,9 @@
 
-{% macro data_table_header(entries, form, tools, toolsRight) %}
+{% macro data_table_header(entries, form, collapseClass) %}
 <div class="box data_table">
-    {% if form or tools or toolsRight %}
+    {% if form %}
         {% import "macros/toolbar.html.twig" as macro %}
-        {{ macro.toolbar(form, tools, toolsRight) }}
+        {{ macro.toolbar(form, collapseClass) }}
     {% endif %}
     <div class="box-body no-padding">
         <div class="dataTables_wrapper form-inline dt-bootstrap">
@@ -48,6 +48,6 @@
 </div>
 
 <div class="navigation text-center no-print">
-    {{ pagerfanta(entries, 'twitter_bootstrap3_translated', { routeName: route }) }}
+    {{ pagerfanta(entries, 'twitter_bootstrap3_translated', { proximity: 1, routeName: route }) }}
 </div>
 {% endmacro %}

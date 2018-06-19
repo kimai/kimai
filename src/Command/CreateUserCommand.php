@@ -63,14 +63,21 @@ class CreateUserCommand extends Command
      */
     protected function configure()
     {
+        $roles = implode(',', [User::DEFAULT_ROLE, User::ROLE_ADMIN]);
+
         $this
             ->setName('kimai:create-user')
             ->setDescription('Create a new user')
             ->setHelp('This command allows you to create a new user.')
-            ->addArgument('username', InputArgument::REQUIRED, 'The username of the user to be created (must be unique)')
-            ->addArgument('email', InputArgument::REQUIRED, 'Email address of the user to be created (must be unique)')
-            ->addArgument('role', InputArgument::OPTIONAL, 'A comma separated list of roles to assign. Examples: "ROLE_USER,ROLE_SUPER_ADMIN"', User::DEFAULT_ROLE)
-            ->addArgument('password', InputArgument::OPTIONAL, 'Password for the user to be created')
+            ->addArgument('username', InputArgument::REQUIRED, 'A name for the new user (must be unique)')
+            ->addArgument('email', InputArgument::REQUIRED, 'Email address of the new user (must be unique)')
+            ->addArgument(
+                'role',
+                InputArgument::OPTIONAL,
+                'A comma separated list of user roles, e.g. "'.$roles.'"',
+                User::DEFAULT_ROLE
+            )
+            ->addArgument('password', InputArgument::OPTIONAL, 'Password for the new user (requested if not provided)')
         ;
     }
 

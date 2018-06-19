@@ -15,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 /**
  * Sidebar controller
  *
- * @Security("has_role('ROLE_USER')")
+ * @Security("is_granted('ROLE_USER')")
  */
 class SidebarController extends AbstractController
 {
@@ -32,10 +32,13 @@ class SidebarController extends AbstractController
      */
     public function settingsAction()
     {
-        return $this->render('sidebar/settings.html.twig', []);
+        $user = $this->getUser();
+
+        return $this->render('sidebar/settings.html.twig', [
+            'user' => $user,
+        ]);
 
         /*
-        $user = $this->getUser();
 
         $form = $this->createForm(UserPreferencesForm::class, $user, [
             'action' => $this->generateUrl('user_profile_preferences', ['username' => $user->getUsername()]),

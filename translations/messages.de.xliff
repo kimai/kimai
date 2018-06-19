@@ -89,7 +89,7 @@
             </trans-unit>
             <trans-unit id="menu.timesheet">
                 <source>menu.timesheet</source>
-                <target>Zeiterfassung</target>
+                <target>Meine Zeiten</target>
             </trans-unit>
             <trans-unit id="menu.invoice">
                 <source>menu.invoice</source>
@@ -97,7 +97,7 @@
             </trans-unit>
             <trans-unit id="menu.admin_timesheet">
                 <source>menu.admin_timesheet</source>
-                <target>Mitarbeiter Zeiten</target>
+                <target>Zeiterfassung</target>
             </trans-unit>
             <trans-unit id="menu.admin_customer">
                 <source>menu.admin_customer</source>
@@ -249,7 +249,7 @@
             </trans-unit>
             <trans-unit id="dashboard.you">
                 <source>dashboard.you</source>
-                <target>Deine Statistiken</target>
+                <target>Meine Statistiken</target>
             </trans-unit>
             <trans-unit id="dashboard.all">
                 <source>dashboard.all</source>
@@ -285,11 +285,11 @@
             -->
             <trans-unit id="timesheet.title">
                 <source>timesheet.title</source>
-                <target>Zeiterfassung</target>
+                <target>Meine Zeiten</target>
             </trans-unit>
             <trans-unit id="timesheet.subtitle">
                 <source>timesheet.subtitle</source>
-                <target>Verwalten Sie Ihre Zeiteinträge</target>
+                <target>Verwalte meine Zeiteinträge</target>
             </trans-unit>
             <trans-unit id="timesheet.edit">
                 <source>timesheet.edit</source>
@@ -313,7 +313,7 @@
             </trans-unit>
             <trans-unit id="profile.subtitle">
                 <source>profile.subtitle</source>
-                <target>Verwalte Deine Einstellungen</target>
+                <target>Verwalte meine Einstellungen</target>
             </trans-unit>
             <trans-unit id="profile.about_me">
                 <source>profile.about_me</source>
@@ -377,7 +377,7 @@
             -->
             <trans-unit id="admin_timesheet.title">
                 <source>admin_timesheet.title</source>
-                <target>Mitarbeiter Zeiterfassung</target>
+                <target>Zeiterfassung</target>
             </trans-unit>
             <trans-unit id="admin_timesheet.subtitle">
                 <source>admin_timesheet.subtitle</source>
@@ -794,7 +794,7 @@
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
                 <target>
-                    Ihr %count% zuletzt bearbeitete Tätigkeit|Eine ihrer %count% letzten Tätigkeiten neustarten
+                    Ihre letzte Tätigkeit wiederaufnehmen|Eine ihrer %count% letzten Tätigkeiten neustarten
                 </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
@@ -828,30 +828,6 @@
             <trans-unit id="entryState.stopped">
                 <source>entryState.stopped</source>
                 <target>Beendete</target>
-            </trans-unit>
-            <trans-unit id="0">
-                <source>0</source>
-                <target>0</target>
-            </trans-unit>
-            <trans-unit id="10">
-                <source>10</source>
-                <target>10</target>
-            </trans-unit>
-            <trans-unit id="25">
-                <source>25</source>
-                <target>25</target>
-            </trans-unit>
-            <trans-unit id="50">
-                <source>50</source>
-                <target>50</target>
-            </trans-unit>
-            <trans-unit id="75">
-                <source>75</source>
-                <target>75</target>
-            </trans-unit>
-            <trans-unit id="100">
-                <source>100</source>
-                <target>100</target>
             </trans-unit>
         </body>
     </file>

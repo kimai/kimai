@@ -5,8 +5,36 @@
  * file that was distributed with this source code.
  */
 
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
 .error-page {
     margin-bottom: 50px;
+}
+
+/* ================================ CONTENT ================================ */
+
+.content {
+    padding: 15px 0;
+}
+.content-header {
+    h1 {
+        small {
+            display: none;
+        }
+    }
+}
+
+@media (min-width: $screen-sm-min) {
+    .content-header {
+        h1 {
+            small {
+                display: inline-block;
+            }
+        }
+    }
+    .content {
+        padding: 15px;
+    }
 }
 
 /* ================================ NAVBAR ================================ */
@@ -16,7 +44,7 @@
     padding-bottom: 9px;
 }
 
-li.messages-menu ul.menu li:hover .pull-left i {
+li.messages-menu ul.menu li .pull-left i {
     color: #dd4b39;
 }
 
@@ -53,31 +81,27 @@ li.open .ticktac i.running{
 
 /* ================================ TOOLBAR ================================ */
 
-.control-sidebar select {
-    color: #000;
+/* Page based action buttons in the upper right corner of the content area */
+.content-header > .breadcrumb {
+    position: absolute;
+    float: right;
+    background: transparent;
 }
-
-.data_table .box-header>.box-tools {
-    top: 3px;
+/* Right sidebar with additional tabs for personal settings and "About Kimai" section */
+.control-sidebar {
+    select {
+        color: #000;
+    }
+    div.image {
+        img.img-circle {
+            max-width: 34px;
+        }
+    }
 }
-
-.box-header .box-title.toolbar form {
-    font-size: 13px;
+/* The filter form available on most pages above the datatable */
+.toolbar form {
+    font-size: $font-size-base;
 }
-.toolbar form input,
-.toolbar form select {
-    display: inline-block;
-    width: inherit;
-}
-
-.toolbar form .form-group {
-    display: inline;
-}
-
-.tools-left {
-    margin-right: 10px;
-}
-
 /* ================================ SIDEBAR ================================ */
 
 /* Used for the Sidebar UserPanel (which is deactivated right now) */
@@ -105,6 +129,16 @@ footer.main-footer {
 
 /* ================================ INVOICES ================================ */
 
+.invoice {
+    margin: 0;
+}
+
+@media (min-width: $screen-sm-min) {
+    .invoice {
+        margin: 10px 25px;
+    }
+}
+
 .page-header-small{
     font-size: 14px;
 }
@@ -126,13 +160,6 @@ table.invoice-sum th, table.invoice-sum td  {
 }
 
 /* ================================ DATA-TABLES ================================ */
-
-/*
-    TODO "display:hidden" regel für dataTable - spalten - mobile ansicht
-    TODO "display:hidden" regel für dataTable - header icon - mobile ansicht
-
-*/
-
 
 /*
 dataTables.bootstrap.css
@@ -181,7 +208,6 @@ div.dataTables_paginate ul.pagination {
 }
 
 @media screen and (max-width: 767px) {
-    div.dataTables_wrapper > div.row > div,
     div.dataTables_length,
     div.dataTables_filter,
     div.dataTables_info,
@@ -194,14 +220,12 @@ div.dataTables_paginate ul.pagination {
     }
 }
 
-
 table.dataTable td,
 table.dataTable th {
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
     box-sizing: content-box;
 }
-
 
 table.dataTable {
     clear: both;
@@ -330,9 +354,6 @@ table.table-bordered td:last-child {
 div.dataTables_scrollHead table.table-bordered {
     border-bottom-width: 0;
 }
-
-
-
 
 /*
  * TableTools styles

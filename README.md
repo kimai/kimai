@@ -1,15 +1,19 @@
 # Kimai v2 - Time Tracking
 
-Kimai v2 - the reloaded open source Time-Tracking application.
+Kimai v2 - the open source time-tracking application with a mobile-first approach.
 
-[![Build Status](https://travis-ci.org/kevinpapst/kimai2.svg?branch=master)](https://travis-ci.org/kevinpapst/kimai2)
+[![Travis Status](https://travis-ci.org/kevinpapst/kimai2.svg?branch=master)](https://travis-ci.org/kevinpapst/kimai2)
+[![Code Quality](https://scrutinizer-ci.com/g/kevinpapst/kimai2/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/kevinpapst/kimai2/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/kevinpapst/kimai2/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/kevinpapst/kimai2/?branch=master)
+[![Scrutinizer Status](https://scrutinizer-ci.com/g/kevinpapst/kimai2/badges/build.png?b=master)](https://scrutinizer-ci.com/g/kevinpapst/kimai2/build-status/master)
 
 ## Introduction
 
-This is (or will be in the future, currently a lot of features are still missing) the reloaded version of the open source time-tracking application [Kimai](http://www.kimai.org).
+This is the reloaded version of the open source timetracker [Kimai](http://www.kimai.org).
+Right now its in an early development phase, its usable but some advanced features from Kimai v1 are missing by now.
 
-It is based on a lot of great PHP components. Special thanks to:
-- [Symfony Framework 4](https://github.com/symfony/symfony)
+Kimai is based on a lot of great frameworks. Special thanks to: 
+- [Symfony v4](https://github.com/symfony/symfony) 
 - [Doctrine](https://github.com/doctrine/)
 - [AdminThemeBundle](https://github.com/avanzu/AdminThemeBundle/) (based on [AdminLTE](https://github.com/almasaeed2010/AdminLTE/))
 
@@ -18,17 +22,21 @@ It is based on a lot of great PHP components. Special thanks to:
 - PHP 7.1 or higher
 - One PHP extension of PDO-SQLite or PDO-MySQL enabled (it might work with PostgreSQL and Oracle as well, but that wasn't tested and is not officially supported)
 - the [usual Symfony application requirements](http://symfony.com/doc/current/reference/requirements.html)
-- Kimai needs to be installed in the root directory of a domain or you need to recompile the frontend assets ([read more](var/docs/developers.md))
+- Kimai needs to be installed in the root directory of a domain or you need to [recompile the frontend assets](var/docs/developers.md)
 
 ## Installation
 
 First, install Git and [Composer](https://getcomposer.org/doc/00-intro.md)
-if you haven't already. Then, clone this repo and execute this command in the cloned directory:
+if you haven't already. Then clone this repo and execute this command in the cloned directory:
 
 ```bash
 git clone https://github.com/kevinpapst/kimai2.git
 cd kimai2/
 ```
+
+The next steps depend in which environment you want to use Kimai, you can choose between development or production mode.
+
+### Installation (development)
 
 Lets prepare the environment by installing all dependencies:
 
@@ -37,7 +45,7 @@ composer install
 ```
 
 The default installation uses a SQLite database, so there is no need to create a database for your first tests.
-The default settings will work out-of-the-box, but you might want to adjust the `.env` values to your needs.
+Our default settings will work out-of-the-box, but you might want to adjust the `.env` values to your needs.
 You can configure your database through your environment (e.g. Webserver, Cloud-Provider) or in your `.env` file:
 ```
 DATABASE_PREFIX=kimai2_
@@ -52,15 +60,7 @@ bin/console doctrine:database:create
 bin/console doctrine:schema:create
 ```
 
-To generate the frontend assets ([more information here](var/docs/developers.md)), execute:
-```bash
-yarn install
-npm run prod
-```
-
-### Installation (development / demo)
-
-Lets boostrap your environment by executing this commands (which is only available in dev environment):
+Lets bootstrap your environment by executing this commands (which is only available in dev environment):
 ```bash
 bin/console kimai:reset-dev
 ```
@@ -98,21 +98,38 @@ bin/console server:run
 This command will start a web server for Kimai. Now you can access the application in your browser at <http://127.0.0.1:8000/>.
 You can stop the built-in web server by pressing `Ctrl + C` while you're in the terminal.
 
+To re-generate the frontend assets ([more information here](var/docs/developers.md)), execute:
+```bash
+yarn install
+npm run prod
+```
 
-### Installation (live)
+### Installation (production)
+
+Lets prepare the environment by installing all dependencies:
+
+```bash
+composer install --no-dev
+```
+
+Make sure the [directories are read and writable by your webserver](https://symfony.com/doc/current/setup/file_permissions.html):
+```bash
+chown -R www-data var/
+chmod -R 777 var/
+```
 
 The database to use is up to you, but we would not recommend using the default SQLite database for production usage.
 Please create your database and configure the connection string in your environment, e.g. with the `.env` file:
 ```
 APP_ENV=prod
-DATABASE_URL=sqlitemysql://db_user:db_password@127.0.0.1:3306/db_name
+DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
 APP_SECRET=insert_a_random_secret_string_for_production
 ```
 
-Create the database schemas and warm up the cache:
+Create the database schemas and warm up the cache (as webserver user):
 ```bash
 bin/console doctrine:schema:create
-bin/console cache:warmup --env=prod
+sudo -u www-data bin/console cache:warmup --env=prod
 ```
 
 Create your first user with the following command. You will be asked to enter a password afterwards.
@@ -120,6 +137,7 @@ Create your first user with the following command. You will be asked to enter a 
 ```bash
 bin/console kimai:create-user username admin@example.com ROLE_SUPER_ADMIN
 ```
+_Tip: You can skip the "create user" step, if you are going to import data from Kimai v1._
 
 For available roles, please refer to the [user documentation](var/docs/users.md).
 
@@ -170,4 +188,4 @@ All available Kimai 2 bundles can be found at the [Kimai recipes](https://github
 If you want to develop for Kimai 2 please read the following documentation:
 
 - an example on how to extend Kimai 2 can be found in this [GitHub repository](https://github.com/kevinpapst/kimai2-invoice)
-- the developer documentation can be found at [var/docs/developers.md](var/docs/developers.md) both on GitHub and your local installation
+- the [developer documentation](var/docs/developers.md) is available both on GitHub and your local installation

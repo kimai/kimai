@@ -36,8 +36,10 @@
             <directory suffix=".php">src/</directory>
             <directory suffix=".php">templates/</directory>
             <exclude>
-                <directory suffix=".php">vendor/</directory>
+                <directory suffix=".php">public/</directory>
                 <directory suffix=".php">tests/</directory>
+                <directory suffix=".php">var/</directory>
+                <directory suffix=".php">vendor/</directory>
             </exclude>
         </whitelist>
     </filter>

@@ -1,4 +1,16 @@
 
+{% macro page_actions(tools) %}
+    <div class="breadcrumb">
+        <div class="box-tools">
+            <div class="btn-group">
+                {% for icon,url in tools  %}
+                    <a class="btn btn-default" href="{{ url }}"{% if '#collapse' in url %} data-toggle="collapse" {% endif %}><i class="fa fa-{{ icon }}"></i></a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
 {% macro page_header(title) %}
     <h2 class="page-header">{{ title|trans }}</h2>
 {% endmacro %}

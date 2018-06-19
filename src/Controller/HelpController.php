@@ -19,7 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
  * This controller can render the markdown documentation from /var/docs/
  *
  * @Route("/help")
- * @Security("has_role('ROLE_USER')")
+ * @Security("is_granted('ROLE_USER')")
  */
 class HelpController extends Controller
 {

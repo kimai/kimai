@@ -6,6 +6,11 @@ global.$ = global.jQuery = $;
 require('jquery-ui');
 require('bootstrap-sass');
 require('jquery-slimscroll');
+require('bootstrap-select');
+
+const Moment = require('moment');
+global.moment = Moment;
+require('daterangepicker');
 
 // ------ for charts ------
 const Chart = require('../../vendor/almasaeed2010/adminlte/plugins/chartjs/Chart.min.js');

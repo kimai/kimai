@@ -1,9 +1,15 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
+{% import "macros/toolbar.html.twig" as toolbar %}
 
 {% block page_title %}{{ 'timesheet.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'timesheet.subtitle'|trans }}{% endblock %}
+{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseTimesheet', 'plus-square': path('timesheet_create')}) }}{% endblock %}
+
+{% block main_before %}
+    {{ toolbar.toolbar(toolbarForm, 'collapseTimesheet') }}
+{% endblock %}
 
 {% block main %}
 
@@ -25,7 +31,7 @@
         'label.actions': '',
     }) %}
 
-    {{ tables.data_table_header(columns, toolbarForm, {'plus-square': path('timesheet_create')}) }}
+    {{ tables.data_table_header(columns) }}
 
     {% for entry in entries %}
         <tr>
@@ -45,7 +51,7 @@
                 {% if not duration_only %}
                     <td>&dash;</td>
                 {% endif %}
-                <td class="hidden-xs"><i>{{ entry.duration|duration }}</i></td>
+                <td class="hidden-xs"><i>{{ entry|duration }}</i></td>
                 <td class="hidden-xs">&dash;</td>
             {% endif %}
 

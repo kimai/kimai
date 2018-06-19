@@ -36,8 +36,9 @@ class TimesheetRepository extends AbstractRepository
      */
     public function stopRecording(Timesheet $entry)
     {
+        // seems to be necessary so Doctrine will recognize a changed timestamp
+        $entry->setBegin(clone $entry->getBegin());
         $entry->setEnd(new DateTime());
-
         $entityManager = $this->getEntityManager();
         $entityManager->persist($entry);
         $entityManager->flush();
