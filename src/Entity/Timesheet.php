@@ -256,6 +256,9 @@ class Timesheet
     }
 
     /**
+     * @param ExecutionContextInterface $context
+     * @param mixed $payload
+     *
      * @Assert\Callback
      */
     public function validate(ExecutionContextInterface $context, $payload)
