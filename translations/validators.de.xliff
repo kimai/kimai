@@ -6,6 +6,10 @@
                 <source>This value is not a valid role.</source>
                 <target>Dieser Wert ist keine gültige Rolle.</target>
             </trans-unit>
+            <trans-unit id="End date must not be earlier then start date.">
+                <source>End date must not be earlier then start date.</source>
+                <target>Das Enddatum darf nicht vor dem Startdatum liegen.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

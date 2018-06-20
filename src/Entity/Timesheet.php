@@ -12,6 +12,7 @@ namespace App\Entity;
 use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Timesheet entity.
@@ -57,6 +58,7 @@ class Timesheet
      * @var integer
      *
      * @ORM\Column(name="duration", type="integer", nullable=true)
+     * @Assert\GreaterThanOrEqual(0)
      */
     private $duration = 0;
 
@@ -251,5 +253,21 @@ class Timesheet
     public function getRate()
     {
         return $this->rate;
+    }
+
+    /**
+     * @param ExecutionContextInterface $context
+     * @param mixed $payload
+     *
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        if ($this->getEnd() !== null && $this->getEnd()->getTimestamp() < $this->getBegin()->getTimestamp()) {
+            $context->buildViolation('End date must not be earlier then start date.')
+                ->atPath('end')
+                ->setTranslationDomain('validators')
+                ->addViolation();
+        }
     }
 }
