@@ -13,7 +13,7 @@ use App\DataFixtures\AppFixtures;
 use App\Entity\User;
 
 /**
- * @coversDefaultClass \App\Controller\InvoiceController
+ * @covers \App\Controller\InvoiceController
  * @group integration
  */
 class ProfileControllerTest extends ControllerBaseTest

@@ -13,7 +13,7 @@ use App\Entity\User;
 use App\Tests\Controller\ControllerBaseTest;
 
 /**
- * @coversDefaultClass \App\Controller\Admin\CustomerController
+ * @covers \App\Controller\Admin\CustomerController
  * @group integration
  */
 class CustomerControllerTest extends ControllerBaseTest

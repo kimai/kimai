@@ -18,7 +18,7 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
- * @coversDefaultClass \App\Command\CreateUserCommand
+ * @covers \App\Command\CreateUserCommand
  * @group integration
  */
 class CreateUserCommandTest extends KernelTestCase

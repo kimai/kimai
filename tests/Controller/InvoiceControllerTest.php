@@ -12,7 +12,7 @@ namespace App\Tests\Controller;
 use App\Entity\User;
 
 /**
- * @coversDefaultClass \App\Controller\InvoiceController
+ * @covers \App\Controller\InvoiceController
  * @group integration
  */
 class InvoiceControllerTest extends ControllerBaseTest

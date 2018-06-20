@@ -10,7 +10,7 @@
 namespace App\Tests\Controller;
 
 /**
- * @coversDefaultClass \App\Controller\SidebarController
+ * @covers \App\Controller\SidebarController
  * @group integration
  */
 class SidebarControllerTest extends ControllerBaseTest

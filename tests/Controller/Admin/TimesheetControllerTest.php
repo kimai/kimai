@@ -13,7 +13,7 @@ use App\Entity\User;
 use App\Tests\Controller\ControllerBaseTest;
 
 /**
- * @coversDefaultClass \App\Controller\Admin\TimesheetController
+ * @covers \App\Controller\Admin\TimesheetController
  * @group integration
  */
 class TimesheetControllerTest extends ControllerBaseTest
