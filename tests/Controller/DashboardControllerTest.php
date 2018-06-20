@@ -10,7 +10,7 @@
 namespace App\Tests\Controller;
 
 /**
- * @coversDefaultClass \App\Controller\DashboardController
+ * @covers \App\Controller\DashboardController
  * @group integration
  */
 class DashboardControllerTest extends ControllerBaseTest

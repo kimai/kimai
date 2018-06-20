@@ -10,7 +10,7 @@
 namespace App\Tests\Controller;
 
 /**
- * @coversDefaultClass \App\Controller\HelpController
+ * @covers \App\Controller\HelpController
  * @group integration
  */
 class HelpControllerTest extends ControllerBaseTest

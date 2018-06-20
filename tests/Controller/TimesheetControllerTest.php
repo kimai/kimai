@@ -13,7 +13,7 @@ use App\DataFixtures\AppFixtures;
 use App\Entity\User;
 
 /**
- * @coversDefaultClass \App\Controller\TimesheetController
+ * @covers \App\Controller\TimesheetController
  * @group integration
  */
 class TimesheetControllerTest extends ControllerBaseTest

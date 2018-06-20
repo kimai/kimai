@@ -10,7 +10,7 @@
 namespace App\Tests\Controller;
 
 /**
- * @coversDefaultClass \App\Controller\ActivityController
+ * @covers \App\Controller\ActivityController
  * @group integration
  */
 class ActivityControllerTest extends ControllerBaseTest
