@@ -20,16 +20,27 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DocumentationLinkExtension extends AbstractTypeExtension
 {
+    /**
+     * @return string
+     */
     public function getExtendedType()
     {
         return FormType::class;
     }
 
+    /**
+     * @param FormView $view
+     * @param FormInterface $form
+     * @param array $options
+     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['documentation'] = $options['documentation'] ?? '';
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefined(array('documentation'));
