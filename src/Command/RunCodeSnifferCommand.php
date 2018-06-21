@@ -60,18 +60,18 @@ class RunCodeSnifferCommand extends Command
 
         $args = [];
         if (!$input->getOption('fix')) {
-            $filename = $this->rootDir . '/' . $input->getOption('checkstyle');
+            $filename = $input->getOption('checkstyle');
             $args[] = '--dry-run';
             $args[] = '--verbose';
             $args[] = '--show-progress=none';
 
             if (!empty($filename)) {
+                $filename = $this->rootDir . '/' . $filename;
                 $args[] = '--format=checkstyle';
                 if (!file_exists($filename) || is_writeable($filename)) {
                     $args[] = '> ' . $filename;
                 } else {
                     $io->error('Target file is not writeable: ' . $filename);
-
                     return;
                 }
             } else {
