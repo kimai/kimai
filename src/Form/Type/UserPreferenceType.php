@@ -37,12 +37,12 @@ class UserPreferenceType extends AbstractType
 
                 if ($preference instanceof UserPreference) {
                     // prevents unconfigured values from showing up in the form
-                    if ($preference->getType() === null) {
+                    if (null === $preference->getType()) {
                         return;
                     }
 
                     $required = true;
-                    if ($preference->getType() == CheckboxType::class) {
+                    if (CheckboxType::class == $preference->getType()) {
                         $required = false;
                     }
 

@@ -33,7 +33,7 @@ class UserQuery extends VisibilityQuery
      */
     public function setRole($role)
     {
-        if (strpos($role, 'ROLE_') !== false || $role === null) {
+        if (false !== strpos($role, 'ROLE_') || null === $role) {
             $this->role = $role;
         }
 

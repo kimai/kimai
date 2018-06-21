@@ -151,7 +151,7 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
         }
 
         // ignore events like the toolbar where we do not have a token
-        if ($this->storage->getToken() === null) {
+        if (null === $this->storage->getToken()) {
             return false;
         }
 

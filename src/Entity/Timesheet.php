@@ -136,7 +136,7 @@ class Timesheet
     public function setEnd($end)
     {
         $this->end = $end;
-        if ($end === null) {
+        if (null === $end) {
             $this->duration = 0;
         }
 
@@ -267,7 +267,7 @@ class Timesheet
      */
     public function validate(ExecutionContextInterface $context, $payload)
     {
-        if ($this->getEnd() !== null && $this->getEnd()->getTimestamp() < $this->getBegin()->getTimestamp()) {
+        if (null !== $this->getEnd() && $this->getEnd()->getTimestamp() < $this->getBegin()->getTimestamp()) {
             $context->buildViolation('End date must not be earlier then start date.')
                 ->atPath('end')
                 ->setTranslationDomain('validators')

@@ -277,33 +277,33 @@ class TimesheetRepository extends AbstractRepository
             ->join('p.customer', 'c')
             ->orderBy('t.' . $query->getOrderBy(), $query->getOrder());
 
-        if ($query->getUser() !== null) {
+        if (null !== $query->getUser()) {
             $qb->andWhere('t.user = :user')
                 ->setParameter('user', $query->getUser());
         }
 
-        if ($query->getState() == TimesheetQuery::STATE_RUNNING) {
+        if (TimesheetQuery::STATE_RUNNING == $query->getState()) {
             $qb->andWhere($qb->expr()->isNull('t.end'));
-        } elseif ($query->getState() == TimesheetQuery::STATE_STOPPED) {
+        } elseif (TimesheetQuery::STATE_STOPPED == $query->getState()) {
             $qb->andWhere($qb->expr()->isNotNull('t.end'));
         }
 
-        if ($query->getBegin() !== null) {
+        if (null !== $query->getBegin()) {
             $qb->andWhere('t.begin >= :begin')
                 ->setParameter('begin', $query->getBegin());
         }
-        if ($query->getEnd() !== null) {
+        if (null !== $query->getEnd()) {
             $qb->andWhere('t.end <= :end')
                 ->setParameter('end', $query->getEnd());
         }
 
-        if ($query->getActivity() !== null) {
+        if (null !== $query->getActivity()) {
             $qb->andWhere('t.activity = :activity')
                 ->setParameter('activity', $query->getActivity());
-        } elseif ($query->getProject() !== null) {
+        } elseif (null !== $query->getProject()) {
             $qb->andWhere('a.project = :project')
                 ->setParameter('project', $query->getProject());
-        } elseif ($query->getCustomer() !== null) {
+        } elseif (null !== $query->getCustomer()) {
             $qb->andWhere('p.customer = :customer')
                 ->setParameter('customer', $query->getCustomer());
         }

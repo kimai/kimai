@@ -115,7 +115,7 @@ class ActivityController extends AbstractController
 
         $deleteForm->handleRequest($request);
 
-        if ($stats->getRecordAmount() == 0 || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
+        if (0 == $stats->getRecordAmount() || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($activity);
             $entityManager->flush();
@@ -185,7 +185,7 @@ class ActivityController extends AbstractController
      */
     private function createEditForm(Activity $activity)
     {
-        if ($activity->getId() === null) {
+        if (null === $activity->getId()) {
             $url = $this->generateUrl('admin_activity_create');
         } else {
             $url = $this->generateUrl('admin_activity_edit', ['id' => $activity->getId()]);

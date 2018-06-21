@@ -59,13 +59,13 @@ class UserRepository extends AbstractRepository implements UserLoaderInterface
             ->from(User::class, 'u')
             ->orderBy('u.' . $query->getOrderBy(), $query->getOrder());
 
-        if ($query->getVisibility() == UserQuery::SHOW_VISIBLE) {
+        if (UserQuery::SHOW_VISIBLE == $query->getVisibility()) {
             $qb->andWhere('u.active = 1');
-        } elseif ($query->getVisibility() == UserQuery::SHOW_HIDDEN) {
+        } elseif (UserQuery::SHOW_HIDDEN == $query->getVisibility()) {
             $qb->andWhere('u.active = 0');
         }
 
-        if ($query->getRole() !== null) {
+        if (null !== $query->getRole()) {
             $qb->andWhere('u.roles LIKE :role')->setParameter('role', '%' . $query->getRole() . '%');
         }
 

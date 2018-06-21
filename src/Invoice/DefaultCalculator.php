@@ -73,7 +73,7 @@ class DefaultCalculator implements CalculatorInterface
     public function getTax(): float
     {
         $vat = $this->getVat();
-        if ($vat == 0) {
+        if (0 == $vat) {
             return 0;
         }
 

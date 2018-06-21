@@ -92,7 +92,7 @@ class CreateUserCommand extends Command
         $email = $input->getArgument('email');
         $role = $input->getArgument('role');
 
-        if ($input->getArgument('password') !== null) {
+        if (null !== $input->getArgument('password')) {
             $password = $input->getArgument('password');
         } else {
             $password = $this->askForPassword($input, $output);

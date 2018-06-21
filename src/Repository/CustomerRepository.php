@@ -117,15 +117,15 @@ class CustomerRepository extends AbstractRepository
             ->from(Customer::class, 'c')
             ->orderBy('c.' . $query->getOrderBy(), $query->getOrder());
 
-        if ($query->getVisibility() == CustomerQuery::SHOW_VISIBLE) {
+        if (CustomerQuery::SHOW_VISIBLE == $query->getVisibility()) {
             $qb->andWhere('c.visible = 1');
 
             /** @var Customer $entity */
             $entity = $query->getHiddenEntity();
-            if ($entity !== null) {
+            if (null !== $entity) {
                 $qb->orWhere('c.id = :customer')->setParameter('customer', $entity);
             }
-        } elseif ($query->getVisibility() == CustomerQuery::SHOW_HIDDEN) {
+        } elseif (CustomerQuery::SHOW_HIDDEN == $query->getVisibility()) {
             $qb->andWhere('c.visible = 0');
         }
 

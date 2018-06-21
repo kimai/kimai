@@ -34,11 +34,11 @@ class TimesheetEditForm extends AbstractType
         $entry = $options['data'];
 
         $activity = null;
-        if ($entry->getId() !== null) {
+        if (null !== $entry->getId()) {
             $activity = $entry->getActivity();
         }
 
-        if ($entry->getEnd() === null || !$options['duration_only']) {
+        if (null === $entry->getEnd() || !$options['duration_only']) {
             $builder->add('begin', DateTimeType::class, [
                 'label' => 'label.begin',
                 'widget' => 'single_text',

@@ -96,7 +96,7 @@ class InvoiceController extends AbstractController
             $query = $form->getData();
             $query->setResultType(TimesheetQuery::RESULT_TYPE_QUERYBUILDER);
 
-            if ($query->getCustomer() !== null) {
+            if (null !== $query->getCustomer()) {
                 $query->getBegin()->setTime(0, 0, 0);
                 $query->getEnd()->setTime(23, 59, 59);
 
@@ -111,14 +111,14 @@ class InvoiceController extends AbstractController
         $model->setCustomer($query->getCustomer());
 
         $action = null;
-        if ($query->getTemplate() !== null) {
+        if (null !== $query->getTemplate()) {
             $generator = $this->service->getNumberGeneratorByName($query->getTemplate()->getNumberGenerator());
-            if ($generator === null) {
+            if (null === $generator) {
                 throw new \Exception('Unknown number generator: ' . $query->getTemplate()->getNumberGenerator());
             }
 
             $calculator = $this->service->getCalculatorByName($query->getTemplate()->getCalculator());
-            if ($calculator === null) {
+            if (null === $calculator) {
                 throw new \Exception('Unknown invoice calculator: ' . $query->getTemplate()->getCalculator());
             }
 
@@ -257,7 +257,7 @@ class InvoiceController extends AbstractController
      */
     private function createEditForm(InvoiceTemplate $template)
     {
-        if ($template->getId() === null) {
+        if (null === $template->getId()) {
             $url = $this->generateUrl('admin_invoice_template_create');
         } else {
             $url = $this->generateUrl('admin_invoice_template_edit', ['id' => $template->getId()]);

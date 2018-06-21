@@ -132,7 +132,7 @@ class CustomerController extends AbstractController
 
         $deleteForm->handleRequest($request);
 
-        if ($stats->getRecordAmount() == 0 || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
+        if (0 == $stats->getRecordAmount() || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($customer);
             $entityManager->flush();
@@ -169,7 +169,7 @@ class CustomerController extends AbstractController
      */
     private function createEditForm(Customer $customer)
     {
-        if ($customer->getId() === null) {
+        if (null === $customer->getId()) {
             $url = $this->generateUrl('admin_customer_create');
         } else {
             $url = $this->generateUrl('admin_customer_edit', ['id' => $customer->getId()]);

@@ -186,7 +186,7 @@ class TimesheetFixtures extends Fixture
         $i = 1;
 
         foreach ($allCustomer as $customerName) {
-            $visible = $i++ % 6 != 0;
+            $visible = 0 != $i++ % 6;
             $entry = new Customer();
             $entry
                 ->setCurrency($this->getRandomCurrency())
@@ -210,7 +210,7 @@ class TimesheetFixtures extends Fixture
         foreach ($allCustomer as $id => $customer) {
             $projectForCustomer = rand(0, 7);
             for ($i = 1; $i <= $projectForCustomer; $i++) {
-                $visible = $i % 5 != 0;
+                $visible = 0 != $i % 5;
                 $entry = new Project();
 
                 $entry
@@ -233,7 +233,7 @@ class TimesheetFixtures extends Fixture
         foreach ($allProject as $projectId => $project) {
             $activityCount = rand(0, 10);
             for ($i = 1; $i <= $activityCount; $i++) {
-                $visible = $i % 4 != 0;
+                $visible = 0 != $i % 4;
                 $entry = new Activity();
                 $entry
                     ->setName($this->getRandomActivity() . ($visible ? '' : '.'))

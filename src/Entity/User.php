@@ -394,7 +394,7 @@ class User implements UserInterface
     public function getPreferenceValue($name, $default = null)
     {
         $preference = $this->getPreference($name);
-        if ($preference === null) {
+        if (null === $preference) {
             return $default;
         }
 

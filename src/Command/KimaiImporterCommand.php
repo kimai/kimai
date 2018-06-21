@@ -151,7 +151,7 @@ class KimaiImporterCommand extends Command
         }
 
         $country = $input->getArgument('country');
-        if (trim(strlen($country)) != 2) {
+        if (2 != trim(strlen($country))) {
             $io->error('Country length needs to be exactly 2 character');
 
             return;
@@ -311,7 +311,7 @@ class KimaiImporterCommand extends Command
         $version = $this->getImportConnection()->query($versionQuery)->fetchColumn();
         $revision = $this->getImportConnection()->query($revisionQuery)->fetchColumn();
 
-        if (version_compare($requiredVersion, $version) == 1) {
+        if (1 == version_compare($requiredVersion, $version)) {
             $io->error(
                 'Import can only performed from an up-to-date Kimai version:' . PHP_EOL .
                 'Needs at least ' . $requiredVersion . ' but found ' . $version
@@ -320,7 +320,7 @@ class KimaiImporterCommand extends Command
             return false;
         }
 
-        if (version_compare($requiredRevision, $revision) == 1) {
+        if (1 == version_compare($requiredRevision, $revision)) {
             $io->error(
                 'Import can only performed from an up-to-date Kimai version:' . PHP_EOL .
                 'Database revision needs to be ' . $requiredRevision . ' but found ' . $revision
@@ -343,7 +343,7 @@ class KimaiImporterCommand extends Command
         foreach ($allListener as $name => $listener) {
             if (in_array($name, ['prePersist', 'preUpdate'])) {
                 foreach ($listener as $service => $class) {
-                    if ($class === TimesheetSubscriber::class) {
+                    if (TimesheetSubscriber::class === $class) {
                         $connection->getEventManager()->removeEventListener(['prePersist', 'preUpdate'], $class);
                     }
                 }
@@ -452,7 +452,7 @@ class KimaiImporterCommand extends Command
 
         foreach ($users as $oldUser) {
             $isActive = (bool) $oldUser['active'] && !(bool) $oldUser['trash'] && !(bool) $oldUser['ban'];
-            $role = ($oldUser['globalRoleID'] == 1) ? User::ROLE_SUPER_ADMIN : User::DEFAULT_ROLE;
+            $role = (1 == $oldUser['globalRoleID']) ? User::ROLE_SUPER_ADMIN : User::DEFAULT_ROLE;
 
             $user = new User();
             $user->setUsername($oldUser['name'])
@@ -798,13 +798,13 @@ class KimaiImporterCommand extends Command
                 $activity = $this->activities[$activityId][$projectId];
             }
 
-            if ($activity === null && isset($this->unassignedActivities[$activityId])) {
+            if (null === $activity && isset($this->unassignedActivities[$activityId])) {
                 $oldActivity = $this->unassignedActivities[$activityId];
                 $activity = $this->createActivity($io, $entityManager, $project, $oldActivity);
                 ++$activityCounter;
             }
 
-            if ($activity === null) {
+            if (null === $activity) {
                 $io->error('Could not create timesheet record, missing activity with ID: ' . $activityId);
                 continue;
             }
@@ -812,7 +812,7 @@ class KimaiImporterCommand extends Command
             $duration = $oldRecord['end'] - $oldRecord['start'];
 
             $rate = $oldRecord['fixedRate'];
-            if ((empty($rate) || $rate == 0.00) && !empty($oldRecord['rate'])) {
+            if ((empty($rate) || 0.00 == $rate) && !empty($oldRecord['rate'])) {
                 $hourlyRate = (float) $oldRecord['rate'];
                 $rate = (float) $hourlyRate * ($duration / 3600);
                 $rate = round($rate, 2);
@@ -845,7 +845,7 @@ class KimaiImporterCommand extends Command
                 $io->error('Reason: ' . $ex->getMessage());
             }
 
-            if ($counter % 500 == 0) {
+            if (0 == $counter % 500) {
                 $io->writeln('Imported ' . $counter . ' timesheet records, import ongoing ...');
             }
         }

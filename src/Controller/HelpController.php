@@ -51,7 +51,7 @@ class HelpController extends Controller
     public function indexAction(?string $chapter)
     {
         $breadcrumb = [self::README];
-        if ($chapter !== self::README) {
+        if (self::README !== $chapter) {
             $breadcrumb[] = $chapter;
         }
 

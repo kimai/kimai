@@ -37,7 +37,7 @@ class RateCalculator implements CalculatorInterface
      */
     public function calculate(Timesheet $record)
     {
-        if ($record->getEnd() === null) {
+        if (null === $record->getEnd()) {
             return;
         }
 

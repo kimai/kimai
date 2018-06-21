@@ -54,12 +54,12 @@ class ActivityRepository extends AbstractRepository
             ->setMaxResults(10)
         ;
 
-        if ($user !== null) {
+        if (null !== $user) {
             $qb->andWhere('t.user = :user')
                 ->setParameter('user', $user);
         }
 
-        if ($startFrom !== null) {
+        if (null !== $startFrom) {
             $qb->andWhere($qb->expr()->gt('t.begin', ':begin'))
                 ->setParameter('begin', $startFrom);
         }
@@ -152,7 +152,7 @@ class ActivityRepository extends AbstractRepository
             ->join('p.customer', 'c')
             ->orderBy('a.' . $query->getOrderBy(), $query->getOrder());
 
-        if ($query->getVisibility() == ActivityQuery::SHOW_VISIBLE) {
+        if (ActivityQuery::SHOW_VISIBLE == $query->getVisibility()) {
             if (!$query->isExclusiveVisibility()) {
                 $qb->andWhere('c.visible = 1');
                 $qb->andWhere('p.visible = 1');
@@ -161,17 +161,17 @@ class ActivityRepository extends AbstractRepository
 
             /** @var Activity $entity */
             $entity = $query->getHiddenEntity();
-            if ($entity !== null) {
+            if (null !== $entity) {
                 $qb->orWhere('a.id = :activity')->setParameter('activity', $entity);
             }
-        } elseif ($query->getVisibility() == ActivityQuery::SHOW_HIDDEN) {
+        } elseif (ActivityQuery::SHOW_HIDDEN == $query->getVisibility()) {
             $qb->andWhere('a.visible = 0');
         }
 
-        if ($query->getProject() !== null) {
+        if (null !== $query->getProject()) {
             $qb->andWhere('a.project = :project')
                 ->setParameter('project', $query->getProject());
-        } elseif ($query->getCustomer() !== null) {
+        } elseif (null !== $query->getCustomer()) {
             $qb->andWhere('p.customer = :customer')
                 ->setParameter('customer', $query->getCustomer());
         }

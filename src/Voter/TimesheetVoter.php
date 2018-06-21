@@ -44,7 +44,7 @@ class TimesheetVoter extends AbstractVoter
             return false;
         }
 
-        if ($subject instanceof Activity && $attribute == self::START) {
+        if ($subject instanceof Activity && self::START == $attribute) {
             return true;
         }
 

@@ -109,7 +109,7 @@ class ProjectController extends AbstractController
 
         $deleteForm->handleRequest($request);
 
-        if ($stats->getRecordAmount() == 0 || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
+        if (0 == $stats->getRecordAmount() || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($project);
             $entityManager->flush();
@@ -173,7 +173,7 @@ class ProjectController extends AbstractController
      */
     private function createEditForm(Project $project)
     {
-        if ($project->getId() === null) {
+        if (null === $project->getId()) {
             $url = $this->generateUrl('admin_project_create');
             $currency = Customer::DEFAULT_CURRENCY;
         } else {

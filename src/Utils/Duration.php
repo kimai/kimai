@@ -49,7 +49,7 @@ class Duration
      */
     public function parseDurationString($duration)
     {
-        if (stripos($duration, ':') !== false) {
+        if (false !== stripos($duration, ':')) {
             return $this->parseDuration($duration, self::FORMAT_COLON);
         }
 
@@ -81,7 +81,7 @@ class Duration
                     throw new \InvalidArgumentException('Colon format cannot parse: ' . $duration);
                 }
                 $seconds = 0;
-                if (count($parts) == 3) {
+                if (3 == count($parts)) {
                     $seconds += array_pop($parts);
                 }
                 $seconds += $parts[1] * 60;

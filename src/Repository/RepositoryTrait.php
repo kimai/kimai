@@ -27,7 +27,7 @@ trait RepositoryTrait
      */
     protected function getBaseQueryResult(QueryBuilder $qb, BaseQuery $query)
     {
-        if ($query->getResultType() == BaseQuery::RESULT_TYPE_PAGER) {
+        if (BaseQuery::RESULT_TYPE_PAGER == $query->getResultType()) {
             return $this->getPager($qb->getQuery(), $query->getPage(), $query->getPageSize());
         }
 
