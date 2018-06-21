@@ -303,6 +303,10 @@
                 <source>label.end</source>
                 <target>Bis</target>
             </trans-unit>
+            <trans-unit id="timesheet.description.help">
+                <source>timesheet.description.help</source>
+                <target>Beschreibungstext</target>
+            </trans-unit>
 
             <!--
               User profile

@@ -311,6 +311,10 @@
                 <source>label.end</source>
                 <target>To</target>
             </trans-unit>
+            <trans-unit id="timesheet.description.help">
+                <source>timesheet.description.help</source>
+                <target>Description</target>
+            </trans-unit>
 
             <!--
               User profile
