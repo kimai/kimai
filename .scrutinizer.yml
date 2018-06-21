@@ -9,7 +9,10 @@ build:
             tests:
                 override:
                     - js-scrutinizer-run
-#                    - php-scrutinizer-run
+                    - php-scrutinizer-run
+                    -
+                        command: phpcs-run
+                        use_website_config: true
         tests: true
     tests:
         override:
@@ -23,11 +26,11 @@ build:
                 coverage:
                     file: 'integration'
                     format: 'clover'
-            -
-                command: 'bin/console kimai:phpcs --checkstyle=checkstyle'
-                analysis:
-                    file: 'checkstyle'
-                    format: 'general-checkstyle'
+#            -
+#                command: 'bin/console kimai:phpcs --checkstyle=checkstyle'
+#                analysis:
+#                    file: 'checkstyle'
+#                    format: 'general-checkstyle'
 
 filter:
     excluded_paths:
@@ -41,41 +44,39 @@ filter:
         - 'var/*'
         - 'vendor/*'
 
-#checks:
-#    php: true
-
-#tools:
-#    php_code_sniffer:
-#        enabled: true
-#        config:
-#            standard: PSR2
-#        filter:
-#            excluded_paths:
-#                - '.github/*'
-#                - 'assets/*'
-#                - 'bin/*'
-#                - 'config/*'
-#                - 'node_modules/*'
-#                - 'public/*'
-#                - 'templates/*'
-#                - 'tests/*'
-#                - 'translations/*'
-#                - 'var/*'
-#                - 'vendor/*'
-#    php_cs_fixer:
-#        enabled: true
+tools:
+    php_code_sniffer:
+        enabled: true
+        config:
+            standard: PSR2
+        filter:
+            excluded_paths:
+                - '.github/*'
+                - 'assets/*'
+                - 'bin/*'
+                - 'config/*'
+                - 'node_modules/*'
+                - 'public/*'
+                - 'templates/*'
+                - 'translations/*'
+                - 'var/*'
+                - 'vendor/*'
+    php_cs_fixer:
+        enabled: true
 #        config:
 #            level: psr2
-#        filter:
-#            excluded_paths:
-#                - '.github/*'
-#                - 'assets/*'
-#                - 'bin/*'
-#                - 'config/*'
-#                - 'node_modules/*'
-#                - 'public/*'
-#                - 'templates/*'
-#                - 'tests/*'
-#                - 'translations/*'
-#                - 'var/*'
-#                - 'vendor/*'
+        filter:
+            excluded_paths:
+                - '.github/*'
+                - 'assets/*'
+                - 'bin/*'
+                - 'config/*'
+                - 'node_modules/*'
+                - 'public/*'
+                - 'templates/*'
+                - 'translations/*'
+                - 'var/*'
+                - 'vendor/*'
+checks:
+    php: true
+    javascript: true
