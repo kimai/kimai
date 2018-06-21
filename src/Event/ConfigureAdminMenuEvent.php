@@ -16,7 +16,7 @@ use Avanzu\AdminThemeBundle\Model\MenuItemModel;
  */
 class ConfigureAdminMenuEvent extends ConfigureMenuEvent
 {
-    const CONFIGURE = 'app.admin_menu_configure';
+    public const CONFIGURE = 'app.admin_menu_configure';
 
     /**
      * This function will either return a MenuItem or null.

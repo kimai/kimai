@@ -23,8 +23,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
  */
 class HelpController extends Controller
 {
-    const README = 'README';
-    const DOCS_DIR = 'var/docs/';
+    public const README = 'README';
+    public const DOCS_DIR = 'var/docs/';
 
     /**
      * @var string

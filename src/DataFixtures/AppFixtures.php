@@ -26,11 +26,11 @@ class AppFixtures extends Fixture
 {
     use FixturesTrait;
 
-    const DEFAULT_PASSWORD = 'kitten';
-    const USERNAME_USER = 'john_user';
-    const USERNAME_TEAMLEAD = 'tony_teamlead';
-    const USERNAME_ADMIN = 'anna_admin';
-    const USERNAME_SUPER_ADMIN = 'susan_super';
+    public const DEFAULT_PASSWORD = 'kitten';
+    public const USERNAME_USER = 'john_user';
+    public const USERNAME_TEAMLEAD = 'tony_teamlead';
+    public const USERNAME_ADMIN = 'anna_admin';
+    public const USERNAME_SUPER_ADMIN = 'susan_super';
 
     /**
      * @var UserPasswordEncoderInterface

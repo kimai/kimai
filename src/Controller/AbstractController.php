@@ -17,14 +17,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 abstract class AbstractController extends Controller
 {
-    const FLASH_SUCCESS = 'success';
-    const FLASH_WARNING = 'warning';
-    const FLASH_ERROR = 'error';
+    public const FLASH_SUCCESS = 'success';
+    public const FLASH_WARNING = 'warning';
+    public const FLASH_ERROR = 'error';
 
-    const DOMAIN_FLASH = 'flashmessages';
-    const DOMAIN_ERROR = 'exceptions';
+    public const DOMAIN_FLASH = 'flashmessages';
+    public const DOMAIN_ERROR = 'exceptions';
 
-    const ROLE_ADMIN = 'ROLE_ADMIN';
+    public const ROLE_ADMIN = 'ROLE_ADMIN';
 
     /**
      * @return object|\Symfony\Component\Translation\DataCollectorTranslator|\Symfony\Component\Translation\IdentityTranslator

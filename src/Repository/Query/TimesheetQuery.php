@@ -17,9 +17,9 @@ use App\Entity\Activity;
  */
 class TimesheetQuery extends ActivityQuery
 {
-    const STATE_ALL = 1;
-    const STATE_RUNNING = 2;
-    const STATE_STOPPED = 3;
+    public const STATE_ALL = 1;
+    public const STATE_RUNNING = 2;
+    public const STATE_STOPPED = 3;
 
     /**
      * Overwritten for different default order

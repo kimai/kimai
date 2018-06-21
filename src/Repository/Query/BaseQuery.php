@@ -14,14 +14,14 @@ namespace App\Repository\Query;
  */
 class BaseQuery
 {
-    const ORDER_ASC = 'ASC';
-    const ORDER_DESC = 'DESC';
+    public const ORDER_ASC = 'ASC';
+    public const ORDER_DESC = 'DESC';
 
-    const DEFAULT_PAGESIZE = 25;
-    const DEFAULT_PAGE = 1;
+    public const DEFAULT_PAGESIZE = 25;
+    public const DEFAULT_PAGE = 1;
 
-    const RESULT_TYPE_PAGER = 'PagerFanta';
-    const RESULT_TYPE_QUERYBUILDER = 'QueryBuilder';
+    public const RESULT_TYPE_PAGER = 'PagerFanta';
+    public const RESULT_TYPE_QUERYBUILDER = 'QueryBuilder';
 
     /**
      * @var \stdClass

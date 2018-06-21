@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class RateCalculatorTest extends TestCase
 {
-    const HOURLY_RATE = 75;
+    public const HOURLY_RATE = 75;
 
     protected function getTestUser()
     {

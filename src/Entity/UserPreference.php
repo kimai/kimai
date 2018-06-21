@@ -21,8 +21,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class UserPreference
 {
-    const HOURLY_RATE = 'hourly_rate';
-    const SKIN = 'skin';
+    public const HOURLY_RATE = 'hourly_rate';
+    public const SKIN = 'skin';
 
     /**
      * @var int

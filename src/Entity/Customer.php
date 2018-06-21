@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Customer
 {
-    const DEFAULT_CURRENCY = 'EUR';
+    public const DEFAULT_CURRENCY = 'EUR';
 
     /**
      * @var int

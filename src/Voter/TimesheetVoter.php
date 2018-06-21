@@ -19,13 +19,13 @@ use App\Entity\Timesheet;
  */
 class TimesheetVoter extends AbstractVoter
 {
-    const START = 'start';
-    const STOP = 'stop';
-    const VIEW = 'view';
-    const EDIT = 'edit';
-    const DELETE = 'delete';
+    public const START = 'start';
+    public const STOP = 'stop';
+    public const VIEW = 'view';
+    public const EDIT = 'edit';
+    public const DELETE = 'delete';
 
-    const ALLOWED_ATTRIBUTES = [
+    public const ALLOWED_ATTRIBUTES = [
         self::START,
         self::STOP,
         self::VIEW,

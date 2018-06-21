@@ -36,8 +36,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class KimaiImporterCommand extends Command
 {
     // minimum required Kimai and database version, lower versions are not supported by this command
-    const MIN_VERSION = '1.0.1';
-    const MIN_REVISION = '1388';
+    public const MIN_VERSION = '1.0.1';
+    public const MIN_REVISION = '1388';
 
     /**
      * Create the user default passwords

@@ -28,9 +28,9 @@ class TimesheetFixtures extends Fixture
 {
     use FixturesTrait;
 
-    const AMOUNT_TIMESHEET = 5000;      // timesheet entries total
-    const RATE_MIN = 10;                // minimum rate for one hour
-    const RATE_MAX = 80;                // maximum rate for one hour
+    public const AMOUNT_TIMESHEET = 5000;      // timesheet entries total
+    public const RATE_MIN = 10;                // minimum rate for one hour
+    public const RATE_MAX = 80;                // maximum rate for one hour
 
     /**
      * {@inheritdoc}

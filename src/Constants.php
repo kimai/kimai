@@ -17,9 +17,9 @@ class Constants
     /**
      * Currently only used for informational purpose in the footer
      */
-    const VERSION = '2.0 dev';
+    public const VERSION = '2.0 dev';
     /**
      * Used in multiple views
      */
-    const GITHUB = 'https://github.com/kevinpapst/kimai2/';
+    public const GITHUB = 'https://github.com/kevinpapst/kimai2/';
 }

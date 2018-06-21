@@ -14,9 +14,9 @@ namespace App\Utils;
  */
 class Duration
 {
-    const FORMAT_COLON = 'colon';
-    const FORMAT_NATURAL = 'natural';
-    const FORMAT_SECONDS = 'seconds';
+    public const FORMAT_COLON = 'colon';
+    public const FORMAT_NATURAL = 'natural';
+    public const FORMAT_SECONDS = 'seconds';
 
     /**
      * Transforms seconds into a duration string.

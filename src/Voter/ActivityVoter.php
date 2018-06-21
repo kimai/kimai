@@ -18,11 +18,11 @@ use App\Entity\Activity;
  */
 class ActivityVoter extends AbstractVoter
 {
-    const VIEW = 'view';
-    const EDIT = 'edit';
-    const DELETE = 'delete';
+    public const VIEW = 'view';
+    public const EDIT = 'edit';
+    public const DELETE = 'delete';
 
-    const ALLOWED_ATTRIBUTES = [
+    public const ALLOWED_ATTRIBUTES = [
         self::VIEW,
         self::EDIT,
         self::DELETE
