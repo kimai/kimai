@@ -60,7 +60,7 @@ class RunCodeSnifferCommand extends Command
 
         $args = ['--config=.php_cs.dist'];
         if (!$input->getOption('fix')) {
-            $filename = $input->getOption('checkstyle');
+            $filename = $this->rootDir . '/' . $input->getOption('checkstyle');
             $args[] = '--dry-run';
             $args[] = '--verbose';
             $args[] = '--show-progress=none';

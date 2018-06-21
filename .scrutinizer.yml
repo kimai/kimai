@@ -8,10 +8,6 @@ build:
                     - 'true'
             tests:
                 override:
-                    - php-scrutinizer-run
-                    -
-                        command: phpcs-run
-                        use_website_config: true
                     - js-scrutinizer-run
         tests: true
     tests:
@@ -35,11 +31,11 @@ build:
 filter:
     excluded_paths:
         - '.github/*'
-        - 'assets/*'
         - 'bin/*'
         - 'config/*'
         - 'node_modules/*'
         - 'public/*'
+        - 'src/*'
         - 'templates/*'
         - 'tests/*'
         - 'translations/*'
