@@ -9,12 +9,7 @@
 
 namespace App\Repository;
 
-use App\Repository\Query\BaseQuery;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query;
-use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Pagerfanta;
 
 /**
  * Class AbstractRepository

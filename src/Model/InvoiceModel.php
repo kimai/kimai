@@ -13,8 +13,6 @@ use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use App\Entity\Timesheet;
 use App\Invoice\CalculatorInterface;
-use App\Invoice\DateNumberGenerator;
-use App\Invoice\DefaultCalculator;
 use App\Invoice\NumberGeneratorInterface;
 use App\Repository\Query\InvoiceQuery;
 

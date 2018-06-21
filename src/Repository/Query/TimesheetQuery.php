@@ -10,10 +10,7 @@
 namespace App\Repository\Query;
 
 use App\Entity\User;
-use App\Repository\Query\BaseQuery;
 use App\Entity\Activity;
-use App\Entity\Customer;
-use App\Entity\Project;
 
 /**
  * Can be used for advanced timesheet repository queries.

@@ -10,7 +10,6 @@
 namespace App\Form;
 
 use App\Entity\User;
-use App\Form\Type\LanguageType;
 use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

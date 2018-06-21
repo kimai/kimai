@@ -9,7 +9,6 @@
 
 namespace App\Repository\Query;
 
-use App\Entity\Customer;
 use App\Entity\Project;
 
 /**

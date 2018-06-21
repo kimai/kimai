@@ -9,9 +9,6 @@
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\AppFixtures;
-use App\Entity\User;
-
 /**
  * @coversDefaultClass \App\Controller\TimesheetController
  * @group integration
