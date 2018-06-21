@@ -26,6 +26,11 @@ build:
                 coverage:
                     file: 'integration'
                     format: 'clover'
+            -
+                command: 'bin/console kimai:phpcs --fix --checkstyle=checkstyle'
+                analysis:
+                    file: 'checkstyle'
+                    format: 'general-checkstyle'
 
 filter:
     excluded_paths:
@@ -41,38 +46,38 @@ filter:
         - 'var/*'
         - 'vendor/*'
 
-tools:
-    php_code_sniffer:
-        enabled: true
-        config:
-            standard: PSR2
-        filter:
-            excluded_paths:
-                - '.github/*'
-                - 'assets/*'
-                - 'bin/*'
-                - 'config/*'
-                - 'node_modules/*'
-                - 'public/*'
-                - 'templates/*'
-                - 'tests/*'
-                - 'translations/*'
-                - 'var/*'
-                - 'vendor/*'
-    php_cs_fixer:
-        enabled: true
-        config:
-            level: psr2
-        filter:
-            excluded_paths:
-                - '.github/*'
-                - 'assets/*'
-                - 'bin/*'
-                - 'config/*'
-                - 'node_modules/*'
-                - 'public/*'
-                - 'templates/*'
-                - 'tests/*'
-                - 'translations/*'
-                - 'var/*'
-                - 'vendor/*'
+#tools:
+#    php_code_sniffer:
+#        enabled: true
+#        config:
+#            standard: PSR2
+#        filter:
+#            excluded_paths:
+#                - '.github/*'
+#                - 'assets/*'
+#                - 'bin/*'
+#                - 'config/*'
+#                - 'node_modules/*'
+#                - 'public/*'
+#                - 'templates/*'
+#                - 'tests/*'
+#                - 'translations/*'
+#                - 'var/*'
+#                - 'vendor/*'
+#    php_cs_fixer:
+#        enabled: true
+#        config:
+#            level: psr2
+#        filter:
+#            excluded_paths:
+#                - '.github/*'
+#                - 'assets/*'
+#                - 'bin/*'
+#                - 'config/*'
+#                - 'node_modules/*'
+#                - 'public/*'
+#                - 'templates/*'
+#                - 'tests/*'
+#                - 'translations/*'
+#                - 'var/*'
+#                - 'vendor/*'
