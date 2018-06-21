@@ -126,7 +126,7 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
 
         foreach ($event->getPreferences() as $preference) {
             if (isset($prefs[$preference->getName()])) {
-                /** @var UserPreference $pref */
+                /* @var UserPreference $pref */
                 $prefs[$preference->getName()]
                     ->setType($preference->getType())
                     ->setConstraints($preference->getConstraints())
