@@ -477,7 +477,7 @@ class KimaiImporterCommand extends Command
                 if ($this->debug) {
                     $io->success('Created user: ' . $user->getUsername());
                 }
-                $counter++;
+                ++$counter;
             } catch (\Exception $ex) {
                 $io->error('Failed to create user: ' . $user->getUsername());
                 $io->error('Reason: ' . $ex->getMessage());
@@ -558,7 +558,7 @@ class KimaiImporterCommand extends Command
                 if ($this->debug) {
                     $io->success('Created customer: ' . $customer->getName());
                 }
-                $counter++;
+                ++$counter;
             } catch (\Exception $ex) {
                 $io->error('Reason: ' . $ex->getMessage());
                 $io->error('Failed to create customer: ' . $customer->getName());
@@ -622,7 +622,7 @@ class KimaiImporterCommand extends Command
                 if ($this->debug) {
                     $io->success('Created project: ' . $project->getName() . ' for customer: ' . $customer->getName());
                 }
-                $counter++;
+                ++$counter;
             } catch (\Exception $ex) {
                 $io->error('Failed to create project: ' . $project->getName());
                 $io->error('Reason: ' . $ex->getMessage());
@@ -682,7 +682,7 @@ class KimaiImporterCommand extends Command
 
                 $this->unassignedActivities[$oldActivity['activityID']] = $oldActivity;
                 $this->createActivity($io, $entityManager, $project, $oldActivity);
-                $counter++;
+                ++$counter;
             } else {
                 $this->unassignedActivities[$oldActivity['activityID']] = $oldActivity;
             }
@@ -802,7 +802,7 @@ class KimaiImporterCommand extends Command
             if ($activity === null && isset($this->unassignedActivities[$activityId])) {
                 $oldActivity = $this->unassignedActivities[$activityId];
                 $activity = $this->createActivity($io, $entityManager, $project, $oldActivity);
-                $activityCounter++;
+                ++$activityCounter;
             }
 
             if ($activity === null) {
@@ -840,7 +840,7 @@ class KimaiImporterCommand extends Command
                 if ($this->debug) {
                     $io->success('Created timesheet record: ' . $timesheet->getId());
                 }
-                $counter++;
+                ++$counter;
             } catch (\Exception $ex) {
                 $io->error('Failed to create timesheet record: ' . $timesheet->getId());
                 $io->error('Reason: ' . $ex->getMessage());
