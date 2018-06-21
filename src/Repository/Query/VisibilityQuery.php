@@ -19,7 +19,7 @@ class VisibilityQuery extends BaseQuery
     const SHOW_BOTH = 3;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $visibility = self::SHOW_VISIBLE;
     /**

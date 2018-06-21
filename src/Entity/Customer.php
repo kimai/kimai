@@ -23,7 +23,7 @@ class Customer
     const DEFAULT_CURRENCY = 'EUR';
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -62,7 +62,7 @@ class Customer
     private $projects;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="visible", type="boolean", nullable=false)
      * @Assert\NotNull()
@@ -225,7 +225,7 @@ class Customer
     /**
      * Set visible
      *
-     * @param boolean $visible
+     * @param bool $visible
      * @return Customer
      */
     public function setVisible($visible)
@@ -238,7 +238,7 @@ class Customer
     /**
      * Get visible
      *
-     * @return boolean
+     * @return bool
      */
     public function getVisible()
     {

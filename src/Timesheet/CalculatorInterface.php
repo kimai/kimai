@@ -22,7 +22,6 @@ interface CalculatorInterface
      * The methods return value will not be evaluated.
      *
      * @param Timesheet $record
-     * @return void
      */
     public function calculate(Timesheet $record);
 }

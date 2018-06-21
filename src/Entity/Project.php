@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Project
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -63,7 +63,7 @@ class Project
     private $comment;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="visible", type="boolean", nullable=false)
      * @Assert\NotNull()
@@ -88,7 +88,7 @@ class Project
     /**
      * Get projectid
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -163,7 +163,7 @@ class Project
     /**
      * Set visible
      *
-     * @param boolean $visible
+     * @param bool $visible
      * @return Project
      */
     public function setVisible($visible)
@@ -176,7 +176,7 @@ class Project
     /**
      * Get visible
      *
-     * @return boolean
+     * @return bool
      */
     public function getVisible()
     {

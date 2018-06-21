@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Activity
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -55,7 +55,7 @@ class Activity
     private $comment;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="visible", type="boolean", nullable=false)
      * @Assert\NotNull()
@@ -137,7 +137,7 @@ class Activity
     /**
      * Set visible
      *
-     * @param boolean $visible
+     * @param bool $visible
      *
      * @return Activity
      */
@@ -151,7 +151,7 @@ class Activity
     /**
      * Get visible
      *
-     * @return boolean
+     * @return bool
      */
     public function getVisible()
     {
@@ -161,7 +161,7 @@ class Activity
     /**
      * Get activity id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {

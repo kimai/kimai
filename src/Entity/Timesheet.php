@@ -29,7 +29,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class Timesheet
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -53,7 +53,7 @@ class Timesheet
     private $end;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="duration", type="integer", nullable=true)
      * @Assert\GreaterThanOrEqual(0)
@@ -95,7 +95,7 @@ class Timesheet
     /**
      * Get entry id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -146,7 +146,7 @@ class Timesheet
     /**
      * Set duration
      *
-     * @param integer $duration
+     * @param int $duration
      * @return Timesheet
      */
     public function setDuration($duration)
@@ -160,7 +160,7 @@ class Timesheet
      * Get duration
      * Do not rely on the results of this method for active records.
      *
-     * @return integer
+     * @return int
      */
     public function getDuration()
     {

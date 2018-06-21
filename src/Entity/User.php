@@ -84,7 +84,7 @@ class User implements UserInterface
     private $alias;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="active", type="boolean", nullable=false)
      * @Assert\NotNull()
@@ -183,7 +183,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param boolean $active
+     * @param bool $active
      * @return $this
      */
     public function setActive($active)
@@ -194,7 +194,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isActive()
     {
