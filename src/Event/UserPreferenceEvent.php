@@ -64,7 +64,7 @@ class UserPreferenceEvent extends Event
         foreach ($this->preferences as $pref) {
             if ($pref->getName() == $preference->getName()) {
                 throw new \InvalidArgumentException(
-                    'Cannot add preference, a preference with the name "'.$preference->getName().'" is already existing'
+                    'Cannot add preference, one with the name "' . $preference->getName() . '" is already existing'
                 );
             }
         }

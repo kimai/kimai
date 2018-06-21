@@ -137,7 +137,7 @@ class InvoiceModel
      */
     public function getDueDate(): \DateTime
     {
-        return new \DateTime('+'.$this->getTemplate()->getDueDays().' days');
+        return new \DateTime('+' . $this->getTemplate()->getDueDays() . ' days');
     }
 
     /**

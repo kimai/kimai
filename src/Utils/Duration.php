@@ -40,7 +40,7 @@ class Duration
         $second = $seconds % 60;
         $second = $second > 9 ? $second : '0' . $second;
 
-        return $hour . ':' . $minute  . ':' . $second;
+        return $hour . ':' . $minute . ':' . $second;
     }
 
     /**

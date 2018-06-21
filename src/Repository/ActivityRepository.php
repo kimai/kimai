@@ -84,7 +84,7 @@ class ActivityRepository extends AbstractRepository
     public function getGlobalStatistics()
     {
         $countAll = $this->getEntityManager()
-            ->createQuery('SELECT COUNT(a.id) FROM '.Activity::class.' a')
+            ->createQuery('SELECT COUNT(a.id) FROM ' . Activity::class . ' a')
             ->getSingleScalarResult();
 
         $stats = new ActivityStatistic();

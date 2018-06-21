@@ -74,7 +74,7 @@ class CreateUserCommand extends Command
             ->addArgument(
                 'role',
                 InputArgument::OPTIONAL,
-                'A comma separated list of user roles, e.g. "'.$roles.'"',
+                'A comma separated list of user roles, e.g. "' . $roles . '"',
                 User::DEFAULT_ROLE
             )
             ->addArgument('password', InputArgument::OPTIONAL, 'Password for the new user (requested if not provided)')

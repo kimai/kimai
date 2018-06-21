@@ -289,7 +289,7 @@ class KimaiImporterCommand extends Command
             'Start: ' . $this->bytesHumanReadable($bytesStart) . PHP_EOL .
             'After caching: ' . $this->bytesHumanReadable($bytesCached) . PHP_EOL .
             'After import: ' . $this->bytesHumanReadable($bytesImported) . PHP_EOL .
-            'Total consumption for importing '.$allImports.' new database entries: ' .
+            'Total consumption for importing ' . $allImports . ' new database entries: ' .
             $this->bytesHumanReadable($bytesImported - $bytesStart)
         );
     }
@@ -405,7 +405,7 @@ class KimaiImporterCommand extends Command
                 $value = $error->getInvalidValue();
                 $io->error(
                     $error->getPropertyPath()
-                    . " (" . (is_array($value) ? implode(',', $value) : $value) .")"
+                    . " (" . (is_array($value) ? implode(',', $value) : $value) . ")"
                     . "\n    "
                     . $error->getMessage()
                 );
@@ -823,8 +823,8 @@ class KimaiImporterCommand extends Command
             $timesheet
                 ->setDescription($oldRecord['description'] ?: ($oldRecord['comment'] ?: null))
                 ->setUser($this->users[$oldRecord['userID']])
-                ->setBegin(new \DateTime("@".$oldRecord['start']))
-                ->setEnd(new \DateTime("@".$oldRecord['end']))
+                ->setBegin(new \DateTime("@" . $oldRecord['start']))
+                ->setEnd(new \DateTime("@" . $oldRecord['end']))
                 ->setDuration($duration)
                 ->setActivity($activity)
                 ->setRate($rate)

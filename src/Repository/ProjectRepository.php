@@ -39,7 +39,7 @@ class ProjectRepository extends AbstractRepository
     public function getGlobalStatistics()
     {
         $countAll = $this->getEntityManager()
-            ->createQuery('SELECT COUNT(p.id) FROM '.Project::class.' p')
+            ->createQuery('SELECT COUNT(p.id) FROM ' . Project::class . ' p')
             ->getSingleScalarResult();
 
         $stats = new ProjectStatistic();

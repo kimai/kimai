@@ -40,7 +40,7 @@ class CustomerRepository extends AbstractRepository
     public function getGlobalStatistics()
     {
         $countAll = $this->getEntityManager()
-            ->createQuery('SELECT COUNT(c.id) FROM '.Customer::class.' c')
+            ->createQuery('SELECT COUNT(c.id) FROM ' . Customer::class . ' c')
             ->getSingleScalarResult();
 
         $stats = new CustomerStatistic();

@@ -149,7 +149,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertMainContentClass(Client $client, $classname)
     {
-        $this->assertContains('<section class="content '.$classname.'">', $client->getResponse()->getContent());
+        $this->assertContains('<section class="content ' . $classname . '">', $client->getResponse()->getContent());
     }
 
     /**

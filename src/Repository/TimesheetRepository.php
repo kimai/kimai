@@ -118,11 +118,11 @@ class TimesheetRepository extends AbstractRepository
     public function getUserStatistics(User $user)
     {
         $durationTotal = $this->getEntityManager()
-            ->createQuery('SELECT SUM(t.duration) FROM '.Timesheet::class.' t WHERE t.user = :user')
+            ->createQuery('SELECT SUM(t.duration) FROM ' . Timesheet::class . ' t WHERE t.user = :user')
             ->setParameter('user', $user)
             ->getSingleScalarResult();
         $rateTotal = $this->getEntityManager()
-            ->createQuery('SELECT SUM(t.rate) FROM '.Timesheet::class.' t WHERE t.user = :user')
+            ->createQuery('SELECT SUM(t.rate) FROM ' . Timesheet::class . ' t WHERE t.user = :user')
             ->setParameter('user', $user)
             ->getSingleScalarResult();
         $amountMonth = $this->queryThisMonth('SUM(t.rate)', $user)
@@ -132,7 +132,7 @@ class TimesheetRepository extends AbstractRepository
             ->getQuery()
             ->getSingleScalarResult();
         $firstEntry = $this->getEntityManager()
-            ->createQuery('SELECT MIN(t.begin) FROM '.Timesheet::class.' t WHERE t.user = :user')
+            ->createQuery('SELECT MIN(t.begin) FROM ' . Timesheet::class . ' t WHERE t.user = :user')
             ->setParameter('user', $user)
             ->getSingleScalarResult();
 
@@ -201,13 +201,13 @@ class TimesheetRepository extends AbstractRepository
     public function getGlobalStatistics()
     {
         $durationTotal = $this->getEntityManager()
-            ->createQuery('SELECT SUM(t.duration) FROM '.Timesheet::class.' t')
+            ->createQuery('SELECT SUM(t.duration) FROM ' . Timesheet::class . ' t')
             ->getSingleScalarResult();
         $rateTotal = $this->getEntityManager()
-            ->createQuery('SELECT SUM(t.rate) FROM '.Timesheet::class.' t')
+            ->createQuery('SELECT SUM(t.rate) FROM ' . Timesheet::class . ' t')
             ->getSingleScalarResult();
         $userTotal = $this->getEntityManager()
-            ->createQuery('SELECT COUNT(DISTINCT(t.user)) FROM '.Timesheet::class.' t')
+            ->createQuery('SELECT COUNT(DISTINCT(t.user)) FROM ' . Timesheet::class . ' t')
             ->getSingleScalarResult();
         $activeNow = $this->getActiveEntries();
         $amountMonth = $this->queryThisMonth('SUM(t.rate)')

@@ -37,7 +37,7 @@ class RoleValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof Role) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\Role');
+            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\Role');
         }
 
         $roles = $value;

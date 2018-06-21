@@ -37,7 +37,7 @@ class UserRepository extends AbstractRepository implements UserLoaderInterface
     public function getGlobalStatistics()
     {
         $countAll = $this->getEntityManager()
-            ->createQuery('SELECT COUNT(u.id) FROM '.User::class.' u')
+            ->createQuery('SELECT COUNT(u.id) FROM ' . User::class . ' u')
             ->getSingleScalarResult();
 
         $stats = new UserStatistic();
