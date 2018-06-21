@@ -34,7 +34,19 @@ $(function() {
                 return confirm($.kimai.settings['confirmDelete']);
             });
 
+            // activate the dropdown functionality
             $('.dropdown-toggle').dropdown();
+
+            // auto hide success message after x seconds, as they are just meant as quick feedback and
+            // not as a permanent source of information
+            if ($.kimai.settings['alertSuccessAutoHide'] > 0) {
+                setTimeout(
+                    function() {
+                        $('div.alert-success').alert('close');
+                    },
+                    $.kimai.settings['alertSuccessAutoHide']
+                );
+            }
 
             $('input[data-datepicker="on"]').daterangepicker({
                 singleDatePicker: true,
@@ -88,7 +100,8 @@ $(function() {
     $.kimai.defaults = {
         baseUrl: '/',
         imagePath: '/images',
-        confirmDelete: 'Really delete?'
+        confirmDelete: 'Really delete?',
+        alertSuccessAutoHide: 5000
     };
 
     // once initialized, here are all values
