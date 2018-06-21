@@ -8,4 +8,5 @@ return PhpCsFixer\Config::create()
         'yoda_style' => false,
         'array_syntax' => ['syntax' => 'short'],
     ])
+    ->setFormat('checkstyle')
 ;
