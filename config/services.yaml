@@ -73,6 +73,10 @@ services:
         tags:
             - { name: form.type }
 
+    App\Form\Extension\DocumentationLinkExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+
     # ================================================================================
     # THEME
     # ================================================================================

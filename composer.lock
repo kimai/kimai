@@ -52,12 +52,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/AdminThemeBundle.git",
-                "reference": "d0d849ac59889ad6f4408fee84e23b09d7d65d36"
+                "reference": "909be9b2d19bc31db1751990b93cf0192893ae5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/AdminThemeBundle/zipball/d0d849ac59889ad6f4408fee84e23b09d7d65d36",
-                "reference": "d0d849ac59889ad6f4408fee84e23b09d7d65d36",
+                "url": "https://api.github.com/repos/kevinpapst/AdminThemeBundle/zipball/909be9b2d19bc31db1751990b93cf0192893ae5c",
+                "reference": "909be9b2d19bc31db1751990b93cf0192893ae5c",
                 "shasum": ""
             },
             "require": {
@@ -111,7 +111,7 @@
             "support": {
                 "source": "https://github.com/kevinpapst/AdminThemeBundle/tree/kevinpapst"
             },
-            "time": "2018-01-21T19:07:18+00:00"
+            "time": "2018-06-19T21:30:20+00:00"
         },
         {
             "name": "beberlei/DoctrineExtensions",

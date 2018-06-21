@@ -1,0 +1,8 @@
+{% extends "@AvanzuAdminTheme/layout/form-theme.html.twig" %}
+
+{% block form_label %}
+    {% if form.vars.documentation is defined and form.vars.documentation is not empty %}
+        <a href="{{ path('help_chapter', {'chapter': form.vars.documentation}) }}"><i class="fa fa-question-circle"></i></a>
+    {% endif %}
+    {{ parent() }}
+{% endblock form_label %}
