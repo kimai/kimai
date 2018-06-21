@@ -123,7 +123,7 @@ class CustomerRepository extends AbstractRepository
 
             /** @var Customer $entity */
             $entity = $query->getHiddenEntity();
-            if ($entity!== null) {
+            if ($entity !== null) {
                 $qb->orWhere('c.id = :customer')->setParameter('customer', $entity);
             }
         } elseif ($query->getVisibility() == CustomerQuery::SHOW_HIDDEN) {

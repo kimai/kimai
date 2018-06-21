@@ -65,7 +65,7 @@ class CreateUserCommandTest extends KernelTestCase
         $command = $this->application->find('kimai:create-user');
         $commandTester = new CommandTester($command);
         $commandTester->execute([
-            'command'  => $command->getName(),
+            'command' => $command->getName(),
             'username' => $username,
             'email' => $email,
             'role' => $role,
