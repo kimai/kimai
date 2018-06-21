@@ -24,7 +24,6 @@ use Symfony\Component\Validator\Validation;
  */
 class TimesheetTest extends TestCase
 {
-
     protected function getEntity()
     {
         $customer = new Customer();
@@ -103,12 +102,12 @@ class TimesheetTest extends TestCase
 
         $violatedFields = [];
         /** @var ConstraintViolationInterface $validation */
-        foreach($validations as $validation) {
+        foreach ($validations as $validation) {
             $violatedFields[] = $validation->getPropertyPath();
         }
 
 
-        foreach($fieldNames as $id => $propertyPath) {
+        foreach ($fieldNames as $id => $propertyPath) {
             $foundField = false;
             if (in_array($propertyPath, $violatedFields)) {
                 $foundField = true;

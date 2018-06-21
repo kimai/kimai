@@ -19,7 +19,6 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 abstract class ControllerBaseTest extends WebTestCase
 {
-
     const DEFAULT_LANGUAGE = 'en';
 
     /**
@@ -28,7 +27,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function getClientForAuthenticatedUser(string $role = User::ROLE_USER)
     {
-        switch($role) {
+        switch ($role) {
             case User::ROLE_SUPER_ADMIN:
                 $client = self::createClient([], [
                     'PHP_AUTH_USER' => AppFixtures::USERNAME_SUPER_ADMIN,

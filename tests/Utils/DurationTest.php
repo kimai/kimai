@@ -17,7 +17,6 @@ use PHPUnit\Framework\TestCase;
  */
 class DurationTest extends TestCase
 {
-
     public function testFormat()
     {
         $sut = new Duration();

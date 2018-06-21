@@ -18,7 +18,6 @@ use App\Entity\User;
  */
 class ProfileControllerTest extends ControllerBaseTest
 {
-
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/profile/' . AppFixtures::USERNAME_USER);

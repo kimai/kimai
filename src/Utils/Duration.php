@@ -14,7 +14,6 @@ namespace App\Utils;
  */
 class Duration
 {
-
     const FORMAT_COLON = 'colon';
     const FORMAT_NATURAL = 'natural';
     const FORMAT_SECONDS = 'seconds';
@@ -83,7 +82,7 @@ class Duration
                 }
                 $seconds = 0;
                 if (count($parts) == 3) {
-                     $seconds += array_pop($parts);
+                    $seconds += array_pop($parts);
                 }
                 $seconds += $parts[1] * 60;
                 $seconds += $parts[0] * 3600;

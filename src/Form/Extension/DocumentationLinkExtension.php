@@ -43,7 +43,7 @@ class DocumentationLinkExtension extends AbstractTypeExtension
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefined(array('documentation'));
+        $resolver->setDefined(['documentation']);
         $resolver->setDefaults(['documentation' => null]);
     }
 }

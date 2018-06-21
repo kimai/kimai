@@ -18,7 +18,6 @@ use App\Tests\Controller\ControllerBaseTest;
  */
 class UserControllerTest extends ControllerBaseTest
 {
-
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/admin/user/');

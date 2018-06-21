@@ -18,7 +18,6 @@ use \PHPUnit\Framework\TestCase;
  */
 class BaseQueryTest extends TestCase
 {
-
     public function testQuery()
     {
         $this->assertBaseQuery(new BaseQuery());

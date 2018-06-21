@@ -15,7 +15,6 @@ namespace App\Tests\Controller;
  */
 class ActivityControllerTest extends ControllerBaseTest
 {
-
     public function testIsSecure()
     {
         $this->markTestSkipped('no public route available');

@@ -17,7 +17,6 @@ use App\Entity\User;
  */
 class InvoiceControllerTest extends ControllerBaseTest
 {
-
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/invoice/');

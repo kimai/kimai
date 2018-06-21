@@ -19,7 +19,6 @@ use Twig\TwigFilter;
  */
 class ExtensionsTest extends TestCase
 {
-
     public function testGetFilters()
     {
         $filters = ['duration', 'money', 'currency', 'country'];

@@ -18,7 +18,6 @@ use App\Entity\User;
  */
 class TimesheetControllerTest extends ControllerBaseTest
 {
-
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/timesheet/');

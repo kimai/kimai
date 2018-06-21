@@ -18,7 +18,6 @@ use App\Tests\Controller\ControllerBaseTest;
  */
 class TimesheetControllerTest extends ControllerBaseTest
 {
-
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/team/timesheet/');

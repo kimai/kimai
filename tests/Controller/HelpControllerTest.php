@@ -15,7 +15,6 @@ namespace App\Tests\Controller;
  */
 class HelpControllerTest extends ControllerBaseTest
 {
-
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/help/');
