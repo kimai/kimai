@@ -11,7 +11,7 @@ namespace App\Tests\Timesheet\Calculator;
 
 use App\Entity\Timesheet;
 use App\Timesheet\Calculator\DurationCalculator;
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Timesheet\Calculator\DurationCalculator

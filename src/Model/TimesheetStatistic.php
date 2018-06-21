@@ -9,7 +9,7 @@
 
 namespace App\Model;
 
-use \DateTime;
+use DateTime;
 
 /**
  * Timesheet statistics for one user.
