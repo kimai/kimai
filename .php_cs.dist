@@ -4,9 +4,23 @@ return PhpCsFixer\Config::create()
     ->setRules([
         '@PSR2' => true,
         '@Symfony' => true,
+        'concat_space' => [
+            'spacing' => 'one'
+        ],
         'yoda_style' => false,
-        'array_syntax' => ['syntax' => 'short'],
-        'phpdoc_align' => ['align' => 'left'],
+        'array_syntax' => [
+            'syntax' => 'short'
+        ],
+        'phpdoc_align' => [
+            'align' => 'left',
+            'tags' => [
+                'method',
+                'param',
+                'property',
+                'type',
+                'var',
+            ],
+        ],
     ])
     ->setFormat('checkstyle')
 ;
