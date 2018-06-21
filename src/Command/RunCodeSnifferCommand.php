@@ -11,18 +11,19 @@ namespace App\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- * Command used to check the project coding styles.
+ * Command used to check and apply the projects coding styles.
  */
 class RunCodeSnifferCommand extends Command
 {
     /**
      * @var string
      */
-    protected $rootDir;
+    protected $rootDir = '';
 
     /**
      * @param string $projectDirectory
@@ -41,6 +42,8 @@ class RunCodeSnifferCommand extends Command
         $this
             ->setName('kimai:phpcs')
             ->setDescription('Run PHP_CodeSniffer to check for the projects coding style')
+            ->addOption('fix', null, InputOption::VALUE_NONE, 'Fix all found problems (risky: modifies your files)')
+            ->addOption('checkstyle', null, InputOption::VALUE_OPTIONAL, '')
         ;
     }
 
@@ -51,29 +54,43 @@ class RunCodeSnifferCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $this->executeCodeSniffer($io, '/src');
-        $this->executeCodeSniffer($io, '/tests');
-        $this->executeCodeSniffer($io, '/templates');
-    }
-
-    /**
-     * @param string $directory
-     */
-    protected function executeCodeSniffer(SymfonyStyle $io, $directory)
-    {
-        $directory = $this->rootDir . $directory;
-
+        $filename = null;
         $exitCode = 0;
         ob_start();
-        passthru($this->rootDir . '/vendor/bin/php-cs-fixer fix --config=.php_cs.dist --verbose --show-progress=estimating ' . $directory, $exitCode);
+
+        $args = ['--config=.php_cs.dist'];
+        if (!$input->getOption('fix')) {
+            $filename = $input->getOption('checkstyle');
+            $args[] = '--dry-run';
+            $args[] = '--verbose';
+            $args[] = '--show-progress=none';
+
+            if (!empty($filename)) {
+                $args[] = '--format=checkstyle';
+                if (!file_exists($filename) || is_writeable($filename)) {
+                    $args[] = '> ' . $filename;
+                } else {
+                    $io->error('Target file is not writeable: ' . $filename);
+
+                    return;
+                }
+            } else {
+                $args[] = '--format=txt';
+            }
+        }
+
+        passthru($this->rootDir . '/vendor/bin/php-cs-fixer fix ' . implode(' ', $args), $exitCode);
         $result = ob_get_clean();
 
         $io->write($result);
 
         if ($exitCode > 0) {
-            $io->error('Found problems while checking sources at: ' . $directory);
+            $io->error(
+                'Found problems while checking your code styles' .
+                (!empty($filename) ? '. Saved checkstyle data to: ' . $filename : '')
+            );
         } else {
-            $io->success('All sources look good at: ' . $directory);
+            $io->success('All source files have proper code styles');
         }
     }
 }
