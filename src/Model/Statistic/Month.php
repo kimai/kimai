@@ -59,6 +59,7 @@ class Month
     public function setTotalDuration($totalDuration)
     {
         $this->totalDuration = $totalDuration;
+
         return $this;
     }
 
@@ -77,6 +78,7 @@ class Month
     public function setTotalRate($totalRate)
     {
         $this->totalRate = $totalRate;
+
         return $this;
     }
 }

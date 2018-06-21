@@ -42,6 +42,7 @@ class InvoiceQuery extends TimesheetQuery
     public function setTemplate($template)
     {
         $this->template = $template;
+
         return $this;
     }
 
@@ -60,6 +61,7 @@ class InvoiceQuery extends TimesheetQuery
     public function setTemplates(array $templates)
     {
         $this->templates = $templates;
+
         return $this;
     }
 }

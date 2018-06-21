@@ -122,6 +122,7 @@ class CreateUserCommand extends Command
                     . $error->getMessage()
                 );
             }
+
             return;
         }
 

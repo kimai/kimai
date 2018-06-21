@@ -242,6 +242,7 @@ class User implements UserInterface
     public function setPlainPassword($password)
     {
         $this->plainPassword = $password;
+
         return $this;
     }
 
@@ -279,6 +280,7 @@ class User implements UserInterface
     public function setEmail($email)
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -297,6 +299,7 @@ class User implements UserInterface
     public function setTitle($title)
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -315,6 +318,7 @@ class User implements UserInterface
     public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
+
         return $this;
     }
 
@@ -342,6 +346,7 @@ class User implements UserInterface
     public function setRoles(array $roles)
     {
         $this->roles = $roles;
+
         return $this;
     }
 
@@ -363,6 +368,7 @@ class User implements UserInterface
             $preferences = new ArrayCollection($preferences);
         }
         $this->preferences = $preferences;
+
         return $this;
     }
 
@@ -392,6 +398,7 @@ class User implements UserInterface
         if ($preference === null) {
             return $default;
         }
+
         return $preference->getValue();
     }
 
@@ -402,6 +409,7 @@ class User implements UserInterface
     public function addPreference(UserPreference $preference)
     {
         $this->preferences->add($preference);
+
         return $this;
     }
 

@@ -85,6 +85,7 @@ class Activity
     public function setProject($project)
     {
         $this->project = $project;
+
         return $this;
     }
 
@@ -97,6 +98,7 @@ class Activity
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -119,6 +121,7 @@ class Activity
     public function setComment($comment)
     {
         $this->comment = $comment;
+
         return $this;
     }
 
@@ -142,6 +145,7 @@ class Activity
     public function setVisible($visible)
     {
         $this->visible = $visible;
+
         return $this;
     }
 

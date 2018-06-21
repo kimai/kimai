@@ -111,6 +111,7 @@ class Project
     public function setCustomer($customer)
     {
         $this->customer = $customer;
+
         return $this;
     }
 
@@ -123,6 +124,7 @@ class Project
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -145,6 +147,7 @@ class Project
     public function setComment($comment)
     {
         $this->comment = $comment;
+
         return $this;
     }
 
@@ -167,6 +170,7 @@ class Project
     public function setVisible($visible)
     {
         $this->visible = $visible;
+
         return $this;
     }
 
@@ -189,6 +193,7 @@ class Project
     public function setBudget($budget)
     {
         $this->budget = $budget;
+
         return $this;
     }
 
@@ -209,6 +214,7 @@ class Project
     public function setActivities($activities)
     {
         $this->activities = $activities;
+
         return $this;
     }
 
@@ -235,6 +241,7 @@ class Project
     public function setOrderNumber($orderNumber)
     {
         $this->orderNumber = $orderNumber;
+
         return $this;
     }
 

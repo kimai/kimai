@@ -128,6 +128,7 @@ class InvoiceTemplate
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -156,6 +157,7 @@ class InvoiceTemplate
     public function setTitle(string $title)
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -174,6 +176,7 @@ class InvoiceTemplate
     public function setAddress($address)
     {
         $this->address = $address;
+
         return $this;
     }
 
@@ -192,6 +195,7 @@ class InvoiceTemplate
     public function setNumberGenerator(string $numberGenerator)
     {
         $this->numberGenerator = $numberGenerator;
+
         return $this;
     }
 
@@ -210,6 +214,7 @@ class InvoiceTemplate
     public function setDueDays(int $dueDays)
     {
         $this->dueDays = $dueDays;
+
         return $this;
     }
 
@@ -228,6 +233,7 @@ class InvoiceTemplate
     public function setVat(float $vat)
     {
         $this->vat = $vat;
+
         return $this;
     }
 
@@ -246,6 +252,7 @@ class InvoiceTemplate
     public function setCompany(string $company)
     {
         $this->company = $company;
+
         return $this;
     }
 
@@ -264,6 +271,7 @@ class InvoiceTemplate
     public function setRenderer(string $renderer)
     {
         $this->renderer = $renderer;
+
         return $this;
     }
 
@@ -282,6 +290,7 @@ class InvoiceTemplate
     public function setCalculator(string $calculator)
     {
         $this->calculator = $calculator;
+
         return $this;
     }
 
@@ -300,6 +309,7 @@ class InvoiceTemplate
     public function setPaymentTerms(string $paymentTerms)
     {
         $this->paymentTerms = $paymentTerms;
+
         return $this;
     }
 

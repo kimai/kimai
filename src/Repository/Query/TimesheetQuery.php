@@ -70,6 +70,7 @@ class TimesheetQuery extends ActivityQuery
     public function setUser(User $user = null)
     {
         $this->user = $user;
+
         return $this;
     }
 
@@ -90,6 +91,7 @@ class TimesheetQuery extends ActivityQuery
     public function setActivity(Activity $activity = null)
     {
         $this->activity = $activity;
+
         return $this;
     }
 
@@ -134,6 +136,7 @@ class TimesheetQuery extends ActivityQuery
     public function setBegin($begin)
     {
         $this->begin = $begin;
+
         return $this;
     }
 
@@ -152,6 +155,7 @@ class TimesheetQuery extends ActivityQuery
     public function setEnd($end)
     {
         $this->end = $end;
+
         return $this;
     }
 }

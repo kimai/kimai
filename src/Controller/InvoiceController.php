@@ -150,6 +150,7 @@ class InvoiceController extends AbstractController
     public function listTemplateAction($page, Request $request)
     {
         $templates = $this->getRepository()->findByQuery(new BaseQuery());
+
         return $this->render('invoice/templates.html.twig', [
             'entries' => $templates,
             'page' => $page,
@@ -186,6 +187,7 @@ class InvoiceController extends AbstractController
         if (!$this->getRepository()->hasTemplate()) {
             $this->flashWarning('invoice.first_template');
         }
+
         return $this->renderTemplateForm(new InvoiceTemplate(), $request);
     }
 

@@ -37,6 +37,7 @@ class ProjectQuery extends VisibilityQuery
     public function setCustomer(Customer $customer = null)
     {
         $this->customer = $customer;
+
         return $this;
     }
 }

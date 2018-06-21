@@ -78,6 +78,7 @@ class Extensions extends \Twig_Extension
                 $seconds = time() - $duration->getBegin()->getTimestamp();
             }
         }
+
         return $this->durationFormatter->format($seconds, $includeSeconds) . ' h';
     }
 
@@ -110,6 +111,7 @@ class Extensions extends \Twig_Extension
         if ($currency !== null) {
             $result .= ' ' . Intl::getCurrencyBundle()->getCurrencySymbol($currency);
         }
+
         return $result;
     }
 

@@ -44,6 +44,7 @@ class ActivityStatistic
     public function setRecordAmount($recordAmount)
     {
         $this->recordAmount = (int) $recordAmount;
+
         return $this;
     }
 
@@ -64,6 +65,7 @@ class ActivityStatistic
     public function setRecordDuration($recordDuration)
     {
         $this->recordDuration = (int) $recordDuration;
+
         return $this;
     }
 
@@ -84,6 +86,7 @@ class ActivityStatistic
     public function setCount($count)
     {
         $this->count = (int) $count;
+
         return $this;
     }
 }

@@ -37,6 +37,7 @@ class UserQuery extends VisibilityQuery
         if (strpos($role, 'ROLE_') !== false || $role === null) {
             $this->role = $role;
         }
+
         return $this;
     }
 }

@@ -42,6 +42,7 @@ class UserRepository extends AbstractRepository implements UserLoaderInterface
 
         $stats = new UserStatistic();
         $stats->setTotalAmount($countAll);
+
         return $stats;
     }
 

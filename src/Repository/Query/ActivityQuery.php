@@ -38,6 +38,7 @@ class ActivityQuery extends ProjectQuery
     public function setProject(Project $project = null)
     {
         $this->project = $project;
+
         return $this;
     }
 }

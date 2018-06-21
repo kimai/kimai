@@ -56,6 +56,7 @@ class DefaultCalculator implements CalculatorInterface
         foreach ($this->model->getEntries() as $entry) {
             $amount += $entry->getRate();
         }
+
         return round($amount, 2);
     }
 
@@ -78,6 +79,7 @@ class DefaultCalculator implements CalculatorInterface
         }
 
         $percent = $vat / 100.00;
+
         return round($this->getSubtotal() * $percent, 2);
     }
 

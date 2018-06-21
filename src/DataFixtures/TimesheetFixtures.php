@@ -55,6 +55,7 @@ class TimesheetFixtures extends Fixture
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
         }
+
         return $all;
     }
 
@@ -70,6 +71,7 @@ class TimesheetFixtures extends Fixture
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
         }
+
         return $all;
     }
 
@@ -85,6 +87,7 @@ class TimesheetFixtures extends Fixture
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
         }
+
         return $all;
     }
     /**
@@ -99,6 +102,7 @@ class TimesheetFixtures extends Fixture
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
         }
+
         return $all;
     }
 
@@ -283,6 +287,7 @@ class TimesheetFixtures extends Fixture
     private function getRandomActivity()
     {
         $all = $this->getActivities();
+
         return $all[array_rand($all)];
     }
 
@@ -321,6 +326,7 @@ class TimesheetFixtures extends Fixture
     private function getRandomProject()
     {
         $all = $this->getProjects();
+
         return $all[array_rand($all)];
     }
 
@@ -361,6 +367,7 @@ class TimesheetFixtures extends Fixture
     private function getRandomLocation()
     {
         $all = $this->getLocations();
+
         return $all[array_rand($all)];
     }
 
@@ -430,6 +437,7 @@ class TimesheetFixtures extends Fixture
     private function getRandomCurrency()
     {
         $all = $this->getCurrencies();
+
         return $all[array_rand($all)];
     }
 }

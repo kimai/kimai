@@ -67,6 +67,7 @@ abstract class AbstractToolbarForm extends AbstractType
                 $query = new CustomerQuery();
                 $query->setVisibility(CustomerQuery::SHOW_BOTH); // this field is the reason for the query here
                 $query->setResultType(CustomerQuery::RESULT_TYPE_QUERYBUILDER);
+
                 return $repo->findByQuery($query);
             },
         ]);
@@ -147,6 +148,7 @@ abstract class AbstractToolbarForm extends AbstractType
                     'query_builder' => function (ProjectRepository $repo) use ($data) {
                         $qb = $repo->builderForEntityType();
                         $qb->where('p.customer = :customer')->setParameter('customer', $data['customer']);
+
                         return $qb;
                     },
                 ]);
@@ -173,6 +175,7 @@ abstract class AbstractToolbarForm extends AbstractType
                     'query_builder' => function (ActivityRepository $repo) use ($data) {
                         $qb = $repo->builderForEntityType();
                         $qb->where('a.project = :project')->setParameter('project', $data['project']);
+
                         return $qb;
                     },
                 ]);

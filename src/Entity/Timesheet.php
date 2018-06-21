@@ -119,6 +119,7 @@ class Timesheet
     public function setBegin($begin)
     {
         $this->begin = $begin;
+
         return $this;
     }
 
@@ -153,6 +154,7 @@ class Timesheet
     public function setDuration($duration)
     {
         $this->duration = $duration;
+
         return $this;
     }
 
@@ -176,6 +178,7 @@ class Timesheet
     public function setUser(User $user)
     {
         $this->user = $user;
+
         return $this;
     }
 
@@ -198,6 +201,7 @@ class Timesheet
     public function setActivity($activity)
     {
         $this->activity = $activity;
+
         return $this;
     }
 
@@ -220,6 +224,7 @@ class Timesheet
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -242,6 +247,7 @@ class Timesheet
     public function setRate($rate)
     {
         $this->rate = $rate;
+
         return $this;
     }
 

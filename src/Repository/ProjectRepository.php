@@ -45,6 +45,7 @@ class ProjectRepository extends AbstractRepository
 
         $stats = new ProjectStatistic();
         $stats->setCount($countAll);
+
         return $stats;
     }
 
@@ -94,6 +95,7 @@ class ProjectRepository extends AbstractRepository
         $query = new ProjectQuery();
         $query->setHiddenEntity($entity);
         $query->setResultType(ProjectQuery::RESULT_TYPE_QUERYBUILDER);
+
         return $this->findByQuery($query);
     }
 

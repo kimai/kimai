@@ -46,6 +46,7 @@ class CustomerRepository extends AbstractRepository
 
         $stats = new CustomerStatistic();
         $stats->setCount($countAll);
+
         return $stats;
     }
 
@@ -101,6 +102,7 @@ class CustomerRepository extends AbstractRepository
         $query = new CustomerQuery();
         $query->setHiddenEntity($entity);
         $query->setResultType(CustomerQuery::RESULT_TYPE_QUERYBUILDER);
+
         return $this->findByQuery($query);
     }
 

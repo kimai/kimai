@@ -82,6 +82,7 @@ class UserPreference
     public function setId(int $id): UserPreference
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -100,6 +101,7 @@ class UserPreference
     public function setUser(User $user): UserPreference
     {
         $this->user = $user;
+
         return $this;
     }
 
@@ -118,6 +120,7 @@ class UserPreference
     public function setName(string $name): UserPreference
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -143,6 +146,7 @@ class UserPreference
     public function setValue($value): UserPreference
     {
         $this->value = $value;
+
         return $this;
     }
 
@@ -155,6 +159,7 @@ class UserPreference
     public function setType(string $type)
     {
         $this->type = $type;
+
         return $this;
     }
 
@@ -175,6 +180,7 @@ class UserPreference
     public function setConstraints(array $constraints)
     {
         $this->constraints = $constraints;
+
         return $this;
     }
 
@@ -187,6 +193,7 @@ class UserPreference
     public function addConstraint(Constraint $constraint)
     {
         $this->constraints[] = $constraint;
+
         return $this;
     }
 

@@ -135,6 +135,7 @@ class ActivityRepository extends AbstractRepository
         $query = new ActivityQuery();
         $query->setHiddenEntity($entity);
         $query->setResultType(ActivityQuery::RESULT_TYPE_QUERYBUILDER);
+
         return $this->findByQuery($query);
     }
 

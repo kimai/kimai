@@ -44,6 +44,7 @@ trait FixturesTrait
     protected function getRandomPhrase()
     {
         $phrases = $this->getPhrases();
+
         return $phrases[array_rand($phrases)];
     }
 }

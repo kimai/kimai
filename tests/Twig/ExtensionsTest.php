@@ -122,6 +122,7 @@ class ExtensionsTest extends TestCase
         $record->setBegin($begin);
         $record->setEnd($end);
         $record->setDuration($seconds);
+
         return $record;
     }
 }

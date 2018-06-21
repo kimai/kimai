@@ -63,6 +63,7 @@ class BaseQuery
     public function setPage($page)
     {
         $this->page = (int)$page;
+
         return $this;
     }
 
@@ -83,6 +84,7 @@ class BaseQuery
         if (!empty($pageSize) && (int)$pageSize > 0) {
             $this->pageSize = (int)$pageSize;
         }
+
         return $this;
     }
 
@@ -103,6 +105,7 @@ class BaseQuery
     public function setOrderBy($orderBy)
     {
         $this->orderBy = $orderBy;
+
         return $this;
     }
 
@@ -123,6 +126,7 @@ class BaseQuery
         if (in_array($order, [self::ORDER_ASC, self::ORDER_DESC])) {
             $this->order = $order;
         }
+
         return $this;
     }
 
@@ -143,6 +147,7 @@ class BaseQuery
         if (in_array($resultType, [self::RESULT_TYPE_PAGER, self::RESULT_TYPE_QUERYBUILDER])) {
             $this->resultType = $resultType;
         }
+
         return $this;
     }
 
@@ -161,6 +166,7 @@ class BaseQuery
     public function setHiddenEntity($hiddenEntity)
     {
         $this->hiddenEntity = $hiddenEntity;
+
         return $this;
     }
 }

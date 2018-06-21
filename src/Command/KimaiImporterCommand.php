@@ -147,12 +147,14 @@ class KimaiImporterCommand extends Command
         $password = $input->getArgument('password');
         if (trim(strlen($password)) < 6) {
             $io->error('Password length is not sufficient, at least 6 character are required');
+
             return;
         }
 
         $country = $input->getArgument('country');
         if (trim(strlen($country)) != 2) {
             $io->error('Country length needs to be exactly 2 character');
+
             return;
         }
 
@@ -174,6 +176,7 @@ class KimaiImporterCommand extends Command
             $users = $this->fetchAllFromImport('users');
         } catch (\Exception $ex) {
             $io->error('Failed to load users: ' . $ex->getMessage());
+
             return;
         }
 
@@ -181,6 +184,7 @@ class KimaiImporterCommand extends Command
             $customer = $this->fetchAllFromImport('customers');
         } catch (\Exception $ex) {
             $io->error('Failed to load customers: ' . $ex->getMessage());
+
             return;
         }
 
@@ -188,6 +192,7 @@ class KimaiImporterCommand extends Command
             $projects = $this->fetchAllFromImport('projects');
         } catch (\Exception $ex) {
             $io->error('Failed to load projects: ' . $ex->getMessage());
+
             return;
         }
 
@@ -195,6 +200,7 @@ class KimaiImporterCommand extends Command
             $activities = $this->fetchAllFromImport('activities');
         } catch (\Exception $ex) {
             $io->error('Failed to load activities: ' . $ex->getMessage());
+
             return;
         }
 
@@ -202,6 +208,7 @@ class KimaiImporterCommand extends Command
             $activityToProject = $this->fetchAllFromImport('projects_activities');
         } catch (\Exception $ex) {
             $io->error('Failed to load activities-project mapping: ' . $ex->getMessage());
+
             return;
         }
 
@@ -209,6 +216,7 @@ class KimaiImporterCommand extends Command
             $records = $this->fetchAllFromImport('timeSheet');
         } catch (\Exception $ex) {
             $io->error('Failed to load timeSheet: ' . $ex->getMessage());
+
             return;
         }
 
@@ -224,6 +232,7 @@ class KimaiImporterCommand extends Command
             $io->success('Imported users: ' . $counter);
         } catch (\Exception $ex) {
             $io->error('Failed to import users: ' . $ex->getMessage());
+
             return;
         }
 
@@ -233,6 +242,7 @@ class KimaiImporterCommand extends Command
             $io->success('Imported customers: ' . $counter);
         } catch (\Exception $ex) {
             $io->error('Failed to import customers: ' . $ex->getMessage());
+
             return;
         }
 
@@ -242,6 +252,7 @@ class KimaiImporterCommand extends Command
             $io->success('Imported projects: ' . $counter);
         } catch (\Exception $ex) {
             $io->error('Failed to import projects: ' . $ex->getMessage());
+
             return;
         }
 
@@ -251,6 +262,7 @@ class KimaiImporterCommand extends Command
             $io->success('Imported activities: ' . $counter);
         } catch (\Exception $ex) {
             $io->error('Failed to import activities: ' . $ex->getMessage());
+
             return;
         }
 
@@ -260,6 +272,7 @@ class KimaiImporterCommand extends Command
             $io->success('Imported timesheet records: ' . $counter);
         } catch (\Exception $ex) {
             $io->error('Failed to import timesheet records: ' . $ex->getMessage());
+
             return;
         }
 
@@ -304,6 +317,7 @@ class KimaiImporterCommand extends Command
                 'Import can only performed from an up-to-date Kimai version:' . PHP_EOL .
                 'Needs at least ' . $requiredVersion . ' but found ' . $version
             );
+
             return false;
         }
 
@@ -312,6 +326,7 @@ class KimaiImporterCommand extends Command
                 'Import can only performed from an up-to-date Kimai version:' . PHP_EOL .
                 'Database revision needs to be ' . $requiredRevision . ' but found ' . $revision
             );
+
             return false;
         }
 
@@ -345,6 +360,7 @@ class KimaiImporterCommand extends Command
     protected function bytesHumanReadable($size)
     {
         $unit = ['b', 'kB', 'MB', 'GB'];
+
         return @round($size / pow(1024, ($i = floor(log($size, 1024)))), 2) . ' ' . $unit[$i];
     }
 
@@ -394,6 +410,7 @@ class KimaiImporterCommand extends Command
                     . $error->getMessage()
                 );
             }
+
             return false;
         }
 
@@ -468,6 +485,7 @@ class KimaiImporterCommand extends Command
 
             $this->users[$oldUser['userID']] = $user;
         }
+
         return $counter;
     }
 
@@ -548,6 +566,7 @@ class KimaiImporterCommand extends Command
 
             $this->customers[$oldCustomer['customerID']] = $customer;
         }
+
         return $counter;
     }
 
@@ -611,6 +630,7 @@ class KimaiImporterCommand extends Command
 
             $this->projects[$oldProject['projectID']] = $project;
         }
+
         return $counter;
     }
 
@@ -667,6 +687,7 @@ class KimaiImporterCommand extends Command
                 $this->unassignedActivities[$oldActivity['activityID']] = $oldActivity;
             }
         }
+
         return $counter;
     }
 
@@ -833,6 +854,7 @@ class KimaiImporterCommand extends Command
         if ($activityCounter > 0) {
             $io->success('Created new (previously unattached) activities during timesheet import: ' . $activityCounter);
         }
+
         return $counter;
     }
 }

@@ -81,6 +81,7 @@ class RateCalculator implements CalculatorInterface
     protected function calculateRate(Timesheet $record)
     {
         $hourlyRate = (float) $record->getUser()->getPreferenceValue(UserPreference::HOURLY_RATE, 0);
+
         return (float) $hourlyRate * ($record->getDuration() / 3600);
     }
 }

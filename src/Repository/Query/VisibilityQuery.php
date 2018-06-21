@@ -70,6 +70,7 @@ class VisibilityQuery extends BaseQuery
     public function setExclusiveVisibility($exclusiveVisibility)
     {
         $this->exclusiveVisibility = (bool) $exclusiveVisibility;
+
         return $this;
     }
 }
