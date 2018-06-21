@@ -20,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class InvoiceToolbarForm extends AbstractToolbarForm
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

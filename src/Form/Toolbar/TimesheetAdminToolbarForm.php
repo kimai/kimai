@@ -17,7 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class TimesheetAdminToolbarForm extends TimesheetToolbarForm
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

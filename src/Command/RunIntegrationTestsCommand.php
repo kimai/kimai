@@ -17,7 +17,7 @@ use Symfony\Component\Console\Command\Command;
 class RunIntegrationTestsCommand extends RunUnitTestsCommand
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
