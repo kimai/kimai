@@ -18,7 +18,6 @@ use App\Repository\Query\ActivityQuery;
  */
 class ActivityToolbarForm extends AbstractToolbarForm
 {
-
     /**
      * {@inheritdoc}
      */

@@ -19,7 +19,6 @@ use App\Repository\Query\TimesheetQuery;
  */
 class TimesheetToolbarForm extends AbstractToolbarForm
 {
-
     /**
      * @inheritdoc
      */

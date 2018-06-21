@@ -16,7 +16,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class TimesheetAdminToolbarForm extends TimesheetToolbarForm
 {
-
     /**
      * @inheritdoc
      */

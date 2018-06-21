@@ -21,7 +21,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UserPasswordType extends AbstractType
 {
-
     /**
      * {@inheritdoc}
      */

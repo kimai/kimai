@@ -18,7 +18,6 @@ use App\Repository\Query\ProjectQuery;
  */
 class ProjectToolbarForm extends AbstractToolbarForm
 {
-
     /**
      * {@inheritdoc}
      */

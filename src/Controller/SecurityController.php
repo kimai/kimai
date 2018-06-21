@@ -30,6 +30,7 @@ class SecurityController extends AbstractController
             'error' => $helper->getLastAuthenticationError(),
         ]);
     }
+
     /**
      * This is the route the user can use to logout.
      *

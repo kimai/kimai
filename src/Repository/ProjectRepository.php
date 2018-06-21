@@ -21,7 +21,6 @@ use App\Repository\Query\ProjectQuery;
  */
 class ProjectRepository extends AbstractRepository
 {
-
     /**
      * @param $id
      * @return null|Project

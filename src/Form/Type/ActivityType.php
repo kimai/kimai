@@ -20,7 +20,6 @@ use App\Repository\ActivityRepository;
  */
 class ActivityType extends AbstractType
 {
-
     /**
      * {@inheritdoc}
      */

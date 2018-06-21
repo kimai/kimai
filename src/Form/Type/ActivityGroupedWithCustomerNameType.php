@@ -16,7 +16,6 @@ use App\Entity\Activity;
  */
 class ActivityGroupedWithCustomerNameType extends ActivityType
 {
-
     /**
      * @param Activity $activity
      * @param $key

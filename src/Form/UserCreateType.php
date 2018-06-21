@@ -19,7 +19,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UserCreateType extends UserEditType
 {
-
     /**
      * {@inheritdoc}
      */

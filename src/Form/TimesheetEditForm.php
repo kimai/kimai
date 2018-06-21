@@ -25,7 +25,6 @@ use App\Repository\ActivityRepository;
  */
 class TimesheetEditForm extends AbstractType
 {
-
     /**
      * {@inheritdoc}
      */

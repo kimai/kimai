@@ -27,7 +27,6 @@ use App\Repository\Query\TimesheetQuery;
  */
 class TimesheetRepository extends AbstractRepository
 {
-
     /**
      * @param Timesheet $entry
      * @return bool

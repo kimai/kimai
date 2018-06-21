@@ -22,7 +22,6 @@ use App\Repository\Query\CustomerQuery;
  */
 class CustomerRepository extends AbstractRepository
 {
-
     /**
      * @param $id
      * @return null|Customer

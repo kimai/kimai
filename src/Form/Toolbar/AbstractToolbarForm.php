@@ -33,7 +33,6 @@ use Symfony\Component\Form\FormEvents;
  */
 abstract class AbstractToolbarForm extends AbstractType
 {
-
     /**
      * Dirty hack to enable easy handling of GET form in controller and javascript.
      *Cleans up the name of all form elents (and unfortunately of the form itself).

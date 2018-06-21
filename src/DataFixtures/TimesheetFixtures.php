@@ -90,6 +90,7 @@ class TimesheetFixtures extends Fixture
 
         return $all;
     }
+
     /**
      * @param ObjectManager $manager
      * @return Activity[]

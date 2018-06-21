@@ -24,7 +24,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ActivityEditForm extends AbstractType
 {
-
     /**
      * {@inheritdoc}
      */

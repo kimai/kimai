@@ -22,7 +22,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class ResetCommand extends Command
 {
-
     /**
      * @inheritdoc
      */
@@ -105,7 +104,6 @@ EOT
 
         return 0;
     }
-
 
     /**
      * @param InputInterface $input

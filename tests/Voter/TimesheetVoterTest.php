@@ -23,7 +23,6 @@ use App\Voter\TimesheetVoter;
  */
 class TimesheetVoterTest extends TestCase
 {
-
     /**
      * @dataProvider getTestData
      */

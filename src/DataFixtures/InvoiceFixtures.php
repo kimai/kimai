@@ -22,7 +22,6 @@ use Doctrine\Common\Persistence\ObjectManager;
  */
 class InvoiceFixtures extends Fixture
 {
-
     /**
      * {@inheritdoc}
      */

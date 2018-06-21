@@ -31,7 +31,6 @@ use App\Repository\Query\ProjectQuery;
  */
 class ProjectController extends AbstractController
 {
-
     /**
      * @return \App\Repository\ProjectRepository
      */

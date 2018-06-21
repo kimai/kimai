@@ -22,7 +22,6 @@ use App\Repository\ActivityRepository;
  */
 class ActivityController extends Controller
 {
-
     /**
      * @return ActivityRepository
      */

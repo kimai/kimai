@@ -21,7 +21,6 @@ use App\Repository\Query\ActivityQuery;
  */
 class ActivityRepository extends AbstractRepository
 {
-
     /**
      * @param $id
      * @return null|Activity

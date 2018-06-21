@@ -30,7 +30,6 @@ use App\Repository\Query\ActivityQuery;
  */
 class ActivityController extends AbstractController
 {
-
     /**
      * @return \App\Repository\ActivityRepository
      */

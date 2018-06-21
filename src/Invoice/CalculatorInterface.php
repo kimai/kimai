@@ -17,7 +17,6 @@ use App\Model\InvoiceModel;
  */
 interface CalculatorInterface
 {
-
     /**
      * Return the timesheet records that will be displayed on the invoice.
      *

@@ -17,7 +17,6 @@ use App\Entity\Timesheet;
  */
 class ShortInvoiceCalculator extends DefaultCalculator
 {
-
     /**
      * @return Timesheet[]
      */

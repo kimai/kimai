@@ -16,7 +16,6 @@ use App\Model\InvoiceModel;
  */
 interface NumberGeneratorInterface
 {
-
     /**
      * @param InvoiceModel $model
      */

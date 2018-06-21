@@ -29,7 +29,6 @@ use App\Repository\Query\CustomerQuery;
  */
 class CustomerController extends AbstractController
 {
-
     /**
      * @return \App\Repository\CustomerRepository
      */

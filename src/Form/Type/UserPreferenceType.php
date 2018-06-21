@@ -23,7 +23,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UserPreferenceType extends AbstractType
 {
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
