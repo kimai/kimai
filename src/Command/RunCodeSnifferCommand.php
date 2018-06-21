@@ -58,7 +58,7 @@ class RunCodeSnifferCommand extends Command
         $exitCode = 0;
         ob_start();
 
-        $args = ['--config=.php_cs.dist'];
+        $args = [];
         if (!$input->getOption('fix')) {
             $filename = $this->rootDir . '/' . $input->getOption('checkstyle');
             $args[] = '--dry-run';
