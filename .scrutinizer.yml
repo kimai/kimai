@@ -23,7 +23,7 @@ build:
                     file: 'integration'
                     format: 'clover'
             -
-                command: 'bin/console kimai:phpcs --fix --checkstyle=checkstyle'
+                command: 'bin/console kimai:phpcs --checkstyle=checkstyle'
                 analysis:
                     file: 'checkstyle'
                     format: 'general-checkstyle'
