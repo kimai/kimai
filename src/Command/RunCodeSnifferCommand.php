@@ -66,7 +66,7 @@ class RunCodeSnifferCommand extends Command
 
         $exitCode = 0;
         ob_start();
-        passthru($this->rootDir . '/bin/phpcs --standard=PSR2 ' . $directory, $exitCode);
+        passthru($this->rootDir . '/vendor/bin/php-cs-fixer fix --config=.php_cs.dist --verbose --show-progress=estimating ' . $directory, $exitCode);
         $result = ob_get_clean();
 
         $io->write($result);
