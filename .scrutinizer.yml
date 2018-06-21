@@ -29,18 +29,50 @@ build:
 
 filter:
     excluded_paths:
-        - 'tests/*'
+        - '.github/*'
+        - 'assets/*'
         - 'bin/*'
-        - '*/build/*'
+        - 'config/*'
         - 'node_modules/*'
         - 'public/*'
+        - 'templates/*'
+        - 'tests/*'
+        - 'translations/*'
         - 'var/*'
         - 'vendor/*'
-checks:
-    php: true
-    javascript: true
-coding_style:
-    php:
-        spaces:
-            around_operators:
-                concatenation: true
+
+tools:
+    php_code_sniffer:
+        enabled: true
+        config:
+            standard: PSR2
+        filter:
+            excluded_paths:
+                - '.github/*'
+                - 'assets/*'
+                - 'bin/*'
+                - 'config/*'
+                - 'node_modules/*'
+                - 'public/*'
+                - 'templates/*'
+                - 'tests/*'
+                - 'translations/*'
+                - 'var/*'
+                - 'vendor/*'
+    php_cs_fixer:
+        enabled: true
+        config:
+            level: psr2
+        filter:
+            excluded_paths:
+                - '.github/*'
+                - 'assets/*'
+                - 'bin/*'
+                - 'config/*'
+                - 'node_modules/*'
+                - 'public/*'
+                - 'templates/*'
+                - 'tests/*'
+                - 'translations/*'
+                - 'var/*'
+                - 'vendor/*'

@@ -25,8 +25,7 @@ class RunCodeSnifferCommand extends Command
     protected $rootDir;
 
     /**
-     * RunCodeSnifferCommand constructor.
-     * @param $projectDirectory
+     * @param string $projectDirectory
      */
     public function __construct($projectDirectory)
     {
@@ -35,7 +34,7 @@ class RunCodeSnifferCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -46,7 +45,7 @@ class RunCodeSnifferCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
