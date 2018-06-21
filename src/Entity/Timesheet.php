@@ -29,7 +29,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class Timesheet
 {
-
     /**
      * @var integer
      *

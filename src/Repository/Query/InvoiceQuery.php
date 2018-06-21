@@ -16,7 +16,6 @@ use App\Entity\InvoiceTemplate;
  */
 class InvoiceQuery extends TimesheetQuery
 {
-
     /**
      * @var InvoiceTemplate
      */

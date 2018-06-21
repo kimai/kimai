@@ -31,7 +31,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class InvoiceController extends AbstractController
 {
-
     /**
      * @var ServiceInvoice
      */

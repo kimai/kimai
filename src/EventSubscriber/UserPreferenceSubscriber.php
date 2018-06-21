@@ -27,7 +27,6 @@ use Symfony\Component\Validator\Constraints\Range;
  */
 class UserPreferenceSubscriber implements EventSubscriberInterface
 {
-
     /**
      * @var EventDispatcherInterface
      */

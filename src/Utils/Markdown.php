@@ -16,7 +16,6 @@ use Parsedown as MarkdownParser;
  */
 class Markdown
 {
-
     /**
      * @var MarkdownParser
      */

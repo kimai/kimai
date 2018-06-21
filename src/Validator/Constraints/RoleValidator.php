@@ -19,7 +19,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
  */
 class RoleValidator extends ConstraintValidator
 {
-
     /**
      * @var string[]
      */

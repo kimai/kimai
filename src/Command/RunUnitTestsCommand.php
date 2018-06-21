@@ -19,7 +19,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class RunUnitTestsCommand extends Command
 {
-
     /**
      * @var string
      */

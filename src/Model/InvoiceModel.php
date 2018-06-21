@@ -23,7 +23,6 @@ use App\Repository\Query\InvoiceQuery;
  */
 class InvoiceModel
 {
-
     /**
      * @var Customer
      */

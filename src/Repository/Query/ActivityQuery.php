@@ -17,7 +17,6 @@ use App\Entity\Project;
  */
 class ActivityQuery extends ProjectQuery
 {
-
     /**
      * @var Project
      */

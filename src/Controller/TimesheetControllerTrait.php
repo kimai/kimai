@@ -18,7 +18,6 @@ use App\Repository\TimesheetRepository;
  */
 trait TimesheetControllerTrait
 {
-
     /**
      * @var bool
      */

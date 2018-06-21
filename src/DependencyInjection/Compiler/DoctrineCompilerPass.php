@@ -18,7 +18,6 @@ use Symfony\Component\Yaml\Yaml;
  */
 class DoctrineCompilerPass implements CompilerPassInterface
 {
-
     /**
      * @var string[]
      */

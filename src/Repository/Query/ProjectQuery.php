@@ -16,7 +16,6 @@ use App\Entity\Customer;
  */
 class ProjectQuery extends VisibilityQuery
 {
-
     /**
      * @var Customer
      */

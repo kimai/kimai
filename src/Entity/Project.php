@@ -20,7 +20,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Project
 {
-
     /**
      * @var integer
      *

@@ -20,7 +20,6 @@ use App\Model\InvoiceModel;
  */
 class DefaultCalculator implements CalculatorInterface
 {
-
     /**
      * @var string
      */

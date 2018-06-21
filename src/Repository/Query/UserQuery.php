@@ -14,7 +14,6 @@ namespace App\Repository\Query;
  */
 class UserQuery extends VisibilityQuery
 {
-
     /**
      * @var string
      */

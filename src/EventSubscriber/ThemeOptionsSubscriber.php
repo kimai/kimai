@@ -22,7 +22,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
  */
 class ThemeOptionsSubscriber implements EventSubscriberInterface
 {
-
     /**
      * @var TokenStorageInterface
      */
