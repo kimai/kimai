@@ -106,7 +106,6 @@ class TimesheetTest extends TestCase
             $violatedFields[] = $validation->getPropertyPath();
         }
 
-
         foreach ($fieldNames as $id => $propertyPath) {
             $foundField = false;
             if (in_array($propertyPath, $violatedFields)) {
