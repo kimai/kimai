@@ -62,7 +62,7 @@ class BaseQuery
      */
     public function setPage($page)
     {
-        $this->page = (int)$page;
+        $this->page = (int) $page;
 
         return $this;
     }
@@ -81,8 +81,8 @@ class BaseQuery
      */
     public function setPageSize($pageSize)
     {
-        if (!empty($pageSize) && (int)$pageSize > 0) {
-            $this->pageSize = (int)$pageSize;
+        if (!empty($pageSize) && (int) $pageSize > 0) {
+            $this->pageSize = (int) $pageSize;
         }
 
         return $this;

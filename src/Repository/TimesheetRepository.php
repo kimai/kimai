@@ -178,7 +178,7 @@ class TimesheetRepository extends AbstractRepository
             if (!isset($years[$curYear])) {
                 $year = new Year($curYear);
                 for ($i = 1; $i < 13; $i++) {
-                    $month = $i < 10 ? '0' . $i : (string)$i;
+                    $month = $i < 10 ? '0' . $i : (string) $i;
                     $year->setMonth(new Month($month));
                 }
                 $years[$curYear] = $year;

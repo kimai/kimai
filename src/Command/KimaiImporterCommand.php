@@ -452,7 +452,7 @@ class KimaiImporterCommand extends Command
         $entityManager = $this->getDoctrine()->getManager();
 
         foreach ($users as $oldUser) {
-            $isActive = (bool)$oldUser['active'] && !(bool)$oldUser['trash'] && !(bool)$oldUser['ban'];
+            $isActive = (bool) $oldUser['active'] && !(bool) $oldUser['trash'] && !(bool) $oldUser['ban'];
             $role = ($oldUser['globalRoleID'] == 1) ? User::ROLE_SUPER_ADMIN : User::DEFAULT_ROLE;
 
             $user = new User();
@@ -526,7 +526,7 @@ class KimaiImporterCommand extends Command
         $entityManager = $this->getDoctrine()->getManager();
 
         foreach ($customers as $oldCustomer) {
-            $isActive = (bool)$oldCustomer['visible'] && !(bool)$oldCustomer['trash'];
+            $isActive = (bool) $oldCustomer['visible'] && !(bool) $oldCustomer['trash'];
             $name = $oldCustomer['name'];
             if (empty($name)) {
                 $name = uniqid();
@@ -596,7 +596,7 @@ class KimaiImporterCommand extends Command
         $entityManager = $this->getDoctrine()->getManager();
 
         foreach ($projects as $oldProject) {
-            $isActive = (bool)$oldProject['visible'] && !(bool)$oldProject['trash'];
+            $isActive = (bool) $oldProject['visible'] && !(bool) $oldProject['trash'];
             $customer = $this->customers[$oldProject['customerID']];
             $name = $oldProject['name'];
             if (empty($name)) {
@@ -710,7 +710,7 @@ class KimaiImporterCommand extends Command
             return $this->activities[$activityId][$project->getId()];
         }
 
-        $isActive = (bool)$oldActivity['visible'] && !(bool)$oldActivity['trash'];
+        $isActive = (bool) $oldActivity['visible'] && !(bool) $oldActivity['trash'];
         $name = $oldActivity['name'];
         if (empty($name)) {
             $name = uniqid();

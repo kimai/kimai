@@ -46,7 +46,7 @@ class Year
      */
     public function setMonth(Month $month)
     {
-        $this->months[(int)$month->getMonth()] = $month;
+        $this->months[(int) $month->getMonth()] = $month;
 
         return $this;
     }

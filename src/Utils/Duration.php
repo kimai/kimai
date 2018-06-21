@@ -53,7 +53,7 @@ class Duration
             return $this->parseDuration($duration, self::FORMAT_COLON);
         }
 
-        if (is_numeric($duration) && $duration == (int)$duration) {
+        if (is_numeric($duration) && $duration == (int) $duration) {
             return $this->parseDuration($duration, self::FORMAT_SECONDS);
         }
 
