@@ -10,11 +10,6 @@ build:
                 override:
                     - js-scrutinizer-run
 #                    - php-scrutinizer-run
-                    -
-                        command: 'bin/console kimai:phpcs --checkstyle=checkstyle'
-                        analysis:
-                            file: 'checkstyle'
-                            format: 'general-checkstyle'
         tests: true
     tests:
         override:
@@ -28,6 +23,11 @@ build:
                 coverage:
                     file: 'integration'
                     format: 'clover'
+            -
+                command: 'bin/console kimai:phpcs --checkstyle=checkstyle'
+                analysis:
+                    file: 'checkstyle'
+                    format: 'general-checkstyle'
 
 filter:
     excluded_paths:
