@@ -105,7 +105,7 @@ class DashboardController extends Controller
                 //"{{ widgets.info_box_counter('stats.amountThisMonth', timesheetGlobal.amountThisMonth|money, 'money', 'green') }}",
                 "{{ widgets.info_box_counter('stats.durationTotal', timesheetGlobal.durationTotal|duration(true), 'hourglass-o', 'yellow') }}",
                 //"{{ widgets.info_box_counter('stats.amountTotal', timesheetGlobal.amountTotal|money, 'money', 'red') }}",
-                "{{ widgets.info_box_counter('stats.activeRecordings', timesheetGlobal.activeCurrently, 'hourglass-o', 'red', path('admin_timesheet', {'state': " . TimesheetQuery::STATE_RUNNING . "})) }}",
+                "{{ widgets.info_box_counter('stats.activeRecordings', timesheetGlobal.activeCurrently, 'hourglass-o', 'red', path('admin_timesheet', {'state': " . TimesheetQuery::STATE_RUNNING . '})) }}',
             ],
         ];
 

@@ -404,7 +404,7 @@ class KimaiImporterCommand extends Command
                 $value = $error->getInvalidValue();
                 $io->error(
                     $error->getPropertyPath()
-                    . " (" . (is_array($value) ? implode(',', $value) : $value) . ")"
+                    . ' (' . (is_array($value) ? implode(',', $value) : $value) . ')'
                     . "\n    "
                     . $error->getMessage()
                 );
@@ -822,8 +822,8 @@ class KimaiImporterCommand extends Command
             $timesheet
                 ->setDescription($oldRecord['description'] ?: ($oldRecord['comment'] ?: null))
                 ->setUser($this->users[$oldRecord['userID']])
-                ->setBegin(new \DateTime("@" . $oldRecord['start']))
-                ->setEnd(new \DateTime("@" . $oldRecord['end']))
+                ->setBegin(new \DateTime('@' . $oldRecord['start']))
+                ->setEnd(new \DateTime('@' . $oldRecord['end']))
                 ->setDuration($duration)
                 ->setActivity($activity)
                 ->setRate($rate)
