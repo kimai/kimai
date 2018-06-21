@@ -144,7 +144,7 @@ class RateCalculatorTest extends TestCase
                         'factor' => 2.0
                     ],
                     'weekdays' => [
-                        'days' => ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'],
+                        'days' => ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
                         'factor' => 1.5
                     ],
                 ],
