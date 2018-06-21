@@ -4,9 +4,9 @@ return PhpCsFixer\Config::create()
     ->setRules([
         '@PSR2' => true,
         '@Symfony' => true,
-        //'align_multiline_comment' => [],
         'yoda_style' => false,
         'array_syntax' => ['syntax' => 'short'],
+        'phpdoc_align' => ['align' => 'left'],
     ])
     ->setFormat('checkstyle')
 ;
