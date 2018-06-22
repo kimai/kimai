@@ -18,6 +18,7 @@ use App\Model\InvoiceModel;
 use App\Repository\Query\BaseQuery;
 use App\Repository\Query\InvoiceQuery;
 use App\Repository\Query\TimesheetQuery;
+use App\Repository\TimesheetRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -100,7 +101,9 @@ class InvoiceController extends AbstractController
                 $query->getBegin()->setTime(0, 0, 0);
                 $query->getEnd()->setTime(23, 59, 59);
 
-                $queryBuilder = $this->getDoctrine()->getRepository(Timesheet::class)->findByQuery($query);
+                /* @var TimesheetRepository $timeRepo */
+                $timeRepo = $this->getDoctrine()->getRepository(Timesheet::class);
+                $queryBuilder = $timeRepo->findByQuery($query);
                 $entries = $queryBuilder->getQuery()->getResult();
             }
         }

@@ -10,8 +10,10 @@
 namespace App\Controller;
 
 use App\Entity\Timesheet;
-use Symfony\Component\HttpFoundation\Request;
 use App\Repository\TimesheetRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Helper functions for Timesheet controller
@@ -163,4 +165,32 @@ trait TimesheetControllerTrait
      * @return \Symfony\Component\Form\FormInterface
      */
     abstract protected function getEditForm(Timesheet $entry, $page);
+
+    /**
+     * Adds a "successful" flash message to the stack.
+     *
+     * @param string $translationKey
+     * @param array $parameter
+     */
+    protected abstract function flashSuccess($translationKey, $parameter = []);
+
+    /**
+     * Adds a "error" flash message to the stack.
+     *
+     * @param $translationKey
+     * @param array $parameter
+     */
+    protected abstract function flashError($translationKey, $parameter = []);
+
+    /**
+     * Shortcut to return the Doctrine Registry service.
+     *
+     * @throws \LogicException If DoctrineBundle is not available
+     */
+    protected abstract function getDoctrine(): ManagerRegistry;
+
+    /**
+     * Returns a RedirectResponse to the given route with the given parameters.
+     */
+    protected abstract function redirectToRoute(string $route, array $parameters = array(), int $status = 302): RedirectResponse;
 }

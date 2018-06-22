@@ -37,8 +37,8 @@ abstract class AbstractController extends Controller
     /**
      * A translated helper for denyAccessUnlessGranted()
      *
-     * @param $attributes
-     * @param null $subject
+     * @param mixed $attributes
+     * @param mixed $subject
      * @param string $translation
      * @param array $parameter
      * @throws AccessDeniedException
