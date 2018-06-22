@@ -146,10 +146,9 @@ class InvoiceController extends AbstractController
      * TODO permission
      *
      * @param $page
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listTemplateAction($page, Request $request)
+    public function listTemplateAction($page)
     {
         $templates = $this->getRepository()->findByQuery(new BaseQuery());
 

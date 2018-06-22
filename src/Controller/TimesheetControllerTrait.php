@@ -14,6 +14,7 @@ use App\Repository\TimesheetRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Helper functions for Timesheet controller
@@ -193,4 +194,17 @@ trait TimesheetControllerTrait
      * Returns a RedirectResponse to the given route with the given parameters.
      */
     abstract protected function redirectToRoute(string $route, array $parameters = [], int $status = 302): RedirectResponse;
+
+    /**
+     * Renders a view.
+     */
+    abstract protected function render(string $view, array $parameters = [], Response $response = null): Response;
+
+    /**
+     * Get a user from the Security Token Storage.
+     *
+     * @return mixed
+     * @throws \LogicException If SecurityBundle is not available
+     */
+    abstract protected function getUser();
 }
