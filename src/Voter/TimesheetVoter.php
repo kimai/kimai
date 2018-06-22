@@ -57,7 +57,7 @@ class TimesheetVoter extends AbstractVoter
 
     /**
      * @param string $attribute
-     * @param mixed $subject
+     * @param Timesheet|Activity $subject
      * @param TokenInterface $token
      * @return bool
      */
@@ -69,20 +69,40 @@ class TimesheetVoter extends AbstractVoter
             return false;
         }
 
-        if (!$subject instanceof Timesheet && !$subject instanceof Activity) {
-            return false;
-        }
-
         switch ($attribute) {
             case self::STOP:
+                if (!$subject instanceof Timesheet) {
+                    return false;
+                }
+
                 return $this->canStop($subject, $user, $token);
+
             case self::START:
+                if (!$subject instanceof Activity) {
+                    return false;
+                }
+
                 return $this->canStart($subject, $user, $token);
+
             case self::VIEW:
+                if (!$subject instanceof Timesheet) {
+                    return false;
+                }
+
                 return $this->canView($subject, $user, $token);
+
             case self::EDIT:
+                if (!$subject instanceof Timesheet) {
+                    return false;
+                }
+
                 return $this->canEdit($subject, $user, $token);
+
             case self::DELETE:
+                if (!$subject instanceof Timesheet) {
+                    return false;
+                }
+
                 return $this->canDelete($subject, $user, $token);
         }
 
