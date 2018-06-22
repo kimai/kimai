@@ -66,6 +66,34 @@ You can run the code sniffer with a built-in command like that:
 bin/console kimai:phpcs
 ```
 
+You can also automatically fix the violations by running: 
+
+ ```bash
+bin/console kimai:phpcs --fix
+```
+
+Be aware that this command will modify all files with violations in the directories `src/` and `tests/`, so its a good idea to commit first.
+
+Our code-styles are configured in [.php_cs.dist](../../.php_cs.dist).
+
+
+## Translations 
+
+We try to keep the number of language files small, in order to make it easier to identify the location of application messages and to unify the codebase.
+
+- If you add a new key, you have to add it in every language file
+- Its very likely that you want to edit the file `messages` as it holds 90% of our application translations 
+
+The files in `translations/` as a quick overview:
+
+- `AvanzuAdminTheme` is only meant for translating strings from the original theme
+- `exceptions` only holds translations of error pages and exception handlers
+- `flashmessages`
+- `messages` holds most of the visible application translations
+- `pagerfanta` includes the translations for the pagination component
+- `sidebar` holds all the translations of the right sidebar
+- `validators` only hold translations related to violations/validation of submitted form data (or API calls)
+
 ## Extending the navigation bar
 
 If you want to add your own entries in the navigation bar, you can subscribe to these events:
