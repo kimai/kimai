@@ -77,7 +77,7 @@ class CreateUserCommandTest extends KernelTestCase
 
     public function testUserAlreadyExisting()
     {
-        $commandTester = $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar');
+        $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar');
         $commandTester = $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar');
 
         $output = $commandTester->getDisplay();

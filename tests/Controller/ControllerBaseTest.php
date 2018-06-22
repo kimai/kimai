@@ -13,6 +13,7 @@ use App\DataFixtures\AppFixtures;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * ControllerBaseTest adds some useful functions for writing integration tests.
@@ -84,14 +85,17 @@ abstract class ControllerBaseTest extends WebTestCase
     {
         $client->request($method, '/' . self::DEFAULT_LANGUAGE . $url);
 
+        /* @var RedirectResponse $response */
+        $response = $client->getResponse();
+
         $this->assertTrue(
-            $client->getResponse()->isRedirect(),
-            sprintf('The secure URL %s is not protected.', $url . $client->getResponse()->getContent())
+            $response->isRedirect(),
+            sprintf('The secure URL %s is not protected.', $url . $response->getContent())
         );
 
         $this->assertEquals(
             'http://localhost/' . self::DEFAULT_LANGUAGE . '/login',
-            $client->getResponse()->getTargetUrl(),
+            $response->getTargetUrl(),
             sprintf('The secure URL %s does not redirect to the login form.', $url)
         );
     }
