@@ -100,7 +100,7 @@ class Duration
                 break;
 
             case self::FORMAT_SECONDS:
-                $seconds = $duration;
+                $seconds = (int) $duration;
                 break;
 
             default:

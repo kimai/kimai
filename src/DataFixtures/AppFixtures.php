@@ -87,7 +87,7 @@ class AppFixtures extends Fixture
     }
 
     /**
-     * @return []
+     * @return array
      */
     protected function getUserDefinition()
     {
