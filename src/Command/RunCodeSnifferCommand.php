@@ -89,6 +89,7 @@ class RunCodeSnifferCommand extends Command
                 'Found problems while checking your code styles' .
                 (!empty($filename) ? '. Saved checkstyle data to: ' . $filename : '')
             );
+
             return;
         }
 
