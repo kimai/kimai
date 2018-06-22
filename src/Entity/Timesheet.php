@@ -9,7 +9,6 @@
 
 namespace App\Entity;
 
-use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -29,9 +28,8 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class Timesheet
 {
-
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -55,7 +53,7 @@ class Timesheet
     private $end;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="duration", type="integer", nullable=true)
      * @Assert\GreaterThanOrEqual(0)
@@ -97,7 +95,7 @@ class Timesheet
     /**
      * Get entry id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -119,6 +117,7 @@ class Timesheet
     public function setBegin($begin)
     {
         $this->begin = $begin;
+
         return $this;
     }
 
@@ -137,7 +136,7 @@ class Timesheet
     public function setEnd($end)
     {
         $this->end = $end;
-        if ($end === null) {
+        if (null === $end) {
             $this->duration = 0;
         }
 
@@ -147,12 +146,13 @@ class Timesheet
     /**
      * Set duration
      *
-     * @param integer $duration
+     * @param int $duration
      * @return Timesheet
      */
     public function setDuration($duration)
     {
         $this->duration = $duration;
+
         return $this;
     }
 
@@ -160,7 +160,7 @@ class Timesheet
      * Get duration
      * Do not rely on the results of this method for active records.
      *
-     * @return integer
+     * @return int
      */
     public function getDuration()
     {
@@ -176,6 +176,7 @@ class Timesheet
     public function setUser(User $user)
     {
         $this->user = $user;
+
         return $this;
     }
 
@@ -198,6 +199,7 @@ class Timesheet
     public function setActivity($activity)
     {
         $this->activity = $activity;
+
         return $this;
     }
 
@@ -220,6 +222,7 @@ class Timesheet
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -242,6 +245,7 @@ class Timesheet
     public function setRate($rate)
     {
         $this->rate = $rate;
+
         return $this;
     }
 
@@ -263,7 +267,7 @@ class Timesheet
      */
     public function validate(ExecutionContextInterface $context, $payload)
     {
-        if ($this->getEnd() !== null && $this->getEnd()->getTimestamp() < $this->getBegin()->getTimestamp()) {
+        if (null !== $this->getEnd() && $this->getEnd()->getTimestamp() < $this->getBegin()->getTimestamp()) {
             $context->buildViolation('End date must not be earlier then start date.')
                 ->atPath('end')
                 ->setTranslationDomain('validators')

@@ -18,6 +18,7 @@ use App\Model\InvoiceModel;
 use App\Repository\Query\BaseQuery;
 use App\Repository\Query\InvoiceQuery;
 use App\Repository\Query\TimesheetQuery;
+use App\Repository\TimesheetRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -31,7 +32,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class InvoiceController extends AbstractController
 {
-
     /**
      * @var ServiceInvoice
      */
@@ -97,11 +97,13 @@ class InvoiceController extends AbstractController
             $query = $form->getData();
             $query->setResultType(TimesheetQuery::RESULT_TYPE_QUERYBUILDER);
 
-            if ($query->getCustomer() !== null) {
+            if (null !== $query->getCustomer()) {
                 $query->getBegin()->setTime(0, 0, 0);
                 $query->getEnd()->setTime(23, 59, 59);
 
-                $queryBuilder = $this->getDoctrine()->getRepository(Timesheet::class)->findByQuery($query);
+                /* @var TimesheetRepository $timeRepo */
+                $timeRepo = $this->getDoctrine()->getRepository(Timesheet::class);
+                $queryBuilder = $timeRepo->findByQuery($query);
                 $entries = $queryBuilder->getQuery()->getResult();
             }
         }
@@ -114,12 +116,12 @@ class InvoiceController extends AbstractController
         $action = null;
         if ($query->getTemplate() !== null) {
             $generator = $this->service->getNumberGeneratorByName($query->getTemplate()->getNumberGenerator());
-            if ($generator === null) {
+            if (null === $generator) {
                 throw new \Exception('Unknown number generator: ' . $query->getTemplate()->getNumberGenerator());
             }
 
             $calculator = $this->service->getCalculatorByName($query->getTemplate()->getCalculator());
-            if ($calculator === null) {
+            if (null === $calculator) {
                 throw new \Exception('Unknown invoice calculator: ' . $query->getTemplate()->getCalculator());
             }
 
@@ -144,12 +146,12 @@ class InvoiceController extends AbstractController
      * TODO permission
      *
      * @param $page
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listTemplateAction($page, Request $request)
+    public function listTemplateAction($page)
     {
         $templates = $this->getRepository()->findByQuery(new BaseQuery());
+
         return $this->render('invoice/templates.html.twig', [
             'entries' => $templates,
             'page' => $page,
@@ -186,6 +188,7 @@ class InvoiceController extends AbstractController
         if (!$this->getRepository()->hasTemplate()) {
             $this->flashWarning('invoice.first_template');
         }
+
         return $this->renderTemplateForm(new InvoiceTemplate(), $request);
     }
 

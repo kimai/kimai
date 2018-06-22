@@ -22,9 +22,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class ResetCommand extends Command
 {
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -56,6 +55,7 @@ EOT
                 $command->run(new ArrayInput([]), $output);
             } catch (\Exception $ex) {
                 $io->error('Failed to create database: ' . $ex->getMessage());
+
                 return 1;
             }
         }
@@ -66,6 +66,7 @@ EOT
                 $command->run(new ArrayInput(['--force' => true]), $output);
             } catch (\Exception $ex) {
                 $io->error('Failed to drop database schema: ' . $ex->getMessage());
+
                 return 2;
             }
 
@@ -74,6 +75,7 @@ EOT
                 $command->run(new ArrayInput([]), $output);
             } catch (\Exception $ex) {
                 $io->error('Failed to create database schema: ' . $ex->getMessage());
+
                 return 3;
             }
         }
@@ -85,6 +87,7 @@ EOT
             $command->run($cmdInput, $output);
         } catch (\Exception $ex) {
             $io->error('Failed to import fixtures: ' . $ex->getMessage());
+
             return 4;
         }
 
@@ -94,13 +97,13 @@ EOT
                 $command->run(new ArrayInput([]), $output);
             } catch (\Exception $ex) {
                 $io->error('Failed to clear cache: ' . $ex->getMessage());
+
                 return 5;
             }
         }
 
         return 0;
     }
-
 
     /**
      * @param InputInterface $input

@@ -14,12 +14,12 @@ namespace App\Repository\Query;
  */
 class VisibilityQuery extends BaseQuery
 {
-    const SHOW_VISIBLE = 1;
-    const SHOW_HIDDEN = 2;
-    const SHOW_BOTH = 3;
+    public const SHOW_VISIBLE = 1;
+    public const SHOW_HIDDEN = 2;
+    public const SHOW_BOTH = 3;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $visibility = self::SHOW_VISIBLE;
     /**
@@ -70,6 +70,7 @@ class VisibilityQuery extends BaseQuery
     public function setExclusiveVisibility($exclusiveVisibility)
     {
         $this->exclusiveVisibility = (bool) $exclusiveVisibility;
+
         return $this;
     }
 }

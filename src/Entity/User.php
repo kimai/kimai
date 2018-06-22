@@ -6,7 +6,6 @@ use App\Validator\Constraints as KimaiAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -27,12 +26,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class User implements UserInterface
 {
-    const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
-    const ROLE_USER = 'ROLE_USER';
-    const ROLE_TEAMLEAD = 'ROLE_TEAMLEAD';
-    const ROLE_ADMIN = 'ROLE_ADMIN';
-    const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
-    const DEFAULT_ROLE = self::ROLE_USER;
+    public const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
+    public const ROLE_USER = 'ROLE_USER';
+    public const ROLE_TEAMLEAD = 'ROLE_TEAMLEAD';
+    public const ROLE_ADMIN = 'ROLE_ADMIN';
+    public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+    public const DEFAULT_ROLE = self::ROLE_USER;
 
     /**
      * @var int
@@ -85,7 +84,7 @@ class User implements UserInterface
     private $alias;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="active", type="boolean", nullable=false)
      * @Assert\NotNull()
@@ -184,7 +183,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param boolean $active
+     * @param bool $active
      * @return $this
      */
     public function setActive($active)
@@ -195,7 +194,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isActive()
     {
@@ -242,6 +241,7 @@ class User implements UserInterface
     public function setPlainPassword($password)
     {
         $this->plainPassword = $password;
+
         return $this;
     }
 
@@ -279,6 +279,7 @@ class User implements UserInterface
     public function setEmail($email)
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -297,6 +298,7 @@ class User implements UserInterface
     public function setTitle($title)
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -315,6 +317,7 @@ class User implements UserInterface
     public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
+
         return $this;
     }
 
@@ -342,6 +345,7 @@ class User implements UserInterface
     public function setRoles(array $roles)
     {
         $this->roles = $roles;
+
         return $this;
     }
 
@@ -363,6 +367,7 @@ class User implements UserInterface
             $preferences = new ArrayCollection($preferences);
         }
         $this->preferences = $preferences;
+
         return $this;
     }
 
@@ -382,16 +387,17 @@ class User implements UserInterface
     }
 
     /**
-     * @param $name
-     * @param null $default
+     * @param string $name
+     * @param mixed $default
      * @return bool|int|null|string
      */
     public function getPreferenceValue($name, $default = null)
     {
         $preference = $this->getPreference($name);
-        if ($preference === null) {
+        if (null === $preference) {
             return $default;
         }
+
         return $preference->getValue();
     }
 
@@ -402,6 +408,7 @@ class User implements UserInterface
     public function addPreference(UserPreference $preference)
     {
         $this->preferences->add($preference);
+
         return $this;
     }
 

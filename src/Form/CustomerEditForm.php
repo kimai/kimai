@@ -28,7 +28,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CustomerEditForm extends AbstractType
 {
-
     /**
      * {@inheritdoc}
      */

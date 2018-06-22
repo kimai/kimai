@@ -35,10 +35,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class KimaiImporterCommand extends Command
 {
-
     // minimum required Kimai and database version, lower versions are not supported by this command
-    const MIN_VERSION = '1.0.1';
-    const MIN_REVISION = '1388';
+    public const MIN_VERSION = '1.0.1';
+    public const MIN_REVISION = '1388';
 
     /**
      * Create the user default passwords
@@ -110,7 +109,7 @@ class KimaiImporterCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -130,7 +129,7 @@ class KimaiImporterCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -147,12 +146,14 @@ class KimaiImporterCommand extends Command
         $password = $input->getArgument('password');
         if (trim(strlen($password)) < 6) {
             $io->error('Password length is not sufficient, at least 6 character are required');
+
             return;
         }
 
         $country = $input->getArgument('country');
-        if (trim(strlen($country)) != 2) {
+        if (2 != trim(strlen($country))) {
             $io->error('Country length needs to be exactly 2 character');
+
             return;
         }
 
@@ -174,6 +175,7 @@ class KimaiImporterCommand extends Command
             $users = $this->fetchAllFromImport('users');
         } catch (\Exception $ex) {
             $io->error('Failed to load users: ' . $ex->getMessage());
+
             return;
         }
 
@@ -181,6 +183,7 @@ class KimaiImporterCommand extends Command
             $customer = $this->fetchAllFromImport('customers');
         } catch (\Exception $ex) {
             $io->error('Failed to load customers: ' . $ex->getMessage());
+
             return;
         }
 
@@ -188,6 +191,7 @@ class KimaiImporterCommand extends Command
             $projects = $this->fetchAllFromImport('projects');
         } catch (\Exception $ex) {
             $io->error('Failed to load projects: ' . $ex->getMessage());
+
             return;
         }
 
@@ -195,6 +199,7 @@ class KimaiImporterCommand extends Command
             $activities = $this->fetchAllFromImport('activities');
         } catch (\Exception $ex) {
             $io->error('Failed to load activities: ' . $ex->getMessage());
+
             return;
         }
 
@@ -202,6 +207,7 @@ class KimaiImporterCommand extends Command
             $activityToProject = $this->fetchAllFromImport('projects_activities');
         } catch (\Exception $ex) {
             $io->error('Failed to load activities-project mapping: ' . $ex->getMessage());
+
             return;
         }
 
@@ -209,6 +215,7 @@ class KimaiImporterCommand extends Command
             $records = $this->fetchAllFromImport('timeSheet');
         } catch (\Exception $ex) {
             $io->error('Failed to load timeSheet: ' . $ex->getMessage());
+
             return;
         }
 
@@ -224,6 +231,7 @@ class KimaiImporterCommand extends Command
             $io->success('Imported users: ' . $counter);
         } catch (\Exception $ex) {
             $io->error('Failed to import users: ' . $ex->getMessage());
+
             return;
         }
 
@@ -233,6 +241,7 @@ class KimaiImporterCommand extends Command
             $io->success('Imported customers: ' . $counter);
         } catch (\Exception $ex) {
             $io->error('Failed to import customers: ' . $ex->getMessage());
+
             return;
         }
 
@@ -242,6 +251,7 @@ class KimaiImporterCommand extends Command
             $io->success('Imported projects: ' . $counter);
         } catch (\Exception $ex) {
             $io->error('Failed to import projects: ' . $ex->getMessage());
+
             return;
         }
 
@@ -251,6 +261,7 @@ class KimaiImporterCommand extends Command
             $io->success('Imported activities: ' . $counter);
         } catch (\Exception $ex) {
             $io->error('Failed to import activities: ' . $ex->getMessage());
+
             return;
         }
 
@@ -260,6 +271,7 @@ class KimaiImporterCommand extends Command
             $io->success('Imported timesheet records: ' . $counter);
         } catch (\Exception $ex) {
             $io->error('Failed to import timesheet records: ' . $ex->getMessage());
+
             return;
         }
 
@@ -276,7 +288,7 @@ class KimaiImporterCommand extends Command
             'Start: ' . $this->bytesHumanReadable($bytesStart) . PHP_EOL .
             'After caching: ' . $this->bytesHumanReadable($bytesCached) . PHP_EOL .
             'After import: ' . $this->bytesHumanReadable($bytesImported) . PHP_EOL .
-            'Total consumption for importing '.$allImports.' new database entries: ' .
+            'Total consumption for importing ' . $allImports . ' new database entries: ' .
             $this->bytesHumanReadable($bytesImported - $bytesStart)
         );
     }
@@ -299,19 +311,21 @@ class KimaiImporterCommand extends Command
         $version = $this->getImportConnection()->query($versionQuery)->fetchColumn();
         $revision = $this->getImportConnection()->query($revisionQuery)->fetchColumn();
 
-        if (version_compare($requiredVersion, $version) == 1) {
+        if (1 == version_compare($requiredVersion, $version)) {
             $io->error(
                 'Import can only performed from an up-to-date Kimai version:' . PHP_EOL .
                 'Needs at least ' . $requiredVersion . ' but found ' . $version
             );
+
             return false;
         }
 
-        if (version_compare($requiredRevision, $revision) == 1) {
+        if (1 == version_compare($requiredRevision, $revision)) {
             $io->error(
                 'Import can only performed from an up-to-date Kimai version:' . PHP_EOL .
                 'Database revision needs to be ' . $requiredRevision . ' but found ' . $revision
             );
+
             return false;
         }
 
@@ -329,7 +343,7 @@ class KimaiImporterCommand extends Command
         foreach ($allListener as $name => $listener) {
             if (in_array($name, ['prePersist', 'preUpdate'])) {
                 foreach ($listener as $service => $class) {
-                    if ($class === TimesheetSubscriber::class) {
+                    if (TimesheetSubscriber::class === $class) {
                         $connection->getEventManager()->removeEventListener(['prePersist', 'preUpdate'], $class);
                     }
                 }
@@ -345,6 +359,7 @@ class KimaiImporterCommand extends Command
     protected function bytesHumanReadable($size)
     {
         $unit = ['b', 'kB', 'MB', 'GB'];
+
         return @round($size / pow(1024, ($i = floor(log($size, 1024)))), 2) . ' ' . $unit[$i];
     }
 
@@ -389,11 +404,12 @@ class KimaiImporterCommand extends Command
                 $value = $error->getInvalidValue();
                 $io->error(
                     $error->getPropertyPath()
-                    . " (" . (is_array($value) ? implode(',', $value) : $value) .")"
+                    . ' (' . (is_array($value) ? implode(',', $value) : $value) . ')'
                     . "\n    "
                     . $error->getMessage()
                 );
             }
+
             return false;
         }
 
@@ -435,8 +451,8 @@ class KimaiImporterCommand extends Command
         $entityManager = $this->getDoctrine()->getManager();
 
         foreach ($users as $oldUser) {
-            $isActive = (bool)$oldUser['active'] && !(bool)$oldUser['trash'] && !(bool)$oldUser['ban'];
-            $role = ($oldUser['globalRoleID'] == 1) ? User::ROLE_SUPER_ADMIN : User::DEFAULT_ROLE;
+            $isActive = (bool) $oldUser['active'] && !(bool) $oldUser['trash'] && !(bool) $oldUser['ban'];
+            $role = (1 == $oldUser['globalRoleID']) ? User::ROLE_SUPER_ADMIN : User::DEFAULT_ROLE;
 
             $user = new User();
             $user->setUsername($oldUser['name'])
@@ -460,7 +476,7 @@ class KimaiImporterCommand extends Command
                 if ($this->debug) {
                     $io->success('Created user: ' . $user->getUsername());
                 }
-                $counter++;
+                ++$counter;
             } catch (\Exception $ex) {
                 $io->error('Failed to create user: ' . $user->getUsername());
                 $io->error('Reason: ' . $ex->getMessage());
@@ -468,6 +484,7 @@ class KimaiImporterCommand extends Command
 
             $this->users[$oldUser['userID']] = $user;
         }
+
         return $counter;
     }
 
@@ -508,7 +525,7 @@ class KimaiImporterCommand extends Command
         $entityManager = $this->getDoctrine()->getManager();
 
         foreach ($customers as $oldCustomer) {
-            $isActive = (bool)$oldCustomer['visible'] && !(bool)$oldCustomer['trash'];
+            $isActive = (bool) $oldCustomer['visible'] && !(bool) $oldCustomer['trash'];
             $name = $oldCustomer['name'];
             if (empty($name)) {
                 $name = uniqid();
@@ -540,7 +557,7 @@ class KimaiImporterCommand extends Command
                 if ($this->debug) {
                     $io->success('Created customer: ' . $customer->getName());
                 }
-                $counter++;
+                ++$counter;
             } catch (\Exception $ex) {
                 $io->error('Reason: ' . $ex->getMessage());
                 $io->error('Failed to create customer: ' . $customer->getName());
@@ -548,6 +565,7 @@ class KimaiImporterCommand extends Command
 
             $this->customers[$oldCustomer['customerID']] = $customer;
         }
+
         return $counter;
     }
 
@@ -577,7 +595,7 @@ class KimaiImporterCommand extends Command
         $entityManager = $this->getDoctrine()->getManager();
 
         foreach ($projects as $oldProject) {
-            $isActive = (bool)$oldProject['visible'] && !(bool)$oldProject['trash'];
+            $isActive = (bool) $oldProject['visible'] && !(bool) $oldProject['trash'];
             $customer = $this->customers[$oldProject['customerID']];
             $name = $oldProject['name'];
             if (empty($name)) {
@@ -603,7 +621,7 @@ class KimaiImporterCommand extends Command
                 if ($this->debug) {
                     $io->success('Created project: ' . $project->getName() . ' for customer: ' . $customer->getName());
                 }
-                $counter++;
+                ++$counter;
             } catch (\Exception $ex) {
                 $io->error('Failed to create project: ' . $project->getName());
                 $io->error('Reason: ' . $ex->getMessage());
@@ -611,6 +629,7 @@ class KimaiImporterCommand extends Command
 
             $this->projects[$oldProject['projectID']] = $project;
         }
+
         return $counter;
     }
 
@@ -662,11 +681,12 @@ class KimaiImporterCommand extends Command
 
                 $this->unassignedActivities[$oldActivity['activityID']] = $oldActivity;
                 $this->createActivity($io, $entityManager, $project, $oldActivity);
-                $counter++;
+                ++$counter;
             } else {
                 $this->unassignedActivities[$oldActivity['activityID']] = $oldActivity;
             }
         }
+
         return $counter;
     }
 
@@ -689,7 +709,7 @@ class KimaiImporterCommand extends Command
             return $this->activities[$activityId][$project->getId()];
         }
 
-        $isActive = (bool)$oldActivity['visible'] && !(bool)$oldActivity['trash'];
+        $isActive = (bool) $oldActivity['visible'] && !(bool) $oldActivity['trash'];
         $name = $oldActivity['name'];
         if (empty($name)) {
             $name = uniqid();
@@ -778,13 +798,13 @@ class KimaiImporterCommand extends Command
                 $activity = $this->activities[$activityId][$projectId];
             }
 
-            if ($activity === null && isset($this->unassignedActivities[$activityId])) {
+            if (null === $activity && isset($this->unassignedActivities[$activityId])) {
                 $oldActivity = $this->unassignedActivities[$activityId];
                 $activity = $this->createActivity($io, $entityManager, $project, $oldActivity);
-                $activityCounter++;
+                ++$activityCounter;
             }
 
-            if ($activity === null) {
+            if (null === $activity) {
                 $io->error('Could not create timesheet record, missing activity with ID: ' . $activityId);
                 continue;
             }
@@ -792,7 +812,7 @@ class KimaiImporterCommand extends Command
             $duration = $oldRecord['end'] - $oldRecord['start'];
 
             $rate = $oldRecord['fixedRate'];
-            if ((empty($rate) || $rate == 0.00) && !empty($oldRecord['rate'])) {
+            if ((empty($rate) || 0.00 == $rate) && !empty($oldRecord['rate'])) {
                 $hourlyRate = (float) $oldRecord['rate'];
                 $rate = (float) $hourlyRate * ($duration / 3600);
                 $rate = round($rate, 2);
@@ -802,8 +822,8 @@ class KimaiImporterCommand extends Command
             $timesheet
                 ->setDescription($oldRecord['description'] ?: ($oldRecord['comment'] ?: null))
                 ->setUser($this->users[$oldRecord['userID']])
-                ->setBegin(new \DateTime("@".$oldRecord['start']))
-                ->setEnd(new \DateTime("@".$oldRecord['end']))
+                ->setBegin(new \DateTime('@' . $oldRecord['start']))
+                ->setEnd(new \DateTime('@' . $oldRecord['end']))
                 ->setDuration($duration)
                 ->setActivity($activity)
                 ->setRate($rate)
@@ -819,13 +839,13 @@ class KimaiImporterCommand extends Command
                 if ($this->debug) {
                     $io->success('Created timesheet record: ' . $timesheet->getId());
                 }
-                $counter++;
+                ++$counter;
             } catch (\Exception $ex) {
                 $io->error('Failed to create timesheet record: ' . $timesheet->getId());
                 $io->error('Reason: ' . $ex->getMessage());
             }
 
-            if ($counter % 500 == 0) {
+            if (0 == $counter % 500) {
                 $io->writeln('Imported ' . $counter . ' timesheet records, import ongoing ...');
             }
         }
@@ -833,6 +853,7 @@ class KimaiImporterCommand extends Command
         if ($activityCounter > 0) {
             $io->success('Created new (previously unattached) activities during timesheet import: ' . $activityCounter);
         }
+
         return $counter;
     }
 }

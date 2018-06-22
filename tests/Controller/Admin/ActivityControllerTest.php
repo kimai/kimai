@@ -18,7 +18,6 @@ use App\Tests\Controller\ControllerBaseTest;
  */
 class ActivityControllerTest extends ControllerBaseTest
 {
-
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/admin/activity/');

@@ -19,9 +19,8 @@ use App\Repository\Query\TimesheetQuery;
  */
 class TimesheetToolbarForm extends AbstractToolbarForm
 {
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

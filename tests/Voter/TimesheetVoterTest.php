@@ -10,7 +10,7 @@
 namespace App\Tests\Voter;
 
 use App\Entity\User;
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
@@ -23,7 +23,6 @@ use App\Voter\TimesheetVoter;
  */
 class TimesheetVoterTest extends TestCase
 {
-
     /**
      * @dataProvider getTestData
      */
@@ -42,8 +41,8 @@ class TimesheetVoterTest extends TestCase
     public function getTestData()
     {
         $user0 = $this->getUser(0, 'ROLE_CUSTOMER');
-        $user1 =  $this->getUser(1, 'ROLE_USER');
-        $user2 =  $this->getUser(1, 'ROLE_TEAMLEAD');
+        $user1 = $this->getUser(1, 'ROLE_USER');
+        $user2 = $this->getUser(1, 'ROLE_TEAMLEAD');
 
         return [
             [$user0, false, new Customer(), ['edit'], VoterInterface::ACCESS_ABSTAIN],
@@ -57,6 +56,7 @@ class TimesheetVoterTest extends TestCase
     {
         $timesheet = new Timesheet();
         $timesheet->setUser($user);
+
         return $timesheet;
     }
 
@@ -65,6 +65,7 @@ class TimesheetVoterTest extends TestCase
         $user = $this->getMockBuilder(User::class)->getMock();
         $user->method('getId')->willReturn($id);
         $user->method('getRoles')->willReturn([$role]);
+
         return $user;
     }
 }

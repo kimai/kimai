@@ -95,10 +95,9 @@ class TimesheetController extends AbstractController
      * @Security("is_granted('stop', entry)")
      *
      * @param Timesheet $entry
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function stopAction(Timesheet $entry, Request $request)
+    public function stopAction(Timesheet $entry)
     {
         return $this->stop($entry, 'timesheet');
     }
@@ -110,10 +109,9 @@ class TimesheetController extends AbstractController
      * @Method({"GET", "POST"})
      * @Security("is_granted('start', activity)")
      *
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function startAction(Activity $activity, Request $request)
+    public function startAction(Activity $activity)
     {
         $user = $this->getUser();
 
@@ -170,9 +168,15 @@ class TimesheetController extends AbstractController
      */
     public function deleteAction(Timesheet $entry, Request $request)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($entry);
-        $entityManager->flush();
+        try {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($entry);
+            $entityManager->flush();
+
+            $this->flashSuccess('action.deleted_successfully');
+        } catch (\Exception $ex) {
+            $this->flashError('action.deleted.error', ['%reason%' => $ex->getMessage()]);
+        }
 
         return $this->redirectToRoute('timesheet_paginated', ['page' => $request->get('page')]);
     }

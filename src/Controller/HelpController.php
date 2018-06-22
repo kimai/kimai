@@ -23,9 +23,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
  */
 class HelpController extends Controller
 {
-
-    const README = 'README';
-    const DOCS_DIR = 'var/docs/';
+    public const README = 'README';
+    public const DOCS_DIR = 'var/docs/';
 
     /**
      * @var string
@@ -49,10 +48,10 @@ class HelpController extends Controller
      * @param string $chapter
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(?string $chapter)
+    public function indexAction(string $chapter)
     {
         $breadcrumb = [self::README];
-        if ($chapter !== self::README) {
+        if (self::README !== $chapter) {
             $breadcrumb[] = $chapter;
         }
 

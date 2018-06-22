@@ -10,9 +10,6 @@
 namespace App\Command;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Command used to run all integration tests.
@@ -20,7 +17,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class RunIntegrationTestsCommand extends RunUnitTestsCommand
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {

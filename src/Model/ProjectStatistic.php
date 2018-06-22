@@ -48,6 +48,7 @@ class ProjectStatistic
     public function setRecordAmount($recordAmount)
     {
         $this->recordAmount = (int) $recordAmount;
+
         return $this;
     }
 
@@ -68,6 +69,7 @@ class ProjectStatistic
     public function setRecordDuration($recordDuration)
     {
         $this->recordDuration = (int) $recordDuration;
+
         return $this;
     }
 
@@ -88,6 +90,7 @@ class ProjectStatistic
     public function setCount($count)
     {
         $this->count = (int) $count;
+
         return $this;
     }
 
@@ -106,6 +109,7 @@ class ProjectStatistic
     public function setActivityAmount($activityAmount)
     {
         $this->activityAmount = (int) $activityAmount;
+
         return $this;
     }
 }

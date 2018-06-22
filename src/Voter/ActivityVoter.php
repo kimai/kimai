@@ -10,7 +10,6 @@
 namespace App\Voter;
 
 use App\Entity\User;
-use App\Voter\AbstractVoter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use App\Entity\Activity;
 
@@ -19,11 +18,11 @@ use App\Entity\Activity;
  */
 class ActivityVoter extends AbstractVoter
 {
-    const VIEW = 'view';
-    const EDIT = 'edit';
-    const DELETE = 'delete';
+    public const VIEW = 'view';
+    public const EDIT = 'edit';
+    public const DELETE = 'delete';
 
-    const ALLOWED_ATTRIBUTES = [
+    public const ALLOWED_ATTRIBUTES = [
         self::VIEW,
         self::EDIT,
         self::DELETE

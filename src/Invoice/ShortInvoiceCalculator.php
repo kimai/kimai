@@ -17,7 +17,6 @@ use App\Entity\Timesheet;
  */
 class ShortInvoiceCalculator extends DefaultCalculator
 {
-
     /**
      * @return Timesheet[]
      */
@@ -28,7 +27,7 @@ class ShortInvoiceCalculator extends DefaultCalculator
         foreach ($this->model->getEntries() as $entry) {
             $timesheet->setRate($timesheet->getRate() + $entry->getRate());
             $timesheet->setDuration($timesheet->getDuration() + $entry->getDuration());
-            if ($timesheet->getActivity() === null) {
+            if (null === $timesheet->getActivity()) {
                 $timesheet->setActivity($entry->getActivity());
                 $timesheet->setEnd($entry->getEnd());
             }

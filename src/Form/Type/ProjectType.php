@@ -20,7 +20,6 @@ use App\Repository\ProjectRepository;
  */
 class ProjectType extends AbstractType
 {
-
     /**
      * {@inheritdoc}
      */

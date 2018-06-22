@@ -19,7 +19,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UserType extends AbstractType
 {
-
     /**
      * {@inheritdoc}
      */
@@ -32,6 +31,7 @@ class UserType extends AbstractType
                 if (!empty($user->getAlias())) {
                     return $user->getAlias() . ' (' . $user->getUsername() . ')';
                 }
+
                 return $user->getUsername();
             },
         ]);

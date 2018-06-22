@@ -29,7 +29,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UserController extends AbstractController
 {
-
     /**
      * @Route("/", defaults={"page": 1}, name="admin_user")
      * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_user_paginated")

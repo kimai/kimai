@@ -27,7 +27,6 @@ use Symfony\Component\Validator\Constraints\Range;
  */
 class UserPreferenceSubscriber implements EventSubscriberInterface
 {
-
     /**
      * @var EventDispatcherInterface
      */
@@ -127,7 +126,7 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
 
         foreach ($event->getPreferences() as $preference) {
             if (isset($prefs[$preference->getName()])) {
-                /** @var UserPreference $pref */
+                /* @var UserPreference $pref */
                 $prefs[$preference->getName()]
                     ->setType($preference->getType())
                     ->setConstraints($preference->getConstraints())
@@ -152,7 +151,7 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
         }
 
         // ignore events like the toolbar where we do not have a token
-        if ($this->storage->getToken() === null) {
+        if (null === $this->storage->getToken()) {
             return false;
         }
 

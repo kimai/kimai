@@ -26,7 +26,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ProjectEditForm extends AbstractType
 {
-
     /**
      * {@inheritdoc}
      */

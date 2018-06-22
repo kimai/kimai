@@ -20,11 +20,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Customer
 {
-
-    const DEFAULT_CURRENCY = 'EUR';
+    public const DEFAULT_CURRENCY = 'EUR';
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -63,7 +62,7 @@ class Customer
     private $projects;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="visible", type="boolean", nullable=false)
      * @Assert\NotNull()
@@ -167,6 +166,7 @@ class Customer
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -187,6 +187,7 @@ class Customer
     public function setNumber(string $number)
     {
         $this->number = $number;
+
         return $this;
     }
 
@@ -207,6 +208,7 @@ class Customer
     public function setComment($comment)
     {
         $this->comment = $comment;
+
         return $this;
     }
 
@@ -223,19 +225,20 @@ class Customer
     /**
      * Set visible
      *
-     * @param boolean $visible
+     * @param bool $visible
      * @return Customer
      */
     public function setVisible($visible)
     {
         $this->visible = $visible;
+
         return $this;
     }
 
     /**
      * Get visible
      *
-     * @return boolean
+     * @return bool
      */
     public function getVisible()
     {
@@ -251,6 +254,7 @@ class Customer
     public function setCompany($company)
     {
         $this->company = $company;
+
         return $this;
     }
 
@@ -273,6 +277,7 @@ class Customer
     public function setContact($contact)
     {
         $this->contact = $contact;
+
         return $this;
     }
 
@@ -293,6 +298,7 @@ class Customer
     public function setAddress($address)
     {
         $this->address = $address;
+
         return $this;
     }
 
@@ -313,6 +319,7 @@ class Customer
     public function setCountry($country)
     {
         $this->country = $country;
+
         return $this;
     }
 
@@ -333,6 +340,7 @@ class Customer
     public function setCurrency($currency)
     {
         $this->currency = $currency;
+
         return $this;
     }
 
@@ -353,6 +361,7 @@ class Customer
     public function setPhone($phone)
     {
         $this->phone = $phone;
+
         return $this;
     }
 
@@ -375,6 +384,7 @@ class Customer
     public function setFax($fax)
     {
         $this->fax = $fax;
+
         return $this;
     }
 
@@ -397,6 +407,7 @@ class Customer
     public function setMobile($mobile)
     {
         $this->mobile = $mobile;
+
         return $this;
     }
 
@@ -419,6 +430,7 @@ class Customer
     public function setMail($mail)
     {
         $this->mail = $mail;
+
         return $this;
     }
 
@@ -441,6 +453,7 @@ class Customer
     public function setHomepage($homepage)
     {
         $this->homepage = $homepage;
+
         return $this;
     }
 
@@ -463,6 +476,7 @@ class Customer
     public function setTimezone($timezone)
     {
         $this->timezone = $timezone;
+
         return $this;
     }
 
@@ -483,6 +497,7 @@ class Customer
     public function setProjects($projects)
     {
         $this->projects = $projects;
+
         return $this;
     }
 

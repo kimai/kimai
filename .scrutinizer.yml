@@ -3,44 +3,38 @@ build:
         node: v8.11.2
     nodes:
         analysis:
-            project_setup:
-                override:
-                    - 'true'
             tests:
                 override:
-                    - php-scrutinizer-run
-                    -
-                        command: phpcs-run
-                        use_website_config: true
                     - js-scrutinizer-run
-        tests: true
-    tests:
-        override:
-            -
-                command: 'vendor/bin/phpunit --exclude-group integration --coverage-clover=unit tests/'
-                coverage:
-                    file: 'unit'
-                    format: 'clover'
-            -
-                command: 'vendor/bin/phpunit --group integration --coverage-clover=integration tests/'
-                coverage:
-                    file: 'integration'
-                    format: 'clover'
+                    - php-scrutinizer-run
+        tests:
+            tests:
+                override:
+                    -
+                        command: 'vendor/bin/phpunit --exclude-group integration --coverage-clover=unit tests/'
+                        coverage:
+                            file: 'unit'
+                            format: 'clover'
+                    -
+                        command: 'vendor/bin/phpunit --group integration --coverage-clover=integration tests/'
+                        coverage:
+                            file: 'integration'
+                            format: 'clover'
+                    -
+                        command: 'bin/console kimai:phpcs --checkstyle=checkstyle'
+                        analysis:
+                            file: 'checkstyle'
+                            format: 'php-cs-checkstyle'
 
 filter:
     excluded_paths:
-        - 'tests/*'
-        - 'bin/*'
-        - '*/build/*'
-        - 'node_modules/*'
-        - 'public/*'
-        - 'var/*'
-        - 'vendor/*'
-checks:
-    php: true
-    javascript: true
-coding_style:
-    php:
-        spaces:
-            around_operators:
-                concatenation: true
+        - '.github/'
+        - 'bin/'
+        - 'config/'
+        - 'public/'
+        - 'templates/'
+        - 'translations/'
+        - 'var/'
+    dependency_paths:
+        - 'node_modules/'
+        - 'vendor/'

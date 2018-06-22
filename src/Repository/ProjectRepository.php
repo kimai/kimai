@@ -21,7 +21,6 @@ use App\Repository\Query\ProjectQuery;
  */
 class ProjectRepository extends AbstractRepository
 {
-
     /**
      * @param $id
      * @return null|Project
@@ -40,11 +39,12 @@ class ProjectRepository extends AbstractRepository
     public function getGlobalStatistics()
     {
         $countAll = $this->getEntityManager()
-            ->createQuery('SELECT COUNT(p.id) FROM '.Project::class.' p')
+            ->createQuery('SELECT COUNT(p.id) FROM ' . Project::class . ' p')
             ->getSingleScalarResult();
 
         $stats = new ProjectStatistic();
         $stats->setCount($countAll);
+
         return $stats;
     }
 
@@ -94,6 +94,7 @@ class ProjectRepository extends AbstractRepository
         $query = new ProjectQuery();
         $query->setHiddenEntity($entity);
         $query->setResultType(ProjectQuery::RESULT_TYPE_QUERYBUILDER);
+
         return $this->findByQuery($query);
     }
 
@@ -112,7 +113,7 @@ class ProjectRepository extends AbstractRepository
             ->join('p.customer', 'c')
             ->orderBy('p.' . $query->getOrderBy(), $query->getOrder());
 
-        if ($query->getVisibility() == ProjectQuery::SHOW_VISIBLE) {
+        if (ProjectQuery::SHOW_VISIBLE == $query->getVisibility()) {
             if (!$query->isExclusiveVisibility()) {
                 $qb->andWhere('c.visible = 1');
             }
@@ -120,17 +121,17 @@ class ProjectRepository extends AbstractRepository
 
             /** @var Project $entity */
             $entity = $query->getHiddenEntity();
-            if ($entity !== null) {
+            if (null !== $entity) {
                 $qb->orWhere('p.id = :project')->setParameter('project', $entity);
             }
 
             // TODO check for visibility of customer
-        } elseif ($query->getVisibility() == ProjectQuery::SHOW_HIDDEN) {
+        } elseif (ProjectQuery::SHOW_HIDDEN == $query->getVisibility()) {
             $qb->andWhere('p.visible = 0');
             // TODO check for visibility of customer
         }
 
-        if ($query->getCustomer() !== null) {
+        if (null !== $query->getCustomer()) {
             $qb->andWhere('p.customer = :customer')
                 ->setParameter('customer', $query->getCustomer());
         }

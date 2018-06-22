@@ -17,7 +17,6 @@ use PHPUnit\Framework\TestCase;
  */
 class MarkdownTest extends TestCase
 {
-
     public function testMarkdownToHtml()
     {
         $sut = new Markdown();

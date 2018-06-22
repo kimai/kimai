@@ -11,14 +11,13 @@ namespace App\Tests\Repository\Query;
 
 use App\Entity\User;
 use App\Repository\Query\BaseQuery;
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Repository\Query\BaseQuery
  */
 class BaseQueryTest extends TestCase
 {
-
     public function testQuery()
     {
         $this->assertBaseQuery(new BaseQuery());

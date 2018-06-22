@@ -39,7 +39,7 @@ class DurationCalculator implements CalculatorInterface
      */
     public function calculate(Timesheet $record)
     {
-        if ($record->getEnd() === null) {
+        if (null === $record->getEnd()) {
             return;
         }
 
@@ -88,7 +88,7 @@ class DurationCalculator implements CalculatorInterface
         $seconds = $minutes * 60;
         $diff = $timestamp % $seconds;
 
-        if ($diff === 0) {
+        if (0 === $diff) {
             return;
         }
 
@@ -109,7 +109,7 @@ class DurationCalculator implements CalculatorInterface
         $seconds = $minutes * 60;
         $diff = $timestamp % $seconds;
 
-        if ($diff === 0) {
+        if (0 === $diff) {
             return;
         }
 
@@ -130,7 +130,7 @@ class DurationCalculator implements CalculatorInterface
         $seconds = $minutes * 60;
         $diff = $timestamp % $seconds;
 
-        if ($diff === 0) {
+        if (0 === $diff) {
             return;
         }
 

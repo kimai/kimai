@@ -50,6 +50,7 @@ class ServiceInvoice
                 return new $class();
             }
         }
+
         return null;
     }
 
@@ -72,6 +73,7 @@ class ServiceInvoice
                 return new $class();
             }
         }
+
         return null;
     }
 
@@ -97,6 +99,7 @@ class ServiceInvoice
                 return $action;
             }
         }
+
         return null;
     }
 }

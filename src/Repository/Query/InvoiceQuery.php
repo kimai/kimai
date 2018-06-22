@@ -16,7 +16,6 @@ use App\Entity\InvoiceTemplate;
  */
 class InvoiceQuery extends TimesheetQuery
 {
-
     /**
      * @var InvoiceTemplate
      */
@@ -42,6 +41,7 @@ class InvoiceQuery extends TimesheetQuery
     public function setTemplate($template)
     {
         $this->template = $template;
+
         return $this;
     }
 
@@ -60,6 +60,7 @@ class InvoiceQuery extends TimesheetQuery
     public function setTemplates(array $templates)
     {
         $this->templates = $templates;
+
         return $this;
     }
 }

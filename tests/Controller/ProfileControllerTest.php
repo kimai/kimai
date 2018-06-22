@@ -10,7 +10,6 @@
 namespace App\Tests\Controller;
 
 use App\DataFixtures\AppFixtures;
-use App\Entity\User;
 
 /**
  * @coversDefaultClass \App\Controller\InvoiceController
@@ -18,7 +17,6 @@ use App\Entity\User;
  */
 class ProfileControllerTest extends ControllerBaseTest
 {
-
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/profile/' . AppFixtures::USERNAME_USER);

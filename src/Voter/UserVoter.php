@@ -17,15 +17,15 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
  */
 class UserVoter extends AbstractVoter
 {
-    const VIEW = 'view';
-    const EDIT = 'edit';
-    const CREATE = 'create';
-    const DELETE = 'delete';
-    const PASSWORD = 'password';
-    const ROLES = 'roles';
-    const PREFERENCES = 'preferences';
+    public const VIEW = 'view';
+    public const EDIT = 'edit';
+    public const CREATE = 'create';
+    public const DELETE = 'delete';
+    public const PASSWORD = 'password';
+    public const ROLES = 'roles';
+    public const PREFERENCES = 'preferences';
 
-    const ALLOWED_ATTRIBUTES = [
+    public const ALLOWED_ATTRIBUTES = [
         self::VIEW,
         self::EDIT,
         self::CREATE,

@@ -74,10 +74,11 @@ class Extensions extends \Twig_Extension
         $seconds = $duration;
         if ($duration instanceof Timesheet) {
             $seconds = $duration->getDuration();
-            if ($duration->getEnd() === null) {
+            if (null === $duration->getEnd()) {
                 $seconds = time() - $duration->getBegin()->getTimestamp();
             }
         }
+
         return $this->durationFormatter->format($seconds, $includeSeconds) . ' h';
     }
 
@@ -107,9 +108,10 @@ class Extensions extends \Twig_Extension
     public function money($amount, $currency = null)
     {
         $result = number_format(round($amount, 2), 2);
-        if ($currency !== null) {
+        if (null !== $currency) {
             $result .= ' ' . Intl::getCurrencyBundle()->getCurrencySymbol($currency);
         }
+
         return $result;
     }
 

@@ -19,7 +19,6 @@ use App\Repository\CustomerRepository;
  */
 class CustomerType extends AbstractType
 {
-
     /**
      * {@inheritdoc}
      */

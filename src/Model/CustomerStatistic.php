@@ -52,6 +52,7 @@ class CustomerStatistic
     public function setRecordAmount($recordAmount)
     {
         $this->recordAmount = (int) $recordAmount;
+
         return $this;
     }
 
@@ -72,6 +73,7 @@ class CustomerStatistic
     public function setRecordDuration($recordDuration)
     {
         $this->recordDuration = (int) $recordDuration;
+
         return $this;
     }
 
@@ -92,6 +94,7 @@ class CustomerStatistic
     public function setCount($count)
     {
         $this->count = (int) $count;
+
         return $this;
     }
 
@@ -110,6 +113,7 @@ class CustomerStatistic
     public function setActivityAmount($activityAmount)
     {
         $this->activityAmount = (int) $activityAmount;
+
         return $this;
     }
 
@@ -128,6 +132,7 @@ class CustomerStatistic
     public function setProjectAmount($projectAmount)
     {
         $this->projectAmount = (int) $projectAmount;
+
         return $this;
     }
 }

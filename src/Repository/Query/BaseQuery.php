@@ -14,17 +14,17 @@ namespace App\Repository\Query;
  */
 class BaseQuery
 {
-    const ORDER_ASC = 'ASC';
-    const ORDER_DESC = 'DESC';
+    public const ORDER_ASC = 'ASC';
+    public const ORDER_DESC = 'DESC';
 
-    const DEFAULT_PAGESIZE = 25;
-    const DEFAULT_PAGE = 1;
+    public const DEFAULT_PAGESIZE = 25;
+    public const DEFAULT_PAGE = 1;
 
-    const RESULT_TYPE_PAGER = 'PagerFanta';
-    const RESULT_TYPE_QUERYBUILDER = 'QueryBuilder';
+    public const RESULT_TYPE_PAGER = 'PagerFanta';
+    public const RESULT_TYPE_QUERYBUILDER = 'QueryBuilder';
 
     /**
-     * @var \stdClass
+     * @var object
      */
     protected $hiddenEntity;
     /**
@@ -62,7 +62,8 @@ class BaseQuery
      */
     public function setPage($page)
     {
-        $this->page = (int)$page;
+        $this->page = (int) $page;
+
         return $this;
     }
 
@@ -80,9 +81,10 @@ class BaseQuery
      */
     public function setPageSize($pageSize)
     {
-        if (!empty($pageSize) && (int)$pageSize > 0) {
-            $this->pageSize = (int)$pageSize;
+        if (!empty($pageSize) && (int) $pageSize > 0) {
+            $this->pageSize = (int) $pageSize;
         }
+
         return $this;
     }
 
@@ -103,6 +105,7 @@ class BaseQuery
     public function setOrderBy($orderBy)
     {
         $this->orderBy = $orderBy;
+
         return $this;
     }
 
@@ -123,6 +126,7 @@ class BaseQuery
         if (in_array($order, [self::ORDER_ASC, self::ORDER_DESC])) {
             $this->order = $order;
         }
+
         return $this;
     }
 
@@ -143,11 +147,12 @@ class BaseQuery
         if (in_array($resultType, [self::RESULT_TYPE_PAGER, self::RESULT_TYPE_QUERYBUILDER])) {
             $this->resultType = $resultType;
         }
+
         return $this;
     }
 
     /**
-     * @return \stdClass
+     * @return object
      */
     public function getHiddenEntity()
     {
@@ -155,12 +160,13 @@ class BaseQuery
     }
 
     /**
-     * @param \stdClass $hiddenEntity
+     * @param object $hiddenEntity
      * @return BaseQuery
      */
     public function setHiddenEntity($hiddenEntity)
     {
         $this->hiddenEntity = $hiddenEntity;
+
         return $this;
     }
 }

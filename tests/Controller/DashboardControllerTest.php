@@ -15,7 +15,6 @@ namespace App\Tests\Controller;
  */
 class DashboardControllerTest extends ControllerBaseTest
 {
-
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/dashboard/');

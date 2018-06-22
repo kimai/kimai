@@ -30,7 +30,6 @@ use App\Repository\Query\ActivityQuery;
  */
 class ActivityController extends AbstractController
 {
-
     /**
      * @return \App\Repository\ActivityRepository
      */
@@ -116,7 +115,7 @@ class ActivityController extends AbstractController
 
         $deleteForm->handleRequest($request);
 
-        if ($stats->getRecordAmount() == 0 || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
+        if (0 == $stats->getRecordAmount() || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($activity);
             $entityManager->flush();

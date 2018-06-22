@@ -22,7 +22,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
  */
 class ThemeOptionsSubscriber implements EventSubscriberInterface
 {
-
     /**
      * @var TokenStorageInterface
      */
@@ -69,11 +68,11 @@ class ThemeOptionsSubscriber implements EventSubscriberInterface
         $skin = '';
         foreach ($user->getPreferences() as $ref) {
             $name = $ref->getName();
-            if ($name === UserPreference::SKIN) {
+            if (UserPreference::SKIN === $name) {
                 $skin = 'skin-' . $ref->getValue();
             }
 
-            if (strpos($name, 'theme.') !== false) {
+            if (false !== strpos($name, 'theme.')) {
                 $this->helper->setOption(str_replace('theme.', '', $name), $ref->getValue());
             }
         }
@@ -97,7 +96,7 @@ class ThemeOptionsSubscriber implements EventSubscriberInterface
         }
 
         // ignore events like the toolbar where we do not have a token
-        if ($this->storage->getToken() === null) {
+        if (null === $this->storage->getToken()) {
             return false;
         }
 

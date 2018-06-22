@@ -18,7 +18,6 @@ use App\Repository\Query\CustomerQuery;
  */
 class CustomerToolbarForm extends AbstractToolbarForm
 {
-
     /**
      * {@inheritdoc}
      */

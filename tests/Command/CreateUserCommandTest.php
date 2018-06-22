@@ -65,7 +65,7 @@ class CreateUserCommandTest extends KernelTestCase
         $command = $this->application->find('kimai:create-user');
         $commandTester = new CommandTester($command);
         $commandTester->execute([
-            'command'  => $command->getName(),
+            'command' => $command->getName(),
             'username' => $username,
             'email' => $email,
             'role' => $role,
@@ -77,7 +77,7 @@ class CreateUserCommandTest extends KernelTestCase
 
     public function testUserAlreadyExisting()
     {
-        $commandTester = $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar');
+        $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar');
         $commandTester = $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar');
 
         $output = $commandTester->getDisplay();

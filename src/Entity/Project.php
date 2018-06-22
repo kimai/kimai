@@ -20,9 +20,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Project
 {
-
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -64,7 +63,7 @@ class Project
     private $comment;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="visible", type="boolean", nullable=false)
      * @Assert\NotNull()
@@ -89,7 +88,7 @@ class Project
     /**
      * Get projectid
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -111,6 +110,7 @@ class Project
     public function setCustomer($customer)
     {
         $this->customer = $customer;
+
         return $this;
     }
 
@@ -123,6 +123,7 @@ class Project
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -145,6 +146,7 @@ class Project
     public function setComment($comment)
     {
         $this->comment = $comment;
+
         return $this;
     }
 
@@ -161,19 +163,20 @@ class Project
     /**
      * Set visible
      *
-     * @param boolean $visible
+     * @param bool $visible
      * @return Project
      */
     public function setVisible($visible)
     {
         $this->visible = $visible;
+
         return $this;
     }
 
     /**
      * Get visible
      *
-     * @return boolean
+     * @return bool
      */
     public function getVisible()
     {
@@ -189,6 +192,7 @@ class Project
     public function setBudget($budget)
     {
         $this->budget = $budget;
+
         return $this;
     }
 
@@ -209,6 +213,7 @@ class Project
     public function setActivities($activities)
     {
         $this->activities = $activities;
+
         return $this;
     }
 
@@ -235,6 +240,7 @@ class Project
     public function setOrderNumber($orderNumber)
     {
         $this->orderNumber = $orderNumber;
+
         return $this;
     }
 

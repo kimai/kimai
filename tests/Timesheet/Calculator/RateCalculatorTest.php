@@ -13,14 +13,14 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Timesheet\Calculator\RateCalculator;
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Timesheet\Calculator\RateCalculator
  */
 class RateCalculatorTest extends TestCase
 {
-    const HOURLY_RATE = 75;
+    public const HOURLY_RATE = 75;
 
     protected function getTestUser()
     {
@@ -144,7 +144,7 @@ class RateCalculatorTest extends TestCase
                         'factor' => 2.0
                     ],
                     'weekdays' => [
-                        'days' => ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'],
+                        'days' => ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
                         'factor' => 1.5
                     ],
                 ],

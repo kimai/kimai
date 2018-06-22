@@ -10,7 +10,6 @@
 namespace App\Voter;
 
 use App\Entity\User;
-use App\Voter\AbstractVoter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use App\Entity\Activity;
 use App\Entity\Timesheet;
@@ -20,13 +19,13 @@ use App\Entity\Timesheet;
  */
 class TimesheetVoter extends AbstractVoter
 {
-    const START = 'start';
-    const STOP = 'stop';
-    const VIEW = 'view';
-    const EDIT = 'edit';
-    const DELETE = 'delete';
+    public const START = 'start';
+    public const STOP = 'stop';
+    public const VIEW = 'view';
+    public const EDIT = 'edit';
+    public const DELETE = 'delete';
 
-    const ALLOWED_ATTRIBUTES = [
+    public const ALLOWED_ATTRIBUTES = [
         self::START,
         self::STOP,
         self::VIEW,
@@ -45,7 +44,7 @@ class TimesheetVoter extends AbstractVoter
             return false;
         }
 
-        if ($subject instanceof Activity && $attribute == self::START) {
+        if ($subject instanceof Activity && self::START == $attribute) {
             return true;
         }
 
@@ -58,7 +57,7 @@ class TimesheetVoter extends AbstractVoter
 
     /**
      * @param string $attribute
-     * @param Timesheet]Activity $subject
+     * @param Timesheet|Activity $subject
      * @param TokenInterface $token
      * @return bool
      */
@@ -72,14 +71,38 @@ class TimesheetVoter extends AbstractVoter
 
         switch ($attribute) {
             case self::STOP:
+                if (!$subject instanceof Timesheet) {
+                    return false;
+                }
+
                 return $this->canStop($subject, $user, $token);
+
             case self::START:
+                if (!$subject instanceof Activity) {
+                    return false;
+                }
+
                 return $this->canStart($subject, $user, $token);
+
             case self::VIEW:
+                if (!$subject instanceof Timesheet) {
+                    return false;
+                }
+
                 return $this->canView($subject, $user, $token);
+
             case self::EDIT:
+                if (!$subject instanceof Timesheet) {
+                    return false;
+                }
+
                 return $this->canEdit($subject, $user, $token);
+
             case self::DELETE:
+                if (!$subject instanceof Timesheet) {
+                    return false;
+                }
+
                 return $this->canDelete($subject, $user, $token);
         }
 

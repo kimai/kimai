@@ -13,14 +13,14 @@ use App\DataFixtures\AppFixtures;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * ControllerBaseTest adds some useful functions for writing integration tests.
  */
 abstract class ControllerBaseTest extends WebTestCase
 {
-
-    const DEFAULT_LANGUAGE = 'en';
+    public const DEFAULT_LANGUAGE = 'en';
 
     /**
      * @param string $role
@@ -28,7 +28,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function getClientForAuthenticatedUser(string $role = User::ROLE_USER)
     {
-        switch($role) {
+        switch ($role) {
             case User::ROLE_SUPER_ADMIN:
                 $client = self::createClient([], [
                     'PHP_AUTH_USER' => AppFixtures::USERNAME_SUPER_ADMIN,
@@ -85,14 +85,17 @@ abstract class ControllerBaseTest extends WebTestCase
     {
         $client->request($method, '/' . self::DEFAULT_LANGUAGE . $url);
 
+        /* @var RedirectResponse $response */
+        $response = $client->getResponse();
+
         $this->assertTrue(
-            $client->getResponse()->isRedirect(),
-            sprintf('The secure URL %s is not protected.', $url . $client->getResponse()->getContent())
+            $response->isRedirect(),
+            sprintf('The secure URL %s is not protected.', $url . $response->getContent())
         );
 
         $this->assertEquals(
             'http://localhost/' . self::DEFAULT_LANGUAGE . '/login',
-            $client->getResponse()->getTargetUrl(),
+            $response->getTargetUrl(),
             sprintf('The secure URL %s does not redirect to the login form.', $url)
         );
     }
@@ -150,7 +153,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertMainContentClass(Client $client, $classname)
     {
-        $this->assertContains('<section class="content '.$classname.'">', $client->getResponse()->getContent());
+        $this->assertContains('<section class="content ' . $classname . '">', $client->getResponse()->getContent());
     }
 
     /**

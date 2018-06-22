@@ -18,7 +18,6 @@ use Symfony\Component\Yaml\Yaml;
  */
 class DoctrineCompilerPass implements CompilerPassInterface
 {
-
     /**
      * @var string[]
      */
@@ -47,16 +46,16 @@ class DoctrineCompilerPass implements CompilerPassInterface
         }
         */
 
-        if ($engine === null) {
+        if (null === $engine) {
             $dbConfig = explode('://', getenv('DATABASE_URL'));
             $engine = $dbConfig['0'] ?: null;
         }
 
-        if ($engine === null) {
+        if (null === $engine) {
             $engine = getenv('DATABASE_ENGINE');
         }
 
-        if ($engine === null) {
+        if (null === $engine) {
             throw new \Exception(
                 'Could not detect database engine. Please set the environment config DATABASE_ENGINE ' .
                 'to one of: "' . implode(', ', $this->allowedEngines) . '" in your .env file: DATABASE_ENGINE=sqlite'

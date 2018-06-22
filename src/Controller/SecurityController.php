@@ -9,7 +9,7 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as SymfonyAbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -18,7 +18,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
  * Controller used to manage the application security.
  * See http://symfony.com/doc/current/cookbook/security/form_login_setup.html.
  */
-class SecurityController extends AbstractController
+class SecurityController extends SymfonyAbstractController
 {
     /**
      * @Route("/login", name="security_login")
@@ -30,6 +30,7 @@ class SecurityController extends AbstractController
             'error' => $helper->getLastAuthenticationError(),
         ]);
     }
+
     /**
      * This is the route the user can use to logout.
      *

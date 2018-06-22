@@ -14,5 +14,5 @@ namespace App\Event;
  */
 class ConfigureMainMenuEvent extends ConfigureMenuEvent
 {
-    const CONFIGURE = 'app.main_menu_configure';
+    public const CONFIGURE = 'app.main_menu_configure';
 }

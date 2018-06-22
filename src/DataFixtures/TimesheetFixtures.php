@@ -28,9 +28,9 @@ class TimesheetFixtures extends Fixture
 {
     use FixturesTrait;
 
-    const AMOUNT_TIMESHEET = 5000;      // timesheet entries total
-    const RATE_MIN = 10;                // minimum rate for one hour
-    const RATE_MAX = 80;                // maximum rate for one hour
+    public const AMOUNT_TIMESHEET = 5000;      // timesheet entries total
+    public const RATE_MIN = 10;                // minimum rate for one hour
+    public const RATE_MAX = 80;                // maximum rate for one hour
 
     /**
      * {@inheritdoc}
@@ -55,6 +55,7 @@ class TimesheetFixtures extends Fixture
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
         }
+
         return $all;
     }
 
@@ -70,6 +71,7 @@ class TimesheetFixtures extends Fixture
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
         }
+
         return $all;
     }
 
@@ -85,8 +87,10 @@ class TimesheetFixtures extends Fixture
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
         }
+
         return $all;
     }
+
     /**
      * @param ObjectManager $manager
      * @return Activity[]
@@ -99,6 +103,7 @@ class TimesheetFixtures extends Fixture
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
         }
+
         return $all;
     }
 
@@ -181,7 +186,7 @@ class TimesheetFixtures extends Fixture
         $i = 1;
 
         foreach ($allCustomer as $customerName) {
-            $visible = $i++ % 6 != 0;
+            $visible = 0 != $i++ % 6;
             $entry = new Customer();
             $entry
                 ->setCurrency($this->getRandomCurrency())
@@ -205,7 +210,7 @@ class TimesheetFixtures extends Fixture
         foreach ($allCustomer as $id => $customer) {
             $projectForCustomer = rand(0, 7);
             for ($i = 1; $i <= $projectForCustomer; $i++) {
-                $visible = $i % 5 != 0;
+                $visible = 0 != $i % 5;
                 $entry = new Project();
 
                 $entry
@@ -228,7 +233,7 @@ class TimesheetFixtures extends Fixture
         foreach ($allProject as $projectId => $project) {
             $activityCount = rand(0, 10);
             for ($i = 1; $i <= $activityCount; $i++) {
-                $visible = $i % 4 != 0;
+                $visible = 0 != $i % 4;
                 $entry = new Activity();
                 $entry
                     ->setName($this->getRandomActivity() . ($visible ? '' : '.'))
@@ -283,6 +288,7 @@ class TimesheetFixtures extends Fixture
     private function getRandomActivity()
     {
         $all = $this->getActivities();
+
         return $all[array_rand($all)];
     }
 
@@ -321,6 +327,7 @@ class TimesheetFixtures extends Fixture
     private function getRandomProject()
     {
         $all = $this->getProjects();
+
         return $all[array_rand($all)];
     }
 
@@ -361,6 +368,7 @@ class TimesheetFixtures extends Fixture
     private function getRandomLocation()
     {
         $all = $this->getLocations();
+
         return $all[array_rand($all)];
     }
 
@@ -430,6 +438,7 @@ class TimesheetFixtures extends Fixture
     private function getRandomCurrency()
     {
         $all = $this->getCurrencies();
+
         return $all[array_rand($all)];
     }
 }

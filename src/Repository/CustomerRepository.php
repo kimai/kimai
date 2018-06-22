@@ -22,7 +22,6 @@ use App\Repository\Query\CustomerQuery;
  */
 class CustomerRepository extends AbstractRepository
 {
-
     /**
      * @param $id
      * @return null|Customer
@@ -41,11 +40,12 @@ class CustomerRepository extends AbstractRepository
     public function getGlobalStatistics()
     {
         $countAll = $this->getEntityManager()
-            ->createQuery('SELECT COUNT(c.id) FROM '.Customer::class.' c')
+            ->createQuery('SELECT COUNT(c.id) FROM ' . Customer::class . ' c')
             ->getSingleScalarResult();
 
         $stats = new CustomerStatistic();
         $stats->setCount($countAll);
+
         return $stats;
     }
 
@@ -101,6 +101,7 @@ class CustomerRepository extends AbstractRepository
         $query = new CustomerQuery();
         $query->setHiddenEntity($entity);
         $query->setResultType(CustomerQuery::RESULT_TYPE_QUERYBUILDER);
+
         return $this->findByQuery($query);
     }
 
@@ -116,15 +117,15 @@ class CustomerRepository extends AbstractRepository
             ->from(Customer::class, 'c')
             ->orderBy('c.' . $query->getOrderBy(), $query->getOrder());
 
-        if ($query->getVisibility() == CustomerQuery::SHOW_VISIBLE) {
+        if (CustomerQuery::SHOW_VISIBLE == $query->getVisibility()) {
             $qb->andWhere('c.visible = 1');
 
             /** @var Customer $entity */
             $entity = $query->getHiddenEntity();
-            if ($entity!== null) {
+            if (null !== $entity) {
                 $qb->orWhere('c.id = :customer')->setParameter('customer', $entity);
             }
-        } elseif ($query->getVisibility() == CustomerQuery::SHOW_HIDDEN) {
+        } elseif (CustomerQuery::SHOW_HIDDEN == $query->getVisibility()) {
             $qb->andWhere('c.visible = 0');
         }
 

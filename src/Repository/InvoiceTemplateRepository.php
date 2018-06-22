@@ -18,7 +18,6 @@ use Doctrine\ORM\Query;
  */
 class InvoiceTemplateRepository extends AbstractRepository
 {
-
     /**
      * @return bool
      */

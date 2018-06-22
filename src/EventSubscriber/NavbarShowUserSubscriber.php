@@ -50,7 +50,7 @@ class NavbarShowUserSubscriber implements EventSubscriberInterface
      */
     public function onShowUser(ShowUserEvent $event)
     {
-        if ($this->storage->getToken() === null) {
+        if (null === $this->storage->getToken()) {
             return;
         }
 

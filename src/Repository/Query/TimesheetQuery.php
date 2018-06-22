@@ -10,19 +10,16 @@
 namespace App\Repository\Query;
 
 use App\Entity\User;
-use App\Repository\Query\BaseQuery;
 use App\Entity\Activity;
-use App\Entity\Customer;
-use App\Entity\Project;
 
 /**
  * Can be used for advanced timesheet repository queries.
  */
 class TimesheetQuery extends ActivityQuery
 {
-    const STATE_ALL = 1;
-    const STATE_RUNNING = 2;
-    const STATE_STOPPED = 3;
+    public const STATE_ALL = 1;
+    public const STATE_RUNNING = 2;
+    public const STATE_STOPPED = 3;
 
     /**
      * Overwritten for different default order
@@ -70,6 +67,7 @@ class TimesheetQuery extends ActivityQuery
     public function setUser(User $user = null)
     {
         $this->user = $user;
+
         return $this;
     }
 
@@ -90,6 +88,7 @@ class TimesheetQuery extends ActivityQuery
     public function setActivity(Activity $activity = null)
     {
         $this->activity = $activity;
+
         return $this;
     }
 
@@ -134,6 +133,7 @@ class TimesheetQuery extends ActivityQuery
     public function setBegin($begin)
     {
         $this->begin = $begin;
+
         return $this;
     }
 
@@ -152,6 +152,7 @@ class TimesheetQuery extends ActivityQuery
     public function setEnd($end)
     {
         $this->end = $end;
+
         return $this;
     }
 }

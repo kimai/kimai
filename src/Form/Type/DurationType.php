@@ -50,7 +50,6 @@ class DurationType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-
         $resolver->setDefaults([
             'label' => 'label.duration',
             'constraints' => [new Regex(['pattern' => $this->pattern])],

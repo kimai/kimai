@@ -13,8 +13,6 @@ use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use App\Entity\Timesheet;
 use App\Invoice\CalculatorInterface;
-use App\Invoice\DateNumberGenerator;
-use App\Invoice\DefaultCalculator;
 use App\Invoice\NumberGeneratorInterface;
 use App\Repository\Query\InvoiceQuery;
 
@@ -23,7 +21,6 @@ use App\Repository\Query\InvoiceQuery;
  */
 class InvoiceModel
 {
-
     /**
      * @var Customer
      */
@@ -69,6 +66,7 @@ class InvoiceModel
     public function setQuery(InvoiceQuery $query)
     {
         $this->query = $query;
+
         return $this;
     }
 
@@ -89,6 +87,7 @@ class InvoiceModel
     public function setEntries(array $entries)
     {
         $this->entries = $entries;
+
         return $this;
     }
 
@@ -107,6 +106,7 @@ class InvoiceModel
     public function setTemplate($template)
     {
         $this->template = $template;
+
         return $this;
     }
 
@@ -125,6 +125,7 @@ class InvoiceModel
     public function setCustomer($customer)
     {
         $this->customer = $customer;
+
         return $this;
     }
 
@@ -133,7 +134,7 @@ class InvoiceModel
      */
     public function getDueDate(): \DateTime
     {
-        return new \DateTime('+'.$this->getTemplate()->getDueDays().' days');
+        return new \DateTime('+' . $this->getTemplate()->getDueDays() . ' days');
     }
 
     /**
@@ -152,6 +153,7 @@ class InvoiceModel
     {
         $this->generator = $generator;
         $this->generator->setModel($this);
+
         return $this;
     }
 
@@ -171,6 +173,7 @@ class InvoiceModel
     {
         $this->calculator = $calculator;
         $this->calculator->setModel($this);
+
         return $this;
     }
 

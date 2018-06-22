@@ -11,7 +11,7 @@ namespace App\Tests\Timesheet\Calculator;
 
 use App\Entity\Timesheet;
 use App\Timesheet\Calculator\DurationCalculator;
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Timesheet\Calculator\DurationCalculator
@@ -118,7 +118,7 @@ class DurationCalculatorTest extends TestCase
                         'duration' => 0,
                     ],
                     'weekdays' => [
-                        'days' => ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'],
+                        'days' => ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
                         'begin' => 0,
                         'end' => 1,
                         'duration' => 30,
@@ -137,7 +137,7 @@ class DurationCalculatorTest extends TestCase
                         'duration' => 30,
                     ],
                     'weekdays' => [
-                        'days' => ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'],
+                        'days' => ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
                         'begin' => 0,
                         'end' => 1,
                         'duration' => 0,

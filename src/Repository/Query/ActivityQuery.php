@@ -9,7 +9,6 @@
 
 namespace App\Repository\Query;
 
-use App\Entity\Customer;
 use App\Entity\Project;
 
 /**
@@ -17,7 +16,6 @@ use App\Entity\Project;
  */
 class ActivityQuery extends ProjectQuery
 {
-
     /**
      * @var Project
      */
@@ -38,6 +36,7 @@ class ActivityQuery extends ProjectQuery
     public function setProject(Project $project = null)
     {
         $this->project = $project;
+
         return $this;
     }
 }

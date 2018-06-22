@@ -25,7 +25,6 @@ use App\Repository\ActivityRepository;
  */
 class TimesheetEditForm extends AbstractType
 {
-
     /**
      * {@inheritdoc}
      */
@@ -39,7 +38,7 @@ class TimesheetEditForm extends AbstractType
             $activity = $entry->getActivity();
         }
 
-        if ($entry->getEnd() === null || !$options['duration_only']) {
+        if (null === $entry->getEnd() || !$options['duration_only']) {
             $builder->add('begin', DateTimeType::class, [
                 'label' => 'label.begin',
                 'widget' => 'single_text',

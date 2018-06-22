@@ -37,11 +37,12 @@ class UserRepository extends AbstractRepository implements UserLoaderInterface
     public function getGlobalStatistics()
     {
         $countAll = $this->getEntityManager()
-            ->createQuery('SELECT COUNT(u.id) FROM '.User::class.' u')
+            ->createQuery('SELECT COUNT(u.id) FROM ' . User::class . ' u')
             ->getSingleScalarResult();
 
         $stats = new UserStatistic();
         $stats->setTotalAmount($countAll);
+
         return $stats;
     }
 
@@ -58,9 +59,9 @@ class UserRepository extends AbstractRepository implements UserLoaderInterface
             ->from(User::class, 'u')
             ->orderBy('u.' . $query->getOrderBy(), $query->getOrder());
 
-        if ($query->getVisibility() == UserQuery::SHOW_VISIBLE) {
+        if (UserQuery::SHOW_VISIBLE == $query->getVisibility()) {
             $qb->andWhere('u.active = 1');
-        } elseif ($query->getVisibility() == UserQuery::SHOW_HIDDEN) {
+        } elseif (UserQuery::SHOW_HIDDEN == $query->getVisibility()) {
             $qb->andWhere('u.active = 0');
         }
 

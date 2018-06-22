@@ -19,7 +19,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class RunUnitTestsCommand extends Command
 {
-
     /**
      * @var string
      */
@@ -36,7 +35,7 @@ class RunUnitTestsCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -48,7 +47,7 @@ class RunUnitTestsCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

@@ -21,7 +21,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UserPreferencesForm extends AbstractType
 {
-
     /**
      * {@inheritdoc}
      */

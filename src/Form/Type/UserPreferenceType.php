@@ -23,7 +23,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UserPreferenceType extends AbstractType
 {
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -43,7 +42,7 @@ class UserPreferenceType extends AbstractType
                     }
 
                     $required = true;
-                    if ($preference->getType() == CheckboxType::class) {
+                    if (CheckboxType::class == $preference->getType()) {
                         $required = false;
                     }
 

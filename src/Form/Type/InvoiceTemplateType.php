@@ -19,7 +19,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class InvoiceTemplateType extends AbstractType
 {
-
     /**
      * {@inheritdoc}
      */

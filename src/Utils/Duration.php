@@ -14,10 +14,9 @@ namespace App\Utils;
  */
 class Duration
 {
-
-    const FORMAT_COLON = 'colon';
-    const FORMAT_NATURAL = 'natural';
-    const FORMAT_SECONDS = 'seconds';
+    public const FORMAT_COLON = 'colon';
+    public const FORMAT_NATURAL = 'natural';
+    public const FORMAT_SECONDS = 'seconds';
 
     /**
      * Transforms seconds into a duration string.
@@ -41,7 +40,7 @@ class Duration
         $second = $seconds % 60;
         $second = $second > 9 ? $second : '0' . $second;
 
-        return $hour . ':' . $minute  . ':' . $second;
+        return $hour . ':' . $minute . ':' . $second;
     }
 
     /**
@@ -50,11 +49,11 @@ class Duration
      */
     public function parseDurationString($duration)
     {
-        if (stripos($duration, ':') !== false) {
+        if (false !== stripos($duration, ':')) {
             return $this->parseDuration($duration, self::FORMAT_COLON);
         }
 
-        if (is_numeric($duration) && $duration == (int)$duration) {
+        if (is_numeric($duration) && $duration == (int) $duration) {
             return $this->parseDuration($duration, self::FORMAT_SECONDS);
         }
 
@@ -82,8 +81,8 @@ class Duration
                     throw new \InvalidArgumentException('Colon format cannot parse: ' . $duration);
                 }
                 $seconds = 0;
-                if (count($parts) == 3) {
-                     $seconds += array_pop($parts);
+                if (3 == count($parts)) {
+                    $seconds += array_pop($parts);
                 }
                 $seconds += $parts[1] * 60;
                 $seconds += $parts[0] * 3600;
@@ -101,7 +100,7 @@ class Duration
                 break;
 
             case self::FORMAT_SECONDS:
-                $seconds = $duration;
+                $seconds = (int) $duration;
                 break;
 
             default:

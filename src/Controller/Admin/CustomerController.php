@@ -29,7 +29,6 @@ use App\Repository\Query\CustomerQuery;
  */
 class CustomerController extends AbstractController
 {
-
     /**
      * @return \App\Repository\CustomerRepository
      */
@@ -133,7 +132,7 @@ class CustomerController extends AbstractController
 
         $deleteForm->handleRequest($request);
 
-        if ($stats->getRecordAmount() == 0 || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
+        if (0 == $stats->getRecordAmount() || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($customer);
             $entityManager->flush();

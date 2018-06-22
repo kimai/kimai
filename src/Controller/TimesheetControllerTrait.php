@@ -10,15 +10,17 @@
 namespace App\Controller;
 
 use App\Entity\Timesheet;
-use Symfony\Component\HttpFoundation\Request;
 use App\Repository\TimesheetRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Helper functions for Timesheet controller
  */
 trait TimesheetControllerTrait
 {
-
     /**
      * @var bool
      */
@@ -164,4 +166,45 @@ trait TimesheetControllerTrait
      * @return \Symfony\Component\Form\FormInterface
      */
     abstract protected function getEditForm(Timesheet $entry, $page);
+
+    /**
+     * Adds a "successful" flash message to the stack.
+     *
+     * @param string $translationKey
+     * @param array $parameter
+     */
+    abstract protected function flashSuccess($translationKey, $parameter = []);
+
+    /**
+     * Adds a "error" flash message to the stack.
+     *
+     * @param $translationKey
+     * @param array $parameter
+     */
+    abstract protected function flashError($translationKey, $parameter = []);
+
+    /**
+     * Shortcut to return the Doctrine Registry service.
+     *
+     * @throws \LogicException If DoctrineBundle is not available
+     */
+    abstract protected function getDoctrine(): ManagerRegistry;
+
+    /**
+     * Returns a RedirectResponse to the given route with the given parameters.
+     */
+    abstract protected function redirectToRoute(string $route, array $parameters = [], int $status = 302): RedirectResponse;
+
+    /**
+     * Renders a view.
+     */
+    abstract protected function render(string $view, array $parameters = [], Response $response = null): Response;
+
+    /**
+     * Get a user from the Security Token Storage.
+     *
+     * @return mixed
+     * @throws \LogicException If SecurityBundle is not available
+     */
+    abstract protected function getUser();
 }

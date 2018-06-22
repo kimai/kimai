@@ -20,7 +20,6 @@ use App\Model\InvoiceModel;
  */
 class DefaultCalculator implements CalculatorInterface
 {
-
     /**
      * @var string
      */
@@ -56,6 +55,7 @@ class DefaultCalculator implements CalculatorInterface
         foreach ($this->model->getEntries() as $entry) {
             $amount += $entry->getRate();
         }
+
         return round($amount, 2);
     }
 
@@ -73,11 +73,12 @@ class DefaultCalculator implements CalculatorInterface
     public function getTax(): float
     {
         $vat = $this->getVat();
-        if ($vat == 0) {
+        if (0 == $vat) {
             return 0;
         }
 
         $percent = $vat / 100.00;
+
         return round($this->getSubtotal() * $percent, 2);
     }
 

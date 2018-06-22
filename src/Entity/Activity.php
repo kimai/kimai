@@ -20,9 +20,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Activity
 {
-
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -56,7 +55,7 @@ class Activity
     private $comment;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="visible", type="boolean", nullable=false)
      * @Assert\NotNull()
@@ -85,6 +84,7 @@ class Activity
     public function setProject($project)
     {
         $this->project = $project;
+
         return $this;
     }
 
@@ -97,6 +97,7 @@ class Activity
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -119,6 +120,7 @@ class Activity
     public function setComment($comment)
     {
         $this->comment = $comment;
+
         return $this;
     }
 
@@ -135,20 +137,21 @@ class Activity
     /**
      * Set visible
      *
-     * @param boolean $visible
+     * @param bool $visible
      *
      * @return Activity
      */
     public function setVisible($visible)
     {
         $this->visible = $visible;
+
         return $this;
     }
 
     /**
      * Get visible
      *
-     * @return boolean
+     * @return bool
      */
     public function getVisible()
     {
@@ -158,7 +161,7 @@ class Activity
     /**
      * Get activity id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {

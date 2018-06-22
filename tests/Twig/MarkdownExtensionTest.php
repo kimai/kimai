@@ -18,7 +18,6 @@ use PHPUnit\Framework\TestCase;
  */
 class MarkdownExtensionTest extends TestCase
 {
-
     public function testGetFilters()
     {
         $sut = new MarkdownExtension(new Markdown());

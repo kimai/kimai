@@ -18,7 +18,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UserRoleType extends AbstractType
 {
-
     /**
      * @var string[]
      */
@@ -39,7 +38,7 @@ class UserRoleType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $roles = [];
-
+        /* @var string[] $value */
         foreach ($this->roles as $key => $value) {
             $roles[$key] = $key;
             foreach ($value as $value2) {

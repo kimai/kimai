@@ -18,7 +18,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class SkinType extends AbstractType
 {
-
     /**
      * {@inheritdoc}
      */

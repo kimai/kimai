@@ -19,7 +19,6 @@ use Twig\TwigFilter;
  */
 class ExtensionsTest extends TestCase
 {
-
     public function testGetFilters()
     {
         $filters = ['duration', 'money', 'currency', 'country'];
@@ -123,6 +122,7 @@ class ExtensionsTest extends TestCase
         $record->setBegin($begin);
         $record->setEnd($end);
         $record->setDuration($seconds);
+
         return $record;
     }
 }

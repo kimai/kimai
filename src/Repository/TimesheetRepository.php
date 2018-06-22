@@ -27,7 +27,6 @@ use App\Repository\Query\TimesheetQuery;
  */
 class TimesheetRepository extends AbstractRepository
 {
-
     /**
      * @param Timesheet $entry
      * @return bool
@@ -119,11 +118,11 @@ class TimesheetRepository extends AbstractRepository
     public function getUserStatistics(User $user)
     {
         $durationTotal = $this->getEntityManager()
-            ->createQuery('SELECT SUM(t.duration) FROM '.Timesheet::class.' t WHERE t.user = :user')
+            ->createQuery('SELECT SUM(t.duration) FROM ' . Timesheet::class . ' t WHERE t.user = :user')
             ->setParameter('user', $user)
             ->getSingleScalarResult();
         $rateTotal = $this->getEntityManager()
-            ->createQuery('SELECT SUM(t.rate) FROM '.Timesheet::class.' t WHERE t.user = :user')
+            ->createQuery('SELECT SUM(t.rate) FROM ' . Timesheet::class . ' t WHERE t.user = :user')
             ->setParameter('user', $user)
             ->getSingleScalarResult();
         $amountMonth = $this->queryThisMonth('SUM(t.rate)', $user)
@@ -133,7 +132,7 @@ class TimesheetRepository extends AbstractRepository
             ->getQuery()
             ->getSingleScalarResult();
         $firstEntry = $this->getEntityManager()
-            ->createQuery('SELECT MIN(t.begin) FROM '.Timesheet::class.' t WHERE t.user = :user')
+            ->createQuery('SELECT MIN(t.begin) FROM ' . Timesheet::class . ' t WHERE t.user = :user')
             ->setParameter('user', $user)
             ->getSingleScalarResult();
 
@@ -178,7 +177,7 @@ class TimesheetRepository extends AbstractRepository
             if (!isset($years[$curYear])) {
                 $year = new Year($curYear);
                 for ($i = 1; $i < 13; $i++) {
-                    $month = $i < 10 ? '0' . $i : (string)$i;
+                    $month = $i < 10 ? '0' . $i : (string) $i;
                     $year->setMonth(new Month($month));
                 }
                 $years[$curYear] = $year;
@@ -202,13 +201,13 @@ class TimesheetRepository extends AbstractRepository
     public function getGlobalStatistics()
     {
         $durationTotal = $this->getEntityManager()
-            ->createQuery('SELECT SUM(t.duration) FROM '.Timesheet::class.' t')
+            ->createQuery('SELECT SUM(t.duration) FROM ' . Timesheet::class . ' t')
             ->getSingleScalarResult();
         $rateTotal = $this->getEntityManager()
-            ->createQuery('SELECT SUM(t.rate) FROM '.Timesheet::class.' t')
+            ->createQuery('SELECT SUM(t.rate) FROM ' . Timesheet::class . ' t')
             ->getSingleScalarResult();
         $userTotal = $this->getEntityManager()
-            ->createQuery('SELECT COUNT(DISTINCT(t.user)) FROM '.Timesheet::class.' t')
+            ->createQuery('SELECT COUNT(DISTINCT(t.user)) FROM ' . Timesheet::class . ' t')
             ->getSingleScalarResult();
         $activeNow = $this->getActiveEntries();
         $amountMonth = $this->queryThisMonth('SUM(t.rate)')
@@ -278,33 +277,33 @@ class TimesheetRepository extends AbstractRepository
             ->join('p.customer', 'c')
             ->orderBy('t.' . $query->getOrderBy(), $query->getOrder());
 
-        if ($query->getUser() !== null) {
+        if (null !== $query->getUser()) {
             $qb->andWhere('t.user = :user')
                 ->setParameter('user', $query->getUser());
         }
 
-        if ($query->getState() == TimesheetQuery::STATE_RUNNING) {
+        if (TimesheetQuery::STATE_RUNNING == $query->getState()) {
             $qb->andWhere($qb->expr()->isNull('t.end'));
-        } elseif ($query->getState() == TimesheetQuery::STATE_STOPPED) {
+        } elseif (TimesheetQuery::STATE_STOPPED == $query->getState()) {
             $qb->andWhere($qb->expr()->isNotNull('t.end'));
         }
 
-        if ($query->getBegin() !== null) {
+        if (null !== $query->getBegin()) {
             $qb->andWhere('t.begin >= :begin')
                 ->setParameter('begin', $query->getBegin());
         }
-        if ($query->getEnd() !== null) {
+        if (null !== $query->getEnd()) {
             $qb->andWhere('t.end <= :end')
                 ->setParameter('end', $query->getEnd());
         }
 
-        if ($query->getActivity() !== null) {
+        if (null !== $query->getActivity()) {
             $qb->andWhere('t.activity = :activity')
                 ->setParameter('activity', $query->getActivity());
-        } elseif ($query->getProject() !== null) {
+        } elseif (null !== $query->getProject()) {
             $qb->andWhere('a.project = :project')
                 ->setParameter('project', $query->getProject());
-        } elseif ($query->getCustomer() !== null) {
+        } elseif (null !== $query->getCustomer()) {
             $qb->andWhere('p.customer = :customer')
                 ->setParameter('customer', $query->getCustomer());
         }
