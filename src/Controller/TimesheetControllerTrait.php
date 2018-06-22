@@ -172,7 +172,7 @@ trait TimesheetControllerTrait
      * @param string $translationKey
      * @param array $parameter
      */
-    protected abstract function flashSuccess($translationKey, $parameter = []);
+    abstract protected function flashSuccess($translationKey, $parameter = []);
 
     /**
      * Adds a "error" flash message to the stack.
@@ -180,17 +180,17 @@ trait TimesheetControllerTrait
      * @param $translationKey
      * @param array $parameter
      */
-    protected abstract function flashError($translationKey, $parameter = []);
+    abstract protected function flashError($translationKey, $parameter = []);
 
     /**
      * Shortcut to return the Doctrine Registry service.
      *
      * @throws \LogicException If DoctrineBundle is not available
      */
-    protected abstract function getDoctrine(): ManagerRegistry;
+    abstract protected function getDoctrine(): ManagerRegistry;
 
     /**
      * Returns a RedirectResponse to the given route with the given parameters.
      */
-    protected abstract function redirectToRoute(string $route, array $parameters = array(), int $status = 302): RedirectResponse;
+    abstract protected function redirectToRoute(string $route, array $parameters = [], int $status = 302): RedirectResponse;
 }

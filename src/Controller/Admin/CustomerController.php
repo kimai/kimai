@@ -169,7 +169,7 @@ class CustomerController extends AbstractController
      */
     private function createEditForm(Customer $customer)
     {
-        if (null === $customer->getId()) {
+        if ($customer->getId() === null) {
             $url = $this->generateUrl('admin_customer_create');
         } else {
             $url = $this->generateUrl('admin_customer_edit', ['id' => $customer->getId()]);

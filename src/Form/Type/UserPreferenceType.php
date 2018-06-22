@@ -37,7 +37,7 @@ class UserPreferenceType extends AbstractType
 
                 if ($preference instanceof UserPreference) {
                     // prevents unconfigured values from showing up in the form
-                    if (null === $preference->getType()) {
+                    if ($preference->getType() === null) {
                         return;
                     }
 

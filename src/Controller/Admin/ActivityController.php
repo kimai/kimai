@@ -185,7 +185,7 @@ class ActivityController extends AbstractController
      */
     private function createEditForm(Activity $activity)
     {
-        if (null === $activity->getId()) {
+        if ($activity->getId() === null) {
             $url = $this->generateUrl('admin_activity_create');
         } else {
             $url = $this->generateUrl('admin_activity_edit', ['id' => $activity->getId()]);

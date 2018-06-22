@@ -34,7 +34,7 @@ class TimesheetEditForm extends AbstractType
         $entry = $options['data'];
 
         $activity = null;
-        if (null !== $entry->getId()) {
+        if ($entry->getId() !== null) {
             $activity = $entry->getActivity();
         }
 

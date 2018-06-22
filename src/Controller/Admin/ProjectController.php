@@ -173,7 +173,7 @@ class ProjectController extends AbstractController
      */
     private function createEditForm(Project $project)
     {
-        if (null === $project->getId()) {
+        if ($project->getId() === null) {
             $url = $this->generateUrl('admin_project_create');
             $currency = Customer::DEFAULT_CURRENCY;
         } else {

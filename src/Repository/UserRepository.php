@@ -65,7 +65,7 @@ class UserRepository extends AbstractRepository implements UserLoaderInterface
             $qb->andWhere('u.active = 0');
         }
 
-        if (null !== $query->getRole()) {
+        if ($query->getRole() !== null) {
             $qb->andWhere('u.roles LIKE :role')->setParameter('role', '%' . $query->getRole() . '%');
         }
 

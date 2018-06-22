@@ -35,7 +35,7 @@ class ProjectEditForm extends AbstractType
         $entry = $options['data'];
 
         $customer = null;
-        if (null !== $entry->getId()) {
+        if ($entry->getId() !== null) {
             $customer = $entry->getCustomer();
         }
 

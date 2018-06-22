@@ -33,7 +33,7 @@ class ActivityEditForm extends AbstractType
         $entry = $options['data'];
 
         $project = null;
-        if (null !== $entry->getId()) {
+        if ($entry->getId() !== null) {
             $project = $entry->getProject();
         }
 
