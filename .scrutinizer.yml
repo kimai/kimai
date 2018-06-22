@@ -3,39 +3,38 @@ build:
         node: v8.11.2
     nodes:
         analysis:
-            project_setup:
-                override:
-                    - 'true'
             tests:
                 override:
                     - js-scrutinizer-run
-        tests: true
-    tests:
-        override:
-            -
-                command: 'vendor/bin/phpunit --exclude-group integration --coverage-clover=unit tests/'
-                coverage:
-                    file: 'unit'
-                    format: 'clover'
-            -
-                command: 'vendor/bin/phpunit --group integration --coverage-clover=integration tests/'
-                coverage:
-                    file: 'integration'
-                    format: 'clover'
-            -
-                command: 'bin/console kimai:phpcs --checkstyle=checkstyle'
-                analysis:
-                    file: 'checkstyle'
-                    format: 'php-cs-checkstyle'
+                    - php-scrutinizer-run
+        unit:
+            tests:
+                override:
+                    -
+                        command: 'vendor/bin/phpunit --exclude-group integration --coverage-clover=unit tests/'
+                        coverage:
+                            file: 'unit'
+                            format: 'clover'
+                    -
+                        command: 'vendor/bin/phpunit --group integration --coverage-clover=integration tests/'
+                        coverage:
+                            file: 'integration'
+                            format: 'clover'
+                    -
+                        command: 'bin/console kimai:phpcs --checkstyle=checkstyle'
+                        analysis:
+                            file: 'checkstyle'
+                            format: 'php-cs-checkstyle'
 
 filter:
     excluded_paths:
-        - '.github/*'
-        - 'bin/*'
-        - 'config/*'
-        - 'node_modules/*'
-        - 'public/*'
-        - 'templates/*'
-        - 'translations/*'
-        - 'var/*'
-        - 'vendor/*'
+        - '.github/'
+        - 'bin/'
+        - 'config/'
+        - 'public/'
+        - 'templates/'
+        - 'translations/'
+        - 'var/'
+    dependency_paths:
+        - 'node_modules/'
+        - 'vendor/'

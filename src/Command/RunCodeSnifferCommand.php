@@ -55,7 +55,6 @@ class RunCodeSnifferCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $filename = null;
-        $exitCode = 0;
         ob_start();
 
         $args = [];
@@ -65,20 +64,21 @@ class RunCodeSnifferCommand extends Command
             $args[] = '--verbose';
             $args[] = '--show-progress=none';
 
+            if (!empty($filename) && (file_exists($filename) && !is_writeable($filename))) {
+                $io->error('Target file is not writeable: ' . $filename);
+
+                return;
+            }
+
             if (!empty($filename)) {
                 $filename = $this->rootDir . '/' . $filename;
-                $args[] = '--format=checkstyle';
-                if (!file_exists($filename) || is_writeable($filename)) {
-                    $args[] = '> ' . $filename;
-                } else {
-                    $io->error('Target file is not writeable: ' . $filename);
-                    return;
-                }
+                $args[] = '> ' . $filename;
             } else {
                 $args[] = '--format=txt';
             }
         }
 
+        $exitCode = 0;
         passthru($this->rootDir . '/vendor/bin/php-cs-fixer fix ' . implode(' ', $args), $exitCode);
         $result = ob_get_clean();
 
@@ -89,8 +89,9 @@ class RunCodeSnifferCommand extends Command
                 'Found problems while checking your code styles' .
                 (!empty($filename) ? '. Saved checkstyle data to: ' . $filename : '')
             );
-        } else {
-            $io->success('All source files have proper code styles');
+            return;
         }
+
+        $io->success('All source files have proper code styles');
     }
 }
