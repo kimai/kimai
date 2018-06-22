@@ -9,9 +9,9 @@
 
 namespace App\Voter;
 
+use App\Entity\Project;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use App\Entity\Project;
 
 /**
  * A voter to check permissions on Projects.

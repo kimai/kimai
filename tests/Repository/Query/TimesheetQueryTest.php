@@ -9,10 +9,10 @@
 
 namespace App\Tests\Repository\Query;
 
-use App\Entity\User;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\User;
 use App\Repository\Query\TimesheetQuery;
 
 /**

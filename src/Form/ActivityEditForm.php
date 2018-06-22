@@ -9,9 +9,9 @@
 
 namespace App\Form;
 
-use App\Form\Type\YesNoType;
 use App\Entity\Activity;
 use App\Form\Type\ProjectType;
+use App\Form\Type\YesNoType;
 use App\Repository\ProjectRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;

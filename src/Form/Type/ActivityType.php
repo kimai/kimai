@@ -9,11 +9,11 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Activity;
+use App\Repository\ActivityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Entity\Activity;
-use App\Repository\ActivityRepository;
 
 /**
  * Custom form field type to select an activity.

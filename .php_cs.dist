@@ -1,6 +1,14 @@
 <?php
 
+$fileHeaderComment = <<<COMMENT
+This file is part of the Kimai time-tracking app.
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+COMMENT;
+
 return PhpCsFixer\Config::create()
+    ->setRiskyAllowed(true)
     ->setRules([
         'encoding' => true,
         'full_opening_tag' => true,
@@ -14,6 +22,9 @@ return PhpCsFixer\Config::create()
         'lowercase_constants' => true,
         'lowercase_keywords' => true,
         'method_argument_space' => ['on_multiline' => 'ensure_fully_multiline'],
+        'header_comment' => ['header' => $fileHeaderComment, 'separate' => 'both'],
+        'no_php4_constructor' => true,
+        'ordered_imports' => true,
         'no_break_comment' => true,
         'no_closing_tag' => true,
         'no_spaces_after_function_name' => true,

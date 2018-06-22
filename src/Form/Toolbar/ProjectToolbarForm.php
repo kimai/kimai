@@ -9,9 +9,9 @@
 
 namespace App\Form\Toolbar;
 
+use App\Repository\Query\ProjectQuery;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Repository\Query\ProjectQuery;
 
 /**
  * Defines the form used for filtering the projects.

@@ -9,18 +9,18 @@
 
 namespace App\Repository;
 
-use App\Entity\User;
 use App\Entity\Activity;
 use App\Entity\Timesheet;
-use Doctrine\DBAL\Types\Type;
-use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Pagerfanta;
+use App\Entity\User;
 use App\Model\Statistic\Month;
 use App\Model\Statistic\Year;
 use App\Model\TimesheetGlobalStatistic;
 use App\Model\TimesheetStatistic;
-use DateTime;
 use App\Repository\Query\TimesheetQuery;
+use DateTime;
+use Doctrine\DBAL\Types\Type;
+use Doctrine\ORM\QueryBuilder;
+use Pagerfanta\Pagerfanta;
 
 /**
  * Class TimesheetRepository

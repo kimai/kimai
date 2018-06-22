@@ -9,10 +9,10 @@
 
 namespace App\Voter;
 
-use App\Entity\User;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use App\Entity\Activity;
 use App\Entity\Timesheet;
+use App\Entity\User;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
  * A voter to check permissions on Timesheets.

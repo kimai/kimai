@@ -9,8 +9,8 @@
 
 namespace App\Controller;
 
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * The abstract base controller.

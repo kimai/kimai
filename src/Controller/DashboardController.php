@@ -9,16 +9,16 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Repository\Query\TimesheetQuery;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Dashboard controller for the admin area.
