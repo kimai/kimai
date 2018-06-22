@@ -57,7 +57,7 @@ class TimesheetVoter extends AbstractVoter
 
     /**
      * @param string $attribute
-     * @param Timesheet|Activity $subject
+     * @param mixed $subject
      * @param TokenInterface $token
      * @return bool
      */
@@ -66,6 +66,10 @@ class TimesheetVoter extends AbstractVoter
         $user = $token->getUser();
 
         if (!$user instanceof User) {
+            return false;
+        }
+
+        if (!$subject instanceof Timesheet && !$subject instanceof Activity) {
             return false;
         }
 
