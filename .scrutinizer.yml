@@ -7,7 +7,7 @@ build:
                 override:
                     - js-scrutinizer-run
                     - php-scrutinizer-run
-        unit:
+        tests:
             tests:
                 override:
                     -

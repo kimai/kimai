@@ -387,8 +387,8 @@ class User implements UserInterface
     }
 
     /**
-     * @param $name
-     * @param null $default
+     * @param string $name
+     * @param mixed $default
      * @return bool|int|null|string
      */
     public function getPreferenceValue($name, $default = null)

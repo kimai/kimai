@@ -260,7 +260,7 @@ class InvoiceController extends AbstractController
      */
     private function createEditForm(InvoiceTemplate $template)
     {
-        if (null === $template->getId()) {
+        if ($template->getId() === null) {
             $url = $this->generateUrl('admin_invoice_template_create');
         } else {
             $url = $this->generateUrl('admin_invoice_template_edit', ['id' => $template->getId()]);
