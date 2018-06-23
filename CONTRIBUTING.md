@@ -5,11 +5,11 @@ Send us your ideas, code reviews, pull requests and feature requests to help us 
 
 ## Pull request rules
 
-- We use PSR-2 with some addons code styles (check our [php-cs-fixer config](.php_cs.dist)), run `bin/console kimai:phpcs` to verify and `bin/console kimai:phpcs --fix` to fix violations
-- Add PHPUnit tests for your changes, verify everything still works and execute our test-suites `bin/console kimai:test-unit` and `bin/console kimai:test-integration`
-- If you contribute new files, please add them with the file-header template from below
-- With sending in a PR, you accept that your contributions/code will be published under MIT license (see the LICENSE file as well)
-- If one of the checks fail, please fix them before asking for a review
+- We use PSR-2 with some additional code-style checks (see our [php-cs-fixer config](.php_cs.dist)). You can run `bin/console kimai:phpcs` to check and `bin/console kimai:phpcs --fix` to fix violations.
+- Add PHPUnit tests for your changes, verify everything still works and execute our test-suites `bin/console kimai:test-unit` and `bin/console kimai:test-integration`.
+- If you contribute new files, please add them with the file-header template from below (our chode-style fixer can do that for you).
+- With sending in a PR, you accept that your contributions/code will be published under MIT license (see the [LICENSE](LICENSE) file as well).
+- If one of the PR checks fails, please fix them before asking us for a review.
 
 Further documentation can be found in the [developer documentation](var/docs/developers.md).
 We also have some information on our homepage at [https://v2.kimai.org/](https://v2.kimai.org/).
