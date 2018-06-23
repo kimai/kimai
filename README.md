@@ -13,10 +13,7 @@ This is the reloaded version of the open source timetracker Kimai.
 Right now its in an early development phase, its usable but some advanced features from Kimai v1 are missing by now.
 
 Kimai v2 has nothing in common with its predecessor [Kimai v1](http://www.kimai.org) besides the basic ideas of time-tracking and the current development team.
-
-It is based on a lot of great frameworks. Special thanks to 
-[Symfony v4](https://github.com/symfony/symfony),  
-[Doctrine](https://github.com/doctrine/),
+It is based on a lot of great frameworks. Special thanks to [Symfony v4](https://github.com/symfony/symfony), [Doctrine](https://github.com/doctrine/),
 [AdminThemeBundle](https://github.com/avanzu/AdminThemeBundle/) (based on [AdminLTE](https://github.com/almasaeed2010/AdminLTE/)).
 
 ### Requirements
@@ -30,9 +27,8 @@ It is based on a lot of great frameworks. Special thanks to
 
 Looking for more information about using Kimai? Check out our more detailed [documentation](var/docs/).
 
-Our roadmap for the future can be seen by viewing the [Milestones](milestones/) planning,
-current work is organized in the [Projects](projects/) section.
-
+Check our roadmap for future development by viewing the [Milestones](milestones/) sections,
+current work is organized in the [Projects](projects/) planning boards.
 The roadmap is open for changes and input from the community, please [sent us](issues/) your ideas and questions.
 
 ## Installation
