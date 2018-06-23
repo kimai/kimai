@@ -9,10 +9,10 @@
 
 namespace App\Form\Toolbar;
 
+use App\Repository\Query\TimesheetQuery;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Repository\Query\TimesheetQuery;
 
 /**
  * Defines the form used for filtering the timesheet.

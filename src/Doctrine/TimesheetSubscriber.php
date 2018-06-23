@@ -9,11 +9,11 @@
 
 namespace App\Doctrine;
 
+use App\Entity\Timesheet;
 use App\Timesheet\CalculatorInterface;
 use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use App\Entity\Timesheet;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 /**
  * A listener to make sure all Timesheet entries will have a proper duration.

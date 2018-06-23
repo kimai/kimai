@@ -9,9 +9,9 @@
 
 namespace App\Voter;
 
+use App\Entity\Activity;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use App\Entity\Activity;
 
 /**
  * A voter to check permissions on Activities.

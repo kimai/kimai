@@ -9,9 +9,9 @@
 
 namespace App\Twig;
 
+use App\Entity\Timesheet;
 use App\Utils\Duration;
 use Symfony\Component\Intl\Intl;
-use App\Entity\Timesheet;
 use Twig\TwigFilter;
 
 /**

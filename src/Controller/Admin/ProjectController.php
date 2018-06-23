@@ -10,17 +10,17 @@
 namespace App\Controller\Admin;
 
 use App\Controller\AbstractController;
-use Pagerfanta\Pagerfanta;
-use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Customer;
 use App\Entity\Project;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use App\Form\ProjectEditForm;
 use App\Form\Toolbar\ProjectToolbarForm;
 use App\Repository\Query\ProjectQuery;
+use Pagerfanta\Pagerfanta;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Controller used to manage projects in the admin part of the site.

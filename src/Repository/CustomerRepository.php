@@ -10,12 +10,12 @@
 namespace App\Repository;
 
 use App\Entity\Activity;
+use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
-use Doctrine\ORM\Query;
-use App\Entity\Customer;
 use App\Model\CustomerStatistic;
 use App\Repository\Query\CustomerQuery;
+use Doctrine\ORM\Query;
 
 /**
  * Class CustomerRepository

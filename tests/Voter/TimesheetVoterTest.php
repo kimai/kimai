@@ -9,14 +9,14 @@
 
 namespace App\Tests\Voter;
 
+use App\Entity\Customer;
+use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Voter\TimesheetVoter;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
-use App\Entity\Customer;
-use App\Entity\Timesheet;
-use App\Voter\TimesheetVoter;
 
 /**
  * @covers \App\Voter\TimesheetVoter

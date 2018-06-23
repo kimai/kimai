@@ -9,10 +9,10 @@
 
 namespace App\EventSubscriber;
 
-use App\Event\ConfigureMainMenuEvent;
 use App\Event\ConfigureAdminMenuEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use App\Event\ConfigureMainMenuEvent;
 use Avanzu\AdminThemeBundle\Model\MenuItemModel;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**

@@ -9,12 +9,12 @@
 
 namespace App\Repository;
 
-use App\Entity\User;
-use Doctrine\ORM\Query;
 use App\Entity\Activity;
 use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Model\ActivityStatistic;
 use App\Repository\Query\ActivityQuery;
+use Doctrine\ORM\Query;
 
 /**
  * Class ActivityRepository
