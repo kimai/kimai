@@ -88,8 +88,8 @@ The files in `translations/` as a quick overview:
 
 - `AvanzuAdminTheme` is only meant for translating strings from the original theme
 - `exceptions` only holds translations of error pages and exception handlers
-- `flashmessages`
-- `messages` holds most of the visible application translations
+- `flashmessages` hold all success and error messages, that will be shown as results from action calls after page reload
+- `messages` holds most of the visible application translations (like all the static UI elements and form translations)
 - `pagerfanta` includes the translations for the pagination component
 - `sidebar` holds all the translations of the right sidebar
 - `validators` only hold translations related to violations/validation of submitted form data (or API calls)
