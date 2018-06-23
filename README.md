@@ -1,6 +1,6 @@
 # Kimai v2 - Time Tracking
 
-Kimai v2 - the open source time-tracking application with a mobile-first approach.
+Kimai v2 - the open source time-tracking application with a mobile-first approach, read more at the [official website](http://v2.kimai.org).
 
 [![Travis Status](https://travis-ci.org/kevinpapst/kimai2.svg?branch=master)](https://travis-ci.org/kevinpapst/kimai2)
 [![Code Quality](https://scrutinizer-ci.com/g/kevinpapst/kimai2/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/kevinpapst/kimai2/?branch=master)
@@ -9,24 +9,31 @@ Kimai v2 - the open source time-tracking application with a mobile-first approac
 
 ## Introduction
 
-This is the reloaded version of the open source timetracker [Kimai](http://www.kimai.org).
+This is the reloaded version of the open source timetracker Kimai.
 Right now its in an early development phase, its usable but some advanced features from Kimai v1 are missing by now.
 
-Kimai is based on a lot of great frameworks. Special thanks to 
+Kimai v2 has nothing in common with its predecessor [Kimai v1](http://www.kimai.org) besides the basic ideas of time-tracking and the current development team.
+
+It is based on a lot of great frameworks. Special thanks to 
 [Symfony v4](https://github.com/symfony/symfony),  
 [Doctrine](https://github.com/doctrine/),
-[AdminThemeBundle](https://github.com/avanzu/AdminThemeBundle/) (based on [AdminLTE](https://github.com/almasaeed2010/AdminLTE/))
+[AdminThemeBundle](https://github.com/avanzu/AdminThemeBundle/) (based on [AdminLTE](https://github.com/almasaeed2010/AdminLTE/)).
 
-## Requirements
+### Requirements
 
 - PHP 7.1.3 or higher
 - One PHP extension of PDO-SQLite or PDO-MySQL enabled (it might work with PostgreSQL and Oracle as well, but that wasn't tested and is not officially supported)
 - the [usual Symfony application requirements](http://symfony.com/doc/current/reference/requirements.html)
 - Kimai needs to be installed in the root directory of a domain or you need to [recompile the frontend assets](var/docs/developers.md)
 
-## Documentation
+## Documentation & Roadmap
 
-If you cannot find the information you are looking for at this page, we have a more detailed [user documentation](var/docs/).
+Looking for more information about using Kimai? Check out our more detailed [documentation](var/docs/).
+
+Our roadmap for the future can be seen by viewing the [Milestones](milestones/) planning,
+current work is organized in the [Projects](projects/) section.
+
+The roadmap is open for changes and input from the community, please [sent us](issues/) your ideas and questions.
 
 ## Installation
 
