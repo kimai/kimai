@@ -12,7 +12,6 @@ Send us your ideas, code reviews, pull requests and feature requests to help us 
 - If one of the PR checks fails, please fix them before asking us for a review.
 
 Further documentation can be found in the [developer documentation](var/docs/developers.md).
-We also have some information on our homepage at [https://v2.kimai.org/](https://v2.kimai.org/).
 
 ### File-header template 
 ```
