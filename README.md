@@ -27,9 +27,9 @@ It is based on a lot of great frameworks. Special thanks to [Symfony v4](https:/
 
 Looking for more information about using Kimai? Check out our more detailed [documentation](var/docs/).
 
-Check our roadmap for future development by viewing the [Milestones](milestones/) sections,
-current work is organized in the [Projects](projects/) planning boards.
-The roadmap is open for changes and input from the community, please [sent us](issues/) your ideas and questions.
+You can see our development roadmap for the future in the [Milestones](milestones/) sections,
+current work is organized in the [Project](projects/) planning boards.
+Our roadmap is open for changes and input from the community, please [sent us](issues/) your ideas and questions.
 
 ## Installation
 
