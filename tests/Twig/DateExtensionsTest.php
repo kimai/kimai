@@ -60,7 +60,6 @@ class DateExtensionsTest extends TestCase
             'de' => ['date_short' => 'd.m.Y'],
             'en' => ['date_short' => 'Y-m-d'],
             'ru' => ['date_short' => 'd.m.Y'],
-
         ]);
         $this->assertEquals($result, $sut->dateShort($date));
     }
