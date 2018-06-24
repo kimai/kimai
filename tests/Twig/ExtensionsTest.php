@@ -12,6 +12,8 @@ namespace App\Tests\Twig;
 use App\Entity\Timesheet;
 use App\Twig\Extensions;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\TwigFilter;
 
 /**
@@ -19,14 +21,24 @@ use Twig\TwigFilter;
  */
 class ExtensionsTest extends TestCase
 {
-    protected function getSut($locales)
+    /**
+     * @param string $locales
+     * @param string $locale
+     * @return Extensions
+     */
+    protected function getSut($locales, $locale = 'en')
     {
-        return new Extensions($locales);
+        $request = new Request();
+        $request->setLocale($locale);
+        $requestStack = new RequestStack();
+        $requestStack->push($request);
+
+        return new Extensions($requestStack, $locales);
     }
 
     public function testGetFilters()
     {
-        $filters = ['duration', 'money', 'currency', 'country', 'month_name'];
+        $filters = ['duration', 'money', 'currency', 'country'];
         $sut = $this->getSut('de');
         $twigFilters = $sut->getFilters();
         $this->assertCount(count($filters), $twigFilters);
@@ -91,39 +103,34 @@ class ExtensionsTest extends TestCase
     }
 
     /**
-     * @param \DateTime $date
      * @param string $result
-     * @dataProvider getMonthData
+     * @param int $amount
+     * @param string $currency
+     * @param string $locale
+     * @dataProvider getMoneyData
      */
-    public function testMonthName(\DateTime $date, $result)
+    public function testMoney($result, $amount, $currency, $locale)
     {
-        $sut = $this->getSut('en');
-        $this->assertEquals($result, $sut->monthName($date));
+        $sut = $this->getSut('en', $locale);
+        $this->assertEquals($result, $sut->money($amount, $currency));
     }
 
-    public function getMonthData()
+    public function getMoneyData()
     {
         return [
-            [new \DateTime('January 2016'), 'month.1'],
-            [new \DateTime('2016-06-23'), 'month.6'],
-            [new \DateTime('2016-12-23'), 'month.12'],
+            ['2,345 €', 2345, 'EUR', 'en'],
+            ['2,345 €', 2345, 'EUR', 'en'],
+            ['2.345,01 €', 2345.009, 'EUR', 'de'],
+            ['2.345,01 €', 2345.009, 'EUR', 'de'],
+            ['13.75 $', 13.75, 'USD', 'en'],
+            ['13,75 $', 13.75, 'USD', 'de'],
+            ['13,75 RUB', 13.75, 'RUB', 'de'],
+            ['13,5 RUB', 13.50, 'RUB', 'de'],
+            ['13,75 ₽', 13.75, 'RUB', 'ru'],
+            ['14 ¥', 13.75, 'JPY', 'de'],
+            ['13 933 ¥', 13933.49, 'JPY', 'ru'],
+            ['1.234.567,89 $', 1234567.891234567890000, 'USD', 'de'],
         ];
-    }
-
-    public function testMoney()
-    {
-        $money = [
-            [2222, 'EUR', '2,222.00 €'],
-            [13.75, 'USD', '13.75 $'],
-        ];
-
-        $sut = $this->getSut('en');
-        foreach ($money as $entry) {
-            $amount = $entry[0];
-            $currency = $entry[1];
-            $expected = $entry[2];
-            $this->assertEquals($expected, $sut->money($amount, $currency));
-        }
     }
 
     public function testDuration()

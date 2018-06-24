@@ -57,7 +57,7 @@
             <tbody>
             {% for entry in model.calculator.entries %}
             <tr>
-                <td>{{ entry.begin|date(kimai_context.date_1) }}</td>
+                <td>{{ entry.begin|date_short }}</td>
                 <td>{{ entry.activity.name }} / {{ entry.activity.project.name }}</td>
                 <td>{{ entry.duration|duration }}</td>
             </tr>

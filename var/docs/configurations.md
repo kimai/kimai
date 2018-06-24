@@ -111,10 +111,5 @@ kimai:
             default:
                 begin: 15
                 end: 15
-
-twig:
-    globals:
-        kimai_context:
-            date_1: "Y-m-d"
 ```
 After changing the file you have to clear the cache with `bin/console cache:clear` or `bin/console cache:clear --env=prod`.

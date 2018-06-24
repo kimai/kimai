@@ -11,6 +11,8 @@ namespace App\Twig;
 
 use App\Entity\Timesheet;
 use App\Utils\Duration;
+use NumberFormatter;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Intl\Intl;
 use Twig\TwigFilter;
 
@@ -22,7 +24,12 @@ class Extensions extends \Twig_Extension
     /**
      * @var string[]
      */
-    private $locales;
+    protected $locales;
+
+    /**
+     * @var string
+     */
+    protected $locale;
 
     /**
      * @var Duration
@@ -30,11 +37,23 @@ class Extensions extends \Twig_Extension
     protected $durationFormatter;
 
     /**
+     * @var NumberFormatter
+     */
+    protected $numberFormatter;
+
+    /**
+     * @var RequestStack
+     */
+    protected $requestStack;
+
+    /**
      * Extensions constructor.
      * @param string $locales
+     * @param string $locale
      */
-    public function __construct($locales)
+    public function __construct(RequestStack $requestStack, $locales)
     {
+        $this->requestStack = $requestStack;
         $this->locales = explode('|', $locales);
         $this->durationFormatter = new Duration();
     }
@@ -49,7 +68,6 @@ class Extensions extends \Twig_Extension
             new TwigFilter('money', [$this, 'money']),
             new TwigFilter('currency', [$this, 'currency']),
             new TwigFilter('country', [$this, 'country']),
-            new TwigFilter('month_name', [$this, 'monthName']),
         ];
     }
 
@@ -108,21 +126,30 @@ class Extensions extends \Twig_Extension
      */
     public function money($amount, $currency = null)
     {
-        $result = number_format(round($amount, 2), 2);
+        $locale = $this->getLocale();
+
+        if ($this->locale !== $locale) {
+            $this->locale = $locale;
+            $this->numberFormatter = new NumberFormatter($locale, NumberFormatter::DECIMAL);
+        }
+
+        $fractionDigits = Intl::getCurrencyBundle()->getFractionDigits($currency);
+        $amount = round($amount, $fractionDigits);
+        $result = $this->numberFormatter->format($amount);
+
         if (null !== $currency) {
-            $result .= ' ' . Intl::getCurrencyBundle()->getCurrencySymbol($currency);
+            $result .= ' ' . Intl::getCurrencyBundle()->getCurrencySymbol($currency, $locale);
         }
 
         return $result;
     }
 
     /**
-     * @param \DateTime $date
      * @return string
      */
-    public function monthName(\DateTime $date)
+    protected function getLocale()
     {
-        return 'month.' . $date->format('n');
+        return $this->requestStack->getCurrentRequest()->getLocale();
     }
 
     /**

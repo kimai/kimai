@@ -111,6 +111,13 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->arrayNode('languages')
+                    ->arrayPrototype()
+                        ->children()
+                            ->scalarNode('date_short')->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end()
         ->end();
 

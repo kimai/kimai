@@ -82,7 +82,12 @@ services:
     # ================================================================================
 
     App\Twig\Extensions:
-        arguments: ['%app_locales%']
+        arguments:
+            $locales: "%app_locales%"
+
+    App\Twig\DateExtensions:
+        arguments:
+            $dateSettings: "%kimai.languages%"
 
     # ================================================================================
     # TIMESHEET RECORD CALCULATOR
