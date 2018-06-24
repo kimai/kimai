@@ -19,10 +19,15 @@ use Twig\TwigFilter;
  */
 class ExtensionsTest extends TestCase
 {
+    protected function getSut($locales)
+    {
+        return new Extensions($locales);
+    }
+
     public function testGetFilters()
     {
-        $filters = ['duration', 'money', 'currency', 'country'];
-        $sut = new Extensions('de');
+        $filters = ['duration', 'money', 'currency', 'country', 'month_name'];
+        $sut = $this->getSut('de');
         $twigFilters = $sut->getFilters();
         $this->assertCount(count($filters), $twigFilters);
         $i = 0;
@@ -35,7 +40,7 @@ class ExtensionsTest extends TestCase
     public function testGetFunctions()
     {
         $functions = ['locales'];
-        $sut = new Extensions('de');
+        $sut = $this->getSut('de');
         $twigFunctions = $sut->getFunctions();
         $this->assertCount(count($functions), $twigFunctions);
         $i = 0;
@@ -53,7 +58,7 @@ class ExtensionsTest extends TestCase
             ['code' => 'ru', 'name' => 'русский'],
         ];
 
-        $sut = new Extensions('en|de|ru');
+        $sut = $this->getSut('en|de|ru');
         $this->assertEquals($locales, $sut->getLocales());
     }
 
@@ -65,7 +70,7 @@ class ExtensionsTest extends TestCase
             'RUB' => 'RUB',
         ];
 
-        $sut = new Extensions('en');
+        $sut = $this->getSut('en');
         foreach ($symbols as $name => $symbol) {
             $this->assertEquals($symbol, $sut->currency($name));
         }
@@ -79,10 +84,30 @@ class ExtensionsTest extends TestCase
             'ES' => 'Spain',
         ];
 
-        $sut = new Extensions('en');
+        $sut = $this->getSut('en');
         foreach ($countries as $locale => $name) {
             $this->assertEquals($name, $sut->country($locale));
         }
+    }
+
+    /**
+     * @param \DateTime $date
+     * @param string $result
+     * @dataProvider getMonthData
+     */
+    public function testMonthName(\DateTime $date, $result)
+    {
+        $sut = $this->getSut('en');
+        $this->assertEquals($result, $sut->monthName($date));
+    }
+
+    public function getMonthData()
+    {
+        return [
+            [new \DateTime('January 2016'), 'month.1'],
+            [new \DateTime('2016-06-23'), 'month.6'],
+            [new \DateTime('2016-12-23'), 'month.12'],
+        ];
     }
 
     public function testMoney()
@@ -92,7 +117,7 @@ class ExtensionsTest extends TestCase
             [13.75, 'USD', '13.75 $'],
         ];
 
-        $sut = new Extensions('en');
+        $sut = $this->getSut('en');
         foreach ($money as $entry) {
             $amount = $entry[0];
             $currency = $entry[1];
@@ -105,7 +130,7 @@ class ExtensionsTest extends TestCase
     {
         $record = $this->getTimesheet(9437);
 
-        $sut = new Extensions('en');
+        $sut = $this->getSut('en');
         $this->assertEquals('02:37 h', $sut->duration($record->getDuration()));
         $this->assertEquals('02:37:17 h', $sut->duration($record->getDuration(), true));
 

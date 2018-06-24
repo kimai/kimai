@@ -49,6 +49,7 @@ class Extensions extends \Twig_Extension
             new TwigFilter('money', [$this, 'money']),
             new TwigFilter('currency', [$this, 'currency']),
             new TwigFilter('country', [$this, 'country']),
+            new TwigFilter('month_name', [$this, 'monthName']),
         ];
     }
 
@@ -113,6 +114,15 @@ class Extensions extends \Twig_Extension
         }
 
         return $result;
+    }
+
+    /**
+     * @param \DateTime $date
+     * @return string
+     */
+    public function monthName(\DateTime $date)
+    {
+        return 'month.' . $date->format('n');
     }
 
     /**

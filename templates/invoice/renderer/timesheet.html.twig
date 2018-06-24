@@ -23,7 +23,7 @@
             </tr>
             <tr>
                 <th style="width:50%">{{ 'label.date'|trans }}</th>
-                <td contenteditable="true">{{ model.invoiceDate|date('F Y') }}</td>
+                <td contenteditable="true">{{ model.invoiceDate|month_name|trans }} {{ model.invoiceDate|date('Y') }}</td>
             </tr>
             <tr>
                 <th>{{ 'label.customer'|trans }}</th>
