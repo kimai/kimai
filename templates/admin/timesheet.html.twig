@@ -33,7 +33,7 @@
 
     {% for entry in entries %}
         <tr>
-            <td>{{ entry.begin|date(kimai_context.date_1) }}</td>
+            <td>{{ entry.begin|date_short }}</td>
 
             {% if not duration_only %}
                 <td class="hidden-xs">{{ entry.begin|date("H:i") }}</td>

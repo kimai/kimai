@@ -33,6 +33,8 @@ class AppExtension extends Extension implements PrependExtensionInterface
             $config = [];
         }
 
+        $container->setParameter('kimai.languages', $config['languages']);
+
         $this->createTimesheetParameter($config, $container);
         $this->createInvoiceParameter($config, $container);
     }

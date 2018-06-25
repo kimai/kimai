@@ -35,10 +35,18 @@ kimai:
         number_generator:
             default: 'App\Invoice\DateNumberGenerator'
 
+    # Language specific settings, like the date formats
+    languages:
+        de:
+            date_short: "d.m.Y"
+        en:
+            date_short: "Y-m-d"
+        ru:
+            date_short: "d.m.Y"
+
 twig:
     globals:
         kimai_context:
-            date_1: "d.m.Y"         # used for display in timesheets
             box_color: "green"      # a color for ???
             active_warning: 3       # display a warning color if the user has at least X active recordings
             control_sidebar:        # all tabs in the control sidebar
