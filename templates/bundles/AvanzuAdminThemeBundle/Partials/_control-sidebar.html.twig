@@ -2,7 +2,7 @@
     <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
         {% if kimai_context.control_sidebar is defined %}
             {% for name, tab in kimai_context.control_sidebar %}
-                <li{% if loop.first %} class="active"{% endif %}><a href="#control-sidebar-{{ name }}-tab" data-toggle="tab"><i class="fa fa-{{ tab.icon }}"></i></a></li>
+                <li{% if loop.first %} class="active"{% endif %}><a href="#control-sidebar-{{ name }}-tab" data-toggle="tab"><i class="{{ tab.icon|icon(tab.icon) }}"></i></a></li>
             {% endfor %}
         {% endif %}
     </ul>

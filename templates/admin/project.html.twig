@@ -5,7 +5,7 @@
 
 {% block page_title %}{{ 'admin_project.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_project.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
-{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseProjectAdmin', 'plus-square': path('admin_project_create')}) }}{% endblock %}
+{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseProjectAdmin', 'create': path('admin_project_create')}) }}{% endblock %}
 
 {% block main_before %}
     {{ toolbar.toolbar(toolbarForm, 'collapseProjectAdmin') }}

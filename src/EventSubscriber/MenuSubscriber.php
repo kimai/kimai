@@ -63,7 +63,7 @@ class MenuSubscriber implements EventSubscriberInterface
 
         $menu = $event->getMenu();
         $menu->addItem(
-            new MenuItemModel('timesheet', 'menu.timesheet', 'timesheet', [], 'fa fa-clock-o')
+            new MenuItemModel('timesheet', 'menu.timesheet', 'timesheet', [], 'far fa-clock')
         );
 
         if (!$isTeamlead) {
@@ -71,7 +71,7 @@ class MenuSubscriber implements EventSubscriberInterface
         }
 
         $menu->addItem(
-            new MenuItemModel('invoice', 'menu.invoice', 'invoice', [], 'fa fa-print')
+            new MenuItemModel('invoice', 'menu.invoice', 'invoice', [], 'fas fa-file-invoice')
         );
     }
 
@@ -88,7 +88,7 @@ class MenuSubscriber implements EventSubscriberInterface
         }
 
         $menu->addChild(
-            new MenuItemModel('timesheet_admin', 'menu.admin_timesheet', 'admin_timesheet', [], 'fa fa-clock-o')
+            new MenuItemModel('timesheet_admin', 'menu.admin_timesheet', 'admin_timesheet', [], 'far fa-clock')
         );
 
         if (!$auth->isGranted('ROLE_ADMIN')) {
@@ -97,16 +97,16 @@ class MenuSubscriber implements EventSubscriberInterface
 
         if ($auth->isGranted('ROLE_SUPER_ADMIN')) {
             $menu->addChild(
-                new MenuItemModel('user_admin', 'menu.admin_user', 'admin_user', [], 'fa fa-user')
+                new MenuItemModel('user_admin', 'menu.admin_user', 'admin_user', [], 'fas fa-user')
             );
         }
 
         $menu->addChild(
-            new MenuItemModel('customer_admin', 'menu.admin_customer', 'admin_customer', [], 'fa fa-users')
+            new MenuItemModel('customer_admin', 'menu.admin_customer', 'admin_customer', [], 'fas fa-users')
         )->addChild(
-            new MenuItemModel('project_admin', 'menu.admin_project', 'admin_project', [], 'fa fa-book')
+            new MenuItemModel('project_admin', 'menu.admin_project', 'admin_project', [], 'fas fa-project-diagram')
         )->addChild(
-            new MenuItemModel('activity_admin', 'menu.admin_activity', 'admin_activity', [], 'fa fa-tasks')
+            new MenuItemModel('activity_admin', 'menu.admin_activity', 'admin_activity', [], 'fas fa-tasks')
         );
     }
 }

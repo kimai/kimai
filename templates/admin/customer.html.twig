@@ -5,7 +5,7 @@
 
 {% block page_title %}{{ 'admin_customer.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_customer.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
-{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseCustomerAdmin', 'plus-square': path('admin_customer_create')}) }}{% endblock %}
+{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseCustomerAdmin', 'create': path('admin_customer_create')}) }}{% endblock %}
 
 {% block main_before %}
     {{ toolbar.toolbar(toolbarForm, 'collapseCustomerAdmin') }}

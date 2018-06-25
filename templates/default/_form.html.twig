@@ -3,7 +3,7 @@
         <h3 class="box-title">
             {{ title }}
             {% if form.vars.documentation is defined and form.vars.documentation is not empty %}
-                <a href="{{ path('help_chapter', {'chapter': form.vars.documentation}) }}"><i class="fa fa-question-circle"></i></a>
+                <a href="{{ path('help_chapter', {'chapter': form.vars.documentation}) }}"><i class="{{ 'help'|icon }}"></i></a>
             {% endif %}
         </h3>
     </div>
