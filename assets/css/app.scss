@@ -109,6 +109,26 @@ li.open .ticktac i.running{
     left: 80px;
 }
 
+/* ================================ FONT AWESOME 5 ================================ */
+.sidebar-menu>li>a>.far,
+.sidebar-menu>li>a>.fas,
+.sidebar-menu>li>a>.fal,
+.sidebar-menu>li>a>.fab {
+    width: 20px;
+}
+
+.sidebar-menu .treeview-menu>li>a>.far,
+.sidebar-menu .treeview-menu>li>a>.fas,
+.sidebar-menu .treeview-menu>li>a>.fal,
+.sidebar-menu .treeview-menu>li>a>.fab {
+    width: 20px;
+}
+
+.main-header .sidebar-toggle {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
 /* ================================ FOOTER ================================ */
 
 footer.main-footer {

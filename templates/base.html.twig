@@ -52,14 +52,14 @@
         {% if is_granted('ROLE_USER') %}
             <li class="visible-xs-inline-block">
                 <a href="{{ path('timesheet') }}" class="ddt-large">
-                    <i class="fa fa-clock-o fa-2x"></i>
+                    <i class="{{ 'timesheet'|icon }} fa-2x"></i>
                 </a>
             </li>
         {% endif %}
         {% if is_granted('ROLE_TEAMLEAD') %}
             <li class="visible-xs-inline-block">
                 <a href="{{ path('invoice') }}" class="ddt-large">
-                    <i class="fa fa-print fa-2x"></i>
+                    <i class="{{ 'invoice'|icon }} fa-2x"></i>
                 </a>
             </li>
         {% endif %}

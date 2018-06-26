@@ -20,7 +20,7 @@ global.Chart = Chart;
 require('../css/vendor.scss');
 require('../../vendor/almasaeed2010/adminlte/dist/css/AdminLTE.min.css');
 require('../../vendor/almasaeed2010/adminlte/dist/css/skins/_all-skins.css');
-require('../css/kimai.scss');
+require('../css/app.scss');
 
 global.$.AdminLTE = {};
 global.$.AdminLTE.options = {};

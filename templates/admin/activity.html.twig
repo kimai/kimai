@@ -5,7 +5,7 @@
 
 {% block page_title %}{{ 'admin_activity.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_activity.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
-{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseActivityAdmin', 'plus-square': path('admin_activity_create')}) }}{% endblock %}
+{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseActivityAdmin', 'create': path('admin_activity_create')}) }}{% endblock %}
 
 {% block main_before %}
     {{ toolbar.toolbar(toolbarForm, 'collapseActivityAdmin') }}

@@ -4,7 +4,7 @@
 
 {% block page_title %}{{ 'admin_invoice_template.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_invoice_template.subtitle'|trans }}{% endblock %}
-{% block page_actions %}{{ widgets.page_actions({'plus-square': path('admin_invoice_template_create'), 'print': path('invoice')}) }}{% endblock %}
+{% block page_actions %}{{ widgets.page_actions({'create': path('admin_invoice_template_create'), 'invoice': path('invoice')}) }}{% endblock %}
 
 {% block main %}
     {% if entries.count == 0 %}

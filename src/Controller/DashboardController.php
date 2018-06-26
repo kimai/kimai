@@ -62,7 +62,7 @@ class DashboardController extends Controller
 
     /**
      * colors: blue / yellow / purple / green / black
-     * icons: bar-chart / line-chart / calendar / clock-o
+     * icons: bar-chart / line-chart / calendar / clock
      *
      * @return array
      */
@@ -74,9 +74,9 @@ class DashboardController extends Controller
             [
                 'header' => 'dashboard.you',
                 'widgets' => [
-                    "{{ widgets.info_box_progress('Bewilligte Stunden', 'Stunden zur Abrechnung bewilligt', 120, 10, 'star-o') }}",
+                    "{{ widgets.info_box_progress('Bewilligte Stunden', 'Stunden zur Abrechnung bewilligt', 120, 10, 'star') }}",
                     "{{ widgets.info_box_progress('Umsatz / Monat', '70% Increase in 30 Days', 6830, 30, 'credit-card', 'black') }}",
-                    "{{ widgets.info_box_progress('Stunden persönlich', 'Das ist noch nicht genug', 135, 60, 'hourglass-o') }}",
+                    "{{ widgets.info_box_progress('Stunden persönlich', 'Das ist noch nicht genug', 135, 60, 'hourglass') }}",
                     "{{ widgets.info_box_progress('Anzahl Benutzer', 'Mehr ist besser!', 5, 90, 'user') }}",
                 ],
             ],
@@ -85,9 +85,9 @@ class DashboardController extends Controller
                 'id' => 'profile.stats',
                 'header' => 'dashboard.you',
                 'widgets' => [
-                    "{{ widgets.info_box_counter('stats.durationThisMonth', timesheetUser.durationThisMonth|duration(true), 'hourglass-o', 'green') }}",
+                    "{{ widgets.info_box_counter('stats.durationThisMonth', timesheetUser.durationThisMonth|duration(true), 'far fa-hourglass', 'green') }}",
                     //"{{ widgets.info_box_counter('stats.amountThisMonth', timesheetUser.amountThisMonth|money, 'money', 'blue') }}",
-                    "{{ widgets.info_box_counter('stats.durationTotal', timesheetUser.durationTotal|duration(true), 'hourglass-o', 'red') }}",
+                    "{{ widgets.info_box_counter('stats.durationTotal', timesheetUser.durationTotal|duration(true), 'far fa-hourglass', 'red') }}",
                     //"{{ widgets.info_box_counter('stats.amountTotal', timesheetUser.amountTotal|money, 'money', 'yellow') }}",
                 ],
             ],
@@ -101,11 +101,11 @@ class DashboardController extends Controller
             'id' => 'alluser.stats',
             'header' => 'dashboard.all',
             'widgets' => [
-                "{{ widgets.info_box_counter('stats.durationThisMonth', timesheetGlobal.durationThisMonth|duration(true), 'hourglass-o', 'blue') }}",
+                "{{ widgets.info_box_counter('stats.durationThisMonth', timesheetGlobal.durationThisMonth|duration(true), 'far fa-hourglass', 'blue') }}",
                 //"{{ widgets.info_box_counter('stats.amountThisMonth', timesheetGlobal.amountThisMonth|money, 'money', 'green') }}",
-                "{{ widgets.info_box_counter('stats.durationTotal', timesheetGlobal.durationTotal|duration(true), 'hourglass-o', 'yellow') }}",
+                "{{ widgets.info_box_counter('stats.durationTotal', timesheetGlobal.durationTotal|duration(true), 'far fa-hourglass', 'yellow') }}",
                 //"{{ widgets.info_box_counter('stats.amountTotal', timesheetGlobal.amountTotal|money, 'money', 'red') }}",
-                "{{ widgets.info_box_counter('stats.activeRecordings', timesheetGlobal.activeCurrently, 'hourglass-o', 'red', path('admin_timesheet', {'state': " . TimesheetQuery::STATE_RUNNING . '})) }}',
+                "{{ widgets.info_box_counter('stats.activeRecordings', timesheetGlobal.activeCurrently, 'far fa-hourglass', 'red', path('admin_timesheet', {'state': " . TimesheetQuery::STATE_RUNNING . '})) }}',
             ],
         ];
 
@@ -128,9 +128,9 @@ class DashboardController extends Controller
             'header' => 'dashboard.admin',
             'widgets' => [
                 "{{ widgets.info_box_more('stats.userTotal', user.totalAmount, ' ', path('admin_user'), 'user') }}",
-                "{{ widgets.info_box_more('stats.customerTotal', customer.count, '', path('admin_customer'), 'users', 'blue') }}",
-                "{{ widgets.info_box_more('stats.projectsTotal', project.count, '', path('admin_project'), 'book', 'yellow') }}",
-                "{{ widgets.info_box_more('stats.activitiesTotal', activity.count, '', path('admin_activity'), 'tasks', 'purple') }}",
+                "{{ widgets.info_box_more('stats.customerTotal', customer.count, '', path('admin_customer'), 'customer', 'blue') }}",
+                "{{ widgets.info_box_more('stats.projectsTotal', project.count, '', path('admin_project'), 'project', 'yellow') }}",
+                "{{ widgets.info_box_more('stats.activitiesTotal', activity.count, '', path('admin_activity'), 'activity', 'purple') }}",
             ],
         ];
         // @codingStandardsIgnoreEnd

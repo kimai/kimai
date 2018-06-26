@@ -51,8 +51,8 @@ twig:
             active_warning: 3       # display a warning color if the user has at least X active recordings
             control_sidebar:        # all tabs in the control sidebar
                 settings:
-                    icon: gears
+                    icon: "fas fa-cogs"
                     controller: 'App\Controller\SidebarController::settingsAction'
                 home:
-                    icon: question-circle-o
+                    icon: "fas fa-question-circle"
                     template: sidebar/home.html.twig

@@ -68,6 +68,7 @@ class Extensions extends \Twig_Extension
             new TwigFilter('money', [$this, 'money']),
             new TwigFilter('currency', [$this, 'currency']),
             new TwigFilter('country', [$this, 'country']),
+            new TwigFilter('icon', [$this, 'icon']),
         ];
     }
 
@@ -117,6 +118,42 @@ class Extensions extends \Twig_Extension
     public function country($country)
     {
         return Intl::getRegionBundle()->getCountryName($country);
+    }
+
+    /**
+     * @param string $name
+     * @param string $default
+     * @return string
+     */
+    public function icon($name, $default = '')
+    {
+        $icons = [
+            'user' => 'fas fa-user',
+            'customer' => 'fas fa-users',
+            'project' => 'fas fa-project-diagram',
+            'activity' => 'fas fa-tasks',
+            'admin' => 'fas fa-wrench',
+            'invoice' => 'fas fa-file-invoice',
+            'timesheet' => 'far fa-clock',
+            'dashboard' => 'fas fa-tachometer-alt',
+            'logout' => 'fas fa-sign-out-alt',
+            'trash' => 'far fa-trash-alt',
+            'delete' => 'far fa-trash-alt',
+            'repeat' => 'fas fa-redo-alt',
+            'edit' => 'far fa-edit',
+            'manual' => 'fas fa-book',
+            'help' => 'far fa-question-circle',
+            'start' => 'fas fa-play-circle',
+            'start-small' => 'fas fa-play-circle',
+            'stop' => 'fas fa-stop',
+            'stop-small' => 'far fa-stop-circle',
+            'filter' => 'fas fa-filter',
+            'create' => 'far fa-plus-square',
+            'list' => 'fas fa-list',
+            'print' => 'fas fa-print',
+        ];
+
+        return $icons[$name] ?? $default;
     }
 
     /**

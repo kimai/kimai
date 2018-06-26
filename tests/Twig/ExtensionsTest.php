@@ -38,7 +38,7 @@ class ExtensionsTest extends TestCase
 
     public function testGetFilters()
     {
-        $filters = ['duration', 'money', 'currency', 'country'];
+        $filters = ['duration', 'money', 'currency', 'country', 'icon'];
         $sut = $this->getSut('de');
         $twigFilters = $sut->getFilters();
         $this->assertCount(count($filters), $twigFilters);
@@ -118,9 +118,9 @@ class ExtensionsTest extends TestCase
     public function getMoneyData()
     {
         return [
+            ['2.345 €', 2345, 'EUR', 'de'],
             ['2,345 €', 2345, 'EUR', 'en'],
-            ['2,345 €', 2345, 'EUR', 'en'],
-            ['2.345,01 €', 2345.009, 'EUR', 'de'],
+            ['2,345.01 €', 2345.009, 'EUR', 'en'],
             ['2.345,01 €', 2345.009, 'EUR', 'de'],
             ['13.75 $', 13.75, 'USD', 'en'],
             ['13,75 $', 13.75, 'USD', 'de'],
@@ -156,5 +156,44 @@ class ExtensionsTest extends TestCase
         $record->setDuration($seconds);
 
         return $record;
+    }
+
+    public function testIcon()
+    {
+        $icons = [
+            'user' => 'fas fa-user',
+            'customer' => 'fas fa-users',
+            'project' => 'fas fa-project-diagram',
+            'activity' => 'fas fa-tasks',
+            'admin' => 'fas fa-wrench',
+            'invoice' => 'fas fa-file-invoice',
+            'timesheet' => 'far fa-clock',
+            'dashboard' => 'fas fa-tachometer-alt',
+            'logout' => 'fas fa-sign-out-alt',
+            'trash' => 'far fa-trash-alt',
+            'delete' => 'far fa-trash-alt',
+            'repeat' => 'fas fa-redo-alt',
+            'edit' => 'far fa-edit',
+            'manual' => 'fas fa-book',
+            'help' => 'far fa-question-circle',
+            'start' => 'fas fa-play-circle',
+            'start-small' => 'fas fa-play-circle',
+            'stop' => 'fas fa-stop',
+            'stop-small' => 'far fa-stop-circle',
+            'filter' => 'fas fa-filter',
+            'create' => 'far fa-plus-square',
+            'list' => 'fas fa-list',
+            'print' => 'fas fa-print',
+        ];
+
+        $sut = $this->getSut('en');
+        foreach ($icons as $icon => $class) {
+            $result = $sut->icon($icon);
+            $this->assertNotEmpty($result);
+            $this->assertInternalType('string', $result);
+        }
+
+        $this->assertEquals('', $sut->icon('foo'));
+        $this->assertEquals('bar', $sut->icon('foo', 'bar'));
     }
 }

@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-xs-12">
         <h2 class="page-header">
-            <i class="fa fa-globe"></i> <span contenteditable="true">{{ model.template.title }}</span>
+            <span contenteditable="true">{{ model.template.title }}</span>
             <small class="pull-right">{{ 'label.date'|trans }}: {{ model.invoiceDate|date_short }}</small>
         </h2>
     </div>
@@ -110,7 +110,7 @@
 <div class="row no-print">
     <div class="col-xs-12">
         <button type="button" class="btn btn-success pull-right" onclick="window.print();return false;" style="margin-right: 5px;">
-            <i class="fa fa-print"></i> {{ 'button.print'|trans }}
+            <i class="{{ 'print'|icon }}"></i> {{ 'button.print'|trans }}
         </button>
     </div>
 </div>

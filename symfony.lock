@@ -3,7 +3,7 @@
         "version": "v2.3.11"
     },
     "avanzu/admin-theme-bundle": {
-        "version": "dev-master"
+        "version": "dev-kevinpapst"
     },
     "beberlei/doctrineextensions": {
         "version": "v1.0.20"
