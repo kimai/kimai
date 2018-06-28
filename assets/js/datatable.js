@@ -5,6 +5,7 @@
  * file that was distributed with this source code.
  */
 
+/** global: Cookies */
 global.Cookies = require('js-cookie');
 
 if (typeof jQuery === 'undefined') {
@@ -27,8 +28,8 @@ $(function() {
         saveVisibility: function (modalSelector) {
             var settings = {};
             var cookieName = $(modalSelector).find('form').attr('name');
-            var columns = $(modalSelector).find('form').find('input:checkbox:not(:checked)').each(
-                function (i) {
+            $(modalSelector).find('form').find('input:checkbox:not(:checked)').each(
+                function () {
                     settings[$(this).attr('name')] = $(this).is(':checked');
                 }
             );
@@ -49,12 +50,12 @@ $(function() {
             var header = $(tbl.find('th').get(column));
             if (header.css("display") === "none") {
                 header.show();
-                tbl.find('tr').each(function(i){
+                tbl.find('tr').each(function(){
                     $($(this).find('td').get(column)).show('ease');
                 });
             } else {
                 header.hide();
-                tbl.find('tr').each(function(i){
+                tbl.find('tr').each(function(){
                     $($(this).find('td').get(column)).hide('ease');
                 });
             }
