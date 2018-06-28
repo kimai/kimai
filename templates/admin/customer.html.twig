@@ -5,7 +5,7 @@
 
 {% block page_title %}{{ 'admin_customer.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_customer.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
-{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseCustomerAdmin', 'create': path('admin_customer_create')}) }}{% endblock %}
+{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseCustomerAdmin', 'visibility': '#modal_customer_admin', 'create': path('admin_customer_create')}) }}{% endblock %}
 
 {% block main_before %}
     {{ toolbar.toolbar(toolbarForm, 'collapseCustomerAdmin') }}
@@ -16,31 +16,35 @@
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% endif %}
 
-    {{ tables.data_table_header({
-        'label.name': '',
-        'label.project': '',
-        'label.comment': 'hidden-xs',
-        'label.country': 'hidden-xs',
-        'label.customer_number': 'hidden-xs',
-        'label.currency': 'hidden-xs',
-        'label.visible': 'hidden-xs',
-        'label.actions': '',
-    }) }}
+    {% set columns = {
+        'name': 'alwaysVisible',
+        'project': '',
+        'comment': 'hidden-xs',
+        'country': 'hidden-xs',
+        'customer_number': 'hidden-xs',
+        'currency': 'hidden-xs',
+        'visible': 'hidden-xs',
+        'actions': 'alwaysVisible',
+    } %}
+
+    {% set tableName = 'customer_admin' %}
+
+    {{ tables.data_table_header(tableName, columns) }}
 
     {% for entry in entries %}
         <tr>
             <td>{{ entry.name }} {% if entry.company is not empty %}({{ entry.company }}){% endif %}</td>
-            <td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">
                 {% for project in entry.projects %}
                     <a href="{{ path('admin_project_edit', {'id' : project.id}) }}">{{ widgets.label_project(project) }}</a>
                     <br class="visible-xs-block">
                 {% endfor %}
             </td>
-            <td class="hidden-xs">{{ entry.comment }}</td>
-            <td class="hidden-xs">{{ entry.country|country }}</td>
-            <td class="hidden-xs">{{ entry.number }}</td>
-            <td class="hidden-xs">{{ entry.currency }} {{ entry.currency|currency }}</td>
-            <td class="hidden-xs">{{ widgets.label_visible(entry.visible) }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'country') }}">{{ entry.country|country }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'customer_number') }}">{{ entry.number }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'currency') }}">{{ entry.currency }} {{ entry.currency|currency }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
             <td>
                 {% set actionButtons = {} %}
                 {% if is_granted('edit', entry) %}

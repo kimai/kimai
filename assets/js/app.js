@@ -28,6 +28,7 @@ require('../../vendor/almasaeed2010/adminlte/dist/js/app.js');
 
 // ------ Kimai itself ------
 require('./kimai.js');
+require('./datatable.js');
 require('./toolbar.js');
 require('../images/default_avatar.png');
 

@@ -3,9 +3,15 @@
     <div class="breadcrumb">
         <div class="box-tools">
             <div class="btn-group">
-                {% for icon,url in tools  %}
-                    <a class="btn btn-default" href="{{ url }}"{% if '#collapse' in url %} data-toggle="collapse" {% endif %}><i class="{{ icon|icon(icon) }}"></i></a>
-                {% endfor %}
+                {%- for icon,url in tools  %}
+                    <a class="btn btn-default" href="{{ url }}"
+                            {% if '#collapse' in url %}
+                                data-toggle="collapse"
+                            {% elseif '#modal' in url %}
+                                data-toggle="modal" data-target="{{ url }}"
+                            {% endif %}
+                    ><i class="{{ icon|icon(icon) }}"></i></a>
+                {% endfor -%}
             </div>
         </div>
     </div>
