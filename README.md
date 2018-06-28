@@ -113,24 +113,24 @@ npm run prod
 
 ### Installation (production)
 
-Lets prepare the environment by installing all dependencies:
-
-```bash
-composer install --no-dev
-```
-
 Make sure the [directories are read and writable by your webserver](https://symfony.com/doc/current/setup/file_permissions.html):
 ```bash
 chown -R www-data var/
 chmod -R 777 var/
 ```
 
-The database to use is up to you, but we would not recommend using the default SQLite database for production usage.
-Please create your database and configure the connection string in your environment, e.g. with the `.env` file:
+The database is up to you, but we would not recommend using the default SQLite database for production usage.
+Please create your database and configure the connection string in your environment, e.g. with the `.env` file (more examples in `.env.dist`):
 ```
 APP_ENV=prod
-DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
 APP_SECRET=insert_a_random_secret_string_for_production
+DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
+```
+
+After activating `prod` environment you can prepare the environment by installing all dependencies:
+
+```bash
+composer install --no-dev
 ```
 
 Create the database schemas and warm up the cache (as webserver user):
