@@ -11,13 +11,13 @@
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% endif %}
 
-    {{ tables.data_table_header({
-        'label.name': '',
-        'label.title': '',
-        'label.due_days': 'hidden-xs',
-        'label.vat': 'hidden-xs',
-        'label.invoice_renderer': 'hidden-xs',
-        'label.actions': '',
+    {{ tables.data_table_header('invoice_template', {
+        'name': 'alwaysVisible',
+        'title': '',
+        'due_days': 'hidden-xs',
+        'vat': 'hidden-xs',
+        'invoice_renderer': 'hidden-xs',
+        'actions': 'alwaysVisible',
     }) }}
 
     {% for entry in entries %}

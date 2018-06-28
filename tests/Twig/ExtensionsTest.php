@@ -51,7 +51,7 @@ class ExtensionsTest extends TestCase
 
     public function testGetFunctions()
     {
-        $functions = ['locales'];
+        $functions = ['locales', 'is_visible_column'];
         $sut = $this->getSut('de');
         $twigFunctions = $sut->getFunctions();
         $this->assertCount(count($functions), $twigFunctions);
@@ -184,6 +184,7 @@ class ExtensionsTest extends TestCase
             'create' => 'far fa-plus-square',
             'list' => 'fas fa-list',
             'print' => 'fas fa-print',
+            'visibility' => 'far fa-eye',
         ];
 
         $sut = $this->getSut('en');

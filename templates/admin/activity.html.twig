@@ -5,7 +5,7 @@
 
 {% block page_title %}{{ 'admin_activity.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_activity.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
-{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseActivityAdmin', 'create': path('admin_activity_create')}) }}{% endblock %}
+{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseActivityAdmin', 'visibility': '#modal_activity_admin', 'create': path('admin_activity_create')}) }}{% endblock %}
 
 {% block main_before %}
     {{ toolbar.toolbar(toolbarForm, 'collapseActivityAdmin') }}
@@ -16,26 +16,30 @@
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% endif %}
 
-    {{ tables.data_table_header({
-        'label.name': '',
-        'label.customer': 'hidden-xs',
-        'label.project': '',
-        'label.comment': 'hidden-xs',
-        'label.visible': 'hidden-xs',
-        'label.actions': '',
-    }) }}
+    {% set columns = {
+        'name': 'alwaysVisible',
+        'customer': 'hidden-xs',
+        'project': '',
+        'comment': 'hidden-xs',
+        'visible': 'hidden-xs',
+        'actions': 'alwaysVisible',
+    } %}
+
+    {% set tableName = 'activity_admin' %}
+
+    {{ tables.data_table_header(tableName, columns) }}
 
     {% for entry in entries %}
         <tr>
             <td>{{ entry.name }}</td>
-            <td class="hidden-xs">
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">
                 <a href="{{ path('admin_customer_edit', {'id' : entry.project.customer.id}) }}">{{ widgets.label_customer(entry.project.customer) }}</a>
             </td>
-            <td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">
                 <a href="{{ path('admin_project_edit', {'id' : entry.project.id}) }}">{{ widgets.label_project(entry.project) }}</a>
             </td>
-            <td class="hidden-xs">{{ entry.comment }}</td>
-            <td class="hidden-xs">{{ widgets.label_visible(entry.visible) }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
             <td>
                 {% set actionButtons = {} %}
                 {% if is_granted('edit', entry) %}

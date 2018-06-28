@@ -243,6 +243,10 @@
                 <source>action.back</source>
                 <target>Back</target>
             </trans-unit>
+            <trans-unit id="action.close">
+                <source>action.close</source>
+                <target>Close</target>
+            </trans-unit>
 
             <!--
               Dashboard
@@ -310,6 +314,14 @@
             <trans-unit id="label.end">
                 <source>label.end</source>
                 <target>To</target>
+            </trans-unit>
+            <trans-unit id="modal.columns.title">
+                <source>modal.columns.title</source>
+                <target>Change column visibility</target>
+            </trans-unit>
+            <trans-unit id="modal.columns.description">
+                <source>modal.columns.description</source>
+                <target>Upon saving the un-checked columns will be hidden and this setting will be stored in a browser cookie. If you delete your cookies, the settings will be reversed.</target>
             </trans-unit>
 
             <!--

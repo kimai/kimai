@@ -1,10 +1,62 @@
 
-{% macro data_table_header(entries, form, collapseClass) %}
-<div class="box data_table">
+{% macro data_table_column_modal(name, entries) %}
+<div class="modal fade" id="modal_{{ name }}" tabindex="-1" role="dialog" aria-labelledby="data_table_modal_label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">{{ 'modal.columns.title'|trans }}</h4>
+            </div>
+            <div class="modal-body">
+                <form name="{{ name }}_visibility">
+                {% for title, class in entries %}
+                    {% if 'alwaysVisible' not in class %}
+                    <div class="form-group {{ class }}">
+                        <input type="checkbox" id="column_{{ title }}" name="{{ title }}"{% if is_visible_column(name, title) %} checked="checked"{% endif %}>
+                        <label class="control-label required" for="column_{{ title }}">{{ ('label.' ~ title)|trans }}</label>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+                </form>
+                <p>{{ 'modal.columns.description'|trans }}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'action.close'|trans }}</button>
+                <button type="button" class="btn btn-primary" onclick="$.datatable.saveVisibility('#modal_{{ name }}')">{{ 'action.save'|trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endmacro %}
+
+{% macro data_table_column_class(name, entries, column) %}
+{% spaceless %}
+    {% set class = '' %}
+    {% set always = false %}
+    {% if entries[column] is defined %}
+        {% set class = entries[column] %}
+        {% if 'alwaysVisible' in entries[column] %}
+            {% set always = true %}
+        {% endif %}
+    {% endif %}
+    {% if (always == false) and (not is_visible_column(name, column)) %}
+        {% set class = class ~ ' hidden' %}
+    {% endif %}
+    {% if not class is empty %}
+    {{ class }}
+    {% endif %}
+{% endspaceless %}
+{% endmacro %}
+
+{% macro data_table_header(name, entries, form, collapseClass) %}
+{% import _self as macro %}
+{{ macro.data_table_column_modal(name, entries) }}
+<div class="box data_table" id="datatable_{{ name }}">
     {% if form %}
         {% import "macros/toolbar.html.twig" as macro %}
         {{ macro.toolbar(form, collapseClass) }}
     {% endif %}
+
     <div class="box-body no-padding">
         <div class="dataTables_wrapper form-inline dt-bootstrap">
             <div class="row">
@@ -17,9 +69,9 @@
                         <thead>
                         <tr>
                             {% for title, class in entries %}
-                            <th{% if class %} class="{{ class }}"{% endif %}>
-                                {{ title|trans }}
-                            </th>
+                                <th class="{{ macro.data_table_column_class(name, entries, title) }}">
+                                    {{ ('label.' ~ title)|trans }}
+                                </th>
                             {% endfor %}
                         </tr>
                         </thead>

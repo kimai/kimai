@@ -235,6 +235,10 @@
                 <source>action.back</source>
                 <target>Zurück</target>
             </trans-unit>
+            <trans-unit id="action.close">
+                <source>action.close</source>
+                <target>Schließen</target>
+            </trans-unit>
 
             <!--
               Dashboard
@@ -302,6 +306,14 @@
             <trans-unit id="label.end">
                 <source>label.end</source>
                 <target>Bis</target>
+            </trans-unit>
+            <trans-unit id="modal.columns.title">
+                <source>modal.columns.title</source>
+                <target>Ändere Spalten-Sichtbarkeit</target>
+            </trans-unit>
+            <trans-unit id="modal.columns.description">
+                <source>modal.columns.description</source>
+                <target>Beim Speichern werden die nicht ausgewählten Spalten ausgeblendet und diese Einstellungen in einem Browser Cookie hinterlegt. Sollten Sie Ihre Cookies löschen, werden die Einstellungen rückgängig gemacht.</target>
             </trans-unit>
 
             <!--

@@ -47,6 +47,41 @@ class Extensions extends \Twig_Extension
     protected $requestStack;
 
     /**
+     * @var array
+     */
+    protected $cookies = [];
+
+    /**
+     * @var string[]
+     */
+    protected static $icons = [
+        'user' => 'fas fa-user',
+        'customer' => 'fas fa-users',
+        'project' => 'fas fa-project-diagram',
+        'activity' => 'fas fa-tasks',
+        'admin' => 'fas fa-wrench',
+        'invoice' => 'fas fa-file-invoice',
+        'timesheet' => 'far fa-clock',
+        'dashboard' => 'fas fa-tachometer-alt',
+        'logout' => 'fas fa-sign-out-alt',
+        'trash' => 'far fa-trash-alt',
+        'delete' => 'far fa-trash-alt',
+        'repeat' => 'fas fa-redo-alt',
+        'edit' => 'far fa-edit',
+        'manual' => 'fas fa-book',
+        'help' => 'far fa-question-circle',
+        'start' => 'fas fa-play-circle',
+        'start-small' => 'fas fa-play-circle',
+        'stop' => 'fas fa-stop',
+        'stop-small' => 'far fa-stop-circle',
+        'filter' => 'fas fa-filter',
+        'create' => 'far fa-plus-square',
+        'list' => 'fas fa-list',
+        'print' => 'fas fa-print',
+        'visibility' => 'far fa-eye',
+    ];
+
+    /**
      * Extensions constructor.
      * @param string $locales
      * @param string $locale
@@ -79,7 +114,40 @@ class Extensions extends \Twig_Extension
     {
         return [
             new \Twig_SimpleFunction('locales', [$this, 'getLocales']),
+            new \Twig_SimpleFunction('is_visible_column', [$this, 'isColumnVisible']),
         ];
+    }
+
+    /**
+     * This is only for datatables, do not use it outside this context.
+     *
+     * @param string $dataTable
+     * @param string $column
+     * @return bool
+     */
+    public function isColumnVisible(string $dataTable, string $column)
+    {
+        // TODO name handling could be improved, as now this info is spread in datatables.html.twig and here
+        $dataTable = $dataTable . '_visibility';
+
+        if (!isset($this->cookies[$dataTable])) {
+            $visibility = false;
+            if ($this->requestStack->getCurrentRequest()->cookies->has($dataTable)) {
+                $visibility = json_decode($this->requestStack->getCurrentRequest()->cookies->get($dataTable), true);
+            }
+            $this->cookies[$dataTable] = $visibility;
+        }
+        $values = $this->cookies[$dataTable];
+
+        if (empty($values) || !is_array($values)) {
+            return true;
+        }
+
+        if (isset($values[$column]) && $values[$column] === false) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -127,33 +195,7 @@ class Extensions extends \Twig_Extension
      */
     public function icon($name, $default = '')
     {
-        $icons = [
-            'user' => 'fas fa-user',
-            'customer' => 'fas fa-users',
-            'project' => 'fas fa-project-diagram',
-            'activity' => 'fas fa-tasks',
-            'admin' => 'fas fa-wrench',
-            'invoice' => 'fas fa-file-invoice',
-            'timesheet' => 'far fa-clock',
-            'dashboard' => 'fas fa-tachometer-alt',
-            'logout' => 'fas fa-sign-out-alt',
-            'trash' => 'far fa-trash-alt',
-            'delete' => 'far fa-trash-alt',
-            'repeat' => 'fas fa-redo-alt',
-            'edit' => 'far fa-edit',
-            'manual' => 'fas fa-book',
-            'help' => 'far fa-question-circle',
-            'start' => 'fas fa-play-circle',
-            'start-small' => 'fas fa-play-circle',
-            'stop' => 'fas fa-stop',
-            'stop-small' => 'far fa-stop-circle',
-            'filter' => 'fas fa-filter',
-            'create' => 'far fa-plus-square',
-            'list' => 'fas fa-list',
-            'print' => 'fas fa-print',
-        ];
-
-        return $icons[$name] ?? $default;
+        return self::$icons[$name] ?? $default;
     }
 
     /**
