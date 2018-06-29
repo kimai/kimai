@@ -432,7 +432,7 @@
         }
     },
     "symfony/thanks": {
-        "version": "v1.0.1"
+        "version": "v1.0.7"
     },
     "symfony/translation": {
         "version": "3.3",

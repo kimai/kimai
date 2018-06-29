@@ -5,7 +5,9 @@
     "description": "Kimai Time-Tracking 2",
     "require": {
         "php": "^7.1.3",
+        "ext-pdo": "*",
         "ext-pdo_sqlite": "*",
+        "ext-intl": "*",
         "avanzu/admin-theme-bundle": "dev-kevinpapst",
         "beberlei/DoctrineExtensions": "^1.0",
         "erusev/parsedown": "^1.6",
@@ -25,7 +27,6 @@
         "symfony/security-bundle": "^4.0",
         "symfony/security-csrf": "^4.0",
         "symfony/swiftmailer-bundle": "^3.1",
-        "symfony/thanks": "^1.0",
         "symfony/translation": "^4.0",
         "symfony/twig-bundle": "^4.0",
         "symfony/validator": "^4.0",
@@ -45,6 +46,7 @@
         "symfony/debug-pack": "^1.0",
         "symfony/maker-bundle": "^1.0",
         "symfony/phpunit-bridge": "^4.0",
+        "symfony/thanks": "^1.0",
         "symfony/web-server-bundle": "^4.0"
     },
     "config": {
