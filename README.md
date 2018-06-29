@@ -19,10 +19,11 @@ It is based on a lot of great frameworks. Special thanks to [Symfony v4](https:/
 ### Requirements
 
 - PHP 7.1.3 or higher
-- One PHP extension of PDO-SQLite or PDO-MySQL enabled (it might work with PostgreSQL and Oracle as well, but that wasn't tested and is not officially supported)
+- One PHP extension of [PDO-SQLite](https://php.net/manual/en/ref.pdo-sqlite.php) or [PDO-MySQL](https://php.net/manual/en/ref.pdo-mysql.php) enabled (it might work with PostgreSQL and Oracle as well, but that wasn't tested and is not officially supported)
+- The PHP extension [intl](https://php.net/manual/en/book.intl.php)
 - the [usual Symfony application requirements](http://symfony.com/doc/current/reference/requirements.html)
 - Kimai needs to be installed in the root directory of a domain or you need to [recompile the frontend assets](var/docs/developers.md)
-- a modern browser, Kimai v2 might be broken on old browsers like the IE 9
+- a modern browser, Kimai v2 might be broken on old browsers like IE 9
 
 ## Documentation & Roadmap
 
