@@ -158,6 +158,11 @@ For available roles, please refer to the [user documentation](var/docs/users.md)
 
 That's it, you can start time-tracking :-)
 
+### Install with YunoHost
+[![Install kimai2 with YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=kimai2)
+
+Kimai 2 package for [YunoHost](https://yunohost.org). See [here](https://github.com/YunoHost-Apps/kimai2_ynh)
+
 ### Importing data from Kimai v1
 
 Before importing your data from a Kimai v1 installation, please read the following carefully:
