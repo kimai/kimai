@@ -683,6 +683,14 @@
                 <source>invoice.service_date</source>
                 <target>Leistungsdatum</target>
             </trans-unit>
+            <trans-unit id="invoice.preview">
+                <source>invoice.preview</source>
+                <target>Vorschau</target>
+            </trans-unit>
+            <trans-unit id="invoice.preview_info">
+                <source>invoice.preview_info</source>
+                <target>Die folgenden Einträge werden in Ihrer Rechnung enthalten sein:</target>
+            </trans-unit>
             <trans-unit id="invoice.amount">
                 <source>invoice.amount</source>
                 <target>Anzahl</target>
@@ -690,6 +698,10 @@
             <trans-unit id="invoice.total_rate">
                 <source>invoice.total_rate</source>
                 <target>Gesamtpreis</target>
+            </trans-unit>
+            <trans-unit id="invoice.unit_price">
+                <source>invoice.unit_price</source>
+                <target>Einzelbetrag</target>
             </trans-unit>
             <trans-unit id="label.payment_terms">
                 <source>label.payment_terms</source>
@@ -706,6 +718,10 @@
             <trans-unit id="invoice_renderer.timesheet">
                 <source>invoice_renderer.timesheet</source>
                 <target>Stundenzettel</target>
+            </trans-unit>
+            <trans-unit id="invoice_renderer.freelancer">
+                <source>invoice_renderer.freelancer</source>
+                <target>Freiberufler</target>
             </trans-unit>
             <trans-unit id="label.invoice_number_generator">
                 <source>label.invoice_number_generator</source>
@@ -738,6 +754,22 @@
             <trans-unit id="label.order_number">
                 <source>label.order_number</source>
                 <target>Bestellnummer</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_tax_number">
+                <source>label.invoice_tax_number</source>
+                <target>USt-IdNr.:</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_bank_account">
+                <source>label.invoice_bank_account</source>
+                <target>Bankverbindung</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_salutation">
+                <source>label.invoice_salutation</source>
+                <target>
+                    Sehr geehrte Damen und Herren,
+
+                    für Ihren Auftrag bedanke ich mich und berechne für meine Leistungen:
+                </target>
             </trans-unit>
 
             <!--

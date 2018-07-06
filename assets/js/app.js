@@ -31,6 +31,7 @@ require('./kimai.js');
 require('./datatable.js');
 require('./toolbar.js');
 require('../images/default_avatar.png');
+require('../images/signature.png');
 
 // ------ icheck for enhanced radio buttins and checkboxes ------
 require('icheck');

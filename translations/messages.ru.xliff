@@ -113,14 +113,6 @@
             </trans-unit>
 
             <!--
-              Footer
-            -->
-            <trans-unit id="footer.license">
-                <source>footer.license</source>
-                <target>Все права сохранены.</target>
-            </trans-unit>
-
-            <!--
               Error templates
             -->
             <trans-unit id="http_error.name">

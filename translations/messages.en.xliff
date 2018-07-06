@@ -117,14 +117,6 @@
             </trans-unit>
 
             <!--
-              Footer
-            -->
-            <trans-unit id="footer.license">
-                <source>footer.license</source>
-                <target>All rights reserved.</target>
-            </trans-unit>
-
-            <!--
               Error templates
             -->
             <trans-unit id="error.no_entries_found">
@@ -691,6 +683,14 @@
                 <source>invoice.service_date</source>
                 <target>Service date</target>
             </trans-unit>
+            <trans-unit id="invoice.preview">
+                <source>invoice.preview</source>
+                <target>Preview</target>
+            </trans-unit>
+            <trans-unit id="invoice.preview_info">
+                <source>invoice.preview_info</source>
+                <target>The following entries will be included in your invoice:</target>
+            </trans-unit>
             <trans-unit id="invoice.amount">
                 <source>invoice.amount</source>
                 <target>Quantity</target>
@@ -698,6 +698,10 @@
             <trans-unit id="invoice.total_rate">
                 <source>invoice.total_rate</source>
                 <target>Total price</target>
+            </trans-unit>
+            <trans-unit id="invoice.unit_price">
+                <source>invoice.unit_price</source>
+                <target>Unit price</target>
             </trans-unit>
             <trans-unit id="label.payment_terms">
                 <source>label.payment_terms</source>
@@ -714,6 +718,10 @@
             <trans-unit id="invoice_renderer.timesheet">
                 <source>invoice_renderer.timesheet</source>
                 <target>Timesheet</target>
+            </trans-unit>
+            <trans-unit id="invoice_renderer.freelancer">
+                <source>invoice_renderer.freelancer</source>
+                <target>Freelancer</target>
             </trans-unit>
             <trans-unit id="label.invoice_number_generator">
                 <source>label.invoice_number_generator</source>
@@ -746,6 +754,22 @@
             <trans-unit id="label.order_number">
                 <source>label.order_number</source>
                 <target>Order number</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_tax_number">
+                <source>label.invoice_tax_number</source>
+                <target>VAT no.:</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_bank_account">
+                <source>label.invoice_bank_account</source>
+                <target>Bank account</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_salutation">
+                <source>label.invoice_salutation</source>
+                <target>
+                    Ladies and gentlemen,
+
+                    I thank you for your order and charge for my services:
+                </target>
             </trans-unit>
 
             <!--

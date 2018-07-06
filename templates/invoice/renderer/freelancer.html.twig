@@ -1,0 +1,129 @@
+{% import "macros/widgets.html.twig" as widgets %}
+
+<div class="row" id="freelancer-invoice" style="page:invoiceFreelancer;">
+    <div class="col-xs-12">
+        <header>
+            <address>
+                <p contenteditable="true">{{ model.template.address }}</p>
+            </address>
+        </header>
+        <article class="address">
+            <h1>{{ 'invoice.to'|trans }}</h1>
+            <address>
+                <p>
+                    <strong>{{ model.customer.company|default(model.customer.name) }}</strong><br>
+                    {{ model.customer.address|nl2br }}
+                </p>
+            </address>
+            <table class="meta">
+                <tr>
+                    <th>{{ 'label.date'|trans }}:</th>
+                    <td contenteditable="true">{{ model.invoiceDate|date_short }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'invoice.service_date'|trans }}:</th>
+                    <td><span contenteditable="true">{{ model.query.end|month_name|trans }} {{ model.query.end|date('Y') }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'invoice.number'|trans }}:</th>
+                    <td><span contenteditable="true">{{ model.numberGenerator.invoiceNumber }}</td>
+                </tr>
+                {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
+                    <tr>
+                        <th>{{ 'label.order_number'|trans }}</th>
+                        <td contenteditable="true">
+                            {{ model.query.project.orderNumber }}
+                        </td>
+                    </tr>
+                {% endif %}
+            </table>
+        </article>
+        <article>
+            <h2>{{ model.template.title|default('invoice_renderer.timesheet'|trans) }}</h2>
+            <p contenteditable="true">
+                {{ 'label.invoice_salutation'|trans|nl2br }}
+            </p>
+            <table class="inventory">
+                <thead>
+                <tr>
+                    <th>{{ 'label.description'|trans }}</th>
+                    <th>{{ 'invoice.unit_price'|trans }}</th>
+                    <th>{{ 'invoice.amount'|trans }}</th>
+                    <th>{{ 'invoice.total_rate'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for entry in model.calculator.entries %}
+                    <tr>
+                        <td contenteditable="true">{{ entry.description }}</td>
+                        <td>{{ app.user.getPreferenceValue('hourly_rate')|money(model.calculator.currency) }}</td>
+                        <td>{{ entry.duration|duration }}</td>
+                        <td>{{ entry.rate|money(model.calculator.currency) }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <table class="balance">
+                <tr>
+                    <th>{{ 'invoice.subtotal'|trans }}</th>
+                    <td>{{ model.calculator.subtotal|money(model.calculator.currency) }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'invoice.tax'|trans }} ({{ model.calculator.vat }}%)</th>
+                    <td>{{ model.calculator.tax|money(model.calculator.currency) }}</td>
+                </tr>
+                <tr>
+                    <th class="total">{{ 'invoice.total'|trans }}</th>
+                    <td class="total">{{ model.calculator.total|money(model.calculator.currency) }}</td>
+                </tr>
+            </table>
+        </article>
+        {% if model.template.paymentTerms is not empty %}
+            <article class="footer">
+                <p contenteditable="true">
+                    {{ model.template.paymentTerms|trim|nl2br }}
+                </p>
+                {% if kimai_context.company.signature is defined %}
+                    <img src="{{ kimai_context.company.signature }}">
+                {% endif %}
+            </article>
+        {% endif %}
+        <footer>
+            <table>
+                <thead>
+                <tr>
+                    <th>{{ 'label.address'|trans }}</th>
+                    <th>{{ 'label.invoice_bank_account'|trans }}</th>
+                    <th>{{ 'label.contact'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        {{ kimai_context.company.address|nl2br }}
+                        {{ 'label.invoice_tax_number'|trans }} {{ kimai_context.company.tax_number }}
+                    </td>
+                    <td>
+                        {{ kimai_context.company.bank_account|nl2br }}
+                    </td>
+                    <td>
+                        {{ 'label.phone'|trans }}: {{ kimai_context.company.phone }}
+                        <br/>
+                        {{ 'label.email'|trans }}: {{ kimai_context.company.email }}
+                        <br/>
+                        {{ 'label.homepage'|trans }}: {{ kimai_context.company.homepage }}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </footer>
+    </div>
+</div>
+
+<div class="row no-print">
+    <div class="col-xs-12">
+        <button type="button" class="btn btn-success pull-right" onclick="window.print();return false;">
+            <i class="{{ 'print'|icon }}"></i> {{ 'button.print'|trans }}
+        </button>
+    </div>
+</div>

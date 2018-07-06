@@ -27,8 +27,9 @@ kimai:
     # All configs related to the invoice administration
     invoice:
         renderer:
-            default: 'App\Controller\InvoiceController::invoiceAction'
-            timesheet: 'App\Controller\InvoiceController::timesheetAction'
+            default: 'App\Controller\InvoicePrintController::printInvoice'
+            timesheet: 'App\Controller\InvoicePrintController::printTimesheet'
+            freelancer: 'App\Controller\InvoicePrintController::printFreelancer'
         calculator:
             default: 'App\Invoice\DefaultCalculator'
             short: 'App\Invoice\ShortInvoiceCalculator'
@@ -56,3 +57,18 @@ twig:
                 home:
                     icon: "fas fa-question-circle"
                     template: sidebar/home.html.twig
+            company:
+                name: Kimai Inc.
+                homepage: www.kimai.org
+                email: kimai@example.com
+                phone: 0123-4567890
+                tax_number: YourTaxNumber
+                signature: /build/images/signature.png
+                address: |
+                    Kimai Inc.
+                    Example road 42
+                    D – 12345 City
+                bank_account: |
+                    Kimai Inc.
+                    IBAN: DE00 0000 0000 0000 0000 00
+                    BIC: XXXXXXXX (a bank name)

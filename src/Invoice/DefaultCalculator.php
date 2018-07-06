@@ -62,7 +62,7 @@ class DefaultCalculator implements CalculatorInterface
     /**
      * @return float
      */
-    public function getVat()
+    public function getVat(): ?float
     {
         return $this->model->getTemplate()->getVat();
     }

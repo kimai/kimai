@@ -21,7 +21,7 @@
     {% if model.entries is empty or action is empty %}
         {{ widgets.callout('warning', 'invoice.select_filter') }}
     {% else %}
-        {{ render(controller(action, {'model': model})) }}
+        {{ render(controller(action, {'model': model, 'appRequest': app.request})) }}
     {% endif %}
 
 {% endblock %}

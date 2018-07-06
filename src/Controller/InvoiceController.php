@@ -89,25 +89,56 @@ class InvoiceController extends AbstractController
 
         $query = $this->getDefaultQuery();
         $form = $this->getToolbarForm($query);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var InvoiceQuery $query */
             $query = $form->getData();
-            $query->setResultType(TimesheetQuery::RESULT_TYPE_QUERYBUILDER);
-
-            if (null !== $query->getCustomer()) {
-                $query->getBegin()->setTime(0, 0, 0);
-                $query->getEnd()->setTime(23, 59, 59);
-
-                /* @var TimesheetRepository $timeRepo */
-                $timeRepo = $this->getDoctrine()->getRepository(Timesheet::class);
-                $queryBuilder = $timeRepo->findByQuery($query);
-                $entries = $queryBuilder->getQuery()->getResult();
-            }
+            $entries = $this->getEntries($query);
         }
 
+        $model = $this->prepareModel($query, $entries);
+
+        $action = null;
+        if ($query->getTemplate() !== null) {
+            $action = $this->service->getRendererActionByName($query->getTemplate()->getRenderer());
+        }
+
+        return $this->render('invoice/index.html.twig', [
+            'model' => $model,
+            'action' => $action,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @param InvoiceQuery $query
+     * @return Timesheet[]
+     */
+    protected function getEntries(InvoiceQuery $query)
+    {
+        if (null === $query->getCustomer()) {
+            return [];
+        }
+
+        $query->setResultType(TimesheetQuery::RESULT_TYPE_QUERYBUILDER);
+        $query->getBegin()->setTime(0, 0, 0);
+        $query->getEnd()->setTime(23, 59, 59);
+
+        /* @var TimesheetRepository $timeRepo */
+        $timeRepo = $this->getDoctrine()->getRepository(Timesheet::class);
+        $queryBuilder = $timeRepo->findByQuery($query);
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    /**
+     * @param InvoiceQuery $query
+     * @param array $entries
+     * @return InvoiceModel
+     * @throws \Exception
+     */
+    protected function prepareModel(InvoiceQuery $query, array $entries)
+    {
         $model = new InvoiceModel();
         $model->setQuery($query);
         $model->setEntries($entries);
@@ -128,14 +159,9 @@ class InvoiceController extends AbstractController
             $model->setTemplate($query->getTemplate());
             $model->setCalculator($calculator);
             $model->setNumberGenerator($generator);
-            $action = $this->service->getRendererActionByName($query->getTemplate()->getRenderer());
         }
 
-        return $this->render('invoice/index.html.twig', [
-            'model' => $model,
-            'action' => $action,
-            'form' => $form->createView(),
-        ]);
+        return $model;
     }
 
     /**
@@ -216,28 +242,6 @@ class InvoiceController extends AbstractController
         return $this->render('invoice/template_edit.html.twig', [
             'template' => $template,
             'form' => $editForm->createView()
-        ]);
-    }
-
-    /**
-     * @param InvoiceModel $model
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function invoiceAction(InvoiceModel $model)
-    {
-        return $this->render('invoice/renderer/print.html.twig', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * @param InvoiceModel $model
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function timesheetAction(InvoiceModel $model)
-    {
-        return $this->render('invoice/renderer/timesheet.html.twig', [
-            'model' => $model,
         ]);
     }
 

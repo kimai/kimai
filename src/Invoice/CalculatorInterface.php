@@ -58,4 +58,11 @@ interface CalculatorInterface
      * @return string
      */
     public function getCurrency(): string;
+
+    /**
+     * Returns the percentage for the value-added tax (VAT) calculation.
+     *
+     * @return float
+     */
+    public function getVat(): ?float;
 }
