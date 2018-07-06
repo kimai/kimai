@@ -56,8 +56,8 @@
                 {% for entry in model.calculator.entries %}
                     <tr>
                         <td contenteditable="true">{{ entry.description }}</td>
-                        <td>{{ app.user.getPreferenceValue('hourly_rate')|money(model.calculator.currency) }}</td>
-                        <td>{{ entry.duration|duration }}</td>
+                        <td contenteditable="true">{{ app.user.getPreferenceValue('hourly_rate')|money(model.calculator.currency) }}</td>
+                        <td contenteditable="true">{{ entry.duration|duration }}</td>
                         <td>{{ entry.rate|money(model.calculator.currency) }}</td>
                     </tr>
                 {% endfor %}
@@ -107,11 +107,11 @@
                         {{ kimai_context.company.bank_account|nl2br }}
                     </td>
                     <td>
-                        {{ 'label.phone'|trans }}: {{ kimai_context.company.phone }}
+                        {{ kimai_context.company.phone }}
                         <br/>
-                        {{ 'label.email'|trans }}: {{ kimai_context.company.email }}
+                        {{ kimai_context.company.email }}
                         <br/>
-                        {{ 'label.homepage'|trans }}: {{ kimai_context.company.homepage }}
+                        {{ kimai_context.company.homepage }}
                     </td>
                 </tr>
                 </tbody>
