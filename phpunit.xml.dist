@@ -10,19 +10,19 @@
     <php>
         <ini name="error_reporting" value="-1" />
         <ini name="intl.default_locale" value="en_US" />
-        <env name="KERNEL_CLASS" value="App\Kernel" />
-        <env name="APP_ENV" value="test"/>
-        <env name="APP_DEBUG" value="1"/>
-        <env name="APP_SECRET" value="5a79a1c866efef9ca1800f971d689f3e"/>
-        <env name="DATABASE_PREFIX" value="kimai2_"/>
+        <env name="KERNEL_CLASS" value="App\Kernel"  force="true"/>
+        <env name="APP_ENV" value="test" force="true"/>
+        <env name="APP_DEBUG" value="1" force="true"/>
+        <env name="APP_SECRET" value="5a79a1c866efef9ca1800f971d689f3e" force="true"/>
+        <env name="DATABASE_PREFIX" value="kimai2_" force="true"/>
         <!-- define your env variables for the test env here -->
 
         <!-- ###+ doctrine/doctrine-bundle ### -->
-        <env name="DATABASE_URL" value="sqlite:///var/data/kimai_test.sqlite"/>
+        <env name="DATABASE_URL" value="sqlite:///var/data/kimai_test.sqlite" force="true"/>
         <!-- ###- doctrine/doctrine-bundle ### -->
 
         <!-- ###+ symfony/swiftmailer-bundle ### -->
-        <env name="MAILER_URL" value="null://localhost"/>
+        <env name="MAILER_URL" value="null://localhost" force="true"/>
         <!-- ###- symfony/swiftmailer-bundle ### -->
     </php>
 

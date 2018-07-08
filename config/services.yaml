@@ -89,6 +89,9 @@ services:
         arguments:
             $dateSettings: "%kimai.languages%"
 
+    KevinPapst\AdminLTEBundle\Helper\ContextHelper:
+        alias: admin_lte_theme.context_helper
+
     # ================================================================================
     # TIMESHEET RECORD CALCULATOR
     # ================================================================================

@@ -10,8 +10,8 @@
 namespace App\EventSubscriber;
 
 use App\Entity\User;
-use Avanzu\AdminThemeBundle\Event\ShowUserEvent;
-use Avanzu\AdminThemeBundle\Model\UserModel;
+use KevinPapst\AdminLTEBundle\Event\ShowUserEvent;
+use KevinPapst\AdminLTEBundle\Model\UserModel;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
