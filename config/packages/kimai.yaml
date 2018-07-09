@@ -49,10 +49,3 @@ twig:
         kimai_context:
             box_color: "green"      # a color for ???
             active_warning: 3       # display a warning color if the user has at least X active recordings
-            control_sidebar:        # all tabs in the control sidebar
-                settings:
-                    icon: "fas fa-cogs"
-                    controller: 'App\Controller\SidebarController::settingsAction'
-                home:
-                    icon: "fas fa-question-circle"
-                    template: sidebar/home.html.twig

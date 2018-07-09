@@ -11,8 +11,8 @@ namespace App\EventSubscriber;
 
 use App\Event\ConfigureAdminMenuEvent;
 use App\Event\ConfigureMainMenuEvent;
-use Avanzu\AdminThemeBundle\Event\SidebarMenuEvent;
-use Avanzu\AdminThemeBundle\Model\MenuItemModel;
+use KevinPapst\AdminLTEBundle\Event\SidebarMenuEvent;
+use KevinPapst\AdminLTEBundle\Model\MenuItemModel;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
