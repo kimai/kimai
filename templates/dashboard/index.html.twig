@@ -4,7 +4,7 @@
 {% block page_title %}{{ 'dashboard.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'dashboard.subtitle'|trans }}{% endblock %}
 
-{% block main_content_class %}dashboard{% endblock %}
+{% block page_content_class %}{{ parent() }} dashboard{% endblock %}
 
 {% block main %}
 
