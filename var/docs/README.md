@@ -9,6 +9,7 @@ The first chapters are meant for developers and administrators:
 - [User and Security](users.md) - everything related to user and security, like authentication and roles  
 - [FAQ](faq.md) - some frequently asked questions and their with answers 
 - [Installation](installation.md) - instructions about several installation methods
+- [Importing data](migration_v1.md) - how to import your timesheets from Kimai v1
 
 The following chapters are meant for users:
 

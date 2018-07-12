@@ -10,9 +10,10 @@ Kimai v2 - the open source time-tracking application with a mobile-first approac
 ## Introduction
 
 This is the reloaded version of the open source timetracker Kimai.
-Kimai v2 has nothing in common with its predecessor [Kimai v1](http://www.kimai.org) besides the basic ideas of time-tracking and the current development team.
+The new version has not much in common with its predecessor [Kimai v1](http://www.kimai.org) besides the basic ideas of time-tracking and the current development team.
 
-Right now its in an early development phase, its usable but some advanced features from Kimai v1 are missing by now.
+Right now its in an early development phase, its usable but some advanced features from Kimai v1 are missing by now (like export and ODT invoices). 
+But we already support to [import your timesheets](migration_v1.md) from Kimai v1.
 
 It is developed with modern frameworks like [Symfony v4](https://github.com/symfony/symfony), [Doctrine](https://github.com/doctrine/),
 [AdminLTE](https://github.com/kevinpapst/AdminLTEBundle/) and [many](composer.json) [more](package.json)...
@@ -40,8 +41,9 @@ Our roadmap is open for changes and input from the community, please [sent us](i
 There are [further infos about installation](var/docs/installation.md) if you have to use FTP or want to develop with Kimai. 
 
 If you want to install Kimai v2 in your production environment, then SSH into your server and change to your webserevr root.
+You need to install Git and [Composer](https://getcomposer.org/doc/00-intro.md) if you haven't already. 
 
-First, install Git and [Composer](https://getcomposer.org/doc/00-intro.md) if you haven't already. Then clone this repo:
+First clone this repo:
 
 ```bash
 git clone https://github.com/kevinpapst/kimai2.git
@@ -55,7 +57,7 @@ chmod -R 777 var/
 ```
 
 It's up to you which database server you want to use, Kimai v2 supports MySQL/MariaDB and SQLite.
-Please create your database and configure the connection string in your environment, e.g. with the `.env` file (more examples in `.env.dist`):
+Create your database and configure the connection string in your environment, e.g. with the `.env` file (more examples in `.env.dist`):
 ```
 APP_ENV=prod
 APP_SECRET=insert_a_random_secret_string_for_production
@@ -79,7 +81,7 @@ Create your first user with the following command. You will be asked to enter a 
 ```bash
 bin/console kimai:create-user username admin@example.com ROLE_SUPER_ADMIN
 ```
-_Tip: You can skip the "create user" step, if you are going to import data from Kimai v1._
+_Tip: You can skip the "create user" step, if you are going to [import data from Kimai v1](migration_v1.md)._
 
 For available roles, please refer to the [user documentation](var/docs/users.md).
 
@@ -91,32 +93,6 @@ For available roles, please refer to the [user documentation](var/docs/users.md)
 > http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html
 
 That's it, you can start time-tracking :-)
-
-### Importing data from Kimai v1
-
-Before importing your data from a Kimai v1 installation, please read the following carefully:
-
-- Data from the existing v1 installation is only read and will never be changed
-- Data can only be imported from a Kimai installation with at least `v1.0.1` and database revision `1388` (check your `configuration` table)
-- Kimai v1 has support for activities without project assignment, which Kimai v2 doesn't support. Unattached activities will be created for every project that has a linked activity in any of the imported timesheet records
-- Rates and fixed-rates are handled in a completely different way and for now only the timesheet record total amounts are imported
-- Customers cannot login and no user accounts will be created for them
-- The customers country has to be manually assigned afterwards, as there is no field in Kimai v1 for that
-- You have to supply the default password that is used for every imported user, as their password will be resetted
-- Data that was deleted in Kimai v1 (user, customer, projects, activities) will be imported and set to `invisible` (if you don't want that, you have to delete all entries that have the value `1` in the `trash` column before importing)
-
-A possible full command for import:
-```bash
-bin/console kimai:import-v1 "mysql://user:password@127.0.0.1:3306/database?charset=utf8" "db_prefix" "password" "country"
-```
-
-It is recommended to test the import in a fresh database. You can test your import as often as you like and fix possible problems in your installation.
-A sample command could look like that:
-```bash
-bin/console doctrine:schema:drop --force && bin/console doctrine:schema:create && bin/console kimai:import-v1 "mysql://kimai:test@127.0.0.1:3306/kimai?charset=latin1" "kimai_" "test123" "de"
-```
-That will drop the configured Kimai v2 database schema and re-create it, before importing the data from the `mysql` database at `127.0.0.1` on port `3306` authenticating the user `kimai` with the password `test` for import.
-The connection will use the charset `latin1` and the default table prefix `kimai_` for reading data. Imported users can login with the password `test123` and all customer will have the country `de` assigned.
 
 ## Extensions for Kimai 2
 

@@ -5,7 +5,7 @@ This page is dedicated to all developers who want to contribute to Kimai. You ar
 # Setting up your environment
 
 All you need is:
-- PHP >= 7.1 
+- PHP >= 7.1.3
 - PHP extension: `PDO-SQLite` enabled
 
 Optional requirement:
@@ -13,6 +13,8 @@ Optional requirement:
 - PHP extension: `PDO-MySQL` enabled
 
 You could even test PostgreSQL and tell us how it works!
+
+Read how to [install Kimai v2 in your dev environment](installation.md). 
 
 ## Frontend dependencies 
 
