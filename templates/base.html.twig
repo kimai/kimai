@@ -89,6 +89,7 @@
 {% block head %}
     {{ parent() }}
     <script src="{{ asset('build/app.js') }}"></script>
+    {% include 'partials/head.html.twig' %}
 {% endblock %}
 
 {% block javascripts %}

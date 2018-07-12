@@ -12,3 +12,8 @@
 {% block login_form_end %}
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
 {% endblock %}
+
+{% block head %}
+    {{ parent() }}
+    {% include 'partials/head.html.twig' %}
+{% endblock %}
