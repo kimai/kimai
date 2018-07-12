@@ -31,3 +31,5 @@ admin_lte:
 
     routes:
         adminlte_profile: user_profile
+        adminlte_welcome: dashboard
+        adminlte_login: security_login

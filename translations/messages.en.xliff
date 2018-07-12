@@ -47,10 +47,6 @@
             <!--
               Login / Security
             -->
-            <trans-unit id="security.title.login">
-                <source>security.title.login</source>
-                <target>Login</target>
-            </trans-unit>
             <trans-unit id="label.password">
                 <source>label.password</source>
                 <target>Password</target>
@@ -58,10 +54,6 @@
             <trans-unit id="label.password_repeat">
                 <source>label.password_repeat</source>
                 <target>Repeat password</target>
-            </trans-unit>
-            <trans-unit id="action.sign_in">
-                <source>action.sign_in</source>
-                <target>Let's go</target>
             </trans-unit>
             <trans-unit id="label.logout">
                 <source>label.logout</source>

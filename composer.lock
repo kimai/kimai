@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7e58d46b399667b75fa9f0b39e8cf11d",
+    "content-hash": "2ccc40edc01587287a3db23b0e9b0458",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -1145,29 +1145,28 @@
         },
         {
             "name": "kevinpapst/adminlte-bundle",
-            "version": "0.3",
+            "version": "1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/AdminLTEBundle.git",
-                "reference": "d7210c249e782b143a5c72f119c4bf463cbb38e5"
+                "reference": "a225f58aeba1aace8f3675fcbb23990d3883f15c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/d7210c249e782b143a5c72f119c4bf463cbb38e5",
-                "reference": "d7210c249e782b143a5c72f119c4bf463cbb38e5",
+                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/a225f58aeba1aace8f3675fcbb23990d3883f15c",
+                "reference": "a225f58aeba1aace8f3675fcbb23990d3883f15c",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1.3",
-                "symfony/config": "^4.0",
-                "symfony/dependency-injection": "^4.0",
-                "symfony/event-dispatcher": "^4.0",
-                "symfony/framework-bundle": "^4.0",
-                "symfony/http-foundation": "^4.0",
-                "symfony/http-kernel": "^4.0",
-                "symfony/options-resolver": "^4.0",
-                "symfony/security": "^4.0",
-                "twig/twig": "^2.0"
+                "symfony/config": ">3.4",
+                "symfony/dependency-injection": ">3.4",
+                "symfony/event-dispatcher": ">3.4",
+                "symfony/http-foundation": ">3.4",
+                "symfony/http-kernel": ">3.4",
+                "symfony/options-resolver": ">3.4",
+                "symfony/security-core": ">3.4",
+                "twig/twig": ">2.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.10",
@@ -1189,24 +1188,19 @@
             "authors": [
                 {
                     "name": "Marc Bach",
-                    "email": "mail@avanzu.de",
-                    "homepage": "http://www.avanzu.de",
-                    "role": "Original Author"
+                    "homepage": "http://www.avanzu.de"
                 },
                 {
                     "name": "Ángel Guzmán Maeso",
-                    "email": "shakaran@gmail.com",
-                    "homepage": "https://shakaran.net/blog",
-                    "role": "Developer Collaborator"
+                    "homepage": "https://shakaran.net/blog"
                 },
                 {
                     "name": "Kevin Papst",
-                    "homepage": "https://www.kevinpapst.de",
-                    "role": "Developer"
+                    "homepage": "https://www.kevinpapst.de"
                 }
             ],
             "description": "Admin Theme based on the AdminLTE 2.3 for easy integration with Symfony 4",
-            "time": "2018-07-08T17:57:25+00:00"
+            "time": "2018-07-12T17:53:22+00:00"
         },
         {
             "name": "monolog/monolog",

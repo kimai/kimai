@@ -57,6 +57,7 @@
                                 <canvas id="barChart{{ year }}" style="height: 230px;"></canvas>
                             </div>
                             <script type="text/javascript">
+                            $(document).ready(function () {
                                 var barChartData{{ year }} = {
                                     labels: barChartLabels,
                                     datasets: [
@@ -89,6 +90,7 @@
                                     var barChart = new Chart(barChartCanvas{{ year }});
                                     barChart.Bar(barChartData{{ year }}, barChartOptions);
                                 });
+                            });
                             </script>
                         {% endfor %}
 

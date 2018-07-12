@@ -10,20 +10,22 @@ Kimai v2 - the open source time-tracking application with a mobile-first approac
 ## Introduction
 
 This is the reloaded version of the open source timetracker Kimai.
+Kimai v2 has nothing in common with its predecessor [Kimai v1](http://www.kimai.org) besides the basic ideas of time-tracking and the current development team.
+
 Right now its in an early development phase, its usable but some advanced features from Kimai v1 are missing by now.
 
-Kimai v2 has nothing in common with its predecessor [Kimai v1](http://www.kimai.org) besides the basic ideas of time-tracking and the current development team.
-It is based on a lot of great frameworks. Special thanks to [Symfony v4](https://github.com/symfony/symfony), [Doctrine](https://github.com/doctrine/),
-[AdminThemeBundle](https://github.com/avanzu/AdminThemeBundle/) (based on [AdminLTE](https://github.com/almasaeed2010/AdminLTE/)).
+It is developed with modern frameworks like [Symfony v4](https://github.com/symfony/symfony), [Doctrine](https://github.com/doctrine/),
+[AdminLTE](https://github.com/kevinpapst/AdminLTEBundle/) and [many](composer.json) [more](package.json)...
 
 ### Requirements
 
 - PHP 7.1.3 or higher
 - One PHP extension of [PDO-SQLite](https://php.net/manual/en/ref.pdo-sqlite.php) or [PDO-MySQL](https://php.net/manual/en/ref.pdo-mysql.php) enabled (it might work with PostgreSQL and Oracle as well, but that wasn't tested and is not officially supported)
 - The PHP extension [intl](https://php.net/manual/en/book.intl.php)
-- the [usual Symfony application requirements](http://symfony.com/doc/current/reference/requirements.html)
+- The [usual Symfony application requirements](http://symfony.com/doc/current/reference/requirements.html)
+- If you use MariaDB, make sure its at least v10.7.2 (see #191)
 - Kimai needs to be installed in the root directory of a domain or you need to [recompile the frontend assets](var/docs/developers.md)
-- a modern browser, Kimai v2 might be broken on old browsers like IE 9
+- A modern browser, Kimai v2 might be broken on old browsers like IE 9
 
 ## Documentation & Roadmap
 
