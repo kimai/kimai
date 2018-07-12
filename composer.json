@@ -10,7 +10,7 @@
         "ext-pdo_sqlite": "*",
         "beberlei/DoctrineExtensions": "^1.0",
         "erusev/parsedown": "^1.6",
-        "kevinpapst/adminlte-bundle": "dev-avanzu-shim",
+        "kevinpapst/adminlte-bundle": "^1.0",
         "ocramius/proxy-manager": "2.1.1",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "^4.0",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "76975a81fb43fda341d9304136154c3c",
+    "content-hash": "2ccc40edc01587287a3db23b0e9b0458",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -1145,16 +1145,16 @@
         },
         {
             "name": "kevinpapst/adminlte-bundle",
-            "version": "dev-avanzu-shim",
+            "version": "1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/AdminLTEBundle.git",
-                "reference": "abc22ad552a0269352cb5bd35c5f992fd7a15a0c"
+                "reference": "a225f58aeba1aace8f3675fcbb23990d3883f15c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/abc22ad552a0269352cb5bd35c5f992fd7a15a0c",
-                "reference": "abc22ad552a0269352cb5bd35c5f992fd7a15a0c",
+                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/a225f58aeba1aace8f3675fcbb23990d3883f15c",
+                "reference": "a225f58aeba1aace8f3675fcbb23990d3883f15c",
                 "shasum": ""
             },
             "require": {
@@ -1188,24 +1188,19 @@
             "authors": [
                 {
                     "name": "Marc Bach",
-                    "email": "mail@avanzu.de",
-                    "homepage": "http://www.avanzu.de",
-                    "role": "Original Author"
+                    "homepage": "http://www.avanzu.de"
                 },
                 {
                     "name": "Ángel Guzmán Maeso",
-                    "email": "shakaran@gmail.com",
-                    "homepage": "https://shakaran.net/blog",
-                    "role": "Developer Collaborator"
+                    "homepage": "https://shakaran.net/blog"
                 },
                 {
                     "name": "Kevin Papst",
-                    "homepage": "https://www.kevinpapst.de",
-                    "role": "Developer"
+                    "homepage": "https://www.kevinpapst.de"
                 }
             ],
             "description": "Admin Theme based on the AdminLTE 2.3 for easy integration with Symfony 4",
-            "time": "2018-07-11T22:23:23+00:00"
+            "time": "2018-07-12T17:53:22+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -7319,7 +7314,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "kevinpapst/adminlte-bundle": 20,
         "symfony/lts": 20
     },
     "prefer-stable": false,
