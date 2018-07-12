@@ -10,11 +10,12 @@ Kimai v2 - the open source time-tracking application with a mobile-first approac
 ## Introduction
 
 This is the reloaded version of the open source timetracker Kimai.
+Kimai v2 has nothing in common with its predecessor [Kimai v1](http://www.kimai.org) besides the basic ideas of time-tracking and the current development team.
+
 Right now its in an early development phase, its usable but some advanced features from Kimai v1 are missing by now.
 
-Kimai v2 has nothing in common with its predecessor [Kimai v1](http://www.kimai.org) besides the basic ideas of time-tracking and the current development team.
-It is based on a lot of great frameworks. Special thanks to [Symfony v4](https://github.com/symfony/symfony), [Doctrine](https://github.com/doctrine/),
-[AdminThemeBundle](https://github.com/avanzu/AdminThemeBundle/) (based on [AdminLTE](https://github.com/almasaeed2010/AdminLTE/)).
+It is developed with modern frameworks like [Symfony v4](https://github.com/symfony/symfony), [Doctrine](https://github.com/doctrine/),
+[AdminLTE](https://github.com/kevinpapst/AdminLTEBundle/) and [many](composer.json) [more](package.json)...
 
 ### Requirements
 
