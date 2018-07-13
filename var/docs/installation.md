@@ -1,10 +1,18 @@
 # Installation
 
 If you want to install Kimai v2 in your production environment and have SSH access, then switch to the official 
-installation instruction in our[README](https://github.com/kevinpapst/kimai2/blob/master/README.md).
+installation instruction in our [README](https://github.com/kevinpapst/kimai2/blob/master/README.md).
 
 You need GIT and [Composer](https://getcomposer.org/doc/00-intro.md) on the machine where you want to install Kimai. 
 
+## Hosting & 1-click installations
+
+These platforms adopted Kimai 2 to be compatible with their one-click installation systems:
+
+[![Install kimai2 with YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=kimai2)
+
+Kimai 2 [package](https://github.com/YunoHost-Apps/kimai2_ynh) for [YunoHost](https://yunohost.org).
+ 
 ## FTP installation
 
 If you have no SSH access to your server (e.g. when you use a shared hosting package) then you need to install Kimai locally and upload it afterwards.
