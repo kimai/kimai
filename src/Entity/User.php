@@ -16,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * Application main User entity.
@@ -24,14 +25,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(
  *      name="users",
  *      uniqueConstraints={
- *          @ORM\UniqueConstraint(columns={"name"}),
- *          @ORM\UniqueConstraint(columns={"mail"})
+ *          @ORM\UniqueConstraint(columns={"username"}),
+ *          @ORM\UniqueConstraint(columns={"email"})
  *      }
  * )
  * @UniqueEntity("username")
  * @UniqueEntity("email")
  */
-class User implements UserInterface
+class User extends BaseUser implements UserInterface
 {
     public const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
     public const ROLE_USER = 'ROLE_USER';
@@ -40,47 +41,50 @@ class User implements UserInterface
     public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
     public const DEFAULT_ROLE = self::ROLE_USER;
 
-    /**
-     * @var int
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(name="id", type="integer")
-     */
-    private $id;
+        /**
+         * @var int
+         *
+         * @ORM\Id
+         * @ORM\GeneratedValue
+         * @ORM\Column(name="id", type="integer")
+         */
+        protected $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=60, nullable=false, unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Length(min=5, max=60)
-     */
-    private $username;
+        /**
+         * @var string
+         *
+         * @ORM\Column(name="name", type="string", length=60, nullable=false, unique=true)
+         * @Assert\NotBlank()
+         * @Assert\Length(min=5, max=60)
+         * /
+        protected $username;
+*/
+        /**
+         * @var string
+         *
+         * @ORM\Column(name="mail", type="string", length=160, nullable=false, unique=true)
+         * @Assert\NotBlank()
+         * @Assert\Email()
+         * /
+        protected $email;
+ */
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="mail", type="string", length=160, nullable=false, unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Email()
-     */
-    private $email;
+        /**
+         * @var string
+         *
+         * @ORM\Column(name="password", type="string", length=254, nullable=true)
+         * /
+        protected $password;
+*/
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=254, nullable=true)
-     */
-    private $password;
-
-    /**
-     * @var string
-     *
-     * @Assert\NotBlank(groups={"registration", "passwordUpdate"})
-     * @Assert\Length(min=6, max=4096, groups={"registration", "passwordUpdate"})
-     */
-    private $plainPassword;
+        /**
+         * @var string
+         *
+         * @Assert\NotBlank(groups={"registration", "passwordUpdate"})
+         * @Assert\Length(min=6, max=4096, groups={"registration", "passwordUpdate"})
+         * /
+        protected $plainPassword;
+*/
 
     /**
      * @var string
@@ -90,13 +94,14 @@ class User implements UserInterface
      */
     private $alias;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="active", type="boolean", nullable=false)
-     * @Assert\NotNull()
-     */
-    private $active = true;
+            /**
+             * @var bool
+             *
+             * @ORM\Column(name="active", type="boolean", nullable=false)
+             * @Assert\NotNull()
+             * /
+            private $active = true;
+*/
 
     /**
      * @var \DateTime
@@ -119,13 +124,14 @@ class User implements UserInterface
      */
     private $avatar;
 
-    /**
-     * @var string[]
-     *
-     * @ORM\Column(type="json_array")
-     * @KimaiAssert\Role()
-     */
-    private $roles = [];
+        /**
+         * @var string[]
+         *
+         * @ORM\Column(type="json_array")
+         * @KimaiAssert\Role()
+         * /
+        protected $roles = [];
+ */
 
     /**
      * @var UserPreference[]|Collection
@@ -187,25 +193,6 @@ class User implements UserInterface
     public function getAlias()
     {
         return $this->alias;
-    }
-
-    /**
-     * @param bool $active
-     * @return $this
-     */
-    public function setActive($active)
-    {
-        $this->active = (bool) $active;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isActive()
-    {
-        return $this->active;
     }
 
     /**
@@ -417,14 +404,6 @@ class User implements UserInterface
         $this->preferences->add($preference);
 
         return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isEnabled()
-    {
-        return $this->isActive();
     }
 
     /**

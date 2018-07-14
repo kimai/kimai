@@ -69,11 +69,11 @@
     {% endif %}
 {% endblock %}
 
-{% block avanzu_navbar_tasks %}{#{ parent() }#}{% endblock %}
-{% block avanzu_navbar_user %}{#{ parent() }#}{% endblock %}
-
-{% block avanzu_sidebar_user %}{# right now we simply deactivate that box #}{% endblock %}
-{% block avanzu_sidebar_search %}{# right now we simply deactivate that box #}{% endblock %}
+{# deactivated blocks #}
+{% block avanzu_navbar_tasks %}{% endblock %}
+{% block avanzu_navbar_user %}{% endblock %}
+{% block avanzu_sidebar_user %}{% endblock %}
+{% block avanzu_sidebar_search %}{% endblock %}
 
 {% block avanzu_breadcrumb %}
     {{ block('page_actions') }}

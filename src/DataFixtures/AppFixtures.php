@@ -70,7 +70,7 @@ class AppFixtures extends Fixture
                 ->setEmail($userData[3])
                 ->setRoles([$userData[4]])
                 ->setAvatar($userData[5])
-                ->setActive($userData[6])
+                ->setEnabled($userData[6])
                 ->setPassword($passwordEncoder->encodePassword($user, self::DEFAULT_PASSWORD))
             ;
 

@@ -38,7 +38,7 @@
             <td class="{{ tables.data_table_column_class(tableName, columns, 'username') }}">{{ entry.username }}</td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'email') }}">{{ entry.email }}</td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'title') }}">{{ entry.title }}</td>
-            <td class="{{ tables.data_table_column_class(tableName, columns, 'active') }}">{{ widgets.label_visible(entry.active) }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'active') }}">{{ widgets.label_visible(entry.enabled) }}</td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'roles') }}">
                 {% for role in entry.roles %}
                     {{ widgets.label_role(role) }}
