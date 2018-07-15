@@ -13,10 +13,10 @@ use App\Validator\Constraints as KimaiAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * Application main User entity.
@@ -41,50 +41,33 @@ class User extends BaseUser implements UserInterface
     public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
     public const DEFAULT_ROLE = self::ROLE_USER;
 
-        /**
-         * @var int
-         *
-         * @ORM\Id
-         * @ORM\GeneratedValue
-         * @ORM\Column(name="id", type="integer")
-         */
-        protected $id;
+    /**
+     * TODO roles
+     * @ORM\Column(type="json_array")
+     * @KimaiAssert\Role()
+     *
+     * TODO username
+     * @ORM\Column(name="name", type="string", length=60, nullable=false, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=5, max=60)
+     *
+     * TODO password
+     * @Assert\NotBlank(groups={"registration", "passwordUpdate"})
+     * @Assert\Length(min=6, max=4096, groups={"registration", "passwordUpdate"})
+     *
+     * TODO email
+     * @Assert\NotBlank()
+     * @Assert\Email()
+     */
 
-        /**
-         * @var string
-         *
-         * @ORM\Column(name="name", type="string", length=60, nullable=false, unique=true)
-         * @Assert\NotBlank()
-         * @Assert\Length(min=5, max=60)
-         * /
-        protected $username;
-*/
-        /**
-         * @var string
-         *
-         * @ORM\Column(name="mail", type="string", length=160, nullable=false, unique=true)
-         * @Assert\NotBlank()
-         * @Assert\Email()
-         * /
-        protected $email;
- */
-
-        /**
-         * @var string
-         *
-         * @ORM\Column(name="password", type="string", length=254, nullable=true)
-         * /
-        protected $password;
-*/
-
-        /**
-         * @var string
-         *
-         * @Assert\NotBlank(groups={"registration", "passwordUpdate"})
-         * @Assert\Length(min=6, max=4096, groups={"registration", "passwordUpdate"})
-         * /
-        protected $plainPassword;
-*/
+    /**
+     * @var int
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(name="id", type="integer")
+     */
+    protected $id;
 
     /**
      * @var string
@@ -93,15 +76,6 @@ class User extends BaseUser implements UserInterface
      * @Assert\Length(max=160)
      */
     private $alias;
-
-            /**
-             * @var bool
-             *
-             * @ORM\Column(name="active", type="boolean", nullable=false)
-             * @Assert\NotNull()
-             * /
-            private $active = true;
-*/
 
     /**
      * @var \DateTime
@@ -124,15 +98,6 @@ class User extends BaseUser implements UserInterface
      */
     private $avatar;
 
-        /**
-         * @var string[]
-         *
-         * @ORM\Column(type="json_array")
-         * @KimaiAssert\Role()
-         * /
-        protected $roles = [];
- */
-
     /**
      * @var UserPreference[]|Collection
      *
@@ -145,6 +110,7 @@ class User extends BaseUser implements UserInterface
      */
     public function __construct()
     {
+        parent::__construct();
         $this->registeredAt = new \DateTime();
         $this->preferences = new ArrayCollection();
     }
@@ -196,88 +162,6 @@ class User extends BaseUser implements UserInterface
     }
 
     /**
-     * @param string $password
-     * @return $this
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * Only for form editing, you don't need this method!
-     *
-     * @return string
-     */
-    public function getPlainPassword()
-    {
-        return $this->plainPassword;
-    }
-
-    /**
-     * Only for form editing, you don't need this method!
-     *
-     * @param string $password
-     * @return $this
-     */
-    public function setPlainPassword($password)
-    {
-        $this->plainPassword = $password;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * @param string $username
-     * @return $this
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * @param string $email
-     * @return $this
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getTitle()
@@ -311,34 +195,6 @@ class User extends BaseUser implements UserInterface
     public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
-
-        return $this;
-    }
-
-    /**
-     * Returns the roles or permissions granted to the user for security.
-     *
-     * @return string[]
-     */
-    public function getRoles()
-    {
-        $roles = $this->roles;
-
-        // guarantees that a user always has at least one role for security
-        if (empty($roles)) {
-            $roles[] = 'ROLE_USER';
-        }
-
-        return array_unique($roles);
-    }
-
-    /**
-     * @param string[] $roles
-     * @return $this
-     */
-    public function setRoles(array $roles)
-    {
-        $this->roles = $roles;
 
         return $this;
     }
@@ -404,27 +260,6 @@ class User extends BaseUser implements UserInterface
         $this->preferences->add($preference);
 
         return $this;
-    }
-
-    /**
-     * Returns the salt that was originally used to encode the password.
-     */
-    public function getSalt()
-    {
-        // See "Do you need to use a Salt?" at http://symfony.com/doc/current/cookbook/security/entity_provider.html
-        // we're using bcrypt in security.yml to encode the password, so
-        // the salt value is built-in and you don't have to generate one
-
-        return;
-    }
-
-    /**
-     * Removes sensitive data from the user.
-     */
-    public function eraseCredentials()
-    {
-        // if you had a plainPassword property, you'd nullify it here
-        // $this->plainPassword = null;
     }
 
     /**
