@@ -57,14 +57,14 @@ class RegistrationSubscriber implements EventSubscriberInterface
      */
     public function onRegistrationSuccess(FormEvent $event)
     {
-        $users = $this->userManager->findUsers();
-
-        if (!empty($users)) {
-            return;
-        }
-
         /** @var $user \FOS\UserBundle\Model\UserInterface */
         $user = $event->getForm()->getData();
-        $user->setRoles([User::ROLE_SUPER_ADMIN]);
+        $roles = [User::ROLE_USER];
+
+        if (empty($this->userManager->findUsers())) {
+            $roles = [User::ROLE_SUPER_ADMIN];
+        }
+
+        $user->setRoles($roles);
     }
 }
