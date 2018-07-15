@@ -57,3 +57,4 @@ If you want to deactivate this feature you have to change the following configs:
 If you want to configure the behaviour (like the allowed time between multiple retries) then configure the settings:
 
 - in `config/packages/fos_user.yaml` the key below `fos_user.registration.resetting` (see [documentation](http://symfony.com/doc/current/bundles/FOSUserBundle/configuration_reference.html))
+- the values `retry_ttl` and `token_ttl` are configured in seconds (7220 = 2 hours) 
