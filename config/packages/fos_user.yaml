@@ -2,47 +2,20 @@ fos_user:
     db_driver: orm
     firewall_name: secured_area
     user_class: App\Entity\User
-#    use_listener: true
-#    use_flash_notifications: true
-#    use_authentication_listener: true
-#    use_username_form_type: true
-#    model_manager_name: null  # change it to the name of your entity/document manager if you don't want to use the default one.
     from_email:
         address: "kimai@example.com"
         sender_name: "Kimai 2"
-#    profile:
-#        form:
-#            type:               FOS\UserBundle\Form\Type\ProfileFormType
-#            name:               fos_user_profile_form
-#            validation_groups:  [Profile, Default]
-#    change_password:
-#        form:
-#            type:               FOS\UserBundle\Form\Type\ChangePasswordFormType
-#            name:               fos_user_change_password_form
-#            validation_groups:  [ChangePassword, Default]
     registration:
         confirmation:
             enabled: false
             template: '@FOSUser/Registration/email.txt.twig'
-#        form:
-#            type:               FOS\UserBundle\Form\Type\RegistrationFormType
-#            name:               fos_user_registration_form
-#            validation_groups:  [Registration, Default]
     resetting:
-        retry_ttl: 7200 # seconds
-        token_ttl: 86400 # seconds
+        retry_ttl: 7200
+        token_ttl: 86400
         email:
             template: '@FOSUser/Resetting/email.txt.twig'
-        form:
-            type: FOS\UserBundle\Form\Type\ResettingFormType
-            name: fos_user_resetting_form
-            validation_groups: [ResetPassword, Default]
     service:
         mailer: fos_user.mailer.twig_swift
-#        email_canonicalizer:    fos_user.util.canonicalizer.default
-#        username_canonicalizer: fos_user.util.canonicalizer.default
-#        token_generator:        fos_user.util.token_generator.default
-#        user_manager:           fos_user.user_manager.default
 #    group:
 #        group_class:    ~ # Required when using groups
 #        group_manager:  fos_user.group_manager.default
