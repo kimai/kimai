@@ -7,10 +7,6 @@ security:
         fos_userbundle:
             id: fos_user.user_provider.username_email
 
-#        database_users:
-#            entity:
-#                class: App\Entity\User
-
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
