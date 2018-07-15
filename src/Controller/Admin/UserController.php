@@ -72,6 +72,7 @@ class UserController extends AbstractController
             $password = $this->get('security.password_encoder')
                 ->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
+            $user->setEnabled(true);
             $user->setRoles([User::DEFAULT_ROLE]);
 
             $entityManager = $this->getDoctrine()->getManager();
