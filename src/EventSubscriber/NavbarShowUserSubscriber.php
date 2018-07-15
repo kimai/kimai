@@ -11,6 +11,7 @@ namespace App\EventSubscriber;
 
 use App\Entity\User;
 use KevinPapst\AdminLTEBundle\Event\ShowUserEvent;
+use KevinPapst\AdminLTEBundle\Event\ThemeEvents;
 use KevinPapst\AdminLTEBundle\Model\UserModel;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -40,8 +41,8 @@ class NavbarShowUserSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            'theme.navbar_user' => ['onShowUser', 100],
-            'theme.sidebar_user' => ['onShowUser', 100],
+            ThemeEvents::THEME_NAVBAR_USER => ['onShowUser', 100],
+            ThemeEvents::THEME_SIDEBAR_USER => ['onShowUser', 100],
         ];
     }
 
