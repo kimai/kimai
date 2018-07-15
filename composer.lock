@@ -1221,16 +1221,16 @@
         },
         {
             "name": "kevinpapst/adminlte-bundle",
-            "version": "1.1",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/AdminLTEBundle.git",
-                "reference": "2901667589937a9fe99e90d4adb93a4d8aaf7f9c"
+                "reference": "21305c134a871ce51f758cc44379653fdb0863e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/2901667589937a9fe99e90d4adb93a4d8aaf7f9c",
-                "reference": "2901667589937a9fe99e90d4adb93a4d8aaf7f9c",
+                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/21305c134a871ce51f758cc44379653fdb0863e6",
+                "reference": "21305c134a871ce51f758cc44379653fdb0863e6",
                 "shasum": ""
             },
             "require": {
@@ -1277,7 +1277,7 @@
                 }
             ],
             "description": "Admin Theme based on the AdminLTE 2.3 for easy integration with Symfony 4",
-            "time": "2018-07-14T21:52:14+00:00"
+            "time": "2018-07-15T20:04:01+00:00"
         },
         {
             "name": "monolog/monolog",
