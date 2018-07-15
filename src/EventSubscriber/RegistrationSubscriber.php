@@ -13,7 +13,6 @@ use App\Entity\User;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Model\UserManagerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -23,22 +22,15 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class RegistrationSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
-
-    /**
      * @var UserManagerInterface
      */
     protected $userManager;
 
     /**
-     * @param EventDispatcherInterface $dispatcher
      * @param UserManagerInterface $userManager
      */
-    public function __construct(EventDispatcherInterface $dispatcher, UserManagerInterface $userManager)
+    public function __construct(UserManagerInterface $userManager)
     {
-        $this->eventDispatcher = $dispatcher;
         $this->userManager = $userManager;
     }
 
