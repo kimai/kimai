@@ -15,6 +15,7 @@ use App\Tests\Controller\ControllerBaseTest;
 /**
  * @coversDefaultClass \App\Controller\Admin\ActivityController
  * @group integration
+ * @group legacy
  */
 class ActivityControllerTest extends ControllerBaseTest
 {
