@@ -66,7 +66,14 @@ class UserRepository extends AbstractRepository implements UserLoaderInterface
         }
 
         if ($query->getRole() !== null) {
-            $qb->andWhere('u.roles LIKE :role')->setParameter('role', '%' . $query->getRole() . '%');
+            $rolesWhere = 'u.roles LIKE :role';
+            $qb->setParameter('role', '%' . $query->getRole() . '%');
+            // a hack as FOSUserBundle does not save the ROLE_USER in the database as it is the default role
+            if ($query->getRole() === User::ROLE_USER) {
+                $rolesWhere .= ' OR u.roles LIKE :role1';
+                $qb->setParameter('role1', '%{}');
+            }
+            $qb->andWhere($rolesWhere);
         }
 
         return $this->getPager($qb->getQuery(), $query->getPage(), $query->getPageSize());
