@@ -31,7 +31,7 @@ class RoleValidatorTest extends TestCase
     }
 
     /**
-     * @expectedException Symfony\Component\Validator\Exception\UnexpectedTypeException
+     * @expectedException \Symfony\Component\Validator\Exception\UnexpectedTypeException
      */
     public function testConstraintIsInvalid()
     {
