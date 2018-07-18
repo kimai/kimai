@@ -10,6 +10,7 @@
 namespace App\Tests\Entity;
 
 use App\Entity\User;
+use App\Entity\UserPreference;
 
 /**
  * @covers \App\Entity\User
@@ -68,5 +69,42 @@ class UserTest extends AbstractEntityTest
         }
 
         $this->assertHasNoViolations($user);
+    }
+
+    public function testDatetime()
+    {
+        $date = new \DateTime('+1 day');
+        $user = new User();
+        $user->setRegisteredAt($date);
+        $this->assertEquals($date, $user->getRegisteredAt());
+    }
+
+    public function testPreferences()
+    {
+        $user = new User();
+        $this->assertNull($user->getPreference('test'));
+        $this->assertNull($user->getPreferenceValue('test'));
+        $this->assertEquals('foo', $user->getPreferenceValue('test', 'foo'));
+
+        $preference = new UserPreference();
+        $preference
+            ->setName('test')
+            ->setValue('foobar');
+        $user->addPreference($preference);
+        $this->assertEquals('foobar', $user->getPreferenceValue('test', 'foo'));
+        $this->assertEquals($preference, $user->getPreference('test'));
+    }
+
+    public function testToString()
+    {
+        $user = new User();
+
+        $user->setUsername('bar');
+        $this->assertEquals('bar', (string) $user);
+        $this->assertEquals('bar', $user->getUsername());
+
+        $user->setAlias('foo');
+        $this->assertEquals('foo', (string) $user);
+        $this->assertEquals('foo', $user->getAlias());
     }
 }
