@@ -46,19 +46,28 @@ class User extends BaseUser implements UserInterface
      * @ORM\Column(type="json_array")
      * @KimaiAssert\Role()
      *
-     * TODO username
-     * @ORM\Column(name="name", type="string", length=60, nullable=false, unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Length(min=5, max=60)
-     *
      * TODO password
      * @Assert\NotBlank(groups={"registration", "passwordUpdate"})
      * @Assert\Length(min=6, max=4096, groups={"registration", "passwordUpdate"})
+     */
+
+    /**
+     * TODO move me somewhere else?
+     * @var string
      *
-     * TODO email
+     * @Assert\NotBlank()
+     * @Assert\Length(min=5, max=60)
+     */
+    protected $username;
+
+    /**
+     * TODO move me somewhere else?
+     * @var string
+     *
      * @Assert\NotBlank()
      * @Assert\Email()
      */
+    protected $email;
 
     /**
      * @var int
