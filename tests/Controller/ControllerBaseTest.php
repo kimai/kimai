@@ -103,7 +103,6 @@ abstract class ControllerBaseTest extends WebTestCase
     /**
      * @param string $url
      * @param string $method
-     * @param Client|null $client
      */
     protected function assertUrlIsSecured(string $url, $method = 'GET')
     {
@@ -162,5 +161,42 @@ abstract class ControllerBaseTest extends WebTestCase
     protected function assertHasDataTable(Client $client)
     {
         $this->assertContains('<table class="table table-striped table-hover dataTable" role="grid">', $client->getResponse()->getContent());
+    }
+
+    /**
+     * @param string $role the USER role to use for the request
+     * @param string $url the URL of the page displaying the initial form to submit
+     * @param string $formSelector a selector to find the form to test
+     * @param array $formData values to fill in the form
+     * @param array $fieldNames array of form-fields that should fail
+     * @param bool $disableValidation whether the form should validate before submitting or not
+     */
+    protected function assertFormHasValidationError($role, $url, $formSelector, array $formData, array $fieldNames, $disableValidation = true)
+    {
+        $client = $this->getClientForAuthenticatedUser($role);
+        $crawler = $client->request('GET', '/' . self::DEFAULT_LANGUAGE . $url);
+        $form = $crawler->filter($formSelector)->form();
+        if ($disableValidation) {
+            $form->disableValidation();
+        }
+        $result = $client->submit($form, $formData);
+
+        $submittedForm = $result->filter($formSelector);
+        $validationErrors = $submittedForm->filter('li.text-danger');
+
+        $this->assertEquals(
+            count($fieldNames),
+            count($validationErrors),
+            sprintf('Expected %s validation errors, found %s', count($fieldNames), count($validationErrors))
+        );
+
+        foreach($fieldNames as $name) {
+            $field = $submittedForm->filter($name);
+            $this->assertNotNull($field, 'Could not find form field: '  . $name);
+            $list = $field->nextAll();
+            $this->assertNotNull($list, 'Form field has no validation message: '  . $name);
+            $validation = $list->filter('li.text-danger');
+            $this->assertGreaterThanOrEqual(1, count($validation), 'Form field has no validation message: '  . $name);
+        }
     }
 }

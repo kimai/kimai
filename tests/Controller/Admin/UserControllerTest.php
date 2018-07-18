@@ -49,25 +49,24 @@ class UserControllerTest extends ControllerBaseTest
     public function getValidationTestData()
     {
         return [
-            /*
             [
-                // missing fields: username, password, email, enabled
+                // invalid fields: username, password_second, email, enabled
                 [
                     'user_create' => [
+                        'username' => '',
                         'plainPassword' => ['first' => 'sdfsdf'],
                         'alias' => 'ycvyxcb',
                         'title' => '34rtwrtewrt',
                         'avatar' => 'asdfawer',
+                        'email' => '',
                     ]
                 ],
                 [
                     '#user_create_username',
-                    '#user_create_plainPassword_second',
+                    '#user_create_plainPassword_first',
                     '#user_create_email',
-                    '#user_create_enabled',
                 ]
             ],
-            */
             // invalid fields: username, password, email, enabled
             [
                 [
@@ -90,30 +89,4 @@ class UserControllerTest extends ControllerBaseTest
             ],
         ];
     }
-
-    protected function assertFormHasValidationError($role, $url, $formSelector, array $formData, array $fieldNames)
-    {
-        $client = $this->getClientForAuthenticatedUser($role);
-        $crawler = $client->request('POST', '/' . self::DEFAULT_LANGUAGE . $url, $formData);
-
-        $form = $crawler->filter($formSelector);
-
-        $validationErrors = $form->filter('li.text-danger');
-
-        $this->assertEquals(
-            count($fieldNames),
-            count($validationErrors),
-            sprintf('Expected %s validation errors, found %s', count($fieldNames), count($validationErrors))
-        );
-
-        foreach($fieldNames as $name) {
-            $field = $form->filter($name);
-            $this->assertNotNull($field, 'Could not find form field: '  . $name);
-            $list = $field->nextAll();
-            $this->assertNotNull($list, 'Form field has no validation message: '  . $name);
-            $validation = $list->filter('li.text-danger');
-            $this->assertGreaterThanOrEqual(1, count($validation), 'Form field has no validation message: '  . $name);
-        }
-    }
-
 }

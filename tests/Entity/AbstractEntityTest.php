@@ -31,6 +31,11 @@ abstract class AbstractEntityTest extends TestCase
             $fieldNames = [$fieldNames];
         }
 
+        $expected = count($fieldNames);
+        $actual = $validations->count();
+
+        $this->assertEquals($expected, $actual, sprintf('Expected %s violations, found %s.', $expected, $actual));
+
         $violatedFields = [];
         /** @var ConstraintViolationInterface $validation */
         foreach ($validations as $validation) {
@@ -48,10 +53,5 @@ abstract class AbstractEntityTest extends TestCase
         }
 
         $this->assertEmpty($violatedFields, sprintf('Unexpected violations found: %s', implode(', ', $violatedFields)));
-
-        $expected = count($fieldNames);
-        $actual = $validations->count();
-
-        $this->assertEquals($expected, $actual, sprintf('Expected %s violations, found %s.', $expected, $actual));
     }
 }
