@@ -23,7 +23,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RegistrationSubscriberTest extends TestCase
 {
-
     public function testGetSubscribedEvents()
     {
         $events = RegistrationSubscriber::getSubscribedEvents();

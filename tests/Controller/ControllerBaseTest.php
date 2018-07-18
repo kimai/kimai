@@ -190,13 +190,13 @@ abstract class ControllerBaseTest extends WebTestCase
             sprintf('Expected %s validation errors, found %s', count($fieldNames), count($validationErrors))
         );
 
-        foreach($fieldNames as $name) {
+        foreach ($fieldNames as $name) {
             $field = $submittedForm->filter($name);
-            $this->assertNotNull($field, 'Could not find form field: '  . $name);
+            $this->assertNotNull($field, 'Could not find form field: ' . $name);
             $list = $field->nextAll();
-            $this->assertNotNull($list, 'Form field has no validation message: '  . $name);
+            $this->assertNotNull($list, 'Form field has no validation message: ' . $name);
             $validation = $list->filter('li.text-danger');
-            $this->assertGreaterThanOrEqual(1, count($validation), 'Form field has no validation message: '  . $name);
+            $this->assertGreaterThanOrEqual(1, count($validation), 'Form field has no validation message: ' . $name);
         }
     }
 }

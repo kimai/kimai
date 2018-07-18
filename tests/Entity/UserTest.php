@@ -16,7 +16,6 @@ use App\Entity\User;
  */
 class UserTest extends AbstractEntityTest
 {
-
     public function getInvalidTestData()
     {
         return [

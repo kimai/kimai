@@ -9,7 +9,6 @@
 
 namespace App\Entity;
 
-use App\Validator\Constraints as KimaiAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
