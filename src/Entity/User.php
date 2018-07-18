@@ -42,34 +42,6 @@ class User extends BaseUser implements UserInterface
     public const DEFAULT_ROLE = self::ROLE_USER;
 
     /**
-     * TODO roles
-     * @ORM\Column(type="json_array")
-     * @KimaiAssert\Role()
-     *
-     * TODO password
-     * @Assert\NotBlank(groups={"registration", "passwordUpdate"})
-     * @Assert\Length(min=6, max=4096, groups={"registration", "passwordUpdate"})
-     */
-
-    /**
-     * TODO move me somewhere else?
-     * @var string
-     *
-     * @Assert\NotBlank()
-     * @Assert\Length(min=5, max=60)
-     */
-    protected $username;
-
-    /**
-     * TODO move me somewhere else?
-     * @var string
-     *
-     * @Assert\NotBlank()
-     * @Assert\Email()
-     */
-    protected $email;
-
-    /**
      * @var int
      *
      * @ORM\Id
