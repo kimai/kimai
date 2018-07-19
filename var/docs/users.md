@@ -34,9 +34,7 @@ Read the [configurations chapter](configurations.md) if you want to change the v
 
 ## User registration
 
-User registration is open by default, as we assume that your Kimai installation is not public accessible.
-
-By default instant approval is activated, so new registered users can directly login and start time-tracking.
+User registration with instant approval is activated by default, so users can register and will be able to login and start time-tracking instantly.
 If you want your new users to use email based activation, then change the following configuration:
 
 - in `config/packages/fos_user.yaml` change the setting `fos_user.registration.confirmation.enabled` to true (default: false)

@@ -9,6 +9,7 @@
 
 namespace App\Tests\Validator\Constraints;
 
+use App\Entity\User;
 use App\Validator\Constraints\Role;
 use App\Validator\Constraints\RoleValidator;
 use PHPUnit\Framework\TestCase;
@@ -22,11 +23,11 @@ class RoleValidatorTest extends TestCase
     public function getValidRoles()
     {
         return [
-            ['ROLE_CUSTOMER'],
-            ['ROLE_USER'],
-            ['ROLE_TEAMLEAD'],
-            ['ROLE_ADMIN'],
-            ['ROLE_SUPER_ADMIN'],
+            [User::ROLE_CUSTOMER],
+            [User::ROLE_USER],
+            [User::ROLE_TEAMLEAD],
+            [User::ROLE_ADMIN],
+            [User::ROLE_SUPER_ADMIN],
         ];
     }
 
@@ -49,5 +50,10 @@ class RoleValidatorTest extends TestCase
         $validator->validate($role, $constraint);
         // the above line would break if the role is invalid, we need the next assert to mark the test as valid
         $this->assertNull(null);
+    }
+
+    public function testValidationError()
+    {
+        $this->markTestIncomplete(__CLASS__ . ': validation message not tested yet');
     }
 }
