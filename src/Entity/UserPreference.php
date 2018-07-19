@@ -132,7 +132,7 @@ class UserPreference
     }
 
     /**
-     * @return string|int|bool
+     * @return mixed
      */
     public function getValue()
     {
@@ -147,7 +147,10 @@ class UserPreference
     }
 
     /**
-     * @param string|int|bool $value
+     * Given $value will not be serialized before its stored, so it should be one of the types:
+     * integer, string or boolean
+     *
+     * @param mixed $value
      * @return UserPreference
      */
     public function setValue($value): UserPreference
