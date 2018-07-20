@@ -59,27 +59,40 @@ chmod -R 777 var/
 ```
 
 It's up to you which database server you want to use, Kimai v2 supports MySQL/MariaDB and SQLite.
-Create your database and configure the connection string in your environment, e.g. with the `.env` file (more examples in `.env.dist`):
+Configure the database connection string in your the `.env` file:
 ```
+# adjust all settings in .env to your needs
 APP_ENV=prod
-APP_SECRET=insert_a_random_secret_string_for_production
 DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
 ```
 
-After activating `prod` environment you can prepare the environment by installing all dependencies:
+Now install all dependencies for Kimai 2:
 
 ```bash
 composer install --no-dev
 ```
 
-Create the database schemas and warm up the cache (as webserver user):
+Optionally create the database:
+```bash
+bin/console doctrine:database:create
+```
+
+Create all schema tables:
 ```bash
 bin/console doctrine:schema:create
+```
+
+Make sure that upcoming update can be automatically applied by setting the correct database version:
+```bash
+bin/console doctrine:migrations:version --add --all
+```
+
+Warm up the cache (as webserver user):
+```bash
 sudo -u www-data bin/console cache:warmup --env=prod
 ```
 
-Create your first user with the following command. You will be asked to enter a password afterwards.
-
+Create your first user with the following command. You will be asked to enter a password afterwards:
 ```bash
 bin/console kimai:create-user username admin@example.com ROLE_SUPER_ADMIN
 ```
@@ -94,7 +107,42 @@ For available roles, please refer to the [user documentation](var/docs/users.md)
 > For more details, see:
 > http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html
 
-That's it, you can start time-tracking :-)
+Installation complete: enjoy time-tracking :-)
+
+## Updating Kimai
+
+**STOP:** Its important that you do not execute the Installation steps before or after your upgrade.
+Make sure that you have a working database backup you start with these simple steps: 
+
+Get the latest code and install dependencies:
+```bash
+cd kimai2/
+git pull origin master
+composer install --no-dev
+```
+
+Refresh your cache:
+```bash
+sudo -u www-data bin/console cache:clear --env=prod
+sudo -u www-data bin/console cache:warmup --env=prod
+```
+
+And upgrade your database:
+```bash
+bin/console doctrine:migrations:migrate
+```
+
+Done! You can use the latest version of Kimai 2. 
+
+## Rolling releases & Git
+
+Please note: Kimai 2 uses a rolling release concept for delivering updates.
+Release versions will be created on a regular base and you can use these tags if you are familiar with Git, but we 
+will not provide support for any specific version (whether its bugs or installation/update docu).
+
+To clarify that further: Every code change, whether its new features or bug fixes, is targeted against master branch and 
+will be intensively tested before merge. We have to go this way, as we develop Kimai in our free time and want to put our 
+effort into the software instead of installation scripts and complicated upgrade processes. 
 
 ## Extensions for Kimai 2
 
