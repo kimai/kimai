@@ -50,6 +50,15 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     }
 
     /**
+     * @return string
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    protected function getPlatform()
+    {
+        return $this->connection->getDatabasePlatform()->getName();
+    }
+
+    /**
      * Call me like this:
      * $schema = $this->getClassMetaData(User::class);
      *
@@ -62,5 +71,22 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
         $schemaTool = new SchemaTool($em);
 
         return $em->getClassMetadata($entityName);
+    }
+
+    /**
+     * we do it via addSql instead of $schema->getTable($users)->dropIndex()
+     * otherwise the commands will be executed as last ones.
+     *
+     * @param string $indexName
+     * @param string $tableName
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    protected function addSqlDropIndex($indexName, $tableName)
+    {
+        $dropSql = 'DROP INDEX ' . $indexName;
+        if ($this->getPlatform() === 'mysql') {
+            $dropSql .= ' ON ' . $tableName;
+        }
+        $this->addSql($dropSql);
     }
 }
