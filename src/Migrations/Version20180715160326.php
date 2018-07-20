@@ -49,7 +49,7 @@ final class Version20180715160326 extends AbstractMigration
         foreach ($indexesOld as $index) {
             if (in_array('name', $index->getColumns()) || in_array('mail', $index->getColumns())) {
                 $this->indexesOld[] = $index;
-                $users->dropIndex($index->getName());
+                $this->addSql('DROP INDEX '.$index->getName().' ON kimai2_users');
             }
         }
 
