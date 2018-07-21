@@ -21,6 +21,5 @@ install:
 script:
   - vendor/bin/phpunit tests/
   - cp tests/.env.dist.sqlite .env
-  - bin/console doctrine:database:drop -n
   - bin/console doctrine:database:create -n
   - bin/console doctrine:migrations:migrate -n
