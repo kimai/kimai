@@ -67,6 +67,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     protected function getClassMetaData($entityName)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
+
         return $em->getClassMetadata($entityName);
     }
 
