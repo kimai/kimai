@@ -5,6 +5,9 @@ cache:
   directories:
     - $HOME/.composer/cache/files
 
+addons:
+  mariadb: '10.7.2'
+
 services:
   - mysql
 
@@ -26,6 +29,7 @@ script:
   - cp tests/.env.dist.sqlite .env
   - bin/console doctrine:database:create -n
   - bin/console doctrine:migrations:migrate -n
+  - mysql --version
   - cp tests/.env.dist.mysql .env
   - bin/console doctrine:database:create -n
   - bin/console doctrine:migrations:migrate -n
