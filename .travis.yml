@@ -5,6 +5,12 @@ cache:
   directories:
     - $HOME/.composer/cache/files
 
+addons:
+  mariadb: '10.2'
+
+services:
+  - mysql
+
 matrix:
   fast_finish: true
   include:
@@ -19,5 +25,10 @@ install:
   - composer install
 
 script:
-  - vendor/bin/phpunit --exclude-group integration tests/
-  - vendor/bin/phpunit --group integration tests/
+  - vendor/bin/phpunit tests/
+  - cp tests/.env.dist.sqlite .env
+  - bin/console doctrine:database:create -n
+  - bin/console doctrine:migrations:migrate -n
+  - cp tests/.env.dist.mysql .env
+  - bin/console doctrine:database:create -n
+  - bin/console doctrine:migrations:migrate -n

@@ -32,4 +32,7 @@ admin_lte:
     routes:
         adminlte_profile: user_profile
         adminlte_welcome: dashboard
-        adminlte_login: security_login
+        adminlte_login: fos_user_security_login
+        adminlte_login_check: fos_user_security_check
+        adminlte_registration: fos_user_registration_register
+        adminlte_password_reset: fos_user_resetting_request

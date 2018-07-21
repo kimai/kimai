@@ -40,15 +40,15 @@ class TimesheetVoterTest extends TestCase
 
     public function getTestData()
     {
-        $user0 = $this->getUser(0, 'ROLE_CUSTOMER');
-        $user1 = $this->getUser(1, 'ROLE_USER');
-        $user2 = $this->getUser(1, 'ROLE_TEAMLEAD');
+        $user0 = $this->getUser(0, User::ROLE_CUSTOMER);
+        $user1 = $this->getUser(1, User::ROLE_USER);
+        $user2 = $this->getUser(1, User::ROLE_TEAMLEAD);
 
         return [
-            [$user0, false, new Customer(), ['edit'], VoterInterface::ACCESS_ABSTAIN],
-            [$user1, false, $this->getTimesheet($user1), ['edit'], VoterInterface::ACCESS_GRANTED],
-            [$user1, false, $this->getTimesheet($user0), ['edit'], VoterInterface::ACCESS_DENIED],
-            [$user2, true, $this->getTimesheet($user1), ['edit'], VoterInterface::ACCESS_GRANTED],
+            [$user0, false, new Customer(), [TimesheetVoter::EDIT], VoterInterface::ACCESS_ABSTAIN],
+            [$user1, false, $this->getTimesheet($user1), [TimesheetVoter::EDIT], VoterInterface::ACCESS_GRANTED],
+            [$user1, false, $this->getTimesheet($user0), [TimesheetVoter::EDIT], VoterInterface::ACCESS_DENIED],
+            [$user2, true, $this->getTimesheet($user1), [TimesheetVoter::EDIT], VoterInterface::ACCESS_GRANTED],
         ];
     }
 

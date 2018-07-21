@@ -9,49 +9,61 @@
 
 namespace App\Tests\Entity;
 
-use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Validator\ConstraintViolationInterface;
-use Symfony\Component\Validator\Validation;
 
 /**
  * @covers \App\Entity\Timesheet
  */
-abstract class AbstractEntityTest extends TestCase
+abstract class AbstractEntityTest extends KernelTestCase
 {
     /**
-     * @param $value
+     * @param $entity
      * @param array|string $fieldNames
      */
-    protected function assertHasViolationForField($value, $fieldNames)
+    protected function assertHasViolationForField($entity, $fieldNames)
     {
-        $validator = Validation::createValidatorBuilder()->enableAnnotationMapping()->getValidator();
-        $validations = $validator->validate($value);
+        self::bootKernel();
+        $validator = static::$kernel->getContainer()->get('validator');
+
+        $violations = $validator->validate($entity);
 
         if (!is_array($fieldNames)) {
             $fieldNames = [$fieldNames];
         }
 
+        $expected = count($fieldNames);
+        $actual = $violations->count();
+
+        $this->assertEquals($expected, $actual, sprintf('Expected %s violations, found %s.', $expected, $actual));
+
         $violatedFields = [];
         /** @var ConstraintViolationInterface $validation */
-        foreach ($validations as $validation) {
-            $violatedFields[] = $validation->getPropertyPath();
+        foreach ($violations as $validation) {
+            $violatedFields[$validation->getPropertyPath()] = $validation->getPropertyPath();
         }
 
         foreach ($fieldNames as $id => $propertyPath) {
             $foundField = false;
             if (in_array($propertyPath, $violatedFields)) {
                 $foundField = true;
-                unset($violatedFields[$id]);
+                unset($violatedFields[$propertyPath]);
             }
 
             $this->assertTrue($foundField, 'Failed finding violation for field: ' . $propertyPath);
         }
 
         $this->assertEmpty($violatedFields, sprintf('Unexpected violations found: %s', implode(', ', $violatedFields)));
+    }
 
-        $expected = count($fieldNames);
-        $actual = $validations->count();
+    protected function assertHasNoViolations($entity)
+    {
+        self::bootKernel();
+        $validator = static::$kernel->getContainer()->get('validator');
 
-        $this->assertEquals($expected, $actual, sprintf('Expected %s violations, found %s.', $expected, $actual));
+        $violations = $validator->validate($entity);
+        $actual = $violations->count();
+
+        $this->assertEquals(0, $actual, sprintf('Expected 0 violations, found %s.', $actual));
     }
 }

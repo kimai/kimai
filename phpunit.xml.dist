@@ -10,7 +10,7 @@
     <php>
         <ini name="error_reporting" value="-1" />
         <ini name="intl.default_locale" value="en_US" />
-        <env name="KERNEL_CLASS" value="App\Kernel"  force="true"/>
+        <env name="KERNEL_CLASS" value="App\Kernel" force="true"/>
         <env name="APP_ENV" value="test" force="true"/>
         <env name="APP_DEBUG" value="1" force="true"/>
         <env name="APP_SECRET" value="5a79a1c866efef9ca1800f971d689f3e" force="true"/>
@@ -37,8 +37,12 @@
             <directory suffix=".php">src/</directory>
             <directory suffix=".php">templates/</directory>
             <exclude>
+                <directory suffix=".php">assets/</directory>
+                <directory suffix=".php">bin/</directory>
+                <directory suffix=".php">config/</directory>
                 <directory suffix=".php">public/</directory>
                 <directory suffix=".php">tests/</directory>
+                <directory suffix=".php">translations/</directory>
                 <directory suffix=".php">var/</directory>
                 <directory suffix=".php">vendor/</directory>
             </exclude>

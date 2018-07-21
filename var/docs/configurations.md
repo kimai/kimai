@@ -1,10 +1,77 @@
 # Configurations
 
-There are several configurations that can be configured with the yaml files in `config/packages/*.yaml``
+Configuration of Kimai is spread in all files in the `config/`directory but mainly it these files:
 
-Please read _Overwriting local configs_ to know where to store your own settings.
+- `.env` - environment specific settings
+- `config/packages/kimai.yaml` - Kimai specific settings
+- `config/packages/admin_lte.yaml` - theme specific settings ([read more](https://github.com/kevinpapst/AdminLTEBundle/blob/master/Resources/docs/configurations.md))
+- `config/packages/fos_user.yaml` - user management and email settings
+- `config/packages/local.yaml` - your local configuration settings
 
-## Duration only
+There are several other configurations that could potentially be interesting for you in [config/packages/*.yaml](../../config/packages/).
+
+If you want to adjust a setting from any of these files, use `local.yaml` (see below).
+
+## Environment specific settings (.env)
+
+The most basic settings, which need always be adjusted are stored in the `.env` file:
+ 
+- `MAILER_URL` - smtp connection for emails
+- `MAILER_FROM` - application specific "from" address for all emails
+- `APP_ENV` - environment for the runtime (use `prod` if you are unsure)
+- `DATABASE_URL` - database connection for storing all application data
+- `DATABASE_PREFIX` - precix for any Kimai table in the configured database
+- `APP_SECRET` - secret used for hasing user password (if you cahnge this, every password is invalid afterwards) 
+
+## Overwriting local configs (local.yaml)
+
+You can create the file `config/packages/local.yaml` and store your own settings inside. This file will NEVER be shipped with Kimai.
+So having your custom settings in this file allows you to easily update Kimai. This is the same concept which is used for the `.env` file.
+
+An example `config/packages/local.yaml` file might look like this:
+
+```yaml
+kimai:
+    timesheet:
+        rounding:
+            default:
+                begin: 15
+                end: 15
+
+admin_lte:
+    options:
+        default_avatar: build/apple-touch-icon.png
+```
+
+The `local.yaml` file will be imported as last configuration file, so you can overwrite any setting from the `config/packages/` directory.
+
+After changing this file you have to clear the cache with `bin/console cache:clear` or `bin/console cache:clear --env=prod`.
+
+## Emails (swiftmailer.yaml)
+
+Kimai uses Swiftmailer to sent emails. You configure your SMTP connection setting in [.env](../../.env.sample). 
+
+For more configuration details read the [Swiftmailer](https://symfony.com/doc/current/reference/configuration/swiftmailer.html) documentation 
+and apply the settings in [swiftmailer.yaml](../../config/packages/swiftmailer.yaml).
+
+## Security
+
+Kimai uses the FOSUserBundle for security related tasks like user management. Its configuration can be found in [fos_user.yaml](../../config/packages/fos_user.yaml).
+
+### User management emails (fos_user.yaml)
+
+Kimai sents emails for newly registered users ([if that is configured](users.md)) and forgotten password requests. 
+You can change the contents of these emails by editing [fos_user.yaml](../../config/packages/fos_user.yaml).
+
+You can find more information in the [FOSUserBundle](https://symfony.com/doc/master/bundles/FOSUserBundle/index.html) documentation.  
+
+### Remember me login (security.yaml)
+
+The default period for the `Remember me` option can be changed in the config file [security.yaml](../../config/packages/security.yaml). 
+
+## Timesheets (kimai.yaml)
+
+### Duration only
 
 Kimai supports two modes for displaying and recording timesheet entries:
 
@@ -19,11 +86,7 @@ You can activate the `duration_only` mode by switching the configuration key `ki
 
 For supported formats while entering the `duration` please see the [timesheet chapter](timesheet.md) 
 
-## Remember me login
-
-The default period for the `Remember me` option can be changed in the config file [security.yaml](../../config/packages/security.yaml). 
-
-## Timesheet records - rounding of begin, end and duration
+### Rounding of begin, end and duration for timesheet records
 
 Rounding rules are used to round the begin & end dates and the duration for timesheet records.
 
@@ -38,7 +101,7 @@ Rounding rules are used to round the begin & end dates and the duration for time
 
 You can configure your `rounding` rules by changing the configuration file [kimai.yaml](../../config/packages/kimai.yaml).
 
-### Examples
+#### Examples
 
 A simple example to always charge at least 1 hour for weekend work (even if you only worked for 5 minutes) could look like this:
 
@@ -66,7 +129,7 @@ kimai:
                 duration: 0
 ```
 
-## Timesheet records - hourly rates
+### Hourly rates for timesheet records
 
 If you want to apply different hourly rates multiplication `factor` for specific weekdays, you can use this `rates` configuration.
 
@@ -80,7 +143,7 @@ If you want to apply different hourly rates multiplication `factor` for specific
 
 You can configure the `hourly_rate` rules by changing the configuration file [kimai.yaml](../../config/packages/kimai.yaml).
 
-### Examples
+#### Examples
 
 1. The "workdays" rule will use the default "hourly rate" for each timesheet entry recorded between "monday" to "friday" as a multiplication with 1 will not change the result
 2. The "weekend" rule will add 50% to each timesheet entry that will be recorded on "saturdays" or "sundays"
@@ -96,20 +159,3 @@ kimai:
                 days: ['saturday','sunday']
                 factor: 1.5
 ```
-
-## Overwriting local configs
-
-You can create the file `config/packages/local.yaml` and store your own settings inside. This file will NEVER be shipped with Kimai.
-
-So having your custom settings in this file allows you to easily update Kimai. This is the same concept as used for the `.env` file.
-
-An example `config/packages/local.yaml` file might look like this:
-```yaml
-kimai:
-    timesheet:
-        rounding:
-            default:
-                begin: 15
-                end: 15
-```
-After changing the file you have to clear the cache with `bin/console cache:clear` or `bin/console cache:clear --env=prod`.
