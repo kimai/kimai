@@ -63,7 +63,7 @@ final class Version20180701120000 extends AbstractMigration
             $this->addSql('ALTER TABLE '.$this->getTableName('projects').' ADD CONSTRAINT FK_407F12069395C3F3 FOREIGN KEY (customer_id) REFERENCES '.$this->getTableName('customers').' (id) ON DELETE CASCADE');
             $this->addSql('ALTER TABLE '.$this->getTableName('activities').' ADD CONSTRAINT FK_8811FE1C166D1F9C FOREIGN KEY (project_id) REFERENCES '.$this->getTableName('projects').' (id) ON DELETE CASCADE');
             $this->addSql('ALTER TABLE '.$this->getTableName('timesheet').' ADD CONSTRAINT FK_4F60C6B18D93D649 FOREIGN KEY (user) REFERENCES '.$this->getTableName('users').' (id)');
-            $this->addSql('ALTER TABLE '.$this->getTableName('timesheet').' ADD CONSTRAINT FK_4F60C6B181C06096 FOREIGN KEY (activity_id) REFERENCES '.$this->getTableName('activities').' (id) ON DELETE CASCADE');
+            $this->addSql('ALTER TABLEx '.$this->getTableName('timesheet').' ADD CONSTRAINT FK_4F60C6B181C06096 FOREIGN KEY (activity_id) REFERENCES '.$this->getTableName('activities').' (id) ON DELETE CASCADE');
         }
     }
 
