@@ -10,7 +10,6 @@
 namespace App\Doctrine;
 
 use Doctrine\Migrations\AbstractMigration as BaseAbstractMigration;
-use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -68,8 +67,6 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     protected function getClassMetaData($entityName)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
-        $schemaTool = new SchemaTool($em);
-
         return $em->getClassMetadata($entityName);
     }
 
