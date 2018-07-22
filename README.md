@@ -69,7 +69,7 @@ DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
 Now install all dependencies for Kimai 2:
 
 ```bash
-composer install --no-dev
+sudo -u www-data composer install --no-dev --optimize-autoloader
 ```
 
 Optionally create the database:
@@ -82,7 +82,7 @@ Create all schema tables:
 bin/console doctrine:schema:create
 ```
 
-Make sure that upcoming update can be automatically applied by setting the correct database version:
+Make sure that upcoming updates can be correctly applied by setting the initial database version:
 ```bash
 bin/console doctrine:migrations:version --add --all
 ```
@@ -111,14 +111,17 @@ Installation complete: enjoy time-tracking :-)
 
 ## Updating Kimai
 
-**STOP:** Its important that you do not execute the Installation steps before or after your upgrade.
-Make sure that you have a working database backup you start with these simple steps: 
+**STOP** 
+
+1. It's important that you don't execute the Installation steps before or after your upgrade
+2. Make sure that you have a working database backup before you start the update
+3. Read the [UPGRADING](UPGRADING.md) guide and [release information](https://github.com/kevinpapst/kimai2/releases) to check if there a further steps required
 
 Get the latest code and install dependencies:
 ```bash
 cd kimai2/
 git pull origin master
-composer install --no-dev
+sudo -u www-data composer install --no-dev --optimize-autoloader
 ```
 
 Refresh your cache:
@@ -140,8 +143,8 @@ Please note: Kimai 2 uses a rolling release concept for delivering updates.
 Release versions will be created on a regular base and you can use these tags if you are familiar with Git, but we 
 will not provide support for any specific version (whether its bugs or installation/update docu).
 
-To clarify that further: Every code change, whether its new features or bug fixes, is targeted against master branch and 
-will be intensively tested before merge. We have to go this way, as we develop Kimai in our free time and want to put our 
+Every code change, whether it's a new features or bug fixes, will be targeted against the master branch and 
+intensively tested before merging. We have to go this way, as we develop Kimai in our free time and want to put our 
 effort into the software instead of installation scripts and complicated upgrade processes. 
 
 ## Extensions for Kimai 2
@@ -153,7 +156,7 @@ All available Kimai 2 bundles can be found at the [Kimai recipes](https://github
 
 ## Developer
 
-If you want to develop for Kimai 2 please read the following documentation:
+If you want to develop with and for Kimai 2 please read the following documentation:
 
 - an example on how to extend Kimai 2 can be found in this [GitHub repository](https://github.com/kevinpapst/kimai2-invoice)
 - the [developer documentation](var/docs/developers.md) is available both on GitHub and your local installation
