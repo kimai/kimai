@@ -111,8 +111,11 @@ Installation complete: enjoy time-tracking :-)
 
 ## Updating Kimai
 
-**STOP:** Its important that you do not execute the Installation steps before or after your upgrade.
-Make sure that you have a working database backup you start with these simple steps: 
+**STOP** 
+
+1. It's important that you don't execute the Installation steps before or after your upgrade
+2. Make sure that you have a working database backup before you start the update
+3. Read the [UPGRADING](UPGRADING.md) guide and [release information](https://github.com/kevinpapst/kimai2/releases) to check if there a further steps required
 
 Get the latest code and install dependencies:
 ```bash

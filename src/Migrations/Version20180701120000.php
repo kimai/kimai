@@ -79,28 +79,5 @@ final class Version20180701120000 extends AbstractMigration
         if (!in_array($platform, ['sqlite', 'mysql'])) {
             $this->abortIf(true, 'Unsupported database platform: ' . $platform);
         }
-
-        if ($platform === 'sqlite') {
-            $this->addSql('DROP TABLE ' . $this->getTableName('users'));
-            $this->addSql('DROP TABLE ' . $this->getTableName('user_preferences'));
-            $this->addSql('DROP TABLE ' . $this->getTableName('customers'));
-            $this->addSql('DROP TABLE ' . $this->getTableName('projects'));
-            $this->addSql('DROP TABLE ' . $this->getTableName('activities'));
-            $this->addSql('DROP TABLE ' . $this->getTableName('timesheet'));
-            $this->addSql('DROP TABLE ' . $this->getTableName('invoice_templates'));
-        } else {
-            $this->addSql('ALTER TABLE ' . $this->getTableName('user_preferences') . ' DROP FOREIGN KEY FK_8D08F631A76ED395');
-            $this->addSql('ALTER TABLE ' . $this->getTableName('timesheet') . ' DROP FOREIGN KEY FK_4F60C6B18D93D649');
-            $this->addSql('ALTER TABLE ' . $this->getTableName('projects') . ' DROP FOREIGN KEY FK_407F12069395C3F3');
-            $this->addSql('ALTER TABLE ' . $this->getTableName('activities') . ' DROP FOREIGN KEY FK_8811FE1C166D1F9C');
-            $this->addSql('ALTER TABLE ' . $this->getTableName('timesheet') . ' DROP FOREIGN KEY FK_4F60C6B181C06096');
-            $this->addSql('DROP TABLE ' . $this->getTableName('users'));
-            $this->addSql('DROP TABLE ' . $this->getTableName('user_preferences'));
-            $this->addSql('DROP TABLE ' . $this->getTableName('customers'));
-            $this->addSql('DROP TABLE ' . $this->getTableName('projects'));
-            $this->addSql('DROP TABLE ' . $this->getTableName('activities'));
-            $this->addSql('DROP TABLE ' . $this->getTableName('timesheet'));
-            $this->addSql('DROP TABLE ' . $this->getTableName('invoice_templates'));
-        }
     }
 }
