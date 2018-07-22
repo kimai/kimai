@@ -66,6 +66,15 @@ abstract class ControllerBaseTest extends WebTestCase
     }
 
     /**
+     * @param string $url
+     * @return string
+     */
+    protected function createUrl($url)
+    {
+        return '/' . self::DEFAULT_LANGUAGE . '/' . ltrim($url, '/');
+    }
+
+    /**
      * @param Client $client
      * @param string $url
      * @param string $method
@@ -73,7 +82,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function request(Client $client, string $url, $method = 'GET')
     {
-        return $client->request($method, '/' . self::DEFAULT_LANGUAGE . $url);
+        return $client->request($method, $this->createUrl($url));
     }
 
     /**
@@ -83,7 +92,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertRequestIsSecured(Client $client, string $url, $method = 'GET')
     {
-        $client->request($method, '/' . self::DEFAULT_LANGUAGE . $url);
+        $client->request($method, $this->createUrl($url));
 
         /* @var RedirectResponse $response */
         $response = $client->getResponse();
@@ -94,7 +103,7 @@ abstract class ControllerBaseTest extends WebTestCase
         );
 
         $this->assertEquals(
-            'http://localhost/' . self::DEFAULT_LANGUAGE . '/login',
+            'http://localhost' . $this->createUrl('/login'),
             $response->getTargetUrl(),
             sprintf('The secure URL %s does not redirect to the login form.', $url)
         );
@@ -118,7 +127,7 @@ abstract class ControllerBaseTest extends WebTestCase
     protected function assertUrlIsSecuredForRole(string $role, string $url, string $method = 'GET')
     {
         $client = $this->getClientForAuthenticatedUser($role);
-        $client->request($method, '/' . self::DEFAULT_LANGUAGE . $url);
+        $client->request($method, $this->createUrl($url));
         $this->assertFalse(
             $client->getResponse()->isSuccessful(),
             sprintf('The secure URL %s is not protected for role %s', $url, $role)
@@ -174,7 +183,7 @@ abstract class ControllerBaseTest extends WebTestCase
     protected function assertFormHasValidationError($role, $url, $formSelector, array $formData, array $fieldNames, $disableValidation = true)
     {
         $client = $this->getClientForAuthenticatedUser($role);
-        $crawler = $client->request('GET', '/' . self::DEFAULT_LANGUAGE . $url);
+        $crawler = $client->request('GET', $this->createUrl($url));
         $form = $crawler->filter($formSelector)->form();
         if ($disableValidation) {
             $form->disableValidation();

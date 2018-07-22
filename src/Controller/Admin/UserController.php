@@ -81,7 +81,13 @@ class UserController extends AbstractController
 
             $this->flashSuccess('action.updated_successfully');
 
-            return $this->redirectToRoute('user_profile_edit', ['username' => $user->getUsername()]);
+            if ($editForm->get('create_more')->getData() !== true) {
+                return $this->redirectToRoute('user_profile_edit', ['username' => $user->getUsername()]);
+            }
+
+            $user = new User();
+            $editForm = $this->createEditForm($user);
+            $editForm->get('create_more')->setData(true);
         }
 
         return $this->render(
