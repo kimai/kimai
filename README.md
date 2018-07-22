@@ -82,7 +82,7 @@ Create all schema tables:
 bin/console doctrine:schema:create
 ```
 
-Make sure that upcoming update can be automatically applied by setting the correct database version:
+Make sure that upcoming updates can be correctly applied by setting the initial database version:
 ```bash
 bin/console doctrine:migrations:version --add --all
 ```
