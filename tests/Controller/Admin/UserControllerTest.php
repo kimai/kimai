@@ -32,6 +32,48 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertHasDataTable($client);
     }
 
+    public function testCreateAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/user/create');
+        $form = $client->getCrawler()->filter('form[name=user_create]')->form();
+        $this->assertTrue($form->has('user_create[create_more]'));
+        $this->assertNull($form->get('user_create[create_more]')->getValue());
+        $client->submit($form, [
+            'user_create' => [
+                'username' => 'foobar@example.com',
+                'plainPassword' => ['first' => 'abcdef', 'second' => 'abcdef'],
+                'email' => 'foobar@example.com',
+                'enabled' => 1,
+            ]
+        ]);
+        $this->assertTrue($client->getResponse()->isRedirect($this->createUrl('/profile/foobar@example.com/edit')));
+        $client->followRedirect();
+        // TODO test that this is the users profile
+    }
+
+    public function testCreateActionWithCreateMore()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/user/create');
+        $form = $client->getCrawler()->filter('form[name=user_create]')->form();
+        $this->assertTrue($form->has('user_create[create_more]'));
+        $client->submit($form, [
+            'user_create' => [
+                'username' => 'foobar@example.com',
+                'plainPassword' => ['first' => 'abcdef', 'second' => 'abcdef'],
+                'email' => 'foobar@example.com',
+                'enabled' => 1,
+                'create_more' => true,
+            ]
+        ]);
+        $this->assertFalse($client->getResponse()->isRedirect());
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $form = $client->getCrawler()->filter('form[name=user_create]')->form();
+        $this->assertTrue($form->has('user_create[create_more]'));
+        $this->assertEquals(1, $form->get('user_create[create_more]')->getValue());
+    }
+
     /**
      * @dataProvider getValidationTestData
      */
@@ -71,12 +113,12 @@ class UserControllerTest extends ControllerBaseTest
             [
                 [
                     'user_create' => [
-                        'username' => '',
+                        'username' => 'Test',
                         'plainPassword' => ['first' => 'sdfsdf', 'second' => 'sdfxxx'],
                         'alias' => 'ycvyxcb',
                         'title' => '34rtwrtewrt',
                         'avatar' => 'asdfawer',
-                        'email' => 'ydfbvsdfgs', // email is not working
+                        'email' => 'ydfbvsdfgs',
                         'enabled' => '3',
                     ]
                 ],

@@ -9,6 +9,7 @@
 
 namespace App\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -37,6 +38,12 @@ class UserCreateType extends UserEditType
             ]);
 
         parent::buildForm($builder, $options);
+
+        $builder->add('create_more', CheckboxType::class, [
+            'label' => 'label.create_more',
+            'required' => false,
+            'mapped' => false,
+        ]);
     }
 
     /**
