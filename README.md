@@ -69,7 +69,7 @@ DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
 Now install all dependencies for Kimai 2:
 
 ```bash
-composer install --no-dev
+sudo -u www-data composer install --no-dev --optimize-autoloader
 ```
 
 Optionally create the database:
@@ -121,7 +121,7 @@ Get the latest code and install dependencies:
 ```bash
 cd kimai2/
 git pull origin master
-composer install --no-dev
+sudo -u www-data composer install --no-dev --optimize-autoloader
 ```
 
 Refresh your cache:

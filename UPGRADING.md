@@ -13,7 +13,7 @@ Create a file and database backup before executing the following steps:
 
 ```bash
 git pull origin master
-composer install --no-dev
+sudo -u www-data composer install --no-dev --optimize-autoloader
 sudo -u www-data bin/console cache:clear --env=prod
 sudo -u www-data bin/console cache:warmup --env=prod
 bin/console doctrine:migrations:version --add 20180701120000
