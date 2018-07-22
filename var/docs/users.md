@@ -35,7 +35,7 @@ Read the [configurations chapter](configurations.md) if you want to change the v
 ## User registration
 
 User registration with instant approval is activated by default, so users can register and will be able to login and start time-tracking instantly.
-If you want your new users to use email based activation, then change the following configuration:
+If you want your new users to use [email](emails.md) based activation, you need to change the following configuration:
 
 - in `config/packages/fos_user.yaml` change the setting `fos_user.registration.confirmation.enabled` to true (default: false)
 
@@ -46,7 +46,7 @@ If you want to deactivate the user registration completely, you have to change t
 
 ## Password reset
 
-The reset password function is enabled by default.
+The reset password function is enabled by default, read how to activate [email](emails.md) support.
 If you want to deactivate this feature you have to change the following configs:
 
 - in `config/packages/admin_lte.yaml` remove the route alias `admin_lte.routes.adminlte_password_reset` (this will remove the link from the login form)
