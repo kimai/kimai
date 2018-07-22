@@ -143,8 +143,8 @@ Please note: Kimai 2 uses a rolling release concept for delivering updates.
 Release versions will be created on a regular base and you can use these tags if you are familiar with Git, but we 
 will not provide support for any specific version (whether its bugs or installation/update docu).
 
-To clarify that further: Every code change, whether its new features or bug fixes, is targeted against master branch and 
-will be intensively tested before merge. We have to go this way, as we develop Kimai in our free time and want to put our 
+Every code change, whether it's a new features or bug fixes, will be targeted against the master branch and 
+intensively tested before merging. We have to go this way, as we develop Kimai in our free time and want to put our 
 effort into the software instead of installation scripts and complicated upgrade processes. 
 
 ## Extensions for Kimai 2
@@ -156,7 +156,7 @@ All available Kimai 2 bundles can be found at the [Kimai recipes](https://github
 
 ## Developer
 
-If you want to develop for Kimai 2 please read the following documentation:
+If you want to develop with and for Kimai 2 please read the following documentation:
 
 - an example on how to extend Kimai 2 can be found in this [GitHub repository](https://github.com/kevinpapst/kimai2-invoice)
 - the [developer documentation](var/docs/developers.md) is available both on GitHub and your local installation
