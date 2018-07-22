@@ -143,23 +143,25 @@
                     <b>{{ 'stats.durationThisMonth'|trans }}</b> <a class="pull-right">{{ stats.durationThisMonth|duration }}</a>
                 </li>
 
+                {% if is_granted('ROLE_ADMIN') %}
                 <li class="list-group-item">
                     <b>{{ 'stats.amountThisMonth'|trans }}</b> <a class="pull-right">{{ stats.amountThisMonth|money }}</a>
                 </li>
+                {% endif %}
 
                 <li class="list-group-item">
                     <b>{{ 'stats.durationTotal'|trans }}</b> <a class="pull-right">{{ stats.durationTotal|duration }}</a>
                 </li>
 
+                {% if is_granted('ROLE_ADMIN') %}
                 <li class="list-group-item">
                     <b>{{ 'stats.amountTotal'|trans }}</b> <a class="pull-right">{{ stats.amountTotal|money }}</a>
                 </li>
+                {% endif %}
 
             </ul>
 
-            {# <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> #}
         </div>
-        <!-- /.box-body -->
     </div>
 {% endmacro %}
 

@@ -33,10 +33,6 @@ yarn install
 
 To rebuild all assets you have to execute:
 ```bash
-yarn run dev
-```
-or
-```bash
 yarn run prod
 ```
 
@@ -58,6 +54,11 @@ You can run unit and integration tests with built-in commands like that:
  ```bash
 bin/console kimai:test-unit
 bin/console kimai:test-integration
+```
+
+Or you simply run all tests with: 
+```bash
+bin/phpunit
 ```
 
 ## Check your code styles
@@ -88,7 +89,6 @@ We try to keep the number of language files small, in order to make it easier to
 
 The files in `translations/` as a quick overview:
 
-- `AvanzuAdminTheme` is only meant for translating strings from the original theme
 - `exceptions` only holds translations of error pages and exception handlers
 - `flashmessages` hold all success and error messages, that will be shown as results from action calls after page reload
 - `messages` holds most of the visible application translations (like all the static UI elements and form translations)
@@ -143,22 +143,21 @@ For more details check the [official menu subscriber](../../src/EventSubscriber/
 We use twig globals to render the control sidebar tabs, so adding one is as easy as adding a new config entry:
 
 ```yaml
-twig:
-    globals:
-        kimai_context:
-            control_sidebar:
-                # these are the official tabs
-                settings:
-                    icon: gears
-                    controller: 'App\Controller\SidebarController::settingsAction'
-                home:
-                    icon: question-circle-o
-                    template: sidebar/home.html.twig
-
+admin_lte:
+    options:
+        control_sidebar:
+            # these are the "official" Kimai tabs
+            settings:
+                icon: "fas fa-cogs"
+                controller: 'App\Controller\SidebarController::settingsAction'
+            home:
+                icon: "fas fa-question-circle"
+                template: sidebar/home.html.twig
 ```
-You have to define the `icon` (font-awesome without the `fa-` prefix) to be used and one of `controller` action or `template`. 
-Both follow the default naming syntax and you can easily link your bundle here instead of the app controller or templates.
-You should NOT add them in `config/packages/kimai.yaml` but in your own bundle config, otherwise they might get lost in a Kimai update.
+You have to define the `icon` (FontAwesome 5) to be used and one of: `controller` action or twig `template`. 
+Both follow the default naming syntax and you can link your bundle here instead of the app controller or templates.
+You should NOT add them in `config/packages/kimai.yaml` but in your own bundle or the `local.yaml` [config](configurations.md), 
+otherwise they might get lost during an update.
 
 ## Adding invoice renderer
 

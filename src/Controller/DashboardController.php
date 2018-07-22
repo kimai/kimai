@@ -102,9 +102,7 @@ class DashboardController extends Controller
             'header' => 'dashboard.all',
             'widgets' => [
                 "{{ widgets.info_box_counter('stats.durationThisMonth', timesheetGlobal.durationThisMonth|duration(true), 'far fa-hourglass', 'blue') }}",
-                //"{{ widgets.info_box_counter('stats.amountThisMonth', timesheetGlobal.amountThisMonth|money, 'money', 'green') }}",
                 "{{ widgets.info_box_counter('stats.durationTotal', timesheetGlobal.durationTotal|duration(true), 'far fa-hourglass', 'yellow') }}",
-                //"{{ widgets.info_box_counter('stats.amountTotal', timesheetGlobal.amountTotal|money, 'money', 'red') }}",
                 "{{ widgets.info_box_counter('stats.activeRecordings', timesheetGlobal.activeCurrently, 'far fa-hourglass', 'red', path('admin_timesheet', {'state': " . TimesheetQuery::STATE_RUNNING . '})) }}',
             ],
         ];
@@ -122,6 +120,15 @@ class DashboardController extends Controller
         if (!$this->isGranted('ROLE_ADMIN', null)) {
             return $widgets;
         }
+
+        $widgets[] = [
+            'id' => 'alluser.money_stats',
+            'header' => '',
+            'widgets' => [
+                "{{ widgets.info_box_counter('stats.amountThisMonth', timesheetGlobal.amountThisMonth|money, 'far fa-money-bill-alt', 'green') }}",
+                "{{ widgets.info_box_counter('stats.amountTotal', timesheetGlobal.amountTotal|money, 'far fa-money-bill-alt', 'red') }}",
+            ],
+        ];
 
         $widgets[] = [
             'id' => 'admin.stats',
