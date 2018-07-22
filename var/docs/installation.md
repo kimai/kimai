@@ -28,10 +28,10 @@ git clone https://github.com/kevinpapst/kimai2.git
 cd kimai2/
 ```
 
-Create the `.env` file, using the `prod` environment and SQLite as database:
+Create the `.env` file (as copy from `.env.dist`), using the `prod` environment and SQLite as database:
 ```
+# you need all settings from .env.dist, but these two need to be adjusted!
 APP_ENV=prod
-APP_SECRET=insert_a_random_secret_string_for_production
 DATABASE_URL=sqlite:///%kernel.project_dir%/var/data/kimai.sqlite
 ```
 The file `var/data/kimai.sqlite` will hold all your data, so make sure to include it in your backups!
@@ -45,6 +45,7 @@ composer install --no-dev
 Create the database schemas:
 ```bash
 bin/console doctrine:schema:create
+bin/console doctrine:migrations:version --add --all
 ```
 
 And create your first user with the following command. You will be asked to enter a password afterwards.
@@ -67,12 +68,11 @@ composer install
 
 The default installation uses a SQLite database, so there is no need to create a database for your first tests.
 Our default settings will work out-of-the-box, but you might want to adjust the `.env` values to your needs.
-You can configure your database through your environment (e.g. Webserver, Cloud-Provider) or in your `.env` file:
+You can configure your database in your `.env` file, e.g.:
 ```
 DATABASE_PREFIX=kimai2_
 DATABASE_URL=sqlite:///%kernel.project_dir%/var/data/kimai.sqlite
 APP_ENV=dev
-APP_SECRET=some_random_secret_string_for_your_installation
 ```
 
 The next commands will create the database and the schema:
