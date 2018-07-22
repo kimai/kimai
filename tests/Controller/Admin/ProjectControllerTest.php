@@ -32,7 +32,6 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertHasDataTable($client);
     }
 
-
     public function testCreateAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
@@ -42,7 +41,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertNull($form->get('project_edit_form[create_more]')->getValue());
         $client->submit($form, [
             'project_edit_form' => [
-                'name' => 'Test 2'
+                'name' => 'Test 2',
             ]
         ]);
         $this->assertTrue($client->getResponse()->isRedirect());
@@ -59,7 +58,8 @@ class ProjectControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'project_edit_form' => [
                 'name' => 'Test create more',
-                'create_more' => true
+                'create_more' => true,
+                // TODO select random customer
             ]
         ]);
         $this->assertFalse($client->getResponse()->isRedirect());
@@ -67,6 +67,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
         $this->assertTrue($form->has('project_edit_form[create_more]'));
         $this->assertEquals(1, $form->get('project_edit_form[create_more]')->getValue());
+        // TODO test that customer is pre-selected
     }
 
     public function testEditAction()

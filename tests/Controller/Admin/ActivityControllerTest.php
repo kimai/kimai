@@ -39,9 +39,9 @@ class ActivityControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
         $this->assertTrue($form->has('activity_edit_form[create_more]'));
         $this->assertNull($form->get('activity_edit_form[create_more]')->getValue());
-        $result = $client->submit($form, [
+        $client->submit($form, [
             'activity_edit_form' => [
-                'name' => 'Test 2'
+                'name' => 'Test 2',
             ]
         ]);
         $this->assertTrue($client->getResponse()->isRedirect());
@@ -55,10 +55,11 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/activity/create');
         $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
         $this->assertTrue($form->has('activity_edit_form[create_more]'));
-        $result = $client->submit($form, [
+        $client->submit($form, [
             'activity_edit_form' => [
                 'name' => 'Test create more',
-                'create_more' => true
+                'create_more' => true,
+                // TODO select random project
             ]
         ]);
         $this->assertFalse($client->getResponse()->isRedirect());
@@ -66,6 +67,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
         $this->assertTrue($form->has('activity_edit_form[create_more]'));
         $this->assertEquals(1, $form->get('activity_edit_form[create_more]')->getValue());
+        // TODO test that project is pre-selected
     }
 
     public function testEditAction()
