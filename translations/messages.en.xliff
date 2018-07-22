@@ -211,6 +211,10 @@
                 <source>label.email</source>
                 <target>Email</target>
             </trans-unit>
+            <trans-unit id="label.create_more">
+                <source>label.create_more</source>
+                <target>Create further entries</target>
+            </trans-unit>
 
             <!--
               Buttons & Actions
