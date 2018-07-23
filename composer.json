@@ -40,6 +40,7 @@
         "dama/doctrine-test-bundle": "^5.0",
         "doctrine/doctrine-fixtures-bundle": "^3.0",
         "friendsofphp/php-cs-fixer": "^2.10",
+        "fzaninotto/faker": "^1.8",
         "phpunit/phpunit": "^7.0",
         "squizlabs/php_codesniffer": "^3.2",
         "symfony/browser-kit": "^4.0",
