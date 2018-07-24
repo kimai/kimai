@@ -26,4 +26,18 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->request($client, '/timesheet/');
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
+
+    public function testCalendarAction()
+    {
+        $client = $this->getClientForAuthenticatedUser();
+        $this->request($client, '/timesheet/calendar');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+    }
+
+    public function testCalendarEntriesAction()
+    {
+        $client = $this->getClientForAuthenticatedUser();
+        $this->request($client, '/timesheet/calendar/entries');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+    }
 }

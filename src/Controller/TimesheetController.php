@@ -72,6 +72,70 @@ class TimesheetController extends AbstractController
     }
 
     /**
+     * @Route("/calendar", name="timesheet_calendar")
+     * @Method("GET")
+     * @Cache(smaxage="10")
+     */
+    public function calendar(Request $request)
+    {
+        return $this->render('timesheet/calendar.html.twig');
+    }
+
+    /**
+     * @Route("/calendar/entries", name="timesheet_calendar_date")
+     * @Method("GET")
+     * @Cache(smaxage="10")
+     */
+    public function calendarEntries(Request $request)
+    {
+        $start = $request->get('start');
+        $end = $request->get('end');
+
+        if ($start === null) {
+            $start = new \DateTime('first day of this month');
+            $start->setTime(0, 0, 0);
+        } else {
+            $start = \DateTime::createFromFormat('Y-m-d', $start);
+            if (!$start) {
+                throw new \Exception('Invalid start-date given');
+            }
+        }
+
+        if ($end === null) {
+            $end = new \DateTime('last day of this month');
+            $end->setTime(23, 59, 59);
+        } else {
+            $end = \DateTime::createFromFormat('Y-m-d', $end);
+            if (!$end) {
+                throw new \Exception('Invalid end-date given');
+            }
+        }
+
+        $query = new TimesheetQuery();
+        $query
+            ->setBegin($start)
+            ->setEnd($end)
+            ->setUser($this->getUser())
+            ->setResultType(TimesheetQuery::RESULT_TYPE_QUERYBUILDER)
+        ;
+
+        /* @var $entries Timesheet[] */
+        $entries = $this->getRepository()->findByQuery($query)->getQuery()->execute();
+        $result = [];
+
+        foreach ($entries as $entry) {
+            $result[] = [
+                'id' => $entry->getId(),
+                'start' => $entry->getBegin(),
+                'end' => $entry->getEnd() ?? new \DateTime(),
+                'title' => $entry->getActivity()->getName() . ' (' . $entry->getActivity()->getProject()->getName() . ')',
+            ];
+        }
+
+        return $this->json($result);
+    }
+
+    /**
      * The "main button and flyout" for displaying (and stopping) active entries.
      *
      * @return \Symfony\Component\HttpFoundation\Response

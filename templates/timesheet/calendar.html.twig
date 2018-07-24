@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+{% import "macros/datatables.html.twig" as tables %}
+{% import "macros/toolbar.html.twig" as toolbar %}
+
+{% block page_title %}{{ 'timesheet.title'|trans }}{% endblock %}
+{% block page_subtitle %}{{ 'timesheet.subtitle'|trans }}{% endblock %}
+{% block page_actions %}{{ widgets.page_actions({'list': path('timesheet'), 'create': path('timesheet_create')}) }}{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-body no-padding">
+                    <div id='calendar'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(function () {
+            $('#calendar').fullCalendar({
+                events: '{{ path('timesheet_calendar_date') }}',
+                header    : {
+                    left  : 'prev,next today',
+                    center: 'title',
+                    right : 'month,agendaWeek,agendaDay'
+                },
+                weekNumbers: true,
+                navLinks: true,
+                locale: '{{ app.request.locale }}',
+                editable  : false,
+                droppable : false,
+                eventBackgroundColor: '#00a65a',
+                eventBorderColor: '#00a65a'
+            })
+        })
+    </script>
+{% endblock %}
