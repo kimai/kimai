@@ -26,8 +26,8 @@ use Faker\Generator;
  */
 class CustomerFixtures extends Fixture
 {
-    public const MIN_CUSTOMERS = 250;
-    public const MAX_CUSTOMERS = 350;
+    public const MIN_CUSTOMERS = 5;
+    public const MAX_CUSTOMERS = 15;
     public const MIN_BUDGET = 0;
     public const MAX_BUDGET = 100000;
     public const MIN_PROJECTS_PER_CUSTOMER = 10;
@@ -44,17 +44,18 @@ class CustomerFixtures extends Fixture
 
         $amountCustomers = rand(self::MIN_CUSTOMERS, self::MAX_CUSTOMERS);
         for ($c = 1; $c <= $amountCustomers; $c++) {
-            $customer = $this->createCustomer($faker);
+            $visibleCustomer = 0 != $c % 3;
+            $customer = $this->createCustomer($faker, $visibleCustomer);
 
             $projectForCustomer = rand(self::MIN_PROJECTS_PER_CUSTOMER, self::MAX_PROJECTS_PER_CUSTOMER);
             for ($p = 1; $p <= $projectForCustomer; $p++) {
-                $visibleProject = 0 != $p % 5;
+                $visibleProject = 0 != $p % 3;
                 $project = $this->createProject($faker, $customer, $visibleProject);
                 $manager->persist($project);
 
                 $activityForProject = rand(self::MIN_ACTIVITIES_PER_PROJECT, self::MAX_ACTIVITIES_PER_PROJECT);
                 for ($a = 1; $a <= $activityForProject; $a++) {
-                    $visibleActivity = 0 != $a % 4;
+                    $visibleActivity = 0 != $a % 3;
                     $activity = $this->createActivity($faker, $project, $visibleActivity);
                     $manager->persist($activity);
                 }
@@ -69,21 +70,22 @@ class CustomerFixtures extends Fixture
 
     /**
      * @param Generator $faker
+     * @param boolean $visible
      * @return Customer
      */
-    private function createCustomer(Generator $faker)
+    private function createCustomer(Generator $faker, $visible)
     {
-        $visible = $faker->boolean;
         $entry = new Customer();
         $entry
             ->setCurrency($faker->currencyCode)
             ->setName($faker->company . ($visible ? '' : ' (x)'))
             ->setAddress($faker->address)
             ->setComment($faker->text)
-            ->setVisible($visible)
             ->setNumber('C-' . $faker->ean8)
             ->setCountry($faker->countryCode)
-            ->setTimezone($faker->timezone);
+            ->setTimezone($faker->timezone)
+            ->setVisible($visible)
+        ;
 
         return $entry;
     }
@@ -91,7 +93,7 @@ class CustomerFixtures extends Fixture
     /**
      * @param Generator $faker
      * @param Customer $customer
-     * @param $visible
+     * @param boolean $visible
      * @return Project
      */
     private function createProject(Generator $faker, Customer $customer, $visible)
@@ -103,7 +105,8 @@ class CustomerFixtures extends Fixture
             ->setBudget(rand(self::MIN_BUDGET, self::MAX_BUDGET))
             ->setComment($faker->text)
             ->setCustomer($customer)
-            ->setVisible($visible);
+            ->setVisible($visible)
+        ;
 
         return $entry;
     }
@@ -111,7 +114,7 @@ class CustomerFixtures extends Fixture
     /**
      * @param Generator $faker
      * @param Project $project
-     * @param $visible
+     * @param boolean $visible
      * @return Activity
      */
     private function createActivity(Generator $faker, Project $project, $visible)
@@ -121,7 +124,8 @@ class CustomerFixtures extends Fixture
             ->setName($faker->bs . ($visible ? '' : ' (x)'))
             ->setProject($project)
             ->setComment($faker->text)
-            ->setVisible($faker->boolean);
+            ->setVisible($visible)
+        ;
 
         return $entry;
     }

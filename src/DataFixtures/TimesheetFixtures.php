@@ -28,10 +28,10 @@ use Faker\Factory;
 class TimesheetFixtures extends Fixture implements DependentFixtureInterface
 {
     public const MIN_TIMESHEETS_PER_USER = 50;
-    public const MAX_TIMESHEETS_PER_USER = 5000;
-    public const MAX_TIMESHEETS_TOTAL = 250000;
+    public const MAX_TIMESHEETS_PER_USER = 500;
+    public const MAX_TIMESHEETS_TOTAL = 5000;
     public const MIN_RUNNING_TIMESHEETS_PER_USER = 0;
-    public const MAX_RUNNING_TIMESHEETS_PER_USER = 4;
+    public const MAX_RUNNING_TIMESHEETS_PER_USER = 3;
 
     public const BATCH_SIZE = 100;
 
@@ -77,7 +77,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
                 $manager->persist($entry);
 
                 if ($i % self::BATCH_SIZE == 0) {
-                    echo '['.$i.'] Timesheets for User ' . $user->getId() . PHP_EOL;
+                    //echo '['.$i.'] Timesheets for User ' . $user->getId() . PHP_EOL;
                     $manager->flush();
                     $manager->clear(Timesheet::class);
                 }

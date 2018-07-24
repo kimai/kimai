@@ -33,7 +33,7 @@ class UserFixtures extends Fixture
     public const USERNAME_ADMIN = 'anna_admin';
     public const USERNAME_SUPER_ADMIN = 'susan_super';
 
-    public const AMOUNT_EXTRA_USER = 50;
+    public const AMOUNT_EXTRA_USER = 2;
 
     public const MIN_RATE = 30;
     public const MAX_RATE = 120;

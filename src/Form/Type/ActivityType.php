@@ -43,7 +43,7 @@ class ActivityType extends AbstractType
     {
         $resolver->setDefaults([
             'label' => 'label.activity',
-            'class' => 'Kimai:Activity',
+            'class' => Activity::class,
             'choice_label' => [$this, 'choiceLabel'],
             'group_by' => [$this, 'groupBy'],
             'query_builder' => function (ActivityRepository $repo) {
