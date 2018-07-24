@@ -118,7 +118,7 @@ class UserFixtures extends Fixture
         $passwordEncoder = $this->encoder;
 
         $faker = Factory::create();
-        for($i = 1; $i <= self::AMOUNT_EXTRA_USER; $i++) {
+        for ($i = 1; $i <= self::AMOUNT_EXTRA_USER; $i++) {
             $user = new User();
             $user
                 ->setAlias($faker->name)

@@ -70,7 +70,7 @@ class CustomerFixtures extends Fixture
 
     /**
      * @param Generator $faker
-     * @param boolean $visible
+     * @param bool $visible
      * @return Customer
      */
     private function createCustomer(Generator $faker, $visible)
@@ -93,7 +93,7 @@ class CustomerFixtures extends Fixture
     /**
      * @param Generator $faker
      * @param Customer $customer
-     * @param boolean $visible
+     * @param bool $visible
      * @return Project
      */
     private function createProject(Generator $faker, Customer $customer, $visible)
@@ -114,7 +114,7 @@ class CustomerFixtures extends Fixture
     /**
      * @param Generator $faker
      * @param Project $project
-     * @param boolean $visible
+     * @param bool $visible
      * @return Activity
      */
     private function createActivity(Generator $faker, Project $project, $visible)
