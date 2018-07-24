@@ -23,7 +23,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  * Execute this command to load the data:
  * $ php bin/console doctrine:fixtures:load
  */
-class AppFixtures extends Fixture
+class UserFixtures extends Fixture
 {
     public const DEFAULT_PASSWORD = 'kitten';
     public const DEFAULT_AVATAR = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y';
@@ -34,6 +34,11 @@ class AppFixtures extends Fixture
     public const USERNAME_SUPER_ADMIN = 'susan_super';
 
     public const AMOUNT_EXTRA_USER = 50;
+
+    public const MIN_RATE = 30;
+    public const MAX_RATE = 120;
+
+    public const BATCH_SIZE = 50;
 
     /**
      * @var UserPasswordEncoderInterface
@@ -54,17 +59,19 @@ class AppFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        $this->loadUsers($manager);
+        $this->loadDefaultAccounts($manager);
+        $this->loadTestUsers($manager);
     }
 
     /**
+     * Default users for all test cases
+     *
      * @param ObjectManager $manager
      */
-    private function loadUsers(ObjectManager $manager)
+    private function loadDefaultAccounts(ObjectManager $manager)
     {
         $passwordEncoder = $this->encoder;
 
-        // default users for all test cases
         $allUsers = $this->getUserDefinition();
         foreach ($allUsers as $userData) {
             $user = new User();
@@ -77,46 +84,64 @@ class AppFixtures extends Fixture
                 ->setAvatar($userData[5])
                 ->setEnabled($userData[6])
                 ->setPassword($passwordEncoder->encodePassword($user, self::DEFAULT_PASSWORD))
+                ->setPreferences([$this->getUserPreference($user)])
             ;
-
-            $preference = new UserPreference();
-            $preference->setName(UserPreference::HOURLY_RATE);
-            $preference->setValue(rand(0, 100));
-            $preference->setUser($user);
-            $user->setPreferences([$preference]);
 
             $manager->persist($user);
         }
 
-        // randomized test users
+        $manager->flush();
+        $manager->clear();
+    }
+
+    /**
+     * @param User $user
+     * @return UserPreference
+     */
+    private function getUserPreference(user $user)
+    {
+        $preference = new UserPreference();
+        $preference->setName(UserPreference::HOURLY_RATE);
+        $preference->setValue(rand(self::MIN_RATE, self::MAX_RATE));
+        $preference->setUser($user);
+
+        return $preference;
+    }
+
+    /**
+     * Generate randomized test users
+     *
+     * @param ObjectManager $manager
+     */
+    private function loadTestUsers(ObjectManager $manager)
+    {
+        $passwordEncoder = $this->encoder;
+
         $faker = Factory::create();
-        for($i = 0; $i < self::AMOUNT_EXTRA_USER; $i++) {
+        for($i = 1; $i <= self::AMOUNT_EXTRA_USER; $i++) {
             $user = new User();
             $user
                 ->setAlias($faker->name)
-                ->setTitle(substr($faker->jobTitle, 0, 159))
+                ->setTitle(substr($faker->jobTitle, 0, 49))
                 ->setUsername($faker->userName)
                 ->setEmail($faker->email)
                 ->setRoles([User::ROLE_USER])
                 ->setAvatar(self::DEFAULT_AVATAR)
                 ->setEnabled(true)
                 ->setPassword($passwordEncoder->encodePassword($user, self::DEFAULT_PASSWORD))
+                ->setPreferences([$this->getUserPreference($user)])
             ;
 
-            $preference = new UserPreference();
-            $preference->setName(UserPreference::HOURLY_RATE);
-            $preference->setValue(rand(0, 100));
-            $preference->setUser($user);
-            $user->setPreferences([$preference]);
-
-            if ($i % 9 == 0) {
+            if ($i % self::BATCH_SIZE == 0) {
                 $manager->flush();
+                $manager->clear();
             }
 
             $manager->persist($user);
         }
 
         $manager->flush();
+        $manager->clear();
     }
 
     /**

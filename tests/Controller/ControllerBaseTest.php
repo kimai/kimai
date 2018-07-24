@@ -9,7 +9,7 @@
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\AppFixtures;
+use App\DataFixtures\UserFixtures;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -31,29 +31,29 @@ abstract class ControllerBaseTest extends WebTestCase
         switch ($role) {
             case User::ROLE_SUPER_ADMIN:
                 $client = self::createClient([], [
-                    'PHP_AUTH_USER' => AppFixtures::USERNAME_SUPER_ADMIN,
-                    'PHP_AUTH_PW' => AppFixtures::DEFAULT_PASSWORD,
+                    'PHP_AUTH_USER' => UserFixtures::USERNAME_SUPER_ADMIN,
+                    'PHP_AUTH_PW' => UserFixtures::DEFAULT_PASSWORD,
                 ]);
                 break;
 
             case User::ROLE_ADMIN:
                 $client = self::createClient([], [
-                    'PHP_AUTH_USER' => AppFixtures::USERNAME_ADMIN,
-                    'PHP_AUTH_PW' => AppFixtures::DEFAULT_PASSWORD,
+                    'PHP_AUTH_USER' => UserFixtures::USERNAME_ADMIN,
+                    'PHP_AUTH_PW' => UserFixtures::DEFAULT_PASSWORD,
                 ]);
                 break;
 
             case User::ROLE_TEAMLEAD:
                 $client = self::createClient([], [
-                    'PHP_AUTH_USER' => AppFixtures::USERNAME_TEAMLEAD,
-                    'PHP_AUTH_PW' => AppFixtures::DEFAULT_PASSWORD,
+                    'PHP_AUTH_USER' => UserFixtures::USERNAME_TEAMLEAD,
+                    'PHP_AUTH_PW' => UserFixtures::DEFAULT_PASSWORD,
                 ]);
                 break;
 
             case User::ROLE_USER:
                 $client = self::createClient([], [
-                    'PHP_AUTH_USER' => AppFixtures::USERNAME_USER,
-                    'PHP_AUTH_PW' => AppFixtures::DEFAULT_PASSWORD,
+                    'PHP_AUTH_USER' => UserFixtures::USERNAME_USER,
+                    'PHP_AUTH_PW' => UserFixtures::DEFAULT_PASSWORD,
                 ]);
                 break;
 
