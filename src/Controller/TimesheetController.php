@@ -114,25 +114,52 @@ class TimesheetController extends AbstractController
         $query = new TimesheetQuery();
         $query
             ->setBegin($start)
-            ->setEnd($end)
             ->setUser($this->getUser())
+            ->setState(TimesheetQuery::STATE_ALL)
             ->setResultType(TimesheetQuery::RESULT_TYPE_QUERYBUILDER)
         ;
+
+        // running entries should only occur for the current month, but they won't
+        // be found if we add the end to the query
+        if ((new \DateTime())->getTimestamp() > $end->getTimestamp()) {
+            $query->setEnd($end);
+        }
 
         /* @var $entries Timesheet[] */
         $entries = $this->getRepository()->findByQuery($query)->getQuery()->execute();
         $result = [];
 
         foreach ($entries as $entry) {
-            $result[] = [
-                'id' => $entry->getId(),
-                'start' => $entry->getBegin(),
-                'end' => $entry->getEnd() ?? new \DateTime(),
-                'title' => $entry->getActivity()->getName() . ' (' . $entry->getActivity()->getProject()->getName() . ')',
-            ];
+            $result[] = $this->getTimesheetEntryForCalendar($entry);
         }
 
         return $this->json($result);
+    }
+
+    /**
+     * @param Timesheet $entry
+     * @return array
+     */
+    protected function getTimesheetEntryForCalendar(Timesheet $entry)
+    {
+        $result = [
+            'id' => $entry->getId(),
+            'start' => $entry->getBegin(),
+            'title' => $entry->getActivity()->getName() . ' (' . $entry->getActivity()->getProject()->getName() . ')',
+            'description' => $entry->getDescription(),
+            'customer' => $entry->getActivity()->getProject()->getCustomer()->getName(),
+            'project' => $entry->getActivity()->getProject()->getName(),
+            'activity' => $entry->getActivity()->getName(),
+        ];
+
+        if (null === $entry->getEnd()) {
+            $result['backgroundColor'] = '#ccc';
+            $result['borderColor'] = '#ccc';
+        } else {
+            $result['end'] = $entry->getEnd() ?? new \DateTime();
+        }
+
+        return $result;
     }
 
     /**
@@ -202,7 +229,10 @@ class TimesheetController extends AbstractController
      */
     public function editAction(Timesheet $entry, Request $request)
     {
-        return $this->edit($entry, $request, 'timesheet_paginated', 'timesheet/edit.html.twig');
+        if (null !== $request->get('page')) {
+            return $this->edit($entry, $request, 'timesheet_paginated', 'timesheet/edit.html.twig');
+        }
+        return $this->edit($entry, $request, 'timesheet', 'timesheet/edit.html.twig');
     }
 
     /**

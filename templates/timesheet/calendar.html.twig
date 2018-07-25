@@ -12,7 +12,7 @@
         <div class="col-md-12">
             <div class="box box-success">
                 <div class="box-body no-padding">
-                    <div id='calendar'></div>
+                    <div id="calendar"></div>
                 </div>
             </div>
         </div>
@@ -30,13 +30,48 @@
                     center: 'title',
                     right : 'month,agendaWeek,agendaDay'
                 },
-                weekNumbers: true,
+                eventLimit: 4,                      // TODO make configurable
+                weekNumbers: true,                  // TODO make configurable
                 navLinks: true,
                 locale: '{{ app.request.locale }}',
                 editable  : false,
                 droppable : false,
-                eventBackgroundColor: '#00a65a',
-                eventBorderColor: '#00a65a'
+                height: 'auto',
+                nowIndicator: true,
+                businessHours: {                    // TODO make configurable
+                    dow: [ 1, 2, 3, 4, 5 ],         // TODO make configurable
+                    start: '10:00',                 // TODO make configurable
+                    end: '18:00'                    // TODO make configurable
+                },
+                eventBackgroundColor: '#00a65a',    // TODO make configurable
+                eventBorderColor: '#00a65a',        // TODO make configurable
+                eventRender: function(eventObj, $el) {
+                    $el.popover({
+                        title: eventObj.title,
+                        content:
+                        '<div class="calendar-entry">' +
+                            '<ul>' +
+                                '<li>' + '{{ 'label.date'|trans }}: ' + eventObj.start.format('L') + '</li>' +
+                                '<li>' + '{{ 'label.begin'|trans }}: ' + eventObj.start.format('LT') + '</li>' +
+                                '<li>' + '{{ 'label.end'|trans }}: ' + (eventObj.end ? eventObj.end.format('LT') : '<i>-</i>') + '</li>' +
+                                '<hr>' +
+                                '<li>' + '{{ 'label.customer'|trans }}: ' + eventObj.customer + '</li>' +
+                                '<li>' + '{{ 'label.project'|trans }}: ' + eventObj.project + '</li>' +
+                                '<li>' + '{{ 'label.activity'|trans }}: ' + eventObj.activity + '</li>' +
+                            '</ul>' +
+                            (eventObj.description ? '<hr><p>' + eventObj.description + '</p>' : '') +
+                        '</div>'
+                        ,
+                        trigger: 'hover',
+                        placement: 'top',
+                        container: 'body',
+                        html: true
+                    });
+                },
+                eventClick: function(calEvent, jsEvent, view) {
+                    var editUrl = '{{ path('timesheet_edit', {id: '-XX-'}) }}'.replace('-XX-', calEvent.id);
+                    location.href = editUrl;
+                },
             })
         })
     </script>

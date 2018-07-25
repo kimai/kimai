@@ -2,6 +2,7 @@ require('../../vendor/kevinpapst/adminlte-bundle/Resources/assets/admin-lte');
 
 require('../css/app.scss');
 require('../css/datatable.scss');
+require('../css/calendar.scss');
 
 require('fullcalendar');
 require('fullcalendar/dist/locale-all');
