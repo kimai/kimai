@@ -24,28 +24,49 @@
     <script>
         $(function () {
             $('#calendar').fullCalendar({
-                events: '{{ path('timesheet_calendar_date') }}',
+                {% if not google.apiKey is null %}
+                googleCalendarApiKey: '{{ google.apiKey }}',
+                {% endif %}
+                eventSources: [
+                    {
+                        url: '{{ path('calendar_entries') }}',
+                        color: '#00a65a',
+                        borderColor: '#00a65a',
+                        name: 'kimaiUserTimeSource'
+                    }
+                    {% for source in google.sources %}
+                    ,
+                    {
+                        googleCalendarId: '{{ source.uri }}',
+                        name: '{{ source.id }}',
+                        color: '{{ source.color }}',
+                        borderColor: '{{ source.color }}'
+                    }
+                    {% endfor %}
+                ],
                 header    : {
                     left  : 'prev,next today',
                     center: 'title',
                     right : 'month,agendaWeek,agendaDay'
                 },
-                eventLimit: 4,                      // TODO make configurable
-                weekNumbers: true,                  // TODO make configurable
+                eventLimit: {{ config.dayLimit }},
+                weekNumbers: {% if config.showWeekNumbers %}true{% else %}false{% endif %},
                 navLinks: true,
                 locale: '{{ app.request.locale }}',
                 editable  : false,
                 droppable : false,
                 height: 'auto',
                 nowIndicator: true,
-                businessHours: {                    // TODO make configurable
-                    dow: [ 1, 2, 3, 4, 5 ],         // TODO make configurable
-                    start: '10:00',                 // TODO make configurable
-                    end: '18:00'                    // TODO make configurable
+                businessHours: {
+                    dow: [{{ config.businessDays|join(',') }}],
+                    start: '{{ config.businessTimeBegin }}',
+                    end: '{{ config.businessTimeEnd }}'
                 },
-                eventBackgroundColor: '#00a65a',    // TODO make configurable
-                eventBorderColor: '#00a65a',        // TODO make configurable
                 eventRender: function(eventObj, $el) {
+                    if (eventObj.source.ajaxSettings.name !== 'kimaiUserTimeSource') {
+                        return;
+
+                    }
                     $el.popover({
                         title: eventObj.title,
                         content:
@@ -69,9 +90,18 @@
                     });
                 },
                 eventClick: function(calEvent, jsEvent, view) {
-                    var editUrl = '{{ path('timesheet_edit', {id: '-XX-'}) }}'.replace('-XX-', calEvent.id);
-                    location.href = editUrl;
+                    location.href = '{{ path('timesheet_edit', {id: '-XX-'}) }}'.replace('-XX-', calEvent.id);
                 },
+                dayClick: function(date, jsEvent, view) {
+                    location.href = '{{ path('timesheet_create') }}' + '?begin=' + date.format();
+                },
+                selectable: true,
+                select: function( start, end, jsEvent, view) {
+                    if(view.type === 'month') {
+                        return;
+                    }
+                    location.href = '{{ path('timesheet_create') }}' + '?from=' + start.format() + '&to=' + end.format();
+                }
             })
         })
     </script>

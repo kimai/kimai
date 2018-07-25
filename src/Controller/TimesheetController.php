@@ -22,7 +22,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Controller used to manage timesheet contents in the public part of the site.
+ * Controller used to manage timesheets.
  *
  * @Route("/timesheet")
  * @Security("is_granted('ROLE_USER')")
@@ -32,7 +32,6 @@ class TimesheetController extends AbstractController
     use TimesheetControllerTrait;
 
     /**
-     * TimesheetController constructor.
      * @param bool $durationOnly
      */
     public function __construct(bool $durationOnly)
@@ -69,97 +68,6 @@ class TimesheetController extends AbstractController
             'query' => $query,
             'toolbarForm' => $form->createView(),
         ]);
-    }
-
-    /**
-     * @Route("/calendar", name="timesheet_calendar")
-     * @Method("GET")
-     * @Cache(smaxage="10")
-     */
-    public function calendar(Request $request)
-    {
-        return $this->render('timesheet/calendar.html.twig');
-    }
-
-    /**
-     * @Route("/calendar/entries", name="timesheet_calendar_date")
-     * @Method("GET")
-     * @Cache(smaxage="10")
-     */
-    public function calendarEntries(Request $request)
-    {
-        $start = $request->get('start');
-        $end = $request->get('end');
-
-        if ($start === null) {
-            $start = new \DateTime('first day of this month');
-            $start->setTime(0, 0, 0);
-        } else {
-            $start = \DateTime::createFromFormat('Y-m-d', $start);
-            if (!$start) {
-                throw new \Exception('Invalid start-date given');
-            }
-        }
-
-        if ($end === null) {
-            $end = new \DateTime('last day of this month');
-            $end->setTime(23, 59, 59);
-        } else {
-            $end = \DateTime::createFromFormat('Y-m-d', $end);
-            if (!$end) {
-                throw new \Exception('Invalid end-date given');
-            }
-        }
-
-        $query = new TimesheetQuery();
-        $query
-            ->setBegin($start)
-            ->setUser($this->getUser())
-            ->setState(TimesheetQuery::STATE_ALL)
-            ->setResultType(TimesheetQuery::RESULT_TYPE_QUERYBUILDER)
-        ;
-
-        // running entries should only occur for the current month, but they won't
-        // be found if we add the end to the query
-        if ((new \DateTime())->getTimestamp() > $end->getTimestamp()) {
-            $query->setEnd($end);
-        }
-
-        /* @var $entries Timesheet[] */
-        $entries = $this->getRepository()->findByQuery($query)->getQuery()->execute();
-        $result = [];
-
-        foreach ($entries as $entry) {
-            $result[] = $this->getTimesheetEntryForCalendar($entry);
-        }
-
-        return $this->json($result);
-    }
-
-    /**
-     * @param Timesheet $entry
-     * @return array
-     */
-    protected function getTimesheetEntryForCalendar(Timesheet $entry)
-    {
-        $result = [
-            'id' => $entry->getId(),
-            'start' => $entry->getBegin(),
-            'title' => $entry->getActivity()->getName() . ' (' . $entry->getActivity()->getProject()->getName() . ')',
-            'description' => $entry->getDescription(),
-            'customer' => $entry->getActivity()->getProject()->getCustomer()->getName(),
-            'project' => $entry->getActivity()->getProject()->getName(),
-            'activity' => $entry->getActivity()->getName(),
-        ];
-
-        if (null === $entry->getEnd()) {
-            $result['backgroundColor'] = '#ccc';
-            $result['borderColor'] = '#ccc';
-        } else {
-            $result['end'] = $entry->getEnd() ?? new \DateTime();
-        }
-
-        return $result;
     }
 
     /**
@@ -232,6 +140,7 @@ class TimesheetController extends AbstractController
         if (null !== $request->get('page')) {
             return $this->edit($entry, $request, 'timesheet_paginated', 'timesheet/edit.html.twig');
         }
+
         return $this->edit($entry, $request, 'timesheet', 'timesheet/edit.html.twig');
     }
 

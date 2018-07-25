@@ -5,6 +5,7 @@ require('../css/datatable.scss');
 require('../css/calendar.scss');
 
 require('fullcalendar');
+require('fullcalendar/dist/gcal.min');
 require('fullcalendar/dist/locale-all');
 require('fullcalendar/dist/fullcalendar.min.css');
 
