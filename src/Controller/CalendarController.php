@@ -110,7 +110,7 @@ class CalendarController extends AbstractController
         $result = [
             'id' => $entry->getId(),
             'start' => $entry->getBegin(),
-            'title' => $entry->getActivity()->getName() . ' (' . $entry->getActivity()->getProject()->getName() . ')',
+            'title' => $entry->getActivity()->getName(),
             'description' => $entry->getDescription(),
             'customer' => $entry->getActivity()->getProject()->getCustomer()->getName(),
             'project' => $entry->getActivity()->getProject()->getName(),
