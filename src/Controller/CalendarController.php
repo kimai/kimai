@@ -70,7 +70,8 @@ class CalendarController extends AbstractController
 
         $end = \DateTime::createFromFormat('Y-m-d', $end);
         if ($end === false) {
-            $end = new \DateTime('last day of this month');
+            $end = clone $start;
+            $end = $end->modify('last day of this month');
         }
         $end->setTime(23, 59, 59);
 
