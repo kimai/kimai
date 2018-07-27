@@ -53,10 +53,11 @@ kimai:
             days: [1, 2, 3, 4, 5]
             begin: '08:00'
             end: '20:00'
+
         # You can configure unlimited google calendars to display events for your company (e.g. holidays)
-        # Please read: ... TODO ...
+        # Please read var/docs/configurations.md to find out more about calendar integration
         # google:
-        #     api_key: ''
+        #     api_key: 'your-restricted-google-api-key'
         #     sources:
         #         holidays:
         #             id: 'de.german#holiday@group.v.calendar.google.com'
