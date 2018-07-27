@@ -185,6 +185,7 @@ class ExtensionsTest extends TestCase
             'list' => 'fas fa-list',
             'print' => 'fas fa-print',
             'visibility' => 'far fa-eye',
+            'calendar' => 'far fa-calendar-alt',
         ];
 
         $sut = $this->getSut('en');

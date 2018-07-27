@@ -40,10 +40,10 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
      */
     public function getDependencies()
     {
-        return array(
+        return [
             UserFixtures::class,
             CustomerFixtures::class,
-        );
+        ];
     }
 
     /**

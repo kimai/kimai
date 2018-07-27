@@ -28,7 +28,7 @@ It is developed with modern frameworks like [Symfony v4](https://github.com/symf
 - The [usual Symfony application requirements](http://symfony.com/doc/current/reference/requirements.html)
 - If you use MariaDB, make sure its at least v10.7.2 (see [FAQ](var/docs/faq.md))
 - Kimai needs to be installed in the root directory of a domain or you need to [recompile the frontend assets](var/docs/developers.md)
-- A modern browser, Kimai v2 might be broken on old browsers like IE 9
+- A modern browser, Kimai v2 might be broken on old browsers like IE 10
 
 ## Documentation & Roadmap
 

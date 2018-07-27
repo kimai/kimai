@@ -425,6 +425,9 @@
     "symfony/security-csrf": {
         "version": "v4.0.4"
     },
+    "symfony/serializer": {
+        "version": "v4.1.2"
+    },
     "symfony/stopwatch": {
         "version": "v4.0.3"
     },

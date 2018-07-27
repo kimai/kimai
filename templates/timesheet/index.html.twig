@@ -5,7 +5,7 @@
 
 {% block page_title %}{{ 'timesheet.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'timesheet.subtitle'|trans }}{% endblock %}
-{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseTimesheet', 'visibility': '#modal_timesheet', 'create': path('timesheet_create')}) }}{% endblock %}
+{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseTimesheet', 'visibility': '#modal_timesheet', 'calendar': path('calendar'), 'create': path('timesheet_create')}) }}{% endblock %}
 
 {% block main_before %}
     {{ toolbar.toolbar(toolbarForm, 'collapseTimesheet') }}
@@ -58,7 +58,7 @@
             {% endif %}
 
             <td class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}">{{ widgets.label_activity(entry.activity) }}</td>
-            <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">{{ entry.description }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">{{ entry.description|nl2br }}</td>
             <td>
                 {% set actionButtons = {'edit': path('timesheet_edit', {'id' : entry.id, 'page': page})} %}
 

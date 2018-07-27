@@ -12,6 +12,7 @@ namespace App\Tests\Controller;
 /**
  * @coversDefaultClass \App\Controller\TimesheetController
  * @group integration
+ * @group legacy
  */
 class TimesheetControllerTest extends ControllerBaseTest
 {
@@ -25,5 +26,6 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser();
         $this->request($client, '/timesheet/');
         $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasDataTable($client);
     }
 }
