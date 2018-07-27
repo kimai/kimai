@@ -22,7 +22,7 @@ class Google
 
     /**
      * @param string $apiKey
-     * @param array $sources
+     * @param Source[] $sources
      */
     public function __construct($apiKey, $sources = [])
     {

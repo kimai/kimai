@@ -27,7 +27,7 @@ class Source
     /**
      * @return string
      */
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -46,7 +46,7 @@ class Source
     /**
      * @return string
      */
-    public function getUri(): string
+    public function getUri(): ?string
     {
         return $this->uri;
     }
@@ -65,7 +65,7 @@ class Source
     /**
      * @return string
      */
-    public function getColor(): string
+    public function getColor(): ?string
     {
         return $this->color;
     }
