@@ -8,19 +8,24 @@
 
 {% block main %}
 
-    {% for settings in dashboard_widgets %}
-        {% if settings.header %}
-            {{ widgets.page_header(settings.header) }}
+    {% for row in widget_rows %}
+        {% if row.title %}
+            {{ widgets.page_header(row.title) }}
         {% endif %}
 
-        {% set width = settings.widgets|length %}
+        {% set width = row.widgets|length %}
         {% set rawWidth = 12 / width %}
         {% set columnWidth = rawWidth|round(0, 'floor') %}
         <div class="row">
-            {% for widgetTemplate in settings.widgets %}
+            {% for widgetTemplate in row.widgets %}
                 <div class="col-md-{{ columnWidth }} col-sm-{{ columnWidth * 2 }} col-xs-{{ columnWidth * 4 }}">
-                    {% set widgetString = '{% import "macros/widgets.html.twig" as widgets %}' ~ widgetTemplate %}
-                    {{ include(template_from_string(widgetString)) }}
+                    {{
+                        include(
+                            template_from_string(
+                                '{% import "macros/widgets.html.twig" as widgets %}' ~ widgetTemplate
+                            )
+                        )
+                    }}
                 </div>
             {% endfor %}
         </div>

@@ -40,7 +40,7 @@ class TimesheetGlobalStatistic extends TimesheetStatistic
      */
     public function setActiveCurrently($activeCurrently)
     {
-        $this->activeCurrently = $activeCurrently;
+        $this->activeCurrently = (int) $activeCurrently;
     }
 
     /**
@@ -56,7 +56,7 @@ class TimesheetGlobalStatistic extends TimesheetStatistic
      */
     public function setActiveThisMonth($activeThisMonth)
     {
-        $this->activeThisMonth = $activeThisMonth;
+        $this->activeThisMonth = (int) $activeThisMonth;
     }
 
     /**
@@ -72,6 +72,6 @@ class TimesheetGlobalStatistic extends TimesheetStatistic
      */
     public function setActiveTotal($activeTotal)
     {
-        $this->activeTotal = $activeTotal;
+        $this->activeTotal = (int) $activeTotal;
     }
 }
