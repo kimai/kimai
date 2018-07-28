@@ -100,8 +100,8 @@ The files in `translations/` as a quick overview:
 
 If you want to add your own entries in the navigation bar, you can subscribe to these events:
 
-- `App\EventConfigureMainMenuEvent::CONFIGURE`
-- `App\ConfigureAdminMenuEvent::CONFIGURE`
+- `App\Event\ConfigureMainMenuEvent::CONFIGURE`
+- `App\Event\ConfigureAdminMenuEvent::CONFIGURE`
 
 And that's how to use it:
 
@@ -111,7 +111,7 @@ use App\Event\ConfigureAdminMenuEvent;
 use Avanzu\AdminThemeBundle\Model\MenuItemModel;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class MySubscriber implements EventSubscriberInterface
+class MyMenuSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(): array
     {
@@ -137,6 +137,37 @@ class MySubscriber implements EventSubscriberInterface
 }
 ```
 For more details check the [official menu subscriber](../../src/EventSubscriber/MenuSubscriber.php).
+
+## Extending the dashboard with widgets
+
+If you want to add your own widget rows to the dashboard, you can subscribe to the event:
+
+- `App\Event\DashboardEvent::DASHBOARD`
+
+And that's how to use it:
+
+```php
+use App\Event\DashboardEvent;
+use App\Model\WidgetRow;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
+class MyDashboardSubscriber implements EventSubscriberInterface
+{
+    public static function getSubscribedEvents(): array
+    {
+        return [DashboardEvent::DASHBOARD => ['onDashboardEvent', 200]];
+    }
+    
+    public function onDashboardEvent(DashboardEvent $event)
+    {
+        $row = new WidgetRow('my_id', 'optional.row.title');
+        // this needs to be a valid twig template string
+        $row->add("{{ widgets.info_box_counter('a title', 100, 'far fa-hourglass', 'green') }}");
+        $event->addWidgetRow($row);
+    }
+}
+```
+For more details check the [official dashboard subscriber](../../src/EventSubscriber/DashboardSubscriber.php).
 
 ## Adding tabs to the "control sidebar"
 
