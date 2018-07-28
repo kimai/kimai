@@ -50,7 +50,7 @@ class TimesheetStatistic
      */
     public function setDurationThisMonth($durationThisMonth)
     {
-        $this->durationThisMonth = $durationThisMonth;
+        $this->durationThisMonth = (int) $durationThisMonth;
     }
 
     /**
@@ -66,7 +66,7 @@ class TimesheetStatistic
      */
     public function setAmountTotal($amountTotal)
     {
-        $this->amountTotal = $amountTotal;
+        $this->amountTotal = (int) $amountTotal;
     }
 
     /**
@@ -82,7 +82,7 @@ class TimesheetStatistic
      */
     public function setDurationTotal($durationTotal)
     {
-        $this->durationTotal = $durationTotal;
+        $this->durationTotal = (int) $durationTotal;
     }
 
     /**
@@ -98,7 +98,7 @@ class TimesheetStatistic
      */
     public function setAmountThisMonth($amountThisMonth)
     {
-        $this->amountThisMonth = $amountThisMonth;
+        $this->amountThisMonth = (int) $amountThisMonth;
     }
 
     /**
