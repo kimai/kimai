@@ -39,7 +39,7 @@ final class Version20180730044139 extends AbstractMigration
         }
 
         $timesheet = $this->getTableName('timesheet');
-        $user = $this->getTableName('user');
+        $user = $this->getTableName('users');
         $activity = $this->getTableName('activities');
 
         if ($platform === 'sqlite') {
