@@ -23,7 +23,7 @@ use Faker\Factory;
 class TimesheetFixtures extends Fixture
 {
     /**
-     * @var
+     * @var User
      */
     protected $user;
 
@@ -83,7 +83,6 @@ class TimesheetFixtures extends Fixture
         $faker = Factory::create();
         $user = $this->user;
 
-        // random amount of timesheet entries for every user
         for ($i = 0; $i < $this->amount; $i++) {
             $entry = $this->createTimesheetEntry(
                 $user,
