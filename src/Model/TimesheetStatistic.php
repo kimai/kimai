@@ -136,6 +136,7 @@ class TimesheetStatistic
     public function setRecordsTotal(int $recordsTotal)
     {
         $this->recordsTotal = $recordsTotal;
+
         return $this;
     }
 }

@@ -20,7 +20,6 @@ use Faker\Factory;
  */
 class CustomerFixtures extends Fixture
 {
-
     /**
      * @var int
      */
@@ -41,6 +40,7 @@ class CustomerFixtures extends Fixture
     public function setAmount(int $amount)
     {
         $this->amount = $amount;
+
         return $this;
     }
 

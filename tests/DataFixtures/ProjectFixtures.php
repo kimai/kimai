@@ -21,7 +21,6 @@ use Faker\Factory;
  */
 class ProjectFixtures extends Fixture
 {
-
     /**
      * @var int
      */
@@ -42,6 +41,7 @@ class ProjectFixtures extends Fixture
     public function setAmount(int $amount)
     {
         $this->amount = $amount;
+
         return $this;
     }
 

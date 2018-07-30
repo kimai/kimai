@@ -49,7 +49,7 @@ class UserControllerTest extends ControllerBaseTest
                 'enabled' => 1,
             ]
         ]);
-        $this->assertIsRedirect($client, $this->createUrl('/profile/'.urlencode($username).'/edit'));
+        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode($username) . '/edit'));
         $client->followRedirect();
 
         $tabs = $client->getCrawler()->filter('div.nav-tabs-custom ul.nav-tabs li');
@@ -66,7 +66,6 @@ class UserControllerTest extends ControllerBaseTest
 
         $form = $client->getCrawler()->filter('form[name=user_edit]')->form();
         $this->assertEquals($username, $form->get('user_edit[alias]')->getValue());
-
     }
 
     public function testCreateActionWithCreateMore()

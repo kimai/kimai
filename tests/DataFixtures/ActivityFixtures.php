@@ -21,7 +21,6 @@ use Faker\Factory;
  */
 class ActivityFixtures extends Fixture
 {
-
     /**
      * @var int
      */
@@ -42,6 +41,7 @@ class ActivityFixtures extends Fixture
     public function setAmount(int $amount)
     {
         $this->amount = $amount;
+
         return $this;
     }
 

@@ -195,7 +195,7 @@ class User extends BaseUser implements UserInterface
     {
         $this->preferences = new ArrayCollection();
 
-        foreach($preferences as $preference) {
+        foreach ($preferences as $preference) {
             $this->addPreference($preference);
         }
 
