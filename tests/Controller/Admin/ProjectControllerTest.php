@@ -11,6 +11,9 @@ namespace App\Tests\Controller\Admin;
 
 use App\Entity\User;
 use App\Tests\Controller\ControllerBaseTest;
+use App\Tests\DataFixtures\CustomerFixtures;
+use App\Tests\DataFixtures\ProjectFixtures;
+use App\Tests\DataFixtures\TimesheetFixtures;
 
 /**
  * @coversDefaultClass \App\Controller\Admin\ProjectController
@@ -44,22 +47,35 @@ class ProjectControllerTest extends ControllerBaseTest
                 'name' => 'Test 2',
             ]
         ]);
-        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/'));
         $client->followRedirect();
         $this->assertHasDataTable($client);
+        $this->assertHasFlashSuccess($client);
     }
 
     public function testCreateActionWithCreateMore()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $fixture = new CustomerFixtures();
+        $fixture->setAmount(10);
+        $this->importFixture($em, $fixture);
+
         $this->assertAccessIsGranted($client, '/admin/project/create');
         $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
         $this->assertTrue($form->has('project_edit_form[create_more]'));
+
+        /** @var \Symfony\Component\DomCrawler\Field\ChoiceFormField $customer */
+        $customer = $form->get('project_edit_form[customer]');
+        $options = $customer->availableOptionValues();
+        $selectedCustomer = $options[array_rand($options)];
+
         $client->submit($form, [
             'project_edit_form' => [
                 'name' => 'Test create more',
                 'create_more' => true,
-                // TODO select random customer
+                'customer' => $selectedCustomer
             ]
         ]);
         $this->assertFalse($client->getResponse()->isRedirect());
@@ -67,7 +83,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
         $this->assertTrue($form->has('project_edit_form[create_more]'));
         $this->assertEquals(1, $form->get('project_edit_form[create_more]')->getValue());
-        // TODO test that customer is pre-selected
+        $this->assertEquals($selectedCustomer, $form->get('project_edit_form[customer]')->getValue());
     }
 
     public function testEditAction()
@@ -80,12 +96,60 @@ class ProjectControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'project_edit_form' => ['name' => 'Test 2']
         ]);
-        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/'));
         $client->followRedirect();
         $this->assertHasDataTable($client);
         $this->request($client, '/admin/project/1/edit');
         $editForm = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
         $this->assertEquals('Test 2', $editForm->get('project_edit_form[name]')->getValue());
+    }
+
+    public function testDeleteAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $fixture = new ProjectFixtures();
+        $fixture->setAmount(1);
+        $this->importFixture($em, $fixture);
+
+        $this->request($client, '/admin/project/2/edit');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->request($client, '/admin/project/2/delete');
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/'));
+        $client->followRedirect();
+        $this->assertHasDataTable($client);
+        $this->assertHasFlashSuccess($client);
+
+        $this->request($client, '/admin/project/2/edit');
+        $this->assertFalse($client->getResponse()->isSuccessful());
+    }
+
+    public function testDeleteActionWithTimesheetEntries()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $fixture = new TimesheetFixtures();
+        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setAmount(10);
+        $this->importFixture($em, $fixture);
+
+        $this->request($client, '/admin/project/1/delete');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=form]')->form();
+        $this->assertStringEndsWith($this->createUrl('/admin/project/1/delete'), $form->getUri());
+        $client->submit($form);
+
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/'));
+        $client->followRedirect();
+        $this->assertHasDataTable($client);
+        $this->assertHasFlashSuccess($client);
+
+        $this->request($client, '/admin/project/1/edit');
+        $this->assertFalse($client->getResponse()->isSuccessful());
     }
 
     /**
