@@ -10,6 +10,7 @@
 namespace App\Repository;
 
 use App\Entity\Activity;
+use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Model\ActivityStatistic;
@@ -129,11 +130,12 @@ class ActivityRepository extends AbstractRepository
      * @param Activity|null $entity
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function builderForEntityType(Activity $entity = null)
+    public function builderForEntityType(Activity $entity = null, Project $project = null)
     {
         $query = new ActivityQuery();
         $query->setHiddenEntity($entity);
         $query->setResultType(ActivityQuery::RESULT_TYPE_QUERYBUILDER);
+        $query->setProject($project);
 
         return $this->findByQuery($query);
     }
@@ -146,10 +148,10 @@ class ActivityRepository extends AbstractRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('a', 'p', 'c')
+        $qb->select('a', 'p','c')
             ->from(Activity::class, 'a')
-            ->join('a.project', 'p')
-            ->join('p.customer', 'c')
+            ->leftJoin('a.project', 'p')
+            ->leftJoin('p.customer', 'c')
             ->orderBy('a.' . $query->getOrderBy(), $query->getOrder());
 
         if (ActivityQuery::SHOW_VISIBLE == $query->getVisibility()) {

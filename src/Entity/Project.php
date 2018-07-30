@@ -86,6 +86,13 @@ class Project
     private $activities;
 
     /**
+     * @var Timesheet[]
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Timesheet", mappedBy="project")
+     */
+    private $timesheets;
+
+    /**
      * Get projectid
      *
      * @return int
@@ -93,6 +100,14 @@ class Project
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return Timesheet[]
+     */
+    public function getTimesheets(): array
+    {
+        return $this->timesheets;
     }
 
     /**

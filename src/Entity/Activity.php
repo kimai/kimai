@@ -34,7 +34,6 @@ class Activity
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="activities")
      * @ORM\JoinColumn(onDelete="CASCADE")
-     * @Assert\NotNull()
      */
     private $project;
 
