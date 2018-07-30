@@ -64,7 +64,7 @@ class Timesheet
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(name="user", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user", referencedColumnName="id", onDelete="CASCADE")
      * @Assert\NotNull()
      */
     private $user;

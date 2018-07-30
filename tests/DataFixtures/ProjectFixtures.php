@@ -50,7 +50,7 @@ class ProjectFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        $projects = $this->getAllCustomers($manager);
+        $customers = $this->getAllCustomers($manager);
         $faker = Factory::create();
 
         for ($i = 0; $i < $this->amount; $i++) {
@@ -60,7 +60,7 @@ class ProjectFixtures extends Fixture
                 ->setName($faker->catchPhrase . ($visible ? '' : ' (x)'))
                 ->setBudget(rand(0, 10000))
                 ->setComment($faker->text)
-                ->setCustomer($projects[array_rand($projects)])
+                ->setCustomer($customers[array_rand($customers)])
                 ->setVisible($visible)
             ;
 

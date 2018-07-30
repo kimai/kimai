@@ -258,4 +258,28 @@ abstract class ControllerBaseTest extends WebTestCase
 
         return $em->getRepository(User::class)->findOneBy(['username' => $name]);
     }
+
+    /**
+     * @param Client $client
+     */
+    protected function assertHasFlashSuccess(Client $client)
+    {
+        $node = $client->getCrawler()->filter('div.alert.alert-success.alert-dismissible');
+        $this->assertNotEmpty($node->text());
+    }
+
+    /**
+     * @param Client $client
+     * @param string $url
+     */
+    protected function assertIsRedirect(Client $client, $url = null)
+    {
+        $this->assertTrue($client->getResponse()->isRedirect());
+        if (null === $url) {
+            return;
+        }
+
+        $this->assertTrue($client->getResponse()->headers->has('Location'));
+        $this->assertStringEndsWith($url, $client->getResponse()->headers->get('Location'));
+    }
 }

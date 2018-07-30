@@ -36,6 +36,10 @@ class TimesheetStatistic
      * @var \DateTime
      */
     protected $firstEntry;
+    /**
+     * @var int
+     */
+    protected $recordsTotal = 0;
 
     /**
      * @return int
@@ -115,5 +119,23 @@ class TimesheetStatistic
     public function setFirstEntry(DateTime $firstEntry)
     {
         $this->firstEntry = $firstEntry;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRecordsTotal(): int
+    {
+        return $this->recordsTotal;
+    }
+
+    /**
+     * @param int $recordsTotal
+     * @return TimesheetStatistic
+     */
+    public function setRecordsTotal(int $recordsTotal)
+    {
+        $this->recordsTotal = $recordsTotal;
+        return $this;
     }
 }

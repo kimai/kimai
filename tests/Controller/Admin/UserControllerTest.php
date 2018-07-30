@@ -47,7 +47,7 @@ class UserControllerTest extends ControllerBaseTest
                 'enabled' => 1,
             ]
         ]);
-        $this->assertTrue($client->getResponse()->isRedirect($this->createUrl('/profile/foobar@example.com/edit')));
+        $this->assertIsRedirect($client, $this->createUrl('/profile/foobar@example.com/edit'));
         $client->followRedirect();
         // TODO test that this is the users profile
     }

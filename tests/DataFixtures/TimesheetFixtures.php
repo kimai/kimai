@@ -26,17 +26,18 @@ class TimesheetFixtures extends Fixture
      * @var User
      */
     protected $user;
-
     /**
      * @var int
      */
     protected $amount = 0;
-
     /**
      * @var int
      */
     protected $running = 0;
-
+    /**
+     * @var Activity[]
+     */
+    protected $activities = [];
     /**
      * @var string
      */
@@ -75,11 +76,23 @@ class TimesheetFixtures extends Fixture
     }
 
     /**
+     * @param Activity[] $activities
+     */
+    public function setActivities(array $activities)
+    {
+        $this->activities = $activities;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {
-        $activities = $this->getAllActivities($manager);
+        $activities = $this->activities;
+        if (empty($activities)) {
+            $activities = $this->getAllActivities($manager);
+        }
+
         $faker = Factory::create();
         $user = $this->user;
 

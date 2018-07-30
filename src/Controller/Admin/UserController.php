@@ -10,6 +10,7 @@
 namespace App\Controller\Admin;
 
 use App\Controller\AbstractController;
+use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Form\Toolbar\UserToolbarForm;
 use App\Form\UserCreateType;
@@ -19,6 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Controller used to manage users in the admin part of the site.
@@ -29,6 +31,27 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UserController extends AbstractController
 {
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    protected $encoder;
+
+    /**
+     * @param UserPasswordEncoderInterface $encoder
+     */
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
+    /**
+     * @return \App\Repository\UserRepository
+     */
+    protected function getRepository()
+    {
+        return $this->getDoctrine()->getRepository(User::class);
+    }
+
     /**
      * @Route("/", defaults={"page": 1}, name="admin_user")
      * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_user_paginated")
@@ -47,7 +70,7 @@ class UserController extends AbstractController
         }
 
         /* @var $entries Pagerfanta */
-        $entries = $this->getDoctrine()->getRepository(User::class)->findByQuery($query);
+        $entries = $this->getRepository()->findByQuery($query);
 
         return $this->render('admin/user.html.twig', [
             'entries' => $entries,
@@ -69,8 +92,7 @@ class UserController extends AbstractController
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $password = $this->get('security.password_encoder')
-                ->encodePassword($user, $user->getPlainPassword());
+            $password = $this->encoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
             $user->setEnabled(true);
             $user->setRoles([User::DEFAULT_ROLE]);
@@ -95,6 +117,49 @@ class UserController extends AbstractController
             [
                 'user' => $user,
                 'form' => $editForm->createView()
+            ]
+        );
+    }
+
+    /**
+     * The route to delete an existing user.
+     *
+     * @Route("/{id}/delete", name="admin_user_delete")
+     * @Method({"GET", "POST"})
+     * @Security("is_granted('delete', userToDelete)")
+     *
+     * @param User $userToDelete
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function deleteAction(User $userToDelete, Request $request)
+    {
+        $stats = $this->getDoctrine()->getRepository(Timesheet::class)->getUserStatistics($userToDelete);
+
+        $deleteForm = $this->createFormBuilder()
+            ->setAction($this->generateUrl('admin_user_delete', ['id' => $userToDelete->getId()]))
+            ->setMethod('POST')
+            ->getForm();
+
+        $deleteForm->handleRequest($request);
+
+        if (0 == $stats->getRecordsTotal() || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($userToDelete);
+            $entityManager->flush();
+
+            $this->flashSuccess('action.deleted_successfully');
+
+            return $this->redirectToRoute('admin_user');
+        }
+
+        return $this->render(
+            'admin/user_delete.html.twig',
+            [
+                'user' => $userToDelete,
+                'stats' => $stats,
+                'form' => $deleteForm->createView(),
             ]
         );
     }
