@@ -93,7 +93,7 @@ class UserVoter extends AbstractVoter
      */
     protected function canEditPreferences(User $profile, User $user, TokenInterface $token)
     {
-        return $profile->getId() == $user->getId();
+        return $profile->getId() === $user->getId();
     }
 
     /**
@@ -107,7 +107,7 @@ class UserVoter extends AbstractVoter
             return true;
         }
 
-        return $profile->getId() == $user->getId();
+        return $profile->getId() === $user->getId();
     }
 
     /**
@@ -121,7 +121,7 @@ class UserVoter extends AbstractVoter
             return true;
         }
 
-        return $profile->getId() == $user->getId();
+        return $profile->getId() === $user->getId();
     }
 
     /**
@@ -131,7 +131,11 @@ class UserVoter extends AbstractVoter
      */
     protected function canDelete(User $profile, User $user, TokenInterface $token)
     {
-        return false;
+        if (!$this->canAdminUsers($token)) {
+            return false;
+        }
+
+        return $profile->getId() !== $user->getId();
     }
 
     /**
@@ -140,6 +144,6 @@ class UserVoter extends AbstractVoter
      */
     protected function canAdminUsers(TokenInterface $token)
     {
-        return $this->isFullyAuthenticated($token) && $this->hasRole('ROLE_SUPER_ADMIN', $token);
+        return $this->isFullyAuthenticated($token) && $this->hasRole(User::ROLE_SUPER_ADMIN, $token);
     }
 }

@@ -27,6 +27,18 @@ class ProfileControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser();
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER);
         $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $tabs = $client->getCrawler()->filter('div.nav-tabs-custom ul.nav-tabs li');
+        $this->assertEquals(4, $tabs->count());
+        $expectedTabs = ['#charts', '#settings', '#password', '#preferences'];
+        $foundTabs = [];
+        foreach ($tabs->filter('a') as $tab) {
+            $name = $tab->getAttribute('href');
+            if (in_array($name, $expectedTabs)) {
+                $foundTabs[] = $name;
+            }
+        }
+        $this->assertEmpty(array_diff($expectedTabs, $foundTabs));
     }
 
     public function testIndexActionWithDifferentUsername()

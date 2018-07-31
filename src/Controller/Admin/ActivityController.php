@@ -122,7 +122,7 @@ class ActivityController extends AbstractController
 
             $this->flashSuccess('action.deleted_successfully');
 
-            return $this->redirectToRoute('admin_activity', ['id' => $activity->getId()]);
+            return $this->redirectToRoute('admin_activity');
         }
 
         return $this->render(
@@ -160,7 +160,7 @@ class ActivityController extends AbstractController
                 $editForm->get('create_more')->setData(true);
                 $activity = $newActivity;
             } else {
-                return $this->redirectToRoute('admin_activity', ['id' => $activity->getId()]);
+                return $this->redirectToRoute('admin_activity');
             }
         }
 
