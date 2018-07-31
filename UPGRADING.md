@@ -1,5 +1,10 @@
 # Upgrading Kimai 2
 
+Database upgrades are currently ONLY provided for MySQL/MariaDB and SQLite. 
+
+If you plan on using e.g. PostgreSQL, please read more about the `bin/console doctrine:migrations:diff` and 
+`bin/console doctrine:migrations:migrate` commands and contact us, so we can integrate them into the official releases.
+
 ## [0.3](https://github.com/kevinpapst/kimai2/releases/tag/0.3) (2018-07-22)
 
 **Update from 0.2:**
