@@ -9,10 +9,10 @@
 
 namespace App\Tests\Repository\Query;
 
-use App\Entity\User;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\User;
 use App\Repository\Query\TimesheetQuery;
 
 /**
@@ -82,7 +82,7 @@ class TimesheetQueryTest extends BaseQueryTest
     {
         $this->assertEquals(TimesheetQuery::STATE_ALL, $sut->getState());
 
-        $sut->setState('foo-bar');
+        $sut->setState(PHP_INT_MAX);
         $this->assertEquals(TimesheetQuery::STATE_ALL, $sut->getState());
 
         $sut->setState(TimesheetQuery::STATE_STOPPED);

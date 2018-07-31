@@ -9,11 +9,11 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Project;
+use App\Repository\ProjectRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Entity\Project;
-use App\Repository\ProjectRepository;
 
 /**
  * Custom form field type to select a project.

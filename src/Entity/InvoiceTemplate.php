@@ -306,7 +306,7 @@ class InvoiceTemplate
      * @param string $paymentTerms
      * @return InvoiceTemplate
      */
-    public function setPaymentTerms(string $paymentTerms)
+    public function setPaymentTerms(?string $paymentTerms)
     {
         $this->paymentTerms = $paymentTerms;
 

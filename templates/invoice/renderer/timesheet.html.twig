@@ -23,7 +23,7 @@
             </tr>
             <tr>
                 <th style="width:50%">{{ 'label.date'|trans }}</th>
-                <td contenteditable="true">{{ model.invoiceDate|date('F Y') }}</td>
+                <td contenteditable="true">{{ model.invoiceDate|month_name|trans }} {{ model.invoiceDate|date('Y') }}</td>
             </tr>
             <tr>
                 <th>{{ 'label.customer'|trans }}</th>
@@ -57,7 +57,7 @@
             <tbody>
             {% for entry in model.calculator.entries %}
             <tr>
-                <td>{{ entry.begin|date(kimai_context.date_1) }}</td>
+                <td>{{ entry.begin|date_short }}</td>
                 <td>{{ entry.activity.name }} / {{ entry.activity.project.name }}</td>
                 <td>{{ entry.duration|duration }}</td>
             </tr>
@@ -96,7 +96,7 @@
 <div class="row no-print">
     <div class="col-xs-12">
         <button type="button" class="btn btn-success pull-right" onclick="window.print();return false;" style="margin-right: 5px;">
-            <i class="fa fa-print"></i> {{ 'button.print'|trans }}
+            <i class="{{ 'print'|icon }}"></i> {{ 'button.print'|trans }}
         </button>
     </div>
 </div>

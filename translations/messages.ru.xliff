@@ -47,10 +47,6 @@
             <!--
               Login / Security
             -->
-            <trans-unit id="security.title.login">
-                <source>security.title.login</source>
-                <target>Логин</target>
-            </trans-unit>
             <trans-unit id="label.password">
                 <source>label.password</source>
                 <target>Пароль</target>
@@ -58,10 +54,6 @@
             <trans-unit id="label.password_repeat">
                 <source>label.password_repeat</source>
                 <target>Повторить пароль</target>
-            </trans-unit>
-            <trans-unit id="action.sign_in">
-                <source>action.sign_in</source>
-                <target>Войти</target>
             </trans-unit>
             <trans-unit id="label.logout">
                 <source>label.logout</source>
@@ -275,6 +267,10 @@
                 <source>action.back</source>
                 <target>Назад</target>
             </trans-unit>
+            <trans-unit id="action.close">
+                <source>action.close</source>
+                <target>Close</target>
+            </trans-unit>
 
             <!--
               Dashboard
@@ -342,6 +338,14 @@
             <trans-unit id="label.end">
                 <source>label.end</source>
                 <target>До</target>
+            </trans-unit>
+            <trans-unit id="modal.columns.title">
+                <source>modal.columns.title</source>
+                <target>Change column visibility</target>
+            </trans-unit>
+            <trans-unit id="modal.columns.description">
+                <source>modal.columns.description</source>
+                <target>Upon saving the un-checked columns will be hidden and this setting will be stored in a browser cookie. If you delete your cookies, the settings will be reversed.</target>
             </trans-unit>
 
             <!--

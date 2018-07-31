@@ -47,7 +47,7 @@ class UserEditType extends AbstractType
                 'label' => 'label.email',
             ])
             // boolean
-            ->add('active', YesNoType::class, [
+            ->add('enabled', YesNoType::class, [
                 'label' => 'label.active',
             ])
         ;

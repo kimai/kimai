@@ -121,6 +121,40 @@ trait TimesheetControllerTrait
         $entry->setUser($this->getUser());
         $entry->setBegin(new \DateTime());
 
+        $start = $request->get('begin');
+        if ($start !== null) {
+            $start = \DateTime::createFromFormat('Y-m-d', $start);
+            if ($start !== false) {
+                $start->setTime(10, 0, 0); // TODO make me configurable
+                $entry->setBegin($start);
+            }
+        }
+
+        $end = $request->get('end');
+        if ($end !== null) {
+            $end = \DateTime::createFromFormat('Y-m-d', $end);
+            if ($end !== false) {
+                $end->setTime(18, 0, 0); // TODO make me configurable
+                $entry->setEnd($end);
+            }
+        }
+
+        $from = $request->get('from');
+        if ($from !== null) {
+            $from = new \DateTime($from);
+            if ($from !== false) {
+                $entry->setBegin($from);
+            }
+        }
+
+        $to = $request->get('to');
+        if ($to !== null) {
+            $to = new \DateTime($to);
+            if ($to !== false) {
+                $entry->setEnd($to);
+            }
+        }
+
         $createForm = $this->getCreateForm($entry);
         $createForm->handleRequest($request);
 

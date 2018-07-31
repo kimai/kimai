@@ -12,7 +12,14 @@ homepage:
         route: timesheet
         permanent: true
 
-avanzu_admin_profile:
-  path: /{_locale}/profile/{username}
-  options:
-    avanzu_admin_route: profile
+fos_user_security:
+    prefix: /{_locale}
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_registration:
+    prefix: /{_locale}/register
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+
+fos_user_resetting:
+    prefix: /{_locale}/resetting
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"

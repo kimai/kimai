@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-xs-12">
         <h2 class="page-header">
-            <i class="fa fa-globe"></i> <span contenteditable="true">{{ model.template.title }}</span>
-            <small class="pull-right">{{ 'label.date'|trans }}: {{ model.invoiceDate|date(kimai_context.date_1) }}</small>
+            <span contenteditable="true">{{ model.template.title }}</span>
+            <small class="pull-right">{{ 'label.date'|trans }}: {{ model.invoiceDate|date_short }}</small>
         </h2>
     </div>
 </div>
@@ -36,7 +36,7 @@
             <b>{{ 'invoice.number'|trans }}: {{ model.numberGenerator.invoiceNumber }}</b>
         </p>
         <p contenteditable="true">
-            <b>{{ 'invoice.due_days'|trans }}:</b> {{ model.dueDate|date(kimai_context.date_1) }}
+            <b>{{ 'invoice.due_days'|trans }}:</b> {{ model.dueDate|date_short }}
             {% if model.customer.number is not empty %}
                 <br><b>{{ 'label.customer_number'|trans }}:</b> {{ model.customer.number }}
             {% endif %}
@@ -61,7 +61,7 @@
             <tbody>
             {% for entry in model.calculator.entries %}
             <tr>
-                <td>{{ entry.begin|date(kimai_context.date_1) }}</td>
+                <td>{{ entry.begin|date_short }}</td>
                 <td>{{ entry.activity.name }} / {{ entry.activity.project.name }}</td>
                 <td>{{ entry.duration|duration }}</td>
                 <td>{{ entry.rate|money(model.calculator.currency) }}</td>
@@ -84,7 +84,7 @@
     </div>
 
     <div class="col-xs-6">
-        <p class="lead" contenteditable="true">{{ 'invoice.due_days'|trans }} {{ model.dueDate|date(kimai_context.date_1) }}</p>
+        <p class="lead" contenteditable="true">{{ 'invoice.due_days'|trans }} {{ model.dueDate|date_short }}</p>
 
         <div class="table-responsive">
             <table class="table">
@@ -110,7 +110,7 @@
 <div class="row no-print">
     <div class="col-xs-12">
         <button type="button" class="btn btn-success pull-right" onclick="window.print();return false;" style="margin-right: 5px;">
-            <i class="fa fa-print"></i> {{ 'button.print'|trans }}
+            <i class="{{ 'print'|icon }}"></i> {{ 'button.print'|trans }}
         </button>
     </div>
 </div>

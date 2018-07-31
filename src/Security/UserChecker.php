@@ -10,19 +10,28 @@
 namespace App\Security;
 
 use App\Entity\User;
+use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use Symfony\Component\Security\Core\Exception\LockedException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * Advanced checks during aithentication to make sure the user is allowed to use Kimai.
+ * Advanced checks during authentication to make sure the user is allowed to use Kimai.
  */
 class UserChecker implements UserCheckerInterface
 {
+    /**
+     * @param UserInterface $user
+     * @throws AccountStatusException
+     */
     public function checkPreAuth(UserInterface $user)
     {
     }
 
+    /**
+     * @param UserInterface $user
+     * @throws AccountStatusException
+     */
     public function checkPostAuth(UserInterface $user)
     {
         if (!$user instanceof User) {

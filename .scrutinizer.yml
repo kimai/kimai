@@ -11,14 +11,9 @@ build:
             tests:
                 override:
                     -
-                        command: 'vendor/bin/phpunit --exclude-group integration --coverage-clover=unit tests/'
+                        command: 'vendor/bin/phpunit --coverage-clover=clover.xml tests/'
                         coverage:
-                            file: 'unit'
-                            format: 'clover'
-                    -
-                        command: 'vendor/bin/phpunit --group integration --coverage-clover=integration tests/'
-                        coverage:
-                            file: 'integration'
+                            file: 'clover.xml'
                             format: 'clover'
                     -
                         command: 'bin/console kimai:phpcs --checkstyle=checkstyle'

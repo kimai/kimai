@@ -1,14 +1,21 @@
 <?php
 
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
-use App\Validator\Constraints as KimaiAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Application main User entity.
@@ -17,14 +24,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(
  *      name="users",
  *      uniqueConstraints={
- *          @ORM\UniqueConstraint(columns={"name"}),
- *          @ORM\UniqueConstraint(columns={"mail"})
+ *          @ORM\UniqueConstraint(columns={"username"}),
+ *          @ORM\UniqueConstraint(columns={"email"})
  *      }
  * )
  * @UniqueEntity("username")
  * @UniqueEntity("email")
  */
-class User implements UserInterface
+class User extends BaseUser implements UserInterface
 {
     public const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
     public const ROLE_USER = 'ROLE_USER';
@@ -40,40 +47,7 @@ class User implements UserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(name="id", type="integer")
      */
-    private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=60, nullable=false, unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Length(min=5, max=60)
-     */
-    private $username;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="mail", type="string", length=160, nullable=false, unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Email()
-     */
-    private $email;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=254, nullable=true)
-     */
-    private $password;
-
-    /**
-     * @var string
-     *
-     * @Assert\NotBlank(groups={"registration", "passwordUpdate"})
-     * @Assert\Length(min=6, max=4096, groups={"registration", "passwordUpdate"})
-     */
-    private $plainPassword;
+    protected $id;
 
     /**
      * @var string
@@ -82,14 +56,6 @@ class User implements UserInterface
      * @Assert\Length(max=160)
      */
     private $alias;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="active", type="boolean", nullable=false)
-     * @Assert\NotNull()
-     */
-    private $active = true;
 
     /**
      * @var \DateTime
@@ -113,14 +79,6 @@ class User implements UserInterface
     private $avatar;
 
     /**
-     * @var string[]
-     *
-     * @ORM\Column(type="json_array")
-     * @KimaiAssert\Role()
-     */
-    private $roles = [];
-
-    /**
      * @var UserPreference[]|Collection
      *
      * @ORM\OneToMany(targetEntity="App\Entity\UserPreference", mappedBy="user", cascade={"persist"})
@@ -132,6 +90,7 @@ class User implements UserInterface
      */
     public function __construct()
     {
+        parent::__construct();
         $this->registeredAt = new \DateTime();
         $this->preferences = new ArrayCollection();
     }
@@ -183,107 +142,6 @@ class User implements UserInterface
     }
 
     /**
-     * @param bool $active
-     * @return $this
-     */
-    public function setActive($active)
-    {
-        $this->active = (bool) $active;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * @param string $password
-     * @return $this
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * Only for form editing, you don't need this method!
-     *
-     * @return string
-     */
-    public function getPlainPassword()
-    {
-        return $this->plainPassword;
-    }
-
-    /**
-     * Only for form editing, you don't need this method!
-     *
-     * @param string $password
-     * @return $this
-     */
-    public function setPlainPassword($password)
-    {
-        $this->plainPassword = $password;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * @param string $username
-     * @return $this
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * @param string $email
-     * @return $this
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getTitle()
@@ -322,34 +180,6 @@ class User implements UserInterface
     }
 
     /**
-     * Returns the roles or permissions granted to the user for security.
-     *
-     * @return string[]
-     */
-    public function getRoles()
-    {
-        $roles = $this->roles;
-
-        // guarantees that a user always has at least one role for security
-        if (empty($roles)) {
-            $roles[] = 'ROLE_USER';
-        }
-
-        return array_unique($roles);
-    }
-
-    /**
-     * @param string[] $roles
-     * @return $this
-     */
-    public function setRoles(array $roles)
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-    /**
      * @return UserPreference[]|Collection
      */
     public function getPreferences(): Collection
@@ -361,12 +191,13 @@ class User implements UserInterface
      * @param UserPreference[]|Collection<UserPreference> $preferences
      * @return User
      */
-    public function setPreferences(array $preferences)
+    public function setPreferences($preferences)
     {
-        if (!($preferences instanceof Collection) && is_array($preferences)) {
-            $preferences = new ArrayCollection($preferences);
+        $this->preferences = new ArrayCollection();
+
+        foreach ($preferences as $preference) {
+            $this->addPreference($preference);
         }
-        $this->preferences = $preferences;
 
         return $this;
     }
@@ -408,37 +239,9 @@ class User implements UserInterface
     public function addPreference(UserPreference $preference)
     {
         $this->preferences->add($preference);
+        $preference->setUser($this);
 
         return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isEnabled()
-    {
-        return $this->isActive();
-    }
-
-    /**
-     * Returns the salt that was originally used to encode the password.
-     */
-    public function getSalt()
-    {
-        // See "Do you need to use a Salt?" at http://symfony.com/doc/current/cookbook/security/entity_provider.html
-        // we're using bcrypt in security.yml to encode the password, so
-        // the salt value is built-in and you don't have to generate one
-
-        return;
-    }
-
-    /**
-     * Removes sensitive data from the user.
-     */
-    public function eraseCredentials()
-    {
-        // if you had a plainPassword property, you'd nullify it here
-        // $this->plainPassword = null;
     }
 
     /**

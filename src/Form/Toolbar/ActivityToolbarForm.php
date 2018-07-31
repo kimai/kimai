@@ -9,9 +9,9 @@
 
 namespace App\Form\Toolbar;
 
+use App\Repository\Query\ActivityQuery;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Repository\Query\ActivityQuery;
 
 /**
  * Defines the form used for filtering the activities.

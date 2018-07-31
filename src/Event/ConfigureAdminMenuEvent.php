@@ -9,7 +9,7 @@
 
 namespace App\Event;
 
-use Avanzu\AdminThemeBundle\Model\MenuItemModel;
+use KevinPapst\AdminLTEBundle\Model\MenuItemModel;
 
 /**
  * The ConfigureAdminMenuEvent is used for populating the administration navigation.

@@ -10,15 +10,15 @@
 namespace App\Controller\Admin;
 
 use App\Controller\AbstractController;
-use Pagerfanta\Pagerfanta;
-use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Customer;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Form\CustomerEditForm;
 use App\Form\Toolbar\CustomerToolbarForm;
 use App\Repository\Query\CustomerQuery;
+use Pagerfanta\Pagerfanta;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Controller used to manage activities in the admin part of the site.
@@ -101,7 +101,7 @@ class CustomerController extends AbstractController
 
             $this->flashSuccess('action.updated_successfully');
 
-            return $this->redirectToRoute('admin_customer', ['id' => $customer->getId()]);
+            return $this->redirectToRoute('admin_customer');
         }
 
         return $this->render('admin/customer_edit.html.twig', [
@@ -139,7 +139,7 @@ class CustomerController extends AbstractController
 
             $this->flashSuccess('action.deleted_successfully');
 
-            return $this->redirectToRoute('admin_customer', ['id' => $customer->getId()]);
+            return $this->redirectToRoute('admin_customer');
         }
 
         return $this->render('admin/customer_delete.html.twig', [

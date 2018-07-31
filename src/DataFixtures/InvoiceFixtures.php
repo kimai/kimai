@@ -12,6 +12,7 @@ namespace App\DataFixtures;
 use App\Entity\InvoiceTemplate;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Faker\Factory;
 
 /**
  * Defines the sample data to load in the database when running the unit and
@@ -35,11 +36,13 @@ class InvoiceFixtures extends Fixture
      */
     private function loadInvoiceTemplates(ObjectManager $manager)
     {
+        $faker = Factory::create();
+
         $template = new InvoiceTemplate();
         $template
             ->setName('Invoice')
             ->setTitle('Your company name')
-            ->setCompany('Kimai, Inc.')
+            ->setCompany($faker->company)
             ->setVat(19)
             ->setDueDays(14)
             ->setPaymentTerms(
@@ -49,10 +52,10 @@ class InvoiceFixtures extends Fixture
                 'as reference.'
             )
             ->setAddress(
-                '795 Folsom Ave, Suite 600' . PHP_EOL .
-                'San Francisco, CA 94107' . PHP_EOL .
-                'Phone: (804) 123-456789' . PHP_EOL .
-                'Email: email@example.com'
+                $faker->streetAddress . PHP_EOL .
+                $faker->city . ', ' . $faker->stateAbbr . ' ' . $faker->postcode . PHP_EOL .
+                'Phone: ' . $faker->phoneNumber . PHP_EOL .
+                'Email: ' . $faker->safeEmail
             )
         ;
 

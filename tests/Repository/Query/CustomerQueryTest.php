@@ -9,8 +9,8 @@
 
 namespace App\Tests\Repository\Query;
 
-use App\Repository\Query\VisibilityQuery;
 use App\Repository\Query\CustomerQuery;
+use App\Repository\Query\VisibilityQuery;
 
 /**
  * @covers \App\Repository\Query\CustomerQuery

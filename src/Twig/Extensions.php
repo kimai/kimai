@@ -9,9 +9,11 @@
 
 namespace App\Twig;
 
-use App\Utils\Duration;
-use Symfony\Component\Intl\Intl;
 use App\Entity\Timesheet;
+use App\Utils\Duration;
+use NumberFormatter;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Intl\Intl;
 use Twig\TwigFilter;
 
 /**
@@ -22,7 +24,12 @@ class Extensions extends \Twig_Extension
     /**
      * @var string[]
      */
-    private $locales;
+    protected $locales;
+
+    /**
+     * @var string
+     */
+    protected $locale;
 
     /**
      * @var Duration
@@ -30,11 +37,59 @@ class Extensions extends \Twig_Extension
     protected $durationFormatter;
 
     /**
+     * @var NumberFormatter
+     */
+    protected $numberFormatter;
+
+    /**
+     * @var RequestStack
+     */
+    protected $requestStack;
+
+    /**
+     * @var array
+     */
+    protected $cookies = [];
+
+    /**
+     * @var string[]
+     */
+    protected static $icons = [
+        'activity' => 'fas fa-tasks',
+        'admin' => 'fas fa-wrench',
+        'calendar' => 'far fa-calendar-alt',
+        'customer' => 'fas fa-users',
+        'create' => 'far fa-plus-square',
+        'dashboard' => 'fas fa-tachometer-alt',
+        'delete' => 'far fa-trash-alt',
+        'edit' => 'far fa-edit',
+        'filter' => 'fas fa-filter',
+        'help' => 'far fa-question-circle',
+        'invoice' => 'fas fa-file-invoice',
+        'list' => 'fas fa-list',
+        'logout' => 'fas fa-sign-out-alt',
+        'manual' => 'fas fa-book',
+        'print' => 'fas fa-print',
+        'project' => 'fas fa-project-diagram',
+        'repeat' => 'fas fa-redo-alt',
+        'start' => 'fas fa-play-circle',
+        'start-small' => 'fas fa-play-circle',
+        'stop' => 'fas fa-stop',
+        'stop-small' => 'far fa-stop-circle',
+        'timesheet' => 'far fa-clock',
+        'trash' => 'far fa-trash-alt',
+        'user' => 'fas fa-user',
+        'visibility' => 'far fa-eye',
+    ];
+
+    /**
      * Extensions constructor.
      * @param string $locales
+     * @param string $locale
      */
-    public function __construct($locales)
+    public function __construct(RequestStack $requestStack, $locales)
     {
+        $this->requestStack = $requestStack;
         $this->locales = explode('|', $locales);
         $this->durationFormatter = new Duration();
     }
@@ -49,6 +104,7 @@ class Extensions extends \Twig_Extension
             new TwigFilter('money', [$this, 'money']),
             new TwigFilter('currency', [$this, 'currency']),
             new TwigFilter('country', [$this, 'country']),
+            new TwigFilter('icon', [$this, 'icon']),
         ];
     }
 
@@ -59,7 +115,40 @@ class Extensions extends \Twig_Extension
     {
         return [
             new \Twig_SimpleFunction('locales', [$this, 'getLocales']),
+            new \Twig_SimpleFunction('is_visible_column', [$this, 'isColumnVisible']),
         ];
+    }
+
+    /**
+     * This is only for datatables, do not use it outside this context.
+     *
+     * @param string $dataTable
+     * @param string $column
+     * @return bool
+     */
+    public function isColumnVisible(string $dataTable, string $column)
+    {
+        // TODO name handling could be improved, as now this info is spread in datatables.html.twig and here
+        $dataTable = $dataTable . '_visibility';
+
+        if (!isset($this->cookies[$dataTable])) {
+            $visibility = false;
+            if ($this->requestStack->getCurrentRequest()->cookies->has($dataTable)) {
+                $visibility = json_decode($this->requestStack->getCurrentRequest()->cookies->get($dataTable), true);
+            }
+            $this->cookies[$dataTable] = $visibility;
+        }
+        $values = $this->cookies[$dataTable];
+
+        if (empty($values) || !is_array($values)) {
+            return true;
+        }
+
+        if (isset($values[$column]) && $values[$column] === false) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -101,18 +190,46 @@ class Extensions extends \Twig_Extension
     }
 
     /**
+     * @param string $name
+     * @param string $default
+     * @return string
+     */
+    public function icon($name, $default = '')
+    {
+        return self::$icons[$name] ?? $default;
+    }
+
+    /**
      * @param float $amount
      * @param string $currency
      * @return string
      */
     public function money($amount, $currency = null)
     {
-        $result = number_format(round($amount, 2), 2);
+        $locale = $this->getLocale();
+
+        if ($this->locale !== $locale) {
+            $this->locale = $locale;
+            $this->numberFormatter = new NumberFormatter($locale, NumberFormatter::DECIMAL);
+        }
+
+        $fractionDigits = Intl::getCurrencyBundle()->getFractionDigits($currency);
+        $amount = round($amount, $fractionDigits);
+        $result = $this->numberFormatter->format($amount);
+
         if (null !== $currency) {
-            $result .= ' ' . Intl::getCurrencyBundle()->getCurrencySymbol($currency);
+            $result .= ' ' . Intl::getCurrencyBundle()->getCurrencySymbol($currency, $locale);
         }
 
         return $result;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getLocale()
+    {
+        return $this->requestStack->getCurrentRequest()->getLocale();
     }
 
     /**

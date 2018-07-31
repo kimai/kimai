@@ -5,7 +5,7 @@ This page is dedicated to all developers who want to contribute to Kimai. You ar
 # Setting up your environment
 
 All you need is:
-- PHP >= 7.1 
+- PHP >= 7.1.3
 - PHP extension: `PDO-SQLite` enabled
 
 Optional requirement:
@@ -13,6 +13,8 @@ Optional requirement:
 - PHP extension: `PDO-MySQL` enabled
 
 You could even test PostgreSQL and tell us how it works!
+
+Read how to [install Kimai v2 in your dev environment](installation.md). 
 
 ## Frontend dependencies 
 
@@ -30,10 +32,6 @@ yarn install
 ```
 
 To rebuild all assets you have to execute:
-```bash
-yarn run dev
-```
-or
 ```bash
 yarn run prod
 ```
@@ -58,6 +56,11 @@ bin/console kimai:test-unit
 bin/console kimai:test-integration
 ```
 
+Or you simply run all tests with: 
+```bash
+bin/phpunit
+```
+
 ## Check your code styles
 
 You can run the code sniffer with a built-in command like that:
@@ -66,12 +69,39 @@ You can run the code sniffer with a built-in command like that:
 bin/console kimai:phpcs
 ```
 
+You can also automatically fix the violations by running: 
+
+ ```bash
+bin/console kimai:phpcs --fix
+```
+
+Be aware that this command will modify all files with violations in the directories `src/` and `tests/`, so its a good idea to commit first.
+
+Our code-styles are configured in [.php_cs.dist](../../.php_cs.dist).
+
+
+## Translations 
+
+We try to keep the number of language files small, in order to make it easier to identify the location of application messages and to unify the codebase.
+
+- If you add a new key, you have to add it in every language file
+- Its very likely that you want to edit the file `messages` as it holds 90% of our application translations 
+
+The files in `translations/` as a quick overview:
+
+- `exceptions` only holds translations of error pages and exception handlers
+- `flashmessages` hold all success and error messages, that will be shown as results from action calls after page reload
+- `messages` holds most of the visible application translations (like all the static UI elements and form translations)
+- `pagerfanta` includes the translations for the pagination component
+- `sidebar` holds all the translations of the right sidebar
+- `validators` only hold translations related to violations/validation of submitted form data (or API calls)
+
 ## Extending the navigation bar
 
 If you want to add your own entries in the navigation bar, you can subscribe to these events:
 
-- `App\EventConfigureMainMenuEvent::CONFIGURE`
-- `App\ConfigureAdminMenuEvent::CONFIGURE`
+- `App\Event\ConfigureMainMenuEvent::CONFIGURE`
+- `App\Event\ConfigureAdminMenuEvent::CONFIGURE`
 
 And that's how to use it:
 
@@ -81,7 +111,7 @@ use App\Event\ConfigureAdminMenuEvent;
 use Avanzu\AdminThemeBundle\Model\MenuItemModel;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class MySubscriber implements EventSubscriberInterface
+class MyMenuSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(): array
     {
@@ -108,27 +138,57 @@ class MySubscriber implements EventSubscriberInterface
 ```
 For more details check the [official menu subscriber](../../src/EventSubscriber/MenuSubscriber.php).
 
+## Extending the dashboard with widgets
+
+If you want to add your own widget rows to the dashboard, you can subscribe to the event:
+
+- `App\Event\DashboardEvent::DASHBOARD`
+
+And that's how to use it:
+
+```php
+use App\Event\DashboardEvent;
+use App\Model\WidgetRow;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
+class MyDashboardSubscriber implements EventSubscriberInterface
+{
+    public static function getSubscribedEvents(): array
+    {
+        return [DashboardEvent::DASHBOARD => ['onDashboardEvent', 200]];
+    }
+    
+    public function onDashboardEvent(DashboardEvent $event)
+    {
+        $row = new WidgetRow('my_id', 'optional.row.title');
+        // this needs to be a valid twig template string
+        $row->add("{{ widgets.info_box_counter('a title', 100, 'far fa-hourglass', 'green') }}");
+        $event->addWidgetRow($row);
+    }
+}
+```
+For more details check the [official dashboard subscriber](../../src/EventSubscriber/DashboardSubscriber.php).
+
 ## Adding tabs to the "control sidebar"
 
 We use twig globals to render the control sidebar tabs, so adding one is as easy as adding a new config entry:
 
 ```yaml
-twig:
-    globals:
-        kimai_context:
-            control_sidebar:
-                # these are the official tabs
-                settings:
-                    icon: gears
-                    controller: 'App\Controller\SidebarController::settingsAction'
-                home:
-                    icon: question-circle-o
-                    template: sidebar/home.html.twig
-
+admin_lte:
+    options:
+        control_sidebar:
+            # these are the "official" Kimai tabs
+            settings:
+                icon: "fas fa-cogs"
+                controller: 'App\Controller\SidebarController::settingsAction'
+            home:
+                icon: "fas fa-question-circle"
+                template: sidebar/home.html.twig
 ```
-You have to define the `icon` (font-awesome without the `fa-` prefix) to be used and one of `controller` action or `template`. 
-Both follow the default naming syntax and you can easily link your bundle here instead of the app controller or templates.
-You should NOT add them in `config/packages/kimai.yaml` but in your own bundle config, otherwise they might get lost in a Kimai update.
+You have to define the `icon` (FontAwesome 5) to be used and one of: `controller` action or twig `template`. 
+Both follow the default naming syntax and you can link your bundle here instead of the app controller or templates.
+You should NOT add them in `config/packages/kimai.yaml` but in your own bundle or the `local.yaml` [config](configurations.md), 
+otherwise they might get lost during an update.
 
 ## Adding invoice renderer
 

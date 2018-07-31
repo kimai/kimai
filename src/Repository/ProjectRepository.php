@@ -10,11 +10,11 @@
 namespace App\Repository;
 
 use App\Entity\Activity;
-use App\Entity\Timesheet;
-use Doctrine\ORM\Query;
 use App\Entity\Project;
+use App\Entity\Timesheet;
 use App\Model\ProjectStatistic;
 use App\Repository\Query\ProjectQuery;
+use Doctrine\ORM\Query;
 
 /**
  * Class ProjectRepository

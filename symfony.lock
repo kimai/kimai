@@ -1,10 +1,4 @@
 {
-    "almasaeed2010/adminlte": {
-        "version": "v2.3.11"
-    },
-    "avanzu/admin-theme-bundle": {
-        "version": "dev-master"
-    },
     "beberlei/doctrineextensions": {
         "version": "v1.0.20"
     },
@@ -116,8 +110,17 @@
             "ref": "bb31a3bbec00a8fc8aa1c9fbf9b0ef9fc492f93d"
         }
     },
+    "friendsofsymfony/user-bundle": {
+        "version": "v2.1.2"
+    },
+    "fzaninotto/faker": {
+        "version": "v1.8.0"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
+    },
+    "kevinpapst/adminlte-bundle": {
+        "version": "0.3"
     },
     "monolog/monolog": {
         "version": "1.23.0"
@@ -136,6 +139,9 @@
     },
     "pagerfanta/pagerfanta": {
         "version": "v1.0.5"
+    },
+    "paragonie/random_compat": {
+        "version": "v2.0.17"
     },
     "phar-io/manifest": {
         "version": "1.0.1"
@@ -419,6 +425,9 @@
     "symfony/security-csrf": {
         "version": "v4.0.4"
     },
+    "symfony/serializer": {
+        "version": "v4.1.2"
+    },
     "symfony/stopwatch": {
         "version": "v4.0.3"
     },
@@ -431,8 +440,11 @@
             "ref": "8daf8ede72274989fb0dc66b83cb4bc1693afbb9"
         }
     },
+    "symfony/templating": {
+        "version": "v4.1.1"
+    },
     "symfony/thanks": {
-        "version": "v1.0.1"
+        "version": "v1.0.7"
     },
     "symfony/translation": {
         "version": "3.3",

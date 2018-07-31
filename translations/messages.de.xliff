@@ -47,10 +47,6 @@
             <!--
               Login / Security
             -->
-            <trans-unit id="security.title.login">
-                <source>security.title.login</source>
-                <target>Anmelden</target>
-            </trans-unit>
             <trans-unit id="label.password">
                 <source>label.password</source>
                 <target>Passwort</target>
@@ -58,10 +54,6 @@
             <trans-unit id="label.password_repeat">
                 <source>label.password_repeat</source>
                 <target>Passwort wiederholen</target>
-            </trans-unit>
-            <trans-unit id="action.sign_in">
-                <source>action.sign_in</source>
-                <target>Los geht's</target>
             </trans-unit>
             <trans-unit id="label.logout">
                 <source>label.logout</source>
@@ -211,6 +203,10 @@
                 <source>label.email</source>
                 <target>Email</target>
             </trans-unit>
+            <trans-unit id="label.create_more">
+                <source>label.create_more</source>
+                <target>Weitere Einträge erstellen</target>
+            </trans-unit>
 
             <!--
               Buttons & Actions
@@ -234,6 +230,10 @@
             <trans-unit id="action.back">
                 <source>action.back</source>
                 <target>Zurück</target>
+            </trans-unit>
+            <trans-unit id="action.close">
+                <source>action.close</source>
+                <target>Schließen</target>
             </trans-unit>
 
             <!--
@@ -303,9 +303,13 @@
                 <source>label.end</source>
                 <target>Bis</target>
             </trans-unit>
-            <trans-unit id="timesheet.description.help">
-                <source>timesheet.description.help</source>
-                <target>Beschreibungstext</target>
+            <trans-unit id="modal.columns.title">
+                <source>modal.columns.title</source>
+                <target>Ändere Spalten-Sichtbarkeit</target>
+            </trans-unit>
+            <trans-unit id="modal.columns.description">
+                <source>modal.columns.description</source>
+                <target>Beim Speichern werden die nicht ausgewählten Spalten ausgeblendet und diese Einstellungen in einem Browser Cookie hinterlegt. Sollten Sie Ihre Cookies löschen, werden die Einstellungen rückgängig gemacht.</target>
             </trans-unit>
 
             <!--
@@ -526,6 +530,13 @@
             <trans-unit id="label.roles">
                 <source>label.roles</source>
                 <target>Rolle</target>
+            </trans-unit>
+            <trans-unit id="admin_user.delete_confirm">
+                <source>admin_user.delete_confirm</source>
+                <target>
+                    Momentan existieren für den Benutzer %user% insgesamt %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen.
+                    Diese Zeiteinträge werden ebenfalls mit gelöscht!
+                </target>
             </trans-unit>
 
             <!--

@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -125,7 +132,7 @@ class UserPreference
     }
 
     /**
-     * @return string|int|bool
+     * @return mixed
      */
     public function getValue()
     {
@@ -140,7 +147,10 @@ class UserPreference
     }
 
     /**
-     * @param string|int|bool $value
+     * Given $value will not be serialized before its stored, so it should be one of the types:
+     * integer, string or boolean
+     *
+     * @param mixed $value
      * @return UserPreference
      */
     public function setValue($value): UserPreference

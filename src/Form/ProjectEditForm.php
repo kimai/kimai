@@ -15,6 +15,7 @@ use App\Form\Type\CustomerType;
 use App\Form\Type\YesNoType;
 use App\Repository\CustomerRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -66,6 +67,14 @@ class ProjectEditForm extends AbstractType
                 'required' => false,
             ])
         ;
+
+        if ($entry->getId() === null) {
+            $builder->add('create_more', CheckboxType::class, [
+                'label' => 'label.create_more',
+                'required' => false,
+                'mapped' => false,
+            ]);
+        }
     }
 
     /**

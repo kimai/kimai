@@ -9,11 +9,12 @@
 
 namespace App\EventSubscriber;
 
-use App\Event\ConfigureMainMenuEvent;
 use App\Event\ConfigureAdminMenuEvent;
+use App\Event\ConfigureMainMenuEvent;
+use KevinPapst\AdminLTEBundle\Event\SidebarMenuEvent;
+use KevinPapst\AdminLTEBundle\Event\ThemeEvents;
+use KevinPapst\AdminLTEBundle\Model\MenuItemModel;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Avanzu\AdminThemeBundle\Model\MenuItemModel;
-use Avanzu\AdminThemeBundle\Event\SidebarMenuEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -48,7 +49,7 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            'theme.sidebar_setup_menu' => ['onSetupNavbar', 100],
+            ThemeEvents::THEME_SIDEBAR_SETUP_MENU => ['onSetupNavbar', 100],
         ];
     }
 
@@ -64,7 +65,7 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
         $isTeamlead = $isLoggedIn && $this->security->isGranted('ROLE_TEAMLEAD');
 
         $event->addItem(
-            new MenuItemModel('dashboard', 'menu.homepage', 'dashboard', [], 'fa fa-dashboard')
+            new MenuItemModel('dashboard', 'menu.homepage', 'dashboard', [], 'fas fa-tachometer-alt')
         );
 
         $this->eventDispatcher->dispatch(
@@ -76,7 +77,7 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
         );
 
         if ($isTeamlead) {
-            $admin = new MenuItemModel('admin', 'menu.admin', '', [], 'fa fa-wrench');
+            $admin = new MenuItemModel('admin', 'menu.admin', '', [], 'fas fa-wrench');
             $event->addItem($admin);
 
             $this->eventDispatcher->dispatch(
@@ -89,7 +90,7 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
         }
 
         $event->addItem(
-            new MenuItemModel('logout', 'menu.logout', 'security_logout', [], 'fa fa-sign-out')
+            new MenuItemModel('logout', 'menu.logout', 'fos_user_security_logout', [], 'fas fa-sign-out-alt')
         );
 
         $this->activateByRoute(

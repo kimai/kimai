@@ -9,8 +9,8 @@
 
 namespace App\Doctrine;
 
-use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\Common\EventSubscriber;
+use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 
 /**
  * Adds a prefix to every doctrine entity AKA database table

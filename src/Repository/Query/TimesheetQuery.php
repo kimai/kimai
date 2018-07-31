@@ -9,8 +9,8 @@
 
 namespace App\Repository\Query;
 
-use App\Entity\User;
 use App\Entity\Activity;
+use App\Entity\User;
 
 /**
  * Can be used for advanced timesheet repository queries.

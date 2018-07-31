@@ -1,0 +1,26 @@
+{# User Account: style can be found in dropdown.less #}
+{% import "@AdminLTE/Macros/default.html.twig" as macro %}
+<li class="dropdown user user-menu">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        {{ macro.avatar(user.avatar, user.username, 'user-image') }}
+        <span class="hidden-xs">{{ user.name }}</span>
+    </a>
+    <ul class="dropdown-menu">
+        <!-- User image -->
+        <li class="user-header">
+            {{ macro.avatar(user.avatar, user.username) }}
+            <p>
+                {{user.name}}
+                <small>{{user.title}}</small>
+            </p>
+        </li>
+        <li class="user-footer">
+            <div class="pull-left">
+                <a href="{{ path('user_profile', {'username' : user.username}) }}" class="btn btn-default btn-flat">{{ 'label.user_profile'|trans }}</a>
+            </div>
+            <div class="pull-right">
+                <a href="{{ logout_path() }}" class="btn btn-default btn-flat">{{ 'label.logout'|trans }}</a>
+            </div>
+        </li>
+    </ul>
+</li>

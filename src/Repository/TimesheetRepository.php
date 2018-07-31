@@ -9,18 +9,18 @@
 
 namespace App\Repository;
 
-use App\Entity\User;
 use App\Entity\Activity;
 use App\Entity\Timesheet;
-use Doctrine\DBAL\Types\Type;
-use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Pagerfanta;
+use App\Entity\User;
 use App\Model\Statistic\Month;
 use App\Model\Statistic\Year;
 use App\Model\TimesheetGlobalStatistic;
 use App\Model\TimesheetStatistic;
-use DateTime;
 use App\Repository\Query\TimesheetQuery;
+use DateTime;
+use Doctrine\DBAL\Types\Type;
+use Doctrine\ORM\QueryBuilder;
+use Pagerfanta\Pagerfanta;
 
 /**
  * Class TimesheetRepository
@@ -121,6 +121,10 @@ class TimesheetRepository extends AbstractRepository
             ->createQuery('SELECT SUM(t.duration) FROM ' . Timesheet::class . ' t WHERE t.user = :user')
             ->setParameter('user', $user)
             ->getSingleScalarResult();
+        $recordsTotal = $this->getEntityManager()
+            ->createQuery('SELECT COUNT(t.id) FROM ' . Timesheet::class . ' t WHERE t.user = :user')
+            ->setParameter('user', $user)
+            ->getSingleScalarResult();
         $rateTotal = $this->getEntityManager()
             ->createQuery('SELECT SUM(t.rate) FROM ' . Timesheet::class . ' t WHERE t.user = :user')
             ->setParameter('user', $user)
@@ -142,6 +146,7 @@ class TimesheetRepository extends AbstractRepository
         $stats->setAmountThisMonth($amountMonth);
         $stats->setDurationThisMonth($durationMonth);
         $stats->setFirstEntry(new DateTime($firstEntry));
+        $stats->setRecordsTotal($recordsTotal);
 
         return $stats;
     }
@@ -203,6 +208,9 @@ class TimesheetRepository extends AbstractRepository
         $durationTotal = $this->getEntityManager()
             ->createQuery('SELECT SUM(t.duration) FROM ' . Timesheet::class . ' t')
             ->getSingleScalarResult();
+        $recordsTotal = $this->getEntityManager()
+            ->createQuery('SELECT COUNT(t.id) FROM ' . Timesheet::class . ' t')
+            ->getSingleScalarResult();
         $rateTotal = $this->getEntityManager()
             ->createQuery('SELECT SUM(t.rate) FROM ' . Timesheet::class . ' t')
             ->getSingleScalarResult();
@@ -228,6 +236,7 @@ class TimesheetRepository extends AbstractRepository
         $stats->setActiveThisMonth($activeMonth);
         $stats->setAmountThisMonth($amountMonth);
         $stats->setDurationThisMonth($durationMonth);
+        $stats->setRecordsTotal($recordsTotal);
 
         return $stats;
     }

@@ -1,14 +1,17 @@
 {
-    "name": "kimai/kimai",
+    "name": "kevinpapst/kimai2",
     "license": "MIT",
     "type": "project",
-    "description": "Kimai Time Tracking reloaded",
+    "description": "Kimai Time-Tracking 2",
     "require": {
         "php": "^7.1.3",
+        "ext-intl": "*",
+        "ext-pdo": "*",
         "ext-pdo_sqlite": "*",
-        "avanzu/admin-theme-bundle": "dev-kevinpapst",
         "beberlei/DoctrineExtensions": "^1.0",
         "erusev/parsedown": "^1.6",
+        "friendsofsymfony/user-bundle": "~2.0",
+        "kevinpapst/adminlte-bundle": "^1.2",
         "ocramius/proxy-manager": "2.1.1",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "^4.0",
@@ -24,8 +27,8 @@
         "symfony/profiler-pack": "^1.0",
         "symfony/security-bundle": "^4.0",
         "symfony/security-csrf": "^4.0",
+        "symfony/serializer": "^4.0",
         "symfony/swiftmailer-bundle": "^3.1",
-        "symfony/thanks": "^1.0",
         "symfony/translation": "^4.0",
         "symfony/twig-bundle": "^4.0",
         "symfony/validator": "^4.0",
@@ -38,6 +41,7 @@
         "dama/doctrine-test-bundle": "^5.0",
         "doctrine/doctrine-fixtures-bundle": "^3.0",
         "friendsofphp/php-cs-fixer": "^2.10",
+        "fzaninotto/faker": "^1.8",
         "phpunit/phpunit": "^7.0",
         "squizlabs/php_codesniffer": "^3.2",
         "symfony/browser-kit": "^4.0",
@@ -45,6 +49,7 @@
         "symfony/debug-pack": "^1.0",
         "symfony/maker-bundle": "^1.0",
         "symfony/phpunit-bridge": "^4.0",
+        "symfony/thanks": "^1.0",
         "symfony/web-server-bundle": "^4.0"
     },
     "config": {
@@ -71,7 +76,8 @@
     },
     "scripts": {
         "auto-scripts": {
-            "cache:clear": "symfony-cmd"
+            "cache:clear": "symfony-cmd",
+            "assets:install": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"

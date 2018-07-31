@@ -104,6 +104,7 @@ class CreateUserCommand extends Command
         $user->setUsername($username)
             ->setPlainPassword($password)
             ->setEmail($email)
+            ->setEnabled(true)
             ->setRoles(explode(',', $role))
         ;
 

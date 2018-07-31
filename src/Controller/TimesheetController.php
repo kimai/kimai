@@ -15,14 +15,14 @@ use App\Form\TimesheetEditForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\Query\TimesheetQuery;
 use Pagerfanta\Pagerfanta;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Controller used to manage timesheet contents in the public part of the site.
+ * Controller used to manage timesheets.
  *
  * @Route("/timesheet")
  * @Security("is_granted('ROLE_USER')")
@@ -32,7 +32,6 @@ class TimesheetController extends AbstractController
     use TimesheetControllerTrait;
 
     /**
-     * TimesheetController constructor.
      * @param bool $durationOnly
      */
     public function __construct(bool $durationOnly)
@@ -138,7 +137,11 @@ class TimesheetController extends AbstractController
      */
     public function editAction(Timesheet $entry, Request $request)
     {
-        return $this->edit($entry, $request, 'timesheet_paginated', 'timesheet/edit.html.twig');
+        if (null !== $request->get('page')) {
+            return $this->edit($entry, $request, 'timesheet_paginated', 'timesheet/edit.html.twig');
+        }
+
+        return $this->edit($entry, $request, 'timesheet', 'timesheet/edit.html.twig');
     }
 
     /**

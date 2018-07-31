@@ -9,10 +9,11 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Customer;
+use App\Repository\CustomerRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Repository\CustomerRepository;
 
 /**
  * Custom form field type to select a customer.
@@ -26,7 +27,7 @@ class CustomerType extends AbstractType
     {
         $resolver->setDefaults([
             'label' => 'label.customer',
-            'class' => 'Kimai:Customer',
+            'class' => Customer::class,
             'choice_label' => 'name',
             'query_builder' => function (CustomerRepository $repo) {
                 return $repo->builderForEntityType(null);

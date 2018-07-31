@@ -1,6 +1,4 @@
-{% extends '@AvanzuAdminTheme/layout/default-layout.html.twig' %}
-
-{% block avanzu_page_content_class %}{{ parent() }} {% block main_content_class %}{% endblock %}{% endblock %}
+{% extends '@AdminLTE/layout/default-layout-avanzu.html.twig' %}
 
 {% block avanzu_page_content_before %}
     <div class="pad no-print">
@@ -13,7 +11,6 @@
 {% endblock %}
 
 {% block avanzu_page_content %}
-    {{ include('default/_flash_messages.html.twig') }}
     {% block main %}{% endblock %}
 {% endblock %}
 
@@ -29,8 +26,6 @@
     {% block page_subtitle %}{% endblock %}
 {% endblock %}
 
-{% block avanzu_logo_path %}{{ path('dashboard') }}{% endblock %}
-
 {% block avanzu_logo_mini %}
     <b>K</b>TT
 {% endblock %}
@@ -38,8 +33,6 @@
 {% block avanzu_logo_lg %}
     <b>Kimai</b> - Time Tracking
 {% endblock %}
-
-{% block avanzu_head %}{# right now we simply deactivate that box #}{% endblock %}
 
 {% block avanzu_footer %}
     {% block footer %}
@@ -52,14 +45,14 @@
         {% if is_granted('ROLE_USER') %}
             <li class="visible-xs-inline-block">
                 <a href="{{ path('timesheet') }}" class="ddt-large">
-                    <i class="fa fa-clock-o fa-2x"></i>
+                    <i class="{{ 'timesheet'|icon }} fa-2x"></i>
                 </a>
             </li>
         {% endif %}
         {% if is_granted('ROLE_TEAMLEAD') %}
             <li class="visible-xs-inline-block">
                 <a href="{{ path('invoice') }}" class="ddt-large">
-                    <i class="fa fa-print fa-2x"></i>
+                    <i class="{{ 'invoice'|icon }} fa-2x"></i>
                 </a>
             </li>
         {% endif %}
@@ -74,14 +67,11 @@
     {% endif %}
 {% endblock %}
 
-{% block avanzu_navbar_toggle %}{{ parent() }}{% endblock %}
-{% block avanzu_navbar_tasks %}{#{ parent() }#}{% endblock %}
-{% block avanzu_navbar_user %}{#{ parent() }#}{% endblock %}
-{% block avanzu_navbar_control_sidebar_toggle %}{{ parent() }}{% endblock %}
-
-{% block avanzu_sidebar_user %}{# right now we simply deactivate that box #}{% endblock %}
-{% block avanzu_sidebar_search %}{# right now we simply deactivate that box #}{% endblock %}
-{% block avanzu_sidebar_nav %}{{ parent() }}{% endblock %}
+{# deactivated blocks #}
+{% block avanzu_navbar_tasks %}{% endblock %}
+{% block avanzu_navbar_user %}{% endblock %}
+{% block avanzu_sidebar_user %}{% endblock %}
+{% block avanzu_sidebar_search %}{% endblock %}
 
 {% block avanzu_breadcrumb %}
     {{ block('page_actions') }}
@@ -89,13 +79,19 @@
 
 {% block page_actions %}{% endblock %}
 
-{% block avanzu_control_sidebar %}{{ parent() }}{% endblock %}
-
-{% block avanzu_javascripts %}
-    {% block javascript_imports %}{% endblock %}
+{% block stylesheets %}
+    {# we do not call parent() as we use a custom built for the frontend assets and don't want the default <stylesheet> #}
+    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
 {% endblock %}
 
-{% block avanzu_javascripts_inline %}
+{% block head %}
+    {{ parent() }}
+    <script src="{{ asset('build/app.js') }}"></script>
+    {% include 'partials/head.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {# we do not call parent() as we use a custom built for the frontend assets and don't want the default <script> #}
     <script type="text/javascript">
         $(document).ready(function () {
             $.kimai.init({imagePath: '{{ asset('images') }}', confirmDelete: '{{ 'confirm.delete'|trans }}'});

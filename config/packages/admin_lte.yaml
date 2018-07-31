@@ -1,0 +1,38 @@
+
+#
+# Configuration file for the AdminLTE bundle
+#
+# For more information about the settings visit:
+# https://github.com/kevinpapst/AdminLTEBundle/blob/master/Resources/docs/configurations.md
+#
+admin_lte:
+    options:
+        # default image for missing user avatar images
+        default_avatar: build/images/default_avatar.png
+        # the color skin
+        skin: skin-blue
+        # if activated, the boxed_layout will be deactivated
+        fixed_layout: false
+        # boxed layout (true) or full-screen (false)
+        boxed_layout: false
+        # initial collapsed state of the sidebar
+        collapsed_sidebar: false
+        # whether the logo collapses or not
+        mini_sidebar: false
+        # tabs in the control_sidebar (right screen) can be configured, see:
+        # https://github.com/kevinpapst/AdminLTEBundle/blob/master/Resources/docs/control_sidebar.md
+        control_sidebar:
+            settings:
+                icon: "fas fa-cogs"
+                controller: 'App\Controller\SidebarController::settingsAction'
+            home:
+                icon: "fas fa-question-circle"
+                template: sidebar/home.html.twig
+
+    routes:
+        adminlte_profile: user_profile
+        adminlte_welcome: dashboard
+        adminlte_login: fos_user_security_login
+        adminlte_login_check: fos_user_security_check
+        adminlte_registration: fos_user_registration_register
+        adminlte_password_reset: fos_user_resetting_request

@@ -9,8 +9,12 @@
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\AppFixtures;
+use App\DataFixtures\UserFixtures;
 use App\Entity\User;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
+use Doctrine\Common\DataFixtures\Loader;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -31,29 +35,29 @@ abstract class ControllerBaseTest extends WebTestCase
         switch ($role) {
             case User::ROLE_SUPER_ADMIN:
                 $client = self::createClient([], [
-                    'PHP_AUTH_USER' => AppFixtures::USERNAME_SUPER_ADMIN,
-                    'PHP_AUTH_PW' => AppFixtures::DEFAULT_PASSWORD,
+                    'PHP_AUTH_USER' => UserFixtures::USERNAME_SUPER_ADMIN,
+                    'PHP_AUTH_PW' => UserFixtures::DEFAULT_PASSWORD,
                 ]);
                 break;
 
             case User::ROLE_ADMIN:
                 $client = self::createClient([], [
-                    'PHP_AUTH_USER' => AppFixtures::USERNAME_ADMIN,
-                    'PHP_AUTH_PW' => AppFixtures::DEFAULT_PASSWORD,
+                    'PHP_AUTH_USER' => UserFixtures::USERNAME_ADMIN,
+                    'PHP_AUTH_PW' => UserFixtures::DEFAULT_PASSWORD,
                 ]);
                 break;
 
             case User::ROLE_TEAMLEAD:
                 $client = self::createClient([], [
-                    'PHP_AUTH_USER' => AppFixtures::USERNAME_TEAMLEAD,
-                    'PHP_AUTH_PW' => AppFixtures::DEFAULT_PASSWORD,
+                    'PHP_AUTH_USER' => UserFixtures::USERNAME_TEAMLEAD,
+                    'PHP_AUTH_PW' => UserFixtures::DEFAULT_PASSWORD,
                 ]);
                 break;
 
             case User::ROLE_USER:
                 $client = self::createClient([], [
-                    'PHP_AUTH_USER' => AppFixtures::USERNAME_USER,
-                    'PHP_AUTH_PW' => AppFixtures::DEFAULT_PASSWORD,
+                    'PHP_AUTH_USER' => UserFixtures::USERNAME_USER,
+                    'PHP_AUTH_PW' => UserFixtures::DEFAULT_PASSWORD,
                 ]);
                 break;
 
@@ -66,6 +70,15 @@ abstract class ControllerBaseTest extends WebTestCase
     }
 
     /**
+     * @param string $url
+     * @return string
+     */
+    protected function createUrl($url)
+    {
+        return '/' . self::DEFAULT_LANGUAGE . '/' . ltrim($url, '/');
+    }
+
+    /**
      * @param Client $client
      * @param string $url
      * @param string $method
@@ -73,7 +86,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function request(Client $client, string $url, $method = 'GET')
     {
-        return $client->request($method, '/' . self::DEFAULT_LANGUAGE . $url);
+        return $client->request($method, $this->createUrl($url));
     }
 
     /**
@@ -83,7 +96,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertRequestIsSecured(Client $client, string $url, $method = 'GET')
     {
-        $client->request($method, '/' . self::DEFAULT_LANGUAGE . $url);
+        $client->request($method, $this->createUrl($url));
 
         /* @var RedirectResponse $response */
         $response = $client->getResponse();
@@ -94,7 +107,7 @@ abstract class ControllerBaseTest extends WebTestCase
         );
 
         $this->assertEquals(
-            'http://localhost/' . self::DEFAULT_LANGUAGE . '/login',
+            'http://localhost' . $this->createUrl('/login'),
             $response->getTargetUrl(),
             sprintf('The secure URL %s does not redirect to the login form.', $url)
         );
@@ -103,7 +116,6 @@ abstract class ControllerBaseTest extends WebTestCase
     /**
      * @param string $url
      * @param string $method
-     * @param Client|null $client
      */
     protected function assertUrlIsSecured(string $url, $method = 'GET')
     {
@@ -119,7 +131,7 @@ abstract class ControllerBaseTest extends WebTestCase
     protected function assertUrlIsSecuredForRole(string $role, string $url, string $method = 'GET')
     {
         $client = $this->getClientForAuthenticatedUser($role);
-        $client->request($method, '/' . self::DEFAULT_LANGUAGE . $url);
+        $client->request($method, $this->createUrl($url));
         $this->assertFalse(
             $client->getResponse()->isSuccessful(),
             sprintf('The secure URL %s is not protected for role %s', $url, $role)
@@ -162,5 +174,112 @@ abstract class ControllerBaseTest extends WebTestCase
     protected function assertHasDataTable(Client $client)
     {
         $this->assertContains('<table class="table table-striped table-hover dataTable" role="grid">', $client->getResponse()->getContent());
+    }
+
+    /**
+     * @param string $role the USER role to use for the request
+     * @param string $url the URL of the page displaying the initial form to submit
+     * @param string $formSelector a selector to find the form to test
+     * @param array $formData values to fill in the form
+     * @param array $fieldNames array of form-fields that should fail
+     * @param bool $disableValidation whether the form should validate before submitting or not
+     */
+    protected function assertFormHasValidationError($role, $url, $formSelector, array $formData, array $fieldNames, $disableValidation = true)
+    {
+        $client = $this->getClientForAuthenticatedUser($role);
+        $crawler = $client->request('GET', $this->createUrl($url));
+        $form = $crawler->filter($formSelector)->form();
+        if ($disableValidation) {
+            $form->disableValidation();
+        }
+        $result = $client->submit($form, $formData);
+
+        $submittedForm = $result->filter($formSelector);
+        $validationErrors = $submittedForm->filter('li.text-danger');
+
+        $this->assertEquals(
+            count($fieldNames),
+            count($validationErrors),
+            sprintf('Expected %s validation errors, found %s', count($fieldNames), count($validationErrors))
+        );
+
+        foreach ($fieldNames as $name) {
+            $field = $submittedForm->filter($name);
+            $this->assertNotNull($field, 'Could not find form field: ' . $name);
+            $list = $field->nextAll();
+            $this->assertNotNull($list, 'Form field has no validation message: ' . $name);
+            $validation = $list->filter('li.text-danger');
+            $this->assertGreaterThanOrEqual(1, count($validation), 'Form field has no validation message: ' . $name);
+        }
+    }
+
+    /**
+     * @param EntityManager $em
+     * @param Fixture $fixture
+     */
+    protected function importFixture(EntityManager $em, Fixture $fixture)
+    {
+        $loader = new Loader();
+        $loader->addFixture($fixture);
+
+        $executor = new ORMExecutor($em, null);
+        $executor->execute($loader->getFixtures(), true);
+    }
+
+    /**
+     * @param EntityManager $em
+     * @param string $role
+     * @return User|null
+     */
+    protected function getUserByRole(EntityManager $em, string $role = User::ROLE_USER)
+    {
+        $name = null;
+
+        switch ($role) {
+            case User::ROLE_SUPER_ADMIN:
+                $name = UserFixtures::USERNAME_SUPER_ADMIN;
+                break;
+
+            case User::ROLE_ADMIN:
+                $name = UserFixtures::USERNAME_ADMIN;
+                break;
+
+            case User::ROLE_TEAMLEAD:
+                $name = UserFixtures::USERNAME_TEAMLEAD;
+                break;
+
+            case User::ROLE_USER:
+                $name = UserFixtures::USERNAME_USER;
+                break;
+
+            default:
+                return null;
+        }
+
+        return $em->getRepository(User::class)->findOneBy(['username' => $name]);
+    }
+
+    /**
+     * @param Client $client
+     */
+    protected function assertHasFlashSuccess(Client $client)
+    {
+        $node = $client->getCrawler()->filter('div.alert.alert-success.alert-dismissible');
+        $this->assertNotEmpty($node->text());
+    }
+
+    /**
+     * @param Client $client
+     * @param string $url
+     */
+    protected function assertIsRedirect(Client $client, $url = null)
+    {
+        $this->assertTrue($client->getResponse()->isRedirect());
+        if (null === $url) {
+            return;
+        }
+
+        $this->assertTrue($client->getResponse()->headers->has('Location'));
+        $this->assertStringEndsWith($url, $client->getResponse()->headers->get('Location'));
     }
 }

@@ -9,9 +9,9 @@
 
 namespace App\Voter;
 
+use App\Entity\Customer;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use App\Entity\Customer;
 
 /**
  * A voter to check permissions on Customers.

@@ -9,16 +9,16 @@
 
 namespace App\Form;
 
+use App\Entity\Timesheet;
+use App\Form\Type\ActivityGroupedWithCustomerNameType;
 use App\Form\Type\DurationType;
 use App\Form\Type\UserType;
+use App\Repository\ActivityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Entity\Timesheet;
-use App\Form\Type\ActivityGroupedWithCustomerNameType;
-use App\Repository\ActivityRepository;
 
 /**
  * Defines the form used to manipulate Timesheet entries.
