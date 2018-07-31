@@ -11,6 +11,8 @@ namespace App\Tests\Controller\Admin;
 
 use App\Entity\User;
 use App\Tests\Controller\ControllerBaseTest;
+use App\Tests\DataFixtures\ProjectFixtures;
+use App\Tests\DataFixtures\TimesheetFixtures;
 
 /**
  * @coversDefaultClass \App\Controller\Admin\ActivityController
@@ -44,7 +46,7 @@ class ActivityControllerTest extends ControllerBaseTest
                 'name' => 'Test 2',
             ]
         ]);
-        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
         $client->followRedirect();
         $this->assertHasDataTable($client);
     }
@@ -52,14 +54,26 @@ class ActivityControllerTest extends ControllerBaseTest
     public function testCreateActionWithCreateMore()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $fixture = new ProjectFixtures();
+        $fixture->setAmount(10);
+        $this->importFixture($em, $fixture);
+
         $this->assertAccessIsGranted($client, '/admin/activity/create');
         $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
         $this->assertTrue($form->has('activity_edit_form[create_more]'));
+
+        /** @var \Symfony\Component\DomCrawler\Field\ChoiceFormField $project */
+        $project = $form->get('activity_edit_form[project]');
+        $options = $project->availableOptionValues();
+        $selectedProject = $options[array_rand($options)];
+
         $client->submit($form, [
             'activity_edit_form' => [
                 'name' => 'Test create more',
                 'create_more' => true,
-                // TODO select random project
+                'project' => $selectedProject,
             ]
         ]);
         $this->assertFalse($client->getResponse()->isRedirect());
@@ -67,7 +81,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
         $this->assertTrue($form->has('activity_edit_form[create_more]'));
         $this->assertEquals(1, $form->get('activity_edit_form[create_more]')->getValue());
-        // TODO test that project is pre-selected
+        $this->assertEquals($selectedProject, $form->get('activity_edit_form[project]')->getValue());
     }
 
     public function testEditAction()
@@ -80,12 +94,54 @@ class ActivityControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'activity_edit_form' => ['name' => 'Test 2']
         ]);
-        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
         $client->followRedirect();
         $this->assertHasDataTable($client);
         $this->request($client, '/admin/activity/1/edit');
         $editForm = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
         $this->assertEquals('Test 2', $editForm->get('activity_edit_form[name]')->getValue());
+    }
+
+    public function testDeleteAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/admin/activity/1/edit');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->request($client, '/admin/activity/1/delete');
+        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
+        $client->followRedirect();
+        $this->assertHasDataTable($client);
+        $this->assertHasFlashSuccess($client);
+
+        $this->request($client, '/admin/activity/1/edit');
+        $this->assertFalse($client->getResponse()->isSuccessful());
+    }
+
+    public function testDeleteActionWithTimesheetEntries()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $fixture = new TimesheetFixtures();
+        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setAmount(10);
+        $this->importFixture($em, $fixture);
+
+        $this->request($client, '/admin/activity/1/delete');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=form]')->form();
+        $this->assertStringEndsWith($this->createUrl('/admin/activity/1/delete'), $form->getUri());
+        $client->submit($form);
+
+        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
+        $client->followRedirect();
+        $this->assertHasDataTable($client);
+        $this->assertHasFlashSuccess($client);
+
+        $this->request($client, '/admin/activity/1/edit');
+        $this->assertFalse($client->getResponse()->isSuccessful());
     }
 
     /**

@@ -69,6 +69,14 @@ class Activity
     private $timesheets;
 
     /**
+     * @return Timesheet[]
+     */
+    public function getTimesheets(): array
+    {
+        return $this->timesheets;
+    }
+
+    /**
      * @return Project
      */
     public function getProject()

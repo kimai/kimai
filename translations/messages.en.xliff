@@ -539,6 +539,13 @@
                 <source>label.roles</source>
                 <target>Role</target>
             </trans-unit>
+            <trans-unit id="admin_user.delete_confirm">
+                <source>admin_user.delete_confirm</source>
+                <target>
+                    Currently the user %user% has %records% time-records which count up to a total of %duration%.
+                    These time-records will be deleted as well!
+                </target>
+            </trans-unit>
 
             <!--
               ROLES

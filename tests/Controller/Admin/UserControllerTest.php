@@ -34,6 +34,7 @@ class UserControllerTest extends ControllerBaseTest
 
     public function testCreateAction()
     {
+        $username = '亚历山德拉';
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/user/create');
         $form = $client->getCrawler()->filter('form[name=user_create]')->form();
@@ -41,15 +42,30 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertNull($form->get('user_create[create_more]')->getValue());
         $client->submit($form, [
             'user_create' => [
-                'username' => 'foobar@example.com',
+                'username' => $username,
+                'alias' => $username,
                 'plainPassword' => ['first' => 'abcdef', 'second' => 'abcdef'],
                 'email' => 'foobar@example.com',
                 'enabled' => 1,
             ]
         ]);
-        $this->assertTrue($client->getResponse()->isRedirect($this->createUrl('/profile/foobar@example.com/edit')));
+        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode($username) . '/edit'));
         $client->followRedirect();
-        // TODO test that this is the users profile
+
+        $tabs = $client->getCrawler()->filter('div.nav-tabs-custom ul.nav-tabs li');
+        $this->assertEquals(4, $tabs->count());
+        $expectedTabs = ['#charts', '#settings', '#password', '#roles'];
+        $foundTabs = [];
+        foreach ($tabs->filter('a') as $tab) {
+            $name = $tab->getAttribute('href');
+            if (in_array($name, $expectedTabs)) {
+                $foundTabs[] = $name;
+            }
+        }
+        $this->assertEmpty(array_diff($expectedTabs, $foundTabs));
+
+        $form = $client->getCrawler()->filter('form[name=user_edit]')->form();
+        $this->assertEquals($username, $form->get('user_edit[alias]')->getValue());
     }
 
     public function testCreateActionWithCreateMore()

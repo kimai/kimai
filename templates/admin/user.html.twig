@@ -50,7 +50,7 @@
                     {% set actionButtons = {'edit': path('user_profile', {'username' : entry.username})}|merge(actionButtons) %}
                 {% endif %}
                 {% if is_granted('delete', entry) %}
-                    {% set actionButtons = actionButtons|merge({'trash': '#'}) %}
+                    {% set actionButtons = actionButtons|merge({'trash': path('admin_user_delete', {'id': entry.id})}) %}
                 {% endif %}
                 {{ widgets.button_group(actionButtons) }}
             </td>

@@ -191,12 +191,13 @@ class User extends BaseUser implements UserInterface
      * @param UserPreference[]|Collection<UserPreference> $preferences
      * @return User
      */
-    public function setPreferences(array $preferences)
+    public function setPreferences($preferences)
     {
-        if (!($preferences instanceof Collection) && is_array($preferences)) {
-            $preferences = new ArrayCollection($preferences);
+        $this->preferences = new ArrayCollection();
+
+        foreach ($preferences as $preference) {
+            $this->addPreference($preference);
         }
-        $this->preferences = $preferences;
 
         return $this;
     }
@@ -238,6 +239,7 @@ class User extends BaseUser implements UserInterface
     public function addPreference(UserPreference $preference)
     {
         $this->preferences->add($preference);
+        $preference->setUser($this);
 
         return $this;
     }
