@@ -459,7 +459,7 @@ class KimaiImporterCommand extends Command
                 ->setAlias($oldUser['alias'])
                 ->setEmail($oldUser['mail'])
                 ->setPlainPassword($password)
-                ->setActive($isActive)
+                ->setEnabled($isActive)
                 ->setRoles([$role])
             ;
 

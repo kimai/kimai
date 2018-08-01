@@ -11,7 +11,7 @@ namespace App\EventSubscriber;
 
 use App\Entity\User;
 use App\Entity\UserPreference;
-use Avanzu\AdminThemeBundle\Helper\ContextHelper;
+use KevinPapst\AdminLTEBundle\Helper\ContextHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\KernelEvent;
 use Symfony\Component\HttpKernel\KernelEvents;

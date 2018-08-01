@@ -2,6 +2,8 @@
 
 Kimai v2 - the open source time-tracking application with a mobile-first approach, read more at the [official website](http://v2.kimai.org).
 
+[![Latest Stable Version](https://poser.pugx.org/kevinpapst/kimai2/v/stable)](https://packagist.org/packages/kevinpapst/kimai2)
+[![License](https://poser.pugx.org/kevinpapst/kimai2/license)](https://packagist.org/packages/kevinpapst/kimai2)
 [![Travis Status](https://travis-ci.org/kevinpapst/kimai2.svg?branch=master)](https://travis-ci.org/kevinpapst/kimai2)
 [![Code Quality](https://scrutinizer-ci.com/g/kevinpapst/kimai2/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/kevinpapst/kimai2/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/kevinpapst/kimai2/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/kevinpapst/kimai2/?branch=master)
@@ -10,20 +12,23 @@ Kimai v2 - the open source time-tracking application with a mobile-first approac
 ## Introduction
 
 This is the reloaded version of the open source timetracker Kimai.
-Right now its in an early development phase, its usable but some advanced features from Kimai v1 are missing by now.
+The new version has not much in common with its predecessor [Kimai v1](http://www.kimai.org) besides the basic ideas of time-tracking and the current development team.
 
-Kimai v2 has nothing in common with its predecessor [Kimai v1](http://www.kimai.org) besides the basic ideas of time-tracking and the current development team.
-It is based on a lot of great frameworks. Special thanks to [Symfony v4](https://github.com/symfony/symfony), [Doctrine](https://github.com/doctrine/),
-[AdminThemeBundle](https://github.com/avanzu/AdminThemeBundle/) (based on [AdminLTE](https://github.com/almasaeed2010/AdminLTE/)).
+Right now its in an early development phase, its usable but some advanced features from Kimai v1 are missing by now (like export and ODT invoices). 
+But we already support to [import your timesheets](migration_v1.md) from Kimai v1.
+
+It is developed with modern frameworks like [Symfony v4](https://github.com/symfony/symfony), [Doctrine](https://github.com/doctrine/),
+[AdminLTE](https://github.com/kevinpapst/AdminLTEBundle/) and [many](composer.json) [more](package.json)...
 
 ### Requirements
 
 - PHP 7.1.3 or higher
 - One PHP extension of [PDO-SQLite](https://php.net/manual/en/ref.pdo-sqlite.php) or [PDO-MySQL](https://php.net/manual/en/ref.pdo-mysql.php) enabled (it might work with PostgreSQL and Oracle as well, but that wasn't tested and is not officially supported)
 - The PHP extension [intl](https://php.net/manual/en/book.intl.php)
-- the [usual Symfony application requirements](http://symfony.com/doc/current/reference/requirements.html)
+- The [usual Symfony application requirements](http://symfony.com/doc/current/reference/requirements.html)
+- If you use MariaDB, make sure its at least v10.7.2 (see [FAQ](var/docs/faq.md))
 - Kimai needs to be installed in the root directory of a domain or you need to [recompile the frontend assets](var/docs/developers.md)
-- a modern browser, Kimai v2 might be broken on old browsers like IE 9
+- A modern browser, Kimai v2 might be broken on old browsers like IE 10
 
 ## Documentation & Roadmap
 
@@ -35,117 +40,63 @@ Our roadmap is open for changes and input from the community, please [sent us](i
 
 ## Installation
 
-First, install Git and [Composer](https://getcomposer.org/doc/00-intro.md) if you haven't already. Then clone this repo:
+There are [further infos about installation](var/docs/installation.md) if you have to use FTP or want to develop with Kimai. 
+
+If you want to install Kimai 2 in your production environment, then SSH into your server and change to your webserver root.
+You need to install Git and [Composer](https://getcomposer.org/doc/00-intro.md) if you haven't already. 
+
+First clone this repo:
 
 ```bash
 git clone https://github.com/kevinpapst/kimai2.git
 cd kimai2/
 ```
 
-The next steps depend in which environment you want to use Kimai, you can choose between development or production mode.
-
-### Installation (development)
-
-Lets prepare the environment by installing all dependencies:
-
-```bash
-composer install
-```
-
-The default installation uses a SQLite database, so there is no need to create a database for your first tests.
-Our default settings will work out-of-the-box, but you might want to adjust the `.env` values to your needs.
-You can configure your database through your environment (e.g. Webserver, Cloud-Provider) or in your `.env` file:
-```
-DATABASE_PREFIX=kimai2_
-DATABASE_URL=sqlite:///%kernel.project_dir%/var/data/kimai.sqlite
-APP_ENV=dev
-APP_SECRET=some_random_secret_string_for_your_installation
-```
-
-The next command will create the database and the schema:
-```bash
-bin/console doctrine:database:create
-bin/console doctrine:schema:create
-```
-
-Lets bootstrap your environment by executing this commands (which is only available in dev environment):
-```bash
-bin/console kimai:reset-dev
-```
-
-You just imported demo data, to test the application in its full beauty and with several different user accounts and permission sets.
-
-You can now login with these accounts:
-
-| Username | Password | Role |
-|---|:---:|---|
-| clara_customer | kitten | Customer |
-| john_user | kitten | User |
-| chris_user | kitten | User (deactivated) |
-| tony_teamlead | kitten | Teamlead |
-| anna_admin | kitten | Administrator |
-| susan_super | kitten | Super-Administrator |
-
-Demo data can always be deleted by dropping the schema and re-creating it.
-ATTENTION - this will erase all your data:
-
-```bash
-bin/console doctrine:schema:drop --force
-bin/console doctrine:schema:create
-```
-
-The `kimai:reset-dev` command can always be executed later on to reset your dev database and cache.
-
-There is no need to configure a virtual host in your web server to access the application for testing.
-Just use the built-in web server for your first tests:
-
-```bash
-bin/console server:run
-```
-
-This command will start a web server for Kimai. Now you can access the application in your browser at <http://127.0.0.1:8000/>.
-You can stop the built-in web server by pressing `Ctrl + C` while you're in the terminal.
-
-To re-generate the frontend assets ([more information here](var/docs/developers.md)), execute:
-```bash
-yarn install
-npm run prod
-```
-
-### Installation (production)
-
-Make sure the [directories are read and writable by your webserver](https://symfony.com/doc/current/setup/file_permissions.html):
+Make sure the [file permissions are correct](https://symfony.com/doc/current/setup/file_permissions.html):
 ```bash
 chown -R www-data var/
 chmod -R 777 var/
 ```
 
-The database is up to you, but we would not recommend using the default SQLite database for production usage.
-Please create your database and configure the connection string in your environment, e.g. with the `.env` file (more examples in `.env.dist`):
+It's up to you which database server you want to use, Kimai v2 supports MySQL/MariaDB and SQLite.
+Configure the database connection string in your the `.env` file:
 ```
+# adjust all settings in .env to your needs
 APP_ENV=prod
-APP_SECRET=insert_a_random_secret_string_for_production
 DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
 ```
 
-After activating `prod` environment you can prepare the environment by installing all dependencies:
+Now install all dependencies for Kimai 2:
 
 ```bash
-composer install --no-dev
+sudo -u www-data composer install --no-dev --optimize-autoloader
 ```
 
-Create the database schemas and warm up the cache (as webserver user):
+Optionally create the database:
+```bash
+bin/console doctrine:database:create
+```
+
+Create all schema tables:
 ```bash
 bin/console doctrine:schema:create
+```
+
+Make sure that upcoming updates can be correctly applied by setting the initial database version:
+```bash
+bin/console doctrine:migrations:version --add --all
+```
+
+Warm up the cache (as webserver user):
+```bash
 sudo -u www-data bin/console cache:warmup --env=prod
 ```
 
-Create your first user with the following command. You will be asked to enter a password afterwards.
-
+Create your first user with the following command. You will be asked to enter a password afterwards:
 ```bash
 bin/console kimai:create-user username admin@example.com ROLE_SUPER_ADMIN
 ```
-_Tip: You can skip the "create user" step, if you are going to import data from Kimai v1._
+_Tip: You can skip the "create user" step, if you are going to [import data from Kimai v1](migration_v1.md)._
 
 For available roles, please refer to the [user documentation](var/docs/users.md).
 
@@ -156,33 +107,45 @@ For available roles, please refer to the [user documentation](var/docs/users.md)
 > For more details, see:
 > http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html
 
-That's it, you can start time-tracking :-)
+Installation complete: enjoy time-tracking :-)
 
-### Importing data from Kimai v1
+## Updating Kimai
 
-Before importing your data from a Kimai v1 installation, please read the following carefully:
+**STOP** 
 
-- Data from the existing v1 installation is only read and will never be changed
-- Data can only be imported from a Kimai installation with at least `v1.0.1` and database revision `1388` (check your `configuration` table)
-- Kimai v1 has support for activities without project assignment, which Kimai v2 doesn't support. Unattached activities will be created for every project that has a linked activity in any of the imported timesheet records
-- Rates and fixed-rates are handled in a completely different way and for now only the timesheet record total amounts are imported
-- Customers cannot login and no user accounts will be created for them
-- The customers country has to be manually assigned afterwards, as there is no field in Kimai v1 for that
-- You have to supply the default password that is used for every imported user, as their password will be resetted
-- Data that was deleted in Kimai v1 (user, customer, projects, activities) will be imported and set to `invisible` (if you don't want that, you have to delete all entries that have the value `1` in the `trash` column before importing)
+1. It's important that you don't execute the Installation steps before or after your upgrade
+2. Make sure that you have a working database backup before you start the update
+3. Read the [UPGRADING](UPGRADING.md) guide and [release information](https://github.com/kevinpapst/kimai2/releases) to check if there a further steps required
 
-A possible full command for import:
+Get the latest code and install dependencies:
 ```bash
-bin/console kimai:import-v1 "mysql://user:password@127.0.0.1:3306/database?charset=utf8" "db_prefix" "password" "country"
+cd kimai2/
+git pull origin master
+sudo -u www-data composer install --no-dev --optimize-autoloader
 ```
 
-It is recommended to test the import in a fresh database. You can test your import as often as you like and fix possible problems in your installation.
-A sample command could look like that:
+Refresh your cache:
 ```bash
-bin/console doctrine:schema:drop --force && bin/console doctrine:schema:create && bin/console kimai:import-v1 "mysql://kimai:test@127.0.0.1:3306/kimai?charset=latin1" "kimai_" "test123" "de"
+sudo -u www-data bin/console cache:clear --env=prod
+sudo -u www-data bin/console cache:warmup --env=prod
 ```
-That will drop the configured Kimai v2 database schema and re-create it, before importing the data from the `mysql` database at `127.0.0.1` on port `3306` authenticating the user `kimai` with the password `test` for import.
-The connection will use the charset `latin1` and the default table prefix `kimai_` for reading data. Imported users can login with the password `test123` and all customer will have the country `de` assigned.
+
+And upgrade your database:
+```bash
+bin/console doctrine:migrations:migrate
+```
+
+Done! You can use the latest version of Kimai 2. 
+
+## Rolling releases & Git
+
+Please note: Kimai 2 uses a rolling release concept for delivering updates.
+Release versions will be created on a regular base and you can use these tags if you are familiar with Git, but we 
+will not provide support for any specific version (whether its bugs or installation/update docu).
+
+Every code change, whether it's a new features or bug fixes, will be targeted against the master branch and 
+intensively tested before merging. We have to go this way, as we develop Kimai in our free time and want to put our 
+effort into the software instead of installation scripts and complicated upgrade processes. 
 
 ## Extensions for Kimai 2
 
@@ -193,7 +156,7 @@ All available Kimai 2 bundles can be found at the [Kimai recipes](https://github
 
 ## Developer
 
-If you want to develop for Kimai 2 please read the following documentation:
+If you want to develop with and for Kimai 2 please read the following documentation:
 
 - an example on how to extend Kimai 2 can be found in this [GitHub repository](https://github.com/kevinpapst/kimai2-invoice)
 - the [developer documentation](var/docs/developers.md) is available both on GitHub and your local installation

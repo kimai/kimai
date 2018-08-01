@@ -11,8 +11,9 @@ namespace App\EventSubscriber;
 
 use App\Event\ConfigureAdminMenuEvent;
 use App\Event\ConfigureMainMenuEvent;
-use Avanzu\AdminThemeBundle\Event\SidebarMenuEvent;
-use Avanzu\AdminThemeBundle\Model\MenuItemModel;
+use KevinPapst\AdminLTEBundle\Event\SidebarMenuEvent;
+use KevinPapst\AdminLTEBundle\Event\ThemeEvents;
+use KevinPapst\AdminLTEBundle\Model\MenuItemModel;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -48,7 +49,7 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            'theme.sidebar_setup_menu' => ['onSetupNavbar', 100],
+            ThemeEvents::THEME_SIDEBAR_SETUP_MENU => ['onSetupNavbar', 100],
         ];
     }
 
@@ -89,7 +90,7 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
         }
 
         $event->addItem(
-            new MenuItemModel('logout', 'menu.logout', 'security_logout', [], 'fas fa-sign-out-alt')
+            new MenuItemModel('logout', 'menu.logout', 'fos_user_security_logout', [], 'fas fa-sign-out-alt')
         );
 
         $this->activateByRoute(

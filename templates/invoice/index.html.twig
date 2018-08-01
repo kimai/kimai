@@ -6,7 +6,7 @@
 {% block page_subtitle %}{{ 'invoice.subtitle'|trans }}{% endblock %}
 {% block page_actions %}{{ widgets.page_actions({'filter': '#collapseInvoice', 'create': path('admin_invoice_template_create'), 'list': path('admin_invoice_template')}) }}{% endblock %}
 
-{% block main_content_class %}invoice{% endblock %}
+{% block page_content_class %}{{ parent() }} invoice{% endblock %}
 
 {% block main_before %}
     {{ toolbar.toolbar(form, 'collapseInvoice', true) }}

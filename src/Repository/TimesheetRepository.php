@@ -121,6 +121,10 @@ class TimesheetRepository extends AbstractRepository
             ->createQuery('SELECT SUM(t.duration) FROM ' . Timesheet::class . ' t WHERE t.user = :user')
             ->setParameter('user', $user)
             ->getSingleScalarResult();
+        $recordsTotal = $this->getEntityManager()
+            ->createQuery('SELECT COUNT(t.id) FROM ' . Timesheet::class . ' t WHERE t.user = :user')
+            ->setParameter('user', $user)
+            ->getSingleScalarResult();
         $rateTotal = $this->getEntityManager()
             ->createQuery('SELECT SUM(t.rate) FROM ' . Timesheet::class . ' t WHERE t.user = :user')
             ->setParameter('user', $user)
@@ -142,6 +146,7 @@ class TimesheetRepository extends AbstractRepository
         $stats->setAmountThisMonth($amountMonth);
         $stats->setDurationThisMonth($durationMonth);
         $stats->setFirstEntry(new DateTime($firstEntry));
+        $stats->setRecordsTotal($recordsTotal);
 
         return $stats;
     }
@@ -203,6 +208,9 @@ class TimesheetRepository extends AbstractRepository
         $durationTotal = $this->getEntityManager()
             ->createQuery('SELECT SUM(t.duration) FROM ' . Timesheet::class . ' t')
             ->getSingleScalarResult();
+        $recordsTotal = $this->getEntityManager()
+            ->createQuery('SELECT COUNT(t.id) FROM ' . Timesheet::class . ' t')
+            ->getSingleScalarResult();
         $rateTotal = $this->getEntityManager()
             ->createQuery('SELECT SUM(t.rate) FROM ' . Timesheet::class . ' t')
             ->getSingleScalarResult();
@@ -228,6 +236,7 @@ class TimesheetRepository extends AbstractRepository
         $stats->setActiveThisMonth($activeMonth);
         $stats->setAmountThisMonth($amountMonth);
         $stats->setDurationThisMonth($durationMonth);
+        $stats->setRecordsTotal($recordsTotal);
 
         return $stats;
     }

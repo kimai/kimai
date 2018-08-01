@@ -14,6 +14,7 @@ use App\Form\Type\ProjectType;
 use App\Form\Type\YesNoType;
 use App\Repository\ProjectRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -59,6 +60,14 @@ class ActivityEditForm extends AbstractType
                 'label' => 'label.visible',
             ])
         ;
+
+        if ($entry->getId() === null) {
+            $builder->add('create_more', CheckboxType::class, [
+                'label' => 'label.create_more',
+                'required' => false,
+                'mapped' => false,
+            ]);
+        }
     }
 
     /**

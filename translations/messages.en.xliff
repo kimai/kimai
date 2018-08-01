@@ -47,10 +47,6 @@
             <!--
               Login / Security
             -->
-            <trans-unit id="security.title.login">
-                <source>security.title.login</source>
-                <target>Login</target>
-            </trans-unit>
             <trans-unit id="label.password">
                 <source>label.password</source>
                 <target>Password</target>
@@ -58,10 +54,6 @@
             <trans-unit id="label.password_repeat">
                 <source>label.password_repeat</source>
                 <target>Repeat password</target>
-            </trans-unit>
-            <trans-unit id="action.sign_in">
-                <source>action.sign_in</source>
-                <target>Let's go</target>
             </trans-unit>
             <trans-unit id="label.logout">
                 <source>label.logout</source>
@@ -210,6 +202,10 @@
             <trans-unit id="label.email">
                 <source>label.email</source>
                 <target>Email</target>
+            </trans-unit>
+            <trans-unit id="label.create_more">
+                <source>label.create_more</source>
+                <target>Create further entries</target>
             </trans-unit>
 
             <!--
@@ -534,6 +530,13 @@
             <trans-unit id="label.roles">
                 <source>label.roles</source>
                 <target>Role</target>
+            </trans-unit>
+            <trans-unit id="admin_user.delete_confirm">
+                <source>admin_user.delete_confirm</source>
+                <target>
+                    Currently the user %user% has %records% time-records which count up to a total of %duration%.
+                    These time-records will be deleted as well!
+                </target>
             </trans-unit>
 
             <!--

@@ -82,7 +82,7 @@ class TimesheetQueryTest extends BaseQueryTest
     {
         $this->assertEquals(TimesheetQuery::STATE_ALL, $sut->getState());
 
-        $sut->setState('foo-bar');
+        $sut->setState(PHP_INT_MAX);
         $this->assertEquals(TimesheetQuery::STATE_ALL, $sut->getState());
 
         $sut->setState(TimesheetQuery::STATE_STOPPED);

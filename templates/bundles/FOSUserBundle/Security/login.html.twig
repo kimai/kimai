@@ -1,0 +1,13 @@
+{% extends '@AdminLTE/FOSUserBundle/Security/login.html.twig' %}
+
+{% block logo_login %}<b>Kimai</b><br>TimeTracking{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+    {% include 'partials/head.html.twig' %}
+{% endblock %}
+
+{% block stylesheets %}
+    {# we do not call parent() as we use a custom built for the frontend assets and don't want the default <stylesheet> #}
+    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+{% endblock %}

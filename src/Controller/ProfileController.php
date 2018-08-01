@@ -22,6 +22,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * User profile controller
@@ -31,6 +32,19 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProfileController extends AbstractController
 {
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    protected $encoder;
+
+    /**
+     * @param UserPasswordEncoderInterface $encoder
+     */
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
     /**
      * @Route("/{username}", name="user_profile")
      * @Method("GET")
@@ -75,8 +89,7 @@ class ProfileController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $password = $this->get('security.password_encoder')
-                ->encodePassword($profile, $profile->getPlainPassword());
+            $password = $this->encoder->encodePassword($profile, $profile->getPlainPassword());
             $profile->setPassword($password);
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -147,11 +160,9 @@ class ProfileController extends AbstractController
                 }
             }
 
-            foreach ($preferences as $preference) {
-                $preference->setUser($profile);
-                $entityManager->persist($preference);
-                $entityManager->flush();
-            }
+            $profile->setPreferences($preferences);
+            $entityManager->persist($profile);
+            $entityManager->flush();
 
             $this->flashSuccess('action.updated_successfully');
 

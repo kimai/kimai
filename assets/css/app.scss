@@ -41,7 +41,7 @@
 
 /* ================================ NAVBAR ================================ */
 
-.navbar-nav>li>a.ddt-large {
+.navbar-nav > li > a.ddt-large {
     padding-top: 12px;
     padding-bottom: 9px;
 }
@@ -92,7 +92,8 @@ li.open .ticktac i.running{
 /* Right sidebar with additional tabs for personal settings and "About Kimai" section */
 .control-sidebar {
     select {
-        color: #000;
+        color: $input-color;
+        background-color: $input-bg;
     }
     div.image {
         img.img-circle {
@@ -111,26 +112,6 @@ li.open .ticktac i.running{
     left: 80px;
 }
 
-/* ================================ FONT AWESOME 5 ================================ */
-.sidebar-menu>li>a>.far,
-.sidebar-menu>li>a>.fas,
-.sidebar-menu>li>a>.fal,
-.sidebar-menu>li>a>.fab {
-    width: 20px;
-}
-
-.sidebar-menu .treeview-menu>li>a>.far,
-.sidebar-menu .treeview-menu>li>a>.fas,
-.sidebar-menu .treeview-menu>li>a>.fal,
-.sidebar-menu .treeview-menu>li>a>.fab {
-    width: 20px;
-}
-
-.main-header .sidebar-toggle {
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-}
-
 /* ================================ FOOTER ================================ */
 
 footer.main-footer {
@@ -138,11 +119,6 @@ footer.main-footer {
     font-size: 80%;
 }
 
-/* ================================ LOGIN-PAGE ================================ */
-
-.login-page form label {
-    padding-left: 5px;
-}
 /* ================================ PRINT ================================ */
 
 @media print{

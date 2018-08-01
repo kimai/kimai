@@ -36,12 +36,15 @@ services:
         class: App\Invoice\ServiceInvoice
         arguments: ['%kimai.invoice%']
 
-    # a route listener, that injects the default locale into the route
     App\EventSubscriber\RedirectToLocaleSubscriber:
         class: App\EventSubscriber\RedirectToLocaleSubscriber
         arguments: ['@router', '%app_locales%', '%locale%']
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    App\Calendar\Service:
+        arguments:
+            $config: "%kimai.calendar%"
 
     # ================================================================================
     # DATABASE
@@ -88,6 +91,9 @@ services:
     App\Twig\DateExtensions:
         arguments:
             $dateSettings: "%kimai.languages%"
+
+    KevinPapst\AdminLTEBundle\Helper\ContextHelper:
+        alias: admin_lte_theme.context_helper
 
     # ================================================================================
     # TIMESHEET RECORD CALCULATOR

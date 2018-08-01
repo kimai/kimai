@@ -122,7 +122,7 @@ class ActivityController extends AbstractController
 
             $this->flashSuccess('action.deleted_successfully');
 
-            return $this->redirectToRoute('admin_activity', ['id' => $activity->getId()]);
+            return $this->redirectToRoute('admin_activity');
         }
 
         return $this->render(
@@ -153,7 +153,15 @@ class ActivityController extends AbstractController
 
             $this->flashSuccess('action.updated_successfully');
 
-            return $this->redirectToRoute('admin_activity', ['id' => $activity->getId()]);
+            if ($editForm->has('create_more') && $editForm->get('create_more')->getData() === true) {
+                $newActivity = new Activity();
+                $newActivity->setProject($activity->getProject());
+                $editForm = $this->createEditForm($newActivity);
+                $editForm->get('create_more')->setData(true);
+                $activity = $newActivity;
+            } else {
+                return $this->redirectToRoute('admin_activity');
+            }
         }
 
         return $this->render(

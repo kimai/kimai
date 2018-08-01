@@ -9,7 +9,7 @@
 
 namespace App\Event;
 
-use Avanzu\AdminThemeBundle\Event\SidebarMenuEvent;
+use KevinPapst\AdminLTEBundle\Event\SidebarMenuEvent;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 

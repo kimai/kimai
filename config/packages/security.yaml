@@ -4,9 +4,8 @@ security:
 
     # https://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        database_users:
-            entity:
-                class: App\Entity\User
+        fos_userbundle:
+            id: fos_user.user_provider.username_email
 
     firewalls:
         dev:
@@ -32,18 +31,20 @@ security:
             # This allows the user to login by submitting a username and password
             # Reference: http://symfony.com/doc/current/cookbook/security/form_login_setup.html
             form_login:
+                # fos user bundle handles the form login
+                provider: fos_userbundle
                 # The route name that the login form submits to
-                check_path: security_login
+                check_path: fos_user_security_check
                 # The name of the route where the login form lives
                 # When the user tries to access a protected page, they are redirected here
-                login_path: security_login
+                login_path: fos_user_security_login
                 # Secure the login form against CSRF
                 # Reference: http://symfony.com/doc/current/cookbook/security/csrf_in_login_form.html
                 csrf_token_generator: security.csrf.token_manager
 
             logout:
                 # The route name the user can go to in order to logout
-                path: security_logout
+                path: fos_user_security_logout
                 # The name of the route to redirect to after logging out
                 target: homepage
 
@@ -54,9 +55,9 @@ security:
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     access_control:
-        # this is a catch-all for the admin area
-        # additional security lives in the controllers
-        - { path: '^/(%app_locales%)$', role: IS_AUTHENTICATED_FULLY }
+        - { path: '^/(%app_locales%)$', role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/(%app_locales%)/login', role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: '^/(%app_locales%)/register', role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: '^/(%app_locales%)/resetting', role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/(%app_locales%)/admin', roles: ROLE_ADMIN }
 

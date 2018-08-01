@@ -32,6 +32,6 @@ class UserStatistic
      */
     public function setTotalAmount($totalAmount)
     {
-        $this->totalAmount = $totalAmount;
+        $this->totalAmount = (int) $totalAmount;
     }
 }
