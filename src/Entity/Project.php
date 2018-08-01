@@ -279,10 +279,7 @@ class Project implements \JsonSerializable
             'visible' => $this->getVisible(),
             'budget' => $this->getBudget(),
             'orderNumber' => $this->getOrderNumber(),
-            'customer' => [
-                'id' => $this->getCustomer()->getId(),
-                'name' => $this->getCustomer()->getName(),
-            ],
+            'customerId' => $this->getCustomer()->getId(),
         ];
     }
 }

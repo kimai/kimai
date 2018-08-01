@@ -193,10 +193,7 @@ class Activity implements \JsonSerializable
             'name' => $this->getName(),
             'comment' => $this->getComment(),
             'visible' => $this->getVisible(),
-            'project' => $this->getProject() ? [
-                'id' => $this->getProject()->getId(),
-                'name' => $this->getProject()->getName(),
-            ] : null,
+            'projectId' => $this->getProject() ? $this->getProject()->getId() : null,
         ];
     }
 }
