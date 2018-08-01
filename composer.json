@@ -10,6 +10,7 @@
         "ext-pdo_sqlite": "*",
         "beberlei/DoctrineExtensions": "^1.0",
         "erusev/parsedown": "^1.6",
+        "friendsofsymfony/rest-bundle": "^2.3",
         "friendsofsymfony/user-bundle": "~2.0",
         "kevinpapst/adminlte-bundle": "^1.2",
         "ocramius/proxy-manager": "2.1.1",
@@ -92,7 +93,7 @@
     "extra": {
         "symfony": {
             "id": "01C3FWRDJJEX9K6Y3A4XDFXPBR",
-            "allow-contrib": false
+            "allow-contrib": true
         }
     },
     "repositories": [

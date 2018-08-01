@@ -31,7 +31,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity("username")
  * @UniqueEntity("email")
  */
-class User extends BaseUser implements UserInterface
+class User extends BaseUser implements UserInterface, \JsonSerializable
 {
     public const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
     public const ROLE_USER = 'ROLE_USER';
@@ -250,5 +250,20 @@ class User extends BaseUser implements UserInterface
     public function __toString()
     {
         return $this->getAlias() ?: $this->getUsername();
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'username' => $this->getUsername(),
+            'alias' => $this->getAlias(),
+            'title' => $this->getTitle(),
+            'active' => $this->isEnabled(),
+            'avatar' => $this->getAvatar(),
+        ];
     }
 }

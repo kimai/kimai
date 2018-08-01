@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="customers")
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
  */
-class Customer
+class Customer implements \JsonSerializable
 {
     public const DEFAULT_CURRENCY = 'EUR';
 
@@ -515,5 +515,30 @@ class Customer
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'number' => $this->getNumber(),
+            'comment' => $this->getComment(),
+            'visible' => $this->getVisible(),
+            'company' => $this->getCompany(),
+            'contact' => $this->getContact(),
+            'address' => $this->getAddress(),
+            'country' => $this->getCountry(),
+            'currency' => $this->getCurrency(),
+            'phone' => $this->getPhone(),
+            'fax' => $this->getFax(),
+            'mobile' => $this->getMobile(),
+            'mail' => $this->getMail(),
+            'homepage' => $this->getHomepage(),
+            'timezone' => $this->getTimezone(),
+        ];
     }
 }

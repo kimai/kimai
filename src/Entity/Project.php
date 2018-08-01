@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="projects")
  * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
  */
-class Project
+class Project implements \JsonSerializable
 {
     /**
      * @var int
@@ -265,5 +265,24 @@ class Project
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'comment' => $this->getComment(),
+            'visible' => $this->getVisible(),
+            'budget' => $this->getBudget(),
+            'orderNumber' => $this->getOrderNumber(),
+            'customer' => [
+                'id' => $this->getCustomer()->getId(),
+                'name' => $this->getCustomer()->getName(),
+            ],
+        ];
     }
 }
