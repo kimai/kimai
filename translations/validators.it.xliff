@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="en" datatype="plaintext" original="none">
+    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="it" datatype="plaintext" original="validators.en.xliff">
         <body>
             <trans-unit id="This value is not a valid role.">
                 <source>This value is not a valid role.</source>
