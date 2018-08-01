@@ -1,6 +1,6 @@
 {
-  "build/app.js": "/build/app.js?5e09a085ecc9dfc5af6b",
-  "build/app.css": "/build/app.css?921dcef8f150f460b1e6bfe0e0e17aa7",
+  "build/app.js": "/build/app.js?f2fdac174cfa5e9cc662",
+  "build/app.css": "/build/app.css?f1b75a243ef44b9caedd3cd98a5c4af7",
   "build/fonts/fa-solid-900.woff": "/build/fonts/fa-solid-900.woff?dfc040d5",
   "build/images/boxed-bg.jpg": "/build/images/boxed-bg.jpg?7799dece",
   "build/images/blue.png": "/build/images/blue.png?96f8a905",
@@ -24,5 +24,6 @@
   "build/fonts/fa-brands-400.woff2": "/build/fonts/fa-brands-400.woff2?66f625f1",
   "build/fonts/glyphicons-halflings-regular.ttf": "/build/fonts/glyphicons-halflings-regular.ttf?e18bbf61",
   "build/images/fa-brands-400.svg": "/build/images/fa-brands-400.svg?5da7e33c",
-  "build/images/default_avatar.png": "/build/images/default_avatar.png?fc197350"
+  "build/images/default_avatar.png": "/build/images/default_avatar.png?fc197350",
+  "build/images/signature.png": "/build/images/signature.png?5f58501e"
 }
