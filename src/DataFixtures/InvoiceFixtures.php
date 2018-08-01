@@ -44,7 +44,7 @@ class InvoiceFixtures extends Fixture
             ->setTitle('Your company name')
             ->setCompany($faker->company)
             ->setVat(19)
-            ->setDueDays(14)
+            ->setDueDays(30)
             ->setPaymentTerms(
                 'I would like to thank you for your confidence and will gladly be there for you in the future.' .
                 PHP_EOL .
@@ -56,6 +56,32 @@ class InvoiceFixtures extends Fixture
                 $faker->city . ', ' . $faker->stateAbbr . ' ' . $faker->postcode . PHP_EOL .
                 'Phone: ' . $faker->phoneNumber . PHP_EOL .
                 'Email: ' . $faker->safeEmail
+            )
+        ;
+
+        $template = new InvoiceTemplate();
+        $template
+            ->setName('Freelancer')
+            ->setTitle('Rechnung')
+            ->setCompany($faker->company)
+            ->setVat(19)
+            ->setDueDays(14)
+            ->setRenderer('freelancer')
+            ->setCalculator('short')
+            ->setNumberGenerator('default')
+            ->setPaymentTerms(
+                'Bitte überweisen Sie den Gesamtbetrag innerhalb von 14 Tagen nach Erhalt der Rechnung auf das unten genannte Konto. Verwenden Sie bitte als Betreff Ihrer Überweisung die Rechnungsnummer.' .
+                PHP_EOL .
+                PHP_EOL .
+                'Ich bedanke mich für das entgegengebrachte Vertrauen. Gerne bin ich auch künftig für Sie da.' .
+                PHP_EOL .
+                PHP_EOL .
+                'Mit freundlichen Grüßen,' .
+                PHP_EOL .
+                'Max Müller'
+            )
+            ->setAddress(
+                $faker->name . ' - ' . $faker->streetAddress . '-' .  $faker->postcode . ' ' . $faker->city
             )
         ;
 
