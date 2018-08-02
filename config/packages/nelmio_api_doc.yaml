@@ -1,0 +1,11 @@
+nelmio_api_doc:
+    models:
+        use_jms: false
+    areas:
+        path_patterns:
+            - ^/api(?!/doc)
+    documentation:
+        info:
+            title: Kimai 2 - API Docs
+            description: REST API description for the Kimai 2 time-tracking software
+            version: 0.1

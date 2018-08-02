@@ -23,13 +23,3 @@ fos_user_registration:
 fos_user_resetting:
     prefix: /{_locale}/resetting
     resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
-
-app.swagger_ui:
-    path: /api/doc
-    methods: GET
-    defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
-
-app.swagger:
-    path: /api/doc.json
-    methods: GET
-    defaults: { _controller: nelmio_api_doc.controller.swagger }
