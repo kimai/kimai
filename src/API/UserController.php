@@ -10,7 +10,9 @@ declare(strict_types=1);
 
 namespace App\API;
 
+use App\Entity\User;
 use FOS\RestBundle\View\View;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Repository\UserRepository;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
@@ -18,6 +20,7 @@ use FOS\RestBundle\View\ViewHandler;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use \Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Swagger\Annotations as SWG;
 
 /**
  * @RouteResource("User")
@@ -46,6 +49,11 @@ class UserController extends Controller
     }
 
     /**
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns the collection of all registered users",
+     * )
+     *
      * @return Response
      */
     public function cgetAction()
@@ -56,6 +64,11 @@ class UserController extends Controller
     }
 
     /**
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return one user entity",
+     * )
+     *
      * @param int $id
      * @return Response
      */

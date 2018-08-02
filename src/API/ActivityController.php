@@ -10,13 +10,16 @@ declare(strict_types=1);
 
 namespace App\API;
 
+use App\Entity\Activity;
 use App\Repository\ActivityRepository;
 use FOS\RestBundle\View\View;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\View\ViewHandler;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use \Symfony\Component\HttpFoundation\Response;
+use Swagger\Annotations as SWG;
 
 /**
  * @RouteResource("Activity")
@@ -45,6 +48,11 @@ class ActivityController extends Controller
     }
 
     /**
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns the collection of all existing activities",
+     * )
+     *
      * @return Response
      */
     public function cgetAction()
@@ -55,6 +63,11 @@ class ActivityController extends Controller
     }
 
     /**
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns one activity entity",
+     * )
+     *
      * @param int $id
      * @return Response
      */
