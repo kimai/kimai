@@ -60,4 +60,4 @@ security:
         - { path: '^/(%app_locales%)/register', role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/(%app_locales%)/resetting', role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/(%app_locales%)/admin', roles: ROLE_ADMIN }
-
+        - { path: '^/api/doc', roles: IS_AUTHENTICATED_REMEMBERED }
