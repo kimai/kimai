@@ -15,14 +15,16 @@ use App\Repository\ActivityRepository;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\View\ViewHandler;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use \Symfony\Component\HttpFoundation\Response;
 use Swagger\Annotations as SWG;
 
 /**
  * @RouteResource("Activity")
+ *
+ * TODO Security("is_granted('ROLE_USER')")
  */
 class ActivityController extends Controller
 {
@@ -51,6 +53,7 @@ class ActivityController extends Controller
      * @SWG\Response(
      *     response=200,
      *     description="Returns the collection of all existing activities",
+     *     @SWG\Schema(ref=@Model(type=Activity::class)),
      * )
      *
      * @return Response
@@ -66,6 +69,7 @@ class ActivityController extends Controller
      * @SWG\Response(
      *     response=200,
      *     description="Returns one activity entity",
+     *     @SWG\Schema(ref=@Model(type=Activity::class)),
      * )
      *
      * @param int $id

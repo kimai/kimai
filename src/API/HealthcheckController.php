@@ -14,6 +14,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Swagger\Annotations as SWG;
 
 class HealthcheckController extends Controller
 {
@@ -32,6 +33,11 @@ class HealthcheckController extends Controller
     }
 
     /**
+     * @SWG\Response(
+     *     response=200,
+     *     description="A simple route that returns a 'pong', which you can use for testing the API",
+     * )
+     *
      * @Rest\Get(path="/ping")
      */
     public function pingAction()

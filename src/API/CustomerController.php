@@ -10,16 +10,21 @@ declare(strict_types=1);
 
 namespace App\API;
 
+use App\Entity\Customer;
 use App\Repository\CustomerRepository;
 use FOS\RestBundle\View\View;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\View\ViewHandler;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use \Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Response;
+use Swagger\Annotations as SWG;
 
 /**
  * @RouteResource("Customer")
+ *
+ * TODO Security("is_granted('ROLE_USER')")
  */
 class CustomerController extends Controller
 {
@@ -45,6 +50,12 @@ class CustomerController extends Controller
     }
 
     /**
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns the collection of all existing customer",
+     *     @SWG\Schema(ref=@Model(type=Customer::class)),
+     * )
+     *
      * @return Response
      */
     public function cgetAction()
@@ -55,6 +66,12 @@ class CustomerController extends Controller
     }
 
     /**
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns one customer entity",
+     *     @SWG\Schema(ref=@Model(type=Customer::class)),
+     * )
+     *
      * @param int $id
      * @return Response
      */

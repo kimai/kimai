@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -31,7 +32,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity("username")
  * @UniqueEntity("email")
  */
-class User extends BaseUser implements UserInterface, \JsonSerializable
+class User extends BaseUser implements UserInterface
 {
     public const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
     public const ROLE_USER = 'ROLE_USER';
@@ -61,6 +62,8 @@ class User extends BaseUser implements UserInterface, \JsonSerializable
      * @var \DateTime
      *
      * @ORM\Column(name="registration_date", type="datetime", nullable=true)
+     *
+     * @Serializer\Exclude()
      */
     private $registeredAt;
 
@@ -82,6 +85,8 @@ class User extends BaseUser implements UserInterface, \JsonSerializable
      * @var UserPreference[]|Collection
      *
      * @ORM\OneToMany(targetEntity="App\Entity\UserPreference", mappedBy="user", cascade={"persist"})
+     *
+     * @Serializer\Exclude()
      */
     private $preferences;
 
@@ -250,20 +255,5 @@ class User extends BaseUser implements UserInterface, \JsonSerializable
     public function __toString()
     {
         return $this->getAlias() ?: $this->getUsername();
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return [
-            'id' => $this->getId(),
-            'username' => $this->getUsername(),
-            'alias' => $this->getAlias(),
-            'title' => $this->getTitle(),
-            'active' => $this->isEnabled(),
-            'avatar' => $this->getAvatar(),
-        ];
     }
 }

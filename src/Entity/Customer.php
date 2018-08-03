@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -18,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="customers")
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
  */
-class Customer implements \JsonSerializable
+class Customer
 {
     public const DEFAULT_CURRENCY = 'EUR';
 
@@ -58,6 +59,8 @@ class Customer implements \JsonSerializable
      * @var Project[]
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="customer")
+     *
+     * @Serializer\Exclude()
      */
     private $projects;
 
@@ -515,30 +518,5 @@ class Customer implements \JsonSerializable
     public function __toString()
     {
         return $this->getName();
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return [
-            'id' => $this->getId(),
-            'name' => $this->getName(),
-            'number' => $this->getNumber(),
-            'comment' => $this->getComment(),
-            'visible' => $this->getVisible(),
-            'company' => $this->getCompany(),
-            'contact' => $this->getContact(),
-            'address' => $this->getAddress(),
-            'country' => $this->getCountry(),
-            'currency' => $this->getCurrency(),
-            'phone' => $this->getPhone(),
-            'fax' => $this->getFax(),
-            'mobile' => $this->getMobile(),
-            'mail' => $this->getMail(),
-            'homepage' => $this->getHomepage(),
-            'timezone' => $this->getTimezone(),
-        ];
     }
 }

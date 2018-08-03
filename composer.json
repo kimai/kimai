@@ -12,6 +12,7 @@
         "erusev/parsedown": "^1.6",
         "friendsofsymfony/rest-bundle": "^2.3",
         "friendsofsymfony/user-bundle": "~2.0",
+        "jms/serializer-bundle": "^2.4",
         "kevinpapst/adminlte-bundle": "^1.2",
         "nelmio/api-doc-bundle": "^3.2",
         "ocramius/proxy-manager": "2.1.1",

@@ -10,16 +10,21 @@ declare(strict_types=1);
 
 namespace App\API;
 
+use App\Entity\Project;
 use App\Repository\ProjectRepository;
 use FOS\RestBundle\View\View;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\View\ViewHandler;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use \Symfony\Component\HttpFoundation\Response;
+use Swagger\Annotations as SWG;
 
 /**
  * @RouteResource("Project")
+ *
+ * TODO Security("is_granted('ROLE_USER')")
  */
 class ProjectController extends Controller
 {
@@ -45,6 +50,12 @@ class ProjectController extends Controller
     }
 
     /**
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns the collection of all existing projects",
+     *     @SWG\Schema(ref=@Model(type=Project::class)),
+     * )
+     *
      * @return Response
      */
     public function cgetAction()
@@ -55,6 +66,12 @@ class ProjectController extends Controller
     }
 
     /**
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns one project entity",
+     *     @SWG\Schema(ref=@Model(type=Project::class)),
+     * )
+     *
      * @param int $id
      * @return Response
      */

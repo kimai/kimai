@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -17,8 +18,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="projects")
  * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
+ *
+ * @Serializer\AccessorOrder("custom", custom = {"id", "name", "comment", "visible", "budget", "orderNumber", "customer_id"})
  */
-class Project implements \JsonSerializable
+class Project
 {
     /**
      * @var int
@@ -35,6 +38,8 @@ class Project implements \JsonSerializable
      * @ORM\ManyToOne(targetEntity="App\Entity\Customer", inversedBy="projects")
      * @ORM\JoinColumn(onDelete="CASCADE")
      * @Assert\NotNull()
+     *
+     * @Serializer\Exclude()
      */
     private $customer;
 
@@ -82,6 +87,8 @@ class Project implements \JsonSerializable
      * @var Activity[]
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Activity", mappedBy="project")
+     *
+     * @Serializer\Exclude()
      */
     private $activities;
 
@@ -89,12 +96,12 @@ class Project implements \JsonSerializable
      * @var Timesheet[]
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Timesheet", mappedBy="project")
+     *
+     * @Serializer\Exclude()
      */
     private $timesheets;
 
     /**
-     * Get projectid
-     *
      * @return int
      */
     public function getId()
@@ -105,9 +112,24 @@ class Project implements \JsonSerializable
     /**
      * @return Timesheet[]
      */
-    public function getTimesheets(): array
+    public function getTimesheets()
     {
         return $this->timesheets;
+    }
+
+    /**
+     * @Serializer\VirtualProperty(name="customer_id")
+     * @Serializer\Type("int")
+     *
+     * @return int
+     */
+    public function getCustomerId()
+    {
+        if (null !== $this->getCustomer()) {
+            return $this->getCustomer()->getId();
+        }
+
+        return null;
     }
 
     /**
@@ -119,8 +141,8 @@ class Project implements \JsonSerializable
     }
 
     /**
-     * @param $customer
-     * @return $this
+     * @param Customer $customer
+     * @return Project
      */
     public function setCustomer($customer)
     {
@@ -143,8 +165,6 @@ class Project implements \JsonSerializable
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
     public function getName()
@@ -153,8 +173,6 @@ class Project implements \JsonSerializable
     }
 
     /**
-     * Set comment
-     *
      * @param string $comment
      * @return Project
      */
@@ -166,8 +184,6 @@ class Project implements \JsonSerializable
     }
 
     /**
-     * Get comment
-     *
      * @return string
      */
     public function getComment()
@@ -176,8 +192,6 @@ class Project implements \JsonSerializable
     }
 
     /**
-     * Set visible
-     *
      * @param bool $visible
      * @return Project
      */
@@ -189,8 +203,6 @@ class Project implements \JsonSerializable
     }
 
     /**
-     * Get visible
-     *
      * @return bool
      */
     public function getVisible()
@@ -199,8 +211,6 @@ class Project implements \JsonSerializable
     }
 
     /**
-     * Set budget
-     *
      * @param float $budget
      * @return Project
      */
@@ -212,8 +222,6 @@ class Project implements \JsonSerializable
     }
 
     /**
-     * Get budget
-     *
      * @return float
      */
     public function getBudget()
@@ -241,9 +249,9 @@ class Project implements \JsonSerializable
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getOrderNumber(): ?string
+    public function getOrderNumber()
     {
         return $this->orderNumber;
     }
@@ -265,21 +273,5 @@ class Project implements \JsonSerializable
     public function __toString()
     {
         return $this->getName();
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return [
-            'id' => $this->getId(),
-            'name' => $this->getName(),
-            'comment' => $this->getComment(),
-            'visible' => $this->getVisible(),
-            'budget' => $this->getBudget(),
-            'orderNumber' => $this->getOrderNumber(),
-            'customerId' => $this->getCustomer()->getId(),
-        ];
     }
 }
