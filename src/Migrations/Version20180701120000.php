@@ -16,7 +16,7 @@ use Doctrine\DBAL\Schema\Schema;
 
 /**
  * Initial database structure of Kimai 2.
- * This file is only required for testing the migrations!
+ * This file is mainly required for testing the migrations.
  */
 final class Version20180701120000 extends AbstractMigration
 {
