@@ -1,0 +1,157 @@
+<?php
+
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace App\Security;
+
+use App\Entity\User;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
+
+class TokenAuthenticator extends AbstractGuardAuthenticator
+{
+    /**
+     * @var EncoderFactoryInterface
+     */
+    protected $encoderFactory;
+
+    /**
+     * @param EncoderFactoryInterface $encoderFactory
+     */
+    public function __construct(EncoderFactoryInterface $encoderFactory)
+    {
+        $this->encoderFactory = $encoderFactory;
+    }
+
+    /**
+     * @param Request $request
+     * @return bool
+     */
+    public function supports(Request $request)
+    {
+        if (strpos($request->getRequestUri(), '/api/doc') === 0) {
+            return false;
+        }
+
+        if (strpos($request->getRequestUri(), '/api/') === 0) {
+            // this allows us to fall back to the users session if no token was given
+            return $request->headers->has('X-AUTH-TOKEN') && $request->headers->has('X-AUTH-USER');
+        }
+
+        return false;
+    }
+
+    /**
+     * @param Request $request
+     * @return array|bool
+     */
+    public function getCredentials(Request $request)
+    {
+        if (!$request->headers->has('X-AUTH-USER') || !$request->headers->has('X-AUTH-TOKEN')) {
+            return false;
+        }
+
+        return [
+            'user' => $request->headers->get('X-AUTH-USER'),
+            'token' => $request->headers->get('X-AUTH-TOKEN'),
+        ];
+    }
+
+    /**
+     * @param array $credentials
+     * @param UserProviderInterface $userProvider
+     * @return null|UserInterface
+     */
+    public function getUser($credentials, UserProviderInterface $userProvider)
+    {
+        $token = $credentials['token'] ?? null;
+        $user = $credentials['user'] ?? null;
+
+        if (empty($token) || empty($user)) {
+            return null;
+        }
+
+        return $userProvider->loadUserByUsername($user);
+    }
+
+    /**
+     * @param array $credentials
+     * @param UserInterface $user
+     * @return bool
+     */
+    public function checkCredentials($credentials, UserInterface $user)
+    {
+        $token = $credentials['token'];
+
+        if (!empty($token) && $user instanceof User && !empty($user->getApiToken())) {
+            $encoder = $this->encoderFactory->getEncoder($user);
+
+            return $encoder->isPasswordValid($user->getApiToken(), $token, $user->getSalt());
+        }
+
+        return false;
+    }
+
+    /**
+     * @param Request $request
+     * @param TokenInterface $token
+     * @param string $providerKey
+     * @return null|Response
+     */
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    {
+        return null;
+    }
+
+    /**
+     * @param Request $request
+     * @param AuthenticationException $exception
+     * @return null|JsonResponse|Response
+     */
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    {
+        $data = [
+            'message' => 'Invalid credentials'
+
+            // security measure: do not leak real reason (unknown user, invalid credentials ...)
+            // you can uncomment this for debugging
+            // 'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
+        ];
+
+        return new JsonResponse($data, Response::HTTP_FORBIDDEN);
+    }
+
+    /**
+     * @param Request $request
+     * @param AuthenticationException|null $authException
+     * @return JsonResponse|Response
+     */
+    public function start(Request $request, AuthenticationException $authException = null)
+    {
+        $data = [
+            'message' => 'Authentication required, missing headers: X-AUTH-USER, X-AUTH-TOKEN'
+        ];
+
+        return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
+    }
+
+    /**
+     * @return bool
+     */
+    public function supportsRememberMe()
+    {
+        return false;
+    }
+}

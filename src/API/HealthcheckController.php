@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -13,12 +14,11 @@ namespace App\API;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Swagger\Annotations as SWG;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class HealthcheckController extends Controller
 {
-
     /**
      * @var ViewHandlerInterface
      */
@@ -42,7 +42,8 @@ class HealthcheckController extends Controller
      */
     public function pingAction()
     {
-        $view = new View('pong', 200);
+        $view = new View(['message' => 'pong'], 200);
+
         return $this->viewHandler->handle($view);
     }
 }

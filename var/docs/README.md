@@ -22,3 +22,4 @@ For the most part Kimai usage should be self-explanatory, so we will only cover 
 - [Installation](installation.md) - instructions about several installation methods
 - [Importing data](migration_v1.md) - how to import your timesheets from Kimai v1
 - [Emails](emails.md) - transport configuration and handling of emails 
+- [REST API](emails.md) - transport configuration and handling of emails 

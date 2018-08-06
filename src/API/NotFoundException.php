@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -10,18 +11,11 @@ declare(strict_types=1);
 
 namespace App\API;
 
-use FOS\RestBundle\View\View;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use App\Repository\UserRepository;
-use FOS\RestBundle\Controller\Annotations\RouteResource;
-use FOS\RestBundle\View\ViewHandler;
-use FOS\RestBundle\View\ViewHandlerInterface;
-use \Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class NotFoundException extends NotFoundHttpException
 {
-    public function __construct(string $message = 'Not found', \Exception $previous = null, int $code = 0, array $headers = array())
+    public function __construct(string $message = 'Not found', \Exception $previous = null, int $code = 0, array $headers = [])
     {
         parent::__construct($message, $previous, $code, $headers);
     }

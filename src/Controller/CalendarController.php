@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Calendar\Service;
+use App\Calendar\TimesheetEntity;
 use App\Entity\Timesheet;
 use App\Repository\Query\TimesheetQuery;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
@@ -96,35 +97,9 @@ class CalendarController extends AbstractController
         $result = [];
 
         foreach ($entries as $entry) {
-            $result[] = $this->getTimesheetEntryForCalendar($entry);
+            $result[] = new TimesheetEntity($entry);
         }
 
         return $this->json($result);
-    }
-
-    /**
-     * @param Timesheet $entry
-     * @return array
-     */
-    protected function getTimesheetEntryForCalendar(Timesheet $entry)
-    {
-        $result = [
-            'id' => $entry->getId(),
-            'start' => $entry->getBegin(),
-            'title' => $entry->getActivity()->getName(),
-            'description' => $entry->getDescription(),
-            'customer' => $entry->getActivity()->getProject()->getCustomer()->getName(),
-            'project' => $entry->getActivity()->getProject()->getName(),
-            'activity' => $entry->getActivity()->getName(),
-        ];
-
-        if (null === $entry->getEnd()) {
-            $result['borderColor'] = '#f39c12';
-            $result['backgroundColor'] = '#f39c12';
-        } else {
-            $result['end'] = $entry->getEnd() ?? new \DateTime();
-        }
-
-        return $result;
     }
 }

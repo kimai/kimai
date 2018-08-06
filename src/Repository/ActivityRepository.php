@@ -148,7 +148,7 @@ class ActivityRepository extends AbstractRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('a', 'p','c')
+        $qb->select('a', 'p', 'c')
             ->from(Activity::class, 'a')
             ->leftJoin('a.project', 'p')
             ->leftJoin('p.customer', 'c')

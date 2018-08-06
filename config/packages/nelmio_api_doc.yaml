@@ -5,7 +5,23 @@ nelmio_api_doc:
         path_patterns:
             - ^/api(?!/doc)
     documentation:
+        host: '{{hostname}}'
+        schemes: [https]
         info:
             title: Kimai 2 - API Docs
             description: REST API description for the Kimai 2 time-tracking software
             version: 0.1
+        securityDefinitions:
+            X-AUTH-USER:
+                type: apiKey
+                description: 'Value: {Username}'
+                name: X-AUTH-USER
+                in: header
+            X-AUTH-TOKEN:
+                type: apiKey
+                description: 'Value: {API Token}'
+                name: X-AUTH-TOKEN
+                in: header
+        security:
+            - X-AUTH-USER: []
+            - X-AUTH-TOKEN: []

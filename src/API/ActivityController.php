@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -12,23 +13,23 @@ namespace App\API;
 
 use App\Entity\Activity;
 use App\Repository\ActivityRepository;
-use FOS\RestBundle\View\View;
-use Nelmio\ApiDocBundle\Annotation\Model;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
+use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandler;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use Nelmio\ApiDocBundle\Annotation as API;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @RouteResource("Activity")
  *
- * TODO Security("is_granted('ROLE_USER')")
+ * @Security("is_granted('ROLE_USER')")
  */
 class ActivityController extends Controller
 {
-
     /**
      * @var ActivityRepository
      */
@@ -53,7 +54,7 @@ class ActivityController extends Controller
      * @SWG\Response(
      *     response=200,
      *     description="Returns the collection of all existing activities",
-     *     @SWG\Schema(ref=@Model(type=Activity::class)),
+     *     @SWG\Schema(ref=@API\Model(type=Activity::class)),
      * )
      *
      * @return Response
@@ -62,6 +63,7 @@ class ActivityController extends Controller
     {
         $data = $this->repository->findAll();
         $view = new View($data, 200);
+
         return $this->viewHandler->handle($view);
     }
 
@@ -69,19 +71,20 @@ class ActivityController extends Controller
      * @SWG\Response(
      *     response=200,
      *     description="Returns one activity entity",
-     *     @SWG\Schema(ref=@Model(type=Activity::class)),
+     *     @SWG\Schema(ref=@API\Model(type=Activity::class)),
      * )
      *
      * @param int $id
      * @return Response
      */
-    public function getAction(int $id)
+    public function getAction($id)
     {
         $data = $this->repository->find($id);
         if (null === $data) {
             throw new NotFoundException();
         }
         $view = new View($data, 200);
+
         return $this->viewHandler->handle($view);
     }
 }

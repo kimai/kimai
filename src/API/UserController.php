@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -11,27 +12,26 @@ declare(strict_types=1);
 namespace App\API;
 
 use App\Entity\User;
-use FOS\RestBundle\View\View;
-use Nelmio\ApiDocBundle\Annotation\Model;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Repository\UserRepository;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
+use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandler;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use \Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @RouteResource("User")
  *
- * TODO Security("is_granted('ROLE_SUPER_ADMIN')")
- * TODO Security("is_granted('IS_AUTHENTICATED_FULLY')")
+ * @Security("is_granted('ROLE_SUPER_ADMIN')")
+ * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
  */
 class UserController extends Controller
 {
-
     /**
      * @var UserRepository
      */
@@ -65,6 +65,7 @@ class UserController extends Controller
     {
         $data = $this->repository->findAll();
         $view = new View($data, 200);
+
         return $this->viewHandler->handle($view);
     }
 
@@ -78,13 +79,14 @@ class UserController extends Controller
      * @param int $id
      * @return Response
      */
-    public function getAction(int $id)
+    public function getAction($id)
     {
         $data = $this->repository->find($id);
         if (null === $data) {
             throw new NotFoundHttpException();
         }
         $view = new View($data, 200);
+
         return $this->viewHandler->handle($view);
     }
 }

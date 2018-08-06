@@ -17,9 +17,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Defines the form used to set the users password.
+ * Defines the form used to set the users API token.
  */
-class UserPasswordType extends AbstractType
+class UserApiTokenType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -27,10 +27,10 @@ class UserPasswordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('plainPassword', RepeatedType::class, [
+            ->add('plainApiToken', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'first_options' => ['label' => 'label.password'],
-                'second_options' => ['label' => 'label.password_repeat'],
+                'first_options' => ['label' => 'label.api_token'],
+                'second_options' => ['label' => 'label.api_token_repeat'],
             ])
         ;
     }
@@ -44,7 +44,7 @@ class UserPasswordType extends AbstractType
             'data_class' => User::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
-            'csrf_token_id' => 'edit_user_password',
+            'csrf_token_id' => 'edit_user_api_token',
         ]);
     }
 }
