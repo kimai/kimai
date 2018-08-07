@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="it" datatype="plaintext" original="sidebar.en.xliff">
+        <body>
+            <trans-unit id="home.title">
+                <source>home.title</source>
+                <target>Kimai v2 - Pre-Version</target>
+            </trans-unit>
+            <trans-unit id="home.betainfo">
+                <source>home.betainfo</source>
+                <target><![CDATA[Thank you for using the open source time-tracker <a href="%url%" target="_blank">Kimai</a>.
+
+                    This new version %version% is currently in an early stage of development and has been published in advance to collect feedback from its users and integrate their ideas into further planning.
+
+                    To help me improve <strong>Kimai</strong>, please send your message on the linked website. Whether you have questions, error messages or ideas for enhancements, your feedback is valuable!
+                ]]></target>
+            </trans-unit>
+            <trans-unit id="made.by.license">
+                <source>made.by.license</source>
+                <target>Realizzato con ♥ da persone speciali</target>
+            </trans-unit>
+            <trans-unit id="help.title">
+                <source>help.title</source>
+                <target>Manuale</target>
+            </trans-unit>
+            <trans-unit id="help.link">
+                <source>help.subtitle</source>
+                <target>Mostra documentazione</target>
+            </trans-unit>
+            <trans-unit id="preferences.title">
+                <source>preferences.title</source>
+                <target>Le tue preferenze</target>
+            </trans-unit>
+            <trans-unit id="preferences.label.language">
+                <source>preferences.label.language</source>
+                <target>Lingua</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
