@@ -94,8 +94,8 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         $data = ['message' => 'Authentication required, missing headers: X-AUTH-USER, X-AUTH-TOKEN'];
 
         $this->assertEquals(
-            json_encode($data, true),
-            $response->getContent(),
+            $data,
+            json_decode($response->getContent(), true),
             sprintf('The secure URL %s is not protected.', $url)
         );
 

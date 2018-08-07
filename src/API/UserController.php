@@ -15,7 +15,6 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\View\View;
-use FOS\RestBundle\View\ViewHandler;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -37,7 +36,7 @@ class UserController extends Controller
     protected $repository;
 
     /**
-     * @var ViewHandler
+     * @var ViewHandlerInterface
      */
     protected $viewHandler;
 

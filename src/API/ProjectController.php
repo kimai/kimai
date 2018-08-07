@@ -15,7 +15,6 @@ use App\Entity\Project;
 use App\Repository\ProjectRepository;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\View\View;
-use FOS\RestBundle\View\ViewHandler;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -36,7 +35,7 @@ class ProjectController extends Controller
     protected $repository;
 
     /**
-     * @var ViewHandler
+     * @var ViewHandlerInterface
      */
     protected $viewHandler;
 
