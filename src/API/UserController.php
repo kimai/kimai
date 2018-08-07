@@ -22,7 +22,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @RouteResource("User")
@@ -83,7 +82,7 @@ class UserController extends Controller
     {
         $data = $this->repository->find($id);
         if (null === $data) {
-            throw new NotFoundHttpException();
+            throw new NotFoundException();
         }
         $view = new View($data, 200);
 

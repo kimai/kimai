@@ -11,27 +11,15 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        api:
-            pattern: ^/api/
-            user_checker: App\Security\UserChecker
-            anonymous: false
-            form_login: false
-
-            # the API is stateless, but as we share a context with secured_area and logged-in users are able to
-            # call the API without problems, we need this setting
-            stateless: false
-            context: kimai
-
-            guard:
-                authenticators:
-                    - App\Security\TokenAuthenticator
-
         secured_area:
             pattern: ^/
             user_checker: App\Security\UserChecker
             anonymous: true
             stateless: false
-            context: kimai
+
+            guard:
+                authenticators:
+                    - App\Security\TokenAuthenticator
 
             remember_me:
                 secret:   '%kernel.secret%'
@@ -60,4 +48,4 @@ security:
         - { path: '^/(%app_locales%)/register', role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/(%app_locales%)/resetting', role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/(%app_locales%)/admin', roles: ROLE_ADMIN }
-        - { path: '^/api$', roles: IS_AUTHENTICATED_REMEMBERED }
+        - { path: '^/api', roles: IS_AUTHENTICATED_REMEMBERED }

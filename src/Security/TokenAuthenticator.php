@@ -22,6 +22,10 @@ use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 
 class TokenAuthenticator extends AbstractGuardAuthenticator
 {
+    public const HEADER_USERNAME = 'X-AUTH-USER';
+    public const HEADER_TOKEN = 'X-AUTH-TOKEN';
+    public const HEADER_JAVASCRIPT = 'X-AUTH-SESSION';
+
     /**
      * @var EncoderFactoryInterface
      */
@@ -46,8 +50,8 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
         }
 
         if (strpos($request->getRequestUri(), '/api/') === 0) {
-            // this allows us to fall back to the users session if no token was given
-            return $request->headers->has('X-AUTH-TOKEN') && $request->headers->has('X-AUTH-USER');
+            // javascript requests can set a header to disable this authenticator and use the existing session
+            return !$request->headers->has(self::HEADER_JAVASCRIPT);
         }
 
         return false;
@@ -59,13 +63,9 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function getCredentials(Request $request)
     {
-        if (!$request->headers->has('X-AUTH-USER') || !$request->headers->has('X-AUTH-TOKEN')) {
-            return false;
-        }
-
         return [
-            'user' => $request->headers->get('X-AUTH-USER'),
-            'token' => $request->headers->get('X-AUTH-TOKEN'),
+            'user' => $request->headers->get(self::HEADER_USERNAME),
+            'token' => $request->headers->get(self::HEADER_TOKEN),
         ];
     }
 
@@ -122,6 +122,13 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
+        if (!$request->headers->has(self::HEADER_USERNAME) || !$request->headers->has(self::HEADER_TOKEN)) {
+            return new JsonResponse(
+                ['message' => 'Authentication required, missing headers: ' . self::HEADER_USERNAME . ', ' . self::HEADER_TOKEN],
+                Response::HTTP_FORBIDDEN
+            );
+        }
+
         $data = [
             'message' => 'Invalid credentials'
 
@@ -141,7 +148,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
     public function start(Request $request, AuthenticationException $authException = null)
     {
         $data = [
-            'message' => 'Authentication required, missing headers: X-AUTH-USER, X-AUTH-TOKEN'
+            'message' => 'Authentication required, missing headers: ' . self::HEADER_USERNAME . ', ' . self::HEADER_TOKEN
         ];
 
         return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);

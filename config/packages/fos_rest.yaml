@@ -82,14 +82,10 @@ fos_rest:
 #        service:              null
         rules:
             - { path: ^/api, prefer_extension: true, fallback_format: json, priorities: [ json, xml ] }
-#            path:                 null     # URL path info
 #            host:                 null     # URL host name
 #            methods:              null     # Method for URL
 #            stop:                 false
-#            prefer_extension:     true
-#            fallback_format:      html
 #            attributes:           []
-#            priorities:           []
 #    versioning:
 #        enabled: false
 #        default_version: ~

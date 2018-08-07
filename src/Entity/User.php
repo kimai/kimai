@@ -85,6 +85,8 @@ class User extends BaseUser implements UserInterface
      * @var string
      *
      * @ORM\Column(name="api_token", type="string", length=255, nullable=true)
+     *
+     * @Serializer\Exclude()
      */
     protected $apiToken;
 

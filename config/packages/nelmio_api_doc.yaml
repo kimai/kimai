@@ -5,8 +5,8 @@ nelmio_api_doc:
         path_patterns:
             - ^/api(?!/doc)
     documentation:
-        host: '{{hostname}}'
-        schemes: [https]
+        #host: '{{hostname}}'
+        schemes: [http, https]
         info:
             title: Kimai 2 - API Docs
             description: REST API description for the Kimai 2 time-tracking software
