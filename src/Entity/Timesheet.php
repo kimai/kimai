@@ -79,6 +79,15 @@ class Timesheet
     private $activity;
 
     /**
+     * @var Project
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="timesheets")
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @Assert\NotNull()
+     */
+    private $project;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", length=65535, nullable=true)
@@ -211,6 +220,25 @@ class Timesheet
     public function getActivity()
     {
         return $this->activity;
+    }
+
+    /**
+     * @return Project
+     */
+    public function getProject()
+    {
+        return $this->project;
+    }
+
+    /**
+     * @param Project $project
+     * @return Timesheet
+     */
+    public function setProject(Project $project)
+    {
+        $this->project = $project;
+
+        return $this;
     }
 
     /**

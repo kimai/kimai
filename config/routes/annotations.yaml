@@ -6,3 +6,8 @@ controllers:
         _locale: '%app_locales%'
     defaults:
         _locale: '%locale%'
+
+api_users:
+    resource: '../src/API/'
+    type: rest
+    prefix: /api

@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -61,6 +62,8 @@ class User extends BaseUser implements UserInterface
      * @var \DateTime
      *
      * @ORM\Column(name="registration_date", type="datetime", nullable=true)
+     *
+     * @Serializer\Exclude()
      */
     private $registeredAt;
 
@@ -79,9 +82,27 @@ class User extends BaseUser implements UserInterface
     private $avatar;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="api_token", type="string", length=255, nullable=true)
+     *
+     * @Serializer\Exclude()
+     */
+    protected $apiToken;
+
+    /**
+     * @var string
+     *
+     * @Serializer\Exclude()
+     */
+    protected $plainApiToken;
+
+    /**
      * @var UserPreference[]|Collection
      *
      * @ORM\OneToMany(targetEntity="App\Entity\UserPreference", mappedBy="user", cascade={"persist"})
+     *
+     * @Serializer\Exclude()
      */
     private $preferences;
 
@@ -175,6 +196,44 @@ class User extends BaseUser implements UserInterface
     public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiToken()
+    {
+        return $this->apiToken;
+    }
+
+    /**
+     * @param string $apiToken
+     * @return User
+     */
+    public function setApiToken($apiToken)
+    {
+        $this->apiToken = $apiToken;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlainApiToken(): ?string
+    {
+        return $this->plainApiToken;
+    }
+
+    /**
+     * @param string $plainApiToken
+     * @return User
+     */
+    public function setPlainApiToken(string $plainApiToken)
+    {
+        $this->plainApiToken = $plainApiToken;
 
         return $this;
     }

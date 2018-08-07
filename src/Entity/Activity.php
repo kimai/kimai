@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -17,6 +18,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="activities")
  * @ORM\Entity(repositoryClass="App\Repository\ActivityRepository")
+ *
+ * @Serializer\AccessorOrder("custom", custom={"id", "name", "comment", "visible", "project_id"})
  */
 class Activity
 {
@@ -34,7 +37,8 @@ class Activity
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="activities")
      * @ORM\JoinColumn(onDelete="CASCADE")
-     * @Assert\NotNull()
+     *
+     * @Serializer\Exclude()
      */
     private $project;
 
@@ -66,8 +70,18 @@ class Activity
      * @var Timesheet[]
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Timesheet", mappedBy="activity")
+     *
+     * @Serializer\Exclude()
      */
     private $timesheets;
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * @return Timesheet[]
@@ -75,6 +89,21 @@ class Activity
     public function getTimesheets(): array
     {
         return $this->timesheets;
+    }
+
+    /**
+     * @Serializer\VirtualProperty(name="project_id")
+     * @Serializer\Type("int")
+     *
+     * @return int|null
+     */
+    public function getProjectId()
+    {
+        if (null !== $this->getProject()) {
+            return $this->getProject()->getId();
+        }
+
+        return null;
     }
 
     /**
@@ -97,8 +126,6 @@ class Activity
     }
 
     /**
-     * Set name
-     *
      * @param string $name
      * @return Activity
      */
@@ -120,8 +147,6 @@ class Activity
     }
 
     /**
-     * Set comment
-     *
      * @param string $comment
      * @return Activity
      */
@@ -133,8 +158,6 @@ class Activity
     }
 
     /**
-     * Get comment
-     *
      * @return string
      */
     public function getComment()
@@ -143,10 +166,7 @@ class Activity
     }
 
     /**
-     * Set visible
-     *
      * @param bool $visible
-     *
      * @return Activity
      */
     public function setVisible($visible)
@@ -157,23 +177,11 @@ class Activity
     }
 
     /**
-     * Get visible
-     *
      * @return bool
      */
     public function getVisible()
     {
         return $this->visible;
-    }
-
-    /**
-     * Get activity id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

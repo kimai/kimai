@@ -1,0 +1,9 @@
+jms_serializer:
+    visitors:
+        xml:
+            format_output: '%kernel.debug%'
+    metadata:
+        directories:
+            FOSUB:
+                namespace_prefix: "FOS\\UserBundle"
+                path: "%kernel.root_dir%/../config/serializer/FOS/UserBundle"

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ swagger_data.spec.info.title }}</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700">
+    <link rel="stylesheet" href="{{ asset('bundles/nelmioapidoc/swagger-ui/swagger-ui.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/nelmioapidoc/style.css') }}">
+    {# json_encode(65) is for JSON_UNESCAPED_SLASHES|JSON_HEX_TAG to avoid JS XSS #}
+    <script id="swagger-data" type="application/json">{{ swagger_data|json_encode(65)|raw }}</script>
+</head>
+<body style="margin-top:0;">
+    <div id="swagger-ui" class="api-platform"></div>
+    <script src="{{ asset('bundles/nelmioapidoc/swagger-ui/swagger-ui-bundle.js') }}"></script>
+    <script src="{{ asset('bundles/nelmioapidoc/swagger-ui/swagger-ui-standalone-preset.js') }}"></script>
+    <script src="{{ asset('bundles/nelmioapidoc/init-swagger-ui.js') }}"></script>
+</body>
+</html>

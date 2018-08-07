@@ -1,0 +1,14 @@
+# Expose security related features like login and logout
+fos_user_security:
+    prefix: /{_locale}
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+# Expose the user registration feature
+fos_user_registration:
+    prefix: /{_locale}/register
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+
+# Expose the users password-reset feature
+fos_user_resetting:
+    prefix: /{_locale}/resetting
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"

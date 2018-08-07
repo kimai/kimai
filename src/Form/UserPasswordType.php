@@ -17,7 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Defines the form used to create and manipulate Users.
+ * Defines the form used to set the users password.
  */
 class UserPasswordType extends AbstractType
 {

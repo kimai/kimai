@@ -11,6 +11,7 @@ namespace App\Controller;
 
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Form\UserApiTokenType;
 use App\Form\UserEditType;
 use App\Form\UserPasswordType;
 use App\Form\UserPreferencesForm;
@@ -105,6 +106,32 @@ class ProfileController extends AbstractController
     }
 
     /**
+     * @Route("/{username}/api-token", name="user_profile_api_token")
+     * @Method({"GET", "POST"})
+     * @Security("is_granted('api-token', profile)")
+     */
+    public function apiTokenAction(User $profile, Request $request)
+    {
+        $form = $this->createApiTokenForm($profile);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $password = $this->encoder->encodePassword($profile, $profile->getPlainApiToken());
+            $profile->setApiToken($password);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($profile);
+            $entityManager->flush();
+
+            $this->flashSuccess('action.updated_successfully');
+
+            return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
+        }
+
+        return $this->getProfileView($profile, 'api-token', null, null, null, null, $form);
+    }
+
+    /**
      * @Route("/{username}/roles", name="user_profile_roles")
      * @Method({"GET", "POST"})
      * @Security("is_granted('roles', profile)")
@@ -179,6 +206,7 @@ class ProfileController extends AbstractController
      * @param Form|null $pwdForm
      * @param Form|null $rolesForm
      * @param Form|null $prefsForm
+     * @param Form|null $apiTokenForm
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -188,7 +216,8 @@ class ProfileController extends AbstractController
         Form $editForm = null,
         Form $pwdForm = null,
         Form $rolesForm = null,
-        Form $prefsForm = null
+        Form $prefsForm = null,
+        Form $apiTokenForm = null
     ) {
         /* @var $timesheetRepo TimesheetRepository */
         $timesheetRepo = $this->getDoctrine()->getRepository(Timesheet::class);
@@ -210,6 +239,10 @@ class ProfileController extends AbstractController
         if ($this->isGranted(UserVoter::PASSWORD, $user)) {
             $pwdForm = $pwdForm ?: $this->createPasswordForm($user);
             $viewVars['forms']['password'] = $pwdForm->createView();
+        }
+        if ($this->isGranted(UserVoter::API_TOKEN, $user)) {
+            $apiTokenForm = $apiTokenForm ?: $this->createApiTokenForm($user);
+            $viewVars['forms']['api-token'] = $apiTokenForm->createView();
         }
         if ($this->isGranted(UserVoter::ROLES, $user)) {
             $rolesForm = $rolesForm ?: $this->createRolesForm($user);
@@ -283,6 +316,23 @@ class ProfileController extends AbstractController
             [
                 'validation_groups' => ['passwordUpdate'],
                 'action' => $this->generateUrl('user_profile_password', ['username' => $user->getUsername()]),
+                'method' => 'POST'
+            ]
+        );
+    }
+
+    /**
+     * @param User $user
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    private function createApiTokenForm(User $user)
+    {
+        return $this->createForm(
+            UserApiTokenType::class,
+            $user,
+            [
+                'validation_groups' => ['apiTokenUpdate'],
+                'action' => $this->generateUrl('user_profile_api_token', ['username' => $user->getUsername()]),
                 'method' => 'POST'
             ]
         );

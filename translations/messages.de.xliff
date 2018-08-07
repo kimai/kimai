@@ -63,6 +63,14 @@
                 <source>label.user_profile</source>
                 <target>Mein Profil</target>
             </trans-unit>
+            <trans-unit id="label.api_token">
+                <source>label.api_token</source>
+                <target>API Schlüssel</target>
+            </trans-unit>
+            <trans-unit id="label.api_token_repeat">
+                <source>label.api_token_repeat</source>
+                <target>API Schlüssel wiederholen</target>
+            </trans-unit>
 
             <!--
               Menu / Navbar items
@@ -342,6 +350,10 @@
             <trans-unit id="profile.password">
                 <source>profile.password</source>
                 <target>Passwort</target>
+            </trans-unit>
+            <trans-unit id="profile.api-token">
+                <source>profile.api-token</source>
+                <target>API</target>
             </trans-unit>
             <trans-unit id="profile.roles">
                 <source>profile.roles</source>

@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -58,6 +59,8 @@ class Customer
      * @var Project[]
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="customer")
+     *
+     * @Serializer\Exclude()
      */
     private $projects;
 

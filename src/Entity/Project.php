@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -17,6 +18,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="projects")
  * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
+ *
+ * @Serializer\AccessorOrder("custom", custom = {"id", "name", "comment", "visible", "budget", "orderNumber", "customer_id"})
  */
 class Project
 {
@@ -35,6 +38,8 @@ class Project
      * @ORM\ManyToOne(targetEntity="App\Entity\Customer", inversedBy="projects")
      * @ORM\JoinColumn(onDelete="CASCADE")
      * @Assert\NotNull()
+     *
+     * @Serializer\Exclude()
      */
     private $customer;
 
@@ -82,17 +87,49 @@ class Project
      * @var Activity[]
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Activity", mappedBy="project")
+     *
+     * @Serializer\Exclude()
      */
     private $activities;
 
     /**
-     * Get projectid
+     * @var Timesheet[]
      *
+     * @ORM\OneToMany(targetEntity="App\Entity\Timesheet", mappedBy="project")
+     *
+     * @Serializer\Exclude()
+     */
+    private $timesheets;
+
+    /**
      * @return int
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return Timesheet[]
+     */
+    public function getTimesheets()
+    {
+        return $this->timesheets;
+    }
+
+    /**
+     * @Serializer\VirtualProperty(name="customer_id")
+     * @Serializer\Type("int")
+     *
+     * @return int
+     */
+    public function getCustomerId()
+    {
+        if (null !== $this->getCustomer()) {
+            return $this->getCustomer()->getId();
+        }
+
+        return null;
     }
 
     /**
@@ -104,8 +141,8 @@ class Project
     }
 
     /**
-     * @param $customer
-     * @return $this
+     * @param Customer $customer
+     * @return Project
      */
     public function setCustomer($customer)
     {
@@ -128,8 +165,6 @@ class Project
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
     public function getName()
@@ -138,8 +173,6 @@ class Project
     }
 
     /**
-     * Set comment
-     *
      * @param string $comment
      * @return Project
      */
@@ -151,8 +184,6 @@ class Project
     }
 
     /**
-     * Get comment
-     *
      * @return string
      */
     public function getComment()
@@ -161,8 +192,6 @@ class Project
     }
 
     /**
-     * Set visible
-     *
      * @param bool $visible
      * @return Project
      */
@@ -174,8 +203,6 @@ class Project
     }
 
     /**
-     * Get visible
-     *
      * @return bool
      */
     public function getVisible()
@@ -184,8 +211,6 @@ class Project
     }
 
     /**
-     * Set budget
-     *
      * @param float $budget
      * @return Project
      */
@@ -197,8 +222,6 @@ class Project
     }
 
     /**
-     * Get budget
-     *
      * @return float
      */
     public function getBudget()
@@ -226,9 +249,9 @@ class Project
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getOrderNumber(): ?string
+    public function getOrderNumber()
     {
         return $this->orderNumber;
     }
