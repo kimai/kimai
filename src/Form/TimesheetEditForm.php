@@ -71,7 +71,6 @@ class TimesheetEditForm extends AbstractType
                 },
             ])
             ->add('description', TextareaType::class, [
-                'help' => 'timesheet.description.help',
                 'label' => 'label.description',
                 'required' => false,
             ])
