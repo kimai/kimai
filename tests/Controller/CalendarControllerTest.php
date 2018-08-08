@@ -87,13 +87,12 @@ class CalendarControllerTest extends ControllerBaseTest
         $this->assertArrayHasKey('customer', $result);
         $this->assertArrayHasKey('project', $result);
         $this->assertArrayHasKey('activity', $result);
+        $this->assertArrayHasKey('borderColor', $result);
+        $this->assertArrayHasKey('backgroundColor', $result);
 
         if (isset($result['end'])) {
-            $this->assertArrayNotHasKey('borderColor', $result);
-            $this->assertArrayNotHasKey('backgroundColor', $result);
-        } else {
-            $this->assertArrayHasKey('borderColor', $result);
-            $this->assertArrayHasKey('backgroundColor', $result);
+            $this->assertNull($result['borderColor']);
+            $this->assertNull($result['backgroundColor']);
         }
     }
 }
