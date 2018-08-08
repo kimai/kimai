@@ -34,7 +34,6 @@ class Activity
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="activities")
      * @ORM\JoinColumn(onDelete="CASCADE")
-     * @Assert\NotNull()
      */
     private $project;
 
@@ -70,6 +69,14 @@ class Activity
     private $timesheets;
 
     /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * @return Timesheet[]
      */
     public function getTimesheets(): array
@@ -97,8 +104,6 @@ class Activity
     }
 
     /**
-     * Set name
-     *
      * @param string $name
      * @return Activity
      */
@@ -120,8 +125,6 @@ class Activity
     }
 
     /**
-     * Set comment
-     *
      * @param string $comment
      * @return Activity
      */
@@ -133,8 +136,6 @@ class Activity
     }
 
     /**
-     * Get comment
-     *
      * @return string
      */
     public function getComment()
@@ -143,10 +144,7 @@ class Activity
     }
 
     /**
-     * Set visible
-     *
      * @param bool $visible
-     *
      * @return Activity
      */
     public function setVisible($visible)
@@ -157,23 +155,11 @@ class Activity
     }
 
     /**
-     * Get visible
-     *
      * @return bool
      */
     public function getVisible()
     {
         return $this->visible;
-    }
-
-    /**
-     * Get activity id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

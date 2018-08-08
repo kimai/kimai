@@ -51,6 +51,7 @@ class ActivityEditForm extends AbstractType
             // entity type: project
             ->add('project', ProjectType::class, [
                 'label' => 'label.project',
+                'required' => false,
                 'query_builder' => function (ProjectRepository $repo) use ($project) {
                     return $repo->builderForEntityType($project);
                 },

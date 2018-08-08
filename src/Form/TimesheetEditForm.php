@@ -12,8 +12,10 @@ namespace App\Form;
 use App\Entity\Timesheet;
 use App\Form\Type\ActivityGroupedWithCustomerNameType;
 use App\Form\Type\DurationType;
+use App\Form\Type\ProjectType;
 use App\Form\Type\UserType;
 use App\Repository\ActivityRepository;
+use App\Repository\ProjectRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -34,8 +36,14 @@ class TimesheetEditForm extends AbstractType
         $entry = $options['data'];
 
         $activity = null;
+        $project = null;
         if ($entry->getId() !== null) {
             $activity = $entry->getActivity();
+            $project = $entry->getProject();
+        }
+
+        if (null === $project && null !== $activity) {
+            $project = $activity->getProject();
         }
 
         if (null === $entry->getEnd() || !$options['duration_only']) {
@@ -64,10 +72,16 @@ class TimesheetEditForm extends AbstractType
         }
 
         $builder
+            ->add('project', ProjectType::class, [
+                'label' => 'label.project',
+                'query_builder' => function (ProjectRepository $repo) use ($project) {
+                    return $repo->builderForEntityType($project);
+                },
+            ])
             ->add('activity', ActivityGroupedWithCustomerNameType::class, [
                 'label' => 'label.activity',
-                'query_builder' => function (ActivityRepository $repo) use ($activity) {
-                    return $repo->builderForEntityType($activity);
+                'query_builder' => function (ActivityRepository $repo) use ($activity, $project) {
+                    return $repo->builderForEntityType($activity, $project);
                 },
             ])
             ->add('description', TextareaType::class, [
