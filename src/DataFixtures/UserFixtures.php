@@ -26,6 +26,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserFixtures extends Fixture
 {
     public const DEFAULT_PASSWORD = 'kitten';
+    public const DEFAULT_API_TOKEN = 'api_kitten';
     public const DEFAULT_AVATAR = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y';
 
     public const USERNAME_USER = 'john_user';
@@ -84,6 +85,7 @@ class UserFixtures extends Fixture
                 ->setAvatar($userData[5])
                 ->setEnabled($userData[6])
                 ->setPassword($passwordEncoder->encodePassword($user, self::DEFAULT_PASSWORD))
+                ->setApiToken($passwordEncoder->encodePassword($user, self::DEFAULT_API_TOKEN))
                 ->setPreferences([$this->getUserPreference($user)])
             ;
 
@@ -109,7 +111,7 @@ class UserFixtures extends Fixture
     }
 
     /**
-     * Generate randomized test users
+     * Generate randomized test users, which don't have API access.
      *
      * @param ObjectManager $manager
      */

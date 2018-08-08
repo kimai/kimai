@@ -1,0 +1,35 @@
+App\Entity\Customer:
+    exclusion_policy: All
+    properties:
+        id:
+            include: true
+        name:
+            include: true
+        number:
+            include: true
+        comment:
+            include: true
+        visible:
+            include: true
+        company:
+            include: true
+        contact:
+            include: true
+        address:
+            include: true
+        country:
+            include: true
+        currency:
+            include: true
+        phone:
+            include: true
+        fax:
+            include: true
+        mobile:
+            include: true
+        mail:
+            include: true
+        homepage:
+            include: true
+        timezone:
+            include: true

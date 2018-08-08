@@ -96,18 +96,18 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertRequestIsSecured(Client $client, string $url, $method = 'GET')
     {
-        $client->request($method, $this->createUrl($url));
+        $this->request($client, $url, $method);
 
         /* @var RedirectResponse $response */
         $response = $client->getResponse();
 
         $this->assertTrue(
             $response->isRedirect(),
-            sprintf('The secure URL %s is not protected.', $url . $response->getContent())
+            sprintf('The secure URL %s is not protected.', $url)
         );
 
-        $this->assertEquals(
-            'http://localhost' . $this->createUrl('/login'),
+        $this->assertStringEndsWith(
+            '/login',
             $response->getTargetUrl(),
             sprintf('The secure URL %s does not redirect to the login form.', $url)
         );

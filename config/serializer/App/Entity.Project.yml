@@ -1,0 +1,22 @@
+App\Entity\Project:
+    exclusion_policy: All
+    custom_accessor_order: [id, name, comment, visible, budget, orderNumber, customer_id]
+    properties:
+        id:
+            include: true
+        name:
+            include: true
+        comment:
+            include: true
+        visible:
+            include: true
+        budget:
+            include: true
+        orderNumber:
+            include: true
+    virtual_properties:
+        getCustomerId:
+            name: customer_id
+            serialized_name: customer_id
+            exp: "object.getCustomer() === null ? null : object.getCustomer().getId()"
+            type: integer

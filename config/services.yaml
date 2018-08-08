@@ -104,3 +104,27 @@ services:
 
     App\Timesheet\Calculator\RateCalculator:
         arguments: ["%kimai.timesheet.rates%"]
+
+    # ================================================================================
+    # REPOSITORIES
+    # ================================================================================
+
+    App\Repository\UserRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\User']
+
+    App\Repository\ActivityRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\Activity']
+
+    App\Repository\ProjectRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\Project']
+
+    App\Repository\CustomerRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\Customer']

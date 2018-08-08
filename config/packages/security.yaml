@@ -2,7 +2,6 @@ security:
     encoders:
         App\Entity\User: bcrypt
 
-    # https://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
         fos_userbundle:
             id: fos_user.user_provider.username_email
@@ -13,39 +12,28 @@ security:
             security: false
 
         secured_area:
-            # this firewall applies to all URLs
             pattern: ^/
-
-            # make sure only allowed users have access to their time-tracking
             user_checker: App\Security\UserChecker
+            anonymous: true
+            stateless: false
 
-            # but the firewall does not require login on every page
-            # denying access is done in access_control or in your controllers
-            anonymous: ~
+            guard:
+                authenticators:
+                    - App\Security\TokenAuthenticator
 
             remember_me:
                 secret:   '%kernel.secret%'
                 lifetime: 604800
                 path:     /
 
-            # This allows the user to login by submitting a username and password
-            # Reference: http://symfony.com/doc/current/cookbook/security/form_login_setup.html
             form_login:
-                # fos user bundle handles the form login
                 provider: fos_userbundle
-                # The route name that the login form submits to
                 check_path: fos_user_security_check
-                # The name of the route where the login form lives
-                # When the user tries to access a protected page, they are redirected here
                 login_path: fos_user_security_login
-                # Secure the login form against CSRF
-                # Reference: http://symfony.com/doc/current/cookbook/security/csrf_in_login_form.html
                 csrf_token_generator: security.csrf.token_manager
 
             logout:
-                # The route name the user can go to in order to logout
                 path: fos_user_security_logout
-                # The name of the route to redirect to after logging out
                 target: homepage
 
     role_hierarchy:
@@ -60,4 +48,4 @@ security:
         - { path: '^/(%app_locales%)/register', role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/(%app_locales%)/resetting', role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/(%app_locales%)/admin', roles: ROLE_ADMIN }
-
+        - { path: '^/api', roles: IS_AUTHENTICATED_REMEMBERED }
