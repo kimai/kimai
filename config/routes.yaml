@@ -11,15 +11,3 @@ homepage:
         _controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
         route: timesheet
         permanent: true
-
-fos_user_security:
-    prefix: /{_locale}
-    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
-
-fos_user_registration:
-    prefix: /{_locale}/register
-    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
-
-fos_user_resetting:
-    prefix: /{_locale}/resetting
-    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"

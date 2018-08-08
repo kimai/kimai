@@ -1,0 +1,11 @@
+# Expose the Kimai API documentation as HTML
+app.swagger_ui:
+    path: /api/doc
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
+
+# Expose the Kimai API documentation as swagger compliant JSON
+app.swagger:
+    path: /api/doc.json
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger }

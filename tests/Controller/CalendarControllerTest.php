@@ -72,5 +72,27 @@ class CalendarControllerTest extends ControllerBaseTest
         $this->assertInternalType('array', $json);
         $this->assertNotEmpty($json);
         $this->assertEquals(10, count($json));
+        foreach ($json as $result) {
+            $this->assertInternalType('array', $result);
+            $this->assertCalendarStructure($result);
+        }
+    }
+
+    protected function assertCalendarStructure(array $result)
+    {
+        $this->assertArrayHasKey('id', $result);
+        $this->assertArrayHasKey('start', $result);
+        $this->assertArrayHasKey('title', $result);
+        $this->assertArrayHasKey('description', $result);
+        $this->assertArrayHasKey('customer', $result);
+        $this->assertArrayHasKey('project', $result);
+        $this->assertArrayHasKey('activity', $result);
+        $this->assertArrayHasKey('borderColor', $result);
+        $this->assertArrayHasKey('backgroundColor', $result);
+
+        if (isset($result['end'])) {
+            $this->assertNull($result['borderColor']);
+            $this->assertNull($result['backgroundColor']);
+        }
     }
 }

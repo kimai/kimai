@@ -1,0 +1,11 @@
+App\Entity\User:
+    exclusion_policy: All
+    properties:
+        id:
+            include: true
+        alias:
+            include: true
+        title:
+            include: true
+        avatar:
+            include: true
