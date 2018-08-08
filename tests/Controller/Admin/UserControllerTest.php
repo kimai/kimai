@@ -52,15 +52,13 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode($username) . '/edit'));
         $client->followRedirect();
 
+        $expectedTabs = ['#charts', '#settings', '#password', '#api-token', '#roles'];
+
         $tabs = $client->getCrawler()->filter('div.nav-tabs-custom ul.nav-tabs li');
-        $this->assertEquals(4, $tabs->count());
-        $expectedTabs = ['#charts', '#settings', '#password', '#roles'];
+        $this->assertEquals(count($expectedTabs), $tabs->count());
         $foundTabs = [];
         foreach ($tabs->filter('a') as $tab) {
-            $name = $tab->getAttribute('href');
-            if (in_array($name, $expectedTabs)) {
-                $foundTabs[] = $name;
-            }
+            $foundTabs[] = $tab->getAttribute('href');
         }
         $this->assertEmpty(array_diff($expectedTabs, $foundTabs));
 
