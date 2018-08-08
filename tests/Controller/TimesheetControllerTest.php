@@ -40,6 +40,14 @@ class TimesheetControllerTest extends ControllerBaseTest
         // TODO more tests
     }
 
+    public function testCreateActionWithFromAndToValues()
+    {
+        $client = $this->getClientForAuthenticatedUser();
+        $this->request($client, '/timesheet/create?from=2018-08-02T20%3A00%3A00&to=2018-08-02T20%3A30%3A00');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        // TODO more tests
+    }
+
     public function testEditAction()
     {
         $client = $this->getClientForAuthenticatedUser();
@@ -52,7 +60,17 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->importFixture($em, $fixture);
 
         $this->request($client, '/timesheet/1/edit');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $response = $client->getResponse();
+
+        $docuUrl = $this->createUrl('/help/timesheet');
+        $this->assertTrue($response->isSuccessful());
+        $this->assertContains(
+            '<a href="'.$docuUrl.'"><i class="far fa-question-circle"></i></a>',
+            $response->getContent(),
+            'Could not find link to documentation'
+        );
+
         // TODO more tests
     }
 
