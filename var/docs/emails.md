@@ -1,9 +1,9 @@
 # Emails
 
 Kimai uses the [Swift MailerBundle](https://symfony.com/doc/current/email.html) for sending emails. 
-Please read their documentation, there are a lot of possible configuration settings that you might want to adapt to your needs.
+Please read their documentation, there are a lot of possible [configuration settings](https://symfony.com/doc/current/reference/configuration/swiftmailer.html) that you might want to adapt to your needs.
 
-If not otherwise noted, all emails will be sent instantly (unless spooling is activated in `config/packages/swiftmailer.yaml`).
+If not otherwise noted, all emails will be sent instantly (unless spooling is activated in [swiftmailer.yaml](../../config/packages/swiftmailer.yaml)).
 
 ## Activating email
 

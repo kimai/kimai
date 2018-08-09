@@ -1,17 +1,5 @@
 # Configurations
 
-Configuration of Kimai is spread in all files in the `config/`directory but mainly it these files:
-
-- `.env` - environment specific settings
-- `config/packages/kimai.yaml` - Kimai specific settings
-- `config/packages/admin_lte.yaml` - theme specific settings ([read more](https://github.com/kevinpapst/AdminLTEBundle/blob/master/Resources/docs/configurations.md))
-- `config/packages/fos_user.yaml` - user management and email settings
-- `config/packages/local.yaml` - your local configuration settings
-
-There are several other configurations that could potentially be interesting for you in [config/packages/*.yaml](../../config/packages/).
-
-If you want to adjust a setting from any of these files, use `local.yaml` (see below).
-
 ## Environment specific settings (.env)
 
 The most basic settings, which need always be adjusted are stored in the `.env` file:
@@ -22,6 +10,20 @@ The most basic settings, which need always be adjusted are stored in the `.env` 
 - `DATABASE_URL` - database connection for storing all application data
 - `DATABASE_PREFIX` - precix for any Kimai table in the configured database
 - `APP_SECRET` - secret used for hasing user password (if you cahnge this, every password is invalid afterwards) 
+
+## Config files
+
+Configuration of Kimai is spread in all files in the `config/`directory but mainly it these files:
+
+- `.env` - environment specific settings
+- `config/packages/kimai.yaml` - Kimai specific settings
+- `config/packages/admin_lte.yaml` - theme specific settings ([read more](https://github.com/kevinpapst/AdminLTEBundle/blob/master/Resources/docs/configurations.md))
+- `config/packages/fos_user.yaml` - user management and email settings
+- `config/packages/local.yaml` - your local configuration settings
+
+There are several other configurations that could potentially be interesting for you in [config/packages/*.yaml](../../config/packages/).
+
+If you want to adjust a setting from any of these files, use `local.yaml`.
 
 ## Overwriting local configs (local.yaml)
 
@@ -45,14 +47,25 @@ admin_lte:
 
 The `local.yaml` file will be imported as last configuration file, so you can overwrite any setting from the `config/packages/` directory.
 
-After changing this file you have to clear the cache with `bin/console cache:clear` or `bin/console cache:clear --env=prod`.
+Whenever the documentation asks you to edit a yaml file from the `config/packages/` directory, it means you should copy 
+this specific configuration key to your `local.yaml` in order to overwrite the default configuration.
+
+## Reload changed configurations
+
+When you change a configuration file, Kimai will not see this change immediately. 
+You can reload the configs after you are done by rebuilding the Symfony cache with:
+
+```bash
+bin/console cache:clear --env=prod
+bin/console cache:warmup --env=prod
+```
+
+Depending on your setup it might be necessary to execute these commands as webserver user, 
+please read the [UPGRADING guide](../../UPGRADING.md) for more details.
 
 ## Emails (swiftmailer.yaml)
 
-Kimai uses Swiftmailer to sent emails. You configure your SMTP connection setting in [.env](../../.env.sample). 
-
-For more configuration details read the [Swiftmailer](https://symfony.com/doc/current/reference/configuration/swiftmailer.html) documentation 
-and apply the settings in [swiftmailer.yaml](../../config/packages/swiftmailer.yaml).
+Read more about [email configuration](emails.md).
 
 ## Security
 
@@ -60,14 +73,61 @@ Kimai uses the FOSUserBundle for security related tasks like user management. It
 
 ### User management emails (fos_user.yaml)
 
-Kimai sents emails for newly registered users ([if that is configured](users.md)) and forgotten password requests. 
-You can change the contents of these emails by editing [fos_user.yaml](../../config/packages/fos_user.yaml).
-
-You can find more information in the [FOSUserBundle](https://symfony.com/doc/master/bundles/FOSUserBundle/index.html) documentation.  
+Read more about [email configuration](emails.md).
 
 ### Remember me login (security.yaml)
 
 The default period for the `Remember me` option can be changed in the config file [security.yaml](../../config/packages/security.yaml). 
+
+### User registration
+
+If you want your new users to use [email](emails.md) based activation add this to your `local.yaml`:
+
+```yaml
+fos_user:
+    registration:
+        confirmation:
+            enabled: true
+```
+
+#### Disable user registration 
+
+To remove the link from the login form add this your `local.yaml`: 
+```yaml
+admin_lte:
+    routes:
+        adminlte_registration: ~
+```
+
+The registration is now hidden, but it's active until you remove the following lines from the [fos_user.yaml](../../config/routes/fos_user.yaml) routes config:
+```yaml
+fos_user_registration:
+    prefix: /{_locale}/register
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+```
+
+### Password reset
+
+If you want to configure the behaviour (like the allowed time between multiple retries) then configure the settings:
+
+- in `config/packages/fos_user.yaml` the key below `fos_user.registration.resetting` (see [documentation](https://symfony.com/doc/current/bundles/FOSUserBundle/configuration_reference.html))
+- the values `retry_ttl` and `token_ttl` are configured in seconds (7220 = 2 hours) 
+
+#### Disable password reset 
+
+To remove the link from the login form add this your `local.yaml`: 
+```yaml
+admin_lte:
+    routes:
+        adminlte_password_reset: ~
+```
+
+The password reset is now hidden, but it's active until you remove the following lines from the [fos_user.yaml](../../config/routes/fos_user.yaml) routes config:
+```yaml
+fos_user_resetting:
+    prefix: /{_locale}/resetting
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+```
 
 ## Timesheets (kimai.yaml)
 
