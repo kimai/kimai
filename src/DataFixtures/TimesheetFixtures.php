@@ -66,10 +66,18 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
                 if ($i > self::MAX_TIMESHEETS_TOTAL) {
                     break;
                 }
+
+                $description = null;
+                if ($i % 3 == 0) {
+                    $description = $faker->text;
+                } elseif ($i % 7 == 0) {
+                    $description = '';
+                }
+
                 $entry = $this->createTimesheetEntry(
                     $user,
                     $activities[array_rand($activities)],
-                    ($i % 3 == 0 ? $faker->text : ''),
+                    $description,
                     round($i / 2),
                     true
                 );
@@ -89,7 +97,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
                 $entry = $this->createTimesheetEntry(
                     $user,
                     $activities[array_rand($activities)],
-                    $faker->text
+                    null
                 );
                 $manager->persist($entry);
             }
