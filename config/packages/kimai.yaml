@@ -68,8 +68,10 @@ kimai:
         #             id: 'de.german#holiday@group.v.calendar.google.com'
         #             color: '#ccc'
 
-twig:
-    globals:
-        kimai_context:
-            box_color: "green"      # a color for: TODO ??? find out ???
-            active_warning: 3       # display a warning color if the user has at least X active recordings
+    # theme related settings, will be available as twig settings
+    theme:
+        # display a warning color if the user has at least X active recordings
+        active_warning: 3
+        # fallback color for all widgets that don't have a dedicated color
+        # possible options: blue, black, purple, yellow, red, green
+        box_color: 'green'

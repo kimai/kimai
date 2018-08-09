@@ -36,6 +36,7 @@ class AppExtension extends Extension implements PrependExtensionInterface
 
         $container->setParameter('kimai.languages', $config['languages']);
         $container->setParameter('kimai.calendar', $config['calendar']);
+        $container->setParameter('kimai.theme', $config['theme']);
 
         $this->createUserParameter($config, $container);
         $this->createTimesheetParameter($config, $container);
@@ -98,6 +99,7 @@ class AppExtension extends Extension implements PrependExtensionInterface
      */
     public function prepend(ContainerBuilder $container)
     {
+        /*
         $configuration = new Configuration();
         $configs = $container->getExtensionConfig($this->getAlias());
         try {
@@ -115,6 +117,7 @@ class AppExtension extends Extension implements PrependExtensionInterface
                 ],
             ]
         );
+        */
     }
 
     /**
