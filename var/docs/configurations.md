@@ -92,18 +92,18 @@ fos_user:
 
 #### Disable user registration 
 
-To remove the link from the login form add this your `local.yaml`: 
+If you want to disable the user registration, add this your `local.yaml`: 
+```yaml
+kimai:
+    user:
+        registration: false
+```
+
+If you only want to hide the link from the login form but keep the functionality, add this your `local.yaml`: 
 ```yaml
 admin_lte:
     routes:
         adminlte_registration: ~
-```
-
-The registration is now hidden, but it's active until you remove the following lines from the [fos_user.yaml](../../config/routes/fos_user.yaml) routes config:
-```yaml
-fos_user_registration:
-    prefix: /{_locale}/register
-    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
 ```
 
 ### Password reset
@@ -115,18 +115,18 @@ If you want to configure the behaviour (like the allowed time between multiple r
 
 #### Disable password reset 
 
-To remove the link from the login form add this your `local.yaml`: 
+If you want to disable the password reset, add this your `local.yaml`: 
+```yaml
+kimai:
+    user:
+        password_reset: false
+```
+
+If you only want to hide the link from the login form but keep the functionality, add this your `local.yaml`: 
 ```yaml
 admin_lte:
     routes:
         adminlte_password_reset: ~
-```
-
-The password reset is now hidden, but it's active until you remove the following lines from the [fos_user.yaml](../../config/routes/fos_user.yaml) routes config:
-```yaml
-fos_user_resetting:
-    prefix: /{_locale}/resetting
-    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
 ```
 
 ## Timesheets (kimai.yaml)

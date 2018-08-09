@@ -1,5 +1,10 @@
 kimai:
 
+    # Settings for the user management and login forms
+    user:
+        registration: true
+        password_reset: true
+
     # All configs related to timesheet and record management
     timesheet:
 
