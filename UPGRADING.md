@@ -5,6 +5,32 @@ Database upgrades are currently ONLY provided for MySQL/MariaDB and SQLite.
 If you plan on using e.g. PostgreSQL, please read more about the `bin/console doctrine:migrations:diff` and 
 `bin/console doctrine:migrations:migrate` commands and contact us, so we can integrate them into the official releases.
 
+## 0.4 (not yet released)
+
+In the time between 0.3 and 0.4 there was a release of composer that introduced a BC break, 
+which leads to problems between Composer and Symfony Flex, resulting in an error like this when running it:
+
+```
+  [ErrorException]
+  Declaration of Symfony\Flex\ParallelDownloader::getRemoteContents($originUrl, $fileUrl, $context) should be compatible with Composer\Util\RemoteFilesystem::getRemoteContents($originUrl, $fileUrl, $context, ?array &$responseHeaders = NULL)
+```
+
+This can be fixed by updating composer before the Kimai update and running composer without the flex plugin:
+```
+composer self-update
+sudo -u www-data composer install --no-plugins
+```
+
+So the full update goes like that: 
+
+```bash
+git pull origin master
+sudo -u www-data composer install --no-dev --optimize-autoloader --no-plugins
+sudo -u www-data bin/console cache:clear --env=prod
+sudo -u www-data bin/console cache:warmup --env=prod
+bin/console doctrine:migrations:migrate
+```
+
 ## [0.3](https://github.com/kevinpapst/kimai2/releases/tag/0.3) (2018-07-22)
 
 **Update from 0.2:**

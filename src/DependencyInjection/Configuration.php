@@ -29,6 +29,17 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->arrayNode('theme')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->integerNode('active_warning')
+                            ->defaultValue(3)
+                        ->end()
+                        ->scalarNode('box_color')
+                            ->defaultValue('green')
+                        ->end()
+                    ->end()
+                ->end()
                 ->arrayNode('user')
                     ->addDefaultsIfNotSet()
                     ->children()

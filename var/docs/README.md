@@ -21,6 +21,7 @@ For the most part Kimai usage should be self-explanatory, so we will only cover 
 - [FAQ](faq.md) - some answers to frequently asked questions 
 - [Emails](emails.md) - transport configuration and handling of emails 
 - [API](developers_api.md) - how to use the JSON API 
+- [Translations](translations.md) - all about languages and translations
 
 ## Installation
  

@@ -11,6 +11,7 @@ namespace App;
 
 use App\DependencyInjection\AppExtension;
 use App\DependencyInjection\Compiler\DoctrineCompilerPass;
+use App\DependencyInjection\Compiler\TwigContextCompilerPass;
 use App\Timesheet\CalculatorInterface;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -66,6 +67,7 @@ class Kernel extends BaseKernel
         $loader->load($confDir . '/services_' . $this->environment . self::CONFIG_EXTS, 'glob');
 
         $container->addCompilerPass(new DoctrineCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
+        $container->addCompilerPass(new TwigContextCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
     }
 
     protected function configureRoutes(RouteCollectionBuilder $routes)
