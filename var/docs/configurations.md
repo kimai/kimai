@@ -17,13 +17,20 @@ Configuration of Kimai is spread in all files in the `config/`directory but main
 
 - `.env` - environment specific settings
 - `config/packages/kimai.yaml` - Kimai specific settings
-- `config/packages/admin_lte.yaml` - theme specific settings ([read more](https://github.com/kevinpapst/AdminLTEBundle/blob/master/Resources/docs/configurations.md))
+- `config/packages/admin_lte.yaml` - Kimai base theme
 - `config/packages/fos_user.yaml` - user management and email settings
 - `config/packages/local.yaml` - your local configuration settings
 
 There are several other configurations that could potentially be interesting for you in [config/packages/*.yaml](../../config/packages/).
 
-If you want to adjust a setting from any of these files, use `local.yaml`.
+If you want to adjust a setting from any of these files, use `local.yaml` (see below).
+
+#### Other topics
+
+- [Theme settings](theme.md) - in `kimai.yaml` and `admin_lte.yaml`
+- [Email configuration](emails.md) - in `swiftmailer.yaml`
+- [Dashboard widgets](dashboard.md) - in `kimai.yaml`
+- [Calendar](calendar.md) - in `kimai.yaml`
 
 ## Overwriting local configs (local.yaml)
 
@@ -62,10 +69,6 @@ bin/console cache:warmup --env=prod
 
 Depending on your setup it might be necessary to execute these commands as webserver user, 
 please read the [UPGRADING guide](../../UPGRADING.md) for more details.
-
-## Emails (swiftmailer.yaml)
-
-Read more about [email configuration](emails.md).
 
 ## Security
 
@@ -176,7 +179,7 @@ kimai:
                 duration: 60
 ```
 
-A rule which is often used is to round to a mulitple of 10: 
+A rule which is often used is to round up to a mulitple of 10: 
 
 ```yaml
 kimai:
@@ -219,47 +222,3 @@ kimai:
                 days: ['saturday','sunday']
                 factor: 1.5
 ```
-
-### Timesheet - Calendar view (kimai.yaml)
-
-The calendar view look and feel can be be configured with the config keys below `kimai.calendar`:  
-
-```yaml
-kimai:
-    calendar:
-        week_numbers: true
-        day_limit: 4
-        businessHours:
-            days: [1, 2, 3, 4, 5]
-            begin: '08:00'
-            end: '20:00'
-```
-
-- `week_numbers` - whether week numbers should be displayed in the monthly view (default: true)
-- `day_limit` defined the max amount of items to be displayed for one day in the monthly view (default: 4)
-- `businessHours.days` defines your working days, which will be highlighted in the weekly and daily view. counting starts with sunday and the index 0, so 1 = monday, ..., 6 = saturday. (default: 1-5 / monday to friday) 
-- `businessHours.begin` the start time of your working day, which will be highlighted in the weekly and daily view (default: 08:00 / 8am)
-- `businessHours.end` the end time of your working day, which will be highlighted in the weekly and daily view (default: 20:00 / 8pm)
-
-#### Integrating google calender
-
-If you want to embed Google calendar events e.g. to display regional holidays or company partys you can import (multiple) Google calendars.
-
-- read how to obtain your [Google API key and find the Calender ID](https://fullcalendar.io/docs/google-calendar)
-- add the optional `kimai.calendar.google` configuration
-- you can add any number of sources under the `kimai.calendar.google.sources` node, each must have its own name (like `holidays` and `company` in this example)
-
-```yaml
-kimai:
-    calendar:
-        google:
-            api_key: 'your-restricted-google-api-key'
-            sources:
-                holidays:
-                    id: 'de.german#holiday@group.v.calendar.google.com'
-                    color: '#ccc'
-                company:
-                    id: 'de.german#holiday@group.v.calendar.google.com'
-                    color: '#cc0000'
-```
-

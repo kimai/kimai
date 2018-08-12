@@ -1,8 +1,8 @@
 # Users
 
-There are multiple pre-defined roles in Kimai, which define the ACLs. A user can only inherit one role, where the roles extend each user.
-
 ## Roles & Permissions
+
+There are multiple pre-defined roles in Kimai, which define the ACLs. A user can only inherit one role, where the roles extend each user.
 
 | Role name | extends | Gives permission for |
 |---|---|---|
@@ -14,7 +14,7 @@ There are multiple pre-defined roles in Kimai, which define the ACLs. A user can
 
 ## Login
 
-- User can login with their username or email
+- User can login with username or email
 - If you activate the `Remember me` option, you can use use the most common functions within the next days without a new login
 
 ### Remember me login

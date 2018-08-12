@@ -178,7 +178,8 @@ admin_lte:
                 icon: "fas fa-question-circle"
                 template: sidebar/home.html.twig
 ```
-You have to define the `icon` (FontAwesome 5) to be used and one of: `controller` action or twig `template`. 
+
+You have to define the `icon` ([read more](theme.md)) to be used and either `controller` action or twig `template`. 
 Both follow the default naming syntax and you can link your bundle here instead of the app controller or templates.
 You should NOT add them in `config/packages/kimai.yaml` but in your own bundle or the `local.yaml` [config](configurations.md), 
 otherwise they might get lost during an update.

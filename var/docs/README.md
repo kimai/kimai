@@ -8,18 +8,18 @@ try to add it as soon as possible.
 
 ## User manual
 
-For the most part Kimai usage should be self-explanatory, so we will only cover topics here which were 
+For the most parts Kimai usage should be self-explanatory, so we will only cover topics here which were 
 [requested](https://github.com/kevinpapst/kimai2/issues) by the community.
 
-- [Timesheets](timesheet.md) - information about timesheets  
-
-## Developer & Administrator
-
-- [Kimai configurations](configurations.md) - application configs, which can only be changed in config files 
-- [Developer docu](developers.md) - how to extend Kimai's feature set  
+- [Timesheets](timesheet.md) - information about timesheets
 - [User and Security](users.md) - docu for user and security topics, like authentication, registration and roles  
+- [Configurations](configurations.md) - intro into the global application configs
+    - [Emails](emails.md) - transport configuration and handling of emails 
+    - [Dashboard & widgets](dashboard.md) - how to configure widgets and dashboard sections
+    - [Calendar](calendar.md) - the Timesheet calendar view
+- [Developer docu](developers.md) - how to extend Kimai's feature set  
+    - [Theme settings](theme.md) - theme related settings
 - [FAQ](faq.md) - some answers to frequently asked questions 
-- [Emails](emails.md) - transport configuration and handling of emails 
 - [API](developers_api.md) - how to use the JSON API 
 - [Translations](translations.md) - all about languages and translations
 

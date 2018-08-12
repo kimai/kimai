@@ -68,7 +68,8 @@ kimai:
         #             id: 'de.german#holiday@group.v.calendar.google.com'
         #             color: '#ccc'
 
-    # theme related settings, will be available as twig settings
+    # theme related settings, will be available as twig globals at "kimai_context.*"
+    # please see documentation at var/docs/theme.md
     theme:
         # display a warning color if the user has at least X active recordings
         active_warning: 3
@@ -76,9 +77,9 @@ kimai:
         # possible options: blue, black, purple, yellow, red, green
         box_color: 'green'
 
-    # configurable dashboard widget sections
+    # Dashboard widget sections, please see documentation at var/docs/dashboard.md
     dashboard:
-        user:
+        user_duration:
             title: dashboard.you
             permission: ROLE_USER
             widgets: [userDurationToday, userDurationWeek, userDurationMonth, userDurationYear]
@@ -86,24 +87,20 @@ kimai:
             title: ~
             permission: ROLE_USER
             widgets: [userAmountToday, userAmountWeek, userAmountMonth, userAmountYear]
-        stats:
+        duration:
             title: dashboard.all
             permission: ROLE_TEAMLEAD
             widgets: [durationToday, durationWeek, durationMonth, durationYear]
-        teamlead:
+        active_users:
             title: ~
             permission: ROLE_TEAMLEAD
             widgets: [activeUsersToday, activeUsersWeek, activeUsersMonth, activeUsersYear]
-        all_rates:
+        rates:
             title: ~
             permission: ROLE_ADMIN
             widgets: [amountToday, amountWeek, amountMonth, amountYear]
 
-    # Possible values for "begin" and "end": http://php.net/manual/en/datetime.formats.relative.php (default: none)
-    # Possible values for "color": blue, black, purple, yellow, red, green (default: green)
-    # Possible values for "query": duration, rate, active, users
-    # Possible values for "icon": https://fontawesome.com/icons (default: none)
-    # Possible values for "user": true, false (default: false)
+    # All available widgets, please see documentation at var/docs/dashboard.md
     widgets:
         userDurationToday: { title: stats.durationToday, query: duration, user: true, begin: '00:00:00', end: '23:59:59', icon: duration, color: green }
         userDurationWeek: { title: stats.durationWeek, query: duration, user: true, begin: 'monday this week 00:00:00', end: 'sunday this week 23:59:59', icon: duration, color: blue }
