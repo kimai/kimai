@@ -37,6 +37,8 @@ class AppExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('kimai.languages', $config['languages']);
         $container->setParameter('kimai.calendar', $config['calendar']);
         $container->setParameter('kimai.theme', $config['theme']);
+        $container->setParameter('kimai.dashboard', $config['dashboard']);
+        $container->setParameter('kimai.widgets', $config['widgets']);
 
         $this->createUserParameter($config, $container);
         $this->createTimesheetParameter($config, $container);

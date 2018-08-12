@@ -9,49 +9,35 @@
 
 namespace App\Model;
 
-class WidgetRow
+class DashboardSection
 {
     /**
-     * @var string
-     */
-    protected $id;
-    /**
-     * @var string
+     * @var null|string
      */
     protected $title;
     /**
-     * @var string[]
+     * @var Widget[]
      */
     protected $widgets = [];
 
     /**
-     * @param string $id
-     * @param string $title
+     * @param null|string $title
      */
-    public function __construct(string $id, string $title = '')
+    public function __construct(?string $title)
     {
-        $this->id = $id;
         $this->title = $title;
     }
 
     /**
      * @return string
      */
-    public function getId(): string
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
     /**
-     * @return string[]
+     * @return Widget[]
      */
     public function getWidgets(): array
     {
@@ -59,12 +45,12 @@ class WidgetRow
     }
 
     /**
-     * @param string $templateString
-     * @return $this
+     * @param Widget $widget
+     * @return DashboardSection
      */
-    public function add(string $templateString)
+    public function addWidget(Widget $widget)
     {
-        $this->widgets[] = $templateString;
+        $this->widgets[] = $widget;
 
         return $this;
     }

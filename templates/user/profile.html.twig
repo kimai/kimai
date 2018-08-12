@@ -140,12 +140,12 @@
             <ul class="list-group list-group-unbordered">
 
                 <li class="list-group-item">
-                    <b>{{ 'stats.durationThisMonth'|trans }}</b> <a class="pull-right">{{ stats.durationThisMonth|duration }}</a>
+                    <b>{{ 'stats.durationMonth'|trans }}</b> <a class="pull-right">{{ stats.durationThisMonth|duration }}</a>
                 </li>
 
                 {% if is_granted('ROLE_ADMIN') %}
                 <li class="list-group-item">
-                    <b>{{ 'stats.amountThisMonth'|trans }}</b> <a class="pull-right">{{ stats.amountThisMonth|money }}</a>
+                    <b>{{ 'stats.amountMonth'|trans }}</b> <a class="pull-right">{{ stats.amountThisMonth|money }}</a>
                 </li>
                 {% endif %}
 
@@ -220,13 +220,13 @@
                 <div class="col-sm-3 border-right">
                     <div class="description-block">
                         <h5 class="description-header">{{ stats.durationThisMonth|duration }}</h5>
-                        <span class="description-text">{{ 'stats.durationThisMonth'|trans }}</span>
+                        <span class="description-text">{{ 'stats.durationMonth'|trans }}</span>
                     </div>
                 </div>
                 <div class="col-sm-3 border-right">
                     <div class="description-block">
                         <h5 class="description-header">{{ stats.amountThisMonth|money }}</h5>
-                        <span class="description-text">{{ 'stats.amountThisMonth'|trans }}</span>
+                        <span class="description-text">{{ 'stats.amountMonth'|trans }}</span>
                     </div>
                 </div>
             </div>
