@@ -1,10 +1,10 @@
 # Dashboard
 
-Read the [configuration chpater](configurations.md) before you start changing your configs. 
+Read the [configuration chapter](configurations.md) before you start changing your configs. 
 
 ## Widgets
 
-Widgets are defined in the configuration node `kimai.widgets` and you find the pre-defined ones in [kimai.yamll](../../config/packages/kimai.yaml).
+Widgets are defined in the configuration node `kimai.widgets` and you find the pre-defined ones in [kimai.yaml](../../config/packages/kimai.yaml).
 
 Here is an example of one widget definition:
 
@@ -23,7 +23,7 @@ Widgets are currently only used in the Dashboard, but maybe used in other templa
 - `user` - whether the query is executed for the current user or for all users. possible values are `true` and `false` (default: `false` - all data is used to calculate the result)
 - `begin` - setting the start date for the query, formatted with the [PHP DateTime syntax](http://php.net/manual/en/datetime.formats.relative.php) (default: `null` - a query matching any start date)
 - `end` - setting the end date for the query, formatted with the [PHP DateTime syntax](http://php.net/manual/en/datetime.formats.relative.php) (default: `null` - a query matching any end date)
-- `color` - a color name, see all possible names in [theme setting](theme.md) (default: ``)
+- `color` - a color name, see all possible names in [theme settings](theme.md) (default: ``)
 - `icon` - an icon alias from [theme settings](theme.md) or any other icon from [Font Awesome 5](https://fontawesome.com/icons) (default: `null` - no icon)
 
 
@@ -44,7 +44,7 @@ kimai:
 
 - `permission` - the name of a role who is allowed to see the widgets, see [users](users.md)
 - `title` - the title of a section, if omitted no title will be shown (default: `null`) 
-- `widgets` - an array of widget names, see above
+- `widgets` - an array of widget names (see above for an example)
 
 ### Default sections
 
@@ -76,7 +76,9 @@ It's also possible to change the title or the list of widgets for every section 
 ```yaml
 kimai:
     dashboard:
-        user_duration: { title: 'something fancy here', widgets: [userDurationWeek, userDurationMonth, userDurationYear] }
+        user_duration:
+            title: 'some fancy widgets'
+            widgets: [userDurationWeek, userDurationMonth, userDurationYear]
 ```
 
 If you want to reorder the sections, you have to overwrite all existing sections (like above) and append new ones. 
