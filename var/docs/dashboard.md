@@ -26,7 +26,6 @@ Widgets are currently only used in the Dashboard, but maybe used in other templa
 - `color` - a color name, see all possible names in [theme settings](theme.md) (default: ``)
 - `icon` - an icon alias from [theme settings](theme.md) or any other icon from [Font Awesome 5](https://fontawesome.com/icons) (default: `null` - no icon)
 
-
 ## Dashboard sections
 
 Within the dashboard all widgets are placed in sections (rows) like this:
@@ -36,6 +35,7 @@ kimai:
     dashboard:
         user_duration:
             title: dashboard.you
+            order: 10
             permission: ROLE_USER
             widgets: [userDurationToday, userDurationWeek, userDurationMonth, userDurationYear, userDurationTotal]
 ``` 
@@ -45,16 +45,18 @@ kimai:
 - `permission` - the name of a role who is allowed to see the widgets, see [users](users.md)
 - `title` - the title of a section, if omitted no title will be shown (default: `null`) 
 - `widgets` - an array of widget names (see above for an example)
+- `order` - allows to define the order of the section
 
 ### Default sections
 
 The dashboard has the following default sections:
 
-- `user_duration`
-- `user_rates`
-- `duration`
-- `active_users`
-- `rates`
+- `user_duration` - order 10
+- `user_rates` - order 20
+- `duration` - order 30
+- `active_users` - order 40
+- `rates` - order 50
+- `admin` - order 100 (this section is programmatically added)  
 
 ### Overwriting sections
 
@@ -81,4 +83,17 @@ kimai:
             widgets: [userDurationWeek, userDurationMonth, userDurationYear]
 ```
 
-If you want to reorder the sections, you have to overwrite all existing sections (like above) and append new ones. 
+### Reorder sections
+
+If you want to reorder the sections, you can overwrite as many sections as you want and simply change their `order` key. 
+Lower numbers will be rendered before higher numbers. 
+
+```yaml
+kimai:
+    dashboard:
+        user_duration: { order: 30 }
+        user_rates: { order: 90 }
+        duration: { order: 40 }
+        active_users: { order: 20 }
+        rates: { order: 50 }
+```

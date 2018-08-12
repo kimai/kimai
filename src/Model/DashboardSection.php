@@ -19,6 +19,10 @@ class DashboardSection
      * @var Widget[]
      */
     protected $widgets = [];
+    /**
+     * @var int
+     */
+    protected $order = 0;
 
     /**
      * @param null|string $title
@@ -26,6 +30,25 @@ class DashboardSection
     public function __construct(?string $title)
     {
         $this->title = $title;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrder(): int
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param int $order
+     * @return DashboardSection
+     */
+    public function setOrder(int $order)
+    {
+        $this->order = $order;
+
+        return $this;
     }
 
     /**

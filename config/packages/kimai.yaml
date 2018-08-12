@@ -81,22 +81,27 @@ kimai:
     dashboard:
         user_duration:
             title: dashboard.you
+            order: 10
             permission: ROLE_USER
             widgets: [userDurationToday, userDurationWeek, userDurationMonth, userDurationYear]
         user_rates:
             title: ~
+            order: 20
             permission: ROLE_USER
             widgets: [userAmountToday, userAmountWeek, userAmountMonth, userAmountYear]
         duration:
             title: dashboard.all
+            order: 30
             permission: ROLE_TEAMLEAD
             widgets: [durationToday, durationWeek, durationMonth, durationYear]
         active_users:
             title: ~
+            order: 40
             permission: ROLE_TEAMLEAD
             widgets: [activeUsersToday, activeUsersWeek, activeUsersMonth, activeUsersYear]
         rates:
             title: ~
+            order: 50
             permission: ROLE_ADMIN
             widgets: [amountToday, amountWeek, amountMonth, amountYear]
 

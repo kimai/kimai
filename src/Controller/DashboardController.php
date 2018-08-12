@@ -69,6 +69,7 @@ class DashboardController extends Controller
             }
 
             $row = new DashboardSection($widgetRow['title'] ?? null);
+            $row->setOrder($widgetRow['order']);
 
             foreach ($widgetRow['widgets'] as $widgetName) {
                 if (!$this->repository->has($widgetName)) {
@@ -86,8 +87,21 @@ class DashboardController extends Controller
             $event
         );
 
+        $sections = $event->getSections();
+
+        uasort(
+            $sections,
+            function (DashboardSection $a, DashboardSection $b) {
+                if ($a->getOrder() == $b->getOrder()) {
+                    return 0;
+                }
+
+                return ($a->getOrder() < $b->getOrder()) ? -1 : 1;
+            }
+        );
+
         return $this->render('dashboard/index.html.twig', [
-            'widget_rows' => $event->getSections()
+            'widget_rows' => $sections
         ]);
     }
 }

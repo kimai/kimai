@@ -97,6 +97,7 @@ class DashboardSubscriber implements EventSubscriberInterface
     protected function addAdminWidgets(DashboardEvent $event)
     {
         $section = new DashboardSection('dashboard.admin');
+        $section->setOrder(100);
 
         $widget = new Widget('stats.userTotal', $this->user->countUser());
         $widget

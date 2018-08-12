@@ -280,6 +280,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayPrototype()
                     ->addDefaultsIfNotSet()
                     ->children()
+                        ->integerNode('order')->defaultValue(0)->end()
                         ->scalarNode('title')->end()
                         ->scalarNode('permission')->isRequired()->end()
                         ->arrayNode('widgets')
