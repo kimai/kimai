@@ -96,7 +96,7 @@ Create your first user with the following command. You will be asked to enter a 
 ```bash
 bin/console kimai:create-user username admin@example.com ROLE_SUPER_ADMIN
 ```
-_Tip: You can skip the "create user" step, if you are going to [import data from Kimai v1](migration_v1.md)._
+_Tip: You can skip the "create user" step, if you are going to [import data from Kimai v1](var/docs/migration_v1.md)._
 
 For available roles, please refer to the [user documentation](var/docs/users.md).
 
