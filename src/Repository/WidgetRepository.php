@@ -60,6 +60,7 @@ class WidgetRepository
         $begin = !empty($widget['begin']) ? new \DateTime($widget['begin']) : null;
         $end = !empty($widget['end']) ? new \DateTime($widget['end']) : null;
         $theUser = $widget['user'] ? $user : null;
+        $type = isset($widget['type']) ? $widget['type'] : Widget::TYPE_COUNTER;
 
         $data = $this->repository->getStatistic($widget['query'], $begin, $end, $theUser);
 
@@ -67,7 +68,7 @@ class WidgetRepository
         $model
             ->setColor($widget['color'])
             ->setIcon($widget['icon'])
-            ->setType($widget['type'])
+            ->setType($type)
         ;
 
         if ($widget['query'] == TimesheetRepository::STATS_QUERY_DURATION) {
