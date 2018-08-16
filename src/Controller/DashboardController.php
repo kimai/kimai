@@ -69,7 +69,10 @@ class DashboardController extends Controller
             }
 
             $row = new DashboardSection($widgetRow['title'] ?? null);
-            $row->setOrder($widgetRow['order']);
+            $row
+                ->setOrder($widgetRow['order'])
+                ->setType($widgetRow['type'])
+            ;
 
             foreach ($widgetRow['widgets'] as $widgetName) {
                 if (!$this->repository->has($widgetName)) {

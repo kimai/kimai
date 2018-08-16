@@ -21,9 +21,6 @@ use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
-/**
- * Class TimesheetRepository
- */
 class TimesheetRepository extends AbstractRepository
 {
     public const STATS_QUERY_DURATION = 'duration';
@@ -31,6 +28,7 @@ class TimesheetRepository extends AbstractRepository
     public const STATS_QUERY_USER = 'users';
     public const STATS_QUERY_AMOUNT = 'amount';
     public const STATS_QUERY_ACTIVE = 'active';
+    public const STATS_QUERY_MONTHLY = 'monthly';
 
     /**
      * @param Timesheet $entry
@@ -85,6 +83,9 @@ class TimesheetRepository extends AbstractRepository
         switch ($type) {
             case self::STATS_QUERY_ACTIVE:
                 return count($this->getActiveEntries($user));
+                break;
+            case self::STATS_QUERY_MONTHLY:
+                return $this->getMonthlyStats($user, $begin, $end);
                 break;
             case self::STATS_QUERY_DURATION:
                 $what = 'SUM(t.duration)';
@@ -190,23 +191,40 @@ class TimesheetRepository extends AbstractRepository
      * Returns an array of Year statistics.
      *
      * @param User|null $user
+     * @param DateTime|null $begin
+     * @param DateTime|null $end
      * @return Year[]
      */
-    public function getMonthlyStats(User $user = null)
+    public function getMonthlyStats(User $user = null, ?DateTime $begin = null, ?DateTime $end = null)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb->select('SUM(t.rate) as rate, SUM(t.duration) as duration, MONTH(t.begin) as month, YEAR(t.begin) as year')
             ->from(Timesheet::class, 't')
-            ->where($qb->expr()->gt('t.begin', '0'))
-            ->andWhere($qb->expr()->isNotNull('t.end'))
+            ->where($qb->expr()->gt('t.begin', ':from'))
+        ;
+
+        if (!empty($begin)) {
+            $qb->setParameter('from', $begin, Type::DATETIME);
+        } else {
+            $qb->setParameter('from', 0);
+        }
+
+        if (!empty($end)) {
+            $qb->andWhere($qb->expr()->lt('t.end', ':to'))
+                ->setParameter('to', $end, Type::DATETIME);
+        } else {
+            $qb->andWhere($qb->expr()->isNotNull('t.end'));
+        }
+
+        $qb
             ->orderBy('year', 'DESC')
             ->addOrderBy('month', 'ASC')
             ->groupBy('year')
             ->addGroupBy('month');
 
         if (null !== $user) {
-            $qb->where('t.user = :user')
+            $qb->andWhere('t.user = :user')
                 ->setParameter('user', $user);
         }
 

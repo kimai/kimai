@@ -28,67 +28,79 @@
                         {% endif %}
 
                         <script type="text/javascript">
-                                var barChartOptions = {
-                                    scaleBeginAtZero: true,
-                                    scaleShowGridLines: true,
-                                    scaleGridLineColor: "rgba(0,0,0,.05)",
-                                    scaleGridLineWidth: 1,
-                                    scaleShowHorizontalLines: true,
-                                    scaleShowVerticalLines: true,
-                                    barShowStroke: true,
-                                    barStrokeWidth: 2,
-                                    barValueSpacing: 5,
-                                    barDatasetSpacing: 1,
-                                    responsive: true,
-                                    maintainAspectRatio: true,
-                                    tooltipTemplate: "<%= value %> {{ 'label.hours'|trans }}",
-                                };
-                                var barChartLabels = [
-                                    {% for i in 1..11 %}
-                                    "{{ ('month.' ~i)|trans }}",
-                                    {% endfor %}
-                                    "{{ 'month.12'|trans }}"
-                                ];
+                            var userProfileChartOptions = {
+                                maintainAspectRatio     : true,
+                                responsive              : true,
+                                legend                  : false,
+                                barPercentage           : 0.5,
+                                categoryPercentage      : 0.9,
+                                scales: {
+                                    xAxes: [{
+                                        gridLines: {
+                                            display: false
+                                        }
+                                    }],
+                                    yAxes: [{
+                                        gridLines: {
+                                            display: true,
+                                            color: 'rgba(0,0,0,.05)',
+                                            lineWidth: 1
+                                        }
+                                    }]
+                                }
+                            };
+                            var userProfileChartLabels = [
+                                {% for i in 1..12 %}
+                                    '{{ ('month.' ~i)|trans }}'
+                                    {% if not loop.last %},{% endif %}
+                                {% endfor %}
+                            ];
                         </script>
 
                         {% for year,yearStat in years %}
                             <h2>{{ year }}</h2>
                             <div class="chart">
-                                <canvas id="barChart{{ year }}" style="height: 230px;"></canvas>
+                                <canvas id="userProfileChart{{ year }}" style="height: 200px;"></canvas>
                             </div>
                             <script type="text/javascript">
                             $(document).ready(function () {
-                                var barChartData{{ year }} = {
-                                    labels: barChartLabels,
+                                var userProfileChartData{{ year }} = {
+                                    labels: userProfileChartLabels,
                                     datasets: [
                                         {
-                                            {# label: '# hours',#}
-                                            fillColor: "#00a65a",
-                                            strokeColor: "#00a65a",
-                                            pointColor: "#00a65a",
-                                            pointStrokeColor: "#c1c7d1",
-                                            pointHighlightFill: "#fff",
-                                            pointHighlightStroke: "rgba(220,220,220,1)",
+                                            label: '{{ year }}',
+                                            backgroundColor     : '#00a65a',
+                                            borderColor         : '#00a65a',
                                             data: [
-                                                {% for i in 1..11 %}
-                                                {{ (yearStat.month(i).totalDuration / 3600)|round }},
+                                                {% for month in yearStat.months %}
+                                                    {{ (month.totalDuration / 3600)|round }}
+                                                    {% if not loop.last %},{% endif %}
                                                 {% endfor %}
-                                                {{ (yearStat.month(12).totalDuration / 3600)|round }}
                                             ]
                                         }
                                     ]
                                 };
-                                {% if tab == "charts" %}
-                                $(function () {
-                                    var barChartCanvas{{ year }} = $("#barChart{{ year }}").get(0).getContext("2d");
-                                    var barChart = new Chart(barChartCanvas{{ year }});
-                                    barChart.Bar(barChartData{{ year }}, barChartOptions);
-                                });
+
+                                var userProfileChartCanvas{{ year }} = $("#userProfileChart{{ year }}").get(0).getContext("2d");
+
+                                {% if tab == 'charts' %}
+                                var userProfileChart{{ year }} = new Chart(
+                                    userProfileChartCanvas{{ year }}, {
+                                        type: 'bar',
+                                        data: userProfileChartData{{ year }},
+                                        options: userProfileChartOptions
+                                    }
+                                );
                                 {% endif %}
-                                $('a[href="#charts"]').on('shown.bs.tab', function(e){
-                                    var barChartCanvas{{ year }} = $("#barChart{{ year }}").get(0).getContext("2d");
-                                    var barChart = new Chart(barChartCanvas{{ year }});
-                                    barChart.Bar(barChartData{{ year }}, barChartOptions);
+
+                                $('a[href="#charts"]').on('shown.bs.tab', function(event){
+                                    var userProfileChart{{ year }} = new Chart(
+                                        userProfileChartCanvas{{ year }}, {
+                                            type: 'bar',
+                                            data: userProfileChartData{{ year }},
+                                            options: userProfileChartOptions
+                                        }
+                                    );
                                 });
                             });
                             </script>

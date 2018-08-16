@@ -11,6 +11,9 @@ namespace App\Model;
 
 class DashboardSection
 {
+    const TYPE_SIMPLE = 'simple';
+    const TYPE_CHART = 'chart';
+
     /**
      * @var null|string
      */
@@ -23,6 +26,10 @@ class DashboardSection
      * @var int
      */
     protected $order = 0;
+    /**
+     * @var string
+     */
+    protected $type = self::TYPE_SIMPLE;
 
     /**
      * @param null|string $title
@@ -30,6 +37,24 @@ class DashboardSection
     public function __construct(?string $title)
     {
         $this->title = $title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     * @return DashboardSection
+     */
+    public function setType(string $type)
+    {
+        $this->type = $type;
+        return $this;
     }
 
     /**

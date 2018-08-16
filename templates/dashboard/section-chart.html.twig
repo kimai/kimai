@@ -1,0 +1,180 @@
+{% set chartWidget = section.widgets.0 %}
+{% set colors = chartWidget.color|split(';') %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+                {#
+            <div class="box-header with-border">
+                <h3 class="box-title">{{ section.title|trans }}</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-wrench"></i></button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+                #}
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        {#
+                        <p class="text-center">
+                            <strong>
+                                {% for yearName, year in chartWidget.data|sort %}
+                                    {% if loop.first or loop.last %}
+                                        {% for id, month in year.months %}
+                                            {% if loop.first %}
+                                            {{ ('month.'~loop.index)|trans }} {{ yearName }}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    {% if loop.first %} - {% endif %}
+                                {% endfor %}
+                            </strong>
+                        </p>
+                        #}
+                        <div class="chart">
+                            <canvas id="timeChart" style="height: 180px;"></canvas>
+                        </div>
+                    </div>
+                    {#
+                    <div class="col-md-4">
+                        <p class="text-center">
+                            <strong>Goal Completion</strong>
+                        </p>
+                        <div class="progress-group">
+                            <span class="progress-text">Add Products to Cart</span>
+                            <span class="progress-number"><b>160</b>/200</span>
+
+                            <div class="progress sm">
+                                <div class="progress-bar progress-bar-aqua" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-group">
+                            <span class="progress-text">Complete Purchase</span>
+                            <span class="progress-number"><b>310</b>/400</span>
+                            <div class="progress sm">
+                                <div class="progress-bar progress-bar-red" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-group">
+                            <span class="progress-text">Visit Premium Page</span>
+                            <span class="progress-number"><b>480</b>/800</span>
+                            <div class="progress sm">
+                                <div class="progress-bar progress-bar-green" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-group">
+                            <span class="progress-text">Send Inquiries</span>
+                            <span class="progress-number"><b>250</b>/500</span>
+                            <div class="progress sm">
+                                <div class="progress-bar progress-bar-yellow" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    #}
+                </div>
+            </div>
+            {% if section.widgets|length > 1 %}
+            <div class="box-footer">
+                <div class="row">
+                    {% set width = (section.widgets|length) - 1 %}
+                    {% set rawWidth = 12 / width %}
+                    {% set columnWidth = rawWidth|round(0, 'floor') %}
+                    {% for widget in section.widgets|slice(1, width) %}
+                        {% set data = widget.data %}
+                        {% if widget.dataType == constant('App\\Model\\Widget::DATA_TYPE_DURATION') %}
+                            {% set data = widget.data|duration %}
+                        {% elseif widget.dataType == constant('App\\Model\\Widget::DATA_TYPE_MONEY') %}
+                            {% set data = widget.data|money %}
+                        {% endif %}
+                        <div class="col-sm-{{ columnWidth }} col-xs-{{ columnWidth * 2 }}">
+                            <div class="description-block border-right">
+                                {#<span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 17%</span>#}
+                                {#<span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> 0%</span>#}
+                                {#<span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 20%</span>#}
+                                {#<span class="description-percentage text-red"><i class="fa fa-caret-down"></i> 18%</span>#}
+                                <h5 class="description-header">{{ data }}</h5>
+                                <span class="description-text">{{ widget.title|trans }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <script>
+            $(function () {
+                'use strict';
+                var timeChartData = {
+                    labels  : [
+                        {% for i in 1..12 %}
+                            '{{ ('month.' ~i)|trans }}'
+                            {% if not loop.last %},{% endif %}
+                        {% endfor %}
+                    ],
+                    datasets: [
+                        {% for yearName, year in chartWidget.data %}
+                        {% set yearColors = colors[loop.index-1]|split('|') %}
+                        {
+                            label               : '{{ yearName }}',
+                            backgroundColor     : '{{ yearColors.1 }}',
+                            borderColor         : '{{ yearColors.0 }}',
+                            pointRadius         : 2,
+                            borderWidth         : 1,
+                            pointHitRadius      : 10,
+                            lineTension         : 0.3,
+                            data                : [
+                                {% for month in year.months %}
+                                    {{ (month.totalDuration / 3600)|round }}
+                                    {% if not loop.last %},{% endif %}
+                                {% endfor %}
+                            ]
+                        }
+                        {% if not loop.last %},{% endif %}
+                        {% endfor %}
+                    ]
+                };
+
+                var timeChartOptions = {
+                    maintainAspectRatio     : true,
+                    responsive              : true,
+                    scales: {
+                        xAxes: [{
+                            gridLines: {
+                                display: false
+                            }
+                        }],
+                        yAxes: [{
+                            gridLines: {
+                                display: true,
+                                color: 'rgba(0,0,0,.05)',
+                                lineWidth: 1
+                            }
+                        }]
+                    }
+                };
+
+                var timeChartCanvas = $('#timeChart').get(0).getContext('2d');
+
+                var timeChart = new Chart(
+                    timeChartCanvas, {
+                        type: 'line',
+                        data: timeChartData,
+                        options: timeChartOptions
+                    }
+                );
+            });
+        </script>
+    </div>
+</div>

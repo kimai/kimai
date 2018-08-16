@@ -9,6 +9,8 @@
 
 namespace App\DependencyInjection;
 
+use App\Model\DashboardSection;
+use App\Model\Widget;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -260,8 +262,14 @@ class Configuration implements ConfigurationInterface
                     ->booleanNode('user')->defaultFalse()->end()
                     ->scalarNode('begin')->end()
                     ->scalarNode('end')->end()
-                    ->scalarNode('icon')->isRequired()->end()
+                    ->scalarNode('icon')->defaultValue('')->end()
                     ->scalarNode('color')->defaultValue('')->end()
+                    ->scalarNode('type')
+                        ->validate()
+                            ->ifNotInArray([Widget::TYPE_COUNTER, Widget::TYPE_MORE])->thenInvalid('Unknown widget type')
+                        ->end()
+                        ->defaultValue(Widget::TYPE_COUNTER)
+                    ->end()
                 ->end()
             ->end()
         ;
@@ -280,6 +288,12 @@ class Configuration implements ConfigurationInterface
                 ->arrayPrototype()
                     ->addDefaultsIfNotSet()
                     ->children()
+                        ->scalarNode('type')
+                            ->validate()
+                                ->ifNotInArray([DashboardSection::TYPE_SIMPLE, DashboardSection::TYPE_CHART])->thenInvalid('Unknown section type')
+                            ->end()
+                            ->defaultValue(DashboardSection::TYPE_SIMPLE)
+                        ->end()
                         ->integerNode('order')->defaultValue(0)->end()
                         ->scalarNode('title')->end()
                         ->scalarNode('permission')->isRequired()->end()

@@ -67,6 +67,7 @@ class WidgetRepository
         $model
             ->setColor($widget['color'])
             ->setIcon($widget['icon'])
+            ->setType($widget['type'])
         ;
 
         if ($widget['query'] == TimesheetRepository::STATS_QUERY_DURATION) {

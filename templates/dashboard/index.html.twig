@@ -9,38 +9,11 @@
 {% block main %}
 
     {% for row in widget_rows %}
-        {% if row.title %}
-            {{ widgets.page_header(row.title) }}
+        {% if row.type == constant('App\\Model\\DashboardSection::TYPE_CHART') %}
+            {% embed 'dashboard/section-chart.html.twig' with { section: row } %}{% endembed %}
+        {% else %}
+            {% embed 'dashboard/section-simple.html.twig' with { section: row } %}{% endembed %}
         {% endif %}
-
-        {% set width = row.widgets|length %}
-        {% set rawWidth = 12 / width %}
-        {% set columnWidth = rawWidth|round(0, 'floor') %}
-        <div class="row">
-            {% for widget in row.widgets %}
-                {% set columnSize = columnWidth %}
-                {% if width == 5 and (loop.first or loop.last) %}
-                    {% set columnSize = columnWidth + 1 %}
-                {% endif %}
-                <div class="col-md-{{ columnSize }} col-sm-{{ columnSize * 2 }} col-xs-{{ columnSize * 4 }}">
-
-                    {% set data = widget.data %}
-                    {% if widget.dataType == constant('App\\Model\\Widget::DATA_TYPE_DURATION') %}
-                        {% set data = widget.data|duration %}
-                    {% elseif widget.dataType == constant('App\\Model\\Widget::DATA_TYPE_MONEY') %}
-                        {% set data = widget.data|money %}
-                    {% endif %}
-
-                    {% set url = null %}
-                    {% if widget.route %}
-                        {% set url = path(widget.route, widget.routeOptions) %}
-                    {% endif %}
-
-                    {% set embedOptions = {data: data, title: widget.title, icon: widget.icon, color: widget.color, url: url} %}
-                    {% embed 'embeds/widget-'~widget.type~'.html.twig' with embedOptions %}{% endembed %}
-                </div>
-            {% endfor %}
-        </div>
     {% endfor %}
 
 {% endblock %}

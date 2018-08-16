@@ -27,12 +27,14 @@ Kimai allows you to configure colors in several places throughout the theme.
 
 Possible values are:
 
-- `green`
-- `blue`
-- `purple`
-- `yellow`
-- `red`
+- `aqua`
 - `black`
+- `blue`
+- `gray`
+- `green`
+- `purple`
+- `red`
+- `yellow`
 
 ### Fallback color
 

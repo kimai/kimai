@@ -32,6 +32,9 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
     public const MAX_TIMESHEETS_TOTAL = 5000;
     public const MIN_RUNNING_TIMESHEETS_PER_USER = 0;
     public const MAX_RUNNING_TIMESHEETS_PER_USER = 3;
+    public const TIMERANGE_DAYS = 1095; // 3 years
+    public const MIN_MINUTES_PER_ENTRY = 15;
+    public const MAX_MINUTES_PER_ENTRY = 840; // 14h
 
     public const BATCH_SIZE = 100;
 
@@ -77,9 +80,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
                 $entry = $this->createTimesheetEntry(
                     $user,
                     $activities[array_rand($activities)],
-                    $description,
-                    round($i / 2),
-                    true
+                    $description
                 );
 
                 $manager->persist($entry);
@@ -97,7 +98,8 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
                 $entry = $this->createTimesheetEntry(
                     $user,
                     $activities[array_rand($activities)],
-                    null
+                    null,
+                    false
                 );
                 $manager->persist($entry);
             }
@@ -140,32 +142,29 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
         return $all;
     }
 
-    private function createTimesheetEntry(User $user, Activity $activity, $description, $startDay = 0, $setEndDate = false)
+    private function createTimesheetEntry(User $user, Activity $activity, $description, $setEndDate = true)
     {
         $start = new \DateTime();
-        if ($startDay > 0) {
-            $start = $start->modify('- ' . (rand(1, $startDay)) . ' days');
-        }
+        $start = $start->modify('- ' . (rand(1, self::TIMERANGE_DAYS)) . ' days');
         $start = $start->modify('- ' . (rand(1, 86400)) . ' seconds');
-
-        $end = clone $start;
-        $end = $end->modify('+ ' . (rand(1, 43200)) . ' seconds');
-
-        //$duration = $end->modify('- ' . $start->getTimestamp() . ' seconds')->getTimestamp();
-        $duration = $end->getTimestamp() - $start->getTimestamp();
-        $rate = $user->getPreferenceValue(UserPreference::HOURLY_RATE);
 
         $entry = new Timesheet();
         $entry
             ->setActivity($activity)
             ->setDescription($description)
             ->setUser($user)
-            ->setRate(round(($duration / 3600) * $rate))
             ->setBegin($start);
 
         if ($setEndDate) {
+            $end = clone $start;
+            $end = $end->modify('+ ' . (rand(self::MIN_MINUTES_PER_ENTRY, self::MAX_MINUTES_PER_ENTRY)) . ' minutes');
+
+            $duration = $end->getTimestamp() - $start->getTimestamp();
+            $rate = $user->getPreferenceValue(UserPreference::HOURLY_RATE);
+
             $entry
                 ->setEnd($end)
+                ->setRate(round(($duration / 3600) * $rate))
                 ->setDuration($duration);
         }
 

@@ -97,3 +97,30 @@ kimai:
         active_users: { order: 20 }
         rates: { order: 50 }
 ```
+
+### Test widgets for the "brave users"
+
+While working on the widgets, some of them were created for testing future functionalities of Kimai.
+You can try them out, but I can't guarantee that they will be supported in the future, as I don't consider them to be `stable` for now.
+
+You can try this configuration in your `local.yaml` to see a chart instead of plain boxes for the last 2 years of monthly times:
+
+```yaml
+kimai:
+    widgets:
+        userRecapTwoYears: { title: stats.durationToday, query: monthly, user: true, begin: '01 january last year 00:00:00', end: '31 december this year 23:59:59', color: '#3b8bba|rgba(0,115,183,0.6);#c1c7d1|rgb(210,214,222,0.9)' }
+
+    dashboard:
+        user_duration:
+            type: chart
+            widgets: [userRecapTwoYears, userDurationToday, userDurationWeek, userDurationMonth, userDurationYear]
+```
+
+A brief description: the `monthly` query allows to fetch data by month and year, but the default widgets are not able to render this data.
+So internally a __chart section template__ (`type: chart`) is used to render the data, which is also able to fetch and display the data for 
+all of the following widgets in the configured section (the above example overwrites the widget config of the default `user_duration` section).
+
+In order to work, the chart widget `userRecapTwoYears` needs to be the first in the section.
+
+This widgets setup amd configuration will likely change in the future, so keep an eye on this config if this widget doesn't work 
+after one of the next updates! 
