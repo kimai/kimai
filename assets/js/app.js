@@ -9,6 +9,9 @@ require('fullcalendar/dist/gcal.min');
 require('fullcalendar/dist/locale-all');
 require('fullcalendar/dist/fullcalendar.min.css');
 
+// ------ for charts ------
+require('chart.js/dist/Chart.min');
+
 // ------ Kimai itself ------
 require('./kimai.js');
 require('./datatable.js');
