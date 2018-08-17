@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c5204d1dd48134e0b9ed8a2c0033dc05",
+    "content-hash": "916334cc4252096cbe9d328a38ba81a5",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -1839,16 +1839,16 @@
         },
         {
             "name": "kevinpapst/adminlte-bundle",
-            "version": "1.2",
+            "version": "2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/AdminLTEBundle.git",
-                "reference": "e9ba0374f1cb952d9c987b5d2f2fd78274c8d3dd"
+                "reference": "ee9406d2fc60a4d26d317fe555104df803ca130c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/e9ba0374f1cb952d9c987b5d2f2fd78274c8d3dd",
-                "reference": "e9ba0374f1cb952d9c987b5d2f2fd78274c8d3dd",
+                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/ee9406d2fc60a4d26d317fe555104df803ca130c",
+                "reference": "ee9406d2fc60a4d26d317fe555104df803ca130c",
                 "shasum": ""
             },
             "require": {
@@ -1895,7 +1895,7 @@
                 }
             ],
             "description": "Admin Theme based on the AdminLTE 2.3 for easy integration with Symfony 4",
-            "time": "2018-07-21T18:49:21+00:00"
+            "time": "2018-08-15T21:18:05+00:00"
         },
         {
             "name": "monolog/monolog",
