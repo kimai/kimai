@@ -15,17 +15,17 @@ which leads to problems between Composer and Symfony Flex, resulting in an error
   Declaration of Symfony\Flex\ParallelDownloader::getRemoteContents($originUrl, $fileUrl, $context) should be compatible with Composer\Util\RemoteFilesystem::getRemoteContents($originUrl, $fileUrl, $context, ?array &$responseHeaders = NULL)
 ```
 
-This can be fixed by updating composer before the Kimai update and running composer without the flex plugin:
+This can be fixed by updating Composer and Flex before executing the Kimai update:
 ```
-composer self-update
-sudo -u www-data composer install --no-plugins
+sudo composer self-update
+sudo -u www-data composer update symfony/flex --no-plugins
 ```
 
-So the full update goes like that: 
+Then the full update can be executed as usual: 
 
 ```bash
 git pull origin master
-sudo -u www-data composer install --no-dev --optimize-autoloader --no-plugins
+sudo -u www-data composer install --no-dev --optimize-autoloader
 sudo -u www-data bin/console cache:clear --env=prod
 sudo -u www-data bin/console cache:warmup --env=prod
 bin/console doctrine:migrations:migrate

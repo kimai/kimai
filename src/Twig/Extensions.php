@@ -80,6 +80,8 @@ class Extensions extends \Twig_Extension
         'trash' => 'far fa-trash-alt',
         'user' => 'fas fa-user',
         'visibility' => 'far fa-eye',
+        'money' => 'far fa-money-bill-alt',
+        'duration' => 'far fa-hourglass',
     ];
 
     /**

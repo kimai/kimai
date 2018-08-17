@@ -32,21 +32,11 @@ class CustomerRepository extends AbstractRepository
     }
 
     /**
-     * Return statistic data for all customer.
-     *
-     * @return CustomerStatistic
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return int
      */
-    public function getGlobalStatistics()
+    public function countCustomer()
     {
-        $countAll = $this->getEntityManager()
-            ->createQuery('SELECT COUNT(c.id) FROM ' . Customer::class . ' c')
-            ->getSingleScalarResult();
-
-        $stats = new CustomerStatistic();
-        $stats->setCount($countAll);
-
-        return $stats;
+        return $this->count([]);
     }
 
     /**

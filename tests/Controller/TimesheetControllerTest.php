@@ -66,12 +66,11 @@ class TimesheetControllerTest extends ControllerBaseTest
         $docuUrl = $this->createUrl('/help/timesheet');
         $this->assertTrue($response->isSuccessful());
         $this->assertContains(
-            '<a href="'.$docuUrl.'"><i class="far fa-question-circle"></i></a>',
+            '<a href="' . $docuUrl . '"><i class="far fa-question-circle"></i></a>',
             $response->getContent(),
             'Could not find link to documentation'
         );
 
         // TODO more tests
     }
-
 }

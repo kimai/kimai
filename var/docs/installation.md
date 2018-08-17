@@ -1,7 +1,7 @@
 # Installation
 
 If you want to install Kimai v2 in your production environment and have SSH access, then switch to the official 
-installation instruction in our [README](https://github.com/kevinpapst/kimai2/blob/master/README.md).
+installation instruction in our [README](https://github.com/kevinpapst/kimai2/#installation).
 
 You need GIT and [Composer](https://getcomposer.org/doc/00-intro.md) on the machine where you want to install Kimai. 
 

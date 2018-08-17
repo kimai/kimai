@@ -10,6 +10,8 @@
 namespace App\Controller;
 
 use App\Event\DashboardEvent;
+use App\Model\DashboardSection;
+use App\Repository\WidgetRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -28,13 +30,25 @@ class DashboardController extends Controller
      * @var EventDispatcherInterface
      */
     protected $eventDispatcher;
+    /**
+     * @var WidgetRepository
+     */
+    protected $repository;
+    /**
+     * @var array
+     */
+    protected $dashboard;
 
     /**
      * @param EventDispatcherInterface $dispatcher
+     * @param WidgetRepository $repository
+     * @param array $dashboard
      */
-    public function __construct(EventDispatcherInterface $dispatcher)
+    public function __construct(EventDispatcherInterface $dispatcher, WidgetRepository $repository, array $dashboard)
     {
         $this->eventDispatcher = $dispatcher;
+        $this->repository = $repository;
+        $this->dashboard = $dashboard;
     }
 
     /**
@@ -45,13 +59,52 @@ class DashboardController extends Controller
     {
         $event = new DashboardEvent($this->getUser());
 
+        foreach ($this->dashboard as $widgetRow) {
+            if (empty($widgetRow['widgets'])) {
+                continue;
+            }
+
+            if (!$this->isGranted($widgetRow['permission'])) {
+                continue;
+            }
+
+            $row = new DashboardSection($widgetRow['title'] ?? null);
+            $row
+                ->setOrder($widgetRow['order'])
+                ->setType($widgetRow['type'])
+            ;
+
+            foreach ($widgetRow['widgets'] as $widgetName) {
+                if (!$this->repository->has($widgetName)) {
+                    throw new \Exception('Unknwon widget: ' . $widgetName);
+                }
+
+                $row->addWidget($this->repository->get($widgetName, $event->getUser()));
+            }
+
+            $event->addSection($row);
+        }
+
         $this->eventDispatcher->dispatch(
             DashboardEvent::DASHBOARD,
             $event
         );
 
+        $sections = $event->getSections();
+
+        uasort(
+            $sections,
+            function (DashboardSection $a, DashboardSection $b) {
+                if ($a->getOrder() == $b->getOrder()) {
+                    return 0;
+                }
+
+                return ($a->getOrder() < $b->getOrder()) ? -1 : 1;
+            }
+        );
+
         return $this->render('dashboard/index.html.twig', [
-            'widget_rows' => $event->getWidgetRows()
+            'widget_rows' => $sections
         ]);
     }
 }

@@ -46,6 +46,14 @@ services:
         arguments:
             $config: "%kimai.calendar%"
 
+    App\Repository\WidgetRepository:
+        arguments:
+            $widgets: "%kimai.widgets%"
+
+    App\Controller\DashboardController:
+        arguments:
+            $dashboard: "%kimai.dashboard%"
+
     # ================================================================================
     # DATABASE
     # ================================================================================
@@ -108,6 +116,11 @@ services:
     # ================================================================================
     # REPOSITORIES
     # ================================================================================
+
+    App\Repository\TimesheetRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\Timesheet']
 
     App\Repository\UserRepository:
         class:     Doctrine\ORM\EntityRepository

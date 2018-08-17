@@ -161,40 +161,20 @@ class ExtensionsTest extends TestCase
     public function testIcon()
     {
         $icons = [
-            'user' => 'fas fa-user',
-            'customer' => 'fas fa-users',
-            'project' => 'fas fa-project-diagram',
-            'activity' => 'fas fa-tasks',
-            'admin' => 'fas fa-wrench',
-            'invoice' => 'fas fa-file-invoice',
-            'timesheet' => 'far fa-clock',
-            'dashboard' => 'fas fa-tachometer-alt',
-            'logout' => 'fas fa-sign-out-alt',
-            'trash' => 'far fa-trash-alt',
-            'delete' => 'far fa-trash-alt',
-            'repeat' => 'fas fa-redo-alt',
-            'edit' => 'far fa-edit',
-            'manual' => 'fas fa-book',
-            'help' => 'far fa-question-circle',
-            'start' => 'fas fa-play-circle',
-            'start-small' => 'fas fa-play-circle',
-            'stop' => 'fas fa-stop',
-            'stop-small' => 'far fa-stop-circle',
-            'filter' => 'fas fa-filter',
-            'create' => 'far fa-plus-square',
-            'list' => 'fas fa-list',
-            'print' => 'fas fa-print',
-            'visibility' => 'far fa-eye',
-            'calendar' => 'far fa-calendar-alt',
+            'user', 'customer', 'project', 'activity', 'admin', 'invoice', 'timesheet', 'dashboard', 'logout', 'trash',
+            'delete', 'repeat', 'edit', 'manual', 'help', 'start', 'start-small', 'stop', 'stop-small', 'filter',
+            'create', 'list', 'print', 'visibility', 'calendar', 'money', 'duration',
         ];
 
+        // test pre-defined icons
         $sut = $this->getSut('en');
-        foreach ($icons as $icon => $class) {
+        foreach ($icons as $icon) {
             $result = $sut->icon($icon);
-            $this->assertNotEmpty($result);
+            $this->assertNotEmpty($result, 'Problem with icon definition: ' . $icon);
             $this->assertInternalType('string', $result);
         }
 
+        // test fallback will be returned
         $this->assertEquals('', $sut->icon('foo'));
         $this->assertEquals('bar', $sut->icon('foo', 'bar'));
     }

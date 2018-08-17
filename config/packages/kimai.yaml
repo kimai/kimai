@@ -68,10 +68,68 @@ kimai:
         #             id: 'de.german#holiday@group.v.calendar.google.com'
         #             color: '#ccc'
 
-    # theme related settings, will be available as twig settings
+    # theme related settings, will be available as twig globals at "kimai_context.*"
+    # please see documentation at var/docs/theme.md
     theme:
         # display a warning color if the user has at least X active recordings
         active_warning: 3
         # fallback color for all widgets that don't have a dedicated color
         # possible options: blue, black, purple, yellow, red, green
         box_color: 'green'
+
+    # Dashboard widget sections, please see documentation at var/docs/dashboard.md
+    dashboard:
+        user_duration:
+            title: dashboard.you
+            order: 10
+            permission: ROLE_USER
+            widgets: [userDurationToday, userDurationWeek, userDurationMonth, userDurationYear]
+        user_rates:
+            title: ~
+            order: 20
+            permission: ROLE_USER
+            widgets: [userAmountToday, userAmountWeek, userAmountMonth, userAmountYear]
+        duration:
+            title: dashboard.all
+            order: 30
+            permission: ROLE_TEAMLEAD
+            widgets: [durationToday, durationWeek, durationMonth, durationYear]
+        active_users:
+            title: ~
+            order: 40
+            permission: ROLE_TEAMLEAD
+            widgets: [activeUsersToday, activeUsersWeek, activeUsersMonth, activeUsersYear]
+        rates:
+            title: ~
+            order: 50
+            permission: ROLE_ADMIN
+            widgets: [amountToday, amountWeek, amountMonth, amountYear]
+
+    # All available widgets, please see documentation at var/docs/dashboard.md
+    widgets:
+        userDurationToday: { title: stats.durationToday, query: duration, user: true, begin: '00:00:00', end: '23:59:59', icon: duration, color: green }
+        userDurationWeek: { title: stats.durationWeek, query: duration, user: true, begin: 'monday this week 00:00:00', end: 'sunday this week 23:59:59', icon: duration, color: blue }
+        userDurationMonth: { title: stats.durationMonth, query: duration, user: true, begin: 'first day of this month 00:00:00', end: 'last day of this month 23:59:59', icon: duration, color: purple }
+        userDurationYear: { title: stats.durationYear, query: duration, user: true, begin: '01 january this year 00:00:00', end: '31 december this year 23:59:59', icon: duration, color: yellow }
+        userDurationTotal: { title: stats.durationTotal, query: duration, user: true, icon: duration, color: red }
+        userAmountToday: { title: stats.amountToday, query: rate, user: true, begin: '00:00:00', end: '23:59:59', icon: money, color: green }
+        userAmountWeek: { title: stats.amountWeek, query: rate, user: true, begin: 'monday this week 00:00:00', end: 'sunday this week 23:59:59', icon: money, color: blue }
+        userAmountMonth: { title: stats.amountMonth, query: rate, user: true, begin: 'first day of this month 00:00:00', end: 'last day of this month 23:59:59', icon: money, color: purple }
+        userAmountYear: { title: stats.amountYear, query: rate, user: true, begin: '01 january this year 00:00:00', end: '31 december this year 23:59:59', icon: money, color: yellow }
+        userAmountTotal: { title: stats.amountTotal, query: rate, user: true, icon: money, color: red }
+        durationToday: { title: stats.durationToday, query: duration, begin: '00:00:00', end: '23:59:59', icon: duration, color: green }
+        durationWeek: { title: stats.durationWeek, query: duration, begin: 'monday this week 00:00:00', end: 'sunday this week 23:59:59', icon: duration, color: blue }
+        durationMonth: { title: stats.durationMonth, query: duration, begin: 'first day of this month 00:00:00', end: 'last day of this month 23:59:59', icon: duration, color: purple }
+        durationYear: { title: stats.durationYear, query: duration, begin: '01 january this year 00:00:00', end: '31 december this year 23:59:59', icon: duration, color: yellow }
+        durationTotal: { title: stats.durationTotal, query: duration, icon: duration, color: red }
+        amountToday: { title: stats.amountToday, query: rate, begin: '00:00:00', end: '23:59:59', icon: money, color: green }
+        amountWeek: { title: stats.amountWeek, query: rate, begin: 'monday this week 00:00:00', end: 'sunday this week 23:59:59', icon: money, color: blue }
+        amountMonth: { title: stats.amountMonth, query: rate, begin: 'first day of this month 00:00:00', end: 'last day of this month 23:59:59', icon: money, color: purple }
+        amountYear: { title: stats.amountYear, query: rate, begin: '01 january this year 00:00:00', end: '31 december this year 23:59:59', icon: money, color: yellow }
+        amountTotal: { title: stats.amountTotal, query: rate, icon: money, color: red }
+        activeUsersToday: { title: stats.userActiveToday, query: users, begin: '00:00:00', end: '23:59:59', icon: user, color: green }
+        activeUsersWeek: { title: stats.userActiveWeek, query: users, begin: 'monday this week 00:00:00', end: 'sunday this week 23:59:59', icon: user, color: blue }
+        activeUsersMonth: { title: stats.userActiveMonth, query: users, begin: 'first day of this month 00:00:00', end: 'last day of this month 23:59:59', icon: user, color: purple }
+        activeUsersYear: { title: stats.userActiveYear, query: users, begin: '01 january this year 00:00:00', end: '31 december this year 23:59:59', icon: user, color: yellow }
+        activeUsersTotal: { title: stats.userActiveTotal, query: users, icon: user, color: red }
+        activeRecordings: { title: stats.activeRecordings, query: active, icon: duration, color: red }
