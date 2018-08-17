@@ -1,0 +1,10 @@
+<div class="info-box">
+    <span class="info-box-icon bg-{{ color|default(kimai_context.box_color) }}"><i class="{{ icon|icon(icon) }}"></i></span>
+
+    <div class="info-box-content">
+        {% if url %}<a href="{{ url }}" class="small-box-footer">{% endif %}
+        <span class="info-box-text">{{ title|trans }}</span>
+        <span class="info-box-number">{{ data }}</span>
+        {% if url %}</a>{% endif %}
+    </div>
+</div>

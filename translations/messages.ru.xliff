@@ -577,50 +577,46 @@
             </trans-unit>
 
             <!--
-              Statistics
+              Statistics data for Dashboard & Users profile
             -->
-            <trans-unit id="stats.durationThisMonth">
-                <source>stats.durationThisMonth</source>
+            <trans-unit id="stats.durationMonth">
+                <source>stats.durationMonth</source>
                 <target>Отработанное время за этот месяц</target>
-            </trans-unit>
-            <trans-unit id="stats.amountThisMonth">
-                <source>stats.amountThisMonth</source>
-                <target>Оборот за этот месяц</target>
             </trans-unit>
             <trans-unit id="stats.durationTotal">
                 <source>stats.durationTotal</source>
                 <target>Общее отработанное время</target>
             </trans-unit>
+            <trans-unit id="stats.amountMonth">
+                <source>stats.amountMonth</source>
+                <target>Оборот за этот месяц</target>
+            </trans-unit>
             <trans-unit id="stats.amountTotal">
                 <source>stats.amountTotal</source>
                 <target>Общий оборот</target>
             </trans-unit>
-
-            <!--
-              Dashboard
-            -->
-            <trans-unit id="stats.userTotal">
-                <source>stats.userTotal</source>
-                <target>Всего пользователей</target>
-            </trans-unit>
-            <trans-unit id="stats.userActiveThisMoth">
-                <source>stats.userActiveThisMoth</source>
+            <trans-unit id="stats.userActiveMonth">
+                <source>stats.userActiveMonth</source>
                 <target>Активные пользователи в этом месяце</target>
             </trans-unit>
-            <trans-unit id="stats.userActiveEver">
-                <source>stats.userActiveEver</source>
+            <trans-unit id="stats.userActiveTotal">
+                <source>stats.userActiveTotal</source>
                 <target>Когда либо активные пользователи </target>
             </trans-unit>
             <trans-unit id="stats.activeRecordings">
                 <source>stats.activeRecordings</source>
                 <target>Текущий активный хронометраж</target>
             </trans-unit>
-            <trans-unit id="stats.ctivitiesTotal">
-                <source>stats.activitiesTotal</source>
+            <trans-unit id="stats.userTotal">
+                <source>stats.userTotal</source>
+                <target>Всего пользователей</target>
+            </trans-unit>
+            <trans-unit id="stats.activityTotal">
+                <source>stats.activityTotal</source>
                 <target>Количество дейтельностей</target>
             </trans-unit>
-            <trans-unit id="stats.projectsTotal">
-                <source>stats.projectsTotal</source>
+            <trans-unit id="stats.projectTotal">
+                <source>stats.projectTotal</source>
                 <target>Количество проектов</target>
             </trans-unit>
             <trans-unit id="stats.customerTotal">

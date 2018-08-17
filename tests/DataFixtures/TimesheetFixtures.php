@@ -97,10 +97,16 @@ class TimesheetFixtures extends Fixture
         $user = $this->user;
 
         for ($i = 0; $i < $this->amount; $i++) {
+            $description = null;
+            if ($i % 3 == 0) {
+                $description = $faker->text;
+            } elseif ($i % 2 == 0) {
+                $description = '';
+            }
             $entry = $this->createTimesheetEntry(
                 $user,
                 $activities[array_rand($activities)],
-                ($i % 3 == 0 ? $faker->text : ''),
+                $description,
                 $this->getDateTime($i)
             );
 

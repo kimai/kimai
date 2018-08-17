@@ -79,22 +79,9 @@ Be aware that this command will modify all files with violations in the director
 
 Our code-styles are configured in [.php_cs.dist](../../.php_cs.dist).
 
-
 ## Translations 
 
-We try to keep the number of language files small, in order to make it easier to identify the location of application messages and to unify the codebase.
-
-- If you add a new key, you have to add it in every language file
-- Its very likely that you want to edit the file `messages` as it holds 90% of our application translations 
-
-The files in `translations/` as a quick overview:
-
-- `exceptions` only holds translations of error pages and exception handlers
-- `flashmessages` hold all success and error messages, that will be shown as results from action calls after page reload
-- `messages` holds most of the visible application translations (like all the static UI elements and form translations)
-- `pagerfanta` includes the translations for the pagination component
-- `sidebar` holds all the translations of the right sidebar
-- `validators` only hold translations related to violations/validation of submitted form data (or API calls)
+Read more about [languages and translations](translations.md).
 
 ## Extending the navigation bar
 
@@ -148,7 +135,8 @@ And that's how to use it:
 
 ```php
 use App\Event\DashboardEvent;
-use App\Model\WidgetRow;
+use App\Model\DashboardSection;
+use App\Model\Widget;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class MyDashboardSubscriber implements EventSubscriberInterface
@@ -160,14 +148,19 @@ class MyDashboardSubscriber implements EventSubscriberInterface
     
     public function onDashboardEvent(DashboardEvent $event)
     {
-        $row = new WidgetRow('my_id', 'optional.row.title');
-        // this needs to be a valid twig template string
-        $row->add("{{ widgets.info_box_counter('a title', 100, 'far fa-hourglass', 'green') }}");
-        $event->addWidgetRow($row);
+        $section = new DashboardSection('optional.row.title');
+        $widget = new Widget('A title', 100);
+        $widget
+            ->setIcon('duration')
+            ->setColor('purple')
+            ->setType(Widget::TYPE_COUNTER)
+        ;
+        $section->addWidget($widget);
+        $event->addSection($section);
     }
 }
 ```
-For more details check the [official dashboard subscriber](../../src/EventSubscriber/DashboardSubscriber.php).
+For more details check this [dashboard subscriber](../../src/EventSubscriber/DashboardSubscriber.php).
 
 ## Adding tabs to the "control sidebar"
 
@@ -185,7 +178,8 @@ admin_lte:
                 icon: "fas fa-question-circle"
                 template: sidebar/home.html.twig
 ```
-You have to define the `icon` (FontAwesome 5) to be used and one of: `controller` action or twig `template`. 
+
+You have to define the `icon` ([read more](theme.md)) to be used and either `controller` action or twig `template`. 
 Both follow the default naming syntax and you can link your bundle here instead of the app controller or templates.
 You should NOT add them in `config/packages/kimai.yaml` but in your own bundle or the `local.yaml` [config](configurations.md), 
 otherwise they might get lost during an update.

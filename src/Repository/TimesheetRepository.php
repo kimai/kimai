@@ -14,7 +14,6 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Model\Statistic\Month;
 use App\Model\Statistic\Year;
-use App\Model\TimesheetGlobalStatistic;
 use App\Model\TimesheetStatistic;
 use App\Repository\Query\TimesheetQuery;
 use DateTime;
@@ -22,11 +21,15 @@ use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
-/**
- * Class TimesheetRepository
- */
 class TimesheetRepository extends AbstractRepository
 {
+    public const STATS_QUERY_DURATION = 'duration';
+    public const STATS_QUERY_RATE = 'rate';
+    public const STATS_QUERY_USER = 'users';
+    public const STATS_QUERY_AMOUNT = 'amount';
+    public const STATS_QUERY_ACTIVE = 'active';
+    public const STATS_QUERY_MONTHLY = 'monthly';
+
     /**
      * @param Timesheet $entry
      * @return bool
@@ -68,44 +71,90 @@ class TimesheetRepository extends AbstractRepository
     }
 
     /**
+     * @param string $type
+     * @param DateTime|null $begin
+     * @param DateTime|null $end
+     * @param User|null $user
+     * @return int|mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getStatistic(string $type, ?DateTime $begin, ?DateTime $end, ?User $user)
+    {
+        switch ($type) {
+            case self::STATS_QUERY_ACTIVE:
+                return count($this->getActiveEntries($user));
+                break;
+            case self::STATS_QUERY_MONTHLY:
+                return $this->getMonthlyStats($user, $begin, $end);
+                break;
+            case self::STATS_QUERY_DURATION:
+                $what = 'SUM(t.duration)';
+                break;
+            case self::STATS_QUERY_RATE:
+                $what = 'SUM(t.rate)';
+                break;
+            case self::STATS_QUERY_USER:
+                $what = 'COUNT(DISTINCT(t.user))';
+                break;
+            case self::STATS_QUERY_AMOUNT:
+                $what = 'COUNT(t.id)';
+                break;
+            default:
+                throw new \InvalidArgumentException('Invalid query type: ' . $type);
+        }
+
+        return $this->queryTimeRange($what, $begin, $end, $user);
+    }
+
+    /**
      * @param $select
      * @param User|null $user
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return int
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    protected function queryThisMonth($select, User $user = null)
+    protected function queryThisMonth($select, ?User $user)
     {
-        $end = new DateTime('last day of this month');
-        $end->setTime(23, 59, 59);
-        $begin = new DateTime('first day of this month');
-        $begin->setTime(0, 0, 0);
+        $begin = new DateTime('first day of this month 00:00:00');
+        $end = new DateTime('last day of this month 23:59:59');
 
         return $this->queryTimeRange($select, $begin, $end, $user);
     }
 
     /**
-     * @param $select
-     * @param DateTime $begin
-     * @param DateTime $end
+     * @param string $select
+     * @param DateTime|null $begin
+     * @param DateTime|null $end
      * @param User|null $user
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return int|mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    protected function queryTimeRange($select, DateTime $begin, DateTime $end, User $user = null)
+    protected function queryTimeRange(string $select, ?DateTime $begin, ?DateTime $end, ?User $user)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb->select($select)
-            ->from(Timesheet::class, 't')
-            ->where($qb->expr()->gt('t.begin', ':from'))
-            ->andWhere($qb->expr()->lt('t.end', ':to'))
-            ->setParameter('from', $begin, Type::DATETIME)
-            ->setParameter('to', $end, Type::DATETIME);
+            ->from(Timesheet::class, 't');
+
+        if (!empty($begin)) {
+            $qb
+                ->andWhere($qb->expr()->gt('t.begin', ':from'))
+                ->setParameter('from', $begin, Type::DATETIME);
+        }
+
+        if (!empty($end)) {
+            $qb
+                ->andWhere($qb->expr()->lt('t.end', ':to'))
+                ->setParameter('to', $end, Type::DATETIME);
+        }
 
         if (null !== $user) {
             $qb->andWhere('t.user = :user')
                 ->setParameter('user', $user);
         }
 
-        return $qb;
+        $result = $qb->getQuery()->getSingleScalarResult();
+
+        return empty($result) ? 0 : $result;
     }
 
     /**
@@ -117,24 +166,11 @@ class TimesheetRepository extends AbstractRepository
      */
     public function getUserStatistics(User $user)
     {
-        $durationTotal = $this->getEntityManager()
-            ->createQuery('SELECT SUM(t.duration) FROM ' . Timesheet::class . ' t WHERE t.user = :user')
-            ->setParameter('user', $user)
-            ->getSingleScalarResult();
-        $recordsTotal = $this->getEntityManager()
-            ->createQuery('SELECT COUNT(t.id) FROM ' . Timesheet::class . ' t WHERE t.user = :user')
-            ->setParameter('user', $user)
-            ->getSingleScalarResult();
-        $rateTotal = $this->getEntityManager()
-            ->createQuery('SELECT SUM(t.rate) FROM ' . Timesheet::class . ' t WHERE t.user = :user')
-            ->setParameter('user', $user)
-            ->getSingleScalarResult();
-        $amountMonth = $this->queryThisMonth('SUM(t.rate)', $user)
-            ->getQuery()
-            ->getSingleScalarResult();
-        $durationMonth = $this->queryThisMonth('SUM(t.duration)', $user)
-            ->getQuery()
-            ->getSingleScalarResult();
+        $durationTotal = $this->getStatistic(self::STATS_QUERY_DURATION, null, null, $user);
+        $recordsTotal = $this->getStatistic(self::STATS_QUERY_AMOUNT, null, null, $user);
+        $rateTotal = $this->getStatistic(self::STATS_QUERY_RATE, null, null, $user);
+        $amountMonth = $this->queryThisMonth('SUM(t.rate)', $user);
+        $durationMonth = $this->queryThisMonth('SUM(t.duration)', $user);
         $firstEntry = $this->getEntityManager()
             ->createQuery('SELECT MIN(t.begin) FROM ' . Timesheet::class . ' t WHERE t.user = :user')
             ->setParameter('user', $user)
@@ -155,23 +191,40 @@ class TimesheetRepository extends AbstractRepository
      * Returns an array of Year statistics.
      *
      * @param User|null $user
+     * @param DateTime|null $begin
+     * @param DateTime|null $end
      * @return Year[]
      */
-    public function getMonthlyStats(User $user = null)
+    public function getMonthlyStats(User $user = null, ?DateTime $begin = null, ?DateTime $end = null)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb->select('SUM(t.rate) as rate, SUM(t.duration) as duration, MONTH(t.begin) as month, YEAR(t.begin) as year')
             ->from(Timesheet::class, 't')
-            ->where($qb->expr()->gt('t.begin', '0'))
-            ->andWhere($qb->expr()->isNotNull('t.end'))
+            ->where($qb->expr()->gt('t.begin', ':from'))
+        ;
+
+        if (!empty($begin)) {
+            $qb->setParameter('from', $begin, Type::DATETIME);
+        } else {
+            $qb->setParameter('from', 0);
+        }
+
+        if (!empty($end)) {
+            $qb->andWhere($qb->expr()->lt('t.end', ':to'))
+                ->setParameter('to', $end, Type::DATETIME);
+        } else {
+            $qb->andWhere($qb->expr()->isNotNull('t.end'));
+        }
+
+        $qb
             ->orderBy('year', 'DESC')
             ->addOrderBy('month', 'ASC')
             ->groupBy('year')
             ->addGroupBy('month');
 
         if (null !== $user) {
-            $qb->where('t.user = :user')
+            $qb->andWhere('t.user = :user')
                 ->setParameter('user', $user);
         }
 
@@ -198,52 +251,6 @@ class TimesheetRepository extends AbstractRepository
     }
 
     /**
-     * Fetch statistic data for all user.
-     *
-     * @return TimesheetGlobalStatistic
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function getGlobalStatistics()
-    {
-        $durationTotal = $this->getEntityManager()
-            ->createQuery('SELECT SUM(t.duration) FROM ' . Timesheet::class . ' t')
-            ->getSingleScalarResult();
-        $recordsTotal = $this->getEntityManager()
-            ->createQuery('SELECT COUNT(t.id) FROM ' . Timesheet::class . ' t')
-            ->getSingleScalarResult();
-        $rateTotal = $this->getEntityManager()
-            ->createQuery('SELECT SUM(t.rate) FROM ' . Timesheet::class . ' t')
-            ->getSingleScalarResult();
-        $userTotal = $this->getEntityManager()
-            ->createQuery('SELECT COUNT(DISTINCT(t.user)) FROM ' . Timesheet::class . ' t')
-            ->getSingleScalarResult();
-        $activeNow = $this->getActiveEntries();
-        $amountMonth = $this->queryThisMonth('SUM(t.rate)')
-            ->getQuery()
-            ->getSingleScalarResult();
-        $durationMonth = $this->queryThisMonth('SUM(t.duration)')
-            ->getQuery()
-            ->getSingleScalarResult();
-        $activeMonth = $this->queryThisMonth('COUNT(DISTINCT(t.user))')
-            ->getQuery()
-            ->getSingleScalarResult();
-
-        $stats = new TimesheetGlobalStatistic();
-        $stats->setAmountTotal($rateTotal);
-        $stats->setDurationTotal($durationTotal);
-        $stats->setActiveTotal($userTotal);
-        $stats->setActiveCurrently(count($activeNow));
-        $stats->setActiveThisMonth($activeMonth);
-        $stats->setAmountThisMonth($amountMonth);
-        $stats->setDurationThisMonth($durationMonth);
-        $stats->setRecordsTotal($recordsTotal);
-
-        return $stats;
-    }
-
-    /**
-     * TODO replace me by a findByQuery() call
-     *
      * @param User $user
      * @return Timesheet[]|null
      */

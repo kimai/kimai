@@ -31,21 +31,11 @@ class ProjectRepository extends AbstractRepository
     }
 
     /**
-     * Return statistic data for all user.
-     *
-     * @return ProjectStatistic
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return int
      */
-    public function getGlobalStatistics()
+    public function countProject()
     {
-        $countAll = $this->getEntityManager()
-            ->createQuery('SELECT COUNT(p.id) FROM ' . Project::class . ' p')
-            ->getSingleScalarResult();
-
-        $stats = new ProjectStatistic();
-        $stats->setCount($countAll);
-
-        return $stats;
+        return $this->count([]);
     }
 
     /**

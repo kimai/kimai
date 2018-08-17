@@ -108,24 +108,6 @@
     </div>
 {% endmacro %}
 
-{% macro info_box_counter(title, amount, icon, color, url) %}
-<div class="info-box">
-    <span class="info-box-icon bg-{{ color|default(kimai_context.box_color) }}"><i class="{{ icon|icon(icon) }}"></i></span>
-
-    <div class="info-box-content">
-        {# this is a ugly hack, make me look nicely (dashboard widget with link) #}
-        {% if url %}
-            <a href="{{ url }}" class="small-box-footer">
-        {% endif %}
-        <span class="info-box-text">{{ title|trans }}</span>
-        <span class="info-box-number">{{ amount }}</span>
-        {% if url %}
-            </a>
-        {% endif %}
-    </div>
-</div>
-{% endmacro %}
-
 {% macro info_box_progress(title, description, amount, percentage, icon, color) %}
     <div class="info-box bg-{{ color|default(kimai_context.box_color) }}">
         <span class="info-box-icon"><i class="{{ icon|icon(icon) }}"></i></span>
@@ -142,21 +124,6 @@
             </span>
         </div>
         <!-- /.info-box-content -->
-    </div>
-{% endmacro %}
-
-{% macro info_box_more(title, amount, unit, url, icon, color) %}
-    <div class="small-box bg-{{ color|default(kimai_context.box_color) }}">
-        <div class="inner">
-            <h3>{{ amount }}<sup style="font-size: 20px">{{ unit|default('') }}</sup></h3>
-            <p>{{ title|trans }}</p>
-        </div>
-        <div class="icon">
-            <i class="{{ icon|icon(icon) }}"></i>
-        </div>
-        <a href="{{ url }}" class="small-box-footer">
-            {{ 'more.info.link'|trans }} <i class="{{ icon|icon(icon) }}"></i>
-        </a>
     </div>
 {% endmacro %}
 

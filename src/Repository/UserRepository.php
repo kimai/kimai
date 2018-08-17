@@ -10,7 +10,6 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use App\Model\UserStatistic;
 use App\Repository\Query\UserQuery;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
@@ -29,21 +28,11 @@ class UserRepository extends AbstractRepository implements UserLoaderInterface
     }
 
     /**
-     * Return statistic data for all user.
-     *
-     * @return UserStatistic
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return int
      */
-    public function getGlobalStatistics()
+    public function countUser()
     {
-        $countAll = $this->getEntityManager()
-            ->createQuery('SELECT COUNT(u.id) FROM ' . User::class . ' u')
-            ->getSingleScalarResult();
-
-        $stats = new UserStatistic();
-        $stats->setTotalAmount($countAll);
-
-        return $stats;
+        return $this->count([]);
     }
 
     /**

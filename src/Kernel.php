@@ -11,6 +11,7 @@ namespace App;
 
 use App\DependencyInjection\AppExtension;
 use App\DependencyInjection\Compiler\DoctrineCompilerPass;
+use App\DependencyInjection\Compiler\TwigContextCompilerPass;
 use App\Timesheet\CalculatorInterface;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -66,17 +67,48 @@ class Kernel extends BaseKernel
         $loader->load($confDir . '/services_' . $this->environment . self::CONFIG_EXTS, 'glob');
 
         $container->addCompilerPass(new DoctrineCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
+        $container->addCompilerPass(new TwigContextCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
     }
 
     protected function configureRoutes(RouteCollectionBuilder $routes)
     {
         $confDir = $this->getProjectDir() . '/config';
+
+        // some routes are based on app configs and will be imported manually
+        $this->configureFosUserRoutes($routes);
+
+        // load bundle specific route files
         if (is_dir($confDir . '/routes/')) {
             $routes->import($confDir . '/routes/*' . self::CONFIG_EXTS, '/', 'glob');
         }
+
+        // load environment specific route files
         if (is_dir($confDir . '/routes/' . $this->environment)) {
             $routes->import($confDir . '/routes/' . $this->environment . '/**/*' . self::CONFIG_EXTS, '/', 'glob');
         }
+
+        // load application routes
         $routes->import($confDir . '/routes' . self::CONFIG_EXTS, '/', 'glob');
+    }
+
+    protected function configureFosUserRoutes(RouteCollectionBuilder $routes)
+    {
+        $features = $this->getContainer()->getParameter('kimai.fosuser');
+
+        // Expose the user registration feature
+        if ($features['registration']) {
+            $routes->import(
+                '@FOSUserBundle/Resources/config/routing/registration.xml',
+                '/{_locale}/register'
+            );
+        }
+
+        // Expose the users password-reset feature
+        if ($features['password_reset']) {
+            $routes->import(
+                '@FOSUserBundle/Resources/config/routing/resetting.xml',
+                '/{_locale}/resetting'
+            );
+        }
     }
 }

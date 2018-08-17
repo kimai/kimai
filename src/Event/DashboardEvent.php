@@ -10,8 +10,7 @@
 namespace App\Event;
 
 use App\Entity\User;
-use App\Model\TimesheetGlobalStatistic;
-use App\Model\WidgetRow;
+use App\Model\DashboardSection;
 use Symfony\Component\EventDispatcher\Event;
 
 class DashboardEvent extends Event
@@ -23,13 +22,12 @@ class DashboardEvent extends Event
      */
     protected $user;
     /**
-     * @var WidgetRow[]
+     * @var DashboardSection[]
      */
     protected $widgetRows = [];
 
     /**
      * @param User $user
-     * @param TimesheetGlobalStatistic $timesheetStatistic
      */
     public function __construct(User $user)
     {
@@ -44,15 +42,21 @@ class DashboardEvent extends Event
         return $this->user;
     }
 
-    public function addWidgetRow(WidgetRow $row)
+    /**
+     * @param DashboardSection $row
+     * @return DashboardEvent
+     */
+    public function addSection(DashboardSection $row)
     {
         $this->widgetRows[] = $row;
+
+        return $this;
     }
 
     /**
-     * @return WidgetRow[]
+     * @return DashboardSection[]
      */
-    public function getWidgetRows()
+    public function getSections()
     {
         return $this->widgetRows;
     }

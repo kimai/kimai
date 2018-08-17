@@ -107,7 +107,7 @@ class TimesheetEditForm extends AbstractType
             'csrf_token_id' => 'timesheet_edit',
             'duration_only' => false,
             'include_user' => false,
-            'documentation' => 'timesheet',
+            'docu_chapter' => 'timesheet',
         ]);
     }
 }

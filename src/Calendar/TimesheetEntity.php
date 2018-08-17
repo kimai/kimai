@@ -155,7 +155,7 @@ class TimesheetEntity
     /**
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }

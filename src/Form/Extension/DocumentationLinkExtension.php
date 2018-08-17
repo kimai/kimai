@@ -35,7 +35,7 @@ class DocumentationLinkExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['documentation'] = $options['documentation'] ?? '';
+        $view->vars['docu_chapter'] = $options['docu_chapter'] ?? null;
     }
 
     /**
@@ -43,7 +43,8 @@ class DocumentationLinkExtension extends AbstractTypeExtension
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefined(['documentation']);
-        $resolver->setDefaults(['documentation' => null]);
+        $resolver->setDefined(['docu_chapter']);
+        $resolver->setAllowedTypes('docu_chapter', 'string');
+        $resolver->setDefault('docu_chapter', '');
     }
 }
