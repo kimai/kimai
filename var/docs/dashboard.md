@@ -122,5 +122,5 @@ all of the following widgets in the configured section (the above example overwr
 
 In order to work, the chart widget `userRecapTwoYears` needs to be the first in the section.
 
-This widgets setup amd configuration will likely change in the future, so keep an eye on this config if this widget doesn't work 
-after one of the next updates! 
+This widgets setup and configuration will likely change in the future, so keep an eye on this config if this widget  
+doesn't work after one of the next updates! 
