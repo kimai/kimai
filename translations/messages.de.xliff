@@ -63,6 +63,14 @@
                 <source>label.user_profile</source>
                 <target>Mein Profil</target>
             </trans-unit>
+            <trans-unit id="label.api_token">
+                <source>label.api_token</source>
+                <target>API Passwort</target>
+            </trans-unit>
+            <trans-unit id="label.api_token_repeat">
+                <source>label.api_token_repeat</source>
+                <target>API Passwort wiederholen</target>
+            </trans-unit>
 
             <!--
               Menu / Navbar items
@@ -343,6 +351,10 @@
                 <source>profile.password</source>
                 <target>Passwort</target>
             </trans-unit>
+            <trans-unit id="profile.api-token">
+                <source>profile.api-token</source>
+                <target>API</target>
+            </trans-unit>
             <trans-unit id="profile.roles">
                 <source>profile.roles</source>
                 <target>Rollen</target>
@@ -531,6 +543,13 @@
                 <source>label.roles</source>
                 <target>Rolle</target>
             </trans-unit>
+            <trans-unit id="admin_user.delete_confirm">
+                <source>admin_user.delete_confirm</source>
+                <target>
+                    Momentan existieren für den Benutzer %user% insgesamt %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen.
+                    Diese Zeiteinträge werden ebenfalls mit gelöscht!
+                </target>
+            </trans-unit>
 
             <!--
               ROLES
@@ -557,50 +576,82 @@
             </trans-unit>
 
             <!--
-              Statistics
+              Statistics data for Dashboard & Users profile
             -->
-            <trans-unit id="stats.durationThisMonth">
-                <source>stats.durationThisMonth</source>
+            <trans-unit id="stats.durationToday">
+                <source>stats.durationToday</source>
+                <target>Arbeitszeit heute</target>
+            </trans-unit>
+            <trans-unit id="stats.durationWeek">
+                <source>stats.durationWeek</source>
+                <target>Arbeitszeit diese Woche</target>
+            </trans-unit>
+            <trans-unit id="stats.durationMonth">
+                <source>stats.durationMonth</source>
                 <target>Arbeitszeit diesen Monat</target>
             </trans-unit>
-            <trans-unit id="stats.amountThisMonth">
-                <source>stats.amountThisMonth</source>
-                <target>Umsatz diesen Monat</target>
+            <trans-unit id="stats.durationYear">
+                <source>stats.durationYear</source>
+                <target>Arbeitszeit dieses Jahr</target>
             </trans-unit>
             <trans-unit id="stats.durationTotal">
                 <source>stats.durationTotal</source>
                 <target>Arbeitszeit total</target>
             </trans-unit>
+            <trans-unit id="stats.amountToday">
+                <source>stats.amountToday</source>
+                <target>Umsatz heute</target>
+            </trans-unit>
+            <trans-unit id="stats.amountWeek">
+                <source>stats.amountWeek</source>
+                <target>Umsatz diese Woche</target>
+            </trans-unit>
+            <trans-unit id="stats.amountMonth">
+                <source>stats.amountMonth</source>
+                <target>Umsatz diesen Monat</target>
+            </trans-unit>
+            <trans-unit id="stats.amountYear">
+                <source>stats.amountYear</source>
+                <target>Umsatz dieses Jahr</target>
+            </trans-unit>
             <trans-unit id="stats.amountTotal">
                 <source>stats.amountTotal</source>
                 <target>Umsatz total</target>
             </trans-unit>
-
-            <!--
-              Dashboard
-            -->
-            <trans-unit id="stats.userTotal">
-                <source>stats.userTotal</source>
-                <target>Anzahl Benutzer</target>
+            <trans-unit id="stats.userActiveToday">
+                <source>stats.userActiveToday</source>
+                <target>Aktive Benutzer heute</target>
             </trans-unit>
-            <trans-unit id="stats.userActiveThisMoth">
-                <source>stats.userActiveThisMoth</source>
+            <trans-unit id="stats.userActiveWeek">
+                <source>stats.userActiveWeek</source>
+                <target>Aktive Benutzer diese Woche</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveMonth">
+                <source>stats.userActiveMonth</source>
                 <target>Aktive Benutzer diesen Monat</target>
             </trans-unit>
-            <trans-unit id="stats.userActiveEver">
-                <source>stats.userActiveEver</source>
+            <trans-unit id="stats.userActiveYear">
+                <source>stats.userActiveYear</source>
+                <target>Aktive Benutzer dieses Jahr</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveTotal">
+                <source>stats.userActiveTotal</source>
                 <target>Aktive Benutzer jemals</target>
             </trans-unit>
             <trans-unit id="stats.activeRecordings">
                 <source>stats.activeRecordings</source>
-                <target>Momentan aktive Zeitmessungen</target>
+                <target>Aktive Zeitmessungen</target>
             </trans-unit>
-            <trans-unit id="stats.activitiesTotal">
-                <source>stats.activitiesTotal</source>
+            <trans-unit id="stats.userTotal">
+                <source>stats.userTotal</source>
+                <target>Anzahl Benutzer</target>
+            </trans-unit>
+            <trans-unit id="stats.activityTotal">
+                <source>stats.activityTotal</source>
                 <target>Anzahl Tätigkeiten</target>
             </trans-unit>
-            <trans-unit id="stats.projectsTotal">
-                <source>stats.projectsTotal</source>
+            <trans-unit id="stats.projectTotal">
+                <source>stats.projectTotal</source>
                 <target>Anzahl Projekte</target>
             </trans-unit>
             <trans-unit id="stats.customerTotal">

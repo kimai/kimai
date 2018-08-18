@@ -96,18 +96,18 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertRequestIsSecured(Client $client, string $url, $method = 'GET')
     {
-        $client->request($method, $this->createUrl($url));
+        $this->request($client, $url, $method);
 
         /* @var RedirectResponse $response */
         $response = $client->getResponse();
 
         $this->assertTrue(
             $response->isRedirect(),
-            sprintf('The secure URL %s is not protected.', $url . $response->getContent())
+            sprintf('The secure URL %s is not protected.', $url)
         );
 
-        $this->assertEquals(
-            'http://localhost' . $this->createUrl('/login'),
+        $this->assertStringEndsWith(
+            '/login',
             $response->getTargetUrl(),
             sprintf('The secure URL %s does not redirect to the login form.', $url)
         );
@@ -257,5 +257,29 @@ abstract class ControllerBaseTest extends WebTestCase
         }
 
         return $em->getRepository(User::class)->findOneBy(['username' => $name]);
+    }
+
+    /**
+     * @param Client $client
+     */
+    protected function assertHasFlashSuccess(Client $client)
+    {
+        $node = $client->getCrawler()->filter('div.alert.alert-success.alert-dismissible');
+        $this->assertNotEmpty($node->text());
+    }
+
+    /**
+     * @param Client $client
+     * @param string $url
+     */
+    protected function assertIsRedirect(Client $client, $url = null)
+    {
+        $this->assertTrue($client->getResponse()->isRedirect());
+        if (null === $url) {
+            return;
+        }
+
+        $this->assertTrue($client->getResponse()->headers->has('Location'));
+        $this->assertStringEndsWith($url, $client->getResponse()->headers->get('Location'));
     }
 }

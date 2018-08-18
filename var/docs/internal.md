@@ -10,3 +10,4 @@ Internal documentation for project maintainers
 - Push a release branch and add it as last PR merge into master
 - Edit the release-draft and add the "Full changelog" link + everything from the "Merged pull requests" section from CHANGELOG.md
 - Create the release
+- Post a new issue at [YunoHost tracker for Kimai 2](https://github.com/YunoHost-Apps/kimai2_ynh)

@@ -1,0 +1,12 @@
+# Expose security related features like login and logout
+fos_user_security:
+    prefix: /{_locale}
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+# The features "user registration" and "password-reset" are enabled by default.
+#
+# You can disable them by setting the config keys in file "config/kimai.yaml":
+#   - kimai.user.registration: false
+#   - kimai.user.password_reset: false
+#
+# The routes for these functions are added dynamically in src/Kernel.php

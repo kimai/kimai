@@ -23,20 +23,21 @@ use Faker\Factory;
 class TimesheetFixtures extends Fixture
 {
     /**
-     * @var
+     * @var User
      */
     protected $user;
-
     /**
      * @var int
      */
     protected $amount = 0;
-
     /**
      * @var int
      */
     protected $running = 0;
-
+    /**
+     * @var Activity[]
+     */
+    protected $activities = [];
     /**
      * @var string
      */
@@ -75,20 +76,37 @@ class TimesheetFixtures extends Fixture
     }
 
     /**
+     * @param Activity[] $activities
+     */
+    public function setActivities(array $activities)
+    {
+        $this->activities = $activities;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {
-        $activities = $this->getAllActivities($manager);
+        $activities = $this->activities;
+        if (empty($activities)) {
+            $activities = $this->getAllActivities($manager);
+        }
+
         $faker = Factory::create();
         $user = $this->user;
 
-        // random amount of timesheet entries for every user
         for ($i = 0; $i < $this->amount; $i++) {
+            $description = null;
+            if ($i % 3 == 0) {
+                $description = $faker->text;
+            } elseif ($i % 2 == 0) {
+                $description = '';
+            }
             $entry = $this->createTimesheetEntry(
                 $user,
                 $activities[array_rand($activities)],
-                ($i % 3 == 0 ? $faker->text : ''),
+                $description,
                 $this->getDateTime($i)
             );
 

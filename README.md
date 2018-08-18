@@ -42,7 +42,7 @@ Our roadmap is open for changes and input from the community, please [sent us](i
 
 There are [further infos about installation](var/docs/installation.md) if you have to use FTP or want to develop with Kimai. 
 
-If you want to install Kimai v2 in your production environment, then SSH into your server and change to your webserevr root.
+If you want to install Kimai 2 in your production environment, then SSH into your server and change to your webserver root.
 You need to install Git and [Composer](https://getcomposer.org/doc/00-intro.md) if you haven't already. 
 
 First clone this repo:
@@ -96,7 +96,7 @@ Create your first user with the following command. You will be asked to enter a 
 ```bash
 bin/console kimai:create-user username admin@example.com ROLE_SUPER_ADMIN
 ```
-_Tip: You can skip the "create user" step, if you are going to [import data from Kimai v1](migration_v1.md)._
+_Tip: You can skip the "create user" step, if you are going to [import data from Kimai v1](var/docs/migration_v1.md)._
 
 For available roles, please refer to the [user documentation](var/docs/users.md).
 

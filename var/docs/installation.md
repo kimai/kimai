@@ -1,7 +1,7 @@
 # Installation
 
 If you want to install Kimai v2 in your production environment and have SSH access, then switch to the official 
-installation instruction in our [README](https://github.com/kevinpapst/kimai2/blob/master/README.md).
+installation instruction in our [README](https://github.com/kevinpapst/kimai2/#installation).
 
 You need GIT and [Composer](https://getcomposer.org/doc/00-intro.md) on the machine where you want to install Kimai. 
 
@@ -81,7 +81,7 @@ bin/console doctrine:database:create
 bin/console doctrine:schema:create
 ```
 
-Lets bootstrap your environment by executing this commands (which is only available in dev environment):
+Lets bootstrap your environment by executing this command (which is only available in dev environment):
 ```bash
 bin/console kimai:reset-dev
 ```
@@ -100,14 +100,14 @@ You can now login with these accounts:
 | susan_super | kitten | Super-Administrator |
 
 Demo data can always be deleted by dropping the schema and re-creating it.
-ATTENTION - this will erase all your data:
+The `kimai:reset-dev` command can always be executed later on to reset your dev database and cache.
+
+ATTENTION - if you don't want the test data, then erase it and create a empty schema:
 
 ```bash
 bin/console doctrine:schema:drop --force
 bin/console doctrine:schema:create
 ```
-
-The `kimai:reset-dev` command can always be executed later on to reset your dev database and cache.
 
 There is no need to configure a virtual host in your web server to access the application for testing.
 Just use the built-in web server for your first tests:

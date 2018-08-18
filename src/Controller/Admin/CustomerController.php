@@ -101,7 +101,7 @@ class CustomerController extends AbstractController
 
             $this->flashSuccess('action.updated_successfully');
 
-            return $this->redirectToRoute('admin_customer', ['id' => $customer->getId()]);
+            return $this->redirectToRoute('admin_customer');
         }
 
         return $this->render('admin/customer_edit.html.twig', [
@@ -139,7 +139,7 @@ class CustomerController extends AbstractController
 
             $this->flashSuccess('action.deleted_successfully');
 
-            return $this->redirectToRoute('admin_customer', ['id' => $customer->getId()]);
+            return $this->redirectToRoute('admin_customer');
         }
 
         return $this->render('admin/customer_delete.html.twig', [

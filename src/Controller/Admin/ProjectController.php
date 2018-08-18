@@ -116,7 +116,7 @@ class ProjectController extends AbstractController
 
             $this->flashSuccess('action.deleted_successfully');
 
-            return $this->redirectToRoute('admin_project', ['id' => $project->getId()]);
+            return $this->redirectToRoute('admin_project');
         }
 
         return $this->render('admin/project_delete.html.twig', [
@@ -151,7 +151,7 @@ class ProjectController extends AbstractController
                 $editForm->get('create_more')->setData(true);
                 $project = $newProject;
             } else {
-                return $this->redirectToRoute('admin_project', ['id' => $project->getId()]);
+                return $this->redirectToRoute('admin_project');
             }
         }
 

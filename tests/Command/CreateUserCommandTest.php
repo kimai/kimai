@@ -20,6 +20,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 /**
  * @coversDefaultClass \App\Command\CreateUserCommand
  * @group integration
+ * @group legacy
  */
 class CreateUserCommandTest extends KernelTestCase
 {

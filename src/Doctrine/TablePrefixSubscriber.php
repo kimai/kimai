@@ -11,6 +11,7 @@ namespace App\Doctrine;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
+use Doctrine\ORM\Events;
 
 /**
  * Adds a prefix to every doctrine entity AKA database table
@@ -19,16 +20,27 @@ class TablePrefixSubscriber implements EventSubscriber
 {
     protected $prefix = '';
 
+    /**
+     * @param string $prefix
+     */
     public function __construct($prefix)
     {
         $this->prefix = (string) $prefix;
     }
 
+    /**
+     * @return array|string[]
+     */
     public function getSubscribedEvents()
     {
-        return ['loadClassMetadata'];
+        return [
+            Events::loadClassMetadata,
+        ];
     }
 
+    /**
+     * @param LoadClassMetadataEventArgs $args
+     */
     public function loadClassMetadata(LoadClassMetadataEventArgs $args)
     {
         $classMetadata = $args->getClassMetadata();
