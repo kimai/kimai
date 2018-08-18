@@ -14,7 +14,7 @@ The files in `translations/` as a quick overview:
 - `sidebar` holds all the translations of the right sidebar
 - `validators` only hold translations related to violations/validation of submitted form data (or API calls)
 
-## Add a new language
+## Adding a new language
 
 As example I choose a new hypothetical language with the locale `xx`. 
 
@@ -40,4 +40,3 @@ parameters:
     locale: en
     app_locales: en|de|ru|it|xx
 ```
-    
