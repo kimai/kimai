@@ -60,11 +60,6 @@ class KimaiImporterCommand extends Command
      */
     protected $connection;
     /**
-     * Prefix for the v1 database tables.
-     * @var string
-     */
-    protected $dbPrefix = '';
-    /**
      * @var User[]
      */
     protected $users = [];
@@ -141,7 +136,7 @@ class KimaiImporterCommand extends Command
         $connectionParams = ['url' => $input->getArgument('connection')];
         $this->connection = DriverManager::getConnection($connectionParams, $config);
 
-        $this->dbPrefix = $input->getArgument('prefix');
+        $dbPrefix = $input->getArgument('prefix');
 
         $password = $input->getArgument('password');
         if (trim(strlen($password)) < 6) {
@@ -157,7 +152,7 @@ class KimaiImporterCommand extends Command
             return;
         }
 
-        if (!$this->checkDatabaseVersion($io, self::MIN_VERSION, self::MIN_REVISION)) {
+        if (!$this->checkDatabaseVersion($io, self::MIN_VERSION, self::MIN_REVISION, $dbPrefix)) {
             return;
         }
 
@@ -172,7 +167,7 @@ class KimaiImporterCommand extends Command
         $bytesStart = memory_get_usage(true);
 
         try {
-            $users = $this->fetchAllFromImport('users');
+            $users = $this->fetchAllFromImport($dbPrefix, 'users');
         } catch (\Exception $ex) {
             $io->error('Failed to load users: ' . $ex->getMessage());
 
@@ -180,7 +175,7 @@ class KimaiImporterCommand extends Command
         }
 
         try {
-            $customer = $this->fetchAllFromImport('customers');
+            $customer = $this->fetchAllFromImport($dbPrefix, 'customers');
         } catch (\Exception $ex) {
             $io->error('Failed to load customers: ' . $ex->getMessage());
 
@@ -188,7 +183,7 @@ class KimaiImporterCommand extends Command
         }
 
         try {
-            $projects = $this->fetchAllFromImport('projects');
+            $projects = $this->fetchAllFromImport($dbPrefix, 'projects');
         } catch (\Exception $ex) {
             $io->error('Failed to load projects: ' . $ex->getMessage());
 
@@ -196,7 +191,7 @@ class KimaiImporterCommand extends Command
         }
 
         try {
-            $activities = $this->fetchAllFromImport('activities');
+            $activities = $this->fetchAllFromImport($dbPrefix, 'activities');
         } catch (\Exception $ex) {
             $io->error('Failed to load activities: ' . $ex->getMessage());
 
@@ -204,7 +199,7 @@ class KimaiImporterCommand extends Command
         }
 
         try {
-            $activityToProject = $this->fetchAllFromImport('projects_activities');
+            $activityToProject = $this->fetchAllFromImport($dbPrefix, 'projects_activities');
         } catch (\Exception $ex) {
             $io->error('Failed to load activities-project mapping: ' . $ex->getMessage());
 
@@ -212,7 +207,7 @@ class KimaiImporterCommand extends Command
         }
 
         try {
-            $records = $this->fetchAllFromImport('timeSheet');
+            $records = $this->fetchAllFromImport($dbPrefix, 'timeSheet');
         } catch (\Exception $ex) {
             $io->error('Failed to load timeSheet: ' . $ex->getMessage());
 
@@ -298,18 +293,29 @@ class KimaiImporterCommand extends Command
      * This is checked againstto the Kimai version and database revision.
      *
      * @param SymfonyStyle $io
-     * @param $requiredVersion
-     * @param $requiredRevision
+     * @param string $requiredVersion
+     * @param string $requiredRevision
+     * @param string $dbPrefix
      * @return bool
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function checkDatabaseVersion(SymfonyStyle $io, $requiredVersion, $requiredRevision)
+    protected function checkDatabaseVersion(SymfonyStyle $io, $requiredVersion, $requiredRevision, $dbPrefix)
     {
-        $versionQuery = 'SELECT `value` from ' . $this->dbPrefix . 'configuration WHERE `option` = "version"';
-        $revisionQuery = 'SELECT `value` from ' . $this->dbPrefix . 'configuration WHERE `option` = "revision"';
+        $version = $this->connection->createQueryBuilder()
+            ->select('value')
+            ->from($this->connection->quoteIdentifier($dbPrefix . 'configuration'))
+            ->where('option = :option')
+            ->setParameter(':option', 'version')
+            ->execute()
+            ->fetchColumn();
 
-        $version = $this->getImportConnection()->query($versionQuery)->fetchColumn();
-        $revision = $this->getImportConnection()->query($revisionQuery)->fetchColumn();
+        $revision = $this->connection->createQueryBuilder()
+            ->select('value')
+            ->from($this->connection->quoteIdentifier($dbPrefix . 'configuration'))
+            ->where('option = :option')
+            ->setParameter(':option', 'revision')
+            ->execute()
+            ->fetchColumn();
 
         if (1 == version_compare($requiredVersion, $version)) {
             $io->error(
@@ -364,21 +370,17 @@ class KimaiImporterCommand extends Command
     }
 
     /**
-     * @param $table
+     * @param string $dbPrefix
+     * @param string $table
      * @return array
-     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function fetchAllFromImport($table)
+    protected function fetchAllFromImport($dbPrefix, $table)
     {
-        return $this->getImportConnection()->query('SELECT * from ' . $this->dbPrefix . $table)->fetchAll();
-    }
-
-    /**
-     * @return \Doctrine\DBAL\Connection
-     */
-    protected function getImportConnection()
-    {
-        return $this->connection;
+        return $this->connection->createQueryBuilder()
+            ->select('*')
+            ->from($this->connection->quoteIdentifier($dbPrefix . $table))
+            ->execute()
+            ->fetchAll();
     }
 
     /**
