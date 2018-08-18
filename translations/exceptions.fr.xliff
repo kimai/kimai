@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="fr" datatype="plaintext" original="exceptions.en.xliff">
+        <body>
+            <trans-unit id="access.denied">
+                <source>access.denied</source>
+                <target>Accès refusé</target>
+            </trans-unit>
+            <trans-unit id="stacktrace">
+                <source>stacktrace</source>
+                <target>Le problème est survenu ici</target>
+            </trans-unit>
+            <trans-unit id="http_error.title">
+                <source>http_error.title</source>
+                <target>Erreur</target>
+            </trans-unit>
+            <trans-unit id="http_error.description">
+                <source>http_error.description</source>
+                <target>Oops ! Une erreur s'est produite.</target>
+            </trans-unit>
+            <trans-unit id="http_error.suggestion">
+                <source>http_error.suggestion</source>
+                <target>
+                    Une erreur inattendue s'est produite, veuillez réessayer.
+                    Vous être peut-être tombé sur un bogue, 
+                    merci de contacter votre administrateur si le problème persiste.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_404.description">
+                <source>http_error_404.description</source>
+                <target>Oops! Page introuvable.</target>
+            </trans-unit>
+            <trans-unit id="http_error_404.suggestion">
+                <source>http_error_404.suggestion</source>
+                <target>
+                    Nous n'avons pas trouvé la page que vous cherchiez.
+                    En attendant, vous pouvez retourner à votre tableau de bord et reprendre.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_403.description">
+                <source>http_error_403.description</source>
+                <target>Cette page est à accès limité.</target>
+            </trans-unit>
+            <trans-unit id="http_error_403.suggestion">
+                <source>http_error_403.suggestion</source>
+                <target>
+                    Désolé, mais vous n'avez pas les permissions suffisantes pour voir cette page.
+                    Si vous pensez qu'il s'agit d'une anomalie, veuillez en parler à votre administrateur.
+                </target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
