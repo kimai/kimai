@@ -737,7 +737,7 @@
             </trans-unit>
             <trans-unit id="invoice.signature_customer">
                 <source>invoice.signature_customer</source>
-                <target>Pour certification : date / nom du client / signature<</target>
+                <target>Pour certification : date / nom du client / signature</target>
             </trans-unit>
             <trans-unit id="label.order_number">
                 <source>label.order_number</source>

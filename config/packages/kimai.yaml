@@ -47,6 +47,12 @@ kimai:
             date_short: 'd.m.Y'
         en:
             date_short: 'Y-m-d'
+        it:
+            date_short: 'd.m.Y'
+        fr:
+            date_short: 'd.m.Y'
+        es:
+            date_short: 'd.m.Y'
         ru:
             date_short: 'd.m.Y'
 
