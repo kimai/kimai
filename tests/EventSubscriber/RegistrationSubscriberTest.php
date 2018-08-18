@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Voter;
+namespace App\Tests\EventSubscriber;
 
 use App\Entity\User;
 use App\EventSubscriber\RegistrationSubscriber;
