@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="es" datatype="plaintext" original="none">
+        <body>
+            <trans-unit id="access.denied">
+                <source>access.denied</source>
+                <target>Acceso denegado</target>
+            </trans-unit>
+            <trans-unit id="stacktrace">
+                <source>stacktrace</source>
+                <target>El problema ocurrió aquí</target>
+            </trans-unit>
+            <trans-unit id="http_error.title">
+                <source>http_error.title</source>
+                <target>Error</target>
+            </trans-unit>
+            <trans-unit id="http_error.description">
+                <source>http_error.description</source>
+                <target>Vaya! Ocurrió un error.</target>
+            </trans-unit>
+            <trans-unit id="http_error.suggestion">
+                <source>http_error.suggestion</source>
+                <target>
+                    Ocurrió un error inesperado, por favor intente de nuevo.
+                    Podría ser un bug, por favor contacte a su administrador si el problema
+                    no se soluciona intentándolo de nuevo.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_404.description">
+                <source>http_error_404.description</source>
+                <target>Vaya! No se encontró la página.</target>
+            </trans-unit>
+            <trans-unit id="http_error_404.suggestion">
+                <source>http_error_404.suggestion</source>
+                <target>
+                    No encontramos lo que buscaba.
+                    Pero, puede volver al panel principal e intentar de nuevo.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_403.description">
+                <source>http_error_403.description</source>
+                <target>Acceso restringido.</target>
+            </trans-unit>
+            <trans-unit id="http_error_403.suggestion">
+                <source>http_error_403.suggestion</source>
+                <target>
+                    Lo sentimos, pero no tiene permisos suficientes para acceder a esta página.
+                    Por favor contacte con su administrador si considera que esto se debe a un error.
+                </target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
