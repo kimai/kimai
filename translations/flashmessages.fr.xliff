@@ -12,7 +12,7 @@
             </trans-unit>
             <trans-unit id="timesheet.start.success">
                 <source>timesheet.start.success</source>
-                <target>Le chronométrage a commencé.</target>
+                <target>Le chronométrage a commencé</target>
             </trans-unit>
             <trans-unit id="timesheet.start.error">
                 <source>timesheet.start.error</source>
@@ -32,7 +32,7 @@
             </trans-unit>
             <trans-unit id="invoice.first_template">
                 <source>invoice.first_template</source>
-                <target>Vous devez créer votre premier modèle de facture avant de poursuivre.</target>
+                <target>Vous devez créer votre premier modèle de facture avant de poursuivre</target>
             </trans-unit>
         </body>
     </file>

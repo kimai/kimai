@@ -3,12 +3,12 @@
     <file date="2017-01-12T20:00:00Z" source-language="en" target-language="fr" datatype="plaintext" original="pagerfanta.en.xliff">
         <body>
             <trans-unit id="previous">
-                <source>précédent</source>
-                <target></target>
+                <source>previous</source>
+                <target>précédent</target>
             </trans-unit>
             <trans-unit id="next">
-                <source>suivant</source>
-                <target></target>
+                <source>next</source>
+                <target>suivant</target>
             </trans-unit>
         </body>
     </file>
