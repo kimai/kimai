@@ -63,6 +63,14 @@
                 <source>label.user_profile</source>
                 <target>Mon profil</target>
             </trans-unit>
+            <trans-unit id="label.api_token">
+                <source>label.api_token</source>
+                <target>Mot de passe de l'API</target>
+            </trans-unit>
+            <trans-unit id="label.api_token_repeat">
+                <source>label.api_token_repeat</source>
+                <target>Répéter le mot de passe de l'API</target>
+            </trans-unit>
 
             <!--
               Menu / Navbar items
@@ -317,8 +325,7 @@
             </trans-unit>
             <trans-unit id="modal.columns.description">
                 <source>modal.columns.description</source>
-                <target>Lors de l'enregistrement, les colonnes non cochées seront masquées. 
-                    Ces paramètres seront stockés dans un cookie du navigateur. Si vous supprimez vos cookies, ils seront réinitialisés.</target>
+                <target>Lors de l'enregistrement, les colonnes non cochées seront masquées. Ces paramètres seront stockés dans un cookie du navigateur. Si vous supprimez vos cookies, ils seront réinitialisés.</target>
             </trans-unit>
 
             <!--
@@ -351,6 +358,10 @@
             <trans-unit id="profile.password">
                 <source>profile.password</source>
                 <target>Mot de passe</target>
+            </trans-unit>
+            <trans-unit id="profile.api-token">
+                <source>profile.api-token</source>
+                <target>API</target>
             </trans-unit>
             <trans-unit id="profile.roles">
                 <source>profile.roles</source>
@@ -434,7 +445,8 @@
             </trans-unit>
             <trans-unit id="admin_activity.delete_confirm">
                 <source>admin_activity.delete_confirm</source>
-                <target>Actuellement, l'activité %activity% du projet %project% pour le client %customer%
+                <target>
+                    Actuellement, l'activité %activity% du projet %project% pour le client %customer%
                     possède %records% fiches de temps qui comptent pour un total de %duration%.
                     Ces fiches de temps seront également effacées.
                 </target>
@@ -539,6 +551,13 @@
                 <source>label.roles</source>
                 <target>Rôles</target>
             </trans-unit>
+            <trans-unit id="admin_user.delete_confirm">
+                <source>admin_user.delete_confirm</source>
+                <target>
+                    Actuellement l'usager %user% a %records% fiches de temps pour une durée totale de %duration%. 
+                    Ces fiches de temps vont aussi êtres supprimées !
+                </target>
+            </trans-unit>
 
             <!--
               ROLES
@@ -565,50 +584,82 @@
             </trans-unit>
 
             <!--
-              Statistics
+              Données statistiques pour le tableau de bord et les profils des usagers
             -->
-            <trans-unit id="stats.durationThisMonth">
-                <source>stats.durationThisMonth</source>
-                <target>Nombre d'heures travaillées ce mois</target>
+            <trans-unit id="stats.durationToday">
+                <source>stats.durationToday</source>
+                <target>Heures travaillées aujourd'hui</target>
             </trans-unit>
-            <trans-unit id="stats.amountThisMonth">
-                <source>stats.amountThisMonth</source>
-                <target>Chiffre d'affaires du mois</target>
+            <trans-unit id="stats.durationWeek">
+                <source>stats.durationWeek</source>
+                <target>Heures travaillées cette semaine</target>
+            </trans-unit>
+            <trans-unit id="stats.durationMonth">
+                <source>stats.durationMonth</source>
+                <target>Heures travaillées ce mois</target>
+            </trans-unit>
+            <trans-unit id="stats.durationYear">
+                <source>stats.durationYear</source>
+                <target>Heures travaillées cette année</target>
             </trans-unit>
             <trans-unit id="stats.durationTotal">
                 <source>stats.durationTotal</source>
-                <target>Nombre total d'heures travaillées</target>
+                <target>Total des heures travaillées</target>
+            </trans-unit>
+            <trans-unit id="stats.amountToday">
+                <source>stats.amountToday</source>
+                <target>Revenu du jour</target>
+            </trans-unit>
+            <trans-unit id="stats.amountWeek">
+                <source>stats.amountWeek</source>
+                <target>Revenu de la semaine</target>
+            </trans-unit>
+            <trans-unit id="stats.amountMonth">
+                <source>stats.amountMonth</source>
+                <target>Revenu du mois</target>
+            </trans-unit>
+            <trans-unit id="stats.amountYear">
+                <source>stats.amountYear</source>
+                <target>Revenu de l'année</target>
             </trans-unit>
             <trans-unit id="stats.amountTotal">
                 <source>stats.amountTotal</source>
-                <target>Chiffre d'affaires total</target>
+                <target>Revenu total</target>
             </trans-unit>
-
-            <!--
-              Dashboard
-            -->
-            <trans-unit id="stats.userTotal">
-                <source>stats.userTotal</source>
-                <target>Nombre d'usagers</target>
+            <trans-unit id="stats.userActiveToday">
+                <source>stats.userActiveToday</source>
+                <target>Usagers actifs aujourd'hui</target>
             </trans-unit>
-            <trans-unit id="stats.userActiveThisMoth">
-                <source>stats.userActiveThisMoth</source>
+            <trans-unit id="stats.userActiveWeek">
+                <source>stats.userActiveWeek</source>
+                <target>Usagers actifs cette semaine</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveMonth">
+                <source>stats.userActiveMonth</source>
                 <target>Usagers actifs ce mois</target>
             </trans-unit>
-            <trans-unit id="stats.userActiveEver">
-                <source>stats.userActiveEver</source>
-                <target>Utilisateurs toujours actifs</target>
+            <trans-unit id="stats.userActiveYear">
+                <source>stats.userActiveYear</source>
+                <target>Usagers actifs cette année</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveTotal">
+                <source>stats.userActiveTotal</source>
+                <target>Nombre total d'usagers actifs</target>
             </trans-unit>
             <trans-unit id="stats.activeRecordings">
                 <source>stats.activeRecordings</source>
                 <target>Enregistrements actifs</target>
             </trans-unit>
-            <trans-unit id="stats.activitiesTotal">
-                <source>stats.activitiesTotal</source>
+            <trans-unit id="stats.userTotal">
+                <source>stats.userTotal</source>
+                <target>Nombre d'usagers</target>
+            </trans-unit>
+            <trans-unit id="stats.activityTotal">
+                <source>stats.activityTotal</source>
                 <target>Nombre d'activités</target>
             </trans-unit>
-            <trans-unit id="stats.projectsTotal">
-                <source>stats.projectsTotal</source>
+            <trans-unit id="stats.projectTotal">
+                <source>stats.projectTotal</source>
                 <target>Nombre de projets</target>
             </trans-unit>
             <trans-unit id="stats.customerTotal">
