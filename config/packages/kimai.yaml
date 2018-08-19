@@ -50,7 +50,7 @@ kimai:
         it:
             date_short: 'd.m.Y'
         fr:
-            date_short: 'd.m.Y'
+            date_short: 'd/m/Y'
         es:
             date_short: 'd.m.Y'
         ru:
