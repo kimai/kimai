@@ -129,7 +129,7 @@
             -->
             <trans-unit id="label.date">
                 <source>label.date</source>
-                <target>Date</target>
+                <target>Date </target>
             </trans-unit>
             <trans-unit id="label.starttime">
                 <source>label.starttime</source>
@@ -189,7 +189,7 @@
             </trans-unit>
             <trans-unit id="label.skin">
                 <source>label.skin</source>
-                <target>Thème Kimai</target>
+                <target>Thème</target>
             </trans-unit>
             <trans-unit id="label.hours">
                 <source>label.hours</source>
@@ -225,7 +225,7 @@
             </trans-unit>
             <trans-unit id="action.edit">
                 <source>action.edit</source>
-                <target>Editer</target>
+                <target>Éditer</target>
             </trans-unit>
             <trans-unit id="action.delete">
                 <source>action.delete</source>
@@ -301,7 +301,7 @@
             </trans-unit>
             <trans-unit id="timesheet.edit">
                 <source>timesheet.edit</source>
-                <target>Editer l'enregistrement</target>
+                <target>Éditer l'enregistrement</target>
             </trans-unit>
             <trans-unit id="label.begin">
                 <source>label.begin</source>
@@ -330,7 +330,7 @@
             </trans-unit>
             <trans-unit id="profile.subtitle">
                 <source>profile.subtitle</source>
-                <target>Editer mes paramètres</target>
+                <target>Éditer mes paramètres</target>
             </trans-unit>
             <trans-unit id="profile.about_me">
                 <source>profile.about_me</source>
@@ -362,7 +362,7 @@
             </trans-unit>
             <trans-unit id="label.theme.fixed_layout">
                 <source>label.theme.fixed_layout</source>
-                <target>Activer la mise en page fixe. Vous ne pourrez pas alors utiliser boîtes flexibles.</target>
+                <target>Activer la mise en page fixe. Les boîtes flexibles seront inactives.</target>
             </trans-unit>
             <trans-unit id="label.theme.boxed_layout">
                 <source>label.theme.boxed_layout</source>
@@ -374,7 +374,7 @@
             </trans-unit>
             <trans-unit id="label.theme.mini_sidebar">
                 <source>label.theme.mini_sidebar</source>
-                <target>Changer la taille de l'en-tête de la barre latérale gauche (pleine ou réduite)</target>
+                <target>Changer la taille de la barre latérale gauche (large ou réduite)</target>
             </trans-unit>
 
             <!--
@@ -449,11 +449,11 @@
             </trans-unit>
             <trans-unit id="admin_customer.subtitle">
                 <source>admin_customer.subtitle</source>
-                <target>Vos clients sont la base de la création des projets et des activités.</target>
+                <target>Vos clients sont à la base de la création des projets et des activités.</target>
             </trans-unit>
             <trans-unit id="label.customer_number">
                 <source>label.customer_number</source>
-                <target>Compte</target>
+                <target>Compte </target>
             </trans-unit>
             <trans-unit id="label.company">
                 <source>label.company</source>
@@ -537,7 +537,7 @@
             </trans-unit>
             <trans-unit id="label.roles">
                 <source>label.roles</source>
-                <target>Rôle</target>
+                <target>Rôles</target>
             </trans-unit>
 
             <!--
@@ -637,7 +637,7 @@
             </trans-unit>
             <trans-unit id="invoice.select_filter">
                 <source>invoice.select_filter</source>
-                <target>Pour générer une facture, vous devez sélectionner au moins un filtre client.</target>
+                <target>Pour générer une facture, vous devez sélectionner au moins un client.</target>
             </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
@@ -657,7 +657,7 @@
             </trans-unit>
             <trans-unit id="invoice.due_days">
                 <source>invoice.due_days</source>
-                <target>Payment target</target>
+                <target>Échéance </target>
             </trans-unit>
             <trans-unit id="invoice.from">
                 <source>invoice.from</source>
@@ -669,7 +669,7 @@
             </trans-unit>
             <trans-unit id="invoice.number">
                 <source>invoice.number</source>
-                <target>N° de facture</target>
+                <target>N° de facture </target>
             </trans-unit>
             <trans-unit id="invoice.subtotal">
                 <source>invoice.subtotal</source>
@@ -697,7 +697,7 @@
             </trans-unit>
             <trans-unit id="label.payment_terms">
                 <source>label.payment_terms</source>
-                <target>Terms of payment</target>
+                <target>Modalités de paiement</target>
             </trans-unit>
             <trans-unit id="label.invoice_renderer">
                 <source>label.invoice_renderer</source>
@@ -810,7 +810,7 @@
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
                 <target>
-                    Redémarrez l'enregistrement de dernière activité|Redémarrez l'enregistrement d'une de vos %count% dernières activités
+                    Redémarrez l'enregistrement de la dernière activité|Redémarrez l'enregistrement d'une de vos %count% dernières activités
                 </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
