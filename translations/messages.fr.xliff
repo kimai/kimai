@@ -137,7 +137,7 @@
             -->
             <trans-unit id="label.date">
                 <source>label.date</source>
-                <target>Date&nbsp;</target>
+                <target>Date</target>
             </trans-unit>
             <trans-unit id="label.starttime">
                 <source>label.starttime</source>
@@ -465,7 +465,7 @@
             </trans-unit>
             <trans-unit id="label.customer_number">
                 <source>label.customer_number</source>
-                <target>Compte&nbsp;</target>
+                <target>Compte</target>
             </trans-unit>
             <trans-unit id="label.company">
                 <source>label.company</source>
@@ -708,7 +708,7 @@
             </trans-unit>
             <trans-unit id="invoice.due_days">
                 <source>invoice.due_days</source>
-                <target>Échéance&nbsp;</target>
+                <target>Échéance</target>
             </trans-unit>
             <trans-unit id="invoice.from">
                 <source>invoice.from</source>
@@ -720,7 +720,7 @@
             </trans-unit>
             <trans-unit id="invoice.number">
                 <source>invoice.number</source>
-                <target>N° de facture&nbsp;</target>
+                <target>N° de facture</target>
             </trans-unit>
             <trans-unit id="invoice.subtotal">
                 <source>invoice.subtotal</source>
