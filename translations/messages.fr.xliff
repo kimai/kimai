@@ -201,11 +201,11 @@
             </trans-unit>
             <trans-unit id="label.hours">
                 <source>label.hours</source>
-                <target>Heures</target>
+                <target>Durée</target>
             </trans-unit>
             <trans-unit id="label.rate">
                 <source>label.rate</source>
-                <target>Tarif</target>
+                <target>Montant</target>
             </trans-unit>
             <trans-unit id="label.language">
                 <source>label.language</source>
@@ -724,7 +724,7 @@
             </trans-unit>
             <trans-unit id="invoice.subtotal">
                 <source>invoice.subtotal</source>
-                <target>Sous-total</target>
+                <target>Total HT</target>
             </trans-unit>
             <trans-unit id="invoice.tax">
                 <source>invoice.tax</source>
@@ -732,7 +732,7 @@
             </trans-unit>
             <trans-unit id="invoice.total">
                 <source>invoice.total</source>
-                <target>Total</target>
+                <target>Total TTC</target>
             </trans-unit>
             <trans-unit id="invoice.service_date">
                 <source>invoice.service_date</source>
