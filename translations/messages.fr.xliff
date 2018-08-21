@@ -101,7 +101,7 @@
             </trans-unit>
             <trans-unit id="menu.admin_customer">
                 <source>menu.admin_customer</source>
-                <target>Client</target>
+                <target>Clients</target>
             </trans-unit>
             <trans-unit id="menu.admin_project">
                 <source>menu.admin_project</source>
@@ -305,7 +305,7 @@
             </trans-unit>
             <trans-unit id="timesheet.subtitle">
                 <source>timesheet.subtitle</source>
-                <target>Administrer mes fiches de temps</target>
+                <target>Administrer les fiches de temps</target>
             </trans-unit>
             <trans-unit id="timesheet.edit">
                 <source>timesheet.edit</source>
@@ -337,15 +337,15 @@
             </trans-unit>
             <trans-unit id="profile.subtitle">
                 <source>profile.subtitle</source>
-                <target>Éditer mes paramètres</target>
+                <target>Éditer les paramètres</target>
             </trans-unit>
             <trans-unit id="profile.about_me">
                 <source>profile.about_me</source>
-                <target>À mon propos</target>
+                <target>À propos</target>
             </trans-unit>
             <trans-unit id="profile.first_entry">
                 <source>profile.first_entry</source>
-                <target>Fonctionne depuis</target>
+                <target>Activités suivies depuis</target>
             </trans-unit>
             <trans-unit id="profile.tab_monthly">
                 <source>profile.tab_monthly</source>
@@ -457,11 +457,11 @@
             -->
             <trans-unit id="admin_customer.title">
                 <source>admin_customer.title</source>
-                <target>Client</target>
+                <target>Clients</target>
             </trans-unit>
             <trans-unit id="admin_customer.subtitle">
                 <source>admin_customer.subtitle</source>
-                <target>Vos clients sont à la base de la création des projets et des activités.</target>
+                <target>Les clients sont à la base de la création des projets et des activités.</target>
             </trans-unit>
             <trans-unit id="label.customer_number">
                 <source>label.customer_number</source>
@@ -529,7 +529,7 @@
             </trans-unit>
             <trans-unit id="admin_user.subtitle">
                 <source>admin_user.subtitle</source>
-                <target>Tous les usagers enregistrés de votre installation Kimai</target>
+                <target>Tous les usagers enregistrés sur cette installation Kimai</target>
             </trans-unit>
             <trans-unit id="label.alias">
                 <source>label.alias</source>
@@ -684,7 +684,7 @@
             </trans-unit>
             <trans-unit id="invoice.subtitle">
                 <source>invoice.subtitle</source>
-                <target>Générer des factures à partir de vos fiches de temps.</target>
+                <target>Générer des factures à partir des fiches de temps.</target>
             </trans-unit>
             <trans-unit id="invoice.select_filter">
                 <source>invoice.select_filter</source>
