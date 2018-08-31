@@ -217,16 +217,16 @@ class TimesheetRepository extends AbstractRepository
             $qb->andWhere($qb->expr()->isNotNull('t.end'));
         }
 
+        if (null !== $user) {
+            $qb->andWhere('t.user = :user')
+                ->setParameter('user', $user);
+        }
+
         $qb
             ->orderBy('year', 'DESC')
             ->addOrderBy('month', 'ASC')
             ->groupBy('year')
             ->addGroupBy('month');
-
-        if (null !== $user) {
-            $qb->andWhere('t.user = :user')
-                ->setParameter('user', $user);
-        }
 
         $years = [];
         foreach ($qb->getQuery()->execute() as $statRow) {
@@ -287,10 +287,10 @@ class TimesheetRepository extends AbstractRepository
 
         $qb->select('t', 'a', 'p', 'c', 'u')
             ->from(Timesheet::class, 't')
-            ->join('t.activity', 'a')
-            ->join('t.user', 'u')
-            ->join('a.project', 'p')
-            ->join('p.customer', 'c')
+            ->leftJoin('t.activity', 'a')
+            ->leftJoin('t.user', 'u')
+            ->leftJoin('a.project', 'p')
+            ->leftJoin('p.customer', 'c')
             ->orderBy('t.' . $query->getOrderBy(), $query->getOrder());
 
         if (null !== $query->getUser()) {

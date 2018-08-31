@@ -83,7 +83,6 @@ class Timesheet
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="timesheets")
      * @ORM\JoinColumn(onDelete="CASCADE")
-     * @Assert\NotNull()
      */
     private $project;
 
@@ -295,6 +294,20 @@ class Timesheet
      */
     public function validate(ExecutionContextInterface $context, $payload)
     {
+        if (null === $this->getActivity()->getProject() && null === $this->getProject()) {
+            $context->buildViolation('A timesheet with a global activity must have an assigned project.')
+                ->atPath('project')
+                ->setTranslationDomain('validators')
+                ->addViolation();
+        }
+
+        if (null !== $this->getActivity()->getProject() && !empty($this->getProject()) && $this->getActivity()->getProject() !== $this->getProject()) {
+            $context->buildViolation('A timesheet with a project specific activity cannot have a different project.')
+                ->atPath('project')
+                ->setTranslationDomain('validators')
+                ->addViolation();
+        }
+
         if (null !== $this->getEnd() && $this->getEnd()->getTimestamp() < $this->getBegin()->getTimestamp()) {
             $context->buildViolation('End date must not be earlier then start date.')
                 ->atPath('end')

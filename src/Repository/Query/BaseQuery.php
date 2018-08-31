@@ -20,6 +20,7 @@ class BaseQuery
     public const DEFAULT_PAGESIZE = 25;
     public const DEFAULT_PAGE = 1;
 
+    public const RESULT_TYPE_OBJECTS = 'Objects';
     public const RESULT_TYPE_PAGER = 'PagerFanta';
     public const RESULT_TYPE_QUERYBUILDER = 'QueryBuilder';
 
@@ -139,14 +140,19 @@ class BaseQuery
     }
 
     /**
-     * @param string $resultType
+     * @param $resultType
      * @return $this
+     * @throws \InvalidArgumentException
      */
     public function setResultType($resultType)
     {
-        if (in_array($resultType, [self::RESULT_TYPE_PAGER, self::RESULT_TYPE_QUERYBUILDER])) {
-            $this->resultType = $resultType;
+        $allowed = [self::RESULT_TYPE_PAGER, self::RESULT_TYPE_QUERYBUILDER, self::RESULT_TYPE_OBJECTS];
+
+        if (!in_array($resultType, $allowed)) {
+            throw new \InvalidArgumentException('Unsupported query result type');
         }
+
+        $this->resultType = $resultType;
 
         return $this;
     }
@@ -160,7 +166,7 @@ class BaseQuery
     }
 
     /**
-     * @param object $hiddenEntity
+     * @param object|string $hiddenEntity
      * @return BaseQuery
      */
     public function setHiddenEntity($hiddenEntity)

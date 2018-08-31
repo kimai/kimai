@@ -20,6 +20,50 @@ class ActivityQuery extends ProjectQuery
      * @var Project
      */
     protected $project;
+    /**
+     * @var bool
+     */
+    protected $orderGlobalsFirst = false;
+    /**
+     * @var bool
+     */
+    protected $globalsOnly = false;
+
+    /**
+     * @return bool
+     */
+    public function isOrderGlobalsFirst(): bool
+    {
+        return $this->orderGlobalsFirst;
+    }
+
+    /**
+     * @param bool $orderGlobalsFirst
+     * @return ActivityQuery
+     */
+    public function setOrderGlobalsFirst(bool $orderGlobalsFirst)
+    {
+        $this->orderGlobalsFirst = $orderGlobalsFirst;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isGlobalsOnly(): bool
+    {
+        return $this->globalsOnly;
+    }
+
+    /**
+     * @param bool $globalsOnly
+     * @return ActivityQuery
+     */
+    public function setGlobalsOnly(bool $globalsOnly)
+    {
+        $this->globalsOnly = $globalsOnly;
+        return $this;
+    }
 
     /**
      * @return Project
@@ -33,7 +77,7 @@ class ActivityQuery extends ProjectQuery
      * @param Project $project
      * @return $this
      */
-    public function setProject(Project $project = null)
+    public function setProject($project = null)
     {
         $this->project = $project;
 

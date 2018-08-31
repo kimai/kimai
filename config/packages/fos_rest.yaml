@@ -6,11 +6,11 @@ fos_rest:
 #        formats:
 #            name:                 ~
 #    unauthorized_challenge:  null
-#    param_fetcher_listener:
-#        enabled:              false
+    param_fetcher_listener:
+        enabled:              true
 #        force:                false
 #        service:              null
-#    cache_dir:            '%kernel.cache_dir%/fos_rest'
+    cache_dir:            '%kernel.cache_dir%/fos_rest'
 #    allowed_methods_listener:
 #        enabled:              false
 #        service:              null

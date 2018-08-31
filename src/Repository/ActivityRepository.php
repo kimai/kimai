@@ -117,15 +117,21 @@ class ActivityRepository extends AbstractRepository
     /**
      * Returns a query builder that is used for ActivityType and your own 'query_builder' option.
      *
-     * @param Activity|null $entity
+     * @param Activity|string|null $activity
+     * @param Project|string|null $project
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function builderForEntityType(Activity $entity = null, Project $project = null)
+    public function builderForEntityType($activity = null, $project = null)
     {
         $query = new ActivityQuery();
-        $query->setHiddenEntity($entity);
+        $query->setHiddenEntity($activity);
         $query->setResultType(ActivityQuery::RESULT_TYPE_QUERYBUILDER);
         $query->setProject($project);
+        $query->setOrderGlobalsFirst(true);
+
+        if (null === $activity && $project === null) {
+            $query->setGlobalsOnly(true);
+        }
 
         return $this->findByQuery($query);
     }
@@ -144,29 +150,57 @@ class ActivityRepository extends AbstractRepository
             ->leftJoin('p.customer', 'c')
             ->orderBy('a.' . $query->getOrderBy(), $query->getOrder());
 
+        $where = $qb->expr()->andX();
+        $where->add('a.visible = :visible');
+
+        $or = $qb->expr()->orX();
+
         if (ActivityQuery::SHOW_VISIBLE == $query->getVisibility()) {
             if (!$query->isExclusiveVisibility()) {
-                $qb->andWhere('c.visible = 1');
-                $qb->andWhere('p.visible = 1');
+                $where->add(
+                    $qb->expr()->orX(
+                        $qb->expr()->eq('c.visible', ':visible'),
+                        $qb->expr()->isNull('c.visible')
+                    )
+                );
+                $where->add(
+                    $qb->expr()->orX(
+                        $qb->expr()->eq('p.visible', ':visible'),
+                        $qb->expr()->isNull('p.visible')
+                    )
+                );
             }
-            $qb->andWhere('a.visible = 1');
-
-            /** @var Activity $entity */
-            $entity = $query->getHiddenEntity();
-            if (null !== $entity) {
-                $qb->orWhere('a.id = :activity')->setParameter('activity', $entity);
-            }
+            $qb->setParameter('visible', 1);
         } elseif (ActivityQuery::SHOW_HIDDEN == $query->getVisibility()) {
-            $qb->andWhere('a.visible = 0');
+            $qb->setParameter('visible', 0);
         }
 
-        if (null !== $query->getProject()) {
-            $qb->andWhere('a.project = :project')
-                ->setParameter('project', $query->getProject());
+        if ($query->isGlobalsOnly()) {
+            $where->add($qb->expr()->isNull('a.project'));
+        } elseif (null !== $query->getProject()) {
+            $where->add('a.project = :project');
+            $qb->setParameter('project', $query->getProject());
         } elseif (null !== $query->getCustomer()) {
-            $qb->andWhere('p.customer = :customer')
-                ->setParameter('customer', $query->getCustomer());
+            $where->add('p.customer = :customer');
+            $qb->setParameter('customer', $query->getCustomer());
         }
+
+        // this must always be the last part before the or
+        $or->add($where);
+
+        // this must always be the last part of the query
+        /** @var Activity $entity */
+        $entity = $query->getHiddenEntity();
+        if (null !== $entity) {
+            $or->add($qb->expr()->eq('a.id', ':activity'));
+            $qb->setParameter('activity', $entity);
+        }
+
+        if ($query->isOrderGlobalsFirst()) {
+            $qb->orderBy('a.project', 'ASC');
+        }
+
+        $qb->andWhere($or);
 
         return $this->getBaseQueryResult($qb, $query);
     }

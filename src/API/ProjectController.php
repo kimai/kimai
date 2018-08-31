@@ -13,7 +13,10 @@ namespace App\API;
 
 use App\Entity\Project;
 use App\Repository\ProjectRepository;
+use App\Repository\Query\VisibilityQuery;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
+use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -55,12 +58,22 @@ class ProjectController extends Controller
      *     description="Returns the collection of all existing projects",
      *     @SWG\Schema(ref=@Model(type=Project::class)),
      * )
+     * @Rest\QueryParam(name="customer", requirements="\d+", strict=true, nullable=true, description="Customer ID to filter projects")
+     * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter projects")
      *
+     * @param ParamFetcherInterface $paramFetcher
      * @return Response
      */
-    public function cgetAction()
+    public function cgetAction(ParamFetcherInterface $paramFetcher)
     {
-        $data = $this->repository->findAll();
+        $criteria = [];
+
+        if (null !== ($customer = $paramFetcher->get('customer'))) {
+            $criteria['customer'] = $customer;
+        }
+        $criteria['visibility'] = $paramFetcher->get('visible', VisibilityQuery::SHOW_VISIBLE);
+
+        $data = $this->repository->findBy($criteria);
         $view = new View($data, 200);
 
         return $this->viewHandler->handle($view);

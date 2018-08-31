@@ -11,10 +11,12 @@ namespace App\Form;
 
 use App\Entity\Timesheet;
 use App\Form\Type\ActivityGroupedWithCustomerNameType;
+use App\Form\Type\CustomerType;
 use App\Form\Type\DurationType;
 use App\Form\Type\ProjectType;
 use App\Form\Type\UserType;
 use App\Repository\ActivityRepository;
+use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -35,12 +37,8 @@ class TimesheetEditForm extends AbstractType
         /** @var Timesheet $entry */
         $entry = $options['data'];
 
-        $activity = null;
-        $project = null;
-        if ($entry->getId() !== null) {
-            $activity = $entry->getActivity();
-            $project = $entry->getProject();
-        }
+        $activity = $entry->getActivity();
+        $project = $entry->getProject();
 
         if (null === $project && null !== $activity) {
             $project = $activity->getProject();
@@ -72,11 +70,28 @@ class TimesheetEditForm extends AbstractType
         }
 
         $builder
+            ->add('customer', CustomerType::class, [
+                'label' => 'label.customer',
+                'query_builder' => function (CustomerRepository $repo) {
+                    return $repo->builderForEntityType();
+                },
+                'required' => false,
+                'mapped' => false,
+                'attr' => [
+                    'data-related-select' => $this->getBlockPrefix() . '_project',
+                    'data-api-url' => 'get_projects',
+                ],
+            ])
             ->add('project', ProjectType::class, [
+                'required' => false,
                 'label' => 'label.project',
                 'query_builder' => function (ProjectRepository $repo) use ($project) {
                     return $repo->builderForEntityType($project);
                 },
+                'attr' => [
+                    'data-related-select' => $this->getBlockPrefix() . '_activity',
+                    'data-api-url' => 'get_activities',
+                ],
             ])
             ->add('activity', ActivityGroupedWithCustomerNameType::class, [
                 'label' => 'label.activity',

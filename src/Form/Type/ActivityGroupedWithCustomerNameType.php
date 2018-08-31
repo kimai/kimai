@@ -24,6 +24,10 @@ class ActivityGroupedWithCustomerNameType extends ActivityType
      */
     public function groupBy(Activity $activity, $key, $index)
     {
+        if (null === $activity->getProject()) {
+            return null;
+        }
+
         return $activity->getProject()->getCustomer()->getName();
     }
 
@@ -33,6 +37,10 @@ class ActivityGroupedWithCustomerNameType extends ActivityType
      */
     public function choiceLabel(Activity $activity)
     {
+        if (null === $activity->getProject()) {
+            return $activity->getName();
+        }
+
         return $activity->getProject()->getName() . ': ' . $activity->getName();
     }
 }

@@ -86,6 +86,13 @@ class Project
     private $activities;
 
     /**
+     * @var Timesheet[]
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Timesheet", mappedBy="project")
+     */
+    private $timesheets;
+
+    /**
      * @return int
      */
     public function getId()
@@ -186,6 +193,25 @@ class Project
     public function getBudget()
     {
         return $this->budget;
+    }
+
+    /**
+     * @param Timesheet[] $timesheets
+     * @return Project
+     */
+    public function setTimesheets($timesheets)
+    {
+        $this->timesheets = $timesheets;
+
+        return $this;
+    }
+
+    /**
+     * @return Timesheet[]
+     */
+    public function getTimesheets()
+    {
+        return $this->timesheets;
     }
 
     /**

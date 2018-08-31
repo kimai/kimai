@@ -40,6 +40,7 @@
                 <directory suffix=".php">assets/</directory>
                 <directory suffix=".php">bin/</directory>
                 <directory suffix=".php">config/</directory>
+                <directory suffix=".php">node_modules/</directory>
                 <directory suffix=".php">public/</directory>
                 <directory suffix=".php">tests/</directory>
                 <directory suffix=".php">translations/</directory>

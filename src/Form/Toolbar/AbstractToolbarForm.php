@@ -146,7 +146,7 @@ abstract class AbstractToolbarForm extends AbstractType
                     'required' => false,
                     'query_builder' => function (ProjectRepository $repo) use ($data) {
                         $qb = $repo->builderForEntityType();
-                        $qb->where('p.customer = :customer')->setParameter('customer', $data['customer']);
+                        $qb->andWhere('p.customer = :customer')->setParameter('customer', $data['customer']);
 
                         return $qb;
                     },
@@ -172,8 +172,8 @@ abstract class AbstractToolbarForm extends AbstractType
                     'group_by' => null,
                     'required' => false,
                     'query_builder' => function (ActivityRepository $repo) use ($data) {
-                        $qb = $repo->builderForEntityType();
-                        $qb->where('a.project = :project')->setParameter('project', $data['project']);
+                        $qb = $repo->builderForEntityType(null, $data['project']);
+                        //$qb->andWhere('a.project = :project')->setParameter('project', $data['project']);
 
                         return $qb;
                     },

@@ -6,3 +6,10 @@
     {% endif %}
     {{ parent() }}
 {% endblock form_label %}
+
+{% block choice_widget_collapsed %}
+    {% if 'data-api-url' in attr|keys %}
+        {% set attr = attr|merge({'data-api-url': path(attr['data-api-url'])}) %}
+    {% endif %}
+    {{ parent() }}
+{% endblock %}
