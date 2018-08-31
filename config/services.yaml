@@ -94,7 +94,7 @@ services:
 
     App\Twig\Extensions:
         arguments:
-            $locales: "%app_locales%"
+            $languages: "%kimai.languages%"
 
     App\Twig\DateExtensions:
         arguments:
