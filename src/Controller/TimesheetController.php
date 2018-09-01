@@ -16,15 +16,14 @@ use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\Query\TimesheetQuery;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller used to manage timesheets.
  *
- * @Route("/timesheet")
+ * @Route(path="/timesheet")
  * @Security("is_granted('ROLE_USER')")
  */
 class TimesheetController extends AbstractController
@@ -40,9 +39,8 @@ class TimesheetController extends AbstractController
     }
 
     /**
-     * @Route("/", defaults={"page": 1}, name="timesheet")
-     * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="timesheet_paginated")
-     * @Method("GET")
+     * @Route(path="/", defaults={"page": 1}, name="timesheet", methods={"GET"})
+     * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="timesheet_paginated", methods={"GET"})
      * @Cache(smaxage="10")
      */
     public function indexAction($page, Request $request)
@@ -89,8 +87,7 @@ class TimesheetController extends AbstractController
     /**
      * The route to stop a running entry.
      *
-     * @Route("/{id}/stop", name="timesheet_stop")
-     * @Method({"GET"})
+     * @Route(path="/{id}/stop", name="timesheet_stop", methods={"GET"})
      * @Security("is_granted('stop', entry)")
      *
      * @param Timesheet $entry
@@ -104,8 +101,7 @@ class TimesheetController extends AbstractController
     /**
      * The route to stop a running entry.
      *
-     * @Route("/start/{id}", name="timesheet_start", requirements={"id" = "\d+"})
-     * @Method({"GET", "POST"})
+     * @Route(path="/start/{id}", name="timesheet_start", requirements={"id" = "\d+"}, methods={"GET", "POST"})
      * @Security("is_granted('start', activity)")
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -127,8 +123,7 @@ class TimesheetController extends AbstractController
     /**
      * The route to edit an existing entry.
      *
-     * @Route("/{id}/edit", name="timesheet_edit")
-     * @Method({"GET", "POST"})
+     * @Route(path="/{id}/edit", name="timesheet_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', entry)")
      *
      * @param Timesheet $entry
@@ -147,8 +142,7 @@ class TimesheetController extends AbstractController
     /**
      * The route to create a new entry by form.
      *
-     * @Route("/create", name="timesheet_create")
-     * @Method({"GET", "POST"})
+     * @Route(path="/create", name="timesheet_create", methods={"GET", "POST"})
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -161,8 +155,7 @@ class TimesheetController extends AbstractController
     /**
      * The route to delete an existing entry.
      *
-     * @Route("/{id}/delete", name="timesheet_delete")
-     * @Method({"GET", "POST"})
+     * @Route(path="/{id}/delete", name="timesheet_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', entry)")
      *
      * @param Timesheet $entry
