@@ -12,6 +12,8 @@ namespace App\Repository;
 use App\Entity\InvoiceTemplate;
 use App\Repository\Query\BaseQuery;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
+use Pagerfanta\Pagerfanta;
 
 /**
  * Class InvoiceTemplateRepository
@@ -40,7 +42,7 @@ class InvoiceTemplateRepository extends AbstractRepository
 
     /**
      * @param BaseQuery $query
-     * @return \Doctrine\ORM\QueryBuilder|\Pagerfanta\Pagerfanta
+     * @return QueryBuilder|Pagerfanta|array
      */
     public function findByQuery(BaseQuery $query)
     {

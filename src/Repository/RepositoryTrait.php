@@ -23,12 +23,14 @@ trait RepositoryTrait
     /**
      * @param QueryBuilder $qb
      * @param BaseQuery $query
-     * @return QueryBuilder|Pagerfanta
+     * @return QueryBuilder|Pagerfanta|array
      */
     protected function getBaseQueryResult(QueryBuilder $qb, BaseQuery $query)
     {
-        if (BaseQuery::RESULT_TYPE_PAGER == $query->getResultType()) {
+        if (BaseQuery::RESULT_TYPE_PAGER === $query->getResultType()) {
             return $this->getPager($qb->getQuery(), $query->getPage(), $query->getPageSize());
+        } elseif (BaseQuery::RESULT_TYPE_OBJECTS === $query->getResultType()) {
+            return $qb->getQuery()->execute();
         }
 
         return $qb;
