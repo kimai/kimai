@@ -15,6 +15,8 @@ use App\Entity\Timesheet;
 use App\Model\ProjectStatistic;
 use App\Repository\Query\ProjectQuery;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
+use Pagerfanta\Pagerfanta;
 
 /**
  * Class ProjectRepository
@@ -90,7 +92,7 @@ class ProjectRepository extends AbstractRepository
 
     /**
      * @param ProjectQuery $query
-     * @return \Doctrine\ORM\QueryBuilder|\Pagerfanta\Pagerfanta
+     * @return QueryBuilder|Pagerfanta|array
      */
     public function findByQuery(ProjectQuery $query)
     {
