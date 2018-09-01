@@ -285,7 +285,7 @@ class TimesheetRepository extends AbstractRepository
 
     /**
      * @param TimesheetQuery $query
-     * @return QueryBuilder|Pagerfanta
+     * @return QueryBuilder|Pagerfanta|array
      */
     public function findByQuery(TimesheetQuery $query)
     {
