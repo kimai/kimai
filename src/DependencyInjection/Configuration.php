@@ -156,6 +156,8 @@ class Configuration implements ConfigurationInterface
             ->arrayPrototype()
                 ->children()
                     ->scalarNode('date_short')->end()
+                    ->scalarNode('duration')->end()
+                    ->scalarNode('duration_short')->end()
                 ->end()
             ->end()
         ;

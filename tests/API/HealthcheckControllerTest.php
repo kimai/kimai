@@ -14,7 +14,6 @@ use App\Entity\User;
 /**
  * @coversDefaultClass \App\API\HealthcheckController
  * @group integration
- * @group legacy
  */
 class HealthcheckControllerTest extends APIControllerBaseTest
 {

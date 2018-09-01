@@ -15,7 +15,6 @@ use App\Tests\DataFixtures\TimesheetFixtures;
 /**
  * @coversDefaultClass \App\Controller\CalendarController
  * @group integration
- * @group legacy
  */
 class CalendarControllerTest extends ControllerBaseTest
 {

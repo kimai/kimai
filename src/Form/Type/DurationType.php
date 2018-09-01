@@ -67,7 +67,7 @@ class DurationType extends AbstractType
         $builder->addModelTransformer(new CallbackTransformer(
             function ($intToFormat) use ($formatter) {
                 try {
-                    return $formatter->format($intToFormat, true);
+                    return $formatter->format($intToFormat);
                 } catch (\Exception $e) {
                     throw new TransformationFailedException($e->getMessage());
                 }
