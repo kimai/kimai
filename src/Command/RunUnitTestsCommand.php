@@ -62,7 +62,7 @@ class RunUnitTestsCommand extends Command
      */
     protected function createPhpunitCmdLine($directory)
     {
-        return $this->rootDir . '/bin/phpunit --exclude-group integration ' . $directory;
+        return 'SYMFONY_DEPRECATIONS_HELPER=weak ' . $this->rootDir . '/bin/phpunit --exclude-group integration ' . $directory;
     }
 
     /**
