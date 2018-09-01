@@ -37,11 +37,16 @@ class BaseQueryTest extends TestCase
     {
         $this->assertEquals(BaseQuery::RESULT_TYPE_PAGER, $sut->getResultType());
 
-        $sut->setResultType('foo-bar');
-        $this->assertEquals(BaseQuery::RESULT_TYPE_PAGER, $sut->getResultType());
-
         $sut->setResultType(BaseQuery::RESULT_TYPE_QUERYBUILDER);
         $this->assertEquals(BaseQuery::RESULT_TYPE_QUERYBUILDER, $sut->getResultType());
+
+        $sut->setResultType(BaseQuery::RESULT_TYPE_OBJECTS);
+        $this->assertEquals(BaseQuery::RESULT_TYPE_OBJECTS, $sut->getResultType());
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unsupported query result type');
+
+        $sut->setResultType('foo-bar');
     }
 
     protected function assertHiddenEntity(BaseQuery $sut)

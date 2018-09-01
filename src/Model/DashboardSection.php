@@ -11,8 +11,8 @@ namespace App\Model;
 
 class DashboardSection
 {
-    const TYPE_SIMPLE = 'simple';
-    const TYPE_CHART = 'chart';
+    public const TYPE_SIMPLE = 'simple';
+    public const TYPE_CHART = 'chart';
 
     /**
      * @var null|string
@@ -54,6 +54,7 @@ class DashboardSection
     public function setType(string $type)
     {
         $this->type = $type;
+
         return $this;
     }
 
