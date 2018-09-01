@@ -14,7 +14,6 @@ use App\Tests\Controller\ControllerBaseTest;
 
 /**
  * @group integration
- * @group legacy
  */
 class ApiDocControllerTest extends ControllerBaseTest
 {

@@ -16,7 +16,6 @@ use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 /**
  * @coversDefaultClass \App\Controller\InvoiceController
  * @group integration
- * @group legacy
  */
 class ProfileControllerTest extends ControllerBaseTest
 {

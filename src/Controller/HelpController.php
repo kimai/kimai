@@ -10,15 +10,14 @@
 namespace App\Controller;
 
 use App\Constants;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * This controller can render the markdown documentation from /var/docs/
  *
- * @Route("/help")
+ * @Route(path="/help")
  * @Security("is_granted('ROLE_USER')")
  */
 class HelpController extends Controller
@@ -41,9 +40,8 @@ class HelpController extends Controller
     }
 
     /**
-     * @Route("/", defaults={"chapter": "README"}, name="help")
-     * @Route("/{chapter}", requirements={"chapter": "[a-zA-Z]*"}, name="help_chapter")
-     * @Method("GET")
+     * @Route(path="/", defaults={"chapter": "README"}, name="help", methods={"GET"})
+     * @Route(path="/{chapter}", requirements={"chapter": "[a-zA-Z]*"}, name="help_chapter", methods={"GET"})
      *
      * @param string $chapter
      * @return \Symfony\Component\HttpFoundation\Response
