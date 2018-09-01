@@ -94,7 +94,7 @@
                     {% for widget in section.widgets|slice(1, width) %}
                         {% set data = widget.data %}
                         {% if widget.dataType == constant('App\\Model\\Widget::DATA_TYPE_DURATION') %}
-                            {% set data = widget.data|duration %}
+                            {% set data = widget.data|duration('full') %}
                         {% elseif widget.dataType == constant('App\\Model\\Widget::DATA_TYPE_MONEY') %}
                             {% set data = widget.data|money %}
                         {% endif %}
