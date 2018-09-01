@@ -23,7 +23,7 @@ trait RepositoryTrait
     /**
      * @param QueryBuilder $qb
      * @param BaseQuery $query
-     * @return QueryBuilder|Pagerfanta
+     * @return QueryBuilder|Pagerfanta|array
      */
     protected function getBaseQueryResult(QueryBuilder $qb, BaseQuery $query)
     {
