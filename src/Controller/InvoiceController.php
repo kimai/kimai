@@ -156,7 +156,7 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route(path="/{id}/edit", name="admin_invoice_template_edit", methods={"GET", "POST"})
+     * @Route(path="/template/{id}/edit", name="admin_invoice_template_edit", methods={"GET", "POST"})
      *
      * TODO permission
      *
@@ -170,7 +170,7 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route(path="/create", name="admin_invoice_template_create", methods={"GET", "POST"})
+     * @Route(path="/template/create", name="admin_invoice_template_create", methods={"GET", "POST"})
      *
      * TODO permission
      *
@@ -185,6 +185,30 @@ class InvoiceController extends AbstractController
         }
 
         return $this->renderTemplateForm(new InvoiceTemplate(), $request);
+    }
+
+    /**
+     * The route to delete an existing template.
+     *
+     * @Route(path="/template/{id}/delete", name="admin_invoice_template_delete", methods={"GET", "POST"})
+     *
+     * @param Timesheet $entry
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteTemplate(InvoiceTemplate $template, Request $request)
+    {
+        try {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($template);
+            $entityManager->flush();
+
+            $this->flashSuccess('action.deleted_successfully');
+        } catch (\Exception $ex) {
+            $this->flashError('action.deleted.error', ['%reason%' => $ex->getMessage()]);
+        }
+
+        return $this->redirectToRoute('admin_invoice_template_paginated', ['page' => $request->get('page')]);
     }
 
     /**

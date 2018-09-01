@@ -29,6 +29,7 @@
             <td class="hidden-xs hidden-sm">{{ "invoice_renderer.#{entry.renderer}"|trans }}</td>
             <td>
                 {% set actionButtons = {'edit': path('admin_invoice_template_edit', {'id' : entry.id, 'page': page})} %}
+                {% set actionButtons = actionButtons|merge({'trash': path('admin_invoice_template_delete', {'id' : entry.id, 'page': page})}) %}
                 {{ widgets.button_group(actionButtons) }}
             </td>
         </tr>
