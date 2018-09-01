@@ -6,6 +6,47 @@
                 <source>access.denied</source>
                 <target>Доступ запрещен</target>
             </trans-unit>
+            <trans-unit id="stacktrace">
+                <source>stacktrace</source>
+                <target>Здесь возникла проблема</target>
+            </trans-unit>
+            <trans-unit id="http_error.title">
+                <source>http_error.title</source>
+                <target>Ошибка</target>
+            </trans-unit>
+            <trans-unit id="http_error.description">
+                <source>http_error.description</source>
+                <target>Упс! Произошла ошибка.</target>
+            </trans-unit>
+            <trans-unit id="http_error.suggestion">
+                <source>http_error.suggestion</source>
+                <target>
+                    Произошла непредвиденная ошибка.
+                    Возможно, обнаружилась ошибка в программе. Cвяжитесь с Вашим администратором, если ошибка все еще возникает при повторной загрузке.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_404.description">
+                <source>http_error_404.description</source>
+                <target>Упс! Страница не найдена!</target>
+            </trans-unit>
+            <trans-unit id="http_error_404.suggestion">
+                <source>http_error_404.suggestion</source>
+                <target>
+                    Извините, но запрашиваемая Вами страница не найдена.
+                    Пожалуйста, вернитесь в панель управления и попробуйте заново.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_403.description">
+                <source>http_error_403.description</source>
+                <target>Эта страница защищена</target>
+            </trans-unit>
+            <trans-unit id="http_error_403.suggestion">
+                <source>http_error_403.suggestion</source>
+                <target>
+                    К сожалению, у Вас нет прав для просмотра этой страницы.
+                    Пожалуйста, обратитесь за помощью к Вашему администратору.
+                </target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
