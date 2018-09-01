@@ -1,4 +1,22 @@
 {% import "macros/widgets.html.twig" as widgets %}
+{# You can overrwite these settings in your config/packages.local.yaml under the key "twig.globals.company" #}
+{% set company = company|default({
+    name: 'Kimai Inc.',
+    homepage: 'www.kimai.org',
+    email: 'kimai@example.com',
+    phone: '0123-4567890',
+    tax_number: 'YourTaxNumber',
+    signature: '/build/images/signature.png',
+    address: 'Kimai Inc.
+        Example road 42
+        D – 12345 City
+    ',
+    bank_account: '
+        Kimai Inc.
+        IBAN: DE00 0000 0000 0000 0000 00
+        BIC: XXXXXXXX (a bank name)
+    '
+}) %}
 
 <div class="row" id="freelancer-invoice" style="page:invoiceFreelancer;">
     <div class="col-xs-12">
