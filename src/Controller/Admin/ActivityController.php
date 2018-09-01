@@ -16,15 +16,14 @@ use App\Form\Toolbar\ActivityToolbarForm;
 use App\Repository\Query\ActivityQuery;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller used to manage activities in the admin part of the site.
  *
- * @Route("/admin/activity")
+ * @Route(path="/admin/activity")
  * @Security("is_granted('ROLE_ADMIN')")
  * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
  */
@@ -39,9 +38,8 @@ class ActivityController extends AbstractController
     }
 
     /**
-     * @Route("/", defaults={"page": 1}, name="admin_activity")
-     * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_activity_paginated")
-     * @Method("GET")
+     * @Route(path="/", defaults={"page": 1}, name="admin_activity", methods={"GET"})
+     * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_activity_paginated", methods={"GET"})
      * @Cache(smaxage="10")
      */
     public function indexAction($page, Request $request)
@@ -68,8 +66,7 @@ class ActivityController extends AbstractController
     }
 
     /**
-     * @Route("/create", name="admin_activity_create")
-     * @Method({"GET", "POST"})
+     * @Route(path="/create", name="admin_activity_create", methods={"GET", "POST"})
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -80,8 +77,7 @@ class ActivityController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="admin_activity_edit")
-     * @Method({"GET", "POST"})
+     * @Route(path="/{id}/edit", name="admin_activity_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', activity)")
      *
      * @param Activity $activity
@@ -96,8 +92,7 @@ class ActivityController extends AbstractController
     /**
      * The route to delete an existing entry.
      *
-     * @Route("/{id}/delete", name="admin_activity_delete")
-     * @Method({"GET", "POST"})
+     * @Route(path="/{id}/delete", name="admin_activity_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', activity)")
      *
      * @param Activity $activity

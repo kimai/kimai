@@ -15,15 +15,14 @@ use App\Form\CustomerEditForm;
 use App\Form\Toolbar\CustomerToolbarForm;
 use App\Repository\Query\CustomerQuery;
 use Pagerfanta\Pagerfanta;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller used to manage activities in the admin part of the site.
  *
- * @Route("/admin/customer")
+ * @Route(path="/admin/customer")
  * @Security("is_granted('ROLE_ADMIN')")
  * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
  */
@@ -38,9 +37,8 @@ class CustomerController extends AbstractController
     }
 
     /**
-     * @Route("/", defaults={"page": 1}, name="admin_customer")
-     * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_customer_paginated")
-     * @Method("GET")
+     * @Route(path="/", defaults={"page": 1}, name="admin_customer", methods={"GET"})
+     * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_customer_paginated", methods={"GET"})
      */
     public function indexAction($page, Request $request)
     {
@@ -65,8 +63,7 @@ class CustomerController extends AbstractController
     }
 
     /**
-     * @Route("/create", name="admin_customer_create")
-     * @Method({"GET", "POST"})
+     * @Route(path="/create", name="admin_customer_create", methods={"GET", "POST"})
      */
     public function createAction(Request $request)
     {
@@ -74,8 +71,7 @@ class CustomerController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="admin_customer_edit")
-     * @Method({"GET", "POST"})
+     * @Route(path="/{id}/edit", name="admin_customer_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', customer)")
      */
     public function editAction(Customer $customer, Request $request)
@@ -113,8 +109,7 @@ class CustomerController extends AbstractController
     /**
      * The route to delete an existing entry.
      *
-     * @Route("/{id}/delete", name="admin_customer_delete")
-     * @Method({"GET", "POST"})
+     * @Route(path="/{id}/delete", name="admin_customer_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', customer)")
      *
      * @param Customer $customer
