@@ -58,6 +58,7 @@ class InvoiceFixtures extends Fixture
                 'Email: ' . $faker->safeEmail
             )
         ;
+        $manager->persist($template);
 
         $template = new InvoiceTemplate();
         $template
