@@ -29,7 +29,7 @@
                 <th>{{ 'label.customer'|trans }}</th>
                 <td contenteditable="true">
                     {% if model.customer.number is not empty %}[{{ model.customer.number }}]{% endif %}
-                    {{ model.customer.name }} / {{ model.customer.contact }}
+                    {{ model.customer.name }}{% if model.customer.contact is not empty %} / {{ model.customer.contact }}{% endif %}
                 </td>
             </tr>
             {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}

@@ -28,13 +28,15 @@ class InvoiceFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        $this->loadInvoiceTemplates($manager);
+        $this->loadInvoiceTemplate($manager);
+        $this->loadFreelancerTemplate($manager);
+        $this->loadTimesheetTemplate($manager);
     }
 
     /**
      * @param ObjectManager $manager
      */
-    private function loadInvoiceTemplates(ObjectManager $manager)
+    private function loadInvoiceTemplate(ObjectManager $manager)
     {
         $faker = Factory::create();
 
@@ -45,6 +47,9 @@ class InvoiceFixtures extends Fixture
             ->setCompany($faker->company)
             ->setVat(19)
             ->setDueDays(30)
+            ->setRenderer('default')
+            ->setCalculator('default')
+            ->setNumberGenerator('default')
             ->setPaymentTerms(
                 'I would like to thank you for your confidence and will gladly be there for you in the future.' .
                 PHP_EOL .
@@ -58,7 +63,17 @@ class InvoiceFixtures extends Fixture
                 'Email: ' . $faker->safeEmail
             )
         ;
+
         $manager->persist($template);
+        $manager->flush();
+    }
+
+    /**
+     * @param ObjectManager $manager
+     */
+    private function loadFreelancerTemplate(ObjectManager $manager)
+    {
+        $faker = Factory::create();
 
         $template = new InvoiceTemplate();
         $template
@@ -81,6 +96,33 @@ class InvoiceFixtures extends Fixture
                 PHP_EOL .
                 'Max Müller'
             )
+            ->setAddress(
+                $faker->name . ' - ' . $faker->streetAddress . '-' .  $faker->postcode . ' ' . $faker->city
+            )
+        ;
+
+        $manager->persist($template);
+        $manager->flush();
+    }
+
+    /**
+     * @param ObjectManager $manager
+     */
+    private function loadTimesheetTemplate(ObjectManager $manager)
+    {
+        $faker = Factory::create();
+
+        $template = new InvoiceTemplate();
+        $template
+            ->setName('Timesheet')
+            ->setTitle('Stundenzettel')
+            ->setCompany($faker->company)
+            ->setVat(19)
+            ->setDueDays(14)
+            ->setRenderer('timesheet')
+            ->setCalculator('default')
+            ->setNumberGenerator('default')
+            ->setPaymentTerms('')
             ->setAddress(
                 $faker->name . ' - ' . $faker->streetAddress . '-' .  $faker->postcode . ' ' . $faker->city
             )
