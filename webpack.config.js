@@ -17,7 +17,7 @@ Encore
     .enableVersioning(Encore.isProduction())
 
     // generate only two files: app.js and app.css
-    .addEntry('app', './assets/js/app.js')
+    .addEntry('app', './assets/app.js')
 
     // enable sass/scss parser
     .enableSassLoader()

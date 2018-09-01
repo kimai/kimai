@@ -83,8 +83,8 @@
                 <p contenteditable="true">
                     {{ model.template.paymentTerms|trim|nl2br }}
                 </p>
-                {% if kimai_context.company.signature is defined %}
-                    <img src="{{ kimai_context.company.signature }}">
+                {% if company.signature is defined %}
+                    <img src="{{ company.signature }}">
                 {% endif %}
             </article>
         {% endif %}
@@ -100,18 +100,18 @@
                 <tbody>
                 <tr>
                     <td>
-                        {{ kimai_context.company.address|nl2br }}
-                        {{ 'label.invoice_tax_number'|trans }} {{ kimai_context.company.tax_number }}
+                        {{ company.address|nl2br }}
+                        {{ 'label.invoice_tax_number'|trans }} {{ company.tax_number }}
                     </td>
                     <td>
-                        {{ kimai_context.company.bank_account|nl2br }}
+                        {{ company.bank_account|nl2br }}
                     </td>
                     <td>
-                        {{ kimai_context.company.phone }}
+                        {{ company.phone }}
                         <br/>
-                        {{ kimai_context.company.email }}
+                        {{ company.email }}
                         <br/>
-                        {{ kimai_context.company.homepage }}
+                        {{ company.homepage }}
                     </td>
                 </tr>
                 </tbody>
