@@ -15,7 +15,6 @@ use App\Tests\Controller\ControllerBaseTest;
 /**
  * @coversDefaultClass \App\Controller\Admin\UserController
  * @group integration
- * @group legacy
  */
 class UserControllerTest extends ControllerBaseTest
 {

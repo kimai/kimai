@@ -15,7 +15,6 @@ use App\Tests\DataFixtures\TimesheetFixtures;
 /**
  * @coversDefaultClass \App\Controller\TimesheetController
  * @group integration
- * @group legacy
  */
 class TimesheetControllerTest extends ControllerBaseTest
 {
