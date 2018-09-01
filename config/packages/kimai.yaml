@@ -57,7 +57,7 @@ kimai:
             duration_short: '%%h:%%m h'
         fr:
             date_short: 'd/m/Y'
-            duration: '%%h:%%m h'
+            duration: '%%h h %%m min'
             duration_short: '%%h:%%m h'
         es:
             date_short: 'd.m.Y'
@@ -65,7 +65,7 @@ kimai:
             duration_short: '%%h:%%m h'
         ru:
             date_short: 'd.m.Y'
-            duration: '%%h:%%m h'
+            duration: '%%h:%%m Часов'
             duration_short: '%%h:%%m h'
 
     # timesheet calendar configuration
