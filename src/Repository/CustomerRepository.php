@@ -16,6 +16,8 @@ use App\Entity\Timesheet;
 use App\Model\CustomerStatistic;
 use App\Repository\Query\CustomerQuery;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
+use Pagerfanta\Pagerfanta;
 
 /**
  * Class CustomerRepository
@@ -97,7 +99,7 @@ class CustomerRepository extends AbstractRepository
 
     /**
      * @param CustomerQuery $query
-     * @return \Doctrine\ORM\QueryBuilder|\Pagerfanta\Pagerfanta
+     * @return QueryBuilder|Pagerfanta|array
      */
     public function findByQuery(CustomerQuery $query)
     {

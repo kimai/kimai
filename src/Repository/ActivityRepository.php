@@ -16,6 +16,8 @@ use App\Entity\User;
 use App\Model\ActivityStatistic;
 use App\Repository\Query\ActivityQuery;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
+use Pagerfanta\Pagerfanta;
 
 /**
  * Class ActivityRepository
@@ -138,7 +140,7 @@ class ActivityRepository extends AbstractRepository
 
     /**
      * @param ActivityQuery $query
-     * @return \Doctrine\ORM\QueryBuilder|\Pagerfanta\Pagerfanta
+     * @return QueryBuilder|Pagerfanta|array
      */
     public function findByQuery(ActivityQuery $query)
     {

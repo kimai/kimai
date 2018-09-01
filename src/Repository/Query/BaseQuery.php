@@ -144,7 +144,7 @@ class BaseQuery
      * @return $this
      * @throws \InvalidArgumentException
      */
-    public function setResultType($resultType)
+    public function setResultType(string $resultType)
     {
         $allowed = [self::RESULT_TYPE_PAGER, self::RESULT_TYPE_QUERYBUILDER, self::RESULT_TYPE_OBJECTS];
 

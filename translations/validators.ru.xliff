@@ -8,7 +8,7 @@
             </trans-unit>
             <trans-unit id="End date must not be earlier then start date.">
                 <source>End date must not be earlier then start date.</source>
-                <target>End date must not be earlier then start date.</target>
+                <target>Конечная дата не может быть установлена ранее начальной даты.</target>
             </trans-unit>
         </body>
     </file>

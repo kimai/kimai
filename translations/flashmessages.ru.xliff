@@ -28,11 +28,11 @@
             </trans-unit>
             <trans-unit id="action.deleted.error">
                 <source>action.deleted.error</source>
-                <target>Entry could not be deleted: %reason%</target>
+                <target>Ошибка - Запись не была удалена: %reason%</target>
             </trans-unit>
             <trans-unit id="invoice.first_template">
                 <source>invoice.first_template</source>
-                <target>You have to create your first template invoice before you can proceed</target>
+                <target>Прежде чем Вы сможете продолжить, необходимо создать первый образец счет-фактуры</target>
             </trans-unit>
         </body>
     </file>

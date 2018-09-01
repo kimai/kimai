@@ -33,14 +33,20 @@ class TimesheetRepository extends AbstractRepository
     /**
      * @param Timesheet $entry
      * @return bool
+     * @throws RepositoryException
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function stopRecording(Timesheet $entry)
     {
+        if (null !== $entry->getEnd()) {
+            throw new RepositoryException('Timesheet entry already stopped');
+        }
+
         // seems to be necessary so Doctrine will recognize a changed timestamp
         $entry->setBegin(clone $entry->getBegin());
         $entry->setEnd(new DateTime());
+
         $entityManager = $this->getEntityManager();
         $entityManager->persist($entry);
         $entityManager->flush();
@@ -51,7 +57,7 @@ class TimesheetRepository extends AbstractRepository
     /**
      * @param User $user
      * @param Activity $activity
-     * @return bool
+     * @return Timesheet
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
@@ -67,7 +73,7 @@ class TimesheetRepository extends AbstractRepository
         $entityManager->persist($entry);
         $entityManager->flush();
 
-        return true;
+        return $entry;
     }
 
     /**
@@ -279,7 +285,7 @@ class TimesheetRepository extends AbstractRepository
 
     /**
      * @param TimesheetQuery $query
-     * @return QueryBuilder|Pagerfanta
+     * @return QueryBuilder|Pagerfanta|array
      */
     public function findByQuery(TimesheetQuery $query)
     {

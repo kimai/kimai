@@ -63,6 +63,14 @@
                 <source>label.user_profile</source>
                 <target>Mon profil</target>
             </trans-unit>
+            <trans-unit id="label.api_token">
+                <source>label.api_token</source>
+                <target>Mot de passe de l'API</target>
+            </trans-unit>
+            <trans-unit id="label.api_token_repeat">
+                <source>label.api_token_repeat</source>
+                <target>Répéter le mot de passe de l'API</target>
+            </trans-unit>
 
             <!--
               Menu / Navbar items
@@ -93,7 +101,7 @@
             </trans-unit>
             <trans-unit id="menu.admin_customer">
                 <source>menu.admin_customer</source>
-                <target>Client</target>
+                <target>Clients</target>
             </trans-unit>
             <trans-unit id="menu.admin_project">
                 <source>menu.admin_project</source>
@@ -189,15 +197,15 @@
             </trans-unit>
             <trans-unit id="label.skin">
                 <source>label.skin</source>
-                <target>Thème Kimai</target>
+                <target>Thème</target>
             </trans-unit>
             <trans-unit id="label.hours">
                 <source>label.hours</source>
-                <target>Heures</target>
+                <target>Durée</target>
             </trans-unit>
             <trans-unit id="label.rate">
                 <source>label.rate</source>
-                <target>Tarif</target>
+                <target>Montant</target>
             </trans-unit>
             <trans-unit id="label.language">
                 <source>label.language</source>
@@ -225,7 +233,7 @@
             </trans-unit>
             <trans-unit id="action.edit">
                 <source>action.edit</source>
-                <target>Editer</target>
+                <target>Éditer</target>
             </trans-unit>
             <trans-unit id="action.delete">
                 <source>action.delete</source>
@@ -297,11 +305,11 @@
             </trans-unit>
             <trans-unit id="timesheet.subtitle">
                 <source>timesheet.subtitle</source>
-                <target>Administrer mes fiches de temps</target>
+                <target>Administrer les fiches de temps</target>
             </trans-unit>
             <trans-unit id="timesheet.edit">
                 <source>timesheet.edit</source>
-                <target>Editer l'enregistrement</target>
+                <target>Éditer l'enregistrement</target>
             </trans-unit>
             <trans-unit id="label.begin">
                 <source>label.begin</source>
@@ -317,8 +325,7 @@
             </trans-unit>
             <trans-unit id="modal.columns.description">
                 <source>modal.columns.description</source>
-                <target>Lors de l'enregistrement, les colonnes non cochées seront masquées. 
-                    Ces paramètres seront stockés dans un cookie du navigateur. Si vous supprimez vos cookies, ils seront réinitialisés.</target>
+                <target>Lors de l'enregistrement, les colonnes non cochées seront masquées. Ces paramètres seront stockés dans un cookie du navigateur. Si vous supprimez vos cookies, ils seront réinitialisés.</target>
             </trans-unit>
 
             <!--
@@ -330,15 +337,15 @@
             </trans-unit>
             <trans-unit id="profile.subtitle">
                 <source>profile.subtitle</source>
-                <target>Editer mes paramètres</target>
+                <target>Éditer les paramètres</target>
             </trans-unit>
             <trans-unit id="profile.about_me">
                 <source>profile.about_me</source>
-                <target>À mon propos</target>
+                <target>À propos</target>
             </trans-unit>
             <trans-unit id="profile.first_entry">
                 <source>profile.first_entry</source>
-                <target>Fonctionne depuis</target>
+                <target>Activités suivies depuis</target>
             </trans-unit>
             <trans-unit id="profile.tab_monthly">
                 <source>profile.tab_monthly</source>
@@ -352,6 +359,10 @@
                 <source>profile.password</source>
                 <target>Mot de passe</target>
             </trans-unit>
+            <trans-unit id="profile.api-token">
+                <source>profile.api-token</source>
+                <target>API</target>
+            </trans-unit>
             <trans-unit id="profile.roles">
                 <source>profile.roles</source>
                 <target>Rôles</target>
@@ -362,7 +373,7 @@
             </trans-unit>
             <trans-unit id="label.theme.fixed_layout">
                 <source>label.theme.fixed_layout</source>
-                <target>Activer la mise en page fixe. Vous ne pourrez pas alors utiliser boîtes flexibles.</target>
+                <target>Activer la mise en page fixe. Les boîtes flexibles seront inactives.</target>
             </trans-unit>
             <trans-unit id="label.theme.boxed_layout">
                 <source>label.theme.boxed_layout</source>
@@ -374,7 +385,7 @@
             </trans-unit>
             <trans-unit id="label.theme.mini_sidebar">
                 <source>label.theme.mini_sidebar</source>
-                <target>Changer la taille de l'en-tête de la barre latérale gauche (pleine ou réduite)</target>
+                <target>Changer la taille de la barre latérale gauche (large ou réduite)</target>
             </trans-unit>
 
             <!--
@@ -434,7 +445,8 @@
             </trans-unit>
             <trans-unit id="admin_activity.delete_confirm">
                 <source>admin_activity.delete_confirm</source>
-                <target>Actuellement, l'activité %activity% du projet %project% pour le client %customer%
+                <target>
+                    Actuellement, l'activité %activity% du projet %project% pour le client %customer%
                     possède %records% fiches de temps qui comptent pour un total de %duration%.
                     Ces fiches de temps seront également effacées.
                 </target>
@@ -445,11 +457,11 @@
             -->
             <trans-unit id="admin_customer.title">
                 <source>admin_customer.title</source>
-                <target>Client</target>
+                <target>Clients</target>
             </trans-unit>
             <trans-unit id="admin_customer.subtitle">
                 <source>admin_customer.subtitle</source>
-                <target>Vos clients sont la base de la création des projets et des activités.</target>
+                <target>Les clients sont à la base de la création des projets et des activités.</target>
             </trans-unit>
             <trans-unit id="label.customer_number">
                 <source>label.customer_number</source>
@@ -517,7 +529,7 @@
             </trans-unit>
             <trans-unit id="admin_user.subtitle">
                 <source>admin_user.subtitle</source>
-                <target>Tous les usagers enregistrés de votre installation Kimai</target>
+                <target>Tous les usagers enregistrés sur cette installation Kimai</target>
             </trans-unit>
             <trans-unit id="label.alias">
                 <source>label.alias</source>
@@ -537,7 +549,14 @@
             </trans-unit>
             <trans-unit id="label.roles">
                 <source>label.roles</source>
-                <target>Rôle</target>
+                <target>Rôles</target>
+            </trans-unit>
+            <trans-unit id="admin_user.delete_confirm">
+                <source>admin_user.delete_confirm</source>
+                <target>
+                    Actuellement l'usager %user% a %records% fiches de temps pour une durée totale de %duration%. 
+                    Ces fiches de temps vont aussi êtres supprimées !
+                </target>
             </trans-unit>
 
             <!--
@@ -565,50 +584,82 @@
             </trans-unit>
 
             <!--
-              Statistics
+              Données statistiques pour le tableau de bord et les profils des usagers
             -->
-            <trans-unit id="stats.durationThisMonth">
-                <source>stats.durationThisMonth</source>
-                <target>Nombre d'heures travaillées ce mois</target>
+            <trans-unit id="stats.durationToday">
+                <source>stats.durationToday</source>
+                <target>Heures travaillées aujourd'hui</target>
             </trans-unit>
-            <trans-unit id="stats.amountThisMonth">
-                <source>stats.amountThisMonth</source>
-                <target>Chiffre d'affaires du mois</target>
+            <trans-unit id="stats.durationWeek">
+                <source>stats.durationWeek</source>
+                <target>Heures travaillées cette semaine</target>
+            </trans-unit>
+            <trans-unit id="stats.durationMonth">
+                <source>stats.durationMonth</source>
+                <target>Heures travaillées ce mois</target>
+            </trans-unit>
+            <trans-unit id="stats.durationYear">
+                <source>stats.durationYear</source>
+                <target>Heures travaillées cette année</target>
             </trans-unit>
             <trans-unit id="stats.durationTotal">
                 <source>stats.durationTotal</source>
-                <target>Nombre total d'heures travaillées</target>
+                <target>Total des heures travaillées</target>
+            </trans-unit>
+            <trans-unit id="stats.amountToday">
+                <source>stats.amountToday</source>
+                <target>Revenu du jour</target>
+            </trans-unit>
+            <trans-unit id="stats.amountWeek">
+                <source>stats.amountWeek</source>
+                <target>Revenu de la semaine</target>
+            </trans-unit>
+            <trans-unit id="stats.amountMonth">
+                <source>stats.amountMonth</source>
+                <target>Revenu du mois</target>
+            </trans-unit>
+            <trans-unit id="stats.amountYear">
+                <source>stats.amountYear</source>
+                <target>Revenu de l'année</target>
             </trans-unit>
             <trans-unit id="stats.amountTotal">
                 <source>stats.amountTotal</source>
-                <target>Chiffre d'affaires total</target>
+                <target>Revenu total</target>
             </trans-unit>
-
-            <!--
-              Dashboard
-            -->
-            <trans-unit id="stats.userTotal">
-                <source>stats.userTotal</source>
-                <target>Nombre d'usagers</target>
+            <trans-unit id="stats.userActiveToday">
+                <source>stats.userActiveToday</source>
+                <target>Usagers actifs aujourd'hui</target>
             </trans-unit>
-            <trans-unit id="stats.userActiveThisMoth">
-                <source>stats.userActiveThisMoth</source>
+            <trans-unit id="stats.userActiveWeek">
+                <source>stats.userActiveWeek</source>
+                <target>Usagers actifs cette semaine</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveMonth">
+                <source>stats.userActiveMonth</source>
                 <target>Usagers actifs ce mois</target>
             </trans-unit>
-            <trans-unit id="stats.userActiveEver">
-                <source>stats.userActiveEver</source>
-                <target>Utilisateurs toujours actifs</target>
+            <trans-unit id="stats.userActiveYear">
+                <source>stats.userActiveYear</source>
+                <target>Usagers actifs cette année</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveTotal">
+                <source>stats.userActiveTotal</source>
+                <target>Nombre total d'usagers actifs</target>
             </trans-unit>
             <trans-unit id="stats.activeRecordings">
                 <source>stats.activeRecordings</source>
                 <target>Enregistrements actifs</target>
             </trans-unit>
-            <trans-unit id="stats.activitiesTotal">
-                <source>stats.activitiesTotal</source>
+            <trans-unit id="stats.userTotal">
+                <source>stats.userTotal</source>
+                <target>Nombre d'usagers</target>
+            </trans-unit>
+            <trans-unit id="stats.activityTotal">
+                <source>stats.activityTotal</source>
                 <target>Nombre d'activités</target>
             </trans-unit>
-            <trans-unit id="stats.projectsTotal">
-                <source>stats.projectsTotal</source>
+            <trans-unit id="stats.projectTotal">
+                <source>stats.projectTotal</source>
                 <target>Nombre de projets</target>
             </trans-unit>
             <trans-unit id="stats.customerTotal">
@@ -633,11 +684,11 @@
             </trans-unit>
             <trans-unit id="invoice.subtitle">
                 <source>invoice.subtitle</source>
-                <target>Générer des factures à partir de vos fiches de temps.</target>
+                <target>Générer des factures à partir des fiches de temps.</target>
             </trans-unit>
             <trans-unit id="invoice.select_filter">
                 <source>invoice.select_filter</source>
-                <target>Pour générer une facture, vous devez sélectionner au moins un filtre client.</target>
+                <target>Pour générer une facture, vous devez sélectionner au moins un client.</target>
             </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
@@ -657,7 +708,7 @@
             </trans-unit>
             <trans-unit id="invoice.due_days">
                 <source>invoice.due_days</source>
-                <target>Payment target</target>
+                <target>Échéance</target>
             </trans-unit>
             <trans-unit id="invoice.from">
                 <source>invoice.from</source>
@@ -673,7 +724,7 @@
             </trans-unit>
             <trans-unit id="invoice.subtotal">
                 <source>invoice.subtotal</source>
-                <target>Sous-total</target>
+                <target>Total HT</target>
             </trans-unit>
             <trans-unit id="invoice.tax">
                 <source>invoice.tax</source>
@@ -681,7 +732,7 @@
             </trans-unit>
             <trans-unit id="invoice.total">
                 <source>invoice.total</source>
-                <target>Total</target>
+                <target>Total TTC</target>
             </trans-unit>
             <trans-unit id="invoice.service_date">
                 <source>invoice.service_date</source>
@@ -697,7 +748,7 @@
             </trans-unit>
             <trans-unit id="label.payment_terms">
                 <source>label.payment_terms</source>
-                <target>Terms of payment</target>
+                <target>Modalités de paiement</target>
             </trans-unit>
             <trans-unit id="label.invoice_renderer">
                 <source>label.invoice_renderer</source>
@@ -810,7 +861,7 @@
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
                 <target>
-                    Redémarrez l'enregistrement de dernière activité|Redémarrez l'enregistrement d'une de vos %count% dernières activités
+                    Redémarrez l'enregistrement de la dernière activité|Redémarrez l'enregistrement d'une de vos %count% dernières activités
                 </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
