@@ -1,0 +1,18 @@
+App\Entity\Activity:
+    exclusion_policy: All
+    custom_accessor_order: [id, name, comment, visible, project_id]
+    properties:
+        id:
+            include: true
+        name:
+            include: true
+        comment:
+            include: true
+        visible:
+            include: true
+    virtual_properties:
+        getProjectId:
+            name: project_id
+            serialized_name: project_id
+            exp: "object.getProject() === null ? null : object.getProject().getId()"
+            type: integer

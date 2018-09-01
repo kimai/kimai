@@ -15,6 +15,8 @@ use App\Entity\Timesheet;
 use App\Model\ProjectStatistic;
 use App\Repository\Query\ProjectQuery;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
+use Pagerfanta\Pagerfanta;
 
 /**
  * Class ProjectRepository
@@ -31,21 +33,11 @@ class ProjectRepository extends AbstractRepository
     }
 
     /**
-     * Return statistic data for all user.
-     *
-     * @return ProjectStatistic
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return int
      */
-    public function getGlobalStatistics()
+    public function countProject()
     {
-        $countAll = $this->getEntityManager()
-            ->createQuery('SELECT COUNT(p.id) FROM ' . Project::class . ' p')
-            ->getSingleScalarResult();
-
-        $stats = new ProjectStatistic();
-        $stats->setCount($countAll);
-
-        return $stats;
+        return $this->count([]);
     }
 
     /**
@@ -100,7 +92,7 @@ class ProjectRepository extends AbstractRepository
 
     /**
      * @param ProjectQuery $query
-     * @return \Doctrine\ORM\QueryBuilder|\Pagerfanta\Pagerfanta
+     * @return QueryBuilder|Pagerfanta|array
      */
     public function findByQuery(ProjectQuery $query)
     {

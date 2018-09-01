@@ -24,6 +24,7 @@ class UserVoter extends AbstractVoter
     public const PASSWORD = 'password';
     public const ROLES = 'roles';
     public const PREFERENCES = 'preferences';
+    public const API_TOKEN = 'api-token';
 
     public const ALLOWED_ATTRIBUTES = [
         self::VIEW,
@@ -32,7 +33,8 @@ class UserVoter extends AbstractVoter
         self::ROLES,
         self::PASSWORD,
         self::DELETE,
-        self::PREFERENCES
+        self::PREFERENCES,
+        self::API_TOKEN,
     ];
 
     /**
@@ -71,6 +73,7 @@ class UserVoter extends AbstractVoter
             case self::VIEW:
                 return $this->canView($subject, $user, $token);
             case self::EDIT:
+            case self::API_TOKEN:
             case self::PASSWORD:
                 return $this->canEdit($subject, $user, $token);
             case self::DELETE:

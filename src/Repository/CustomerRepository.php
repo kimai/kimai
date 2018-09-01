@@ -16,6 +16,8 @@ use App\Entity\Timesheet;
 use App\Model\CustomerStatistic;
 use App\Repository\Query\CustomerQuery;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
+use Pagerfanta\Pagerfanta;
 
 /**
  * Class CustomerRepository
@@ -32,21 +34,11 @@ class CustomerRepository extends AbstractRepository
     }
 
     /**
-     * Return statistic data for all customer.
-     *
-     * @return CustomerStatistic
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return int
      */
-    public function getGlobalStatistics()
+    public function countCustomer()
     {
-        $countAll = $this->getEntityManager()
-            ->createQuery('SELECT COUNT(c.id) FROM ' . Customer::class . ' c')
-            ->getSingleScalarResult();
-
-        $stats = new CustomerStatistic();
-        $stats->setCount($countAll);
-
-        return $stats;
+        return $this->count([]);
     }
 
     /**
@@ -107,7 +99,7 @@ class CustomerRepository extends AbstractRepository
 
     /**
      * @param CustomerQuery $query
-     * @return \Doctrine\ORM\QueryBuilder|\Pagerfanta\Pagerfanta
+     * @return QueryBuilder|Pagerfanta|array
      */
     public function findByQuery(CustomerQuery $query)
     {

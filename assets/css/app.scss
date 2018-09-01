@@ -6,105 +6,18 @@
  */
 
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/variables";
-@import "invoice";
-@import "datatable";
 
 .error-page {
     margin-bottom: 50px;
 }
 
-/* ================================ CONTENT ================================ */
-
-.content {
-    padding: 15px 0;
-}
-.content-header {
-    h1 {
-        small {
-            display: none;
-        }
-    }
+@media print{
+    .sf-toolbar, .control-sidebar {display: none !important;}
 }
 
-@media (min-width: $screen-sm-min) {
-    .content-header {
-        h1 {
-            small {
-                display: inline-block;
-            }
-        }
-    }
-    .content {
-        padding: 15px;
-    }
-}
+@import 'content';
+@import 'toolbar';
 
-/* ================================ NAVBAR ================================ */
-
-.navbar-nav > li > a.ddt-large {
-    padding-top: 12px;
-    padding-bottom: 9px;
-}
-
-li.messages-menu ul.menu li .pull-left i {
-    color: #dd4b39;
-}
-
-.navbar-nav>.messages-menu>.dropdown-menu>li .menu>li>a>p {
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.navbar-nav .start_record {
-    text-align: center;
-}
-
-/*
-.ticktac:hover i.running{
-    color: #4ff131;
-}
-
-li.open .ticktac i.running{
-    color: #4ff131;
-}
-
-.ticktac i.stopped{
-    color: #fff;
-}
-
-.ticktac:hover i.stopped{
-    color: #4ff131;
-}
-.user-panel>.info {
-    left: 40px;
-    padding-top: 0px;
-}
-*/
-
-/* ================================ TOOLBAR ================================ */
-
-/* Page based action buttons in the upper right corner of the content area */
-.content-header > .breadcrumb {
-    position: absolute;
-    float: right;
-    background: transparent;
-}
-/* Right sidebar with additional tabs for personal settings and "About Kimai" section */
-.control-sidebar {
-    select {
-        color: $input-color;
-        background-color: $input-bg;
-    }
-    div.image {
-        img.img-circle {
-            max-width: 34px;
-        }
-    }
-}
-/* The filter form available on most pages above the datatable */
-.toolbar form {
-    font-size: $font-size-base;
-}
 /* ================================ SIDEBAR ================================ */
 
 /* Used for the Sidebar UserPanel (which is deactivated right now) */
@@ -119,8 +32,8 @@ footer.main-footer {
     font-size: 80%;
 }
 
-/* ================================ PRINT ================================ */
-
-@media print{
-    .sf-toolbar, .control-sidebar {display: none !important;}
-}
+@import 'invoice';
+@import 'datatable';
+@import 'calendar';
+@import 'dashboard';
+@import 'navbar';

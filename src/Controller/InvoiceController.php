@@ -19,15 +19,14 @@ use App\Repository\Query\BaseQuery;
 use App\Repository\Query\InvoiceQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TimesheetRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller used to manage invoices.
  *
- * @Route("/invoice")
+ * @Route(path="/invoice")
  * @Security("is_granted('ROLE_TEAMLEAD')")
  */
 class InvoiceController extends AbstractController
@@ -38,7 +37,6 @@ class InvoiceController extends AbstractController
     protected $service;
 
     /**
-     * InvoiceController constructor.
      * @param ServiceInvoice $service
      */
     public function __construct(ServiceInvoice $service)
@@ -73,7 +71,7 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route("/", name="invoice")
+     * @Route(path="/", name="invoice", methods={"GET", "POST"})
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -165,9 +163,8 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route("/template", defaults={"page": 1}, name="admin_invoice_template")
-     * @Route("/template/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_invoice_template_paginated")
-     * @Method({"GET", "POST"})
+     * @Route(path="/template", defaults={"page": 1}, name="admin_invoice_template", methods={"GET", "POST"})
+     * @Route(path="/template/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_invoice_template_paginated", methods={"GET", "POST"})
      *
      * TODO permission
      *
@@ -185,8 +182,7 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="admin_invoice_template_edit")
-     * @Method({"GET", "POST"})
+     * @Route(path="/{id}/edit", name="admin_invoice_template_edit", methods={"GET", "POST"})
      *
      * TODO permission
      *
@@ -200,8 +196,7 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route("/create", name="admin_invoice_template_create")
-     * @Method({"GET", "POST"})
+     * @Route(path="/create", name="admin_invoice_template_create", methods={"GET", "POST"})
      *
      * TODO permission
      *

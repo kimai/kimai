@@ -80,17 +80,18 @@ class Extensions extends \Twig_Extension
         'trash' => 'far fa-trash-alt',
         'user' => 'fas fa-user',
         'visibility' => 'far fa-eye',
+        'money' => 'far fa-money-bill-alt',
+        'duration' => 'far fa-hourglass',
     ];
 
     /**
-     * Extensions constructor.
-     * @param string $locales
-     * @param string $locale
+     * @param RequestStack $requestStack
+     * @param array $languages
      */
-    public function __construct(RequestStack $requestStack, $locales)
+    public function __construct(RequestStack $requestStack, array $languages)
     {
         $this->requestStack = $requestStack;
-        $this->locales = explode('|', $locales);
+        $this->locales = $languages;
         $this->durationFormatter = new Duration();
     }
 
@@ -155,10 +156,10 @@ class Extensions extends \Twig_Extension
      * Transforms seconds into a duration string.
      *
      * @param int|Timesheet $duration
-     * @param bool $includeSeconds
+     * @param string $format
      * @return string
      */
-    public function duration($duration, $includeSeconds = false)
+    public function duration($duration, $format = null)
     {
         $seconds = $duration;
         if ($duration instanceof Timesheet) {
@@ -168,7 +169,22 @@ class Extensions extends \Twig_Extension
             }
         }
 
-        return $this->durationFormatter->format($seconds, $includeSeconds) . ' h';
+        $locale = $this->getLocale();
+        switch ($format) {
+            case 'full':
+                $format = isset($this->locales[$locale]) ? $this->locales[$locale]['duration'] : null;
+                break;
+            case null:
+            case 'short':
+                $format = isset($this->locales[$locale]) ? $this->locales[$locale]['duration_short'] : null;
+                break;
+        }
+
+        if (null === $format) {
+            $format = '%h:%m h';
+        }
+
+        return $this->durationFormatter->format($seconds, $format);
     }
 
     /**
@@ -242,7 +258,7 @@ class Extensions extends \Twig_Extension
     public function getLocales()
     {
         $locales = [];
-        foreach ($this->locales as $locale) {
+        foreach (array_keys($this->locales) as $locale) {
             $locales[] = ['code' => $locale, 'name' => Intl::getLocaleBundle()->getLocaleName($locale, $locale)];
         }
 

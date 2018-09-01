@@ -1,8 +1,8 @@
 # Users
 
-There are multiple pre-defined roles in Kimai, which define the ACLs. A user can only inherit one role, where the roles extend each user.
-
 ## Roles & Permissions
+
+There are multiple pre-defined roles in Kimai, which define the ACLs. A user can only inherit one role, where the roles extend each user.
 
 | Role name | extends | Gives permission for |
 |---|---|---|
@@ -14,7 +14,7 @@ There are multiple pre-defined roles in Kimai, which define the ACLs. A user can
 
 ## Login
 
-- User can login with their username or email
+- User can login with username or email
 - If you activate the `Remember me` option, you can use use the most common functions within the next days without a new login
 
 ### Remember me login
@@ -35,18 +35,13 @@ Read the [configurations chapter](configurations.md) if you want to change the v
 ## User registration
 
 User registration with instant approval is activated by default, so users can register and will be able to login and start time-tracking instantly.
-If you want your new users to use [email](emails.md) based activation, you need to change the following configuration:
 
-- in `config/packages/fos_user.yaml` change the setting `fos_user.registration.confirmation.enabled` to true (default: false)
-
-If you want to deactivate the user registration completely, you have to change the following configs:
-
-- in `config/packages/admin_lte.yaml` remove the route alias `admin_lte.routes.adminlte_registration` (this will remove the link from the login form)
-- in `config/routes.yaml` remove the block `fos_user_registration` (this will deactivate the functionality)
+Read the [configurations chapter](configurations.md) if you want to disable the registration or enable email verification. 
 
 ## Password reset
 
-The reset password function is enabled by default, read how to activate [email](emails.md) support.
+The reset password function is enabled by default, but you need to activate [email](emails.md) support if you want to use it.
+
 If you want to deactivate this feature you have to change the following configs:
 
 - in `config/packages/admin_lte.yaml` remove the route alias `admin_lte.routes.adminlte_password_reset` (this will remove the link from the login form)
@@ -56,3 +51,5 @@ If you want to configure the behaviour (like the allowed time between multiple r
 
 - in `config/packages/fos_user.yaml` the key below `fos_user.registration.resetting` (see [documentation](https://symfony.com/doc/current/bundles/FOSUserBundle/configuration_reference.html))
 - the values `retry_ttl` and `token_ttl` are configured in seconds (7220 = 2 hours) 
+
+Read the [configurations chapter](configurations.md) if you want to reload the changed configuration files. 

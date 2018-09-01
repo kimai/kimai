@@ -11,23 +11,23 @@ namespace App\Controller;
 
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Form\UserApiTokenType;
 use App\Form\UserEditType;
 use App\Form\UserPasswordType;
 use App\Form\UserPreferencesForm;
 use App\Form\UserRolesType;
 use App\Repository\TimesheetRepository;
 use App\Voter\UserVoter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * User profile controller
  *
- * @Route("/profile")
+ * @Route(path="/profile")
  * @Security("is_granted('ROLE_USER')")
  */
 class ProfileController extends AbstractController
@@ -46,8 +46,7 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/{username}", name="user_profile")
-     * @Method("GET")
+     * @Route(path="/{username}", name="user_profile", methods={"GET"})
      * @Security("is_granted('view', profile)")
      */
     public function indexAction(User $profile)
@@ -56,8 +55,7 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/{username}/edit", name="user_profile_edit")
-     * @Method({"GET", "POST"})
+     * @Route(path="/{username}/edit", name="user_profile_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', profile)")
      */
     public function editAction(User $profile, Request $request)
@@ -79,8 +77,7 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/{username}/password", name="user_profile_password")
-     * @Method({"GET", "POST"})
+     * @Route(path="/{username}/password", name="user_profile_password", methods={"GET", "POST"})
      * @Security("is_granted('password', profile)")
      */
     public function passwordAction(User $profile, Request $request)
@@ -105,8 +102,32 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/{username}/roles", name="user_profile_roles")
-     * @Method({"GET", "POST"})
+     * @Route(path="/{username}/api-token", name="user_profile_api_token", methods={"GET", "POST"})
+     * @Security("is_granted('api-token', profile)")
+     */
+    public function apiTokenAction(User $profile, Request $request)
+    {
+        $form = $this->createApiTokenForm($profile);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $password = $this->encoder->encodePassword($profile, $profile->getPlainApiToken());
+            $profile->setApiToken($password);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($profile);
+            $entityManager->flush();
+
+            $this->flashSuccess('action.updated_successfully');
+
+            return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
+        }
+
+        return $this->getProfileView($profile, 'api-token', null, null, null, null, $form);
+    }
+
+    /**
+     * @Route(path="/{username}/roles", name="user_profile_roles", methods={"GET", "POST"})
      * @Security("is_granted('roles', profile)")
      */
     public function rolesAction(User $profile, Request $request)
@@ -128,8 +149,7 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/{username}/prefs", name="user_profile_preferences")
-     * @Method({"GET", "POST"})
+     * @Route(path="/{username}/prefs", name="user_profile_preferences", methods={"GET", "POST"})
      * @Security("is_granted('preferences', profile)")
      */
     public function savePreferencesAction(User $profile, Request $request)
@@ -179,6 +199,7 @@ class ProfileController extends AbstractController
      * @param Form|null $pwdForm
      * @param Form|null $rolesForm
      * @param Form|null $prefsForm
+     * @param Form|null $apiTokenForm
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -188,7 +209,8 @@ class ProfileController extends AbstractController
         Form $editForm = null,
         Form $pwdForm = null,
         Form $rolesForm = null,
-        Form $prefsForm = null
+        Form $prefsForm = null,
+        Form $apiTokenForm = null
     ) {
         /* @var $timesheetRepo TimesheetRepository */
         $timesheetRepo = $this->getDoctrine()->getRepository(Timesheet::class);
@@ -210,6 +232,10 @@ class ProfileController extends AbstractController
         if ($this->isGranted(UserVoter::PASSWORD, $user)) {
             $pwdForm = $pwdForm ?: $this->createPasswordForm($user);
             $viewVars['forms']['password'] = $pwdForm->createView();
+        }
+        if ($this->isGranted(UserVoter::API_TOKEN, $user)) {
+            $apiTokenForm = $apiTokenForm ?: $this->createApiTokenForm($user);
+            $viewVars['forms']['api-token'] = $apiTokenForm->createView();
         }
         if ($this->isGranted(UserVoter::ROLES, $user)) {
             $rolesForm = $rolesForm ?: $this->createRolesForm($user);
@@ -283,6 +309,23 @@ class ProfileController extends AbstractController
             [
                 'validation_groups' => ['passwordUpdate'],
                 'action' => $this->generateUrl('user_profile_password', ['username' => $user->getUsername()]),
+                'method' => 'POST'
+            ]
+        );
+    }
+
+    /**
+     * @param User $user
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    private function createApiTokenForm(User $user)
+    {
+        return $this->createForm(
+            UserApiTokenType::class,
+            $user,
+            [
+                'validation_groups' => ['apiTokenUpdate'],
+                'action' => $this->generateUrl('user_profile_api_token', ['username' => $user->getUsername()]),
                 'method' => 'POST'
             ]
         );

@@ -15,6 +15,8 @@ use App\Entity\User;
 use App\Model\ActivityStatistic;
 use App\Repository\Query\ActivityQuery;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
+use Pagerfanta\Pagerfanta;
 
 /**
  * Class ActivityRepository
@@ -76,21 +78,11 @@ class ActivityRepository extends AbstractRepository
     }
 
     /**
-     * Return global statistic data for all user.
-     *
-     * @return ActivityStatistic
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return int
      */
-    public function getGlobalStatistics()
+    public function countActivity()
     {
-        $countAll = $this->getEntityManager()
-            ->createQuery('SELECT COUNT(a.id) FROM ' . Activity::class . ' a')
-            ->getSingleScalarResult();
-
-        $stats = new ActivityStatistic();
-        $stats->setCount($countAll);
-
-        return $stats;
+        return $this->count([]);
     }
 
     /**
@@ -140,7 +132,7 @@ class ActivityRepository extends AbstractRepository
 
     /**
      * @param ActivityQuery $query
-     * @return \Doctrine\ORM\QueryBuilder|\Pagerfanta\Pagerfanta
+     * @return QueryBuilder|Pagerfanta|array
      */
     public function findByQuery(ActivityQuery $query)
     {

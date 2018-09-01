@@ -16,12 +16,13 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * This is the class that loads and manages your bundle configuration
+ * This class that loads and manages the Kimai configuration and container parameter.
  */
 class AppExtension extends Extension implements PrependExtensionInterface
 {
     /**
-     * {@inheritdoc}
+     * @param array $configs
+     * @param ContainerBuilder $container
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -35,11 +36,40 @@ class AppExtension extends Extension implements PrependExtensionInterface
 
         $container->setParameter('kimai.languages', $config['languages']);
         $container->setParameter('kimai.calendar', $config['calendar']);
+        $container->setParameter('kimai.theme', $config['theme']);
+        $container->setParameter('kimai.dashboard', $config['dashboard']);
+        $container->setParameter('kimai.widgets', $config['widgets']);
 
+        $this->createUserParameter($config, $container);
         $this->createTimesheetParameter($config, $container);
         $this->createInvoiceParameter($config, $container);
     }
 
+    /**
+     * @param array $config
+     * @param ContainerBuilder $container
+     */
+    public function createUserParameter(array $config, ContainerBuilder $container)
+    {
+        if (!$config['user']['registration']) {
+            $routes = $container->getParameter('admin_lte_theme.routes');
+            $routes['adminlte_registration'] = null;
+            $container->setParameter('admin_lte_theme.routes', $routes);
+        }
+
+        if (!$config['user']['password_reset']) {
+            $routes = $container->getParameter('admin_lte_theme.routes');
+            $routes['adminlte_password_reset'] = null;
+            $container->setParameter('admin_lte_theme.routes', $routes);
+        }
+
+        $container->setParameter('kimai.fosuser', $config['user']);
+    }
+
+    /**
+     * @param array $config
+     * @param ContainerBuilder $container
+     */
     public function createTimesheetParameter(array $config, ContainerBuilder $container)
     {
         $container->setParameter('kimai.timesheet.rates', $config['timesheet']['rates']);
@@ -71,6 +101,7 @@ class AppExtension extends Extension implements PrependExtensionInterface
      */
     public function prepend(ContainerBuilder $container)
     {
+        /*
         $configuration = new Configuration();
         $configs = $container->getExtensionConfig($this->getAlias());
         try {
@@ -88,10 +119,11 @@ class AppExtension extends Extension implements PrependExtensionInterface
                 ],
             ]
         );
+        */
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getAlias()
     {

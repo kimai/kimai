@@ -16,7 +16,9 @@ use Doctrine\DBAL\Schema\Index;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
- * Add constraints for the "delete user" feature.
+ * Migrations fot the "delete user" feature.
+ *
+ * Adds constraints to the timesheet table, so all timesheet entries. will be deleted when a user is deleted.
  */
 final class Version20180730044139 extends AbstractMigration
 {

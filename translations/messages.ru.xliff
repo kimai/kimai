@@ -63,6 +63,14 @@
                 <source>label.user_profile</source>
                 <target>Мой Профиль</target>
             </trans-unit>
+            <trans-unit id="label.api_token">
+                <source>label.api_token</source>
+                <target>API Пароль</target>
+            </trans-unit>
+            <trans-unit id="label.api_token_repeat">
+                <source>label.api_token_repeat</source>
+                <target>API Пароль повторить</target>
+            </trans-unit>
 
             <!--
               Menu / Navbar items
@@ -82,6 +90,10 @@
             <trans-unit id="menu.timesheet">
                 <source>menu.timesheet</source>
                 <target>Учет времени</target>
+            </trans-unit>
+            <trans-unit id="menu.invoice">
+                <source>menu.invoice</source>
+                <target>Счета</target>
             </trans-unit>
             <trans-unit id="menu.admin_timesheet">
                 <source>menu.admin_timesheet</source>
@@ -107,42 +119,6 @@
             <!--
               Error templates
             -->
-            <trans-unit id="http_error.name">
-                <source>http_error.name</source>
-                <target>Ошибка</target>
-            </trans-unit>
-            <trans-unit id="http_error.description">
-                <source>http_error.description</source>
-                <target>Ошибка</target>
-            </trans-unit>
-            <trans-unit id="http_error.suggestion">
-                <source>http_error.suggestion</source>
-                <target>Ошибка</target>
-            </trans-unit>
-            <trans-unit id="http_error_403.description">
-                <source>http_error_403.description</source>
-                <target>Ошибка</target>
-            </trans-unit>
-            <trans-unit id="http_error_403.suggestion">
-                <source>http_error_403.suggestion</source>
-                <target>Ошибка</target>
-            </trans-unit>
-            <trans-unit id="http_error_404.description">
-                <source>http_error_404.description</source>
-                <target>Ошибка</target>
-            </trans-unit>
-            <trans-unit id="http_error_404.suggestion">
-                <source>http_error_404.suggestion</source>
-                <target>Ошибка</target>
-            </trans-unit>
-            <trans-unit id="http_error_405.description">
-                <source>http_error_405.description</source>
-                <target>Ошибка</target>
-            </trans-unit>
-            <trans-unit id="http_error_405.suggestion">
-                <source>http_error_405.suggestion</source>
-                <target>Ошибка</target>
-            </trans-unit>
             <trans-unit id="error.no_entries_found">
                 <source>error.no_entries_found</source>
                 <target>Записи не найдены</target>
@@ -235,6 +211,10 @@
                 <source>label.email</source>
                 <target>Email</target>
             </trans-unit>
+            <trans-unit id="label.create_more">
+                <source>label.create_more</source>
+                <target>Cоздать новые записи</target>
+            </trans-unit>
 
             <!--
               Buttons & Actions
@@ -261,7 +241,7 @@
             </trans-unit>
             <trans-unit id="action.close">
                 <source>action.close</source>
-                <target>Close</target>
+                <target>Закрыто</target>
             </trans-unit>
 
             <!--
@@ -333,11 +313,11 @@
             </trans-unit>
             <trans-unit id="modal.columns.title">
                 <source>modal.columns.title</source>
-                <target>Change column visibility</target>
+                <target>Изменить видимость столбцов</target>
             </trans-unit>
             <trans-unit id="modal.columns.description">
                 <source>modal.columns.description</source>
-                <target>Upon saving the un-checked columns will be hidden and this setting will be stored in a browser cookie. If you delete your cookies, the settings will be reversed.</target>
+                <target>При сохранении не выбранные столбцы будут скрыты и данные установки будет сохранены в браузере „cookie“. При удалении cookies, Ваши установки изменятся.</target>
             </trans-unit>
 
             <!--
@@ -371,6 +351,10 @@
                 <source>profile.password</source>
                 <target>Пароль</target>
             </trans-unit>
+            <trans-unit id="profile.api-token">
+                <source>profile.api-token</source>
+                <target>API</target>
+            </trans-unit>
             <trans-unit id="profile.roles">
                 <source>profile.roles</source>
                 <target>Роли / Задачи</target>
@@ -394,6 +378,18 @@
             <trans-unit id="label.theme.mini_sidebar">
                 <source>label.theme.mini_sidebar</source>
                 <target>Активизирует уменьшенную версию панели навигации</target>
+            </trans-unit>
+
+            <!--
+              Help - Manual
+            -->
+            <trans-unit id="help.title">
+                <source>help.title</source>
+                <target>Помощь</target>
+            </trans-unit>
+            <trans-unit id="help.subtitle">
+                <source>help.subtitle</source>
+                <target>Руководство к пользованию и конфигурации Kimai (доступно только на английском)</target>
             </trans-unit>
 
             <!--
@@ -423,7 +419,7 @@
                 <source>admin_project.delete_confirm</source>
                 <target>
                     На данный момент для проекта %project% клиента %customer% существует всего %activities%
-                    активностей и %records% временных записей, общая продолдительность которых составляет %duration%.
+                    активностей и %records% временных записей, общая продолжительность которых составляет %duration%.
                     Эти виды активности и временные записи также будут удалены!
                 </target>
             </trans-unit>
@@ -442,8 +438,8 @@
             <trans-unit id="admin_activity.delete_confirm">
                 <source>admin_activity.delete_confirm</source>
                 <target>
-                    На данный момент для дейтельности %activity% в проекте %project% клиента %customer% существует
-                    всего %records% временных записей, общая продолдительность которых составляет %duration%. Эти
+                    На данный момент для деятельности %activity% в проекте %project% клиента %customer% существует
+                    всего временных записей %records%, общая продолжительность которых составляет %duration%. Эти
                     временные записи также будут удалены!
                 </target>
             </trans-unit>
@@ -458,6 +454,10 @@
             <trans-unit id="admin_customer.subtitle">
                 <source>admin_customer.subtitle</source>
                 <target>Журнал записи клиентской базы, включающий проекты и деятельность.</target>
+            </trans-unit>
+            <trans-unit id="label.customer_number">
+                <source>label.customer_number</source>
+                <target>Клиентский номер</target>
             </trans-unit>
             <trans-unit id="label.company">
                 <source>label.company</source>
@@ -506,9 +506,9 @@
             <trans-unit id="admin_customer.delete_confirm">
                 <source>admin_customer.delete_confirm</source>
                 <target>
-                  На данный момент для дейтельности %activity% в проекте %project% клиента %customer% существует
-                  всего %records% временных записей, общая продолдительность которых составляет %duration%. Эти
-                  проекты, виды активности и временные записи также будут удалены!
+                    На данный момент для деятельности %activity% в проекте %project% клиента %customer% существует
+                    всего временных записей %records%, общая продолжительность которых составляет %duration%. Эти
+                    проекты, виды активности и временные записи также будут удалены!
                 </target>
             </trans-unit>
 
@@ -543,6 +543,12 @@
                 <source>label.roles</source>
                 <target>Позиция</target>
             </trans-unit>
+            <trans-unit id="admin_user.delete_confirm">
+                <source>admin_user.delete_confirm</source>
+                <target>
+                    На данный момент для пользователя %user% существует всего временных записей %records%, общая продолжительность которых составляет %duration%. Эти временные записи также будут удалены!
+                </target>
+            </trans-unit>
 
             <!--
               ROLES
@@ -569,55 +575,215 @@
             </trans-unit>
 
             <!--
-              Statistics
+              Statistics data for Dashboard & Users profile
             -->
-            <trans-unit id="stats.durationThisMonth">
-                <source>stats.durationThisMonth</source>
-                <target>Отработанное время за этот месяц</target>
+            <trans-unit id="stats.durationToday">
+                <source>stats.durationToday</source>
+                <target>Отработано сегодня</target>
             </trans-unit>
-            <trans-unit id="stats.amountThisMonth">
-                <source>stats.amountThisMonth</source>
-                <target>Оборот за этот месяц</target>
+            <trans-unit id="stats.durationWeek">
+                <source>stats.durationWeek</source>
+                <target>Отработано за эту неделю</target>
+            </trans-unit>
+            <trans-unit id="stats.durationMonth">
+                <source>stats.durationMonth</source>
+                <target>Отработано за этот месяц</target>
+            </trans-unit>
+            <trans-unit id="stats.durationYear">
+                <source>stats.durationYear</source>
+                <target>Отработано за этот год</target>
             </trans-unit>
             <trans-unit id="stats.durationTotal">
                 <source>stats.durationTotal</source>
-                <target>Общее отработанное время</target>
+                <target>Отработано всего</target>
+            </trans-unit>
+            <trans-unit id="stats.amountToday">
+                <source>stats.amountToday</source>
+                <target>Оборот за сегодня</target>
+            </trans-unit>
+            <trans-unit id="stats.amountWeek">
+                <source>stats.amountWeek</source>
+                <target>Оборот этой недели</target>
+            </trans-unit>
+            <trans-unit id="stats.amountMonth">
+                <source>stats.amountMonth</source>
+                <target>Оборот этого месяца</target>
+            </trans-unit>
+            <trans-unit id="stats.amountYear">
+                <source>stats.amountYear</source>
+                <target>Оборот этого года</target>
             </trans-unit>
             <trans-unit id="stats.amountTotal">
                 <source>stats.amountTotal</source>
-                <target>Общий оборот</target>
+                <target>Итоговый оборот</target>
             </trans-unit>
-
-            <!--
-              Dashboard
-            -->
-            <trans-unit id="stats.userTotal">
-                <source>stats.userTotal</source>
-                <target>Всего пользователей</target>
+            <trans-unit id="stats.userActiveToday">
+                <source>stats.userActiveToday</source>
+                <target>Активные пользователи сегодня</target>
             </trans-unit>
-            <trans-unit id="stats.userActiveThisMoth">
-                <source>stats.userActiveThisMoth</source>
+            <trans-unit id="stats.userActiveWeek">
+                <source>stats.userActiveWeek</source>
+                <target>Активные пользователи на этой неделе</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveMonth">
+                <source>stats.userActiveMonth</source>
                 <target>Активные пользователи в этом месяце</target>
             </trans-unit>
-            <trans-unit id="stats.userActiveEver">
-                <source>stats.userActiveEver</source>
-                <target>Когда либо активные пользователи </target>
+            <trans-unit id="stats.userActiveYear">
+                <source>stats.userActiveYear</source>
+                <target>Активные пользователи за этот год</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveTotal">
+                <source>stats.userActiveTotal</source>
+                <target>Всего активных пользователей</target>
             </trans-unit>
             <trans-unit id="stats.activeRecordings">
                 <source>stats.activeRecordings</source>
-                <target>Текущий активный хронометраж</target>
+                <target>Активные временные записи</target>
             </trans-unit>
-            <trans-unit id="stats.ctivitiesTotal">
-                <source>stats.activitiesTotal</source>
-                <target>Количество дейтельностей</target>
+            <trans-unit id="stats.userTotal">
+                <source>stats.userTotal</source>
+                <target>Количество пользователей</target>
             </trans-unit>
-            <trans-unit id="stats.projectsTotal">
-                <source>stats.projectsTotal</source>
+            <trans-unit id="stats.activityTotal">
+                <source>stats.activityTotal</source>
+                <target>Объем деятельности</target>
+            </trans-unit>
+            <trans-unit id="stats.projectTotal">
+                <source>stats.projectTotal</source>
                 <target>Количество проектов</target>
             </trans-unit>
             <trans-unit id="stats.customerTotal">
                 <source>stats.customerTotal</source>
                 <target>Количество клиентов</target>
+            </trans-unit>
+
+            <!--
+              Invoice
+            -->
+            <trans-unit id="admin_invoice_template.title">
+                <source>admin_invoice_template.title</source>
+                <target>Образцы счетов</target>
+            </trans-unit>
+            <trans-unit id="admin_invoice_template.subtitle">
+                <source>admin_invoice_template.subtitle</source>
+                <target>Управляйте образцами счетов, с помощью которых Вы сможете экспортировать данные.</target>
+            </trans-unit>
+            <trans-unit id="invoice.title">
+                <source>invoice.title</source>
+                <target>Бланки счета</target>
+            </trans-unit>
+            <trans-unit id="invoice.subtitle">
+                <source>invoice.subtitle</source>
+                <target>Создайте счета для записанных периодов времени.</target>
+            </trans-unit>
+            <trans-unit id="invoice.select_filter">
+                <source>invoice.select_filter</source>
+                <target>Прежде чем создать счет, необходимо выбрать фильтр сортировки клиентов.</target>
+            </trans-unit>
+            <trans-unit id="button.print">
+                <source>button.print</source>
+                <target>Печать</target>
+            </trans-unit>
+            <trans-unit id="invoice_print">
+                <source>invoice_print</source>
+                <target>счет</target>
+            </trans-unit>
+            <trans-unit id="label.template">
+                <source>label.template</source>
+                <target>шаблон</target>
+            </trans-unit>
+            <trans-unit id="label.due_days">
+                <source>label.due_days</source>
+                <target>Дата оплаты - дни</target>
+            </trans-unit>
+            <trans-unit id="invoice.due_days">
+                <source>invoice.due_days</source>
+                <target>Дата оплаты</target>
+            </trans-unit>
+            <trans-unit id="invoice.from">
+                <source>invoice.from</source>
+                <target>С</target>
+            </trans-unit>
+            <trans-unit id="invoice.to">
+                <source>invoice.to</source>
+                <target>До</target>
+            </trans-unit>
+            <trans-unit id="invoice.number">
+                <source>invoice.number</source>
+                <target>Номер счета</target>
+            </trans-unit>
+            <trans-unit id="invoice.subtotal">
+                <source>invoice.subtotal</source>
+                <target>Сумма счета оплаты (нетто)</target>
+            </trans-unit>
+            <trans-unit id="invoice.tax">
+                <source>invoice.tax</source>
+                <target>НДС</target>
+            </trans-unit>
+            <trans-unit id="invoice.total">
+                <source>invoice.total</source>
+                <target>Конечная сумма расчета</target>
+            </trans-unit>
+            <trans-unit id="invoice.service_date">
+                <source>invoice.service_date</source>
+                <target>Дата выполненной работы</target>
+            </trans-unit>
+            <trans-unit id="invoice.amount">
+                <source>invoice.amount</source>
+                <target>Количество</target>
+            </trans-unit>
+            <trans-unit id="invoice.total_rate">
+                <source>invoice.total_rate</source>
+                <target>Общая стоимость</target>
+            </trans-unit>
+            <trans-unit id="label.payment_terms">
+                <source>label.payment_terms</source>
+                <target>Информация о выплате</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_renderer">
+                <source>label.invoice_renderer</source>
+                <target>Шаблон счета</target>
+            </trans-unit>
+            <trans-unit id="invoice_renderer.default">
+                <source>invoice_renderer.default</source>
+                <target>Счет (стандартный)</target>
+            </trans-unit>
+            <trans-unit id="invoice_renderer.timesheet">
+                <source>invoice_renderer.timesheet</source>
+                <target>Табель учета времени</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_number_generator">
+                <source>label.invoice_number_generator</source>
+                <target>Генератор номеров счета</target>
+            </trans-unit>
+            <trans-unit id="invoice_number_generator.default">
+                <source>invoice_number_generator.default</source>
+                <target>Дата (стандартная)</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_calculator">
+                <source>label.invoice_calculator</source>
+                <target>Суммарный учет</target>
+            </trans-unit>
+            <trans-unit id="invoice_calculator.default">
+                <source>invoice_calculator.default</source>
+                <target>Почасовая основа (стандартная)</target>
+            </trans-unit>
+            <trans-unit id="invoice_calculator.short">
+                <source>invoice_calculator.short</source>
+                <target>Почасовая основа - сокращенная версия (только одна запись)</target>
+            </trans-unit>
+            <trans-unit id="invoice.signature_user">
+                <source>invoice.signature_user</source>
+                <target>Подтверждение: Дата / Имя консультанта / Подпись</target>
+            </trans-unit>
+            <trans-unit id="invoice.signature_customer">
+                <source>invoice.signature_customer</source>
+                <target>Подтверждение: Дата / Имя клиента / Подпись</target>
+            </trans-unit>
+            <trans-unit id="label.order_number">
+                <source>label.order_number</source>
+                <target>Номер заказа</target>
             </trans-unit>
 
             <!--
@@ -685,7 +851,9 @@
             </trans-unit>
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
-                <target>Ваша последняя %count% отредактированная дейтельность|Eine ihrer %count% letzten Aktivitäten neustarten|Eine ihrer %count% letzten Aktivitäten neustarten</target>
+                <target>
+                    Возобновить последнюю деятельность|Возобновить одну их %count% последних деятельностей.
+                </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>

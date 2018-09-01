@@ -79,6 +79,18 @@ class User extends BaseUser implements UserInterface
     private $avatar;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="api_token", type="string", length=255, nullable=true)
+     */
+    protected $apiToken;
+
+    /**
+     * @var string
+     */
+    protected $plainApiToken;
+
+    /**
      * @var UserPreference[]|Collection
      *
      * @ORM\OneToMany(targetEntity="App\Entity\UserPreference", mappedBy="user", cascade={"persist"})
@@ -175,6 +187,44 @@ class User extends BaseUser implements UserInterface
     public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiToken()
+    {
+        return $this->apiToken;
+    }
+
+    /**
+     * @param string $apiToken
+     * @return User
+     */
+    public function setApiToken($apiToken)
+    {
+        $this->apiToken = $apiToken;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlainApiToken(): ?string
+    {
+        return $this->plainApiToken;
+    }
+
+    /**
+     * @param string $plainApiToken
+     * @return User
+     */
+    public function setPlainApiToken(string $plainApiToken)
+    {
+        $this->plainApiToken = $plainApiToken;
 
         return $this;
     }

@@ -10,18 +10,18 @@
 namespace App\Controller;
 
 use App\Calendar\Service;
+use App\Calendar\TimesheetEntity;
 use App\Entity\Timesheet;
 use App\Repository\Query\TimesheetQuery;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller used to display calendars.
  *
- * @Route("/calendar")
+ * @Route(path="/calendar")
  * @Security("is_granted('ROLE_USER')")
  */
 class CalendarController extends AbstractController
@@ -40,8 +40,7 @@ class CalendarController extends AbstractController
     }
 
     /**
-     * @Route("/", name="calendar")
-     * @Method("GET")
+     * @Route(path="/", name="calendar", methods={"GET"})
      * @Cache(smaxage="10")
      */
     public function userCalendar()
@@ -53,8 +52,7 @@ class CalendarController extends AbstractController
     }
 
     /**
-     * @Route("/user", name="calendar_entries")
-     * @Method("GET")
+     * @Route(path="/user", name="calendar_entries", methods={"GET"})
      * @Cache(smaxage="10")
      */
     public function calendarEntries(Request $request)
@@ -96,35 +94,9 @@ class CalendarController extends AbstractController
         $result = [];
 
         foreach ($entries as $entry) {
-            $result[] = $this->getTimesheetEntryForCalendar($entry);
+            $result[] = new TimesheetEntity($entry);
         }
 
         return $this->json($result);
-    }
-
-    /**
-     * @param Timesheet $entry
-     * @return array
-     */
-    protected function getTimesheetEntryForCalendar(Timesheet $entry)
-    {
-        $result = [
-            'id' => $entry->getId(),
-            'start' => $entry->getBegin(),
-            'title' => $entry->getActivity()->getName(),
-            'description' => $entry->getDescription(),
-            'customer' => $entry->getActivity()->getProject()->getCustomer()->getName(),
-            'project' => $entry->getActivity()->getProject()->getName(),
-            'activity' => $entry->getActivity()->getName(),
-        ];
-
-        if (null === $entry->getEnd()) {
-            $result['borderColor'] = '#f39c12';
-            $result['backgroundColor'] = '#f39c12';
-        } else {
-            $result['end'] = $entry->getEnd() ?? new \DateTime();
-        }
-
-        return $result;
     }
 }

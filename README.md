@@ -18,7 +18,10 @@ Right now its in an early development phase, its usable but some advanced featur
 But we already support to [import your timesheets](migration_v1.md) from Kimai v1.
 
 It is developed with modern frameworks like [Symfony v4](https://github.com/symfony/symfony), [Doctrine](https://github.com/doctrine/),
-[AdminLTE](https://github.com/kevinpapst/AdminLTEBundle/) and [many](composer.json) [more](package.json)...
+[AdminLTE](https://github.com/kevinpapst/AdminLTEBundle/) and [many](composer.json) [more](package.json).
+
+Kimai is a multi-language application and already translated to English. German, Italian, Frensh, Spanish and Russian.
+If you want to support us in translating Kimai, please [read this documentation](var/docs/translations.md). 
 
 ### Requirements
 
@@ -34,8 +37,8 @@ It is developed with modern frameworks like [Symfony v4](https://github.com/symf
 
 Looking for more information about using Kimai? Check out our more detailed [documentation](var/docs/).
 
-You can see our development roadmap for the future in the [Milestones](milestones/) sections,
-current work is organized in the [Project](projects/) planning boards.
+You can see our development roadmap for the future in the [Milestones](milestones/) sections.
+
 Our roadmap is open for changes and input from the community, please [sent us](issues/) your ideas and questions.
 
 ## Installation
@@ -96,7 +99,7 @@ Create your first user with the following command. You will be asked to enter a 
 ```bash
 bin/console kimai:create-user username admin@example.com ROLE_SUPER_ADMIN
 ```
-_Tip: You can skip the "create user" step, if you are going to [import data from Kimai v1](migration_v1.md)._
+_Tip: You can skip the "create user" step, if you are going to [import data from Kimai v1](var/docs/migration_v1.md)._
 
 For available roles, please refer to the [user documentation](var/docs/users.md).
 

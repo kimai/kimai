@@ -21,8 +21,13 @@ use Twig\TwigFilter;
  */
 class ExtensionsTest extends TestCase
 {
+    private $localeEn = ['en' => ['date_short' => 'Y-m-d', 'duration' => '%h:%m:%s h', 'duration_short' => '%h:%m h']];
+    private $localeDe = ['de' => ['date_short' => 'd.m.Y', 'duration' => '%h:%m:%s Stunden', 'duration_short' => '%h:%m h']];
+    private $localeRu = ['ru' => ['date_short' => 'd.m.Y', 'duration' => '%h:%m:%s h', 'duration_short' => '%h:%m h']];
+    private $localeFake = ['XX' => ['date_short' => 'd.m.Y', 'duration' => '%h Stunden, %m Minuten und %s Sekunden', 'duration_short' => '%h - %m - %s Zeit']];
+
     /**
-     * @param string $locales
+     * @param array $locales
      * @param string $locale
      * @return Extensions
      */
@@ -39,7 +44,7 @@ class ExtensionsTest extends TestCase
     public function testGetFilters()
     {
         $filters = ['duration', 'money', 'currency', 'country', 'icon'];
-        $sut = $this->getSut('de');
+        $sut = $this->getSut($this->localeDe);
         $twigFilters = $sut->getFilters();
         $this->assertCount(count($filters), $twigFilters);
         $i = 0;
@@ -52,7 +57,7 @@ class ExtensionsTest extends TestCase
     public function testGetFunctions()
     {
         $functions = ['locales', 'is_visible_column'];
-        $sut = $this->getSut('de');
+        $sut = $this->getSut($this->localeDe);
         $twigFunctions = $sut->getFunctions();
         $this->assertCount(count($functions), $twigFunctions);
         $i = 0;
@@ -70,7 +75,8 @@ class ExtensionsTest extends TestCase
             ['code' => 'ru', 'name' => 'русский'],
         ];
 
-        $sut = $this->getSut('en|de|ru');
+        $appLocales = array_merge($this->localeEn, $this->localeDe, $this->localeRu);
+        $sut = $this->getSut($appLocales);
         $this->assertEquals($locales, $sut->getLocales());
     }
 
@@ -82,7 +88,7 @@ class ExtensionsTest extends TestCase
             'RUB' => 'RUB',
         ];
 
-        $sut = $this->getSut('en');
+        $sut = $this->getSut($this->localeEn);
         foreach ($symbols as $name => $symbol) {
             $this->assertEquals($symbol, $sut->currency($name));
         }
@@ -96,7 +102,7 @@ class ExtensionsTest extends TestCase
             'ES' => 'Spain',
         ];
 
-        $sut = $this->getSut('en');
+        $sut = $this->getSut($this->localeEn);
         foreach ($countries as $locale => $name) {
             $this->assertEquals($name, $sut->country($locale));
         }
@@ -111,7 +117,7 @@ class ExtensionsTest extends TestCase
      */
     public function testMoney($result, $amount, $currency, $locale)
     {
-        $sut = $this->getSut('en', $locale);
+        $sut = $this->getSut($this->localeEn, $locale);
         $this->assertEquals($result, $sut->money($amount, $currency));
     }
 
@@ -137,12 +143,22 @@ class ExtensionsTest extends TestCase
     {
         $record = $this->getTimesheet(9437);
 
-        $sut = $this->getSut('en');
+        $sut = $this->getSut($this->localeEn);
         $this->assertEquals('02:37 h', $sut->duration($record->getDuration()));
-        $this->assertEquals('02:37:17 h', $sut->duration($record->getDuration(), true));
+        $this->assertEquals('02:37:17 h', $sut->duration($record->getDuration(), '%h:%m:%s h'));
 
+        // test Timesheet object
         $this->assertEquals('02:37 h', $sut->duration($record));
-        $this->assertEquals('02:37:17 h', $sut->duration($record, true));
+        $this->assertEquals('02:37:17', $sut->duration($record, '%h:%m:%s'));
+
+        // test extended format
+        $sut = $this->getSut($this->localeFake, 'XX');
+        $this->assertEquals('02 - 37 - 17 Zeit', $sut->duration($record->getDuration(), 'short'));
+        $this->assertEquals('02 Stunden, 37 Minuten und 17 Sekunden', $sut->duration($record->getDuration(), 'full'));
+
+        // test fallback format
+        $sut = $this->getSut($this->localeEn, 'XX');
+        $this->assertEquals('02:37 h', $sut->duration($record->getDuration()));
     }
 
     protected function getTimesheet($seconds)
@@ -161,40 +177,20 @@ class ExtensionsTest extends TestCase
     public function testIcon()
     {
         $icons = [
-            'user' => 'fas fa-user',
-            'customer' => 'fas fa-users',
-            'project' => 'fas fa-project-diagram',
-            'activity' => 'fas fa-tasks',
-            'admin' => 'fas fa-wrench',
-            'invoice' => 'fas fa-file-invoice',
-            'timesheet' => 'far fa-clock',
-            'dashboard' => 'fas fa-tachometer-alt',
-            'logout' => 'fas fa-sign-out-alt',
-            'trash' => 'far fa-trash-alt',
-            'delete' => 'far fa-trash-alt',
-            'repeat' => 'fas fa-redo-alt',
-            'edit' => 'far fa-edit',
-            'manual' => 'fas fa-book',
-            'help' => 'far fa-question-circle',
-            'start' => 'fas fa-play-circle',
-            'start-small' => 'fas fa-play-circle',
-            'stop' => 'fas fa-stop',
-            'stop-small' => 'far fa-stop-circle',
-            'filter' => 'fas fa-filter',
-            'create' => 'far fa-plus-square',
-            'list' => 'fas fa-list',
-            'print' => 'fas fa-print',
-            'visibility' => 'far fa-eye',
-            'calendar' => 'far fa-calendar-alt',
+            'user', 'customer', 'project', 'activity', 'admin', 'invoice', 'timesheet', 'dashboard', 'logout', 'trash',
+            'delete', 'repeat', 'edit', 'manual', 'help', 'start', 'start-small', 'stop', 'stop-small', 'filter',
+            'create', 'list', 'print', 'visibility', 'calendar', 'money', 'duration',
         ];
 
-        $sut = $this->getSut('en');
-        foreach ($icons as $icon => $class) {
+        // test pre-defined icons
+        $sut = $this->getSut($this->localeEn);
+        foreach ($icons as $icon) {
             $result = $sut->icon($icon);
-            $this->assertNotEmpty($result);
+            $this->assertNotEmpty($result, 'Problem with icon definition: ' . $icon);
             $this->assertInternalType('string', $result);
         }
 
+        // test fallback will be returned
         $this->assertEquals('', $sut->icon('foo'));
         $this->assertEquals('bar', $sut->icon('foo', 'bar'));
     }
