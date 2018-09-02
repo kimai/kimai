@@ -65,4 +65,11 @@ interface CalculatorInterface
      * @return float
      */
     public function getVat(): ?float;
+
+    /**
+     * Returns the total amount of worked time in seconds.
+     *
+     * @return int
+     */
+    public function getTimeWorked(): int;
 }

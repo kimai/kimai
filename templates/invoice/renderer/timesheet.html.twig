@@ -63,6 +63,13 @@
             </tr>
             {% endfor %}
             </tbody>
+            <tfoot>
+            <tr>
+                <th></th>
+                <th>{{ 'invoice.total_working_time'|trans }}</th>
+                <th>{{ model.calculator.timeWorked|duration }}</th>
+            </tr>
+            </tfoot>
         </table>
     </div>
 </div>

@@ -97,4 +97,19 @@ class DefaultCalculator implements CalculatorInterface
     {
         return $this->model->getCustomer()->getCurrency();
     }
+
+    /**
+     * Returns the total amount of worked time in seconds.
+     *
+     * @return int
+     */
+    public function getTimeWorked(): int
+    {
+        $time = 0;
+        foreach ($this->model->getEntries() as $entry) {
+            $time += $entry->getDuration();
+        }
+
+        return $time;
+    }
 }

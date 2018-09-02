@@ -64,6 +64,7 @@
             <table class="inventory">
                 <thead>
                 <tr>
+                    <th>{{ 'label.date'|trans }}</th>
                     <th>{{ 'label.description'|trans }}</th>
                     <th>{{ 'invoice.unit_price'|trans }}</th>
                     <th>{{ 'invoice.amount'|trans }}</th>
@@ -73,6 +74,7 @@
                 <tbody>
                 {% for entry in model.calculator.entries %}
                     <tr>
+                        <td>{{ entry.begin|date_short }}</td>
                         <td contenteditable="true">{{ entry.description }}</td>
                         <td contenteditable="true">{{ app.user.getPreferenceValue('hourly_rate')|money(model.calculator.currency) }}</td>
                         <td contenteditable="true">{{ entry.duration|duration }}</td>

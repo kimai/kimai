@@ -798,6 +798,10 @@
                 <source>invoice.signature_customer</source>
                 <target>Leistungsbestätigung: Datum / Name Kunde / Unterschrift</target>
             </trans-unit>
+            <trans-unit id="invoice.total_working_time">
+                <source>invoice.total_working_time</source>
+                <target>Gesamtdauer</target>
+            </trans-unit>
             <trans-unit id="label.order_number">
                 <source>label.order_number</source>
                 <target>Bestellnummer</target>
