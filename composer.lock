@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0cf38f9b4970d089487593f344ed0282",
+    "content-hash": "26a66efe4ec32d6644deeaff090a303b",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -1840,16 +1840,16 @@
         },
         {
             "name": "kevinpapst/adminlte-bundle",
-            "version": "2.0",
+            "version": "2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/AdminLTEBundle.git",
-                "reference": "ee9406d2fc60a4d26d317fe555104df803ca130c"
+                "reference": "43840776d45cb86a4dbcb915efa582eb41c5a564"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/ee9406d2fc60a4d26d317fe555104df803ca130c",
-                "reference": "ee9406d2fc60a4d26d317fe555104df803ca130c",
+                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/43840776d45cb86a4dbcb915efa582eb41c5a564",
+                "reference": "43840776d45cb86a4dbcb915efa582eb41c5a564",
                 "shasum": ""
             },
             "require": {
@@ -1865,7 +1865,8 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.10",
-                "phpspec/prophecy": "^1.6"
+                "phpspec/prophecy": "^1.6",
+                "phpunit/phpunit": "^7.3"
             },
             "suggest": {
                 "friendsofsymfony/user-bundle": "Allows easy user management and security support",
@@ -1895,8 +1896,8 @@
                     "homepage": "https://www.kevinpapst.de"
                 }
             ],
-            "description": "Admin Theme based on the AdminLTE 2.3 for easy integration with Symfony 4",
-            "time": "2018-08-15T21:18:05+00:00"
+            "description": "Admin Theme based on the AdminLTE 2.4.8 for easy integration with Symfony 4",
+            "time": "2018-09-02T17:21:38+00:00"
         },
         {
             "name": "monolog/monolog",
