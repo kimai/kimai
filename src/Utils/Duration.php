@@ -18,14 +18,17 @@ class Duration
     public const FORMAT_NATURAL = 'natural';
     public const FORMAT_SECONDS = 'seconds';
 
+    public const FORMAT_WITH_SECONDS = '%h:%m:%s';
+    public const FORMAT_NO_SECONDS = '%h:%m';
+
     /**
      * Transforms seconds into a duration string.
      *
      * @param $seconds
-     * @param bool $includeSeconds
+     * @param string $format
      * @return string
      */
-    public function format($seconds, $includeSeconds = false)
+    public function format($seconds, $format = self::FORMAT_NO_SECONDS)
     {
         $hour = floor($seconds / 3600);
         $minute = floor(($seconds / 60) % 60);
@@ -33,14 +36,13 @@ class Duration
         $hour = $hour > 9 ? $hour : '0' . $hour;
         $minute = $minute > 9 ? $minute : '0' . $minute;
 
-        if (!$includeSeconds) {
-            return $hour . ':' . $minute;
-        }
-
         $second = $seconds % 60;
         $second = $second > 9 ? $second : '0' . $second;
 
-        return $hour . ':' . $minute . ':' . $second;
+        $formatted = str_replace('%h', $hour, $format);
+        $formatted = str_replace('%m', $minute, $formatted);
+
+        return str_replace('%s', $second, $formatted);
     }
 
     /**

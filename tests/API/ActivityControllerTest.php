@@ -14,7 +14,6 @@ use App\Entity\User;
 /**
  * @coversDefaultClass \App\API\ActivityController
  * @group integration
- * @group legacy
  */
 class ActivityControllerTest extends APIControllerBaseTest
 {

@@ -18,21 +18,25 @@
                 <source>timesheet.start.error</source>
                 <target>Ошибка - Хронометраж не был начат: %reason%</target>
             </trans-unit>
-            <trans-unit id="action.updated_successfully">
-                <source>action.updated_successfully</source>
+            <trans-unit id="action.update.success">
+                <source>action.update.success</source>
                 <target>Изменения успешно сохранены</target>
             </trans-unit>
-            <trans-unit id="action.deleted_successfully">
-                <source>action.deleted_successfully</source>
+            <trans-unit id="action.update.error">
+                <source>action.update.error</source>
+                <target>Changes could not be saved: %reason%</target>
+            </trans-unit>
+            <trans-unit id="action.delete.success">
+                <source>action.delete.success</source>
                 <target>Запись успешно удалена</target>
             </trans-unit>
-            <trans-unit id="action.deleted.error">
-                <source>action.deleted.error</source>
-                <target>Entry could not be deleted: %reason%</target>
+            <trans-unit id="action.delete.error">
+                <source>action.delete.error</source>
+                <target>Ошибка - Запись не была удалена: %reason%</target>
             </trans-unit>
             <trans-unit id="invoice.first_template">
                 <source>invoice.first_template</source>
-                <target>You have to create your first template invoice before you can proceed</target>
+                <target>Прежде чем Вы сможете продолжить, необходимо создать первый образец счет-фактуры</target>
             </trans-unit>
         </body>
     </file>

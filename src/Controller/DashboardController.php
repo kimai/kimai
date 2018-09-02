@@ -12,16 +12,15 @@ namespace App\Controller;
 use App\Event\DashboardEvent;
 use App\Model\DashboardSection;
 use App\Repository\WidgetRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Dashboard controller for the admin area.
  *
- * @Route("/dashboard")
+ * @Route(path="/dashboard")
  * @Security("is_granted('ROLE_USER')")
  */
 class DashboardController extends Controller
@@ -52,8 +51,7 @@ class DashboardController extends Controller
     }
 
     /**
-     * @Route("/", defaults={}, name="dashboard")
-     * @Method("GET")
+     * @Route(path="/", defaults={}, name="dashboard", methods={"GET"})
      */
     public function indexAction()
     {

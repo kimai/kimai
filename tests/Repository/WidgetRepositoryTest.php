@@ -73,9 +73,9 @@ class WidgetRepositoryTest extends TestCase
     {
         return [
             [12, TimesheetRepository::STATS_QUERY_DURATION, Widget::DATA_TYPE_DURATION],
-            [112233, TimesheetRepository::STATS_QUERY_AMOUNT, Widget::DATA_TYPE_MONEY],
+            [112233, TimesheetRepository::STATS_QUERY_AMOUNT, Widget::DATA_TYPE_INT],
             [37, TimesheetRepository::STATS_QUERY_ACTIVE, Widget::DATA_TYPE_INT],
-            [375, TimesheetRepository::STATS_QUERY_RATE, Widget::DATA_TYPE_INT],
+            [375, TimesheetRepository::STATS_QUERY_RATE, Widget::DATA_TYPE_MONEY],
             [['test' => 'foo'], TimesheetRepository::STATS_QUERY_USER, Widget::DATA_TYPE_INT],
         ];
     }

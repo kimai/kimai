@@ -60,7 +60,7 @@ class WidgetRepository
         $begin = !empty($widget['begin']) ? new \DateTime($widget['begin']) : null;
         $end = !empty($widget['end']) ? new \DateTime($widget['end']) : null;
         $theUser = $widget['user'] ? $user : null;
-        $type = isset($widget['type']) ? $widget['type'] : Widget::TYPE_COUNTER;
+        $type = $widget['type'] ?? Widget::TYPE_COUNTER;
 
         $data = $this->repository->getStatistic($widget['query'], $begin, $end, $theUser);
 
@@ -73,7 +73,7 @@ class WidgetRepository
 
         if ($widget['query'] == TimesheetRepository::STATS_QUERY_DURATION) {
             $model->setDataType(Widget::DATA_TYPE_DURATION);
-        } elseif ($widget['query'] == TimesheetRepository::STATS_QUERY_AMOUNT) {
+        } elseif ($widget['query'] == TimesheetRepository::STATS_QUERY_RATE) {
             $model->setDataType(Widget::DATA_TYPE_MONEY);
         }
 

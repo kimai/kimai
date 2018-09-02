@@ -9,7 +9,9 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\InvoiceTemplate;
 use App\Entity\User;
+use App\Tests\DataFixtures\InvoiceFixtures;
 
 /**
  * @coversDefaultClass \App\Controller\InvoiceController
@@ -23,12 +25,59 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/invoice/');
     }
 
-    public function testIndexAction()
+    public function testIndexActionRedirectsToCreateTemplate()
     {
-        $this->markTestSkipped('create invoice template before this test case');
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $this->request($client, '/invoice/');
+        $this->assertIsRedirect($client, '/invoice/template/create');
+    }
+
+    public function testIndexActionHasErrorMessageOnEmptyQuery()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $fixture = new InvoiceFixtures();
+        $this->importFixture($em, $fixture);
+
         $this->request($client, '/invoice/');
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertMainContentClass($client, 'dashboard');
+
+        $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
+        $this->assertNotEmpty($node->text());
+        $this->assertContains('Before you can create an invoice, you have to select at least a customer filter.', $node->text());
+    }
+
+    public function testListTemplateAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $fixture = new InvoiceFixtures();
+        $this->importFixture($em, $fixture);
+
+        $this->request($client, '/invoice/template');
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasDataTable($client);
+    }
+
+    public function testDeleteTemplateAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $fixture = new InvoiceFixtures();
+        $this->importFixture($em, $fixture);
+
+        $this->request($client, '/invoice/template/1/delete?page=1');
+        $this->assertIsRedirect($client, '/invoice/template/page/1');
+        $client->followRedirect();
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasFlashSuccess($client);
+
+        $this->assertEquals(0, $em->getRepository(InvoiceTemplate::class)->count([]));
     }
 }

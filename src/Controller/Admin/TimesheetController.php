@@ -16,15 +16,14 @@ use App\Form\TimesheetEditForm;
 use App\Form\Toolbar\TimesheetAdminToolbarForm;
 use App\Repository\Query\TimesheetQuery;
 use Pagerfanta\Pagerfanta;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller used for manage timesheet entries in the admin part of the site.
  *
- * @Route("/team/timesheet")
+ * @Route(path="/team/timesheet")
  * @Security("is_granted('ROLE_TEAMLEAD')")
  * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
  */
@@ -44,9 +43,8 @@ class TimesheetController extends AbstractController
     /**
      * This route shows all users timesheet entries.
      *
-     * @Route("/", defaults={"page": 1}, name="admin_timesheet")
-     * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_timesheet_paginated")
-     * @Method("GET")
+     * @Route(path="/", defaults={"page": 1}, name="admin_timesheet", methods={"GET"})
+     * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_timesheet_paginated", methods={"GET"})
      *
      * @param $page
      * @param Request $request
@@ -78,8 +76,7 @@ class TimesheetController extends AbstractController
     /**
      * The route to stop a running entry.
      *
-     * @Route("/{id}/stop", name="admin_timesheet_stop")
-     * @Method({"GET"})
+     * @Route(path="/{id}/stop", name="admin_timesheet_stop", methods={"GET"})
      * @Security("is_granted('stop', entry)")
      *
      * @param Timesheet $entry
@@ -93,8 +90,7 @@ class TimesheetController extends AbstractController
     /**
      * The route to edit an existing entry.
      *
-     * @Route("/{id}/edit", name="admin_timesheet_edit")
-     * @Method({"GET", "POST"})
+     * @Route(path="/{id}/edit", name="admin_timesheet_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', entry)")
      *
      * @param Timesheet $entry
@@ -109,8 +105,7 @@ class TimesheetController extends AbstractController
     /**
      * The route to create a new entry by form.
      *
-     * @Route("/create", name="admin_timesheet_create")
-     * @Method({"GET", "POST"})
+     * @Route(path="/create", name="admin_timesheet_create", methods={"GET", "POST"})
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -123,8 +118,7 @@ class TimesheetController extends AbstractController
     /**
      * The route to delete an existing entry.
      *
-     * @Route("/{id}/delete", name="admin_timesheet_delete")
-     * @Method({"GET", "POST"})
+     * @Route(path="/{id}/delete", name="admin_timesheet_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', entry)")
      *
      * @param Timesheet $entry
@@ -138,9 +132,9 @@ class TimesheetController extends AbstractController
             $entityManager->remove($entry);
             $entityManager->flush();
 
-            $this->flashSuccess('action.deleted_successfully');
+            $this->flashSuccess('action.delete.success');
         } catch (\Exception $ex) {
-            $this->flashError('action.deleted.error', ['%reason%' => $ex->getMessage()]);
+            $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
         }
 
         return $this->redirectToRoute('admin_timesheet_paginated', ['page' => $request->get('page')]);

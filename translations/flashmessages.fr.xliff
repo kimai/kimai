@@ -18,16 +18,20 @@
                 <source>timesheet.start.error</source>
                 <target>Le chronométrage ne peut pas être lancé : %reason%</target>
             </trans-unit>
-            <trans-unit id="action.updated_successfully">
-                <source>action.updated_successfully</source>
+            <trans-unit id="action.update.success">
+                <source>action.update.success</source>
                 <target>Modifications enregistrées</target>
             </trans-unit>
-            <trans-unit id="action.deleted_successfully">
-                <source>action.deleted_successfully</source>
+            <trans-unit id="action.update.error">
+                <source>action.update.error</source>
+                <target>Changes could not be saved: %reason%</target>
+            </trans-unit>
+            <trans-unit id="action.delete.success">
+                <source>action.delete.success</source>
                 <target>L'entrée a été supprimée</target>
             </trans-unit>
-            <trans-unit id="action.deleted.error">
-                <source>action.deleted.error</source>
+            <trans-unit id="action.delete.error">
+                <source>action.delete.error</source>
                 <target>L'entrée ne peut pas être supprimée : %reason%</target>
             </trans-unit>
             <trans-unit id="invoice.first_template">

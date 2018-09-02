@@ -55,6 +55,9 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('duration_only')
                     ->defaultValue(false)
                 ->end()
+                ->booleanNode('markdown_content')
+                    ->defaultValue(false)
+                ->end()
                 ->arrayNode('rounding')
                     ->requiresAtLeastOneElement()
                     ->useAttributeAsKey('key')
@@ -156,6 +159,8 @@ class Configuration implements ConfigurationInterface
             ->arrayPrototype()
                 ->children()
                     ->scalarNode('date_short')->end()
+                    ->scalarNode('duration')->end()
+                    ->scalarNode('duration_short')->end()
                 ->end()
             ->end()
         ;

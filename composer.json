@@ -16,7 +16,7 @@
         "kevinpapst/adminlte-bundle": "^2.0",
         "nelmio/api-doc-bundle": "^3.2",
         "ocramius/proxy-manager": "2.1.1",
-        "sensio/framework-extra-bundle": "^5.1",
+        "sensio/framework-extra-bundle": "^5.2",
         "symfony/asset": "^4.0",
         "symfony/console": "^4.0",
         "symfony/dotenv": "^4.0",
@@ -97,11 +97,5 @@
             "id": "01C3FWRDJJEX9K6Y3A4XDFXPBR",
             "allow-contrib": true
         }
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/kevinpapst/AdminThemeBundle"
-        }
-    ]
+    }
 }

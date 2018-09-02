@@ -17,15 +17,14 @@ use App\Form\Toolbar\ProjectToolbarForm;
 use App\Repository\Query\ProjectQuery;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller used to manage projects in the admin part of the site.
  *
- * @Route("/admin/project")
+ * @Route(path="/admin/project")
  * @Security("is_granted('ROLE_ADMIN')")
  * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
  */
@@ -40,9 +39,8 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/", defaults={"page": 1}, name="admin_project")
-     * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_project_paginated")
-     * @Method("GET")
+     * @Route(path="/", defaults={"page": 1}, name="admin_project", methods={"GET"})
+     * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_project_paginated", methods={"GET"})
      * @Cache(smaxage="10")
      */
     public function indexAction($page, Request $request)
@@ -69,8 +67,7 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/create", name="admin_project_create")
-     * @Method({"GET", "POST"})
+     * @Route(path="/create", name="admin_project_create", methods={"GET", "POST"})
      */
     public function createAction(Request $request)
     {
@@ -78,8 +75,7 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="admin_project_edit")
-     * @Method({"GET", "POST"})
+     * @Route(path="/{id}/edit", name="admin_project_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', project)")
      */
     public function editAction(Project $project, Request $request)
@@ -90,8 +86,7 @@ class ProjectController extends AbstractController
     /**
      * The route to delete an existing entry.
      *
-     * @Route("/{id}/delete", name="admin_project_delete")
-     * @Method({"GET", "POST"})
+     * @Route(path="/{id}/delete", name="admin_project_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', project)")
      *
      * @param Project $project
@@ -114,7 +109,7 @@ class ProjectController extends AbstractController
             $entityManager->remove($project);
             $entityManager->flush();
 
-            $this->flashSuccess('action.deleted_successfully');
+            $this->flashSuccess('action.delete.success');
 
             return $this->redirectToRoute('admin_project');
         }
@@ -142,7 +137,7 @@ class ProjectController extends AbstractController
             $entityManager->persist($project);
             $entityManager->flush();
 
-            $this->flashSuccess('action.updated_successfully');
+            $this->flashSuccess('action.update.success');
 
             if ($editForm->has('create_more') && $editForm->get('create_more')->getData() === true) {
                 $newProject = new Project();

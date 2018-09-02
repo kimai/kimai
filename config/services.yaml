@@ -54,6 +54,10 @@ services:
         arguments:
             $dashboard: "%kimai.dashboard%"
 
+    App\Twig\MarkdownExtension:
+        arguments:
+            $timesheetAsMarkdown: "%kimai.timesheet.markdown%"
+
     # ================================================================================
     # DATABASE
     # ================================================================================
@@ -94,7 +98,7 @@ services:
 
     App\Twig\Extensions:
         arguments:
-            $locales: "%app_locales%"
+            $languages: "%kimai.languages%"
 
     App\Twig\DateExtensions:
         arguments:
@@ -141,3 +145,8 @@ services:
         class:     Doctrine\ORM\EntityRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Customer']
+
+    App\Repository\InvoiceTemplateRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\InvoiceTemplate']

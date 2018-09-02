@@ -12,6 +12,8 @@ namespace App\Repository;
 use App\Entity\InvoiceTemplate;
 use App\Repository\Query\BaseQuery;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
+use Pagerfanta\Pagerfanta;
 
 /**
  * Class InvoiceTemplateRepository
@@ -40,7 +42,7 @@ class InvoiceTemplateRepository extends AbstractRepository
 
     /**
      * @param BaseQuery $query
-     * @return \Doctrine\ORM\QueryBuilder|\Pagerfanta\Pagerfanta
+     * @return QueryBuilder|Pagerfanta|array
      */
     public function findByQuery(BaseQuery $query)
     {
@@ -51,5 +53,36 @@ class InvoiceTemplateRepository extends AbstractRepository
             ->orderBy('t.id');
 
         return $this->getBaseQueryResult($qb, $query);
+    }
+
+    /**
+     * @param InvoiceTemplate $template
+     * @return InvoiceTemplate
+     * @throws RepositoryException
+     */
+    public function saveTemplate(InvoiceTemplate $template)
+    {
+        try {
+            $this->getEntityManager()->persist($template);
+            $this->getEntityManager()->flush();
+        } catch (\Exception $ex) {
+            throw new RepositoryException('Could not save InvoiceTemplate');
+        }
+
+        return $template;
+    }
+
+    /**
+     * @param InvoiceTemplate $template
+     * @throws RepositoryException
+     */
+    public function removeTemplate(InvoiceTemplate $template)
+    {
+        try {
+            $this->getEntityManager()->remove($template);
+            $this->getEntityManager()->flush();
+        } catch (\Exception $ex) {
+            throw new RepositoryException('Could not remove InvoiceTemplate');
+        }
     }
 }

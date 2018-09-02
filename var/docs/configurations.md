@@ -134,6 +134,16 @@ admin_lte:
 
 ## Timesheets (kimai.yaml)
 
+### Descriptions with Markdown
+
+The description for every timesheet entry can be formatted in two different ways, configured with the `markdown_content` setting.
+
+- `false` - simple newlines in the description box will be displayed in the frontend as well (default)
+- `true` - description will be rendered with a markdown engine, supporting simple lists and other HTML content
+
+Allowing Markdown in timesheet descriptions is beautiful, but also could be a [security risk](https://github.com/erusev/parsedown/blob/master/README.md#security).
+Kimai will only apply the markdown in the user timesheet and not in the admin section as additional security measure.   
+
 ### Duration only
 
 Kimai supports two modes for displaying and recording timesheet entries:

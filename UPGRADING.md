@@ -5,7 +5,21 @@ Database upgrades are currently ONLY provided for MySQL/MariaDB and SQLite.
 If you plan on using e.g. PostgreSQL, please read more about the `bin/console doctrine:migrations:diff` and 
 `bin/console doctrine:migrations:migrate` commands and contact us, so we can integrate them into the official releases.
 
-## 0.4 (not yet released)
+
+A normal upgrade can be executed with these commands: 
+
+```bash
+git pull origin master
+sudo -u www-data composer install --no-dev --optimize-autoloader
+sudo -u www-data bin/console cache:clear --env=prod
+sudo -u www-data bin/console cache:warmup --env=prod
+bin/console doctrine:migrations:migrate
+```
+
+There might be version specific tasks that need to be executed before or after these steps, please see below 
+if your updated version is mentioned below.
+
+## [0.4](https://github.com/kevinpapst/kimai2/releases/tag/0.4) (2018-09-01)
 
 In the time between 0.3 and 0.4 there was a release of composer that introduced a BC break, 
 which leads to problems between Composer and Symfony Flex, resulting in an error like this when running it:
@@ -21,7 +35,7 @@ sudo composer self-update
 sudo -u www-data composer update symfony/flex --no-plugins
 ```
 
-Then the full update can be executed as usual: 
+Then the full update can be executed as usual:
 
 ```bash
 git pull origin master

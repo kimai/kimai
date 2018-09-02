@@ -14,9 +14,8 @@ use App\Entity\User;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 /**
- * @coversDefaultClass \App\Controller\InvoiceController
+ * @coversDefaultClass \App\Controller\ProfileController
  * @group integration
- * @group legacy
  */
 class ProfileControllerTest extends ControllerBaseTest
 {
