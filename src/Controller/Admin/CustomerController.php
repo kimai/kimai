@@ -95,7 +95,7 @@ class CustomerController extends AbstractController
             $entityManager->persist($customer);
             $entityManager->flush();
 
-            $this->flashSuccess('action.updated_successfully');
+            $this->flashSuccess('action.update.success');
 
             return $this->redirectToRoute('admin_customer');
         }
@@ -132,7 +132,7 @@ class CustomerController extends AbstractController
             $entityManager->remove($customer);
             $entityManager->flush();
 
-            $this->flashSuccess('action.deleted_successfully');
+            $this->flashSuccess('action.delete.success');
 
             return $this->redirectToRoute('admin_customer');
         }
