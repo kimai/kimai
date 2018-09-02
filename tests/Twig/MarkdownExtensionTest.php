@@ -22,8 +22,9 @@ class MarkdownExtensionTest extends TestCase
     {
         $sut = new MarkdownExtension(new Markdown());
         $filters = $sut->getFilters();
-        $this->assertCount(1, $filters);
+        $this->assertCount(2, $filters);
         $this->assertEquals('md2html', $filters[0]->getName());
+        $this->assertEquals('desc2html', $filters[1]->getName());
     }
 
     public function testMarkdownToHtml()
@@ -32,4 +33,20 @@ class MarkdownExtensionTest extends TestCase
         $this->assertEquals('<p><em>test</em></p>', $sut->markdownToHtml('*test*'));
         $this->assertEquals('<h1>foobar</h1>', $sut->markdownToHtml('# foobar'));
     }
+
+    public function testTimesheetContent()
+    {
+        $sut = new MarkdownExtension(new Markdown(), false);
+        $this->assertEquals(
+            "- test<br />\n- foo",
+            $sut->timesheetContent("- test\n- foo")
+        );
+
+        $sut = new MarkdownExtension(new Markdown(), true);
+        $this->assertEquals(
+            "<ul>\n<li>test</li>\n<li>foo</li>\n</ul>\n<p>foo <strong>bar</strong></p>",
+            $sut->timesheetContent("- test\n- foo\n\nfoo __bar__")
+        );
+    }
+
 }

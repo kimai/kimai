@@ -28,3 +28,11 @@
         padding: 15px;
     }
 }
+
+td {
+    &.timesheet-description {
+        & >ul {
+            padding-left: 10px;
+        }
+    }
+}
