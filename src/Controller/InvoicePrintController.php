@@ -47,10 +47,9 @@ class InvoicePrintController extends AbstractController
 
     /**
      * @param InvoiceModel $model
-     * @param Request $appRequest
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function printFreelancer(Request $appRequest, InvoiceModel $model)
+    public function printFreelancer(InvoiceModel $model)
     {
         return $this->render('invoice/renderer/freelancer.html.twig', [
             'model' => $model,
