@@ -68,7 +68,7 @@ class ProfileController extends AbstractController
             $entityManager->persist($profile);
             $entityManager->flush();
 
-            $this->flashSuccess('action.updated_successfully');
+            $this->flashSuccess('action.update.success');
 
             return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
         }
@@ -93,7 +93,7 @@ class ProfileController extends AbstractController
             $entityManager->persist($profile);
             $entityManager->flush();
 
-            $this->flashSuccess('action.updated_successfully');
+            $this->flashSuccess('action.update.success');
 
             return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
         }
@@ -118,7 +118,7 @@ class ProfileController extends AbstractController
             $entityManager->persist($profile);
             $entityManager->flush();
 
-            $this->flashSuccess('action.updated_successfully');
+            $this->flashSuccess('action.update.success');
 
             return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
         }
@@ -140,7 +140,7 @@ class ProfileController extends AbstractController
             $entityManager->persist($profile);
             $entityManager->flush();
 
-            $this->flashSuccess('action.updated_successfully');
+            $this->flashSuccess('action.update.success');
 
             return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
         }
@@ -184,7 +184,7 @@ class ProfileController extends AbstractController
             $entityManager->persist($profile);
             $entityManager->flush();
 
-            $this->flashSuccess('action.updated_successfully');
+            $this->flashSuccess('action.update.success');
 
             return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
         }

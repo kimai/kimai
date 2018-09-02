@@ -115,7 +115,7 @@ class ActivityController extends AbstractController
             $entityManager->remove($activity);
             $entityManager->flush();
 
-            $this->flashSuccess('action.deleted_successfully');
+            $this->flashSuccess('action.delete.success');
 
             return $this->redirectToRoute('admin_activity');
         }
@@ -146,7 +146,7 @@ class ActivityController extends AbstractController
             $entityManager->persist($activity);
             $entityManager->flush();
 
-            $this->flashSuccess('action.updated_successfully');
+            $this->flashSuccess('action.update.success');
 
             if ($editForm->has('create_more') && $editForm->get('create_more')->getData() === true) {
                 $newActivity = new Activity();
