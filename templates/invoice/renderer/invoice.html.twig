@@ -51,21 +51,23 @@
     <div class="col-xs-12 table-responsive">
         <table class="table table-striped">
             <thead>
-            <tr>
-                <th>{{ 'label.date'|trans }}</th>
-                <th>{{ 'label.activity'|trans }}</th>
-                <th>{{ 'label.hours'|trans }}</th>
-                <th>{{ 'label.rate'|trans }}</th>
-            </tr>
+                <tr>
+                    <th>{{ 'label.date'|trans }}</th>
+                    <th>{{ 'label.activity'|trans }}</th>
+                    <th>{{ 'invoice.unit_price'|trans }}</th>
+                    <th>{{ 'label.hours'|trans }}</th>
+                    <th>{{ 'invoice.total_rate'|trans }}</th>
+                </tr>
             </thead>
             <tbody>
             {% for entry in model.calculator.entries %}
-            <tr>
-                <td>{{ entry.begin|date_short }}</td>
-                <td>{{ entry.activity.name }} / {{ entry.activity.project.name }}</td>
-                <td>{{ entry.duration|duration }}</td>
-                <td>{{ entry.rate|money(model.calculator.currency) }}</td>
-            </tr>
+                <tr>
+                    <td>{{ entry.begin|date_short }}</td>
+                    <td>{{ entry.activity.name }} / {{ entry.activity.project.name }}</td>
+                    <td contenteditable="true">{{ app.user.getPreferenceValue('hourly_rate')|money(model.calculator.currency) }}</td>
+                    <td>{{ entry.duration|duration }}</td>
+                    <td>{{ entry.rate|money(model.calculator.currency) }}</td>
+                </tr>
             {% endfor %}
             </tbody>
         </table>
@@ -109,7 +111,7 @@
 
 <div class="row no-print">
     <div class="col-xs-12">
-        <button type="button" class="btn btn-success pull-right" onclick="window.print();return false;" style="margin-right: 5px;">
+        <button type="button" class="btn btn-success pull-right" onclick="window.print();return false;">
             <i class="{{ 'print'|icon }}"></i> {{ 'button.print'|trans }}
         </button>
     </div>

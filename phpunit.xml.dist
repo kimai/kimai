@@ -17,7 +17,7 @@
         <env name="DATABASE_PREFIX" value="kimai2_" force="true"/>
         <!-- define your env variables for the test env here -->
 
-        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak_vendors"/>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
 
         <!-- ###+ doctrine/doctrine-bundle ### -->
         <env name="DATABASE_URL" value="sqlite:///var/data/kimai_test.sqlite" force="true"/>

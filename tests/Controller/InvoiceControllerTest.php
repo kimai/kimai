@@ -63,6 +63,59 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertHasDataTable($client);
     }
 
+    public function testCreateTemplateAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $this->request($client, '/invoice/template/create');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=invoice_template_form]')->form();
+        $client->submit($form, [
+            'invoice_template_form' => [
+                'name' => 'Test',
+                'title' => 'Test invoice template',
+                'company' => 'Company name',
+                'renderer' => 'default',
+                'calculator' => 'default',
+                'numberGenerator' => 'default',
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/invoice/template'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertHasFlashSuccess($client);
+    }
+
+    public function testEditTemplateAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $fixture = new InvoiceFixtures();
+        $this->importFixture($em, $fixture);
+
+        $this->request($client, '/invoice/template/1/edit?page=1');
+        $form = $client->getCrawler()->filter('form[name=invoice_template_form]')->form();
+        $client->submit($form, [
+            'invoice_template_form' => [
+                'name' => 'Test 2!',
+                'title' => 'Test invoice template',
+                'company' => 'Company name',
+                'renderer' => 'default',
+                'calculator' => 'default',
+                'numberGenerator' => 'default',
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/invoice/template'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertHasFlashSuccess($client);
+    }
+
     public function testDeleteTemplateAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);

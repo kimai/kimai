@@ -58,4 +58,18 @@ interface CalculatorInterface
      * @return string
      */
     public function getCurrency(): string;
+
+    /**
+     * Returns the percentage for the value-added tax (VAT) calculation.
+     *
+     * @return float
+     */
+    public function getVat(): ?float;
+
+    /**
+     * Returns the total amount of worked time in seconds.
+     *
+     * @return int
+     */
+    public function getTimeWorked(): int;
 }

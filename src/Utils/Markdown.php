@@ -37,6 +37,7 @@ class Markdown
     public function toHtml(string $text, bool $safe = true): string
     {
         $this->parser->setSafeMode($safe);
+
         return $this->parser->text($text);
     }
 }
