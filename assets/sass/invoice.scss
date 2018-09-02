@@ -184,38 +184,25 @@ table.invoice-sum th, table.invoice-sum td  {
         padding: 5px;
     }
 
+    table.inventory td:nth-child(1),
     table.inventory th:nth-child(1) {
         text-align: left;
     }
 
+    table.inventory td:nth-child(2),
     table.inventory th:nth-child(2) {
         text-align: center;
+        width: 20%;
     }
 
+    table.inventory td:nth-child(3),
     table.inventory th:nth-child(3) {
         text-align: center;
+        width: 20%;
     }
 
+    table.inventory td:nth-child(4),
     table.inventory th:nth-child(4) {
-        text-align: right;
-    }
-
-    table.inventory td:nth-child(1) {
-        text-align: left;
-        width: 40%;
-    }
-
-    table.inventory td:nth-child(2) {
-        text-align: center;
-        width: 20%;
-    }
-
-    table.inventory td:nth-child(3) {
-        text-align: center;
-        width: 20%;
-    }
-
-    table.inventory td:nth-child(4) {
         text-align: right;
         width: 20%;
     }
