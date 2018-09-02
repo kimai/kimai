@@ -29,7 +29,7 @@ class InvoicePrintController extends AbstractController
      */
     public function printInvoice(InvoiceModel $model)
     {
-        return $this->render('invoice/renderer/print.html.twig', [
+        return $this->render('invoice/renderer/invoice.html.twig', [
             'model' => $model,
         ]);
     }
@@ -46,43 +46,13 @@ class InvoicePrintController extends AbstractController
     }
 
     /**
-     * @Route("/invoice/freelancer", name="invoice_freelancer")
-     *
      * @param InvoiceModel $model
      * @param Request $appRequest
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function printFreelancer(Request $appRequest, InvoiceModel $model)
     {
-        $form = $this->createForm(InvoiceToolbarForm::class, $model->getQuery(), [
-            'action' => $this->generateUrl('invoice', []),
-            'method' => 'GET',
-        ]);
-
-        $form->handleRequest($appRequest);
-
         return $this->render('invoice/renderer/freelancer.html.twig', [
-            'form' => $form->createView(),
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * @param InvoiceModel $model
-     * @param Request $appRequest
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function printFreelancerPreview(Request $appRequest, InvoiceModel $model)
-    {
-        $form = $this->createForm(InvoiceToolbarForm::class, $model->getQuery(), [
-            'action' => $this->generateUrl('invoice', []),
-            'method' => 'GET',
-        ]);
-
-        $form->handleRequest($appRequest);
-
-        return $this->render('invoice/renderer/preview.html.twig', [
-            'form' => $form->createView(),
             'model' => $model,
         ]);
     }

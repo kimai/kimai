@@ -34,7 +34,7 @@ class InvoiceModel
     /**
      * @var Timesheet[]
      */
-    protected $entries;
+    protected $entries = [];
 
     /**
      * @var InvoiceTemplate

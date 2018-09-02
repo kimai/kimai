@@ -27,11 +27,16 @@ class ShortInvoiceCalculator extends DefaultCalculator
         foreach ($this->model->getEntries() as $entry) {
             $timesheet->setRate($timesheet->getRate() + $entry->getRate());
             $timesheet->setDuration($timesheet->getDuration() + $entry->getDuration());
+            $timesheet->setBegin($entry->getBegin());
             if (null === $timesheet->getActivity()) {
                 $timesheet->setActivity($entry->getActivity());
-                $timesheet->setEnd($entry->getEnd());
             }
-            $timesheet->setBegin($entry->getBegin());
+        }
+
+        if (null !== $this->model->getQuery()->getActivity()) {
+            $timesheet->setDescription($this->model->getQuery()->getActivity()->getName());
+        } elseif (null !== $this->model->getQuery()->getProject()) {
+            $timesheet->setDescription($this->model->getQuery()->getProject()->getName());
         }
 
         return [$timesheet];
