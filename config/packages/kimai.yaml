@@ -8,6 +8,9 @@ kimai:
     # All configs related to timesheet and record management
     timesheet:
 
+        # render timesheet descriptions with markdown
+        markdown_content: false
+
         # Whether we display start and end time columns (false) or durations only (true).
         # Setting this to true will also change the "edit timesheet" forms, more infos available in the configurations docu.
         duration_only: false

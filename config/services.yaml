@@ -54,6 +54,10 @@ services:
         arguments:
             $dashboard: "%kimai.dashboard%"
 
+    App\Twig\MarkdownExtension:
+        arguments:
+            $timesheetAsMarkdown: "%kimai.timesheet.markdown%"
+
     # ================================================================================
     # DATABASE
     # ================================================================================
