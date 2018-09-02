@@ -78,7 +78,6 @@ class InvoiceControllerTest extends ControllerBaseTest
                 'renderer' => 'default',
                 'calculator' => 'default',
                 'numberGenerator' => 'default',
-
             ]
         ]);
 
@@ -107,7 +106,6 @@ class InvoiceControllerTest extends ControllerBaseTest
                 'renderer' => 'default',
                 'calculator' => 'default',
                 'numberGenerator' => 'default',
-
             ]
         ]);
 

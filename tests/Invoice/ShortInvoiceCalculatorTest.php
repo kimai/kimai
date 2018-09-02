@@ -102,7 +102,7 @@ class ShortInvoiceCalculatorTest extends TestCase
         $template->setVat(19);
 
         $project = new Project();
-        $project ->setName('project description');
+        $project->setName('project description');
 
         $query = new InvoiceQuery();
         $query->setProject($project);

@@ -48,5 +48,4 @@ class MarkdownExtensionTest extends TestCase
             $sut->timesheetContent("- test\n- foo\n\nfoo __bar__")
         );
     }
-
 }

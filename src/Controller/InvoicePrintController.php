@@ -9,11 +9,8 @@
 
 namespace App\Controller;
 
-use App\Form\Toolbar\InvoiceToolbarForm;
 use App\Model\InvoiceModel;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Controller used to print invoices.
@@ -22,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class InvoicePrintController extends AbstractController
 {
-
     /**
      * @param InvoiceModel $model
      * @return \Symfony\Component\HttpFoundation\Response

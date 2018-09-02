@@ -97,7 +97,7 @@ class InvoiceFixtures extends Fixture
                 'Max Müller'
             )
             ->setAddress(
-                $faker->name . ' - ' . $faker->streetAddress . '-' .  $faker->postcode . ' ' . $faker->city
+                $faker->name . ' - ' . $faker->streetAddress . '-' . $faker->postcode . ' ' . $faker->city
             )
         ;
 
@@ -124,7 +124,7 @@ class InvoiceFixtures extends Fixture
             ->setNumberGenerator('default')
             ->setPaymentTerms('')
             ->setAddress(
-                $faker->name . ' - ' . $faker->streetAddress . '-' .  $faker->postcode . ' ' . $faker->city
+                $faker->name . ' - ' . $faker->streetAddress . '-' . $faker->postcode . ' ' . $faker->city
             )
         ;
 

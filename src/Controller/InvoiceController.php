@@ -129,6 +129,7 @@ class InvoiceController extends AbstractController
         $query->getEnd()->setTime(23, 59, 59);
 
         $queryBuilder = $this->timesheetRepository->findByQuery($query);
+
         return $queryBuilder->getQuery()->getResult();
     }
 
@@ -255,6 +256,7 @@ class InvoiceController extends AbstractController
             try {
                 $this->invoiceRepository->saveTemplate($template);
                 $this->flashSuccess('action.update.success');
+
                 return $this->redirectToRoute('admin_invoice_template');
             } catch (\Exception $ex) {
                 $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
