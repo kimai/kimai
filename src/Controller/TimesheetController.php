@@ -169,9 +169,9 @@ class TimesheetController extends AbstractController
             $entityManager->remove($entry);
             $entityManager->flush();
 
-            $this->flashSuccess('action.deleted_successfully');
+            $this->flashSuccess('action.delete.success');
         } catch (\Exception $ex) {
-            $this->flashError('action.deleted.error', ['%reason%' => $ex->getMessage()]);
+            $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
         }
 
         return $this->redirectToRoute('timesheet_paginated', ['page' => $request->get('page')]);
