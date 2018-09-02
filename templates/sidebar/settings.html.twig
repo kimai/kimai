@@ -23,14 +23,8 @@
         {{ 'preferences.label.language'|trans({}, 'sidebar') }}
         <select class="pull-right" onchange="window.location.href = this.options[this.selectedIndex].value;">
             {% for locale in locales() %}
-                <option value="{{ path(app.request.get('_route', 'homepage'), app.request.get('_route_params', [])|merge({ _locale: locale.code })) }}" {% if app.request.locale == locale.code %}selected="selected"{% endif %}>{{ locale.name|capitalize }}</option>
+                <option value="{{ path(originalRequest.get('_route', 'homepage'), originalRequest.get('_route_params', [])|merge({ _locale: locale.code })) }}" {% if app.request.locale == locale.code %}selected="selected"{% endif %}>{{ locale.name|capitalize }}</option>
             {% endfor %}
         </select>
     </label>
 </div>
-{#
-{{ form_start(form) }}
-{{ form_widget(form) }}
-<input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
-{{ form_end(form) }}
-#}

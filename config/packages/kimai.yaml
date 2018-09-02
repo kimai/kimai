@@ -62,7 +62,7 @@ kimai:
         fr:
             date_short: 'd/m/Y'
             duration: '%%h h %%m min'
-            duration_short: '%%h:%%m h'
+            duration_short: '%%h h %%m'
         es:
             date_short: 'd.m.Y'
             duration: '%%h:%%m h'
