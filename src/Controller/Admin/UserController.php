@@ -102,7 +102,7 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->flashSuccess('action.updated_successfully');
+            $this->flashSuccess('action.update.success');
 
             if ($editForm->get('create_more')->getData() !== true) {
                 return $this->redirectToRoute('user_profile_edit', ['username' => $user->getUsername()]);
@@ -149,7 +149,7 @@ class UserController extends AbstractController
             $entityManager->remove($userToDelete);
             $entityManager->flush();
 
-            $this->flashSuccess('action.deleted_successfully');
+            $this->flashSuccess('action.delete.success');
 
             return $this->redirectToRoute('admin_user');
         }

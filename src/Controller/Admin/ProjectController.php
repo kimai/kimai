@@ -109,7 +109,7 @@ class ProjectController extends AbstractController
             $entityManager->remove($project);
             $entityManager->flush();
 
-            $this->flashSuccess('action.deleted_successfully');
+            $this->flashSuccess('action.delete.success');
 
             return $this->redirectToRoute('admin_project');
         }
@@ -137,7 +137,7 @@ class ProjectController extends AbstractController
             $entityManager->persist($project);
             $entityManager->flush();
 
-            $this->flashSuccess('action.updated_successfully');
+            $this->flashSuccess('action.update.success');
 
             if ($editForm->has('create_more') && $editForm->get('create_more')->getData() === true) {
                 $newProject = new Project();
