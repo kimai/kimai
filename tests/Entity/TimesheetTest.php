@@ -33,6 +33,11 @@ class TimesheetTest extends AbstractEntityTest
         $this->assertSame(0.00, $sut->getRate());
         $this->assertNull($sut->getFixedRate());
         $this->assertNull($sut->getHourlyRate());
+
+        $this->assertInstanceOf(Timesheet::class, $sut->setFixedRate(13.47));
+        $this->assertEquals(13.47, $sut->getFixedRate());
+        $this->assertInstanceOf(Timesheet::class, $sut->setHourlyRate(99));
+        $this->assertEquals(99, $sut->getHourlyRate());
     }
 
     protected function getEntity()
