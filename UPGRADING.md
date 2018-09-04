@@ -32,7 +32,7 @@ which leads to problems between Composer and Symfony Flex, resulting in an error
 This can be fixed by updating Composer and Flex before executing the Kimai update:
 ```
 sudo composer self-update
-sudo -u www-data composer update symfony/flex --no-plugins
+sudo -u www-data composer update symfony/flex --no-plugins --no-scripts
 ```
 
 Then the full update can be executed as usual:
