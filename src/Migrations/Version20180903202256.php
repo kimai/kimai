@@ -19,7 +19,7 @@ final class Version20180903202256 extends AbstractMigration
         }
 
         $timesheet = $this->getTableName('timesheet');
-        $user = $this->getTableName('user');
+        $user = $this->getTableName('users');
         $activity = $this->getTableName('activities');
 
         if ($platform === 'sqlite') {
@@ -46,8 +46,7 @@ final class Version20180903202256 extends AbstractMigration
         }
 
         $timesheet = $this->getTableName('timesheet');
-        $user = $this->getTableName('user');
-        $activity = $this->getTableName('activities');
+        $user = $this->getTableName('users');
 
         if ($platform === 'sqlite') {
             $this->addSql('DROP INDEX IDX_4F60C6B18D93D649');
