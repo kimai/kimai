@@ -319,6 +319,10 @@
                 <source>modal.columns.description</source>
                 <target>Upon saving the un-checked columns will be hidden and this setting will be stored in a browser cookie. If you delete your cookies, the settings will be reversed.</target>
             </trans-unit>
+            <trans-unit id="label.fixed_rate">
+                <source>label.fixed_rate</source>
+                <target>Fixed rate</target>
+            </trans-unit>
 
             <!--
               User profile

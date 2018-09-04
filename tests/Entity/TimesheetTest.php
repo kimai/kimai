@@ -20,6 +20,21 @@ use App\Entity\User;
  */
 class TimesheetTest extends AbstractEntityTest
 {
+    public function testDefaultValues()
+    {
+        $sut = new Timesheet();
+        $this->assertNull($sut->getId());
+        $this->assertNull($sut->getBegin());
+        $this->assertNull($sut->getEnd());
+        $this->assertSame(0, $sut->getDuration());
+        $this->assertNull($sut->getUser());
+        $this->assertNull($sut->getActivity());
+        $this->assertNull($sut->getDescription());
+        $this->assertSame(0.00, $sut->getRate());
+        $this->assertNull($sut->getFixedRate());
+        $this->assertNull($sut->getHourlyRate());
+    }
+
     protected function getEntity()
     {
         $customer = new Customer();
