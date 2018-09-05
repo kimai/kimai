@@ -29,6 +29,8 @@ script:
   - cp tests/.env.dist.sqlite .env
   - bin/console doctrine:database:create -n
   - bin/console doctrine:migrations:migrate -n
+  - bin/console doctrine:migrations:migrate first -n
   - cp tests/.env.dist.mysql .env
   - bin/console doctrine:database:create -n
   - bin/console doctrine:migrations:migrate -n
+  - bin/console doctrine:migrations:migrate first -n
