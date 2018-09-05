@@ -54,7 +54,7 @@ final class Version20180805183527 extends AbstractMigration
             $this->abortIf(true, 'Unsupported database platform: ' . $platform);
         }
 
-        $user = $this->getTableName('user');
+        $user = $this->getTableName('users');
 
         if ($platform === 'sqlite') {
             $this->addSql('DROP INDEX UNIQ_B9AC5BCE92FC23A8');

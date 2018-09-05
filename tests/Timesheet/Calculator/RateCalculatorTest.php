@@ -22,6 +22,32 @@ class RateCalculatorTest extends TestCase
 {
     public const HOURLY_RATE = 75;
 
+    public function testCalculateWithHourlyRate()
+    {
+        $record = new Timesheet();
+        $record->setEnd(new \DateTime());
+        $record->setDuration(1800);
+        $record->setHourlyRate(100);
+
+        $sut = new RateCalculator([]);
+        $sut->calculate($record);
+        $this->assertEquals(50, $record->getRate());
+    }
+
+    public function testCalculateWithFixedRate()
+    {
+        $record = new Timesheet();
+        $record->setEnd(new \DateTime());
+        $record->setDuration(1800);
+        $record->setFixedRate(10);
+        // make sure that fixed rate is always applied, even if hourly rate is set
+        $record->setHourlyRate(99);
+
+        $sut = new RateCalculator([]);
+        $sut->calculate($record);
+        $this->assertEquals(10, $record->getRate());
+    }
+
     protected function getTestUser()
     {
         $pref = new UserPreference();
@@ -38,6 +64,9 @@ class RateCalculatorTest extends TestCase
     {
         $record = new Timesheet();
         $record->setBegin(new \DateTime());
+        $record->setDuration(1800);
+        $record->setFixedRate(100);
+        $record->setHourlyRate(100);
         $this->assertEquals(0, $record->getRate());
 
         $sut = new RateCalculator([]);
