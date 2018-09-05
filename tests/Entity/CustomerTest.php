@@ -41,6 +41,41 @@ class CustomerTest extends AbstractEntityTest
 
         $this->assertNull($sut->getFixedRate());
         $this->assertNull($sut->getHourlyRate());
+    }
+
+    public function testSetterAndGetter()
+    {
+        $sut = new Customer();
+        $this->assertInstanceOf(Customer::class, $sut->setName('foo-bar'));
+        $this->assertEquals('foo-bar', $sut->getName());
+        $this->assertEquals('foo-bar', (string)$sut);
+
+        $this->assertInstanceOf(Customer::class, $sut->setVisible(false));
+        $this->assertFalse($sut->getVisible());
+
+        $this->assertInstanceOf(Customer::class, $sut->setComment('hello world'));
+        $this->assertEquals('hello world', $sut->getComment());
+
+        $this->assertInstanceOf(Customer::class, $sut->setCompany('test company'));
+        $this->assertEquals('test company', $sut->getCompany());
+
+        $this->assertInstanceOf(Customer::class, $sut->setContact('test contact'));
+        $this->assertEquals('test contact', $sut->getContact());
+
+        $this->assertInstanceOf(Customer::class, $sut->setPhone('0123456789'));
+        $this->assertEquals('0123456789', $sut->getPhone());
+
+        $this->assertInstanceOf(Customer::class, $sut->setFax('asdfghjkl'));
+        $this->assertEquals('asdfghjkl', $sut->getFax());
+
+        $this->assertInstanceOf(Customer::class, $sut->setMobile('76576534'));
+        $this->assertEquals('76576534', $sut->getMobile());
+
+        $this->assertInstanceOf(Customer::class, $sut->setMail('test@example.com'));
+        $this->assertEquals('test@example.com', $sut->getMail());
+
+        $this->assertInstanceOf(Customer::class, $sut->setHomepage('https://www.example.com'));
+        $this->assertEquals('https://www.example.com', $sut->getHomepage());
 
         $this->assertInstanceOf(Customer::class, $sut->setFixedRate(13.47));
         $this->assertEquals(13.47, $sut->getFixedRate());

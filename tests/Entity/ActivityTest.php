@@ -10,6 +10,7 @@
 namespace App\Tests\Entity;
 
 use App\Entity\Activity;
+use App\Entity\Timesheet;
 
 /**
  * @covers \App\Entity\Activity
@@ -27,6 +28,20 @@ class ActivityTest extends AbstractEntityTest
         // timesheets
         $this->assertNull($sut->getFixedRate());
         $this->assertNull($sut->getHourlyRate());
+    }
+
+    public function testSetterAndGetter()
+    {
+        $sut = new Activity();
+        $this->assertInstanceOf(Activity::class, $sut->setName('foo-bar'));
+        $this->assertEquals('foo-bar', $sut->getName());
+        $this->assertEquals('foo-bar', (string)$sut);
+
+        $this->assertInstanceOf(Activity::class, $sut->setVisible(false));
+        $this->assertFalse($sut->getVisible());
+
+        $this->assertInstanceOf(Activity::class, $sut->setComment('hello world'));
+        $this->assertEquals('hello world', $sut->getComment());
 
         $this->assertInstanceOf(Activity::class, $sut->setFixedRate(13.47));
         $this->assertEquals(13.47, $sut->getFixedRate());
