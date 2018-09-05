@@ -291,6 +291,7 @@ class Timesheet
     public function setFixedRate(?float $fixedRate)
     {
         $this->fixedRate = $fixedRate;
+
         return $this;
     }
 
@@ -309,6 +310,7 @@ class Timesheet
     public function setHourlyRate(?float $hourlyRate)
     {
         $this->hourlyRate = $hourlyRate;
+
         return $this;
     }
 

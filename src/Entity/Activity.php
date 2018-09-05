@@ -70,6 +70,22 @@ class Activity
     private $timesheets;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="fixed_rate", type="decimal", precision=10, scale=2, nullable=true)
+     * @Assert\GreaterThanOrEqual(0)
+     */
+    private $fixedRate = null;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="hourly_rate", type="decimal", precision=10, scale=2, nullable=true)
+     * @Assert\GreaterThanOrEqual(0)
+     */
+    private $hourlyRate = null;
+
+    /**
      * @return Timesheet[]
      */
     public function getTimesheets(): array
@@ -174,6 +190,44 @@ class Activity
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return float
+     */
+    public function getFixedRate(): ?float
+    {
+        return $this->fixedRate;
+    }
+
+    /**
+     * @param float $fixedRate
+     * @return Activity
+     */
+    public function setFixedRate(?float $fixedRate)
+    {
+        $this->fixedRate = $fixedRate;
+
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getHourlyRate(): ?float
+    {
+        return $this->hourlyRate;
+    }
+
+    /**
+     * @param float $hourlyRate
+     * @return Activity
+     */
+    public function setHourlyRate(?float $hourlyRate)
+    {
+        $this->hourlyRate = $hourlyRate;
+
+        return $this;
     }
 
     /**

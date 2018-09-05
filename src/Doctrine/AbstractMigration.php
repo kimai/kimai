@@ -9,6 +9,8 @@
 
 namespace App\Doctrine;
 
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Doctrine\DBAL\DBALException;
 use Doctrine\Migrations\AbstractMigration as BaseAbstractMigration;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -50,7 +52,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
 
     /**
      * @return string
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws DBALException
      */
     protected function getPlatform()
     {
@@ -62,7 +64,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
      * $schema = $this->getClassMetaData(User::class);
      *
      * @param string $entityName
-     * @return \Doctrine\Common\Persistence\Mapping\ClassMetadata
+     * @return ClassMetadata
      */
     protected function getClassMetaData($entityName)
     {
@@ -77,7 +79,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
      *
      * @param string $indexName
      * @param string $tableName
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws DBALException
      */
     protected function addSqlDropIndex($indexName, $tableName)
     {

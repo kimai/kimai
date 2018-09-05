@@ -15,6 +15,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -44,9 +45,6 @@ class CustomerEditForm extends AbstractType
             ->add('comment', TextareaType::class, [
                 'label' => 'label.comment',
                 'required' => false,
-            ])
-            ->add('visible', YesNoType::class, [
-                'label' => 'label.visible',
             ])
             ->add('company', TextType::class, [
                 'label' => 'label.company',
@@ -88,6 +86,17 @@ class CustomerEditForm extends AbstractType
             ])
             ->add('timezone', TimezoneType::class, [
                 'label' => 'label.timezone',
+            ])
+            ->add('fixedRate', NumberType::class, [
+                'label' => 'label.fixed_rate',
+                'required' => false,
+            ])
+            ->add('hourlyRate', NumberType::class, [
+                'label' => 'label.hourly_rate',
+                'required' => false,
+            ])
+            ->add('visible', YesNoType::class, [
+                'label' => 'label.visible',
             ])
         ;
     }
