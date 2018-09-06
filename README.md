@@ -15,7 +15,7 @@ This is the reloaded version of the open source timetracker Kimai.
 The new version has not much in common with its predecessor [Kimai v1](http://www.kimai.org) besides the basic ideas of time-tracking and the current development team.
 
 Right now its in an early development phase, its usable but some advanced features from Kimai v1 are missing by now (like export and ODT invoices). 
-But we already support to [import your timesheets](migration_v1.md) from Kimai v1.
+But we already support to [import your timesheets](var/docs/migration_v1.md) from Kimai v1.
 
 It is developed with modern frameworks like [Symfony v4](https://github.com/symfony/symfony), [Doctrine](https://github.com/doctrine/),
 [AdminLTE](https://github.com/kevinpapst/AdminLTEBundle/) and [many](composer.json) [more](package.json).
