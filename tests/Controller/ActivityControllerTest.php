@@ -25,8 +25,7 @@ class ActivityControllerTest extends ControllerBaseTest
     public function testRecentActivitiesAction()
     {
         $kernel = self::bootKernel();
-        $this->application = new Application($kernel);
-        $container = self::$kernel->getContainer();
+        $container = $kernel->getContainer();
 
         $em = $container->get('doctrine.orm.entity_manager');
         $user = $em->getRepository(User::class)->getById(1);
@@ -34,7 +33,6 @@ class ActivityControllerTest extends ControllerBaseTest
         $storage = new TokenStorage();
         $storage->setToken(new UsernamePasswordToken($user, [], 'foo'));
         $container->set('security.token_storage', $storage);
-
 
         $fixture = new TimesheetFixtures();
         $fixture->setUser($user);

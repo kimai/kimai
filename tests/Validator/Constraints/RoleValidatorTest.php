@@ -12,7 +12,6 @@ namespace App\Tests\Validator\Constraints;
 use App\Entity\User;
 use App\Validator\Constraints\Role;
 use App\Validator\Constraints\RoleValidator;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
@@ -80,7 +79,7 @@ class RoleValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidRoles
-     * @param string $role
+     * @param mixed $role
      */
     public function testValidationError($role)
     {
@@ -90,7 +89,7 @@ class RoleValidatorTest extends ConstraintValidatorTestCase
 
         $this->validator->validate($role, $constraint);
 
-        $expectedFormat = is_string($role) ? '"'.$role.'"' : $role;
+        $expectedFormat = is_string($role) ? '"' . $role . '"' : $role;
 
         $this->buildViolation('myMessage')
             ->setParameter('{{ value }}', $expectedFormat)
