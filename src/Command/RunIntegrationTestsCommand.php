@@ -34,6 +34,6 @@ class RunIntegrationTestsCommand extends RunUnitTestsCommand
      */
     protected function createPhpunitCmdLine($directory)
     {
-        return $this->rootDir . '/bin/phpunit --group integration ' . $directory;
+        return 'SYMFONY_DEPRECATIONS_HELPER=weak ' . $this->rootDir . '/bin/phpunit --group integration ' . $directory;
     }
 }
