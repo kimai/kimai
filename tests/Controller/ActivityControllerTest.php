@@ -9,11 +9,10 @@
 
 namespace App\Tests\Controller;
 
-use App\Controller\ActivityController;
+use App\Entity\Activity;
+use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 /**
  * @coversDefaultClass \App\Controller\ActivityController
@@ -23,29 +22,22 @@ class ActivityControllerTest extends ControllerBaseTest
 {
     public function testRecentActivitiesAction()
     {
-        $kernel = self::bootKernel();
-        $container = $kernel->getContainer();
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
-        $em = $container->get('doctrine.orm.entity_manager');
-        $user = $em->getRepository(User::class)->getById(1);
-
-        $storage = new TokenStorage();
-        $storage->setToken(new UsernamePasswordToken($user, [], 'foo'));
-        $container->set('security.token_storage', $storage);
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $this->getUserByRole($em, User::ROLE_USER);
 
         $fixture = new TimesheetFixtures();
         $fixture->setUser($user);
         $fixture->setAmount(1);
-        $fixture->setStartDate(new \DateTime('-30 days'));
+        $fixture->setStartDate(new \DateTime('-10 days'));
         $this->importFixture($em, $fixture);
 
-        $controller = $container->get(ActivityController::class);
-        $controller->setContainer($container);
-        $response = $controller->recentActivitiesAction();
+        $this->request($client, '/activities/recent');
+        $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $content = $response->getContent();
+        $content = $client->getResponse()->getContent();
 
-        $this->assertTrue($response->isSuccessful());
         $this->assertContains('<li class="dropdown notifications-menu">', $content);
         $this->assertContains('<span class="label label-success">1</span>', $content);
         $this->assertContains('<a href="/en/timesheet/start/1">', $content);
