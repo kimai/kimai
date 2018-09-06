@@ -9,6 +9,7 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
 
@@ -36,7 +37,61 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser();
         $this->request($client, '/timesheet/create');
         $this->assertTrue($client->getResponse()->isSuccessful());
-        // TODO more tests
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $client->submit($form, [
+            'timesheet_edit_form' => [
+                'description' => 'Testing is fun!'
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasFlashSuccess($client);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var Timesheet $timesheet */
+        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
+        $this->assertNull($timesheet->getEnd());
+        $this->assertEquals('Testing is fun!', $timesheet->getDescription());
+        $this->assertEquals(0, $timesheet->getRate());
+        $this->assertNull($timesheet->getHourlyRate());
+        $this->assertNull($timesheet->getFixedRate());
+    }
+
+    public function testStopAction()
+    {
+        $client = $this->getClientForAuthenticatedUser();
+        $this->request($client, '/timesheet/create');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $client->submit($form, [
+            'timesheet_edit_form' => [
+                'description' => 'Testing is fun!',
+                'fixedRate' => 100,
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->request($client, '/timesheet/1/stop');
+        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var Timesheet $timesheet */
+        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
+        $this->assertInstanceOf(\DateTime::class, $timesheet->getEnd());
+        $this->assertEquals(100, $timesheet->getRate());
+        $this->assertEquals(100, $timesheet->getFixedRate());
+        $this->assertNull($timesheet->getHourlyRate());
     }
 
     public function testCreateActionWithFromAndToValues()

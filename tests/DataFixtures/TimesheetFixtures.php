@@ -48,6 +48,9 @@ class TimesheetFixtures extends Fixture
      */
     public function setStartDate($date)
     {
+        if ($date instanceof \DateTime) {
+            $date = $date->format('Y-m-d');
+        }
         $this->startDate = $date;
     }
 

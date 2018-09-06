@@ -70,7 +70,7 @@ class ProfileController extends AbstractController
 
             $this->flashSuccess('action.update.success');
 
-            return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
+            return $this->redirectToRoute('user_profile_edit', ['username' => $profile->getUsername()]);
         }
 
         return $this->getProfileView($profile, 'settings', $form);
@@ -95,7 +95,7 @@ class ProfileController extends AbstractController
 
             $this->flashSuccess('action.update.success');
 
-            return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
+            return $this->redirectToRoute('user_profile_password', ['username' => $profile->getUsername()]);
         }
 
         return $this->getProfileView($profile, 'password', null, $form);
@@ -120,7 +120,7 @@ class ProfileController extends AbstractController
 
             $this->flashSuccess('action.update.success');
 
-            return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
+            return $this->redirectToRoute('user_profile_api_token', ['username' => $profile->getUsername()]);
         }
 
         return $this->getProfileView($profile, 'api-token', null, null, null, null, $form);
@@ -142,7 +142,7 @@ class ProfileController extends AbstractController
 
             $this->flashSuccess('action.update.success');
 
-            return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
+            return $this->redirectToRoute('user_profile_roles', ['username' => $profile->getUsername()]);
         }
 
         return $this->getProfileView($profile, 'roles', null, null, $form);
@@ -186,7 +186,7 @@ class ProfileController extends AbstractController
 
             $this->flashSuccess('action.update.success');
 
-            return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
+            return $this->redirectToRoute('user_profile_preferences', ['username' => $profile->getUsername()]);
         }
 
         return $this->getProfileView($profile, 'preferences', null, null, null, $form);

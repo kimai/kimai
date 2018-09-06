@@ -10,7 +10,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Translation\DataCollectorTranslator;
 
 /**
  * The abstract base controller.
@@ -27,27 +27,11 @@ abstract class AbstractController extends Controller
     public const ROLE_ADMIN = 'ROLE_ADMIN';
 
     /**
-     * @return object|\Symfony\Component\Translation\DataCollectorTranslator|\Symfony\Component\Translation\IdentityTranslator
+     * @return DataCollectorTranslator
      */
-    protected function getTranslator()
+    private function getTranslator()
     {
         return $this->container->get('translator');
-    }
-
-    /**
-     * A translated helper for denyAccessUnlessGranted()
-     *
-     * @param mixed $attributes
-     * @param mixed $subject
-     * @param string $translation
-     * @param array $parameter
-     * @throws AccessDeniedException
-     */
-    protected function denyUnlessGranted($attributes, $subject = null, $translation = 'access.denied', $parameter = [])
-    {
-        $error = $this->getTranslator()->trans($translation, $parameter, self::DOMAIN_ERROR);
-        // TODO try & catch and add to audit log?
-        $this->denyAccessUnlessGranted($attributes, $subject, $error);
     }
 
     /**
@@ -72,7 +56,7 @@ abstract class AbstractController extends Controller
     /**
      * Adds a "warning" flash message to the stack.
      *
-     * @param $translationKey
+     * @param string $translationKey
      * @param array $parameter
      */
     protected function flashWarning($translationKey, $parameter = [])
@@ -91,7 +75,7 @@ abstract class AbstractController extends Controller
     /**
      * Adds a "error" flash message to the stack.
      *
-     * @param $translationKey
+     * @param string $translationKey
      * @param array $parameter
      */
     protected function flashError($translationKey, $parameter = [])
