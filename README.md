@@ -29,7 +29,7 @@ If you want to support us in translating Kimai, please [read this documentation]
 - One PHP extension of [PDO-SQLite](https://php.net/manual/en/ref.pdo-sqlite.php) or [PDO-MySQL](https://php.net/manual/en/ref.pdo-mysql.php) enabled (it might work with PostgreSQL and Oracle as well, but that wasn't tested and is not officially supported)
 - The PHP extension [intl](https://php.net/manual/en/book.intl.php)
 - The [usual Symfony application requirements](http://symfony.com/doc/current/reference/requirements.html)
-- If you use MariaDB, make sure its at least v10.7.2 (see [FAQ](var/docs/faq.md))
+- If you use MariaDB, make sure its at least v10.2.7 (see [FAQ](var/docs/faq.md))
 - Kimai needs to be installed in the root directory of a domain or you need to [recompile the frontend assets](var/docs/developers.md)
 - A modern browser, Kimai v2 might be broken on old browsers like IE 10
 
