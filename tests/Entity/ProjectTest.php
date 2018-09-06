@@ -33,7 +33,6 @@ class ProjectTest extends AbstractEntityTest
         $this->assertNull($sut->getHourlyRate());
     }
 
-
     public function testSetterAndGetter()
     {
         $sut = new Project();
@@ -43,7 +42,7 @@ class ProjectTest extends AbstractEntityTest
         $this->assertSame($customer, $sut->getCustomer());
 
         $this->assertInstanceOf(Project::class, $sut->setName('123456789'));
-        $this->assertEquals('123456789', (string)$sut);
+        $this->assertEquals('123456789', (string) $sut);
 
         $this->assertInstanceOf(Project::class, $sut->setOrderNumber('123456789'));
         $this->assertEquals('123456789', $sut->getOrderNumber());

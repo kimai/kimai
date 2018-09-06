@@ -10,7 +10,6 @@
 namespace App\Tests\Entity;
 
 use App\Entity\Activity;
-use App\Entity\Timesheet;
 
 /**
  * @covers \App\Entity\Activity
@@ -35,7 +34,7 @@ class ActivityTest extends AbstractEntityTest
         $sut = new Activity();
         $this->assertInstanceOf(Activity::class, $sut->setName('foo-bar'));
         $this->assertEquals('foo-bar', $sut->getName());
-        $this->assertEquals('foo-bar', (string)$sut);
+        $this->assertEquals('foo-bar', (string) $sut);
 
         $this->assertInstanceOf(Activity::class, $sut->setVisible(false));
         $this->assertFalse($sut->getVisible());

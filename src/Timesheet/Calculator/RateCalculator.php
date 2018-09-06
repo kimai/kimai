@@ -44,6 +44,7 @@ class RateCalculator implements CalculatorInterface
         $fixedRate = $this->findFixedRate($record);
         if (null !== $fixedRate) {
             $record->setRate($fixedRate);
+
             return;
         }
 
@@ -54,7 +55,6 @@ class RateCalculator implements CalculatorInterface
             $this->calculateRate($record->getDuration(), $hourlyRate, $factor)
         );
     }
-
 
     /**
      * @param Timesheet $record
@@ -83,7 +83,7 @@ class RateCalculator implements CalculatorInterface
             }
         }
 
-        return (float)$record->getUser()->getPreferenceValue(UserPreference::HOURLY_RATE, 0);
+        return (float) $record->getUser()->getPreferenceValue(UserPreference::HOURLY_RATE, 0);
     }
 
     /**

@@ -25,7 +25,7 @@ class CustomerTest extends AbstractEntityTest
         $this->assertNull($sut->getComment());
         // projects
         $this->assertTrue($sut->getVisible());
-        //
+
         $this->assertNull($sut->getCompany());
         $this->assertNull($sut->getContact());
         $this->assertNull($sut->getAddress());
@@ -48,7 +48,7 @@ class CustomerTest extends AbstractEntityTest
         $sut = new Customer();
         $this->assertInstanceOf(Customer::class, $sut->setName('foo-bar'));
         $this->assertEquals('foo-bar', $sut->getName());
-        $this->assertEquals('foo-bar', (string)$sut);
+        $this->assertEquals('foo-bar', (string) $sut);
 
         $this->assertInstanceOf(Customer::class, $sut->setVisible(false));
         $this->assertFalse($sut->getVisible());
