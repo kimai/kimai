@@ -41,15 +41,79 @@ class RateCalculator implements CalculatorInterface
             return;
         }
 
-        if (null !== $record->getFixedRate()) {
-            $record->setRate($record->getFixedRate());
+        $fixedRate = $this->findFixedRate($record);
+        if (null !== $fixedRate) {
+            $record->setRate($fixedRate);
+
             return;
         }
 
-        $rate = $this->calculateRate($record);
+        $hourlyRate = $this->findHourlyRate($record);
         $factor = $this->getRateFactor($record);
 
-        $record->setRate($rate * $factor);
+        $record->setRate(
+            $this->calculateRate($record->getDuration(), $hourlyRate, $factor)
+        );
+    }
+
+    /**
+     * @param Timesheet $record
+     * @return float
+     */
+    protected function findHourlyRate(Timesheet $record)
+    {
+        if (null !== $record->getHourlyRate()) {
+            return $record->getHourlyRate();
+        }
+
+        $activity = $record->getActivity();
+        if (null !== $activity->getHourlyRate()) {
+            return $activity->getHourlyRate();
+        }
+
+        $project = $activity->getProject();
+        if (null !== $project) {
+            if (null !== $project->getHourlyRate()) {
+                return $project->getHourlyRate();
+            }
+
+            $customer = $project->getCustomer();
+            if (null !== $customer->getHourlyRate()) {
+                return $customer->getHourlyRate();
+            }
+        }
+
+        return (float) $record->getUser()->getPreferenceValue(UserPreference::HOURLY_RATE, 0);
+    }
+
+    /**
+     * @param Timesheet $record
+     * @return float|null
+     */
+    protected function findFixedRate(Timesheet $record)
+    {
+        if (null !== $record->getFixedRate()) {
+            return $record->getFixedRate();
+        }
+
+        $activity = $record->getActivity();
+        if (null !== $activity->getFixedRate()) {
+            return $activity->getFixedRate();
+        }
+
+        $project = $activity->getProject();
+        if (null !== $project) {
+            if (null !== $project->getFixedRate()) {
+                return $project->getFixedRate();
+            }
+
+            $customer = $project->getCustomer();
+            if (null !== $customer->getFixedRate()) {
+                return $customer->getFixedRate();
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -80,17 +144,13 @@ class RateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param Timesheet $record
+     * @param int $duration
+     * @param float $hourlyRate
+     * @param float $factor
      * @return float
      */
-    protected function calculateRate(Timesheet $record)
+    protected function calculateRate($duration, $hourlyRate, $factor)
     {
-        if (null !== $record->getHourlyRate()) {
-            $hourlyRate = $record->getHourlyRate();
-        } else {
-            $hourlyRate = (float)$record->getUser()->getPreferenceValue(UserPreference::HOURLY_RATE, 0);
-        }
-
-        return (float) $hourlyRate * ($record->getDuration() / 3600);
+        return (float) $hourlyRate * ($duration / 3600) * $factor;
     }
 }

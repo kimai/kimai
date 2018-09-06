@@ -12,14 +12,19 @@ namespace App\Tests\Validator\Constraints;
 use App\Entity\User;
 use App\Validator\Constraints\Role;
 use App\Validator\Constraints\RoleValidator;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
  * @covers \App\Validator\Constraints\RoleValidator
  */
-class RoleValidatorTest extends TestCase
+class RoleValidatorTest extends ConstraintValidatorTestCase
 {
+    protected function createValidator()
+    {
+        return new RoleValidator();
+    }
+
     public function getValidRoles()
     {
         return [
@@ -36,24 +41,59 @@ class RoleValidatorTest extends TestCase
      */
     public function testConstraintIsInvalid()
     {
-        $validator = new RoleValidator();
-        $validator->validate('foo', new NotBlank());
+        $this->validator->validate('foo', new NotBlank());
     }
 
     /**
      * @dataProvider getValidRoles
+     * @param string $role
      */
     public function testConstraintWithValidRole($role)
     {
         $constraint = new Role();
-        $validator = new RoleValidator();
-        $validator->validate($role, $constraint);
-        // the above line would break if the role is invalid, we need the next assert to mark the test as valid
-        $this->assertNull(null);
+        $this->validator->validate($role, $constraint);
+        $this->assertNoViolation();
     }
 
-    public function testValidationError()
+    public function testNullIsInvalid()
     {
-        $this->markTestIncomplete(__CLASS__ . ': validation message not tested yet');
+        $this->validator->validate(null, new Role(['message' => 'myMessage']));
+
+        $this->buildViolation('myMessage')
+            ->setParameter('{{ value }}', 'null')
+            ->setCode(Role::ROLE_ERROR)
+            ->assertRaised();
+    }
+
+    public function getInvalidRoles()
+    {
+        return [
+            ['foo'],
+            [0],
+            ['role_user'],
+            ['ROLE-CUSTOMER'],
+            ['anonymous'],
+            [''],
+        ];
+    }
+
+    /**
+     * @dataProvider getInvalidRoles
+     * @param mixed $role
+     */
+    public function testValidationError($role)
+    {
+        $constraint = new Role([
+            'message' => 'myMessage',
+        ]);
+
+        $this->validator->validate($role, $constraint);
+
+        $expectedFormat = is_string($role) ? '"' . $role . '"' : $role;
+
+        $this->buildViolation('myMessage')
+            ->setParameter('{{ value }}', $expectedFormat)
+            ->setCode(Role::ROLE_ERROR)
+            ->assertRaised();
     }
 }

@@ -44,10 +44,13 @@ class TimesheetFixtures extends Fixture
     protected $startDate = '2018-04-01';
 
     /**
-     * @param string $date
+     * @param string|\DateTime $date
      */
     public function setStartDate($date)
     {
+        if ($date instanceof \DateTime) {
+            $date = $date->format('Y-m-d');
+        }
         $this->startDate = $date;
     }
 

@@ -99,7 +99,7 @@ class TimesheetController extends AbstractController
     }
 
     /**
-     * The route to stop a running entry.
+     * The route to start a running entry.
      *
      * @Route(path="/start/{id}", name="timesheet_start", requirements={"id" = "\d+"}, methods={"GET", "POST"})
      * @Security("is_granted('start', activity)")

@@ -15,7 +15,7 @@ This is the reloaded version of the open source timetracker Kimai.
 The new version has not much in common with its predecessor [Kimai v1](http://www.kimai.org) besides the basic ideas of time-tracking and the current development team.
 
 Right now its in an early development phase, its usable but some advanced features from Kimai v1 are missing by now (like export and ODT invoices). 
-But we already support to [import your timesheets](migration_v1.md) from Kimai v1.
+But we already support to [import your timesheets](var/docs/migration_v1.md) from Kimai v1.
 
 It is developed with modern frameworks like [Symfony v4](https://github.com/symfony/symfony), [Doctrine](https://github.com/doctrine/),
 [AdminLTE](https://github.com/kevinpapst/AdminLTEBundle/) and [many](composer.json) [more](package.json).
@@ -29,7 +29,7 @@ If you want to support us in translating Kimai, please [read this documentation]
 - One PHP extension of [PDO-SQLite](https://php.net/manual/en/ref.pdo-sqlite.php) or [PDO-MySQL](https://php.net/manual/en/ref.pdo-mysql.php) enabled (it might work with PostgreSQL and Oracle as well, but that wasn't tested and is not officially supported)
 - The PHP extension [intl](https://php.net/manual/en/book.intl.php)
 - The [usual Symfony application requirements](http://symfony.com/doc/current/reference/requirements.html)
-- If you use MariaDB, make sure its at least v10.7.2 (see [FAQ](var/docs/faq.md))
+- If you use MariaDB, make sure its at least v10.2.7 (see [FAQ](var/docs/faq.md))
 - Kimai needs to be installed in the root directory of a domain or you need to [recompile the frontend assets](var/docs/developers.md)
 - A modern browser, Kimai v2 might be broken on old browsers like IE 10
 

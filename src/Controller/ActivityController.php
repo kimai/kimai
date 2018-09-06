@@ -13,6 +13,7 @@ use App\Entity\Activity;
 use App\Repository\ActivityRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Controller used to manage activity contents in the public part of the site.
@@ -32,7 +33,7 @@ class ActivityController extends Controller
     /**
      * The flyout to render recent activities and quick-start new recordings.
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function recentActivitiesAction()
     {
