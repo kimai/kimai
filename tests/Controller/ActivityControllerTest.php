@@ -12,7 +12,6 @@ namespace App\Tests\Controller;
 use App\Controller\ActivityController;
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
