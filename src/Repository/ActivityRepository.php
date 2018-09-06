@@ -47,7 +47,7 @@ class ActivityRepository extends AbstractRepository
             ->join('t.activity', 'a')
             ->join('a.project', 'p')
             ->join('p.customer', 'c')
-            ->where($qb->expr()->isNotNull('t.end'))
+            ->andWhere($qb->expr()->isNotNull('t.end'))
             ->andWhere('a.visible = 1')
             ->andWhere('p.visible = 1')
             ->andWhere('c.visible = 1')
