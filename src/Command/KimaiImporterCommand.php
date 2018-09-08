@@ -312,18 +312,28 @@ class KimaiImporterCommand extends Command
      * This is checked against the Kimai version and database revision.
      *
      * @param SymfonyStyle $io
-     * @param $requiredVersion
-     * @param $requiredRevision
+     * @param string $requiredVersion
+     * @param string $requiredRevision
      * @return bool
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function checkDatabaseVersion(SymfonyStyle $io, $requiredVersion, $requiredRevision)
     {
-        $versionQuery = 'SELECT `value` from ' . $this->dbPrefix . 'configuration WHERE `option` = "version"';
-        $revisionQuery = 'SELECT `value` from ' . $this->dbPrefix . 'configuration WHERE `option` = "revision"';
+        $version = $this->connection->createQueryBuilder()
+            ->select('value')
+            ->from($this->connection->quoteIdentifier($this->dbPrefix . 'configuration'))
+            ->where('option = :option')
+            ->setParameter(':option', 'version')
+            ->execute()
+            ->fetchColumn();
 
-        $version = $this->getImportConnection()->query($versionQuery)->fetchColumn();
-        $revision = $this->getImportConnection()->query($revisionQuery)->fetchColumn();
+        $revision = $this->connection->createQueryBuilder()
+            ->select('value')
+            ->from($this->connection->quoteIdentifier($this->dbPrefix . 'configuration'))
+            ->where('option = :option')
+            ->setParameter(':option', 'revision')
+            ->execute()
+            ->fetchColumn();
 
         if (1 == version_compare($requiredVersion, $version)) {
             $io->error(
@@ -378,21 +388,16 @@ class KimaiImporterCommand extends Command
     }
 
     /**
-     * @param $table
+     * @param string $table
      * @return array
-     * @throws \Doctrine\DBAL\DBALException
      */
     protected function fetchAllFromImport($table)
     {
-        return $this->getImportConnection()->query('SELECT * from ' . $this->dbPrefix . $table)->fetchAll();
-    }
-
-    /**
-     * @return \Doctrine\DBAL\Connection
-     */
-    protected function getImportConnection()
-    {
-        return $this->connection;
+        return $this->connection->createQueryBuilder()
+            ->select('*')
+            ->from($this->connection->quoteIdentifier($this->dbPrefix . $table))
+            ->execute()
+            ->fetchAll();
     }
 
     /**
