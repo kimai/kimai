@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Twig;
+namespace App\Tests\Command;
 
 use App\Command\CreateUserCommand;
 use App\Entity\User;
