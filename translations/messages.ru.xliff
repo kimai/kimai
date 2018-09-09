@@ -741,18 +741,6 @@
                 <source>label.payment_terms</source>
                 <target>Информация о выплате</target>
             </trans-unit>
-            <trans-unit id="label.invoice_calculator">
-                <source>label.invoice_calculator</source>
-                <target>Суммарный учет</target>
-            </trans-unit>
-            <trans-unit id="invoice_calculator.default">
-                <source>invoice_calculator.default</source>
-                <target>Почасовая основа (стандартная)</target>
-            </trans-unit>
-            <trans-unit id="invoice_calculator.short">
-                <source>invoice_calculator.short</source>
-                <target>Почасовая основа - сокращенная версия (только одна запись)</target>
-            </trans-unit>
             <trans-unit id="invoice.signature_user">
                 <source>invoice.signature_user</source>
                 <target>Подтверждение: Дата / Имя консультанта / Подпись</target>

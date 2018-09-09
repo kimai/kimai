@@ -750,18 +750,6 @@
                 <source>label.payment_terms</source>
                 <target>Modalités de paiement</target>
             </trans-unit>
-            <trans-unit id="label.invoice_calculator">
-                <source>label.invoice_calculator</source>
-                <target>Calcul du total</target>
-            </trans-unit>
-            <trans-unit id="invoice_calculator.default">
-                <source>invoice_calculator.default</source>
-                <target>Tarifs horaires (par defaut)</target>
-            </trans-unit>
-            <trans-unit id="invoice_calculator.short">
-                <source>invoice_calculator.short</source>
-                <target>Tarifs horaires particuliers (seulement pour un enregistrement)</target>
-            </trans-unit>
             <trans-unit id="invoice.signature_user">
                 <source>invoice.signature_user</source>
                 <target>Pour certification : date / nom du consultant / signature</target>

@@ -717,18 +717,6 @@
                 <source>label.payment_terms</source>
                 <target>Condiciones de pago</target>
             </trans-unit>
-            <trans-unit id="label.invoice_calculator">
-                <source>label.invoice_calculator</source>
-                <target>Cálculo de suma</target>
-            </trans-unit>
-            <trans-unit id="invoice_calculator.default">
-                <source>invoice_calculator.default</source>
-                <target>Tarifa por horas (default)</target>
-            </trans-unit>
-            <trans-unit id="invoice_calculator.short">
-                <source>invoice_calculator.short</source>
-                <target>Tarifa por horas - version mínima (sólo un registro)</target>
-            </trans-unit>
             <trans-unit id="invoice.signature_user">
                 <source>invoice.signature_user</source>
                 <target>Confirmación: Fecha / Nombre / Firma</target>

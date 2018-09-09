@@ -47,8 +47,9 @@ class InvoiceCalculatorType extends AbstractType
             'label' => 'label.invoice_calculator',
             'choices' => $renderer,
             'choice_label' => function ($renderer) {
-                return 'invoice_calculator.' . $renderer;
-            }
+                return $renderer;
+            },
+            'translation_domain' => 'invoice-calculator',
         ]);
     }
 
