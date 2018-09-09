@@ -47,8 +47,9 @@ class InvoiceNumberGeneratorType extends AbstractType
             'label' => 'label.invoice_number_generator',
             'choices' => $renderer,
             'choice_label' => function ($renderer) {
-                return 'invoice_number_generator.' . $renderer;
-            }
+                return $renderer;
+            },
+            'translation_domain' => 'invoice-numbergenerator',
         ]);
     }
 

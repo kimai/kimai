@@ -14,10 +14,6 @@
                 <source>timesheet</source>
                 <target>Hoja de tiempo</target>
             </trans-unit>
-            <trans-unit id="label.invoice_number_generator">
-                <source>label.invoice_number_generator</source>
-                <target>Generador de número de factura</target>
-            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -741,14 +741,6 @@
                 <source>label.payment_terms</source>
                 <target>Информация о выплате</target>
             </trans-unit>
-            <trans-unit id="label.invoice_number_generator">
-                <source>label.invoice_number_generator</source>
-                <target>Генератор номеров счета</target>
-            </trans-unit>
-            <trans-unit id="invoice_number_generator.default">
-                <source>invoice_number_generator.default</source>
-                <target>Дата (стандартная)</target>
-            </trans-unit>
             <trans-unit id="label.invoice_calculator">
                 <source>label.invoice_calculator</source>
                 <target>Суммарный учет</target>
