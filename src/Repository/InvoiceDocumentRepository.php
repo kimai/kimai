@@ -55,6 +55,9 @@ class InvoiceDocumentRepository
         $documents = [];
 
         foreach($this->documentDirs as $searchPath) {
+            if (!is_dir($base . $searchPath)) {
+                continue;
+            }
             $finder = Finder::create()->ignoreDotFiles(true)->files()->in($base . $searchPath)->name('*.*');
             foreach ($finder->getIterator() as $file) {
                 $documents[] = new InvoiceDocument($file);
