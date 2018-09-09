@@ -35,7 +35,9 @@ class TwigContextCompilerPass implements CompilerPassInterface
 
             $path = dirname(dirname(dirname(__DIR__))) . DIRECTORY_SEPARATOR;
             foreach($container->getParameter('kimai.invoice.documents') as $invoicePath) {
-                $definition->addMethodCall('addPath', [$path . $invoicePath, 'invoice']);
+                if (is_dir($path . $invoicePath)) {
+                    $definition->addMethodCall('addPath', [$path . $invoicePath, 'invoice']);
+                }
             }
         }
     }
