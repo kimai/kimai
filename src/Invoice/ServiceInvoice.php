@@ -9,34 +9,61 @@
 
 namespace App\Invoice;
 
+use App\Entity\InvoiceDocument;
+use App\Model\InvoiceModel;
+use App\Repository\InvoiceDocumentRepository;
+use Symfony\Component\Finder\Finder;
+
 /**
- * A service to manage the invoice configuration:
- * - invoice number generator
- * - invoice sum calculator
- * - template renderer
+ * A service to manage invoice dependencies.
  */
 class ServiceInvoice
 {
     /**
-     * @var array
+     * @var CalculatorInterface[]
      */
-    protected $config = [];
+    protected $calculator = [];
 
     /**
-     * ServiceInvoice constructor.
-     * @param array $invoiceConfig
+     * @var RendererInterface[]
      */
-    public function __construct(array $invoiceConfig)
+    protected $renderer = [];
+
+    /**
+     * @var NumberGeneratorInterface[]
+     */
+    protected $numberGenerator = [];
+
+    /**
+     * @var InvoiceDocumentRepository
+     */
+    protected $documents;
+
+    /**
+     * @param InvoiceDocumentRepository $repository
+     */
+    public function __construct(InvoiceDocumentRepository $repository)
     {
-        $this->config = $invoiceConfig;
+        $this->documents = $repository;
     }
 
     /**
-     * @return array
+     * @param NumberGeneratorInterface $generator
+     * @return $this
+     */
+    public function addNumberGenerator(NumberGeneratorInterface $generator)
+    {
+        $this->numberGenerator[] = $generator;
+
+        return $this;
+    }
+
+    /**
+     * @return NumberGeneratorInterface[]
      */
     public function getNumberGenerator()
     {
-        return $this->config['number_generator'];
+        return $this->numberGenerator;
     }
 
     /**
@@ -45,9 +72,9 @@ class ServiceInvoice
      */
     public function getNumberGeneratorByName(string $name)
     {
-        foreach ($this->getNumberGenerator() as $key => $class) {
-            if ($key === $name) {
-                return new $class();
+        foreach ($this->getNumberGenerator() as $generator) {
+            if ($generator->getId() === $name) {
+                return $generator;
             }
         }
 
@@ -55,11 +82,22 @@ class ServiceInvoice
     }
 
     /**
-     * @return array
+     * @param CalculatorInterface $calculator
+     * @return $this
+     */
+    public function addCalculator(CalculatorInterface $calculator)
+    {
+        $this->calculator[] = $calculator;
+
+        return $this;
+    }
+
+    /**
+     * @return CalculatorInterface[]
      */
     public function getCalculator()
     {
-        return $this->config['calculator'];
+        return $this->calculator;
     }
 
     /**
@@ -68,38 +106,52 @@ class ServiceInvoice
      */
     public function getCalculatorByName(string $name)
     {
-        foreach ($this->getCalculator() as $key => $class) {
-            if ($key === $name) {
-                return new $class();
+        foreach ($this->getCalculator() as $calculator) {
+            if ($calculator->getId() === $name) {
+                return $calculator;
             }
         }
 
         return null;
+    }
+
+    /**
+     * @param string $name
+     * @return InvoiceDocument|null
+     */
+    public function getDocumentByName(string $name)
+    {
+        return $this->documents->findByName($name);
     }
 
     /**
      * Returns an array of invoice renderer, which will consist of a unique name and a controller action.
      *
-     * @return array
-     * @throws \Exception
+     * @return InvoiceDocument[]
      */
-    public function getRenderer()
+    public function getDocuments()
     {
-        return $this->config['renderer'];
+        return $this->documents->findAll();
     }
 
     /**
-     * @param $renderer
-     * @return string|null
+     * @param RendererInterface $renderer
+     * @return $this
      */
-    public function getRendererActionByName($renderer)
+    public function addRenderer(RendererInterface $renderer)
     {
-        foreach ($this->config['renderer'] as $name => $action) {
-            if ($name == $renderer) {
-                return $action;
-            }
-        }
+        $this->renderer[] = $renderer;
 
-        return null;
+        return $this;
+    }
+
+    /**
+     * Returns an array of invoice renderer.
+     *
+     * @return RendererInterface[]
+     */
+    public function getRenderer()
+    {
+        return $this->renderer;
     }
 }

@@ -41,4 +41,12 @@ class ShortInvoiceCalculator extends DefaultCalculator
 
         return [$timesheet];
     }
+
+    /**
+     * @return string
+     */
+    public function getId(): string
+    {
+        return 'short';
+    }
 }

@@ -39,10 +39,10 @@ class AppExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('kimai.theme', $config['theme']);
         $container->setParameter('kimai.dashboard', $config['dashboard']);
         $container->setParameter('kimai.widgets', $config['widgets']);
+        $container->setParameter('kimai.invoice.documents', $config['invoice']['documents']);
 
         $this->createUserParameter($config, $container);
         $this->createTimesheetParameter($config, $container);
-        $this->createInvoiceParameter($config, $container);
     }
 
     /**
@@ -76,25 +76,6 @@ class AppExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('kimai.timesheet.rounding', $config['timesheet']['rounding']);
         $container->setParameter('kimai.timesheet.duration_only', $config['timesheet']['duration_only']);
         $container->setParameter('kimai.timesheet.markdown', $config['timesheet']['markdown_content']);
-    }
-
-    /**
-     * @param array $config
-     * @param ContainerBuilder $container
-     */
-    private function createInvoiceParameter(array $config, ContainerBuilder $container)
-    {
-        $keys = ['renderer', 'calculator', 'number_generator'];
-
-        foreach ($keys as $key) {
-            if (!isset($config['invoice'][$key]) || 0 === count($config['invoice'][$key])) {
-                throw new InvalidDefinitionException('Missing invoice configuration: kimai.invoice.' . $key);
-            }
-
-            $container->setParameter('kimai.invoice.' . $key, $config['invoice'][$key]);
-        }
-
-        $container->setParameter('kimai.invoice', $config['invoice']);
     }
 
     /**

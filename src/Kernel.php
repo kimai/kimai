@@ -11,8 +11,12 @@ namespace App;
 
 use App\DependencyInjection\AppExtension;
 use App\DependencyInjection\Compiler\DoctrineCompilerPass;
+use App\DependencyInjection\Compiler\InvoiceServiceCompilerPass;
 use App\DependencyInjection\Compiler\TwigContextCompilerPass;
-use App\Timesheet\CalculatorInterface;
+use App\Invoice\CalculatorInterface as InvoiceCalculator;
+use App\Invoice\NumberGeneratorInterface;
+use App\Invoice\RendererInterface;
+use App\Timesheet\CalculatorInterface as TimesheetCalculator;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
@@ -26,6 +30,10 @@ class Kernel extends BaseKernel
 
     public const CONFIG_EXTS = '.{php,xml,yaml,yml}';
 
+    public const TAG_INVOICE_RENDERER = 'invoice.renderer';
+    public const TAG_INVOICE_NUMBER_GENERATOR = 'invoice.number_generator';
+    public const TAG_INVOICE_CALCULATOR = 'invoice.calculator';
+
     public function getCacheDir()
     {
         return $this->getProjectDir() . '/var/cache/' . $this->environment;
@@ -38,7 +46,10 @@ class Kernel extends BaseKernel
 
     protected function build(ContainerBuilder $container)
     {
-        $container->registerForAutoconfiguration(CalculatorInterface::class)->addTag('timesheet.calculator');
+        $container->registerForAutoconfiguration(TimesheetCalculator::class)->addTag('timesheet.calculator');
+        $container->registerForAutoconfiguration(RendererInterface::class)->addTag(self::TAG_INVOICE_RENDERER);
+        $container->registerForAutoconfiguration(NumberGeneratorInterface::class)->addTag(self::TAG_INVOICE_NUMBER_GENERATOR);
+        $container->registerForAutoconfiguration(InvoiceCalculator::class)->addTag(self::TAG_INVOICE_CALCULATOR);
     }
 
     public function registerBundles()
@@ -68,6 +79,7 @@ class Kernel extends BaseKernel
 
         $container->addCompilerPass(new DoctrineCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new TwigContextCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
+        $container->addCompilerPass(new InvoiceServiceCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
     }
 
     protected function configureRoutes(RouteCollectionBuilder $routes)

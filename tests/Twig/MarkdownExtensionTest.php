@@ -41,6 +41,8 @@ class MarkdownExtensionTest extends TestCase
             "- test<br />\n- foo",
             $sut->timesheetContent("- test\n- foo")
         );
+        $this->assertEquals('', $sut->timesheetContent(null));
+        $this->assertEquals('', $sut->timesheetContent(''));
 
         $sut = new MarkdownExtension(new Markdown(), true);
         $this->assertEquals(

@@ -46,7 +46,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
         $this->assertNotEmpty($node->text());
-        $this->assertContains('Before you can create an invoice, you have to select at least a customer filter.', $node->text());
+        $this->assertContains('No invoice entries were found based on your selected filters.', $node->text());
     }
 
     public function testListTemplateAction()

@@ -53,8 +53,12 @@ class MarkdownExtension extends \Twig_Extension
      * @param string $content
      * @return string
      */
-    public function timesheetContent(string $content): string
+    public function timesheetContent($content): string
     {
+        if (empty($content)) {
+            return '';
+        }
+
         if ($this->timesheetIsMarkdown) {
             return $this->markdown->toHtml($content, false);
         }

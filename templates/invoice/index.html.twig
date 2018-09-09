@@ -18,10 +18,34 @@
 
 {% block main %}
 
-    {% if model.entries is empty or action is empty %}
+    {% if model.entries is empty %}
         {{ widgets.callout('warning', 'invoice.select_filter') }}
     {% else %}
-        {{ render(controller(action, {'model': model, 'appRequest': app.request})) }}
+
+        {{ include('invoice/preview.html.twig') }}
+
+        <div class="row no-print">
+            <div class="col-xs-12">
+                <button type="button" id="print-invoice-button" class="btn btn-success pull-right">
+                    <i class="{{ 'print'|icon }}"></i> {{ 'button.print'|trans }}
+                </button>
+            </div>
+        </div>
+
     {% endif %}
 
+{% endblock %}
+
+{% block javascripts %}
+    {# we do not call parent() as we use a custom built for the frontend assets and don't want the default <script> #}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $( "#print-invoice-button" ).click(function() {
+                var prevAction = $( "#invoice-print-form" ).attr('action');
+                $( "#invoice-print-form" ).attr('target', '_blank').attr('action', '{{ path('invoice_print') }}');
+                $( "#invoice-print-form" ).submit();
+                $( "#invoice-print-form" ).removeAttr('target').attr('action', prevAction);
+            });
+        });
+    </script>
 {% endblock %}

@@ -76,7 +76,7 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route(path="/", name="invoice", methods={"GET", "POST"})
+     * @Route(path="/", name="invoice", methods={"GET"})
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -102,16 +102,54 @@ class InvoiceController extends AbstractController
 
         $model = $this->prepareModel($query, $entries);
 
-        $action = null;
-        if ($query->getTemplate() !== null) {
-            $action = $this->service->getRendererActionByName($query->getTemplate()->getRenderer());
-        }
-
         return $this->render('invoice/index.html.twig', [
             'model' => $model,
-            'action' => $action,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route(path="/print", name="invoice_print", methods={"GET"})
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     */
+    public function printAction(Request $request)
+    {
+        if (!$this->invoiceRepository->hasTemplate()) {
+            return $this->redirectToRoute('admin_invoice_template_create');
+        }
+
+        $query = $this->getDefaultQuery();
+        $form = $this->getToolbarForm($query);
+        $form->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->redirectToRoute('admin_invoice_template_create');
+        }
+
+        /** @var InvoiceQuery $query */
+        $query = $form->getData();
+        $entries = $this->getEntries($query);
+        $model = $this->prepareModel($query, $entries);
+
+        $document = $this->service->getDocumentByName($model->getTemplate()->getRenderer());
+        if (null === $document) {
+            throw new \Exception('Unknown invoice document: ' . $model->getTemplate()->getRenderer());
+        }
+
+        foreach ($this->service->getRenderer() as $renderer) {
+            if ($renderer->supports($document)) {
+                break;
+            }
+        }
+
+        if (null === $renderer) {
+            throw new \Exception('Unknown invoice renderer: ' . $model->getTemplate()->getRenderer());
+        }
+
+        return $renderer->render($document, $model);
     }
 
     /**
@@ -278,6 +316,9 @@ class InvoiceController extends AbstractController
         return $this->createForm(InvoiceToolbarForm::class, $query, [
             'action' => $this->generateUrl('invoice', []),
             'method' => 'GET',
+            'attr' => [
+                'id' => 'invoice-print-form'
+            ]
         ]);
     }
 

@@ -39,8 +39,8 @@ class InvoiceNumberGeneratorType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $renderer = [];
-        foreach ($this->service->getNumberGenerator() as $name => $class) {
-            $renderer[$name] = $name;
+        foreach ($this->service->getNumberGenerator() as $generator) {
+            $renderer[$generator->getId()] = $generator->getId();
         }
 
         $resolver->setDefaults([

@@ -1,0 +1,114 @@
+{% extends 'invoice/layout.html.twig' %}
+
+{% block invoice %}
+<div class="row">
+    <div class="col-xs-12">
+        <h2 class="page-header">
+            <span contenteditable="true">{{ model.template.title }}</span>
+            <small class="pull-right">{{ 'label.date'|trans }}: {{ model.invoiceDate|date_short }}</small>
+        </h2>
+    </div>
+</div>
+
+<div class="row invoice-info">
+    <div class="col-sm-4 invoice-col">
+        {{ 'invoice.from'|trans }}
+        <address contenteditable="true">
+            <strong>{{ model.template.company }}</strong><br>
+            {{ model.template.address|trim|nl2br }}
+        </address>
+    </div>
+    <div class="col-sm-4 invoice-col">
+        {% set customerPhone = model.customer.phone|default(model.customer.mobile) %}
+        {{ 'invoice.to'|trans }}
+        <address contenteditable="true">
+            <strong>{{ model.customer.company|default(model.customer.name) }}</strong><br>
+            {{ model.customer.address|nl2br }}
+            {% if model.customer.phone is not empty %}
+                <br>
+                {{ 'label.phone'|trans }}: {{ model.customer.phone }}
+            {% endif %}
+            {% if model.customer.mail is not empty %}
+                <br>
+                {{ 'label.email'|trans }}: {{ model.customer.mail }}
+            {% endif %}
+        </address>
+    </div>
+    <div class="col-sm-4 invoice-col">
+        <p contenteditable="true">
+            <b>{{ 'invoice.number'|trans }}: {{ model.numberGenerator.invoiceNumber }}</b>
+        </p>
+        <p contenteditable="true">
+            <b>{{ 'invoice.due_days'|trans }}:</b> {{ model.dueDate|date_short }}
+            {% if model.customer.number is not empty %}
+                <br><b>{{ 'label.customer_number'|trans }}:</b> {{ model.customer.number }}
+            {% endif %}
+            {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
+                <br><b>{{ 'label.order_number'|trans }}:</b> {{ model.query.project.orderNumber }}
+            {% endif %}
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>{{ 'label.date'|trans }}</th>
+                    <th>{{ 'label.activity'|trans }}</th>
+                    <th>{{ 'invoice.unit_price'|trans }}</th>
+                    <th>{{ 'label.hours'|trans }}</th>
+                    <th>{{ 'invoice.total_rate'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entry in model.calculator.entries %}
+                <tr>
+                    <td>{{ entry.begin|date_short }}</td>
+                    <td>{{ entry.activity.name }} / {{ entry.activity.project.name }}</td>
+                    <td contenteditable="true">{{ app.user.getPreferenceValue('hourly_rate')|money(model.calculator.currency) }}</td>
+                    <td>{{ entry.duration|duration }}</td>
+                    <td>{{ entry.rate|money(model.calculator.currency) }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-6">
+        {% if model.template.paymentTerms is not empty %}
+        <p class="lead">{{ 'label.payment_terms'|trans }}</p>
+
+        <p class="text-muted well well-sm no-shadow" contenteditable="true">
+            {{ model.template.paymentTerms|trim|nl2br }}
+        </p>
+        {% endif %}
+    </div>
+
+    <div class="col-xs-6">
+        <p class="lead" contenteditable="true">{{ 'invoice.due_days'|trans }} {{ model.dueDate|date_short }}</p>
+
+        <div class="table-responsive">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th style="width:50%">{{ 'invoice.subtotal'|trans }}</th>
+                    <td>{{ model.calculator.subtotal|money(model.calculator.currency) }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'invoice.tax'|trans }} ({{ model.calculator.vat }}%)</th>
+                    <td>{{ model.calculator.tax|money(model.calculator.currency) }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'invoice.total'|trans }}</th>
+                    <td>{{ model.calculator.total|money(model.calculator.currency) }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

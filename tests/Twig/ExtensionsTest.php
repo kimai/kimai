@@ -124,6 +124,7 @@ class ExtensionsTest extends TestCase
     public function getMoneyData()
     {
         return [
+            ['0 €', null, 'EUR', 'de'],
             ['2.345 €', 2345, 'EUR', 'de'],
             ['2,345 €', 2345, 'EUR', 'en'],
             ['2,345.01 €', 2345.009, 'EUR', 'en'],

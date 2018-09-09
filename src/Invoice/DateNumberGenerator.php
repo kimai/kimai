@@ -23,6 +23,14 @@ class DateNumberGenerator implements NumberGeneratorInterface
     protected $model;
 
     /**
+     * @return string
+     */
+    public function getId(): string
+    {
+        return 'default';
+    }
+
+    /**
      * @param InvoiceModel $model
      */
     public function setModel(InvoiceModel $model)

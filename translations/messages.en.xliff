@@ -684,7 +684,11 @@
             </trans-unit>
             <trans-unit id="invoice.select_filter">
                 <source>invoice.select_filter</source>
-                <target>Before you can create an invoice, you have to select at least a customer filter.</target>
+                <target>No invoice entries were found based on your selected filters.</target>
+            </trans-unit>
+            <trans-unit id="invoice.preview">
+                <source>invoice.preview</source>
+                <target>This is a preview of the data that will show up in your invoice document.</target>
             </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
@@ -733,14 +737,6 @@
             <trans-unit id="invoice.service_date">
                 <source>invoice.service_date</source>
                 <target>Service date</target>
-            </trans-unit>
-            <trans-unit id="invoice.preview">
-                <source>invoice.preview</source>
-                <target>Preview</target>
-            </trans-unit>
-            <trans-unit id="invoice.preview_info">
-                <source>invoice.preview_info</source>
-                <target>The following entries will be included in your invoice:</target>
             </trans-unit>
             <trans-unit id="invoice.amount">
                 <source>invoice.amount</source>

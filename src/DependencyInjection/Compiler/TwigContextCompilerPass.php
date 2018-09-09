@@ -29,5 +29,14 @@ class TwigContextCompilerPass implements CompilerPassInterface
 
         $twig->addMethodCall('addGlobal', ['kimai_context', $theme]);
         $twig->addMethodCall('addGlobal', ['duration_only', $durationOnly]);
+
+        if ($container->hasDefinition('twig.loader.native_filesystem')) {
+            $definition = $container->getDefinition('twig.loader.native_filesystem');
+
+            $path = dirname(dirname(dirname(__DIR__))) . DIRECTORY_SEPARATOR;
+            foreach($container->getParameter('kimai.invoice.documents') as $invoicePath) {
+                $definition->addMethodCall('addPath', [$path . $invoicePath, 'invoice']);
+            }
+        }
     }
 }

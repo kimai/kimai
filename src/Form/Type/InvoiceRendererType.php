@@ -39,8 +39,8 @@ class InvoiceRendererType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $renderer = [];
-        foreach ($this->service->getRenderer() as $name => $action) {
-            $renderer[$name] = $name;
+        foreach ($this->service->getDocuments() as $document) {
+            $renderer[$document->getId()] = $document->getId();
         }
 
         $resolver->setDefaults([

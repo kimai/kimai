@@ -12,6 +12,8 @@
 /var/cache/*
 !var/cache/.gitkeep
 
+/var/invoices/*
+
 /var/log/*
 !var/log/.gitkeep
 

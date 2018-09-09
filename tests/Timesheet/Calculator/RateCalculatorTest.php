@@ -158,48 +158,6 @@ class RateCalculatorTest extends TestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     * @dataProvider getDisallowedFactors
-     */
-    public function testCalculateWithInvalidFactor($factor)
-    {
-        $today = new \DateTime();
-        $day = $today->format('l');
-        $rules = [
-            'default' => [
-                'days' => [$day],
-                'factor' => $factor
-            ],
-        ];
-        $seconds = 41837;
-
-        $end = new \DateTime();
-        $start = clone $end;
-        $start->setTimestamp($end->getTimestamp() - $seconds);
-
-        $record = new Timesheet();
-        $record->setUser($this->getTestUser());
-        $record->setBegin($start);
-        $record->setDuration($seconds);
-        $record->setActivity(new Activity());
-
-        $this->assertEquals(0, $record->getRate());
-
-        $record->setEnd($end);
-
-        $sut = new RateCalculator($rules);
-        $sut->calculate($record);
-    }
-
-    public function getDisallowedFactors()
-    {
-        return [
-            [0],
-            [-1],
-        ];
-    }
-
-    /**
      * @dataProvider getRuleDefinitions
      */
     public function testCalculateWithRules($rules, $expectedFactor)

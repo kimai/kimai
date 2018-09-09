@@ -1,3 +1,54 @@
+{% import "macros/widgets.html.twig" as widgets %}
+{{ widgets.callout('success', 'invoice.preview') }}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-condensed">
+                <thead>
+                <tr>
+                    <th>{{ 'label.date'|trans }}</th>
+                    <th class="hidden-xs hidden-sm">{{ 'label.activity'|trans }}</th>
+                    <th class="text-center">{{ 'invoice.unit_price'|trans }}</th>
+                    <th class="text-center">{{ 'invoice.amount'|trans }}</th>
+                    <th class="text-right">{{ 'invoice.total_rate'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for entry in model.calculator.entries %}
+                    {% set duration = entry.duration|duration() %}
+                    {% if entry.fixedRate is not null %}
+                        {% set rate = entry.fixedRate %}
+                        {% set duration = 1 %}
+                    {% elseif entry.hourlyRate is not null %}
+                        {% set rate = entry.hourlyRate %}
+                    {% else %}
+                        {% set rate = app.user.getPreferenceValue('hourly_rate') %}
+                    {% endif %}
+                    <tr>
+                        <td>{{ entry.begin|date_short }}</td>
+                        <td class="hidden-xs hidden-sm timesheet-description">
+                            {% if entry.description is not empty %}
+                                {{ entry.description|desc2html }}
+                            {% else %}
+                                {{ entry.activity.name }} / {{ entry.activity.project.name }}
+                            {% endif %}
+                        </td>
+                        <td class="text-center" contenteditable="true">
+                            {{ rate|money(model.calculator.currency) }}
+                        </td>
+                        <td class="text-center">
+                            {{ duration }}
+                        </td>
+                        <td class="text-right">{{ entry.rate|money(model.calculator.currency) }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{#
 <div class="row">
     <div class="col-xs-12">
         <h2 class="page-header">
@@ -108,11 +159,4 @@
         </div>
     </div>
 </div>
-
-<div class="row no-print">
-    <div class="col-xs-12">
-        <button type="button" class="btn btn-success pull-right" onclick="window.print();return false;">
-            <i class="{{ 'print'|icon }}"></i> {{ 'button.print'|trans }}
-        </button>
-    </div>
-</div>
+#}
