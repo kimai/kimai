@@ -35,17 +35,17 @@ class InvoiceServiceCompilerPass implements CompilerPassInterface
 
         $taggedRenderer = $container->findTaggedServiceIds(Kernel::TAG_INVOICE_RENDERER);
         foreach ($taggedRenderer as $id => $tags) {
-            $definition->addMethodCall('addRenderer', array(new Reference($id)));
+            $definition->addMethodCall('addRenderer', [new Reference($id)]);
         }
 
         $taggedGenerator = $container->findTaggedServiceIds(Kernel::TAG_INVOICE_NUMBER_GENERATOR);
         foreach ($taggedGenerator as $id => $tags) {
-            $definition->addMethodCall('addNumberGenerator', array(new Reference($id)));
+            $definition->addMethodCall('addNumberGenerator', [new Reference($id)]);
         }
 
         $taggedCalculator = $container->findTaggedServiceIds(Kernel::TAG_INVOICE_CALCULATOR);
         foreach ($taggedCalculator as $id => $tags) {
-            $definition->addMethodCall('addCalculator', array(new Reference($id)));
+            $definition->addMethodCall('addCalculator', [new Reference($id)]);
         }
     }
 }

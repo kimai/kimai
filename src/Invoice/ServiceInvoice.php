@@ -10,9 +10,7 @@
 namespace App\Invoice;
 
 use App\Entity\InvoiceDocument;
-use App\Model\InvoiceModel;
 use App\Repository\InvoiceDocumentRepository;
-use Symfony\Component\Finder\Finder;
 
 /**
  * A service to manage invoice dependencies.

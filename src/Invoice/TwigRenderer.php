@@ -44,7 +44,7 @@ class TwigRenderer implements RendererInterface
      */
     public function render(InvoiceDocument $document, InvoiceModel $model): Response
     {
-        $content = $this->twig->render('@invoice/'.basename($document->getFilename()), [
+        $content = $this->twig->render('@invoice/' . basename($document->getFilename()), [
             'model' => $model
         ]);
 

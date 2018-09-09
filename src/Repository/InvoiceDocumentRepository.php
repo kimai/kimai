@@ -14,7 +14,6 @@ use Symfony\Component\Finder\Finder;
 
 class InvoiceDocumentRepository
 {
-
     /**
      * @var array
      */
@@ -54,7 +53,7 @@ class InvoiceDocumentRepository
 
         $documents = [];
 
-        foreach($this->documentDirs as $searchPath) {
+        foreach ($this->documentDirs as $searchPath) {
             if (!is_dir($base . $searchPath)) {
                 continue;
             }

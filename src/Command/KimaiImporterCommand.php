@@ -797,7 +797,6 @@ class KimaiImporterCommand extends Command
             }
         }
 
-
         if (!$this->validateImport($io, $activity)) {
             throw new \Exception('Failed to validate activity: ' . $activity->getName());
         }
@@ -937,15 +936,15 @@ class KimaiImporterCommand extends Command
 
             $io->write('.');
             if (0 == $counter % 80) {
-                $io->writeln(' ('.$counter.'/'.$total.')');
+                $io->writeln(' (' . $counter . '/' . $total . ')');
                 $entityManager->clear(Timesheet::class);
             }
         }
 
-        for ($i = 0; $i < 80-($counter%80); $i++) {
+        for ($i = 0; $i < 80 - ($counter % 80); $i++) {
             $io->write(' ');
         }
-        $io->writeln(' ('.$counter.'/'.$total.')');
+        $io->writeln(' (' . $counter . '/' . $total . ')');
 
         if ($activityCounter > 0) {
             $io->success('Created new (previously global) activities during timesheet import: ' . $activityCounter);

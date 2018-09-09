@@ -34,7 +34,7 @@ class TwigContextCompilerPass implements CompilerPassInterface
             $definition = $container->getDefinition('twig.loader.native_filesystem');
 
             $path = dirname(dirname(dirname(__DIR__))) . DIRECTORY_SEPARATOR;
-            foreach($container->getParameter('kimai.invoice.documents') as $invoicePath) {
+            foreach ($container->getParameter('kimai.invoice.documents') as $invoicePath) {
                 if (!is_dir($path . $invoicePath)) {
                     continue;
                 }
