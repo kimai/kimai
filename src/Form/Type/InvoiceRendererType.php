@@ -47,8 +47,9 @@ class InvoiceRendererType extends AbstractType
             'label' => 'label.invoice_renderer',
             'choices' => $renderer,
             'choice_label' => function ($renderer) {
-                return 'invoice_renderer.' . $renderer;
-            }
+                return $renderer;
+            },
+            'translation_domain' => 'invoice-renderer',
         ]);
     }
 

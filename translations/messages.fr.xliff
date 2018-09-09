@@ -750,18 +750,6 @@
                 <source>label.payment_terms</source>
                 <target>Modalités de paiement</target>
             </trans-unit>
-            <trans-unit id="label.invoice_renderer">
-                <source>label.invoice_renderer</source>
-                <target>Modèle de facture</target>
-            </trans-unit>
-            <trans-unit id="invoice_renderer.default">
-                <source>invoice_renderer.default</source>
-                <target>Facture (par défaut)</target>
-            </trans-unit>
-            <trans-unit id="invoice_renderer.timesheet">
-                <source>invoice_renderer.timesheet</source>
-                <target>Fiche de temps</target>
-            </trans-unit>
             <trans-unit id="label.invoice_number_generator">
                 <source>label.invoice_number_generator</source>
                 <target>Générateur de numéros de facture</target>

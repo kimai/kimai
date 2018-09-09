@@ -754,22 +754,6 @@
                 <source>label.payment_terms</source>
                 <target>Zahlungsinformationen</target>
             </trans-unit>
-            <trans-unit id="label.invoice_renderer">
-                <source>label.invoice_renderer</source>
-                <target>Rechnungsvorlage</target>
-            </trans-unit>
-            <trans-unit id="invoice_renderer.default">
-                <source>invoice_renderer.default</source>
-                <target>Rechnung (Standard)</target>
-            </trans-unit>
-            <trans-unit id="invoice_renderer.timesheet">
-                <source>invoice_renderer.timesheet</source>
-                <target>Stundenzettel</target>
-            </trans-unit>
-            <trans-unit id="invoice_renderer.freelancer">
-                <source>invoice_renderer.freelancer</source>
-                <target>Freiberufler</target>
-            </trans-unit>
             <trans-unit id="label.invoice_number_generator">
                 <source>label.invoice_number_generator</source>
                 <target>Rechnungsnummern-Generator</target>

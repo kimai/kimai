@@ -717,22 +717,6 @@
                 <source>label.payment_terms</source>
                 <target>Condiciones de pago</target>
             </trans-unit>
-            <trans-unit id="label.invoice_renderer">
-                <source>label.invoice_renderer</source>
-                <target>Plantilla de factura</target>
-            </trans-unit>
-            <trans-unit id="invoice_renderer.default">
-                <source>invoice_renderer.default</source>
-                <target>Factura (default)</target>
-            </trans-unit>
-            <trans-unit id="invoice_renderer.timesheet">
-                <source>invoice_renderer.timesheet</source>
-                <target>Hoja de tiempo</target>
-            </trans-unit>
-            <trans-unit id="label.invoice_number_generator">
-                <source>label.invoice_number_generator</source>
-                <target>Generador de número de factura</target>
-            </trans-unit>
             <trans-unit id="invoice_number_generator.default">
                 <source>invoice_number_generator.default</source>
                 <target>Fecha (default)</target>

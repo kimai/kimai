@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file date="2018-09-09T16:00:00Z" source-language="en" target-language="en" datatype="plaintext" original="none">
+        <body>
+            <trans-unit id="label.invoice_renderer">
+                <source>label.invoice_renderer</source>
+                <target>Invoice template</target>
+            </trans-unit>
+            <trans-unit id="default">
+                <source>default</source>
+                <target>Invoice (default)</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target>Timesheet</target>
+            </trans-unit>
+            <trans-unit id="freelancer">
+                <source>freelancer</source>
+                <target>Freelancer</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
