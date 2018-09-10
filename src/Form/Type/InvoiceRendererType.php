@@ -38,19 +38,42 @@ class InvoiceRendererType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $renderer = [];
+        $documents = [];
         foreach ($this->service->getDocuments() as $document) {
-            $renderer[$document->getId()] = $document->getId();
+            foreach ($this->service->getRenderer() as $renderer) {
+                if ($renderer->supports($document)) {
+                    $documents[$document->getName()] = $document->getId();
+                }
+            }
         }
 
         $resolver->setDefaults([
             'label' => 'label.invoice_renderer',
-            'choices' => $renderer,
-            'choice_label' => function ($renderer) {
-                return $renderer;
+            'choices' => $documents,
+            'group_by' => [$this, 'getGroupBy'],
+            'choice_label' => function ($choiceValue, $key, $value) {
+                return $choiceValue;
             },
             'translation_domain' => 'invoice-renderer',
         ]);
+    }
+
+    /**
+     * @param string $value
+     * @param string $label
+     * @param string $index
+     * @return string
+     */
+    public function getGroupBy($value, $label, $index)
+    {
+        $renderer = $label;
+        return ucfirst(
+            substr(
+                $renderer,
+                1+strrpos($renderer, '.'),
+                strrpos($renderer, '.')
+            )
+        );
     }
 
     /**

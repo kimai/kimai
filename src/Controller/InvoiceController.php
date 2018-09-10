@@ -141,15 +141,16 @@ class InvoiceController extends AbstractController
 
         foreach ($this->service->getRenderer() as $renderer) {
             if ($renderer->supports($document)) {
-                break;
+                return $renderer->render($document, $model);
             }
         }
 
-        if (null === $renderer) {
-            throw new \Exception('Unknown invoice renderer: ' . $model->getTemplate()->getRenderer());
-        }
+        $this->flashError('Cannot render invoice: ' . $model->getTemplate()->getRenderer() . ' (' . $document->getName() . ')');
 
-        return $renderer->render($document, $model);
+        return $this->render('invoice/index.html.twig', [
+            'model' => $model,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
@@ -180,9 +181,12 @@ class InvoiceController extends AbstractController
     protected function prepareModel(InvoiceQuery $query, array $entries)
     {
         $model = new InvoiceModel();
-        $model->setQuery($query);
-        $model->setEntries($entries);
-        $model->setCustomer($query->getCustomer());
+        $model
+            ->setQuery($query)
+            ->setEntries($entries)
+            ->setCustomer($query->getCustomer())
+            ->setUser($this->getUser())
+        ;
 
         $action = null;
         if ($query->getTemplate() !== null) {

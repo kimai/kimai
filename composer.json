@@ -16,6 +16,8 @@
         "kevinpapst/adminlte-bundle": "^2.1",
         "nelmio/api-doc-bundle": "^3.2",
         "ocramius/proxy-manager": "2.1.1",
+        "phpoffice/phpspreadsheet": "^1.4",
+        "phpoffice/phpword": "^0.15.0",
         "sensio/framework-extra-bundle": "^5.2",
         "symfony/asset": "^4.0",
         "symfony/console": "^4.0",

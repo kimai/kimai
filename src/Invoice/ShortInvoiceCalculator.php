@@ -25,6 +25,8 @@ class ShortInvoiceCalculator extends DefaultCalculator
         $timesheet = new Timesheet();
 
         foreach ($this->model->getEntries() as $entry) {
+            $timesheet->setFixedRate($entry->getFixedRate()); // FIXME invoice
+            $timesheet->setHourlyRate($entry->getHourlyRate()); // FIXME invoice
             $timesheet->setRate($timesheet->getRate() + $entry->getRate());
             $timesheet->setDuration($timesheet->getDuration() + $entry->getDuration());
             $timesheet->setBegin($entry->getBegin());

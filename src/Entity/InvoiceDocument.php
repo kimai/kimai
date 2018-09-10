@@ -37,6 +37,14 @@ class InvoiceDocument
     /**
      * @return string
      */
+    public function getName()
+    {
+        return basename($this->getFilename());
+    }
+
+    /**
+     * @return string
+     */
     public function getFilename(): string
     {
         return $this->file->getRealPath();

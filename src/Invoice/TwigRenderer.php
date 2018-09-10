@@ -34,7 +34,7 @@ class TwigRenderer implements RendererInterface
      */
     public function supports(InvoiceDocument $document): bool
     {
-        return stripos('.html.twig', $document->getFilename()) !== false;
+        return stripos($document->getFilename(), '.twig') !== false;
     }
 
     /**

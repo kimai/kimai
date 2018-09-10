@@ -16,7 +16,6 @@
         'title': '',
         'due_days': 'hidden-xs',
         'vat': 'hidden-xs',
-        'invoice_renderer': 'hidden-xs',
         'actions': 'alwaysVisible',
     }) }}
 
@@ -26,7 +25,6 @@
             <td>{{ entry.title }}</td>
             <td class="hidden-xs hidden-sm">{{ entry.dueDays }}</td>
             <td class="hidden-xs hidden-sm">{{ entry.vat }}</td>
-            <td class="hidden-xs hidden-sm">{{ "invoice_renderer.#{entry.renderer}"|trans }}</td>
             <td>
                 {% set actionButtons = {'edit': path('admin_invoice_template_edit', {'id' : entry.id, 'page': page})} %}
                 {% set actionButtons = actionButtons|merge({'trash': path('admin_invoice_template_delete', {'id' : entry.id, 'page': page})}) %}

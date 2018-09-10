@@ -31,6 +31,40 @@ class InvoiceFixtures extends Fixture
         $this->loadInvoiceTemplate($manager);
         $this->loadFreelancerTemplate($manager);
         $this->loadTimesheetTemplate($manager);
+        $this->loadDocxTemplate($manager);
+    }
+
+    /**
+     * @param ObjectManager $manager
+     */
+    private function loadDocxTemplate(ObjectManager $manager)
+    {
+        $faker = Factory::create();
+
+        $template = new InvoiceTemplate();
+        $template
+            ->setName('Company invoice (docx)')
+            ->setTitle('Invoice')
+            ->setCompany('Kimai Inc.')
+            ->setVat(19)
+            ->setDueDays(14)
+            ->setRenderer('company')
+            ->setCalculator('default')
+            ->setNumberGenerator('default')
+            ->setPaymentTerms(
+                'Acme Bank' . PHP_EOL .
+                'Account: '.$faker->bankAccountNumber . PHP_EOL .
+                'IBAN: ' . $faker->iban('DE')
+            )
+            ->setAddress(
+                'Kimai Inc.' . PHP_EOL .
+                $faker->streetAddress . PHP_EOL .
+                $faker->city . ', ' . $faker->stateAbbr . ' ' . $faker->postcode
+            )
+        ;
+
+        $manager->persist($template);
+        $manager->flush();
     }
 
     /**

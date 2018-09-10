@@ -12,12 +12,14 @@ namespace App\Model;
 use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Invoice\CalculatorInterface;
 use App\Invoice\NumberGeneratorInterface;
 use App\Repository\Query\InvoiceQuery;
 
 /**
- * Class InvoiceModel is the ONLY value that a renderer template receives for generating the invoice.
+ * InvoiceModel is the ONLY value that a RendererInterface receives for generating the invoice,
+ * besides the InvoiceDocument which is used as a "template".
  */
 class InvoiceModel
 {
@@ -50,6 +52,11 @@ class InvoiceModel
      * @var NumberGeneratorInterface
      */
     protected $generator;
+
+    /**
+     * @var User
+     */
+    protected $user;
 
     /**
      * @return InvoiceQuery
@@ -183,5 +190,23 @@ class InvoiceModel
     public function getCalculator(): CalculatorInterface
     {
         return $this->calculator;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     * @return InvoiceModel
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+        return $this;
     }
 }
