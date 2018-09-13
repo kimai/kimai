@@ -8,6 +8,7 @@
                 <thead>
                 <tr>
                     <th>{{ 'label.date'|trans }}</th>
+                    <th class="hidden-xs hidden-sm">{{ 'label.user'|trans }}</th>
                     <th class="hidden-xs hidden-sm">{{ 'label.activity'|trans }}</th>
                     <th class="text-center">{{ 'invoice.unit_price'|trans }}</th>
                     <th class="text-center">{{ 'invoice.amount'|trans }}</th>
@@ -27,6 +28,7 @@
                     {% endif %}
                     <tr>
                         <td>{{ entry.begin|date_short }}</td>
+                        <td class="hidden-xs hidden-sm">{{ widgets.username(entry.user) }}</td>
                         <td class="hidden-xs hidden-sm timesheet-description">
                             {% if entry.description is not empty %}
                                 {{ entry.description|desc2html }}

@@ -4,7 +4,7 @@
         <body>
             <trans-unit id="label.invoice_renderer">
                 <source>label.invoice_renderer</source>
-                <target>Invoice template</target>
+                <target>Invoice document</target>
             </trans-unit>
             <trans-unit id="default">
                 <source>default</source>

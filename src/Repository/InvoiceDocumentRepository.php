@@ -59,7 +59,11 @@ class InvoiceDocumentRepository
             }
             $finder = Finder::create()->ignoreDotFiles(true)->files()->in($base . $searchPath)->name('*.*');
             foreach ($finder->getIterator() as $file) {
-                $documents[] = new InvoiceDocument($file);
+                $doc = new InvoiceDocument($file);
+                // the first found invoice document wins
+                if (!isset($documents[$doc->getId()])) {
+                    $documents[$doc->getId()] = $doc;
+                }
             }
         }
 

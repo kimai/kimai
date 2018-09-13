@@ -13,48 +13,11 @@ use App\Entity\InvoiceDocument;
 use App\Entity\Timesheet;
 use App\Entity\UserPreference;
 use App\Model\InvoiceModel;
-use App\Twig\DateExtensions;
-use App\Twig\Extensions;
-use PhpOffice\PhpWord\TemplateProcessor;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\File\Stream;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 
-abstract class AbstractWordRenderer
+trait RendererTrait
 {
-    /**
-     * @var DateExtensions
-     */
-    protected $dateExtension;
-
-    /**
-     * @var Extensions
-     */
-    protected $extension;
-
-    /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
-
-    /**
-     * @var TokenStorageInterface
-     */
-    protected $tokenStorage;
-
-    /**
-     * @param DateExtensions $dateExtension
-     */
-    public function __construct(TokenStorageInterface $tokenStorage, TranslatorInterface $translator, DateExtensions $dateExtension, Extensions $extensions)
-    {
-        $this->tokenStorage = $tokenStorage;
-        $this->translator = $translator;
-        $this->dateExtension = $dateExtension;
-        $this->extension = $extensions;
-    }
 
     /**
      * @return string[]
@@ -84,37 +47,25 @@ abstract class AbstractWordRenderer
      * @param \DateTime $date
      * @return mixed
      */
-    protected function getFormattedDateTime(\DateTime $date)
-    {
-        return $this->dateExtension->dateShort($date);
-    }
+    abstract protected function getFormattedDateTime(\DateTime $date);
 
     /**
      * @param $amount
      * @return mixed
      */
-    protected function getFormattedMoney($amount)
-    {
-        return $this->extension->money($amount);
-    }
+    abstract protected function getFormattedMoney($amount);
 
     /**
      * @param \DateTime $date
      * @return mixed
      */
-    protected function getFormattedMonthName(\DateTime $date)
-    {
-        return $this->translator->trans($this->dateExtension->monthName($date));
-    }
+    abstract protected function getFormattedMonthName(\DateTime $date);
 
     /**
      * @param $seconds
      * @return mixed
      */
-    protected function getFormattedDuration($seconds)
-    {
-        return $this->extension->duration($seconds);
-    }
+    abstract protected function getFormattedDuration($seconds);
 
     /**
      * @param InvoiceModel $model
@@ -158,14 +109,13 @@ abstract class AbstractWordRenderer
 
     /**
      * @param Timesheet $timesheet
-     * @param string $fallbackRate
      * @return array
      */
-    protected function timesheetToArray(Timesheet $timesheet, $fallbackRate)
+    protected function timesheetToArray(Timesheet $timesheet)
     {
         $rate = $timesheet->getRate();
         $hourlyRate = $timesheet->getHourlyRate();
-        $amount = $this->extension->duration($timesheet->getDuration());
+        $amount = $this->getFormattedDuration($timesheet->getDuration());
         $description = $timesheet->getDescription();
 
         if (null !== $timesheet->getFixedRate()) {
@@ -178,49 +128,47 @@ abstract class AbstractWordRenderer
             $description = $timesheet->getActivity()->getName();
         }
 
+        $user = $timesheet->getUser();
+
         if (empty($hourlyRate)) {
-            $hourlyRate = $fallbackRate;
+            $hourlyRate = $user->getPreferenceValue(UserPreference::HOURLY_RATE);;
         }
+
+        $activity = $timesheet->getActivity();
+        $project = $activity->getProject();
+        $customer = $project->getCustomer();
 
         return [
             'entry.description' => $description,
             'entry.amount' => $amount,
             'entry.rate' => $this->getFormattedMoney($hourlyRate),
             'entry.total' => $this->getFormattedMoney($rate),
+            'entry.duration' => $timesheet->getDuration(),
+            'entry.begin' => $this->getFormattedDateTime($timesheet->getBegin()),
+            'entry.begin_timestamp' => $timesheet->getBegin()->getTimestamp(),
+            'entry.end' => $this->getFormattedDateTime($timesheet->getEnd()),
+            'entry.end_timestamp' => $timesheet->getEnd()->getTimestamp(),
             'entry.date' => $this->getFormattedDateTime($timesheet->getBegin()),
+            'entry.user_id' => $user->getId(),
+            'entry.user_name' => $user->getUsername(),
+            'entry.user_alias' => $user->getAlias(),
+            'entry.activity' => $activity->getName(),
+            'entry.activity_id' => $activity->getId(),
+            'entry.project' => $project->getName(),
+            'entry.project_id' => $project->getId(),
+            'entry.customer' => $customer->getName(),
+            'entry.customer_id' => $customer->getId(),
         ];
     }
 
     /**
-     * @param InvoiceDocument $document
-     * @param InvoiceModel $model
-     * @return Response
+     * @param mixed $file
+     * @param string $filename
+     * @return BinaryFileResponse
      */
-    public function render(InvoiceDocument $document, InvoiceModel $model): Response
+    protected function getFileResponse($file, $filename)
     {
-        $filename = basename($document->getFilename());
-
-        $template = new TemplateProcessor($document->getFilename());
-        foreach($this->modelToReplacer($model) as $key => $value) {
-            $template->setValue($key, $value);
-        }
-
-        $template->cloneRow('entry.description', count($model->getCalculator()->getEntries()));
-        $i = 1;
-        $rate = $model->getUser()->getPreferenceValue(UserPreference::HOURLY_RATE);
-        foreach($model->getCalculator()->getEntries() as $entry) {
-            $values = $this->timesheetToArray($entry, $rate);
-            foreach($values as $search => $replace) {
-                $template->setValue($search . '#' . $i, $replace);
-            }
-            $i++;
-        }
-
-        $cacheFile = $template->save();
-
-        clearstatcache(true, $cacheFile);
-
-        $response = new BinaryFileResponse(new Stream($cacheFile));
+        $response = new BinaryFileResponse($file);
         $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename);
 
         $response->headers->set('Content-Type', $this->getContentType());

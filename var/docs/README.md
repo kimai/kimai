@@ -12,6 +12,7 @@ For the most parts Kimai usage should be self-explanatory, so we will only cover
 [requested](https://github.com/kevinpapst/kimai2/issues) by the community.
 
 - [Timesheets](timesheet.md) - information about timesheets
+- [Invoices](invoices.md) - export your data to different formats with customizable templates
 - [User and Security](users.md) - docu for user and security topics, like authentication, registration and roles  
 - [Configurations](configurations.md) - intro into the global application configs
     - [Emails](emails.md) - transport configuration and handling of emails 
