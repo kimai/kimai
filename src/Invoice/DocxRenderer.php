@@ -10,7 +10,6 @@
 namespace App\Invoice;
 
 use App\Entity\InvoiceDocument;
-use App\Entity\UserPreference;
 use App\Model\InvoiceModel;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\TemplateProcessor;
@@ -52,15 +51,15 @@ class DocxRenderer extends AbstractRenderer implements RendererInterface
         $filename = basename($document->getFilename());
 
         $template = new TemplateProcessor($document->getFilename());
-        foreach($this->modelToReplacer($model) as $key => $value) {
+        foreach ($this->modelToReplacer($model) as $key => $value) {
             $template->setValue($key, $value);
         }
 
         $template->cloneRow('entry.description', count($model->getCalculator()->getEntries()));
         $i = 1;
-        foreach($model->getCalculator()->getEntries() as $entry) {
+        foreach ($model->getCalculator()->getEntries() as $entry) {
             $values = $this->timesheetToArray($entry);
-            foreach($values as $search => $replace) {
+            foreach ($values as $search => $replace) {
                 $template->setValue($search . '#' . $i, $replace);
             }
             $i++;

@@ -16,15 +16,28 @@ Be aware of the following rules:
 - The first file to be found takes precedence 
 - Kimai looks first in `var/invoices/`, so you can overwrite default templates
 - You should store your templates in `var/invoices/` as this directory is not shipped with Kimai and not touched during updates
-- You can configure different search directories through the config key `kimai.invoice.documents` 
+- You can configure different search directories through the config key `kimai.invoice.documents` if you want to 
+  - hide the default templates
+  - add additional template source directories
 
 The invoice system currently supports the following formats:
 
 - `HTML`
   - through the use of Twig templates
+  - PRO: no need for additional software, print or convert to PDF from your browser (if supported) 
 - `DOCX`
   - OOXML - Open Office XML Text
   - Microsoft Word 2007-2013 XML
+  - PRO: simple customization and possibility to edit the invoice later on
+- `CSV`
+  - Comma-separated file with UTF-8 encoding and double-quotes around each field 
+  - PRO: good for exporting and creating enhanced reports with an office software package
+- `XLS`
+  - The Microsoft Excel™ Binary file format (BIFF5 and BIFF8) is a binary file format that was used by Microsoft Excel™ between versions 95 and 2003.
+  - PRO: None, please switch to XLSX - we will not support any question regarding this file format, good luck with it!
+- `XLSX`
+  - Comma-separated file with UTF-8 encoding 
+  - PRO: best for exporting, creating enhanced reports with an office software package
 
 Caution: the default templates were only tested with LibreOffice!
 
@@ -48,14 +61,18 @@ This row will then be cloned for every timesheet entry.
 
 Please read `Template variables` to find out which variables you can use in your template.
 
-### CSV templates
+### Spreadsheets (XLSX and CSV)
 
-CSV templates are plain text files with a UTF-8 encoding and will be comma-separated.
+Spreadsheet templates are powered by [PhpSpreadsheet](https://github.com/PHPOffice/PhpSpreadsheet).
+
+**Important:** within the first 100 rows you MUST-HAVE the template row for timesheet entries, which means there must be 
+a value starting with `${entry.` in one of the first 10 columns, otherwise no entries will be rendered!
+
+_Check the default templates if that doesn't make sense to you ;-)_
+
+This row will then be cloned for every timesheet entry. 
 
 Please read `Template variables` to find out which variables you can use in your CSV file.
-
-**Important:** You need at least one row that contains a column starting with `${entry.`, otherwise the entries won't be rendered! 
-This row will then be cloned for every timesheet entry. 
 
 ## Template variables
 

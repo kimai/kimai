@@ -207,6 +207,7 @@ class InvoiceModel
     public function setUser(User $user)
     {
         $this->user = $user;
+
         return $this;
     }
 }

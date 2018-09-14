@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 trait RendererTrait
 {
-
     /**
      * @return string[]
      */
@@ -40,6 +39,7 @@ trait RendererTrait
                 return true;
             }
         }
+
         return false;
     }
 
@@ -131,7 +131,7 @@ trait RendererTrait
         $user = $timesheet->getUser();
 
         if (empty($hourlyRate)) {
-            $hourlyRate = $user->getPreferenceValue(UserPreference::HOURLY_RATE);;
+            $hourlyRate = $user->getPreferenceValue(UserPreference::HOURLY_RATE);
         }
 
         $activity = $timesheet->getActivity();

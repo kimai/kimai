@@ -12,14 +12,14 @@ namespace App\Invoice;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
-class CsvRenderer extends AbstractSpreadsheetRenderer implements RendererInterface
+class XlsxRenderer extends AbstractSpreadsheetRenderer implements RendererInterface
 {
     /**
      * @return string[]
      */
     protected function getFileExtensions()
     {
-        return ['.csv'];
+        return ['.xlsx', '.xls'];
     }
 
     /**
@@ -27,7 +27,7 @@ class CsvRenderer extends AbstractSpreadsheetRenderer implements RendererInterfa
      */
     protected function getContentType()
     {
-        return 'text/csv';
+        return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
     }
 
     /**
@@ -37,8 +37,8 @@ class CsvRenderer extends AbstractSpreadsheetRenderer implements RendererInterfa
      */
     protected function saveSpreadsheet(Spreadsheet $spreadsheet)
     {
-        $filename = tempnam(sys_get_temp_dir(), 'kimai-csv');
-        $writer = IOFactory::createWriter($spreadsheet, 'Csv');
+        $filename = tempnam(sys_get_temp_dir(), 'kimai-xslx');
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save($filename);
 
         return $filename;

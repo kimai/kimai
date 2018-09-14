@@ -53,7 +53,7 @@ class InvoiceFixtures extends Fixture
             ->setNumberGenerator('default')
             ->setPaymentTerms(
                 'Acme Bank' . PHP_EOL .
-                'Account: '.$faker->bankAccountNumber . PHP_EOL .
+                'Account: ' . $faker->bankAccountNumber . PHP_EOL .
                 'IBAN: ' . $faker->iban('DE')
             )
             ->setAddress(

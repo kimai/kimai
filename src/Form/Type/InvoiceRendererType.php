@@ -68,10 +68,11 @@ class InvoiceRendererType extends AbstractType
     public function getGroupBy($value, $label, $index)
     {
         $renderer = $label;
+
         return ucfirst(
             substr(
                 $renderer,
-                1+strrpos($renderer, '.'),
+                1 + strrpos($renderer, '.'),
                 strrpos($renderer, '.')
             )
         );
