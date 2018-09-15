@@ -17,7 +17,7 @@ use App\Model\InvoiceModel;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Invoice\DefaultCalculator
+ * @covers \App\Invoice\Calculator\DefaultCalculator
  */
 class DefaultCalculatorTest extends TestCase
 {

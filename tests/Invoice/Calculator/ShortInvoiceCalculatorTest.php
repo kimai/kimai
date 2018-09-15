@@ -20,7 +20,7 @@ use App\Repository\Query\InvoiceQuery;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Invoice\ShortInvoiceCalculator
+ * @covers \App\Invoice\Calculator\ShortInvoiceCalculator
  */
 class ShortInvoiceCalculatorTest extends TestCase
 {
