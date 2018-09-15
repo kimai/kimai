@@ -14,6 +14,7 @@ use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use App\Entity\Project;
 use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Invoice\Calculator\ShortInvoiceCalculator;
 use App\Model\InvoiceModel;
 use App\Repository\Query\InvoiceQuery;
@@ -56,16 +57,29 @@ class ShortInvoiceCalculatorTest extends TestCase
         $activity->setName('activity description');
 
         $timesheet = new Timesheet();
-        $timesheet->setDuration(3600);
-        $timesheet->setRate(293.27);
+        $timesheet
+            ->setDuration(3600)
+            ->setRate(293.27)
+            ->setUser(new User())
+            ->setActivity($activity)
+        ;
 
         $timesheet2 = new Timesheet();
-        $timesheet2->setDuration(400);
-        $timesheet2->setRate(84);
+        $timesheet2
+            ->setDuration(400)
+            ->setRate(84)
+            ->setUser(new User())
+            ->setActivity($activity)
+        ;
 
         $timesheet3 = new Timesheet();
-        $timesheet3->setDuration(1800);
-        $timesheet3->setRate(111.11);
+        $timesheet3
+            ->setDuration(1800)
+            ->setRate(111.11)
+            ->setUser(new User())
+            ->setActivity($activity)
+        ;
+
 
         $entries = [$timesheet, $timesheet2, $timesheet3];
 
