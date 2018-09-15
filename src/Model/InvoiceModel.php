@@ -54,6 +54,16 @@ class InvoiceModel
     protected $generator;
 
     /**
+     * @var \DateTime
+     */
+    protected $invoiceDate;
+
+    public function __construct()
+    {
+        $this->invoiceDate = new \DateTime();
+    }
+
+    /**
      * @return InvoiceQuery
      */
     public function getQuery(): InvoiceQuery
@@ -144,7 +154,7 @@ class InvoiceModel
      */
     public function getInvoiceDate(): \DateTime
     {
-        return new \DateTime();
+        return $this->invoiceDate;
     }
 
     /**

@@ -14,31 +14,15 @@ use App\Entity\InvoiceTemplate;
 use App\Entity\Timesheet;
 use App\Invoice\Calculator\DefaultCalculator;
 use App\Model\InvoiceModel;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Invoice\Calculator\DefaultCalculator
  */
-class DefaultCalculatorTest extends TestCase
+class DefaultCalculatorTest extends AbstractCalculatorTest
 {
     public function testEmptyModel()
     {
-        $customer = new Customer();
-        $template = new InvoiceTemplate();
-
-        $model = new InvoiceModel();
-        $model->setCustomer($customer);
-        $model->setTemplate($template);
-
-        $sut = new DefaultCalculator();
-        $sut->setModel($model);
-
-        $this->assertEquals(0, $sut->getTotal());
-        $this->assertEquals(0, $sut->getVat());
-        $this->assertEquals('EUR', $sut->getCurrency());
-        $this->assertEquals(0, $sut->getSubtotal());
-        $this->assertEquals(0, $sut->getTimeWorked());
-        $this->assertEquals([], $sut->getEntries());
+        $this->assertEmptyModel(new DefaultCalculator());
     }
 
     public function testWithMultipleEntries()

@@ -44,6 +44,6 @@ class DateNumberGenerator implements NumberGeneratorInterface
      */
     public function getInvoiceNumber(): string
     {
-        return date('ymd');
+        return date('ymd', $this->model->getInvoiceDate()->getTimestamp());
     }
 }
