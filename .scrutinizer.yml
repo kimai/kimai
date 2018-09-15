@@ -15,11 +15,13 @@ build:
                         coverage:
                             file: 'clover.xml'
                             format: 'clover'
+                            stop_on_failure: true
                     -
                         command: 'bin/console kimai:phpcs --checkstyle=checkstyle'
                         analysis:
                             file: 'checkstyle'
                             format: 'php-cs-checkstyle'
+                            stop_on_failure: true
 
 filter:
     excluded_paths:
@@ -33,3 +35,9 @@ filter:
     dependency_paths:
         - 'node_modules/'
         - 'vendor/'
+
+build_failure_conditions:
+    - 'classes.metric("php_code_coverage.coverage", = 0).exists'
+    - 'project.metric("scrutinizer.quality", < 9.30)'
+    - 'project.metric("scrutinizer.test_coverage", < 0.70)'
+    - 'project.metric_change("scrutinizer.test_coverage", < 0.01)'
