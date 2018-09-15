@@ -7,19 +7,20 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Invoice;
+namespace App\Invoice\Renderer;
 
+use App\Invoice\RendererInterface;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
-class CsvRenderer extends AbstractSpreadsheetRenderer implements RendererInterface
+class OdsRenderer extends AbstractSpreadsheetRenderer implements RendererInterface
 {
     /**
      * @return string[]
      */
     protected function getFileExtensions()
     {
-        return ['.csv'];
+        return ['.ods'];
     }
 
     /**
@@ -27,7 +28,7 @@ class CsvRenderer extends AbstractSpreadsheetRenderer implements RendererInterfa
      */
     protected function getContentType()
     {
-        return 'text/csv';
+        return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
     }
 
     /**
@@ -37,8 +38,8 @@ class CsvRenderer extends AbstractSpreadsheetRenderer implements RendererInterfa
      */
     protected function saveSpreadsheet(Spreadsheet $spreadsheet)
     {
-        $filename = tempnam(sys_get_temp_dir(), 'kimai-csv');
-        $writer = IOFactory::createWriter($spreadsheet, 'Csv');
+        $filename = tempnam(sys_get_temp_dir(), 'kimai-ods');
+        $writer = IOFactory::createWriter($spreadsheet, 'Ods');
         $writer->save($filename);
 
         return $filename;

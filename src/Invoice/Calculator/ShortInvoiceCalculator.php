@@ -7,46 +7,39 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Invoice;
+namespace App\Invoice\Calculator;
 
 use App\Entity\Timesheet;
+use App\Invoice\CalculatorInterface;
 
 /**
- * A calculator that sums up the timesheet records by user.
+ * A calculator that sums up all timesheet records from the model and returns only one
+ * entry for a compact invoice version.
  */
-class UserInvoiceCalculator extends DefaultCalculator
+class ShortInvoiceCalculator extends AbstractCalculator implements CalculatorInterface
 {
     /**
      * @return Timesheet[]
      */
     public function getEntries()
     {
-        /** @var Timesheet[] $timesheets */
-        $timesheets = [];
+        $timesheet = new Timesheet();
 
         foreach ($this->model->getEntries() as $entry) {
-            if (!isset($timesheets[$entry->getUser()->getId()])) {
-                $timesheets[$entry->getUser()->getId()] = new Timesheet();
-            }
-            $timesheet = $timesheets[$entry->getUser()->getId()];
-            $timesheet->setUser($entry->getUser());
             $timesheet->setFixedRate($entry->getFixedRate()); // FIXME invoice
             $timesheet->setHourlyRate($entry->getHourlyRate()); // FIXME invoice
             $timesheet->setRate($timesheet->getRate() + $entry->getRate());
             $timesheet->setDuration($timesheet->getDuration() + $entry->getDuration());
-            if (null == $timesheet->getBegin() || $timesheet->getBegin()->getTimestamp() > $entry->getBegin()->getTimestamp()) {
-                $timesheet->setBegin($entry->getBegin());
-            }
-            if (null == $timesheet->getEnd() || $timesheet->getEnd()->getTimestamp() < $entry->getEnd()->getTimestamp()) {
-                $timesheet->setEnd($entry->getEnd());
-            }
+            $timesheet->setBegin($entry->getBegin());
+            $timesheet->setUser($entry->getUser());
+
             if (null === $timesheet->getActivity()) {
                 $timesheet->setActivity($entry->getActivity());
             }
-        }
 
-        if (null !== $this->model->getQuery()->getActivity()) {
-            $timesheet->setActivity($this->model->getQuery()->getActivity());
+            if (empty($timesheet->getDescription())) {
+                $timesheet->setDescription($entry->getActivity()->getName());
+            }
         }
 
         if (null !== $this->model->getQuery()->getActivity()) {
@@ -55,7 +48,7 @@ class UserInvoiceCalculator extends DefaultCalculator
             $timesheet->setDescription($this->model->getQuery()->getProject()->getName());
         }
 
-        return array_values($timesheets);
+        return [$timesheet];
     }
 
     /**
@@ -63,6 +56,6 @@ class UserInvoiceCalculator extends DefaultCalculator
      */
     public function getId(): string
     {
-        return 'user';
+        return 'short';
     }
 }

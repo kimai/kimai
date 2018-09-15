@@ -7,8 +7,9 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Invoice;
+namespace App\Invoice\NumberGenerator;
 
+use App\Invoice\NumberGeneratorInterface;
 use App\Model\InvoiceModel;
 
 /**

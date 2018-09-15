@@ -24,22 +24,28 @@ The invoice system currently supports the following formats:
 
 - `HTML`
   - through the use of Twig templates
-  - PRO: no need for additional software, print or convert to PDF from your browser (if supported) 
+  - Pros: no need for additional software, print or convert to PDF from your browser (if supported) 
 - `DOCX`
   - OOXML - Open Office XML Text
   - Microsoft Word 2007-2013 XML
-  - PRO: simple customization and possibility to edit the invoice later on
+  - Pros: simple customization and possibility to edit the invoice later on
+  - our recommended invoice document format
 - `CSV`
   - Comma-separated file with UTF-8 encoding and double-quotes around each field 
-  - PRO: good for exporting and creating enhanced reports with an office software package
+  - Pros: good for exporting and creating enhanced reports with an office software package
+  - our recommended export format
 - `XLS`
   - The Microsoft Excel™ Binary file format (BIFF5 and BIFF8) is a binary file format that was used by Microsoft Excel™ between versions 95 and 2003.
-  - PRO: None, please switch to XLSX - we will not support any question regarding this file format, good luck with it!
+  - Pros: None, please switch to XLSX or ODS - we will not support any question regarding this file format, good luck with it!
 - `XLSX`
-  - Comma-separated file with UTF-8 encoding 
-  - PRO: best for exporting, creating enhanced reports with an office software package
+  - Microsoft Excel™ 2007 shipped with a new file format, namely Microsoft Office Open XML SpreadsheetML, and Excel 2010 extended this still further with new features. 
+  - PRO: good for exporting, creating enhanced reports with an office software package
+- `ODS`
+  - Open Document Format (ODF) or OASIS, is the OpenOffice.org XML file format for spreadsheets used by OpenOffice, LibreOffice, StarCalc and others 
+  - Pros: open format - good for exporting, creating enhanced reports with an office software package
+  - our recommended spreadsheet format
 
-Caution: the default templates were only tested with LibreOffice!
+**Be aware**: the default templates were only tested with LibreOffice!
 
 ### Twig templates
 
@@ -56,17 +62,17 @@ GitHub to find out which variables can be used or debug it with:
 
 Docx templates are powered by [PHPWord](https://github.com/PHPOffice/PHPWord) and its `TemplateProcessor`.
 
-**Important:** The variable `${entry.description}` has to be set in one table row, otherwise the entries won't be rendered! 
+**Important:** The variable `${entry.description}` has to be set in one table row, otherwise no timesheet records will be rendered! 
 This row will then be cloned for every timesheet entry. 
 
 Please read `Template variables` to find out which variables you can use in your template.
 
-### Spreadsheets (XLSX and CSV)
+### Spreadsheets (ODS, XLSX and CSV)
 
 Spreadsheet templates are powered by [PhpSpreadsheet](https://github.com/PHPOffice/PhpSpreadsheet).
 
 **Important:** within the first 100 rows you MUST-HAVE the template row for timesheet entries, which means there must be 
-a value starting with `${entry.` in one of the first 10 columns, otherwise no entries will be rendered!
+a value starting with `${entry.` in one of the first 10 columns, otherwise no timesheet records will be rendered!
 
 _Check the default templates if that doesn't make sense to you ;-)_
 

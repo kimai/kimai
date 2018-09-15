@@ -7,32 +7,47 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Invoice;
+namespace App\Invoice\Calculator;
 
 use App\Entity\Timesheet;
+use App\Invoice\CalculatorInterface;
 
 /**
- * A calculator that sums up all timesheet records from the model and returns only one
- * entry for a compact invoice version.
+ * A calculator that sums up the timesheet records by user.
  */
-class ShortInvoiceCalculator extends DefaultCalculator
+class UserInvoiceCalculator extends AbstractCalculator implements CalculatorInterface
 {
     /**
      * @return Timesheet[]
      */
     public function getEntries()
     {
-        $timesheet = new Timesheet();
+        /** @var Timesheet[] $timesheets */
+        $timesheets = [];
 
         foreach ($this->model->getEntries() as $entry) {
+            if (!isset($timesheets[$entry->getUser()->getId()])) {
+                $timesheets[$entry->getUser()->getId()] = new Timesheet();
+            }
+            $timesheet = $timesheets[$entry->getUser()->getId()];
+            $timesheet->setUser($entry->getUser());
             $timesheet->setFixedRate($entry->getFixedRate()); // FIXME invoice
             $timesheet->setHourlyRate($entry->getHourlyRate()); // FIXME invoice
             $timesheet->setRate($timesheet->getRate() + $entry->getRate());
             $timesheet->setDuration($timesheet->getDuration() + $entry->getDuration());
-            $timesheet->setBegin($entry->getBegin());
+            if (null == $timesheet->getBegin() || $timesheet->getBegin()->getTimestamp() > $entry->getBegin()->getTimestamp()) {
+                $timesheet->setBegin($entry->getBegin());
+            }
+            if (null == $timesheet->getEnd() || $timesheet->getEnd()->getTimestamp() < $entry->getEnd()->getTimestamp()) {
+                $timesheet->setEnd($entry->getEnd());
+            }
             if (null === $timesheet->getActivity()) {
                 $timesheet->setActivity($entry->getActivity());
             }
+        }
+
+        if (null !== $this->model->getQuery()->getActivity()) {
+            $timesheet->setActivity($this->model->getQuery()->getActivity());
         }
 
         if (null !== $this->model->getQuery()->getActivity()) {
@@ -41,7 +56,7 @@ class ShortInvoiceCalculator extends DefaultCalculator
             $timesheet->setDescription($this->model->getQuery()->getProject()->getName());
         }
 
-        return [$timesheet];
+        return array_values($timesheets);
     }
 
     /**
@@ -49,6 +64,6 @@ class ShortInvoiceCalculator extends DefaultCalculator
      */
     public function getId(): string
     {
-        return 'short';
+        return 'user';
     }
 }

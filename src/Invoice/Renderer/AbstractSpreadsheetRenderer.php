@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Invoice;
+namespace App\Invoice\Renderer;
 
 use App\Entity\InvoiceDocument;
 use App\Model\InvoiceModel;
