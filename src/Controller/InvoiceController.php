@@ -185,7 +185,6 @@ class InvoiceController extends AbstractController
             ->setQuery($query)
             ->setEntries($entries)
             ->setCustomer($query->getCustomer())
-            ->setUser($this->getUser())
         ;
 
         $action = null;

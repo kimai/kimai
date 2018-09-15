@@ -54,11 +54,6 @@ class InvoiceModel
     protected $generator;
 
     /**
-     * @var User
-     */
-    protected $user;
-
-    /**
      * @return InvoiceQuery
      */
     public function getQuery(): InvoiceQuery
@@ -190,24 +185,5 @@ class InvoiceModel
     public function getCalculator(): CalculatorInterface
     {
         return $this->calculator;
-    }
-
-    /**
-     * @return User
-     */
-    public function getUser(): User
-    {
-        return $this->user;
-    }
-
-    /**
-     * @param User $user
-     * @return InvoiceModel
-     */
-    public function setUser(User $user)
-    {
-        $this->user = $user;
-
-        return $this;
     }
 }
