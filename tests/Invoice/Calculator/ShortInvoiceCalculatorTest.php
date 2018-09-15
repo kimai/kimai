@@ -7,30 +7,35 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Invoice;
+namespace App\Tests\Invoice\Calculator;
 
+use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
+use App\Entity\Project;
 use App\Entity\Timesheet;
-use App\Invoice\DefaultCalculator;
+use App\Invoice\Calculator\ShortInvoiceCalculator;
 use App\Model\InvoiceModel;
+use App\Repository\Query\InvoiceQuery;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Invoice\DefaultCalculator
+ * @covers \App\Invoice\ShortInvoiceCalculator
  */
-class DefaultCalculatorTest extends TestCase
+class ShortInvoiceCalculatorTest extends TestCase
 {
     public function testEmptyModel()
     {
         $customer = new Customer();
         $template = new InvoiceTemplate();
+        $query = new InvoiceQuery();
 
         $model = new InvoiceModel();
         $model->setCustomer($customer);
         $model->setTemplate($template);
+        $model->setQuery($query);
 
-        $sut = new DefaultCalculator();
+        $sut = new ShortInvoiceCalculator();
         $sut->setModel($model);
 
         $this->assertEquals(0, $sut->getTotal());
@@ -38,7 +43,7 @@ class DefaultCalculatorTest extends TestCase
         $this->assertEquals('EUR', $sut->getCurrency());
         $this->assertEquals(0, $sut->getSubtotal());
         $this->assertEquals(0, $sut->getTimeWorked());
-        $this->assertEquals([], $sut->getEntries());
+        $this->assertEquals(1, count($sut->getEntries()));
     }
 
     public function testWithMultipleEntries()
@@ -46,6 +51,9 @@ class DefaultCalculatorTest extends TestCase
         $customer = new Customer();
         $template = new InvoiceTemplate();
         $template->setVat(19);
+
+        $activity = new Activity();
+        $activity->setName('activity description');
 
         $timesheet = new Timesheet();
         $timesheet->setDuration(3600);
@@ -61,12 +69,16 @@ class DefaultCalculatorTest extends TestCase
 
         $entries = [$timesheet, $timesheet2, $timesheet3];
 
+        $query = new InvoiceQuery();
+        $query->setActivity($activity);
+
         $model = new InvoiceModel();
         $model->setCustomer($customer);
         $model->setTemplate($template);
         $model->setEntries($entries);
+        $model->setQuery($query);
 
-        $sut = new DefaultCalculator();
+        $sut = new ShortInvoiceCalculator();
         $sut->setModel($model);
 
         $this->assertEquals(581.17, $sut->getTotal());
@@ -74,6 +86,39 @@ class DefaultCalculatorTest extends TestCase
         $this->assertEquals('EUR', $sut->getCurrency());
         $this->assertEquals(488.38, $sut->getSubtotal());
         $this->assertEquals(5800, $sut->getTimeWorked());
-        $this->assertEquals($entries, $sut->getEntries());
+        $this->assertEquals(1, count($sut->getEntries()));
+
+        /** @var Timesheet $result */
+        $result = $sut->getEntries()[0];
+        $this->assertEquals('activity description', $result->getDescription());
+        $this->assertEquals(488.38, $result->getRate());
+        $this->assertEquals(5800, $result->getDuration());
+    }
+
+    public function testDescriptionByProject()
+    {
+        $customer = new Customer();
+        $template = new InvoiceTemplate();
+        $template->setVat(19);
+
+        $project = new Project();
+        $project->setName('project description');
+
+        $query = new InvoiceQuery();
+        $query->setProject($project);
+
+        $model = new InvoiceModel();
+        $model->setCustomer($customer);
+        $model->setTemplate($template);
+        $model->setEntries([]);
+        $model->setQuery($query);
+
+        $sut = new ShortInvoiceCalculator();
+        $sut->setModel($model);
+        $this->assertEquals(1, count($sut->getEntries()));
+
+        /** @var Timesheet $result */
+        $result = $sut->getEntries()[0];
+        $this->assertEquals('project description', $result->getDescription());
     }
 }
