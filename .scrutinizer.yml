@@ -12,16 +12,16 @@ build:
                 override:
                     -
                         command: 'vendor/bin/phpunit --coverage-clover=clover.xml tests/'
+                        stop_on_failure: true
                         coverage:
                             file: 'clover.xml'
                             format: 'clover'
-                            stop_on_failure: true
                     -
                         command: 'bin/console kimai:phpcs --checkstyle=checkstyle'
+                        stop_on_failure: true
                         analysis:
                             file: 'checkstyle'
                             format: 'php-cs-checkstyle'
-                            stop_on_failure: true
 
 filter:
     excluded_paths:
