@@ -9,7 +9,8 @@
 
 templates/invoice/renderer/.~lock*
 
-/var/data/kimai.sqlite
+/var/data/*.sqlite
+!/var/data/kimai_test.sqlite
 /var/coverage/
 /var/cache/*
 !var/cache/.gitkeep
