@@ -10,6 +10,8 @@
 namespace App\Tests\Invoice\Renderer;
 
 use App\Invoice\Renderer\TwigRenderer;
+use App\Model\InvoiceModel;
+use Symfony\Component\HttpFoundation\Request;
 use Twig\Loader\FilesystemLoader;
 
 /**
@@ -31,5 +33,32 @@ class TwigRendererTest extends AbstractRendererTest
         $this->assertFalse($sut->supports($this->getInvoiceDocument('export.csv')));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('spreadsheet.xlsx')));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('open-spreadsheet.ods')));
+    }
+
+    public function testRenderTimesheet()
+    {
+        $kernel = self::bootKernel();
+        /** @var \Twig_Environment $twig */
+        $twig = $kernel->getContainer()->get('twig');
+        $stack = $kernel->getContainer()->get('request_stack');
+        $request = new Request();
+        $request->setLocale('en');
+        $stack->push($request);
+
+        $twig->getLoader()->addPath($this->getInvoiceTemplatePath(), 'invoice');
+
+        $sut = new TwigRenderer($twig);
+
+        $model = $this->getInvoiceModel();
+
+        $document = $this->getInvoiceDocument('timesheet.html.twig');
+        $response = $sut->render($document, $model);
+
+        $content = $response->getContent();
+
+        $this->assertContains('<h2 class="page-header">
+           <span contenteditable="true">a test invoice template title</span>
+        </h2>', $content);
+        $this->assertEquals(5, substr_count($content, '<td>activity description / project name</td>'));
     }
 }

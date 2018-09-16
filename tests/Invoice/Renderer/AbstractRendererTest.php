@@ -9,28 +9,49 @@
 
 namespace App\Tests\Invoice\Renderer;
 
+use App\Entity\Activity;
+use App\Entity\Customer;
 use App\Entity\InvoiceDocument;
+use App\Entity\InvoiceTemplate;
+use App\Entity\Project;
+use App\Entity\Timesheet;
+use App\Entity\User;
+use App\Invoice\Calculator\DefaultCalculator;
 use App\Invoice\Renderer\AbstractRenderer;
+use App\Model\InvoiceModel;
+use App\Repository\Query\InvoiceQuery;
 use App\Twig\DateExtensions;
 use App\Twig\Extensions;
-use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Translation\TranslatorInterface;
 
-abstract class AbstractRendererTest extends TestCase
+abstract class AbstractRendererTest extends KernelTestCase
 {
-    protected function getInvoiceDocument($filename)
+    /**
+     * @return string
+     */
+    protected function getInvoiceTemplatePath()
+    {
+        return __DIR__ . '/../../../templates/invoice/renderer/';
+    }
+
+    /**
+     * @param string $filename
+     * @return InvoiceDocument
+     */
+    protected function getInvoiceDocument(string $filename)
     {
         return new InvoiceDocument(
-            new \SplFileInfo(__DIR__ . '/../../../templates/invoice/renderer/' . $filename)
+            new \SplFileInfo($this->getInvoiceTemplatePath() . $filename)
         );
     }
 
     /**
-     * @param $classname
+     * @param string $classname
      * @return AbstractRenderer
      */
-    protected function getAbstractRenderer($classname)
+    protected function getAbstractRenderer(string $classname)
     {
         $requestStack = new RequestStack();
         $dateSettings = [];
@@ -41,5 +62,100 @@ abstract class AbstractRendererTest extends TestCase
         $extensions = new Extensions($requestStack, $languages);
 
         return new $classname($translator, $dateExtension, $extensions);
+    }
+
+    /**
+     * @return InvoiceModel
+     */
+    protected function getInvoiceModel()
+    {
+        $customer = new Customer();
+        $template = new InvoiceTemplate();
+        $template->setTitle('a test invoice template title');
+        $template->setVat(19);
+
+        $project = new Project();
+        $project->setName('project name');
+        $project->setCustomer($customer);
+
+        $activity = new Activity();
+        $activity->setName('activity description');
+        $activity->setProject($project);
+
+        $user1 = $this->getMockBuilder(User::class)->setMethods(['getId'])->disableOriginalConstructor()->getMock();
+        $user1->method('getId')->willReturn(1);
+
+        $user2 = $this->getMockBuilder(User::class)->setMethods(['getId'])->disableOriginalConstructor()->getMock();
+        $user2->method('getId')->willReturn(2);
+
+        $timesheet = new Timesheet();
+        $timesheet
+            ->setDuration(3600)
+            ->setRate(293.27)
+            ->setUser($user1)
+            ->setActivity($activity)
+            ->setBegin(new \DateTime())
+            ->setEnd(new \DateTime())
+        ;
+
+        $timesheet2 = new Timesheet();
+        $timesheet2
+            ->setDuration(400)
+            ->setRate(84.75)
+            ->setUser($user2)
+            ->setActivity($activity)
+            ->setBegin(new \DateTime())
+            ->setEnd(new \DateTime())
+        ;
+
+        $timesheet3 = new Timesheet();
+        $timesheet3
+            ->setDuration(1800)
+            ->setRate(111.11)
+            ->setUser($user1)
+            ->setActivity($activity)
+            ->setBegin(new \DateTime())
+            ->setEnd(new \DateTime())
+        ;
+
+        $timesheet4 = new Timesheet();
+        $timesheet4
+            ->setDuration(400)
+            ->setRate(1947.99)
+            ->setUser($user2)
+            ->setActivity($activity)
+            ->setBegin(new \DateTime())
+            ->setEnd(new \DateTime())
+        ;
+
+        $timesheet5 = new Timesheet();
+        $timesheet5
+            ->setDuration(400)
+            ->setRate(84)
+            ->setUser(new User())
+            ->setActivity($activity)
+            ->setBegin(new \DateTime())
+            ->setEnd(new \DateTime())
+        ;
+
+        $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5];
+
+        $query = new InvoiceQuery();
+        $query->setActivity($activity);
+        $query->setBegin(new \DateTime());
+        $query->setEnd(new \DateTime());
+
+        $model = new InvoiceModel();
+        $model->setCustomer($customer);
+        $model->setTemplate($template);
+        $model->setEntries($entries);
+        $model->setQuery($query);
+
+        $calculator = new DefaultCalculator();
+        $calculator->setModel($model);
+
+        $model->setCalculator($calculator);
+
+        return $model;
     }
 }
