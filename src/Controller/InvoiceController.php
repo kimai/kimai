@@ -187,7 +187,6 @@ class InvoiceController extends AbstractController
             ->setCustomer($query->getCustomer())
         ;
 
-        $action = null;
         if ($query->getTemplate() !== null) {
             $generator = $this->service->getNumberGeneratorByName($query->getTemplate()->getNumberGenerator());
             if (null === $generator) {

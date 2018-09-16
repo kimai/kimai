@@ -44,7 +44,9 @@ class TwigRendererTest extends AbstractRendererTest
         $request->setLocale('en');
         $stack->push($request);
 
-        $twig->getLoader()->addPath($this->getInvoiceTemplatePath(), 'invoice');
+        /** @var FilesystemLoader $loader */
+        $loader = $twig->getLoader();
+        $loader->addPath($this->getInvoiceTemplatePath(), 'invoice');
 
         $sut = new TwigRenderer($twig);
 

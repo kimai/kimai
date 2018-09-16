@@ -63,6 +63,7 @@ class XlsxRendererTest extends AbstractRendererTest
         ob_start();
         $response->sendContent();
         $content2 = ob_get_clean();
+        $this->assertNotEmpty($content2);
 
         $this->assertFalse(file_exists($file->getRealPath()));
     }
