@@ -19,21 +19,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DocxRenderer extends AbstractRenderer implements RendererInterface
 {
-    /**
-     * @param PhpWord $phpWord
-     */
+    /*
     protected function setPhpWordOptions(PhpWord $phpWord)
     {
         if (!extension_loaded('zip')) {
             \PhpOffice\PhpWord\Settings::setZipClass(\PhpOffice\PhpWord\Settings::PCLZIP);
         }
 
-        /*
-        \PhpOffice\PhpWord\Settings::setPdfRendererPath(__DIR__ . '/../../vendor/tecnickcom/tcpdf/');
-        \PhpOffice\PhpWord\Settings::setPdfRendererName(\PhpOffice\PhpWord\Settings::PDF_RENDERER_TCPDF);
-        \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
-        $phpWord->getSettings()->setThemeFontLang(new Language(Language::EN_US));
-        */
+        // \PhpOffice\PhpWord\Settings::setPdfRendererPath(__DIR__ . '/../../vendor/tecnickcom/tcpdf/');
+        // \PhpOffice\PhpWord\Settings::setPdfRendererName(\PhpOffice\PhpWord\Settings::PDF_RENDERER_TCPDF);
+        // \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
+        // $phpWord->getSettings()->setThemeFontLang(new Language(Language::EN_US));
 
         $properties = $phpWord->getDocInfo();
         $properties->setCreator('Kimai 2');
@@ -41,6 +37,7 @@ class DocxRenderer extends AbstractRenderer implements RendererInterface
         $properties->setCreated(time());
         $properties->setModified(time());
     }
+    */
 
     /**
      * @param InvoiceDocument $document

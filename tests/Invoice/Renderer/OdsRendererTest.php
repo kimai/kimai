@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * @covers \App\Invoice\Renderer\OdsRenderer
+ * @covers \App\Invoice\Renderer\AbstractRenderer
+ * @covers \App\Invoice\Renderer\AbstractSpreadsheetRenderer
  */
 class OdsRendererTest extends AbstractRendererTest
 {

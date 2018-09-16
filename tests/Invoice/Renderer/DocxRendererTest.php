@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * @covers \App\Invoice\Renderer\DocxRenderer
+ * @covers \App\Invoice\Renderer\AbstractRenderer
  */
 class DocxRendererTest extends AbstractRendererTest
 {
