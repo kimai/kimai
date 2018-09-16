@@ -17,12 +17,14 @@ use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Invoice\Calculator\DefaultCalculator;
+use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Invoice\Renderer\AbstractRenderer;
 use App\Model\InvoiceModel;
 use App\Repository\Query\InvoiceQuery;
 use App\Twig\DateExtensions;
 use App\Twig\Extensions;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -57,6 +59,10 @@ abstract class AbstractRendererTest extends KernelTestCase
         $dateSettings = [];
         $languages = [];
 
+        $request = new Request();
+        $request->setLocale('en');
+        $requestStack->push($request);
+
         $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $dateExtension = new DateExtensions($requestStack, $dateSettings);
         $extensions = new Extensions($requestStack, $languages);
@@ -82,11 +88,15 @@ abstract class AbstractRendererTest extends KernelTestCase
         $activity->setName('activity description');
         $activity->setProject($project);
 
-        $user1 = $this->getMockBuilder(User::class)->setMethods(['getId'])->disableOriginalConstructor()->getMock();
+        $userMethods = ['getId', 'getPreferenceValue', 'getUsername'];
+        $user1 = $this->getMockBuilder(User::class)->setMethods($userMethods)->disableOriginalConstructor()->getMock();
         $user1->method('getId')->willReturn(1);
+        $user1->method('getPreferenceValue')->willReturn('50');
+        $user1->method('getUsername')->willReturn('foo-bar');
 
-        $user2 = $this->getMockBuilder(User::class)->setMethods(['getId'])->disableOriginalConstructor()->getMock();
+        $user2 = $this->getMockBuilder(User::class)->setMethods($userMethods)->disableOriginalConstructor()->getMock();
         $user2->method('getId')->willReturn(2);
+        $user2->method('getUsername')->willReturn('hello-world');
 
         $timesheet = new Timesheet();
         $timesheet
@@ -132,7 +142,7 @@ abstract class AbstractRendererTest extends KernelTestCase
         $timesheet5
             ->setDuration(400)
             ->setRate(84)
-            ->setUser(new User())
+            ->setUser((new User())->setUsername('kevin'))
             ->setActivity($activity)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
@@ -155,6 +165,11 @@ abstract class AbstractRendererTest extends KernelTestCase
         $calculator->setModel($model);
 
         $model->setCalculator($calculator);
+
+        $numberGenerator = new DateNumberGenerator();
+        $numberGenerator->setModel($model);
+
+        $model->setNumberGenerator($numberGenerator);
 
         return $model;
     }

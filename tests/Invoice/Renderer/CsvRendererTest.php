@@ -10,6 +10,7 @@
 namespace App\Tests\Invoice\Renderer;
 
 use App\Invoice\Renderer\CsvRenderer;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * @covers \App\Invoice\Renderer\CsvRenderer
@@ -28,5 +29,28 @@ class CsvRendererTest extends AbstractRendererTest
         $this->assertTrue($sut->supports($this->getInvoiceDocument('export.csv')));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('spreadsheet.xlsx')));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('open-spreadsheet.ods')));
+    }
+
+    public function testRender()
+    {
+        /** @var CsvRenderer $sut */
+        $sut = $this->getAbstractRenderer(CsvRenderer::class);
+        $model = $this->getInvoiceModel();
+        $document = $this->getInvoiceDocument('export.csv');
+        /** @var BinaryFileResponse $response */
+        $response = $sut->render($document, $model);
+
+        $file = $response->getFile();
+        $this->assertEquals('text/csv', $response->headers->get('Content-Type'));
+        $this->assertEquals('attachment; filename=export.csv', $response->headers->get('Content-Disposition'));
+
+        $content = file_get_contents($file->getRealPath());
+        $this->assertNotContains('${', $content);
+        $this->assertContains('', $content);
+        $this->assertEquals(6, substr_count($content, PHP_EOL));
+        $this->assertEquals(5, substr_count($content, 'activity description'));
+        $this->assertEquals(1, substr_count($content, ',"kevin",'));
+        $this->assertEquals(2, substr_count($content, ',"hello-world",'));
+        $this->assertEquals(2, substr_count($content, ',"foo-bar",'));
     }
 }

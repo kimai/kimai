@@ -35,7 +35,7 @@ class TwigRendererTest extends AbstractRendererTest
         $this->assertFalse($sut->supports($this->getInvoiceDocument('open-spreadsheet.ods')));
     }
 
-    public function testRenderTimesheet()
+    public function testRender()
     {
         $kernel = self::bootKernel();
         /** @var \Twig_Environment $twig */
