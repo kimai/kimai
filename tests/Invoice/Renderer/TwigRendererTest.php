@@ -10,7 +10,6 @@
 namespace App\Tests\Invoice\Renderer;
 
 use App\Invoice\Renderer\TwigRenderer;
-use App\Model\InvoiceModel;
 use Symfony\Component\HttpFoundation\Request;
 use Twig\Loader\FilesystemLoader;
 
