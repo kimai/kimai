@@ -26,7 +26,7 @@ class UserInvoiceCalculatorTest extends AbstractCalculatorTest
 {
     public function testEmptyModel()
     {
-        $this->assertEmptyModel(new ShortInvoiceCalculator());
+        $this->assertEmptyModel(new UserInvoiceCalculator());
     }
 
     public function testWithMultipleEntries()
