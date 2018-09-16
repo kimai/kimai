@@ -66,7 +66,7 @@ class InvoiceModel
     /**
      * @return InvoiceQuery
      */
-    public function getQuery(): InvoiceQuery
+    public function getQuery(): ?InvoiceQuery
     {
         return $this->query;
     }
@@ -115,7 +115,7 @@ class InvoiceModel
      * @param InvoiceTemplate $template
      * @return InvoiceModel
      */
-    public function setTemplate($template)
+    public function setTemplate(InvoiceTemplate $template)
     {
         $this->template = $template;
 
@@ -144,8 +144,12 @@ class InvoiceModel
     /**
      * @return \DateTime
      */
-    public function getDueDate(): \DateTime
+    public function getDueDate(): ?\DateTime
     {
+        if (null === $this->getTemplate()) {
+            return null;
+        }
+
         return new \DateTime('+' . $this->getTemplate()->getDueDays() . ' days');
     }
 
@@ -172,7 +176,7 @@ class InvoiceModel
     /**
      * @return NumberGeneratorInterface
      */
-    public function getNumberGenerator(): NumberGeneratorInterface
+    public function getNumberGenerator(): ?NumberGeneratorInterface
     {
         return $this->generator;
     }
@@ -192,7 +196,7 @@ class InvoiceModel
     /**
      * @return CalculatorInterface
      */
-    public function getCalculator(): CalculatorInterface
+    public function getCalculator(): ?CalculatorInterface
     {
         return $this->calculator;
     }
