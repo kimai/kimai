@@ -10,7 +10,7 @@
 namespace App\Model\Statistic;
 
 /**
- * Yearly statistics
+ * Monthly statistics
  */
 class Month
 {
@@ -28,11 +28,14 @@ class Month
     protected $totalRate = 0;
 
     /**
-     * Month constructor.
      * @param string $month
      */
-    public function __construct($month)
+    public function __construct(string $month)
     {
+        $monthNumber = (int)$month;
+        if ($monthNumber < 1 || $monthNumber > 12) {
+            throw new \InvalidArgumentException('Invalid month given, expected 01-12 but given: ' . $monthNumber);
+        }
         $this->month = $month;
     }
 

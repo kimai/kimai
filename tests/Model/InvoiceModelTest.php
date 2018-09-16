@@ -9,7 +9,6 @@
 
 namespace App\Tests\Model;
 
-use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use App\Entity\Timesheet;
