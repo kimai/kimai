@@ -12,7 +12,6 @@ namespace App\Model;
 use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use App\Entity\Timesheet;
-use App\Entity\User;
 use App\Invoice\CalculatorInterface;
 use App\Invoice\NumberGeneratorInterface;
 use App\Repository\Query\InvoiceQuery;

@@ -30,8 +30,7 @@ class UserInvoiceCalculator extends AbstractCalculator implements CalculatorInte
         /** @var Timesheet[] $timesheets */
         $timesheets = [];
 
-        foreach ($entries as $entry)
-        {
+        foreach ($entries as $entry) {
             if (!isset($timesheets[$entry->getUser()->getId()])) {
                 $timesheets[$entry->getUser()->getId()] = new Timesheet();
             }

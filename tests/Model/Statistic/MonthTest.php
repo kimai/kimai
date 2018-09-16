@@ -27,19 +27,18 @@ class MonthTest extends TestCase
 
     public function testAllowedMonths()
     {
-        for($i = 1; $i < 10; $i++) {
+        for ($i = 1; $i < 10; $i++) {
             new Month('0' . $i);
         }
-        for($i = 10; $i < 13; $i++) {
-            new Month((string)$i);
+        for ($i = 10; $i < 13; $i++) {
+            new Month((string) $i);
         }
         $this->assertTrue(true);
     }
 
     public function testInvalidMonths()
     {
-        foreach(['00', '13', '99', '0.9'] as $month)
-        {
+        foreach (['00', '13', '99', '0.9'] as $month) {
             $ex = null;
             try {
                 new Month($month);
@@ -48,7 +47,7 @@ class MonthTest extends TestCase
             }
             $this->assertInstanceOf(\InvalidArgumentException::class, $ex);
             $this->assertEquals(
-                'Invalid month given, expected 01-12 but given: ' . ((int)$month),
+                'Invalid month given, expected 01-12 but given: ' . ((int) $month),
                 $ex->getMessage()
             );
         }

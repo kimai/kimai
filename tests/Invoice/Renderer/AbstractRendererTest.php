@@ -11,13 +11,11 @@ namespace App\Tests\Invoice\Renderer;
 
 use App\Entity\InvoiceDocument;
 use App\Invoice\Renderer\AbstractRenderer;
-use App\Invoice\Renderer\TwigRenderer;
 use App\Twig\DateExtensions;
 use App\Twig\Extensions;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Translation\TranslatorInterface;
-use Twig\Loader\FilesystemLoader;
 
 abstract class AbstractRendererTest extends TestCase
 {

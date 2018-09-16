@@ -41,6 +41,7 @@ abstract class AbstractCalculatorTest extends TestCase
         $this->assertEquals(0, $sut->getSubtotal());
         $this->assertEquals(0, $sut->getTimeWorked());
         $this->assertEquals(0, count($sut->getEntries()));
+        $this->assertEquals(0, $sut->getTax());
     }
 
     protected function assertDescription(CalculatorInterface $sut, $addProject = false, $addActivity = false)

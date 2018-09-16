@@ -46,7 +46,7 @@ class InvoiceDocumentRepositoryTest extends TestCase
         $all = $sut->findAll();
         $this->assertEquals(count(self::$defaultDocuments), count($all));
 
-        foreach($all as $document) {
+        foreach ($all as $document) {
             $this->assertTrue(in_array($document->getName(), self::$defaultDocuments));
         }
 

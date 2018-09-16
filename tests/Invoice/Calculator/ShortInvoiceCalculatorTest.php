@@ -12,7 +12,6 @@ namespace App\Tests\Invoice\Calculator;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
-use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Invoice\Calculator\ShortInvoiceCalculator;
@@ -21,6 +20,7 @@ use App\Repository\Query\InvoiceQuery;
 
 /**
  * @covers \App\Invoice\Calculator\ShortInvoiceCalculator
+ * @covers \App\Invoice\Calculator\AbstractCalculator
  */
 class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
 {
@@ -82,6 +82,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $sut = new ShortInvoiceCalculator();
         $sut->setModel($model);
 
+        $this->assertEquals('short', $sut->getId());
         $this->assertEquals(581.17, $sut->getTotal());
         $this->assertEquals(19, $sut->getVat());
         $this->assertEquals('EUR', $sut->getCurrency());

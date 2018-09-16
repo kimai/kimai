@@ -14,13 +14,13 @@ use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use App\Entity\Timesheet;
 use App\Entity\User;
-use App\Invoice\Calculator\ShortInvoiceCalculator;
 use App\Invoice\Calculator\UserInvoiceCalculator;
 use App\Model\InvoiceModel;
 use App\Repository\Query\InvoiceQuery;
 
 /**
  * @covers \App\Invoice\Calculator\UserInvoiceCalculator
+ * @covers \App\Invoice\Calculator\AbstractCalculator
  */
 class UserInvoiceCalculatorTest extends AbstractCalculatorTest
 {
@@ -98,6 +98,7 @@ class UserInvoiceCalculatorTest extends AbstractCalculatorTest
         $sut = new UserInvoiceCalculator();
         $sut->setModel($model);
 
+        $this->assertEquals('user', $sut->getId());
         $this->assertEquals(3000.13, $sut->getTotal());
         $this->assertEquals(19, $sut->getVat());
         $this->assertEquals('EUR', $sut->getCurrency());
@@ -110,7 +111,6 @@ class UserInvoiceCalculatorTest extends AbstractCalculatorTest
         $this->assertEquals(2032.74, $entries[1]->getRate());
         $this->assertEquals(84, $entries[2]->getRate());
     }
-
 
     public function testDescriptionByTimesheet()
     {

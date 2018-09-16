@@ -32,7 +32,7 @@ class Month
      */
     public function __construct(string $month)
     {
-        $monthNumber = (int)$month;
+        $monthNumber = (int) $month;
         if ($monthNumber < 1 || $monthNumber > 12) {
             throw new \InvalidArgumentException('Invalid month given, expected 01-12 but given: ' . $monthNumber);
         }

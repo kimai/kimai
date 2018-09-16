@@ -17,6 +17,7 @@ use App\Model\InvoiceModel;
 
 /**
  * @covers \App\Invoice\Calculator\DefaultCalculator
+ * @covers \App\Invoice\Calculator\AbstractCalculator
  */
 class DefaultCalculatorTest extends AbstractCalculatorTest
 {
@@ -53,6 +54,7 @@ class DefaultCalculatorTest extends AbstractCalculatorTest
         $sut = new DefaultCalculator();
         $sut->setModel($model);
 
+        $this->assertEquals('default', $sut->getId());
         $this->assertEquals(581.17, $sut->getTotal());
         $this->assertEquals(19, $sut->getVat());
         $this->assertEquals('EUR', $sut->getCurrency());

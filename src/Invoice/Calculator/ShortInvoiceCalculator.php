@@ -30,8 +30,7 @@ class ShortInvoiceCalculator extends AbstractCalculator implements CalculatorInt
 
         $timesheet = new Timesheet();
 
-        foreach ($entries as $entry)
-        {
+        foreach ($entries as $entry) {
             $timesheet->setUser($entry->getUser());
             $timesheet->setFixedRate($entry->getFixedRate()); // FIXME invoice
             $timesheet->setHourlyRate($entry->getHourlyRate()); // FIXME invoice
