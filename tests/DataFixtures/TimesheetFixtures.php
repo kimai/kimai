@@ -56,34 +56,46 @@ class TimesheetFixtures extends Fixture
 
     /**
      * @param int $amount
+     * @return $this
      */
     public function setAmountRunning($amount)
     {
         $this->running = $amount;
+
+        return $this;
     }
 
     /**
      * @param int $amount
+     * @return $this
      */
     public function setAmount($amount)
     {
         $this->amount = $amount;
+
+        return $this;
     }
 
     /**
      * @param User $user
+     * @return $this
      */
     public function setUser(User $user)
     {
         $this->user = $user;
+
+        return $this;
     }
 
     /**
      * @param Activity[] $activities
+     * @return $this
      */
     public function setActivities(array $activities)
     {
         $this->activities = $activities;
+
+        return $this;
     }
 
     /**

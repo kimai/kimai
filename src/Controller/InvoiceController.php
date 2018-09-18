@@ -126,7 +126,7 @@ class InvoiceController extends AbstractController
         $form->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
-            return $this->redirectToRoute('admin_invoice_template_create');
+            return $this->redirectToRoute('invoice');
         }
 
         /** @var InvoiceQuery $query */
