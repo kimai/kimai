@@ -26,7 +26,7 @@ The invoice system currently supports the following formats:
   - file extension: filename must end with `.xlsx` 
   - PRO: good for exporting, creating enhanced reports with an office software package
 - `ODS`
-  - Open Document Format (ODF) or OASIS, is the OpenOffice.org XML file format for spreadsheets used by OpenOffice, LibreOffice, StarCalc and others 
+  - Open Document Spreadsheet or OASIS, is the OpenOffice.org XML file format for spreadsheets supported by OpenOffice, LibreOffice, StarCalc, Microsoft and others 
   - file extension: filename must end with `.ods` 
   - Pros: open format - good for exporting, creating enhanced reports with an office software package
   - our recommended spreadsheet format

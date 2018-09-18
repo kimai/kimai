@@ -18,6 +18,22 @@
                 <source>freelancer</source>
                 <target>Freelancer</target>
             </trans-unit>
+            <trans-unit id="open-spreadsheet">
+                <source>open-spreadsheet</source>
+                <target>Calc Spreadsheet</target>
+            </trans-unit>
+            <trans-unit id="spreadsheet">
+                <source>spreadsheet</source>
+                <target>Excel</target>
+            </trans-unit>
+            <trans-unit id="export">
+                <source>export</source>
+                <target>Data export</target>
+            </trans-unit>
+            <trans-unit id="company">
+                <source>company</source>
+                <target>Company invoice</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

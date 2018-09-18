@@ -8,11 +8,15 @@
             </trans-unit>
             <trans-unit id="default">
                 <source>default</source>
-                <target>Stundenbasiert (Standard)</target>
+                <target>Eintragsbasiert - ein Eintrag pro Zeitmessung (Standard)</target>
             </trans-unit>
             <trans-unit id="short">
                 <source>short</source>
-                <target>Stundenbasiert - Kurzversion (nur ein Eintrag)</target>
+                <target>Stunden aufsummiert - nur ein Eintrag</target>
+            </trans-unit>
+            <trans-unit id="user">
+                <source>user</source>
+                <target>Benutzer gruppiert - ein Eintrag pro Benutzer</target>
             </trans-unit>
         </body>
     </file>

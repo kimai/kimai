@@ -8,11 +8,15 @@
             </trans-unit>
             <trans-unit id="default">
                 <source>default</source>
-                <target>Hourly rates (default)</target>
+                <target>Entry-based - one entry per time measurement (default)</target>
             </trans-unit>
             <trans-unit id="short">
                 <source>short</source>
-                <target>Hourly rates - short version (only one record)</target>
+                <target>Hours added up - only one entry</target>
+            </trans-unit>
+            <trans-unit id="user">
+                <source>user</source>
+                <target>User grouped - one entry per user</target>
             </trans-unit>
         </body>
     </file>

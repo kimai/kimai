@@ -18,6 +18,22 @@
                 <source>freelancer</source>
                 <target>Freiberufler</target>
             </trans-unit>
+            <trans-unit id="open-spreadsheet">
+                <source>open-spreadsheet</source>
+                <target>Calc Tabellendokument</target>
+            </trans-unit>
+            <trans-unit id="spreadsheet">
+                <source>spreadsheet</source>
+                <target>Excel Tabelle</target>
+            </trans-unit>
+            <trans-unit id="export">
+                <source>export</source>
+                <target>Datenexport</target>
+            </trans-unit>
+            <trans-unit id="company">
+                <source>company</source>
+                <target>Firmen-Rechnung</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
