@@ -31,23 +31,30 @@ class ShortInvoiceCalculator extends AbstractCalculator implements CalculatorInt
         $timesheet = new Timesheet();
 
         foreach ($entries as $entry) {
-            $timesheet->setUser($entry->getUser());
-            $timesheet->setFixedRate($entry->getFixedRate()); // FIXME invoice
-            $timesheet->setHourlyRate($entry->getHourlyRate()); // FIXME invoice
-            $timesheet->setRate($timesheet->getRate() + $entry->getRate());
-            $timesheet->setDuration($timesheet->getDuration() + $entry->getDuration());
-            if (null == $timesheet->getBegin() || $timesheet->getBegin()->getTimestamp() > $entry->getBegin()->getTimestamp()) {
-                $timesheet->setBegin($entry->getBegin());
-            }
-            if (null == $timesheet->getEnd() || $timesheet->getEnd()->getTimestamp() < $entry->getEnd()->getTimestamp()) {
-                $timesheet->setEnd($entry->getEnd());
-            }
-            if (null === $timesheet->getActivity()) {
-                $timesheet->setActivity($entry->getActivity());
-            }
-            if (empty($timesheet->getDescription())) {
-                $timesheet->setDescription($entry->getActivity()->getName());
-            }
+            $this->mergeTimesheets($timesheet, $entry);
+        }
+
+        return [$timesheet];
+    }
+
+    /**
+     * @param Timesheet $timesheet
+     * @param Timesheet $entry
+     */
+    protected function mergeTimesheets(Timesheet $timesheet, Timesheet $entry)
+    {
+        $timesheet->setUser($entry->getUser());
+        $timesheet->setFixedRate($entry->getFixedRate()); // FIXME invoice
+        $timesheet->setHourlyRate($entry->getHourlyRate()); // FIXME invoice
+        $timesheet->setRate($timesheet->getRate() + $entry->getRate());
+        $timesheet->setDuration($timesheet->getDuration() + $entry->getDuration());
+
+        if (null == $timesheet->getBegin() || $timesheet->getBegin()->getTimestamp() > $entry->getBegin()->getTimestamp()) {
+            $timesheet->setBegin($entry->getBegin());
+        }
+
+        if (null == $timesheet->getEnd() || $timesheet->getEnd()->getTimestamp() < $entry->getEnd()->getTimestamp()) {
+            $timesheet->setEnd($entry->getEnd());
         }
 
         if (null !== $this->model->getQuery()->getActivity()) {
@@ -57,7 +64,13 @@ class ShortInvoiceCalculator extends AbstractCalculator implements CalculatorInt
             $timesheet->setDescription($this->model->getQuery()->getProject()->getName());
         }
 
-        return [$timesheet];
+        if (null === $timesheet->getActivity()) {
+            $timesheet->setActivity($entry->getActivity());
+        }
+        if (empty($timesheet->getDescription())) {
+
+            $timesheet->setDescription($entry->getActivity()->getName());
+        }
     }
 
     /**
