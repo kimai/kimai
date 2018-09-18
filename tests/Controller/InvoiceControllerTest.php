@@ -86,7 +86,6 @@ class InvoiceControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSuccess($client);
-
     }
 
     public function testPrintAction()
