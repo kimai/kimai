@@ -138,6 +138,7 @@ class InvoiceControllerTest extends ControllerBaseTest
             'begin' => $begin->format('Y-m-d'),
             'end' => $end->format('Y-m-d'),
             'customer' => 1,
+            'project' => 1,
         ]);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
