@@ -16,10 +16,9 @@ RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-di
 
 COPY ./ /usr/src/
 WORKDIR /usr/src
-RUN chown -R www-data:www-data /usr/src
-RUN a2enmod rewrite
+RUN rmdir /var/www/html && ln -s /usr/src/public /var/www/html
+RUN chown -R www-data:www-data /usr/src && a2enmod rewrite
 
 USER www-data
 WORKDIR /usr/src
 RUN composer install --no-dev --optimize-autoloader
-RUN ln -s /usr/src/public /var/www/html/kimai2
