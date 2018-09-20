@@ -7,18 +7,12 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Invoice;
+namespace App\Invoice\Calculator;
 
 use App\Entity\Timesheet;
 use App\Model\InvoiceModel;
 
-/**
- * Class DefaultCalculator works on all given entries using:
- * - the customers currency
- * - the invoice template vat rate
- * - the entries rate
- */
-class DefaultCalculator implements CalculatorInterface
+abstract class AbstractCalculator
 {
     /**
      * @var string
@@ -33,10 +27,12 @@ class DefaultCalculator implements CalculatorInterface
     /**
      * @return Timesheet[]
      */
-    public function getEntries()
-    {
-        return $this->model->getEntries();
-    }
+    abstract public function getEntries();
+
+    /**
+     * @return string
+     */
+    abstract public function getId(): string;
 
     /**
      * @param InvoiceModel $model

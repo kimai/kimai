@@ -9,8 +9,6 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\Activity;
-use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
 

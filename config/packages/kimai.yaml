@@ -33,17 +33,12 @@ kimai:
         #        days: ['saturday','sunday']
         #        factor: 1.5
 
-    # All configs related to the invoice administration
-    invoice:
-        renderer:
-            default: 'App\Controller\InvoicePrintController::printInvoice'
-            timesheet: 'App\Controller\InvoicePrintController::printTimesheet'
-            freelancer: 'App\Controller\InvoicePrintController::printFreelancer'
-        calculator:
-            default: 'App\Invoice\DefaultCalculator'
-            short: 'App\Invoice\ShortInvoiceCalculator'
-        number_generator:
-            default: 'App\Invoice\DateNumberGenerator'
+    # Invoice management
+    #invoice:
+    #    # all files in these directories will be used as invoice documents (if supported by a renderer)
+    #    documents:
+    #        - 'var/invoices/'
+    #        - 'templates/invoice/renderer/'
 
     # Language specific settings, like the date formats
     languages:

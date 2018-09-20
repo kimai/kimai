@@ -12,6 +12,7 @@ namespace App\Tests\Controller;
 use App\Entity\InvoiceTemplate;
 use App\Entity\User;
 use App\Tests\DataFixtures\InvoiceFixtures;
+use App\Tests\DataFixtures\TimesheetFixtures;
 
 /**
  * @coversDefaultClass \App\Controller\InvoiceController
@@ -46,7 +47,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
         $this->assertNotEmpty($node->text());
-        $this->assertContains('Before you can create an invoice, you have to select at least a customer filter.', $node->text());
+        $this->assertContains('No invoice entries were found based on your selected filters.', $node->text());
     }
 
     public function testListTemplateAction()
@@ -84,8 +85,86 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, $this->createUrl('/invoice/template'));
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
-
         $this->assertHasFlashSuccess($client);
+    }
+
+    public function testPrintAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $fixture = new InvoiceFixtures();
+        $this->importFixture($em, $fixture);
+
+        $begin = new \DateTime('first day of this month');
+        $end = new \DateTime('last day of this month');
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setUser($this->getUserByRole($em, User::ROLE_TEAMLEAD))
+            ->setAmount(20)
+            ->setStartDate($begin)
+        ;
+        $this->importFixture($em, $fixture);
+
+        $this->request($client, '/invoice/');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('#invoice-print-form')->form();
+        $client->submit($form, [
+            'template' => 1,
+            'user' => '',
+            'begin' => $begin->format('Y-m-d'),
+            'end' => $end->format('Y-m-d'),
+            'customer' => 1,
+        ]);
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
+        $this->assertEquals(0, $node->count());
+
+        $node = $client->getCrawler()->filter('div.callout.callout-success.lead');
+        $this->assertNotEmpty($node->text());
+        $this->assertContains('This is a preview of the data that will show up in your invoice document.', $node->text());
+
+        $node = $client->getCrawler()->filter('section.invoice div.table-responsive table.table-striped tbody tr');
+        $this->assertEquals(20, $node->count());
+
+        $form = $client->getCrawler()->filter('#invoice-print-form')->form();
+        $form->getFormNode()->setAttribute('action', $this->createUrl('/invoice/print'));
+        $client->submit($form, [
+            'template' => 1,
+            'user' => '',
+            'begin' => $begin->format('Y-m-d'),
+            'end' => $end->format('Y-m-d'),
+            'customer' => 1,
+            'project' => 1,
+        ]);
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $node = $client->getCrawler()->filter('body');
+        $this->assertEquals(1, $node->count());
+        $this->assertEquals('invoice_print', $node->getIterator()[0]->getAttribute('class'));
+    }
+
+    public function testPrintActionRedirectsToCreateTemplate()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $this->request($client, '/invoice/print');
+        $this->assertIsRedirect($client, '/invoice/template/create');
+    }
+
+    public function testPrintActionRedirectsToIndex()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $fixture = new InvoiceFixtures();
+        $this->importFixture($em, $fixture);
+
+        $this->request($client, '/invoice/print');
+        $this->assertIsRedirect($client, '/invoice/');
     }
 
     public function testEditTemplateAction()

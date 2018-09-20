@@ -39,16 +39,17 @@ class InvoiceCalculatorType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $renderer = [];
-        foreach ($this->service->getCalculator() as $name => $class) {
-            $renderer[$name] = $name;
+        foreach ($this->service->getCalculator() as $calculator) {
+            $renderer[$calculator->getId()] = $calculator->getId();
         }
 
         $resolver->setDefaults([
             'label' => 'label.invoice_calculator',
             'choices' => $renderer,
             'choice_label' => function ($renderer) {
-                return 'invoice_calculator.' . $renderer;
-            }
+                return $renderer;
+            },
+            'translation_domain' => 'invoice-calculator',
         ]);
     }
 

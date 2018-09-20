@@ -19,6 +19,15 @@ bin/console doctrine:migrations:migrate
 There might be version specific tasks that need to be executed before or after these steps, please see below 
 if your updated version is mentioned below.
 
+## [0.5](https://github.com/kevinpapst/kimai2/releases/tag/0.5) (unreleased)
+
+Some configuration nodes were removed, if you have one of them in your `local.yaml` you need to delete them:
+- `kimai.invoice.calculator`
+- `kimai.invoice.renderer`
+- `kimai.invoice.number_generator`
+
+The new config `kimai.invoice.documents` was introduced, holding a list of directories ([read more](https://github.com/kevinpapst/kimai2/blob/master/var/docs/invoices.md)).
+
 ## [0.4](https://github.com/kevinpapst/kimai2/releases/tag/0.4) (2018-09-01)
 
 In the time between 0.3 and 0.4 there was a release of composer that introduced a BC break, 

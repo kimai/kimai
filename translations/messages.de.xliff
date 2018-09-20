@@ -684,7 +684,11 @@
             </trans-unit>
             <trans-unit id="invoice.select_filter">
                 <source>invoice.select_filter</source>
-                <target>Bevor Sie eine Rechnung erstellen können, müssen Sie mindestens einen Kunden-Filter auswählen.</target>
+                <target>Anhand ihrer ausgewählten Filter wurden keine Rechnungseinträge gefunden.</target>
+            </trans-unit>
+            <trans-unit id="invoice.preview">
+                <source>invoice.preview</source>
+                <target>Dies ist eine Vorschau der Daten, die in Ihrer Rechnung enthalten sein werden.</target>
             </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
@@ -734,14 +738,6 @@
                 <source>invoice.service_date</source>
                 <target>Leistungsdatum</target>
             </trans-unit>
-            <trans-unit id="invoice.preview">
-                <source>invoice.preview</source>
-                <target>Vorschau</target>
-            </trans-unit>
-            <trans-unit id="invoice.preview_info">
-                <source>invoice.preview_info</source>
-                <target>Die folgenden Einträge werden in Ihrer Rechnung enthalten sein:</target>
-            </trans-unit>
             <trans-unit id="invoice.amount">
                 <source>invoice.amount</source>
                 <target>Anzahl</target>
@@ -757,42 +753,6 @@
             <trans-unit id="label.payment_terms">
                 <source>label.payment_terms</source>
                 <target>Zahlungsinformationen</target>
-            </trans-unit>
-            <trans-unit id="label.invoice_renderer">
-                <source>label.invoice_renderer</source>
-                <target>Rechnungsvorlage</target>
-            </trans-unit>
-            <trans-unit id="invoice_renderer.default">
-                <source>invoice_renderer.default</source>
-                <target>Rechnung (Standard)</target>
-            </trans-unit>
-            <trans-unit id="invoice_renderer.timesheet">
-                <source>invoice_renderer.timesheet</source>
-                <target>Stundenzettel</target>
-            </trans-unit>
-            <trans-unit id="invoice_renderer.freelancer">
-                <source>invoice_renderer.freelancer</source>
-                <target>Freiberufler</target>
-            </trans-unit>
-            <trans-unit id="label.invoice_number_generator">
-                <source>label.invoice_number_generator</source>
-                <target>Rechnungsnummern-Generator</target>
-            </trans-unit>
-            <trans-unit id="invoice_number_generator.default">
-                <source>invoice_number_generator.default</source>
-                <target>Datum (Standard)</target>
-            </trans-unit>
-            <trans-unit id="label.invoice_calculator">
-                <source>label.invoice_calculator</source>
-                <target>Summen Berechnung</target>
-            </trans-unit>
-            <trans-unit id="invoice_calculator.default">
-                <source>invoice_calculator.default</source>
-                <target>Stundenbasiert (Standard)</target>
-            </trans-unit>
-            <trans-unit id="invoice_calculator.short">
-                <source>invoice_calculator.short</source>
-                <target>Stundenbasiert - Kurzversion (nur ein Eintrag)</target>
             </trans-unit>
             <trans-unit id="invoice.signature_user">
                 <source>invoice.signature_user</source>

@@ -30,7 +30,7 @@ class SidebarControllerTest extends ControllerBaseTest
         $content = $client->getResponse()->getContent();
 
         $this->assertContains('<ul class="control-sidebar-menu">', $content);
-        $this->assertContains('<a href="/en/profile/'.$user->getUsername().'">', $content);
+        $this->assertContains('<a href="/en/profile/' . $user->getUsername() . '">', $content);
         $this->assertContains('<select class="pull-right" onchange="window.location.href = this.options[this.selectedIndex].value;">', $content);
     }
 }

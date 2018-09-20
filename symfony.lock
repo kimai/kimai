@@ -161,6 +161,9 @@
     "kevinpapst/adminlte-bundle": {
         "version": "0.3"
     },
+    "markbaker/complex": {
+        "version": "1.4.6"
+    },
     "monolog/monolog": {
         "version": "1.23.0"
     },
@@ -191,6 +194,9 @@
     "paragonie/random_compat": {
         "version": "v2.0.17"
     },
+    "pclzip/pclzip": {
+        "version": "2.8.2"
+    },
     "phar-io/manifest": {
         "version": "1.0.1"
     },
@@ -211,6 +217,15 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
+    },
+    "phpoffice/common": {
+        "version": "0.2.9"
+    },
+    "phpoffice/phpspreadsheet": {
+        "version": "1.4.0"
+    },
+    "phpoffice/phpword": {
+        "version": "0.15.0"
     },
     "phpoption/phpoption": {
         "version": "1.5.0"
@@ -592,6 +607,9 @@
     },
     "zendframework/zend-code": {
         "version": "3.3.0"
+    },
+    "zendframework/zend-escaper": {
+        "version": "2.6.0"
     },
     "zendframework/zend-eventmanager": {
         "version": "3.2.0"

@@ -1,5 +1,10 @@
 {% import "macros/widgets.html.twig" as widgets %}
-{# You can overrwite these settings in your config/packages.local.yaml under the key "twig.globals.company" #}
+
+{% extends 'invoice/layout.html.twig' %}
+
+{% block invoice %}
+
+{# You can overwrite these settings in your config/packages.local.yaml under the key "twig.globals.company" #}
 {% set company = company|default({
     name: 'Kimai Inc.',
     homepage: 'www.kimai.org',
@@ -137,11 +142,4 @@
         </footer>
     </div>
 </div>
-
-<div class="row no-print">
-    <div class="col-xs-12">
-        <button type="button" class="btn btn-success pull-right" onclick="window.print();return false;">
-            <i class="{{ 'print'|icon }}"></i> {{ 'button.print'|trans }}
-        </button>
-    </div>
-</div>
+{% endblock %}

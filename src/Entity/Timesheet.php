@@ -153,6 +153,8 @@ class Timesheet
     public function setEnd($end)
     {
         $this->end = $end;
+
+        // FIXME test and then remove it, this should not be neccessary
         if (null === $end) {
             $this->duration = 0;
         }

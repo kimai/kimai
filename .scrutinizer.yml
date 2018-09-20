@@ -12,11 +12,13 @@ build:
                 override:
                     -
                         command: 'vendor/bin/phpunit --coverage-clover=clover.xml tests/'
+                        stop_on_failure: true
                         coverage:
                             file: 'clover.xml'
                             format: 'clover'
                     -
                         command: 'bin/console kimai:phpcs --checkstyle=checkstyle'
+                        stop_on_failure: true
                         analysis:
                             file: 'checkstyle'
                             format: 'php-cs-checkstyle'
@@ -33,3 +35,8 @@ filter:
     dependency_paths:
         - 'node_modules/'
         - 'vendor/'
+
+build_failure_conditions:
+    - 'project.metric("scrutinizer.quality", < 9.30)'
+    - 'project.metric("scrutinizer.test_coverage", < 0.70)'
+    - 'project.metric_change("scrutinizer.test_coverage", < 0.01)'

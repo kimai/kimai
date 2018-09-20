@@ -44,6 +44,7 @@ class RateCalculator implements CalculatorInterface
         $fixedRate = $this->findFixedRate($record);
         if (null !== $fixedRate) {
             $record->setRate($fixedRate);
+            $record->setFixedRate($fixedRate);
 
             return;
         }
@@ -51,9 +52,11 @@ class RateCalculator implements CalculatorInterface
         $hourlyRate = $this->findHourlyRate($record);
         $factor = $this->getRateFactor($record);
 
-        $record->setRate(
-            $this->calculateRate($record->getDuration(), $hourlyRate, $factor)
-        );
+        $hourlyRate = (float) $hourlyRate * $factor;
+        $rate = (float) $hourlyRate * ($record->getDuration() / 3600);
+
+        $record->setHourlyRate($hourlyRate);
+        $record->setRate($rate);
     }
 
     /**
@@ -127,11 +130,6 @@ class RateCalculator implements CalculatorInterface
             $weekday = $record->getEnd()->format('l');
             $days = array_map('strtolower', $rateFactor['days']);
             if (in_array(strtolower($weekday), $days)) {
-                if ($rateFactor['factor'] <= 0) {
-                    throw new \InvalidArgumentException(
-                        'A rate factor smaller or equals 0 is not allowed, given: ' . $rateFactor['factor']
-                    );
-                }
                 $factor += $rateFactor['factor'];
             }
         }
@@ -141,16 +139,5 @@ class RateCalculator implements CalculatorInterface
         }
 
         return $factor;
-    }
-
-    /**
-     * @param int $duration
-     * @param float $hourlyRate
-     * @param float $factor
-     * @return float
-     */
-    protected function calculateRate($duration, $hourlyRate, $factor)
-    {
-        return (float) $hourlyRate * ($duration / 3600) * $factor;
     }
 }

@@ -31,8 +31,11 @@
 
 td {
     &.timesheet-description {
-        & >ul {
-            padding-left: 10px;
+        ul {
+            padding-left: 15px;
+        }
+        p {
+            margin: 0;
         }
     }
 }

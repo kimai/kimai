@@ -55,10 +55,11 @@ git clone https://github.com/kevinpapst/kimai2.git
 cd kimai2/
 ```
 
-Make sure the [file permissions are correct](https://symfony.com/doc/current/setup/file_permissions.html):
+Make sure the [file permissions are correct](https://symfony.com/doc/current/setup/file_permissions.html) and create your `.env` file:
 ```bash
 chown -R www-data var/
 chmod -R 777 var/
+cp .env.dist .env
 ```
 
 It's up to you which database server you want to use, Kimai v2 supports MySQL/MariaDB and SQLite.
@@ -66,7 +67,7 @@ Configure the database connection string in your the `.env` file:
 ```
 # adjust all settings in .env to your needs
 APP_ENV=prod
-DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
+DATABASE_URL=mysql://user:password@127.0.0.1:3306/database
 ```
 
 Now install all dependencies for Kimai 2:

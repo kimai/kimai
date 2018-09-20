@@ -99,6 +99,12 @@ class Configuration implements ConfigurationInterface
                             ->floatNode('factor')
                                 ->isRequired()
                                 ->defaultValue(1)
+                                ->validate()
+                                    ->ifTrue(function ($value) {
+                                        return $value <= 0;
+                                    })
+                                    ->thenInvalid('A rate factor smaller or equals 0 is not allowed')
+                                ->end()
                             ->end()
                         ->end()
                     ->end()
@@ -116,32 +122,15 @@ class Configuration implements ConfigurationInterface
         $node = $builder->root('invoice');
 
         $node
+            ->addDefaultsIfNotSet()
             ->children()
-                ->arrayNode('renderer')
+                ->arrayNode('documents')
                     ->requiresAtLeastOneElement()
-                    ->useAttributeAsKey('key')
                     ->isRequired()
-                    ->prototype('scalar')->end()
+                    ->scalarPrototype()->end()
                     ->defaultValue([
-                        'default' => 'App\Controller\InvoiceController::invoiceAction',
-                    ])
-                ->end()
-                ->arrayNode('calculator')
-                    ->requiresAtLeastOneElement()
-                    ->useAttributeAsKey('key')
-                    ->isRequired()
-                    ->prototype('scalar')->end()
-                    ->defaultValue([
-                        'default' => 'App\Invoice\DefaultCalculator',
-                    ])
-                ->end()
-                ->arrayNode('number_generator')
-                    ->requiresAtLeastOneElement()
-                    ->useAttributeAsKey('key')
-                    ->isRequired()
-                    ->prototype('scalar')->end()
-                    ->defaultValue([
-                        'default' => 'App\Invoice\DateNumberGenerator',
+                        'var/invoices/',
+                        'templates/invoice/renderer/'
                     ])
                 ->end()
             ->end()

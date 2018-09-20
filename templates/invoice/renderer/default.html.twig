@@ -1,3 +1,6 @@
+{% extends 'invoice/layout.html.twig' %}
+
+{% block invoice %}
 <div class="row">
     <div class="col-xs-12">
         <h2 class="page-header">
@@ -108,11 +111,4 @@
         </div>
     </div>
 </div>
-
-<div class="row no-print">
-    <div class="col-xs-12">
-        <button type="button" class="btn btn-success pull-right" onclick="window.print();return false;">
-            <i class="{{ 'print'|icon }}"></i> {{ 'button.print'|trans }}
-        </button>
-    </div>
-</div>
+{% endblock %}

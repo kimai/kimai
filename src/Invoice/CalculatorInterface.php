@@ -72,4 +72,14 @@ interface CalculatorInterface
      * @return int
      */
     public function getTimeWorked(): int;
+
+    /**
+     * Returns the unique ID of this calculator.
+     *
+     * Prefix it with your company name followed by a hyphen (e.g. "acme-"),
+     * if this is a third-party calculator.
+     *
+     * @return string
+     */
+    public function getId(): string;
 }

@@ -1,0 +1,29 @@
+<?php
+
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace App\Tests\Invoice\Calculator;
+
+use App\Invoice\NumberGenerator\DateNumberGenerator;
+use App\Model\InvoiceModel;
+use PHPUnit\Framework\TestCase;
+
+/**
+ * @covers \App\Invoice\NumberGenerator\DateNumberGenerator
+ */
+class DateNumberGeneratorTest extends TestCase
+{
+    public function testGetInvoiceNumber()
+    {
+        $sut = new DateNumberGenerator();
+        $sut->setModel(new InvoiceModel());
+
+        $this->assertEquals(date('ymd'), $sut->getInvoiceNumber());
+        $this->assertEquals('default', $sut->getId());
+    }
+}
