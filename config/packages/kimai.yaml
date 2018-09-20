@@ -35,7 +35,7 @@ kimai:
 
     # Invoice management
     #invoice:
-    #    # all files in these directories will be treated as invoice documents
+    #    # all files in these directories will be used as invoice documents (if supported by a renderer)
     #    documents:
     #        - 'var/invoices/'
     #        - 'templates/invoice/renderer/'
