@@ -1,9 +1,9 @@
 FROM php:7.2-apache
 
-ENV PORT 3333
-EXPOSE 3333
+#ENV PORT 3333
+#EXPOSE 3333
 
-RUN sed -i "s/80/$PORT/g" /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
+#RUN sed -i "s/80/$PORT/g" /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
 # && docker-php-entrypoint apache2-foreground
 
 RUN apt-get update && apt-get install -y --no-install-recommends libicu-dev git zip unzip && \
@@ -22,3 +22,7 @@ RUN chown -R www-data:www-data /usr/src && a2enmod rewrite
 USER www-data
 WORKDIR /usr/src
 RUN composer install --no-dev --optimize-autoloader
+
+USER root
+EXPOSE 80
+CMD ["apache2-foreground"]
