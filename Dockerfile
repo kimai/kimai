@@ -6,9 +6,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends libicu-dev git 
     docker-php-ext-configure intl && \
     docker-php-ext-install intl
 
-RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer && \
-    apt-get -y autoremove && \
-    apt-get clean
+RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
 
 COPY ./ /usr/src/
 WORKDIR /usr/src
@@ -20,6 +18,10 @@ WORKDIR /usr/src
 RUN composer install --no-dev --optimize-autoloader
 
 USER root
+# todo remove composer
+RUN apt-get purge -y git zip unzip && \
+    apt-get -y autoremove && \
+    apt-get clean
 
 EXPOSE 80
 CMD ["apache2-foreground"]
