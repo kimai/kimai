@@ -1,10 +1,6 @@
 FROM php:7.2-apache
 
-#ENV PORT 3333
-#EXPOSE 3333
-
-#RUN sed -i "s/80/$PORT/g" /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
-# && docker-php-entrypoint apache2-foreground
+VOLUME /usr/src/var/data
 
 RUN apt-get update && apt-get install -y --no-install-recommends libicu-dev git zip unzip && \
     docker-php-ext-configure intl && \
@@ -24,5 +20,6 @@ WORKDIR /usr/src
 RUN composer install --no-dev --optimize-autoloader
 
 USER root
+
 EXPOSE 80
 CMD ["apache2-foreground"]
