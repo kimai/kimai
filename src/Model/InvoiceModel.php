@@ -17,7 +17,8 @@ use App\Invoice\NumberGeneratorInterface;
 use App\Repository\Query\InvoiceQuery;
 
 /**
- * Class InvoiceModel is the ONLY value that a renderer template receives for generating the invoice.
+ * InvoiceModel is the ONLY value that a RendererInterface receives for generating the invoice,
+ * besides the InvoiceDocument which is used as a "template".
  */
 class InvoiceModel
 {
@@ -34,7 +35,7 @@ class InvoiceModel
     /**
      * @var Timesheet[]
      */
-    protected $entries;
+    protected $entries = [];
 
     /**
      * @var InvoiceTemplate
@@ -52,9 +53,19 @@ class InvoiceModel
     protected $generator;
 
     /**
+     * @var \DateTime
+     */
+    protected $invoiceDate;
+
+    public function __construct()
+    {
+        $this->invoiceDate = new \DateTime();
+    }
+
+    /**
      * @return InvoiceQuery
      */
-    public function getQuery(): InvoiceQuery
+    public function getQuery(): ?InvoiceQuery
     {
         return $this->query;
     }
@@ -103,7 +114,7 @@ class InvoiceModel
      * @param InvoiceTemplate $template
      * @return InvoiceModel
      */
-    public function setTemplate($template)
+    public function setTemplate(InvoiceTemplate $template)
     {
         $this->template = $template;
 
@@ -132,8 +143,12 @@ class InvoiceModel
     /**
      * @return \DateTime
      */
-    public function getDueDate(): \DateTime
+    public function getDueDate(): ?\DateTime
     {
+        if (null === $this->getTemplate()) {
+            return null;
+        }
+
         return new \DateTime('+' . $this->getTemplate()->getDueDays() . ' days');
     }
 
@@ -142,7 +157,7 @@ class InvoiceModel
      */
     public function getInvoiceDate(): \DateTime
     {
-        return new \DateTime();
+        return $this->invoiceDate;
     }
 
     /**
@@ -160,7 +175,7 @@ class InvoiceModel
     /**
      * @return NumberGeneratorInterface
      */
-    public function getNumberGenerator(): NumberGeneratorInterface
+    public function getNumberGenerator(): ?NumberGeneratorInterface
     {
         return $this->generator;
     }
@@ -180,7 +195,7 @@ class InvoiceModel
     /**
      * @return CalculatorInterface
      */
-    public function getCalculator(): CalculatorInterface
+    public function getCalculator(): ?CalculatorInterface
     {
         return $this->calculator;
     }

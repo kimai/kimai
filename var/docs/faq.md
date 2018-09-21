@@ -23,10 +23,10 @@ There is a [discussion in the issue tracker](https://github.com/kevinpapst/kimai
 
 There are two solution for this: 
 
-- Update your MariaDB server to at least 10.7.2
+- Update your MariaDB server to at least 10.2.7
 - Switch to SQLite (that can be changed in your `.env` file)
 
 Further readings:
 
-- [MariaDB - JSON support was added with 10.7.2](https://mariadb.com/kb/en/library/json-data-type/)
+- [MariaDB - JSON support was added with 10.2.7](https://mariadb.com/kb/en/library/json-data-type/)
 - [Using JSON fields with Doctrine ORM on PostgreSQL & MySQL](https://symfony.fi/entry/using-json-fields-with-doctrine-orm-on-postgresql-mysql)

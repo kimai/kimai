@@ -15,19 +15,19 @@ use App\Form\InvoiceTemplateForm;
 use App\Form\Toolbar\InvoiceToolbarForm;
 use App\Invoice\ServiceInvoice;
 use App\Model\InvoiceModel;
+use App\Repository\InvoiceTemplateRepository;
 use App\Repository\Query\BaseQuery;
 use App\Repository\Query\InvoiceQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TimesheetRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller used to manage invoices.
  *
- * @Route("/invoice")
+ * @Route(path="/invoice")
  * @Security("is_granted('ROLE_TEAMLEAD')")
  */
 class InvoiceController extends AbstractController
@@ -36,14 +36,25 @@ class InvoiceController extends AbstractController
      * @var ServiceInvoice
      */
     protected $service;
+    /**
+     * @var InvoiceTemplateRepository
+     */
+    protected $invoiceRepository;
+    /**
+     * @var TimesheetRepository
+     */
+    protected $timesheetRepository;
 
     /**
-     * InvoiceController constructor.
      * @param ServiceInvoice $service
+     * @param InvoiceTemplateRepository $invoice
+     * @param TimesheetRepository $timesheet
      */
-    public function __construct(ServiceInvoice $service)
+    public function __construct(ServiceInvoice $service, InvoiceTemplateRepository $invoice, TimesheetRepository $timesheet)
     {
         $this->service = $service;
+        $this->invoiceRepository = $invoice;
+        $this->timesheetRepository = $timesheet;
     }
 
     /**
@@ -65,15 +76,7 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @return \App\Repository\InvoiceTemplateRepository
-     */
-    protected function getRepository()
-    {
-        return $this->getDoctrine()->getRepository(InvoiceTemplate::class);
-    }
-
-    /**
-     * @Route("/", name="invoice")
+     * @Route(path="/", name="invoice", methods={"GET"})
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -81,7 +84,7 @@ class InvoiceController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        if (!$this->getRepository()->hasTemplate()) {
+        if (!$this->invoiceRepository->hasTemplate()) {
             return $this->redirectToRoute('admin_invoice_template_create');
         }
 
@@ -89,31 +92,101 @@ class InvoiceController extends AbstractController
 
         $query = $this->getDefaultQuery();
         $form = $this->getToolbarForm($query);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var InvoiceQuery $query */
             $query = $form->getData();
-            $query->setResultType(TimesheetQuery::RESULT_TYPE_QUERYBUILDER);
+            $entries = $this->getEntries($query);
+        }
 
-            if (null !== $query->getCustomer()) {
-                $query->getBegin()->setTime(0, 0, 0);
-                $query->getEnd()->setTime(23, 59, 59);
+        $model = $this->prepareModel($query, $entries);
 
-                /* @var TimesheetRepository $timeRepo */
-                $timeRepo = $this->getDoctrine()->getRepository(Timesheet::class);
-                $queryBuilder = $timeRepo->findByQuery($query);
-                $entries = $queryBuilder->getQuery()->getResult();
+        return $this->render('invoice/index.html.twig', [
+            'model' => $model,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route(path="/print", name="invoice_print", methods={"GET"})
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     */
+    public function printAction(Request $request)
+    {
+        if (!$this->invoiceRepository->hasTemplate()) {
+            return $this->redirectToRoute('admin_invoice_template_create');
+        }
+
+        $query = $this->getDefaultQuery();
+        $form = $this->getToolbarForm($query);
+        $form->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->redirectToRoute('invoice');
+        }
+
+        /** @var InvoiceQuery $query */
+        $query = $form->getData();
+        $entries = $this->getEntries($query);
+        $model = $this->prepareModel($query, $entries);
+
+        $document = $this->service->getDocumentByName($model->getTemplate()->getRenderer());
+        if (null === $document) {
+            throw new \Exception('Unknown invoice document: ' . $model->getTemplate()->getRenderer());
+        }
+
+        foreach ($this->service->getRenderer() as $renderer) {
+            if ($renderer->supports($document)) {
+                return $renderer->render($document, $model);
             }
         }
 
-        $model = new InvoiceModel();
-        $model->setQuery($query);
-        $model->setEntries($entries);
-        $model->setCustomer($query->getCustomer());
+        $this->flashError('Cannot render invoice: ' . $model->getTemplate()->getRenderer() . ' (' . $document->getName() . ')');
 
-        $action = null;
+        return $this->render('invoice/index.html.twig', [
+            'model' => $model,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @param InvoiceQuery $query
+     * @return Timesheet[]
+     */
+    protected function getEntries(InvoiceQuery $query)
+    {
+        if (null === $query->getCustomer()) {
+            return [];
+        }
+
+        $query->setResultType(TimesheetQuery::RESULT_TYPE_QUERYBUILDER);
+        $query->getBegin()->setTime(0, 0, 0);
+        $query->getEnd()->setTime(23, 59, 59);
+
+        $queryBuilder = $this->timesheetRepository->findByQuery($query);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    /**
+     * @param InvoiceQuery $query
+     * @param array $entries
+     * @return InvoiceModel
+     * @throws \Exception
+     */
+    protected function prepareModel(InvoiceQuery $query, array $entries)
+    {
+        $model = new InvoiceModel();
+        $model
+            ->setQuery($query)
+            ->setEntries($entries)
+            ->setCustomer($query->getCustomer())
+        ;
+
         if ($query->getTemplate() !== null) {
             $generator = $this->service->getNumberGeneratorByName($query->getTemplate()->getNumberGenerator());
             if (null === $generator) {
@@ -128,20 +201,14 @@ class InvoiceController extends AbstractController
             $model->setTemplate($query->getTemplate());
             $model->setCalculator($calculator);
             $model->setNumberGenerator($generator);
-            $action = $this->service->getRendererActionByName($query->getTemplate()->getRenderer());
         }
 
-        return $this->render('invoice/index.html.twig', [
-            'model' => $model,
-            'action' => $action,
-            'form' => $form->createView(),
-        ]);
+        return $model;
     }
 
     /**
-     * @Route("/template", defaults={"page": 1}, name="admin_invoice_template")
-     * @Route("/template/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_invoice_template_paginated")
-     * @Method({"GET", "POST"})
+     * @Route(path="/template", defaults={"page": 1}, name="admin_invoice_template", methods={"GET", "POST"})
+     * @Route(path="/template/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_invoice_template_paginated", methods={"GET", "POST"})
      *
      * TODO permission
      *
@@ -150,7 +217,7 @@ class InvoiceController extends AbstractController
      */
     public function listTemplateAction($page)
     {
-        $templates = $this->getRepository()->findByQuery(new BaseQuery());
+        $templates = $this->invoiceRepository->findByQuery(new BaseQuery());
 
         return $this->render('invoice/templates.html.twig', [
             'entries' => $templates,
@@ -159,11 +226,11 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="admin_invoice_template_edit")
-     * @Method({"GET", "POST"})
+     * @Route(path="/template/{id}/edit", name="admin_invoice_template_edit", methods={"GET", "POST"})
      *
      * TODO permission
      *
+     * @param InvoiceTemplate $template
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
@@ -174,8 +241,7 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route("/create", name="admin_invoice_template_create")
-     * @Method({"GET", "POST"})
+     * @Route(path="/template/create", name="admin_invoice_template_create", methods={"GET", "POST"})
      *
      * TODO permission
      *
@@ -185,11 +251,34 @@ class InvoiceController extends AbstractController
      */
     public function createTemplateAction(Request $request)
     {
-        if (!$this->getRepository()->hasTemplate()) {
+        if (!$this->invoiceRepository->hasTemplate()) {
             $this->flashWarning('invoice.first_template');
         }
 
         return $this->renderTemplateForm(new InvoiceTemplate(), $request);
+    }
+
+    /**
+     * The route to delete an existing template.
+     *
+     * TODO permission
+     *
+     * @Route(path="/template/{id}/delete", name="admin_invoice_template_delete", methods={"GET", "POST"})
+     *
+     * @param InvoiceTemplate $template
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteTemplate(InvoiceTemplate $template, Request $request)
+    {
+        try {
+            $this->invoiceRepository->removeTemplate($template);
+            $this->flashSuccess('action.delete.success');
+        } catch (\Exception $ex) {
+            $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
+        }
+
+        return $this->redirectToRoute('admin_invoice_template_paginated', ['page' => $request->get('page')]);
     }
 
     /**
@@ -204,40 +293,19 @@ class InvoiceController extends AbstractController
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($template);
-            $entityManager->flush();
+            try {
+                $this->invoiceRepository->saveTemplate($template);
+                $this->flashSuccess('action.update.success');
 
-            $this->flashSuccess('action.updated_successfully');
-
-            return $this->redirectToRoute('admin_invoice_template');
+                return $this->redirectToRoute('admin_invoice_template');
+            } catch (\Exception $ex) {
+                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            }
         }
 
         return $this->render('invoice/template_edit.html.twig', [
             'template' => $template,
             'form' => $editForm->createView()
-        ]);
-    }
-
-    /**
-     * @param InvoiceModel $model
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function invoiceAction(InvoiceModel $model)
-    {
-        return $this->render('invoice/renderer/print.html.twig', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * @param InvoiceModel $model
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function timesheetAction(InvoiceModel $model)
-    {
-        return $this->render('invoice/renderer/timesheet.html.twig', [
-            'model' => $model,
         ]);
     }
 
@@ -250,6 +318,9 @@ class InvoiceController extends AbstractController
         return $this->createForm(InvoiceToolbarForm::class, $query, [
             'action' => $this->generateUrl('invoice', []),
             'method' => 'GET',
+            'attr' => [
+                'id' => 'invoice-print-form'
+            ]
         ]);
     }
 

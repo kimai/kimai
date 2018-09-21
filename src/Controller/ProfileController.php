@@ -18,17 +18,16 @@ use App\Form\UserPreferencesForm;
 use App\Form\UserRolesType;
 use App\Repository\TimesheetRepository;
 use App\Voter\UserVoter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * User profile controller
  *
- * @Route("/profile")
+ * @Route(path="/profile")
  * @Security("is_granted('ROLE_USER')")
  */
 class ProfileController extends AbstractController
@@ -47,8 +46,7 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/{username}", name="user_profile")
-     * @Method("GET")
+     * @Route(path="/{username}", name="user_profile", methods={"GET"})
      * @Security("is_granted('view', profile)")
      */
     public function indexAction(User $profile)
@@ -57,8 +55,7 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/{username}/edit", name="user_profile_edit")
-     * @Method({"GET", "POST"})
+     * @Route(path="/{username}/edit", name="user_profile_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', profile)")
      */
     public function editAction(User $profile, Request $request)
@@ -71,17 +68,16 @@ class ProfileController extends AbstractController
             $entityManager->persist($profile);
             $entityManager->flush();
 
-            $this->flashSuccess('action.updated_successfully');
+            $this->flashSuccess('action.update.success');
 
-            return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
+            return $this->redirectToRoute('user_profile_edit', ['username' => $profile->getUsername()]);
         }
 
         return $this->getProfileView($profile, 'settings', $form);
     }
 
     /**
-     * @Route("/{username}/password", name="user_profile_password")
-     * @Method({"GET", "POST"})
+     * @Route(path="/{username}/password", name="user_profile_password", methods={"GET", "POST"})
      * @Security("is_granted('password', profile)")
      */
     public function passwordAction(User $profile, Request $request)
@@ -97,17 +93,16 @@ class ProfileController extends AbstractController
             $entityManager->persist($profile);
             $entityManager->flush();
 
-            $this->flashSuccess('action.updated_successfully');
+            $this->flashSuccess('action.update.success');
 
-            return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
+            return $this->redirectToRoute('user_profile_password', ['username' => $profile->getUsername()]);
         }
 
         return $this->getProfileView($profile, 'password', null, $form);
     }
 
     /**
-     * @Route("/{username}/api-token", name="user_profile_api_token")
-     * @Method({"GET", "POST"})
+     * @Route(path="/{username}/api-token", name="user_profile_api_token", methods={"GET", "POST"})
      * @Security("is_granted('api-token', profile)")
      */
     public function apiTokenAction(User $profile, Request $request)
@@ -123,17 +118,16 @@ class ProfileController extends AbstractController
             $entityManager->persist($profile);
             $entityManager->flush();
 
-            $this->flashSuccess('action.updated_successfully');
+            $this->flashSuccess('action.update.success');
 
-            return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
+            return $this->redirectToRoute('user_profile_api_token', ['username' => $profile->getUsername()]);
         }
 
         return $this->getProfileView($profile, 'api-token', null, null, null, null, $form);
     }
 
     /**
-     * @Route("/{username}/roles", name="user_profile_roles")
-     * @Method({"GET", "POST"})
+     * @Route(path="/{username}/roles", name="user_profile_roles", methods={"GET", "POST"})
      * @Security("is_granted('roles', profile)")
      */
     public function rolesAction(User $profile, Request $request)
@@ -146,17 +140,16 @@ class ProfileController extends AbstractController
             $entityManager->persist($profile);
             $entityManager->flush();
 
-            $this->flashSuccess('action.updated_successfully');
+            $this->flashSuccess('action.update.success');
 
-            return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
+            return $this->redirectToRoute('user_profile_roles', ['username' => $profile->getUsername()]);
         }
 
         return $this->getProfileView($profile, 'roles', null, null, $form);
     }
 
     /**
-     * @Route("/{username}/prefs", name="user_profile_preferences")
-     * @Method({"GET", "POST"})
+     * @Route(path="/{username}/prefs", name="user_profile_preferences", methods={"GET", "POST"})
      * @Security("is_granted('preferences', profile)")
      */
     public function savePreferencesAction(User $profile, Request $request)
@@ -191,9 +184,9 @@ class ProfileController extends AbstractController
             $entityManager->persist($profile);
             $entityManager->flush();
 
-            $this->flashSuccess('action.updated_successfully');
+            $this->flashSuccess('action.update.success');
 
-            return $this->redirectToRoute('user_profile', ['username' => $profile->getUsername()]);
+            return $this->redirectToRoute('user_profile_preferences', ['username' => $profile->getUsername()]);
         }
 
         return $this->getProfileView($profile, 'preferences', null, null, null, $form);

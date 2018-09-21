@@ -31,10 +31,13 @@ class Markdown
 
     /**
      * @param string $text
+     * @param bool $safe
      * @return string
      */
-    public function toHtml(string $text): string
+    public function toHtml(string $text, bool $safe = true): string
     {
+        $this->parser->setSafeMode($safe);
+
         return $this->parser->text($text);
     }
 }

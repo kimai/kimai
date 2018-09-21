@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+    <script src="{{ asset('build/app.js') }}"></script>
+</head>
+<body class="invoice_print">
+<div class="wrapper">
+    <section class="invoice">
+        {% block invoice %}{% endblock %}
+    </section>
+    {% block print_button %}
+        <div class="row no-print">
+            <div class="col-xs-12">
+                <button type="button" class="btn btn-success pull-right" onclick="window.print();return false;">
+                    <i class="{{ 'print'|icon }}"></i> {{ 'button.print'|trans }}
+                </button>
+            </div>
+        </div>
+    {% endblock %}
+</div>
+</body>
+</html>

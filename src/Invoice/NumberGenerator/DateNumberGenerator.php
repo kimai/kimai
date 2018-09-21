@@ -7,8 +7,9 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Invoice;
+namespace App\Invoice\NumberGenerator;
 
+use App\Invoice\NumberGeneratorInterface;
 use App\Model\InvoiceModel;
 
 /**
@@ -23,6 +24,14 @@ class DateNumberGenerator implements NumberGeneratorInterface
     protected $model;
 
     /**
+     * @return string
+     */
+    public function getId(): string
+    {
+        return 'default';
+    }
+
+    /**
      * @param InvoiceModel $model
      */
     public function setModel(InvoiceModel $model)
@@ -35,6 +44,6 @@ class DateNumberGenerator implements NumberGeneratorInterface
      */
     public function getInvoiceNumber(): string
     {
-        return date('ymd');
+        return date('ymd', $this->model->getInvoiceDate()->getTimestamp());
     }
 }

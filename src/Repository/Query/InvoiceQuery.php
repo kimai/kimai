@@ -44,23 +44,4 @@ class InvoiceQuery extends TimesheetQuery
 
         return $this;
     }
-
-    /**
-     * @return InvoiceTemplate[]
-     */
-    public function getTemplates(): array
-    {
-        return $this->templates;
-    }
-
-    /**
-     * @param InvoiceTemplate[] $templates
-     * @return InvoiceQuery
-     */
-    public function setTemplates(array $templates)
-    {
-        $this->templates = $templates;
-
-        return $this;
-    }
 }

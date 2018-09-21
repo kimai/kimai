@@ -44,43 +44,58 @@ class TimesheetFixtures extends Fixture
     protected $startDate = '2018-04-01';
 
     /**
-     * @param string $date
+     * @param string|\DateTime $date
      */
     public function setStartDate($date)
     {
+        if ($date instanceof \DateTime) {
+            $date = $date->format('Y-m-d');
+        }
         $this->startDate = $date;
     }
 
     /**
      * @param int $amount
+     * @return $this
      */
     public function setAmountRunning($amount)
     {
         $this->running = $amount;
+
+        return $this;
     }
 
     /**
      * @param int $amount
+     * @return $this
      */
     public function setAmount($amount)
     {
         $this->amount = $amount;
+
+        return $this;
     }
 
     /**
      * @param User $user
+     * @return $this
      */
     public function setUser(User $user)
     {
         $this->user = $user;
+
+        return $this;
     }
 
     /**
      * @param Activity[] $activities
+     * @return $this
      */
     public function setActivities(array $activities)
     {
         $this->activities = $activities;
+
+        return $this;
     }
 
     /**

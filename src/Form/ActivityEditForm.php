@@ -15,6 +15,7 @@ use App\Form\Type\YesNoType;
 use App\Repository\ProjectRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -55,6 +56,14 @@ class ActivityEditForm extends AbstractType
                 'query_builder' => function (ProjectRepository $repo) use ($project) {
                     return $repo->builderForEntityType($project);
                 },
+            ])
+            ->add('fixedRate', NumberType::class, [
+                'label' => 'label.fixed_rate',
+                'required' => false,
+            ])
+            ->add('hourlyRate', NumberType::class, [
+                'label' => 'label.hourly_rate',
+                'required' => false,
             ])
             // boolean
             ->add('visible', YesNoType::class, [

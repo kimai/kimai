@@ -147,6 +147,63 @@ class DurationCalculatorTest extends TestCase
                 (clone $start)->setTime(14, 32, 52), // 14:33 => 2:18 (second duration will not be rounded)
                 8280
             ],
+            [
+                [
+                    'default' => [
+                        'days' => [$day],
+                        'begin' => 0,
+                        'end' => 0,
+                        'duration' => 1,
+                    ],
+                    'weekdays' => [
+                        'days' => ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
+                        'begin' => 0,
+                        'end' => 0,
+                        'duration' => 1,
+                    ],
+                ],
+                (clone $start)->setTime(12, 27, 35), // no diff, to test ...
+                (clone $start)->setTime(12, 27, 35), // ... that no rounding is applied
+                0
+            ],
+            [
+                [
+                    'default' => [
+                        'days' => [$day],
+                        'begin' => 1,
+                        'end' => 1,
+                        'duration' => 1,
+                    ],
+                    'weekdays' => [
+                        'days' => ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
+                        'begin' => 1,
+                        'end' => 1,
+                        'duration' => 1,
+                    ],
+                ],
+                (clone $start)->setTime(12, 27, 00), // no diff, to test ...
+                (clone $start)->setTime(12, 27, 00), // ... that no rounding is applied
+                0
+            ],
+            [
+                [
+                    'default' => [
+                        'days' => [$day],
+                        'begin' => 0,
+                        'end' => 0,
+                        'duration' => 0,
+                    ],
+                    'weekdays' => [
+                        'days' => ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
+                        'begin' => 0,
+                        'end' => 0,
+                        'duration' => 0,
+                    ],
+                ],
+                (clone $start)->setTime(12, 27, 35), // no diff, to test ...
+                (clone $start)->setTime(12, 27, 35), // ... that no rounding is applied
+                0
+            ],
         ];
     }
 }

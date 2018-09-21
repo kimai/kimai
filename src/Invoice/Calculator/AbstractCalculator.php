@@ -7,18 +7,12 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Invoice;
+namespace App\Invoice\Calculator;
 
 use App\Entity\Timesheet;
 use App\Model\InvoiceModel;
 
-/**
- * Class DefaultCalculator works on all given entries using:
- * - the customers currency
- * - the invoice template vat rate
- * - the entries rate
- */
-class DefaultCalculator implements CalculatorInterface
+abstract class AbstractCalculator
 {
     /**
      * @var string
@@ -33,10 +27,12 @@ class DefaultCalculator implements CalculatorInterface
     /**
      * @return Timesheet[]
      */
-    public function getEntries()
-    {
-        return $this->model->getEntries();
-    }
+    abstract public function getEntries();
+
+    /**
+     * @return string
+     */
+    abstract public function getId(): string;
 
     /**
      * @param InvoiceModel $model
@@ -62,7 +58,7 @@ class DefaultCalculator implements CalculatorInterface
     /**
      * @return float
      */
-    public function getVat()
+    public function getVat(): ?float
     {
         return $this->model->getTemplate()->getVat();
     }
@@ -96,5 +92,20 @@ class DefaultCalculator implements CalculatorInterface
     public function getCurrency(): string
     {
         return $this->model->getCustomer()->getCurrency();
+    }
+
+    /**
+     * Returns the total amount of worked time in seconds.
+     *
+     * @return int
+     */
+    public function getTimeWorked(): int
+    {
+        $time = 0;
+        foreach ($this->model->getEntries() as $entry) {
+            $time += $entry->getDuration();
+        }
+
+        return $time;
     }
 }

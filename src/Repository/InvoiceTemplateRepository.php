@@ -54,4 +54,35 @@ class InvoiceTemplateRepository extends AbstractRepository
 
         return $this->getBaseQueryResult($qb, $query);
     }
+
+    /**
+     * @param InvoiceTemplate $template
+     * @return InvoiceTemplate
+     * @throws RepositoryException
+     */
+    public function saveTemplate(InvoiceTemplate $template)
+    {
+        try {
+            $this->getEntityManager()->persist($template);
+            $this->getEntityManager()->flush();
+        } catch (\Exception $ex) {
+            throw new RepositoryException('Could not save InvoiceTemplate');
+        }
+
+        return $template;
+    }
+
+    /**
+     * @param InvoiceTemplate $template
+     * @throws RepositoryException
+     */
+    public function removeTemplate(InvoiceTemplate $template)
+    {
+        try {
+            $this->getEntityManager()->remove($template);
+            $this->getEntityManager()->flush();
+        } catch (\Exception $ex) {
+            throw new RepositoryException('Could not remove InvoiceTemplate');
+        }
+    }
 }

@@ -97,8 +97,25 @@ class Timesheet
      * @var float
      *
      * @ORM\Column(name="rate", type="decimal", precision=10, scale=2, nullable=false)
+     * @Assert\GreaterThanOrEqual(0)
      */
     private $rate = 0.00;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="fixed_rate", type="decimal", precision=10, scale=2, nullable=true)
+     * @Assert\GreaterThanOrEqual(0)
+     */
+    private $fixedRate = null;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="hourly_rate", type="decimal", precision=10, scale=2, nullable=true)
+     * @Assert\GreaterThanOrEqual(0)
+     */
+    private $hourlyRate = null;
 
     /**
      * Get entry id
@@ -144,6 +161,8 @@ class Timesheet
     public function setEnd($end)
     {
         $this->end = $end;
+
+        // FIXME test and then remove it, this should not be neccessary
         if (null === $end) {
             $this->duration = 0;
         }
@@ -284,6 +303,44 @@ class Timesheet
     public function getRate()
     {
         return $this->rate;
+    }
+
+    /**
+     * @return float
+     */
+    public function getFixedRate(): ?float
+    {
+        return $this->fixedRate;
+    }
+
+    /**
+     * @param float $fixedRate
+     * @return Timesheet
+     */
+    public function setFixedRate(?float $fixedRate)
+    {
+        $this->fixedRate = $fixedRate;
+
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getHourlyRate(): ?float
+    {
+        return $this->hourlyRate;
+    }
+
+    /**
+     * @param float $hourlyRate
+     * @return Timesheet
+     */
+    public function setHourlyRate(?float $hourlyRate)
+    {
+        $this->hourlyRate = $hourlyRate;
+
+        return $this;
     }
 
     /**

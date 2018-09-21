@@ -21,7 +21,7 @@ class Year
     /**
      * @var Month[]
      */
-    protected $months;
+    protected $months = [];
 
     /**
      * Year constructor.
@@ -52,10 +52,10 @@ class Year
     }
 
     /**
-     * @param $month
+     * @param int $month
      * @return null|Month
      */
-    public function getMonth($month)
+    public function getMonth(int $month)
     {
         if (isset($this->months[$month])) {
             return $this->months[$month];

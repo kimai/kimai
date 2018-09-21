@@ -750,38 +750,6 @@
                 <source>label.payment_terms</source>
                 <target>Modalités de paiement</target>
             </trans-unit>
-            <trans-unit id="label.invoice_renderer">
-                <source>label.invoice_renderer</source>
-                <target>Modèle de facture</target>
-            </trans-unit>
-            <trans-unit id="invoice_renderer.default">
-                <source>invoice_renderer.default</source>
-                <target>Facture (par défaut)</target>
-            </trans-unit>
-            <trans-unit id="invoice_renderer.timesheet">
-                <source>invoice_renderer.timesheet</source>
-                <target>Fiche de temps</target>
-            </trans-unit>
-            <trans-unit id="label.invoice_number_generator">
-                <source>label.invoice_number_generator</source>
-                <target>Générateur de numéros de facture</target>
-            </trans-unit>
-            <trans-unit id="invoice_number_generator.default">
-                <source>invoice_number_generator.default</source>
-                <target>Date (par defaut)</target>
-            </trans-unit>
-            <trans-unit id="label.invoice_calculator">
-                <source>label.invoice_calculator</source>
-                <target>Calcul du total</target>
-            </trans-unit>
-            <trans-unit id="invoice_calculator.default">
-                <source>invoice_calculator.default</source>
-                <target>Tarifs horaires (par defaut)</target>
-            </trans-unit>
-            <trans-unit id="invoice_calculator.short">
-                <source>invoice_calculator.short</source>
-                <target>Tarifs horaires particuliers (seulement pour un enregistrement)</target>
-            </trans-unit>
             <trans-unit id="invoice.signature_user">
                 <source>invoice.signature_user</source>
                 <target>Pour certification : date / nom du consultant / signature</target>

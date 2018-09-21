@@ -73,7 +73,7 @@ class WidgetRepository
 
         if ($widget['query'] == TimesheetRepository::STATS_QUERY_DURATION) {
             $model->setDataType(Widget::DATA_TYPE_DURATION);
-        } elseif ($widget['query'] == TimesheetRepository::STATS_QUERY_AMOUNT) {
+        } elseif ($widget['query'] == TimesheetRepository::STATS_QUERY_RATE) {
             $model->setDataType(Widget::DATA_TYPE_MONEY);
         }
 

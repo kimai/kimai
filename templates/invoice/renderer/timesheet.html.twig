@@ -1,5 +1,7 @@
 {% import "macros/widgets.html.twig" as widgets %}
+{% extends 'invoice/layout.html.twig' %}
 
+{% block invoice %}
 <div class="row">
     <div class="col-xs-12">
         <h2 class="page-header">
@@ -23,13 +25,19 @@
             </tr>
             <tr>
                 <th style="width:50%">{{ 'label.date'|trans }}</th>
-                <td contenteditable="true">{{ model.invoiceDate|month_name|trans }} {{ model.invoiceDate|date('Y') }}</td>
+                <td contenteditable="true">
+                    {% if model.query.begin|date('m') != model.query.end|date('m') or model.query.begin|date('Y') != model.query.end|date('Y') %}
+                        {{ model.query.begin|date_short }} - {{ model.query.end|date_short }}
+                    {% else %}
+                        {{ model.query.end|month_name|trans }} {{ model.query.end|date('Y') }}
+                    {% endif %}
+                </td>
             </tr>
             <tr>
                 <th>{{ 'label.customer'|trans }}</th>
                 <td contenteditable="true">
                     {% if model.customer.number is not empty %}[{{ model.customer.number }}]{% endif %}
-                    {{ model.customer.name }} / {{ model.customer.contact }}
+                    {{ model.customer.name }}{% if model.customer.contact is not empty %} / {{ model.customer.contact }}{% endif %}
                 </td>
             </tr>
             {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
@@ -50,6 +58,9 @@
             <thead>
             <tr>
                 <th>{{ 'label.date'|trans }}</th>
+                {% if model.query.user is empty %}
+                <th>{{ 'label.user'|trans }}</th>
+                {% endif %}
                 <th>{{ 'label.activity'|trans }}</th>
                 <th>{{ 'label.hours'|trans }}</th>
             </tr>
@@ -58,11 +69,21 @@
             {% for entry in model.calculator.entries %}
             <tr>
                 <td>{{ entry.begin|date_short }}</td>
+                {% if model.query.user is empty %}
+                    <td>{{ widgets.username(entry.user) }}</td>
+                {% endif %}
                 <td>{{ entry.activity.name }} / {{ entry.activity.project.name }}</td>
                 <td>{{ entry.duration|duration }}</td>
             </tr>
             {% endfor %}
             </tbody>
+            <tfoot>
+            <tr>
+                <th></th>
+                <th>{{ 'invoice.total_working_time'|trans }}</th>
+                <th>{{ model.calculator.timeWorked|duration }}</th>
+            </tr>
+            </tfoot>
         </table>
     </div>
 </div>
@@ -92,11 +113,4 @@
         </div>
     </div>
 </div>
-
-<div class="row no-print">
-    <div class="col-xs-12">
-        <button type="button" class="btn btn-success pull-right" onclick="window.print();return false;" style="margin-right: 5px;">
-            <i class="{{ 'print'|icon }}"></i> {{ 'button.print'|trans }}
-        </button>
-    </div>
-</div>
+{% endblock %}

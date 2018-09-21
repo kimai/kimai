@@ -20,6 +20,7 @@ use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -101,6 +102,14 @@ class TimesheetEditForm extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'label.description',
+                'required' => false,
+            ])
+            ->add('fixedRate', NumberType::class, [
+                'label' => 'label.fixed_rate',
+                'required' => false,
+            ])
+            ->add('hourlyRate', NumberType::class, [
+                'label' => 'label.hourly_rate',
                 'required' => false,
             ])
         ;

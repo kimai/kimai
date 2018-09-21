@@ -16,16 +16,15 @@ use App\Form\Toolbar\UserToolbarForm;
 use App\Form\UserCreateType;
 use App\Repository\Query\UserQuery;
 use Pagerfanta\Pagerfanta;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Controller used to manage users in the admin part of the site.
  *
- * @Route("/admin/user")
+ * @Route(path="/admin/user")
  * @Security("is_granted('ROLE_SUPER_ADMIN')")
  * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
  */
@@ -53,9 +52,12 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/", defaults={"page": 1}, name="admin_user")
-     * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_user_paginated")
-     * @Method("GET")
+     * @Route(path="/", defaults={"page": 1}, name="admin_user", methods={"GET"})
+     * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_user_paginated", methods={"GET"})
+
+     * @param int $page
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction($page, Request $request)
     {
@@ -80,8 +82,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/create", name="admin_user_create")
-     * @Method({"GET", "POST"})
+     * @Route(path="/create", name="admin_user_create", methods={"GET", "POST"})
      * @Security("is_granted('create', user)")
      */
     public function createAction(Request $request)
@@ -101,7 +102,7 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->flashSuccess('action.updated_successfully');
+            $this->flashSuccess('action.update.success');
 
             if ($editForm->get('create_more')->getData() !== true) {
                 return $this->redirectToRoute('user_profile_edit', ['username' => $user->getUsername()]);
@@ -124,8 +125,7 @@ class UserController extends AbstractController
     /**
      * The route to delete an existing user.
      *
-     * @Route("/{id}/delete", name="admin_user_delete")
-     * @Method({"GET", "POST"})
+     * @Route(path="/{id}/delete", name="admin_user_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', userToDelete)")
      *
      * @param User $userToDelete
@@ -149,7 +149,7 @@ class UserController extends AbstractController
             $entityManager->remove($userToDelete);
             $entityManager->flush();
 
-            $this->flashSuccess('action.deleted_successfully');
+            $this->flashSuccess('action.delete.success');
 
             return $this->redirectToRoute('admin_user');
         }

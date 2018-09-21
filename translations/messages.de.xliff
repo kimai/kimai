@@ -319,6 +319,10 @@
                 <source>modal.columns.description</source>
                 <target>Beim Speichern werden die nicht ausgewählten Spalten ausgeblendet und diese Einstellungen in einem Browser Cookie hinterlegt. Sollten Sie Ihre Cookies löschen, werden die Einstellungen rückgängig gemacht.</target>
             </trans-unit>
+            <trans-unit id="label.fixed_rate">
+                <source>label.fixed_rate</source>
+                <target>Festbetrag</target>
+            </trans-unit>
 
             <!--
               User profile
@@ -680,7 +684,11 @@
             </trans-unit>
             <trans-unit id="invoice.select_filter">
                 <source>invoice.select_filter</source>
-                <target>Bevor Sie eine Rechnung erstellen können, müssen Sie mindestens einen Kunden-Filter auswählen.</target>
+                <target>Anhand ihrer ausgewählten Filter wurden keine Rechnungseinträge gefunden.</target>
+            </trans-unit>
+            <trans-unit id="invoice.preview">
+                <source>invoice.preview</source>
+                <target>Dies ist eine Vorschau der Daten, die in Ihrer Rechnung enthalten sein werden.</target>
             </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
@@ -738,41 +746,13 @@
                 <source>invoice.total_rate</source>
                 <target>Gesamtpreis</target>
             </trans-unit>
+            <trans-unit id="invoice.unit_price">
+                <source>invoice.unit_price</source>
+                <target>Einzelbetrag</target>
+            </trans-unit>
             <trans-unit id="label.payment_terms">
                 <source>label.payment_terms</source>
                 <target>Zahlungsinformationen</target>
-            </trans-unit>
-            <trans-unit id="label.invoice_renderer">
-                <source>label.invoice_renderer</source>
-                <target>Rechnungsvorlage</target>
-            </trans-unit>
-            <trans-unit id="invoice_renderer.default">
-                <source>invoice_renderer.default</source>
-                <target>Rechnung (Standard)</target>
-            </trans-unit>
-            <trans-unit id="invoice_renderer.timesheet">
-                <source>invoice_renderer.timesheet</source>
-                <target>Stundenzettel</target>
-            </trans-unit>
-            <trans-unit id="label.invoice_number_generator">
-                <source>label.invoice_number_generator</source>
-                <target>Rechnungsnummern-Generator</target>
-            </trans-unit>
-            <trans-unit id="invoice_number_generator.default">
-                <source>invoice_number_generator.default</source>
-                <target>Datum (Standard)</target>
-            </trans-unit>
-            <trans-unit id="label.invoice_calculator">
-                <source>label.invoice_calculator</source>
-                <target>Summen Berechnung</target>
-            </trans-unit>
-            <trans-unit id="invoice_calculator.default">
-                <source>invoice_calculator.default</source>
-                <target>Stundenbasiert (Standard)</target>
-            </trans-unit>
-            <trans-unit id="invoice_calculator.short">
-                <source>invoice_calculator.short</source>
-                <target>Stundenbasiert - Kurzversion (nur ein Eintrag)</target>
             </trans-unit>
             <trans-unit id="invoice.signature_user">
                 <source>invoice.signature_user</source>
@@ -782,9 +762,29 @@
                 <source>invoice.signature_customer</source>
                 <target>Leistungsbestätigung: Datum / Name Kunde / Unterschrift</target>
             </trans-unit>
+            <trans-unit id="invoice.total_working_time">
+                <source>invoice.total_working_time</source>
+                <target>Gesamtdauer</target>
+            </trans-unit>
             <trans-unit id="label.order_number">
                 <source>label.order_number</source>
                 <target>Bestellnummer</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_tax_number">
+                <source>label.invoice_tax_number</source>
+                <target>USt-IdNr.:</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_bank_account">
+                <source>label.invoice_bank_account</source>
+                <target>Bankverbindung</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_salutation">
+                <source>label.invoice_salutation</source>
+                <target>
+                    Sehr geehrte Damen und Herren,
+
+                    für Ihren Auftrag bedanke ich mich und berechne für meine Leistungen:
+                </target>
             </trans-unit>
 
             <!--

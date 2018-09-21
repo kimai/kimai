@@ -9,14 +9,28 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\User;
+
 /**
  * @coversDefaultClass \App\Controller\SidebarController
  * @group integration
  */
 class SidebarControllerTest extends ControllerBaseTest
 {
-    public function testIsSecure()
+    public function testSettingsAction()
     {
-        $this->markTestSkipped('no public route available');
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $this->getUserByRole($em, User::ROLE_USER);
+
+        $this->request($client, '/sidebar/settings');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+
+        $this->assertContains('<ul class="control-sidebar-menu">', $content);
+        $this->assertContains('<a href="/en/profile/' . $user->getUsername() . '">', $content);
+        $this->assertContains('<select class="pull-right" onchange="window.location.href = this.options[this.selectedIndex].value;">', $content);
     }
 }

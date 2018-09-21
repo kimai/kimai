@@ -1,0 +1,2 @@
+start_date,start_timestamp,end_date,end_timestamp,duration,username,description,rate,amount,total
+${entry.begin},${entry.begin_timestamp},${entry.end},${entry.end_timestamp},${entry.duration},${entry.user_name},${entry.description},${entry.rate},${entry.amount},${entry.total}

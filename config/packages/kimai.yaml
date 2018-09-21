@@ -8,6 +8,9 @@ kimai:
     # All configs related to timesheet and record management
     timesheet:
 
+        # render timesheet descriptions with markdown
+        markdown_content: false
+
         # Whether we display start and end time columns (false) or durations only (true).
         # Setting this to true will also change the "edit timesheet" forms, more infos available in the configurations docu.
         duration_only: false
@@ -30,31 +33,39 @@ kimai:
         #        days: ['saturday','sunday']
         #        factor: 1.5
 
-    # All configs related to the invoice administration
-    invoice:
-        renderer:
-            default: 'App\Controller\InvoiceController::invoiceAction'
-            timesheet: 'App\Controller\InvoiceController::timesheetAction'
-        calculator:
-            default: 'App\Invoice\DefaultCalculator'
-            short: 'App\Invoice\ShortInvoiceCalculator'
-        number_generator:
-            default: 'App\Invoice\DateNumberGenerator'
+    # Invoice management
+    #invoice:
+    #    # all files in these directories will be used as invoice documents (if supported by a renderer)
+    #    documents:
+    #        - 'var/invoices/'
+    #        - 'templates/invoice/renderer/'
 
     # Language specific settings, like the date formats
     languages:
         de:
             date_short: 'd.m.Y'
+            duration: '%%h:%%m Stunden'
+            duration_short: '%%h:%%m h'
         en:
             date_short: 'Y-m-d'
+            duration: '%%h:%%m hours'
+            duration_short: '%%h:%%m h'
         it:
             date_short: 'd.m.Y'
+            duration: '%%h:%%m h'
+            duration_short: '%%h:%%m h'
         fr:
             date_short: 'd/m/Y'
+            duration: '%%h h %%m min'
+            duration_short: '%%h h %%m'
         es:
             date_short: 'd.m.Y'
+            duration: '%%h:%%m h'
+            duration_short: '%%h:%%m h'
         ru:
             date_short: 'd.m.Y'
+            duration: '%%h:%%m Часов'
+            duration_short: '%%h:%%m h'
 
     # timesheet calendar configuration
     calendar:

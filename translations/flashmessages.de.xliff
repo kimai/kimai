@@ -18,16 +18,20 @@
                 <source>timesheet.start.error</source>
                 <target>Zeitmessung konnte nicht gestartet werden: %reason%</target>
             </trans-unit>
-            <trans-unit id="action.updated_successfully">
-                <source>action.updated_successfully</source>
+            <trans-unit id="action.update.success">
+                <source>action.update.success</source>
                 <target>Änderungen erfolgreich gespeichert</target>
             </trans-unit>
-            <trans-unit id="action.deleted_successfully">
-                <source>action.deleted_successfully</source>
+            <trans-unit id="action.update.error">
+                <source>action.update.error</source>
+                <target>Änderungen konnten nicht gespeichert werden: %reason%</target>
+            </trans-unit>
+            <trans-unit id="action.delete.success">
+                <source>action.delete.success</source>
                 <target>Eintrag wurde erfolgreich gelöscht</target>
             </trans-unit>
-            <trans-unit id="action.deleted.error">
-                <source>action.deleted.error</source>
+            <trans-unit id="action.delete.error">
+                <source>action.delete.error</source>
                 <target>Eintrag konnte nicht gelöscht werden: %reason%</target>
             </trans-unit>
             <trans-unit id="invoice.first_template">

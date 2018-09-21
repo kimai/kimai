@@ -1,0 +1,41 @@
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+.content {
+    padding: 15px 0;
+}
+.content-header {
+    h1 {
+        small {
+            display: none;
+        }
+    }
+}
+
+@media (min-width: $screen-sm-min) {
+    .content-header {
+        h1 {
+            small {
+                display: inline-block;
+            }
+        }
+    }
+    .content {
+        padding: 15px;
+    }
+}
+
+td {
+    &.timesheet-description {
+        ul {
+            padding-left: 15px;
+        }
+        p {
+            margin: 0;
+        }
+    }
+}

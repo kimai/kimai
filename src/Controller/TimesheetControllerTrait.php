@@ -96,7 +96,7 @@ trait TimesheetControllerTrait
             $entityManager->persist($entry);
             $entityManager->flush();
 
-            $this->flashSuccess('action.updated_successfully');
+            $this->flashSuccess('action.update.success');
 
             return $this->redirectToRoute($redirectRoute, ['page' => $request->get('page')]);
         }
@@ -175,7 +175,7 @@ trait TimesheetControllerTrait
 
             $entityManager->flush();
 
-            $this->flashSuccess('action.updated_successfully');
+            $this->flashSuccess('action.update.success');
 
             return $this->redirectToRoute($redirectRoute);
         }

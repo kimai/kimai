@@ -4,10 +4,14 @@ Before importing your data from a Kimai v1 installation, please read the followi
 
 - Data from the existing v1 installation is only read and will never be changed
 - Data can only be imported from a Kimai installation with at least `v1.0.1` and database revision `1388` (check your `configuration` table)
-- Kimai v1 has support for activities without project assignment, which Kimai v2 doesn't support. Unattached activities will be created for every project that has a linked activity in any of the imported timesheet records
-- Rates and fixed-rates are handled in a completely different way and for now only the timesheet record total amounts are imported
-- Customers cannot login and no user accounts will be created for them
-- The customers country has to be manually assigned afterwards, as there is no field in Kimai v1 for that
+- Kimai v1 has support for activities without project assignment yet, which Kimai v2 doesn't support
+   - global activities will be created for every project that has a linked activity in any of the imported timesheet records
+- User-specific rates are not yet supported in Kimai 2
+  - fixed-rates and hourly-rates for projects and activities are imported
+  - fixed-rates and hourly-rates and total rate for timesheet entries are imported
+- Customers in Kimai 2 are only used for recording
+  - they cannot login and no user accounts will be created for them
+  - country has to be manually assigned afterwards to customers, as there is no field in Kimai v1 for that
 - You have to supply the default password that is used for every imported user, as their password will be resetted
 - Data that was deleted in Kimai v1 (user, customer, projects, activities) will be imported and set to `invisible` (if you don't want that, you have to delete all entries that have the value `1` in the `trash` column before importing)
 

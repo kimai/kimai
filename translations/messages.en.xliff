@@ -117,14 +117,6 @@
             </trans-unit>
 
             <!--
-              Footer
-            -->
-            <trans-unit id="footer.license">
-                <source>footer.license</source>
-                <target>All rights reserved.</target>
-            </trans-unit>
-
-            <!--
               Error templates
             -->
             <trans-unit id="error.no_entries_found">
@@ -326,6 +318,10 @@
             <trans-unit id="modal.columns.description">
                 <source>modal.columns.description</source>
                 <target>Upon saving the un-checked columns will be hidden and this setting will be stored in a browser cookie. If you delete your cookies, the settings will be reversed.</target>
+            </trans-unit>
+            <trans-unit id="label.fixed_rate">
+                <source>label.fixed_rate</source>
+                <target>Fixed rate</target>
             </trans-unit>
 
             <!--
@@ -688,7 +684,11 @@
             </trans-unit>
             <trans-unit id="invoice.select_filter">
                 <source>invoice.select_filter</source>
-                <target>Before you can create an invoice, you have to select at least a customer filter.</target>
+                <target>No invoice entries were found based on your selected filters.</target>
+            </trans-unit>
+            <trans-unit id="invoice.preview">
+                <source>invoice.preview</source>
+                <target>This is a preview of the data that will show up in your invoice document.</target>
             </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
@@ -746,41 +746,13 @@
                 <source>invoice.total_rate</source>
                 <target>Total price</target>
             </trans-unit>
+            <trans-unit id="invoice.unit_price">
+                <source>invoice.unit_price</source>
+                <target>Unit price</target>
+            </trans-unit>
             <trans-unit id="label.payment_terms">
                 <source>label.payment_terms</source>
                 <target>Terms of payment</target>
-            </trans-unit>
-            <trans-unit id="label.invoice_renderer">
-                <source>label.invoice_renderer</source>
-                <target>Invoice template</target>
-            </trans-unit>
-            <trans-unit id="invoice_renderer.default">
-                <source>invoice_renderer.default</source>
-                <target>Invoice (default)</target>
-            </trans-unit>
-            <trans-unit id="invoice_renderer.timesheet">
-                <source>invoice_renderer.timesheet</source>
-                <target>Timesheet</target>
-            </trans-unit>
-            <trans-unit id="label.invoice_number_generator">
-                <source>label.invoice_number_generator</source>
-                <target>Invoicenumber-Generator</target>
-            </trans-unit>
-            <trans-unit id="invoice_number_generator.default">
-                <source>invoice_number_generator.default</source>
-                <target>Date (default)</target>
-            </trans-unit>
-            <trans-unit id="label.invoice_calculator">
-                <source>label.invoice_calculator</source>
-                <target>Sum calculation</target>
-            </trans-unit>
-            <trans-unit id="invoice_calculator.default">
-                <source>invoice_calculator.default</source>
-                <target>Hourly rates (default)</target>
-            </trans-unit>
-            <trans-unit id="invoice_calculator.short">
-                <source>invoice_calculator.short</source>
-                <target>Hourly rates - short version (only one record)</target>
             </trans-unit>
             <trans-unit id="invoice.signature_user">
                 <source>invoice.signature_user</source>
@@ -790,9 +762,29 @@
                 <source>invoice.signature_customer</source>
                 <target>Confirmation: Date / Name Customer / Signature</target>
             </trans-unit>
+            <trans-unit id="invoice.total_working_time">
+                <source>invoice.total_working_time</source>
+                <target>Total duration</target>
+            </trans-unit>
             <trans-unit id="label.order_number">
                 <source>label.order_number</source>
                 <target>Order number</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_tax_number">
+                <source>label.invoice_tax_number</source>
+                <target>VAT no.:</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_bank_account">
+                <source>label.invoice_bank_account</source>
+                <target>Bank account</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_salutation">
+                <source>label.invoice_salutation</source>
+                <target>
+                    Ladies and gentlemen,
+
+                    I thank you for your order and charge for my services:
+                </target>
             </trans-unit>
 
             <!--

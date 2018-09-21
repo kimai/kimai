@@ -74,7 +74,7 @@ final class Version20180730044139 extends AbstractMigration
         }
 
         $timesheet = $this->getTableName('timesheet');
-        $user = $this->getTableName('user');
+        $user = $this->getTableName('users');
 
         if ($platform === 'sqlite') {
             $this->addSql('DROP INDEX IDX_4F60C6B18D93D649');

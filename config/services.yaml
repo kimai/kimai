@@ -32,10 +32,6 @@ services:
     # APPLICATION CORE
     # ================================================================================
 
-    App\Invoice\ServiceInvoice:
-        class: App\Invoice\ServiceInvoice
-        arguments: ['%kimai.invoice%']
-
     App\EventSubscriber\RedirectToLocaleSubscriber:
         class: App\EventSubscriber\RedirectToLocaleSubscriber
         arguments: ['@router', '%app_locales%', '%locale%']
@@ -53,6 +49,10 @@ services:
     App\Controller\DashboardController:
         arguments:
             $dashboard: "%kimai.dashboard%"
+
+    App\Twig\MarkdownExtension:
+        arguments:
+            $timesheetAsMarkdown: "%kimai.timesheet.markdown%"
 
     # ================================================================================
     # DATABASE
@@ -94,7 +94,7 @@ services:
 
     App\Twig\Extensions:
         arguments:
-            $locales: "%app_locales%"
+            $languages: "%kimai.languages%"
 
     App\Twig\DateExtensions:
         arguments:
@@ -141,3 +141,13 @@ services:
         class:     Doctrine\ORM\EntityRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Customer']
+
+    App\Repository\InvoiceTemplateRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\InvoiceTemplate']
+
+    App\Repository\InvoiceDocumentRepository:
+        class: App\Repository\InvoiceDocumentRepository
+        arguments: ['%kimai.invoice.documents%']
+

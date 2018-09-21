@@ -1,0 +1,39 @@
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
+.error-page {
+    margin-bottom: 50px;
+}
+
+@media print{
+    .sf-toolbar, .control-sidebar {display: none !important;}
+}
+
+@import 'content';
+@import 'toolbar';
+
+/* ================================ SIDEBAR ================================ */
+
+/* Used for the Sidebar UserPanel (which is deactivated right now) */
+.user-panel>.info {
+    left: 80px;
+}
+
+/* ================================ FOOTER ================================ */
+
+footer.main-footer {
+    padding: 5px;
+    font-size: 80%;
+}
+
+@import 'invoice';
+@import 'datatable';
+@import 'calendar';
+@import 'dashboard';
+@import 'navbar';

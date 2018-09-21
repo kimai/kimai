@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Twig;
+namespace App\Tests\Command;
 
 use App\Command\CreateUserCommand;
 use App\Entity\User;
@@ -20,7 +20,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 /**
  * @coversDefaultClass \App\Command\CreateUserCommand
  * @group integration
- * @group legacy
  */
 class CreateUserCommandTest extends KernelTestCase
 {
