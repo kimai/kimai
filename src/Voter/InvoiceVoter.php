@@ -9,7 +9,6 @@
 
 namespace App\Voter;
 
-use App\Entity\Activity;
 use App\Entity\InvoiceTemplate;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -58,7 +57,7 @@ class InvoiceVoter extends AbstractVoter
 
     /**
      * @param string $attribute
-     * @param Activity $subject
+     * @param string|InvoiceTemplate $subject
      * @param TokenInterface $token
      * @return bool
      */
