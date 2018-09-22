@@ -11,6 +11,7 @@
     float: right;
     background: transparent;
 }
+
 /* Right sidebar with additional tabs for personal settings and "About Kimai" section */
 .control-sidebar {
     select {
@@ -23,7 +24,18 @@
         }
     }
 }
-/* The filter form available on most pages above the datatable */
-.toolbar form {
-    font-size: $font-size-base;
+
+/* The filter form is available on most pages above the datatable */
+@media (min-width: 768px) {
+    .toolbar {
+        form.navbar-form {
+            font-size: $font-size-base;
+            .form-control {
+                display: inline-block;
+                width: 100%;
+                vertical-align: middle;
+            }
+        }
+    }
 }
+
