@@ -38,5 +38,5 @@ filter:
 
 build_failure_conditions:
     - 'project.metric("scrutinizer.quality", < 9.30)'
-    - 'project.metric("scrutinizer.test_coverage", < 0.70)'
-    - 'project.metric_change("scrutinizer.test_coverage", < 0.01)'
+    - 'project.metric("scrutinizer.test_coverage", < 0.73)'
+    - 'project.metric_change("scrutinizer.test_coverage", < 0.1)'
