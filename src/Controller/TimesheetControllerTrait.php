@@ -92,8 +92,6 @@ trait TimesheetControllerTrait
                 $record->setEnd($end);
             }
 
-            // TODO validate that end is not before begin
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($entry);
             $entityManager->flush();

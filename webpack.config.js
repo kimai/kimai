@@ -7,7 +7,7 @@ Encore
     // the public path used by the web server to access the previous directory
     .setPublicPath('/build/')
 
-    // delete old files before creating them
+    // empty the outputPath directory before each build
     .cleanupOutputBeforeBuild()
 
     // add debug data in development
@@ -24,9 +24,6 @@ Encore
 
     // show OS notifications when builds finish/fail
     .enableBuildNotifications()
-
-    // empty the outputPath dir before each build
-    .cleanupOutputBeforeBuild()
 
     // load jquery as Kimai and AdminLTE rely on it
     .autoProvidejQuery()
