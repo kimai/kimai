@@ -77,6 +77,7 @@ class InvoiceController extends AbstractController
 
     /**
      * @Route(path="/", name="invoice", methods={"GET"})
+     * @Security("is_granted('view', 'invoice')")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -110,6 +111,7 @@ class InvoiceController extends AbstractController
 
     /**
      * @Route(path="/print", name="invoice_print", methods={"GET"})
+     * @Security("is_granted('create', 'invoice')")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -209,8 +211,7 @@ class InvoiceController extends AbstractController
     /**
      * @Route(path="/template", defaults={"page": 1}, name="admin_invoice_template", methods={"GET", "POST"})
      * @Route(path="/template/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_invoice_template_paginated", methods={"GET", "POST"})
-     *
-     * TODO permission
+     * @Security("is_granted('view', 'invoice_template')")
      *
      * @param $page
      * @return \Symfony\Component\HttpFoundation\Response
@@ -227,8 +228,7 @@ class InvoiceController extends AbstractController
 
     /**
      * @Route(path="/template/{id}/edit", name="admin_invoice_template_edit", methods={"GET", "POST"})
-     *
-     * TODO permission
+     * @Security("is_granted('edit', template)")
      *
      * @param InvoiceTemplate $template
      * @param Request $request
@@ -242,8 +242,7 @@ class InvoiceController extends AbstractController
 
     /**
      * @Route(path="/template/create", name="admin_invoice_template_create", methods={"GET", "POST"})
-     *
-     * TODO permission
+     * @Security("is_granted('create', 'invoice_template')")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -261,9 +260,8 @@ class InvoiceController extends AbstractController
     /**
      * The route to delete an existing template.
      *
-     * TODO permission
-     *
      * @Route(path="/template/{id}/delete", name="admin_invoice_template_delete", methods={"GET", "POST"})
+     * @Security("is_granted('delete', template)")
      *
      * @param InvoiceTemplate $template
      * @param Request $request

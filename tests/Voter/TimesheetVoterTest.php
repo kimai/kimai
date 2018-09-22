@@ -12,10 +12,10 @@ namespace App\Tests\Voter;
 use App\Entity\Customer;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Security\AclDecisionManager;
 use App\Voter\TimesheetVoter;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 /**
@@ -26,12 +26,13 @@ class TimesheetVoterTest extends TestCase
     /**
      * @dataProvider getTestData
      */
-    public function testCustomerIsDisallowed(User $user, $allow, $subject, $attributes, $result)
+    public function testVote(User $user, $allow, $subject, $attributes, $result)
     {
         $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
 
-        $accessManager = $this->getMockBuilder(AccessDecisionManagerInterface::class)->getMock();
-        $accessManager->method('decide')->willReturn($allow);
+        $accessManager = $this->getMockBuilder(AclDecisionManager::class)->disableOriginalConstructor()->getMock();
+        $accessManager->method('isFullyAuthenticated')->willReturn($allow);
+        $accessManager->method('hasRole')->willReturn($allow);
 
         $sut = new TimesheetVoter($accessManager);
 

@@ -57,8 +57,9 @@ cd kimai2/
 
 Make sure the [file permissions are correct](https://symfony.com/doc/current/setup/file_permissions.html) and create your `.env` file:
 ```bash
-chown -R www-data var/
-chmod -R 777 var/
+chown -R :www-data .
+chmod -R g+r .
+chmod -R g+rw var/
 cp .env.dist .env
 ```
 
