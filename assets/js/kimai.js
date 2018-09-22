@@ -55,6 +55,8 @@ $(function() {
                     format: "YYYY-MM-DD",
                     firstDay: 1
                 }
+            }, function(start, end, label) {
+                $(this).val(start.format('YYYY-MM-DD'));
             });
 
             $('input[data-datetimepicker="on"]').daterangepicker({
@@ -68,9 +70,8 @@ $(function() {
                     format: "YYYY-MM-DD HH:mm",
                     firstDay: 1
                 }
-            });
-            $('input[data-datetimepicker="on"]').on('apply.daterangepicker', function(ev, picker) {
-                $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm'));
+            }, function(start, end, label) {
+                $(this).val(start.format('YYYY-MM-DD HH:mm'));
             });
 
             /*
