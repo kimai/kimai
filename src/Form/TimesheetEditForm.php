@@ -44,9 +44,9 @@ class TimesheetEditForm extends AbstractType
                 'label' => 'label.begin',
                 'widget' => 'single_text',
                 'html5' => false,
-                'format' => 'yyyy-MM-dd H:m',
+                'format' => 'yyyy-MM-dd HH:mm',
                 'with_seconds' => false,
-                'attr' => ['data-datetimepicker' => 'on'],
+                'attr' => ['autocomplete' => 'off', 'data-datetimepicker' => 'on'],
             ]);
         }
 
@@ -58,9 +58,9 @@ class TimesheetEditForm extends AbstractType
                 'widget' => 'single_text',
                 'required' => false,
                 'html5' => false,
-                'format' => 'yyyy-MM-dd H:m',
+                'format' => 'yyyy-MM-dd HH:mm',
                 'with_seconds' => false,
-                'attr' => ['data-datetimepicker' => 'on'],
+                'attr' => ['autocomplete' => 'off', 'data-datetimepicker' => 'on'],
             ]);
         }
 
