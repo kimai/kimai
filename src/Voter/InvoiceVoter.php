@@ -42,14 +42,14 @@ class InvoiceVoter extends AbstractVoter
      */
     protected function supports($attribute, $subject)
     {
-        if (!$subject instanceof InvoiceTemplate) {
-            if (!in_array($subject, self::ALLOWED_SUBJECTS)) {
-                return false;
-            }
-        }
-
         if (!in_array($attribute, self::ALLOWED_ATTRIBUTES)) {
             return false;
+        }
+
+        if (!$subject instanceof InvoiceTemplate) {
+            if (!is_string($subject) || !in_array($subject, self::ALLOWED_SUBJECTS)) {
+                return false;
+            }
         }
 
         return true;
