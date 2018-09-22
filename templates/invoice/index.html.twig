@@ -37,6 +37,7 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function () {
             $( "#print-invoice-button" ).click(function() {
