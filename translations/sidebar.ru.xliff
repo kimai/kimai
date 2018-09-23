@@ -4,7 +4,7 @@
         <body>
             <trans-unit id="home.title">
                 <source>home.title</source>
-                <target>Kimai v2 - Предварительная версия</target>
+                <target>Kimai v2 - %version%</target>
             </trans-unit>
             <trans-unit id="home.betainfo">
                 <source>home.betainfo</source>
