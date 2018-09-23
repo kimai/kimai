@@ -168,8 +168,6 @@ trait TimesheetControllerTrait
                 }
             }
 
-            // TODO validate that end is not before begin
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($entry);
 
