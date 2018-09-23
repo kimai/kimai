@@ -57,8 +57,11 @@ class TimesheetControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form.navbar-form')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/timesheet/export'));
         $client->submit($form, [
+            'state' => 1,
+            'pageSize' => 25,
             'begin' => (new \DateTime('-10 days'))->format('yyyy-MM-dd'),
             'end' => (new \DateTime())->format('yyyy-MM-dd'),
+            'customer' => '',
         ]);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -98,6 +101,30 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertEquals(0, $timesheet->getRate());
         $this->assertNull($timesheet->getHourlyRate());
         $this->assertNull($timesheet->getFixedRate());
+    }
+
+    public function testDeleteAction()
+    {
+        $client = $this->getClientForAuthenticatedUser();
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $fixture = new TimesheetFixtures();
+        $fixture->setAmount(10);
+        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setStartDate('2017-05-01');
+        $this->importFixture($em, $fixture);
+
+        $this->request($client, '/timesheet/1/edit');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->request($client, '/timesheet/1/delete');
+        $this->assertIsRedirect($client, $this->createUrl('/timesheet/page/1'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasFlashSuccess($client);
+
+        $this->request($client, '/timesheet/1/edit');
+        $this->assertFalse($client->getResponse()->isSuccessful());
     }
 
     public function testStartAction()
@@ -223,9 +250,9 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->request($client, '/timesheet/1/edit');
 
         $response = $client->getResponse();
+        $this->assertTrue($response->isSuccessful());
 
         $docuUrl = $this->createUrl('/help/timesheet');
-        $this->assertTrue($response->isSuccessful());
         $this->assertContains(
             '<a href="' . $docuUrl . '"><i class="far fa-question-circle"></i></a>',
             $response->getContent(),
