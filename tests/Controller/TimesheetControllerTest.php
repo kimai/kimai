@@ -46,7 +46,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new TimesheetFixtures();
-        $fixture->setAmount(10);
+        $fixture->setAmount(5);
         $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
         $fixture->setStartDate(new \DateTime('-10 days'));
         $this->importFixture($em, $fixture);
@@ -75,7 +75,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new TimesheetFixtures();
-        $fixture->setAmount(10);
+        $fixture->setAmount(5);
         $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
         $fixture->setStartDate(new \DateTime('-10 days'));
         $this->importFixture($em, $fixture);
@@ -96,11 +96,10 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $node = $client->getCrawler()->filter('body');
-        $this->assertEquals(1, $node->count());
-        $this->assertEquals('invoice_print', $node->getIterator()[0]->getAttribute('class'));
+        $this->assertEquals('invoice_print', $node->getNode(0)->getAttribute('class'));
 
-        $result = $client->getCrawler()->filter('section.invoice table.table tbody tr');
-        $this->assertEquals(10, count($result));
+        $result = $node->filter('section.invoice table.table tbody tr');
+        $this->assertEquals(5, count($result));
     }
 
     public function testCreateAction()
