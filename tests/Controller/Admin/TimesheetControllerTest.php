@@ -40,6 +40,7 @@ class TimesheetControllerTest extends ControllerBaseTest
             $this->assertEquals('i', $item->firstChild->tagName);
         }
     }
+
     public function testIndexActionWithQuery()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
