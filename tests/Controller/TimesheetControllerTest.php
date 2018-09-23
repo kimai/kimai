@@ -105,7 +105,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
     public function testDeleteAction()
     {
-        $client = $this->getClientForAuthenticatedUser();
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new TimesheetFixtures();
