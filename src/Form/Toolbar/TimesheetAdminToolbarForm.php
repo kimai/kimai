@@ -24,6 +24,8 @@ class TimesheetAdminToolbarForm extends TimesheetToolbarForm
         $this->addTimesheetStateChoice($builder);
         $this->addPageSizeChoice($builder);
         $this->addUserChoice($builder);
+        $this->addStartDateChoice($builder);
+        $this->addEndDateChoice($builder);
         $this->addCustomerChoice($builder);
         $this->addProjectChoice($builder);
         $this->addActivityChoice($builder);

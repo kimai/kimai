@@ -53,6 +53,12 @@ class TimesheetController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var TimesheetQuery $query */
             $query = $form->getData();
+            if (null !== $query->getBegin()) {
+                $query->getBegin()->setTime(0, 0, 0);
+            }
+            if (null !== $query->getEnd()) {
+                $query->getEnd()->setTime(23, 59, 59);
+            }
         }
 
         $query->setUser($this->getUser());
