@@ -48,9 +48,10 @@ class VersionCommandTest extends KernelTestCase
     {
         return [
             [[], 'Kimai 2 - ' . Constants::VERSION . ' ' . Constants::STATUS . ' (' . Constants::NAME . ') by Kevin Papst and contributors.'],
-            [['--short' => true], Constants::VERSION],
             [['--name' => true], Constants::NAME],
-            [['--status' => true], Constants::STATUS],
+            [['--candidate' => true], Constants::STATUS],
+            [['--short' => true], Constants::VERSION],
+            [['--semver' => true], Constants::VERSION . '-' . Constants::STATUS],
         ];
     }
 

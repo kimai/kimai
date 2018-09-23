@@ -42,12 +42,14 @@ class HealthcheckControllerTest extends APIControllerBaseTest
         $this->assertInternalType('array', $result);
 
         $this->assertArrayHasKey('version', $result);
-        $this->assertArrayHasKey('status', $result);
+        $this->assertArrayHasKey('candidate', $result);
+        $this->assertArrayHasKey('semver', $result);
         $this->assertArrayHasKey('name', $result);
         $this->assertArrayHasKey('copyright', $result);
 
-        $this->assertEquals(Constants::VERSION, $result['version']);
-        $this->assertEquals(Constants::STATUS, $result['status']);
+        $this->assertSame(Constants::VERSION, $result['version']);
+        $this->assertEquals(Constants::STATUS, $result['candidate']);
+        $this->assertEquals(Constants::VERSION . '-' . Constants::STATUS, $result['semver']);
         $this->assertEquals(Constants::NAME, $result['name']);
         $this->assertEquals(
             'Kimai 2 - ' . Constants::VERSION . ' ' . Constants::STATUS . ' (' . Constants::NAME . ') by Kevin Papst and contributors.',

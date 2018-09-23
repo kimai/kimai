@@ -31,8 +31,9 @@ class VersionCommand extends Command
             ->setDescription('Receive version information')
             ->setHelp('This command allows you to fetch various version information about Kimai.')
             ->addOption('name', null, InputOption::VALUE_NONE, 'Display the major release name')
-            ->addOption('status', null, InputOption::VALUE_NONE, 'Display the current version status ("stable" or "dev")')
+            ->addOption('candidate', null, InputOption::VALUE_NONE, 'Display the current version candidate (e.g. "stable" or "dev")')
             ->addOption('short', null, InputOption::VALUE_NONE, 'Display the version only')
+            ->addOption('semver', null, InputOption::VALUE_NONE, 'Semantical versioning (SEMVER) compatible version string')
         ;
     }
 
@@ -42,6 +43,12 @@ class VersionCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
+
+        if ($input->getOption('semver')) {
+            $io->writeln(Constants::VERSION . '-' . Constants::STATUS);
+
+            return;
+        }
 
         if ($input->getOption('short')) {
             $io->writeln(Constants::VERSION);
@@ -55,7 +62,7 @@ class VersionCommand extends Command
             return;
         }
 
-        if ($input->getOption('status')) {
+        if ($input->getOption('candidate')) {
             $io->writeln(Constants::STATUS);
 
             return;

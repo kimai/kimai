@@ -60,7 +60,8 @@ class HealthcheckController extends Controller
     {
         $version = [
             'version' => Constants::VERSION,
-            'status' => Constants::STATUS,
+            'candidate' => Constants::STATUS,
+            'semver' => Constants::VERSION . '-' . Constants::STATUS,
             'name' => Constants::NAME,
             'copyright' => 'Kimai 2 - ' . Constants::VERSION . ' ' . Constants::STATUS . ' (' . Constants::NAME . ') by Kevin Papst and contributors.',
         ];
