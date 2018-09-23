@@ -40,6 +40,35 @@ class TimesheetControllerTest extends ControllerBaseTest
             $this->assertEquals('i', $item->firstChild->tagName);
         }
     }
+    public function testIndexActionWithQuery()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $fixture = new TimesheetFixtures();
+        $fixture->setAmount(10);
+        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setStartDate(new \DateTime('-10 days'));
+        $this->importFixture($em, $fixture);
+
+        $this->request($client, '/team/timesheet/');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form.navbar-form')->form();
+        $client->submit($form, [
+            'state' => 1,
+            'user' => 1,
+            'pageSize' => 25,
+            'begin' => (new \DateTime('-10 days'))->format('Y-m-d'),
+            'end' => (new \DateTime())->format('Y-m-d'),
+            'customer' => null,
+        ]);
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasDataTable($client);
+
+        // TODO more assertions
+    }
 
     public function testCreateAction()
     {
