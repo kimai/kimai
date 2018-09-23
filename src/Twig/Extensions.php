@@ -62,6 +62,8 @@ class Extensions extends \Twig_Extension
         'create' => 'far fa-plus-square',
         'dashboard' => 'fas fa-tachometer-alt',
         'delete' => 'far fa-trash-alt',
+        'download' => 'fas fa-download',
+        'duration' => 'far fa-hourglass',
         'edit' => 'far fa-edit',
         'filter' => 'fas fa-filter',
         'help' => 'far fa-question-circle',
@@ -69,6 +71,7 @@ class Extensions extends \Twig_Extension
         'list' => 'fas fa-list',
         'logout' => 'fas fa-sign-out-alt',
         'manual' => 'fas fa-book',
+        'money' => 'far fa-money-bill-alt',
         'print' => 'fas fa-print',
         'project' => 'fas fa-project-diagram',
         'repeat' => 'fas fa-redo-alt',
@@ -80,8 +83,6 @@ class Extensions extends \Twig_Extension
         'trash' => 'far fa-trash-alt',
         'user' => 'fas fa-user',
         'visibility' => 'far fa-eye',
-        'money' => 'far fa-money-bill-alt',
-        'duration' => 'far fa-hourglass',
     ];
 
     /**

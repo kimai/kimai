@@ -30,6 +30,45 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->request($client, '/timesheet/');
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasDataTable($client);
+
+        $result = $client->getCrawler()->filter('div.breadcrumb div.box-tools div.btn-group a.btn');
+        $this->assertEquals(5, count($result));
+
+        foreach($result as $item) {
+            $this->assertEquals('btn btn-default', $item->getAttribute('class'));
+            $this->assertEquals('i', $item->firstChild->tagName);
+        }
+    }
+
+    public function testExportAction()
+    {
+        $client = $this->getClientForAuthenticatedUser();
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $fixture = new TimesheetFixtures();
+        $fixture->setAmount(10);
+        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setStartDate(new \DateTime('-10 days'));
+        $this->importFixture($em, $fixture);
+
+        $this->request($client, '/timesheet/');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form.navbar-form')->form();
+        $form->getFormNode()->setAttribute('action', $this->createUrl('/timesheet/export'));
+        $client->submit($form, [
+            'begin' => (new \DateTime('-10 days'))->format('yyyy-MM-dd'),
+            'end' => (new \DateTime())->format('yyyy-MM-dd'),
+        ]);
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $node = $client->getCrawler()->filter('body');
+        $this->assertEquals(1, $node->count());
+        $this->assertEquals('invoice_print', $node->getIterator()[0]->getAttribute('class'));
+
+        $result = $client->getCrawler()->filter('section.invoice table.table tbody tr');
+        $this->assertEquals(10, count($result));
     }
 
     public function testCreateAction()

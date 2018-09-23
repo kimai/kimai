@@ -42,6 +42,10 @@ class TimesheetController extends AbstractController
      * @Route(path="/", defaults={"page": 1}, name="timesheet", methods={"GET"})
      * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="timesheet_paginated", methods={"GET"})
      * @Cache(smaxage="10")
+     *
+     * @param int $page
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction($page, Request $request)
     {
@@ -75,7 +79,41 @@ class TimesheetController extends AbstractController
     }
 
     /**
-     * The "main button and flyout" for displaying (and stopping) active entries.
+     * @Route(path="/export", name="timesheet_export", methods={"GET"})
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function exportAction(Request $request)
+    {
+        $query = new TimesheetQuery();
+
+        $form = $this->getToolbarForm($query);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var TimesheetQuery $query */
+            $query = $form->getData();
+            if (null !== $query->getBegin()) {
+                $query->getBegin()->setTime(0, 0, 0);
+            }
+            if (null !== $query->getEnd()) {
+                $query->getEnd()->setTime(23, 59, 59);
+            }
+        }
+
+        $query->setUser($this->getUser());
+
+        /* @var $entries Pagerfanta */
+        $entries = $this->getRepository()->findByQuery($query);
+
+        return $this->render('timesheet/export.html.twig', [
+            'entries' => $entries,
+            'query' => $query,
+        ]);
+    }
+
+    /**
+     * The "main button and fly-out" for displaying (and stopping) active entries.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
