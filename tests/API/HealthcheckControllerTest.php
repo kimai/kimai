@@ -9,6 +9,7 @@
 
 namespace App\Tests\API;
 
+use App\Constants;
 use App\Entity\User;
 
 /**
@@ -30,5 +31,29 @@ class HealthcheckControllerTest extends APIControllerBaseTest
 
         $this->assertInternalType('array', $result);
         $this->assertEquals(['message' => 'pong'], $result);
+    }
+
+    public function testVersion()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertAccessIsGranted($client, '/api/version');
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertInternalType('array', $result);
+
+        $this->assertArrayHasKey('version', $result);
+        $this->assertArrayHasKey('candidate', $result);
+        $this->assertArrayHasKey('semver', $result);
+        $this->assertArrayHasKey('name', $result);
+        $this->assertArrayHasKey('copyright', $result);
+
+        $this->assertSame(Constants::VERSION, $result['version']);
+        $this->assertEquals(Constants::STATUS, $result['candidate']);
+        $this->assertEquals(Constants::VERSION . '-' . Constants::STATUS, $result['semver']);
+        $this->assertEquals(Constants::NAME, $result['name']);
+        $this->assertEquals(
+            'Kimai 2 - ' . Constants::VERSION . ' ' . Constants::STATUS . ' (' . Constants::NAME . ') by Kevin Papst and contributors.',
+            $result['copyright']
+        );
     }
 }

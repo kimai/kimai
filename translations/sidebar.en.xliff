@@ -4,13 +4,13 @@
         <body>
             <trans-unit id="home.title">
                 <source>home.title</source>
-                <target>Kimai v2 - Pre-Version</target>
+                <target>Kimai v2 - %version%</target>
             </trans-unit>
             <trans-unit id="home.betainfo">
                 <source>home.betainfo</source>
                 <target><![CDATA[Thank you for using the open source time-tracker <a href="%url%" target="_blank">Kimai</a>.
 
-                    This new version %version% is currently in an early stage of development and has been published in advance to collect feedback from its users and integrate their ideas into further planning.
+                    This new version is currently in an early stage of development and has been published in advance to collect feedback from its users and integrate their ideas into further planning.
 
                     To help me improve <strong>Kimai</strong>, please send your message on the linked website. Whether you have questions, error messages or ideas for enhancements, your feedback is valuable!
                 ]]></target>
