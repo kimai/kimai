@@ -14,7 +14,7 @@ use App\Form\Type\InvoiceCalculatorType;
 use App\Form\Type\InvoiceNumberGeneratorType;
 use App\Form\Type\InvoiceRendererType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\PercentType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -51,9 +51,9 @@ class InvoiceTemplateForm extends AbstractType
             ->add('dueDays', TextType::class, [
                 'label' => 'label.due_days',
             ])
-            ->add('vat', PercentType::class, [
+            ->add('vat', NumberType::class, [
                 'label' => 'label.vat',
-                'type' => 'integer',
+                'scale' => 2,
             ])
             ->add('renderer', InvoiceRendererType::class, [])
             ->add('calculator', InvoiceCalculatorType::class, [])
