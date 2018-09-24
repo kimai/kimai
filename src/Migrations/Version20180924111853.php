@@ -40,6 +40,7 @@ final class Version20180924111853 extends AbstractMigration
             $this->addSql('DROP TABLE __temp__' . $invoiceTemplates);
             $this->addSql('CREATE UNIQUE INDEX UNIQ_1626CFE95E237E06 ON ' . $invoiceTemplates . ' (name)');
         } else {
+            $this->addSql('UPDATE ' . $invoiceTemplates . ' SET name=SUBSTRING(name, 1, 60)');
             $this->addSql('ALTER TABLE ' . $invoiceTemplates . ' CHANGE name name VARCHAR(60) NOT NULL, CHANGE vat vat DOUBLE PRECISION DEFAULT 0');
         }
     }
