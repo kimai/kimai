@@ -77,7 +77,7 @@ class InvoiceTemplate
     /**
      * @var float
      *
-     * @ORM\Column(name="vat", type="float", default=0, nullable=false)
+     * @ORM\Column(name="vat", type="float", nullable=false)
      * @Assert\Range(min = 0.0, max = 99.99)
      */
     private $vat = 0.00;
