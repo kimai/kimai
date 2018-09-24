@@ -51,10 +51,16 @@ $(function() {
             $('input[data-datepicker="on"]').daterangepicker({
                 singleDatePicker: true,
                 showDropdowns: true,
+                autoUpdateInput: false,
                 locale: {
                     format: "YYYY-MM-DD",
                     firstDay: 1
                 }
+            });
+
+            $('input[data-datepicker="on"]').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('YYYY-MM-DD'));
+                $(this).trigger("change");
             });
 
             $('input[data-datetimepicker="on"]').daterangepicker({
@@ -69,8 +75,10 @@ $(function() {
                     firstDay: 1
                 }
             });
+
             $('input[data-datetimepicker="on"]').on('apply.daterangepicker', function(ev, picker) {
                 $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm'));
+                $(this).trigger("change");
             });
 
             /*
@@ -98,8 +106,6 @@ $(function() {
 
     // default values
     $.kimai.defaults = {
-        baseUrl: '/',
-        imagePath: '/images',
         confirmDelete: 'Really delete?',
         alertSuccessAutoHide: 5000
     };

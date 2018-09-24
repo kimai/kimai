@@ -102,8 +102,6 @@ class Project
     private $hourlyRate = null;
 
     /**
-     * Get projectid
-     *
      * @return int
      */
     public function getId()
@@ -144,8 +142,6 @@ class Project
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
     public function getName()
@@ -154,8 +150,6 @@ class Project
     }
 
     /**
-     * Set comment
-     *
      * @param string $comment
      * @return Project
      */
@@ -167,8 +161,6 @@ class Project
     }
 
     /**
-     * Get comment
-     *
      * @return string
      */
     public function getComment()
@@ -177,8 +169,6 @@ class Project
     }
 
     /**
-     * Set visible
-     *
      * @param bool $visible
      * @return Project
      */
@@ -190,8 +180,6 @@ class Project
     }
 
     /**
-     * Get visible
-     *
      * @return bool
      */
     public function getVisible()
@@ -200,8 +188,6 @@ class Project
     }
 
     /**
-     * Set budget
-     *
      * @param float $budget
      * @return Project
      */
@@ -213,8 +199,6 @@ class Project
     }
 
     /**
-     * Get budget
-     *
      * @return float
      */
     public function getBudget()
@@ -242,7 +226,7 @@ class Project
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getOrderNumber(): ?string
     {

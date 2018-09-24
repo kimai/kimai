@@ -10,6 +10,9 @@
                             {% elseif '#modal' in url %}
                                 data-toggle="modal" data-target="{{ url }}"
                             {% endif %}
+                            {% if 'onclick:' in url %}
+                                onclick="{{ url|replace({'onclick:': ''}) }}"
+                            {% endif %}
                     ><i class="{{ icon|icon(icon) }}"></i></a>
                 {% endfor -%}
             </div>

@@ -60,6 +60,12 @@ class TimesheetController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var TimesheetQuery $query */
             $query = $form->getData();
+            if (null !== $query->getBegin()) {
+                $query->getBegin()->setTime(0, 0, 0);
+            }
+            if (null !== $query->getEnd()) {
+                $query->getEnd()->setTime(23, 59, 59);
+            }
         }
 
         /* @var $entries Pagerfanta */
@@ -118,7 +124,7 @@ class TimesheetController extends AbstractController
     /**
      * The route to delete an existing entry.
      *
-     * @Route(path="/{id}/delete", name="admin_timesheet_delete", methods={"GET", "POST"})
+     * @Route(path="/{id}/delete", defaults={"page": 1}, name="admin_timesheet_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', entry)")
      *
      * @param Timesheet $entry
