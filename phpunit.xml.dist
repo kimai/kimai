@@ -39,6 +39,7 @@
             <directory suffix=".php">src/</directory>
             <directory suffix=".php">templates/</directory>
             <exclude>
+                <directory suffix=".php">src/Migrations/</directory>
                 <directory suffix=".php">assets/</directory>
                 <directory suffix=".php">bin/</directory>
                 <directory suffix=".php">config/</directory>
