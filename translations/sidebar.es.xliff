@@ -4,13 +4,13 @@
         <body>
             <trans-unit id="home.title">
                 <source>home.title</source>
-                <target>Kimai v2 - Pre-Version</target>
+                <target>Kimai v2 - %version%</target>
             </trans-unit>
             <trans-unit id="home.betainfo">
                 <source>home.betainfo</source>
                 <target><![CDATA[Gracias por usar el control de tiempo ppen source <a href="%url%" target="_blank">Kimai</a>.
 
-                    Esta nueva versión %version% se encuentra en una etapa inicial de desarrollo y ha sido publicada con la intención de recolectar feedback de los usuarios para incluir sus ideas en planes futuros..
+                    Esta nueva versión se encuentra en una etapa inicial de desarrollo y ha sido publicada con la intención de recolectar feedback de los usuarios para incluir sus ideas en planes futuros..
 
                     Para ayudar a mejorar <strong>Kimai</strong>, por favor enviar sus comentarios al sitio. Sus comentarios, ideas para mejorar o reportes de errores son valiosos y agradezco el tiempo para enviárnoslos!
                 ]]></target>

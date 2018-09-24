@@ -4,13 +4,13 @@
         <body>
             <trans-unit id="home.title">
                 <source>home.title</source>
-                <target>Kimai v2 - Vorab Version</target>
+                <target>Kimai v2 - %version%</target>
             </trans-unit>
             <trans-unit id="home.betainfo">
                 <source>home.betainfo</source>
                 <target><![CDATA[Danke für die Nutzung der Open-Source Zeiterfassung <a href="%url%" target="_blank">Kimai</a>.
 
-                    Diese neue Version %version% ist aktuell noch in einer frühen Phase der Entwicklung und wurde vorab veröffentlicht, um frühzeitig Rückmeldungen ihrer Benutzer zu sammeln und deren Ideen in die weitere Planung zu integrieren.
+                    Diese neue Version ist aktuell noch in einer frühen Phase der Entwicklung und wurde vorab veröffentlicht, um frühzeitig Rückmeldungen ihrer Benutzer zu sammeln und deren Ideen in die weitere Planung zu integrieren.
 
                     Um bei der Verbesserung von <strong>Kimai</strong> zu helfen, schicken Sie mir bitte eine Nachricht auf der verlinkten Webseite. Egal ob Fragen, Fehlermeldungen oder Ideen für Erweiterungen, Ihr Feedback ist wertvoll!
                 ]]></target>
