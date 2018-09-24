@@ -37,8 +37,9 @@ class InvoiceTemplate
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @ORM\Column(name="name", type="string", length=60, nullable=false)
      * @Assert\NotBlank()
+     * @Assert\Length(min=1, max=60)
      */
     private $name;
 
@@ -76,8 +77,8 @@ class InvoiceTemplate
     /**
      * @var float
      *
-     * @ORM\Column(name="vat", type="integer", length=2, nullable=true)
-     * @Assert\Range(min = 0, max = 99)
+     * @ORM\Column(name="vat", type="float", default=0, nullable=false)
+     * @Assert\Range(min = 0.0, max = 99.99)
      */
     private $vat = 0.00;
 
