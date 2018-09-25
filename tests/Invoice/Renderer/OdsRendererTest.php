@@ -10,6 +10,7 @@
 namespace App\Tests\Invoice\Renderer;
 
 use App\Invoice\Renderer\OdsRenderer;
+use App\Model\InvoiceModel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
@@ -33,7 +34,16 @@ class OdsRendererTest extends AbstractRendererTest
         $this->assertTrue($sut->supports($this->getInvoiceDocument('open-spreadsheet.ods')));
     }
 
-    public function testRender()
+    public function getTestModel()
+    {
+        yield [$this->getInvoiceModel(), '1,947.99', 6, 5, 1, 2, 2];
+        yield [$this->getInvoiceModelOneEntry(), '293.27', 2, 1, 0, 1, 0];
+    }
+
+    /**
+     * @dataProvider getTestModel
+     */
+    public function testRender(InvoiceModel $model, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3)
     {
         /** @var OdsRenderer $sut */
         $sut = $this->getAbstractRenderer(OdsRenderer::class);

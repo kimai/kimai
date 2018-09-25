@@ -10,6 +10,7 @@
 namespace App\Tests\Invoice\Renderer;
 
 use App\Invoice\Renderer\CsvRenderer;
+use App\Model\InvoiceModel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
@@ -33,11 +34,19 @@ class CsvRendererTest extends AbstractRendererTest
         $this->assertFalse($sut->supports($this->getInvoiceDocument('open-spreadsheet.ods')));
     }
 
-    public function testRender()
+    public function getTestModel()
+    {
+        yield [$this->getInvoiceModel(), '1,947.99', 6, 5, 1, 2, 2];
+        yield [$this->getInvoiceModelOneEntry(), '293.27', 2, 1, 0, 1, 0];
+    }
+
+    /**
+     * @dataProvider getTestModel
+     */
+    public function testRender(InvoiceModel $model, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3)
     {
         /** @var CsvRenderer $sut */
         $sut = $this->getAbstractRenderer(CsvRenderer::class);
-        $model = $this->getInvoiceModel();
         $document = $this->getInvoiceDocument('export.csv');
         /** @var BinaryFileResponse $response */
         $response = $sut->render($document, $model);
@@ -50,12 +59,12 @@ class CsvRendererTest extends AbstractRendererTest
         $content = file_get_contents($file->getRealPath());
 
         $this->assertNotContains('${', $content);
-        $this->assertContains(',"1,947.99"', $content);
-        $this->assertEquals(6, substr_count($content, PHP_EOL));
-        $this->assertEquals(5, substr_count($content, 'activity description'));
-        $this->assertEquals(1, substr_count($content, ',"kevin",'));
-        $this->assertEquals(2, substr_count($content, ',"hello-world",'));
-        $this->assertEquals(2, substr_count($content, ',"foo-bar",'));
+        $this->assertContains(',"'.$expectedRate.'"', $content);
+        $this->assertEquals($expectedRows, substr_count($content, PHP_EOL));
+        $this->assertEquals($expectedDescriptions, substr_count($content, 'activity description'));
+        $this->assertEquals($expectedUser1, substr_count($content, ',"kevin",'));
+        $this->assertEquals($expectedUser3, substr_count($content, ',"hello-world",'));
+        $this->assertEquals($expectedUser2, substr_count($content, ',"foo-bar",'));
 
         ob_start();
         $response->sendContent();
