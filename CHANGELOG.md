@@ -1,5 +1,42 @@
 # Change Log
 
+## [0.5](https://github.com/kevinpapst/kimai2/tree/0.5) (2018-09-25)
+[Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.4...0.5)
+
+**Closed issues:**
+
+- Creating database schema throws exceptions [\#322](https://github.com/kevinpapst/kimai2/issues/322)
+- API: Kimai metadata endpoint [\#320](https://github.com/kevinpapst/kimai2/issues/320)
+- Support Markdown in timesheet description [\#295](https://github.com/kevinpapst/kimai2/issues/295)
+- Add permission voter for invoices and templates [\#293](https://github.com/kevinpapst/kimai2/issues/293)
+- Add support for MS Office templates [\#283](https://github.com/kevinpapst/kimai2/issues/283)
+- Adding rates to customers, projects and tasks [\#271](https://github.com/kevinpapst/kimai2/issues/271)
+- Delete invoice templates [\#267](https://github.com/kevinpapst/kimai2/issues/267)
+- Sum of hours in timesheet invoice [\#262](https://github.com/kevinpapst/kimai2/issues/262)
+- Feature request - API [\#251](https://github.com/kevinpapst/kimai2/issues/251)
+- Feature request - PDF Download for monthly report [\#244](https://github.com/kevinpapst/kimai2/issues/244)
+- Add support for OpenOffice templates [\#223](https://github.com/kevinpapst/kimai2/issues/223)
+- Feature Request - Excel Output of times [\#221](https://github.com/kevinpapst/kimai2/issues/221)
+- Add installable package [\#209](https://github.com/kevinpapst/kimai2/issues/209)
+- Add hourly rate options [\#111](https://github.com/kevinpapst/kimai2/issues/111)
+- User preferences in control sidebar [\#88](https://github.com/kevinpapst/kimai2/issues/88)
+
+**Merged pull requests:**
+
+- invoice VAT as float and database key length [\#323](https://github.com/kevinpapst/kimai2/pull/323) ([kevinpapst](https://github.com/kevinpapst))
+- added version command + api endpoint [\#321](https://github.com/kevinpapst/kimai2/pull/321) ([kevinpapst](https://github.com/kevinpapst))
+- Timesheet export [\#317](https://github.com/kevinpapst/kimai2/pull/317) ([kevinpapst](https://github.com/kevinpapst))
+- added invoice voter [\#316](https://github.com/kevinpapst/kimai2/pull/316) ([kevinpapst](https://github.com/kevinpapst))
+- Refactored invoice system [\#306](https://github.com/kevinpapst/kimai2/pull/306) ([kevinpapst](https://github.com/kevinpapst))
+- add stable controller tests [\#305](https://github.com/kevinpapst/kimai2/pull/305) ([kevinpapst](https://github.com/kevinpapst))
+- Fixed rate and Hourly rates [\#304](https://github.com/kevinpapst/kimai2/pull/304) ([kevinpapst](https://github.com/kevinpapst))
+- add hourly\_rate and fixed\_rate to timesheet entries [\#302](https://github.com/kevinpapst/kimai2/pull/302) ([kevinpapst](https://github.com/kevinpapst))
+- allow to switch language on any page [\#299](https://github.com/kevinpapst/kimai2/pull/299) ([kevinpapst](https://github.com/kevinpapst))
+-  Fix duration\_short format for french translation  [\#297](https://github.com/kevinpapst/kimai2/pull/297) ([jeau](https://github.com/jeau))
+- allow markdown in timesheet descriptions [\#296](https://github.com/kevinpapst/kimai2/pull/296) ([kevinpapst](https://github.com/kevinpapst))
+- added option to delete invoice template [\#294](https://github.com/kevinpapst/kimai2/pull/294) ([kevinpapst](https://github.com/kevinpapst))
+- Improved invoice preview [\#254](https://github.com/kevinpapst/kimai2/pull/254) ([kevinpapst](https://github.com/kevinpapst))
+
 ## [0.4](https://github.com/kevinpapst/kimai2/tree/0.4) (2018-09-01)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.3...0.4)
 
@@ -12,16 +49,16 @@
 
 **Closed issues:**
 
-- Improve dashboard display [\#280](https://github.com/kevinpapst/kimai2/issues/280)
-- CSV export [\#263](https://github.com/kevinpapst/kimai2/issues/263)
 - Spanish Translation Contrib [\#248](https://github.com/kevinpapst/kimai2/issues/248)
 - Administration of projects throws error if locale is "de" [\#247](https://github.com/kevinpapst/kimai2/issues/247)
 - Web Installer Package for near-automated installs from browser [\#235](https://github.com/kevinpapst/kimai2/issues/235)
+- Improve dashboard display [\#280](https://github.com/kevinpapst/kimai2/issues/280)
 - Delete user [\#225](https://github.com/kevinpapst/kimai2/issues/225)
 - Feature request - Monthly overview / report [\#207](https://github.com/kevinpapst/kimai2/issues/207)
 
 **Merged pull requests:**
 
+- prepare release 0.4 [\#292](https://github.com/kevinpapst/kimai2/pull/292) ([kevinpapst](https://github.com/kevinpapst))
 - fixed money display in dashboard widgets [\#291](https://github.com/kevinpapst/kimai2/pull/291) ([kevinpapst](https://github.com/kevinpapst))
 - Symfony update 4.1.4 [\#290](https://github.com/kevinpapst/kimai2/pull/290) ([kevinpapst](https://github.com/kevinpapst))
 - do not allow to stop already stopped timesheets [\#289](https://github.com/kevinpapst/kimai2/pull/289) ([kevinpapst](https://github.com/kevinpapst))

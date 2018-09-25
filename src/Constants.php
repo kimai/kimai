@@ -25,7 +25,7 @@ class Constants
     /**
      * The current release status
      */
-    public const STATUS = 'dev';
+    public const STATUS = 'stable';
     /**
      * Used in multiple views
      */
