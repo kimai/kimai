@@ -173,4 +173,65 @@ abstract class AbstractRendererTest extends KernelTestCase
 
         return $model;
     }
+
+    /**
+     * @param Timesheet[] $timesheets
+     * @return InvoiceModel
+     */
+    protected function getInvoiceModelOneEntry()
+    {
+        $customer = new Customer();
+        $template = new InvoiceTemplate();
+        $template->setTitle('a test invoice template title');
+        $template->setVat(19);
+
+        $project = new Project();
+        $project->setName('project name');
+        $project->setCustomer($customer);
+
+        $activity = new Activity();
+        $activity->setName('activity description');
+        $activity->setProject($project);
+
+        $userMethods = ['getId', 'getPreferenceValue', 'getUsername'];
+        $user1 = $this->getMockBuilder(User::class)->setMethods($userMethods)->disableOriginalConstructor()->getMock();
+        $user1->method('getId')->willReturn(1);
+        $user1->method('getPreferenceValue')->willReturn('50');
+        $user1->method('getUsername')->willReturn('foo-bar');
+
+        $timesheet = new Timesheet();
+        $timesheet
+            ->setDuration(3600)
+            ->setRate(293.27)
+            ->setUser($user1)
+            ->setActivity($activity)
+            ->setBegin(new \DateTime())
+            ->setEnd(new \DateTime())
+        ;
+
+        $entries = [$timesheet];
+
+        $query = new InvoiceQuery();
+        $query->setActivity($activity);
+        $query->setBegin(new \DateTime());
+        $query->setEnd(new \DateTime());
+
+        $model = new InvoiceModel();
+        $model->setCustomer($customer);
+        $model->setTemplate($template);
+        $model->setEntries($entries);
+        $model->setQuery($query);
+
+        $calculator = new DefaultCalculator();
+        $calculator->setModel($model);
+
+        $model->setCalculator($calculator);
+
+        $numberGenerator = new DateNumberGenerator();
+        $numberGenerator->setModel($model);
+
+        $model->setNumberGenerator($numberGenerator);
+
+        return $model;
+    }
 }
