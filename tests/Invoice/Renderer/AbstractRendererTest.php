@@ -174,7 +174,6 @@ abstract class AbstractRendererTest extends KernelTestCase
         return $model;
     }
 
-
     /**
      * @param Timesheet[] $timesheets
      * @return InvoiceModel
