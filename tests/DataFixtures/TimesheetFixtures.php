@@ -42,9 +42,40 @@ class TimesheetFixtures extends Fixture
      * @var string
      */
     protected $startDate = '2018-04-01';
+    /**
+     * @var bool
+     */
+    protected $fixedRate = false;
+    /**
+     * @var bool
+     */
+    protected $hourlyRate = false;
+
+    /**
+     * @param bool $fixedRate
+     * @return TimesheetFixtures
+     */
+    public function setFixedRate(bool $fixedRate)
+    {
+        $this->fixedRate = $fixedRate;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $hourlyRate
+     * @return TimesheetFixtures
+     */
+    public function setHourlyRate(bool $hourlyRate)
+    {
+        $this->hourlyRate = $hourlyRate;
+
+        return $this;
+    }
 
     /**
      * @param string|\DateTime $date
+     * @return TimesheetFixtures
      */
     public function setStartDate($date)
     {
@@ -52,6 +83,8 @@ class TimesheetFixtures extends Fixture
             $date = $date->format('Y-m-d');
         }
         $this->startDate = $date;
+
+        return $this;
     }
 
     /**
@@ -192,6 +225,14 @@ class TimesheetFixtures extends Fixture
             ->setUser($user)
             ->setRate(round(($duration / 3600) * $rate))
             ->setBegin($start);
+
+        if ($this->fixedRate) {
+            $entry->setFixedRate(rand(10, 100));
+        }
+
+        if ($this->hourlyRate) {
+            $entry->setHourlyRate($rate);
+        }
 
         if ($setEndDate) {
             $entry

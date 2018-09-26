@@ -1,6 +1,6 @@
 App\Entity\Activity:
     exclusion_policy: All
-    custom_accessor_order: [id, name, comment, visible, project_id]
+    custom_accessor_order: [id, name, comment, visible, project_id, fixedRate, hourlyRate]
     properties:
         id:
             include: true
@@ -9,6 +9,10 @@ App\Entity\Activity:
         comment:
             include: true
         visible:
+            include: true
+        fixedRate:
+            include: true
+        hourlyRate:
             include: true
     virtual_properties:
         getProjectId:

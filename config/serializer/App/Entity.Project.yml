@@ -1,6 +1,6 @@
 App\Entity\Project:
     exclusion_policy: All
-    custom_accessor_order: [id, name, comment, visible, budget, orderNumber, customer_id]
+    custom_accessor_order: [id, name, comment, visible, budget, orderNumber, customer_id, fixedRate, hourlyRate]
     properties:
         id:
             include: true
@@ -13,6 +13,10 @@ App\Entity\Project:
         budget:
             include: true
         orderNumber:
+            include: true
+        fixedRate:
+            include: true
+        hourlyRate:
             include: true
     virtual_properties:
         getCustomerId:
