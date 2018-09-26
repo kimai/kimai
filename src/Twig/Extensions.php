@@ -59,6 +59,7 @@ class Extensions extends \Twig_Extension
         'admin' => 'fas fa-wrench',
         'calendar' => 'far fa-calendar-alt',
         'customer' => 'fas fa-users',
+        'copy' => 'far fa-copy',
         'create' => 'far fa-plus-square',
         'dashboard' => 'fas fa-tachometer-alt',
         'delete' => 'far fa-trash-alt',

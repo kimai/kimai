@@ -76,7 +76,7 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route(path="/", name="invoice", methods={"GET"})
+     * @Route(path="/", name="invoice", methods={"GET", "POST"})
      * @Security("is_granted('view', 'invoice')")
      *
      * @param Request $request
@@ -110,7 +110,7 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route(path="/print", name="invoice_print", methods={"GET"})
+     * @Route(path="/print", name="invoice_print", methods={"GET", "POST"})
      * @Security("is_granted('create', 'invoice')")
      *
      * @param Request $request
@@ -242,19 +242,37 @@ class InvoiceController extends AbstractController
 
     /**
      * @Route(path="/template/create", name="admin_invoice_template_create", methods={"GET", "POST"})
+     * @Route(path="/template/create/{id}", name="admin_invoice_template_copy", methods={"GET", "POST"})
      * @Security("is_granted('create', 'invoice_template')")
      *
      * @param Request $request
+     * @param InvoiceTemplate|null $template
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function createTemplateAction(Request $request)
+    public function createTemplateAction(Request $request, ?InvoiceTemplate $copyFrom)
     {
         if (!$this->invoiceRepository->hasTemplate()) {
             $this->flashWarning('invoice.first_template');
         }
 
-        return $this->renderTemplateForm(new InvoiceTemplate(), $request);
+        $template = new InvoiceTemplate();
+        if (null !== $copyFrom) {
+            $template
+                ->setName('Copy of ' . $copyFrom->getName())
+                ->setTitle($copyFrom->getTitle())
+                ->setDueDays($copyFrom->getDueDays())
+                ->setCalculator($copyFrom->getCalculator())
+                ->setVat($copyFrom->getVat())
+                ->setRenderer($copyFrom->getRenderer())
+                ->setCompany($copyFrom->getCompany())
+                ->setPaymentTerms($copyFrom->getPaymentTerms())
+                ->setAddress($copyFrom->getAddress())
+                ->setNumberGenerator($copyFrom->getNumberGenerator())
+            ;
+        }
+
+        return $this->renderTemplateForm($template, $request);
     }
 
     /**
@@ -315,7 +333,7 @@ class InvoiceController extends AbstractController
     {
         return $this->createForm(InvoiceToolbarForm::class, $query, [
             'action' => $this->generateUrl('invoice', []),
-            'method' => 'GET',
+            'method' => 'POST',
             'attr' => [
                 'id' => 'invoice-print-form'
             ]
