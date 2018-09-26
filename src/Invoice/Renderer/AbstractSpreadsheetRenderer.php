@@ -39,7 +39,9 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
         $entries = $model->getCalculator()->getEntries();
         $replacer = $this->modelToReplacer($model);
         $timesheetAmount = count($entries);
-        $this->addTemplateRows($worksheet, $timesheetAmount);
+        if ($timesheetAmount > 1) {
+            $this->addTemplateRows($worksheet, $timesheetAmount);
+        }
 
         $worksheet->setTitle($model->getTemplate()->getTitle());
 
