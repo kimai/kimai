@@ -21,12 +21,14 @@ if your updated version is mentioned below.
 
 ## [0.5](https://github.com/kevinpapst/kimai2/releases/tag/0.5) (unreleased)
 
-Some configuration nodes were removed, if you have one of them in your `local.yaml` you need to delete them:
+Some configuration nodes were removed, if you have one of them in your `local.yaml` you need to delete them before you start the update:
 - `kimai.invoice.calculator`
 - `kimai.invoice.renderer`
 - `kimai.invoice.number_generator`
 
 The new config `kimai.invoice.documents` was introduced, holding a list of directories ([read more](https://github.com/kevinpapst/kimai2/blob/master/var/docs/invoices.md)).
+
+**BC break:** InvoiceTemplate name was changed from 255 characters to 60. If you used longer names, these will be truncated when upgrading the database.
 
 ## [0.4](https://github.com/kevinpapst/kimai2/releases/tag/0.4) (2018-09-01)
 

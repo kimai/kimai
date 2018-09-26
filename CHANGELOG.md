@@ -1,7 +1,11 @@
 # Change Log
 
-## [0.5](https://github.com/kevinpapst/kimai2/tree/0.5) (2018-09-25)
+## [0.5](https://github.com/kevinpapst/kimai2/tree/0.5) (2018-09-26)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.4...0.5)
+
+**Fixed bugs:**
+
+- Excel Output not containing data [\#327](https://github.com/kevinpapst/kimai2/issues/327)
 
 **Closed issues:**
 
@@ -17,12 +21,12 @@
 - Feature request - PDF Download for monthly report [\#244](https://github.com/kevinpapst/kimai2/issues/244)
 - Add support for OpenOffice templates [\#223](https://github.com/kevinpapst/kimai2/issues/223)
 - Feature Request - Excel Output of times [\#221](https://github.com/kevinpapst/kimai2/issues/221)
-- Add installable package [\#209](https://github.com/kevinpapst/kimai2/issues/209)
 - Add hourly rate options [\#111](https://github.com/kevinpapst/kimai2/issues/111)
-- User preferences in control sidebar [\#88](https://github.com/kevinpapst/kimai2/issues/88)
 
 **Merged pull requests:**
 
+- added copy invoice template action [\#331](https://github.com/kevinpapst/kimai2/pull/331) ([kevinpapst](https://github.com/kevinpapst))
+- fix spreadsheet renderer for invoices with one entry [\#328](https://github.com/kevinpapst/kimai2/pull/328) ([kevinpapst](https://github.com/kevinpapst))
 - invoice VAT as float and database key length [\#323](https://github.com/kevinpapst/kimai2/pull/323) ([kevinpapst](https://github.com/kevinpapst))
 - added version command + api endpoint [\#321](https://github.com/kevinpapst/kimai2/pull/321) ([kevinpapst](https://github.com/kevinpapst))
 - Timesheet export [\#317](https://github.com/kevinpapst/kimai2/pull/317) ([kevinpapst](https://github.com/kevinpapst))
