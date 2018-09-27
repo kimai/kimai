@@ -5,7 +5,6 @@ Database upgrades are currently ONLY provided for MySQL/MariaDB and SQLite.
 If you plan on using e.g. PostgreSQL, please read more about the `bin/console doctrine:migrations:diff` and 
 `bin/console doctrine:migrations:migrate` commands and contact us, so we can integrate them into the official releases.
 
-
 A normal upgrade can be executed with these commands: 
 
 ```bash
@@ -19,7 +18,7 @@ bin/console doctrine:migrations:migrate
 There might be version specific tasks that need to be executed before or after these steps, please see below 
 if your updated version is mentioned below.
 
-## [0.5](https://github.com/kevinpapst/kimai2/releases/tag/0.5) (unreleased)
+## [0.5](https://github.com/kevinpapst/kimai2/releases/tag/0.5) (2018-09-27)
 
 Some configuration nodes were removed, if you have one of them in your `local.yaml` you need to delete them before you start the update:
 - `kimai.invoice.calculator`
@@ -28,7 +27,8 @@ Some configuration nodes were removed, if you have one of them in your `local.ya
 
 The new config `kimai.invoice.documents` was introduced, holding a list of directories ([read more](https://github.com/kevinpapst/kimai2/blob/master/var/docs/invoices.md)).
 
-**BC break:** InvoiceTemplate name was changed from 255 characters to 60. If you used longer names, these will be truncated when upgrading the database.
+**BC break:** InvoiceTemplate name was changed from 255 characters to 60. If you used longer invoice-template names, they will be truncated when upgrading the database.
+Please make sure that they are unique in the first 60 character before you upgrade your database with `doctrine:migrations:migrate`. 
 
 ## [0.4](https://github.com/kevinpapst/kimai2/releases/tag/0.4) (2018-09-01)
 

@@ -1,6 +1,6 @@
 # Change Log
 
-## [0.5](https://github.com/kevinpapst/kimai2/tree/0.5) (2018-09-26)
+## [0.5](https://github.com/kevinpapst/kimai2/tree/0.5) (2018-09-27)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.4...0.5)
 
 **Fixed bugs:**
