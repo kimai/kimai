@@ -66,6 +66,10 @@ kimai:
             date_short: 'd.m.Y'
             duration: '%%h:%%m Часов'
             duration_short: '%%h:%%m h'
+        ar:
+            date_short: 'Y-m-d'
+            duration: '%%h:%%m hours'
+            duration_short: '%%h:%%m h'
 
     # timesheet calendar configuration
     calendar:
