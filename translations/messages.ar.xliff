@@ -843,7 +843,7 @@
             -->
             <trans-unit id="active.entries">
                 <source>active.entries</source>
-                <target>{1} لديك %count% سجل نشط|{2}لديك %count% من السجلات النشطة</target>
+                <target>{1} عندك %count% سجل نشط|]2,Inf] عندك %count% سجلات نشطة</target>
             </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
@@ -852,7 +852,7 @@
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
                 <target>
-                    {1}إعادة تشغيل آخر نشاط مسجل الخاص بك |{2}إعادة تشغيل واحد من %count% من الأنشطة الأخيرة
+                    إعادة تشغيل آخر نشاط مسجل الخاص بك، إعادة تشغيل واحد من %count% الأنشطة الأخيرة
                 </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
