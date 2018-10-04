@@ -843,7 +843,7 @@
             -->
             <trans-unit id="active.entries">
                 <source>active.entries</source>
-                <target>{1} عندك %count% سجل نشط|]2,Inf] عندك %count% سجلات نشطة</target>
+                <target>{1} عندك %count% سجل نشط|{2} عندك %count% سجلات نشطة|[3,Inf] عندك %count% سجلات نشطة</target>
             </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
