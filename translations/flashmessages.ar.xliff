@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file date="2018-09-28T20:00:00Z" source-language="en" target-language="ar" datatype="plaintext" original="none">
+        <body>
+            <trans-unit id="timesheet.stop.success">
+                <source>timesheet.stop.success</source>
+                <target>تم إيقاف تسجيل الوقت</target>
+            </trans-unit>
+            <trans-unit id="timesheet.stop.error">
+                <source>timesheet.stop.error</source>
+                <target>تعذر إيقاف تسجيل الوقت:٪ reason٪</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.success">
+                <source>timesheet.start.success</source>
+                <target>بدأ تسجيل الوقت</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.error">
+                <source>timesheet.start.error</source>
+                <target>تعذر بدء تسجيل الوقت:٪ reason٪</target>
+            </trans-unit>
+            <trans-unit id="action.update.success">
+                <source>action.update.success</source>
+                <target>تم حفظ التغييرات بنجاح</target>
+            </trans-unit>
+            <trans-unit id="action.update.error">
+                <source>action.update.error</source>
+                <target>لا يمكن حفظ التغييرات:٪ السبب٪</target>
+            </trans-unit>
+            <trans-unit id="action.delete.success">
+                <source>action.delete.success</source>
+                <target>Entry was deleted successful</target>
+            </trans-unit>
+            <trans-unit id="action.delete.error">
+                <source>action.delete.error</source>
+                <target>لا يمكن حذف المشاركة:٪ السبب٪</target>
+            </trans-unit>
+            <trans-unit id="invoice.first_template">
+                <source>invoice.first_template</source>
+                <target>يجب عليك إنشاء فاتورة النموذج الأولى قبل المتابعة</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
