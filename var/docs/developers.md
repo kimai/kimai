@@ -6,19 +6,17 @@ This page is dedicated to all developers who want to contribute to Kimai. You ar
 
 All you need is:
 - PHP >= 7.1.3
-- PHP extension: `PDO-SQLite` enabled
+- PHP extensions: `PDO-SQLite`, `intl` and `zip`
 
 Optional requirement:
 - a MySQL/MariaDB instance
 - PHP extension: `PDO-MySQL` enabled
 
-You could even test PostgreSQL and tell us how it works!
-
 Read how to [install Kimai v2 in your dev environment](installation.md). 
 
 ## Frontend dependencies 
 
-If you want to make changes to CSS / Javascripts, you need:
+If you want to make changes to CSS / Javascript, you need:
 
 - [NodeJS](https://www.npmjs.com/)
 - [Yarn Package Manager](https://yarnpkg.com/en/)
