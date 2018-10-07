@@ -29,6 +29,9 @@ $(function() {
                 $.kimai.settings = $.extend({}, $.kimai.defaults, options);
             }
 
+            // set the current locale for all javascript components
+            moment.locale($.kimai.settings['locale']);
+
             // ask before a delete call is executed
             $('a.btn-trash').click(function (event) {
                 return confirm($.kimai.settings['confirmDelete']);
@@ -106,6 +109,7 @@ $(function() {
 
     // default values
     $.kimai.defaults = {
+        locale: 'en',
         confirmDelete: 'Really delete?',
         alertSuccessAutoHide: 5000
     };
