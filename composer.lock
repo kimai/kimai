@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a26c523a27230af927eae4b468daadda",
+    "content-hash": "e24287fc499f226174a891c385faddd9",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -1840,16 +1840,16 @@
         },
         {
             "name": "kevinpapst/adminlte-bundle",
-            "version": "2.1",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/AdminLTEBundle.git",
-                "reference": "43840776d45cb86a4dbcb915efa582eb41c5a564"
+                "reference": "8460d414056348ec0f7a79a12f051e649ae3958d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/43840776d45cb86a4dbcb915efa582eb41c5a564",
-                "reference": "43840776d45cb86a4dbcb915efa582eb41c5a564",
+                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/8460d414056348ec0f7a79a12f051e649ae3958d",
+                "reference": "8460d414056348ec0f7a79a12f051e649ae3958d",
                 "shasum": ""
             },
             "require": {
@@ -1896,8 +1896,8 @@
                     "homepage": "https://www.kevinpapst.de"
                 }
             ],
-            "description": "Admin Theme based on the AdminLTE 2.4.8 for easy integration with Symfony 4",
-            "time": "2018-09-02T17:21:38+00:00"
+            "description": "Admin theme bundle for Symfony 4 based on AdminLTE 2.4.8 with FOSUserBundle support",
+            "time": "2018-10-07T22:12:27+00:00"
         },
         {
             "name": "markbaker/complex",
@@ -4578,6 +4578,7 @@
             ],
             "description": "Enforces Long Term Supported versions of Symfony components",
             "homepage": "https://symfony.com",
+            "abandoned": "symfony/flex",
             "time": "2018-04-03T05:04:16+00:00"
         },
         {
@@ -9101,7 +9102,7 @@
         "php": "^7.1.3",
         "ext-intl": "*",
         "ext-pdo": "*",
-        "ext-pdo_sqlite": "*"
+        "ext-zip": "*"
     },
     "platform-dev": []
 }
