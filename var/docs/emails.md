@@ -42,10 +42,12 @@ app.ERROR: Exception occurred while flushing email queue: Expected response code
 ```
 you might suffer from a wrong configuration (read the documentation linked above) and try a full featured SMTP URL with a dedicated user account for authentication:  
 ```
-MAILER_URL=smtp://kimai@example.compassword@mx.example.com:587?encryption=tls&auth_mode=plain
+MAILER_URL=smtp://username:password@mx.example.com:587?encryption=tls&auth_mode=plain
 ```
+Password should not contain URL characters like '&@:', which can cause problems parsing the SMTP URL. 
+If you have to use one of these characters, you need to adjust the swiftmailer configuration at `config/packages/swiftmailer.yaml`. 
 
-If that still doesn't help , try to set a `local_domain` in the file `config/packages/local.yaml`:
+If that still doesn't help, try to set a `local_domain` in the file `config/packages/local.yaml`:
 ```yaml
 swiftmailer:
     local_domain: 'kimai.local' 
