@@ -29,6 +29,9 @@ $(function() {
                 $.kimai.settings = $.extend({}, $.kimai.defaults, options);
             }
 
+            // set the current locale for all javascript components
+            moment.locale($.kimai.settings['locale']);
+
             // ask before a delete call is executed
             $('a.btn-trash').click(function (event) {
                 return confirm($.kimai.settings['confirmDelete']);
@@ -51,10 +54,16 @@ $(function() {
             $('input[data-datepicker="on"]').daterangepicker({
                 singleDatePicker: true,
                 showDropdowns: true,
+                autoUpdateInput: false,
                 locale: {
                     format: "YYYY-MM-DD",
                     firstDay: 1
                 }
+            });
+
+            $('input[data-datepicker="on"]').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('YYYY-MM-DD'));
+                $(this).trigger("change");
             });
 
             $('input[data-datetimepicker="on"]').daterangepicker({
@@ -69,8 +78,10 @@ $(function() {
                     firstDay: 1
                 }
             });
+
             $('input[data-datetimepicker="on"]').on('apply.daterangepicker', function(ev, picker) {
                 $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm'));
+                $(this).trigger("change");
             });
 
             /*
@@ -98,8 +109,7 @@ $(function() {
 
     // default values
     $.kimai.defaults = {
-        baseUrl: '/',
-        imagePath: '/images',
+        locale: 'en',
         confirmDelete: 'Really delete?',
         alertSuccessAutoHide: 5000
     };

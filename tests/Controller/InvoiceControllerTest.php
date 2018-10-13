@@ -88,6 +88,34 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
     }
 
+    public function testCopyTemplateAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $fixture = new InvoiceFixtures();
+        $this->importFixture($em, $fixture);
+
+        /** @var InvoiceTemplate $template */
+        $template = $em->getRepository(InvoiceTemplate::class)->find(1);
+
+        $this->request($client, '/invoice/template/create/1');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=invoice_template_form]')->form();
+        $values = $form->getPhpValues()['invoice_template_form'];
+        $this->assertEquals('Copy of ' . $template->getName(), $values['name']);
+        $this->assertEquals($template->getTitle(), $values['title']);
+        $this->assertEquals($template->getDueDays(), $values['dueDays']);
+        $this->assertEquals($template->getCalculator(), $values['calculator']);
+        $this->assertEquals($template->getVat(), $values['vat']);
+        $this->assertEquals($template->getRenderer(), $values['renderer']);
+        $this->assertEquals($template->getCompany(), $values['company']);
+        $this->assertEquals($template->getAddress(), $values['address']);
+        $this->assertEquals($template->getPaymentTerms(), $values['paymentTerms']);
+        $this->assertEquals($template->getNumberGenerator(), $values['numberGenerator']);
+    }
+
     public function testPrintAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);

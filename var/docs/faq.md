@@ -1,5 +1,10 @@
 # Frequently asked questions
 
+## I have a problem
+
+Please open a new issue at [GitHub](https://github.com/kevinpapst/kimai2/issues/).
+Add the last entries from your logfile at `var/log/prod.log`.
+
 ## I have only FTP available ...
 
 So you want to install Kimai v2 but have no SSH access to your server? 

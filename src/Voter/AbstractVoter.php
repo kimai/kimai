@@ -9,8 +9,8 @@
 
 namespace App\Voter;
 
+use App\Security\AclDecisionManager;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
@@ -19,15 +19,15 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 abstract class AbstractVoter extends Voter
 {
     /**
-     * @var AccessDecisionManagerInterface
+     * @var AclDecisionManager
      */
     protected $decisionManager;
 
     /**
      * AbstractVoter constructor.
-     * @param AccessDecisionManagerInterface $decisionManager
+     * @param AclDecisionManager $decisionManager
      */
-    public function __construct(AccessDecisionManagerInterface $decisionManager)
+    public function __construct(AclDecisionManager $decisionManager)
     {
         $this->decisionManager = $decisionManager;
     }
@@ -38,11 +38,7 @@ abstract class AbstractVoter extends Voter
      */
     protected function isFullyAuthenticated(TokenInterface $token)
     {
-        if ($this->decisionManager->decide($token, ['IS_AUTHENTICATED_FULLY'])) {
-            return true;
-        }
-
-        return false;
+        return $this->decisionManager->isFullyAuthenticated($token);
     }
 
     /**
@@ -52,10 +48,6 @@ abstract class AbstractVoter extends Voter
      */
     protected function hasRole($role, TokenInterface $token)
     {
-        if ($this->decisionManager->decide($token, [$role])) {
-            return true;
-        }
-
-        return false;
+        return $this->decisionManager->hasRole($token, [$role]);
     }
 }

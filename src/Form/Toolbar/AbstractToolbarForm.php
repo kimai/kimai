@@ -110,7 +110,8 @@ abstract class AbstractToolbarForm extends AbstractType
             'widget' => 'single_text',
             'html5' => false,
             'required' => false,
-            'attr' => ['data-datepicker' => 'on'],
+            'format' => 'yyyy-MM-dd',
+            'attr' => ['autocomplete' => 'off', 'data-datepicker' => 'on'],
         ]);
     }
 
@@ -124,7 +125,8 @@ abstract class AbstractToolbarForm extends AbstractType
             'widget' => 'single_text',
             'html5' => false,
             'required' => false,
-            'attr' => ['data-datepicker' => 'on'],
+            'format' => 'yyyy-MM-dd',
+            'attr' => ['autocomplete' => 'off', 'data-datepicker' => 'on'],
         ]);
     }
 

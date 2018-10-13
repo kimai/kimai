@@ -15,9 +15,17 @@ namespace App;
 class Constants
 {
     /**
-     * Currently only used for informational purpose in the footer
+     * The current release version
      */
-    public const VERSION = '2.0 dev';
+    public const VERSION = 0.5;
+    /**
+     * The release name
+     */
+    public const NAME = 'Ayumi';
+    /**
+     * The current release status
+     */
+    public const STATUS = 'stable';
     /**
      * Used in multiple views
      */

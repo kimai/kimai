@@ -7,7 +7,7 @@ Encore
     // the public path used by the web server to access the previous directory
     .setPublicPath('/build/')
 
-    // empty the outputPath dir before each build
+    // empty the outputPath directory before each build
     .cleanupOutputBeforeBuild()
 
     // add debug data in development

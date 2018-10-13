@@ -252,7 +252,7 @@ class Project
     /**
      * @return string|null
      */
-    public function getOrderNumber()
+    public function getOrderNumber(): ?string
     {
         return $this->orderNumber;
     }

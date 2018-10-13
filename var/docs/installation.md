@@ -90,14 +90,14 @@ You just imported demo data, to test the application in its full beauty and with
 
 You can now login with these accounts:
 
-| Username | Password | Role |
-|---|:---:|---|
-| clara_customer | kitten | Customer |
-| john_user | kitten | User |
-| chris_user | kitten | User (deactivated) |
-| tony_teamlead | kitten | Teamlead |
-| anna_admin | kitten | Administrator |
-| susan_super | kitten | Super-Administrator |
+| Username | Password | API Key | Role |
+|---|:---:|:---:|---|
+| clara_customer| kitten | api_kitten |Customer |
+| john_user| kitten | api_kitten |User |
+| chris_user| kitten | api_kitten |User (deactivated) |
+| tony_teamlead| kitten | api_kitten |Teamlead |
+| anna_admin| kitten | api_kitten |Administrator |
+| susan_super| kitten | api_kitten |Super-Administrator |
 
 Demo data can always be deleted by dropping the schema and re-creating it.
 The `kimai:reset-dev` command can always be executed later on to reset your dev database and cache.

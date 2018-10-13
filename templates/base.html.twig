@@ -94,7 +94,7 @@
     {# we do not call parent() as we use a custom built for the frontend assets and don't want the default <script> #}
     <script type="text/javascript">
         $(document).ready(function () {
-            $.kimai.init({imagePath: '{{ asset('images') }}', confirmDelete: '{{ 'confirm.delete'|trans }}'});
+            $.kimai.init({locale: '{{ app.request.locale }}', confirmDelete: '{{ 'confirm.delete'|trans }}'});
             //$.kimai.pauseRecord('li.messages-menu ul.menu li');
         });
     </script>

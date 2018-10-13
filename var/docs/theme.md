@@ -61,33 +61,34 @@ with a pre-defined list of icon aliases to guarantee a consistent look.
 
 The pre-defined icons aliases are:
 
-- `user`
-- `customer`
-- `project`
 - `activity`
 - `admin`
-- `invoice`
-- `timesheet`
+- `calendar`
+- `customer`
+- `create`
 - `dashboard`
-- `logout`
-- `trash`
 - `delete`
-- `repeat`
+- `download`
+- `duration`
 - `edit`
-- `manual`
+- `filter`
 - `help`
+- `invoice`
+- `list`
+- `logout`
+- `manual`
+- `money`
+- `print`
+- `project`
+- `repeat`
 - `start`
 - `start-small`
 - `stop`
 - `stop-small`
-- `filter`
-- `create`
-- `list`
-- `print`
+- `timesheet`
+- `trash`
+- `user`
 - `visibility`
-- `calendar`
-- `money`
-- `duration`
 
 Icon aliases can be used by applying the `icon` filter, e.g.
 

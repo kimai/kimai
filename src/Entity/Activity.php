@@ -131,8 +131,6 @@ class Activity
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
     public function getName()

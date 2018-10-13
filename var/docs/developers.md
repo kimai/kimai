@@ -6,19 +6,17 @@ This page is dedicated to all developers who want to contribute to Kimai. You ar
 
 All you need is:
 - PHP >= 7.1.3
-- PHP extension: `PDO-SQLite` enabled
+- PHP extensions: `PDO-SQLite`, `intl` and `zip`
 
 Optional requirement:
 - a MySQL/MariaDB instance
 - PHP extension: `PDO-MySQL` enabled
 
-You could even test PostgreSQL and tell us how it works!
-
 Read how to [install Kimai v2 in your dev environment](installation.md). 
 
 ## Frontend dependencies 
 
-If you want to make changes to CSS / Javascripts, you need:
+If you want to make changes to CSS / Javascript, you need:
 
 - [NodeJS](https://www.npmjs.com/)
 - [Yarn Package Manager](https://yarnpkg.com/en/)
@@ -164,7 +162,7 @@ For more details check this [dashboard subscriber](../../src/EventSubscriber/Das
 
 ## Adding tabs to the "control sidebar"
 
-We use twig globals to render the control sidebar tabs, so adding one is as easy as adding a new config entry:
+We use the AdminLTE bundle to render the control sidebar tabs, so adding another tab is as easy as adding a new config entry:
 
 ```yaml
 admin_lte:
@@ -179,8 +177,8 @@ admin_lte:
                 template: sidebar/home.html.twig
 ```
 
-You have to define the `icon` ([read more](theme.md)) to be used and either `controller` action or twig `template`. 
-Both follow the default naming syntax and you can link your bundle here instead of the app controller or templates.
+You have to define the `icon` ([read more](theme.md)) to be used and then either `controller` action or twig `template`. 
+Both follow the default naming syntax and you can link your bundle here instead of existing application controller or templates.
 You should NOT add them in `config/packages/kimai.yaml` but in your own bundle or the `local.yaml` [config](configurations.md), 
 otherwise they might get lost during an update.
 
