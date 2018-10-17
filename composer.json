@@ -13,7 +13,7 @@
         "friendsofsymfony/rest-bundle": "^2.3",
         "friendsofsymfony/user-bundle": "~2.0",
         "jms/serializer-bundle": "^2.4",
-        "kevinpapst/adminlte-bundle": "^2.1",
+        "kevinpapst/adminlte-bundle": "~2.1",
         "nelmio/api-doc-bundle": "^3.2",
         "ocramius/proxy-manager": "2.1.1",
         "phpoffice/phpspreadsheet": "^1.4",
@@ -26,7 +26,6 @@
         "symfony/flex": "^1.0",
         "symfony/form": "^4.0",
         "symfony/framework-bundle": "^4.0",
-        "symfony/lts": "^4@dev",
         "symfony/monolog-bundle": "^3.1",
         "symfony/orm-pack": "^1.0",
         "symfony/profiler-pack": "^1.0",
@@ -97,7 +96,8 @@
     "extra": {
         "symfony": {
             "id": "01C3FWRDJJEX9K6Y3A4XDFXPBR",
-            "allow-contrib": true
+            "allow-contrib": true,
+            "require": "~4.1.0"
         }
     }
 }
