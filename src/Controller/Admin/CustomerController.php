@@ -67,7 +67,14 @@ class CustomerController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        return $this->renderCustomerForm(new Customer(), $request);
+        $defaults = $this->getParameter('kimai.defaults')['customer'];
+
+        $customer = new Customer();
+        $customer->setCountry($defaults['country']);
+        $customer->setCurrency($defaults['currency']);
+        $customer->setTimezone($defaults['timezone']);
+
+        return $this->renderCustomerForm($customer, $request);
     }
 
     /**

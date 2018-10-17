@@ -232,3 +232,18 @@ kimai:
                 days: ['saturday','sunday']
                 factor: 1.5
 ```
+
+## Customer (kimai.yaml)
+
+### Defaults
+
+You can set some defaults for customer creation.  These override the default timezone, currency and country set in kimai.yml
+
+```yaml
+kimai:
+    defaults:
+        customer:
+            timezone: Europe/London
+            country: GB
+            currency: GBP
+```
