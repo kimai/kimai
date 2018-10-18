@@ -28,6 +28,18 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CustomerController extends AbstractController
 {
+    private $defaults;
+    
+    /**
+     * COnstruct a new customer controller with a parameters array.
+     *
+     * @param array $defaults
+     */
+    public function __construct(array $defaults)
+    {
+        $this->defaults = $defaults;
+    }
+
     /**
      * @return \App\Repository\CustomerRepository
      */
@@ -67,12 +79,10 @@ class CustomerController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $defaults = $this->getParameter('kimai.defaults')['customer'];
-
         $customer = new Customer();
-        $customer->setCountry($defaults['country']);
-        $customer->setCurrency($defaults['currency']);
-        $customer->setTimezone($defaults['timezone']);
+        $customer->setCountry($this->defaults['country']);
+        $customer->setCurrency($this->defaults['currency']);
+        $customer->setTimezone($this->defaults['timezone']);
 
         return $this->renderCustomerForm($customer, $request);
     }
