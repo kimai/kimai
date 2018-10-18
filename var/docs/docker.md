@@ -8,7 +8,7 @@ The docker file in the root of the source tree can be used to taer up developmen
 
 You can change the docker tag if you want. Remeber the dot at the end of the command.
 
-    docker build --rm -t tobybatch/kimai .
+    docker build --rm -t tobybatch/kimai:dev .
 
 ## Run the development docker.
 
@@ -23,7 +23,7 @@ You can then hit the server on http://localhost:8080
         -v $(pwd):/opt/kimai \
         -e _UID=$(id -u) \
         -e _GID=$(id -g) \
-        tobybatch/kimai
+        tobybatch/kimai:dev
 
     * ```docker run```
       Run the docker
@@ -39,7 +39,7 @@ You can then hit the server on http://localhost:8080
       Set the UID in the conatiner to be the current user
     * ```-e _GID=$(id -g)```
       Set the GID in the conatiner to be the current user
-    * ```tobybatch/kimai```
+    * ```tobybatch/kimai:dev```
       Run the container that was built inthe previous section
 
 ## Running commands in the container

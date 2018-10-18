@@ -1,0 +1,47 @@
+version: '2.1'
+services:
+    db:
+        image: mysql:5.6
+        environment:
+            MYSQL_USER: lamp
+            MYSQL_PASSWORD: lamp
+            MYSQL_DATABASE: lamp
+            MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+        volumes:
+            - mysql:/var/lib/mysql
+        restart: always
+        healthcheck:
+            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+            # test: ["CMD", "mysql" ,"-u", "lamp", "-plamp", "-h", "localhost", "lamp", "-e", "'desc user;'"]
+            interval: 20s
+            retries: 10
+
+    php:
+        image: kimai
+		build:
+			context: .
+        links: [ db ]
+        ports:
+            - "9000:9000"
+        depends_on:
+            db:
+                condition: service_healthy
+        environment:
+            DBUSER: lamp
+            DBPASS: lamp
+            DBNAME: lamp
+            DBHOST: db
+        volumes:
+            - kimai:/opt/kimai
+
+    web:
+        image: nginx:latest
+        ports:
+            - "8080:8080"
+        links:
+            - php
+        volumes:
+            - kimai:/opt/kimai
+
+volumes:
+	kimai:
