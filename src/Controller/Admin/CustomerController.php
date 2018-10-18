@@ -28,6 +28,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CustomerController extends AbstractController
 {
+    /**
+     * Default form settings from kinai.yml/local.yml
+     *
+     * @var array
+     */
     private $defaults;
     
     /**
