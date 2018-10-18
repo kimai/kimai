@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 # Is this a first run situation?
 if [ ! -e /opt/kimai/var/data/kimai.sqlite ]; then
@@ -20,7 +20,7 @@ if [ ! -z "$_GID" ]; then
     fi 
 else
     # Drop privs to run as www-data
-    _UID=33
+    _GID=33
 fi  
     
 if [ ! -z "$_UID" ]; then
@@ -31,10 +31,10 @@ if [ ! -z "$_UID" ]; then
     fi
 else
     # Drop privs to run as www-data
-    _GID=33
+    _UID=33
 fi
 
 chown -R ${_UID}:${_GID} /opt/kimai
 _USER=$(id -un $_UID)
 
-su - ${_USER} -c "/opt/kimai/bin/console server:run 0.0.0.0:${PORT}"
+su - ${_USER} -s /bin/bash -c "/opt/kimai/bin/console server:run 0.0.0.0:${PORT}"
