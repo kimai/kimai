@@ -35,17 +35,21 @@ services:
         stdin_open: true
         tty: true
         volumes:
-            - kimai:/opt/kimai
+            - ./php.ini:/usr/local/etc/php/php.ini
+            - kimai:/var/www/html
             - ./initscripts:/var/tmp/init-sql
 
     web:
         image: nginx:latest
         ports:
-            - "8080:8080"
+            - "8080:80"
         links:
             - php
+        depends_on:
+            - php
         volumes:
-            - kimai:/opt/kimai
+            - ./default.conf:/etc/nginx/conf.d/default.conf
+            - kimai:/var/www/html
 
 volumes:
     kimai:

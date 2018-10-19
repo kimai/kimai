@@ -1,12 +1,18 @@
-#!/bin/sh
+#!/bin/bash
+
+until mysql -u lamp -plamp -h db lamp -e "show tables"; do
+  >&2 echo "Mysql is unavailable - sleeping"
+  sleep 5
+done
 
 APP_PATH=/var/www/html
 
 # Check the mount point for the code base, this could be pretty much any file
 if [ ! -e $APP_PATH/.env ]; then
     # Copy in the code base
-    rm -rf /var/www/html
-    cp -r /var/tmp/kimai $APP_PATH
+    rm -rf /var/www/html/{*,.*}
+    cp -r /var/tmp/kimai/* $APP_PATH
+    cp -r /var/tmp/kimai/.??* $APP_PATH
 fi
 
 # If the schema does not exist then create it (and run the migrations)
@@ -42,4 +48,4 @@ done
 /var/www/html/bin/console cache:warmup --env=prod
 
 # Start listening
-CMD ["php-fpm"]
+php-fpm

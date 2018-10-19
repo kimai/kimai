@@ -40,6 +40,6 @@ RUN sed -i "s/kimai@example.com/${MAILER_FROM}/g" /var/tmp/kimai/.env && \
 FROM kimai
 ADD startup.sh /startup.sh
 RUN mkdir -p /var/tmp/init-sql
-RUN echo "Files in this folder ending in .sh or .sql will be excuted at start up" > /var/tmp/init-sql/README
+RUN apk add --no-cache mysql-client bash
 
-CMD /startup.sh
+ENTRYPOINT /startup.sh
