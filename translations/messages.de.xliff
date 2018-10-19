@@ -383,6 +383,10 @@
                 <source>label.theme.mini_sidebar</source>
                 <target>Aktiviert die minimierte Version der linken Navigationsleiste</target>
             </trans-unit>
+            <trans-unit id="label.calendar.initial_view">
+                <source>label.calendar.initial_view</source>
+                <target>Initiale Darstellung des Kalenders</target>
+            </trans-unit>
 
             <!--
               Help - Manual

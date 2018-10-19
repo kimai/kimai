@@ -24,7 +24,7 @@
     <script>
         $(function () {
             $('#calendar').fullCalendar({
-                defaultView: '{{ config.initialView }}',
+                defaultView: '{{ app.user.getPreferenceValue('calendar.initial_view') }}',
                 {% if not google.apiKey is null %}
                 googleCalendarApiKey: '{{ google.apiKey }}',
                 {% endif %}

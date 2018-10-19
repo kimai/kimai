@@ -8,7 +8,6 @@ The calendar view look and feel is configured with the config keys below `kimai.
 ```yaml
 kimai:
     calendar:
-        initial_view: month
         week_numbers: true
         day_limit: 4
         businessHours:
@@ -17,14 +16,20 @@ kimai:
             end: '20:00'
 ```
 
-- `initial_view` - defines the type of view when initially loading the calendar. available options are: month, agendaWeek, agendaDay, basicWeek, basicDay (default: month)
 - `week_numbers` - whether week numbers should be displayed in the monthly view (default: true)
 - `day_limit` defined the max amount of items to be displayed for one day in the monthly view (default: 4)
 - `businessHours.days` defines your working days, which will be highlighted in the weekly and daily view. counting starts with sunday and the index 0, so 1 = monday, ..., 6 = saturday. (default: 1-5 / monday to friday) 
 - `businessHours.begin` the start time of your working day, which will be highlighted in the weekly and daily view (default: 08:00 / 8am)
 - `businessHours.end` the end time of your working day, which will be highlighted in the weekly and daily view (default: 20:00 / 8pm)
 
-#### Integrating google calender
+## Initial view
+
+The initial view for the calendar is `month`.
+It is a user specific setting and each user can configure it in his **User profile** at **Preferences**.  
+
+Available options are: `month`, `agendaWeek`, `agendaDay`, `basicWeek`, `basicDay`
+
+## Integrating google calender
 
 If you want to embed Google calendars e.g. to display regional holidays or company events you can import (multiple) Google calendars.
 

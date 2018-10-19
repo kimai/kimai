@@ -73,8 +73,6 @@ kimai:
 
     # timesheet calendar configuration
     calendar:
-        # possible values are: month, agendaWeek, agendaDay, basicWeek, basicDay
-        initial_view: month
         week_numbers: true
         day_limit: 4
         businessHours:
