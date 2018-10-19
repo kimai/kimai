@@ -6,10 +6,11 @@ ARG MAILER_URL
 
 RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer && \
     apk add --no-cache \
+        bash \
         git \
         icu-dev \
         freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev \
-        mysql \
+        mysql-client \
         unzip \
         zip \
         && \
@@ -23,23 +24,20 @@ RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-di
         gd \
         intl \
         pdo_mysql \
-        zip 
+        zip && \
+    mkdir -p /var/tmp/init-sql
 
-# ADD https://github.com/kevinpapst/kimai2/archive/${VERSION}.tar.gz /var/tmp/kimai.tgz
-COPY ${VERSION}.tar.gz /var/tmp/kimai.tgz
+ADD https://github.com/kevinpapst/kimai2/archive/${VERSION}.tar.gz /var/tmp/kimai.tgz
 ADD env /var/tmp/kimai/.env
 
 WORKDIR /var/tmp/kimai
 RUN tar --strip-components=1 -zxvf /var/tmp/kimai.tgz && \
-    composer install --no-dev --optimize-autoloader 
-RUN sed -i "s/kimai@example.com/${MAILER_FROM}/g" /var/tmp/kimai/.env && \
+    composer install --no-dev --optimize-autoloader && \
+    sed -i "s/kimai@example.com/${MAILER_FROM}/g" /var/tmp/kimai/.env && \
     sed -i "s|null://localhost|${MAILER_URL}|g" /var/tmp/kimai/.env && \
     sed -i "s/change_this_to_something_unique/$(</dev/urandom tr -dc 'A-Za-z0-9' | head -c48)/g" /var/tmp/kimai/.env && \
     rm /usr/bin/composer
 
-FROM kimai
 ADD startup.sh /startup.sh
-RUN mkdir -p /var/tmp/init-sql
-RUN apk add --no-cache mysql-client bash
 
 ENTRYPOINT /startup.sh

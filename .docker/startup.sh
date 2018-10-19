@@ -46,6 +46,7 @@ done
 
 # Warm up the cache
 /var/www/html/bin/console cache:warmup --env=prod
+chown -R www-data:www-data /var/www/html/var
 
 # Start listening
 php-fpm
