@@ -85,9 +85,9 @@ class CustomerController extends AbstractController
     public function createAction(Request $request)
     {
         $customer = new Customer();
-        $customer->setCountry($this->defaults['country']);
-        $customer->setCurrency($this->defaults['currency']);
-        $customer->setTimezone($this->defaults['timezone']);
+        $customer->setCountry($this->defaults['customer']['country']);
+        $customer->setCurrency($this->defaults['customer']['currency']);
+        $customer->setTimezone($this->defaults['customer']['timezone']);
 
         return $this->renderCustomerForm($customer, $request);
     }
