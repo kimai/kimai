@@ -22,7 +22,7 @@ class UserTest extends AbstractEntityTest
         return [
             ['', ''],
             [null, null],
-            ['test', 'test@'], // too short username
+            ['xx', 'test@'], // too short username
             [str_pad('#', 61, '-'), 'test@x.'], // too long username
             [str_pad('#', 61, '-'), 'test@x.', ['xxxxx']], // too short password and invalid role
         ];
@@ -51,7 +51,7 @@ class UserTest extends AbstractEntityTest
     public function getValidTestData()
     {
         return [
-            [str_pad('#', 6, '-'), 'test@x.x'], // shortest possible username
+            [str_pad('#', 3, '-'), 'test@x.x'], // shortest possible username
             [str_pad('#', 60, '-'), 'test@x.x', ['ROLE_CUSTOMER']], // longest possible password and valid role
         ];
     }
