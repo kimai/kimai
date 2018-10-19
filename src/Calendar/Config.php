@@ -57,6 +57,14 @@ class Config
     }
 
     /**
+     * @return string
+     */
+    public function getInitialView()
+    {
+        return $this->config['initial_view'];
+    }
+
+    /**
      * @return bool
      */
     public function isShowWeekNumbers()

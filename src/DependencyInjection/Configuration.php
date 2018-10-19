@@ -164,6 +164,12 @@ class Configuration implements ConfigurationInterface
 
         $node
             ->children()
+                ->scalarNode('initial_view')
+                    ->validate()
+                        ->ifNotInArray(['month', 'agendaWeek', 'basicWeek', 'agendaDay', 'basicDay'])->thenInvalid('Unknown calendar view')
+                    ->end()
+                    ->defaultValue('month')
+                ->end()
                 ->booleanNode('week_numbers')->defaultTrue()->end()
                 ->integerNode('day_limit')->defaultValue(4)->end()
                 ->arrayNode('businessHours')

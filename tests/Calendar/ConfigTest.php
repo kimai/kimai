@@ -25,6 +25,7 @@ class ConfigTest extends TestCase
                 'begin' => '07:49',
                 'end' => '19:27'
             ],
+            'initial_view' => 'foo_bar',
             'day_limit' => 20,
             'week_numbers' => false,
         ];
@@ -35,6 +36,7 @@ class ConfigTest extends TestCase
         $this->assertEquals('07:49', $sut->getBusinessTimeBegin());
         $this->assertEquals('19:27', $sut->getBusinessTimeEnd());
         $this->assertEquals(20, $sut->getDayLimit());
+        $this->assertEquals('foo_bar', $sut->getInitialView());
         $this->assertFalse($sut->isShowWeekNumbers());
     }
 }
