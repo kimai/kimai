@@ -1,40 +1,45 @@
-#!/bin/bash -x
+#!/bin/sh
 
-# Is this a first run situation?
-if [ ! -e /opt/kimai/var/data/kimai.sqlite ]; then
+APP_PATH=/var/www/html
 
-    /opt/kimai/bin/console doctrine:database:create
-    /opt/kimai/bin/console doctrine:schema:create
-    /opt/kimai/bin/console -n doctrine:migrations:version --add --all
-    /opt/kimai/bin/console cache:warmup --env=prod
-    /opt/kimai/bin/console kimai:create-user admin admin@example.com ROLE_SUPER_ADMIN admin
-
+# Check the mount point for the code base, this could be pretty much any file
+if [ ! -e $APP_PATH/.env ]; then
+    # Copy in the code base
+    rm -rf /var/www/html
+    cp -r /var/tmp/kimai $APP_PATH
 fi
 
-# Do we have a UID/GID to run as?
-if [ ! -z "$_GID" ]; then
-    # If the group doesn't exist create it.
-    if ! egrep -q "^(.+):x:${_GID}" /etc/group; then
-        echo Group does not exists, creating GID $_GID
-        groupadd --gid ${_GID} kimai
-    fi 
-else
-    # Drop privs to run as www-data
-    _GID=33
-fi  
-    
-if [ ! -z "$_UID" ]; then
-    # If the user doesn't exist create it.
-    if ! egrep -q "^(.+):x:${_UID}" /etc/passwd; then
-        echo User does not exists, creating UID $_UID
-        useradd --gid ${_GID} --uid ${_UID} kimai
+# If the schema does not exist then create it (and run the migrations)
+TABLE_COUNT=$(/var/www/html/bin/console doctrine:query:sql "select * from kimai2_users")
+if [ "$?" != 0 ]; then
+    # We can't find the users table.  We'll usae this to guess we don't have a schema installed.
+    # Is there a better way of doing this?
+    /var/www/html/bin/console -y doctrine:schema:create
+    /var/www/html/bin/console -y doctrine:migrations:version --add --all
+fi
+
+# If we have a start up/seed sql file run that.
+for initfile in /var/tmp/init-sql/*; do
+
+    if [ ${initfile: -4} == ".sh" ]; then
+        sh $initfile
+
+    elif [ ${initfile: -4} == ".dql" ]; then
+        while IFS='' read -r line || [[ -n "$line" ]]; do
+            echo $line
+            /var/www/html/bin/console doctrine:query:sql "$line"
+        done < $initfile
+
+    elif [ ${initfile: -4} == ".sql" ]; then
+        while IFS='' read -r line || [[ -n "$line" ]]; do
+            echo $line
+            /var/www/html/bin/console doctrine:query:sql "$line"
+        done < $initfile
     fi
-else
-    # Drop privs to run as www-data
-    _UID=33
-fi
+done
 
-chown -R ${_UID}:${_GID} /opt/kimai
-_USER=$(id -un $_UID)
+# Warm up the cache
+/var/www/html/bin/console cache:warmup --env=prod
 
-su - ${_USER} -s /bin/bash -c "/opt/kimai/bin/console server:run 0.0.0.0:${PORT}"
+# Start listening
+CMD ["php-fpm"]

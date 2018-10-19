@@ -1,52 +1,45 @@
-FROM php:7.2.9-apache-stretch
+FROM php:7.2-fpm-alpine as kimai
+
+ARG VERSION
+ARG MAILER_FROM
+ARG MAILER_URL 
 
 RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer && \
-    apt update && \
-    apt install -y \
+    apk add --no-cache \
         git \
-        libicu-dev \
-        libjpeg-dev \
-        libldap2-dev \
-        libldb-dev \
-        libpng-dev \
+        icu-dev \
+        freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev \
+        mysql \
         unzip \
         zip \
         && \
     docker-php-ext-install \
         gd \
         intl \
-        ldap \
         pdo_mysql \
         zip \
         && \
     docker-php-ext-install \
         gd \
         intl \
-        ldap \
         pdo_mysql \
-        zip
+        zip 
 
-RUN apt-get purge -y \
-        git \
-        libicu-dev \
-        libjpeg-dev \
-        libldap2-dev \
-        libldb-dev \
-        libpng-dev \
-        zip \
-        git \
-        unzip \
-        zip \
-        && \
-     apt-get -y autoremove && \
-     apt-get clean && \
-     rm /usr/bin/composer
+# ADD https://github.com/kevinpapst/kimai2/archive/${VERSION}.tar.gz /var/tmp/kimai.tgz
+COPY ${VERSION}.tar.gz /var/tmp/kimai.tgz
+ADD env /var/tmp/kimai/.env
 
-ADD .docker/startup.sh /startup.sh
-WORKDIR /opt/kimai
+WORKDIR /var/tmp/kimai
+RUN tar --strip-components=1 -zxvf /var/tmp/kimai.tgz && \
+    composer install --no-dev --optimize-autoloader 
+RUN sed -i "s/kimai@example.com/${MAILER_FROM}/g" /var/tmp/kimai/.env && \
+    sed -i "s|null://localhost|${MAILER_URL}|g" /var/tmp/kimai/.env && \
+    sed -i "s/change_this_to_something_unique/$(</dev/urandom tr -dc 'A-Za-z0-9' | head -c48)/g" /var/tmp/kimai/.env && \
+    rm /usr/bin/composer
 
-ENV PORT=8080
+FROM kimai
+ADD startup.sh /startup.sh
+RUN mkdir -p /var/tmp/init-sql
+RUN echo "Files in this folder ending in .sh or .sql will be excuted at start up" > /var/tmp/init-sql/README
 
-ENTRYPOINT /startup.sh
-
-# Copy the built app into a new container without the build devs, this keeps the container size down.
+CMD /startup.sh

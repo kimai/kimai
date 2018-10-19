@@ -18,8 +18,12 @@ services:
 
     php:
         image: kimai
-		build:
-			context: .
+        build:
+            context: .
+            args:
+                VERSION: 0.5
+                MAILER_FROM: docker@example.com
+                MAILER_URL: null://127.0.0.1
         links: [ db ]
         ports:
             - "9000:9000"
@@ -27,12 +31,12 @@ services:
             db:
                 condition: service_healthy
         environment:
-            DBUSER: lamp
-            DBPASS: lamp
-            DBNAME: lamp
-            DBHOST: db
+            VERSION: 0.5
+        stdin_open: true
+        tty: true
         volumes:
             - kimai:/opt/kimai
+            - ./initscripts:/var/tmp/init-sql
 
     web:
         image: nginx:latest
@@ -44,4 +48,5 @@ services:
             - kimai:/opt/kimai
 
 volumes:
-	kimai:
+    kimai:
+    mysql:
