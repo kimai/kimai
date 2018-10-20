@@ -29,15 +29,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class CustomerController extends AbstractController
 {
     /**
-     * Default form settings from kinai.yml/local.yml
-     *
      * @var array
      */
     private $defaults;
     
     /**
-     * COnstruct a new customer controller with a parameters array.
-     *
      * @param array $defaults
      */
     public function __construct(array $defaults)
