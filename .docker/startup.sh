@@ -9,7 +9,7 @@ APP_PATH=/var/www/html
 
 # Check the mount point for the code base, this could be pretty much any file
 if [ ! -e $APP_PATH/.env ]; then
-    # Copy in the code base
+    # Copy in the code base so it's on a shared volume for php-fpm and nginx
     rm -rf /var/www/html/{*,.*}
     cp -r /var/tmp/kimai/* $APP_PATH
     cp -r /var/tmp/kimai/.??* $APP_PATH
