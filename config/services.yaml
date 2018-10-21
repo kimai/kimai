@@ -54,6 +54,10 @@ services:
         arguments:
             $timesheetAsMarkdown: "%kimai.timesheet.markdown%"
 
+    App\Controller\Admin\CustomerController:
+        arguments:
+            $defaults: "%kimai.defaults%"
+            
     # ================================================================================
     # DATABASE
     # ================================================================================

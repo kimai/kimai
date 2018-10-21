@@ -39,6 +39,7 @@ class Configuration implements ConfigurationInterface
                 ->append($this->getThemeNode())
                 ->append($this->getDashboardNode())
                 ->append($this->getWidgetsNode())
+                ->append($this->getDefaultsNode())
             ->end()
         ->end();
 
@@ -296,6 +297,28 @@ class Configuration implements ConfigurationInterface
                             ->performNoDeepMerging()
                             ->scalarPrototype()
                         ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    protected function getDefaultsNode()
+    {
+        $builder = new TreeBuilder();
+        $node = $builder->root('defaults');
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('customer')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('timezone')->defaultValue('Europe/Berlin')->end()
+                        ->scalarNode('country')->defaultValue('DE')->end()
+                        ->scalarNode('currency')->defaultValue('EUR')->end()
                     ->end()
                 ->end()
             ->end()

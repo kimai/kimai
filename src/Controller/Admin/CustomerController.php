@@ -29,6 +29,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class CustomerController extends AbstractController
 {
     /**
+     * @var array
+     */
+    private $defaults;
+
+    /**
+     * @param array $defaults
+     */
+    public function __construct(array $defaults)
+    {
+        $this->defaults = $defaults;
+    }
+
+    /**
      * @return \App\Repository\CustomerRepository
      */
     protected function getRepository()
@@ -67,7 +80,12 @@ class CustomerController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        return $this->renderCustomerForm(new Customer(), $request);
+        $customer = new Customer();
+        $customer->setCountry($this->defaults['customer']['country']);
+        $customer->setCurrency($this->defaults['customer']['currency']);
+        $customer->setTimezone($this->defaults['customer']['timezone']);
+
+        return $this->renderCustomerForm($customer, $request);
     }
 
     /**

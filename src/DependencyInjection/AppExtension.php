@@ -39,6 +39,7 @@ class AppExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('kimai.dashboard', $config['dashboard']);
         $container->setParameter('kimai.widgets', $config['widgets']);
         $container->setParameter('kimai.invoice.documents', $config['invoice']['documents']);
+        $container->setParameter('kimai.defaults', $config['defaults']);
 
         $this->createUserParameter($config, $container);
         $this->createTimesheetParameter($config, $container);
