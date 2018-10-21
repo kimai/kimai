@@ -311,9 +311,10 @@ class Configuration implements ConfigurationInterface
         $node = $builder->root('defaults');
 
         $node
-            ->requiresAtLeastOneElement()
-                ->useAttributeAsKey('key')
-                ->arrayPrototype()
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('customer')
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('timezone')->defaultValue('Europe/Berlin')->end()
                         ->scalarNode('country')->defaultValue('DE')->end()
