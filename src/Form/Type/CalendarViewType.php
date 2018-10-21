@@ -35,7 +35,7 @@ class CalendarViewType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $choices = [];
-        foreach(self::ALLOWED_VIEWS as $name) {
+        foreach (self::ALLOWED_VIEWS as $name) {
             $choices[$name] = $name;
         }
 
