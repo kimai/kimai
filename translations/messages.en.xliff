@@ -387,6 +387,19 @@
                 <source>label.calendar.initial_view</source>
                 <target>Initial calendar view</target>
             </trans-unit>
+            <!-- Options for user-preference label.calendar.initial_view -->
+            <trans-unit id="month">
+                <source>month</source>
+                <target>Month</target>
+            </trans-unit>
+            <trans-unit id="agendaWeek">
+                <source>agendaWeek</source>
+                <target>Week</target>
+            </trans-unit>
+            <trans-unit id="agendaDay">
+                <source>agendaDay</source>
+                <target>Day</target>
+            </trans-unit>
 
             <!--
               Help - Manual

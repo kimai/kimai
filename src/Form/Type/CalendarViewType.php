@@ -21,11 +21,12 @@ class CalendarViewType extends AbstractType
     public const DEFAULT_VIEW = 'month';
 
     public const ALLOWED_VIEWS = [
-        self::DEFAULT_VIEW,
+        'month',
         'agendaWeek',
         'agendaDay',
-        'basicWeek',
-        'basicDay',
+        // unused view types for now
+        //'basicWeek',
+        //'basicDay',
     ];
 
     /**
