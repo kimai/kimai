@@ -24,9 +24,6 @@ class CalendarViewType extends AbstractType
         'month',
         'agendaWeek',
         'agendaDay',
-        // unused view types for now
-        //'basicWeek',
-        //'basicDay',
     ];
 
     /**

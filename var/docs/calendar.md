@@ -25,9 +25,9 @@ kimai:
 ## Initial view
 
 The initial view for the calendar is `month`.
-It is a user specific setting and each user can configure it in his **User profile** at **Preferences**.  
+It is a user specific setting and each user can configure it in his _User profile_ at _Preferences_.  
 
-Available options are: `month`, `agendaWeek`, `agendaDay`, `basicWeek`, `basicDay`
+Available options are: `month`, `agendaWeek`, `agendaDay`
 
 ## Integrating google calender
 
