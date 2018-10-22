@@ -1,7 +1,7 @@
 # Docker
 
  * [Developer docker](#developing-in-a-docker) (apache, sqlite)
- * [Production docker](#Production-docker-compose) (docker-compose, mariadb, nginx, php-fpm)
+ * [Production docker](#production-docker-compose) (docker-compose, mariadb, nginx, php-fpm)
 
 ## Developing in a docker
 
