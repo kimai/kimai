@@ -383,6 +383,23 @@
                 <source>label.theme.mini_sidebar</source>
                 <target>Aktiviert die minimierte Version der linken Navigationsleiste</target>
             </trans-unit>
+            <trans-unit id="label.calendar.initial_view">
+                <source>label.calendar.initial_view</source>
+                <target>Initiale Darstellung des Kalenders</target>
+            </trans-unit>
+            <!-- Options for user-preference label.calendar.initial_view -->
+            <trans-unit id="month">
+                <source>month</source>
+                <target>Monat</target>
+            </trans-unit>
+            <trans-unit id="agendaWeek">
+                <source>agendaWeek</source>
+                <target>Woche</target>
+            </trans-unit>
+            <trans-unit id="agendaDay">
+                <source>agendaDay</source>
+                <target>Tag</target>
+            </trans-unit>
 
             <!--
               Help - Manual

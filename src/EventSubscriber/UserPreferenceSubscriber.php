@@ -12,6 +12,7 @@ namespace App\EventSubscriber;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\UserPreferenceEvent;
+use App\Form\Type\CalendarViewType;
 use App\Form\Type\SkinType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -94,6 +95,11 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setName('theme.mini_sidebar')
                 ->setValue(true)
                 ->setType(CheckboxType::class),
+
+            (new UserPreference())
+                ->setName('calendar.initial_view')
+                ->setValue(CalendarViewType::DEFAULT_VIEW)
+                ->setType(CalendarViewType::class),
 
             /*
             (new UserPreference())

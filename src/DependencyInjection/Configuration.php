@@ -311,17 +311,11 @@ class Configuration implements ConfigurationInterface
         $node = $builder->root('defaults');
 
         $node
-            ->requiresAtLeastOneElement()
-                ->useAttributeAsKey('key')
-                ->arrayPrototype()
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('customer')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('type')
-                            ->validate()
-                                ->ifNotInArray([DashboardSection::TYPE_SIMPLE, DashboardSection::TYPE_CHART])->thenInvalid('Unknown section type')
-                            ->end()
-                            ->defaultValue(DashboardSection::TYPE_SIMPLE)
-                        ->end()
                         ->scalarNode('timezone')->defaultValue('Europe/Berlin')->end()
                         ->scalarNode('country')->defaultValue('DE')->end()
                         ->scalarNode('currency')->defaultValue('EUR')->end()

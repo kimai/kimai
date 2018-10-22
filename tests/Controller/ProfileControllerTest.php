@@ -11,6 +11,7 @@ namespace App\Tests\Controller;
 
 use App\DataFixtures\UserFixtures;
 use App\Entity\User;
+use App\Entity\UserPreference;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 /**
@@ -205,5 +206,55 @@ class ProfileControllerTest extends ControllerBaseTest
         $user = $this->getUserByRole($em, User::ROLE_USER);
 
         $this->assertEquals(['ROLE_TEAMLEAD', 'ROLE_SUPER_ADMIN', 'ROLE_USER'], $user->getRoles());
+    }
+
+    public function testPreferencesAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/prefs');
+
+        /** @var User $user */
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $this->getUserByRole($em, User::ROLE_USER);
+
+        $this->assertEquals(82, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
+        $this->assertEquals('green', $user->getPreferenceValue(UserPreference::SKIN));
+        $this->assertEquals(true, $user->getPreferenceValue('theme.fixed_layout'));
+        $this->assertEquals(false, $user->getPreferenceValue('theme.boxed_layout'));
+        $this->assertEquals(false, $user->getPreferenceValue('theme.collapsed_sidebar'));
+        $this->assertEquals(true, $user->getPreferenceValue('theme.mini_sidebar'));
+        $this->assertEquals('month', $user->getPreferenceValue('calendar.initial_view'));
+
+        $form = $client->getCrawler()->filter('form[name=user_preferences_form]')->form();
+        $client->submit($form, [
+            'user_preferences_form' => [
+                'preferences' => [
+                    ['name' => UserPreference::HOURLY_RATE, 'value' => 37],
+                    ['name' => UserPreference::SKIN, 'value' => 'blue'],
+                    ['name' => 'theme.fixed_layout', 'value' => false],
+                    ['name' => 'theme.boxed_layout', 'value' => true],
+                    ['name' => 'theme.collapsed_sidebar', 'value' => true],
+                    ['name' => 'theme.mini_sidebar', 'value' => false],
+                    ['name' => 'calendar.initial_view', 'value' => 'agendaDay'],
+                ]
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/prefs'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertHasFlashSuccess($client);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $this->getUserByRole($em, User::ROLE_USER);
+
+        $this->assertEquals(37, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
+        $this->assertEquals('blue', $user->getPreferenceValue(UserPreference::SKIN));
+        $this->assertEquals(false, $user->getPreferenceValue('theme.fixed_layout'));
+        $this->assertEquals(true, $user->getPreferenceValue('theme.boxed_layout'));
+        $this->assertEquals(true, $user->getPreferenceValue('theme.collapsed_sidebar'));
+        $this->assertEquals(false, $user->getPreferenceValue('theme.mini_sidebar'));
+        $this->assertEquals('agendaDay', $user->getPreferenceValue('calendar.initial_view'));
     }
 }

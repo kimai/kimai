@@ -14,8 +14,6 @@ use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @coversDefaultClass \App\Command\CreateUserCommand
@@ -36,15 +34,10 @@ class CreateUserCommandTest extends KernelTestCase
 
         $passwordEncoder = $container->get('security.password_encoder');
 
-        $validationResult = $this->getMockBuilder(ConstraintViolationListInterface::class)->getMock();
-        $validationResult->method('count')->willReturn(0);
-        $validator = $this->getMockBuilder(ValidatorInterface::class)->getMock();
-        $validator->method('validate')->willReturn($validationResult);
-
         $this->application->add(new CreateUserCommand(
             $passwordEncoder,
             $container->get('doctrine'),
-            $validator
+            $container->get('validator')
         ));
     }
 
@@ -73,6 +66,14 @@ class CreateUserCommandTest extends KernelTestCase
         ]);
 
         return $commandTester;
+    }
+
+    public function testUserWithValidationProblem()
+    {
+        $commandTester = $this->createUser('xx', '', 'ROLE_USER', '');
+        $output = $commandTester->getDisplay();
+        $this->assertContains('[ERROR] plainPassword ()', $output);
+        // TODO the test validator is misconfigured, doesn't find "short username" and "empty email"
     }
 
     public function testUserAlreadyExisting()

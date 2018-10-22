@@ -155,8 +155,9 @@ kimai:
         activeUsersTotal: { title: stats.userActiveTotal, query: users, icon: user, color: red }
         activeRecordings: { title: stats.activeRecordings, query: active, icon: duration, color: red }
 
-    defaults:
-        customer:
-            timezone: Europe/Berlin
-            country: DE
-            currency: EUR
+    # Default settings used to populate forms
+    #defaults:
+    #    customer:
+    #        timezone: Europe/Berlin
+    #        country: DE
+    #        currency: EUR

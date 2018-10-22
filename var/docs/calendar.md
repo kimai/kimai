@@ -3,7 +3,7 @@
 Kimai 2 provides a calendar view, which displays your timesheet entries in a easy readable format.
 You can choose between a monthly, weekly and daily view.
 
-The calendar view look and feel is configured with the config keys below `kimai.calendar` in `kimai.yaml`:  
+The calendar view look and feel is configured with the config keys below `kimai.calendar` in `kimai.yaml` / your [local.yaml](configurations.md):  
 
 ```yaml
 kimai:
@@ -22,7 +22,14 @@ kimai:
 - `businessHours.begin` the start time of your working day, which will be highlighted in the weekly and daily view (default: 08:00 / 8am)
 - `businessHours.end` the end time of your working day, which will be highlighted in the weekly and daily view (default: 20:00 / 8pm)
 
-#### Integrating google calender
+## Initial view
+
+The initial view for the calendar is `month`.
+It is a user specific setting and each user can configure it in his _User profile_ at _Preferences_.  
+
+Available options are: `month`, `agendaWeek`, `agendaDay`
+
+## Integrating google calender
 
 If you want to embed Google calendars e.g. to display regional holidays or company events you can import (multiple) Google calendars.
 
