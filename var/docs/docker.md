@@ -1,15 +1,15 @@
-#Docker
+# Docker
 
  * [Developer docker](#developing-in-a-docker) (apache, sqlite)
  * [Production docker](#Production-docker-compose) (docker-compose, mariadb, nginx, php-fpm)
 
-##Developing in a docker
+## Developing in a docker
 
 The developer docker manages the resources required to run a checkout of Kimai against locally hosted files.  The DB data is stored in sqlite database.  File edits against the local files are reflected in the running docker.
 
-###Requirements
+### Requirements
 
-####Docker
+#### Docker
 
 Follow the follwing links to install docker on your OS.
 
@@ -18,13 +18,13 @@ Follow the follwing links to install docker on your OS.
  * Ubuntu: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04
  * Windows: https://docs.docker.com/docker-for-windows/install/
 
-###Building the development docker
+### Building the development docker
 
 You can change the docker tag if you want. Remeber the dot at the end of the command.
 
     docker build --rm -t tobybatch/kimai:dev .
 
-###Run the development docker.
+### Run the development docker.
 
 The docker needs to write out it's cache and log files.  This can cause permissions issues between the host and the docker process.  To alleviate this start the docker with a UID/GID and the whole file tree will be chown to that user.  In the example below it chowns to the current user.
 
@@ -56,7 +56,7 @@ You can then hit the server on http://localhost:8080
     * ```tobybatch/kimai:dev```
       Run the container that was built inthe previous section
 
-###Running commands in the container
+### Running commands in the container
 
 We can run commands in the container.  Just docker know which container you want to affect.
 
@@ -66,13 +66,13 @@ e.g. Clear the caches
 
     docker exec -ti kimai bin/console cache:clear
 
-####Get a shell
+#### Get a shell
 
 Open a bash shell in the running container.
 
     docker exec -ti kimai bash
 
-####Install developer fixtures
+#### Install developer fixtures
 
 We can reset and populate the DB with fixture data.  See [Development installation](https://github.com/kevinpapst/kimai2/blob/master/var/docs/installation.md#development-installation)
 
@@ -89,15 +89,15 @@ Install Bats, and in the .docker sub folder of this project directory run the te
     cd .docker
     make test
 
-##Production docker compose
+## Production docker compose
 
-###Requirements
+### Requirements
 
-####Docker-compose
+#### Docker-compose
 
 You will need to install docker compose: https://docs.docker.com/compose/install/
 
-###Running the cluster
+### Running the cluster
 
 Make sure you are in the ```.docker``` sub-folder of the install root:
 
@@ -108,23 +108,23 @@ If you add the -d flag you'll run in the background:
 
     docker-compose up --build -d
 
-###Create an admin user
+### Create an admin user
 
 In a seperate terminal (unless you started into the background) run:
 
     docker-compose exec php bin/console kimai:create-user username admin@example.com ROLE_SUPER_ADMIN
 
-###Running commands
+### Running commands
 
 The php image has the kimai installation.  You can run any shell command against that instance:
 
     docker-compose exec php WHATEVER COMMAND YOU WANT
 
-###Data persitance
+### Data persitance
 
 The mysql instance persists it's data to a docker volume.  You can either back up that volume (FOLDERNAME_mysql) or follow the instructions here: https://hub.docker.com/_/mysql/
 
-####tldr;
+#### tldr;
 
 
     docker-compose exec db sh -c 'exec mysqldump -ulamp -plamp lamp' > /some/path/on/your/host/all-databases.sql
