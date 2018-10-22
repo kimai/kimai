@@ -3,7 +3,7 @@ BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
 VERSION = $(subst /,_,$(BRANCH))
 
 test:
-	env NAME=$(NAME) VERSION=$(VERSION) bats tests.bats
+	env NAME=$(NAME) VERSION=$(VERSION) bats --tap tests.bats
 
 build:
 	docker build -t $(NAME):$(VERSION) --rm ..

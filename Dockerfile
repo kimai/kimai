@@ -41,7 +41,7 @@ RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-di
      # apt-get -y autoremove && \
      # apt-get clean
 
-ADD .docker/startup.sh /startup.sh
+ADD .docker/startup-dev.sh /startup.sh
 WORKDIR /opt/kimai
 
 ENV PORT=8080
