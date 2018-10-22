@@ -1,0 +1,57 @@
+version: '2.1'
+services:
+    db:
+        image: mysql:5.6
+        environment:
+            MYSQL_USER: lamp
+            MYSQL_PASSWORD: lamp
+            MYSQL_DATABASE: lamp
+            MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+        volumes:
+            - mysql:/var/lib/mysql
+        restart: always
+        healthcheck:
+            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+            # test: ["CMD", "mysql" ,"-u", "lamp", "-plamp", "-h", "localhost", "lamp", "-e", "'desc user;'"]
+            interval: 20s
+            retries: 10
+
+    php:
+        image: kimai
+        build:
+            context: .
+            args:
+                VERSION: 0.5
+                MAILER_FROM: docker@example.com
+                MAILER_URL: null://127.0.0.1
+        links: [ db ]
+        ports:
+            - "9000:9000"
+            - "8001:8001"
+        depends_on:
+            db:
+                condition: service_healthy
+        environment:
+            VERSION: 0.5
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./php.ini:/usr/local/etc/php/php.ini
+            - kimai:/var/www/html
+            - ./initscripts:/var/tmp/init-sql
+
+    web:
+        image: nginx:latest
+        ports:
+            - "8080:80"
+        links:
+            - php
+        depends_on:
+            - php
+        volumes:
+            - ./default.conf:/etc/nginx/conf.d/default.conf
+            - kimai:/var/www/html
+
+volumes:
+    kimai:
+    mysql:
