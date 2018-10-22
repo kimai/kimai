@@ -3,7 +3,7 @@
  * [Developer docker](#developing-in-a-docker) (apache, sqlite)
  * [Production docker](#production-docker-compose) (docker-compose, mariadb, nginx, php-fpm
 
-## Developing in a docker (#developing-in-a-docker)
+## Developing in a docker (developing-in-a-docker)
 
 The developer docker manages the resources required to run a checkout of Kimai against locally hosted files.  The DB data is stored in sqlite database.  File edits against the local files are reflected in the running docker.
 
@@ -89,7 +89,7 @@ Install Bats, and in the .docker sub folder of this project directory run the te
     cd .docker
     make test
 
-## Production docker-compose)(#production-docker-compose)
+## Production docker-compose)(production-docker-compose)
 
 ### Requirements
 
