@@ -20,8 +20,8 @@ TABLE_COUNT=$(/var/www/html/bin/console doctrine:query:sql "select * from kimai2
 if [ "$?" != 0 ]; then
     # We can't find the users table.  We'll usae this to guess we don't have a schema installed.
     # Is there a better way of doing this?
-    /var/www/html/bin/console -y doctrine:schema:create
-    /var/www/html/bin/console -y doctrine:migrations:version --add --all
+    /var/www/html/bin/console -n doctrine:schema:create
+    /var/www/html/bin/console -n doctrine:migrations:version --add --all
 fi
 
 # If we have a start up/seed sql file run that.

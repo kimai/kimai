@@ -1,8 +1,22 @@
 # Docker
 
-## Developing in a docker
+ * [Developer docker](#developing-in-a-docker) (apache, sqlite)
+ * [Production docker](#production-docker-compose) (docker-compose, mariadb, nginx, php-fpm
 
-The docker file in the root of the source tree can be used to taer up development server.  It needs to mount the files from the host ar run time so edits on the host will be reflected in the docker.
+## Developing in a docker (#developing-in-a-docker)
+
+The developer docker manages the resources required to run a checkout of Kimai against locally hosted files.  The DB data is stored in sqlite database.  File edits against the local files are reflected in the running docker.
+
+## Requirements
+
+### Docker
+
+Follow the follwing links to install docker on your OS.
+
+ * Debian: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-debian-9
+ * Fedora: https://www.techrepublic.com/article/how-to-install-docker-on-fedora-25/
+ * Ubuntu: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04
+ * Windows: https://docs.docker.com/docker-for-windows/install/
 
 ## Building the development docker
 
@@ -74,3 +88,44 @@ Install Bats, and in the .docker sub folder of this project directory run the te
 
     cd .docker
     make test
+
+## Production docker-compose)(#production-docker-compose)
+
+### Requirements
+
+#### Docker-compose
+
+You will need to install docker compose: https://docs.docker.com/compose/install/
+
+### Running the cluster
+
+Make sure you are in the ```.docker``` sub-folder of the install root:
+
+    cd .docker
+    docker-compose up --build
+
+If you add the -d flag you'll run in the background:
+
+    docker-compose up --build -d
+
+### Create an admin user
+
+In a seperate terminal (unless you started into the background) run:
+
+    docker-compose exec php bin/console kimai:create-user username admin@example.com ROLE_SUPER_ADMIN
+
+### Running commands
+
+The php image has the kimai installation.  You can run any shell command against that instance:
+
+    docker-compose exec php WHATEVER COMMAND YOU WANT
+
+### Data persitance
+
+The mysql instance persists it's data to a docker volume.  You can either back up that volume (FOLDERNAME_mysql) or follow the instructions here: https://hub.docker.com/_/mysql/
+
+#### tldr;
+
+
+    docker-compose exec db sh -c 'exec mysqldump -ulamp -plamp lamp' > /some/path/on/your/host/all-databases.sql
+
