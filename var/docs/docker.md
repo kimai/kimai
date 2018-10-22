@@ -78,7 +78,7 @@ We can reset and populate the DB with fixture data.  See [Development installati
 
     docker exec -ti kimai bin/console kimai:reset-dev
 
-###Tests
+## Tests
 
 We use Bats (Bash Automated Testing System) to test this image:
 
