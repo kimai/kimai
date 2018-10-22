@@ -2,6 +2,7 @@
 
  * [Developer docker](#developing-in-a-docker) (apache, sqlite)
  * [Production docker](#production-docker-compose) (docker-compose, mariadb, nginx, php-fpm)
+ * [Tests](#tests)
 
 ## Developing in a docker
 
@@ -78,17 +79,6 @@ We can reset and populate the DB with fixture data.  See [Development installati
 
     docker exec -ti kimai bin/console kimai:reset-dev
 
-## Tests
-
-We use Bats (Bash Automated Testing System) to test this image:
-
-> https://github.com/sstephenson/bats
-
-Install Bats, and in the .docker sub folder of this project directory run the tests:
-
-    cd .docker
-    make test
-
 ## Production docker compose
 
 ### Requirements
@@ -129,3 +119,13 @@ The mysql instance persists it's data to a docker volume.  You can either back u
 
     docker-compose exec db sh -c 'exec mysqldump -ulamp -plamp lamp' > /some/path/on/your/host/all-databases.sql
 
+## Tests
+
+We use Bats (Bash Automated Testing System) to test this image:
+
+> https://github.com/sstephenson/bats
+
+Install Bats, and in the .docker sub folder of this project directory run the tests:
+
+    cd .docker
+    make test
