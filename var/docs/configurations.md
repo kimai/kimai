@@ -233,11 +233,11 @@ kimai:
                 factor: 1.5
 ```
 
-## Customer (kimai.yaml)
+## Forms (kimai.yaml)
 
-### Defaults
+You can set some defaults for various forms within Kimai, to easify the creation process.
 
-You can set some defaults for customer creation.  These override the default timezone, currency and country set in kimai.yml
+### Customer creation
 
 ```yaml
 kimai:

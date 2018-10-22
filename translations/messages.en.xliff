@@ -383,6 +383,23 @@
                 <source>label.theme.mini_sidebar</source>
                 <target>Toggle the size of the left sidebar's header (full or collapse)</target>
             </trans-unit>
+            <trans-unit id="label.calendar.initial_view">
+                <source>label.calendar.initial_view</source>
+                <target>Initial calendar view</target>
+            </trans-unit>
+            <!-- Options for user-preference label.calendar.initial_view -->
+            <trans-unit id="month">
+                <source>month</source>
+                <target>Month</target>
+            </trans-unit>
+            <trans-unit id="agendaWeek">
+                <source>agendaWeek</source>
+                <target>Week</target>
+            </trans-unit>
+            <trans-unit id="agendaDay">
+                <source>agendaDay</source>
+                <target>Day</target>
+            </trans-unit>
 
             <!--
               Help - Manual

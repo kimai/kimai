@@ -32,7 +32,7 @@ class CustomerController extends AbstractController
      * @var array
      */
     private $defaults;
-    
+
     /**
      * @param array $defaults
      */

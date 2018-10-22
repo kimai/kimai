@@ -304,25 +304,4 @@ class Configuration implements ConfigurationInterface
 
         return $node;
     }
-
-    protected function getDefaultsNode()
-    {
-        $builder = new TreeBuilder();
-        $node = $builder->root('defaults');
-
-        $node
-            ->requiresAtLeastOneElement()
-                ->useAttributeAsKey('key')
-                ->arrayPrototype()
-                    ->children()
-                        ->scalarNode('timezone')->defaultValue('Europe/Berlin')->end()
-                        ->scalarNode('country')->defaultValue('DE')->end()
-                        ->scalarNode('currency')->defaultValue('EUR')->end()
-                    ->end()
-                ->end()
-            ->end()
-        ;
-
-        return $node;
-    }
 }
