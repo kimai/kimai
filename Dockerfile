@@ -31,20 +31,8 @@ RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-di
         pdo_mysql \
         zip
 
-# RUN apt-get purge -y \
-        # git \
-        # libicu-dev \
-        # libjpeg-dev \
-        # libldap2-dev \
-        # libldb-dev \
-        # libpng-dev \
-        # zip \
-        # git \
-        # unzip \
-        # zip \
-        # && \
-     # apt-get -y autoremove && \
-     # apt-get clean
+RUN apt-get -y autoremove && \
+     apt-get clean
 
 ADD .docker/startup-dev.sh /startup.sh
 WORKDIR /opt/kimai

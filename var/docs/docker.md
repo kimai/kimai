@@ -84,7 +84,7 @@ Open a bash shell in the running container.
 
 #### Install developer fixtures
 
-We can reset and populate the DB with fixture data.  See [Development installation](https://github.com/kevinpapst/kimai2/blob/master/var/docs/installation.md#development-installation)
+We can reset and populate the DB with fixture data.  See [Development installation](installation.md#development-installation)
 
     docker exec -ti kimai bin/console kimai:reset-dev
 

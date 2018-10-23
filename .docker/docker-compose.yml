@@ -22,7 +22,7 @@ services:
             retries: 10
 
     php:
-        image: kimai
+        image: kimai2
         build:
             context: .
             args:

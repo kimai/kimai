@@ -5,7 +5,7 @@
 
 setup() {
   IMAGE_NAME="$NAME:$VERSION"
-  CONTAINER_NAME="kimai_test"
+  CONTAINER_NAME="kimai2_test"
 }
 
 build_image() {
