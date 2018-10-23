@@ -34,6 +34,7 @@ You can then hit the server on http://localhost:8080
     docker run \
         -ti \
         --name kimai \
+        --rm \
         -p 8080:8080 \
         -v $(pwd):/opt/kimai \
         -e _UID=$(id -u) \
@@ -46,6 +47,8 @@ You can then hit the server on http://localhost:8080
       Keep an interactive shell attached to the container
     * ```--name kimai```
       Give the running container a name
+    * ```--rm```
+      Clean up the dev container when it exists
     * ```-p 8080:8080```
       Foward port 8080 into the container
     * ```-v $(pwd):/opt/kimai```
