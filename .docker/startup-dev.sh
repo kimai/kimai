@@ -12,7 +12,6 @@ if [ ! -e /opt/kimai/var/data/kimai.sqlite ]; then
     /opt/kimai/bin/console doctrine:schema:create
     /opt/kimai/bin/console -n doctrine:migrations:version --add --all
     /opt/kimai/bin/console cache:warmup --env=prod
-    /opt/kimai/bin/console kimai:create-user admin admin@example.com ROLE_SUPER_ADMIN admin
 
     composer require symfony/web-server-bundle --dev
 fi

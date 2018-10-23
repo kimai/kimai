@@ -70,6 +70,12 @@ e.g. Clear the caches
 
     docker exec -ti kimai bin/console cache:clear
 
+#### Create a user
+
+Create an admin user with the username admin and a password of admin:
+
+    docker exec -ti kimai kimai:create-user username admin@example.com ROLE_SUPER_ADMIN admin
+
 #### Get a shell
 
 Open a bash shell in the running container.
