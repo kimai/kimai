@@ -21,7 +21,7 @@ if [ ! -e $APP_PATH/.env ]; then
 fi
 
 # If the schema does not exist then create it (and run the migrations)
-TABLE_COUNT=$(/var/www/html/bin/console doctrine:query:sql "select * from kimai2_users")
+TABLE_COUNT=$(/var/www/html/bin/console doctrine:query:dql "Select u from App\Entity\User u")
 if [ "$?" != 0 ]; then
     # We can't find the users table.  We'll usae this to guess we don't have a schema installed.
     # Is there a better way of doing this?
@@ -38,7 +38,7 @@ for initfile in /var/tmp/init-sql/*; do
     elif [ ${initfile: -4} == ".dql" ]; then
         while IFS='' read -r line || [[ -n "$line" ]]; do
             echo $line
-            /var/www/html/bin/console doctrine:query:sql "$line"
+            /var/www/html/bin/console doctrine:query:dql "$line"
         done < $initfile
 
     elif [ ${initfile: -4} == ".sql" ]; then

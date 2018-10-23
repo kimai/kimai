@@ -3,7 +3,7 @@
 # For the full copyright and license information, please view the LICENSE
 # file that was distributed with this source code.
 
-NAME = tobybatch/kimai
+NAME = tobybatch/kimai2
 BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
 VERSION = $(subst /,_,$(BRANCH))
 
