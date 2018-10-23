@@ -84,6 +84,7 @@ class Extensions extends \Twig_Extension
         'trash' => 'far fa-trash-alt',
         'user' => 'fas fa-user',
         'visibility' => 'far fa-eye',
+        'settings' => 'fas fa-wrench',
     ];
 
     /**
