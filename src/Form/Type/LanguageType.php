@@ -20,15 +20,35 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class LanguageType extends AbstractType
 {
     /**
+     * @var string[]
+     */
+    private $locales = [];
+
+    /**
+     * @param array|string $locales
+     */
+    public function __construct($locales)
+    {
+        if (!is_array($locales)) {
+            $locales = explode('|', $locales);
+        }
+
+        $this->locales = $locales;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $choices = [];
+        foreach ($this->locales as $key) {
+            $name = ucfirst(Intl::getLocaleBundle()->getLocaleName($key, $key));
+            $choices[$name] = $key;
+        }
+
         $resolver->setDefaults([
-            'choices' => [
-                Intl::getLocaleBundle()->getLocaleName('de', 'de') => 'de',
-                Intl::getLocaleBundle()->getLocaleName('en', 'en') => 'en',
-            ]
+            'choices' => $choices
         ]);
     }
 

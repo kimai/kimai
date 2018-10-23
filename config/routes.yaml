@@ -4,10 +4,3 @@ home:
         _controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
         route: homepage
         permanent: true
-
-homepage:
-    path: /{_locale}
-    defaults:
-        _controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
-        route: timesheet
-        permanent: true

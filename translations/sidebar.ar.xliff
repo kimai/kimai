@@ -2,36 +2,12 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file date="2018-09-28T20:00:00Z" source-language="en" target-language="ar" datatype="plaintext" original="none">
         <body>
-            <trans-unit id="home.title">
-                <source>home.title</source>
-                <target>Kimai v2 - %version%</target>
-            </trans-unit>
             <trans-unit id="home.betainfo">
                 <source>home.betainfo</source>
-                <target><![CDATA[شكرًا لك على استخدام أداة تتبع الوقت مفتوحة المصدر <a href="%url%" target="_blank">Kimai</a>.
+                <target><![CDATA[شكرًا لك على استخدام أداة تتبع الوقت مفتوحة المصدر Kimai.
                     هذا الإصدار الجديد حاليًا في مرحلة مبكرة من التطوير وقد تم نشره مسبقًا لجمع التعليقات من مستخدميه ودمج أفكارهم في التخطيط الإضافي.
-                     لمساعدتي في تحسين <strong>Kimai</strong>, الرجاء إرسال رسالتك على موقع الويب المرتبط. سواء كان لديك أسئلة أو للتبليغ عن خطأ أو عطل أو أفكار للتحسينات ، فإن تعليقاتك ذات قيمة!
+                     لمساعدتي في تحسين Kimai, الرجاء إرسال رسالتك على موقع الويب المرتبط. سواء كان لديك أسئلة أو للتبليغ عن خطأ أو عطل أو أفكار للتحسينات ، فإن تعليقاتك ذات قيمة!
                 ]]></target>
-            </trans-unit>
-            <trans-unit id="made.by.license">
-                <source>made.by.license</source>
-                <target>برمج ب ♥ من قبل مساهمين متطوعين</target>
-            </trans-unit>
-            <trans-unit id="help.title">
-                <source>help.title</source>
-                <target>كتيب</target>
-            </trans-unit>
-            <trans-unit id="help.link">
-                <source>help.subtitle</source>
-                <target>عرض الوثائق</target>
-            </trans-unit>
-            <trans-unit id="preferences.title">
-                <source>preferences.title</source>
-                <target>تفضيلاتك</target>
-            </trans-unit>
-            <trans-unit id="preferences.label.language">
-                <source>preferences.label.language</source>
-                <target>لغة</target>
             </trans-unit>
         </body>
     </file>

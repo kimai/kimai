@@ -230,6 +230,8 @@ class ProfileControllerTest extends ControllerBaseTest
             'user_preferences_form' => [
                 'preferences' => [
                     ['name' => UserPreference::HOURLY_RATE, 'value' => 37],
+                    ['name' => 'timezone', 'value' => 'America/Creston'],
+                    ['name' => 'language', 'value' => 'ar'],
                     ['name' => UserPreference::SKIN, 'value' => 'blue'],
                     ['name' => 'theme.fixed_layout', 'value' => false],
                     ['name' => 'theme.boxed_layout', 'value' => true],
@@ -250,6 +252,8 @@ class ProfileControllerTest extends ControllerBaseTest
         $user = $this->getUserByRole($em, User::ROLE_USER);
 
         $this->assertEquals(37, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
+        $this->assertEquals('', $user->getPreferenceValue('America/Creston'));
+        $this->assertEquals('ar', $user->getPreferenceValue('language'));
         $this->assertEquals('blue', $user->getPreferenceValue(UserPreference::SKIN));
         $this->assertEquals(false, $user->getPreferenceValue('theme.fixed_layout'));
         $this->assertEquals(true, $user->getPreferenceValue('theme.boxed_layout'));

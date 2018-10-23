@@ -2,38 +2,22 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file date="2017-01-12T20:00:00Z" source-language="en" target-language="en" datatype="plaintext" original="none">
         <body>
-            <trans-unit id="home.title">
-                <source>home.title</source>
-                <target>Kimai v2 - %version%</target>
-            </trans-unit>
             <trans-unit id="home.betainfo">
                 <source>home.betainfo</source>
-                <target><![CDATA[Thank you for using the open source time-tracker <a href="%url%" target="_blank">Kimai</a>.
+                <target><![CDATA[Thank you for using the open source time-tracker Kimai.
 
                     This new version is currently in an early stage of development and has been published in advance to collect feedback from its users and integrate their ideas into further planning.
 
-                    To help me improve <strong>Kimai</strong>, please send your message on the linked website. Whether you have questions, error messages or ideas for enhancements, your feedback is valuable!
+                    To help me improve Kimai, please send your message on the linked website. Whether you have questions, error messages or ideas for enhancements, your feedback is valuable!
                 ]]></target>
             </trans-unit>
-            <trans-unit id="made.by.license">
-                <source>made.by.license</source>
-                <target>Made with ♥ by great contributors</target>
+            <trans-unit id="home.github">
+                <source>home.github</source>
+                <target>Kimai - Project website</target>
             </trans-unit>
-            <trans-unit id="help.title">
-                <source>help.title</source>
-                <target>Manual</target>
-            </trans-unit>
-            <trans-unit id="help.link">
-                <source>help.subtitle</source>
-                <target>Show documentation</target>
-            </trans-unit>
-            <trans-unit id="preferences.title">
-                <source>preferences.title</source>
-                <target>Your preferences</target>
-            </trans-unit>
-            <trans-unit id="preferences.label.language">
-                <source>preferences.label.language</source>
-                <target>Language</target>
+            <trans-unit id="home.website">
+                <source>home.website</source>
+                <target>Homepage</target>
             </trans-unit>
         </body>
     </file>

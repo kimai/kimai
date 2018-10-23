@@ -30,4 +30,8 @@ class Constants
      * Used in multiple views
      */
     public const GITHUB = 'https://github.com/kevinpapst/kimai2/';
+    /**
+     * Used in multiple views
+     */
+    public const HOMEPAGE = 'https://v2.kimai.org';
 }
