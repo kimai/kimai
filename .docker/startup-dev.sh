@@ -9,7 +9,7 @@
 if [ ! -e /opt/kimai/var/data/kimai.sqlite ]; then
 
     if [ ! -e /opt/kimai/.env ]; then
-        sed 's/prod/dev/g' /opt/kimai/.env.dist > /opt/kimai/.env
+        cp /opt/kimai/.env.dev /opt/kimai/.env
     fi
     composer install
 
