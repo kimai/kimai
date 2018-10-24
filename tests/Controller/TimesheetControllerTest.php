@@ -232,8 +232,12 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
         $this->assertInstanceOf(\DateTime::class, $timesheet->getEnd());
         $this->assertEquals(50, $timesheet->getRate());
-        $this->assertEquals('2018-08-02T20:00:00+00:00', $timesheet->getBegin()->format(\DateTime::ATOM));
-        $this->assertEquals('2018-08-02T20:30:00+00:00', $timesheet->getEnd()->format(\DateTime::ATOM));
+
+        $expected = new \DateTime('2018-08-02T20:00:00');
+        $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getBegin()->format(\DateTime::ATOM));
+
+        $expected = new \DateTime('2018-08-02T20:30:00');
+        $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getEnd()->format(\DateTime::ATOM));
     }
 
     public function testCreateActionWithBeginAndEndValues()
@@ -260,8 +264,12 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
         $this->assertInstanceOf(\DateTime::class, $timesheet->getEnd());
         $this->assertEquals(800, $timesheet->getRate());
-        $this->assertEquals('2018-08-02T10:00:00+00:00', $timesheet->getBegin()->format(\DateTime::ATOM));
-        $this->assertEquals('2018-08-02T18:00:00+00:00', $timesheet->getEnd()->format(\DateTime::ATOM));
+
+        $expected = new \DateTime('2018-08-02T10:00:00');
+        $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getBegin()->format(\DateTime::ATOM));
+
+        $expected = new \DateTime('2018-08-02T18:00:00');
+        $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getEnd()->format(\DateTime::ATOM));
     }
 
     public function testEditAction()

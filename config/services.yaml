@@ -33,10 +33,7 @@ services:
     # ================================================================================
 
     App\EventSubscriber\RedirectToLocaleSubscriber:
-        class: App\EventSubscriber\RedirectToLocaleSubscriber
         arguments: ['@router', '%app_locales%', '%locale%']
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
     App\Calendar\Service:
         arguments:
@@ -81,12 +78,11 @@ services:
     # FORMS
     # ================================================================================
 
-    # form type to edit user roles
     App\Form\Type\UserRoleType:
-        class: App\Form\Type\UserRoleType
         arguments: ["%security.role_hierarchy.roles%"]
-        tags:
-            - { name: form.type }
+
+    App\Form\Type\LanguageType:
+        arguments: ["%app_locales%"]
 
     App\Form\Extension\DocumentationLinkExtension:
         tags:
