@@ -1,4 +1,0 @@
-#!/usr/bin/env sh
-
-docker build --build-arg VERSION=0.5 -t ${IMAGE_NAME} .
-

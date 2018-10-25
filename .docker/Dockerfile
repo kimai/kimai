@@ -5,9 +5,9 @@
 
 FROM php:7.2-fpm-alpine as kimai
 
-ARG VERSION
-ARG MAILER_FROM
-ARG MAILER_URL 
+ARG VERSION=0.5
+ARG MAILER_FROM=kimai@example.com
+ARG MAILER_URL=null://localhost
 
 RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer && \
     apk add --no-cache \
