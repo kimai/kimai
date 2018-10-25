@@ -23,7 +23,7 @@ admin_lte:
         # https://github.com/kevinpapst/AdminLTEBundle/blob/master/Resources/docs/control_sidebar.md
         control_sidebar:
             settings:
-                icon: "fas fa-cogs"
+                icon: "fas fa-user"
                 controller: 'App\Controller\SidebarController::settingsAction'
             home:
                 icon: "fas fa-question-circle"
@@ -31,7 +31,7 @@ admin_lte:
 
     routes:
         adminlte_profile: user_profile
-        adminlte_welcome: dashboard
+        adminlte_welcome: homepage
         adminlte_login: fos_user_security_login
         adminlte_login_check: fos_user_security_check
         adminlte_registration: fos_user_registration_register

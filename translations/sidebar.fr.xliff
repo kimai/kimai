@@ -2,38 +2,14 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file date="2017-01-12T20:00:00Z" source-language="en" target-language="fr" datatype="plaintext" original="sidebar.en.xliff">
         <body>
-            <trans-unit id="home.title">
-                <source>home.title</source>
-                <target>Kimai v2 - %version%</target>
-            </trans-unit>
             <trans-unit id="home.betainfo">
                 <source>home.betainfo</source>
-                <target><![CDATA[Merci d'utiliser ce logiciel libre de suivi de temps <a href="%url%" target="_blank">Kimai</a>.
+                <target><![CDATA[Merci d'utiliser ce logiciel libre de suivi de temps Kimai.
 
                     Cette nouvelle version est actuellement à un stade précoce de développement et a été publié à l'avance afin de recueillir les commentaires de ses utilisateurs et d'intégrer leurs idées dans la planification à venir.
 
-                    Pour m'aider à améliorer<strong>Kimai</strong>, merci de poster votre message sur le site lié. Que vous ayez des questions, des messages ou des idées d'améliorations, vos retours sont précieux ! 
+                    Pour m'aider à améliorer Kimai, merci de poster votre message sur le site lié. Que vous ayez des questions, des messages ou des idées d'améliorations, vos retours sont précieux !
                 ]]></target>
-            </trans-unit>
-            <trans-unit id="made.by.license">
-                <source>made.by.license</source>
-                <target>Réalisé avec ♥ par des contributeurs sympas</target>
-            </trans-unit>
-            <trans-unit id="help.title">
-                <source>help.title</source>
-                <target>Documentation</target>
-            </trans-unit>
-            <trans-unit id="help.link">
-                <source>help.subtitle</source>
-                <target>Consulter la documentation</target>
-            </trans-unit>
-            <trans-unit id="preferences.title">
-                <source>preferences.title</source>
-                <target>Vos préférences</target>
-            </trans-unit>
-            <trans-unit id="preferences.label.language">
-                <source>preferences.label.language</source>
-                <target>Langage</target>
             </trans-unit>
         </body>
     </file>

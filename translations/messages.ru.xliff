@@ -820,7 +820,7 @@
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
                 <target>
-                    Возобновить последнюю деятельность|Возобновить одну их %count% последних деятельностей.
+                    Возобновить последнюю деятельность|Возобновить одну их %count% последних деятельностей.|Возобновить одну их %count% последних деятельностей.
                 </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">

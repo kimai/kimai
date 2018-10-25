@@ -1,0 +1,53 @@
+<?php
+
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace App\Tests\Controller;
+
+use App\Entity\User;
+use App\Entity\UserPreference;
+use App\Form\Type\LanguageType;
+
+/**
+ * @coversDefaultClass \App\Controller\HomepageController
+ * @group integration
+ */
+class HomepageControllerTest extends ControllerBaseTest
+{
+    public function testIsSecure()
+    {
+        $this->assertUrlIsSecured('/homepage');
+    }
+
+    public function testIndexAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->request($client, '/homepage');
+        $this->assertIsRedirect($client, '/en/timesheet/');
+    }
+
+    public function testIndexActionWithChangedLanguage()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $this->getUserByRole($em, User::ROLE_USER);
+
+        $pref = (new UserPreference())
+            ->setName('language')
+            ->setValue('ar')
+            ->setType(LanguageType::class);
+
+        $user->addPreference($pref);
+
+        $em->persist($pref);
+
+        $this->request($client, '/homepage');
+        $this->assertIsRedirect($client, '/ar/timesheet/');
+    }
+}
