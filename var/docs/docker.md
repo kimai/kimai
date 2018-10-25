@@ -2,6 +2,7 @@
 
  * [Developer docker](#developing-in-a-docker) (apache, sqlite)
  * [Production docker](#production-docker-compose) (docker-compose, mariadb, nginx, php-fpm)
+ * [Tests](#tests)
 
 ## Developing in a docker
 
@@ -11,50 +12,55 @@ The developer docker manages the resources required to run a checkout of Kimai a
 
 #### Docker
 
-Follow the follwing links to install docker on your OS.
+Follow the following links to install docker on your OS.
 
  * Debian: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-debian-9
  * Fedora: https://www.techrepublic.com/article/how-to-install-docker-on-fedora-25/
  * Ubuntu: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04
  * Windows: https://docs.docker.com/docker-for-windows/install/
 
-### Building the development docker
-
-You can change the docker tag if you want. Remeber the dot at the end of the command.
-
-    docker build --rm -t tobybatch/kimai:dev .
-
 ### Run the development docker.
 
-The docker needs to write out it's cache and log files.  This can cause permissions issues between the host and the docker process.  To alleviate this start the docker with a UID/GID and the whole file tree will be chown to that user.  In the example below it chowns to the current user.
+First pull the docker image:
 
-You can then hit the server on http://localhost:8080
+    docker pull kimai/kimai2:dev
+
+Open a shell in the root of the project and run the docker:
 
     docker run \
         -ti \
         --name kimai \
+        --rm \
         -p 8080:8080 \
         -v $(pwd):/opt/kimai \
         -e _UID=$(id -u) \
         -e _GID=$(id -g) \
-        tobybatch/kimai:dev
+        kimai/kimai2:dev
+
+You can then hit the server on http://localhost:8080
+
+#### Run command explained:
 
     * ```docker run```
       Run the docker
     * ```-ti```
-      Keep an interactive shell attached to the container
+      Keep an interactive shell attached to the container.  You can replace this with -d if you want the docker to run in the background (daemon mode).
     * ```--name kimai```
       Give the running container a name
+    * ```--rm```
+      Clean up the dev container when it exists.  You can skip this whole line if you want the container to persist between start/stop commands.  Because all the kimai2 files are on the host file system this doesn't really mater.
     * ```-p 8080:8080```
       Foward port 8080 into the container
     * ```-v $(pwd):/opt/kimai```
-      Mount kimai into the container
+      Mount kimai into the container.  The first part of this path need to be an absolute path to the kimai2 project followed by the path /opt/kimai inside the container.  e.g. /home/foo/workspace/kimai2:/opt/kimai
     * ```-e _UID=$(id -u)```
-      Set the UID in the conatiner to be the current user
+      Set the UID in the conatiner to be the current user. The docker needs to write out it's cache and log files.  This can cause permissions issues between the host and the docker process.  To alleviate this start the docker with a UID/GID and the whole file tree will be chown to that user.
     * ```-e _GID=$(id -g)```
-      Set the GID in the conatiner to be the current user
-    * ```tobybatch/kimai:dev```
-      Run the container that was built inthe previous section
+      Set the GID in the conatiner to be the current user. As above
+    * ```kimai/kimai:dev```
+      The container name.
+
+The docker needs to write out it's cache and log files.  This can cause permissions issues between the host and the docker process.  To alleviate this start the docker with a UID/GID and the whole file tree will be chown to that user.  In the example below it chowns to the current user.
 
 ### Running commands in the container
 
@@ -66,6 +72,12 @@ e.g. Clear the caches
 
     docker exec -ti kimai bin/console cache:clear
 
+#### Create a user
+
+Create an admin user with the username admin and a password of admin:
+
+    docker exec -ti kimai kimai:create-user username admin@example.com ROLE_SUPER_ADMIN admin
+
 #### Get a shell
 
 Open a bash shell in the running container.
@@ -74,20 +86,9 @@ Open a bash shell in the running container.
 
 #### Install developer fixtures
 
-We can reset and populate the DB with fixture data.  See [Development installation](https://github.com/kevinpapst/kimai2/blob/master/var/docs/installation.md#development-installation)
+We can reset and populate the DB with fixture data.  See [Development installation](installation.md#development-installation)
 
     docker exec -ti kimai bin/console kimai:reset-dev
-
-## Tests
-
-We use Bats (Bash Automated Testing System) to test this image:
-
-> https://github.com/sstephenson/bats
-
-Install Bats, and in the .docker sub folder of this project directory run the tests:
-
-    cd .docker
-    make test
 
 ## Production docker compose
 
@@ -120,7 +121,7 @@ The php image has the kimai installation.  You can run any shell command against
 
     docker-compose exec php WHATEVER COMMAND YOU WANT
 
-### Data persitance
+### Data persistence
 
 The mysql instance persists it's data to a docker volume.  You can either back up that volume (FOLDERNAME_mysql) or follow the instructions here: https://hub.docker.com/_/mysql/
 
@@ -129,3 +130,13 @@ The mysql instance persists it's data to a docker volume.  You can either back u
 
     docker-compose exec db sh -c 'exec mysqldump -ulamp -plamp lamp' > /some/path/on/your/host/all-databases.sql
 
+## Tests
+
+We use Bats (Bash Automated Testing System) to test this image:
+
+> https://github.com/sstephenson/bats
+
+Install Bats, and in the .docker sub folder of this project directory run the tests:
+
+    cd .docker
+    make test

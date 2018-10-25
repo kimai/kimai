@@ -18,6 +18,11 @@ use App\Tests\DataFixtures\TimesheetFixtures;
  */
 class ActivityControllerTest extends ControllerBaseTest
 {
+    public function testIsSecure()
+    {
+        $this->assertUrlIsSecured('/activities/recent');
+    }
+
     public function testRecentActivitiesAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);

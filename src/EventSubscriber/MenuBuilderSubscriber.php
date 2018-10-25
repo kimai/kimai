@@ -89,10 +89,6 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
             );
         }
 
-        $event->addItem(
-            new MenuItemModel('logout', 'menu.logout', 'fos_user_security_logout', [], 'fas fa-sign-out-alt')
-        );
-
         $this->activateByRoute(
             $event->getRequest()->get('_route'),
             $event->getItems()
