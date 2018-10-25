@@ -38,7 +38,7 @@ ADD .docker/startup-dev.sh /startup.sh
 WORKDIR /opt/kimai
 
 ENV PORT=8080
+ENV _UID=33
+ENV _GID=33
 
 ENTRYPOINT /startup.sh
-
-# Copy the built app into a new container without the build devs, this keeps the container size down.
