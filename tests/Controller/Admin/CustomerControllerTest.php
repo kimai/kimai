@@ -38,6 +38,16 @@ class CustomerControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/customer/create');
         $form = $client->getCrawler()->filter('form[name=customer_edit_form]')->form();
+
+        $kernel = self::bootKernel();
+        $container = $kernel->getContainer();
+        $defaults = $container->getParameter('kimai.defaults')['customer'];
+
+        $editForm = $client->getCrawler()->filter('form[name=customer_edit_form]')->form();
+        $this->assertEquals($defaults['country'], $editForm->get('customer_edit_form[country]')->getValue());
+        $this->assertEquals($defaults['currency'], $editForm->get('customer_edit_form[currency]')->getValue());
+        $this->assertEquals($defaults['timezone'], $editForm->get('customer_edit_form[timezone]')->getValue());
+
         $client->submit($form, [
             'customer_edit_form' => [
                 'name' => 'Test Customer',

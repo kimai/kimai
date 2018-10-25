@@ -11,30 +11,20 @@ namespace App\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Intl\Intl;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Custom form field type to select the language.
+ * Custom form field type to select a calendar view.
  */
-class LanguageType extends AbstractType
+class CalendarViewType extends AbstractType
 {
-    /**
-     * @var string[]
-     */
-    private $locales = [];
+    public const DEFAULT_VIEW = 'month';
 
-    /**
-     * @param array|string $locales
-     */
-    public function __construct($locales)
-    {
-        if (!is_array($locales)) {
-            $locales = explode('|', $locales);
-        }
-
-        $this->locales = $locales;
-    }
+    public const ALLOWED_VIEWS = [
+        'month',
+        'agendaWeek',
+        'agendaDay',
+    ];
 
     /**
      * {@inheritdoc}
@@ -42,13 +32,13 @@ class LanguageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $choices = [];
-        foreach ($this->locales as $key) {
-            $name = ucfirst(Intl::getLocaleBundle()->getLocaleName($key, $key));
-            $choices[$name] = $key;
+        foreach (self::ALLOWED_VIEWS as $name) {
+            $choices[$name] = $name;
         }
 
         $resolver->setDefaults([
-            'choices' => $choices
+            'required' => true,
+            'choices' => $choices,
         ]);
     }
 

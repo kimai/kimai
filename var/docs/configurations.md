@@ -232,3 +232,19 @@ kimai:
                 days: ['saturday','sunday']
                 factor: 1.5
 ```
+
+## Forms (kimai.yaml)
+
+You can set some defaults for various forms within Kimai, to easify the creation process.
+
+### Customer creation
+
+Define the default values for a customer like this: 
+```yaml
+kimai:
+    defaults:
+        customer:
+            timezone: Europe/London
+            country: GB
+            currency: GBP
+```

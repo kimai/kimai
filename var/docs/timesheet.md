@@ -4,7 +4,23 @@ User manual on the timesheet tables and actions.
 
 Kimai 2 provides also a [calendar view](calendar.md), which displays your timesheet entries in an easy readable format.
 
-## Duration only
+## Starting records
+
+You can start new timesheet records like so:
+- Click the **redo** button in the "last activities" dropdown in the upper toolbar
+- Click the **redo** button from one of the activities in your timesheet
+- Start a completely new activity, by clicking the big **play** button in the toolbar
+
+The same goes for running time-records: top them with one-click from the timesheet or from the "running entries" dropdown.
+
+## Stopping records
+
+You can stop timesheet records like so:
+- Click the **stop** button in the "active records" dropdown in the upper toolbar
+- Click the **stop** button from one of the running activities in your timesheet
+- Edit a running activity, add an end date and save
+
+## Duration only mode
 
 When the `duration_only` mode is activated, you will only see the `date` and `duration` fields (see [configurations chapter](configurations.md)).
 
@@ -40,9 +56,9 @@ While calculating the rate of a timesheet entry, the first setting that is found
 - Users hourly rate
 
 If neither a fixed nor a hourly rate can be found, the users rate will be used to calculate the records rate.
-In that case and the users rate is not set or equals 0, the records rate will be set to 0.
+If that is the case and if the users rate is not set or equals 0, the records rate will be set to 0.
 
-The calculation is based on the following formular:
+The calculation is based on the following formula:
 
 - __Fixed rate__: `$fixedRate`
 - __Hourly rate__: `$hourlyRate * ($durationInSeconds / 3600) * $factor`

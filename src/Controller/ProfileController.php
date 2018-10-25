@@ -46,6 +46,14 @@ class ProfileController extends AbstractController
     }
 
     /**
+     * @Route(path="/", name="fos_user_profile_show", methods={"GET"})
+     */
+    public function profileAction()
+    {
+        return $this->redirectToRoute('user_profile', ['username' => $this->getUser()->getUsername()]);
+    }
+
+    /**
      * @Route(path="/{username}", name="user_profile", methods={"GET"})
      * @Security("is_granted('view', profile)")
      */

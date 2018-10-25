@@ -2,7 +2,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    app_locales: en|de|it|fr|es|ru
+    app_locales: en|de|it|fr|es|ru|ar
 
 services:
     # default configuration for services in *this* file
@@ -33,10 +33,7 @@ services:
     # ================================================================================
 
     App\EventSubscriber\RedirectToLocaleSubscriber:
-        class: App\EventSubscriber\RedirectToLocaleSubscriber
         arguments: ['@router', '%app_locales%', '%locale%']
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
     App\Calendar\Service:
         arguments:
@@ -54,6 +51,10 @@ services:
         arguments:
             $timesheetAsMarkdown: "%kimai.timesheet.markdown%"
 
+    App\Controller\Admin\CustomerController:
+        arguments:
+            $defaults: "%kimai.defaults%"
+            
     # ================================================================================
     # DATABASE
     # ================================================================================
@@ -77,12 +78,11 @@ services:
     # FORMS
     # ================================================================================
 
-    # form type to edit user roles
     App\Form\Type\UserRoleType:
-        class: App\Form\Type\UserRoleType
         arguments: ["%security.role_hierarchy.roles%"]
-        tags:
-            - { name: form.type }
+
+    App\Form\Type\LanguageType:
+        arguments: ["%app_locales%"]
 
     App\Form\Extension\DocumentationLinkExtension:
         tags:

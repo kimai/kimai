@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="de" datatype="plaintext" original="messages.en.xliff">
+    <file date="2018-09-28T20:00:00Z" source-language="en" target-language="ar" datatype="plaintext" original="none">
         <body>
             <!--
               Global template keys
             -->
             <trans-unit id="browser.title">
                 <source>browser.title</source>
-                <target>Kimai - Zeiterfassung</target>
+                <target>Kimai - Time Tracking</target>
             </trans-unit>
             <trans-unit id="yes">
                 <source>yes</source>
-                <target>Ja</target>
+                <target>نعم</target>
             </trans-unit>
             <trans-unit id="no">
                 <source>no</source>
-                <target>Nein</target>
+                <target>لا</target>
             </trans-unit>
             <trans-unit id="both">
                 <source>both</source>
-                <target></target>
+                <target>على حد سواء</target>
             </trans-unit>
             <trans-unit id="subtitle.amount">
                 <source>subtitle.amount</source>
-                <target>(insgesamt %count%)</target>
+                <target>(total %count%)</target>
             </trans-unit>
             <trans-unit id="This is a mandatory field">
                 <source>This is a mandatory field</source>
-                <target>Pflichtfeld</target>
+                <target>إلزامي</target>
             </trans-unit>
             <trans-unit id="create">
                 <source>create</source>
-                <target>Erstellen</target>
+                <target>أنتج</target>
             </trans-unit>
             <trans-unit id="confirm.delete">
                 <source>confirm.delete</source>
-                <target>Wollen Sie das wirklich löschen?</target>
+                <target>هل تريد حقًا حذفها؟</target>
             </trans-unit>
             <trans-unit id="confirm.delete_message">
                 <source>confirm.delete_message</source>
                 <target>
-                    Sie müssen das Löschen erneut bestätigen, da verknüpfte Objekte existieren welche ebenfalls mit gelöscht werden.
+                    يجب عليك تأكيد الحذف ، حيث أن هناك عناصر مرتبطة سيتم حذفها أيضًا.
                 </target>
             </trans-unit>
 
@@ -49,27 +49,27 @@
             -->
             <trans-unit id="label.password">
                 <source>label.password</source>
-                <target>Passwort</target>
+                <target>كلمه السر</target>
             </trans-unit>
             <trans-unit id="label.password_repeat">
                 <source>label.password_repeat</source>
-                <target>Passwort wiederholen</target>
+                <target>اعد كلمة السر</target>
             </trans-unit>
             <trans-unit id="label.logout">
                 <source>label.logout</source>
-                <target>Abmelden</target>
+                <target>الخروج</target>
             </trans-unit>
             <trans-unit id="label.user_profile">
                 <source>label.user_profile</source>
-                <target>Mein Profil</target>
+                <target>ملفي</target>
             </trans-unit>
             <trans-unit id="label.api_token">
                 <source>label.api_token</source>
-                <target>API Passwort</target>
+                <target>كلمة مرور API</target>
             </trans-unit>
             <trans-unit id="label.api_token_repeat">
                 <source>label.api_token_repeat</source>
-                <target>API Passwort wiederholen</target>
+                <target>كرر كلمة مرور API</target>
             </trans-unit>
 
             <!--
@@ -77,43 +77,43 @@
             -->
             <trans-unit id="menu.homepage">
                 <source>menu.homepage</source>
-                <target>Dashboard</target>
+                <target>لوحة القيادة</target>
             </trans-unit>
             <trans-unit id="menu.admin">
                 <source>menu.admin</source>
-                <target>Administration</target>
+                <target>الادارة</target>
             </trans-unit>
             <trans-unit id="menu.logout">
                 <source>menu.logout</source>
-                <target>Abmelden</target>
+                <target>الخروج</target>
             </trans-unit>
             <trans-unit id="menu.timesheet">
                 <source>menu.timesheet</source>
-                <target>Meine Zeiten</target>
+                <target>أوقاتي</target>
             </trans-unit>
             <trans-unit id="menu.invoice">
                 <source>menu.invoice</source>
-                <target>Rechnungen</target>
+                <target>الفواتير</target>
             </trans-unit>
             <trans-unit id="menu.admin_timesheet">
                 <source>menu.admin_timesheet</source>
-                <target>Zeiterfassung</target>
+                <target>الجداول الزمنية</target>
             </trans-unit>
             <trans-unit id="menu.admin_customer">
                 <source>menu.admin_customer</source>
-                <target>Kunden</target>
+                <target>زبون</target>
             </trans-unit>
             <trans-unit id="menu.admin_project">
                 <source>menu.admin_project</source>
-                <target>Projekte</target>
+                <target>مشاريع</target>
             </trans-unit>
             <trans-unit id="menu.admin_activity">
                 <source>menu.admin_activity</source>
-                <target>Tätigkeiten</target>
+                <target>أنشطة</target>
             </trans-unit>
             <trans-unit id="menu.admin_user">
                 <source>menu.admin_user</source>
-                <target>Benutzer</target>
+                <target>المستخدم</target>
             </trans-unit>
 
             <!--
@@ -121,7 +121,7 @@
             -->
             <trans-unit id="error.no_entries_found">
                 <source>error.no_entries_found</source>
-                <target>Keine Einträge vorhanden</target>
+                <target>لا يوجد بيانات</target>
             </trans-unit>
 
             <!--
@@ -129,39 +129,39 @@
             -->
             <trans-unit id="label.date">
                 <source>label.date</source>
-                <target>Datum</target>
+                <target>تاريخ</target>
             </trans-unit>
             <trans-unit id="label.starttime">
                 <source>label.starttime</source>
-                <target>Beginn</target>
+                <target>ابدأ</target>
             </trans-unit>
             <trans-unit id="label.endtime">
                 <source>label.endtime</source>
-                <target>Ende</target>
+                <target>النهاية</target>
             </trans-unit>
             <trans-unit id="label.duration">
                 <source>label.duration</source>
-                <target>Dauer</target>
+                <target>المدة الزمنية</target>
             </trans-unit>
             <trans-unit id="label.user">
                 <source>label.user</source>
-                <target>Benutzer</target>
+                <target>المستخدم</target>
             </trans-unit>
             <trans-unit id="label.username">
                 <source>label.username</source>
-                <target>Benutzername</target>
+                <target>اسم المستخدم</target>
             </trans-unit>
             <trans-unit id="label.description">
                 <source>label.description</source>
-                <target>Beschreibung</target>
+                <target>وصف</target>
             </trans-unit>
             <trans-unit id="label.name">
                 <source>label.name</source>
-                <target>Name</target>
+                <target>اسم</target>
             </trans-unit>
             <trans-unit id="label.comment">
                 <source>label.comment</source>
-                <target>Kommentar</target>
+                <target>تعليق</target>
             </trans-unit>
             <trans-unit id="label.id">
                 <source>label.id</source>
@@ -169,23 +169,23 @@
             </trans-unit>
             <trans-unit id="label.visible">
                 <source>label.visible</source>
-                <target>Sichtbar</target>
+                <target>مرئي</target>
             </trans-unit>
             <trans-unit id="label.budget">
                 <source>label.budget</source>
-                <target>Budget</target>
+                <target>ميزانية</target>
             </trans-unit>
             <trans-unit id="label.activity">
                 <source>label.activity</source>
-                <target>Tätigkeit</target>
+                <target>نشاط</target>
             </trans-unit>
             <trans-unit id="label.project">
                 <source>label.project</source>
-                <target>Projekt</target>
+                <target>مشروع</target>
             </trans-unit>
             <trans-unit id="label.hourly_rate">
                 <source>label.hourly_rate</source>
-                <target>Stundenlohn</target>
+                <target>بالساعة</target>
             </trans-unit>
             <trans-unit id="label.skin">
                 <source>label.skin</source>
@@ -193,27 +193,27 @@
             </trans-unit>
             <trans-unit id="label.hours">
                 <source>label.hours</source>
-                <target>Stunden</target>
+                <target>ساعات</target>
             </trans-unit>
             <trans-unit id="label.rate">
                 <source>label.rate</source>
-                <target>Lohn</target>
+                <target>معدل</target>
             </trans-unit>
             <trans-unit id="label.language">
                 <source>label.language</source>
-                <target>Sprache</target>
+                <target>اللغة</target>
             </trans-unit>
             <trans-unit id="label.customer">
                 <source>label.customer</source>
-                <target>Kunde</target>
+                <target>العميل</target>
             </trans-unit>
             <trans-unit id="label.email">
                 <source>label.email</source>
-                <target>Email</target>
+                <target>البريد الإلكتروني</target>
             </trans-unit>
             <trans-unit id="label.create_more">
                 <source>label.create_more</source>
-                <target>Weitere Einträge erstellen</target>
+                <target>إنشاء بيانات أخرى</target>
             </trans-unit>
 
             <!--
@@ -221,27 +221,27 @@
             -->
             <trans-unit id="label.actions">
                 <source>label.actions</source>
-                <target>Aktionen</target>
+                <target>خيارات</target>
             </trans-unit>
             <trans-unit id="action.edit">
                 <source>action.edit</source>
-                <target>Bearbeiten</target>
+                <target>تعديل</target>
             </trans-unit>
             <trans-unit id="action.delete">
                 <source>action.delete</source>
-                <target>Löschen</target>
+                <target>حذف</target>
             </trans-unit>
             <trans-unit id="action.save">
                 <source>action.save</source>
-                <target>Speichern</target>
+                <target>إحفظ</target>
             </trans-unit>
             <trans-unit id="action.back">
                 <source>action.back</source>
-                <target>Zurück</target>
+                <target>رجوع</target>
             </trans-unit>
             <trans-unit id="action.close">
                 <source>action.close</source>
-                <target>Schließen</target>
+                <target>أغلق</target>
             </trans-unit>
 
             <!--
@@ -249,23 +249,23 @@
             -->
             <trans-unit id="dashboard.title">
                 <source>dashboard.title</source>
-                <target>Dashboard</target>
+                <target>لوحة القيادة</target>
             </trans-unit>
             <trans-unit id="dashboard.subtitle">
                 <source>dashboard.subtitle</source>
-                <target>Willkommen!</target>
+                <target>مرحباً!</target>
             </trans-unit>
             <trans-unit id="dashboard.you">
                 <source>dashboard.you</source>
-                <target>Meine Statistiken</target>
+                <target>إحصائياتي</target>
             </trans-unit>
             <trans-unit id="dashboard.all">
                 <source>dashboard.all</source>
-                <target>Alle Benutzer</target>
+                <target>جميع المستخدمين</target>
             </trans-unit>
             <trans-unit id="dashboard.admin">
                 <source>dashboard.admin</source>
-                <target>Administrator</target>
+                <target>مدير</target>
             </trans-unit>
 
             <!--
@@ -273,19 +273,19 @@
             -->
             <trans-unit id="more.info.link">
                 <source>more.info.link</source>
-                <target>Mehr Infos</target>
+                <target>معلومات أخرى</target>
             </trans-unit>
             <trans-unit id="badge.visible">
                 <source>badge.visible</source>
-                <target>Ja</target>
+                <target>نعم</target>
             </trans-unit>
             <trans-unit id="badge.invisible">
                 <source>badge.invisible</source>
-                <target>Nein</target>
+                <target>لا</target>
             </trans-unit>
             <trans-unit id="label.toggle_dropdown">
                 <source>label.toggle_dropdown</source>
-                <target>Menü anzeigen</target>
+                <target>عرض القائمة</target>
             </trans-unit>
 
             <!--
@@ -293,35 +293,35 @@
             -->
             <trans-unit id="timesheet.title">
                 <source>timesheet.title</source>
-                <target>Meine Zeiten</target>
+                <target>أوقاتي</target>
             </trans-unit>
             <trans-unit id="timesheet.subtitle">
                 <source>timesheet.subtitle</source>
-                <target>Verwalte meine Zeiteinträge</target>
+                <target>إدارة تسجيلاتي</target>
             </trans-unit>
             <trans-unit id="timesheet.edit">
                 <source>timesheet.edit</source>
-                <target>Eintrag bearbeiten</target>
+                <target>تعديل السجل</target>
             </trans-unit>
             <trans-unit id="label.begin">
                 <source>label.begin</source>
-                <target>Von</target>
+                <target>من</target>
             </trans-unit>
             <trans-unit id="label.end">
                 <source>label.end</source>
-                <target>Bis</target>
+                <target>إلى</target>
             </trans-unit>
             <trans-unit id="modal.columns.title">
                 <source>modal.columns.title</source>
-                <target>Ändere Spalten-Sichtbarkeit</target>
+                <target>تغيير عرض الخانة</target>
             </trans-unit>
             <trans-unit id="modal.columns.description">
                 <source>modal.columns.description</source>
-                <target>Beim Speichern werden die nicht ausgewählten Spalten ausgeblendet und diese Einstellungen in einem Browser Cookie hinterlegt. Sollten Sie Ihre Cookies löschen, werden die Einstellungen rückgängig gemacht.</target>
+                <target>عند حفظ الخانات غير المحددة سيتم إخفاؤها وسيتم تخزين هذا الإعداد في ملف تعريف ارتباط المتصفح. إذا قمت بحذف ملفات تعريف الارتباط الخاصة بك ، سيتم عكس الإعدادات.</target>
             </trans-unit>
             <trans-unit id="label.fixed_rate">
                 <source>label.fixed_rate</source>
-                <target>Festbetrag</target>
+                <target>معدل ثابت</target>
             </trans-unit>
 
             <!--
@@ -329,31 +329,31 @@
             -->
             <trans-unit id="profile.title">
                 <source>profile.title</source>
-                <target>Benutzerprofil</target>
+                <target>ملف تعريفي للمستخدم</target>
             </trans-unit>
             <trans-unit id="profile.subtitle">
                 <source>profile.subtitle</source>
-                <target>Verwalte meine Einstellungen</target>
+                <target>تعديل الإعدادات الخاصة بي</target>
             </trans-unit>
             <trans-unit id="profile.about_me">
                 <source>profile.about_me</source>
-                <target>Über mich</target>
+                <target>عني</target>
             </trans-unit>
             <trans-unit id="profile.first_entry">
                 <source>profile.first_entry</source>
-                <target>Arbeitet seit</target>
+                <target>العمل منذ</target>
             </trans-unit>
             <trans-unit id="profile.tab_monthly">
                 <source>profile.tab_monthly</source>
-                <target>Jahresstatistik</target>
+                <target>إحصاء سنوي</target>
             </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>
-                <target>Profil</target>
+                <target>الملف الشخصي</target>
             </trans-unit>
             <trans-unit id="profile.password">
                 <source>profile.password</source>
-                <target>Passwort</target>
+                <target>كلمه السر</target>
             </trans-unit>
             <trans-unit id="profile.api-token">
                 <source>profile.api-token</source>
@@ -361,44 +361,27 @@
             </trans-unit>
             <trans-unit id="profile.roles">
                 <source>profile.roles</source>
-                <target>Rollen</target>
+                <target>الأدوار</target>
             </trans-unit>
             <trans-unit id="profile.preferences">
                 <source>profile.preferences</source>
-                <target>Einstellungen</target>
+                <target>تفضيلات</target>
             </trans-unit>
             <trans-unit id="label.theme.fixed_layout">
                 <source>label.theme.fixed_layout</source>
-                <target>Aktiviert das "statische Layout" (linke Navigationsleiste und Header bleiben beim Scrollen an ihrer Stelle)</target>
+                <target>تنشيط التنسيق الثابت. لا يمكنك استخدام التخطيطات الثابتة والمعبأة معًا.</target>
             </trans-unit>
             <trans-unit id="label.theme.boxed_layout">
                 <source>label.theme.boxed_layout</source>
-                <target>Aktiviert das "Boxlayout" (gut für große Bildschirme, lässt sich aber nicht mit dem "statischen Layout" gemeinsam verwenden)</target>
+                <target>تنشيط التنسيق المضمن (أجمل للشاشات الكبيرة)</target>
             </trans-unit>
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
-                <target>Steuert den Status der linken Navigationsleiste (zugeklappt oder geöffnet)</target>
+                <target>تبديل حالة صفحة الشريط الجانبي الأيسر في صفحة (فتح أو طي)</target>
             </trans-unit>
             <trans-unit id="label.theme.mini_sidebar">
                 <source>label.theme.mini_sidebar</source>
-                <target>Aktiviert die minimierte Version der linken Navigationsleiste</target>
-            </trans-unit>
-            <trans-unit id="label.calendar.initial_view">
-                <source>label.calendar.initial_view</source>
-                <target>Initiale Darstellung des Kalenders</target>
-            </trans-unit>
-            <!-- Options for user-preference label.calendar.initial_view -->
-            <trans-unit id="month">
-                <source>month</source>
-                <target>Monat</target>
-            </trans-unit>
-            <trans-unit id="agendaWeek">
-                <source>agendaWeek</source>
-                <target>Woche</target>
-            </trans-unit>
-            <trans-unit id="agendaDay">
-                <source>agendaDay</source>
-                <target>Tag</target>
+                <target>تبديل حجم رأس الشريط الجانبي الأيسر (ممتلئ أو طي)</target>
             </trans-unit>
 
             <!--
@@ -406,11 +389,11 @@
             -->
             <trans-unit id="help.title">
                 <source>help.title</source>
-                <target>Hilfe</target>
+                <target>مساعدة</target>
             </trans-unit>
             <trans-unit id="help.subtitle">
                 <source>help.subtitle</source>
-                <target>Anleitung zur Benutzung und Konfiguration von Kimai (nur auf Englisch verfügbar)</target>
+                <target>تعليمات لاستخدام وتكوين Kimai</target>
             </trans-unit>
 
             <!--
@@ -418,11 +401,11 @@
             -->
             <trans-unit id="admin_timesheet.title">
                 <source>admin_timesheet.title</source>
-                <target>Zeiterfassung</target>
+                <target>الجداول الزمنية</target>
             </trans-unit>
             <trans-unit id="admin_timesheet.subtitle">
                 <source>admin_timesheet.subtitle</source>
-                <target>Zeiten aller Benutzer</target>
+                <target>سجلات جميع المستخدمين</target>
             </trans-unit>
 
             <!--
@@ -430,18 +413,18 @@
             -->
             <trans-unit id="admin_project.title">
                 <source>admin_project.title</source>
-                <target>Projekte</target>
+                <target>مشاريع</target>
             </trans-unit>
             <trans-unit id="admin_project.subtitle">
                 <source>admin_project.subtitle</source>
-                <target>Ein Projekt fasst Tätigkeiten für jeweils einen Kunden in einer Gruppe zusammen</target>
+                <target>يجمع المشروع بين أنشطة العميل في المجموعة</target>
             </trans-unit>
             <trans-unit id="admin_project.delete_confirm">
                 <source>admin_project.delete_confirm</source>
                 <target>
-                    Momentan existieren für das Projekt %project% des Kunden %customer% insgesamt %activities%
-                    Tätigkeiten und %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen.
-                    Diese Tätigkeiten und Zeiteinträge werden ebenfalls mit gelöscht!
+                    حاليا المشروع %project% للعميل %customer% لديه %activities%
+                    الأنشطة و %records% ، سجلات الوقت, والتي تصل إلى ما مجموعه %duration%.
+                    سيتم حذف هذه الأنشطة وسجلات الوقت كذلك!
                 </target>
             </trans-unit>
 
@@ -450,18 +433,18 @@
             -->
             <trans-unit id="admin_activity.title">
                 <source>admin_activity.title</source>
-                <target>Tätigkeiten</target>
+                <target>أنشطة</target>
             </trans-unit>
             <trans-unit id="admin_activity.subtitle">
                 <source>admin_activity.subtitle</source>
-                <target>Aufgaben die zur Zeiterfassung genutzt werden können</target>
+                <target>المهام التي يمكن اختيارها لسجلات الوقت</target>
             </trans-unit>
             <trans-unit id="admin_activity.delete_confirm">
                 <source>admin_activity.delete_confirm</source>
                 <target>
-                    Momentan existieren für die Tätigkeit %activity% im Projekt %project% für den Kunden %customer%
-                    insgesamt %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen. Diese
-                    Zeiteinträge werden ebenfalls mit gelöscht!
+                    حاليا النشاط %activity% في المشروع %project% للعميل %customer%
+                    لديه %records% ، سجلات الوقت والتي تصل إلى ما مجموعه %duration%.
+                    سيتم حذف هذه السجلات الزمنية كذلك!
                 </target>
             </trans-unit>
 
@@ -470,66 +453,65 @@
             -->
             <trans-unit id="admin_customer.title">
                 <source>admin_customer.title</source>
-                <target>Kunden</target>
+                <target>زبون</target>
             </trans-unit>
             <trans-unit id="admin_customer.subtitle">
                 <source>admin_customer.subtitle</source>
-                <target>Ihre Kunden stellen die Basis dar, auf der Sie Projekte und Tätigkeiten anlegen können</target>
+                <target>عميلك هو الأساس لإنشاء المشاريع والأنشطة</target>
             </trans-unit>
             <trans-unit id="label.customer_number">
                 <source>label.customer_number</source>
-                <target>Kundennummer</target>
+                <target>حساب</target>
             </trans-unit>
             <trans-unit id="label.company">
                 <source>label.company</source>
-                <target>Unternehmensbezeichnung</target>
+                <target>اسم الشركة</target>
             </trans-unit>
             <trans-unit id="label.vat">
                 <source>label.vat</source>
-                <target>Umsatzsteuer</target>
+                <target>ضريبة</target>
             </trans-unit>
             <trans-unit id="label.contact">
                 <source>label.contact</source>
-                <target>Kontakt</target>
+                <target>اتصل</target>
             </trans-unit>
             <trans-unit id="label.address">
                 <source>label.address</source>
-                <target>Adresse</target>
+                <target>عنوان</target>
             </trans-unit>
             <trans-unit id="label.country">
                 <source>label.country</source>
-                <target>Land</target>
+                <target>بلد</target>
             </trans-unit>
             <trans-unit id="label.phone">
                 <source>label.phone</source>
-                <target>Telefon</target>
+                <target>هاتف</target>
             </trans-unit>
             <trans-unit id="label.fax">
                 <source>label.fax</source>
-                <target>Fax</target>
+                <target>فاكس</target>
             </trans-unit>
             <trans-unit id="label.mobile">
                 <source>label.mobile</source>
-                <target>Handy</target>
+                <target>التليفون المحمول</target>
             </trans-unit>
             <trans-unit id="label.homepage">
                 <source>label.homepage</source>
-                <target>Homepage</target>
+                <target>الصفحة الرئيسية</target>
             </trans-unit>
             <trans-unit id="label.timezone">
                 <source>label.timezone</source>
-                <target>Zeitzone</target>
+                <target>المنطقة الزمنية</target>
             </trans-unit>
             <trans-unit id="label.currency">
                 <source>label.currency</source>
-                <target>Währung</target>
+                <target>العملة</target>
             </trans-unit>
             <trans-unit id="admin_customer.delete_confirm">
                 <source>admin_customer.delete_confirm</source>
                 <target>
-                    Momentan existieren für den Kunden %customer% insgesamt %project% Projekte mit %activity%
-                    Tätigkeiten, die sich in %records% Zeiteinträgen auf eine Gesamtdauer von %duration% belaufen. Diese
-                    Projekte, Tätigkeiten und Zeiteinträge werden ebenfalls mit gelöscht!
+                    حاليا العميل %customer% لديه %project% مشاريع مع %activity% الأنشطة التي تعد في %records% سجلات الوقت إلى ما مجموعه %duration%.
+                    سيتم حذف هذه المشاريع والأنشطة والسجلات الزمنية كذلك!
                 </target>
             </trans-unit>
 
@@ -538,37 +520,37 @@
             -->
             <trans-unit id="admin_user.title">
                 <source>admin_user.title</source>
-                <target>Benutzer</target>
+                <target>المستخدم</target>
             </trans-unit>
             <trans-unit id="admin_user.subtitle">
                 <source>admin_user.subtitle</source>
-                <target>Alle registrierten Benutzer der Zeitverwaltung</target>
+                <target>جميع المستخدمين المسجلين من تثبيت Kimai الخاص بك</target>
             </trans-unit>
             <trans-unit id="label.alias">
                 <source>label.alias</source>
-                <target>Name</target>
+                <target>اسم</target>
             </trans-unit>
             <trans-unit id="label.title">
                 <source>label.title</source>
-                <target>Titel</target>
+                <target>عنوان</target>
             </trans-unit>
             <trans-unit id="label.avatar">
                 <source>label.avatar</source>
-                <target>Profilbild</target>
+                <target>صورة الملف الشخصي</target>
             </trans-unit>
             <trans-unit id="label.active">
                 <source>label.active</source>
-                <target>Aktiv</target>
+                <target>نشيط</target>
             </trans-unit>
             <trans-unit id="label.roles">
                 <source>label.roles</source>
-                <target>Rolle</target>
+                <target>وظيفة</target>
             </trans-unit>
             <trans-unit id="admin_user.delete_confirm">
                 <source>admin_user.delete_confirm</source>
                 <target>
-                    Momentan existieren für den Benutzer %user% insgesamt %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen.
-                    Diese Zeiteinträge werden ebenfalls mit gelöscht!
+                    حاليا المستخدم %user% لديه %records% سجلات الوقت التي تصل إلى ما مجموعه %duration%.
+                    سيتم حذف هذه السجلات الزمنية كذلك!
                 </target>
             </trans-unit>
 
@@ -577,23 +559,23 @@
             -->
             <trans-unit id="ROLE_SUPER_ADMIN">
                 <source>ROLE_SUPER_ADMIN</source>
-                <target>System-Admin</target>
+                <target>مسؤول النظام</target>
             </trans-unit>
             <trans-unit id="ROLE_ADMIN">
                 <source>ROLE_ADMIN</source>
-                <target>Administrator</target>
+                <target>مدير</target>
             </trans-unit>
             <trans-unit id="ROLE_TEAMLEAD">
                 <source>ROLE_TEAMLEAD</source>
-                <target>Teamleiter</target>
+                <target>قائد الفريق</target>
             </trans-unit>
             <trans-unit id="ROLE_USER">
                 <source>ROLE_USER</source>
-                <target>Benutzer</target>
+                <target>المستخدم</target>
             </trans-unit>
             <trans-unit id="ROLE_CUSTOMER">
                 <source>ROLE_CUSTOMER</source>
-                <target>Kunde</target>
+                <target>زبون</target>
             </trans-unit>
 
             <!--
@@ -601,83 +583,83 @@
             -->
             <trans-unit id="stats.durationToday">
                 <source>stats.durationToday</source>
-                <target>Arbeitszeit heute</target>
+                <target>ساعات العمل اليوم</target>
             </trans-unit>
             <trans-unit id="stats.durationWeek">
                 <source>stats.durationWeek</source>
-                <target>Arbeitszeit diese Woche</target>
+                <target>ساعات العمل هذا الأسبوع</target>
             </trans-unit>
             <trans-unit id="stats.durationMonth">
                 <source>stats.durationMonth</source>
-                <target>Arbeitszeit diesen Monat</target>
+                <target>ساعات العمل هذا الشهر</target>
             </trans-unit>
             <trans-unit id="stats.durationYear">
                 <source>stats.durationYear</source>
-                <target>Arbeitszeit dieses Jahr</target>
+                <target>ساعات العمل هذا العام</target>
             </trans-unit>
             <trans-unit id="stats.durationTotal">
                 <source>stats.durationTotal</source>
-                <target>Arbeitszeit total</target>
+                <target>مجموع ساعات العمل</target>
             </trans-unit>
             <trans-unit id="stats.amountToday">
                 <source>stats.amountToday</source>
-                <target>Umsatz heute</target>
+                <target>الإيرادات اليوم</target>
             </trans-unit>
             <trans-unit id="stats.amountWeek">
                 <source>stats.amountWeek</source>
-                <target>Umsatz diese Woche</target>
+                <target>الإيرادات هذا الأسبوع</target>
             </trans-unit>
             <trans-unit id="stats.amountMonth">
                 <source>stats.amountMonth</source>
-                <target>Umsatz diesen Monat</target>
+                <target>الإيرادات هذا الشهر</target>
             </trans-unit>
             <trans-unit id="stats.amountYear">
                 <source>stats.amountYear</source>
-                <target>Umsatz dieses Jahr</target>
+                <target>الإيرادات هذا العام</target>
             </trans-unit>
             <trans-unit id="stats.amountTotal">
                 <source>stats.amountTotal</source>
-                <target>Umsatz total</target>
+                <target>إجمالي الإيرادات</target>
             </trans-unit>
             <trans-unit id="stats.userActiveToday">
                 <source>stats.userActiveToday</source>
-                <target>Aktive Benutzer heute</target>
+                <target>المستخدمون النشطون اليوم</target>
             </trans-unit>
             <trans-unit id="stats.userActiveWeek">
                 <source>stats.userActiveWeek</source>
-                <target>Aktive Benutzer diese Woche</target>
+                <target>المستخدمون النشطون هذا الأسبوع</target>
             </trans-unit>
             <trans-unit id="stats.userActiveMonth">
                 <source>stats.userActiveMonth</source>
-                <target>Aktive Benutzer diesen Monat</target>
+                <target>المستخدمون النشطون هذا الشهر</target>
             </trans-unit>
             <trans-unit id="stats.userActiveYear">
                 <source>stats.userActiveYear</source>
-                <target>Aktive Benutzer dieses Jahr</target>
+                <target>المستخدمون النشطون هذا العام</target>
             </trans-unit>
             <trans-unit id="stats.userActiveTotal">
                 <source>stats.userActiveTotal</source>
-                <target>Aktive Benutzer jemals</target>
+                <target>المستخدمين النشطين على الإطلاق</target>
             </trans-unit>
             <trans-unit id="stats.activeRecordings">
                 <source>stats.activeRecordings</source>
-                <target>Aktive Zeitmessungen</target>
+                <target>سجلات نشطة</target>
             </trans-unit>
             <trans-unit id="stats.userTotal">
                 <source>stats.userTotal</source>
-                <target>Anzahl Benutzer</target>
+                <target>عدد المستخدمين</target>
             </trans-unit>
             <trans-unit id="stats.activityTotal">
                 <source>stats.activityTotal</source>
-                <target>Anzahl Tätigkeiten</target>
+                <target>عدد الأنشطة</target>
             </trans-unit>
             <trans-unit id="stats.projectTotal">
                 <source>stats.projectTotal</source>
-                <target>Anzahl Projekte</target>
+                <target>عدد المشاريع</target>
             </trans-unit>
             <trans-unit id="stats.customerTotal">
                 <source>stats.customerTotal</source>
-                <target>Anzahl Kunden</target>
+                <target>عدد العملاء</target>
             </trans-unit>
 
             <!--
@@ -685,122 +667,122 @@
             -->
             <trans-unit id="admin_invoice_template.title">
                 <source>admin_invoice_template.title</source>
-                <target>Rechnungsvorlagen</target>
+                <target>قالب الفاتورة</target>
             </trans-unit>
             <trans-unit id="admin_invoice_template.subtitle">
                 <source>admin_invoice_template.subtitle</source>
-                <target>Verwalten Sie Ihre Rechnungsvorlagen, mit deren Hilfe Sie ihre Daten exportieren können.</target>
+                <target>إدارة قوالب الفاتورة التي يمكن استخدامها لتصدير البيانات.</target>
             </trans-unit>
             <trans-unit id="invoice.title">
                 <source>invoice.title</source>
-                <target>Rechnungen</target>
+                <target>الفواتير</target>
             </trans-unit>
             <trans-unit id="invoice.subtitle">
                 <source>invoice.subtitle</source>
-                <target>Hier erstellen Sie Rechnungen für ihre aufgezeichneten Zeiten.</target>
+                <target>م بإنشاء فواتير من بيانات ورقة التوقيت الخاصة بك.</target>
             </trans-unit>
             <trans-unit id="invoice.select_filter">
                 <source>invoice.select_filter</source>
-                <target>Anhand ihrer ausgewählten Filter wurden keine Rechnungseinträge gefunden.</target>
+                <target>لم يتم العثور على بيانات الفواتير بناءً على الفلاتر المحددة.</target>
             </trans-unit>
             <trans-unit id="invoice.preview">
                 <source>invoice.preview</source>
-                <target>Dies ist eine Vorschau der Daten, die in Ihrer Rechnung enthalten sein werden.</target>
+                <target>هذه معاينة للبيانات التي ستظهر في مستند الفاتورة.</target>
             </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
-                <target>Drucken</target>
+                <target>طباعة</target>
             </trans-unit>
             <trans-unit id="invoice_print">
                 <source>invoice_print</source>
-                <target>Rechnung</target>
+                <target>فاتورة</target>
             </trans-unit>
             <trans-unit id="label.template">
                 <source>label.template</source>
-                <target>Vorlage</target>
+                <target>قالب</target>
             </trans-unit>
             <trans-unit id="label.due_days">
                 <source>label.due_days</source>
-                <target>Zahlungsziel in Tagen</target>
+                <target>شروط الدفع في أيام</target>
             </trans-unit>
             <trans-unit id="invoice.due_days">
                 <source>invoice.due_days</source>
-                <target>Zahlungsziel</target>
+                <target>هدف الدفع</target>
             </trans-unit>
             <trans-unit id="invoice.from">
                 <source>invoice.from</source>
-                <target>Von</target>
+                <target>من</target>
             </trans-unit>
             <trans-unit id="invoice.to">
                 <source>invoice.to</source>
-                <target>An</target>
+                <target>إلى</target>
             </trans-unit>
             <trans-unit id="invoice.number">
                 <source>invoice.number</source>
-                <target>Rechnungsnummer</target>
+                <target>رقم الفاتورة</target>
             </trans-unit>
             <trans-unit id="invoice.subtotal">
                 <source>invoice.subtotal</source>
-                <target>Rechnungsbetrag (netto)</target>
+                <target>حاصل الجمع</target>
             </trans-unit>
             <trans-unit id="invoice.tax">
                 <source>invoice.tax</source>
-                <target>Umsatzsteuer</target>
+                <target>ضريبة</target>
             </trans-unit>
             <trans-unit id="invoice.total">
                 <source>invoice.total</source>
-                <target>Rechnungsendbetrag</target>
+                <target>مجموع</target>
             </trans-unit>
             <trans-unit id="invoice.service_date">
                 <source>invoice.service_date</source>
-                <target>Leistungsdatum</target>
+                <target>تاريخ الخدمة</target>
             </trans-unit>
             <trans-unit id="invoice.amount">
                 <source>invoice.amount</source>
-                <target>Anzahl</target>
+                <target>كمية</target>
             </trans-unit>
             <trans-unit id="invoice.total_rate">
                 <source>invoice.total_rate</source>
-                <target>Gesamtpreis</target>
+                <target>السعر الكلي</target>
             </trans-unit>
             <trans-unit id="invoice.unit_price">
                 <source>invoice.unit_price</source>
-                <target>Einzelbetrag</target>
+                <target>سعر الوحدة</target>
             </trans-unit>
             <trans-unit id="label.payment_terms">
                 <source>label.payment_terms</source>
-                <target>Zahlungsinformationen</target>
+                <target>شروط الدفع</target>
             </trans-unit>
             <trans-unit id="invoice.signature_user">
                 <source>invoice.signature_user</source>
-                <target>Leistungsbestätigung: Datum / Name Berater / Unterschrift</target>
+                <target>التأكيد: تاريخ / اسم استشاري / التوقيع</target>
             </trans-unit>
             <trans-unit id="invoice.signature_customer">
                 <source>invoice.signature_customer</source>
-                <target>Leistungsbestätigung: Datum / Name Kunde / Unterschrift</target>
+                <target>التأكيد: تاريخ / اسم العميل / التوقيع</target>
             </trans-unit>
             <trans-unit id="invoice.total_working_time">
                 <source>invoice.total_working_time</source>
-                <target>Gesamtdauer</target>
+                <target>المدة الإجمالية</target>
             </trans-unit>
             <trans-unit id="label.order_number">
                 <source>label.order_number</source>
-                <target>Bestellnummer</target>
+                <target>رقم الطلب</target>
             </trans-unit>
             <trans-unit id="label.invoice_tax_number">
                 <source>label.invoice_tax_number</source>
-                <target>USt-IdNr.:</target>
+                <target>رقم ضريبة القيمة المضافة:</target>
             </trans-unit>
             <trans-unit id="label.invoice_bank_account">
                 <source>label.invoice_bank_account</source>
-                <target>Bankverbindung</target>
+                <target>حساب البنك</target>
             </trans-unit>
             <trans-unit id="label.invoice_salutation">
                 <source>label.invoice_salutation</source>
                 <target>
-                    Sehr geehrte Damen und Herren,
+                    السيدات والسادة،
 
-                    für Ihren Auftrag bedanke ich mich und berechne für meine Leistungen:
+                    أشكرك على طلبك ورسوم خدماتي:
                 </target>
             </trans-unit>
 
@@ -809,51 +791,51 @@
             -->
             <trans-unit id="month.1">
                 <source>month.1</source>
-                <target>Januar</target>
+                <target>يناير</target>
             </trans-unit>
             <trans-unit id="month.2">
                 <source>month.2</source>
-                <target>Februar</target>
+                <target>فبراير</target>
             </trans-unit>
             <trans-unit id="month.3">
                 <source>month.3</source>
-                <target>März</target>
+                <target>آذار</target>
             </trans-unit>
             <trans-unit id="month.4">
                 <source>month.4</source>
-                <target>April</target>
+                <target>نيسان</target>
             </trans-unit>
             <trans-unit id="month.5">
                 <source>month.5</source>
-                <target>Mai</target>
+                <target>مايو</target>
             </trans-unit>
             <trans-unit id="month.6">
                 <source>month.6</source>
-                <target>Juni</target>
+                <target>يونيو</target>
             </trans-unit>
             <trans-unit id="month.7">
                 <source>month.7</source>
-                <target>Juli</target>
+                <target>يوليو</target>
             </trans-unit>
             <trans-unit id="month.8">
                 <source>month.8</source>
-                <target>August</target>
+                <target>أغسطس</target>
             </trans-unit>
             <trans-unit id="month.9">
                 <source>month.9</source>
-                <target>September</target>
+                <target>سبتمبر</target>
             </trans-unit>
             <trans-unit id="month.10">
                 <source>month.10</source>
-                <target>Oktober</target>
+                <target>أكتوبر</target>
             </trans-unit>
             <trans-unit id="month.11">
                 <source>month.11</source>
-                <target>November</target>
+                <target>نوفمبر</target>
             </trans-unit>
             <trans-unit id="month.12">
                 <source>month.12</source>
-                <target>Dezember</target>
+                <target>ديسمبر</target>
             </trans-unit>
 
             <!--
@@ -861,25 +843,25 @@
             -->
             <trans-unit id="active.entries">
                 <source>active.entries</source>
-                <target>Sie haben %count% aktiven Eintrag|Sie haben %count% aktive Einträge</target>
+                <target>{1} عندك %count% سجل نشط|{2} عندك %count% سجلات نشطة|[3,Inf] عندك %count% سجلات نشطة</target>
             </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
-                <target>Alle Einträge anzeigen</target>
+                <target>عرض كل السجلات</target>
             </trans-unit>
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
                 <target>
-                    Ihre letzte Tätigkeit wiederaufnehmen|Eine ihrer %count% letzten Tätigkeiten neustarten
+                    إعادة تشغيل آخر نشاط مسجل الخاص بك، إعادة تشغيل واحد من %count% الأنشطة الأخيرة
                 </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>
-                <target>%activity% in %project% für %customer%</target>
+                <target>%activity% في %project% ل %customer%</target>
             </trans-unit>
             <trans-unit id="timesheet.start">
                 <source>timesheet.start</source>
-                <target>Neue Zeitmessung starten</target>
+                <target>إنشاء سجل زمني جديد</target>
             </trans-unit>
 
             <!--
@@ -887,23 +869,23 @@
             -->
             <trans-unit id="label.pageSize">
                 <source>label.pageSize</source>
-                <target>Anzahl Einträge</target>
+                <target>حجم الصفحة</target>
             </trans-unit>
             <trans-unit id="label.entryState">
                 <source>label.entryState</source>
-                <target>Zeiten</target>
+                <target>السجلات</target>
             </trans-unit>
             <trans-unit id="entryState.all">
                 <source>entryState.all</source>
-                <target>Alle</target>
+                <target>الكل</target>
             </trans-unit>
             <trans-unit id="entryState.running">
                 <source>entryState.running</source>
-                <target>Laufende</target>
+                <target>نشطة</target>
             </trans-unit>
             <trans-unit id="entryState.stopped">
                 <source>entryState.stopped</source>
-                <target>Beendete</target>
+                <target>توقف</target>
             </trans-unit>
         </body>
     </file>
