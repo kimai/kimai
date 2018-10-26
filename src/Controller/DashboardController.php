@@ -13,7 +13,6 @@ use App\Event\DashboardEvent;
 use App\Model\DashboardSection;
 use App\Repository\WidgetRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route(path="/dashboard")
  * @Security("is_granted('ROLE_USER')")
  */
-class DashboardController extends Controller
+class DashboardController extends AbstractController
 {
     /**
      * @var EventDispatcherInterface
