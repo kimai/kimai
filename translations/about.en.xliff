@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file date="2018-10-29T10:00:00Z" source-language="en" target-language="en" datatype="plaintext" original="none">
+        <body>
+            <trans-unit id="about.title">
+                <source>about.title</source>
+                <target>About Kimai</target>
+            </trans-unit>
+            <trans-unit id="about.subtitle">
+                <source>about.subtitle</source>
+                <target>System information</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

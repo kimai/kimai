@@ -28,6 +28,18 @@
             </div>
         </a>
     </li>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <li>
+            <a href="{{ path('about') }}">
+                <i class="menu-icon far fa-copyright bg-aqua"></i>
+
+                <div class="menu-info">
+                    <h4 class="control-sidebar-subheading">{{ 'about.title'|trans({}, 'about') }}</h4>
+                    <p>{{ 'about.subtitle'|trans({}, 'about') }}</p>
+                </div>
+            </a>
+        </li>
+    {% endif %}
 </ul>
 
 <p><br>Made with ♥ by <a href="https://www.kevinpapst.de/">Kevin Papst</a> and <a href="{{ constant('App\\Constants::GITHUB') }}graphs/contributors" target="_blank">great contributors</a>.</p>
