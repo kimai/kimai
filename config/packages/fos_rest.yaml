@@ -1,5 +1,5 @@
 fos_rest:
-#    disable_csrf_role: ROLE_API
+#    disable_csrf_role: IS_AUTHENTICATED_ANONYMOUSLY
 #    access_denied_listener:
 #        enabled:              false
 #        service:              null
@@ -18,8 +18,8 @@ fos_rest:
         default_format: json
         include_format: true
 #        prefix_methods:       true
-#    body_converter:
-#        enabled:              false
+    body_converter:
+        enabled:              true
 #        validate:             false
 #        validation_errors_argument:  validationErrors
 #    service:
@@ -46,8 +46,8 @@ fos_rest:
 #            name:                 ~
 #        templating_formats:
 #            name:                 ~
-#        view_response_listener:
-#            enabled:              true
+        view_response_listener:
+            enabled:              true
 #            force:                true
 #            service:              null
         failed_validation:    400
@@ -67,16 +67,16 @@ fos_rest:
         messages:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
             'Symfony\Component\HttpKernel\Exception\NotFoundHttpException': true
-#    body_listener:
-#        enabled:              true
+    body_listener:
+        enabled:              true
 #        service:              null
 #        default_format:       null
 #        throw_exception_on_unsupported_content_type:  false
 #        decoders:
 #            name:                 ~
-#        array_normalizer:
-#            service:              null
-#            forms:                false
+        array_normalizer:
+            service:              null
+            forms:                true
     format_listener:
         enabled: true
 #        service:              null
