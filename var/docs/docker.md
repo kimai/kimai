@@ -2,7 +2,7 @@
 
 We bundle a simple docker that can be used for test purposes.  Either pull it from docker hub or build it.
 
-## Build the docker:
+## Build the docker
 
     docker build -t kimai/kimai2 .
 
@@ -10,21 +10,28 @@ We bundle a simple docker that can be used for test purposes.  Either pull it fr
 
     docker run -ti -p 8001:8001 --name kimai2 --rm kimai/kimai2
 
-The you can then access the site on http://127.0.0.1:8001 or on Mac you may need to use the docker IP:
+You can then access the site on http://127.0.0.1:8001. If that doesn't work check the IP of your docker:
 
     docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' kimai2
 
-You can hit kimai at that ip on port 8001.
+You can find Kimai at that IP on port 8001.
+
+### Mac using docker-machine
+
+When using dock-machine on your Mac, you need to use the IP of your machine. 
+Considering you started the machine named `default`, you find the IP with:
+
+    docker-machine ip default
 
 ## Running commands in the docker
 
-You can run any command in the container in this fashion once it is started.  Add -ti to attach a terminal.
+You can run any command in the container in this fashion once it is started.  Add `-ti` to attach a terminal.
 
     docker exec -ti kimai2 bash
 
 ## Create a user and dummy data
 
-See the docs [here](installation.md) for full instructions, but this creates a user admin/admin with all privileges.
+See the docs [here](installation.md) for full instructions, but this creates a user `admin/admin` with all privileges.
 
     docker exec kimai2 bin/console kimai:create-user admin admin@example.com ROLE_SUPER_ADMIN admin
 
@@ -45,7 +52,8 @@ Else if you want a fresh database that will persist your changes then copy it ou
     docker run -v /tmp:/tmp kimai/kimai2 cp /opt/kimai/var/data/kimai.sqlite /tmp
     cp /tmp/kimai.sqlite var/data/
 
-This will mount a directory in the container and copy the initialised database to it.  Then copy it into your project tree to provided a working sqlite database.
+This will mount a directory in the container and copy the initialised database to it.
+Then copy it into your project tree to provide a working sqlite database.
 
 ### Install using composer
 
@@ -59,7 +67,7 @@ Then set up kimai2 using composer:
 
 ### Check permissions and environment
 
-And set us into dev mode and fix permissions:
+Swicth into `dev` mode and fix permissions:
 
     sudo chown -R $(id -u):$(id -g) .
     sed "s/prod/dev/g" .env.dist > .env
