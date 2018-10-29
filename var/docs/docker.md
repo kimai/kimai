@@ -4,19 +4,33 @@ We bundle a simple docker that can be used for test purposes.  Either pull it fr
 
 ## Build the docker:
 
-    docker build -t $USER/kimai2 .
+    docker build -t kimai/kimai2 .
 
 ## Run the docker
 
-    docker run -ti -p 8001:8001 --name kimai2 --rm $USER/kimai2
+    docker run -ti -p 8001:8001 --name kimai2 --rm kimai/kimai2
 
-There is an admin user with the password admin but no fixtures installed. To install the fixtures:
+The you can then access the site on http://127.0.0.1:8001 or on Mac you may need to use the docker IP:
 
-    docker exec kimai2 bin/console kimai:reset-dev
+    docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' kimai2
 
-You can run any command in the container in this fashion.  Add -ti to attach a terminal.
+You can hit kimai at that ip on port 8001.
+
+## Running commands in the docker
+
+You can run any command in the container in this fashion once it is started.  Add -ti to attach a terminal.
 
     docker exec -ti kimai2 bash
+
+## Create a user and dummy data
+
+See the docs [here](installation.md) for full instructions, but this crates a user admin/admin with all privileges.
+
+    docker exec kimai2 bin/console kimai:create-user admin admin@example.com ROLE_SUPER_ADMIN admin
+
+To install the fixtures:
+
+    docker exec kimai2 bin/console kimai:reset-dev
 
 ## Developing against the docker
 
@@ -26,7 +40,7 @@ The following installs assume you have cloned the repo and opened a terminal in 
 
 If you already have a sqlite DB set up you can skip this step.
 
-    docker run -v /tmp:/tmp $USER/kimai2 cp /opt/kimai/var/data/kimai.sqlite /tmp
+    docker run -v /tmp:/tmp kimai/kimai2 cp /opt/kimai/var/data/kimai.sqlite /tmp
     cp /tmp/kimai.sqlite var/data/
 
 ### Install using composer
@@ -49,4 +63,4 @@ And set us into dev mode and fix permissions:
 
 ### Run the container
 
-    docker run -ti -p 8001:8001 --name kimai2 -v $(pwd):/opt/kimai --rm $USER/kimai2
+    docker run -ti -p 8001:8001 --name kimai2 -v $(pwd):/opt/kimai --rm kimai/kimai2
