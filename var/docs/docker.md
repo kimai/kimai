@@ -36,16 +36,18 @@ To install the fixtures:
 
 The following installs assume you have cloned the repo and opened a terminal in the root of the project.
 
-### Grab an initialized sqlite database
+### Set up a sqlite database
 
-If you already have a sqlite DB set up you can skip this step.
+If you already have a sqlite DB just copy it to var/data/kimai.sqlite relative to the project root.
+
+Else if you want a fresh database that will persist your changes then copy it out of the container.
 
     docker run -v /tmp:/tmp kimai/kimai2 cp /opt/kimai/var/data/kimai.sqlite /tmp
     cp /tmp/kimai.sqlite var/data/
 
-### Install using composer
+This will mount a directory in the container and copy the initialised database to it.  Then copy it into your project tree to provided a working sqlite database.
 
-If you have already set up kimai2 using composer you can skip this step too.
+### Install using composer
 
 First chown the file tree so the www-data user can run composer:
 
@@ -53,7 +55,9 @@ First chown the file tree so the www-data user can run composer:
 
 Then set up kimai2 using composer:
 
-    docker run -v $(pwd):/opt/kimai composer install
+    docker run -v $(pwd):/opt/kimai kimai/kimai2 composer install
+
+### Check permissions and environment
 
 And set us into dev mode and fix permissions:
 
