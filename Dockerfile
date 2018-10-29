@@ -24,13 +24,6 @@ RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-di
         intl \
         ldap \
         pdo_mysql \
-        zip \
-        && \
-    docker-php-ext-install \
-        gd \
-        intl \
-        ldap \
-        pdo_mysql \
         zip && \
     apt-get -y autoremove && \
     apt-get clean && \
@@ -43,7 +36,6 @@ RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-di
     bin/console cache:warmup && \
     chown -R www-data:www-data var
 
-ENV PORT=8080
-
+EXPOSE 8001
 USER www-data
 CMD /opt/kimai/bin/console server:run 0.0.0.0:8001
