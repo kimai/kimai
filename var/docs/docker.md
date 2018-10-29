@@ -24,7 +24,7 @@ You can run any command in the container in this fashion once it is started.  Ad
 
 ## Create a user and dummy data
 
-See the docs [here](installation.md) for full instructions, but this crates a user admin/admin with all privileges.
+See the docs [here](installation.md) for full instructions, but this creates a user admin/admin with all privileges.
 
     docker exec kimai2 bin/console kimai:create-user admin admin@example.com ROLE_SUPER_ADMIN admin
 
