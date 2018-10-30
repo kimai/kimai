@@ -12,11 +12,14 @@ namespace App\EventSubscriber;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\UserPreferenceEvent;
+use App\Form\Type\CalendarViewType;
+use App\Form\Type\LanguageType;
 use App\Form\Type\SkinType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\HttpKernel\Event\KernelEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -69,6 +72,16 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setValue(0)
                 ->setType(IntegerType::class)
                 ->addConstraint(new Range(['min' => 0])),
+/*
+            (new UserPreference())
+                ->setName('timezone')
+                ->setValue(date_default_timezone_get())
+                ->setType(TimezoneType::class),
+*/
+            (new UserPreference())
+                ->setName('language')
+                ->setValue('en') // TODO fetch from services.yaml
+                ->setType(LanguageType::class),
 
             (new UserPreference())
                 ->setName(UserPreference::SKIN)
@@ -95,12 +108,10 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setValue(true)
                 ->setType(CheckboxType::class),
 
-            /*
             (new UserPreference())
-                ->setName('language')
-                ->setValue('de')
-                ->setType(LanguageType::class),
-            */
+                ->setName('calendar.initial_view')
+                ->setValue(CalendarViewType::DEFAULT_VIEW)
+                ->setType(CalendarViewType::class),
         ];
     }
 

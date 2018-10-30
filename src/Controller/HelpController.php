@@ -11,7 +11,6 @@ namespace App\Controller;
 
 use App\Constants;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -20,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route(path="/help")
  * @Security("is_granted('ROLE_USER')")
  */
-class HelpController extends Controller
+class HelpController extends AbstractController
 {
     public const README = 'README';
     public const DOCS_DIR = 'var/docs/';

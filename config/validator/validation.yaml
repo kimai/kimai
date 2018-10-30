@@ -4,7 +4,7 @@ App\Entity\User:
             - App\Validator\Constraints\Role: ~
         username:
             - NotBlank: ~
-            - Length: { min: 5, max: 60 }
+            - Length: { min: 3, max: 60 }
         email:
             - NotBlank: ~
             - Email: ~

@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
- * Class ThemeOptionsSubscriber
+ * Allows dynamic injection of theme related options.
  */
 class ThemeOptionsSubscriber implements EventSubscriberInterface
 {
@@ -33,7 +33,6 @@ class ThemeOptionsSubscriber implements EventSubscriberInterface
     protected $helper;
 
     /**
-     * ThemeOptionsSubscriber constructor.
      * @param TokenStorageInterface $storage
      * @param ContextHelper $helper
      */

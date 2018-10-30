@@ -154,3 +154,10 @@ kimai:
         activeUsersYear: { title: stats.userActiveYear, query: users, begin: '01 january this year 00:00:00', end: '31 december this year 23:59:59', icon: user, color: yellow }
         activeUsersTotal: { title: stats.userActiveTotal, query: users, icon: user, color: red }
         activeRecordings: { title: stats.activeRecordings, query: active, icon: duration, color: red }
+
+    # Default settings used to populate forms
+    #defaults:
+    #    customer:
+    #        timezone: Europe/Berlin
+    #        country: DE
+    #        currency: EUR

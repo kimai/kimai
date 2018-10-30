@@ -2,38 +2,14 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file date="2017-01-12T20:00:00Z" source-language="en" target-language="es" datatype="plaintext" original="none">
         <body>
-            <trans-unit id="home.title">
-                <source>home.title</source>
-                <target>Kimai v2 - %version%</target>
-            </trans-unit>
             <trans-unit id="home.betainfo">
                 <source>home.betainfo</source>
-                <target><![CDATA[Gracias por usar el control de tiempo ppen source <a href="%url%" target="_blank">Kimai</a>.
+                <target><![CDATA[Gracias por usar el control de tiempo ppen source Kimai.
 
                     Esta nueva versión se encuentra en una etapa inicial de desarrollo y ha sido publicada con la intención de recolectar feedback de los usuarios para incluir sus ideas en planes futuros..
 
-                    Para ayudar a mejorar <strong>Kimai</strong>, por favor enviar sus comentarios al sitio. Sus comentarios, ideas para mejorar o reportes de errores son valiosos y agradezco el tiempo para enviárnoslos!
+                    Para ayudar a mejorar Kimai, por favor enviar sus comentarios al sitio. Sus comentarios, ideas para mejorar o reportes de errores son valiosos y agradezco el tiempo para enviárnoslos!
                 ]]></target>
-            </trans-unit>
-            <trans-unit id="made.by.license">
-                <source>made.by.license</source>
-                <target>Hecho con ♥ por un grandioso equipo de contribuidores</target>
-            </trans-unit>
-            <trans-unit id="help.title">
-                <source>help.title</source>
-                <target>Manual</target>
-            </trans-unit>
-            <trans-unit id="help.link">
-                <source>help.subtitle</source>
-                <target>Ver documentación</target>
-            </trans-unit>
-            <trans-unit id="preferences.title">
-                <source>preferences.title</source>
-                <target>Preferencias</target>
-            </trans-unit>
-            <trans-unit id="preferences.label.language">
-                <source>preferences.label.language</source>
-                <target>Idioma</target>
             </trans-unit>
         </body>
     </file>

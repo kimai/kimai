@@ -111,7 +111,7 @@ class CreateUserCommand extends Command
         $pwd = $this->encoder->encodePassword($user, $user->getPlainPassword());
         $user->setPassword($pwd);
 
-        $errors = $this->validator->validate($user);
+        $errors = $this->validator->validate($user, null, ['registration']);
         if ($errors->count() > 0) {
             /** @var \Symfony\Component\Validator\ConstraintViolation $error */
             foreach ($errors as $error) {
@@ -149,13 +149,13 @@ class CreateUserCommand extends Command
         /* @var QuestionHelper $helper */
         $helper = $this->getHelper('question');
 
-        $passwordQuestion = new Question('Please enter the password');
+        $passwordQuestion = new Question('Please enter the password: ');
         $passwordQuestion->setHidden(true);
         $passwordQuestion->setHiddenFallback(false);
         $passwordQuestion->setValidator(function (?string $value) {
             $password = trim($value);
-            if (empty($password) || strlen($password) < 6) {
-                throw new \Exception('The password is too short, must be at least 6 character');
+            if (empty($password)) {
+                throw new \Exception('The password may not be empty');
             }
 
             return $value;

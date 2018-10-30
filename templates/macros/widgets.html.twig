@@ -1,3 +1,6 @@
+{% macro icon(icon) %}
+<i class="{{ icon|icon(icon) }}"></i>
+{% endmacro %}
 
 {% macro page_actions(tools) %}
     <div class="breadcrumb">

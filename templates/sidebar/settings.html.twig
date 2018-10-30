@@ -16,15 +16,45 @@
     </li>
 </ul>
 
-<h3 class="control-sidebar-heading">{{ 'preferences.title'|trans({}, 'sidebar') }}</h3>
-
-<div class="form-group">
-    <label class="control-sidebar-subheading">
-        {{ 'preferences.label.language'|trans({}, 'sidebar') }}
-        <select class="pull-right" onchange="window.location.href = this.options[this.selectedIndex].value;">
-            {% for locale in locales() %}
-                <option value="{{ path(originalRequest.get('_route', 'homepage'), originalRequest.get('_route_params', [])|merge({ _locale: locale.code })) }}" {% if app.request.locale == locale.code %}selected="selected"{% endif %}>{{ locale.name|capitalize }}</option>
-            {% endfor %}
-        </select>
-    </label>
-</div>
+<ul class="control-sidebar-menu">
+    <li>
+        <a href="{{ path('user_profile_edit', {'username' : user.username}) }}">
+            <div class="pull-left image">
+                <i class="{{ 'user'|icon }} text-gray"></i>
+            </div>
+            <div class="menu-info">
+                <h4 class="control-sidebar-subheading">{{ 'profile.title'|trans }}</h4>
+            </div>
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('user_profile_preferences', {'username' : user.username}) }}">
+            <div class="pull-left image">
+                <i class="{{ 'settings'|icon }} text-gray"></i>
+            </div>
+            <div class="menu-info">
+                <h4 class="control-sidebar-subheading">{{ 'profile.preferences'|trans }}</h4>
+            </div>
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('help') }}">
+            <div class="pull-left image">
+                <i class="{{ 'help'|icon }} text-gray"></i>
+            </div>
+            <div class="menu-info">
+                <h4 class="control-sidebar-subheading">{{ 'help.title'|trans }}</h4>
+            </div>
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('fos_user_security_logout') }}">
+            <div class="pull-left image">
+                <i class="{{ 'logout'|icon }} text-gray"></i>
+            </div>
+            <div class="menu-info">
+                <h4 class="control-sidebar-subheading">{{ 'menu.logout'|trans }}</h4>
+            </div>
+        </a>
+    </li>
+</ul>

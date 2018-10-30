@@ -1,5 +1,34 @@
 # Change Log
 
+## [0.6](https://github.com/kevinpapst/kimai2/tree/0.6) (unreleased)
+[Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.5...0.6)
+
+**Fixed bugs:**
+
+- invalid CSRF-Token [\#344](https://github.com/kevinpapst/kimai2/issues/344)
+
+**Closed issues:**
+
+- Make settings more accessible [\#365](https://github.com/kevinpapst/kimai2/issues/365)
+- Data validation for register page username field. [\#360](https://github.com/kevinpapst/kimai2/issues/360)
+- Option for setting default calendar view [\#359](https://github.com/kevinpapst/kimai2/issues/359)
+- 500: Internal Server Error after login \(new install\) [\#342](https://github.com/kevinpapst/kimai2/issues/342)
+- Invoices export error [\#341](https://github.com/kevinpapst/kimai2/issues/341)
+- Interactive help after fresh installation [\#94](https://github.com/kevinpapst/kimai2/issues/94)
+
+**Merged pull requests:**
+
+- Sidebar - user-profile links and language settings [\#369](https://github.com/kevinpapst/kimai2/pull/369) ([kevinpapst](https://github.com/kevinpapst))
+- added configurable initial calendar view [\#363](https://github.com/kevinpapst/kimai2/pull/363) ([kevinpapst](https://github.com/kevinpapst))
+- decrease minimum username to 3 character [\#362](https://github.com/kevinpapst/kimai2/pull/362) ([kevinpapst](https://github.com/kevinpapst))
+- Default country \(\#2\) [\#358](https://github.com/kevinpapst/kimai2/pull/358) ([tobybatch](https://github.com/tobybatch))
+- composer: removed deprecated symfony/lt, updated others [\#354](https://github.com/kevinpapst/kimai2/pull/354) ([kevinpapst](https://github.com/kevinpapst))
+- updated admin-lte theme bundle to 2.1.1 [\#350](https://github.com/kevinpapst/kimai2/pull/350) ([kevinpapst](https://github.com/kevinpapst))
+- updated timesheet and email documentation [\#349](https://github.com/kevinpapst/kimai2/pull/349) ([kevinpapst](https://github.com/kevinpapst))
+- updated required dependencies [\#346](https://github.com/kevinpapst/kimai2/pull/346) ([kevinpapst](https://github.com/kevinpapst))
+- Fix password reset [\#345](https://github.com/kevinpapst/kimai2/pull/345) ([kevinpapst](https://github.com/kevinpapst))
+- added arabic translations and locale support in datepicker [\#337](https://github.com/kevinpapst/kimai2/pull/337) ([kevinpapst](https://github.com/kevinpapst))
+
 ## [0.5](https://github.com/kevinpapst/kimai2/tree/0.5) (2018-09-27)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.4...0.5)
 
@@ -62,7 +91,6 @@
 
 **Merged pull requests:**
 
-- prepare release 0.4 [\#292](https://github.com/kevinpapst/kimai2/pull/292) ([kevinpapst](https://github.com/kevinpapst))
 - fixed money display in dashboard widgets [\#291](https://github.com/kevinpapst/kimai2/pull/291) ([kevinpapst](https://github.com/kevinpapst))
 - Symfony update 4.1.4 [\#290](https://github.com/kevinpapst/kimai2/pull/290) ([kevinpapst](https://github.com/kevinpapst))
 - do not allow to stop already stopped timesheets [\#289](https://github.com/kevinpapst/kimai2/pull/289) ([kevinpapst](https://github.com/kevinpapst))
@@ -115,7 +143,6 @@
 
 **Merged pull requests:**
 
-- prepare release 0.3 [\#231](https://github.com/kevinpapst/kimai2/pull/231) ([kevinpapst](https://github.com/kevinpapst))
 - Easier creation of Tasks/Projects/User [\#230](https://github.com/kevinpapst/kimai2/pull/230) ([kevinpapst](https://github.com/kevinpapst))
 - Added email configuration docs [\#228](https://github.com/kevinpapst/kimai2/pull/228) ([kevinpapst](https://github.com/kevinpapst))
 - Show revenue only for ROLE\_ADMIN [\#227](https://github.com/kevinpapst/kimai2/pull/227) ([kevinpapst](https://github.com/kevinpapst))
@@ -189,7 +216,6 @@
 **Merged pull requests:**
 
 - \[WIP\] Translations [\#173](https://github.com/kevinpapst/kimai2/pull/173) ([simonschaufi](https://github.com/simonschaufi))
-- prepare v0.2 release \#177 [\#178](https://github.com/kevinpapst/kimai2/pull/178) ([kevinpapst](https://github.com/kevinpapst))
 - various documentation updates [\#176](https://github.com/kevinpapst/kimai2/pull/176) ([kevinpapst](https://github.com/kevinpapst))
 - code styles: header\_comment and ordered\_imports [\#175](https://github.com/kevinpapst/kimai2/pull/175) ([kevinpapst](https://github.com/kevinpapst))
 - Code sniffer rules \#158 [\#172](https://github.com/kevinpapst/kimai2/pull/172) ([kevinpapst](https://github.com/kevinpapst))
