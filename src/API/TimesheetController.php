@@ -128,20 +128,21 @@ class TimesheetController extends Controller
 
         if ($form->isValid()) {
             if (null !== $timesheet->getId()) {
-                return new Response("This method does not support updates", Response::HTTP_BAD_REQUEST);
+                return new Response('This method does not support updates', Response::HTTP_BAD_REQUEST);
             }
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($timesheet);
             $entityManager->flush();
 
-
             $view = new View($timesheet, 200);
             $view->getContext()->setGroups(['Default', 'Entity']);
+
             return $this->viewHandler->handle($view);
         }
 
         $view = new View($form);
+
         return $this->viewHandler->handle($view);
     }
 }

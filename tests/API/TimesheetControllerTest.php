@@ -83,7 +83,6 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertEquals(2016, $result['rate']);
     }
 
-
     public function testNotFound()
     {
         $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/20');
