@@ -4,11 +4,11 @@ We bundle a simple docker that can be used for test purposes.  Either pull it fr
 
 ## Build the docker:
 
-    docker build -t kimai/kimai2 .
+    docker build -t kimai/kimai2:dev .
 
 ## Run the docker
 
-    docker run -ti -p 8001:8001 --name kimai2 --rm kimai/kimai2
+    docker run -ti -p 8001:8001 --name kimai2 --rm kimai/kimai:dev2
 
 The you can then access the site on http://127.0.0.1:8001 or on Mac you may need to use the docker IP:
 
@@ -34,37 +34,13 @@ To install the fixtures:
 
 ## Developing against the docker
 
-The following installs assume you have cloned the repo and opened a terminal in the root of the project.
+It is possible to mount your source tree and sqlite DB into the container at run time.
 
-### Set up a sqlite database
+    docker run --rm -d -p 8001:8001 \
+        -v $(pwd)/src:/opt/kimai/src \
+        -v $(pwd)/var/data/kimai.sqlite:/opt/kimai/var/data/kimai.sqlite \
+        --name kimai2 kimai/kimai2:dev
 
-If you already have a sqlite DB just copy it to var/data/kimai.sqlite relative to the project root.
+Now edits in the local file tree will be served by the container and database changes will persist.
 
-Else if you want a fresh database that will persist your changes then copy it out of the container.
-
-    docker run -v /tmp:/tmp kimai/kimai2 cp /opt/kimai/var/data/kimai.sqlite /tmp
-    cp /tmp/kimai.sqlite var/data/
-
-This will mount a directory in the container and copy the initialised database to it.  Then copy it into your project tree to provided a working sqlite database.
-
-### Install using composer
-
-First chown the file tree so the www-data user can run composer:
-
-    sudo chown -R www-data:www-data .
-
-Then set up kimai2 using composer:
-
-    docker run -v $(pwd):/opt/kimai kimai/kimai2 composer install
-
-### Check permissions and environment
-
-And set us into dev mode and fix permissions:
-
-    sudo chown -R $(id -u):$(id -g) .
-    sed "s/prod/dev/g" .env.dist > .env
-    sudo chown -R www-data:www-data var
-
-### Run the container
-
-    docker run -ti -p 8001:8001 --name kimai2 -v $(pwd):/opt/kimai --rm kimai/kimai2
+See [The official docker documentation](https://docs.docker.com/) for more options on running the container.
