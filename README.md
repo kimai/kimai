@@ -45,6 +45,10 @@ Our roadmap is open for changes and input from the community, please [sent us](i
 
 ## Installation
 
+> **NOTE**
+>
+> sudo -u www-data (a command which grants the "www-data" user temporary administrator/super-user privileges) is intended primarily for server applications. If you are installing Kimai 2 on a desktop computer - even for use in a local network, but where the computer primarily serves as a single user computer - you will avoid permission errors by subsituting "www-data" in the relevant commands with your username (i.e. sudo -u myusername ...).
+
 There are [further infos about installation](var/docs/installation.md) if you have to use FTP or want to develop with Kimai. 
 
 If you want to install Kimai 2 in your production environment, then SSH into your server and change to your webserver root.
@@ -117,6 +121,10 @@ For available roles, please refer to the [user documentation](var/docs/users.md)
 Installation complete: enjoy time-tracking :-)
 
 ## Updating Kimai
+
+> **NOTE**
+> 
+> sudo -u www-data (a command which grants the "www-data" user temporary administrator/super-user privileges) is intended primarily for server applications. If you are installing Kimai 2 on a desktop computer - even for use in a local network, but where the computer primarily serves as a single user computer - you will avoid permission errors by subsituting "www-data" in the relevant commands with your username (i.e. sudo -u myusername ...).
 
 **STOP** 
 
