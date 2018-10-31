@@ -2,23 +2,30 @@
 
 We bundle a simple docker that can be used for test purposes.  Either pull it from docker hub or build it.
 
-## Build the docker:
+## Build the docker
 
     docker build -t kimai/kimai2:dev .
 
 ## Run the docker
 
-    docker run -ti -p 8001:8001 --name kimai2 --rm kimai/kimai:dev2
+    docker run -ti -p 8001:8001 --name kimai2 --rm kimai/kimai2:dev
 
-The you can then access the site on http://127.0.0.1:8001 or on Mac you may need to use the docker IP:
+You can then access the site on http://127.0.0.1:8001. If that doesn't work check the IP of your docker:
 
     docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' kimai2
 
-You can hit kimai at that ip on port 8001.
+You can find Kimai at that IP on port 8001.
+
+### Mac using docker-machine
+
+When using dock-machine on your Mac, you need to use the IP of your machine. 
+Considering you started the machine named `default`, you find the IP with:
+
+    docker-machine ip default
 
 ## Running commands in the docker
 
-You can run any command in the container in this fashion once it is started.  Add -ti to attach a terminal.
+You can run any command in the container in this fashion once it is started.  Add `-ti` to attach a terminal.
 
     docker exec -ti kimai2 bash
 
