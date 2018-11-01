@@ -45,7 +45,9 @@ Our roadmap is open for changes and input from the community, please [sent us](i
 
 ## Installation
 
-There are [further infos about installation](var/docs/installation.md) if you have to use FTP or want to develop with Kimai. 
+> **NOTE**
+>
+> There are [further infos about installation](var/docs/installation.md) if you have to use FTP, want to develop with Kimai, or are setting Kimai up on a personal computer (vs a server). 
 
 If you want to install Kimai 2 in your production environment, then SSH into your server and change to your webserver root.
 You need to install Git and [Composer](https://getcomposer.org/doc/00-intro.md) if you haven't already. 
@@ -117,6 +119,10 @@ For available roles, please refer to the [user documentation](var/docs/users.md)
 Installation complete: enjoy time-tracking :-)
 
 ## Updating Kimai
+
+> **NOTE**
+> 
+> Don't forget tweaks that may be necessary to these instructions if you are using FTP, developing, or updating on a personal computer instead of a server. See [further infos about installation](var/docs/installation.md).
 
 **STOP** 
 
