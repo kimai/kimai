@@ -180,7 +180,12 @@ class ActivityRepository extends AbstractRepository
         if ($query->isGlobalsOnly()) {
             $where->add($qb->expr()->isNull('a.project'));
         } elseif (null !== $query->getProject()) {
-            $where->add('a.project = :project');
+            $where->add(
+                $qb->expr()->orX(
+                    $qb->expr()->eq('a.project', ':project'),
+                    $qb->expr()->isNull('a.project')
+                )
+            );
             $qb->setParameter('project', $query->getProject());
         } elseif (null !== $query->getCustomer()) {
             $where->add('p.customer = :customer');

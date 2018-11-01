@@ -30,6 +30,8 @@ class CustomerFixtures extends Fixture
     public const MAX_CUSTOMERS = 15;
     public const MIN_BUDGET = 0;
     public const MAX_BUDGET = 100000;
+    public const MIN_GLOBAL_ACTIVITIES = 5;
+    public const MAX_GLOBAL_ACTIVITIES = 50;
     public const MIN_PROJECTS_PER_CUSTOMER = 10;
     public const MAX_PROJECTS_PER_CUSTOMER = 50;
     public const MIN_ACTIVITIES_PER_PROJECT = 0;
@@ -66,6 +68,16 @@ class CustomerFixtures extends Fixture
             $manager->flush();
             $manager->clear();
         }
+
+        $amountGlobalActivities = rand(self::MIN_GLOBAL_ACTIVITIES, self::MAX_GLOBAL_ACTIVITIES);
+        for ($c = 1; $c <= $amountGlobalActivities; $c++) {
+            $visibleActivity = 0 != $a % 3;
+            $activity = $this->createActivity($faker, null, $visibleActivity);
+            $manager->persist($activity);
+        }
+
+        $manager->flush();
+        $manager->clear();
     }
 
     /**
@@ -113,11 +125,11 @@ class CustomerFixtures extends Fixture
 
     /**
      * @param Generator $faker
-     * @param Project $project
+     * @param Project|null $project
      * @param bool $visible
      * @return Activity
      */
-    private function createActivity(Generator $faker, Project $project, $visible)
+    private function createActivity(Generator $faker, ?Project $project, $visible)
     {
         $entry = new Activity();
         $entry

@@ -135,6 +135,13 @@ class TimesheetVoter extends AbstractVoter
         if (!$activity->getVisible()) {
             return false;
         }
+
+        // this is only a workaround
+        if (null === $activity->getProject()) {
+            return true;
+        }
+
+        // FIXME check project from timesheet, see above
         if (!$activity->getProject()->getVisible()) {
             return false;
         }

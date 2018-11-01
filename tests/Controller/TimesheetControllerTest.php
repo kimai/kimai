@@ -111,7 +111,9 @@ class TimesheetControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
         $client->submit($form, [
             'timesheet_edit_form' => [
-                'description' => 'Testing is fun!'
+                'description' => 'Testing is fun!',
+                'project' => 1,
+                'activity' => 1,
             ]
         ]);
 
@@ -184,6 +186,8 @@ class TimesheetControllerTest extends ControllerBaseTest
             'timesheet_edit_form' => [
                 'description' => 'Testing is fun!',
                 'fixedRate' => 100,
+                'project' => 1,
+                'activity' => 1,
             ]
         ]);
 
@@ -218,6 +222,8 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'timesheet_edit_form' => [
                 'hourlyRate' => 100,
+                'project' => 1,
+                'activity' => 1,
             ]
         ]);
 
@@ -250,6 +256,8 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'timesheet_edit_form' => [
                 'hourlyRate' => 100,
+                'project' => 1,
+                'activity' => 1,
             ]
         ]);
 

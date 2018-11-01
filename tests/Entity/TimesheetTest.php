@@ -29,6 +29,7 @@ class TimesheetTest extends AbstractEntityTest
         $this->assertSame(0, $sut->getDuration());
         $this->assertNull($sut->getUser());
         $this->assertNull($sut->getActivity());
+        $this->assertNull($sut->getProject());
         $this->assertNull($sut->getDescription());
         $this->assertSame(0.00, $sut->getRate());
         $this->assertNull($sut->getFixedRate());
@@ -56,6 +57,7 @@ class TimesheetTest extends AbstractEntityTest
         $entity = new Timesheet();
         $entity->setUser(new User());
         $entity->setActivity($activity);
+        $entity->setProject($project);
 
         return $entity;
     }

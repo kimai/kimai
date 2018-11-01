@@ -28,7 +28,7 @@ class ActivityType extends AbstractType
         if (null === $activity->getProject()) {
             return null;
         }
-        return '[' . $activity->getProject()->getId() . '] ' . $activity->getProject()->getName();
+        return $activity->getProject()->getName();
     }
 
     /**

@@ -33,7 +33,7 @@
                             {% if entry.description is not empty %}
                                 {{ entry.description|desc2html }}
                             {% else %}
-                                {{ entry.activity.name }} / {{ entry.activity.project.name }}
+                                {{ entry.activity.name }} / {{ entry.project.name }}
                             {% endif %}
                         </td>
                         <td class="text-center" contenteditable="true">

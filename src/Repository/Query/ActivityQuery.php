@@ -17,7 +17,7 @@ use App\Entity\Project;
 class ActivityQuery extends ProjectQuery
 {
     /**
-     * @var Project
+     * @var Project|int
      */
     protected $project;
     /**
@@ -66,7 +66,7 @@ class ActivityQuery extends ProjectQuery
     }
 
     /**
-     * @return Project
+     * @return Project|int
      */
     public function getProject()
     {
@@ -74,7 +74,7 @@ class ActivityQuery extends ProjectQuery
     }
 
     /**
-     * @param Project $project
+     * @param Project|int $project
      * @return $this
      */
     public function setProject($project = null)

@@ -46,8 +46,8 @@
                             {% endif %}
                             <span class="small">
                                 {{ 'label.activity'|trans }}: {{ entry.activity.name }} |
-                                {{ 'label.project'|trans }}: {{ entry.activity.project.name }} |
-                                {{ 'label.customer'|trans }}: {{ entry.activity.project.customer.name }}
+                                {{ 'label.project'|trans }}: {{ entry.project.name }} |
+                                {{ 'label.customer'|trans }}: {{ entry.project.customer.name }}
                             </span>
                         </td>
                         <td>{{ entry.duration|duration }}</td>

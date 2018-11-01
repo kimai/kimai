@@ -83,6 +83,7 @@ class Timesheet
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="timesheets")
      * @ORM\JoinColumn(onDelete="CASCADE")
+     * @Assert\NotNull()
      */
     private $project;
 
@@ -351,6 +352,14 @@ class Timesheet
      */
     public function validate(ExecutionContextInterface $context, $payload)
     {
+        if (null === $this->getActivity()) {
+            $context->buildViolation('A timesheet must have an activity.')
+                ->atPath('activity')
+                ->setTranslationDomain('validators')
+                ->addViolation();
+            return;
+        }
+
         if (null === $this->getActivity()->getProject() && null === $this->getProject()) {
             $context->buildViolation('A timesheet with a global activity must have an assigned project.')
                 ->atPath('project')

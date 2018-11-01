@@ -72,6 +72,7 @@ abstract class AbstractCalculatorTest extends TestCase
             ->setRate(293.27)
             ->setUser(new User())
             ->setActivity((new Activity())->setName('foo'))
+            ->setProject((new Project())->setName('bar'));
         ;
 
         $model = new InvoiceModel();

@@ -13,6 +13,7 @@ namespace App\API;
 
 use App\Entity\Project;
 use App\Repository\ProjectRepository;
+use App\Repository\Query\ProjectQuery;
 use App\Repository\Query\VisibilityQuery;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
@@ -66,14 +67,19 @@ class ProjectController extends Controller
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher)
     {
-        $criteria = [];
+        $query = new ProjectQuery();
+        $query->setResultType(ProjectQuery::RESULT_TYPE_OBJECTS);
 
-        if (null !== ($customer = $paramFetcher->get('customer'))) {
-            $criteria['customer'] = $customer;
+        $customer = $paramFetcher->get('customer');
+        if (!empty($customer)) {
+            $query->setCustomer($customer);
         }
-        $criteria['visibility'] = $paramFetcher->get('visible', VisibilityQuery::SHOW_VISIBLE);
 
-        $data = $this->repository->findBy($criteria);
+        if (null !== ($visible = $paramFetcher->get('visible'))) {
+            $query->setVisibility($visible);
+        }
+
+        $data = $this->repository->findByQuery($query);
         $view = new View($data, 200);
 
         return $this->viewHandler->handle($view);

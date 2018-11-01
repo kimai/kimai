@@ -10,7 +10,7 @@
 namespace App\Form;
 
 use App\Entity\Timesheet;
-use App\Form\Type\ActivityGroupedWithCustomerNameType;
+use App\Form\Type\ActivityType;
 use App\Form\Type\CustomerType;
 use App\Form\Type\DurationType;
 use App\Form\Type\ProjectType;
@@ -80,21 +80,21 @@ class TimesheetEditForm extends AbstractType
                 'mapped' => false,
                 'attr' => [
                     'data-related-select' => $this->getBlockPrefix() . '_project',
-                    'data-api-url' => 'get_projects',
+                    'data-api-url' => ['get_projects', ['customer' => '-s-']],
                 ],
             ])
             ->add('project', ProjectType::class, [
-                'required' => false,
+                'required' => true,
                 'label' => 'label.project',
                 'query_builder' => function (ProjectRepository $repo) use ($project) {
                     return $repo->builderForEntityType($project);
                 },
                 'attr' => [
                     'data-related-select' => $this->getBlockPrefix() . '_activity',
-                    'data-api-url' => 'get_activities',
+                    'data-api-url' => ['get_activities', ['project' => '-s-']],
                 ],
             ])
-            ->add('activity', ActivityGroupedWithCustomerNameType::class, [
+            ->add('activity', ActivityType::class, [
                 'label' => 'label.activity',
                 'query_builder' => function (ActivityRepository $repo) use ($activity, $project) {
                     return $repo->builderForEntityType($activity, $project);
