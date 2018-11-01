@@ -5,17 +5,43 @@ installation instruction in our [README](https://github.com/kevinpapst/kimai2/#i
 
 You need GIT and [Composer](https://getcomposer.org/doc/00-intro.md) on the machine where you want to install Kimai. 
 
-## Installing on a personal computer (instead of a server)
-### 1. No need to use www-data user
+## Docker
+
+There is a dedicated about [our Docker setup](docker.md), which is primarily meant for use in development. 
+
+## Installing on a personal computer
+
+### Which user to use - no need to use www-data user?!
+
 The installation instructions are intended primarily for server applications. 
-If you are installing Kimai 2 on a desktop or laptop computer - even for use in a local network, but where the computer primarily serves as a single user computer - you will avoid permission errors by subsituting ```www-data``` in the relevant commands with your username.
-In particular, ```sudo -u www-data``` is a command which grants the ```www-data``` user temporary administrator/super-user privileges). However, depending on the configuration of your particular computer, you may be able to avoid sudo altogether (your user may already have adequate permissions).
-You can try first leaving ```sudo -u www-data``` altogether in the relevant commands. If you have permission errors, you can substitute it for ```sudo -u username``` in the relevant commands (where username is the username that runs the server - if you don't know, it is likely your own username that you login with).
 
-### 2. Chown & Chmod commands
-Further, chown & chmod commands should be for the username that runs the server instead of ```www-data``` (again, if you don't know, it is likely your own username).
+If you are installing Kimai 2 on your personal computer - even for use in a local network, but where the computer primarily 
+serves as a single user computer - you will avoid permission errors by subsituting `www-data` in the relevant commands with your username.
 
-Also note that, depending on where you are installing Kimai 2 and how your computer is configured, you may also receive "operation not permitted" errors when setting file permissions (chown and chmod commands). In that case, prefix them with ```sudo ```.
+In particular, `sudo -u www-data` is a command which grants the `www-data` user temporary administrator/super-user privileges). 
+However, depending on the configuration of your particular computer, you may be able to avoid sudo altogether (your user 
+may already have adequate permissions).
+
+You can try first leaving `sudo -u www-data` altogether in the relevant commands. 
+If you have permission errors, you can substitute it for `sudo -u $USER` in the relevant commands (where username is the 
+username that runs the server - if you don't know, it is likely your own username that you login with).
+
+### chown & chmod commands
+
+Further, `chown` and `chmod` commands should be for the username that runs the server instead of `www-data` (again, if you 
+don't know, it is likely your own username).
+
+Also note that, depending on where you are installing Kimai 2 and how your computer is configured, you may also receive 
+"operation not permitted" errors when setting file permissions (chown and chmod commands). 
+In that case, prefix them with `sudo`.
+
+### Still doesn't work?
+
+These infos were added to give you some possible guidance if you run into troubles. The Linux (and Mac) filesystem 
+with its permission structure, especially when using server software, can be tricky and challenging.
+
+But this has NOTHING to do with Kimai and we might not be able to help you in such situations ... it is your system and 
+responsibility, be aware that wrong permissions might break Kimai and can also lead to security problems.
 
 ## Hosting & 1-click installations
 
