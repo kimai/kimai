@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file date="2018-09-09T16:00:00Z" source-language="en" target-language="hu" datatype="plaintext" original="none">
+    <file date="2018-09-09T16:00:00Z" source-language="en" target-language="hu" datatype="plaintext" original="invoice-calculator.en.xliff">
         <body>
             <trans-unit id="label.invoice_calculator">
                 <source>label.invoice_calculator</source>
@@ -8,8 +8,7 @@
             </trans-unit>
             <trans-unit id="default">
                 <source>default</source>
-                Bejegyzés alapján - Egy bejegyzés időmérésenként (alapértelmezett)
-                <target>Entry-based - one entry per time measurement (default)</target>
+                <target>Bejegyzés alapján - Egy bejegyzés időmérésenként (alapértelmezett)</target>
             </trans-unit>
             <trans-unit id="short">
                 <source>short</source>
