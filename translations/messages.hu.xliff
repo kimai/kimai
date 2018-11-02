@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="en" datatype="plaintext" original="none">
+    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="hu" datatype="plaintext" original="none">
         <body>
             <!--
               Global template keys
@@ -775,34 +775,34 @@
             </trans-unit>
             <trans-unit id="invoice.signature_user">
                 <source>invoice.signature_user</source>
-                <target>Confirmation: Date / Name Consultant / Signature</target>
+                <target>Dátum, Megbízott, Aláírás</target>
             </trans-unit>
             <trans-unit id="invoice.signature_customer">
                 <source>invoice.signature_customer</source>
-                <target>Confirmation: Date / Name Customer / Signature</target>
+                <target>Dátum, Megbízó, Aláírás</target>
             </trans-unit>
             <trans-unit id="invoice.total_working_time">
                 <source>invoice.total_working_time</source>
-                <target>Total duration</target>
+                <target>Teljes munkaidő</target>
             </trans-unit>
             <trans-unit id="label.order_number">
                 <source>label.order_number</source>
-                <target>Order number</target>
+                <target>Megbízás száma</target>
             </trans-unit>
             <trans-unit id="label.invoice_tax_number">
                 <source>label.invoice_tax_number</source>
-                <target>VAT no.:</target>
+                <target>Adószám</target>
             </trans-unit>
             <trans-unit id="label.invoice_bank_account">
                 <source>label.invoice_bank_account</source>
-                <target>Bank account</target>
+                <target>Bankszámlaszám</target>
             </trans-unit>
             <trans-unit id="label.invoice_salutation">
                 <source>label.invoice_salutation</source>
                 <target>
-                    Ladies and gentlemen,
+                    Tisztelt Hölgyem/Uram!
 
-                    I thank you for your order and charge for my services:
+                    Köszönöm megbízását, alább találja a szolgáltatásaim árát részletezve:
                 </target>
             </trans-unit>
 
@@ -811,43 +811,43 @@
             -->
             <trans-unit id="month.1">
                 <source>month.1</source>
-                <target>January</target>
+                <target>Január</target>
             </trans-unit>
             <trans-unit id="month.2">
                 <source>month.2</source>
-                <target>February</target>
+                <target>Február</target>
             </trans-unit>
             <trans-unit id="month.3">
                 <source>month.3</source>
-                <target>March</target>
+                <target>Március</target>
             </trans-unit>
             <trans-unit id="month.4">
                 <source>month.4</source>
-                <target>April</target>
+                <target>Április</target>
             </trans-unit>
             <trans-unit id="month.5">
                 <source>month.5</source>
-                <target>May</target>
+                <target>Május</target>
             </trans-unit>
             <trans-unit id="month.6">
                 <source>month.6</source>
-                <target>June</target>
+                <target>Június</target>
             </trans-unit>
             <trans-unit id="month.7">
                 <source>month.7</source>
-                <target>July</target>
+                <target>Július</target>
             </trans-unit>
             <trans-unit id="month.8">
                 <source>month.8</source>
-                <target>August</target>
+                <target>Augusztus</target>
             </trans-unit>
             <trans-unit id="month.9">
                 <source>month.9</source>
-                <target>September</target>
+                <target>Szeptember</target>
             </trans-unit>
             <trans-unit id="month.10">
                 <source>month.10</source>
-                <target>October</target>
+                <target>Október</target>
             </trans-unit>
             <trans-unit id="month.11">
                 <source>month.11</source>
@@ -863,25 +863,25 @@
             -->
             <trans-unit id="active.entries">
                 <source>active.entries</source>
-                <target>You have %count% active record|You have %count% active records</target>
+                <target>%count% rögzítés van folyamatban|%count% rögzítés van folyamatban</target>
             </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
-                <target>Show all records</target>
+                <target>Összes rögzítés megjelenítése</target>
             </trans-unit>
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
                 <target>
-                    Restart your last recorded activity|Restart one of your %count% last activities
+                    Legutóbb rögzített tevékenység folytatása|Tevékenység folytatása a legutóbbi %count% közül
                 </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>
-                <target>%activity% in %project% for %customer%</target>
+                <target>%activity% tevékenység %project% projekt %customer% ügyfél</target>
             </trans-unit>
             <trans-unit id="timesheet.start">
                 <source>timesheet.start</source>
-                <target>Create new time-record</target>
+                <target>Új rögzítés indítása</target>
             </trans-unit>
 
             <!--
@@ -889,23 +889,23 @@
             -->
             <trans-unit id="label.pageSize">
                 <source>label.pageSize</source>
-                <target>Page size</target>
+                <target>Oldalméret</target>
             </trans-unit>
             <trans-unit id="label.entryState">
                 <source>label.entryState</source>
-                <target>Records</target>
+                <target>Rögzítések</target>
             </trans-unit>
             <trans-unit id="entryState.all">
                 <source>entryState.all</source>
-                <target>All</target>
+                <target>Összes</target>
             </trans-unit>
             <trans-unit id="entryState.running">
                 <source>entryState.running</source>
-                <target>Active</target>
+                <target>Folyamatban</target>
             </trans-unit>
             <trans-unit id="entryState.stopped">
                 <source>entryState.stopped</source>
-                <target>Stopped</target>
+                <target>Megállítva</target>
             </trans-unit>
         </body>
     </file>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file date="2018-09-09T16:00:00Z" source-language="en" target-language="hu" datatype="plaintext" original="none">
+        <body>
+            <trans-unit id="label.invoice_calculator">
+                <source>label.invoice_calculator</source>
+                <target>Összeg számítása</target>
+            </trans-unit>
+            <trans-unit id="default">
+                <source>default</source>
+                Bejegyzés alapján - Egy bejegyzés időmérésenként (alapértelmezett)
+                <target>Entry-based - one entry per time measurement (default)</target>
+            </trans-unit>
+            <trans-unit id="short">
+                <source>short</source>
+                <target>Idők összeadva - csak egy bejegyzés</target>
+            </trans-unit>
+            <trans-unit id="user">
+                <source>user</source>
+                <target>Felhasználónként csoportosítva - egy bejegyzés felhasználónként</target>
+            </trans-unit>
+            <trans-unit id="activity">
+                <source>activity</source>
+                <target>Tevékenységenként csoportosítva - egy bejegyzés tevékenységenként</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
