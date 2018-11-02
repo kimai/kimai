@@ -25,7 +25,7 @@ Adjust the `target-language` in the file header, as example for the new file `ex
 <file date="2018-08-01T20:00:00Z" source-language="en" target-language="xx" datatype="plaintext" original="exceptions.en.xliff">`
 ```
 
-Adjust the file `config/kimai.yaml` and add the language settings below the key `kimai.languages`: 
+Adjust the file `config/packages/kimai.yaml` and add the language settings below the key `kimai.languages`: 
 ```yaml
 kimai:
     languages:

@@ -70,6 +70,10 @@ kimai:
             date_short: 'Y-m-d'
             duration: '%%h:%%m hours'
             duration_short: '%%h:%%m h'
+        hu:
+            date_short: 'Y.m.d.'
+            duration: '%%h:%%m óra'
+            duration_short: '%%h:%%m h'
 
     # timesheet calendar configuration
     calendar:
