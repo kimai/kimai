@@ -1,0 +1,912 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="en" datatype="plaintext" original="none">
+        <body>
+            <!--
+              Global template keys
+            -->
+            <trans-unit id="browser.title">
+                <source>browser.title</source>
+                <target>Kimai - Időrögzítő</target>
+            </trans-unit>
+            <trans-unit id="yes">
+                <source>yes</source>
+                <target>Igen</target>
+            </trans-unit>
+            <trans-unit id="no">
+                <source>no</source>
+                <target>Nem</target>
+            </trans-unit>
+            <trans-unit id="both">
+                <source>both</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id="subtitle.amount">
+                <source>subtitle.amount</source>
+                <target>(total %count%)</target>
+            </trans-unit>
+            <trans-unit id="This is a mandatory field">
+                <source>This is a mandatory field</source>
+                <target>Kötelező</target>
+            </trans-unit>
+            <trans-unit id="create">
+                <source>create</source>
+                <target>Létrehozás</target>
+            </trans-unit>
+            <trans-unit id="confirm.delete">
+                <source>confirm.delete</source>
+                <target>Buztos vagy benne, hogy törölni szerenéd?</target>
+            </trans-unit>
+            <trans-unit id="confirm.delete_message">
+                <source>confirm.delete_message</source>
+                <target>
+                    Meg kell erősítened a törlést, mert kapcsolódó elemek is törlésre kerülnek.
+                    You have to confirm the deletion, as there are linked objects which will be deleted as well.
+                </target>
+            </trans-unit>
+
+            <!--
+              Login / Security
+            -->
+            <trans-unit id="label.password">
+                <source>label.password</source>
+                <target>Jelszó</target>
+            </trans-unit>
+            <trans-unit id="label.password_repeat">
+                <source>label.password_repeat</source>
+                <target>Jelsző ismétlése</target>
+            </trans-unit>
+            <trans-unit id="label.logout">
+                <source>label.logout</source>
+                <target>Kijelentkezés</target>
+            </trans-unit>
+            <trans-unit id="label.user_profile">
+                <source>label.user_profile</source>
+                <target>Profilom</target>
+            </trans-unit>
+            <trans-unit id="label.api_token">
+                <source>label.api_token</source>
+                <target>API jelszó</target>
+            </trans-unit>
+            <trans-unit id="label.api_token_repeat">
+                <source>label.api_token_repeat</source>
+                <target>API jelszó ismétlese</target>
+            </trans-unit>
+
+            <!--
+              Menu / Navbar items
+            -->
+            <trans-unit id="menu.homepage">
+                <source>menu.homepage</source>
+                <target>Kezdőlap</target>
+            </trans-unit>
+            <trans-unit id="menu.admin">
+                <source>menu.admin</source>
+                <target>Adminisztráció</target>
+            </trans-unit>
+            <trans-unit id="menu.logout">
+                <source>menu.logout</source>
+                <target>Kijelentkezés</target>
+            </trans-unit>
+            <trans-unit id="menu.timesheet">
+                <source>menu.timesheet</source>
+                <target>Rögzített órák</target>
+            </trans-unit>
+            <trans-unit id="menu.invoice">
+                <source>menu.invoice</source>
+                <target>Számlák</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_timesheet">
+                <source>menu.admin_timesheet</source>
+                <target>Rögzített órák</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_customer">
+                <source>menu.admin_customer</source>
+                <target>Ügyfelek</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_project">
+                <source>menu.admin_project</source>
+                <target>Projektek</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_activity">
+                <source>menu.admin_activity</source>
+                <target>Tevékenységek</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_user">
+                <source>menu.admin_user</source>
+                <target>Felhasználók</target>
+            </trans-unit>
+
+            <!--
+              Error templates
+            -->
+            <trans-unit id="error.no_entries_found">
+                <source>error.no_entries_found</source>
+                <target>Nem található bejegyzés</target>
+            </trans-unit>
+
+            <!--
+              General labels
+            -->
+            <trans-unit id="label.date">
+                <source>label.date</source>
+                <target>Dátum</target>
+            </trans-unit>
+            <trans-unit id="label.starttime">
+                <source>label.starttime</source>
+                <target>Kezdés</target>
+            </trans-unit>
+            <trans-unit id="label.endtime">
+                <source>label.endtime</source>
+                <target>Befejezés</target>
+            </trans-unit>
+            <trans-unit id="label.duration">
+                <source>label.duration</source>
+                <target>Időtartam</target>
+            </trans-unit>
+            <trans-unit id="label.user">
+                <source>label.user</source>
+                <target>Felhasználó</target>
+            </trans-unit>
+            <trans-unit id="label.username">
+                <source>label.username</source>
+                <target>Felhasználónév</target>
+            </trans-unit>
+            <trans-unit id="label.description">
+                <source>label.description</source>
+                <target>Leírás</target>
+            </trans-unit>
+            <trans-unit id="label.name">
+                <source>label.name</source>
+                <target>Név</target>
+            </trans-unit>
+            <trans-unit id="label.comment">
+                <source>label.comment</source>
+                <target>Megjegyzés</target>
+            </trans-unit>
+            <trans-unit id="label.id">
+                <source>label.id</source>
+                <target>ID</target>
+            </trans-unit>
+            <trans-unit id="label.visible">
+                <source>label.visible</source>
+                <target>Látható</target>
+            </trans-unit>
+            <trans-unit id="label.budget">
+                <source>label.budget</source>
+                <target>Költségvetés</target>
+            </trans-unit>
+            <trans-unit id="label.activity">
+                <source>label.activity</source>
+                <target>Tevékenység</target>
+            </trans-unit>
+            <trans-unit id="label.project">
+                <source>label.project</source>
+                <target>Projekt</target>
+            </trans-unit>
+            <trans-unit id="label.hourly_rate">
+                <source>label.hourly_rate</source>
+                <target>Órabér</target>
+            </trans-unit>
+            <trans-unit id="label.skin">
+                <source>label.skin</source>
+                <target>Kimai téma</target>
+            </trans-unit>
+            <trans-unit id="label.hours">
+                <source>label.hours</source>
+                <target>Órák</target>
+            </trans-unit>
+            <trans-unit id="label.rate">
+                <source>label.rate</source>
+                <target>Órabér</target>
+            </trans-unit>
+            <trans-unit id="label.language">
+                <source>label.language</source>
+                <target>Nyelv</target>
+            </trans-unit>
+            <trans-unit id="label.customer">
+                <source>label.customer</source>
+                <target>Ügyfél</target>
+            </trans-unit>
+            <trans-unit id="label.email">
+                <source>label.email</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="label.create_more">
+                <source>label.create_more</source>
+                <target>Új bejegyzés hozzáadása</target>
+            </trans-unit>
+
+            <!--
+              Buttons & Actions
+            -->
+            <trans-unit id="label.actions">
+                <source>label.actions</source>
+                <target>Műveletek</target>
+            </trans-unit>
+            <trans-unit id="action.edit">
+                <source>action.edit</source>
+                <target>Szerkesztés</target>
+            </trans-unit>
+            <trans-unit id="action.delete">
+                <source>action.delete</source>
+                <target>Törlés</target>
+            </trans-unit>
+            <trans-unit id="action.save">
+                <source>action.save</source>
+                <target>Mentés</target>
+            </trans-unit>
+            <trans-unit id="action.back">
+                <source>action.back</source>
+                <target>Vissza</target>
+            </trans-unit>
+            <trans-unit id="action.close">
+                <source>action.close</source>
+                <target>Bezárás</target>
+            </trans-unit>
+
+            <!--
+              Dashboard
+            -->
+            <trans-unit id="dashboard.title">
+                <source>dashboard.title</source>
+                <target>Kezdőlap</target>
+            </trans-unit>
+            <trans-unit id="dashboard.subtitle">
+                <source>dashboard.subtitle</source>
+                <target>Üdv!</target>
+            </trans-unit>
+            <trans-unit id="dashboard.you">
+                <source>dashboard.you</source>
+                <target>Az én statiisztikáim</target>
+            </trans-unit>
+            <trans-unit id="dashboard.all">
+                <source>dashboard.all</source>
+                <target>Minden felhasználó</target>
+            </trans-unit>
+            <trans-unit id="dashboard.admin">
+                <source>dashboard.admin</source>
+                <target>Adminisztrátor</target>
+            </trans-unit>
+
+            <!--
+              Widgets
+            -->
+            <trans-unit id="more.info.link">
+                <source>more.info.link</source>
+                <target>További információ</target>
+            </trans-unit>
+            <trans-unit id="badge.visible">
+                <source>badge.visible</source>
+                <target>Igen</target>
+            </trans-unit>
+            <trans-unit id="badge.invisible">
+                <source>badge.invisible</source>
+                <target>Nem</target>
+            </trans-unit>
+            <trans-unit id="label.toggle_dropdown">
+                <source>label.toggle_dropdown</source>
+                <target>Menü megjelenítése</target>
+            </trans-unit>
+
+            <!--
+              Timesheet
+            -->
+            <trans-unit id="timesheet.title">
+                <source>timesheet.title</source>
+                <target>Rögzített órák</target>
+            </trans-unit>
+            <trans-unit id="timesheet.subtitle">
+                <source>timesheet.subtitle</source>
+                <target>Rögzített óráim szerkesztése</target>
+            </trans-unit>
+            <trans-unit id="timesheet.edit">
+                <source>timesheet.edit</source>
+                <target>Bejegyzés szerkesztése</target>
+            </trans-unit>
+            <trans-unit id="label.begin">
+                <source>label.begin</source>
+                <target>Kesdés</target>
+            </trans-unit>
+            <trans-unit id="label.end">
+                <source>label.end</source>
+                <target>Befejezés</target>
+            </trans-unit>
+            <trans-unit id="modal.columns.title">
+                <source>modal.columns.title</source>
+                <target>Megjelenítendő oszlopok kiválasztása</target>
+            </trans-unit>
+            <trans-unit id="modal.columns.description">
+                <source>modal.columns.description</source>
+                <target>A megjelenítendő oszlopok egy böngésző sütiben lesznek tárolva. Ha törlöd az oldalhoz tartozó sütiket, akkor ez a beállítás visszaáll az alapértelmezett értékre.</target>
+            </trans-unit>
+            <trans-unit id="label.fixed_rate">
+                <source>label.fixed_rate</source>
+                <target>Fix órabér</target>
+            </trans-unit>
+
+            <!--
+              User profile
+            -->
+            <trans-unit id="profile.title">
+                <source>profile.title</source>
+                <target>Felhasználói profil</target>
+            </trans-unit>
+            <trans-unit id="profile.subtitle">
+                <source>profile.subtitle</source>
+                <target>A beállításaim mödosítása</target>
+            </trans-unit>
+            <trans-unit id="profile.about_me">
+                <source>profile.about_me</source>
+                <target>Rólam</target>
+            </trans-unit>
+            <trans-unit id="profile.first_entry">
+                <source>profile.first_entry</source>
+                <target>Munka kezdete</target>
+            </trans-unit>
+            <trans-unit id="profile.tab_monthly">
+                <source>profile.tab_monthly</source>
+                <target>Éves statisztika</target>
+            </trans-unit>
+            <trans-unit id="profile.settings">
+                <source>profile.settings</source>
+                <target>Profil</target>
+            </trans-unit>
+            <trans-unit id="profile.password">
+                <source>profile.password</source>
+                <target>Jelszó</target>
+            </trans-unit>
+            <trans-unit id="profile.api-token">
+                <source>profile.api-token</source>
+                <target>API</target>
+            </trans-unit>
+            <trans-unit id="profile.roles">
+                <source>profile.roles</source>
+                <target>Szerepkörök</target>
+            </trans-unit>
+            <trans-unit id="profile.preferences">
+                <source>profile.preferences</source>
+                <target>Beállítások</target>
+            </trans-unit>
+            <trans-unit id="label.theme.fixed_layout">
+                <source>label.theme.fixed_layout</source>
+                <target>Rögzitett elrendezés. Nem használhatod egyszerre a dobozos elrendezéssel</target>
+            </trans-unit>
+            <trans-unit id="label.theme.boxed_layout">
+                <source>label.theme.boxed_layout</source>
+                <target>Dobozos elrendezés (nagy kijelzőkön jobban néz ki)</target>
+            </trans-unit>
+            <trans-unit id="label.theme.collapsed_sidebar">
+                <source>label.theme.collapsed_sidebar</source>
+                <target>A bal oldali oldalsáv automatikus elrejtése</target>
+            </trans-unit>
+            <trans-unit id="label.theme.mini_sidebar">
+                <source>label.theme.mini_sidebar</source>
+                <target>A bal oldali oldalsáv fejlécének automatikus összecsukása</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.initial_view">
+                <source>label.calendar.initial_view</source>
+                <target>Alapértelmezett naptár nézet</target>
+            </trans-unit>
+            <!-- Options for user-preference label.calendar.initial_view -->
+            <trans-unit id="month">
+                <source>month</source>
+                <target>Hónap</target>
+            </trans-unit>
+            <trans-unit id="agendaWeek">
+                <source>agendaWeek</source>
+                <target>Hét</target>
+            </trans-unit>
+            <trans-unit id="agendaDay">
+                <source>agendaDay</source>
+                <target>Nap</target>
+            </trans-unit>
+
+            <!--
+              Help - Manual
+            -->
+            <trans-unit id="help.title">
+                <source>help.title</source>
+                <target>Súgó</target>
+            </trans-unit>
+            <trans-unit id="help.subtitle">
+                <source>help.subtitle</source>
+                <target>Segítség a Kimai használatához és beállításához</target>
+            </trans-unit>
+
+            <!--
+              Admin: Timesheet
+            -->
+            <trans-unit id="admin_timesheet.title">
+                <source>admin_timesheet.title</source>
+                <target>Rögzített órák</target>
+            </trans-unit>
+            <trans-unit id="admin_timesheet.subtitle">
+                <source>admin_timesheet.subtitle</source>
+                <target>Minden felhasználó bejegyzései</target>
+            </trans-unit>
+
+            <!--
+              Admin: Projects
+            -->
+            <trans-unit id="admin_project.title">
+                <source>admin_project.title</source>
+                <target>Projektek</target>
+            </trans-unit>
+            <trans-unit id="admin_project.subtitle">
+                <source>admin_project.subtitle</source>
+                <target>A projektek egyesítik több felhasználó azonos ügyfélhez tartozó tevékenységeit </target>
+            </trans-unit>
+            <trans-unit id="admin_project.delete_confirm">
+                <source>admin_project.delete_confirm</source>
+                <target>
+                    A %customer% ügyfélhez tartozó %project% projekthez kapcsolódik %activities% tevékenység 
+                    és %records% időbejegyzés, ami összesen %duration%.
+                    Ezek a tevékenységek és bejegyzések is törlésre kerülnek!
+                </target>
+            </trans-unit>
+
+            <!--
+              Admin: Activity
+            -->
+            <trans-unit id="admin_activity.title">
+                <source>admin_activity.title</source>
+                <target>Tevékenységek</target>
+            </trans-unit>
+            <trans-unit id="admin_activity.subtitle">
+                <source>admin_activity.subtitle</source>
+                <target>Idő rögzítéskor kiválasztható lehetőségek</target>
+            </trans-unit>
+            <trans-unit id="admin_activity.delete_confirm">
+                <source>admin_activity.delete_confirm</source>
+                <target>
+                    A %customer% ügyfélhez és %project% projekthez tartozó %activities% tevékenységhez
+                    kapcsolódik %records% időbejegyzés, ami összesen %duration%.
+                    Ezek a bejegyzések is törlésre kerülnek!
+                </target>
+            </trans-unit>
+
+            <!--
+              Admin: Customer
+            -->
+            <trans-unit id="admin_customer.title">
+                <source>admin_customer.title</source>
+                <target>Ügyfél</target>
+            </trans-unit>
+            <trans-unit id="admin_customer.subtitle">
+                <source>admin_customer.subtitle</source>
+                <target>Az ügyfelekhez hozzárendelve hozhatsz létre projekteket és tevékenységeket</target>
+            </trans-unit>
+            <trans-unit id="label.customer_number">
+                <source>label.customer_number</source>
+                <target>Adószám</target>
+            </trans-unit>
+            <trans-unit id="label.company">
+                <source>label.company</source>
+                <target>Cég neve</target>
+            </trans-unit>
+            <trans-unit id="label.vat">
+                <source>label.vat</source>
+                <target>Áfa</target>
+            </trans-unit>
+            <trans-unit id="label.contact">
+                <source>label.contact</source>
+                <target>Kapcsolat</target>
+            </trans-unit>
+            <trans-unit id="label.address">
+                <source>label.address</source>
+                <target>Cím</target>
+            </trans-unit>
+            <trans-unit id="label.country">
+                <source>label.country</source>
+                <target>Ország</target>
+            </trans-unit>
+            <trans-unit id="label.phone">
+                <source>label.phone</source>
+                <target>Telefonszám</target>
+            </trans-unit>
+            <trans-unit id="label.fax">
+                <source>label.fax</source>
+                <target>Fax</target>
+            </trans-unit>
+            <trans-unit id="label.mobile">
+                <source>label.mobile</source>
+                <target>Mobil</target>
+            </trans-unit>
+            <trans-unit id="label.homepage">
+                <source>label.homepage</source>
+                <target>Honlap</target>
+            </trans-unit>
+            <trans-unit id="label.timezone">
+                <source>label.timezone</source>
+                <target>Időzóna</target>
+            </trans-unit>
+            <trans-unit id="label.currency">
+                <source>label.currency</source>
+                <target>Pénznem</target>
+            </trans-unit>
+            <trans-unit id="admin_customer.delete_confirm">
+                <source>admin_customer.delete_confirm</source>
+                <target>
+                    A %customer% ügyfélhez kapcsolódik %project% projekt, %activities% tevékenység 
+                    és %records% időbejegyzés, ami összesen %duration%.
+                    Ezek a projektek, tevékenységek és bejegyzések is törlésre kerülnek!
+                </target>
+            </trans-unit>
+
+            <!--
+              Admin: User
+            -->
+            <trans-unit id="admin_user.title">
+                <source>admin_user.title</source>
+                <target>Felhasználó</target>
+            </trans-unit>
+            <trans-unit id="admin_user.subtitle">
+                <source>admin_user.subtitle</source>
+                <target>Az oldalon regisztrált összes felhasználó</target>
+            </trans-unit>
+            <trans-unit id="label.alias">
+                <source>label.alias</source>
+                <target>Név</target>
+            </trans-unit>
+            <trans-unit id="label.title">
+                <source>label.title</source>
+                <target>Beosztás</target>
+            </trans-unit>
+            <trans-unit id="label.avatar">
+                <source>label.avatar</source>
+                <target>Profilkép</target>
+            </trans-unit>
+            <trans-unit id="label.active">
+                <source>label.active</source>
+                <target>Aktív</target>
+            </trans-unit>
+            <trans-unit id="label.roles">
+                <source>label.roles</source>
+                <target>Szerepkör</target>
+            </trans-unit>
+            <trans-unit id="admin_user.delete_confirm">
+                <source>admin_user.delete_confirm</source>
+                <target>
+                    A %user% felhasnálóhoz kapcsolódik %records% időbejegyzés, ami összesen %duration%.
+                    Ezek a bejegyzések is törlésre kerülnek!
+                </target>
+            </trans-unit>
+
+            <!--
+              ROLES
+            -->
+            <trans-unit id="ROLE_SUPER_ADMIN">
+                <source>ROLE_SUPER_ADMIN</source>
+                <target>Rendszer adminisztrátor</target>
+            </trans-unit>
+            <trans-unit id="ROLE_ADMIN">
+                <source>ROLE_ADMIN</source>
+                <target>Adminisztrátor</target>
+            </trans-unit>
+            <trans-unit id="ROLE_TEAMLEAD">
+                <source>ROLE_TEAMLEAD</source>
+                <target>Vezető</target>
+            </trans-unit>
+            <trans-unit id="ROLE_USER">
+                <source>ROLE_USER</source>
+                <target>Felhasználó</target>
+            </trans-unit>
+            <trans-unit id="ROLE_CUSTOMER">
+                <source>ROLE_CUSTOMER</source>
+                <target>Ügyfél</target>
+            </trans-unit>
+
+            <!--
+              Statistics data for Dashboard & Users profile
+            -->
+            <trans-unit id="stats.durationToday">
+                <source>stats.durationToday</source>
+                <target>Mai munkaórák</target>
+            </trans-unit>
+            <trans-unit id="stats.durationWeek">
+                <source>stats.durationWeek</source>
+                <target>Eheti munkaórák</target>
+            </trans-unit>
+            <trans-unit id="stats.durationMonth">
+                <source>stats.durationMonth</source>
+                <target>E havi munkaórák</target>
+            </trans-unit>
+            <trans-unit id="stats.durationYear">
+                <source>stats.durationYear</source>
+                <target>Idei munkaórák</target>
+            </trans-unit>
+            <trans-unit id="stats.durationTotal">
+                <source>stats.durationTotal</source>
+                <target>Összes munkaórák</target>
+            </trans-unit>
+            <trans-unit id="stats.amountToday">
+                <source>stats.amountToday</source>
+                <target>Mai bevétel</target>
+            </trans-unit>
+            <trans-unit id="stats.amountWeek">
+                <source>stats.amountWeek</source>
+                <target>Eheti bevétel</target>
+            </trans-unit>
+            <trans-unit id="stats.amountMonth">
+                <source>stats.amountMonth</source>
+                <target>E havi bevvétel</target>
+            </trans-unit>
+            <trans-unit id="stats.amountYear">
+                <source>stats.amountYear</source>
+                <target>Idei bevétel</target>
+            </trans-unit>
+            <trans-unit id="stats.amountTotal">
+                <source>stats.amountTotal</source>
+                <target>Összes bevétel</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveToday">
+                <source>stats.userActiveToday</source>
+                <target>Mai aktív felhasználók</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveWeek">
+                <source>stats.userActiveWeek</source>
+                <target>Eheti aktív felhasználók</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveMonth">
+                <source>stats.userActiveMonth</source>
+                <target>E havi aktív felhasználók</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveYear">
+                <source>stats.userActiveYear</source>
+                <target>Idei aktív felhasználók</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveTotal">
+                <source>stats.userActiveTotal</source>
+                <target>Összes aktjv felhasználó</target>
+            </trans-unit>
+            <trans-unit id="stats.activeRecordings">
+                <source>stats.activeRecordings</source>
+                <target>Aktív rögzítések</target>
+            </trans-unit>
+            <trans-unit id="stats.userTotal">
+                <source>stats.userTotal</source>
+                <target>Felhasználó</target>
+            </trans-unit>
+            <trans-unit id="stats.activityTotal">
+                <source>stats.activityTotal</source>
+                <target>Tevékenység</target>
+            </trans-unit>
+            <trans-unit id="stats.projectTotal">
+                <source>stats.projectTotal</source>
+                <target>Projekt</target>
+            </trans-unit>
+            <trans-unit id="stats.customerTotal">
+                <source>stats.customerTotal</source>
+                <target>Ügyfél</target>
+            </trans-unit>
+
+            <!--
+              Invoice
+            -->
+            <trans-unit id="admin_invoice_template.title">
+                <source>admin_invoice_template.title</source>
+                <target>Számla sablon</target>
+            </trans-unit>
+            <trans-unit id="admin_invoice_template.subtitle">
+                <source>admin_invoice_template.subtitle</source>
+                <target>Beállíthatod a számla sablonjaidat, amiket számlák exportálásakor használhatsz</target>
+            </trans-unit>
+            <trans-unit id="invoice.title">
+                <source>invoice.title</source>
+                <target>Számlák</target>
+            </trans-unit>
+            <trans-unit id="invoice.subtitle">
+                <source>invoice.subtitle</source>
+                <target>Számlák készítése az időbejegyzéseidből</target>
+            </trans-unit>
+            <trans-unit id="invoice.select_filter">
+                <source>invoice.select_filter</source>
+                <target>Nem található keresési feltételeknek megfelelő számla.</target>
+            </trans-unit>
+            <trans-unit id="invoice.preview">
+                <source>invoice.preview</source>
+                
+                <target>Ez a számlán szereplő adatok az előnézete.</target>
+            </trans-unit>
+            <trans-unit id="button.print">
+                <source>button.print</source>
+                <target>Nyomtatás</target>
+            </trans-unit>
+            <trans-unit id="invoice_print">
+                <source>invoice_print</source>
+                <target>Számla</target>
+            </trans-unit>
+            <trans-unit id="label.template">
+                <source>label.template</source>
+                <target>Sablon</target>
+            </trans-unit>
+            <trans-unit id="label.due_days">
+                <source>label.due_days</source>
+                <target>Teljesítési idő</target>
+            </trans-unit>
+            <trans-unit id="invoice.due_days">
+                <source>invoice.due_days</source>
+                <target>Fizetési határidő</target>
+            </trans-unit>
+            <trans-unit id="invoice.from">
+                <source>invoice.from</source>
+                <target>Ettől:</target>
+            </trans-unit>
+            <trans-unit id="invoice.to">
+                <source>invoice.to</source>
+                <target>Eddig:</target>
+            </trans-unit>
+            <trans-unit id="invoice.number">
+                <source>invoice.number</source>
+                <target>Számla száma</target>
+            </trans-unit>
+            <trans-unit id="invoice.subtotal">
+                <source>invoice.subtotal</source>
+                <target>Részösszeg</target>
+            </trans-unit>
+            <trans-unit id="invoice.tax">
+                <source>invoice.tax</source>
+                <target>Áfa</target>
+            </trans-unit>
+            <trans-unit id="invoice.total">
+                <source>invoice.total</source>
+                <target>Végösszeg</target>
+            </trans-unit>
+            <trans-unit id="invoice.service_date">
+                <source>invoice.service_date</source>
+                <target>Teljesítés időpontja</target>
+            </trans-unit>
+            <trans-unit id="invoice.amount">
+                <source>invoice.amount</source>
+                <target>Mennyiség</target>
+            </trans-unit>
+            <trans-unit id="invoice.total_rate">
+                <source>invoice.total_rate</source>
+                <target>Teljes ár</target>
+            </trans-unit>
+            <trans-unit id="invoice.unit_price">
+                <source>invoice.unit_price</source>
+                <target>Egységár</target>
+            </trans-unit>
+            <trans-unit id="label.payment_terms">
+                <source>label.payment_terms</source>
+                <target>Fizetési feltételek</target>
+            </trans-unit>
+            <trans-unit id="invoice.signature_user">
+                <source>invoice.signature_user</source>
+                <target>Confirmation: Date / Name Consultant / Signature</target>
+            </trans-unit>
+            <trans-unit id="invoice.signature_customer">
+                <source>invoice.signature_customer</source>
+                <target>Confirmation: Date / Name Customer / Signature</target>
+            </trans-unit>
+            <trans-unit id="invoice.total_working_time">
+                <source>invoice.total_working_time</source>
+                <target>Total duration</target>
+            </trans-unit>
+            <trans-unit id="label.order_number">
+                <source>label.order_number</source>
+                <target>Order number</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_tax_number">
+                <source>label.invoice_tax_number</source>
+                <target>VAT no.:</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_bank_account">
+                <source>label.invoice_bank_account</source>
+                <target>Bank account</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_salutation">
+                <source>label.invoice_salutation</source>
+                <target>
+                    Ladies and gentlemen,
+
+                    I thank you for your order and charge for my services:
+                </target>
+            </trans-unit>
+
+            <!--
+              Month names
+            -->
+            <trans-unit id="month.1">
+                <source>month.1</source>
+                <target>January</target>
+            </trans-unit>
+            <trans-unit id="month.2">
+                <source>month.2</source>
+                <target>February</target>
+            </trans-unit>
+            <trans-unit id="month.3">
+                <source>month.3</source>
+                <target>March</target>
+            </trans-unit>
+            <trans-unit id="month.4">
+                <source>month.4</source>
+                <target>April</target>
+            </trans-unit>
+            <trans-unit id="month.5">
+                <source>month.5</source>
+                <target>May</target>
+            </trans-unit>
+            <trans-unit id="month.6">
+                <source>month.6</source>
+                <target>June</target>
+            </trans-unit>
+            <trans-unit id="month.7">
+                <source>month.7</source>
+                <target>July</target>
+            </trans-unit>
+            <trans-unit id="month.8">
+                <source>month.8</source>
+                <target>August</target>
+            </trans-unit>
+            <trans-unit id="month.9">
+                <source>month.9</source>
+                <target>September</target>
+            </trans-unit>
+            <trans-unit id="month.10">
+                <source>month.10</source>
+                <target>October</target>
+            </trans-unit>
+            <trans-unit id="month.11">
+                <source>month.11</source>
+                <target>November</target>
+            </trans-unit>
+            <trans-unit id="month.12">
+                <source>month.12</source>
+                <target>December</target>
+            </trans-unit>
+
+            <!--
+             Navbar - recent entries and activities
+            -->
+            <trans-unit id="active.entries">
+                <source>active.entries</source>
+                <target>You have %count% active record|You have %count% active records</target>
+            </trans-unit>
+            <trans-unit id="timesheet.all">
+                <source>timesheet.all</source>
+                <target>Show all records</target>
+            </trans-unit>
+            <trans-unit id="recent.activities">
+                <source>recent.activities</source>
+                <target>
+                    Restart your last recorded activity|Restart one of your %count% last activities
+                </target>
+            </trans-unit>
+            <trans-unit id="recent.activities.format">
+                <source>recent.activities.format</source>
+                <target>%activity% in %project% for %customer%</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start">
+                <source>timesheet.start</source>
+                <target>Create new time-record</target>
+            </trans-unit>
+
+            <!--
+              TOOLBARS
+            -->
+            <trans-unit id="label.pageSize">
+                <source>label.pageSize</source>
+                <target>Page size</target>
+            </trans-unit>
+            <trans-unit id="label.entryState">
+                <source>label.entryState</source>
+                <target>Records</target>
+            </trans-unit>
+            <trans-unit id="entryState.all">
+                <source>entryState.all</source>
+                <target>All</target>
+            </trans-unit>
+            <trans-unit id="entryState.running">
+                <source>entryState.running</source>
+                <target>Active</target>
+            </trans-unit>
+            <trans-unit id="entryState.stopped">
+                <source>entryState.stopped</source>
+                <target>Stopped</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

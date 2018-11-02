@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="hu" datatype="plaintext" original="none">
+        <body>
+            <trans-unit id="home.betainfo">
+                <source>home.betainfo</source>
+                <target><![CDATA[Köszönjük, hogy a nyílt forráskódú Kimai időrögzító szoftvert használod.
+
+                    Ez a jelenlegi verzió még a fejlesztés korai szakaszában jár és elsősorban azért lett publikálva, hogy visszajelzéseket gyűjtsön a felhasználóktól, hogy az ötleteiket később figyelembe lehessen venni a további tervezéshez.
+
+                    A Kimai fejlesztéséhez nagyban hozzájárulhatsz, ha üzenetet küldesz nekünk a lenti oldalon. Akár csak kérdésed van, vagy egy jó ötleted ami javítaná az oldalt, minden visszajelzés fontos nekünk!
+                ]]></target>
+            </trans-unit>
+            <trans-unit id="home.github">
+                <source>home.github</source>
+                <target>Kimai projekt oldala</target>
+            </trans-unit>
+            <trans-unit id="home.website">
+                <source>home.website</source>
+                <target>Weboldal</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
