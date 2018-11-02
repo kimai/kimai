@@ -11,20 +11,18 @@ try to add it as soon as possible.
 For the most parts Kimai usage should be self-explanatory, so we will only cover topics here which were 
 [requested](https://github.com/kevinpapst/kimai2/issues) by the community.
 
-- [Timesheets](timesheet.md) - information about timesheets
-- [Invoices](invoices.md) - export your data to different formats with customizable templates
-- [User and Security](users.md) - docu for user and security topics, like authentication, registration and roles  
 - [Configurations](configurations.md) - intro into the global application configs
-    - [Emails](emails.md) - transport configuration and handling of emails 
-    - [Dashboard & widgets](dashboard.md) - how to configure widgets and dashboard sections
     - [Calendar](calendar.md) - the Timesheet calendar view
-- [Developer docu](developers.md) - how to extend Kimai's feature set  
+    - [Dashboard & widgets](dashboard.md) - how to configure widgets and dashboard sections
+    - [Emails](emails.md) - transport configuration and handling of emails 
+- [Developer](developers.md) - docs about extending Kimai's feature set  
+    - [API](developers_api.md) - how to use the JSON API 
     - [Theme settings](theme.md) - theme related settings
 - [FAQ](faq.md) - some answers to frequently asked questions 
-- [API](developers_api.md) - how to use the JSON API 
-- [Translations](translations.md) - all about languages and translations
-
-## Installation
- 
 - [Installation](installation.md) - instructions about several installation methods
-- [Importing data](migration_v1.md) - how to import your timesheets from Kimai v1
+    - [Docker](docker.md) - using the built-in Dockerfile for development
+    - [Importing data](migration_v1.md) - how to import your timesheets from Kimai v1
+- [Invoices](invoices.md) - export your data to different formats with customizable templates
+- [Timesheets](timesheet.md) - information about timesheets
+- [Translations](translations.md) - all about languages and translations
+- [User and Security](users.md) - docu for user and security topics, like authentication, registration and roles  
