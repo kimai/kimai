@@ -154,6 +154,12 @@ class TimesheetController extends AbstractController
     {
         $user = $this->getUser();
 
+        //Stop currently running actions.
+        $activeEntries = $this->getRepository()->getActiveEntries($user);
+        foreach ($activeEntries as $activeEntry) {
+                $this->stop($activeEntry, 'timesheet');
+        }
+
         try {
             $this->getRepository()->startRecording($user, $activity);
             $this->flashSuccess('timesheet.start.success');
