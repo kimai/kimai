@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Repository\TimesheetRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -171,6 +172,8 @@ trait TimesheetControllerTrait
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($entry);
 
+            $this->stopActiveEntries($entry->getUser());
+
             $entityManager->flush();
 
             $this->flashSuccess('action.update.success');
@@ -182,6 +185,20 @@ trait TimesheetControllerTrait
             'entry' => $entry,
             'form' => $createForm->createView(),
         ]);
+    }
+
+    /**
+     * @param User $user
+     * @throws \App\Repository\RepositoryException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    protected function stopActiveEntries(User $user)
+    {
+        $themeParameter = $this->getParameter('kimai.theme');
+        if (isset($themeParameter['active_warning']) && $themeParameter['active_warning'] === (int) 1) {
+            $this->getRepository()->stopActiveEntries($this->getUser());
+        }
     }
 
     /**

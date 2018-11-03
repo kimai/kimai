@@ -284,6 +284,25 @@ class TimesheetRepository extends AbstractRepository
     }
 
     /**
+     * @param User $user
+     * @return User
+     * @throws RepositoryException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function stopActiveEntries(User $user)
+    {
+        //Stop currently running actions.
+        $activeEntries = $this->getActiveEntries($user);
+
+        foreach ($activeEntries as $activeEntry) {
+            $this->stopRecording($activeEntry);
+        }
+
+        return $user;
+    }
+
+    /**
      * @param TimesheetQuery $query
      * @return QueryBuilder|Pagerfanta|array
      */
