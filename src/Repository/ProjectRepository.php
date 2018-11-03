@@ -41,7 +41,7 @@ class ProjectRepository extends AbstractRepository
     }
 
     /**
-     * Retrieves statistics for one activity.
+     * Retrieves statistics for one project.
      *
      * @param Project $project
      * @return ProjectStatistic
@@ -55,7 +55,7 @@ class ProjectRepository extends AbstractRepository
             ->addSelect('COUNT(DISTINCT(a.id)) as activityAmount')
             ->from(Activity::class, 'a')
             ->join(Timesheet::class, 't')
-            ->where('a.project = :project')
+            ->where('t.project = :project')
             ->andWhere('t.activity = a.id')
         ;
 

@@ -44,6 +44,7 @@ class ActivityQuery extends ProjectQuery
     public function setOrderGlobalsFirst(bool $orderGlobalsFirst)
     {
         $this->orderGlobalsFirst = $orderGlobalsFirst;
+
         return $this;
     }
 
@@ -62,6 +63,7 @@ class ActivityQuery extends ProjectQuery
     public function setGlobalsOnly(bool $globalsOnly)
     {
         $this->globalsOnly = $globalsOnly;
+
         return $this;
     }
 

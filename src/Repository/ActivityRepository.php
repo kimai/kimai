@@ -36,7 +36,7 @@ class ActivityRepository extends AbstractRepository
     /**
      * @param User|null $user
      * @param \DateTime|null $startFrom
-     * @return mixed
+     * @return Timesheet[]
      */
     public function getRecentActivities(User $user = null, \DateTime $startFrom = null)
     {
@@ -46,7 +46,7 @@ class ActivityRepository extends AbstractRepository
             ->distinct()
             ->from(Timesheet::class, 't')
             ->join('t.activity', 'a')
-            ->join('a.project', 'p')
+            ->join('t.project', 'p')
             ->join('p.customer', 'c')
             ->andWhere($qb->expr()->isNotNull('t.end'))
             ->andWhere('a.visible = 1')
@@ -67,15 +67,7 @@ class ActivityRepository extends AbstractRepository
                 ->setParameter('begin', $startFrom);
         }
 
-        $results = $qb->getQuery()->getResult();
-
-        $activities = [];
-        /* @var Timesheet $entry */
-        foreach ($results as $entry) {
-            $activities[] = $entry->getActivity();
-        }
-
-        return $activities;
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -153,11 +145,9 @@ class ActivityRepository extends AbstractRepository
             ->orderBy('a.' . $query->getOrderBy(), $query->getOrder());
 
         $where = $qb->expr()->andX();
-        $where->add('a.visible = :visible');
-
-        $or = $qb->expr()->orX();
 
         if (ActivityQuery::SHOW_VISIBLE == $query->getVisibility()) {
+            $where->add('a.visible = :visible');
             if (!$query->isExclusiveVisibility()) {
                 $where->add(
                     $qb->expr()->orX(
@@ -174,6 +164,7 @@ class ActivityRepository extends AbstractRepository
             }
             $qb->setParameter('visible', 1);
         } elseif (ActivityQuery::SHOW_HIDDEN == $query->getVisibility()) {
+            $where->add('a.visible = :visible');
             $qb->setParameter('visible', 0);
         }
 
@@ -191,6 +182,8 @@ class ActivityRepository extends AbstractRepository
             $where->add('p.customer = :customer');
             $qb->setParameter('customer', $query->getCustomer());
         }
+
+        $or = $qb->expr()->orX();
 
         // this must always be the last part before the or
         $or->add($where);

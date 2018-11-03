@@ -60,7 +60,7 @@ class CustomerRepository extends AbstractRepository
             ->join(Project::class, 'p')
             ->join(Customer::class, 'c')
             ->andWhere('t.activity = a.id')
-            ->andWhere('a.project = p.id')
+            ->andWhere('t.project = p.id')
             ->andWhere('p.customer = c.id')
             ->andWhere('c.id = :customer')
         ;

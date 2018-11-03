@@ -74,7 +74,7 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
         $repository->stopRecording($entities[0]);
     }
 
-    public function testStartAndStop()
+    public function testStopRecording()
     {
         $em = $this->getEntityManager();
         $user = $this->getUserByRole($em, User::ROLE_USER);
@@ -82,16 +82,10 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
 
         $fixtures = new TimesheetFixtures();
         $fixtures->setUser($user);
-        $fixtures->setAmount(1);
+        $fixtures->setAmountRunning(1);
         $this->importFixture($em, $fixtures);
 
-        $query = new TimesheetQuery();
-        $query->setResultType(BaseQuery::RESULT_TYPE_OBJECTS);
-        $entities = $repository->findByQuery($query);
-        $activity = $entities[0]->getActivity();
-
-        $user = $this->getUserByRole($em, User::ROLE_USER);
-        $timesheet = $repository->startRecording($user, $activity);
+        $timesheet = $repository->find(1);
         $this->assertInstanceOf(Timesheet::class, $timesheet);
         $this->assertNull($timesheet->getEnd());
 

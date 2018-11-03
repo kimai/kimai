@@ -357,6 +357,7 @@ class Timesheet
                 ->atPath('activity')
                 ->setTranslationDomain('validators')
                 ->addViolation();
+
             return;
         }
 

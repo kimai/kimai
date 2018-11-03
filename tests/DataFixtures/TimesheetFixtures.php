@@ -132,7 +132,7 @@ class TimesheetFixtures extends Fixture
             $entry = $this->createTimesheetEntry(
                 $user,
                 $activity,
-                $activity->getProject() ?? $project,
+                $project,
                 $description,
                 $this->getDateTime($i)
             );
@@ -153,7 +153,8 @@ class TimesheetFixtures extends Fixture
                 $activity,
                 $project,
                 $faker->text,
-                $this->getDateTime($i)
+                $this->getDateTime($i),
+                false
             );
             $manager->persist($entry);
         }

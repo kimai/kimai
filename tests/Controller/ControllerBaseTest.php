@@ -81,11 +81,12 @@ abstract class ControllerBaseTest extends WebTestCase
      * @param Client $client
      * @param string $url
      * @param string $method
+     * @param array $parameters
      * @return \Symfony\Component\DomCrawler\Crawler
      */
-    protected function request(Client $client, string $url, $method = 'GET')
+    protected function request(Client $client, string $url, $method = 'GET', array $parameters = [])
     {
-        return $client->request($method, $this->createUrl($url));
+        return $client->request($method, $this->createUrl($url), $parameters);
     }
 
     /**
@@ -140,13 +141,14 @@ abstract class ControllerBaseTest extends WebTestCase
 
     /**
      * @param Client $client
-     * @param string $url
+     * @param $url
+     * @param string $method
+     * @param array $parameters
      */
-    protected function assertAccessIsGranted(Client $client, $url)
+    protected function assertAccessIsGranted(Client $client, $url, $method = 'GET', array $parameters = [])
     {
-        $this->request($client, $url);
+        $this->request($client, $url, $method, $parameters);
         $this->assertTrue($client->getResponse()->isSuccessful());
-        // TODO improve this test?
     }
 
     /**

@@ -175,7 +175,6 @@ abstract class AbstractToolbarForm extends AbstractType
                     'required' => false,
                     'query_builder' => function (ActivityRepository $repo) use ($data) {
                         $qb = $repo->builderForEntityType(null, $data['project']);
-                        //$qb->andWhere('a.project = :project')->setParameter('project', $data['project']);
 
                         return $qb;
                     },

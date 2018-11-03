@@ -14,7 +14,6 @@ namespace App\API;
 use App\Entity\Project;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
-use App\Repository\Query\VisibilityQuery;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -70,8 +69,7 @@ class ProjectController extends Controller
         $query = new ProjectQuery();
         $query->setResultType(ProjectQuery::RESULT_TYPE_OBJECTS);
 
-        $customer = $paramFetcher->get('customer');
-        if (!empty($customer)) {
+        if (null !== ($customer = $paramFetcher->get('customer'))) {
             $query->setCustomer($customer);
         }
 

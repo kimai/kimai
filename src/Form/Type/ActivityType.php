@@ -28,6 +28,7 @@ class ActivityType extends AbstractType
         if (null === $activity->getProject()) {
             return null;
         }
+
         return $activity->getProject()->getName();
     }
 
@@ -52,11 +53,12 @@ class ActivityType extends AbstractType
             'query_builder' => function (ActivityRepository $repo) {
                 return $repo->builderForEntityType();
             },
-            'choice_attr' => function(Activity $activity, $key, $value) {
+            'choice_attr' => function (Activity $activity, $key, $value) {
                 $attributes = [];
                 if (null !== $activity->getProject()) {
                     $attributes['data-project'] = $activity->getProject()->getId();
                 }
+
                 return $attributes;
             },
             //'attr' => ['class' => 'selectpicker', 'data-size' => 10, 'data-live-search' => true, 'data-width' => '100%']

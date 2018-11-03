@@ -59,7 +59,8 @@ class ActivityController extends Controller
      *     @SWG\Schema(ref=@API\Model(type=Activity::class)),
      * )
      * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="Project ID to filter activities. If none is provided, only global activities will be returned.")
-     * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter projects")
+     * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter activities")
+     * @Rest\QueryParam(name="globals", requirements="true", strict=true, nullable=true, description="Pass true to fetch only global activities")
      *
      * @return Response
      */
@@ -67,13 +68,14 @@ class ActivityController extends Controller
     {
         $query = new ActivityQuery();
         $query->setOrderGlobalsFirst(true)
-            ->setGlobalsOnly(true)
             ->setResultType(ActivityQuery::RESULT_TYPE_OBJECTS);
 
-        $project = $paramFetcher->get('project');
-        if (!empty($project)) {
+        if (null !== ($globals = $paramFetcher->get('globals'))) {
+            $query->setGlobalsOnly(true);
+        }
+
+        if (null !== ($project = $paramFetcher->get('project'))) {
             $query->setProject($project);
-            $query->setGlobalsOnly(false);
         }
 
         if (null !== ($visible = $paramFetcher->get('visible'))) {

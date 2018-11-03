@@ -159,7 +159,14 @@ class TimesheetControllerTest extends ControllerBaseTest
 
     public function testStartAction()
     {
-        $client = $this->getClientForAuthenticatedUser();
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $fixture = new TimesheetFixtures();
+        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setAmount(1);
+        $this->importFixture($em, $fixture);
+
         $this->request($client, '/timesheet/start/1');
 
         $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
@@ -169,10 +176,11 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->find(2);
         $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
         $this->assertNull($timesheet->getEnd());
         $this->assertEquals(1, $timesheet->getActivity()->getId());
+        $this->assertEquals(1, $timesheet->getProject()->getId());
     }
 
     public function testStopAction()
