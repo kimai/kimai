@@ -182,56 +182,9 @@ Both follow the default naming syntax and you can link your bundle here instead 
 You should NOT add them in `config/packages/kimai.yaml` but in your own bundle or the `local.yaml` [config](configurations.md), 
 otherwise they might get lost during an update.
 
-## Adding invoice renderer (FIXME)
+## Adding documents for invoice rendering 
 
-An invoice renderer is a controller action that receives an instanceof `App\Model\InvoiceModel` and returns a HTML response.
-This HTML response is the preview inside for the invoice screen. 
-
-Adding invoice renderer can be achieved by adding keys to the configuration `kimai.invoice.renderer` like this:
-
-```
-kimai:
-    invoice:
-        renderer:
-            default: 'App\Controller\InvoiceController::invoiceAction'
-```
-
-The name of the renderer must be unique, please prefix it with your vendor or bundle name and make sure it only contains
-character as it will be stored in a database column.
-
-## Adding invoice calculator (FIXME)
-
-An invoice calculator is a class extending `App\Invoice\CalculatorInterface` and is responsible for calculating 
-invoice rates, taxes and such.   
-
-Adding invoice calculator can be achieved by adding keys to the configuration `kimai.invoice.calculator` like this:
-
-```
-kimai:
-    invoice:
-        calculator:
-            default: 'App\Invoice\DefaultCalculator'
-```
-
-The name of the calculator must be unique, please prefix it with your vendor or bundle name and make sure it only contains
-character as it will be stored in a database column.
-
-## Adding invoice-number generator (FIXME)
-
-An invoice-number generator is a class extending `App\Invoice\NumberGeneratorInterface` and its only task is to generate 
-a number for the invoice. In most cases you do not want to mix multiple invoice-number generators througout your invoice templates.   
-
-Adding invoice-number generator can be achieved by adding keys to the configuration `kimai.invoice.number_generator` like this:
-
-```
-kimai:
-    invoice:
-        number_generator:
-            default: 'App\Invoice\DateNumberGenerator'
-```
-
-The name of the number generator must be unique, please prefix it with your vendor or bundle name and make sure it only contains
-character as it will be stored in a database column.
+In the config `kimai.invoice.documents`, you can add a list of directories with the locations of your invoice document templates ([read more](invoices.md)).
 
 ## Adding timesheet calculator
 
