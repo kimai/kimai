@@ -345,6 +345,8 @@ class Timesheet
     }
 
     /**
+     * These validations are used in places, where we don't use a form yet (like the API).
+     *
      * @param ExecutionContextInterface $context
      * @param mixed $payload
      *
@@ -361,15 +363,15 @@ class Timesheet
             return;
         }
 
-        if (null === $this->getActivity()->getProject() && null === $this->getProject()) {
-            $context->buildViolation('A timesheet with a global activity must have an assigned project.')
+        if (null === $this->getProject()) {
+            $context->buildViolation('A timesheet must have a project.')
                 ->atPath('project')
                 ->setTranslationDomain('validators')
                 ->addViolation();
         }
 
-        if (null !== $this->getActivity()->getProject() && !empty($this->getProject()) && $this->getActivity()->getProject() !== $this->getProject()) {
-            $context->buildViolation('A timesheet with a project specific activity cannot have a different project.')
+        if (null !== $this->getActivity()->getProject() && $this->getActivity()->getProject() !== $this->getProject()) {
+            $context->buildViolation('Project mismatch, project specific activity and timesheet project are different.')
                 ->atPath('project')
                 ->setTranslationDomain('validators')
                 ->addViolation();
