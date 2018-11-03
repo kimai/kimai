@@ -35,13 +35,13 @@ abstract class AbstractEntityTest extends KernelTestCase
         $expected = count($fieldNames);
         $actual = $violations->count();
 
-        $this->assertEquals($expected, $actual, sprintf('Expected %s violations, found %s.', $expected, $actual));
-
         $violatedFields = [];
         /** @var ConstraintViolationInterface $validation */
         foreach ($violations as $validation) {
             $violatedFields[$validation->getPropertyPath()] = $validation->getPropertyPath();
         }
+
+        $this->assertEquals($expected, count($violatedFields), sprintf('Expected %s violations, found %s in %s.', $expected, $actual, implode(', ', array_keys($violatedFields))));
 
         foreach ($fieldNames as $id => $propertyPath) {
             $foundField = false;

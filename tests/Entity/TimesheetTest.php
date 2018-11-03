@@ -62,6 +62,30 @@ class TimesheetTest extends AbstractEntityTest
         return $entity;
     }
 
+    public function testValidationNeedsActivity()
+    {
+        $entity = new Timesheet();
+        $entity
+            ->setUser(new User())
+            ->setProject(new Project())
+            ->setBegin(new \DateTime())
+        ;
+
+        $this->assertHasViolationForField($entity, 'activity');
+    }
+
+    public function testValidationNeedsProject()
+    {
+        $entity = new Timesheet();
+        $entity
+            ->setUser(new User())
+            ->setActivity(new Activity())
+            ->setBegin(new \DateTime())
+        ;
+
+        $this->assertHasViolationForField($entity, 'project');
+    }
+
     public function testValidationEndNotEarlierThanBegin()
     {
         $entity = $this->getEntity();
