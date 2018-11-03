@@ -65,10 +65,6 @@ class TimesheetVoter extends AbstractVoter
             return false;
         }
 
-        if (!$subject instanceof Timesheet) {
-            return false;
-        }
-
         switch ($attribute) {
             case self::STOP:
                 return $this->canStop($subject, $user, $token);
