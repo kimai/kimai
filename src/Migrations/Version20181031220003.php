@@ -28,7 +28,8 @@ final class Version20181031220003 extends AbstractMigration
         }
 
         $timesheet = $this->getTableName('timesheet');
-        $activities = $this->getTableName('timesheet');
+        $projects = $this->getTableName('projects');
+        $activities = $this->getTableName('activities');
 
         if ($platform === 'sqlite') {
             $this->addSql('DROP INDEX IDX_4F60C6B18D93D649');
@@ -43,7 +44,7 @@ final class Version20181031220003 extends AbstractMigration
             $this->addSql('CREATE INDEX IDX_4F60C6B1166D1F9C ON ' . $timesheet . ' (project_id)');
         } else {
             $this->addSql('ALTER TABLE ' . $timesheet . ' ADD project_id INT DEFAULT NULL AFTER activity_id, CHANGE user user INT DEFAULT NULL, CHANGE activity_id activity_id INT DEFAULT NULL, CHANGE end_time end_time DATETIME DEFAULT NULL, CHANGE duration duration INT DEFAULT NULL, CHANGE fixed_rate fixed_rate NUMERIC(10, 2) DEFAULT NULL, CHANGE hourly_rate hourly_rate NUMERIC(10, 2) DEFAULT NULL');
-            $this->addSql('ALTER TABLE ' . $timesheet . ' ADD CONSTRAINT FK_4F60C6B1166D1F9C FOREIGN KEY (project_id) REFERENCES kimai2_projects (id) ON DELETE CASCADE');
+            $this->addSql('ALTER TABLE ' . $timesheet . ' ADD CONSTRAINT FK_4F60C6B1166D1F9C FOREIGN KEY (project_id) REFERENCES ' . $projects . ' (id) ON DELETE CASCADE');
             $this->addSql('CREATE INDEX IDX_4F60C6B1166D1F9C ON ' . $timesheet . ' (project_id)');
         }
 
