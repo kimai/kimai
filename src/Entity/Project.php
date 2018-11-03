@@ -33,7 +33,7 @@ class Project
      * @var Customer
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Customer", inversedBy="projects")
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
     private $customer;

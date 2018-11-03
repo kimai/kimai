@@ -64,7 +64,7 @@ class Timesheet
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(name="user", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\JoinColumn(name="user", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
     private $user;
@@ -73,7 +73,7 @@ class Timesheet
      * @var Activity
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Activity", inversedBy="timesheets")
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
     private $activity;
@@ -82,7 +82,7 @@ class Timesheet
      * @var Project
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="timesheets")
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
     private $project;
