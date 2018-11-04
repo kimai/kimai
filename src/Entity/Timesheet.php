@@ -359,8 +359,6 @@ class Timesheet
                 ->atPath('activity')
                 ->setTranslationDomain('validators')
                 ->addViolation();
-
-            return;
         }
 
         if (null === $this->getProject()) {
@@ -370,7 +368,7 @@ class Timesheet
                 ->addViolation();
         }
 
-        if (null !== $this->getActivity()->getProject() && $this->getActivity()->getProject() !== $this->getProject()) {
+        if (null !== $this->getActivity() && null !== $this->getProject() && null !== $this->getActivity()->getProject() && $this->getActivity()->getProject() !== $this->getProject()) {
             $context->buildViolation('Project mismatch, project specific activity and timesheet project are different.')
                 ->atPath('project')
                 ->setTranslationDomain('validators')

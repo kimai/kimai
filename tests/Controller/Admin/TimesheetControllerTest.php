@@ -81,6 +81,8 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'timesheet_edit_form' => [
                 'description' => 'Testing is fun!',
+                'project' => 1,
+                'activity' => 1,
             ]
         ]);
 
