@@ -84,7 +84,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertInternalType('array', $result);
         $this->assertEquals(count($expected), count($result), 'Found wrong amount of projects');
 
-        for ($i =0; $i < count($expected); $i++) {
+        for ($i = 0; $i < count($expected); $i++) {
             $project = $result[$i];
             $compare = $expected[$i];
             $this->assertStructure($project, $compare[0]);
@@ -101,7 +101,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         yield ['/api/projects', ['customer' => '1', 'visible' => VisibilityQuery::SHOW_HIDDEN], [[false, 1]]];
         yield ['/api/projects', ['customer' => '2', 'visible' => VisibilityQuery::SHOW_VISIBLE], []];
         yield ['/api/projects', ['customer' => '2', 'visible' => VisibilityQuery::SHOW_BOTH], [[false, 2], [false, 2]]];
-        yield ['/api/projects', ['customer' => '2', 'visible' => VisibilityQuery::SHOW_HIDDEN], [[false,2 ]]];
+        yield ['/api/projects', ['customer' => '2', 'visible' => VisibilityQuery::SHOW_HIDDEN], [[false, 2]]];
     }
 
     public function testGetEntity()
