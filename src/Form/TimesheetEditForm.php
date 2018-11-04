@@ -118,7 +118,7 @@ class TimesheetEditForm extends AbstractType
                 'required' => false,
             ])
         ;
-
+/*
         $builder->get('customer')->addEventListener(
             FormEvents::POST_SUBMIT,
             function (FormEvent $event) {
@@ -137,7 +137,7 @@ class TimesheetEditForm extends AbstractType
                 ]);
             }
         );
-
+*/
         $builder->get('project')->addEventListener(
             FormEvents::POST_SUBMIT,
             function (FormEvent $event) {
