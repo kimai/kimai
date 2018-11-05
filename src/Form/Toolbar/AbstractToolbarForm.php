@@ -110,8 +110,9 @@ abstract class AbstractToolbarForm extends AbstractType
             'widget' => 'single_text',
             'html5' => false,
             'required' => false,
-            'format' => 'yyyy-MM-dd',
+            'format' => DateType::HTML5_FORMAT,
             'attr' => ['autocomplete' => 'off', 'data-datepicker' => 'on'],
+            'empty_data' => (new \DateTime('first day of this month'))->format('Y-M-d')
         ]);
     }
 
@@ -125,8 +126,9 @@ abstract class AbstractToolbarForm extends AbstractType
             'widget' => 'single_text',
             'html5' => false,
             'required' => false,
-            'format' => 'yyyy-MM-dd',
+            'format' => DateType::HTML5_FORMAT,
             'attr' => ['autocomplete' => 'off', 'data-datepicker' => 'on'],
+            'empty_data' => (new \DateTime('last day of this month'))->format('Y-M-d')
         ]);
     }
 

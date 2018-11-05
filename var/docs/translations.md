@@ -12,7 +12,10 @@ The files in `translations/` as a quick overview:
 - `messages` holds most of the visible application translations (like all the static UI elements and form translations)
 - `pagerfanta` includes the translations for the pagination component
 - `sidebar` holds all the translations of the right sidebar
-- `validators` only hold translations related to violations/validation of submitted form data (or API calls)
+- `validators` only holds translations related to violations/validation of submitted form data (or API calls)
+- `invoice-calculator` holds translations of calculator types (see `Adding invoice calculator` in [developers](developers.md)-section)
+- `invoice-numbergenerator` holds translations of the invoice calculator (see `Adding invoice-number generator ` in [developers](developers.md)-section)
+- `invoice-renderer` holds translations of all invoice templates ([read more](invoices.md))
 
 ## Adding a new language
 
