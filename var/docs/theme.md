@@ -9,6 +9,24 @@ All Kimai specific theme settings will be available in the twig templates with t
 {{ kimai_context.box_color }}
 ``` 
 
+## Searchable input types
+
+The select boxes for customer, project and activity are by default the OS standard UI elements. 
+This might be a limit for users with a long list of active and non-hidden elements.
+
+Therefor a test is currently running, which can be activated setting the the following configuration:  
+
+```yaml
+kimai:
+    theme:
+        select_type: selectpicker
+```
+
+This will turn the select boxes into javascript elements with quick search option. 
+
+Why is this a beta test? It's not clear, if we keep on using this javascript library or activate it by default.
+Therefor your feedback is highly welcome, please post your opinion at GitHub.   
+
 ## Active entries warning
 
 A small colored warning sign will be shown, if a user has more than 3 active timesheet entries.
@@ -61,39 +79,14 @@ with a pre-defined list of icon aliases to guarantee a consistent look.
 
 The pre-defined icons aliases are:
 
-- `activity`
-- `admin`
-- `calendar`
-- `customer`
-- `create`
-- `dashboard`
-- `delete`
-- `download`
-- `duration`
-- `edit`
-- `filter`
-- `help`
-- `invoice`
-- `list`
-- `logout`
-- `manual`
-- `money`
-- `print`
-- `project`
-- `repeat`
-- `start`
-- `start-small`
-- `stop`
-- `stop-small`
-- `timesheet`
-- `trash`
-- `user`
-- `visibility`
+`activity`, `admin`, `calendar`, `customer`, `create`,`dashboard`, `delete`, `download`, `duration`, `edit`, `filter`, 
+`help`, `invoice`, `list`, `logout`, `manual`, `money`, `print`, `project`, `repeat`, `start`, `start-small`, `stop`, 
+`stop-small`, `timesheet`, `trash`, `user`, `visibility`
+
+The full list can be found in this [TwigExtension](https://github.com/kevinpapst/kimai2/blob/master/src/Twig/Extensions.php).
 
 Icon aliases can be used by applying the `icon` filter, e.g.
 
 ```
 <i class="{{ 'money'|icon }}"></i>
 ```
-
-

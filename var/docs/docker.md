@@ -59,4 +59,4 @@ They were built by the community, we do not support them - for question please a
 
 - [dysonspherelab](https://hub.docker.com/r/dysonsphere/kimai2/) (for more infos [read this issue](https://github.com/kevinpapst/kimai2/issues/284))
 - [felixhummel](https://github.com/felixhummel/kimai-in-docker/tree/kimai2)
-- [Haidy777](https://github.com/Haidy777/kimai2/blob/docker/Dockerfile) 
+- [Haidy777](https://github.com/Haidy777/kimai2/blob/docker/Dockerfile) (for more infos [read this issue](https://github.com/kevinpapst/kimai2/pull/311))
