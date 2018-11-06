@@ -41,7 +41,7 @@ Looking for more information about using Kimai? Check out our more detailed [doc
 
 You can see our development roadmap for the future in the [Milestones](https://github.com/kevinpapst/kimai2/milestones) sections.
 
-Our roadmap is open for changes and input from the community, please [sent us](https://github.com/kevinpapst/kimai2/issues) your ideas and questions.
+Our roadmap is open for changes and input from the community, please [send us](https://github.com/kevinpapst/kimai2/issues) your ideas and questions.
 
 ## Installation
 
