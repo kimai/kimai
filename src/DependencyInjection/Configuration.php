@@ -111,6 +111,19 @@ class Configuration implements ConfigurationInterface
                     ->end()
                     ->defaultValue([])
                 ->end()
+
+                ->arrayNode('active_entries')
+                    ->addDefaultsIfNotSet()
+                        ->children()
+                            ->integerNode('soft_limit')
+                                ->defaultValue(3)
+                            ->end()
+                            ->integerNode('hard_limit')
+                                ->defaultValue(10)
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 
@@ -209,9 +222,6 @@ class Configuration implements ConfigurationInterface
         $node
             ->addDefaultsIfNotSet()
             ->children()
-                ->integerNode('active_warning')
-                    ->defaultValue(3)
-                ->end()
                 ->scalarNode('box_color')
                     ->defaultValue('green')
                 ->end()

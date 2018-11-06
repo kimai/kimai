@@ -33,6 +33,15 @@ kimai:
         #        days: ['saturday','sunday']
         #        factor: 1.5
 
+        # If you want to limit the max. active entries per user, you can do it here.
+        # The soft_limit is used as theme setting (former known as "kimai.theme.active_warning":
+        #   display a warning color if the user has at least X active recordings
+        # The hard_limit used to detect how many active records a user can have:
+        #   when the limit is reached, the oldest recording will be stopped.
+        active_entries:
+            soft_limit: 3
+            hard_limit: 10
+
     # Invoice management
     #invoice:
     #    # all files in these directories will be used as invoice documents (if supported by a renderer)
@@ -96,8 +105,6 @@ kimai:
     # theme related settings, will be available as twig globals at "kimai_context.*"
     # please see documentation at var/docs/theme.md
     theme:
-        # display a warning color if the user has at least X active recordings
-        active_warning: 3
         # fallback color for all widgets that don't have a dedicated color
         # possible options: blue, black, purple, yellow, red, green
         box_color: 'green'

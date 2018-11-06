@@ -285,21 +285,34 @@ class TimesheetRepository extends AbstractRepository
 
     /**
      * @param User $user
-     * @return User
+     * @param int $limit
+     * @return int
      * @throws RepositoryException
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function stopActiveEntries(User $user)
+    public function stopActiveEntries(User $user, int $limit)
     {
-        //Stop currently running actions.
+        $counter = 0;
         $activeEntries = $this->getActiveEntries($user);
 
-        foreach ($activeEntries as $activeEntry) {
-            $this->stopRecording($activeEntry);
+        // reduce limit by one:
+        // this method is only called when a new entry is started
+        // -> all entries, including the new one must not exceed the $limit
+        $limit--;
+
+        if (count($activeEntries) > $limit) {
+            $i = 1;
+            foreach ($activeEntries as $activeEntry) {
+                if ($i > $limit) {
+                    $this->stopRecording($activeEntry);
+                    $counter++;
+                }
+                $i++;
+            }
         }
 
-        return $user;
+        return $counter;
     }
 
     /**

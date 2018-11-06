@@ -170,13 +170,16 @@ trait TimesheetControllerTrait
             }
 
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($entry);
 
-            $this->stopActiveEntries($entry->getUser());
+            try {
+                $this->stopActiveEntries($entry->getUser());
+                $entityManager->persist($entry);
+                $entityManager->flush();
 
-            $entityManager->flush();
-
-            $this->flashSuccess('action.update.success');
+                $this->flashSuccess('action.update.success');
+            } catch (\Exception $ex) {
+                $this->flashError('timesheet.start.error', ['%reason%' => $ex->getMessage()]);
+            }
 
             return $this->redirectToRoute($redirectRoute);
         }
@@ -195,10 +198,8 @@ trait TimesheetControllerTrait
      */
     protected function stopActiveEntries(User $user)
     {
-        $themeParameter = $this->getParameter('kimai.theme');
-        if (isset($themeParameter['active_warning']) && $themeParameter['active_warning'] === (int) 1) {
-            $this->getRepository()->stopActiveEntries($this->getUser());
-        }
+        $activeRecordsLimit = $this->getParameter('kimai.timesheet.active_entries.hard_limit');
+        $this->getRepository()->stopActiveEntries($user, $activeRecordsLimit);
     }
 
     /**
