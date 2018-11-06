@@ -140,7 +140,7 @@ class BaseQuery
     }
 
     /**
-     * @param string $resultType
+     * @param $resultType
      * @return $this
      * @throws \InvalidArgumentException
      */
@@ -166,7 +166,7 @@ class BaseQuery
     }
 
     /**
-     * @param object $hiddenEntity
+     * @param object|string $hiddenEntity
      * @return BaseQuery
      */
     public function setHiddenEntity($hiddenEntity)

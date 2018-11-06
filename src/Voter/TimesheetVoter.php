@@ -44,10 +44,6 @@ class TimesheetVoter extends AbstractVoter
             return false;
         }
 
-        if ($subject instanceof Activity && self::START == $attribute) {
-            return true;
-        }
-
         if (!$subject instanceof Timesheet) {
             return false;
         }
@@ -71,38 +67,18 @@ class TimesheetVoter extends AbstractVoter
 
         switch ($attribute) {
             case self::STOP:
-                if (!$subject instanceof Timesheet) {
-                    return false;
-                }
-
                 return $this->canStop($subject, $user, $token);
 
             case self::START:
-                if (!$subject instanceof Activity) {
-                    return false;
-                }
-
                 return $this->canStart($subject, $user, $token);
 
             case self::VIEW:
-                if (!$subject instanceof Timesheet) {
-                    return false;
-                }
-
                 return $this->canView($subject, $user, $token);
 
             case self::EDIT:
-                if (!$subject instanceof Timesheet) {
-                    return false;
-                }
-
                 return $this->canEdit($subject, $user, $token);
 
             case self::DELETE:
-                if (!$subject instanceof Timesheet) {
-                    return false;
-                }
-
                 return $this->canDelete($subject, $user, $token);
         }
 
@@ -122,23 +98,21 @@ class TimesheetVoter extends AbstractVoter
     }
 
     /**
-     * @param Activity $activity
+     * @param Timesheet $timesheet
      * @param User $user
      * @param TokenInterface $token
      * @return bool
      */
-    protected function canStart(Activity $activity, User $user, TokenInterface $token)
+    protected function canStart(Timesheet $timesheet, User $user, TokenInterface $token)
     {
         // we could check the amount of active entries
         // if a teamlead starts an entry for another user, check that this user is part of his team
 
-        if (!$activity->getVisible()) {
+        if (!$timesheet->getActivity()->getVisible() || !$timesheet->getProject()->getVisible()) {
             return false;
         }
-        if (!$activity->getProject()->getVisible()) {
-            return false;
-        }
-        if (!$activity->getProject()->getCustomer()->getVisible()) {
+
+        if (!$timesheet->getProject()->getCustomer()->getVisible()) {
             return false;
         }
 

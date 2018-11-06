@@ -32,5 +32,9 @@ class ProjectQueryTest extends BaseQueryTest
         $sut->setCustomer($expected);
 
         $this->assertEquals($expected, $sut->getCustomer());
+
+        // make sure int is allowed as well
+        $sut->setCustomer(99);
+        $this->assertEquals(99, $sut->getCustomer());
     }
 }

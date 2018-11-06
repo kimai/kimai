@@ -10,8 +10,10 @@
 namespace App\Form;
 
 use App\Entity\Activity;
+use App\Form\Type\CustomerType;
 use App\Form\Type\ProjectType;
 use App\Form\Type\YesNoType;
+use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -35,8 +37,11 @@ class ActivityEditForm extends AbstractType
         $entry = $options['data'];
 
         $project = null;
-        if ($entry->getId() !== null) {
+        $customer = null;
+
+        if (null !== $entry->getProject()) {
             $project = $entry->getProject();
+            $customer = $project->getCustomer();
         }
 
         $builder
@@ -49,9 +54,21 @@ class ActivityEditForm extends AbstractType
                 'label' => 'label.comment',
                 'required' => false,
             ])
-            // entity type: project
+            ->add('customer', CustomerType::class, [
+                'label' => 'label.customer',
+                'query_builder' => function (CustomerRepository $repo) use ($customer) {
+                    return $repo->builderForEntityType($customer);
+                },
+                'required' => false,
+                'mapped' => false,
+                'attr' => [
+                    'data-related-select' => $this->getBlockPrefix() . '_project',
+                    'data-api-url' => ['get_projects', ['customer' => '-s-']],
+                ],
+            ])
             ->add('project', ProjectType::class, [
                 'label' => 'label.project',
+                'required' => false,
                 'query_builder' => function (ProjectRepository $repo) use ($project) {
                     return $repo->builderForEntityType($project);
                 },

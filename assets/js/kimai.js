@@ -84,6 +84,28 @@ $(function() {
                 $(this).trigger("change");
             });
 
+            $('select[data-related-select]').change(function() {
+                var apiUrl = $(this).attr('data-api-url').replace('-s-', $(this).val());
+                var targetSelect = $(this).attr('data-related-select');
+
+                $.ajax({
+                    url: apiUrl,
+                    headers: {
+                        'X-AUTH-SESSION': true,
+                        'Content-Type':'application/json'
+                    },
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data){
+                        $('#' + targetSelect).find('option').remove().end().find('optgroup').remove().end();
+                        $.each(data, function(i, obj) {
+                            $('#' + targetSelect).append('<option value="' + obj.id + '">' + obj.name + '</option>');
+                        });
+                        $('#' + targetSelect).trigger('change')
+                    }
+                });
+            });
+
             /*
             $('input').iCheck({
                 checkboxClass: 'icheckbox_square-blue',

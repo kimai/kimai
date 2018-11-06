@@ -18,14 +18,17 @@ $(document).ready(function () {
             case 'customer':
                 if ($(this).val() === '') {
                     $('.toolbar form select#project').parent().remove();
+                    //$('.toolbar form select#project').parent().parent().remove();
                 } else {
                     $('.toolbar form select#project').val('');
                 }
                 $('.toolbar form select#activity').parent().remove();
+                //$('.toolbar form select#activity').parent().parent().remove();
                 break;
             case 'project':
                 if ($(this).val() === '') {
                     $('.toolbar form select#activity').parent().remove();
+                    //$('.toolbar form select#activity').parent().parent().remove();
                 } else {
                     $('.toolbar form select#activity').val('');
                 }

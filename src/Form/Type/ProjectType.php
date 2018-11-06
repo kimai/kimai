@@ -35,6 +35,7 @@ class ProjectType extends AbstractType
             'query_builder' => function (ProjectRepository $repo) {
                 return $repo->builderForEntityType(null);
             },
+            //'attr' => ['class' => 'selectpicker', 'data-size' => 10, 'data-live-search' => true, 'data-width' => '100%']
         ]);
     }
 

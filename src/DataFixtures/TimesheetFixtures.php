@@ -10,6 +10,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Activity;
+use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
@@ -56,6 +57,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
     {
         $allUser = $this->getAllUsers($manager);
         $activities = $this->getAllActivities($manager);
+        $projects = $this->getAllProjects($manager);
 
         $faker = Factory::create();
 
@@ -80,6 +82,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
                 $entry = $this->createTimesheetEntry(
                     $user,
                     $activities[array_rand($activities)],
+                    $projects[array_rand($projects)],
                     $description
                 );
 
@@ -98,6 +101,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
                 $entry = $this->createTimesheetEntry(
                     $user,
                     $activities[array_rand($activities)],
+                    $projects[array_rand($projects)],
                     null,
                     false
                 );
@@ -128,12 +132,28 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
 
     /**
      * @param ObjectManager $manager
+     * @return Project[]
+     */
+    protected function getAllProjects(ObjectManager $manager)
+    {
+        $all = [];
+        /* @var Project[] $entries */
+        $entries = $manager->getRepository(Project::class)->findAll();
+        foreach ($entries as $temp) {
+            $all[$temp->getId()] = $temp;
+        }
+
+        return $all;
+    }
+
+    /**
+     * @param ObjectManager $manager
      * @return Activity[]
      */
     protected function getAllActivities(ObjectManager $manager)
     {
         $all = [];
-        /* @var User[] $entries */
+        /* @var Activity[] $entries */
         $entries = $manager->getRepository(Activity::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
@@ -142,7 +162,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
         return $all;
     }
 
-    private function createTimesheetEntry(User $user, Activity $activity, $description, $setEndDate = true)
+    private function createTimesheetEntry(User $user, Activity $activity, Project $project, $description, $setEndDate = true)
     {
         $start = new \DateTime();
         $start = $start->modify('- ' . (rand(1, self::TIMERANGE_DAYS)) . ' days');
@@ -151,6 +171,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
         $entry = new Timesheet();
         $entry
             ->setActivity($activity)
+            ->setProject($activity->getProject() ?? $project)
             ->setDescription($description)
             ->setUser($user)
             ->setBegin($start);

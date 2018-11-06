@@ -111,7 +111,9 @@ class TimesheetControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
         $client->submit($form, [
             'timesheet_edit_form' => [
-                'description' => 'Testing is fun!'
+                'description' => 'Testing is fun!',
+                'project' => 1,
+                'activity' => 1,
             ]
         ]);
 
@@ -157,7 +159,14 @@ class TimesheetControllerTest extends ControllerBaseTest
 
     public function testStartAction()
     {
-        $client = $this->getClientForAuthenticatedUser();
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $fixture = new TimesheetFixtures();
+        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setAmount(1);
+        $this->importFixture($em, $fixture);
+
         $this->request($client, '/timesheet/start/1');
 
         $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
@@ -167,10 +176,11 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet = $em->getRepository(Timesheet::class)->find(2);
         $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
         $this->assertNull($timesheet->getEnd());
         $this->assertEquals(1, $timesheet->getActivity()->getId());
+        $this->assertEquals(1, $timesheet->getProject()->getId());
     }
 
     public function testStopAction()
@@ -184,6 +194,8 @@ class TimesheetControllerTest extends ControllerBaseTest
             'timesheet_edit_form' => [
                 'description' => 'Testing is fun!',
                 'fixedRate' => 100,
+                'project' => 1,
+                'activity' => 1,
             ]
         ]);
 
@@ -218,6 +230,8 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'timesheet_edit_form' => [
                 'hourlyRate' => 100,
+                'project' => 1,
+                'activity' => 1,
             ]
         ]);
 
@@ -250,6 +264,8 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'timesheet_edit_form' => [
                 'hourlyRate' => 100,
+                'project' => 1,
+                'activity' => 1,
             ]
         ]);
 

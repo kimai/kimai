@@ -10,6 +10,7 @@
 namespace App\Tests\DataFixtures;
 
 use App\Entity\Activity;
+use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
@@ -141,6 +142,8 @@ class TimesheetFixtures extends Fixture
             $activities = $this->getAllActivities($manager);
         }
 
+        $projects = $this->getAllProjects($manager);
+
         $faker = Factory::create();
         $user = $this->user;
 
@@ -151,9 +154,18 @@ class TimesheetFixtures extends Fixture
             } elseif ($i % 2 == 0) {
                 $description = '';
             }
+
+            $activity = $activities[array_rand($activities)];
+            $project = $activity->getProject();
+
+            if (null === $project) {
+                $project = $projects[array_rand($projects)];
+            }
+
             $entry = $this->createTimesheetEntry(
                 $user,
-                $activities[array_rand($activities)],
+                $activity,
+                $project,
                 $description,
                 $this->getDateTime($i)
             );
@@ -162,11 +174,20 @@ class TimesheetFixtures extends Fixture
         }
 
         for ($i = 0; $i < $this->running; $i++) {
+            $activity = $activities[array_rand($activities)];
+            $project = $activity->getProject();
+
+            if (null === $project) {
+                $project = $projects[array_rand($projects)];
+            }
+
             $entry = $this->createTimesheetEntry(
                 $user,
-                $activities[array_rand($activities)],
+                $activity,
+                $project,
                 $faker->text,
-                $this->getDateTime($i)
+                $this->getDateTime($i),
+                false
             );
             $manager->persist($entry);
         }
@@ -193,8 +214,24 @@ class TimesheetFixtures extends Fixture
     protected function getAllActivities(ObjectManager $manager)
     {
         $all = [];
-        /* @var User[] $entries */
+        /* @var Activity[] $entries */
         $entries = $manager->getRepository(Activity::class)->findAll();
+        foreach ($entries as $temp) {
+            $all[$temp->getId()] = $temp;
+        }
+
+        return $all;
+    }
+
+    /**
+     * @param ObjectManager $manager
+     * @return Project[]
+     */
+    protected function getAllProjects(ObjectManager $manager)
+    {
+        $all = [];
+        /* @var Project[] $entries */
+        $entries = $manager->getRepository(Project::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
         }
@@ -205,12 +242,13 @@ class TimesheetFixtures extends Fixture
     /**
      * @param User $user
      * @param Activity $activity
-     * @param $description
+     * @param Project $project
+     * @param string $description
      * @param \DateTime $start
      * @param bool $setEndDate
      * @return Timesheet
      */
-    private function createTimesheetEntry(User $user, Activity $activity, $description, \DateTime $start, $setEndDate = true)
+    private function createTimesheetEntry(User $user, Activity $activity, Project $project, $description, \DateTime $start, $setEndDate = true)
     {
         $end = clone $start;
         $end = $end->modify('+ ' . (rand(1, 172800)) . ' seconds');
@@ -221,6 +259,7 @@ class TimesheetFixtures extends Fixture
         $entry = new Timesheet();
         $entry
             ->setActivity($activity)
+            ->setProject($project)
             ->setDescription($description)
             ->setUser($user)
             ->setRate(round(($duration / 3600) * $rate))

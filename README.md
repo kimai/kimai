@@ -20,7 +20,7 @@ But we already support to [import your timesheets](var/docs/migration_v1.md) fro
 It is developed with modern frameworks like [Symfony v4](https://github.com/symfony/symfony), [Doctrine](https://github.com/doctrine/),
 [AdminLTE](https://github.com/kevinpapst/AdminLTEBundle/) and [many](composer.json) [more](package.json).
 
-Kimai is a multi-language application and already translated to: English, German, Italian, French, Spanish, Russian and Arabic.
+Kimai is a multi-language application and already translated to: English, German, Italian, French, Spanish, Russian, Arabic and Hungarian.
 If you want to support us in translating Kimai, please [read this documentation](var/docs/translations.md). 
 
 ### Requirements
@@ -45,7 +45,10 @@ Our roadmap is open for changes and input from the community, please [sent us](i
 
 ## Installation
 
-There are [further infos about installation](var/docs/installation.md) if you have to use FTP or want to develop with Kimai. 
+> **NOTE**
+>
+> There are [further infos about installation](var/docs/installation.md) if you have to use FTP, want to develop with Kimai 
+or are setting up Kimai on your personal computer. There is also a [docker image](var/docs/docker.md) available.
 
 If you want to install Kimai 2 in your production environment, then SSH into your server and change to your webserver root.
 You need to install Git and [Composer](https://getcomposer.org/doc/00-intro.md) if you haven't already. 
@@ -65,7 +68,7 @@ chmod -R g+rw var/
 cp .env.dist .env
 ```
 
-It's up to you which database server you want to use, Kimai v2 supports MySQL/MariaDB and SQLite.
+It's up to you which database server you want to use, Kimai v2 supports MySQL/MariaDB and SQLite, but SQLite is [not recommended](var/docs/faq.md) for production usage.
 Configure the database connection string in your the `.env` file:
 ```
 # adjust all settings in .env to your needs
@@ -117,6 +120,11 @@ For available roles, please refer to the [user documentation](var/docs/users.md)
 Installation complete: enjoy time-tracking :-)
 
 ## Updating Kimai
+
+> **NOTE**
+> 
+> Don't forget tweaks that may be necessary to these instructions if you are using FTP, developing or updating on your 
+personal computer instead of a server. See [further infos about installation](var/docs/installation.md).
 
 **STOP** 
 

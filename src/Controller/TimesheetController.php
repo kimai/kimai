@@ -9,7 +9,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Activity;
 use App\Entity\Timesheet;
 use App\Form\TimesheetEditForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
@@ -19,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Controller used to manage timesheets.
@@ -143,20 +143,36 @@ class TimesheetController extends AbstractController
     }
 
     /**
-     * The route to start a running entry.
+     * The route to re-start a timesheet entry.
      *
      * @Route(path="/start/{id}", name="timesheet_start", requirements={"id" = "\d+"}, methods={"GET", "POST"})
-     * @Security("is_granted('start', activity)")
+     * @Security("is_granted('start', timesheet)")
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function startAction(Activity $activity)
+    public function startAction(ValidatorInterface $validator, Timesheet $timesheet)
     {
         $user = $this->getUser();
 
         try {
-            $this->getRepository()->startRecording($user, $activity);
-            $this->flashSuccess('timesheet.start.success');
+            $entry = new Timesheet();
+            $entry
+                ->setBegin(new \DateTime())
+                ->setUser($user)
+                ->setActivity($timesheet->getActivity())
+                ->setProject($timesheet->getProject())
+            ;
+
+            $errors = $validator->validate($entry);
+
+            if (count($errors) > 0) {
+                $this->flashError('timesheet.start.error', ['%reason%' => $errors[0]->getPropertyPath() . ' = ' . $errors[0]->getMessage()]);
+            } else {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($entry);
+                $entityManager->flush();
+                $this->flashSuccess('timesheet.start.success');
+            }
         } catch (\Exception $ex) {
             $this->flashError('timesheet.start.error', ['%reason%' => $ex->getMessage()]);
         }
