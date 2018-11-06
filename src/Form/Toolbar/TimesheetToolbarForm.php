@@ -45,6 +45,7 @@ class TimesheetToolbarForm extends AbstractToolbarForm
                 'entryState.running' => TimesheetQuery::STATE_RUNNING,
                 'entryState.stopped' => TimesheetQuery::STATE_STOPPED
             ],
+            //'attr' => ['class' => 'selectpicker', 'data-live-search' => false, 'data-width' => '100%']
         ]);
     }
 

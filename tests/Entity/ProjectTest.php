@@ -12,6 +12,7 @@ namespace App\Tests\Entity;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\Timesheet;
 
 /**
  * @covers \App\Entity\Project
@@ -31,6 +32,7 @@ class ProjectTest extends AbstractEntityTest
         // activities
         $this->assertNull($sut->getFixedRate());
         $this->assertNull($sut->getHourlyRate());
+        $this->assertNull($sut->getTimesheets());
     }
 
     public function testSetterAndGetter()
@@ -64,5 +66,9 @@ class ProjectTest extends AbstractEntityTest
         $this->assertEquals(13.47, $sut->getFixedRate());
         $this->assertInstanceOf(Project::class, $sut->setHourlyRate(99));
         $this->assertEquals(99, $sut->getHourlyRate());
+
+        $timesheets = [(new Timesheet())->setDescription('foo'), (new Timesheet())->setDescription('bar')];
+        $this->assertInstanceOf(Project::class, $sut->setTimesheets($timesheets));
+        $this->assertSame($timesheets, $sut->getTimesheets());
     }
 }

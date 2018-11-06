@@ -33,7 +33,7 @@ class Project
      * @var Customer
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Customer", inversedBy="projects")
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
     private $customer;
@@ -102,6 +102,13 @@ class Project
     private $hourlyRate = null;
 
     /**
+     * @var Timesheet[]
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Timesheet", mappedBy="project")
+     */
+    private $timesheets;
+
+    /**
      * @return int
      */
     public function getId()
@@ -118,8 +125,8 @@ class Project
     }
 
     /**
-     * @param $customer
-     * @return $this
+     * @param Customer $customer
+     * @return Project
      */
     public function setCustomer($customer)
     {
@@ -129,8 +136,6 @@ class Project
     }
 
     /**
-     * Set name
-     *
      * @param string $name
      * @return Project
      */
@@ -204,6 +209,25 @@ class Project
     public function getBudget()
     {
         return $this->budget;
+    }
+
+    /**
+     * @param Timesheet[] $timesheets
+     * @return Project
+     */
+    public function setTimesheets($timesheets)
+    {
+        $this->timesheets = $timesheets;
+
+        return $this;
+    }
+
+    /**
+     * @return Timesheet[]
+     */
+    public function getTimesheets()
+    {
+        return $this->timesheets;
     }
 
     /**

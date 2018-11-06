@@ -10,15 +10,21 @@
 namespace App\Form;
 
 use App\Entity\Timesheet;
-use App\Form\Type\ActivityGroupedWithCustomerNameType;
+use App\Form\Type\ActivityType;
+use App\Form\Type\CustomerType;
 use App\Form\Type\DurationType;
+use App\Form\Type\ProjectType;
 use App\Form\Type\UserType;
 use App\Repository\ActivityRepository;
+use App\Repository\CustomerRepository;
+use App\Repository\ProjectRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -34,9 +40,12 @@ class TimesheetEditForm extends AbstractType
         /** @var Timesheet $entry */
         $entry = $options['data'];
 
-        $activity = null;
-        if ($entry->getId() !== null) {
-            $activity = $entry->getActivity();
+        $activity = $entry->getActivity();
+        $project = $entry->getProject();
+        $customer = null === $entry->getProject() ? null : $entry->getProject()->getCustomer();
+
+        if (null === $project && null !== $activity) {
+            $project = $activity->getProject();
         }
 
         if (null === $entry->getEnd() || !$options['duration_only']) {
@@ -65,7 +74,32 @@ class TimesheetEditForm extends AbstractType
         }
 
         $builder
-            ->add('activity', ActivityGroupedWithCustomerNameType::class, [
+            ->add('customer', CustomerType::class, [
+                'label' => 'label.customer',
+                'query_builder' => function (CustomerRepository $repo) use ($customer) {
+                    return $repo->builderForEntityType($customer);
+                },
+                'data' => $customer ? $customer : '',
+                'required' => false,
+                'mapped' => false,
+                'attr' => [
+                    'data-related-select' => $this->getBlockPrefix() . '_project',
+                    'data-api-url' => ['get_projects', ['customer' => '-s-']],
+                ],
+            ])
+            ->add('project', ProjectType::class, [
+                'required' => true,
+                'placeholder' => '',
+                'label' => 'label.project',
+                'query_builder' => function (ProjectRepository $repo) use ($project) {
+                    return $repo->builderForEntityType($project);
+                },
+                'attr' => [
+                    'data-related-select' => $this->getBlockPrefix() . '_activity',
+                    'data-api-url' => ['get_activities', ['project' => '-s-']],
+                ],
+            ])
+            ->add('activity', ActivityType::class, [
                 'label' => 'label.activity',
                 'query_builder' => function (ActivityRepository $repo) use ($activity) {
                     return $repo->builderForEntityType($activity);
@@ -84,6 +118,38 @@ class TimesheetEditForm extends AbstractType
                 'required' => false,
             ])
         ;
+        /*
+        $builder->get('customer')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event) {
+                $customer = $event->getForm()->getData();
+                $event->getForm()->getParent()->add('project', ProjectType::class, [
+                    'required' => true,
+                    'placeholder' => '',
+                    'label' => 'label.project',
+                    'query_builder' => function (ProjectRepository $repo) use ($customer) {
+                        return $repo->builderForEntityType(null, $customer);
+                    },
+                    'attr' => [
+                        'data-related-select' => $this->getBlockPrefix() . '_activity',
+                        'data-api-url' => ['get_activities', ['project' => '-s-']],
+                    ],
+                ]);
+            }
+        );
+        */
+        $builder->get('project')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event) {
+                $project = $event->getForm()->getData();
+                $event->getForm()->getParent()->add('activity', ActivityType::class, [
+                    'label' => 'label.activity',
+                    'query_builder' => function (ActivityRepository $repo) use ($project) {
+                        return $repo->builderForEntityType(null, $project);
+                    },
+                ]);
+            }
+        );
 
         if ($options['include_user']) {
             $builder->add('user', UserType::class);

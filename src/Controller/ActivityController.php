@@ -37,12 +37,11 @@ class ActivityController extends AbstractController
     public function recentActivitiesAction()
     {
         $user = $this->getUser();
-        // TODO make days configurable
-        $activeEntries = $this->getRepository()->getRecentActivities($user, new \DateTime('-30 days'));
+        $entries = $this->getRepository()->getRecentActivities($user, new \DateTime('-30 days'));
 
         return $this->render(
             'navbar/recent-activities.html.twig',
-            ['activities' => $activeEntries]
+            ['entries' => $entries]
         );
     }
 }
