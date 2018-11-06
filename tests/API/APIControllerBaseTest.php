@@ -138,11 +138,11 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
      * @param Client $client
      * @param string $url
      * @param string $method
-     * @param string $content
      * @param array $parameters
+     * @param string $content
      * @return Crawler
      */
-    protected function request(Client $client, string $url, $method = 'GET', string $content = null, array $parameters = [])
+    protected function request(Client $client, string $url, $method = 'GET', array $parameters = [], string $content = null)
     {
         $server = ['HTTP_CONTENT_TYPE' => 'application/json', 'CONTENT_TYPE' => 'application/json'];
 
