@@ -10,6 +10,7 @@
 namespace App\Repository;
 
 use App\Entity\Activity;
+use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Model\ProjectStatistic;
@@ -41,7 +42,7 @@ class ProjectRepository extends AbstractRepository
     }
 
     /**
-     * Retrieves statistics for one activity.
+     * Retrieves statistics for one project.
      *
      * @param Project $project
      * @return ProjectStatistic
@@ -55,7 +56,7 @@ class ProjectRepository extends AbstractRepository
             ->addSelect('COUNT(DISTINCT(a.id)) as activityAmount')
             ->from(Activity::class, 'a')
             ->join(Timesheet::class, 't')
-            ->where('a.project = :project')
+            ->where('t.project = :project')
             ->andWhere('t.activity = a.id')
         ;
 
@@ -79,12 +80,14 @@ class ProjectRepository extends AbstractRepository
      * Returns a query builder that is used for ProjectType and your own 'query_builder' option.
      *
      * @param Project|null $entity
-     * @return \Doctrine\ORM\QueryBuilder
+     * @param Customer|null $customer
+     * @return array|QueryBuilder|Pagerfanta
      */
-    public function builderForEntityType(Project $entity = null)
+    public function builderForEntityType(Project $entity = null, Customer $customer = null)
     {
         $query = new ProjectQuery();
         $query->setHiddenEntity($entity);
+        $query->setCustomer($customer);
         $query->setResultType(ProjectQuery::RESULT_TYPE_QUERYBUILDER);
 
         return $this->findByQuery($query);

@@ -35,3 +35,10 @@ Further readings:
 
 - [MariaDB - JSON support was added with 10.2.7](https://mariadb.com/kb/en/library/json-data-type/)
 - [Using JSON fields with Doctrine ORM on PostgreSQL & MySQL](https://symfony.fi/entry/using-json-fields-with-doctrine-orm-on-postgresql-mysql)
+
+## Why is SQLite not recommended for production usage
+
+SQLite is a great database engine for testing, but when it comes to production usage it fails due to several reasons:
+
+- It does not support ALTER TABLE commands and makes update procedures very clunky and problematic/errorsome (we still try to support updates, but they are heavy on large databases)
+- It does not support FOREIGN KEY constraints out of the box, which can lead to critical bugs when deleting activities/projects/customers 

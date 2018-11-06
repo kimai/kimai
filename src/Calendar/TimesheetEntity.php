@@ -63,8 +63,8 @@ class TimesheetEntity
         $this->start = $entry->getBegin();
         $this->title = $entry->getActivity()->getName();
         $this->description = $entry->getDescription();
-        $this->customer = $entry->getActivity()->getProject()->getCustomer()->getName();
-        $this->project = $entry->getActivity()->getProject()->getName();
+        $this->customer = $entry->getProject()->getCustomer()->getName();
+        $this->project = $entry->getProject()->getName();
         $this->activity = $entry->getActivity()->getName();
 
         if (null === $entry->getEnd()) {

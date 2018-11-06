@@ -56,11 +56,18 @@
 
 {% macro label_activity(activity) %}
     {% import _self as macro %}
-    {% if activity.visible and activity.project.visible and activity.project.customer.visible %}
-        {{ macro.label(activity.name, 'primary', activity.project.customer.name ~ ': ' ~ activity.project.name) }}
-    {% else %}
-        {{ macro.label(activity.name, 'warning', activity.project.customer.name ~ ': ' ~ activity.project.name) }}
+    {% set isVisible = activity.visible %}
+    {% if isVisible and not activity.project is null %}
+        {% set isVisible = activity.project.visible %}
+        {% if isVisible and not activity.project.customer is null %}
+            {% set isVisible = activity.project.customer.visible %}
+        {% endif %}
     {% endif %}
+    {% set label = '' %}
+    {% if not activity.project is null %}
+        {% set label = activity.project.customer.name ~ ': ' ~ activity.project.name %}
+    {% endif %}
+    {{ macro.label(activity.name, (isVisible ? 'primary' : 'warning'), label) }}
 {% endmacro %}
 
 {% macro label_project(project) %}

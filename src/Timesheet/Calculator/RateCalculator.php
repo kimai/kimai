@@ -74,7 +74,7 @@ class RateCalculator implements CalculatorInterface
             return $activity->getHourlyRate();
         }
 
-        $project = $activity->getProject();
+        $project = $record->getProject();
         if (null !== $project) {
             if (null !== $project->getHourlyRate()) {
                 return $project->getHourlyRate();
@@ -104,7 +104,7 @@ class RateCalculator implements CalculatorInterface
             return $activity->getFixedRate();
         }
 
-        $project = $activity->getProject();
+        $project = $record->getProject();
         if (null !== $project) {
             if (null !== $project->getFixedRate()) {
                 return $project->getFixedRate();

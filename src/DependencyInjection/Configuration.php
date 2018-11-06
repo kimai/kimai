@@ -225,6 +225,9 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('box_color')
                     ->defaultValue('green')
                 ->end()
+                ->scalarNode('select_type')
+                    ->defaultNull()
+                ->end()
             ->end()
         ;
 

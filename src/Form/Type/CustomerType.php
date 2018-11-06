@@ -32,6 +32,7 @@ class CustomerType extends AbstractType
             'query_builder' => function (CustomerRepository $repo) {
                 return $repo->builderForEntityType(null);
             },
+            //'attr' => ['class' => 'selectpicker', 'data-size' => 10, 'data-live-search' => true, 'data-width' => '100%']
         ]);
     }
 

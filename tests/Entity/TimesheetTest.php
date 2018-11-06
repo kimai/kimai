@@ -29,6 +29,7 @@ class TimesheetTest extends AbstractEntityTest
         $this->assertSame(0, $sut->getDuration());
         $this->assertNull($sut->getUser());
         $this->assertNull($sut->getActivity());
+        $this->assertNull($sut->getProject());
         $this->assertNull($sut->getDescription());
         $this->assertSame(0.00, $sut->getRate());
         $this->assertNull($sut->getFixedRate());
@@ -56,8 +57,50 @@ class TimesheetTest extends AbstractEntityTest
         $entity = new Timesheet();
         $entity->setUser(new User());
         $entity->setActivity($activity);
+        $entity->setProject($project);
 
         return $entity;
+    }
+
+    public function testValidationNeedsActivity()
+    {
+        $entity = new Timesheet();
+        $entity
+            ->setUser(new User())
+            ->setProject(new Project())
+            ->setBegin(new \DateTime())
+        ;
+
+        $this->assertHasViolationForField($entity, 'activity');
+    }
+
+    public function testValidationNeedsProject()
+    {
+        $entity = new Timesheet();
+        $entity
+            ->setUser(new User())
+            ->setActivity(new Activity())
+            ->setBegin(new \DateTime())
+        ;
+
+        $this->assertHasViolationForField($entity, 'project');
+    }
+
+    public function testValidationProjectMismatch()
+    {
+        $project = (new Project())->setName('foo');
+        $project2 = (new Project())->setName('bar');
+        $activity = (new Activity())->setName('hello-world')->setProject($project);
+
+        $entity = new Timesheet();
+        $entity
+            ->setUser(new User())
+            ->setActivity($activity)
+            ->setProject($project2)
+            ->setBegin(new \DateTime())
+        ;
+
+        $this->assertHasViolationForField($entity, 'project');
     }
 
     public function testValidationEndNotEarlierThanBegin()

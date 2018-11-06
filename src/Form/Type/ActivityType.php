@@ -25,7 +25,11 @@ class ActivityType extends AbstractType
      */
     public function groupBy(Activity $activity, $key, $index)
     {
-        return '[' . $activity->getProject()->getId() . '] ' . $activity->getProject()->getName();
+        if (null === $activity->getProject()) {
+            return null;
+        }
+
+        return $activity->getProject()->getName();
     }
 
     /**
@@ -47,8 +51,17 @@ class ActivityType extends AbstractType
             'choice_label' => [$this, 'choiceLabel'],
             'group_by' => [$this, 'groupBy'],
             'query_builder' => function (ActivityRepository $repo) {
-                return $repo->builderForEntityType(null);
+                return $repo->builderForEntityType();
             },
+            'choice_attr' => function (Activity $activity, $key, $value) {
+                $attributes = [];
+                if (null !== $activity->getProject()) {
+                    $attributes['data-project'] = $activity->getProject()->getId();
+                }
+
+                return $attributes;
+            },
+            //'attr' => ['class' => 'selectpicker', 'data-size' => 10, 'data-live-search' => true, 'data-width' => '100%']
         ]);
     }
 

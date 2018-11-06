@@ -9,7 +9,11 @@
 
 namespace App\Tests\API;
 
+use App\Entity\Customer;
+use App\Entity\Project;
 use App\Entity\User;
+use App\Repository\Query\VisibilityQuery;
+use Symfony\Bundle\FrameworkBundle\Client;
 
 /**
  * @coversDefaultClass \App\API\ProjectController
@@ -34,6 +38,72 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertStructure($result[0]);
     }
 
+    protected function loadProjectTestData(Client $client)
+    {
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $customer = $em->getRepository(Customer::class)->find(1);
+
+        $customer2 = (new Customer())->setName('first one')->setVisible(false)->setCountry('de')->setTimezone('Europe/Berlin');
+        $em->persist($customer2);
+
+        $customer3 = (new Customer())->setName('second one')->setCountry('at')->setTimezone('Europe/Vienna');
+        $em->persist($customer3);
+
+        $project = (new Project())->setName('first')->setVisible(false)->setCustomer($customer2);
+        $em->persist($project);
+
+        $project = (new Project())->setName('second')->setVisible(false)->setCustomer($customer);
+        $em->persist($project);
+
+        $project = (new Project())->setName('third')->setVisible(true)->setCustomer($customer2);
+        $em->persist($project);
+
+        $project = (new Project())->setName('fourth')->setVisible(true)->setCustomer($customer3);
+        $em->persist($project);
+
+        $project = (new Project())->setName('fifth')->setVisible(true)->setCustomer($customer);
+        $em->persist($project);
+
+        $project = (new Project())->setName('sixth')->setVisible(false)->setCustomer($customer3);
+        $em->persist($project);
+
+        $em->flush();
+    }
+
+    /**
+     * @dataProvider getCollectionTestData
+     */
+    public function testGetCollectionWithParams($url, $parameters, $expected)
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->loadProjectTestData($client);
+        $this->assertAccessIsGranted($client, $url, 'GET', $parameters);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertInternalType('array', $result);
+        $this->assertEquals(count($expected), count($result), 'Found wrong amount of projects');
+
+        for ($i = 0; $i < count($expected); $i++) {
+            $project = $result[$i];
+            $compare = $expected[$i];
+            $this->assertStructure($project, $compare[0]);
+            $this->assertEquals($compare[1], $project['customer_id']);
+        }
+    }
+
+    public function getCollectionTestData()
+    {
+        yield ['/api/projects', [], [[true, 1], [false, 3], [false, 1]]];
+        yield ['/api/projects', ['customer' => '1'], [[true, 1], [false, 1]]];
+        yield ['/api/projects', ['customer' => '1', 'visible' => VisibilityQuery::SHOW_VISIBLE], [[true, 1], [false, 1]]];
+        yield ['/api/projects', ['customer' => '1', 'visible' => VisibilityQuery::SHOW_BOTH], [[true, 1], [false, 1], [false, 1]]];
+        yield ['/api/projects', ['customer' => '1', 'visible' => VisibilityQuery::SHOW_HIDDEN], [[false, 1]]];
+        yield ['/api/projects', ['customer' => '2', 'visible' => VisibilityQuery::SHOW_VISIBLE], []];
+        yield ['/api/projects', ['customer' => '2', 'visible' => VisibilityQuery::SHOW_BOTH], [[false, 2], [false, 2]]];
+        yield ['/api/projects', ['customer' => '2', 'visible' => VisibilityQuery::SHOW_HIDDEN], [[false, 2]]];
+    }
+
     public function testGetEntity()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
@@ -49,11 +119,17 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertEntityNotFound(User::ROLE_USER, '/api/projects/2');
     }
 
-    protected function assertStructure(array $result)
+    protected function assertStructure(array $result, $complete = true)
     {
         $expectedKeys = [
             'id', 'name', 'comment', 'visible', 'budget', 'order_number', 'customer_id'
         ];
+
+        if (!$complete) {
+            $expectedKeys = [
+                'id', 'name', 'visible', 'budget', 'customer_id'
+            ];
+        }
 
         $actual = array_keys($result);
 

@@ -72,7 +72,7 @@
                 {% if model.query.user is empty %}
                     <td>{{ widgets.username(entry.user) }}</td>
                 {% endif %}
-                <td>{{ entry.activity.name }} / {{ entry.activity.project.name }}</td>
+                <td>{{ entry.activity.name }} / {{ entry.project.name }}</td>
                 <td>{{ entry.duration|duration }}</td>
             </tr>
             {% endfor %}

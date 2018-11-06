@@ -9,7 +9,6 @@
 
 namespace App\Repository;
 
-use App\Entity\Activity;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Model\Statistic\Month;
@@ -52,28 +51,6 @@ class TimesheetRepository extends AbstractRepository
         $entityManager->flush();
 
         return true;
-    }
-
-    /**
-     * @param User $user
-     * @param Activity $activity
-     * @return Timesheet
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function startRecording(User $user, Activity $activity)
-    {
-        $entry = new Timesheet();
-        $entry
-            ->setBegin(new DateTime())
-            ->setUser($user)
-            ->setActivity($activity);
-
-        $entityManager = $this->getEntityManager();
-        $entityManager->persist($entry);
-        $entityManager->flush();
-
-        return $entry;
     }
 
     /**
@@ -223,16 +200,16 @@ class TimesheetRepository extends AbstractRepository
             $qb->andWhere($qb->expr()->isNotNull('t.end'));
         }
 
+        if (null !== $user) {
+            $qb->andWhere('t.user = :user')
+                ->setParameter('user', $user);
+        }
+
         $qb
             ->orderBy('year', 'DESC')
             ->addOrderBy('month', 'ASC')
             ->groupBy('year')
             ->addGroupBy('month');
-
-        if (null !== $user) {
-            $qb->andWhere('t.user = :user')
-                ->setParameter('user', $user);
-        }
 
         $years = [];
         foreach ($qb->getQuery()->execute() as $statRow) {
@@ -267,7 +244,7 @@ class TimesheetRepository extends AbstractRepository
         $qb->select('t', 'a', 'p', 'c')
             ->from(Timesheet::class, 't')
             ->join('t.activity', 'a')
-            ->join('a.project', 'p')
+            ->join('t.project', 'p')
             ->join('p.customer', 'c')
             ->where($qb->expr()->gt('t.begin', '0'))
             ->andWhere($qb->expr()->isNull('t.end'))
@@ -325,10 +302,10 @@ class TimesheetRepository extends AbstractRepository
 
         $qb->select('t', 'a', 'p', 'c', 'u')
             ->from(Timesheet::class, 't')
-            ->join('t.activity', 'a')
-            ->join('t.user', 'u')
-            ->join('a.project', 'p')
-            ->join('p.customer', 'c')
+            ->leftJoin('t.activity', 'a')
+            ->leftJoin('t.user', 'u')
+            ->leftJoin('t.project', 'p')
+            ->leftJoin('p.customer', 'c')
             ->orderBy('t.' . $query->getOrderBy(), $query->getOrder());
 
         if (null !== $query->getUser()) {
@@ -355,7 +332,7 @@ class TimesheetRepository extends AbstractRepository
             $qb->andWhere('t.activity = :activity')
                 ->setParameter('activity', $query->getActivity());
         } elseif (null !== $query->getProject()) {
-            $qb->andWhere('a.project = :project')
+            $qb->andWhere('t.project = :project')
                 ->setParameter('project', $query->getProject());
         } elseif (null !== $query->getCustomer()) {
             $qb->andWhere('p.customer = :customer')
