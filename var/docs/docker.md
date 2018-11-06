@@ -51,3 +51,12 @@ It is possible to mount your source tree and sqlite DB into the container at run
 Now edits in the local file tree will be served by the container and database changes will persist.
 
 See [The official docker documentation](https://docs.docker.com/) for more options on running the container.
+
+## Further docker solutions
+
+As there are several approaches to docker images, you have multiple docker images to choose from. 
+They were built by the community, we do not support them - for question please ask in their repositories:
+
+- [dysonspherelab](https://hub.docker.com/r/dysonsphere/kimai2/) (for more infos [read this issue](https://github.com/kevinpapst/kimai2/issues/284))
+- [felixhummel](https://github.com/felixhummel/kimai-in-docker/tree/kimai2)
+- [Haidy777](https://github.com/Haidy777/kimai2/blob/docker/Dockerfile) 
