@@ -88,6 +88,11 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
+    App\Form\Extension\EnhancedChoiceTypeExtension:
+        arguments: ["%kimai.theme.select_type%"]
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Bridge\Doctrine\Form\Type\EntityType }
+
     # ================================================================================
     # THEME
     # ================================================================================

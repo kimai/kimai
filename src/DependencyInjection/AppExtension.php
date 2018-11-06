@@ -35,47 +35,57 @@ class AppExtension extends Extension implements PrependExtensionInterface
 
         $container->setParameter('kimai.languages', $config['languages']);
         $container->setParameter('kimai.calendar', $config['calendar']);
-        $container->setParameter('kimai.theme', $config['theme']);
         $container->setParameter('kimai.dashboard', $config['dashboard']);
         $container->setParameter('kimai.widgets', $config['widgets']);
         $container->setParameter('kimai.invoice.documents', $config['invoice']['documents']);
         $container->setParameter('kimai.defaults', $config['defaults']);
 
-        $this->createUserParameter($config, $container);
-        $this->createTimesheetParameter($config, $container);
+        $this->createThemeParameter($config['theme'], $container);
+        $this->createUserParameter($config['user'], $container);
+        $this->createTimesheetParameter($config['timesheet'], $container);
     }
 
     /**
      * @param array $config
      * @param ContainerBuilder $container
      */
-    public function createUserParameter(array $config, ContainerBuilder $container)
+    protected function createThemeParameter(array $config, ContainerBuilder $container)
     {
-        if (!$config['user']['registration']) {
+        $container->setParameter('kimai.theme', $config);
+        $container->setParameter('kimai.theme.select_type', $config['select_type']);
+    }
+
+    /**
+     * @param array $config
+     * @param ContainerBuilder $container
+     */
+    protected function createUserParameter(array $config, ContainerBuilder $container)
+    {
+        if (!$config['registration']) {
             $routes = $container->getParameter('admin_lte_theme.routes');
             $routes['adminlte_registration'] = null;
             $container->setParameter('admin_lte_theme.routes', $routes);
         }
 
-        if (!$config['user']['password_reset']) {
+        if (!$config['password_reset']) {
             $routes = $container->getParameter('admin_lte_theme.routes');
             $routes['adminlte_password_reset'] = null;
             $container->setParameter('admin_lte_theme.routes', $routes);
         }
 
-        $container->setParameter('kimai.fosuser', $config['user']);
+        $container->setParameter('kimai.fosuser', $config);
     }
 
     /**
      * @param array $config
      * @param ContainerBuilder $container
      */
-    public function createTimesheetParameter(array $config, ContainerBuilder $container)
+    protected function createTimesheetParameter(array $config, ContainerBuilder $container)
     {
-        $container->setParameter('kimai.timesheet.rates', $config['timesheet']['rates']);
-        $container->setParameter('kimai.timesheet.rounding', $config['timesheet']['rounding']);
-        $container->setParameter('kimai.timesheet.duration_only', $config['timesheet']['duration_only']);
-        $container->setParameter('kimai.timesheet.markdown', $config['timesheet']['markdown_content']);
+        $container->setParameter('kimai.timesheet.rates', $config['rates']);
+        $container->setParameter('kimai.timesheet.rounding', $config['rounding']);
+        $container->setParameter('kimai.timesheet.duration_only', $config['duration_only']);
+        $container->setParameter('kimai.timesheet.markdown', $config['markdown_content']);
     }
 
     /**

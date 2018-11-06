@@ -96,6 +96,9 @@ kimai:
     # theme related settings, will be available as twig globals at "kimai_context.*"
     # please see documentation at var/docs/theme.md
     theme:
+        # BETA test: If you set this to 'selectpicker' the customer/project/activity select boxes will be transformed
+        # into a searchable and javascript enhanced input type
+        select_type: ~
         # display a warning color if the user has at least X active recordings
         active_warning: 3
         # fallback color for all widgets that don't have a dedicated color
