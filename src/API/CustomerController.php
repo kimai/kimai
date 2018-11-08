@@ -19,7 +19,6 @@ use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -27,7 +26,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Security("is_granted('ROLE_USER')")
  */
-class CustomerController extends Controller
+class CustomerController extends BaseApiController
 {
     /**
      * @var CustomerRepository
@@ -62,6 +61,7 @@ class CustomerController extends Controller
     {
         $data = $this->repository->findAll();
         $view = new View($data, 200);
+        $view->getContext()->setGroups(['Default', 'Collection', 'Customer']);
 
         return $this->viewHandler->handle($view);
     }
@@ -83,6 +83,7 @@ class CustomerController extends Controller
             throw new NotFoundException();
         }
         $view = new View($data, 200);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Customer']);
 
         return $this->viewHandler->handle($view);
     }

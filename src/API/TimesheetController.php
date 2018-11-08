@@ -21,7 +21,6 @@ use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation as API;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -30,7 +29,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Security("is_granted('ROLE_USER')")
  */
-class TimesheetController extends Controller
+class TimesheetController extends BaseApiController
 {
     /**
      * @var TimesheetRepository
@@ -69,7 +68,7 @@ class TimesheetController extends Controller
 
         $data = $this->repository->findByQuery($query);
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default']);
+        $view->getContext()->setGroups(['Default', 'Collection', 'Timesheet']);
 
         return $this->viewHandler->handle($view);
     }
@@ -91,7 +90,7 @@ class TimesheetController extends Controller
             throw new NotFoundException();
         }
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Entity']);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
 
         return $this->viewHandler->handle($view);
     }
@@ -109,9 +108,6 @@ class TimesheetController extends Controller
     public function postAction(Request $request)
     {
         // TODO check permissions
-        // TODO allow setting the user id
-        // TODO define SWG\Schema (Timesheet::class is wrong due to virtual_properties)
-        // TODO support duration_only mode ?
 
         $timesheet = new Timesheet();
         $timesheet->setUser($this->getUser());

@@ -22,7 +22,6 @@ use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation as API;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -30,7 +29,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Security("is_granted('ROLE_USER')")
  */
-class ActivityController extends Controller
+class ActivityController extends BaseApiController
 {
     /**
      * @var ActivityRepository
@@ -84,6 +83,7 @@ class ActivityController extends Controller
 
         $data = $this->repository->findByQuery($query);
         $view = new View($data, 200);
+        $view->getContext()->setGroups(['Default', 'Collection', 'Activity']);
 
         return $this->viewHandler->handle($view);
     }
@@ -105,6 +105,7 @@ class ActivityController extends Controller
             throw new NotFoundException();
         }
         $view = new View($data, 200);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Activity']);
 
         return $this->viewHandler->handle($view);
     }
