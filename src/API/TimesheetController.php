@@ -107,8 +107,6 @@ class TimesheetController extends BaseApiController
      */
     public function postAction(Request $request)
     {
-        // TODO check permissions
-
         $timesheet = new Timesheet();
         $timesheet->setUser($this->getUser());
         $timesheet->setBegin(new \DateTime());
@@ -138,6 +136,7 @@ class TimesheetController extends BaseApiController
         }
 
         $view = new View($form);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
 
         return $this->viewHandler->handle($view);
     }

@@ -35,7 +35,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertInternalType('array', $result);
         $this->assertNotEmpty($result);
         $this->assertEquals(1, count($result));
-        $this->assertStructure($result[0]);
+        $this->assertStructure($result[0], false);
     }
 
     protected function loadProjectTestData(Client $client)
@@ -87,8 +87,8 @@ class ProjectControllerTest extends APIControllerBaseTest
         for ($i = 0; $i < count($expected); $i++) {
             $project = $result[$i];
             $compare = $expected[$i];
-            $this->assertStructure($project, $compare[0]);
-            $this->assertEquals($compare[1], $project['customer_id']);
+            $this->assertStructure($project, false);
+            $this->assertEquals($compare[1], $project['customer']);
         }
     }
 
@@ -119,21 +119,20 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertEntityNotFound(User::ROLE_USER, '/api/projects/2');
     }
 
-    protected function assertStructure(array $result, $complete = true)
+    protected function assertStructure(array $result, $full = true)
     {
         $expectedKeys = [
-            'id', 'name', 'comment', 'visible', 'budget', 'order_number', 'customer_id'
+            'id', 'name', 'comment', 'visible', 'budget', 'order_number', 'customer'
         ];
 
-        if (!$complete) {
+        if (!$full) {
             $expectedKeys = [
-                'id', 'name', 'visible', 'budget', 'customer_id'
+                'id', 'name', 'visible', 'customer'
             ];
         }
 
         $actual = array_keys($result);
 
-        $this->assertEquals(count($expectedKeys), count($actual), 'Project entity has different amount of keys');
         $this->assertEquals($expectedKeys, $actual, 'Project structure does not match');
     }
 }

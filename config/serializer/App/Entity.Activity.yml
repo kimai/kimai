@@ -1,22 +1,31 @@
 App\Entity\Activity:
     exclusion_policy: All
-    custom_accessor_order: [id, name, comment, visible, project_id, fixedRate, hourlyRate]
+    custom_accessor_order: [id, name, comment, visible, project, fixedRate, hourlyRate]
     properties:
         id:
             include: true
+            groups: [Default]
         name:
             include: true
+            groups: [Default]
         comment:
             include: true
+            groups: [Entity]
         visible:
             include: true
+            groups: [Default]
         fixedRate:
             include: true
+            groups: [Default]
         hourlyRate:
             include: true
+            groups: [Default]
+        project:
+            include: false
+            groups: [Default]
     virtual_properties:
-        getProjectId:
-            name: project_id
-            serialized_name: project_id
+        getProject:
+            serialized_name: project
             exp: "object.getProject() === null ? null : object.getProject().getId()"
             type: integer
+            groups: [Default]

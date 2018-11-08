@@ -1,34 +1,53 @@
 App\Entity\Timesheet:
     exclusion_policy: All
-    custom_accessor_order: [id, begin, end, duration, rate, activity_id, user_id, description, fixedRate, hourlyRate]
+    custom_accessor_order: [id, begin, end, duration, rate, activity, project, user, description, fixedRate, hourlyRate]
     properties:
         id:
             include: true
+            groups: [Default]
         begin:
             include: true
+            groups: [Default]
         end:
             include: true
+            groups: [Default]
         duration:
             include: true
+            groups: [Default]
         description:
             include: true
             groups: [Entity]
         rate:
             include: true
+            groups: [Default]
         fixedRate:
             include: true
             groups: [Entity]
         hourlyRate:
             include: true
             groups: [Entity]
+        activity:
+            include: false
+            groups: [Default]
+        project:
+            include: false
+            groups: [Default]
+        user:
+            include: false
+            groups: [Default]
     virtual_properties:
-        activity_id:
-            serialized_name: activity_id
+        getActivity:
+            serialized_name: activity
             exp: "object.getActivity() === null ? null : object.getActivity().getId()"
             type: integer
-            groups: [Entity]
-        user_id:
-            serialized_name: user_id
+            groups: [Default]
+        getProject:
+            serialized_name: project
+            exp: "object.getProject() === null ? null : object.getProject().getId()"
+            type: integer
+            groups: [Default]
+        getUser:
+            serialized_name: user
             exp: "object.getUser().getId()"
             type: integer
-            groups: [Entity]
+            groups: [Default]

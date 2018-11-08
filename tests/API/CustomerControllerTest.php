@@ -31,7 +31,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertInternalType('array', $result);
         $this->assertNotEmpty($result);
         $this->assertEquals(1, count($result));
-        $this->assertStructure($result[0]);
+        $this->assertStructure($result[0], false);
     }
 
     public function testGetEntity()
@@ -41,7 +41,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertInternalType('array', $result);
-        $this->assertStructure($result);
+        $this->assertStructure($result, true);
     }
 
     public function testNotFound()
@@ -49,16 +49,19 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertEntityNotFound(User::ROLE_USER, '/api/customers/2');
     }
 
-    protected function assertStructure(array $result)
+    protected function assertStructure(array $result, $full = true)
     {
-        $expectedKeys = [
-            'id', 'name', 'number', 'comment', 'visible', 'company', 'contact', 'address', 'country', 'currency',
-            'phone', 'fax', 'mobile', 'mail', 'timezone'
-        ];
+        $expectedKeys = ['id', 'name', 'visible'];
+
+        if ($full) {
+            $expectedKeys = [
+                'id', 'name', 'number', 'comment', 'visible', 'company', 'contact', 'address', 'country', 'currency',
+                'phone', 'fax', 'mobile', 'mail', 'timezone'
+            ];
+        }
 
         $actual = array_keys($result);
 
-        $this->assertEquals(count($expectedKeys), count($actual), 'Customer entity has different amount of keys');
         $this->assertEquals($expectedKeys, $actual, 'Customer structure does not match');
     }
 }

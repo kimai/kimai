@@ -84,6 +84,24 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertEquals(2016, $result['rate']);
     }
 
+    public function testPostActionWithIdIsNotAllowed()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $data = [
+            'id' => 1,
+            'activity' => 1,
+            'project' => 1,
+            'begin' => (new \DateTime('- 8 hours'))->format('Y-m-d H:m'),
+            'end' => (new \DateTime())->format('Y-m-d H:m'),
+            'description' => 'foo',
+            'fixedRate' => 2016,
+            'hourlyRate' => 127
+        ];
+        $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
+        $this->assertFalse($client->getResponse()->isSuccessful());
+        $this->assertEquals(400, $client->getResponse()->getStatusCode());
+    }
+
     public function testNotFound()
     {
         $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/20');
@@ -92,18 +110,17 @@ class TimesheetControllerTest extends APIControllerBaseTest
     protected function assertDefaultStructure(array $result, $full = true)
     {
         $expectedKeys = [
-            'id', 'begin', 'end', 'duration', 'rate'
+            'id', 'begin', 'end', 'duration', 'rate', 'activity', 'project', 'user'
         ];
 
         if ($full) {
             $expectedKeys = array_merge($expectedKeys, [
-                'activity_id', 'user_id', 'description', 'fixed_rate', 'hourly_rate'
+                'description', 'fixed_rate', 'hourly_rate'
             ]);
         }
 
         $actual = array_keys($result);
 
-        $this->assertEquals(count($expectedKeys), count($actual), 'Timesheet entity has different amount of keys');
         $this->assertEquals($expectedKeys, $actual, 'Timesheet structure does not match');
     }
 }

@@ -4,37 +4,55 @@ App\Entity\Customer:
     properties:
         id:
             include: true
+            groups: [Default]
         name:
             include: true
+            groups: [Default]
         number:
             include: true
+            groups: [Entity]
         comment:
             include: true
+            groups: [Entity]
         visible:
             include: true
+            groups: [Default]
         company:
             include: true
+            groups: [Entity]
         contact:
             include: true
+            groups: [Entity]
         address:
             include: true
+            groups: [Entity]
         country:
             include: true
+            groups: [Entity]
         currency:
             include: true
+            groups: [Entity]
         phone:
             include: true
+            groups: [Entity]
         fax:
             include: true
+            groups: [Entity]
         mobile:
             include: true
+            groups: [Entity]
         mail:
             include: true
+            groups: [Entity]
         homepage:
             include: true
+            groups: [Entity]
         timezone:
             include: true
+            groups: [Entity]
         fixedRate:
             include: true
+            groups: [Default]
         hourlyRate:
             include: true
+            groups: [Default]

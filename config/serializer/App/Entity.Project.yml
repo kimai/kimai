@@ -1,26 +1,37 @@
 App\Entity\Project:
     exclusion_policy: All
-    custom_accessor_order: [id, name, comment, visible, budget, orderNumber, customer_id, fixedRate, hourlyRate]
+    custom_accessor_order: [id, name, comment, visible, budget, orderNumber, customer, fixedRate, hourlyRate]
     properties:
         id:
             include: true
+            groups: [Default]
         name:
             include: true
+            groups: [Default]
         comment:
             include: true
+            groups: [Entity]
         visible:
             include: true
+            groups: [Default]
         budget:
             include: true
+            groups: [Entity]
         orderNumber:
             include: true
+            groups: [Entity]
         fixedRate:
             include: true
+            groups: [Entity]
         hourlyRate:
             include: true
+            groups: [Entity]
+        customer:
+            include: false
+            groups: [Default]
     virtual_properties:
-        getCustomerId:
-            name: customer_id
-            serialized_name: customer_id
+        getCustomer:
+            serialized_name: customer
             exp: "object.getCustomer() === null ? null : object.getCustomer().getId()"
             type: integer
+            groups: [Default]
