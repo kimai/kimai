@@ -1,5 +1,7 @@
 # Docker
 
+There is an official docker repo for the kimai app, https://github.com/tobybatch/kimai2 and a dockerhub repo https://hub.docker.com/r/kimai/kimai2.  Please raise any container issues [there](https://github.com/tobybatch/kimai2/issues).
+
 We bundle a simple docker that can be used for test purposes.  Either pull it from docker hub or build it.
 
 ## Build the docker
