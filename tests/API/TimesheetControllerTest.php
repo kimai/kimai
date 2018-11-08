@@ -9,6 +9,9 @@
 
 namespace App\Tests\API;
 
+use App\Entity\Activity;
+use App\Entity\Customer;
+use App\Entity\Project;
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
 
@@ -82,6 +85,62 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result['id']);
         $this->assertEquals(28800, $result['duration']);
         $this->assertEquals(2016, $result['rate']);
+    }
+
+    // check for project, as this is a required field. It will not be included in the select, as it is
+    // already filtered within the repository due to the hidden customer
+    public function testPostActionWithInvisibleProject()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $customer = (new Customer())->setName('foo-bar-1')->setVisible(false)->setCountry('DE')->setTimezone('Euopre/Berlin');
+        $em->persist($customer);
+        $project = (new Project())->setName('foo-bar-2')->setVisible(true)->setCustomer($customer);
+        $em->persist($project);
+        $activity = (new Activity())->setName('foo-bar-3')->setVisible(true);
+        $em->persist($activity);
+        $em->flush();
+
+        $data = [
+            'activity' => $activity->getId(),
+            'project' => $project->getId(),
+            'begin' => (new \DateTime('- 8 hours'))->format('Y-m-d H:m'),
+            'end' => (new \DateTime())->format('Y-m-d H:m'),
+            'description' => 'foo',
+            'fixedRate' => 2016,
+            'hourlyRate' => 127
+        ];
+        $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
+        $this->assertApiCallValidationError($client->getResponse(), ['project']);
+    }
+
+    // check for activity, as this is a required field. It will not be included in the select, as it is
+    // already filtered within the repository due to the hidden flag
+    public function testPostActionWithInvisibleActivity()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $customer = (new Customer())->setName('foo-bar-1')->setVisible(true)->setCountry('DE')->setTimezone('Euopre/Berlin');
+        $em->persist($customer);
+        $project = (new Project())->setName('foo-bar-2')->setVisible(true)->setCustomer($customer);
+        $em->persist($project);
+        $activity = (new Activity())->setName('foo-bar-3')->setVisible(false);
+        $em->persist($activity);
+        $em->flush();
+
+        $data = [
+            'activity' => $activity->getId(),
+            'project' => $project->getId(),
+            'begin' => (new \DateTime('- 8 hours'))->format('Y-m-d H:m'),
+            'end' => (new \DateTime())->format('Y-m-d H:m'),
+            'description' => 'foo',
+            'fixedRate' => 2016,
+            'hourlyRate' => 127
+        ];
+        $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
+        $this->assertApiCallValidationError($client->getResponse(), ['activity']);
     }
 
     public function testPostActionWithIdIsNotAllowed()

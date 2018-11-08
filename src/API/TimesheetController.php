@@ -125,6 +125,10 @@ class TimesheetController extends BaseApiController
                 return new Response('This method does not support updates', Response::HTTP_BAD_REQUEST);
             }
 
+            if (!$this->isGranted('start', $timesheet)) {
+                return new Response('You are not allowed to start this timesheet record', Response::HTTP_BAD_REQUEST);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($timesheet);
             $entityManager->flush();

@@ -88,8 +88,9 @@ class TimesheetTest extends AbstractEntityTest
 
     public function testValidationProjectMismatch()
     {
-        $project = (new Project())->setName('foo');
-        $project2 = (new Project())->setName('bar');
+        $customer = new Customer();
+        $project = (new Project())->setName('foo')->setCustomer($customer);
+        $project2 = (new Project())->setName('bar')->setCustomer($customer);
         $activity = (new Activity())->setName('hello-world')->setProject($project);
 
         $entity = new Timesheet();

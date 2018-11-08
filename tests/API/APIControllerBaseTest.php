@@ -170,4 +170,23 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
             json_decode($client->getResponse()->getContent(), true)
         );
     }
+
+    /**
+     * @param Response $response
+     * @param string[] $failedFields
+     */
+    protected function assertApiCallValidationError(Response $response, array $failedFields)
+    {
+        $this->assertFalse($response->isSuccessful());
+        $result = json_decode($response->getContent(), true);
+
+        $this->assertArrayHasKey('errors', $result);
+        $this->assertArrayHasKey('children', $result['errors']);
+        $data = $result['errors']['children'];
+
+        foreach ($failedFields as $fieldName) {
+            $this->assertArrayHasKey($fieldName, $data);
+            $this->assertArrayHasKey('errors', $data[$fieldName]);
+        }
+    }
 }
