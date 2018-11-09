@@ -50,7 +50,7 @@ To install the fixtures:
 
 ## Developing against the docker
 
-It is possible to mount your source tree and sqlite DB into the container at run time.
+It is possible to mount your source tree and sqlite DB into the container at run time.  **N.B. The sqlite database needs to writable by the www-data user.** Use ```chown 33:33 /path/to/file.sqlite``` on the host machine.
 
     docker run --rm -d -p 8001:8001 \
         -v $(pwd)/src:/opt/kimai/src \
