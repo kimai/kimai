@@ -876,6 +876,7 @@ class KimaiImporterCommand extends Command
                 $activity = $this->activities[$activityId][$projectId];
             }
 
+            // FIXME support global activities
             if (null === $activity && isset($this->unassignedActivities[$activityId])) {
                 $oldActivity = $this->unassignedActivities[$activityId];
                 $activity = $this->createActivity($io, $entityManager, $project, $oldActivity, $fixedRates, $rates);
