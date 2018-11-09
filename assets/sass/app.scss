@@ -32,6 +32,22 @@ footer.main-footer {
     font-size: 80%;
 }
 
+/* ================================ help ================================ */
+
+.markdown-body {
+    h1, h2, h3, h4, h5, h6 {
+        a.anchor
+        {
+            float: left;
+            font-size: 0.5em;
+            margin-left: -1.2em;
+            padding-top: 0.5em;
+            color: $text-color;
+            display: none;
+        }
+    }
+}
+
 @import 'invoice';
 @import 'datatable';
 @import 'calendar';
