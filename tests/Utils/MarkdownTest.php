@@ -21,6 +21,6 @@ class MarkdownTest extends TestCase
     {
         $sut = new Markdown();
         $this->assertEquals('<p><em>test</em></p>', $sut->toHtml('*test*'));
-        $this->assertEquals('<h1>foobar</h1>', $sut->toHtml('# foobar'));
+        $this->assertEquals('<h1 id="foobar">foobar</h1>', $sut->toHtml('# foobar'));
     }
 }
