@@ -8,16 +8,63 @@
                 <h4 class="modal-title" id="myModalLabel">{{ 'modal.columns.title'|trans }}</h4>
             </div>
             <div class="modal-body">
-                <form name="{{ name }}_visibility">
-                {% for title, class in entries %}
-                    {% if 'alwaysVisible' not in class %}
-                    <div class="form-group {{ class }}">
-                        <input type="checkbox" id="column_{{ title }}" name="{{ title }}"{% if is_visible_column(name, title) %} checked="checked"{% endif %}>
-                        <label class="control-label required" for="column_{{ title }}">{{ ('label.' ~ title)|trans }}</label>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#phone" aria-controls="home" role="tab" data-toggle="tab">Phone</a></li>
+                        <li role="presentation"><a href="#tablet" aria-controls="profile" role="tab" data-toggle="tab">Tablet</a></li>
+                        <li role="presentation"><a href="#laptop" aria-controls="messages" role="tab" data-toggle="tab">Laptop</a></li>
+                        <li role="presentation"><a href="#desktop" aria-controls="messages" role="tab" data-toggle="tab">Desktop</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="phone">
+                            <form name="{{ name }}_visibility-xs">
+                                {% for title, class in entries %}
+                                    {% if 'alwaysVisible' not in class %}
+                                        <div class="form-group">
+                                            <input type="checkbox" id="column_{{ title }}" name="{{ title }}"{% if is_visible_column(name, title, '-xs') %} checked="checked"{% endif %}>
+                                            <label class="control-label required" for="column_{{ title }}">{{ ('label.' ~ title)|trans }}</label>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </form>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="tablet">
+                            <form name="{{ name }}_visibility-sm">
+                                {% for title, class in entries %}
+                                    {% if 'alwaysVisible' not in class %}
+                                        <div class="form-group">
+                                            <input type="checkbox" id="column_{{ title }}" name="{{ title }}"{% if is_visible_column(name, title, '-sm') %} checked="checked"{% endif %}>
+                                            <label class="control-label required" for="column_{{ title }}">{{ ('label.' ~ title)|trans }}</label>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </form>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="laptop">
+                            <form name="{{ name }}_visibility-md">
+                                {% for title, class in entries %}
+                                    {% if 'alwaysVisible' not in class %}
+                                        <div class="form-group">
+                                            <input type="checkbox" id="column_{{ title }}" name="{{ title }}"{% if is_visible_column(name, title, '-md') %} checked="checked"{% endif %}>
+                                            <label class="control-label required" for="column_{{ title }}">{{ ('label.' ~ title)|trans }}</label>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </form>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="desktop">
+                            <form name="{{ name }}_visibility-lg">
+                                {% for title, class in entries %}
+                                    {% if 'alwaysVisible' not in class %}
+                                        <div class="form-group">
+                                            <input type="checkbox" id="column_{{ title }}" name="{{ title }}"{% if is_visible_column(name, title, '-lg') %} checked="checked"{% endif %}>
+                                            <label class="control-label required" for="column_{{ title }}">{{ ('label.' ~ title)|trans }}</label>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </form>
+                        </div>
                     </div>
-                    {% endif %}
-                {% endfor %}
-                </form>
                 <p>{{ 'modal.columns.description'|trans }}</p>
             </div>
             <div class="modal-footer">
@@ -33,17 +80,33 @@
 {% spaceless %}
     {% set class = '' %}
     {% set always = false %}
+
     {% if entries[column] is defined %}
-        {% set class = entries[column] %}
-        {% if 'alwaysVisible' in entries[column] %}
-            {% set always = true %}
+        {% set classes = entries[column] %}
+        {% if 'alwaysVisible' in classes %}
+            {# as this column should always be visible, we remove every class that includes hidden #}
+            {% for tmp in classes|split(' ') %}
+                {% if 'hidden' not in tmp %}
+                    {% set class = class ~ ' ' ~ tmp %}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            {% for size in ['-lg', '-xs', '-sm', '-md'] %}
+                {% set hiddenSize = 'hidden' ~ size %}
+                {% if not is_visible_column(name, column, size) %}
+                    {% if hiddenSize not in classes %}
+                        {% set classes = classes ~ ' ' ~ hiddenSize %}
+                    {% endif %}
+                {% else %}
+                    {% set classes = classes|replace({(hiddenSize): ''}) %}
+                {% endif %}
+            {% endfor %}
+            {% set class = classes %}
         {% endif %}
     {% endif %}
-    {% if (always == false) and (not is_visible_column(name, column)) %}
-        {% set class = class ~ ' hidden' %}
-    {% endif %}
+
     {% if not class is empty %}
-    {{ class }}
+        {{ class }}
     {% endif %}
 {% endspaceless %}
 {% endmacro %}

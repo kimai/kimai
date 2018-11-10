@@ -128,12 +128,13 @@ class Extensions extends \Twig_Extension
      *
      * @param string $dataTable
      * @param string $column
+     * @param string $size
      * @return bool
      */
-    public function isColumnVisible(string $dataTable, string $column)
+    public function isColumnVisible(string $dataTable, string $column, string $size)
     {
-        // TODO name handling could be improved, as now this info is spread in datatables.html.twig and here
-        $dataTable = $dataTable . '_visibility';
+        // name handling is spread between here and datatables.html.twig (data_table_column_modal)
+        $dataTable = $dataTable . '_visibility' . $size;
 
         if (!isset($this->cookies[$dataTable])) {
             $visibility = false;
