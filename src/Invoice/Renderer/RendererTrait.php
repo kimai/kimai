@@ -135,7 +135,7 @@ trait RendererTrait
         }
 
         $activity = $timesheet->getActivity();
-        $project = $activity->getProject();
+        $project = $timesheet->getProject();
         $customer = $project->getCustomer();
 
         return [
