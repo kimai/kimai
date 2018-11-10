@@ -323,22 +323,6 @@
                 <source>label.fixed_rate</source>
                 <target>Festbetrag</target>
             </trans-unit>
-            <trans-unit id="screen_size_xs">
-                <source>screen_size_xs</source>
-                <target>Handy</target>
-            </trans-unit>
-            <trans-unit id="screen_size_sm">
-                <source>screen_size_sm</source>
-                <target>Tablet</target>
-            </trans-unit>
-            <trans-unit id="screen_size_md">
-                <source>screen_size_md</source>
-                <target>Laptop</target>
-            </trans-unit>
-            <trans-unit id="screen_size_lg">
-                <source>screen_size_lg</source>
-                <target>Desktop</target>
-            </trans-unit>
 
             <!--
               User profile
