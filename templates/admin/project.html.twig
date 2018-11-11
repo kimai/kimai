@@ -8,7 +8,7 @@
 {% block page_actions %}{{ widgets.page_actions({'filter': '#collapseProjectAdmin', 'visibility': '#modal_project_admin', 'create': path('admin_project_create')}) }}{% endblock %}
 
 {% block main_before %}
-    {{ toolbar.toolbar(toolbarForm, 'collapseProjectAdmin') }}
+    {{ toolbar.toolbar(toolbarForm, 'collapseProjectAdmin', showFilter) }}
 {% endblock %}
 
 {% block main %}

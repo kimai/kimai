@@ -8,7 +8,7 @@
 {% block page_actions %}{{ widgets.page_actions({'filter': '#collapseTimesheet', 'download': 'onclick:return exportTimesheet()', 'visibility': '#modal_timesheet', 'calendar': path('calendar'), 'create': path('timesheet_create')}) }}{% endblock %}
 
 {% block main_before %}
-    {{ toolbar.toolbar(toolbarForm, 'collapseTimesheet') }}
+    {{ toolbar.toolbar(toolbarForm, 'collapseTimesheet', showFilter) }}
 {% endblock %}
 
 {% block main %}

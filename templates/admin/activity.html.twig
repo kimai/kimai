@@ -8,7 +8,7 @@
 {% block page_actions %}{{ widgets.page_actions({'filter': '#collapseActivityAdmin', 'visibility': '#modal_activity_admin', 'create': path('admin_activity_create')}) }}{% endblock %}
 
 {% block main_before %}
-    {{ toolbar.toolbar(toolbarForm, 'collapseActivityAdmin') }}
+    {{ toolbar.toolbar(toolbarForm, 'collapseActivityAdmin', showFilter) }}
 {% endblock %}
 
 {% block main %}

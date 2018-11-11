@@ -65,6 +65,7 @@ class ProjectController extends AbstractController
         return $this->render('admin/project.html.twig', [
             'entries' => $entries,
             'query' => $query,
+            'showFilter' => $form->isSubmitted(),
             'toolbarForm' => $form->createView(),
         ]);
     }
