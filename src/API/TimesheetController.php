@@ -16,9 +16,12 @@ use App\Form\TimesheetEditForm;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TimesheetRepository;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation as API;
+use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
@@ -57,16 +60,54 @@ class TimesheetController extends BaseApiController
      *     description="Returns the collection of all existing timesheets for the user",
      *     @SWG\Schema(ref=@API\Model(type=Timesheet::class)),
      * )
+     * @Rest\QueryParam(name="customer", requirements="\d+", strict=true, nullable=true, description="Customer ID to filter timesheets")
+     * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="Project ID to filter timesheets")
+     * @Rest\QueryParam(name="activity", requirements="\d+", strict=true, nullable=true, description="Activity ID to filter timesheets")
+     * @Rest\QueryParam(name="page", requirements="\d+", strict=true, nullable=true, description="The current page")
+     * @Rest\QueryParam(name="size", requirements="\d+", strict=true, nullable=true, description="The amount of entries for each page")
+     * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The order for the results, either ASC or DESC")
+     * @Rest\QueryParam(name="orderBy", requirements="id|begin", strict=true, nullable=true, description="The result order, either 'id' or 'begin'")
      *
      * @return Response
      */
-    public function cgetAction()
+    public function cgetAction(ParamFetcherInterface $paramFetcher)
     {
         $query = new TimesheetQuery();
         $query->setUser($this->getUser());
-        $query->setResultType(TimesheetQuery::RESULT_TYPE_OBJECTS);
+        $query->setResultType(TimesheetQuery::RESULT_TYPE_PAGER);
 
+        if (null !== ($customer = $paramFetcher->get('customer'))) {
+            $query->setCustomer($customer);
+        }
+
+        if (null !== ($project = $paramFetcher->get('project'))) {
+            $query->setProject($project);
+        }
+
+        if (null !== ($activity = $paramFetcher->get('activity'))) {
+            $query->setActivity($activity);
+        }
+
+        if (null !== ($page = $paramFetcher->get('page'))) {
+            $query->setPage($page);
+        }
+
+        if (null !== ($size = $paramFetcher->get('size'))) {
+            $query->setPageSize($size);
+        }
+
+        if (null !== ($order = $paramFetcher->get('order'))) {
+            $query->setOrder($order);
+        }
+
+        if (null !== ($orderBy = $paramFetcher->get('orderBy'))) {
+            $query->setOrderBy($orderBy);
+        }
+
+        /** @var Pagerfanta $data */
         $data = $this->repository->findByQuery($query);
+        $data = (array) $data->getCurrentPageResults();
+
         $view = new View($data, 200);
         $view->getContext()->setGroups(['Default', 'Collection', 'Timesheet']);
 
