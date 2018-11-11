@@ -17,6 +17,7 @@ use App\Form\Toolbar\ProjectToolbarForm;
 use App\Form\Type\ProjectType;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
+use Doctrine\ORM\ORMException;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -114,8 +115,13 @@ class ProjectController extends AbstractController
         $deleteForm->handleRequest($request);
 
         if (0 == $stats->getRecordAmount() || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
-            $this->getRepository()->deleteProject($project, $deleteForm->get('project')->getData());
-            $this->flashSuccess('action.delete.success');
+            try {
+                $this->getRepository()->deleteProject($project, $deleteForm->get('project')->getData());
+                $this->flashSuccess('action.delete.success');
+            } catch (ORMException $ex) {
+                $this->flashError('action.delete.error');
+            }
+
             return $this->redirectToRoute('admin_project');
         }
 

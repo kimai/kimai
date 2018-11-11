@@ -16,6 +16,7 @@ use App\Form\Toolbar\ActivityToolbarForm;
 use App\Form\Type\ActivityType;
 use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityQuery;
+use Doctrine\ORM\ORMException;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -120,8 +121,13 @@ class ActivityController extends AbstractController
         $deleteForm->handleRequest($request);
 
         if (0 == $stats->getRecordAmount() || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
-            $this->getRepository()->deleteActivity($activity, $deleteForm->get('activity')->getData());
-            $this->flashSuccess('action.delete.success');
+            try {
+                $this->getRepository()->deleteActivity($activity, $deleteForm->get('activity')->getData());
+                $this->flashSuccess('action.delete.success');
+            } catch (ORMException $ex) {
+                $this->flashError('action.delete.error');
+            }
+
             return $this->redirectToRoute('admin_activity');
         }
 

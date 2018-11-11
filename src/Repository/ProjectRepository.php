@@ -15,6 +15,7 @@ use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Model\ProjectStatistic;
 use App\Repository\Query\ProjectQuery;
+use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
@@ -138,34 +139,41 @@ class ProjectRepository extends AbstractRepository
      * @param Project $delete
      * @param Project|null $replace
      * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function deleteProject(Project $delete, ?Project $replace = null)
     {
-        if (null !== $replace) {
-            $qb = $this->getEntityManager()->createQueryBuilder();
-            $qb
-                ->update(Timesheet::class, 't')
-                ->set('t.project', ':replace')
-                ->where('t.project = :delete')
-                ->setParameter('delete', $delete)
-                ->setParameter('replace', $replace)
-                ->getQuery()
-                ->execute();
+        $em = $this->getEntityManager();
+        $em->beginTransaction();
 
-            $qb = $this->getEntityManager()->createQueryBuilder();
-            $qb
-                ->update(Activity::class, 'a')
-                ->set('a.project', ':replace')
-                ->where('a.project = :delete')
-                ->setParameter('delete', $delete)
-                ->setParameter('replace', $replace)
-                ->getQuery()
-                ->execute();
+        try {
+            if (null !== $replace) {
+                $qb = $em->createQueryBuilder();
+                $qb
+                    ->update(Timesheet::class, 't')
+                    ->set('t.project', ':replace')
+                    ->where('t.project = :delete')
+                    ->setParameter('delete', $delete)
+                    ->setParameter('replace', $replace)
+                    ->getQuery()
+                    ->execute();
+
+                $qb = $em->createQueryBuilder();
+                $qb
+                    ->update(Activity::class, 'a')
+                    ->set('a.project', ':replace')
+                    ->where('a.project = :delete')
+                    ->setParameter('delete', $delete)
+                    ->setParameter('replace', $replace)
+                    ->getQuery()
+                    ->execute();
+            }
+
+            $em->remove($delete);
+            $em->flush();
+            $em->commit();
+        } catch (ORMException $ex) {
+            $em->rollback();
+            throw $ex;
         }
-
-        $entityManager = $this->getEntityManager();
-        $entityManager->remove($delete);
-        $entityManager->flush();
     }
 }

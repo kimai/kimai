@@ -15,6 +15,7 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Model\ActivityStatistic;
 use App\Repository\Query\ActivityQuery;
+use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
@@ -213,21 +214,29 @@ class ActivityRepository extends AbstractRepository
      */
     public function deleteActivity(Activity $delete, ?Activity $replace = null)
     {
-        if (null !== $replace) {
-            $qb = $this->getEntityManager()->createQueryBuilder();
-            $query = $qb
-                ->update(Timesheet::class, 't')
-                ->set('t.activity', ':replace')
-                ->where('t.activity = :delete')
-                ->setParameter('delete', $delete)
-                ->setParameter('replace', $replace)
-                ->getQuery();
+        $em = $this->getEntityManager();
+        $em->beginTransaction();
 
-            $result = $query->execute();
+        try {
+            if (null !== $replace) {
+                $qb = $em->createQueryBuilder();
+                $query = $qb
+                    ->update(Timesheet::class, 't')
+                    ->set('t.activity', ':replace')
+                    ->where('t.activity = :delete')
+                    ->setParameter('delete', $delete)
+                    ->setParameter('replace', $replace)
+                    ->getQuery();
+
+                $result = $query->execute();
+            }
+
+            $em->remove($delete);
+            $em->flush();
+            $em->commit();
+        } catch (ORMException $ex) {
+            $em->rollback();
+            throw $ex;
         }
-
-        $entityManager = $this->getEntityManager();
-        $entityManager->remove($delete);
-        $entityManager->flush();
     }
 }
