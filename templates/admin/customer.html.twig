@@ -8,7 +8,7 @@
 {% block page_actions %}{{ widgets.page_actions({'filter': '#collapseCustomerAdmin', 'visibility': '#modal_customer_admin', 'create': path('admin_customer_create')}) }}{% endblock %}
 
 {% block main_before %}
-    {{ toolbar.toolbar(toolbarForm, 'collapseCustomerAdmin') }}
+    {{ toolbar.toolbar(toolbarForm, 'collapseCustomerAdmin', showFilter) }}
 {% endblock %}
 
 {% block main %}

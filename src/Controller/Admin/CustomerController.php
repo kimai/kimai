@@ -71,6 +71,7 @@ class CustomerController extends AbstractController
         return $this->render('admin/customer.html.twig', [
             'entries' => $entries,
             'query' => $query,
+            'showFilter' => $form->isSubmitted(),
             'toolbarForm' => $form->createView(),
         ]);
     }
