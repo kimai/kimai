@@ -22,6 +22,30 @@ class ProjectQuery extends VisibilityQuery
     protected $customer;
 
     /**
+     * @var array
+     */
+    protected $ignored = [];
+
+    /**
+     * @param mixed $entity
+     * @return $this
+     */
+    public function addIgnoredEntity($entity)
+    {
+        $this->ignored[] = $entity;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getIgnoredEntities()
+    {
+        return $this->ignored;
+    }
+
+    /**
      * @return Customer|int
      */
     public function getCustomer()

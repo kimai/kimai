@@ -13,7 +13,10 @@ use App\Controller\AbstractController;
 use App\Entity\Customer;
 use App\Form\CustomerEditForm;
 use App\Form\Toolbar\CustomerToolbarForm;
+use App\Form\Type\CustomerType;
+use App\Repository\CustomerRepository;
 use App\Repository\Query\CustomerQuery;
+use Doctrine\ORM\ORMException;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -140,6 +143,18 @@ class CustomerController extends AbstractController
         $stats = $this->getRepository()->getCustomerStatistics($customer);
 
         $deleteForm = $this->createFormBuilder()
+            ->add('customer', CustomerType::class, [
+                'label' => 'label.customer',
+                'query_builder' => function (CustomerRepository $repo) use ($customer) {
+                    $query = new CustomerQuery();
+                    $query
+                        ->setResultType(CustomerQuery::RESULT_TYPE_QUERYBUILDER)
+                        ->addIgnoredEntity($customer);
+
+                    return $repo->findByQuery($query);
+                },
+                'required' => false,
+            ])
             ->setAction($this->generateUrl('admin_customer_delete', ['id' => $customer->getId()]))
             ->setMethod('POST')
             ->getForm();
@@ -147,11 +162,12 @@ class CustomerController extends AbstractController
         $deleteForm->handleRequest($request);
 
         if (0 == $stats->getRecordAmount() || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($customer);
-            $entityManager->flush();
-
-            $this->flashSuccess('action.delete.success');
+            try {
+                $this->getRepository()->deleteCustomer($customer, $deleteForm->get('customer')->getData());
+                $this->flashSuccess('action.delete.success');
+            } catch (ORMException $ex) {
+                $this->flashError('action.delete.error');
+            }
 
             return $this->redirectToRoute('admin_customer');
         }

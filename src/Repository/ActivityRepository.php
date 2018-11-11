@@ -15,6 +15,7 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Model\ActivityStatistic;
 use App\Repository\Query\ActivityQuery;
+use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
@@ -183,6 +184,11 @@ class ActivityRepository extends AbstractRepository
             $qb->setParameter('customer', $query->getCustomer());
         }
 
+        if (!empty($query->getIgnoredEntities())) {
+            $qb->andWhere('a.id NOT IN(:ignored)');
+            $qb->setParameter('ignored', $query->getIgnoredEntities());
+        }
+
         $or = $qb->expr()->orX();
 
         // this must always be the last part before the or
@@ -203,5 +209,39 @@ class ActivityRepository extends AbstractRepository
         $qb->andWhere($or);
 
         return $this->getBaseQueryResult($qb, $query);
+    }
+
+    /**
+     * @param Activity $delete
+     * @param Activity|null $replace
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function deleteActivity(Activity $delete, ?Activity $replace = null)
+    {
+        $em = $this->getEntityManager();
+        $em->beginTransaction();
+
+        try {
+            if (null !== $replace) {
+                $qb = $em->createQueryBuilder();
+                $query = $qb
+                    ->update(Timesheet::class, 't')
+                    ->set('t.activity', ':replace')
+                    ->where('t.activity = :delete')
+                    ->setParameter('delete', $delete)
+                    ->setParameter('replace', $replace)
+                    ->getQuery();
+
+                $result = $query->execute();
+            }
+
+            $em->remove($delete);
+            $em->flush();
+            $em->commit();
+        } catch (ORMException $ex) {
+            $em->rollback();
+            throw $ex;
+        }
     }
 }

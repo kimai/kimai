@@ -24,6 +24,10 @@ class CustomerFixtures extends Fixture
      * @var int
      */
     protected $amount = 0;
+    /**
+     * @var bool
+     */
+    protected $isVisible = null;
 
     /**
      * @return int
@@ -45,6 +49,17 @@ class CustomerFixtures extends Fixture
     }
 
     /**
+     * @param bool $visible
+     * @return $this
+     */
+    public function setIsVisible(bool $visible)
+    {
+        $this->isVisible = $visible;
+
+        return $this;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
@@ -53,6 +68,9 @@ class CustomerFixtures extends Fixture
 
         for ($i = 0; $i < $this->amount; $i++) {
             $visible = 0 != $i % 3;
+            if (null !== $this->isVisible) {
+                $visible = $this->isVisible;
+            }
             $entity = new Customer();
             $entity
                 ->setCurrency($faker->currencyCode)

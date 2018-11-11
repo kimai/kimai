@@ -9,6 +9,7 @@
 
 namespace App\Tests\Controller\Admin;
 
+use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\Controller\ControllerBaseTest;
 use App\Tests\DataFixtures\CustomerFixtures;
@@ -135,6 +136,14 @@ class ProjectControllerTest extends ControllerBaseTest
         $fixture->setAmount(10);
         $this->importFixture($em, $fixture);
 
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        $this->assertEquals(10, count($timesheets));
+
+        /** @var Timesheet $entry */
+        foreach($timesheets as $entry) {
+            $this->assertEquals(1, $entry->getActivity()->getId());
+        }
+
         $this->request($client, '/admin/project/1/delete');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
@@ -146,6 +155,60 @@ class ProjectControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertHasDataTable($client);
         $this->assertHasFlashSuccess($client);
+
+        // SQLIte does not necessarly support onCascade delete, so these timesheet will stay after deletion
+        // $em->clear();
+        // $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        // $this->assertEquals(0, count($timesheets));
+
+        $this->request($client, '/admin/project/1/edit');
+        $this->assertFalse($client->getResponse()->isSuccessful());
+    }
+
+    public function testDeleteActionWithTimesheetEntriesAndReplacement()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $fixture = new TimesheetFixtures();
+        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setAmount(10);
+        $this->importFixture($em, $fixture);
+        $fixture = new ProjectFixtures();
+        $fixture->setAmount(1)->setIsVisible(true);
+        $this->importFixture($em, $fixture);
+
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        $this->assertEquals(10, count($timesheets));
+
+        /** @var Timesheet $entry */
+        foreach($timesheets as $entry) {
+            $this->assertEquals(1, $entry->getProject()->getId());
+        }
+
+        $this->request($client, '/admin/project/1/delete');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=form]')->form();
+        $this->assertStringEndsWith($this->createUrl('/admin/project/1/delete'), $form->getUri());
+        $client->submit($form, [
+            'form' => [
+                'project' => 2
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/'));
+        $client->followRedirect();
+        $this->assertHasDataTable($client);
+        $this->assertHasFlashSuccess($client);
+
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        $this->assertEquals(10, count($timesheets));
+
+        /** @var Timesheet $entry */
+        foreach($timesheets as $entry) {
+            $this->assertEquals(2, $entry->getProject()->getId());
+        }
 
         $this->request($client, '/admin/project/1/edit');
         $this->assertFalse($client->getResponse()->isSuccessful());

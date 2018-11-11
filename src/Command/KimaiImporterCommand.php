@@ -763,7 +763,6 @@ class KimaiImporterCommand extends Command
         array $rates,
         ?Project $project
     ) {
-
         $activityId = $oldActivity['activityID'];
         $projectId = null !== $project ? $project->getId() : null;
 
