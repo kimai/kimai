@@ -63,10 +63,10 @@ class TimesheetController extends BaseApiController
      * @Rest\QueryParam(name="customer", requirements="\d+", strict=true, nullable=true, description="Customer ID to filter timesheets")
      * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="Project ID to filter timesheets")
      * @Rest\QueryParam(name="activity", requirements="\d+", strict=true, nullable=true, description="Activity ID to filter timesheets")
-     * @Rest\QueryParam(name="page", requirements="\d+", strict=true, nullable=true, description="The current page")
+     * @Rest\QueryParam(name="page", requirements="\d+", strict=true, nullable=true, description="The page to display, renders a 404 if not found")
      * @Rest\QueryParam(name="size", requirements="\d+", strict=true, nullable=true, description="The amount of entries for each page")
-     * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The order for the results, either ASC or DESC")
-     * @Rest\QueryParam(name="orderBy", requirements="id|begin", strict=true, nullable=true, description="The result order, either 'id' or 'begin'")
+     * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order, either ASC or DESC")
+     * @Rest\QueryParam(name="orderBy", requirements="id|begin", strict=true, nullable=true, description="The field by which results will be ordered, either 'id' or 'begin'")
      *
      * @return Response
      */
