@@ -21,7 +21,7 @@
                                 {{ entry.activity.name }}
                                 <small><i class="{{ 'timesheet'|icon }}"></i> {{ entry|duration }}</small>
                             </h4>
-                            <p>{{ entry.activity.project.name }} ({{ entry.activity.project.customer.name }})</p>
+                            <p>{{ entry.project.name }} ({{ entry.project.customer.name }})</p>
                         </a>
                     </li>
                     {% endfor %}

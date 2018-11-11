@@ -104,6 +104,7 @@ abstract class AbstractRendererTest extends KernelTestCase
             ->setRate(293.27)
             ->setUser($user1)
             ->setActivity($activity)
+            ->setProject($project)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
         ;
@@ -114,6 +115,7 @@ abstract class AbstractRendererTest extends KernelTestCase
             ->setRate(84.75)
             ->setUser($user2)
             ->setActivity($activity)
+            ->setProject($project)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
         ;
@@ -124,6 +126,7 @@ abstract class AbstractRendererTest extends KernelTestCase
             ->setRate(111.11)
             ->setUser($user1)
             ->setActivity($activity)
+            ->setProject($project)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
         ;
@@ -134,6 +137,7 @@ abstract class AbstractRendererTest extends KernelTestCase
             ->setRate(1947.99)
             ->setUser($user2)
             ->setActivity($activity)
+            ->setProject($project)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
         ;
@@ -144,6 +148,7 @@ abstract class AbstractRendererTest extends KernelTestCase
             ->setFixedRate(84)
             ->setUser((new User())->setUsername('kevin'))
             ->setActivity($activity)
+            ->setProject($project)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
         ;
@@ -205,6 +210,7 @@ abstract class AbstractRendererTest extends KernelTestCase
             ->setRate(293.27)
             ->setUser($user1)
             ->setActivity($activity)
+            ->setProject($project)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
         ;

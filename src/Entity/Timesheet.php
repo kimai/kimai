@@ -64,7 +64,7 @@ class Timesheet
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(name="user", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\JoinColumn(name="user", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
     private $user;
@@ -73,10 +73,19 @@ class Timesheet
      * @var Activity
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Activity", inversedBy="timesheets")
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
     private $activity;
+
+    /**
+     * @var Project
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="timesheets")
+     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
+     * @Assert\NotNull()
+     */
+    private $project;
 
     /**
      * @var string
@@ -233,6 +242,25 @@ class Timesheet
     }
 
     /**
+     * @return Project
+     */
+    public function getProject()
+    {
+        return $this->project;
+    }
+
+    /**
+     * @param Project $project
+     * @return Timesheet
+     */
+    public function setProject(Project $project)
+    {
+        $this->project = $project;
+
+        return $this;
+    }
+
+    /**
      * Set description
      *
      * @param string $description
@@ -317,6 +345,8 @@ class Timesheet
     }
 
     /**
+     * These validations are used in places, where we don't use a form yet (like the API).
+     *
      * @param ExecutionContextInterface $context
      * @param mixed $payload
      *
@@ -324,6 +354,27 @@ class Timesheet
      */
     public function validate(ExecutionContextInterface $context, $payload)
     {
+        if (null === $this->getActivity()) {
+            $context->buildViolation('A timesheet must have an activity.')
+                ->atPath('activity')
+                ->setTranslationDomain('validators')
+                ->addViolation();
+        }
+
+        if (null === $this->getProject()) {
+            $context->buildViolation('A timesheet must have a project.')
+                ->atPath('project')
+                ->setTranslationDomain('validators')
+                ->addViolation();
+        }
+
+        if (null !== $this->getActivity() && null !== $this->getProject() && null !== $this->getActivity()->getProject() && $this->getActivity()->getProject() !== $this->getProject()) {
+            $context->buildViolation('Project mismatch, project specific activity and timesheet project are different.')
+                ->atPath('project')
+                ->setTranslationDomain('validators')
+                ->addViolation();
+        }
+
         if (null !== $this->getEnd() && $this->getEnd()->getTimestamp() < $this->getBegin()->getTimestamp()) {
             $context->buildViolation('End date must not be earlier then start date.')
                 ->atPath('end')

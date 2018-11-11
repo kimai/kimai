@@ -66,7 +66,7 @@
             {% for entry in model.calculator.entries %}
                 <tr>
                     <td>{{ entry.begin|date_short }}</td>
-                    <td>{{ entry.activity.name }} / {{ entry.activity.project.name }}</td>
+                    <td>{{ entry.activity.name }} / {{ entry.project.name }}</td>
                     <td contenteditable="true">{{ app.user.getPreferenceValue('hourly_rate')|money(model.calculator.currency) }}</td>
                     <td>{{ entry.duration|duration }}</td>
                     <td>{{ entry.rate|money(model.calculator.currency) }}</td>

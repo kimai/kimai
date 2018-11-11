@@ -1,17 +1,17 @@
-{% if activities is not empty %}
+{% if entries is defined and entries is not empty %}
     <li class="dropdown notifications-menu">
         <a href="#" class="dropdown-toggle ddt-large" data-toggle="dropdown">
             <i class="{{ 'activity'|icon }} fa-2x"></i>
-            <span class="label label-success">{{ activities|length }}</span>
+            <span class="label label-success">{{ entries|length }}</span>
         </a>
         <ul class="dropdown-menu">
-            <li class="header">{{ 'recent.activities'|transchoice(activities|length) }}</li>
+            <li class="header">{{ 'recent.activities'|transchoice(entries|length) }}</li>
             <li>
                 <ul class="menu">
-                    {% for activity in activities %}
+                    {% for timesheet in entries %}
                         <li>
-                            <a href="{{ path('timesheet_start', {'id' : activity.id}) }}">
-                                <i class="{{ 'start-small'|icon }} text-green"></i> {{ 'recent.activities.format'|trans({'%activity%': activity.name, '%project%': activity.project.name, '%customer%': activity.project.customer.name}) }}
+                            <a href="{{ path('timesheet_start', {'id' : timesheet.id}) }}">
+                                <i class="{{ 'start-small'|icon }} text-green"></i> {{ 'recent.activities.format'|trans({'%activity%': timesheet.activity.name, '%project%': timesheet.project.name, '%customer%': timesheet.project.customer.name}) }}
                             </a>
                         </li>
                     {% endfor %}

@@ -12,7 +12,6 @@ namespace App\Controller;
 use App\Entity\Activity;
 use App\Repository\ActivityRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -20,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Security("is_granted('ROLE_USER')")
  */
-class ActivityController extends Controller
+class ActivityController extends AbstractController
 {
     /**
      * @return ActivityRepository
@@ -38,12 +37,11 @@ class ActivityController extends Controller
     public function recentActivitiesAction()
     {
         $user = $this->getUser();
-        // TODO make days configurable
-        $activeEntries = $this->getRepository()->getRecentActivities($user, new \DateTime('-30 days'));
+        $entries = $this->getRepository()->getRecentActivities($user, new \DateTime('-30 days'));
 
         return $this->render(
             'navbar/recent-activities.html.twig',
-            ['activities' => $activeEntries]
+            ['entries' => $entries]
         );
     }
 }

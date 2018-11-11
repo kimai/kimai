@@ -17,12 +17,58 @@ use App\Entity\Project;
 class ActivityQuery extends ProjectQuery
 {
     /**
-     * @var Project
+     * @var Project|int
      */
     protected $project;
+    /**
+     * @var bool
+     */
+    protected $orderGlobalsFirst = false;
+    /**
+     * @var bool
+     */
+    protected $globalsOnly = false;
 
     /**
-     * @return Project
+     * @return bool
+     */
+    public function isOrderGlobalsFirst(): bool
+    {
+        return $this->orderGlobalsFirst;
+    }
+
+    /**
+     * @param bool $orderGlobalsFirst
+     * @return ActivityQuery
+     */
+    public function setOrderGlobalsFirst(bool $orderGlobalsFirst)
+    {
+        $this->orderGlobalsFirst = $orderGlobalsFirst;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isGlobalsOnly(): bool
+    {
+        return $this->globalsOnly;
+    }
+
+    /**
+     * @param bool $globalsOnly
+     * @return ActivityQuery
+     */
+    public function setGlobalsOnly(bool $globalsOnly)
+    {
+        $this->globalsOnly = $globalsOnly;
+
+        return $this;
+    }
+
+    /**
+     * @return Project|int
      */
     public function getProject()
     {
@@ -30,10 +76,10 @@ class ActivityQuery extends ProjectQuery
     }
 
     /**
-     * @param Project $project
+     * @param Project|int $project
      * @return $this
      */
-    public function setProject(Project $project = null)
+    public function setProject($project = null)
     {
         $this->project = $project;
 

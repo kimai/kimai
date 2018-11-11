@@ -31,6 +31,7 @@ class VisibilityType extends AbstractType
                 'yes' => VisibilityQuery::SHOW_VISIBLE,
                 'no' => VisibilityQuery::SHOW_HIDDEN,
             ],
+            //'attr' => ['class' => 'selectpicker', 'data-live-search' => false, 'data-width' => '100%']
         ]);
     }
 

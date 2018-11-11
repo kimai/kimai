@@ -12,6 +12,7 @@ namespace App\Tests\Invoice\Calculator;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
+use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Invoice\Calculator\ShortInvoiceCalculator;
@@ -35,8 +36,12 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $template = new InvoiceTemplate();
         $template->setVat(19);
 
+        $project = new Project();
+        $project->setName('sdfsdf');
+
         $activity = new Activity();
         $activity->setName('activity description');
+        $activity->setProject($project);
 
         $timesheet = new Timesheet();
         $timesheet
@@ -44,6 +49,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
             ->setRate(293.27)
             ->setUser(new User())
             ->setActivity($activity)
+            ->setProject($project)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
         ;
@@ -54,6 +60,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
             ->setRate(84)
             ->setUser(new User())
             ->setActivity($activity)
+            ->setProject($project)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
         ;
@@ -64,6 +71,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
             ->setRate(111.11)
             ->setUser(new User())
             ->setActivity($activity)
+            ->setProject($project)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
         ;

@@ -9,6 +9,7 @@
 
 namespace App\Tests\Voter;
 
+use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Timesheet;
 use App\Entity\User;
@@ -26,9 +27,9 @@ class TimesheetVoterTest extends TestCase
     /**
      * @dataProvider getTestData
      */
-    public function testVote(User $user, $allow, $subject, $attributes, $result)
+    public function testVote($user, $roles, $allow, $subject, $attributes, $result)
     {
-        $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
+        $token = new UsernamePasswordToken($user, 'foo', 'bar', $roles);
 
         $accessManager = $this->getMockBuilder(AclDecisionManager::class)->disableOriginalConstructor()->getMock();
         $accessManager->method('isFullyAuthenticated')->willReturn($allow);
@@ -43,13 +44,17 @@ class TimesheetVoterTest extends TestCase
     {
         $user0 = $this->getUser(0, User::ROLE_CUSTOMER);
         $user1 = $this->getUser(1, User::ROLE_USER);
-        $user2 = $this->getUser(1, User::ROLE_TEAMLEAD);
+        $user2 = $this->getUser(2, User::ROLE_TEAMLEAD);
 
         return [
-            [$user0, false, new Customer(), [TimesheetVoter::EDIT], VoterInterface::ACCESS_ABSTAIN],
-            [$user1, false, $this->getTimesheet($user1), [TimesheetVoter::EDIT], VoterInterface::ACCESS_GRANTED],
-            [$user1, false, $this->getTimesheet($user0), [TimesheetVoter::EDIT], VoterInterface::ACCESS_DENIED],
-            [$user2, true, $this->getTimesheet($user1), [TimesheetVoter::EDIT], VoterInterface::ACCESS_GRANTED],
+            [$user0, $user0->getRoles(), false, new Customer(), [TimesheetVoter::EDIT], VoterInterface::ACCESS_ABSTAIN],
+            [$user1, $user1->getRoles(), false, $this->getTimesheet($user1), [TimesheetVoter::EDIT], VoterInterface::ACCESS_GRANTED],
+            [$user1, $user1->getRoles(), false, $this->getTimesheet($user0), [TimesheetVoter::EDIT], VoterInterface::ACCESS_DENIED],
+            [$user2, $user2->getRoles(), true, $this->getTimesheet($user1), [TimesheetVoter::EDIT], VoterInterface::ACCESS_GRANTED],
+            ['foo', [], false, $this->getTimesheet($user1), [TimesheetVoter::EDIT], VoterInterface::ACCESS_DENIED],
+            [$user2, $user2->getRoles(), true, new Activity(), [TimesheetVoter::EDIT], VoterInterface::ACCESS_ABSTAIN],
+            [$user2, $user2->getRoles(), true, $this->getTimesheet($user2), [TimesheetVoter::VIEW], VoterInterface::ACCESS_GRANTED],
+            [$user1, $user1->getRoles(), false, $this->getTimesheet($user2), [TimesheetVoter::VIEW], VoterInterface::ACCESS_DENIED],
         ];
     }
 
@@ -61,6 +66,11 @@ class TimesheetVoterTest extends TestCase
         return $timesheet;
     }
 
+    /**
+     * @param $id
+     * @param $role
+     * @return User
+     */
     protected function getUser($id, $role)
     {
         $user = $this->getMockBuilder(User::class)->getMock();

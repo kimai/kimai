@@ -2,7 +2,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    app_locales: en|de|it|fr|es|ru|ar
+    app_locales: en|de|it|fr|es|ru|ar|hu
 
 services:
     # default configuration for services in *this* file
@@ -87,6 +87,11 @@ services:
     App\Form\Extension\DocumentationLinkExtension:
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+
+    App\Form\Extension\EnhancedChoiceTypeExtension:
+        arguments: ["%kimai.theme.select_type%"]
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Bridge\Doctrine\Form\Type\EntityType }
 
     # ================================================================================
     # THEME

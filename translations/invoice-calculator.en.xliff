@@ -18,6 +18,10 @@
                 <source>user</source>
                 <target>User grouped - one entry per user</target>
             </trans-unit>
+            <trans-unit id="activity">
+                <source>activity</source>
+                <target>Activity grouped - one entry per activity</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -120,6 +120,7 @@ class RateCalculatorTest extends TestCase
             ->setHourlyRate($timesheetHourly)
             ->setFixedRate($timesheetFixed)
             ->setActivity($activity)
+            ->setProject($project)
             ->setDuration($duration)
             ->setUser($this->getTestUser($userRate))
         ;

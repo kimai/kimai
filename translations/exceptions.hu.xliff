@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="hu" datatype="plaintext" original="exceptions.en.xliff">
+        <body>
+            <trans-unit id="access.denied">
+                <source>access.denied</source>
+                <target>Belépés megtagadva</target>
+            </trans-unit>
+            <trans-unit id="stacktrace">
+                <source>stacktrace</source>
+                <target>Egy probléma adódott</target>
+            </trans-unit>
+            <trans-unit id="http_error.title">
+                <source>http_error.title</source>
+                <target>Hiba</target>
+            </trans-unit>
+            <trans-unit id="http_error.description">
+                <source>http_error.description</source>
+                <target>Hoppá! Hiba történt.</target>
+            </trans-unit>
+            <trans-unit id="http_error.suggestion">
+                <source>http_error.suggestion</source>
+                <target>
+                    Egy váratlan hiba történt, kérlek próbáld újra.
+                    Lehetséges, hogy egy bug-ot találtál, ha a hiba nem szűnik meg miután újra próbáltad 
+                    értesítsd a rendszergazdát
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_404.description">
+                <source>http_error_404.description</source>
+                <target>Hoppá! Az oldal nem található.</target>
+            </trans-unit>
+            <trans-unit id="http_error_404.suggestion">
+                <source>http_error_404.suggestion</source>
+                <target>
+                    Az oldal nem található.
+                    Visszatérhetsz a kezdőlapra, és újra megbróbálhatod.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_403.description">
+                <source>http_error_403.description</source>
+                <target>Az oldal hozzáférése korlátozott.</target>
+            </trans-unit>
+            <trans-unit id="http_error_403.suggestion">
+                <source>http_error_403.suggestion</source>
+                <target>
+                    Elnézést, de nincs jogosultságod az oldal megtekintéséhez.
+                    Kérlek beszélj a rendszergazdával, ha szerinted ez egy hiba.
+                </target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

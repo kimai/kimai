@@ -11,7 +11,6 @@ namespace App\Controller;
 
 use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -21,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route(path="/homepage")
  * @Security("is_granted('ROLE_USER')")
  */
-class HomepageController extends Controller
+class HomepageController extends AbstractController
 {
     /**
      * @Route(path="", defaults={}, name="homepage", methods={"GET"})
