@@ -462,6 +462,7 @@
                     Momentan existieren für die Tätigkeit %activity% im Projekt %project% für den Kunden %customer%
                     insgesamt %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen. Diese
                     Zeiteinträge werden ebenfalls mit gelöscht!
+                    Alternativ können Sie eine Tätigkeit auswählen, auf die alle existierenden Einträge umgebucht werden:
                 </target>
             </trans-unit>
 

@@ -13,6 +13,8 @@ use App\Controller\AbstractController;
 use App\Entity\Activity;
 use App\Form\ActivityEditForm;
 use App\Form\Toolbar\ActivityToolbarForm;
+use App\Form\Type\ActivityType;
+use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityQuery;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
@@ -104,6 +106,13 @@ class ActivityController extends AbstractController
         $stats = $this->getRepository()->getActivityStatistics($activity);
 
         $deleteForm = $this->createFormBuilder()
+            ->add('activity', ActivityType::class, [
+                'label' => 'label.activity',
+                'query_builder' => function (ActivityRepository $repo) use ($activity) {
+                    return $repo->builderForEntityType(null, $activity->getProject());
+                },
+                'required' => false,
+            ])
             ->setAction($this->generateUrl('admin_activity_delete', ['id' => $activity->getId()]))
             ->setMethod('POST')
             ->getForm();
@@ -111,12 +120,8 @@ class ActivityController extends AbstractController
         $deleteForm->handleRequest($request);
 
         if (0 == $stats->getRecordAmount() || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($activity);
-            $entityManager->flush();
-
+            $this->getRepository()->deleteActivity($activity, $deleteForm->get('activity')->getData());
             $this->flashSuccess('action.delete.success');
-
             return $this->redirectToRoute('admin_activity');
         }
 

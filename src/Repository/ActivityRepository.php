@@ -204,4 +204,30 @@ class ActivityRepository extends AbstractRepository
 
         return $this->getBaseQueryResult($qb, $query);
     }
+
+    /**
+     * @param Activity $delete
+     * @param Activity|null $replace
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function deleteActivity(Activity $delete, ?Activity $replace = null)
+    {
+        if (null !== $replace) {
+            $qb = $this->getEntityManager()->createQueryBuilder();
+            $query = $qb
+                ->update(Timesheet::class, 't')
+                ->set('t.activity', ':replace')
+                ->where('t.activity = :delete')
+                ->setParameter('delete', $delete)
+                ->setParameter('replace', $replace)
+                ->getQuery();
+
+            $result = $query->execute();
+        }
+
+        $entityManager = $this->getEntityManager();
+        $entityManager->remove($delete);
+        $entityManager->flush();
+    }
 }
