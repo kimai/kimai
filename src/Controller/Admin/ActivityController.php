@@ -61,6 +61,7 @@ class ActivityController extends AbstractController
         return $this->render('admin/activity.html.twig', [
             'entries' => $entries,
             'query' => $query,
+            'showFilter' => $form->isSubmitted(),
             'toolbarForm' => $form->createView(),
         ]);
     }

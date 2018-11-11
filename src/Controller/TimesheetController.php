@@ -74,6 +74,7 @@ class TimesheetController extends AbstractController
             'entries' => $entries,
             'page' => $page,
             'query' => $query,
+            'showFilter' => $form->isSubmitted(),
             'toolbarForm' => $form->createView(),
         ]);
     }

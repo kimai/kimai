@@ -8,7 +8,7 @@
 {% block page_actions %}{{ widgets.page_actions({'filter': '#collapseUserAdmin', 'visibility': '#modal_user_admin', 'create': path('admin_user_create')}) }}{% endblock %}
 
 {% block main_before %}
-    {{ toolbar.toolbar(toolbarForm, 'collapseUserAdmin') }}
+    {{ toolbar.toolbar(toolbarForm, 'collapseUserAdmin', showFilter) }}
 {% endblock %}
 
 {% block main %}
