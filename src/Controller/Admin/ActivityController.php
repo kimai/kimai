@@ -110,7 +110,16 @@ class ActivityController extends AbstractController
             ->add('activity', ActivityType::class, [
                 'label' => 'label.activity',
                 'query_builder' => function (ActivityRepository $repo) use ($activity) {
-                    return $repo->builderForEntityType(null, $activity->getProject());
+                    $query = new ActivityQuery();
+                    $query
+                        ->setResultType(ActivityQuery::RESULT_TYPE_QUERYBUILDER)
+                        ->setProject($activity->getProject())
+                        ->setOrderGlobalsFirst(true)
+                        ->addIgnoredEntity($activity)
+                        ->setGlobalsOnly(null === $activity->getProject())
+                    ;
+
+                    return $repo->findByQuery($query);
                 },
                 'required' => false,
             ])

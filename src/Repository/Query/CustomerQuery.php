@@ -25,7 +25,7 @@ class CustomerQuery extends VisibilityQuery
      * @param Customer|int $customer
      * @return $this
      */
-    public function addIgnoredCustomer($customer)
+    public function addIgnoredEntity($customer)
     {
         $this->ignored[] = $customer;
 
@@ -35,7 +35,7 @@ class CustomerQuery extends VisibilityQuery
     /**
      * @return array
      */
-    public function getIgnoredCustomer()
+    public function getIgnoredEntities()
     {
         return $this->ignored;
     }

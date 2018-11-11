@@ -148,7 +148,7 @@ class CustomerController extends AbstractController
                     $query = new CustomerQuery();
                     $query
                         ->setResultType(CustomerQuery::RESULT_TYPE_QUERYBUILDER)
-                        ->addIgnoredCustomer($customer);
+                        ->addIgnoredEntity($customer);
 
                     return $repo->findByQuery($query);
                 },

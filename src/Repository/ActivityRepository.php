@@ -184,6 +184,11 @@ class ActivityRepository extends AbstractRepository
             $qb->setParameter('customer', $query->getCustomer());
         }
 
+        if (!empty($query->getIgnoredEntities())) {
+            $qb->andWhere('a.id NOT IN(:ignored)');
+            $qb->setParameter('ignored', $query->getIgnoredEntities());
+        }
+
         $or = $qb->expr()->orX();
 
         // this must always be the last part before the or

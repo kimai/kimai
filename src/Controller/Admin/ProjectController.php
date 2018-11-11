@@ -104,7 +104,13 @@ class ProjectController extends AbstractController
             ->add('project', ProjectType::class, [
                 'label' => 'label.project',
                 'query_builder' => function (ProjectRepository $repo) use ($project) {
-                    return $repo->builderForEntityType(null, $project->getCustomer());
+                    $query = new ProjectQuery();
+                    $query
+                        ->setResultType(ProjectQuery::RESULT_TYPE_QUERYBUILDER)
+                        ->setCustomer($project->getCustomer())
+                        ->addIgnoredEntity($project);
+
+                    return $repo->findByQuery($query);
                 },
                 'required' => false,
             ])

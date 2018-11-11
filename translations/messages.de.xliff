@@ -532,6 +532,7 @@
                     Momentan existieren für den Kunden %customer% insgesamt %project% Projekte mit %activity%
                     Tätigkeiten, die sich in %records% Zeiteinträgen auf eine Gesamtdauer von %duration% belaufen. Diese
                     Projekte, Tätigkeiten und Zeiteinträge werden ebenfalls mit gelöscht!
+                    Alternativ können Sie einen Kunden auswählen, auf den alle Daten umgebucht werden:
                 </target>
             </trans-unit>
 

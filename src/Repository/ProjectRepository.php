@@ -132,6 +132,11 @@ class ProjectRepository extends AbstractRepository
                 ->setParameter('customer', $query->getCustomer());
         }
 
+        if (!empty($query->getIgnoredEntities())) {
+            $qb->andWhere('p.id NOT IN(:ignored)');
+            $qb->setParameter('ignored', $query->getIgnoredEntities());
+        }
+
         return $this->getBaseQueryResult($qb, $query);
     }
 

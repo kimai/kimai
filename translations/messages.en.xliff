@@ -532,6 +532,7 @@
                     Currently the customer %customer% has %project% projects with %activity% activities, which count up
                     in %records% time-records to a total of %duration%.
                     These projects, activities and time-records will be deleted as well!
+                    Alternatively, you can select a customer to whom all data is transferred:
                 </target>
             </trans-unit>
 

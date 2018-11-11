@@ -122,9 +122,9 @@ class CustomerRepository extends AbstractRepository
             $qb->andWhere('c.visible = 0');
         }
 
-        if (!empty($query->getIgnoredCustomer())) {
+        if (!empty($query->getIgnoredEntities())) {
             $qb->andWhere('c.id NOT IN(:ignored)');
-            $qb->setParameter('ignored', $query->getIgnoredCustomer());
+            $qb->setParameter('ignored', $query->getIgnoredEntities());
         }
 
         return $this->getBaseQueryResult($qb, $query);
