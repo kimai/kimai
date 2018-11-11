@@ -442,6 +442,7 @@
                     Currently the project %project% for the customer %customer% has %activities%
                     activities and %records% time-records, which count up to a total of %duration%.
                     These activities and time-records will be deleted as well!
+                    Alternatively, you can select a project to which all existing activities and entries are transferred:
                 </target>
             </trans-unit>
 

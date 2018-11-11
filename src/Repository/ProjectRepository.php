@@ -133,4 +133,39 @@ class ProjectRepository extends AbstractRepository
 
         return $this->getBaseQueryResult($qb, $query);
     }
+
+    /**
+     * @param Project $delete
+     * @param Project|null $replace
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function deleteProject(Project $delete, ?Project $replace = null)
+    {
+        if (null !== $replace) {
+            $qb = $this->getEntityManager()->createQueryBuilder();
+            $qb
+                ->update(Timesheet::class, 't')
+                ->set('t.project', ':replace')
+                ->where('t.project = :delete')
+                ->setParameter('delete', $delete)
+                ->setParameter('replace', $replace)
+                ->getQuery()
+                ->execute();
+
+            $qb = $this->getEntityManager()->createQueryBuilder();
+            $qb
+                ->update(Activity::class, 'a')
+                ->set('a.project', ':replace')
+                ->where('a.project = :delete')
+                ->setParameter('delete', $delete)
+                ->setParameter('replace', $replace)
+                ->getQuery()
+                ->execute();
+        }
+
+        $entityManager = $this->getEntityManager();
+        $entityManager->remove($delete);
+        $entityManager->flush();
+    }
 }

@@ -14,6 +14,8 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Form\ProjectEditForm;
 use App\Form\Toolbar\ProjectToolbarForm;
+use App\Form\Type\ProjectType;
+use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
@@ -98,6 +100,13 @@ class ProjectController extends AbstractController
         $stats = $this->getRepository()->getProjectStatistics($project);
 
         $deleteForm = $this->createFormBuilder()
+            ->add('project', ProjectType::class, [
+                'label' => 'label.project',
+                'query_builder' => function (ProjectRepository $repo) use ($project) {
+                    return $repo->builderForEntityType(null, $project->getCustomer());
+                },
+                'required' => false,
+            ])
             ->setAction($this->generateUrl('admin_project_delete', ['id' => $project->getId()]))
             ->setMethod('POST')
             ->getForm();
@@ -105,12 +114,8 @@ class ProjectController extends AbstractController
         $deleteForm->handleRequest($request);
 
         if (0 == $stats->getRecordAmount() || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($project);
-            $entityManager->flush();
-
+            $this->getRepository()->deleteProject($project, $deleteForm->get('project')->getData());
             $this->flashSuccess('action.delete.success');
-
             return $this->redirectToRoute('admin_project');
         }
 
