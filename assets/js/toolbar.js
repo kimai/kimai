@@ -17,12 +17,12 @@ $(document).ready(function () {
         switch (event.target.id) {
             case 'customer':
                 $('.toolbar form select#project').val('');
-                if ($('.toolbar form select#activity').find(':selected').attr('data-global') == "false") {
+                if ($('.toolbar form select#activity').find(':selected').attr('data-project')) {
                     $('.toolbar form select#activity').val('');
                 }
                 break;
             case 'project':
-                if ($('.toolbar form select#activity').find(':selected').attr('data-global') == "false") {
+                if ($('.toolbar form select#activity').find(':selected').attr('data-project')) {
                     $('.toolbar form select#activity').val('');
                 }
                 break;

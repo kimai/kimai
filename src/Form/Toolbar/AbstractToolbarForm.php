@@ -9,7 +9,6 @@
 
 namespace App\Form\Toolbar;
 
-use App\Entity\Activity;
 use App\Form\Type\ActivityType;
 use App\Form\Type\CustomerType;
 use App\Form\Type\PageSizeType;
@@ -163,6 +162,7 @@ abstract class AbstractToolbarForm extends AbstractType
                         $query->setCustomer($data['customer']);
                         $query->setResultType(ProjectQuery::RESULT_TYPE_QUERYBUILDER);
                         $query->setVisibility(ProjectQuery::SHOW_BOTH);
+
                         return $repo->findByQuery($query);
                     },
                 ]);
@@ -184,14 +184,8 @@ abstract class AbstractToolbarForm extends AbstractType
                 $query->setGlobalsOnly(true);
                 $query->setOrderGlobalsFirst(true);
                 $query->setVisibility(ActivityQuery::SHOW_BOTH);
+
                 return $repo->findByQuery($query);
-            },
-            'choice_attr' => function($choiceValue, $key, $value) {
-                /** @var Activity $choiceValue */
-                if (!($choiceValue instanceof Activity)) {
-                    return [];
-                }
-                return ['data-global' => (null === $choiceValue->getProject() ? "true" : "false")];
             },
         ]);
 
@@ -212,14 +206,8 @@ abstract class AbstractToolbarForm extends AbstractType
                         $query->setProject($data['project']);
                         $query->setOrderGlobalsFirst(true);
                         $query->setVisibility(ActivityQuery::SHOW_BOTH);
+
                         return $repo->findByQuery($query);
-                    },
-                    'choice_attr' => function($choiceValue, $key, $value) {
-                        /** @var Activity $choiceValue */
-                        if (!($choiceValue instanceof Activity)) {
-                            return [];
-                        }
-                        return ['data-global' => (null === $choiceValue->getProject() ? "true" : "false")];
                     },
                 ]);
             }
