@@ -41,6 +41,27 @@ class ActivityType extends AbstractType
     }
 
     /**
+     * @param Activity $choiceValue
+     * @param $key
+     * @param $value
+     * @return array
+     */
+    public function choiceAttr($choiceValue, $key, $value)
+    {
+        $project = null;
+
+        if (!($choiceValue instanceof Activity)) {
+            return [];
+        }
+
+        if (null !== $choiceValue->getProject()) {
+            $project = $choiceValue->getProject()->getId();
+        }
+
+        return ['data-project' => $project];
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
@@ -50,16 +71,9 @@ class ActivityType extends AbstractType
             'class' => Activity::class,
             'choice_label' => [$this, 'choiceLabel'],
             'group_by' => [$this, 'groupBy'],
+            'choice_attr' => [$this, 'choiceAttr'],
             'query_builder' => function (ActivityRepository $repo) {
                 return $repo->builderForEntityType();
-            },
-            'choice_attr' => function (Activity $activity, $key, $value) {
-                $attributes = [];
-                if (null !== $activity->getProject()) {
-                    $attributes['data-project'] = $activity->getProject()->getId();
-                }
-
-                return $attributes;
             },
             //'attr' => ['class' => 'selectpicker', 'data-size' => 10, 'data-live-search' => true, 'data-width' => '100%']
         ]);

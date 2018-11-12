@@ -19,8 +19,11 @@ use App\Form\Type\VisibilityType;
 use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
+use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\CustomerQuery;
+use App\Repository\Query\ProjectQuery;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -137,6 +140,12 @@ abstract class AbstractToolbarForm extends AbstractType
      */
     protected function addProjectChoice(FormBuilderInterface $builder)
     {
+        $builder->add('project', ChoiceType::class, [
+            'group_by' => null,
+            'required' => false,
+            'label' => 'label.project',
+        ]);
+
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
             function (FormEvent $event) {
@@ -149,10 +158,12 @@ abstract class AbstractToolbarForm extends AbstractType
                     'group_by' => null,
                     'required' => false,
                     'query_builder' => function (ProjectRepository $repo) use ($data) {
-                        $qb = $repo->builderForEntityType();
-                        $qb->andWhere('p.customer = :customer')->setParameter('customer', $data['customer']);
+                        $query = new ProjectQuery();
+                        $query->setCustomer($data['customer']);
+                        $query->setResultType(ProjectQuery::RESULT_TYPE_QUERYBUILDER);
+                        $query->setVisibility(ProjectQuery::SHOW_BOTH);
 
-                        return $qb;
+                        return $repo->findByQuery($query);
                     },
                 ]);
             }
@@ -164,6 +175,20 @@ abstract class AbstractToolbarForm extends AbstractType
      */
     protected function addActivityChoice(FormBuilderInterface $builder)
     {
+        $builder->add('activity', ActivityType::class, [
+            'group_by' => null,
+            'required' => false,
+            'query_builder' => function (ActivityRepository $repo) {
+                $query = new ActivityQuery();
+                $query->setResultType(ActivityQuery::RESULT_TYPE_QUERYBUILDER);
+                $query->setGlobalsOnly(true);
+                $query->setOrderGlobalsFirst(true);
+                $query->setVisibility(ActivityQuery::SHOW_BOTH);
+
+                return $repo->findByQuery($query);
+            },
+        ]);
+
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
             function (FormEvent $event) {
@@ -176,9 +201,13 @@ abstract class AbstractToolbarForm extends AbstractType
                     'group_by' => null,
                     'required' => false,
                     'query_builder' => function (ActivityRepository $repo) use ($data) {
-                        $qb = $repo->builderForEntityType(null, $data['project']);
+                        $query = new ActivityQuery();
+                        $query->setResultType(ActivityQuery::RESULT_TYPE_QUERYBUILDER);
+                        $query->setProject($data['project']);
+                        $query->setOrderGlobalsFirst(true);
+                        $query->setVisibility(ActivityQuery::SHOW_BOTH);
 
-                        return $qb;
+                        return $repo->findByQuery($query);
                     },
                 ]);
             }
