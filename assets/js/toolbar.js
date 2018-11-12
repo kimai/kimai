@@ -16,20 +16,13 @@ $(document).ready(function () {
     $('.toolbar form select').change(function (event) {
         switch (event.target.id) {
             case 'customer':
-                if ($(this).val() === '') {
-                    $('.toolbar form select#project').parent().remove();
-                    //$('.toolbar form select#project').parent().parent().remove();
-                } else {
-                    $('.toolbar form select#project').val('');
+                $('.toolbar form select#project').val('');
+                if ($('.toolbar form select#activity').find(':selected').attr('data-global') == "false") {
+                    $('.toolbar form select#activity').val('');
                 }
-                $('.toolbar form select#activity').parent().remove();
-                //$('.toolbar form select#activity').parent().parent().remove();
                 break;
             case 'project':
-                if ($(this).val() === '') {
-                    $('.toolbar form select#activity').parent().remove();
-                    //$('.toolbar form select#activity').parent().parent().remove();
-                } else {
+                if ($('.toolbar form select#activity').find(':selected').attr('data-global') == "false") {
                     $('.toolbar form select#activity').val('');
                 }
                 break;

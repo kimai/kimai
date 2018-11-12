@@ -9,6 +9,7 @@
 
 namespace App\Form\Toolbar;
 
+use App\Entity\Activity;
 use App\Form\Type\ActivityType;
 use App\Form\Type\CustomerType;
 use App\Form\Type\PageSizeType;
@@ -19,8 +20,11 @@ use App\Form\Type\VisibilityType;
 use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
+use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\CustomerQuery;
+use App\Repository\Query\ProjectQuery;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -137,6 +141,12 @@ abstract class AbstractToolbarForm extends AbstractType
      */
     protected function addProjectChoice(FormBuilderInterface $builder)
     {
+        $builder->add('project', ChoiceType::class, [
+            'group_by' => null,
+            'required' => false,
+            'label' => 'label.project',
+        ]);
+
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
             function (FormEvent $event) {
@@ -149,10 +159,11 @@ abstract class AbstractToolbarForm extends AbstractType
                     'group_by' => null,
                     'required' => false,
                     'query_builder' => function (ProjectRepository $repo) use ($data) {
-                        $qb = $repo->builderForEntityType();
-                        $qb->andWhere('p.customer = :customer')->setParameter('customer', $data['customer']);
-
-                        return $qb;
+                        $query = new ProjectQuery();
+                        $query->setCustomer($data['customer']);
+                        $query->setResultType(ProjectQuery::RESULT_TYPE_QUERYBUILDER);
+                        $query->setVisibility(ProjectQuery::SHOW_BOTH);
+                        return $repo->findByQuery($query);
                     },
                 ]);
             }
@@ -164,6 +175,26 @@ abstract class AbstractToolbarForm extends AbstractType
      */
     protected function addActivityChoice(FormBuilderInterface $builder)
     {
+        $builder->add('activity', ActivityType::class, [
+            'group_by' => null,
+            'required' => false,
+            'query_builder' => function (ActivityRepository $repo) {
+                $query = new ActivityQuery();
+                $query->setResultType(ActivityQuery::RESULT_TYPE_QUERYBUILDER);
+                $query->setGlobalsOnly(true);
+                $query->setOrderGlobalsFirst(true);
+                $query->setVisibility(ActivityQuery::SHOW_BOTH);
+                return $repo->findByQuery($query);
+            },
+            'choice_attr' => function($choiceValue, $key, $value) {
+                /** @var Activity $choiceValue */
+                if (!($choiceValue instanceof Activity)) {
+                    return [];
+                }
+                return ['data-global' => (null === $choiceValue->getProject() ? "true" : "false")];
+            },
+        ]);
+
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
             function (FormEvent $event) {
@@ -176,9 +207,19 @@ abstract class AbstractToolbarForm extends AbstractType
                     'group_by' => null,
                     'required' => false,
                     'query_builder' => function (ActivityRepository $repo) use ($data) {
-                        $qb = $repo->builderForEntityType(null, $data['project']);
-
-                        return $qb;
+                        $query = new ActivityQuery();
+                        $query->setResultType(ActivityQuery::RESULT_TYPE_QUERYBUILDER);
+                        $query->setProject($data['project']);
+                        $query->setOrderGlobalsFirst(true);
+                        $query->setVisibility(ActivityQuery::SHOW_BOTH);
+                        return $repo->findByQuery($query);
+                    },
+                    'choice_attr' => function($choiceValue, $key, $value) {
+                        /** @var Activity $choiceValue */
+                        if (!($choiceValue instanceof Activity)) {
+                            return [];
+                        }
+                        return ['data-global' => (null === $choiceValue->getProject() ? "true" : "false")];
                     },
                 ]);
             }
