@@ -7,6 +7,7 @@
 
 - Invoicing export - 500: Internal Server Error [\#390](https://github.com/kevinpapst/kimai2/issues/390)
 - invalid CSRF-Token [\#344](https://github.com/kevinpapst/kimai2/issues/344)
+- fix duration and rate for html invoices [\#414](https://github.com/kevinpapst/kimai2/pull/414) ([kevinpapst](https://github.com/kevinpapst))
 - fixed broken toolbar form with empty date [\#391](https://github.com/kevinpapst/kimai2/pull/391) ([kevinpapst](https://github.com/kevinpapst))
 
 **Closed issues:**
