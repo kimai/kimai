@@ -8,7 +8,7 @@
 {% block page_actions %}{{ widgets.page_actions({'filter': '#collapseTimesheetAdmin', 'visibility': '#modal_timesheet_admin', 'create': path('admin_timesheet_create')}) }}{% endblock %}
 
 {% block main_before %}
-    {{ toolbar.toolbar(toolbarForm, 'collapseTimesheetAdmin') }}
+    {{ toolbar.toolbar(toolbarForm, 'collapseTimesheetAdmin', showFilter) }}
 {% endblock %}
 
 {% block main %}
@@ -16,7 +16,7 @@
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% endif %}
 
-    {% set columns = {'date': 'alwaysVisible'} %}
+    {% set columns = {'date': ''} %}
 
     {% if not duration_only %}
         {% set columns = columns|merge({'starttime': 'hidden-xs', 'endtime': 'hidden-xs'}) %}
@@ -25,6 +25,8 @@
     {% set columns = columns|merge({
         'duration': '',
         'rate': '',
+        'customer': 'hidden-xs hidden-sm',
+        'project': 'hidden-xs hidden-sm',
         'activity': 'hidden-xs hidden-sm',
         'username': 'hidden-xs',
         'description': 'hidden-xs hidden-sm',
@@ -37,7 +39,7 @@
 
     {% for entry in entries %}
         <tr>
-            <td>{{ entry.begin|date_short }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'date') }}">{{ entry.begin|date_short }}</td>
 
             {% if not duration_only %}
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'starttime') }}">{{ entry.begin|date("H:i") }}</td>
@@ -57,6 +59,12 @@
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'rate') }}">&dash;</td>
             {% endif %}
 
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">
+                <a href="{{ path('admin_customer_edit', {'id': entry.project.customer.id}) }}">{{ widgets.label_customer(entry.project.customer) }}</a>
+            </td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">
+                <a href="{{ path('admin_project_edit', {'id': entry.project.id}) }}">{{ widgets.label_project(entry.project) }}</a>
+            </td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}">
                 <a href="{{ path('admin_activity_edit', {'id': entry.activity.id}) }}">{{ widgets.label_activity(entry.activity) }}</a>
             </td>

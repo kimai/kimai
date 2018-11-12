@@ -210,6 +210,7 @@ abstract class AbstractRendererTest extends KernelTestCase
             ->setRate(293.27)
             ->setUser($user1)
             ->setActivity($activity)
+            ->setProject($project)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
         ;

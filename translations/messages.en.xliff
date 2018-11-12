@@ -442,6 +442,7 @@
                     Currently the project %project% for the customer %customer% has %activities%
                     activities and %records% time-records, which count up to a total of %duration%.
                     These activities and time-records will be deleted as well!
+                    Alternatively, you can select a project to which all existing activities and entries are transferred:
                 </target>
             </trans-unit>
 
@@ -462,6 +463,7 @@
                     Currently the activity %activity% in the project %project% for the customer %customer%
                     has %records% time-records, which count up to a total of %duration%.
                     These time-records will be deleted as well!
+                    Alternatively, you can select an activity to which all existing entries are transferred:
                 </target>
             </trans-unit>
 
@@ -530,6 +532,7 @@
                     Currently the customer %customer% has %project% projects with %activity% activities, which count up
                     in %records% time-records to a total of %duration%.
                     These projects, activities and time-records will be deleted as well!
+                    Alternatively, you can select a customer to whom all data is transferred:
                 </target>
             </trans-unit>
 

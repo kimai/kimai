@@ -21,6 +21,27 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ProjectType extends AbstractType
 {
     /**
+     * @param Project $choiceValue
+     * @param $key
+     * @param $value
+     * @return array
+     */
+    public function choiceAttr($choiceValue, $key, $value)
+    {
+        $customer = null;
+
+        if (!($choiceValue instanceof Project)) {
+            return [];
+        }
+
+        if (null !== $choiceValue->getCustomer()) {
+            $customer = $choiceValue->getCustomer()->getId();
+        }
+
+        return ['data-customer' => $customer];
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
@@ -29,6 +50,7 @@ class ProjectType extends AbstractType
             'label' => 'label.project',
             'class' => Project::class,
             'choice_label' => 'name',
+            'choice_attr' => [$this, 'choiceAttr'],
             'group_by' => function (Project $project, $key, $index) {
                 return $project->getCustomer()->getName();
             },

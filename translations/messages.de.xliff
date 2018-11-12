@@ -442,6 +442,7 @@
                     Momentan existieren für das Projekt %project% des Kunden %customer% insgesamt %activities%
                     Tätigkeiten und %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen.
                     Diese Tätigkeiten und Zeiteinträge werden ebenfalls mit gelöscht!
+                    Alternativ können Sie ein Projekt auswählen, auf das alle existierenden Aktivitäten und Einträge umgebucht werden:
                 </target>
             </trans-unit>
 
@@ -462,6 +463,7 @@
                     Momentan existieren für die Tätigkeit %activity% im Projekt %project% für den Kunden %customer%
                     insgesamt %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen. Diese
                     Zeiteinträge werden ebenfalls mit gelöscht!
+                    Alternativ können Sie eine Tätigkeit auswählen, auf die alle existierenden Einträge umgebucht werden:
                 </target>
             </trans-unit>
 
@@ -530,6 +532,7 @@
                     Momentan existieren für den Kunden %customer% insgesamt %project% Projekte mit %activity%
                     Tätigkeiten, die sich in %records% Zeiteinträgen auf eine Gesamtdauer von %duration% belaufen. Diese
                     Projekte, Tätigkeiten und Zeiteinträge werden ebenfalls mit gelöscht!
+                    Alternativ können Sie einen Kunden auswählen, auf den alle Daten umgebucht werden:
                 </target>
             </trans-unit>
 

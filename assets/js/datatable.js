@@ -26,18 +26,22 @@ $(function() {
 
     $.datatable = {
         saveVisibility: function (modalSelector) {
-            var settings = {};
-            var cookieName = $(modalSelector).find('form').attr('name');
-            $(modalSelector).find('form').find('input:checkbox:not(:checked)').each(
-                function () {
-                    settings[$(this).attr('name')] = $(this).is(':checked');
+            $(modalSelector).find('form').each(
+                function() {
+                    var settings = {};
+                    var cookieName = $(this).attr('name');
+                    $(this).find('input:checkbox:not(:checked)').each(
+                        function () {
+                            settings[$(this).attr('name')] = $(this).is(':checked');
+                        }
+                    );
+                    if (jQuery.isEmptyObject(settings)) {
+                        Cookies.remove(cookieName);
+                    } else {
+                        Cookies.set(cookieName, JSON.stringify(settings), {expires: 365});
+                    }
                 }
             );
-            if (jQuery.isEmptyObject(settings)) {
-                Cookies.remove(cookieName);
-            } else {
-                Cookies.set(cookieName, JSON.stringify(settings), {expires: 365});
-            }
             $(modalSelector).modal('toggle');
             location.reload();
         },
@@ -49,12 +53,12 @@ $(function() {
             }
             var header = $(tbl.find('th').get(column));
             if (header.css("display") === "none") {
-                header.show();
+                header.show('ease');
                 tbl.find('tr').each(function(){
                     $($(this).find('td').get(column)).show('ease');
                 });
             } else {
-                header.hide();
+                header.hide('ease');
                 tbl.find('tr').each(function(){
                     $($(this).find('td').get(column)).hide('ease');
                 });

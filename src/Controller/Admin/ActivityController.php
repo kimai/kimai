@@ -13,7 +13,10 @@ use App\Controller\AbstractController;
 use App\Entity\Activity;
 use App\Form\ActivityEditForm;
 use App\Form\Toolbar\ActivityToolbarForm;
+use App\Form\Type\ActivityType;
+use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityQuery;
+use Doctrine\ORM\ORMException;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -61,6 +64,7 @@ class ActivityController extends AbstractController
         return $this->render('admin/activity.html.twig', [
             'entries' => $entries,
             'query' => $query,
+            'showFilter' => $form->isSubmitted(),
             'toolbarForm' => $form->createView(),
         ]);
     }
@@ -104,6 +108,22 @@ class ActivityController extends AbstractController
         $stats = $this->getRepository()->getActivityStatistics($activity);
 
         $deleteForm = $this->createFormBuilder()
+            ->add('activity', ActivityType::class, [
+                'label' => 'label.activity',
+                'query_builder' => function (ActivityRepository $repo) use ($activity) {
+                    $query = new ActivityQuery();
+                    $query
+                        ->setResultType(ActivityQuery::RESULT_TYPE_QUERYBUILDER)
+                        ->setProject($activity->getProject())
+                        ->setOrderGlobalsFirst(true)
+                        ->addIgnoredEntity($activity)
+                        ->setGlobalsOnly(null === $activity->getProject())
+                    ;
+
+                    return $repo->findByQuery($query);
+                },
+                'required' => false,
+            ])
             ->setAction($this->generateUrl('admin_activity_delete', ['id' => $activity->getId()]))
             ->setMethod('POST')
             ->getForm();
@@ -111,11 +131,12 @@ class ActivityController extends AbstractController
         $deleteForm->handleRequest($request);
 
         if (0 == $stats->getRecordAmount() || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($activity);
-            $entityManager->flush();
-
-            $this->flashSuccess('action.delete.success');
+            try {
+                $this->getRepository()->deleteActivity($activity, $deleteForm->get('activity')->getData());
+                $this->flashSuccess('action.delete.success');
+            } catch (ORMException $ex) {
+                $this->flashError('action.delete.error');
+            }
 
             return $this->redirectToRoute('admin_activity');
         }
