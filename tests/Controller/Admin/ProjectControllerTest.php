@@ -140,7 +140,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertEquals(10, count($timesheets));
 
         /** @var Timesheet $entry */
-        foreach($timesheets as $entry) {
+        foreach ($timesheets as $entry) {
             $this->assertEquals(1, $entry->getActivity()->getId());
         }
 
@@ -182,7 +182,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertEquals(10, count($timesheets));
 
         /** @var Timesheet $entry */
-        foreach($timesheets as $entry) {
+        foreach ($timesheets as $entry) {
             $this->assertEquals(1, $entry->getProject()->getId());
         }
 
@@ -206,7 +206,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertEquals(10, count($timesheets));
 
         /** @var Timesheet $entry */
-        foreach($timesheets as $entry) {
+        foreach ($timesheets as $entry) {
             $this->assertEquals(2, $entry->getProject()->getId());
         }
 
