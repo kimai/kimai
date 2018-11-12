@@ -5,19 +5,54 @@
 
 **Fixed bugs:**
 
+- Invoicing export - 500: Internal Server Error [\#390](https://github.com/kevinpapst/kimai2/issues/390)
 - invalid CSRF-Token [\#344](https://github.com/kevinpapst/kimai2/issues/344)
+- fixed broken toolbar form with empty date [\#391](https://github.com/kevinpapst/kimai2/pull/391) ([kevinpapst](https://github.com/kevinpapst))
 
 **Closed issues:**
 
+- Form fields should be always visible [\#408](https://github.com/kevinpapst/kimai2/issues/408)
+- Merge projects and/or activities [\#406](https://github.com/kevinpapst/kimai2/issues/406)
+- Active filter should stay open [\#405](https://github.com/kevinpapst/kimai2/issues/405)
+- Make project field optional [\#401](https://github.com/kevinpapst/kimai2/issues/401)
+- Global activities support for Kimai 1 importer [\#400](https://github.com/kevinpapst/kimai2/issues/400)
+- Unrecognized Options "renderer, number\_generator" under "kimai.invoice" [\#381](https://github.com/kevinpapst/kimai2/issues/381)
+- Invoice Grouped by Activity [\#379](https://github.com/kevinpapst/kimai2/issues/379)
+- Set the order of columns \(in my times page\) [\#371](https://github.com/kevinpapst/kimai2/issues/371)
+- Columns on small/narrow displays \(mobile\) on „my times“ page [\#370](https://github.com/kevinpapst/kimai2/issues/370)
 - Make settings more accessible [\#365](https://github.com/kevinpapst/kimai2/issues/365)
 - Data validation for register page username field. [\#360](https://github.com/kevinpapst/kimai2/issues/360)
 - Option for setting default calendar view [\#359](https://github.com/kevinpapst/kimai2/issues/359)
 - 500: Internal Server Error after login \(new install\) [\#342](https://github.com/kevinpapst/kimai2/issues/342)
 - Invoices export error [\#341](https://github.com/kevinpapst/kimai2/issues/341)
+- Activities just Duration [\#334](https://github.com/kevinpapst/kimai2/issues/334)
+- add the same activity for multiple projects [\#325](https://github.com/kevinpapst/kimai2/issues/325)
+- API: Endpoint for API docs needs session cookie [\#319](https://github.com/kevinpapst/kimai2/issues/319)
+- Feature request: Quick search box for activities when creating new timesheet [\#307](https://github.com/kevinpapst/kimai2/issues/307)
+- docker image for kimai2 [\#284](https://github.com/kevinpapst/kimai2/issues/284)
+- Separate Customer / Project / Activity input when logging time [\#250](https://github.com/kevinpapst/kimai2/issues/250)
 - Interactive help after fresh installation [\#94](https://github.com/kevinpapst/kimai2/issues/94)
 
 **Merged pull requests:**
 
+- added more timesheet related invoice fields [\#411](https://github.com/kevinpapst/kimai2/pull/411) ([kevinpapst](https://github.com/kevinpapst))
+- toolbar improvements [\#410](https://github.com/kevinpapst/kimai2/pull/410) ([kevinpapst](https://github.com/kevinpapst))
+- move entries from one entity to another upon deletion [\#409](https://github.com/kevinpapst/kimai2/pull/409) ([kevinpapst](https://github.com/kevinpapst))
+- show toolbar filter if they were submitted [\#407](https://github.com/kevinpapst/kimai2/pull/407) ([kevinpapst](https://github.com/kevinpapst))
+- full configurable data columns in all screen sizes [\#404](https://github.com/kevinpapst/kimai2/pull/404) ([kevinpapst](https://github.com/kevinpapst))
+- added global activity support in importer [\#402](https://github.com/kevinpapst/kimai2/pull/402) ([kevinpapst](https://github.com/kevinpapst))
+- Fix for \#397 [\#398](https://github.com/kevinpapst/kimai2/pull/398) ([tobybatch](https://github.com/tobybatch))
+- Added links to docker hub and my docker repo [\#396](https://github.com/kevinpapst/kimai2/pull/396) ([tobybatch](https://github.com/tobybatch))
+- fixed issues- & milestone links [\#395](https://github.com/kevinpapst/kimai2/pull/395) ([lduer](https://github.com/lduer))
+- added links to further docker images by the community [\#394](https://github.com/kevinpapst/kimai2/pull/394) ([kevinpapst](https://github.com/kevinpapst))
+- beta test: added quick search box for customers, projects and activities [\#392](https://github.com/kevinpapst/kimai2/pull/392) ([kevinpapst](https://github.com/kevinpapst))
+- updated the documentation, reflecting the changes in \#306 [\#387](https://github.com/kevinpapst/kimai2/pull/387) ([lduer](https://github.com/lduer))
+- Added Hungarian translation and fixed the path of kimai.yaml in translation documentation [\#385](https://github.com/kevinpapst/kimai2/pull/385) ([infeeeee](https://github.com/infeeeee))
+- improved docs and cross-linked docker [\#383](https://github.com/kevinpapst/kimai2/pull/383) ([kevinpapst](https://github.com/kevinpapst))
+- Doc update of install/update instructions re: username [\#382](https://github.com/kevinpapst/kimai2/pull/382) ([srdco](https://github.com/srdco))
+- invoice calculator to group entries by activity [\#380](https://github.com/kevinpapst/kimai2/pull/380) ([kevinpapst](https://github.com/kevinpapst))
+- basic about screen with server and debug infos [\#378](https://github.com/kevinpapst/kimai2/pull/378) ([kevinpapst](https://github.com/kevinpapst))
+- Dev/demo dockerfile [\#377](https://github.com/kevinpapst/kimai2/pull/377) ([tobybatch](https://github.com/tobybatch))
 - Sidebar - user-profile links and language settings [\#369](https://github.com/kevinpapst/kimai2/pull/369) ([kevinpapst](https://github.com/kevinpapst))
 - added configurable initial calendar view [\#363](https://github.com/kevinpapst/kimai2/pull/363) ([kevinpapst](https://github.com/kevinpapst))
 - decrease minimum username to 3 character [\#362](https://github.com/kevinpapst/kimai2/pull/362) ([kevinpapst](https://github.com/kevinpapst))
@@ -28,6 +63,7 @@
 - updated required dependencies [\#346](https://github.com/kevinpapst/kimai2/pull/346) ([kevinpapst](https://github.com/kevinpapst))
 - Fix password reset [\#345](https://github.com/kevinpapst/kimai2/pull/345) ([kevinpapst](https://github.com/kevinpapst))
 - added arabic translations and locale support in datepicker [\#337](https://github.com/kevinpapst/kimai2/pull/337) ([kevinpapst](https://github.com/kevinpapst))
+- Support global activities [\#259](https://github.com/kevinpapst/kimai2/pull/259) ([kevinpapst](https://github.com/kevinpapst))
 
 ## [0.5](https://github.com/kevinpapst/kimai2/tree/0.5) (2018-09-27)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.4...0.5)
