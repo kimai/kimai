@@ -168,3 +168,9 @@ kimai:
     #        timezone: Europe/Berlin
     #        country: DE
     #        currency: EUR
+    permissions:
+        roles:
+            ROLE_USER: [my_rate]
+            ROLE_TEAMLEAD: [team_rate]
+            ROLE_ADMIN: []
+            ROLE_SUPER_ADMIN: []
