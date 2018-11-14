@@ -161,6 +161,7 @@ class InvoiceController extends AbstractController
      */
     protected function getEntries(InvoiceQuery $query)
     {
+        // customer needs to be defined, as we need the currency for the invoice
         if (null === $query->getCustomer()) {
             return [];
         }
