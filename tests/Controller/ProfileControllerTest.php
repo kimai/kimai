@@ -242,7 +242,9 @@ class ProfileControllerTest extends ControllerBaseTest
             ]
         ]);
 
-        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/prefs'));
+        $targetUrl = '/ar/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/prefs';
+
+        $this->assertIsRedirect($client, $targetUrl);
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
 
