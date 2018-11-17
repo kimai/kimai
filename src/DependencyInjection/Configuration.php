@@ -116,10 +116,22 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                         ->children()
                             ->integerNode('soft_limit')
-                                ->defaultValue(3)
+                                ->defaultValue(1)
+                                ->validate()
+                                    ->ifTrue(function ($value) {
+                                        return $value <= 0;
+                                    })
+                                    ->thenInvalid('The hard_limit must be at least 1')
+                                ->end()
                             ->end()
                             ->integerNode('hard_limit')
-                                ->defaultValue(10)
+                                ->defaultValue(1)
+                                ->validate()
+                                    ->ifTrue(function ($value) {
+                                        return $value <= 0;
+                                    })
+                                    ->thenInvalid('The soft_limit must be at least 1')
+                                ->end()
                             ->end()
                         ->end()
                     ->end()

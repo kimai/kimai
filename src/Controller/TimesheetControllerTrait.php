@@ -26,6 +26,10 @@ trait TimesheetControllerTrait
      * @var bool
      */
     private $durationOnly = false;
+    /**
+     * @var int
+     */
+    private $hardLimit = 1;
 
     /**
      * @param bool $durationOnly
@@ -41,6 +45,22 @@ trait TimesheetControllerTrait
     protected function isDurationOnlyMode()
     {
         return $this->durationOnly;
+    }
+
+    /**
+     * @param int $hardLimit
+     */
+    protected function setHardLimit(int $hardLimit)
+    {
+        $this->hardLimit = $hardLimit;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getHardLimit()
+    {
+        return $this->hardLimit;
     }
 
     /**
@@ -198,8 +218,7 @@ trait TimesheetControllerTrait
      */
     protected function stopActiveEntries(User $user)
     {
-        $activeRecordsLimit = $this->getParameter('kimai.timesheet.active_entries.hard_limit');
-        $this->getRepository()->stopActiveEntries($user, $activeRecordsLimit);
+        $this->getRepository()->stopActiveEntries($user, $this->getHardLimit());
     }
 
     /**

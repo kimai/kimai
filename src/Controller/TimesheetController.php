@@ -32,10 +32,12 @@ class TimesheetController extends AbstractController
 
     /**
      * @param bool $durationOnly
+     * @param int $hardLimit
      */
-    public function __construct(bool $durationOnly)
+    public function __construct(bool $durationOnly, int $hardLimit)
     {
         $this->setDurationMode($durationOnly);
+        $this->setHardLimit($hardLimit);
     }
 
     /**
