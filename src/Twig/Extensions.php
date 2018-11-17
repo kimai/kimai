@@ -120,7 +120,29 @@ class Extensions extends \Twig_Extension
         return [
             new \Twig_SimpleFunction('locales', [$this, 'getLocales']),
             new \Twig_SimpleFunction('is_visible_column', [$this, 'isColumnVisible']),
+            new \Twig_SimpleFunction('is_datatable_configured', [$this, 'isDatatableConfigured']),
         ];
+    }
+
+    /**
+     * @param string $dataTable
+     * @param string $size
+     * @return bool
+     */
+    public function isDatatableConfigured(string $dataTable, string $size)
+    {
+        $cookie = $this->getVisibilityCookieName($dataTable, $size);
+        return $this->requestStack->getCurrentRequest()->cookies->has($cookie);
+    }
+
+    /**
+     * @param string $dataTable
+     * @param string $size
+     * @return string
+     */
+    public function getVisibilityCookieName(string $dataTable, string $size)
+    {
+        return $dataTable . '_visibility' . $size;
     }
 
     /**
@@ -134,16 +156,16 @@ class Extensions extends \Twig_Extension
     public function isColumnVisible(string $dataTable, string $column, string $size)
     {
         // name handling is spread between here and datatables.html.twig (data_table_column_modal)
-        $dataTable = $dataTable . '_visibility' . $size;
+        $cookie = $this->getVisibilityCookieName($dataTable, $size);
 
-        if (!isset($this->cookies[$dataTable])) {
+        if (!isset($this->cookies[$cookie])) {
             $visibility = false;
-            if ($this->requestStack->getCurrentRequest()->cookies->has($dataTable)) {
-                $visibility = json_decode($this->requestStack->getCurrentRequest()->cookies->get($dataTable), true);
+            if ($this->requestStack->getCurrentRequest()->cookies->has($cookie)) {
+                $visibility = json_decode($this->requestStack->getCurrentRequest()->cookies->get($cookie), true);
             }
-            $this->cookies[$dataTable] = $visibility;
+            $this->cookies[$cookie] = $visibility;
         }
-        $values = $this->cookies[$dataTable];
+        $values = $this->cookies[$cookie];
 
         if (empty($values) || !is_array($values)) {
             return true;
