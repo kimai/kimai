@@ -328,6 +328,7 @@ class TimesheetRepository extends AbstractRepository
             $qb->andWhere('t.begin >= :begin')
                 ->setParameter('begin', $query->getBegin());
         }
+
         if (null !== $query->getEnd()) {
             $qb->andWhere('t.end <= :end')
                 ->setParameter('end', $query->getEnd());
@@ -336,12 +337,16 @@ class TimesheetRepository extends AbstractRepository
         if (null !== $query->getActivity()) {
             $qb->andWhere('t.activity = :activity')
                 ->setParameter('activity', $query->getActivity());
-        } elseif (null !== $query->getProject()) {
-            $qb->andWhere('t.project = :project')
-                ->setParameter('project', $query->getProject());
-        } elseif (null !== $query->getCustomer()) {
-            $qb->andWhere('p.customer = :customer')
-                ->setParameter('customer', $query->getCustomer());
+        }
+
+        if (null === $query->getActivity() || null === $query->getActivity()->getProject()) {
+            if (null !== $query->getProject()) {
+                $qb->andWhere('t.project = :project')
+                    ->setParameter('project', $query->getProject());
+            } elseif (null !== $query->getCustomer()) {
+                $qb->andWhere('p.customer = :customer')
+                    ->setParameter('customer', $query->getCustomer());
+            }
         }
 
         return $this->getBaseQueryResult($qb, $query);

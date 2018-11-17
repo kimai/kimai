@@ -77,6 +77,7 @@ class UserController extends AbstractController
         return $this->render('admin/user.html.twig', [
             'entries' => $entries,
             'query' => $query,
+            'showFilter' => $form->isSubmitted(),
             'toolbarForm' => $form->createView(),
         ]);
     }

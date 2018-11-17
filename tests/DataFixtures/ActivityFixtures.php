@@ -25,6 +25,14 @@ class ActivityFixtures extends Fixture
      * @var int
      */
     protected $amount = 0;
+    /**
+     * @var bool
+     */
+    protected $isGlobal = false;
+    /**
+     * @var bool
+     */
+    protected $isVisible = null;
 
     /**
      * @return int
@@ -32,6 +40,28 @@ class ActivityFixtures extends Fixture
     public function getAmount(): int
     {
         return $this->amount;
+    }
+
+    /**
+     * @param bool $global
+     * @return $this
+     */
+    public function setIsGlobal(bool $global)
+    {
+        $this->isGlobal = $global;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $visible
+     * @return $this
+     */
+    public function setIsVisible(bool $visible)
+    {
+        $this->isVisible = $visible;
+
+        return $this;
     }
 
     /**
@@ -55,10 +85,17 @@ class ActivityFixtures extends Fixture
 
         // random amount of timesheet entries for every user
         for ($i = 0; $i < $this->amount; $i++) {
+            $project = null;
+            if (false === $this->isGlobal) {
+                $project = $projects[array_rand($projects)];
+            }
             $visible = 0 != $i % 3;
+            if (null !== $this->isVisible) {
+                $visible = $this->isVisible;
+            }
             $entity = new Activity();
             $entity
-                ->setProject($projects[array_rand($projects)])
+                ->setProject($project)
                 ->setName($faker->bs . ($visible ? '' : ' (x)'))
                 ->setComment($faker->text)
                 ->setVisible($visible)

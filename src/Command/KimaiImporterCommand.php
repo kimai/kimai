@@ -82,14 +82,13 @@ class KimaiImporterCommand extends Command
      */
     protected $activities = [];
     /**
-     * activityId => activity[]
-     * @var array
-     */
-    protected $unassignedActivities = [];
-    /**
      * @var bool
      */
     protected $debug = false;
+    /**
+     * @var array
+     */
+    protected $oldActivities = [];
 
     /**
      * @param UserPasswordEncoderInterface $encoder
@@ -704,16 +703,32 @@ class KimaiImporterCommand extends Command
     {
         $counter = 0;
         $entityManager = $this->getDoctrine()->getManager();
+
+        // remember which activity has at least one assigned project
         $oldActivityMapping = [];
         foreach ($activityToProject as $mapping) {
-            $oldActivityMapping[$mapping['activityID']] = $mapping['projectID'];
+            $oldActivityMapping[$mapping['activityID']][] = $mapping['projectID'];
         }
 
+        // create global activities
         foreach ($activities as $oldActivity) {
+            $this->oldActivities[$oldActivity['activityID']] = $oldActivity;
             if (isset($oldActivityMapping[$oldActivity['activityID']])) {
-                $projectId = $oldActivityMapping[$oldActivity['activityID']];
-                $project = null;
+                continue;
+            }
 
+            $this->createActivity($io, $entityManager, $oldActivity, $fixedRates, $rates, null);
+            ++$counter;
+        }
+
+        $io->success('Created global activities: ' . $counter);
+
+        // create project specific activities
+        foreach ($activities as $oldActivity) {
+            if (!isset($oldActivityMapping[$oldActivity['activityID']])) {
+                continue;
+            }
+            foreach ($oldActivityMapping[$oldActivity['activityID']] as $projectId) {
                 if (!isset($this->projects[$projectId])) {
                     throw new \Exception(
                         'Invalid project linked to activity ' . $oldActivity['name'] . ': ' . $projectId
@@ -722,11 +737,8 @@ class KimaiImporterCommand extends Command
 
                 $project = $this->projects[$projectId];
 
-                $this->unassignedActivities[$oldActivity['activityID']] = $oldActivity;
-                $this->createActivity($io, $entityManager, $project, $oldActivity, $fixedRates, $rates);
+                $this->createActivity($io, $entityManager, $oldActivity, $fixedRates, $rates, $project);
                 ++$counter;
-            } else {
-                $this->unassignedActivities[$oldActivity['activityID']] = $oldActivity;
             }
         }
 
@@ -736,24 +748,26 @@ class KimaiImporterCommand extends Command
     /**
      * @param SymfonyStyle $io
      * @param ObjectManager $entityManager
-     * @param Project $project
      * @param array $oldActivity
      * @param array $fixedRates
      * @param array $rates
+     * @param Project $project
      * @return Activity
      * @throws \Exception
      */
     protected function createActivity(
         SymfonyStyle $io,
         ObjectManager $entityManager,
-        Project $project,
         array $oldActivity,
         array $fixedRates,
-        array $rates
+        array $rates,
+        ?Project $project
     ) {
         $activityId = $oldActivity['activityID'];
-        if (isset($this->activities[$activityId][$project->getId()])) {
-            return $this->activities[$activityId][$project->getId()];
+        $projectId = null !== $project ? $project->getId() : null;
+
+        if (isset($this->activities[$activityId][$projectId])) {
+            return $this->activities[$activityId][$projectId];
         }
 
         $isActive = (bool) $oldActivity['visible'] && !(bool) $oldActivity['trash'];
@@ -775,7 +789,7 @@ class KimaiImporterCommand extends Command
             if ($fixedRow['activityID'] === null) {
                 continue;
             }
-            if ($fixedRow['projectID'] !== null && $fixedRow['projectID'] !== $project->getId()) {
+            if ($fixedRow['projectID'] !== null && $fixedRow['projectID'] !== $projectId) {
                 continue;
             }
 
@@ -788,7 +802,7 @@ class KimaiImporterCommand extends Command
             if ($ratesRow['userID'] !== null || $ratesRow['activityID'] === null) {
                 continue;
             }
-            if ($ratesRow['projectID'] !== null && $ratesRow['projectID'] !== $project->getId()) {
+            if ($ratesRow['projectID'] !== null && $ratesRow['projectID'] !== $projectId) {
                 continue;
             }
 
@@ -815,7 +829,7 @@ class KimaiImporterCommand extends Command
         if (!isset($this->activities[$activityId])) {
             $this->activities[$activityId] = [];
         }
-        $this->activities[$activityId][$project->getId()] = $activity;
+        $this->activities[$activityId][$projectId] = $activity;
 
         return $activity;
     }
@@ -872,18 +886,22 @@ class KimaiImporterCommand extends Command
                 continue;
             }
 
+            $customerId = $project->getCustomer()->getId();
+
             if (isset($this->activities[$activityId][$projectId])) {
                 $activity = $this->activities[$activityId][$projectId];
+            } elseif (isset($this->activities[$activityId][null])) {
+                $activity = $this->activities[$activityId][null];
             }
 
-            if (null === $activity && isset($this->unassignedActivities[$activityId])) {
-                $oldActivity = $this->unassignedActivities[$activityId];
-                $activity = $this->createActivity($io, $entityManager, $project, $oldActivity, $fixedRates, $rates);
+            if (null === $activity && isset($this->oldActivities[$activityId])) {
+                $oldActivity = $this->oldActivities[$activityId];
+                $activity = $this->createActivity($io, $entityManager, $oldActivity, $fixedRates, $rates, $project);
                 ++$activityCounter;
             }
 
             if (null === $activity) {
-                $io->error('Could not create timesheet record, missing activity with ID: ' . $activityId);
+                $io->error('Could not create timesheet record, missing activity with ID: ' . $activityId . '/' . $projectId . '/' . $customerId);
                 continue;
             }
 
@@ -904,7 +922,7 @@ class KimaiImporterCommand extends Command
             if ($timesheet->getFixedRate() !== null) {
                 $timesheet->setRate($timesheet->getFixedRate());
             } elseif ($timesheet->getHourlyRate() !== null) {
-                $rate = $timesheet->getHourlyRate();
+                $hourlyRate = $timesheet->getHourlyRate();
                 $rate = (float) $hourlyRate * ($duration / 3600);
                 $timesheet->setRate(round($rate, 2));
             }
@@ -916,6 +934,7 @@ class KimaiImporterCommand extends Command
                 ->setEnd(new \DateTime('@' . $oldRecord['end']))
                 ->setDuration($duration)
                 ->setActivity($activity)
+                ->setProject($project)
             ;
 
             if (!$this->validateImport($io, $timesheet)) {
@@ -947,7 +966,7 @@ class KimaiImporterCommand extends Command
         $io->writeln(' (' . $counter . '/' . $total . ')');
 
         if ($activityCounter > 0) {
-            $io->success('Created new (previously global) activities during timesheet import: ' . $activityCounter);
+            $io->success('Created new activities during timesheet import: ' . $activityCounter);
         }
 
         return $counter;
