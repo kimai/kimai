@@ -276,13 +276,12 @@ class TimesheetRepository extends AbstractRepository
         // reduce limit by one:
         // this method is only called when a new entry is started
         // -> all entries, including the new one must not exceed the $limit
-        $limit = $hardLimit-1;
+        $limit = $hardLimit - 1;
 
         if (count($activeEntries) > $limit) {
             $i = 1;
             foreach ($activeEntries as $activeEntry) {
                 if ($i > $limit) {
-
                     if ($hardLimit > 1) {
                         throw new \Exception('Too many entries active');
                     }
