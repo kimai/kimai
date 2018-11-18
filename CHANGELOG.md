@@ -1,17 +1,20 @@
 # Change Log
 
-## [0.6](https://github.com/kevinpapst/kimai2/tree/0.6) (unreleased)
+## [0.6](https://github.com/kevinpapst/kimai2/tree/0.6) (2018-11-18)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.5...0.6)
 
 **Fixed bugs:**
 
 - Invoicing export - 500: Internal Server Error [\#390](https://github.com/kevinpapst/kimai2/issues/390)
 - invalid CSRF-Token [\#344](https://github.com/kevinpapst/kimai2/issues/344)
+- fix column visibility if unconfigured \(no cookie existing\) [\#423](https://github.com/kevinpapst/kimai2/pull/423) ([kevinpapst](https://github.com/kevinpapst))
 - fix duration and rate for html invoices [\#414](https://github.com/kevinpapst/kimai2/pull/414) ([kevinpapst](https://github.com/kevinpapst))
 - fixed broken toolbar form with empty date [\#391](https://github.com/kevinpapst/kimai2/pull/391) ([kevinpapst](https://github.com/kevinpapst))
 
 **Closed issues:**
 
+- Language setting does not work immediately [\#418](https://github.com/kevinpapst/kimai2/issues/418)
+- After installation no graphic/background/icons shown [\#417](https://github.com/kevinpapst/kimai2/issues/417)
 - Form fields should be always visible [\#408](https://github.com/kevinpapst/kimai2/issues/408)
 - Merge projects and/or activities [\#406](https://github.com/kevinpapst/kimai2/issues/406)
 - Active filter should stay open [\#405](https://github.com/kevinpapst/kimai2/issues/405)
@@ -27,8 +30,10 @@
 - 500: Internal Server Error after login \(new install\) [\#342](https://github.com/kevinpapst/kimai2/issues/342)
 - Invoices export error [\#341](https://github.com/kevinpapst/kimai2/issues/341)
 - Activities just Duration [\#334](https://github.com/kevinpapst/kimai2/issues/334)
+- API: Add filtering/sorting/limits [\#333](https://github.com/kevinpapst/kimai2/issues/333)
 - add the same activity for multiple projects [\#325](https://github.com/kevinpapst/kimai2/issues/325)
 - API: Endpoint for API docs needs session cookie [\#319](https://github.com/kevinpapst/kimai2/issues/319)
+- API: Timesheets [\#315](https://github.com/kevinpapst/kimai2/issues/315)
 - Feature request: Quick search box for activities when creating new timesheet [\#307](https://github.com/kevinpapst/kimai2/issues/307)
 - docker image for kimai2 [\#284](https://github.com/kevinpapst/kimai2/issues/284)
 - Separate Customer / Project / Activity input when logging time [\#250](https://github.com/kevinpapst/kimai2/issues/250)
@@ -36,12 +41,14 @@
 
 **Merged pull requests:**
 
+- redirect to user language after profile update [\#421](https://github.com/kevinpapst/kimai2/pull/421) ([kevinpapst](https://github.com/kevinpapst))
 - added more timesheet related invoice fields [\#411](https://github.com/kevinpapst/kimai2/pull/411) ([kevinpapst](https://github.com/kevinpapst))
 - toolbar improvements [\#410](https://github.com/kevinpapst/kimai2/pull/410) ([kevinpapst](https://github.com/kevinpapst))
 - move entries from one entity to another upon deletion [\#409](https://github.com/kevinpapst/kimai2/pull/409) ([kevinpapst](https://github.com/kevinpapst))
 - show toolbar filter if they were submitted [\#407](https://github.com/kevinpapst/kimai2/pull/407) ([kevinpapst](https://github.com/kevinpapst))
 - full configurable data columns in all screen sizes [\#404](https://github.com/kevinpapst/kimai2/pull/404) ([kevinpapst](https://github.com/kevinpapst))
 - added global activity support in importer [\#402](https://github.com/kevinpapst/kimai2/pull/402) ([kevinpapst](https://github.com/kevinpapst))
+- added parsedown extension for header ids \(\#388\) [\#399](https://github.com/kevinpapst/kimai2/pull/399) ([lduer](https://github.com/lduer))
 - Fix for \#397 [\#398](https://github.com/kevinpapst/kimai2/pull/398) ([tobybatch](https://github.com/tobybatch))
 - Added links to docker hub and my docker repo [\#396](https://github.com/kevinpapst/kimai2/pull/396) ([tobybatch](https://github.com/tobybatch))
 - fixed issues- & milestone links [\#395](https://github.com/kevinpapst/kimai2/pull/395) ([lduer](https://github.com/lduer))
@@ -64,6 +71,7 @@
 - updated required dependencies [\#346](https://github.com/kevinpapst/kimai2/pull/346) ([kevinpapst](https://github.com/kevinpapst))
 - Fix password reset [\#345](https://github.com/kevinpapst/kimai2/pull/345) ([kevinpapst](https://github.com/kevinpapst))
 - added arabic translations and locale support in datepicker [\#337](https://github.com/kevinpapst/kimai2/pull/337) ([kevinpapst](https://github.com/kevinpapst))
+- API endpoint for Timesheet entries [\#332](https://github.com/kevinpapst/kimai2/pull/332) ([kevinpapst](https://github.com/kevinpapst))
 - Support global activities [\#259](https://github.com/kevinpapst/kimai2/pull/259) ([kevinpapst](https://github.com/kevinpapst))
 
 ## [0.5](https://github.com/kevinpapst/kimai2/tree/0.5) (2018-09-27)
