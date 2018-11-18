@@ -77,10 +77,20 @@
                 </thead>
                 <tbody>
                 {% for entry in model.calculator.entries %}
+                    {% set duration = entry.duration|duration() %}
+                    {% if entry.fixedRate is not null %}
+                        {% set rate = entry.fixedRate %}
+                        {% set duration = 1 %}
+                    {% elseif entry.hourlyRate is not null %}
+                        {% set rate = entry.hourlyRate %}
+                    {% else %}
+                        {% set rate = app.user.getPreferenceValue('hourly_rate') %}
+                    {% endif %}
+
                     <tr>
                         <td contenteditable="true">{{ entry.description }}</td>
-                        <td contenteditable="true">{{ app.user.getPreferenceValue('hourly_rate')|money(model.calculator.currency) }}</td>
-                        <td contenteditable="true">{{ entry.duration|duration }}</td>
+                        <td contenteditable="true">{{ rate|money(model.calculator.currency) }}</td>
+                        <td contenteditable="true">{{ duration }}</td>
                         <td>{{ entry.rate|money(model.calculator.currency) }}</td>
                     </tr>
                 {% endfor %}

@@ -14,7 +14,10 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Form\ProjectEditForm;
 use App\Form\Toolbar\ProjectToolbarForm;
+use App\Form\Type\ProjectType;
+use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
+use Doctrine\ORM\ORMException;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -62,6 +65,7 @@ class ProjectController extends AbstractController
         return $this->render('admin/project.html.twig', [
             'entries' => $entries,
             'query' => $query,
+            'showFilter' => $form->isSubmitted(),
             'toolbarForm' => $form->createView(),
         ]);
     }
@@ -98,6 +102,19 @@ class ProjectController extends AbstractController
         $stats = $this->getRepository()->getProjectStatistics($project);
 
         $deleteForm = $this->createFormBuilder()
+            ->add('project', ProjectType::class, [
+                'label' => 'label.project',
+                'query_builder' => function (ProjectRepository $repo) use ($project) {
+                    $query = new ProjectQuery();
+                    $query
+                        ->setResultType(ProjectQuery::RESULT_TYPE_QUERYBUILDER)
+                        ->setCustomer($project->getCustomer())
+                        ->addIgnoredEntity($project);
+
+                    return $repo->findByQuery($query);
+                },
+                'required' => false,
+            ])
             ->setAction($this->generateUrl('admin_project_delete', ['id' => $project->getId()]))
             ->setMethod('POST')
             ->getForm();
@@ -105,11 +122,12 @@ class ProjectController extends AbstractController
         $deleteForm->handleRequest($request);
 
         if (0 == $stats->getRecordAmount() || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($project);
-            $entityManager->flush();
-
-            $this->flashSuccess('action.delete.success');
+            try {
+                $this->getRepository()->deleteProject($project, $deleteForm->get('project')->getData());
+                $this->flashSuccess('action.delete.success');
+            } catch (ORMException $ex) {
+                $this->flashError('action.delete.error');
+            }
 
             return $this->redirectToRoute('admin_project');
         }

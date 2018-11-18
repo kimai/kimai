@@ -1,10 +1,19 @@
 # Docker
 
-We bundle a simple docker that can be used for test purposes.  Either pull it from docker hub or build it.
+The Dockerfile supplied with this application is development or demonstration docker.  It runs a self contained version of kimai2 against a sqlite database in the docker container.
+
+There is an official docker repo for the kimai app that includes the Docker file from this repo and a docker file suitable for running in a production environment.
+
+ * The docker repo: [https://github.com/tobybatch/kimai2](https://github.com/tobybatch/kimai2)
+ * That repo on dockerhub auto-building  the prod and dev conatiners: [https://hub.docker.com/r/kimai/kimai2](https://hub.docker.com/r/kimai/kimai2).
+ 
+Any issues with the container rather than the application itself should be raised [here](https://github.com/tobybatch/kimai2/issues).
 
 ## Build the docker
 
     docker build -t kimai/kimai2:dev .
+
+
 
 ## Run the docker
 
@@ -41,7 +50,7 @@ To install the fixtures:
 
 ## Developing against the docker
 
-It is possible to mount your source tree and sqlite DB into the container at run time.
+It is possible to mount your source tree and sqlite DB into the container at run time.  **N.B. The sqlite database needs to writable by the www-data user.** Use ```chown 33:33 kimai.sqlite``` on the host machine.
 
     docker run --rm -d -p 8001:8001 \
         -v $(pwd)/src:/opt/kimai/src \

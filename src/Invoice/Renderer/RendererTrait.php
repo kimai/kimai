@@ -135,8 +135,11 @@ trait RendererTrait
         }
 
         $activity = $timesheet->getActivity();
-        $project = $activity->getProject();
+        $project = $timesheet->getProject();
         $customer = $project->getCustomer();
+
+        $begin = $timesheet->getBegin();
+        $end = $timesheet->getEnd();
 
         return [
             'entry.description' => $description,
@@ -144,11 +147,14 @@ trait RendererTrait
             'entry.rate' => $this->getFormattedMoney($hourlyRate),
             'entry.total' => $this->getFormattedMoney($rate),
             'entry.duration' => $timesheet->getDuration(),
-            'entry.begin' => $this->getFormattedDateTime($timesheet->getBegin()),
-            'entry.begin_timestamp' => $timesheet->getBegin()->getTimestamp(),
-            'entry.end' => $this->getFormattedDateTime($timesheet->getEnd()),
-            'entry.end_timestamp' => $timesheet->getEnd()->getTimestamp(),
-            'entry.date' => $this->getFormattedDateTime($timesheet->getBegin()),
+            'entry.duration_minutes' => number_format($timesheet->getDuration() / 60),
+            'entry.begin' => $this->getFormattedDateTime($begin),
+            'entry.begin_time' => date("H:i", $begin->getTimestamp()),
+            'entry.begin_timestamp' => $begin->getTimestamp(),
+            'entry.end' => $this->getFormattedDateTime($end),
+            'entry.end_time' => date("H:i", $end->getTimestamp()),
+            'entry.end_timestamp' => $end->getTimestamp(),
+            'entry.date' => $this->getFormattedDateTime($begin),
             'entry.user_id' => $user->getId(),
             'entry.user_name' => $user->getUsername(),
             'entry.user_alias' => $user->getAlias(),

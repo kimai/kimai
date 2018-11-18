@@ -9,14 +9,14 @@
             </div>
             <div class="modal-body">
                 <form name="{{ name }}_visibility">
-                {% for title, class in entries %}
-                    {% if 'alwaysVisible' not in class %}
-                    <div class="form-group {{ class }}">
-                        <input type="checkbox" id="column_{{ title }}" name="{{ title }}"{% if is_visible_column(name, title) %} checked="checked"{% endif %}>
-                        <label class="control-label required" for="column_{{ title }}">{{ ('label.' ~ title)|trans }}</label>
-                    </div>
-                    {% endif %}
-                {% endfor %}
+                    {% for title, class in entries %}
+                        {% if 'alwaysVisible' not in class %}
+                            <div class="form-group">
+                                <input type="checkbox" id="column_{{ title }}" name="{{ title }}"{% if is_visible_column(name, title, '') %} checked="checked"{% endif %}>
+                                <label class="control-label required" for="column_{{ title }}">{{ ('label.' ~ title)|trans }}</label>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </form>
                 <p>{{ 'modal.columns.description'|trans }}</p>
             </div>
@@ -33,17 +33,38 @@
 {% spaceless %}
     {% set class = '' %}
     {% set always = false %}
+
     {% if entries[column] is defined %}
-        {% set class = entries[column] %}
-        {% if 'alwaysVisible' in entries[column] %}
-            {% set always = true %}
+        {% set classes = entries[column] %}
+        {% if 'alwaysVisible' in classes %}
+            {# as this column should always be visible, we remove every class that includes hidden #}
+            {% for tmp in classes|split(' ') %}
+                {% if 'hidden' not in tmp %}
+                    {% set class = class ~ ' ' ~ tmp %}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            {% if not is_visible_column(name, column, '') %}
+                {% set classes = classes ~ ' hidden' %}
+            {% elseif not is_datatable_configured(name, '') %}
+                {% for tmp in classes|split(' ') %}
+                    {% if 'hidden' == tmp %}
+                        {% set classes = classes|replace({(tmp): ''}) %}
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                {% for tmp in classes|split(' ') %}
+                    {% if 'hidden' in tmp %}
+                        {% set classes = classes|replace({(tmp): ''}) %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            {% set class = classes %}
         {% endif %}
     {% endif %}
-    {% if (always == false) and (not is_visible_column(name, column)) %}
-        {% set class = class ~ ' hidden' %}
-    {% endif %}
+
     {% if not class is empty %}
-    {{ class }}
+        {{ class }}
     {% endif %}
 {% endspaceless %}
 {% endmacro %}
