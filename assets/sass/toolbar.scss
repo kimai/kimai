@@ -26,7 +26,7 @@
 }
 
 /* The filter form is available on most pages above the datatable */
-@media (min-width: 768px) {
+@media (min-width: $screen-sm-min) {
     .toolbar {
         form.navbar-form {
             font-size: $font-size-base;

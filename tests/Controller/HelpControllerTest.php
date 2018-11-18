@@ -25,7 +25,7 @@ class HelpControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser();
         $this->request($client, '/help/');
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertContains('<h1>Kimai documentation</h1>', $client->getResponse()->getContent());
+        $this->assertContains('<h1 id="kimai-documentation">Kimai documentation</h1>', $client->getResponse()->getContent());
         $this->assertContains('<a href="configurations">', $client->getResponse()->getContent());
         $this->assertContains('<a href="developers">', $client->getResponse()->getContent());
         $this->assertContains('<a href="users">', $client->getResponse()->getContent());
