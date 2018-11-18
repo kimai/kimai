@@ -31,7 +31,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER);
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $expectedTabs = ['#charts', '#settings', '#password', '#api-token', '#preferences'];
+        $expectedTabs = ['#charts', '#settings', '#password', '#api-token', '#roles', '#preferences'];
 
         $tabs = $client->getCrawler()->filter('div.nav-tabs-custom ul.nav-tabs li');
         $this->assertEquals(count($expectedTabs), $tabs->count());

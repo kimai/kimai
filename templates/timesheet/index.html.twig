@@ -5,7 +5,18 @@
 
 {% block page_title %}{{ 'timesheet.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'timesheet.subtitle'|trans }}{% endblock %}
-{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseTimesheet', 'download': 'onclick:return exportTimesheet()', 'visibility': '#modal_timesheet', 'calendar': path('calendar'), 'create': path('timesheet_create')}) }}{% endblock %}
+{% block page_actions %}
+    {% set actions = {'filter': '#collapseTimesheet'} %}
+    {% if is_granted('export_own_timesheet') %}
+        {% set actions = actions|merge({'download': 'onclick:return exportTimesheet()'}) %}
+    {% endif %}
+    {% set actions = actions|merge({'visibility': '#modal_timesheet'}) %}
+    {% set actions = actions|merge({'calendar': path('calendar')}) %}
+    {% if is_granted('create_own_timesheet') %}
+        {% set actions = actions|merge({'create': path('timesheet_create')}) %}
+    {% endif %}
+    {{ widgets.page_actions(actions) }}
+{% endblock %}
 
 {% block main_before %}
     {{ toolbar.toolbar(toolbarForm, 'collapseTimesheet', showFilter) }}
@@ -64,10 +75,13 @@
             <td class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}">{{ widgets.label_activity(entry.activity) }}</td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }} timesheet-description">{{ entry.description|desc2html }}</td>
             <td>
-                {% set actionButtons = {'edit': path('timesheet_edit', {'id' : entry.id, 'page': page})} %}
+                {% set actionButtons = {} %}
+                {% if is_granted('edit', entry) %}
+                    {% set actionButtons = actionButtons|merge({'edit': path('timesheet_edit', {'id' : entry.id, 'page': page})}) %}
+                {% endif %}
 
                 {% if entry.end %}
-                    {% if is_granted('start', entry.activity) %}
+                    {% if is_granted('start', entry) %}
                         {% set actionButtons = {'repeat': path('timesheet_start', {'id' : entry.activity.id})}|merge(actionButtons) %}
                     {% endif %}
                 {% else %}
@@ -76,7 +90,9 @@
                     {% endif %}
                 {% endif %}
 
-                {% set actionButtons = actionButtons|merge({'trash': path('timesheet_delete', {'id' : entry.id, 'page': page})}) %}
+                {% if is_granted('delete', entry) %}
+                    {% set actionButtons = actionButtons|merge({'trash': path('timesheet_delete', {'id' : entry.id, 'page': page})}) %}
+                {% endif %}
                 {{ widgets.button_group(actionButtons) }}
             </td>
         </tr>

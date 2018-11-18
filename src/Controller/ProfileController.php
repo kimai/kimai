@@ -28,7 +28,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  * User profile controller
  *
  * @Route(path="/profile")
- * @Security("is_granted('ROLE_USER')")
+ * @Security("is_granted('view_own_profile') or is_granted('view_other_profile')")
  */
 class ProfileController extends AbstractController
 {

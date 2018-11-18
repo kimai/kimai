@@ -40,9 +40,41 @@ class AppExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('kimai.invoice.documents', $config['invoice']['documents']);
         $container->setParameter('kimai.defaults', $config['defaults']);
 
+        $this->createPermissionParameter($config['permissions'], $container);
         $this->createThemeParameter($config['theme'], $container);
         $this->createUserParameter($config['user'], $container);
         $this->createTimesheetParameter($config['timesheet'], $container);
+    }
+
+    /**
+     * Performs some pre-compilation on the configured permissions from kimai.yaml
+     * to save us from constant array lookups from during runtime.
+     *
+     * @param array $config
+     * @param ContainerBuilder $container
+     */
+    protected function createPermissionParameter(array $config, ContainerBuilder $container)
+    {
+        foreach ($config['maps'] as $role => $sets) {
+            if (!isset($config['roles'][$role])) {
+                $exception = new InvalidConfigurationException(
+                    'Configured permission set includes unknown role "' . $role . '"'
+                );
+                $exception->setPath('kimai.permissions.maps.' . $role);
+                throw $exception;
+            }
+            foreach ($sets as $set) {
+                if (!isset($config['sets'][$set])) {
+                    $exception = new InvalidConfigurationException(
+                        'Configured permission set "' . $set . '" for role "' . $role . '" is unknown'
+                    );
+                    $exception->setPath('kimai.permissions.maps.' . $role);
+                    throw $exception;
+                }
+                $config['roles'][$role] = array_unique(array_merge($config['roles'][$role], $config['sets'][$set]));
+            }
+        }
+        $container->setParameter('kimai.permissions', $config['roles']);
     }
 
     /**

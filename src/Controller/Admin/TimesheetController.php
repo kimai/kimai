@@ -24,8 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Controller used for manage timesheet entries in the admin part of the site.
  *
  * @Route(path="/team/timesheet")
- * @Security("is_granted('ROLE_TEAMLEAD')")
- * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+ * @Security("is_granted('view_other_timesheet')")
  */
 class TimesheetController extends AbstractController
 {
@@ -41,10 +40,9 @@ class TimesheetController extends AbstractController
     }
 
     /**
-     * This route shows all users timesheet entries.
-     *
      * @Route(path="/", defaults={"page": 1}, name="admin_timesheet", methods={"GET"})
      * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_timesheet_paginated", methods={"GET"})
+     * @Security("is_granted('view_other_timesheet')")
      *
      * @param $page
      * @param Request $request
@@ -81,8 +79,6 @@ class TimesheetController extends AbstractController
     }
 
     /**
-     * The route to stop a running entry.
-     *
      * @Route(path="/{id}/stop", name="admin_timesheet_stop", methods={"GET"})
      * @Security("is_granted('stop', entry)")
      *
@@ -95,8 +91,6 @@ class TimesheetController extends AbstractController
     }
 
     /**
-     * The route to edit an existing entry.
-     *
      * @Route(path="/{id}/edit", name="admin_timesheet_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', entry)")
      *
@@ -110,9 +104,8 @@ class TimesheetController extends AbstractController
     }
 
     /**
-     * The route to create a new entry by form.
-     *
      * @Route(path="/create", name="admin_timesheet_create", methods={"GET", "POST"})
+     * @Security("is_granted('create_other_timesheet')")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -123,8 +116,6 @@ class TimesheetController extends AbstractController
     }
 
     /**
-     * The route to delete an existing entry.
-     *
      * @Route(path="/{id}/delete", defaults={"page": 1}, name="admin_timesheet_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', entry)")
      *

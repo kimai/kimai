@@ -5,7 +5,13 @@
 
 {% block page_title %}{{ 'admin_timesheet.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_timesheet.subtitle'|trans }}{% endblock %}
-{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseTimesheetAdmin', 'visibility': '#modal_timesheet_admin', 'create': path('admin_timesheet_create')}) }}{% endblock %}
+{% block page_actions %}
+    {% set actions = {'filter': '#collapseTimesheetAdmin', 'visibility': '#modal_timesheet_admin'} %}
+    {% if is_granted('create_other_timesheet') %}
+        {% set actions = actions|merge({'create': path('admin_timesheet_create')}) %}
+    {% endif %}
+    {{ widgets.page_actions(actions) }}
+{% endblock %}
 
 {% block main_before %}
     {{ toolbar.toolbar(toolbarForm, 'collapseTimesheetAdmin', showFilter) }}

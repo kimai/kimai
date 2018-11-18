@@ -1,10 +1,12 @@
 kimai:
 
+    # --------------------------------------------------------------------------------
     # Settings for the user management and login forms
     user:
         registration: true
         password_reset: true
 
+    # --------------------------------------------------------------------------------
     # All configs related to timesheet and record management
     timesheet:
 
@@ -33,6 +35,7 @@ kimai:
         #        days: ['saturday','sunday']
         #        factor: 1.5
 
+    # --------------------------------------------------------------------------------
     # Invoice management
     #invoice:
     #    # all files in these directories will be used as invoice documents (if supported by a renderer)
@@ -40,6 +43,43 @@ kimai:
     #        - 'var/invoices/'
     #        - 'templates/invoice/renderer/'
 
+    # --------------------------------------------------------------------------------
+    # Default settings used to populate forms
+    #defaults:
+    #    customer:
+    #        timezone: Europe/Berlin
+    #        country: DE
+    #        currency: EUR
+
+    # --------------------------------------------------------------------------------
+    # Free configurable permission system, see var/docs/permissions.md
+    permissions:
+        # mapping complex rulesets of single permissions to named "sets" ("set name" = [array of "permissions"])
+        sets:
+            ACTIVITIES: [view_activity,create_activity,edit_activity,delete_activity]
+            PROJECTS: [view_project,create_project,edit_project,delete_project]
+            CUSTOMERS: [view_customer,create_customer,edit_customer,delete_customer]
+            INVOICE: [view_invoice,create_invoice]
+            INVOICE_TEMPLATE: [view_invoice_template,create_invoice_template,edit_invoice_template,delete_invoice_template]
+            TIMESHEET: [view_own_timesheet,start_own_timesheet,stop_own_timesheet,create_own_timesheet,edit_own_timesheet,export_own_timesheet,delete_own_timesheet]
+            TIMESHEET_OTHER: [view_other_timesheet,start_other_timesheet,stop_other_timesheet,create_other_timesheet,edit_other_timesheet,delete_other_timesheet]
+            PROFILE: [view_own_profile,edit_own_profile,delete_own_profile,password_own_profile,roles_own_profile,preferences_own_profile,api-token_own_profile]
+            PROFILE_OTHER: [view_other_profile,edit_other_profile,delete_other_profile,password_other_profile,roles_other_profile,preferences_other_profile,api-token_other_profile]
+            USER: [view_user,create_user,delete_user]
+        # mapping "sets" or permissions to user roles ("role name" = [array of "set names"])
+        maps:
+            ROLE_USER: [TIMESHEET,PROFILE]
+            ROLE_TEAMLEAD: [INVOICE,TIMESHEET,TIMESHEET_OTHER,PROFILE]
+            ROLE_ADMIN: [ACTIVITIES,PROJECTS,CUSTOMERS,INVOICE,INVOICE_TEMPLATE,TIMESHEET,TIMESHEET_OTHER,PROFILE]
+            ROLE_SUPER_ADMIN: [ACTIVITIES,PROJECTS,CUSTOMERS,INVOICE,INVOICE_TEMPLATE,TIMESHEET,TIMESHEET_OTHER,PROFILE,PROFILE_OTHER,USER]
+        # adding single permissions to user roles, extending the definition from "sets" ("role name" = [array of "permissions"])
+        roles:
+            ROLE_USER: []
+            ROLE_TEAMLEAD: [view_invoice_template,create_invoice_template,edit_invoice_template]
+            ROLE_ADMIN: []
+            ROLE_SUPER_ADMIN: []
+
+    # --------------------------------------------------------------------------------
     # Language specific settings, like the date formats
     languages:
         de:
@@ -75,6 +115,7 @@ kimai:
             duration: '%%h:%%m óra'
             duration_short: '%%h:%%m h'
 
+    # --------------------------------------------------------------------------------
     # timesheet calendar configuration
     calendar:
         week_numbers: true
@@ -93,6 +134,7 @@ kimai:
         #             id: 'de.german#holiday@group.v.calendar.google.com'
         #             color: '#ccc'
 
+    # --------------------------------------------------------------------------------
     # theme related settings, will be available as twig globals at "kimai_context.*"
     # please see documentation at var/docs/theme.md
     theme:
@@ -105,6 +147,7 @@ kimai:
         # possible options: blue, black, purple, yellow, red, green
         box_color: 'green'
 
+    # --------------------------------------------------------------------------------
     # Dashboard widget sections, please see documentation at var/docs/dashboard.md
     dashboard:
         user_duration:
@@ -133,6 +176,7 @@ kimai:
             permission: ROLE_ADMIN
             widgets: [amountToday, amountWeek, amountMonth, amountYear]
 
+    # --------------------------------------------------------------------------------
     # All available widgets, please see documentation at var/docs/dashboard.md
     widgets:
         userDurationToday: { title: stats.durationToday, query: duration, user: true, begin: '00:00:00', end: '23:59:59', icon: duration, color: green }
@@ -161,16 +205,3 @@ kimai:
         activeUsersYear: { title: stats.userActiveYear, query: users, begin: '01 january this year 00:00:00', end: '31 december this year 23:59:59', icon: user, color: yellow }
         activeUsersTotal: { title: stats.userActiveTotal, query: users, icon: user, color: red }
         activeRecordings: { title: stats.activeRecordings, query: active, icon: duration, color: red }
-
-    # Default settings used to populate forms
-    #defaults:
-    #    customer:
-    #        timezone: Europe/Berlin
-    #        country: DE
-    #        currency: EUR
-    permissions:
-        roles:
-            ROLE_USER: [my_rate]
-            ROLE_TEAMLEAD: [team_rate]
-            ROLE_ADMIN: []
-            ROLE_SUPER_ADMIN: []
