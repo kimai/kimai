@@ -61,6 +61,8 @@ class CustomerControllerTest extends APIControllerBaseTest
         }
 
         $actual = array_keys($result);
+        sort($actual);
+        sort($expectedKeys);
 
         $this->assertEquals($expectedKeys, $actual, 'Customer structure does not match');
     }

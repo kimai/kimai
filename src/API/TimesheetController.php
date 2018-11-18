@@ -56,17 +56,17 @@ class TimesheetController extends BaseApiController
 
     /**
      * @SWG\Response(
-     *     response=200,
-     *     description="Returns the collection of all existing timesheets for the user",
-     *     @SWG\Schema(ref=@API\Model(type=Timesheet::class)),
+     *      response=200,
+     *      description="Returns the collection of all existing timesheets for the user",
+     *      @SWG\Schema(ref="#/definitions/TimesheetCollection"),
      * )
      * @Rest\QueryParam(name="customer", requirements="\d+", strict=true, nullable=true, description="Customer ID to filter timesheets")
      * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="Project ID to filter timesheets")
      * @Rest\QueryParam(name="activity", requirements="\d+", strict=true, nullable=true, description="Activity ID to filter timesheets")
-     * @Rest\QueryParam(name="page", requirements="\d+", strict=true, nullable=true, description="The page to display, renders a 404 if not found")
-     * @Rest\QueryParam(name="size", requirements="\d+", strict=true, nullable=true, description="The amount of entries for each page")
-     * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order, either ASC or DESC")
-     * @Rest\QueryParam(name="orderBy", requirements="id|begin", strict=true, nullable=true, description="The field by which results will be ordered, either 'id' or 'begin'")
+     * @Rest\QueryParam(name="page", requirements="\d+", strict=true, nullable=true, description="The page to display, renders a 404 if not found (default: 1)")
+     * @Rest\QueryParam(name="size", requirements="\d+", strict=true, nullable=true, description="The amount of entries for each page (default: 25)")
+     * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order (allowed values: 'ASC', 'DESC')")
+     * @Rest\QueryParam(name="orderBy", requirements="id|begin|end|rate", strict=true, nullable=true, description="The field by which results will be ordered (allowed values: 'id', 'begin', 'end', 'rate')")
      *
      * @return Response
      */
@@ -116,9 +116,9 @@ class TimesheetController extends BaseApiController
 
     /**
      * @SWG\Response(
-     *     response=200,
-     *     description="Returns one timesheet entity",
-     *     @SWG\Schema(ref=@API\Model(type=Timesheet::class)),
+     *      response=200,
+     *      description="Returns one timesheet entity",
+     *      @SWG\Schema(ref="#/definitions/TimesheetEntity")
      * )
      *
      * @param int $id
@@ -137,10 +137,14 @@ class TimesheetController extends BaseApiController
     }
 
     /**
-     * @SWG\Response(
-     *     response=200,
-     *     description="Creates a new new timesheet entry and returns it afterwards",
-     *     @SWG\Schema(ref=@API\Model(type=Timesheet::class)),
+     * @SWG\Post(
+     *      description="Creates a new timesheet entry and returns it afterwards",
+     *      @SWG\Schema(ref="#/definitions/TimesheetFormEntity"),
+     *      @SWG\Response(
+     *          response=200,
+     *          description="Returns the new created timesheet entry",
+     *          @SWG\Schema(ref="#/definitions/TimesheetEntity"),
+     *      )
      * )
      *
      * @param Request $request
@@ -175,7 +179,7 @@ class TimesheetController extends BaseApiController
             $entityManager->flush();
 
             $view = new View($timesheet, 200);
-            $view->getContext()->setGroups(['Default', 'Entity']);
+            $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
 
             return $this->viewHandler->handle($view);
         }

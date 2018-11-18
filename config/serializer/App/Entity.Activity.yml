@@ -22,6 +22,7 @@ App\Entity\Activity:
             groups: [Default]
         project:
             include: false
+            exclude: true
             groups: [Default]
     virtual_properties:
         getProject:

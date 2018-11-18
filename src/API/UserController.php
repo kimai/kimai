@@ -51,9 +51,9 @@ class UserController extends BaseApiController
 
     /**
      * @SWG\Response(
-     *     response=200,
-     *     description="Returns the collection of all registered users",
-     *     @SWG\Schema(ref=@Model(type=User::class)),
+     *      response=200,
+     *      description="Returns the collection of all registered users",
+     *      @SWG\Schema(ref="#/definitions/UserCollection"),
      * )
      *
      * @return Response
@@ -69,9 +69,9 @@ class UserController extends BaseApiController
 
     /**
      * @SWG\Response(
-     *     response=200,
-     *     description="Return one user entity",
-     *     @SWG\Schema(ref=@Model(type=User::class)),
+     *      response=200,
+     *      description="Return one user entity",
+     *      @SWG\Schema(ref="#/definitions/UserEntity"),
      * )
      *
      * @param int $id

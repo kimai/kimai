@@ -53,13 +53,13 @@ class ActivityController extends BaseApiController
 
     /**
      * @SWG\Response(
-     *     response=200,
-     *     description="Returns the collection of all existing activities",
-     *     @SWG\Schema(ref=@API\Model(type=Activity::class)),
+     *      response=200,
+     *      description="Returns the collection of all existing activities",
+     *      @SWG\Schema(ref="#/definitions/ActivityCollection"),
      * )
      * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="Project ID to filter activities. If none is provided, only global activities will be returned.")
-     * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter activities")
-     * @Rest\QueryParam(name="globals", requirements="true", strict=true, nullable=true, description="Pass true to fetch only global activities")
+     * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter activities (1=visible, 2=hidden, 3=both)")
+     * @Rest\QueryParam(name="globals", requirements="true", strict=true, nullable=true, description="Pass 'true' as string to fetch only global activities")
      *
      * @return Response
      */
@@ -90,9 +90,9 @@ class ActivityController extends BaseApiController
 
     /**
      * @SWG\Response(
-     *     response=200,
-     *     description="Returns one activity entity",
-     *     @SWG\Schema(ref=@API\Model(type=Activity::class)),
+     *      response=200,
+     *      description="Returns one activity entity",
+     *      @SWG\Schema(ref="#/definitions/ActivityEntity"),
      * )
      *
      * @param int $id

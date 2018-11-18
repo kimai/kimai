@@ -59,6 +59,8 @@ class UserControllerTest extends APIControllerBaseTest
         }
 
         $actual = array_keys($result);
+        sort($actual);
+        sort($expectedKeys);
 
         $this->assertEquals($expectedKeys, $actual, 'User structure does not match');
     }

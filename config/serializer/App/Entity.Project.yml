@@ -28,6 +28,7 @@ App\Entity\Project:
             groups: [Entity]
         customer:
             include: false
+            exclude: true
             groups: [Default]
     virtual_properties:
         getCustomer:

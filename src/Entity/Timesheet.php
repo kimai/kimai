@@ -398,7 +398,14 @@ class Timesheet
             }
         }
 
-        if (null !== $this->getEnd() && $this->getEnd()->getTimestamp() < $this->getBegin()->getTimestamp()) {
+        if (null === $this->getBegin() && null !== $this->getEnd()) {
+            $context->buildViolation('You must submit a begin date before an end date is added.')
+                ->atPath('begin')
+                ->setTranslationDomain('validators')
+                ->addViolation();
+        }
+
+        if (null !== $this->getBegin() && null !== $this->getEnd() && $this->getEnd()->getTimestamp() < $this->getBegin()->getTimestamp()) {
             $context->buildViolation('End date must not be earlier then start date.')
                 ->atPath('end')
                 ->setTranslationDomain('validators')

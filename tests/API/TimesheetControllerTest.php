@@ -179,6 +179,8 @@ class TimesheetControllerTest extends APIControllerBaseTest
         }
 
         $actual = array_keys($result);
+        sort($actual);
+        sort($expectedKeys);
 
         $this->assertEquals($expectedKeys, $actual, 'Timesheet structure does not match');
     }

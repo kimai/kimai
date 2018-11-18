@@ -120,6 +120,8 @@ class ActivityControllerTest extends APIControllerBaseTest
         }
 
         $actual = array_keys($result);
+        sort($actual);
+        sort($expectedKeys);
 
         $this->assertEquals($expectedKeys, $actual, 'Activity structure does not match');
     }
