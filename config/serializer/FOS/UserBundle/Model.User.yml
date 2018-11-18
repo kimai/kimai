@@ -1,6 +1,15 @@
 FOS\UserBundle\Model\User:
     exclusion_policy: NONE
     properties:
+        enabled:
+            include: true
+            groups: [Default]
+        groups:
+            include: true
+            groups: [Entity]
+        roles:
+            include: true
+            groups: [Entity]
         email:
             exclude: true
         emailCanonical:

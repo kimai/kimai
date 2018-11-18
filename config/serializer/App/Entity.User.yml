@@ -3,9 +3,13 @@ App\Entity\User:
     properties:
         id:
             include: true
+            groups: [Default]
         alias:
             include: true
+            groups: [Default]
         title:
             include: true
+            groups: [Entity]
         avatar:
             include: true
+            groups: [Entity]

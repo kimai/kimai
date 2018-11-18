@@ -37,18 +37,27 @@ class TimesheetEditForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var Timesheet $entry */
-        $entry = $options['data'];
+        $activity = null;
+        $project = null;
+        $customer = null;
+        $end = null;
 
-        $activity = $entry->getActivity();
-        $project = $entry->getProject();
-        $customer = null === $entry->getProject() ? null : $entry->getProject()->getCustomer();
+        if (isset($options['data'])) {
+            /** @var Timesheet $entry */
+            $entry = $options['data'];
 
-        if (null === $project && null !== $activity) {
-            $project = $activity->getProject();
+            $activity = $entry->getActivity();
+            $project = $entry->getProject();
+            $customer = null === $entry->getProject() ? null : $entry->getProject()->getCustomer();
+
+            if (null === $project && null !== $activity) {
+                $project = $activity->getProject();
+            }
+
+            $end = $entry->getEnd();
         }
 
-        if (null === $entry->getEnd() || !$options['duration_only']) {
+        if (null === $end || !$options['duration_only']) {
             $builder->add('begin', DateTimeType::class, [
                 'label' => 'label.begin',
                 'widget' => 'single_text',
@@ -75,6 +84,11 @@ class TimesheetEditForm extends AbstractType
 
         $builder
             ->add('customer', CustomerType::class, [
+                // documentation is for NelmioApiDocBundle
+                'documentation' => [
+                    'type' => 'integer',
+                    'description' => 'Customer ID',
+                ],
                 'label' => 'label.customer',
                 'query_builder' => function (CustomerRepository $repo) use ($customer) {
                     return $repo->builderForEntityType($customer);
@@ -88,6 +102,11 @@ class TimesheetEditForm extends AbstractType
                 ],
             ])
             ->add('project', ProjectType::class, [
+                // documentation is for NelmioApiDocBundle
+                'documentation' => [
+                    'type' => 'integer',
+                    'description' => 'Project ID',
+                ],
                 'required' => true,
                 'placeholder' => '',
                 'label' => 'label.project',
@@ -100,6 +119,11 @@ class TimesheetEditForm extends AbstractType
                 ],
             ])
             ->add('activity', ActivityType::class, [
+                // documentation is for NelmioApiDocBundle
+                'documentation' => [
+                    'type' => 'integer',
+                    'description' => 'Activity ID',
+                ],
                 'label' => 'label.activity',
                 'query_builder' => function (ActivityRepository $repo) use ($activity) {
                     return $repo->builderForEntityType($activity);

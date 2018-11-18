@@ -19,10 +19,8 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use Nelmio\ApiDocBundle\Annotation as API;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -30,7 +28,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Security("is_granted('ROLE_USER')")
  */
-class ActivityController extends Controller
+class ActivityController extends BaseApiController
 {
     /**
      * @var ActivityRepository
@@ -54,13 +52,13 @@ class ActivityController extends Controller
 
     /**
      * @SWG\Response(
-     *     response=200,
-     *     description="Returns the collection of all existing activities",
-     *     @SWG\Schema(ref=@API\Model(type=Activity::class)),
+     *      response=200,
+     *      description="Returns the collection of all existing activities",
+     *      @SWG\Schema(ref="#/definitions/ActivityCollection"),
      * )
      * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="Project ID to filter activities. If none is provided, only global activities will be returned.")
-     * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter activities")
-     * @Rest\QueryParam(name="globals", requirements="true", strict=true, nullable=true, description="Pass true to fetch only global activities")
+     * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter activities (1=visible, 2=hidden, 3=both)")
+     * @Rest\QueryParam(name="globals", requirements="true", strict=true, nullable=true, description="Pass 'true' as string to fetch only global activities")
      *
      * @return Response
      */
@@ -84,15 +82,16 @@ class ActivityController extends Controller
 
         $data = $this->repository->findByQuery($query);
         $view = new View($data, 200);
+        $view->getContext()->setGroups(['Default', 'Collection', 'Activity']);
 
         return $this->viewHandler->handle($view);
     }
 
     /**
      * @SWG\Response(
-     *     response=200,
-     *     description="Returns one activity entity",
-     *     @SWG\Schema(ref=@API\Model(type=Activity::class)),
+     *      response=200,
+     *      description="Returns one activity entity",
+     *      @SWG\Schema(ref="#/definitions/ActivityEntity"),
      * )
      *
      * @param int $id
@@ -105,6 +104,7 @@ class ActivityController extends Controller
             throw new NotFoundException();
         }
         $view = new View($data, 200);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Activity']);
 
         return $this->viewHandler->handle($view);
     }

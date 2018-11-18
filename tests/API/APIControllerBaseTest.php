@@ -139,11 +139,14 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
      * @param string $url
      * @param string $method
      * @param array $parameters
+     * @param string $content
      * @return Crawler
      */
-    protected function request(Client $client, string $url, $method = 'GET', array $parameters = [])
+    protected function request(Client $client, string $url, $method = 'GET', array $parameters = [], string $content = null)
     {
-        return $client->request($method, $this->createUrl($url), $parameters, [], ['HTTP_CONTENT_TYPE' => 'application/json']);
+        $server = ['HTTP_CONTENT_TYPE' => 'application/json', 'CONTENT_TYPE' => 'application/json'];
+
+        return $client->request($method, $this->createUrl($url), $parameters, [], $server, $content);
     }
 
     /**
@@ -166,5 +169,24 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
             $expected,
             json_decode($client->getResponse()->getContent(), true)
         );
+    }
+
+    /**
+     * @param Response $response
+     * @param string[] $failedFields
+     */
+    protected function assertApiCallValidationError(Response $response, array $failedFields)
+    {
+        $this->assertFalse($response->isSuccessful());
+        $result = json_decode($response->getContent(), true);
+
+        $this->assertArrayHasKey('errors', $result);
+        $this->assertArrayHasKey('children', $result['errors']);
+        $data = $result['errors']['children'];
+
+        foreach ($failedFields as $fieldName) {
+            $this->assertArrayHasKey($fieldName, $data);
+            $this->assertArrayHasKey('errors', $data[$fieldName]);
+        }
     }
 }
