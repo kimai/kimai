@@ -56,7 +56,9 @@ final class Version20181031220003 extends AbstractMigration
             $this->addSql('CREATE INDEX IDX_4F60C6B1166D1F9C ON ' . $timesheet . ' (project_id)');
         } else {
             // project table
+            $this->addSql('ALTER TABLE ' . $projects . ' DROP FOREIGN KEY FK_407F12069395C3F3');
             $this->addSql('ALTER TABLE ' . $projects . ' CHANGE customer_id customer_id INT NOT NULL');
+            $this->addSql('ALTER TABLE ' . $projects . ' ADD CONSTRAINT FK_407F12069395C3F3 FOREIGN KEY (customer_id) REFERENCES ' . $customers . ' (id) ON DELETE CASCADE');
             // timesheet table
             $this->addSql('ALTER TABLE ' . $timesheet . ' ADD project_id INT DEFAULT NULL AFTER activity_id');
             $this->addSql('ALTER TABLE ' . $timesheet . ' ADD CONSTRAINT FK_4F60C6B1166D1F9C FOREIGN KEY (project_id) REFERENCES ' . $projects . ' (id) ON DELETE CASCADE');
@@ -117,7 +119,9 @@ final class Version20181031220003 extends AbstractMigration
             $this->addSql('CREATE INDEX IDX_4F60C6B181C06096 ON ' . $timesheet . ' (activity_id)');
         } else {
             // project table
+            $this->addSql('ALTER TABLE ' . $projects . ' DROP FOREIGN KEY FK_407F12069395C3F3');
             $this->addSql('ALTER TABLE ' . $projects . ' CHANGE customer_id customer_id INT DEFAULT NULL');
+            $this->addSql('ALTER TABLE ' . $projects . ' ADD CONSTRAINT FK_407F12069395C3F3 FOREIGN KEY (customer_id) REFERENCES ' . $customers . ' (id) ON DELETE CASCADE');
             // timesheet table
             $this->addSql('ALTER TABLE ' . $timesheet . ' DROP FOREIGN KEY FK_4F60C6B1166D1F9C');
             $this->addSql('DROP INDEX IDX_4F60C6B1166D1F9C ON ' . $timesheet);
