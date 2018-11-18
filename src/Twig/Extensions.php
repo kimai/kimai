@@ -132,6 +132,7 @@ class Extensions extends \Twig_Extension
     public function isDatatableConfigured(string $dataTable, string $size)
     {
         $cookie = $this->getVisibilityCookieName($dataTable, $size);
+
         return $this->requestStack->getCurrentRequest()->cookies->has($cookie);
     }
 
