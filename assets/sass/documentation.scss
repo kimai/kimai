@@ -10,10 +10,16 @@
         a.anchor {
             float: left;
             font-size: 0.5em;
-            margin-left: -1.2em;
+            margin-left: -1em;
             padding-top: 0.5em;
             color: $text-color;
             display: none;
         }
+    }
+}
+
+@media (min-width: $screen-sm-min) {
+    .markdown-body {
+        padding-left: 25px;
     }
 }
