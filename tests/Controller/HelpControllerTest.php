@@ -39,6 +39,14 @@ class HelpControllerTest extends ControllerBaseTest
         $this->assertContains('<a href="/en/help/">Back</a>', $client->getResponse()->getContent());
     }
 
+    public function testMissingPage()
+    {
+        $client = $this->getClientForAuthenticatedUser();
+        $this->request($client, '/help/foo');
+        $this->assertFalse($client->getResponse()->isSuccessful());
+        $this->assertEquals(404, $client->getResponse()->getStatusCode());
+    }
+
     public function testValidateRouteDoesNotAllowSpecialChars()
     {
         $client = $this->getClientForAuthenticatedUser();

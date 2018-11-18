@@ -56,7 +56,7 @@ class ExtensionsTest extends TestCase
 
     public function testGetFunctions()
     {
-        $functions = ['locales', 'is_visible_column'];
+        $functions = ['locales', 'is_visible_column', 'is_datatable_configured'];
         $sut = $this->getSut($this->localeDe);
         $twigFunctions = $sut->getFunctions();
         $this->assertCount(count($functions), $twigFunctions);
