@@ -36,7 +36,7 @@ class DebugRendererTest extends AbstractRendererTest
         $rows = $data['entries'];
         $this->assertEquals($expectedRows, count($rows));
 
-        foreach($rows as $row) {
+        foreach ($rows as $row) {
             $this->assertEntryStructure($row);
         }
 
@@ -75,7 +75,7 @@ class DebugRendererTest extends AbstractRendererTest
             'customer.comment',
         ];
 
-        foreach($keys as $key) {
+        foreach ($keys as $key) {
             $this->assertArrayHasKey($key, $model);
         }
 
@@ -115,7 +115,7 @@ class DebugRendererTest extends AbstractRendererTest
             'entry.customer_id',
         ];
 
-        foreach($keys as $key) {
+        foreach ($keys as $key) {
             $this->assertArrayHasKey($key, $model);
         }
 
