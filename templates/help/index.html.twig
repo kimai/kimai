@@ -18,7 +18,7 @@
             <a href="{{ path('help') }}">{{ 'action.back'|trans }}</a>
         </div>
         {% endif %}
-        <div class="box-body">
+        <div class="box-body markdown-body">
             {{ documentation|md2html|replace(replacer)|raw }}
         </div>
     </div>
