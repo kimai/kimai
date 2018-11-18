@@ -96,6 +96,7 @@ final class Version20181031220003 extends AbstractMigration
 
         $timesheet = $this->getTableName('timesheet');
         $projects = $this->getTableName('projects');
+        $customers = $this->getTableName('customers');
 
         if ($platform === 'sqlite') {
             // project table
