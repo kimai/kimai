@@ -46,20 +46,59 @@ At the end the system calculated the final list of permissions:
 
 | Permission name | Set name | Description |
 |---|---|---|
-| ROLE_CUSTOMER | -  | -  |
-| ROLE_USER | x  | -  |
-| ROLE_TEAMLEAD | x  | -  |
-| ROLE_ADMIN | x | -  |
-| ROLE_SUPER_ADMIN | x  | -  |
+| view_activity | ACTIVITIES  | -  |
+| create_activity | ACTIVITIES  | -  |
+| edit_activity | ACTIVITIES  | -  |
+| delete_activity | ACTIVITIES  | -  |
+| view_project | PROJECTS  | -  |
+| create_project | PROJECTS  | -  |
+| edit_project | PROJECTS  | -  |
+| delete_project | PROJECTS  | -  |
+| view_customer | CUSTOMERS  | -  |
+| create_customer | CUSTOMERS  | -  |
+| edit_customer | CUSTOMERS  | -  |
+| delete_customer | CUSTOMERS  | -  |
+| view_invoice | INVOICE  | -  |
+| create_invoice | INVOICE  | -  |
+| view_invoice_template | INVOICE_TEMPLATE  | -  |
+| create_invoice_template | INVOICE_TEMPLATE  | -  |
+| edit_invoice_template | INVOICE_TEMPLATE  | -  |
+| delete_invoice_template | INVOICE_TEMPLATE  | -  |
+| view_own_timesheet | TIMESHEET  | -  |
+| start_own_timesheet | TIMESHEET  | -  |
+| stop_own_timesheet | TIMESHEET  | -  |
+| create_own_timesheet | TIMESHEET  | -  |
+| edit_own_timesheet | TIMESHEET  | -  |
+| export_own_timesheet | TIMESHEET  | -  |
+| delete_own_timesheet | TIMESHEET  | -  |
+| view_other_timesheet | TIMESHEET_OTHER  | -  |
+| start_other_timesheet | TIMESHEET_OTHER  | -  |
+| stop_other_timesheet | TIMESHEET_OTHER  | -  |
+| create_other_timesheet | TIMESHEET_OTHER  | -  |
+| edit_other_timesheet | TIMESHEET_OTHER  | -  |
+| delete_other_timesheet | TIMESHEET_OTHER  | -  |
+| view_own_profile | PROFILE  | -  |
+| edit_own_profile | PROFILE  | -  |
+| delete_own_profile | PROFILE  | -  |
+| password_own_profile | PROFILE  | -  |
+| roles_own_profile | PROFILE  | -  |
+| preferences_own_profile | PROFILE  | -  |
+| api-token_own_profile | PROFILE  | -  |
+| view_other_profile | PROFILE_OTHER  | -  |
+| edit_other_profile | PROFILE_OTHER  | -  |
+| delete_other_profile | PROFILE_OTHER  | -  |
+| password_other_profile | PROFILE_OTHER  | -  |
+| roles_other_profile | PROFILE_OTHER  | -  |
+| preferences_other_profile | PROFILE_OTHER  | -  |
+| api-token_other_profile | PROFILE_OTHER  | -  |
+| view_user | USER  | -  |
+| create_user | USER  | -  |
+| delete_user | USER  | -  |
 
 ## Configure permissions
 
-Even though the permissions were safely crafted and matched to the pre-defined user-roles, we know that there are many companies  
-that need a different combination of allowed actions. 
+Knowing that many companies need a different combination of allowed permissions than the default ones, you might also 
+want to change the pre-configured permission.
 
-XXXXX TODO XXXXX  
-
-```yaml
-kimai:
-    permissions:
-```
+You can do that in your [local.yaml](configurations.md). Define the permissions like in the above mentioned example, 
+you might start by copying the default permissions from kimai.yaml.
