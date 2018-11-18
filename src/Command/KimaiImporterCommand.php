@@ -318,19 +318,22 @@ class KimaiImporterCommand extends Command
      */
     protected function checkDatabaseVersion(SymfonyStyle $io, $requiredVersion, $requiredRevision)
     {
+        $optionColumn = $this->connection->quoteIdentifier('option');
+        $qb = $this->connection->createQueryBuilder();
+
         $version = $this->connection->createQueryBuilder()
             ->select('value')
             ->from($this->connection->quoteIdentifier($this->dbPrefix . 'configuration'))
-            ->where('option = :option')
-            ->setParameter(':option', 'version')
+            ->where($qb->expr()->eq($optionColumn, ':option'))
+            ->setParameter('option', 'version')
             ->execute()
             ->fetchColumn();
 
         $revision = $this->connection->createQueryBuilder()
             ->select('value')
             ->from($this->connection->quoteIdentifier($this->dbPrefix . 'configuration'))
-            ->where('option = :option')
-            ->setParameter(':option', 'revision')
+            ->where($qb->expr()->eq($optionColumn, ':option'))
+            ->setParameter('option', 'revision')
             ->execute()
             ->fetchColumn();
 
