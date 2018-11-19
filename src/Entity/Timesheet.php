@@ -376,21 +376,21 @@ class Timesheet
                     ->addViolation();
             }
 
-            if ($activity->getVisible() === false) {
+            if (null === $this->getEnd() && $activity->getVisible() === false) {
                 $context->buildViolation('Cannot start a disabled activity.')
                     ->atPath('activity')
                     ->setTranslationDomain('validators')
                     ->addViolation();
             }
 
-            if ($project->getVisible() === false) {
+            if (null === $this->getEnd() && $project->getVisible() === false) {
                 $context->buildViolation('Cannot start a disabled project.')
                     ->atPath('project')
                     ->setTranslationDomain('validators')
                     ->addViolation();
             }
 
-            if ($project->getCustomer()->getVisible() === false) {
+            if (null === $this->getEnd() && $project->getCustomer()->getVisible() === false) {
                 $context->buildViolation('Cannot start a disabled customer.')
                     ->atPath('customer')
                     ->setTranslationDomain('validators')
