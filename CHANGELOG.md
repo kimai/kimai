@@ -1,5 +1,22 @@
 # Change Log
 
+## [0.6.1](https://github.com/kevinpapst/kimai2/tree/0.6.1) (2018-11-19)
+[Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.6...0.6.1)
+
+**Fixed bugs:**
+
+- Error importing v1 Database [\#428](https://github.com/kevinpapst/kimai2/issues/428)
+- Redo button missing? [\#426](https://github.com/kevinpapst/kimai2/issues/426)
+
+**Closed issues:**
+
+-  Error importing v1 Database \(could not convert to string\) [\#431](https://github.com/kevinpapst/kimai2/issues/431)
+
+**Merged pull requests:**
+
+- fix migration for MySQL [\#430](https://github.com/kevinpapst/kimai2/pull/430) ([kevinpapst](https://github.com/kevinpapst))
+- fix importer for MySQL [\#429](https://github.com/kevinpapst/kimai2/pull/429) ([kevinpapst](https://github.com/kevinpapst))
+
 ## [0.6](https://github.com/kevinpapst/kimai2/tree/0.6) (2018-11-18)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.5...0.6)
 
