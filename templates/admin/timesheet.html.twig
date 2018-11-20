@@ -56,15 +56,19 @@
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'endtime') }}">{{ entry.end|date("H:i") }}</td>
                 {% endif %}
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}">{{ entry.duration|duration }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'rate') }}">{{ entry.rate|money(entry.project.customer.currency) }}</td>
             {% else %}
                 {% if not duration_only %}
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'endtime') }}">&dash;</td>
                 {% endif %}
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}"><i>{{ entry|duration }}</i></td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'rate') }}">&dash;</td>
             {% endif %}
-
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'rate') }}">
+                {% if not entry.end or not is_granted('view_rate', entry) %}
+                    &dash;
+                {% else %}
+                    {{ entry.rate|money(entry.project.customer.currency) }}
+                {% endif %}
+            </td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">
                 <a href="{{ path('admin_customer_edit', {'id': entry.project.customer.id}) }}">{{ widgets.label_customer(entry.project.customer) }}</a>
             </td>

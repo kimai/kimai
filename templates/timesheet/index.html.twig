@@ -34,9 +34,13 @@
         {% set columns = columns|merge({'starttime': '', 'endtime': 'hidden-xs'}) %}
     {% endif %}
 
+    {% set columns = columns|merge({'duration': ''}) %}
+
+    {% if is_granted('view_rate_own_timesheet') %}
+        {% set columns = columns|merge({'rate': 'hidden-xs'}) %}
+    {% endif %}
+
     {% set columns = columns|merge({
-        'duration': '',
-        'rate': 'hidden-xs',
         'customer': 'hidden-xs hidden-sm',
         'project': 'hidden-xs hidden-sm',
         'activity': 'hidden-xs hidden-sm',
@@ -61,13 +65,17 @@
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'endtime') }}">{{ entry.end|date("H:i") }}</td>
                 {% endif %}
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}">{{ entry.duration|duration }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'rate') }}">{{ entry.rate|money(entry.project.customer.currency) }}</td>
+                {% if is_granted('view_rate', entry) %}
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'rate') }}">{{ entry.rate|money(entry.project.customer.currency) }}</td>
+                {% endif %}
             {% else %}
                 {% if not duration_only %}
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'endtime') }}">&dash;</td>
                 {% endif %}
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}"><i>{{ entry|duration }}</i></td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'rate') }}">&dash;</td>
+                {% if is_granted('view_rate', entry) %}
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'rate') }}">&dash;</td>
+                {% endif %}
             {% endif %}
 
             <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">{{ widgets.label_customer(entry.project.customer) }}</td>

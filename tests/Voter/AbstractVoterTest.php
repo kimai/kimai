@@ -74,12 +74,14 @@ abstract class AbstractVoterTest extends TestCase
             $profile = ['view_own_profile', 'edit_own_profile', 'delete_own_profile', 'password_own_profile', 'roles_own_profile', 'preferences_own_profile', 'api-token_own_profile'];
             $profileOther = ['view_other_profile', 'edit_other_profile', 'delete_other_profile', 'password_other_profile', 'roles_other_profile', 'preferences_other_profile', 'api-token_other_profile'];
             $user = ['view_user', 'create_user', 'delete_user'];
+            $rate = ['view_rate_own_timesheet', 'edit_rate_own_timesheet'];
+            $rateOther = ['view_rate_other_timesheet', 'edit_rate_other_timesheet'];
 
             $permissions = [
                 'ROLE_USER' => array_merge($timesheet, $profile),
-                'ROLE_TEAMLEAD' => array_merge($invoice, $timesheet, $timesheetOthers, $profile),
-                'ROLE_ADMIN' => array_merge($activities, $projects, $customers, $invoice, $invoiceTemplate, $timesheet, $timesheetOthers, $profile),
-                'ROLE_SUPER_ADMIN' => array_merge($activities, $projects, $customers, $invoice, $invoiceTemplate, $timesheet, $timesheetOthers, $profile, $profileOther, $user),
+                'ROLE_TEAMLEAD' => array_merge($invoice, $timesheet, $timesheetOthers, $profile, ['view_rate_own_timesheet', 'view_rate_other_timesheet']),
+                'ROLE_ADMIN' => array_merge($activities, $projects, $customers, $invoice, $invoiceTemplate, $timesheet, $timesheetOthers, $profile, $rate, $rateOther),
+                'ROLE_SUPER_ADMIN' => array_merge($activities, $projects, $customers, $invoice, $invoiceTemplate, $timesheet, $timesheetOthers, $profile, $profileOther, $user, $rate, $rateOther),
             ];
         }
 

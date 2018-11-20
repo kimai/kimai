@@ -238,6 +238,7 @@ class TimesheetController extends AbstractController
         return $this->createForm(TimesheetEditForm::class, $entry, [
             'action' => $this->generateUrl('timesheet_create'),
             'method' => 'POST',
+            'include_rate' => $this->isGranted('edit_rate', $entry),
             'duration_only' => $this->isDurationOnlyMode(),
         ]);
     }
@@ -255,6 +256,7 @@ class TimesheetController extends AbstractController
                 'page' => $page
             ]),
             'method' => 'POST',
+            'include_rate' => $this->isGranted('edit_rate', $entry),
             'duration_only' => $this->isDurationOnlyMode(),
         ]);
     }

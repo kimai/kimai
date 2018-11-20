@@ -148,7 +148,8 @@ class TimesheetController extends AbstractController
             'action' => $this->generateUrl('admin_timesheet_create'),
             'method' => 'POST',
             'duration_only' => $this->isDurationOnlyMode(),
-            'include_user' => true
+            'include_rate' => $this->isGranted('edit_rate', $entry),
+            'include_user' => true,
         ]);
     }
 
@@ -166,7 +167,8 @@ class TimesheetController extends AbstractController
             ]),
             'method' => 'POST',
             'duration_only' => $this->isDurationOnlyMode(),
-            'include_user' => true
+            'include_rate' => $this->isGranted('edit_rate', $entry),
+            'include_user' => true,
         ]);
     }
 

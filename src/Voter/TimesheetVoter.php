@@ -23,6 +23,8 @@ class TimesheetVoter extends AbstractVoter
     public const STOP = 'stop';
     public const EDIT = 'edit';
     public const DELETE = 'delete';
+    public const VIEW_RATE = 'view_rate';
+    public const EDIT_RATE = 'edit_rate';
 
     /**
      * support rules based on the given $subject (here: Timesheet)
@@ -31,7 +33,9 @@ class TimesheetVoter extends AbstractVoter
         self::START,
         self::STOP,
         self::EDIT,
-        self::DELETE
+        self::DELETE,
+        self::VIEW_RATE,
+        self::EDIT_RATE,
     ];
 
     /**
@@ -80,6 +84,8 @@ class TimesheetVoter extends AbstractVoter
                 $permission .= $attribute;
                 break;
 
+            case self::VIEW_RATE:
+            case self::EDIT_RATE:
             case self::STOP:
             case self::EDIT:
             case self::DELETE:

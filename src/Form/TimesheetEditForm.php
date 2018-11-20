@@ -109,15 +109,20 @@ class TimesheetEditForm extends AbstractType
                 'label' => 'label.description',
                 'required' => false,
             ])
-            ->add('fixedRate', NumberType::class, [
-                'label' => 'label.fixed_rate',
-                'required' => false,
-            ])
-            ->add('hourlyRate', NumberType::class, [
-                'label' => 'label.hourly_rate',
-                'required' => false,
-            ])
         ;
+
+        if ($options['include_rate']) {
+            $builder
+                ->add('fixedRate', NumberType::class, [
+                    'label' => 'label.fixed_rate',
+                    'required' => false,
+                ])
+                ->add('hourlyRate', NumberType::class, [
+                    'label' => 'label.hourly_rate',
+                    'required' => false,
+                ]);
+        }
+
         /*
         $builder->get('customer')->addEventListener(
             FormEvents::POST_SUBMIT,
@@ -138,6 +143,7 @@ class TimesheetEditForm extends AbstractType
             }
         );
         */
+
         $builder->get('project')->addEventListener(
             FormEvents::POST_SUBMIT,
             function (FormEvent $event) {
@@ -168,6 +174,7 @@ class TimesheetEditForm extends AbstractType
             'csrf_token_id' => 'timesheet_edit',
             'duration_only' => false,
             'include_user' => false,
+            'include_rate' => true,
             'docu_chapter' => 'timesheet',
         ]);
     }

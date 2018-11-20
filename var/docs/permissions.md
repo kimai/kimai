@@ -77,6 +77,10 @@ At the end the system calculated the final list of permissions:
 | create_other_timesheet | TIMESHEET_OTHER  | -  |
 | edit_other_timesheet | TIMESHEET_OTHER  | -  |
 | delete_other_timesheet | TIMESHEET_OTHER  | -  |
+| view_rate_own_timesheet | RATE | -  |
+| edit_rate_own_timesheet | RATE | -  |
+| view_rate_other_timesheet | RATE_OTHER | -  |
+| edit_rate_other_timesheet | RATE_OTHER | -  |
 | view_own_profile | PROFILE  | -  |
 | edit_own_profile | PROFILE  | -  |
 | delete_own_profile | PROFILE  | -  |
