@@ -18,6 +18,7 @@
         "ocramius/proxy-manager": "2.1.1",
         "phpoffice/phpspreadsheet": "^1.4",
         "phpoffice/phpword": "^0.15.0",
+        "scheb/two-factor-bundle": "^3.16.0",
         "sensio/framework-extra-bundle": "^5.2",
         "symfony/asset": "^4.0",
         "symfony/console": "^4.0",
@@ -29,6 +30,7 @@
         "symfony/monolog-bundle": "^3.1",
         "symfony/orm-pack": "^1.0",
         "symfony/profiler-pack": "^1.0",
+        "symfony/requirements-checker": "^1.1",
         "symfony/security-bundle": "^4.0",
         "symfony/security-csrf": "^4.0",
         "symfony/serializer": "^4.0",
@@ -81,7 +83,8 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install": "symfony-cmd"
+            "assets:install": "symfony-cmd",
+            "requirements-checker": "script"
         },
         "post-install-cmd": [
             "@auto-scripts"

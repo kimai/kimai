@@ -161,6 +161,9 @@
     "kevinpapst/adminlte-bundle": {
         "version": "0.3"
     },
+    "lcobucci/jwt": {
+        "version": "3.2.5"
+    },
     "markbaker/complex": {
         "version": "1.4.6"
     },
@@ -269,6 +272,15 @@
     "psr/simple-cache": {
         "version": "1.0.0"
     },
+    "scheb/two-factor-bundle": {
+        "version": "3.16",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.16",
+            "ref": "b5789cd9710e2ee555bf361079b991068a0f640b"
+        }
+    },
     "sebastian/code-unit-reverse-lookup": {
         "version": "1.0.1"
     },
@@ -310,6 +322,9 @@
             "version": "4.0",
             "ref": "aaddfdf43cdecd4cf91f992052d76c2cadc04543"
         }
+    },
+    "sonata-project/google-authenticator": {
+        "version": "2.2.0"
     },
     "squizlabs/php_codesniffer": {
         "version": "3.2.2"
@@ -472,6 +487,15 @@
     },
     "symfony/property-info": {
         "version": "v4.1.3"
+    },
+    "symfony/requirements-checker": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "93d0ec48679f5e240d265088305c1ad775723f93"
+        }
     },
     "symfony/routing": {
         "version": "4.0",
