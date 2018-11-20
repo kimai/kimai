@@ -11,11 +11,6 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        main:
-            two_factor:
-                auth_form_path: 2fa_login    # The route name you have used in the routes.yaml
-                check_path: 2fa_login_check  # The route name you have used in the routes.yaml
-
         secured_area:
             pattern: ^/
             user_checker: App\Security\UserChecker
@@ -36,6 +31,10 @@ security:
                 check_path: fos_user_security_check
                 login_path: fos_user_security_login
                 csrf_token_generator: security.csrf.token_manager
+
+            two_factor:
+                auth_form_path: 2fa_login    # The route name you have used in the routes.yaml
+                check_path: 2fa_login_check  # The route name you have used in the routes.yaml
 
             logout:
                 path: fos_user_security_logout
