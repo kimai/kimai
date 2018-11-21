@@ -44,6 +44,8 @@ At the end the system calculated the final list of permissions:
 
 ## Existing permissions
 
+The permission-names were chosen to be self-explanatory. In the hope that it worked, here is the full list of existing permissions:
+
 | Permission name | Set name | Description |
 |---|---|---|
 | view_activity | ACTIVITIES  | -  |
@@ -95,6 +97,7 @@ At the end the system calculated the final list of permissions:
 | roles_other_profile | PROFILE_OTHER  | -  |
 | preferences_other_profile | PROFILE_OTHER  | -  |
 | api-token_other_profile | PROFILE_OTHER  | -  |
+| edit_own_hourly_rate | - | allows to edit the own user specific hourly rate | 
 | view_user | USER  | -  |
 | create_user | USER  | -  |
 | delete_user | USER  | -  |

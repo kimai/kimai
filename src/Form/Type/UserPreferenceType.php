@@ -46,10 +46,16 @@ class UserPreferenceType extends AbstractType
                         $required = false;
                     }
 
-                    $event->getForm()->add('value', $preference->getType(), [
+                    $type = $preference->getType();
+                    if (!$preference->isEnabled()) {
+                        $type = HiddenType::class;
+                    }
+
+                    $event->getForm()->add('value', $type, [
                         'label' => 'label.' . $preference->getName(),
                         'constraints' => $preference->getConstraints(),
                         'required' => $required,
+                        'disabled' => !$preference->isEnabled(),
                     ]);
                 }
             }

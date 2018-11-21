@@ -15,6 +15,7 @@ use App\Event\UserPreferenceEvent;
 use App\Form\Type\CalendarViewType;
 use App\Form\Type\LanguageType;
 use App\Form\Type\SkinType;
+use App\Security\RolePermissionManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -25,9 +26,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Constraints\Range;
 
-/**
- * Class UserPreferenceSubscriber
- */
 class UserPreferenceSubscriber implements EventSubscriberInterface
 {
     /**
@@ -41,14 +39,20 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
     protected $storage;
 
     /**
-     * UserPreferenceSubscriber constructor.
+     * @var RolePermissionManager
+     */
+    protected $acl;
+
+    /**
      * @param EventDispatcherInterface $dispatcher
      * @param TokenStorageInterface $storage
+     * @param RolePermissionManager $acl
      */
-    public function __construct(EventDispatcherInterface $dispatcher, TokenStorageInterface $storage)
+    public function __construct(EventDispatcherInterface $dispatcher, TokenStorageInterface $storage, RolePermissionManager $acl)
     {
         $this->eventDispatcher = $dispatcher;
         $this->storage = $storage;
+        $this->acl = $acl;
     }
 
     /**
@@ -62,22 +66,33 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * @param User $user
      * @return UserPreference[]
      */
-    public function getDefaultPreferences()
+    public function getDefaultPreferences(User $user)
     {
+        $enableHourlyRate = false;
+        foreach ($user->getRoles() as $role) {
+            if ($this->acl->hasPermission($role, 'edit_own_hourly_rate')) {
+                $enableHourlyRate = true;
+            }
+        }
+
+        /*
+            (new UserPreference())
+                ->setName('timezone')
+                ->setValue(date_default_timezone_get())
+                ->setType(TimezoneType::class),
+        */
+
         return [
             (new UserPreference())
                 ->setName(UserPreference::HOURLY_RATE)
                 ->setValue(0)
                 ->setType(IntegerType::class)
+                ->setEnabled($enableHourlyRate)
                 ->addConstraint(new Range(['min' => 0])),
-/*
-            (new UserPreference())
-                ->setName('timezone')
-                ->setValue(date_default_timezone_get())
-                ->setType(TimezoneType::class),
-*/
+
             (new UserPreference())
                 ->setName('language')
                 ->setValue('en') // TODO fetch from services.yaml
@@ -132,15 +147,17 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
             $prefs[$preference->getName()] = $preference;
         }
 
-        $event = new UserPreferenceEvent($user, $this->getDefaultPreferences());
+        $event = new UserPreferenceEvent($user, $this->getDefaultPreferences($user));
         $this->eventDispatcher->dispatch(UserPreferenceEvent::CONFIGURE, $event);
 
         foreach ($event->getPreferences() as $preference) {
+            /* @var UserPreference[] $prefs */
             if (isset($prefs[$preference->getName()])) {
                 /* @var UserPreference $pref */
                 $prefs[$preference->getName()]
                     ->setType($preference->getType())
                     ->setConstraints($preference->getConstraints())
+                    ->setEnabled($preference->isEnabled())
                 ;
             } else {
                 $prefs[$preference->getName()] = $preference;

@@ -208,16 +208,29 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertEquals(['ROLE_TEAMLEAD', 'ROLE_SUPER_ADMIN', 'ROLE_USER'], $user->getRoles());
     }
 
-    public function testPreferencesAction()
+    public function getPreferencesTestData()
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/prefs');
+        return [
+            // assert that the user doesn't have the "edit_rate_own_timesheet" permission
+            [User::ROLE_USER, UserFixtures::USERNAME_USER, 82, 82],
+            // admins are allowed to update their own hourly rate
+            [User::ROLE_ADMIN, UserFixtures::USERNAME_ADMIN, 81, 37],
+        ];
+    }
+
+    /**
+     * @dataProvider getPreferencesTestData
+     */
+    public function testPreferencesAction($role, $username, $hourlyRateOriginal, $hourlyRate)
+    {
+        $client = $this->getClientForAuthenticatedUser($role);
+        $this->request($client, '/profile/' . $username . '/prefs');
 
         /** @var User $user */
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole($em, $role);
 
-        $this->assertEquals(82, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
+        $this->assertEquals($hourlyRateOriginal, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
         $this->assertEquals('green', $user->getPreferenceValue(UserPreference::SKIN));
         $this->assertEquals(true, $user->getPreferenceValue('theme.fixed_layout'));
         $this->assertEquals(false, $user->getPreferenceValue('theme.boxed_layout'));
@@ -242,7 +255,7 @@ class ProfileControllerTest extends ControllerBaseTest
             ]
         ]);
 
-        $targetUrl = '/ar/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/prefs';
+        $targetUrl = '/ar/profile/' . urlencode($username) . '/prefs';
 
         $this->assertIsRedirect($client, $targetUrl);
         $client->followRedirect();
@@ -251,9 +264,9 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByRole($em, $role);
 
-        $this->assertEquals(37, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
+        $this->assertEquals($hourlyRate, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
         //$this->assertEquals('', $user->getPreferenceValue('America/Creston'));
         $this->assertEquals('ar', $user->getPreferenceValue('language'));
         $this->assertEquals('blue', $user->getPreferenceValue(UserPreference::SKIN));
