@@ -194,7 +194,13 @@ class ProfileController extends AbstractController
 
             $this->flashSuccess('action.update.success');
 
-            return $this->redirectToRoute('user_profile_preferences', ['username' => $profile->getUsername()]);
+            // switch locale if neccessary
+            $locale = $profile->getPreferenceValue('language', $request->getLocale());
+
+            return $this->redirectToRoute('user_profile_preferences', [
+                '_locale' => $locale,
+                'username' => $profile->getUsername()
+            ]);
         }
 
         return $this->getProfileView($profile, 'preferences', null, null, null, $form);

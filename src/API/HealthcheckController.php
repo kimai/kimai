@@ -37,6 +37,7 @@ class HealthcheckController extends Controller
      * @SWG\Response(
      *     response=200,
      *     description="A simple route that returns a 'pong', which you can use for testing the API",
+     *     examples={"{'message': 'pong'}"}
      * )
      *
      * @Rest\Get(path="/ping")

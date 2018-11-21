@@ -82,11 +82,12 @@ abstract class ControllerBaseTest extends WebTestCase
      * @param string $url
      * @param string $method
      * @param array $parameters
+     * @param string $content
      * @return \Symfony\Component\DomCrawler\Crawler
      */
-    protected function request(Client $client, string $url, $method = 'GET', array $parameters = [])
+    protected function request(Client $client, string $url, $method = 'GET', array $parameters = [], string $content = null)
     {
-        return $client->request($method, $this->createUrl($url), $parameters);
+        return $client->request($method, $this->createUrl($url), $parameters, [], [], $content);
     }
 
     /**

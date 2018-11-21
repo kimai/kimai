@@ -46,6 +46,12 @@
         {% else %}
             {% if not is_visible_column(name, column, '') %}
                 {% set classes = classes ~ ' hidden' %}
+            {% elseif not is_datatable_configured(name, '') %}
+                {% for tmp in classes|split(' ') %}
+                    {% if 'hidden' == tmp %}
+                        {% set classes = classes|replace({(tmp): ''}) %}
+                    {% endif %}
+                {% endfor %}
             {% else %}
                 {% for tmp in classes|split(' ') %}
                     {% if 'hidden' in tmp %}

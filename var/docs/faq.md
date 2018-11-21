@@ -42,3 +42,19 @@ SQLite is a great database engine for testing, but when it comes to production u
 
 - It does not support ALTER TABLE commands and makes update procedures very clunky and problematic/errorsome (we still try to support updates, but they are heavy on large databases)
 - It does not support FOREIGN KEY constraints out of the box, which can lead to critical bugs when deleting activities/projects/customers 
+
+## Dotenv::populate() must be an instance of Symfony\\Component\\Dotenv\\void
+
+If you encounter an error like this:
+
+```
+PHP Fatal error:  Uncaught TypeError: Return value of Symfony\\Component\\Dotenv\\Dotenv::populate() must be an instance of Symfony\\Component\\Dotenv\\void, none returned in /var/www/kimai2/vendor/symfony/dotenv/Dotenv.php:95
+Stack trace:
+#0 /var/www/kimai2/vendor/symfony/dotenv/Dotenv.php(57): Symfony\\Component\\Dotenv\\Dotenv->populate(Array)
+#1 /var/www//kimai2/public/index.php(15): Symfony\\Component\\Dotenv\\Dotenv->load('/var/www/html/k...')
+#2 {main}\n  thrown in /var/www/kimai2/vendor/symfony/dotenv/Dotenv.php on line 95
+
+```
+
+you are running PHP 7.0. Probably you were able to install Kimai v2, because your PHP-CLI uses a different PHP version than your webserver.
+Upgrade PHP and the error will be gone.  

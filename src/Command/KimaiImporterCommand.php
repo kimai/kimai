@@ -247,7 +247,7 @@ class KimaiImporterCommand extends Command
             $allImports += $counter;
             $io->success('Imported users: ' . $counter);
         } catch (\Exception $ex) {
-            $io->error('Failed to import users: ' . $ex->getMessage());
+            $io->error('Failed to import users: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
             return;
         }
@@ -257,7 +257,7 @@ class KimaiImporterCommand extends Command
             $allImports += $counter;
             $io->success('Imported customers: ' . $counter);
         } catch (\Exception $ex) {
-            $io->error('Failed to import customers: ' . $ex->getMessage());
+            $io->error('Failed to import customers: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
             return;
         }
@@ -267,7 +267,7 @@ class KimaiImporterCommand extends Command
             $allImports += $counter;
             $io->success('Imported projects: ' . $counter);
         } catch (\Exception $ex) {
-            $io->error('Failed to import projects: ' . $ex->getMessage());
+            $io->error('Failed to import projects: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
             return;
         }
@@ -277,7 +277,7 @@ class KimaiImporterCommand extends Command
             $allImports += $counter;
             $io->success('Imported activities: ' . $counter);
         } catch (\Exception $ex) {
-            $io->error('Failed to import activities: ' . $ex->getMessage());
+            $io->error('Failed to import activities: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
             return;
         }
@@ -287,7 +287,7 @@ class KimaiImporterCommand extends Command
             $allImports += $counter;
             $io->success('Imported timesheet records: ' . $counter);
         } catch (\Exception $ex) {
-            $io->error('Failed to import timesheet records: ' . $ex->getMessage());
+            $io->error('Failed to import timesheet records: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
             return;
         }
@@ -318,19 +318,22 @@ class KimaiImporterCommand extends Command
      */
     protected function checkDatabaseVersion(SymfonyStyle $io, $requiredVersion, $requiredRevision)
     {
+        $optionColumn = $this->connection->quoteIdentifier('option');
+        $qb = $this->connection->createQueryBuilder();
+
         $version = $this->connection->createQueryBuilder()
             ->select('value')
             ->from($this->connection->quoteIdentifier($this->dbPrefix . 'configuration'))
-            ->where('option = :option')
-            ->setParameter(':option', 'version')
+            ->where($qb->expr()->eq($optionColumn, ':option'))
+            ->setParameter('option', 'version')
             ->execute()
             ->fetchColumn();
 
         $revision = $this->connection->createQueryBuilder()
             ->select('value')
             ->from($this->connection->quoteIdentifier($this->dbPrefix . 'configuration'))
-            ->where('option = :option')
-            ->setParameter(':option', 'revision')
+            ->where($qb->expr()->eq($optionColumn, ':option'))
+            ->setParameter('option', 'revision')
             ->execute()
             ->fetchColumn();
 
@@ -382,8 +385,10 @@ class KimaiImporterCommand extends Command
     protected function bytesHumanReadable($size)
     {
         $unit = ['b', 'kB', 'MB', 'GB'];
+        $i = floor(log($size, 1024));
+        $a = (int) $i;
 
-        return @round($size / pow(1024, ($i = floor(log($size, 1024)))), 2) . ' ' . $unit[$i];
+        return @round($size / pow(1024, $i), 2) . ' ' . $unit[$a];
     }
 
     /**
@@ -419,12 +424,8 @@ class KimaiImporterCommand extends Command
         if ($errors->count() > 0) {
             /** @var \Symfony\Component\Validator\ConstraintViolation $error */
             foreach ($errors as $error) {
-                $value = $error->getInvalidValue();
                 $io->error(
-                    $error->getPropertyPath()
-                    . ' (' . (is_array($value) ? implode(',', $value) : $value) . ')'
-                    . "\n    "
-                    . $error->getMessage()
+                    (string) $error
                 );
             }
 
@@ -938,7 +939,7 @@ class KimaiImporterCommand extends Command
             ;
 
             if (!$this->validateImport($io, $timesheet)) {
-                throw new \Exception('Failed to validate timesheet record: ' . $timesheet->getId());
+                throw new \Exception('Failed to validate timesheet record: ' . $oldRecord['timeEntryID']);
             }
 
             try {
@@ -949,8 +950,7 @@ class KimaiImporterCommand extends Command
                 }
                 ++$counter;
             } catch (\Exception $ex) {
-                $io->error('Failed to create timesheet record: ' . $timesheet->getId());
-                $io->error('Reason: ' . $ex->getMessage());
+                $io->error('Failed to create timesheet record: ' . $ex->getMessage());
             }
 
             $io->write('.');

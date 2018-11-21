@@ -32,7 +32,7 @@ class UserControllerTest extends APIControllerBaseTest
         $this->assertInternalType('array', $result);
         $this->assertNotEmpty($result);
         $this->assertEquals(6, count($result));
-        $this->assertStructure($result[0]);
+        $this->assertStructure($result[0], false);
     }
 
     public function testGetEntity()
@@ -50,15 +50,18 @@ class UserControllerTest extends APIControllerBaseTest
         $this->assertEntityNotFound(User::ROLE_SUPER_ADMIN, '/api/users/99');
     }
 
-    protected function assertStructure(array $result)
+    protected function assertStructure(array $result, $full = true)
     {
-        $expectedKeys = [
-            'id', 'username', 'enabled', 'roles', 'alias', 'title', 'avatar'
-        ];
+        $expectedKeys = ['id', 'username', 'enabled', 'alias'];
+
+        if ($full) {
+            $expectedKeys = ['id', 'username', 'enabled', 'roles', 'alias', 'title', 'avatar'];
+        }
 
         $actual = array_keys($result);
+        sort($actual);
+        sort($expectedKeys);
 
-        $this->assertEquals(count($expectedKeys), count($actual), 'User entity has different amount of keys');
         $this->assertEquals($expectedKeys, $actual, 'User structure does not match');
     }
 }
