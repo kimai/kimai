@@ -107,5 +107,9 @@ The permission-names were chosen to be self-explanatory. In the hope that it wor
 Knowing that many companies need a different combination of allowed permissions than the default ones, you might also 
 want to change the pre-configured permission.
 
-You can do that in your [local.yaml](configurations.md). Define the permissions like in the above mentioned example, 
-you might start by copying the default permissions from kimai.yaml.
+You can do that in your [local.yaml](configurations.md). Define the permissions like we did in the above mentioned example, 
+you might start by copying the default permissions from `kimai.yaml`.
+
+Be aware: if you configure your own permission definition, you have to overwrite the complete 
+node (`sets`, `maps` or`roles`) that you edited and define all SETS and/or ROLES.
+
