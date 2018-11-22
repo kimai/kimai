@@ -13,10 +13,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface;
 
 /**
  * Application main User entity.
@@ -309,7 +309,7 @@ class User extends BaseUser implements UserInterface, TwoFactorInterface
     private $googleAuthenticatorSecret;
 
     // [...]
-    
+
     public function isGoogleAuthenticatorEnabled(): bool
     {
         return $this->googleAuthenticatorSecret ? true : false;
@@ -329,5 +329,4 @@ class User extends BaseUser implements UserInterface, TwoFactorInterface
     {
         $this->googleAuthenticatorSecret = $googleAuthenticatorSecret;
     }
-
 }

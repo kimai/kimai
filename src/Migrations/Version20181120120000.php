@@ -52,7 +52,7 @@ final class Version20181120120000 extends AbstractMigration
         if (!in_array($platform, ['sqlite', 'mysql'])) {
             $this->abortIf(true, 'Unsupported database platform: ' . $platform);
         }
-        
+
         if ($platform === 'mysql') {
             $this->addSql('ALTER TABLE ' . $this->getTableName('users') . ' DROP googleAuthenticatorSecret');
         }
