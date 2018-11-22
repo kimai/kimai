@@ -17,6 +17,10 @@ security:
             anonymous: true
             stateless: false
 
+            two_factor:
+                auth_form_path: 2fa_login    # The route name you have used in the routes.yaml
+                check_path: 2fa_login_check  # The route name you have used in the routes.yaml
+
             guard:
                 authenticators:
                     - App\Security\TokenAuthenticator
@@ -32,13 +36,10 @@ security:
                 login_path: fos_user_security_login
                 csrf_token_generator: security.csrf.token_manager
 
-            two_factor:
-                auth_form_path: 2fa_login    # The route name you have used in the routes.yaml
-                check_path: 2fa_login_check  # The route name you have used in the routes.yaml
-
             logout:
                 path: fos_user_security_logout
                 target: homepage
+
 
     role_hierarchy:
         ROLE_USER:        ROLE_CUSTOMER
