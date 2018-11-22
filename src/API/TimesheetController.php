@@ -28,8 +28,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @RouteResource("Timesheet")
- *
- * @Security("is_granted('ROLE_USER')")
  */
 class TimesheetController extends BaseApiController
 {
@@ -66,6 +64,8 @@ class TimesheetController extends BaseApiController
      * @Rest\QueryParam(name="size", requirements="\d+", strict=true, nullable=true, description="The amount of entries for each page (default: 25)")
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order (allowed values: 'ASC', 'DESC')")
      * @Rest\QueryParam(name="orderBy", requirements="id|begin|end|rate", strict=true, nullable=true, description="The field by which results will be ordered (allowed values: 'id', 'begin', 'end', 'rate')")
+     *
+     * @Security("is_granted('view_own_timesheet')")
      *
      * @return Response
      */
@@ -120,6 +120,8 @@ class TimesheetController extends BaseApiController
      *      @SWG\Schema(ref="#/definitions/TimesheetEntity")
      * )
      *
+     * @Security("is_granted('view_own_timesheet')")
+     *
      * @param int $id
      * @return Response
      */
@@ -145,6 +147,8 @@ class TimesheetController extends BaseApiController
      *          @SWG\Schema(ref="#/definitions/TimesheetEntity"),
      *      )
      * )
+     *
+     * @Security("is_granted('create_own_timesheet')")
      *
      * @param Request $request
      * @return Response

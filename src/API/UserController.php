@@ -22,9 +22,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @RouteResource("User")
- *
- * @Security("is_granted('ROLE_SUPER_ADMIN')")
- * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
  */
 class UserController extends BaseApiController
 {
@@ -55,6 +52,8 @@ class UserController extends BaseApiController
      *      @SWG\Schema(ref="#/definitions/UserCollection"),
      * )
      *
+     * @Security("is_granted('view_user')")
+     *
      * @return Response
      */
     public function cgetAction()
@@ -72,6 +71,8 @@ class UserController extends BaseApiController
      *      description="Return one user entity",
      *      @SWG\Schema(ref="#/definitions/UserEntity"),
      * )
+     *
+     * @Security("is_granted('view_user')")
      *
      * @param int $id
      * @return Response

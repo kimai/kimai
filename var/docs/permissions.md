@@ -46,61 +46,61 @@ At the end the system calculated the final list of permissions:
 
 The permission-names were chosen to be self-explanatory. In the hope that it worked, here is the full list of existing permissions:
 
-| Permission name | Set name | Description |
-|---|---|---|
-| view_activity | ACTIVITIES  | -  |
-| create_activity | ACTIVITIES  | -  |
-| edit_activity | ACTIVITIES  | -  |
-| delete_activity | ACTIVITIES  | -  |
-| view_project | PROJECTS  | -  |
-| create_project | PROJECTS  | -  |
-| edit_project | PROJECTS  | -  |
-| delete_project | PROJECTS  | -  |
-| view_customer | CUSTOMERS  | -  |
-| create_customer | CUSTOMERS  | -  |
-| edit_customer | CUSTOMERS  | -  |
-| delete_customer | CUSTOMERS  | -  |
-| view_invoice | INVOICE  | -  |
-| create_invoice | INVOICE  | -  |
-| view_invoice_template | INVOICE_TEMPLATE  | -  |
-| create_invoice_template | INVOICE_TEMPLATE  | -  |
-| edit_invoice_template | INVOICE_TEMPLATE  | -  |
-| delete_invoice_template | INVOICE_TEMPLATE  | -  |
-| view_own_timesheet | TIMESHEET  | -  |
-| start_own_timesheet | TIMESHEET  | -  |
-| stop_own_timesheet | TIMESHEET  | -  |
-| create_own_timesheet | TIMESHEET  | -  |
-| edit_own_timesheet | TIMESHEET  | -  |
-| export_own_timesheet | TIMESHEET  | -  |
-| delete_own_timesheet | TIMESHEET  | -  |
-| view_other_timesheet | TIMESHEET_OTHER  | -  |
-| start_other_timesheet | TIMESHEET_OTHER  | -  |
-| stop_other_timesheet | TIMESHEET_OTHER  | -  |
-| create_other_timesheet | TIMESHEET_OTHER  | -  |
-| edit_other_timesheet | TIMESHEET_OTHER  | -  |
-| delete_other_timesheet | TIMESHEET_OTHER  | -  |
-| view_rate_own_timesheet | RATE | -  |
-| edit_rate_own_timesheet | RATE | -  |
-| view_rate_other_timesheet | RATE_OTHER | -  |
-| edit_rate_other_timesheet | RATE_OTHER | -  |
-| view_own_profile | PROFILE  | -  |
-| edit_own_profile | PROFILE  | -  |
-| delete_own_profile | PROFILE  | -  |
-| password_own_profile | PROFILE  | -  |
-| roles_own_profile | PROFILE  | -  |
-| preferences_own_profile | PROFILE  | -  |
-| api-token_own_profile | PROFILE  | -  |
-| view_other_profile | PROFILE_OTHER  | -  |
-| edit_other_profile | PROFILE_OTHER  | -  |
-| delete_other_profile | PROFILE_OTHER  | -  |
-| password_other_profile | PROFILE_OTHER  | -  |
-| roles_other_profile | PROFILE_OTHER  | -  |
-| preferences_other_profile | PROFILE_OTHER  | -  |
-| api-token_other_profile | PROFILE_OTHER  | -  |
-| edit_own_hourly_rate | - | allows to edit the own user specific hourly rate | 
-| view_user | USER  | -  |
-| create_user | USER  | -  |
-| delete_user | USER  | -  |
+| Permission name | Set name | API use | Description |
+|---|---|---|---|
+| view_activity | ACTIVITIES  |   | -  |
+| create_activity | ACTIVITIES  |   | -  |
+| edit_activity | ACTIVITIES  |   | -  |
+| delete_activity | ACTIVITIES  |   | -  |
+| view_project | PROJECTS  |   |   |
+| create_project | PROJECTS  |   | -  |
+| edit_project | PROJECTS  |   | -  |
+| delete_project | PROJECTS  |   | -  |
+| view_customer | CUSTOMERS  |   | -  |
+| create_customer | CUSTOMERS  |   | -  |
+| edit_customer | CUSTOMERS  |   | -  |
+| delete_customer | CUSTOMERS  |   | -  |
+| view_invoice | INVOICE  |   | -  |
+| create_invoice | INVOICE  |   | -  |
+| view_invoice_template | INVOICE_TEMPLATE  |   | -  |
+| create_invoice_template | INVOICE_TEMPLATE  |   | -  |
+| edit_invoice_template | INVOICE_TEMPLATE  |   | -  |
+| delete_invoice_template | INVOICE_TEMPLATE  |   | -  |
+| view_own_timesheet | TIMESHEET  | X  | -  |
+| start_own_timesheet | TIMESHEET  |   | -  |
+| stop_own_timesheet | TIMESHEET  |   | -  |
+| create_own_timesheet | TIMESHEET  | X  | -  |
+| edit_own_timesheet | TIMESHEET  |   | -  |
+| export_own_timesheet | TIMESHEET  |   | -  |
+| delete_own_timesheet | TIMESHEET  |   | -  |
+| view_other_timesheet | TIMESHEET_OTHER  |   | -  |
+| start_other_timesheet | TIMESHEET_OTHER  |   | -  |
+| stop_other_timesheet | TIMESHEET_OTHER  |   | -  |
+| create_other_timesheet | TIMESHEET_OTHER  |   | -  |
+| edit_other_timesheet | TIMESHEET_OTHER  |   | -  |
+| delete_other_timesheet | TIMESHEET_OTHER  |   | -  |
+| view_rate_own_timesheet | RATE |   | -  |
+| edit_rate_own_timesheet | RATE |   | -  |
+| view_rate_other_timesheet | RATE_OTHER |   | -  |
+| edit_rate_other_timesheet | RATE_OTHER |   | -  |
+| view_own_profile | PROFILE  |   | -  |
+| edit_own_profile | PROFILE  |   | -  |
+| delete_own_profile | PROFILE  |   | -  |
+| password_own_profile | PROFILE  |   | -  |
+| roles_own_profile | PROFILE  |   | -  |
+| preferences_own_profile | PROFILE  |   | -  |
+| api-token_own_profile | PROFILE  |   | -  |
+| view_other_profile | PROFILE_OTHER  |   | -  |
+| edit_other_profile | PROFILE_OTHER  |   | -  |
+| delete_other_profile | PROFILE_OTHER  |   | -  |
+| password_other_profile | PROFILE_OTHER  |   | -  |
+| roles_other_profile | PROFILE_OTHER  |   | allows to change roles for other users |
+| preferences_other_profile | PROFILE_OTHER  |   | _reserved for later_  |
+| api-token_other_profile | PROFILE_OTHER  |   | allows to set the API login token for other users  |
+| edit_own_hourly_rate | - |   | allows to edit the own user specific hourly rate | 
+| view_user | USER  | X  | allows to access the User administration and see the list of all users  |
+| create_user | USER  |   | allows to create new users  |
+| delete_user | USER  |   | allows to delete existing users  |
 
 ## Configure permissions
 
@@ -112,4 +112,3 @@ you might start by copying the default permissions from `kimai.yaml`.
 
 Be aware: if you configure your own permission definition, you have to overwrite the complete 
 node (`sets`, `maps` or`roles`) that you edited and define all SETS and/or ROLES.
-
