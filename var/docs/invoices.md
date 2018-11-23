@@ -93,35 +93,50 @@ See below in `Template variables` to find out which variables you can use in you
 
 You can use the following global variables in your templates:
 
-| Key | Description | Example | 
-|---|---|---|
-| ${invoice.due_date} | The due date for the invoice payment | |
-| ${invoice.date} | The creation date of this invoice | |
-| ${invoice.number} | The generated invoice number | |
-| ${invoice.currency} | The invoice currency | |
-| ${invoice.total_time} | The total working time (entries with a fixed rate are always calculated with 1) | |
-| ${invoice.total} | The invoices total (including tax) | |
-| ${invoice.subtotal} | The invoices subtotal (excluding tax) | |
-| ${invoice.vat} | The VAT in percent for this invoice | |
-| ${invoice.tax} | The tax of the invoice amount | |
-| ${template.name} | The invoice name, as configured in your template | |
-| ${template.company} | The company name, as configured in your template | |
-| ${template.address} | The invoicing address, as configured in your template | |
-| ${template.title} | The invoice title, as configured in your template | |
-| ${template.payment_terms} | Your payment terms, usage might differ from template to template | |
-| ${template.due_days} | The amount of days for the payment, starting with the day of creating the invoice | |
-| ${query.begin} | The query begin as formatted short date | |
-| ${query.end} | The query end as formatted short date | |
-| ${query.month} | The month for this query (begin date) | |
-| ${query.year} | The year for this query (begin date) | |
-| ${customer.address} | The customer address | |
-| ${customer.name} | The customer name | |
-| ${customer.contact} | The customer contact | |
-| ${customer.company} | The customer company | |
-| ${customer.number} | The customer number | |
-| ${customer.country} | The customer country | |
-| ${customer.homepage} | The customer homepage | |
-| ${customer.comment} | The customer comment | |
+| Key | Description |
+|---|---|
+| ${invoice.due_date} | The due date for the invoice payment |
+| ${invoice.date} | The creation date of this invoice |
+| ${invoice.number} | The generated invoice number |
+| ${invoice.currency} | The invoice currency |
+| ${invoice.total_time} | The total working time (entries with a fixed rate are always calculated with 1) |
+| ${invoice.total} | The invoices total (including tax) |
+| ${invoice.subtotal} | The invoices subtotal (excluding tax) |
+| ${invoice.vat} | The VAT in percent for this invoice |
+| ${invoice.tax} | The tax of the invoice amount |
+| ${template.name} | The invoice name, as configured in your template |
+| ${template.company} | The company name, as configured in your template |
+| ${template.address} | The invoicing address, as configured in your template |
+| ${template.title} | The invoice title, as configured in your template |
+| ${template.payment_terms} | Your payment terms, usage might differ from template to template |
+| ${template.due_days} | The amount of days for the payment, starting with the day of creating the invoice |
+| ${query.begin} | The query begin as formatted short date |
+| ${query.end} | The query end as formatted short date |
+| ${query.month} | The month for this query (begin date) |
+| ${query.year} | The year for this query (begin date) |
+
+If a customer was selected the following values exist as well:
+
+| Key | Description |
+|---|---|
+| ${customer.id} | The customer ID |
+| ${customer.address} | The customer address |
+| ${customer.name} | The customer name |
+| ${customer.contact} | The customer contact |
+| ${customer.company} | The customer company |
+| ${customer.number} | The customer number |
+| ${customer.country} | The customer country |
+| ${customer.homepage} | The customer homepage |
+| ${customer.comment} | The customer comment |
+
+If a project was selected the following values exist as well:
+
+| Key | Description |
+|---|---|
+| ${project.id} | The project ID |
+| ${project.name} | The project name |
+| ${project.comment} | The project name |
+| ${project.order_number} | The project order number |
 
 ### Timesheet entry variables 
 

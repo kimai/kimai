@@ -17,14 +17,14 @@ class DebugRendererTest extends AbstractRendererTest
 {
     public function getTestModel()
     {
-        yield [$this->getInvoiceModel(), '1,947.99', 5, 5, 1, 2, 2];
-        yield [$this->getInvoiceModelOneEntry(), '293.27', 1, 1, 0, 1, 0];
+        yield [$this->getInvoiceModel(), '1,947.99', 5, 5, 1, 2, 2, true];
+        yield [$this->getInvoiceModelOneEntry(), '293.27', 1, 1, 0, 1, 0, false];
     }
 
     /**
      * @dataProvider getTestModel
      */
-    public function testRender(InvoiceModel $model, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3)
+    public function testRender(InvoiceModel $model, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3, $hasProject)
     {
         $document = new InvoiceDocument(new \SplFileInfo(__DIR__ . '/DebugRenderer.php'));
         $sut = new DebugRenderer();
@@ -32,7 +32,7 @@ class DebugRendererTest extends AbstractRendererTest
         $response = $sut->render($document, $model);
         $data = json_decode($response->getContent(), true);
 
-        $this->assertModelStructure($data['model']);
+        $this->assertModelStructure($data['model'], $hasProject);
         $rows = $data['entries'];
         $this->assertEquals($expectedRows, count($rows));
 
@@ -43,7 +43,7 @@ class DebugRendererTest extends AbstractRendererTest
         // TODO check values or formats?
     }
 
-    protected function assertModelStructure(array $model)
+    protected function assertModelStructure(array $model, $hasProject = true)
     {
         $keys = [
             'invoice.due_date',
@@ -65,6 +65,7 @@ class DebugRendererTest extends AbstractRendererTest
             'query.end',
             'query.month',
             'query.year',
+            'customer.id',
             'customer.address',
             'customer.name',
             'customer.contact',
@@ -75,17 +76,20 @@ class DebugRendererTest extends AbstractRendererTest
             'customer.comment',
         ];
 
-        foreach ($keys as $key) {
-            $this->assertArrayHasKey($key, $model);
+        if ($hasProject) {
+            $keys = array_merge($keys, [
+                'project.id',
+                'project.name',
+                'project.comment',
+                'project.order_number',
+            ]);
         }
 
-        $expectedKeys = array_merge([], $keys);
-        sort($expectedKeys);
         $givenKeys = array_keys($model);
+        sort($keys);
         sort($givenKeys);
 
-        $this->assertEquals(count($keys), count($givenKeys));
-        $this->assertEquals($expectedKeys, $givenKeys);
+        $this->assertEquals($keys, $givenKeys);
     }
 
     protected function assertEntryStructure(array $model)
