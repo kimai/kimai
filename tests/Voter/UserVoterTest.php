@@ -57,13 +57,14 @@ class UserVoterTest extends AbstractVoterTest
             yield [$user, $user, 'view', $result];
             yield [$user, $user, 'edit', $result];
             yield [$user, $user, 'password', $result];
-            yield [$user, $user, 'roles', $result];
             yield [$user, $user, 'preferences', $result];
             yield [$user, $user, 'api-token', $result];
         }
 
         $result = VoterInterface::ACCESS_DENIED;
         foreach ([$user0, $user1, $user2] as $user) {
+            yield [$user, $user, 'roles', $result];
+            yield [$user3, $user, 'roles', $result];
             yield [$user, $user3, 'view', $result];
             yield [$user, $user3, 'edit', $result];
             yield [$user, $user3, 'delete', $result];
