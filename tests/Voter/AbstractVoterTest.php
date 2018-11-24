@@ -71,7 +71,7 @@ abstract class AbstractVoterTest extends TestCase
             $invoiceTemplate = ['view_invoice_template', 'create_invoice_template', 'edit_invoice_template', 'delete_invoice_template'];
             $timesheet = ['view_own_timesheet', 'start_own_timesheet', 'stop_own_timesheet', 'create_own_timesheet', 'edit_own_timesheet', 'export_own_timesheet', 'delete_own_timesheet'];
             $timesheetOthers = ['view_other_timesheet', 'start_other_timesheet', 'stop_other_timesheet', 'create_other_timesheet', 'edit_other_timesheet', 'delete_other_timesheet'];
-            $profile = ['view_own_profile', 'edit_own_profile', 'delete_own_profile', 'password_own_profile', 'roles_own_profile', 'preferences_own_profile', 'api-token_own_profile'];
+            $profile = ['view_own_profile', 'edit_own_profile', 'password_own_profile', 'preferences_own_profile', 'api-token_own_profile'];
             $profileOther = ['view_other_profile', 'edit_other_profile', 'delete_other_profile', 'password_other_profile', 'roles_other_profile', 'preferences_other_profile', 'api-token_other_profile'];
             $user = ['view_user', 'create_user', 'delete_user'];
             $rate = ['view_rate_own_timesheet', 'edit_rate_own_timesheet'];
@@ -80,7 +80,7 @@ abstract class AbstractVoterTest extends TestCase
             $roleUser = ['edit_own_hourly_rate'];
             $roleTeamlead = ['view_rate_own_timesheet', 'view_rate_other_timesheet', 'edit_own_hourly_rate'];
             $roleAdmin = ['edit_own_hourly_rate'];
-            $roleSuperAdmin = ['edit_own_hourly_rate'];
+            $roleSuperAdmin = ['edit_own_hourly_rate', 'delete_own_profile', 'roles_own_profile'];
 
             $permissions = [
                 'ROLE_USER' => array_merge($timesheet, $profile, $roleUser),

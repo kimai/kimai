@@ -25,13 +25,24 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertUrlIsSecured('/profile/' . UserFixtures::USERNAME_USER);
     }
 
-    public function testIndexAction()
+    public function getTabTestData()
     {
-        $client = $this->getClientForAuthenticatedUser();
-        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER);
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        $userTabs = ['#charts', '#settings', '#password', '#api-token', '#preferences'];
 
-        $expectedTabs = ['#charts', '#settings', '#password', '#api-token', '#roles', '#preferences'];
+        return [
+            [User::ROLE_USER, UserFixtures::USERNAME_USER, ['#charts', '#settings', '#password', '#api-token', '#preferences']],
+            [User::ROLE_SUPER_ADMIN, UserFixtures::USERNAME_SUPER_ADMIN, array_merge($userTabs, ['#roles'])],
+        ];
+    }
+
+    /**
+     * @dataProvider getTabTestData
+     */
+    public function testIndexAction($role, $username, $expectedTabs)
+    {
+        $client = $this->getClientForAuthenticatedUser($role);
+        $this->request($client, '/profile/' . $username);
+        $this->assertTrue($client->getResponse()->isSuccessful());
 
         $tabs = $client->getCrawler()->filter('div.nav-tabs-custom ul.nav-tabs li');
         $this->assertEquals(count($expectedTabs), $tabs->count());
