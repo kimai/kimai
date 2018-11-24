@@ -83,7 +83,7 @@ The permission-names were chosen to be self-explanatory. In the hope that it wor
 | edit_rate_own_timesheet | RATE |   | -  |
 | view_rate_other_timesheet | RATE_OTHER |   | -  |
 | edit_rate_other_timesheet | RATE_OTHER |   | -  |
-| view_own_profile | PROFILE  |   | -  |
+| view_own_profile | PROFILE  |   | Allows access to the own profile view. Without this permission, users cannot access any of their profile settings or passwords ...  |
 | edit_own_profile | PROFILE  |   | -  |
 | delete_own_profile | PROFILE  |   | -  |
 | password_own_profile | PROFILE  |   | -  |
