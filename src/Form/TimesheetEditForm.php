@@ -32,6 +32,26 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TimesheetEditForm extends AbstractType
 {
+
+    /**
+     * @var CustomerRepository
+     */
+    private $customers;
+    /**
+     * @var ProjectRepository
+     */
+    private $projects;
+
+    /**
+     * @param CustomerRepository $customer
+     * @param ProjectRepository $project
+     */
+    public function __construct(CustomerRepository $customer, ProjectRepository $project)
+    {
+        $this->customers = $customer;
+        $this->projects = $project;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -82,34 +102,45 @@ class TimesheetEditForm extends AbstractType
             ]);
         }
 
+        $projectOptions = [];
+
+        if ($this->customers->countCustomer(true) > 1) {
+            $builder
+                ->add('customer', CustomerType::class, [
+                    // documentation is for NelmioApiDocBundle
+                    'documentation' => [
+                        'type' => 'integer',
+                        'description' => 'Customer ID',
+                    ],
+                    'query_builder' => function (CustomerRepository $repo) use ($customer) {
+                        return $repo->builderForEntityType($customer);
+                    },
+                    'data' => $customer ? $customer : '',
+                    'required' => false,
+                    'mapped' => false,
+                    'attr' => [
+                        'data-related-select' => $this->getBlockPrefix() . '_project',
+                        'data-api-url' => ['get_projects', ['customer' => '-s-']],
+                    ],
+                ]);
+        } else {
+            $projectOptions['group_by'] = null;
+        }
+
+        if ($this->projects->countProject(true) > 1) {
+            $projectOptions['placeholder'] = null;
+        } else {
+            $projectOptions['group_by'] = null;
+        }
+
         $builder
-            ->add('customer', CustomerType::class, [
-                // documentation is for NelmioApiDocBundle
-                'documentation' => [
-                    'type' => 'integer',
-                    'description' => 'Customer ID',
-                ],
-                'label' => 'label.customer',
-                'query_builder' => function (CustomerRepository $repo) use ($customer) {
-                    return $repo->builderForEntityType($customer);
-                },
-                'data' => $customer ? $customer : '',
-                'required' => false,
-                'mapped' => false,
-                'attr' => [
-                    'data-related-select' => $this->getBlockPrefix() . '_project',
-                    'data-api-url' => ['get_projects', ['customer' => '-s-']],
-                ],
-            ])
-            ->add('project', ProjectType::class, [
+            ->add('project', ProjectType::class, array_merge($projectOptions, [
                 // documentation is for NelmioApiDocBundle
                 'documentation' => [
                     'type' => 'integer',
                     'description' => 'Project ID',
                 ],
                 'required' => true,
-                'placeholder' => '',
-                'label' => 'label.project',
                 'query_builder' => function (ProjectRepository $repo) use ($project) {
                     return $repo->builderForEntityType($project);
                 },
@@ -117,14 +148,15 @@ class TimesheetEditForm extends AbstractType
                     'data-related-select' => $this->getBlockPrefix() . '_activity',
                     'data-api-url' => ['get_activities', ['project' => '-s-']],
                 ],
-            ])
+            ]));
+
+        $builder
             ->add('activity', ActivityType::class, [
                 // documentation is for NelmioApiDocBundle
                 'documentation' => [
                     'type' => 'integer',
                     'description' => 'Activity ID',
                 ],
-                'label' => 'label.activity',
                 'query_builder' => function (ActivityRepository $repo) use ($activity) {
                     return $repo->builderForEntityType($activity);
                 },
@@ -162,6 +194,7 @@ class TimesheetEditForm extends AbstractType
             }
         );
         */
+
         $builder->get('project')->addEventListener(
             FormEvents::POST_SUBMIT,
             function (FormEvent $event) {
