@@ -48,21 +48,21 @@ The permission-names were chosen to be self-explanatory. In the hope that it wor
 
 | Permission name | Set name | API use | Description |
 |---|---|---|---|
-| view_activity | ACTIVITIES  |   | -  |
+| view_activity | ACTIVITIES  |   | allows access to the activity administration  |
 | create_activity | ACTIVITIES  |   | -  |
 | edit_activity | ACTIVITIES  |   | -  |
 | delete_activity | ACTIVITIES  |   | -  |
-| view_project | PROJECTS  |   |   |
+| view_project | PROJECTS  |   | allows access to the project administration  |
 | create_project | PROJECTS  |   | -  |
 | edit_project | PROJECTS  |   | -  |
 | delete_project | PROJECTS  |   | -  |
-| view_customer | CUSTOMERS  |   | -  |
+| view_customer | CUSTOMERS  |   | allows access to the customer administration  |
 | create_customer | CUSTOMERS  |   | -  |
 | edit_customer | CUSTOMERS  |   | -  |
 | delete_customer | CUSTOMERS  |   | -  |
-| view_invoice | INVOICE  |   | -  |
+| view_invoice | INVOICE  |   | allows access to the invoice section  |
 | create_invoice | INVOICE  |   | -  |
-| view_invoice_template | INVOICE_TEMPLATE  |   | -  |
+| view_invoice_template | INVOICE_TEMPLATE  |   | allows access to the invoice and invoice template section  |
 | create_invoice_template | INVOICE_TEMPLATE  |   | -  |
 | edit_invoice_template | INVOICE_TEMPLATE  |   | -  |
 | delete_invoice_template | INVOICE_TEMPLATE  |   | -  |
@@ -73,7 +73,7 @@ The permission-names were chosen to be self-explanatory. In the hope that it wor
 | edit_own_timesheet | TIMESHEET  |   | -  |
 | export_own_timesheet | TIMESHEET  |   | -  |
 | delete_own_timesheet | TIMESHEET  |   | -  |
-| view_other_timesheet | TIMESHEET_OTHER  |   | -  |
+| view_other_timesheet | TIMESHEET_OTHER  |   | allows access to the complete timesheet view  |
 | start_other_timesheet | TIMESHEET_OTHER  |   | -  |
 | stop_other_timesheet | TIMESHEET_OTHER  |   | -  |
 | create_other_timesheet | TIMESHEET_OTHER  |   | -  |
@@ -93,11 +93,12 @@ The permission-names were chosen to be self-explanatory. In the hope that it wor
 | view_other_profile | PROFILE_OTHER  |   | -  |
 | edit_other_profile | PROFILE_OTHER  |   | -  |
 | delete_other_profile | PROFILE_OTHER  |   | -  |
-| password_other_profile | PROFILE_OTHER  |   | -  |
+| password_other_profile | PROFILE_OTHER  |   | allows to change the password for another user  |
 | roles_other_profile | PROFILE_OTHER  |   | allows to change roles for other users |
-| preferences_other_profile | PROFILE_OTHER  |   | _reserved for later_  |
+| preferences_other_profile | PROFILE_OTHER  |   | allows to change the preferences for another user  |
 | api-token_other_profile | PROFILE_OTHER  |   | allows to set the API login token for other users  |
-| edit_own_hourly_rate | - |   | allows to edit the own user specific hourly rate | 
+| hourly-rate_own_profile | - |   | allows to edit the own user specific hourly rate | 
+| hourly-rate_other_profile | - |   | allows to edit other users specific hourly rate | 
 | view_user | USER  | X  | allows to access the User administration and see the list of all users  |
 | create_user | USER  |   | allows to create new users  |
 | delete_user | USER  |   | allows to delete existing users  |

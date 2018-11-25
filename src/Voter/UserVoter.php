@@ -24,6 +24,7 @@ class UserVoter extends AbstractVoter
     public const ROLES = 'roles';
     public const PREFERENCES = 'preferences';
     public const API_TOKEN = 'api-token';
+    public const HOURLY_RATE = 'hourly-rate';
 
     public const ALLOWED_ATTRIBUTES = [
         self::VIEW,
@@ -33,6 +34,7 @@ class UserVoter extends AbstractVoter
         self::DELETE,
         self::PREFERENCES,
         self::API_TOKEN,
+        self::HOURLY_RATE,
     ];
 
     /**
@@ -85,6 +87,7 @@ class UserVoter extends AbstractVoter
             case self::PASSWORD:
             case self::ROLES:
             case self::PREFERENCES:
+            case self::HOURLY_RATE:
                 $permission .= $attribute;
                 break;
 

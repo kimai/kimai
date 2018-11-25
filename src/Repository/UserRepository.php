@@ -28,6 +28,18 @@ class UserRepository extends AbstractRepository implements UserLoaderInterface
     }
 
     /**
+     * Overwritten to fetch preferences when using the Profile controller actions.
+     * Depends on the query, some magic mechanisms like the ParamConverter will use this method to fetch the user.
+     */
+    public function findOneBy(array $criteria, array $orderBy = null)
+    {
+        if (count($criteria) == 1 && isset($criteria['username'])) {
+            return $this->loadUserByUsername($criteria['username']);
+        }
+
+        return parent::findOneBy($criteria, $orderBy);
+    }
+    /**
      * @return int
      */
     public function countUser()
@@ -43,7 +55,6 @@ class UserRepository extends AbstractRepository implements UserLoaderInterface
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        // if we join activities, the maxperpage limit will limit the list to the amount or projects + activties
         $qb->select('u')
             ->from(User::class, 'u')
             ->orderBy('u.' . $query->getOrderBy(), $query->getOrder());
@@ -77,6 +88,8 @@ class UserRepository extends AbstractRepository implements UserLoaderInterface
     public function loadUserByUsername($username)
     {
         return $this->createQueryBuilder('u')
+            ->select('u', 'p')
+            ->leftJoin('u.preferences', 'p')
             ->where('u.username = :username')
             ->orWhere('u.email = :username')
             ->setParameter('username', $username)

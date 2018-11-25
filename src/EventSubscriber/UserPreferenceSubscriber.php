@@ -11,19 +11,17 @@ namespace App\EventSubscriber;
 
 use App\Entity\User;
 use App\Entity\UserPreference;
+use App\Event\PrepareUserEvent;
 use App\Event\UserPreferenceEvent;
 use App\Form\Type\CalendarViewType;
 use App\Form\Type\LanguageType;
 use App\Form\Type\SkinType;
-use App\Security\RolePermissionManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
-use Symfony\Component\HttpKernel\Event\KernelEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\Range;
 
 class UserPreferenceSubscriber implements EventSubscriberInterface
@@ -34,25 +32,25 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
     protected $eventDispatcher;
 
     /**
+     * @var AuthorizationCheckerInterface
+     */
+    protected $voter;
+
+    /**
      * @var TokenStorageInterface
      */
     protected $storage;
 
     /**
-     * @var RolePermissionManager
-     */
-    protected $acl;
-
-    /**
      * @param EventDispatcherInterface $dispatcher
      * @param TokenStorageInterface $storage
-     * @param RolePermissionManager $acl
+     * @param AuthorizationCheckerInterface $voter
      */
-    public function __construct(EventDispatcherInterface $dispatcher, TokenStorageInterface $storage, RolePermissionManager $acl)
+    public function __construct(EventDispatcherInterface $dispatcher, TokenStorageInterface $storage, AuthorizationCheckerInterface $voter)
     {
         $this->eventDispatcher = $dispatcher;
         $this->storage = $storage;
-        $this->acl = $acl;
+        $this->voter = $voter;
     }
 
     /**
@@ -61,7 +59,7 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::CONTROLLER => ['loadUserPreferences', 200]
+            PrepareUserEvent::PREPARE => ['loadUserPreferences', 200]
         ];
     }
 
@@ -72,10 +70,9 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
     public function getDefaultPreferences(User $user)
     {
         $enableHourlyRate = false;
-        foreach ($user->getRoles() as $role) {
-            if ($this->acl->hasPermission($role, 'edit_own_hourly_rate')) {
-                $enableHourlyRate = true;
-            }
+
+        if ($this->voter->isGranted('hourly-rate', $user)) {
+            $enableHourlyRate = true;
         }
 
         /*
@@ -131,16 +128,15 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param KernelEvent $event
+     * @param PrepareUserEvent $event
      */
-    public function loadUserPreferences(KernelEvent $event)
+    public function loadUserPreferences(PrepareUserEvent $event)
     {
         if (!$this->canHandleEvent($event)) {
             return;
         }
 
-        /** @var User $user */
-        $user = $this->storage->getToken()->getUser();
+        $user = $event->getUser();
 
         $prefs = [];
         foreach ($user->getPreferences() as $preference) {
@@ -168,23 +164,14 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param KernelEvent $event
+     * @param PrepareUserEvent $event
      * @return bool
      */
-    protected function canHandleEvent(KernelEvent $event): bool
+    protected function canHandleEvent(PrepareUserEvent $event): bool
     {
-        // Ignore sub-requests
-        if (!$event->isMasterRequest()) {
+        if (null === ($user = $event->getUser())) {
             return false;
         }
-
-        // ignore events like the toolbar where we do not have a token
-        if (null === $this->storage->getToken()) {
-            return false;
-        }
-
-        /** @var User $user */
-        $user = $this->storage->getToken()->getUser();
 
         return ($user instanceof User);
     }

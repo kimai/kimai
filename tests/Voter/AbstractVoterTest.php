@@ -77,10 +77,10 @@ abstract class AbstractVoterTest extends TestCase
             $rate = ['view_rate_own_timesheet', 'edit_rate_own_timesheet'];
             $rateOther = ['view_rate_other_timesheet', 'edit_rate_other_timesheet'];
 
-            $roleUser = ['edit_own_hourly_rate'];
-            $roleTeamlead = ['view_rate_own_timesheet', 'view_rate_other_timesheet', 'edit_own_hourly_rate'];
-            $roleAdmin = ['edit_own_hourly_rate'];
-            $roleSuperAdmin = ['edit_own_hourly_rate', 'delete_own_profile', 'roles_own_profile'];
+            $roleUser = [];
+            $roleTeamlead = ['view_rate_own_timesheet', 'view_rate_other_timesheet', 'hourly-rate_own_profile'];
+            $roleAdmin = ['hourly-rate_own_profile'];
+            $roleSuperAdmin = ['hourly-rate_own_profile', 'hourly-rate_other_profile', 'delete_own_profile', 'roles_own_profile'];
 
             $permissions = [
                 'ROLE_USER' => array_merge($timesheet, $profile, $roleUser),
