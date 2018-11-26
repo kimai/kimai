@@ -16,6 +16,7 @@ use Doctrine\DBAL\Schema\Schema;
 
 /**
  * Add the Google authentication secret code to a user for 2fa.
+ * Bundle: https://github.com/scheb/two-factor-bundle
  */
 final class Version20181120120000 extends AbstractMigration
 {
