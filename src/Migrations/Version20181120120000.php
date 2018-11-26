@@ -15,8 +15,7 @@ use App\Doctrine\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
- * Initial database structure of Kimai 2.
- * This file is mainly required for testing the migrations.
+ * Add the Google authentication secret code to a user for 2fa.
  */
 final class Version20181120120000 extends AbstractMigration
 {
