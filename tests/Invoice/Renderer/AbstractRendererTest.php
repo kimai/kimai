@@ -159,6 +159,7 @@ abstract class AbstractRendererTest extends KernelTestCase
         $query->setActivity($activity);
         $query->setBegin(new \DateTime());
         $query->setEnd(new \DateTime());
+        $query->setProject($project);
 
         $model = new InvoiceModel();
         $model->setCustomer($customer);
