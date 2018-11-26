@@ -1,8 +1,7 @@
 # See the configuration reference at https://github.com/scheb/two-factor-bundle/blob/master/Resources/doc/configuration.md
 scheb_two_factor:
     security_tokens:
-        #- Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken
-        # If you're using guard-based authentication, you have to use this one:
+        - Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken
         - Symfony\Component\Security\Guard\Token\PostAuthenticationGuardToken
     google:
         enabled: true
