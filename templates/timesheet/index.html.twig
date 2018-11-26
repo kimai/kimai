@@ -68,7 +68,7 @@
 
                 {% if entry.end %}
                     {% if is_granted('start', entry) %}
-                        {% set actionButtons = {'repeat': path('timesheet_start', {'id' : entry.activity.id})}|merge(actionButtons) %}
+                        {% set actionButtons = {'repeat': path('timesheet_start', {'id' : entry.id})}|merge(actionButtons) %}
                     {% endif %}
                 {% else %}
                     {% if is_granted('stop', entry) %}
