@@ -312,7 +312,7 @@ class User extends BaseUser implements UserInterface, TwoFactorInterface
 
     public function isGoogleAuthenticatorEnabled(): bool
     {
-        return $this->googleAuthenticatorSecret ? true : false;
+        return null !== $this->googleAuthenticatorSecret;
     }
 
     public function getGoogleAuthenticatorUsername(): string
