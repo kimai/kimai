@@ -5,7 +5,13 @@
 
 {% block page_title %}{{ 'admin_timesheet.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_timesheet.subtitle'|trans }}{% endblock %}
-{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseTimesheetAdmin', 'visibility': '#modal_timesheet_admin', 'create': path('admin_timesheet_create')}) }}{% endblock %}
+{% block page_actions %}
+    {% set actions = {'filter': '#collapseTimesheetAdmin', 'visibility': '#modal_timesheet_admin'} %}
+    {% if is_granted('create_other_timesheet') %}
+        {% set actions = actions|merge({'create': path('admin_timesheet_create')}) %}
+    {% endif %}
+    {{ widgets.page_actions(actions) }}
+{% endblock %}
 
 {% block main_before %}
     {{ toolbar.toolbar(toolbarForm, 'collapseTimesheetAdmin', showFilter) }}
@@ -50,15 +56,19 @@
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'endtime') }}">{{ entry.end|date("H:i") }}</td>
                 {% endif %}
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}">{{ entry.duration|duration }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'rate') }}">{{ entry.rate|money(entry.project.customer.currency) }}</td>
             {% else %}
                 {% if not duration_only %}
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'endtime') }}">&dash;</td>
                 {% endif %}
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}"><i>{{ entry|duration }}</i></td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'rate') }}">&dash;</td>
             {% endif %}
-
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'rate') }}">
+                {% if not entry.end or not is_granted('view_rate', entry) %}
+                    &dash;
+                {% else %}
+                    {{ entry.rate|money(entry.project.customer.currency) }}
+                {% endif %}
+            </td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">
                 <a href="{{ path('admin_customer_edit', {'id': entry.project.customer.id}) }}">{{ widgets.label_customer(entry.project.customer) }}</a>
             </td>

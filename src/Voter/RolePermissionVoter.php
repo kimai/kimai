@@ -9,49 +9,39 @@
 
 namespace App\Voter;
 
-use App\Entity\Project;
+use App\Entity\Activity;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
- * A voter to check permissions on Projects.
+ * A voter to check the free-configurable permission from "kimai.permissions".
  */
-class ProjectVoter extends AbstractVoter
+class RolePermissionVoter extends AbstractVoter
 {
-    public const VIEW = 'view';
-    public const EDIT = 'edit';
-    public const DELETE = 'delete';
-
-    /**
-     * support rules based on the given $subject (here: Project)
-     */
-    public const ALLOWED_ATTRIBUTES = [
-        self::VIEW,
-        self::EDIT,
-        self::DELETE
-    ];
-
     /**
      * @param string $attribute
-     * @param Project $subject
+     * @param mixed $subject
      * @return bool
      */
     protected function supports($attribute, $subject)
     {
-        if (!$subject instanceof Project) {
+        // we only work on single strings that have no subject
+        if (null !== $subject) {
             return false;
         }
 
-        if (!in_array($attribute, self::ALLOWED_ATTRIBUTES)) {
-            return false;
+        // and which is not neither a user role like USER_ADMIN
+        // nor an implicit role like IS_REMEMBERED / IS_FULLY_AUTHENTICATED
+        if (strpos($attribute, 'ROLE_') === false && strpos($attribute, 'IS_') === false) {
+            return $this->isRegisteredPermission($attribute);
         }
 
-        return true;
+        return false;
     }
 
     /**
      * @param string $attribute
-     * @param Project $subject
+     * @param Activity $subject
      * @param TokenInterface $token
      * @return bool
      */
@@ -59,12 +49,14 @@ class ProjectVoter extends AbstractVoter
     {
         $user = $token->getUser();
 
-        if (!$user instanceof User) {
+        if (!($user instanceof User)) {
             return false;
         }
 
-        if ($subject instanceof Project) {
-            return $this->hasRolePermission($user, $attribute . '_project');
+        foreach ($user->getRoles() as $role) {
+            if ($this->hasPermission($role, $attribute)) {
+                return true;
+            }
         }
 
         return false;

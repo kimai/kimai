@@ -35,23 +35,31 @@ class UserPreferenceType extends AbstractType
                 /** @var UserPreference $preference */
                 $preference = $event->getData();
 
-                if ($preference instanceof UserPreference) {
-                    // prevents unconfigured values from showing up in the form
-                    if ($preference->getType() === null) {
-                        return;
-                    }
-
-                    $required = true;
-                    if (CheckboxType::class == $preference->getType()) {
-                        $required = false;
-                    }
-
-                    $event->getForm()->add('value', $preference->getType(), [
-                        'label' => 'label.' . $preference->getName(),
-                        'constraints' => $preference->getConstraints(),
-                        'required' => $required,
-                    ]);
+                if (!($preference instanceof UserPreference)) {
+                    return;
                 }
+
+                // prevents unconfigured values from showing up in the form
+                if ($preference->getType() === null) {
+                    return;
+                }
+
+                $required = true;
+                if (CheckboxType::class == $preference->getType()) {
+                    $required = false;
+                }
+
+                $type = $preference->getType();
+                if (!$preference->isEnabled()) {
+                    $type = HiddenType::class;
+                }
+
+                $event->getForm()->add('value', $type, [
+                    'label' => 'label.' . $preference->getName(),
+                    'constraints' => $preference->getConstraints(),
+                    'required' => $required,
+                    'disabled' => !$preference->isEnabled(),
+                ]);
             }
         );
         $builder->add('name', HiddenType::class);

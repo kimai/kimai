@@ -5,7 +5,13 @@
 
 {% block page_title %}{{ 'admin_activity.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_activity.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
-{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseActivityAdmin', 'visibility': '#modal_activity_admin', 'create': path('admin_activity_create')}) }}{% endblock %}
+{% block page_actions %}
+    {% set actions = {'filter': '#collapseActivityAdmin', 'visibility': '#modal_activity_admin'} %}
+    {% if is_granted('create_activity') %}
+        {% set actions = actions|merge({'create': path('admin_activity_create')}) %}
+    {% endif %}
+    {{ widgets.page_actions(actions) }}
+{% endblock %}
 
 {% block main_before %}
     {{ toolbar.toolbar(toolbarForm, 'collapseActivityAdmin', showFilter) }}

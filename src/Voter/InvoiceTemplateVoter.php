@@ -9,21 +9,21 @@
 
 namespace App\Voter;
 
-use App\Entity\Project;
+use App\Entity\InvoiceTemplate;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
- * A voter to check permissions on Projects.
+ * A voter to check permissions on InvoiceTemplateVote.
  */
-class ProjectVoter extends AbstractVoter
+class InvoiceTemplateVoter extends AbstractVoter
 {
     public const VIEW = 'view';
     public const EDIT = 'edit';
     public const DELETE = 'delete';
 
     /**
-     * support rules based on the given $subject (here: Project)
+     * support rules based on the given $subject (here: InvoiceTemplate)
      */
     public const ALLOWED_ATTRIBUTES = [
         self::VIEW,
@@ -33,12 +33,12 @@ class ProjectVoter extends AbstractVoter
 
     /**
      * @param string $attribute
-     * @param Project $subject
+     * @param InvoiceTemplate $subject
      * @return bool
      */
     protected function supports($attribute, $subject)
     {
-        if (!$subject instanceof Project) {
+        if (!$subject instanceof InvoiceTemplate) {
             return false;
         }
 
@@ -51,7 +51,7 @@ class ProjectVoter extends AbstractVoter
 
     /**
      * @param string $attribute
-     * @param Project $subject
+     * @param InvoiceTemplate $subject
      * @param TokenInterface $token
      * @return bool
      */
@@ -63,8 +63,8 @@ class ProjectVoter extends AbstractVoter
             return false;
         }
 
-        if ($subject instanceof Project) {
-            return $this->hasRolePermission($user, $attribute . '_project');
+        if ($subject instanceof InvoiceTemplate) {
+            return $this->hasRolePermission($user, $attribute . '_invoice_template');
         }
 
         return false;
