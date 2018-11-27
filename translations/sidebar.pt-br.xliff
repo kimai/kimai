@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="pt-br" datatype="plaintext" original="none">
+        <body>
+            <trans-unit id="home.betainfo">
+                <source>home.betainfo</source>
+                <target><![CDATA[Obrigado por usar o rastreador de tempo de código aberto Kimai.
+
+                    Esta nova versão está atualmente em um estágio inicial de desenvolvimento e foi publicada com antecedência para coletar feedback de seus usuários e integrar suas ideias em planejamento adicional.
+
+                    Para me ajudar a melhorar o Kimai, por favor envie sua mensagem no site vinculado. Se você tiver dúvidas, mensagens de erro ou ideias para melhorias, seu feedback é valioso!
+	]]></target>
+            </trans-unit>
+            <trans-unit id="home.github">
+                <source>home.github</source>
+                <target>Kimai - Project website</target>
+            </trans-unit>
+            <trans-unit id="home.website">
+                <source>home.website</source>
+                <target>Homepage</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
