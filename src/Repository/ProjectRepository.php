@@ -35,10 +35,15 @@ class ProjectRepository extends AbstractRepository
     }
 
     /**
+     * @param null|bool $visible
      * @return int
      */
-    public function countProject()
+    public function countProject($visible = null)
     {
+        if (null !== $visible) {
+            return $this->count(['visible' => (int) $visible]);
+        }
+
         return $this->count([]);
     }
 

@@ -35,10 +35,15 @@ class CustomerRepository extends AbstractRepository
     }
 
     /**
+     * @param null|bool $visible
      * @return int
      */
-    public function countCustomer()
+    public function countCustomer($visible = null)
     {
+        if (null !== $visible) {
+            return $this->count(['visible' => (int) $visible]);
+        }
+
         return $this->count([]);
     }
 
