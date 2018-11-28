@@ -1,0 +1,213 @@
+kimai:
+
+    # --------------------------------------------------------------------------------
+    # Settings for the user management and login forms
+    user:
+        registration: true
+        password_reset: true
+
+    # --------------------------------------------------------------------------------
+    # All configs related to timesheet and record management
+    timesheet:
+
+        # render timesheet descriptions with markdown
+        markdown_content: false
+
+        # Whether we display start and end time columns (false) or durations only (true).
+        # Setting this to true will also change the "edit timesheet" forms, more infos available in the configurations docu.
+        duration_only: false
+
+        # Rounding rules are used to round the begin & end dates and the duration for timesheet records.
+        # The "default" rule will round "begin" down and "end" up to the full minute, the "duration" will not be rounded.
+        # Please read var/docs/configurations.md to find out more about rounding rules
+        rounding:
+            default:
+                days: ['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
+                begin: 1
+                end: 1
+                duration: 0
+
+        # If you want to apply different hourly rates for specific weekdays, you can uncomment the "rates" configuration.
+        # The "weekend" rule will add 50% to each timesheet entry that will be recorded on "saturdays" or "sundays".
+        # Please read var/docs/configurations.md to find out more about rates rules
+        # rates:
+        #    weekend:
+        #        days: ['saturday','sunday']
+        #        factor: 1.5
+
+    # --------------------------------------------------------------------------------
+    # Invoice management
+    #invoice:
+    #    # all files in these directories will be used as invoice documents (if supported by a renderer)
+    #    documents:
+    #        - 'var/invoices/'
+    #        - 'templates/invoice/renderer/'
+
+    # --------------------------------------------------------------------------------
+    # Default settings used to populate forms
+    #defaults:
+    #    customer:
+    #        timezone: Europe/Berlin
+    #        country: DE
+    #        currency: EUR
+
+    # --------------------------------------------------------------------------------
+    # Free configurable permission system, see var/docs/permissions.md
+    permissions:
+        # mapping complex rulesets of single permissions to named "sets" ("set name" = [array of "permissions"])
+        sets:
+            ACTIVITIES: [view_activity,create_activity,edit_activity,delete_activity]
+            PROJECTS: [view_project,create_project,edit_project,delete_project]
+            CUSTOMERS: [view_customer,create_customer,edit_customer,delete_customer]
+            INVOICE: [view_invoice,create_invoice]
+            INVOICE_TEMPLATE: [view_invoice_template,create_invoice_template,edit_invoice_template,delete_invoice_template]
+            TIMESHEET: [view_own_timesheet,start_own_timesheet,stop_own_timesheet,create_own_timesheet,edit_own_timesheet,export_own_timesheet,delete_own_timesheet]
+            TIMESHEET_OTHER: [view_other_timesheet,start_other_timesheet,stop_other_timesheet,create_other_timesheet,edit_other_timesheet,delete_other_timesheet]
+            PROFILE: [view_own_profile,edit_own_profile,password_own_profile,preferences_own_profile,api-token_own_profile]
+            PROFILE_OTHER: [view_other_profile,edit_other_profile,delete_other_profile,password_other_profile,roles_other_profile,preferences_other_profile,api-token_other_profile]
+            USER: [view_user,create_user,delete_user]
+            RATE: [view_rate_own_timesheet,edit_rate_own_timesheet]
+            RATE_OTHER: [view_rate_other_timesheet,edit_rate_other_timesheet]
+        # mapping "sets" or permissions to user roles ("role name" = [array of "set names"])
+        maps:
+            ROLE_USER: [TIMESHEET,PROFILE]
+            ROLE_TEAMLEAD: [INVOICE,TIMESHEET,TIMESHEET_OTHER,PROFILE]
+            ROLE_ADMIN: [ACTIVITIES,PROJECTS,CUSTOMERS,INVOICE,INVOICE_TEMPLATE,TIMESHEET,TIMESHEET_OTHER,PROFILE,RATE,RATE_OTHER]
+            ROLE_SUPER_ADMIN: [ACTIVITIES,PROJECTS,CUSTOMERS,INVOICE,INVOICE_TEMPLATE,TIMESHEET,TIMESHEET_OTHER,PROFILE,PROFILE_OTHER,USER,RATE,RATE_OTHER]
+        # adding single permissions to user roles, extending the definition from "sets" ("role name" = [array of "permissions"])
+        roles:
+            ROLE_USER: []
+            ROLE_TEAMLEAD: [view_invoice_template,create_invoice_template,edit_invoice_template,view_rate_own_timesheet,view_rate_other_timesheet,hourly-rate_own_profile]
+            ROLE_ADMIN: [hourly-rate_own_profile]
+            ROLE_SUPER_ADMIN: [hourly-rate_own_profile,hourly-rate_other_profile,delete_own_profile,roles_own_profile]
+
+    # --------------------------------------------------------------------------------
+    # Language specific settings, like the date formats
+    languages:
+        de:
+            date_short: 'd.m.Y'
+            duration: '%%h:%%m Stunden'
+            duration_short: '%%h:%%m h'
+        en:
+            date_short: 'Y-m-d'
+            duration: '%%h:%%m hours'
+            duration_short: '%%h:%%m h'
+ 	pt-br:
+            date_short: 'd-m-Y'
+            duration: '%%h:%%m horas'
+            duration_short: '%%h:%%m h'
+        it:
+            date_short: 'd.m.Y'
+            duration: '%%h:%%m h'
+            duration_short: '%%h:%%m h'
+        fr:
+            date_short: 'd/m/Y'
+            duration: '%%h h %%m min'
+            duration_short: '%%h h %%m'
+        es:
+            date_short: 'd.m.Y'
+            duration: '%%h:%%m h'
+            duration_short: '%%h:%%m h'
+        ru:
+            date_short: 'd.m.Y'
+            duration: '%%h:%%m Часов'
+            duration_short: '%%h:%%m h'
+        ar:
+            date_short: 'Y-m-d'
+            duration: '%%h:%%m hours'
+            duration_short: '%%h:%%m h'
+        hu:
+            date_short: 'Y.m.d.'
+            duration: '%%h:%%m óra'
+            duration_short: '%%h:%%m h'
+
+    # --------------------------------------------------------------------------------
+    # timesheet calendar configuration
+    calendar:
+        week_numbers: true
+        day_limit: 4
+        businessHours:
+            days: [1, 2, 3, 4, 5]
+            begin: '08:00'
+            end: '20:00'
+
+        # You can configure unlimited google calendars to display events for your company (e.g. holidays)
+        # Please read var/docs/configurations.md to find out more about calendar integration
+        # google:
+        #     api_key: 'your-restricted-google-api-key'
+        #     sources:
+        #         holidays:
+        #             id: 'de.german#holiday@group.v.calendar.google.com'
+        #             color: '#ccc'
+
+    # --------------------------------------------------------------------------------
+    # theme related settings, will be available as twig globals at "kimai_context.*"
+    # please see documentation at var/docs/theme.md
+    theme:
+        # BETA test: If you set this to 'selectpicker' the customer/project/activity select boxes will be transformed
+        # into a searchable and javascript enhanced input type
+        select_type: ~
+        # display a warning color if the user has at least X active recordings
+        active_warning: 3
+        # fallback color for all widgets that don't have a dedicated color
+        # possible options: blue, black, purple, yellow, red, green
+        box_color: 'green'
+
+    # --------------------------------------------------------------------------------
+    # Dashboard widget sections, please see documentation at var/docs/dashboard.md
+    dashboard:
+        user_duration:
+            title: dashboard.you
+            order: 10
+            permission: ROLE_USER
+            widgets: [userDurationToday, userDurationWeek, userDurationMonth, userDurationYear]
+        user_rates:
+            title: ~
+            order: 20
+            permission: ROLE_USER
+            widgets: [userAmountToday, userAmountWeek, userAmountMonth, userAmountYear]
+        duration:
+            title: dashboard.all
+            order: 30
+            permission: ROLE_TEAMLEAD
+            widgets: [durationToday, durationWeek, durationMonth, durationYear]
+        active_users:
+            title: ~
+            order: 40
+            permission: ROLE_TEAMLEAD
+            widgets: [activeUsersToday, activeUsersWeek, activeUsersMonth, activeUsersYear]
+        rates:
+            title: ~
+            order: 50
+            permission: ROLE_ADMIN
+            widgets: [amountToday, amountWeek, amountMonth, amountYear]
+
+    # --------------------------------------------------------------------------------
+    # All available widgets, please see documentation at var/docs/dashboard.md
+    widgets:
+        userDurationToday: { title: stats.durationToday, query: duration, user: true, begin: '00:00:00', end: '23:59:59', icon: duration, color: green }
+        userDurationWeek: { title: stats.durationWeek, query: duration, user: true, begin: 'monday this week 00:00:00', end: 'sunday this week 23:59:59', icon: duration, color: blue }
+        userDurationMonth: { title: stats.durationMonth, query: duration, user: true, begin: 'first day of this month 00:00:00', end: 'last day of this month 23:59:59', icon: duration, color: purple }
+        userDurationYear: { title: stats.durationYear, query: duration, user: true, begin: '01 january this year 00:00:00', end: '31 december this year 23:59:59', icon: duration, color: yellow }
+        userDurationTotal: { title: stats.durationTotal, query: duration, user: true, icon: duration, color: red }
+        userAmountToday: { title: stats.amountToday, query: rate, user: true, begin: '00:00:00', end: '23:59:59', icon: money, color: green }
+        userAmountWeek: { title: stats.amountWeek, query: rate, user: true, begin: 'monday this week 00:00:00', end: 'sunday this week 23:59:59', icon: money, color: blue }
+        userAmountMonth: { title: stats.amountMonth, query: rate, user: true, begin: 'first day of this month 00:00:00', end: 'last day of this month 23:59:59', icon: money, color: purple }
+        userAmountYear: { title: stats.amountYear, query: rate, user: true, begin: '01 january this year 00:00:00', end: '31 december this year 23:59:59', icon: money, color: yellow }
+        userAmountTotal: { title: stats.amountTotal, query: rate, user: true, icon: money, color: red }
+        durationToday: { title: stats.durationToday, query: duration, begin: '00:00:00', end: '23:59:59', icon: duration, color: green }
+        durationWeek: { title: stats.durationWeek, query: duration, begin: 'monday this week 00:00:00', end: 'sunday this week 23:59:59', icon: duration, color: blue }
+        durationMonth: { title: stats.durationMonth, query: duration, begin: 'first day of this month 00:00:00', end: 'last day of this month 23:59:59', icon: duration, color: purple }
+        durationYear: { title: stats.durationYear, query: duration, begin: '01 january this year 00:00:00', end: '31 december this year 23:59:59', icon: duration, color: yellow }
+        durationTotal: { title: stats.durationTotal, query: duration, icon: duration, color: red }
+        amountToday: { title: stats.amountToday, query: rate, begin: '00:00:00', end: '23:59:59', icon: money, color: green }
+        amountWeek: { title: stats.amountWeek, query: rate, begin: 'monday this week 00:00:00', end: 'sunday this week 23:59:59', icon: money, color: blue }
+        amountMonth: { title: stats.amountMonth, query: rate, begin: 'first day of this month 00:00:00', end: 'last day of this month 23:59:59', icon: money, color: purple }
+        amountYear: { title: stats.amountYear, query: rate, begin: '01 january this year 00:00:00', end: '31 december this year 23:59:59', icon: money, color: yellow }
+        amountTotal: { title: stats.amountTotal, query: rate, icon: money, color: red }
+        activeUsersToday: { title: stats.userActiveToday, query: users, begin: '00:00:00', end: '23:59:59', icon: user, color: green }
+        activeUsersWeek: { title: stats.userActiveWeek, query: users, begin: 'monday this week 00:00:00', end: 'sunday this week 23:59:59', icon: user, color: blue }
+        activeUsersMonth: { title: stats.userActiveMonth, query: users, begin: 'first day of this month 00:00:00', end: 'last day of this month 23:59:59', icon: user, color: purple }
+        activeUsersYear: { title: stats.userActiveYear, query: users, begin: '01 january this year 00:00:00', end: '31 december this year 23:59:59', icon: user, color: yellow }
+        activeUsersTotal: { title: stats.userActiveTotal, query: users, icon: user, color: red }
+        activeRecordings: { title: stats.activeRecordings, query: active, icon: duration, color: red }
