@@ -14,6 +14,8 @@ lockComment: >
   This thread has been automatically locked since there has not been
   any recent activity after it was closed. Please open a new issue for
   related bugs.
+  If you use Kimai on a daily basis, please [consider donating](https://www.kimai.org/donate/) to
+  support further development of Kimai.
 
 # Assign `resolved` as the reason for locking. Set to `false` to disable
 setLockReason: false
