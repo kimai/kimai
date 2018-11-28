@@ -20,7 +20,7 @@ But we already support to [import your timesheets](var/docs/migration_v1.md) fro
 It is developed with modern frameworks like [Symfony v4](https://github.com/symfony/symfony), [Doctrine](https://github.com/doctrine/),
 [AdminLTE](https://github.com/kevinpapst/AdminLTEBundle/) and [many](composer.json) [more](package.json).
 
-Kimai is a multi-language application and already translated to: English, German, Italian, French, Spanish, Russian, Arabic and Hungarian.
+Kimai is a multi-language application and already translated to: English, German, Italian, French, Spanish, Russian, Arabic, Hungarian and Portuguese.
 If you want to support us in translating Kimai, please [read this documentation](var/docs/translations.md). 
 
 ### Requirements
