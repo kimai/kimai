@@ -28,7 +28,6 @@
         "symfony/framework-bundle": "^4.0",
         "symfony/monolog-bundle": "^3.1",
         "symfony/orm-pack": "^1.0",
-        "symfony/profiler-pack": "^1.0",
         "symfony/security-bundle": "^4.0",
         "symfony/security-csrf": "^4.0",
         "symfony/serializer": "^4.0",
@@ -53,6 +52,7 @@
         "symfony/debug-pack": "^1.0",
         "symfony/maker-bundle": "^1.0",
         "symfony/phpunit-bridge": "^4.0",
+        "symfony/profiler-pack": "^1.0",
         "symfony/thanks": "^1.0",
         "symfony/web-server-bundle": "^4.0"
     },
