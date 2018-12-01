@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8522b81a061364fcd7f8c9972778ae50",
+    "content-hash": "60350c29c9fbee34365f26e44e30cbe4",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -5782,37 +5782,6 @@
             "time": "2018-10-02T16:36:10+00:00"
         },
         {
-            "name": "symfony/webpack-encore-pack",
-            "version": "v1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/webpack-encore-pack.git",
-                "reference": "8d7f51379d7ae17aea7cf501d910a11896895ac4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/webpack-encore-pack/zipball/8d7f51379d7ae17aea7cf501d910a11896895ac4",
-                "reference": "8d7f51379d7ae17aea7cf501d910a11896895ac4",
-                "shasum": ""
-            },
-            "require": {
-                "symfony/asset": "^3.3|^4.0"
-            },
-            "type": "symfony-pack",
-            "extra": {
-                "thanks": {
-                    "name": "symfony/webpack-encore",
-                    "url": "https://github.com/symfony/webpack-encore"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "A pack for Symfony Encore",
-            "time": "2018-07-16T10:15:28+00:00"
-        },
-        {
             "name": "symfony/yaml",
             "version": "v4.1.6",
             "source": {
@@ -8971,6 +8940,37 @@
             "description": "Symfony WebServerBundle",
             "homepage": "https://symfony.com",
             "time": "2018-07-26T09:10:45+00:00"
+        },
+        {
+            "name": "symfony/webpack-encore-pack",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/webpack-encore-pack.git",
+                "reference": "8d7f51379d7ae17aea7cf501d910a11896895ac4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/webpack-encore-pack/zipball/8d7f51379d7ae17aea7cf501d910a11896895ac4",
+                "reference": "8d7f51379d7ae17aea7cf501d910a11896895ac4",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/asset": "^3.3|^4.0"
+            },
+            "type": "symfony-pack",
+            "extra": {
+                "thanks": {
+                    "name": "symfony/webpack-encore",
+                    "url": "https://github.com/symfony/webpack-encore"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A pack for Symfony Encore",
+            "time": "2018-07-16T10:15:28+00:00"
         },
         {
             "name": "theseer/tokenizer",
