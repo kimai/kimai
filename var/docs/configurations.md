@@ -134,6 +134,26 @@ admin_lte:
 
 ## Timesheets (kimai.yaml)
 
+### Limit active entries
+
+To limit the amount of active entries each user can have, the configuration `active_entries` can be changed:
+
+```yaml
+kimai:
+    timesheet:
+        active_entries:
+            soft_limit: 1
+            hard_limit: 3
+```
+
+The `soft_limit` is used as theme setting (formerly "kimai.theme.active_warning") to display a warning if the user has at least X active recordings.
+
+The `hard_limit` is used to detect how many active records are allowed per user (by default 3 active time-records are allowed). 
+If `hard_limit` is 1, the active record is automatically stopped when a new one is started.
+When `hard_limit` is greater than 1 and as soon as the limit is reached, the user has to manually stop at least one active 
+entry (an error message is shown, indicating why it is not possible to start another one).
+ 
+
 ### Descriptions with Markdown
 
 The description for every timesheet entry can be formatted in two different ways, configured with the `markdown_content` setting.

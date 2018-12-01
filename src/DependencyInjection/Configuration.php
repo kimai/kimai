@@ -234,6 +234,10 @@ class Configuration implements ConfigurationInterface
         $node
             ->addDefaultsIfNotSet()
             ->children()
+                ->integerNode('active_warning')
+                    ->defaultValue(3)
+                    ->setDeprecated('The node "%node%" at path "%path%" is deprecated, please use "active_entries.soft_limit" instead.')
+                ->end()
                 ->scalarNode('box_color')
                     ->defaultValue('green')
                 ->end()

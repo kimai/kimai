@@ -283,7 +283,7 @@ class TimesheetRepository extends AbstractRepository
             foreach ($activeEntries as $activeEntry) {
                 if ($i > $limit) {
                     if ($hardLimit > 1) {
-                        throw new \Exception('Too many entries active');
+                        throw new \Exception('Too many active entries');
                     }
 
                     $this->stopRecording($activeEntry);

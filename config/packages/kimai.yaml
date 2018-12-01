@@ -34,14 +34,16 @@ kimai:
         #        factor: 1.5
 
         # If you want to limit the max. active entries per user, you can do it here.
-        # The soft_limit is used as theme setting (former known as "kimai.theme.active_warning":
+        #
+        # The soft_limit is used as theme setting (formerly "kimai.theme.active_warning"):
         #   display a warning color if the user has at least X active recordings
-        # The hard_limit used to detect how many active records a user can have:
-        #   By default a user can only have one active timeentry. The first one is stopped when the new one starts
-        #   When hard_limit is > 1: as soon as the limit is reached, the the user has to stop one active entry.
+        #
+        # The hard_limit is used to detect how many active records are allowed per user:
+        #   By default a user can only have one active time-record. The first one is stopped when the new one starts.
+        #   When hard_limit is > 1: as soon as the limit is reached and warning is shown and the user has to stop one active entry.
         active_entries:
             soft_limit: 1
-            hard_limit: 2
+            hard_limit: 3
 
     # Invoice management
     #invoice:
