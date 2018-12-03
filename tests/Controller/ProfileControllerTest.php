@@ -225,9 +225,9 @@ class ProfileControllerTest extends ControllerBaseTest
             // assert that the user doesn't have the "hourly-rate_own_profile" permission
             [User::ROLE_USER, UserFixtures::USERNAME_USER, 82, 82, 'ar'],
             // admins are allowed to update their own hourly rate
-            [User::ROLE_ADMIN, UserFixtures::USERNAME_ADMIN, 81, 37, 'ar'],
+            [User::ROLE_ADMIN, UserFixtures::USERNAME_ADMIN, 81, 37.5, 'ar'],
             // admins are allowed to update other peoples hourly rate
-            [User::ROLE_SUPER_ADMIN, UserFixtures::USERNAME_USER, 82, 37, 'en'],
+            [User::ROLE_SUPER_ADMIN, UserFixtures::USERNAME_USER, 82, 37.5, 'en'],
         ];
     }
 
@@ -255,7 +255,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'user_preferences_form' => [
                 'preferences' => [
-                    ['name' => UserPreference::HOURLY_RATE, 'value' => 37],
+                    ['name' => UserPreference::HOURLY_RATE, 'value' => 37.5],
 //                    ['name' => 'timezone', 'value' => 'America/Creston'],
                     ['name' => 'language', 'value' => 'ar'],
                     ['name' => UserPreference::SKIN, 'value' => 'blue'],
