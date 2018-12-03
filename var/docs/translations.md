@@ -43,3 +43,11 @@ parameters:
     locale: en
     app_locales: en|de|ru|it|xx
 ```
+
+## Check for missing translations
+
+When you search for missing keys, please use this command:
+```bash
+bin/console debug:translation --only-missing de
+```
+and replace `de` with your locale. 

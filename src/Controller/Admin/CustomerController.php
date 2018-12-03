@@ -26,8 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Controller used to manage activities in the admin part of the site.
  *
  * @Route(path="/admin/customer")
- * @Security("is_granted('ROLE_ADMIN')")
- * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+ * @Security("is_granted('view_customer')")
  */
 class CustomerController extends AbstractController
 {
@@ -55,6 +54,11 @@ class CustomerController extends AbstractController
     /**
      * @Route(path="/", defaults={"page": 1}, name="admin_customer", methods={"GET"})
      * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_customer_paginated", methods={"GET"})
+     * @Security("is_granted('view_customer')")
+     *
+     * @param int $page
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction($page, Request $request)
     {
@@ -81,6 +85,10 @@ class CustomerController extends AbstractController
 
     /**
      * @Route(path="/create", name="admin_customer_create", methods={"GET", "POST"})
+     * @Security("is_granted('create_customer')")
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createAction(Request $request)
     {
@@ -95,6 +103,10 @@ class CustomerController extends AbstractController
     /**
      * @Route(path="/{id}/edit", name="admin_customer_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', customer)")
+     *
+     * @param Customer $customer
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Customer $customer, Request $request)
     {
@@ -102,35 +114,6 @@ class CustomerController extends AbstractController
     }
 
     /**
-     * @param Customer $customer
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    protected function renderCustomerForm(Customer $customer, Request $request)
-    {
-        $editForm = $this->createEditForm($customer);
-
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($customer);
-            $entityManager->flush();
-
-            $this->flashSuccess('action.update.success');
-
-            return $this->redirectToRoute('admin_customer');
-        }
-
-        return $this->render('admin/customer_edit.html.twig', [
-            'customer' => $customer,
-            'form' => $editForm->createView()
-        ]);
-    }
-
-    /**
-     * The route to delete an existing entry.
-     *
      * @Route(path="/{id}/delete", name="admin_customer_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', customer)")
      *
@@ -176,6 +159,33 @@ class CustomerController extends AbstractController
             'customer' => $customer,
             'stats' => $stats,
             'form' => $deleteForm->createView(),
+        ]);
+    }
+
+    /**
+     * @param Customer $customer
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    protected function renderCustomerForm(Customer $customer, Request $request)
+    {
+        $editForm = $this->createEditForm($customer);
+
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($customer);
+            $entityManager->flush();
+
+            $this->flashSuccess('action.update.success');
+
+            return $this->redirectToRoute('admin_customer');
+        }
+
+        return $this->render('admin/customer_edit.html.twig', [
+            'customer' => $customer,
+            'form' => $editForm->createView()
         ]);
     }
 

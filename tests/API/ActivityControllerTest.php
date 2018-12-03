@@ -75,7 +75,7 @@ class ActivityControllerTest extends APIControllerBaseTest
             $hasProject = $expected[$i][0];
             $this->assertStructure($activity, $hasProject);
             if ($hasProject) {
-                $this->assertEquals($expected[$i][0], $activity['project_id']);
+                $this->assertEquals($expected[$i][0], $activity['project']);
             }
         }
     }
@@ -100,7 +100,10 @@ class ActivityControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertInternalType('array', $result);
-        $this->assertStructure($result, false);
+
+        $expectedKeys = ['id', 'name', 'comment', 'visible'];
+        $actual = array_keys($result);
+        $this->assertEquals($expectedKeys, $actual);
     }
 
     public function testNotFound()
@@ -108,19 +111,18 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertEntityNotFound(User::ROLE_USER, '/api/activities/2');
     }
 
-    protected function assertStructure(array $result, $project = true)
+    protected function assertStructure(array $result, $full = true)
     {
-        $expectedKeys = [
-            'id', 'name', 'comment', 'visible'
-        ];
+        $expectedKeys = ['id', 'name', 'visible'];
 
-        if ($project) {
-            $expectedKeys[] = 'project_id';
+        if ($full) {
+            $expectedKeys = ['id', 'name', 'visible', 'project'];
         }
 
         $actual = array_keys($result);
+        sort($actual);
+        sort($expectedKeys);
 
-        $this->assertEquals(count($expectedKeys), count($actual), 'Activity entity has different amount of keys: ' . $result['id']);
         $this->assertEquals($expectedKeys, $actual, 'Activity structure does not match');
     }
 }

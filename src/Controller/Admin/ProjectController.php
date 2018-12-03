@@ -28,8 +28,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Controller used to manage projects in the admin part of the site.
  *
  * @Route(path="/admin/project")
- * @Security("is_granted('ROLE_ADMIN')")
- * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+ * @Security("is_granted('view_project')")
  */
 class ProjectController extends AbstractController
 {
@@ -45,6 +44,11 @@ class ProjectController extends AbstractController
      * @Route(path="/", defaults={"page": 1}, name="admin_project", methods={"GET"})
      * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_project_paginated", methods={"GET"})
      * @Cache(smaxage="10")
+     * @Security("is_granted('view_project')")
+     *
+     * @param int $page
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction($page, Request $request)
     {
@@ -72,6 +76,10 @@ class ProjectController extends AbstractController
 
     /**
      * @Route(path="/create", name="admin_project_create", methods={"GET", "POST"})
+     * @Security("is_granted('create_project')")
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createAction(Request $request)
     {
@@ -81,6 +89,10 @@ class ProjectController extends AbstractController
     /**
      * @Route(path="/{id}/edit", name="admin_project_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', project)")
+     *
+     * @param Project $project
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Project $project, Request $request)
     {
@@ -88,8 +100,6 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * The route to delete an existing entry.
-     *
      * @Route(path="/{id}/delete", name="admin_project_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', project)")
      *

@@ -22,7 +22,7 @@ if (typeof jQuery === 'undefined') {
 $.datatable = {};
 
 $(function() {
-"use strict";
+    "use strict";
 
     $.datatable = {
         saveVisibility: function (modalSelector) {
@@ -30,7 +30,7 @@ $(function() {
                 function() {
                     var settings = {};
                     var cookieName = $(this).attr('name');
-                    $(this).find('input:checkbox:not(:checked)').each(
+                    $(this).find('input:checkbox').each(
                         function () {
                             settings[$(this).attr('name')] = $(this).is(':checked');
                         }

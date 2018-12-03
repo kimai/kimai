@@ -14,7 +14,8 @@ For the most parts Kimai usage should be self-explanatory, so we will only cover
 - [Configurations](configurations.md) - intro into the global application configs
     - [Calendar](calendar.md) - the Timesheet calendar view
     - [Dashboard & widgets](dashboard.md) - how to configure widgets and dashboard sections
-    - [Emails](emails.md) - transport configuration and handling of emails 
+    - [Emails](emails.md) - transport configuration and handling of emails
+    - [Permissions](permissions.md) - flexible and configurable ROLE based permission system 
 - [Developer](developers.md) - docs about extending Kimai's feature set  
     - [API](developers_api.md) - how to use the JSON API 
     - [Theme settings](theme.md) - theme related settings

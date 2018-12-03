@@ -1,4 +1,7 @@
 jms_serializer:
+    handlers:
+        datetime:
+            default_format: "Y-m-d H:i"
     visitors:
         xml:
             format_output: '%kernel.debug%'

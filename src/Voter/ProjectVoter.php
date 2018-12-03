@@ -22,6 +22,9 @@ class ProjectVoter extends AbstractVoter
     public const EDIT = 'edit';
     public const DELETE = 'delete';
 
+    /**
+     * support rules based on the given $subject (here: Project)
+     */
     public const ALLOWED_ATTRIBUTES = [
         self::VIEW,
         self::EDIT,
@@ -30,16 +33,16 @@ class ProjectVoter extends AbstractVoter
 
     /**
      * @param string $attribute
-     * @param mixed $subject
+     * @param Project $subject
      * @return bool
      */
     protected function supports($attribute, $subject)
     {
-        if (!in_array($attribute, self::ALLOWED_ATTRIBUTES)) {
+        if (!$subject instanceof Project) {
             return false;
         }
 
-        if (!$subject instanceof Project) {
+        if (!in_array($attribute, self::ALLOWED_ATTRIBUTES)) {
             return false;
         }
 
@@ -60,54 +63,10 @@ class ProjectVoter extends AbstractVoter
             return false;
         }
 
-        switch ($attribute) {
-            case self::VIEW:
-                return $this->canView($subject, $user, $token);
-            case self::EDIT:
-                return $this->canEdit($subject, $user, $token);
-            case self::DELETE:
-                return $this->canDelete($token);
+        if ($subject instanceof Project) {
+            return $this->hasRolePermission($user, $attribute . '_project');
         }
 
         return false;
-    }
-
-    /**
-     * @param Project $project
-     * @param User $user
-     * @param TokenInterface $token
-     * @return bool
-     */
-    protected function canView(Project $project, User $user, TokenInterface $token)
-    {
-        if ($this->canEdit($project, $user, $token)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param Project $project
-     * @param User $user
-     * @param TokenInterface $token
-     * @return bool
-     */
-    protected function canEdit(Project $project, User $user, TokenInterface $token)
-    {
-        if ($this->canDelete($token)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param TokenInterface $token
-     * @return bool
-     */
-    protected function canDelete(TokenInterface $token)
-    {
-        return $this->isFullyAuthenticated($token) && $this->hasRole('ROLE_ADMIN', $token);
     }
 }

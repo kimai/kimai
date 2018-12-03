@@ -5,7 +5,13 @@
 
 {% block page_title %}{{ 'admin_customer.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_customer.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
-{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseCustomerAdmin', 'visibility': '#modal_customer_admin', 'create': path('admin_customer_create')}) }}{% endblock %}
+{% block page_actions %}
+    {% set actions = {'filter': '#collapseCustomerAdmin', 'visibility': '#modal_customer_admin'} %}
+    {% if is_granted('create_customer') %}
+        {% set actions = actions|merge({'create': path('admin_customer_create')}) %}
+    {% endif %}
+    {{ widgets.page_actions(actions) }}
+{% endblock %}
 
 {% block main_before %}
     {{ toolbar.toolbar(toolbarForm, 'collapseCustomerAdmin', showFilter) }}

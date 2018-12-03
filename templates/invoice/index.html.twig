@@ -4,7 +4,17 @@
 
 {% block page_title %}{{ 'invoice.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'invoice.subtitle'|trans }}{% endblock %}
-{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseInvoice', 'create': path('admin_invoice_template_create'), 'list': path('admin_invoice_template')}) }}{% endblock %}
+{% block page_actions %}
+    {% set actions = {'filter': '#collapseInvoice'} %}
+    {% if is_granted('create_invoice_template') %}
+        {% set actions = actions|merge({'create': path('admin_invoice_template_create')}) %}
+    {% endif %}
+    {% if is_granted('view_invoice_template') %}
+        {% set actions = actions|merge({'list': path('admin_invoice_template')}) %}
+    {% endif %}
+    {{ widgets.page_actions(actions) }}
+{% endblock %}
+
 
 {% block page_content_class %}{{ parent() }} invoice{% endblock %}
 
@@ -21,23 +31,24 @@
     {% if model.entries is empty %}
         {{ widgets.callout('warning', 'invoice.select_filter') }}
     {% else %}
-
         {{ include('invoice/preview.html.twig') }}
 
-        <div class="row no-print">
-            <div class="col-xs-12">
-                <button type="button" id="print-invoice-button" class="btn btn-success pull-right">
-                    <i class="{{ 'print'|icon }}"></i> {{ 'button.print'|trans }}
-                </button>
+        {% if is_granted('create_invoice') %}
+            <div class="row no-print">
+                <div class="col-xs-12">
+                    <button type="button" id="print-invoice-button" class="btn btn-success pull-right">
+                        <i class="{{ 'print'|icon }}"></i> {{ 'button.print'|trans }}
+                    </button>
+                </div>
             </div>
-        </div>
-
+        {% endif %}
     {% endif %}
 
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+    {% if is_granted('create_invoice') %}
     <script type="text/javascript">
         $(document).ready(function () {
             $( "#print-invoice-button" ).click(function() {
@@ -48,4 +59,5 @@
             });
         });
     </script>
+    {% endif %}
 {% endblock %}

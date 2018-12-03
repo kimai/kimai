@@ -19,22 +19,22 @@ class UserVoter extends AbstractVoter
 {
     public const VIEW = 'view';
     public const EDIT = 'edit';
-    public const CREATE = 'create';
     public const DELETE = 'delete';
     public const PASSWORD = 'password';
     public const ROLES = 'roles';
     public const PREFERENCES = 'preferences';
     public const API_TOKEN = 'api-token';
+    public const HOURLY_RATE = 'hourly-rate';
 
     public const ALLOWED_ATTRIBUTES = [
         self::VIEW,
         self::EDIT,
-        self::CREATE,
         self::ROLES,
         self::PASSWORD,
         self::DELETE,
         self::PREFERENCES,
         self::API_TOKEN,
+        self::HOURLY_RATE,
     ];
 
     /**
@@ -48,7 +48,7 @@ class UserVoter extends AbstractVoter
             return false;
         }
 
-        if (!$subject instanceof User) {
+        if (!($subject instanceof User)) {
             return false;
         }
 
@@ -65,66 +65,48 @@ class UserVoter extends AbstractVoter
     {
         $user = $token->getUser();
 
-        if (!$user instanceof User) {
+        if (!($user instanceof User)) {
             return false;
         }
 
+        $permission = '';
+
         switch ($attribute) {
+            // special case for the UserController
+            case self::DELETE:
+                if (!$this->canDelete($subject, $user, $token)) {
+                    return false;
+                }
+
+                return $this->hasRolePermission($user, 'delete_user');
+
+            // used in templates and ProfileController
             case self::VIEW:
-                return $this->canView($subject, $user, $token);
             case self::EDIT:
             case self::API_TOKEN:
             case self::PASSWORD:
-                return $this->canEdit($subject, $user, $token);
-            case self::DELETE:
-                return $this->canDelete($subject, $user, $token);
-            case self::CREATE: // create actually passes in the current user as $subject, not the new one
             case self::ROLES:
-                return $this->canAdminUsers($token);
             case self::PREFERENCES:
-                return $this->canEditPreferences($subject, $user, $token);
+            case self::HOURLY_RATE:
+                $permission .= $attribute;
+                break;
+
+            default:
+                return false;
         }
 
-        return false;
-    }
+        $permission .= '_';
 
-    /**
-     * @param User $profile
-     * @param User $user
-     * @param TokenInterface $token
-     * @return bool
-     */
-    protected function canEditPreferences(User $profile, User $user, TokenInterface $token)
-    {
-        return $profile->getId() === $user->getId();
-    }
-
-    /**
-     * @param User $profile
-     * @param User $user
-     * @return bool
-     */
-    protected function canView(User $profile, User $user, TokenInterface $token)
-    {
-        if ($this->canEdit($profile, $user, $token)) {
-            return true;
+        // extend me for "team" support later on
+        if ($subject->getId() == $user->getId()) {
+            $permission .= 'own';
+        } else {
+            $permission .= 'other';
         }
 
-        return $profile->getId() === $user->getId();
-    }
+        $permission .= '_profile';
 
-    /**
-     * @param User $profile
-     * @param User $user
-     * @return bool
-     */
-    protected function canEdit(User $profile, User $user, TokenInterface $token)
-    {
-        if ($this->canAdminUsers($token)) {
-            return true;
-        }
-
-        return $profile->getId() === $user->getId();
+        return $this->hasRolePermission($user, $permission);
     }
 
     /**
@@ -134,19 +116,6 @@ class UserVoter extends AbstractVoter
      */
     protected function canDelete(User $profile, User $user, TokenInterface $token)
     {
-        if (!$this->canAdminUsers($token)) {
-            return false;
-        }
-
         return $profile->getId() !== $user->getId();
-    }
-
-    /**
-     * @param TokenInterface $token
-     * @return bool
-     */
-    protected function canAdminUsers(TokenInterface $token)
-    {
-        return $this->isFullyAuthenticated($token) && $this->hasRole(User::ROLE_SUPER_ADMIN, $token);
     }
 }

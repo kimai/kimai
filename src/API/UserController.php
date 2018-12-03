@@ -16,19 +16,14 @@ use App\Repository\UserRepository;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @RouteResource("User")
- *
- * @Security("is_granted('ROLE_SUPER_ADMIN')")
- * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
  */
-class UserController extends Controller
+class UserController extends BaseApiController
 {
     /**
      * @var UserRepository
@@ -52,10 +47,12 @@ class UserController extends Controller
 
     /**
      * @SWG\Response(
-     *     response=200,
-     *     description="Returns the collection of all registered users",
-     *     @SWG\Schema(ref=@Model(type=User::class)),
+     *      response=200,
+     *      description="Returns the collection of all registered users",
+     *      @SWG\Schema(ref="#/definitions/UserCollection"),
      * )
+     *
+     * @Security("is_granted('view_user')")
      *
      * @return Response
      */
@@ -63,16 +60,19 @@ class UserController extends Controller
     {
         $data = $this->repository->findAll();
         $view = new View($data, 200);
+        $view->getContext()->setGroups(['Default', 'Collection', 'User']);
 
         return $this->viewHandler->handle($view);
     }
 
     /**
      * @SWG\Response(
-     *     response=200,
-     *     description="Return one user entity",
-     *     @SWG\Schema(ref=@Model(type=User::class)),
+     *      response=200,
+     *      description="Return one user entity",
+     *      @SWG\Schema(ref="#/definitions/UserEntity"),
      * )
+     *
+     * @Security("is_granted('view_user')")
      *
      * @param int $id
      * @return Response
@@ -84,6 +84,7 @@ class UserController extends Controller
             throw new NotFoundException();
         }
         $view = new View($data, 200);
+        $view->getContext()->setGroups(['Default', 'Entity', 'User']);
 
         return $this->viewHandler->handle($view);
     }

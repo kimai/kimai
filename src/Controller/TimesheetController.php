@@ -14,7 +14,6 @@ use App\Form\TimesheetEditForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\Query\TimesheetQuery;
 use Pagerfanta\Pagerfanta;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,7 +23,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  * Controller used to manage timesheets.
  *
  * @Route(path="/timesheet")
- * @Security("is_granted('ROLE_USER')")
+ * @Security("is_granted('view_own_timesheet')")
  */
 class TimesheetController extends AbstractController
 {
@@ -43,7 +42,7 @@ class TimesheetController extends AbstractController
     /**
      * @Route(path="/", defaults={"page": 1}, name="timesheet", methods={"GET"})
      * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="timesheet_paginated", methods={"GET"})
-     * @Cache(smaxage="10")
+     * @Security("is_granted('view_own_timesheet')")
      *
      * @param int $page
      * @param Request $request
@@ -83,6 +82,7 @@ class TimesheetController extends AbstractController
 
     /**
      * @Route(path="/export", name="timesheet_export", methods={"GET"})
+     * @Security("is_granted('export_own_timesheet')")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -116,8 +116,6 @@ class TimesheetController extends AbstractController
     }
 
     /**
-     * The "main button and fly-out" for displaying (and stopping) active entries.
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function activeEntriesAction()
@@ -146,8 +144,6 @@ class TimesheetController extends AbstractController
     }
 
     /**
-     * The route to re-start a timesheet entry.
-     *
      * @Route(path="/start/{id}", name="timesheet_start", requirements={"id" = "\d+"}, methods={"GET", "POST"})
      * @Security("is_granted('start', timesheet)")
      *
@@ -186,8 +182,6 @@ class TimesheetController extends AbstractController
     }
 
     /**
-     * The route to edit an existing entry.
-     *
      * @Route(path="/{id}/edit", name="timesheet_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', entry)")
      *
@@ -205,9 +199,8 @@ class TimesheetController extends AbstractController
     }
 
     /**
-     * The route to create a new entry by form.
-     *
      * @Route(path="/create", name="timesheet_create", methods={"GET", "POST"})
+     * @Security("is_granted('create_own_timesheet')")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -218,8 +211,6 @@ class TimesheetController extends AbstractController
     }
 
     /**
-     * The route to delete an existing entry.
-     *
      * @Route(path="/{id}/delete", defaults={"page": 1}, name="timesheet_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', entry)")
      *
@@ -251,6 +242,7 @@ class TimesheetController extends AbstractController
         return $this->createForm(TimesheetEditForm::class, $entry, [
             'action' => $this->generateUrl('timesheet_create'),
             'method' => 'POST',
+            'include_rate' => $this->isGranted('edit_rate', $entry),
             'duration_only' => $this->isDurationOnlyMode(),
         ]);
     }
@@ -268,6 +260,7 @@ class TimesheetController extends AbstractController
                 'page' => $page
             ]),
             'method' => 'POST',
+            'include_rate' => $this->isGranted('edit_rate', $entry),
             'duration_only' => $this->isDurationOnlyMode(),
         ]);
     }

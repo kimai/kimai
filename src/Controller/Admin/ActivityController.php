@@ -27,8 +27,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Controller used to manage activities in the admin part of the site.
  *
  * @Route(path="/admin/activity")
- * @Security("is_granted('ROLE_ADMIN')")
- * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+ * @Security("is_granted('view_activity')")
  */
 class ActivityController extends AbstractController
 {
@@ -44,6 +43,11 @@ class ActivityController extends AbstractController
      * @Route(path="/", defaults={"page": 1}, name="admin_activity", methods={"GET"})
      * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_activity_paginated", methods={"GET"})
      * @Cache(smaxage="10")
+     * @Security("is_granted('view_activity')")
+     *
+     * @param int $page
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction($page, Request $request)
     {
@@ -71,6 +75,7 @@ class ActivityController extends AbstractController
 
     /**
      * @Route(path="/create", name="admin_activity_create", methods={"GET", "POST"})
+     * @Security("is_granted('create_activity')")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -94,8 +99,6 @@ class ActivityController extends AbstractController
     }
 
     /**
-     * The route to delete an existing entry.
-     *
      * @Route(path="/{id}/delete", name="admin_activity_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', activity)")
      *

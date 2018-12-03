@@ -73,7 +73,10 @@ trait RendererTrait
      */
     protected function modelToReplacer(InvoiceModel $model)
     {
-        return [
+        $customer = $model->getCustomer();
+        $project = $model->getQuery()->getProject();
+
+        $values = [
             'invoice.due_date' => $this->getFormattedDateTime($model->getDueDate()),
             'invoice.date' => $this->getFormattedDateTime($model->getInvoiceDate()),
             'invoice.number' => $model->getNumberGenerator()->getInvoiceNumber(),
@@ -95,16 +98,32 @@ trait RendererTrait
             'query.end' => $this->getFormattedDateTime($model->getQuery()->getEnd()),
             'query.month' => $this->getFormattedMonthName($model->getQuery()->getBegin()),
             'query.year' => $model->getQuery()->getBegin()->format('Y'),
-
-            'customer.address' => $model->getCustomer()->getAddress(),
-            'customer.name' => $model->getCustomer()->getName(),
-            'customer.contact' => $model->getCustomer()->getContact(),
-            'customer.company' => $model->getCustomer()->getCompany(),
-            'customer.number' => $model->getCustomer()->getNumber(),
-            'customer.country' => $model->getCustomer()->getCountry(),
-            'customer.homepage' => $model->getCustomer()->getHomepage(),
-            'customer.comment' => $model->getCustomer()->getComment(),
         ];
+
+        if (null !== $project) {
+            $values = array_merge($values, [
+                'project.id' => $project->getId(),
+                'project.name' => $project->getName(),
+                'project.comment' => $project->getComment(),
+                'project.order_number' => $project->getOrderNumber(),
+            ]);
+        }
+
+        if (null !== $customer) {
+            $values = array_merge($values, [
+                'customer.id' => $customer->getId(),
+                'customer.address' => $customer->getAddress(),
+                'customer.name' => $customer->getName(),
+                'customer.contact' => $customer->getContact(),
+                'customer.company' => $customer->getCompany(),
+                'customer.number' => $customer->getNumber(),
+                'customer.country' => $customer->getCountry(),
+                'customer.homepage' => $customer->getHomepage(),
+                'customer.comment' => $customer->getComment(),
+            ]);
+        }
+
+        return $values;
     }
 
     /**
@@ -149,14 +168,15 @@ trait RendererTrait
             'entry.duration' => $timesheet->getDuration(),
             'entry.duration_minutes' => number_format($timesheet->getDuration() / 60),
             'entry.begin' => $this->getFormattedDateTime($begin),
-            'entry.begin_time' => date("H:i", $begin->getTimestamp()),
+            'entry.begin_time' => date('H:i', $begin->getTimestamp()),
             'entry.begin_timestamp' => $begin->getTimestamp(),
             'entry.end' => $this->getFormattedDateTime($end),
-            'entry.end_time' => date("H:i", $end->getTimestamp()),
+            'entry.end_time' => date('H:i', $end->getTimestamp()),
             'entry.end_timestamp' => $end->getTimestamp(),
             'entry.date' => $this->getFormattedDateTime($begin),
             'entry.user_id' => $user->getId(),
             'entry.user_name' => $user->getUsername(),
+            'entry.user_title' => $user->getTitle(),
             'entry.user_alias' => $user->getAlias(),
             'entry.activity' => $activity->getName(),
             'entry.activity_id' => $activity->getId(),

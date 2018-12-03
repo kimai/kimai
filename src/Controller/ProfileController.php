@@ -11,6 +11,7 @@ namespace App\Controller;
 
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Event\PrepareUserEvent;
 use App\Form\UserApiTokenType;
 use App\Form\UserEditType;
 use App\Form\UserPasswordType;
@@ -19,6 +20,7 @@ use App\Form\UserRolesType;
 use App\Repository\TimesheetRepository;
 use App\Voter\UserVoter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,10 +30,15 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  * User profile controller
  *
  * @Route(path="/profile")
- * @Security("is_granted('ROLE_USER')")
+ * @Security("is_granted('view_own_profile') or is_granted('view_other_profile')")
  */
 class ProfileController extends AbstractController
 {
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $dispatcher;
+
     /**
      * @var UserPasswordEncoderInterface
      */
@@ -40,9 +47,10 @@ class ProfileController extends AbstractController
     /**
      * @param UserPasswordEncoderInterface $encoder
      */
-    public function __construct(UserPasswordEncoderInterface $encoder)
+    public function __construct(UserPasswordEncoderInterface $encoder, EventDispatcherInterface $dispatcher)
     {
         $this->encoder = $encoder;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -162,6 +170,10 @@ class ProfileController extends AbstractController
      */
     public function savePreferencesAction(User $profile, Request $request)
     {
+        // we need to prepare the user preferences, which is done via an EventSubscriber
+        $event = new PrepareUserEvent($profile);
+        $this->dispatcher->dispatch(PrepareUserEvent::PREPARE, $event);
+
         $original = [];
         foreach ($profile->getPreferences() as $preference) {
             $original[$preference->getName()] = $preference;
@@ -194,8 +206,11 @@ class ProfileController extends AbstractController
 
             $this->flashSuccess('action.update.success');
 
-            // switch locale if neccessary
-            $locale = $profile->getPreferenceValue('language', $request->getLocale());
+            // switch locale ONLY if updated profile is the current user
+            $locale = $request->getLocale();
+            if ($this->getUser()->getId() === $profile->getId()) {
+                $locale = $profile->getPreferenceValue('language', $locale);
+            }
 
             return $this->redirectToRoute('user_profile_preferences', [
                 '_locale' => $locale,
@@ -269,6 +284,10 @@ class ProfileController extends AbstractController
      */
     private function createPreferencesForm(User $user)
     {
+        // we need to prepare the user preferences, which is done via an EventSubscriber
+        $event = new PrepareUserEvent($user);
+        $this->dispatcher->dispatch(PrepareUserEvent::PREPARE, $event);
+
         return $this->createForm(
             UserPreferencesForm::class,
             $user,
