@@ -176,6 +176,7 @@ trait RendererTrait
             'entry.date' => $this->getFormattedDateTime($begin),
             'entry.user_id' => $user->getId(),
             'entry.user_name' => $user->getUsername(),
+            'entry.user_title' => $user->getTitle(),
             'entry.user_alias' => $user->getAlias(),
             'entry.activity' => $activity->getName(),
             'entry.activity_id' => $activity->getId(),
