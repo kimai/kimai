@@ -12,6 +12,7 @@ namespace App\Tests\Invoice\Calculator;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
+use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Invoice\Calculator\UserInvoiceCalculator;
@@ -50,6 +51,7 @@ class UserInvoiceCalculatorTest extends AbstractCalculatorTest
             ->setRate(293.27)
             ->setUser($user1)
             ->setActivity($activity)
+            ->setProject((new Project())->setName('bar'));
         ;
 
         $timesheet2 = new Timesheet();
@@ -58,6 +60,7 @@ class UserInvoiceCalculatorTest extends AbstractCalculatorTest
             ->setRate(84.75)
             ->setUser($user2)
             ->setActivity($activity)
+            ->setProject((new Project())->setName('bar'));
         ;
 
         $timesheet3 = new Timesheet();
@@ -66,6 +69,7 @@ class UserInvoiceCalculatorTest extends AbstractCalculatorTest
             ->setRate(111.11)
             ->setUser($user1)
             ->setActivity($activity)
+            ->setProject((new Project())->setName('bar'));
         ;
 
         $timesheet4 = new Timesheet();
@@ -74,6 +78,7 @@ class UserInvoiceCalculatorTest extends AbstractCalculatorTest
             ->setRate(1947.99)
             ->setUser($user2)
             ->setActivity($activity)
+            ->setProject((new Project())->setName('bar'));
         ;
 
         $timesheet5 = new Timesheet();
@@ -82,6 +87,7 @@ class UserInvoiceCalculatorTest extends AbstractCalculatorTest
             ->setRate(84)
             ->setUser(new User())
             ->setActivity($activity)
+            ->setProject((new Project())->setName('bar'));
         ;
 
         $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5];

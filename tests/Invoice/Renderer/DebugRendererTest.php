@@ -111,6 +111,7 @@ class DebugRendererTest extends AbstractRendererTest
             'entry.user_id',
             'entry.user_name',
             'entry.user_alias',
+            'entry.user_title',
             'entry.activity',
             'entry.activity_id',
             'entry.project',
