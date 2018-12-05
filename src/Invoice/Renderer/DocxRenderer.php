@@ -30,9 +30,10 @@ class DocxRenderer extends AbstractRenderer implements RendererInterface
 
         $filename = basename($document->getFilename());
 
+        $xmlEscaper = new Xml();
         $template = new TemplateProcessor($document->getFilename());
+
         foreach ($this->modelToReplacer($model) as $search => $replace) {
-            $xmlEscaper = new Xml();
             $replace = $xmlEscaper->escape($replace);
             $replace = str_replace(PHP_EOL, '</w:t><w:br /><w:t xml:space="preserve">', $replace);
 
@@ -44,7 +45,6 @@ class DocxRenderer extends AbstractRenderer implements RendererInterface
         foreach ($model->getCalculator()->getEntries() as $entry) {
             $values = $this->timesheetToArray($entry);
             foreach ($values as $search => $replace) {
-                $xmlEscaper = new Xml();
                 $replace = $xmlEscaper->escape($replace);
                 $replace = str_replace(PHP_EOL, '</w:t><w:br /><w:t xml:space="preserve">', $replace);
 
