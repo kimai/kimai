@@ -1,51 +1,94 @@
 # Installation
 
-If you want to install Kimai v2 in your production environment and have SSH access, then switch to the official 
-installation instruction in our [README](https://github.com/kevinpapst/kimai2/#installation).
+The recommended way to install Kimai v2 is via SSH, you need GIT and [Composer](https://getcomposer.org/doc/00-intro.md). 
 
-You need GIT and [Composer](https://getcomposer.org/doc/00-intro.md) on the machine where you want to install Kimai. 
+But there are further installation methods described: 
+- [Development setup](#development-installation) 
+- [Docker](var/docs/docker.md)
+- [1-click installations](#hosting-and-1-click-installations) 
+- [FTP](#ftp-installation) (not supported)
+- Hints for [local single-user setup](#installation-on-a-personal-computer) 
+
+## Recommended setup 
+
+To install Kimai 2 in your production environment, connect with SSH to your server and change to your webserver root directory.
+You need to install Git and [Composer](https://getcomposer.org/doc/00-intro.md) if you haven't already. 
+
+First clone this repo:
+
+```bash
+git clone https://github.com/kevinpapst/kimai2.git
+cd kimai2/
+```
+
+Make sure the [file permissions are correct](https://symfony.com/doc/current/setup/file_permissions.html) and create your `.env` file:
+```bash
+chown -R :www-data .
+chmod -R g+r .
+chmod -R g+rw var/
+cp .env.dist .env
+```
+
+It's up to you which database server you want to use, Kimai v2 supports MySQL/MariaDB and SQLite, but SQLite is [not recommended](faq.md) for production usage.
+Configure the database connection string in your the `.env` file:
+```
+# adjust all settings in .env to your needs
+APP_ENV=prod
+DATABASE_URL=mysql://user:password@127.0.0.1:3306/database
+```
+
+Now install all dependencies for Kimai 2:
+
+```bash
+sudo -u www-data composer install --no-dev --optimize-autoloader
+```
+
+Optionally create the database:
+```bash
+bin/console doctrine:database:create
+```
+
+Create all schema tables:
+```bash
+bin/console doctrine:schema:create
+```
+
+Make sure that upcoming updates can be correctly applied by setting the initial database version:
+```bash
+bin/console doctrine:migrations:version --add --all
+```
+
+Warm up the cache (as webserver user):
+```bash
+sudo -u www-data bin/console cache:warmup --env=prod
+```
+
+Create your first user with the following command. You will be asked to enter a password afterwards:
+```bash
+bin/console kimai:create-user username admin@example.com ROLE_SUPER_ADMIN
+```
+_Tip: You can skip the "create user" step, if you are going to [import data from Kimai v1](migration_v1.md)._
+
+For available roles, please refer to the [user documentation](users.md).
+
+> **NOTE**
+>
+> If you want to use a fully-featured web server (like Nginx or Apache) to run
+> Kimai, configure it to point at the `public/` directory of the project.
+> For more details, see:
+> http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html
+
+Installation complete: enjoy time-tracking :-)
 
 ## Docker
 
 There is a dedicated about [our Docker setup](docker.md), which is primarily meant for use in development. 
 
-## Installing on a personal computer
-
-### Which user to use - no need to use www-data user?!
-
-The installation instructions are intended primarily for server applications. 
-
-If you are installing Kimai 2 on your personal computer - even for use in a local network, but where the computer primarily 
-serves as a single user computer - you will avoid permission errors by subsituting `www-data` in the relevant commands with your username.
-
-In particular, `sudo -u www-data` is a command which grants the `www-data` user temporary administrator/super-user privileges). 
-However, depending on the configuration of your particular computer, you may be able to avoid sudo altogether (your user 
-may already have adequate permissions).
-
-You can try first leaving `sudo -u www-data` altogether in the relevant commands. 
-If you have permission errors, you can substitute it for `sudo -u $USER` in the relevant commands (where username is the 
-username that runs the server - if you don't know, it is likely your own username that you login with).
-
-### chown & chmod commands
-
-Further, `chown` and `chmod` commands should be for the username that runs the server instead of `www-data` (again, if you 
-don't know, it is likely your own username).
-
-Also note that, depending on where you are installing Kimai 2 and how your computer is configured, you may also receive 
-"operation not permitted" errors when setting file permissions (chown and chmod commands). 
-In that case, prefix them with `sudo`.
-
-### Still doesn't work?
-
-These infos were added to give you some possible guidance if you run into troubles. The Linux (and Mac) filesystem 
-with its permission structure, especially when using server software, can be tricky and challenging.
-
-But this has NOTHING to do with Kimai and we might not be able to help you in such situations ... it is your system and 
-responsibility, be aware that wrong permissions might break Kimai and can also lead to security problems.
-
-## Hosting & 1-click installations
+## Hosting and 1-click installations
 
 These platforms adopted Kimai 2 to be compatible with their one-click installation systems:
+
+### YunoHost
 
 [![Install kimai2 with YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=kimai2)
 
@@ -162,3 +205,37 @@ To re-generate the frontend assets ([more information here](var/docs/developers.
 yarn install
 npm run prod
 ```
+
+## Installation on a personal computer
+
+### Which user to use - no need to use www-data user?!
+
+The installation instructions are intended primarily for server applications. 
+
+If you are installing Kimai 2 on your personal computer - maybe for use in a local network, but where the computer primarily 
+serves as a single user computer - you will avoid permission errors by substituting `www-data` in the relevant commands with your username.
+
+In particular, `sudo -u www-data` is a command which grants the `www-data` user temporary administrator/super-user privileges). 
+However, depending on the configuration of your particular computer, you may be able to avoid sudo altogether (your user 
+may already have adequate permissions).
+
+You can try first leaving `sudo -u www-data` altogether in the relevant commands. 
+If you have permission errors, you can substitute it for `sudo -u $USER` in the relevant commands (where username is the 
+username that runs the server - if you don't know, it is likely your own username that you login with).
+
+### chown & chmod commands
+
+Further, `chown` and `chmod` commands should be for the username that runs the server instead of `www-data` (again, if you 
+don't know, it is likely your own username).
+
+Also note that, depending on where you are installing Kimai 2 and how your computer is configured, you may also receive 
+"operation not permitted" errors when setting file permissions (chown and chmod commands). 
+In that case, prefix them with `sudo`.
+
+### Still doesn't work?
+
+These infos were added to give you some possible guidance if you run into troubles. The Linux (and Mac) filesystem 
+with its permission structure, especially when using server software, can be tricky and challenging.
+
+But this has NOTHING to do with Kimai and we might not be able to help you in such situations ... it is your system and 
+responsibility, be aware that wrong permissions might break Kimai and can also lead to security problems.
