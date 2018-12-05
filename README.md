@@ -1,6 +1,6 @@
-# Kimai 2 - Time Tracking made easy
+# Kimai 2 - Time-tracking made easy
 
-Kimai - the open source time-tracking application with a mobile-first approach (read more at the [official website](http://v2.kimai.org)).
+Kimai - the open source time-tracker application with a mobile-first approach (read more at the [official website](http://v2.kimai.org)).
 
 [![Latest Stable Version](https://poser.pugx.org/kevinpapst/kimai2/v/stable)](https://packagist.org/packages/kevinpapst/kimai2)
 [![License](https://poser.pugx.org/kevinpapst/kimai2/license)](https://packagist.org/packages/kevinpapst/kimai2)
