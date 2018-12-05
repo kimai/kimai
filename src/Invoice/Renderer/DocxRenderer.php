@@ -12,33 +12,13 @@ namespace App\Invoice\Renderer;
 use App\Entity\InvoiceDocument;
 use App\Invoice\RendererInterface;
 use App\Model\InvoiceModel;
-use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\Escaper\Xml;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Symfony\Component\HttpFoundation\File\Stream;
 use Symfony\Component\HttpFoundation\Response;
 
 class DocxRenderer extends AbstractRenderer implements RendererInterface
 {
-    /*
-    protected function setPhpWordOptions(PhpWord $phpWord)
-    {
-        if (!extension_loaded('zip')) {
-            \PhpOffice\PhpWord\Settings::setZipClass(\PhpOffice\PhpWord\Settings::PCLZIP);
-        }
-
-        // \PhpOffice\PhpWord\Settings::setPdfRendererPath(__DIR__ . '/../../vendor/tecnickcom/tcpdf/');
-        // \PhpOffice\PhpWord\Settings::setPdfRendererName(\PhpOffice\PhpWord\Settings::PDF_RENDERER_TCPDF);
-        // \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
-        // $phpWord->getSettings()->setThemeFontLang(new Language(Language::EN_US));
-
-        $properties = $phpWord->getDocInfo();
-        $properties->setCreator('Kimai 2');
-        $properties->setDescription('Created with Kimai 2, the open-source time-tracking software! Get more information at www.kimai.org.');
-        $properties->setCreated(time());
-        $properties->setModified(time());
-    }
-    */
-
     /**
      * @param InvoiceDocument $document
      * @param InvoiceModel $model
@@ -46,11 +26,17 @@ class DocxRenderer extends AbstractRenderer implements RendererInterface
      */
     public function render(InvoiceDocument $document, InvoiceModel $model): Response
     {
+        \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(false);
+
         $filename = basename($document->getFilename());
 
         $template = new TemplateProcessor($document->getFilename());
-        foreach ($this->modelToReplacer($model) as $key => $value) {
-            $template->setValue($key, $value);
+        foreach ($this->modelToReplacer($model) as $search => $replace) {
+            $xmlEscaper = new Xml();
+            $replace = $xmlEscaper->escape($replace);
+            $replace = str_replace(PHP_EOL, '</w:t><w:br /><w:t xml:space="preserve">', $replace);
+
+            $template->setValue($search, $replace);
         }
 
         $template->cloneRow('entry.description', count($model->getCalculator()->getEntries()));
@@ -58,6 +44,10 @@ class DocxRenderer extends AbstractRenderer implements RendererInterface
         foreach ($model->getCalculator()->getEntries() as $entry) {
             $values = $this->timesheetToArray($entry);
             foreach ($values as $search => $replace) {
+                $xmlEscaper = new Xml();
+                $replace = $xmlEscaper->escape($replace);
+                $replace = str_replace(PHP_EOL, '</w:t><w:br /><w:t xml:space="preserve">', $replace);
+
                 $template->setValue($search . '#' . $i, $replace);
             }
             $i++;
