@@ -212,7 +212,7 @@ npm run prod
 
 The installation instructions are intended primarily for server applications. 
 
-If you are installing Kimai 2 on your personal computer - even for use in a local network, but where the computer primarily 
+If you are installing Kimai 2 on your personal computer - maybe for use in a local network, but where the computer primarily 
 serves as a single user computer - you will avoid permission errors by substituting `www-data` in the relevant commands with your username.
 
 In particular, `sudo -u www-data` is a command which grants the `www-data` user temporary administrator/super-user privileges). 

@@ -1,6 +1,6 @@
-# Kimai v2 - Time Tracking
+# Kimai 2 - Time Tracking made simple
 
-Kimai v2 - the open source time-tracking application with a mobile-first approach, read more at the [official website](http://v2.kimai.org).
+Kimai 2 - the open source time-tracking application with a mobile-first approach (read more at the [official website](http://v2.kimai.org)).
 
 [![Latest Stable Version](https://poser.pugx.org/kevinpapst/kimai2/v/stable)](https://packagist.org/packages/kevinpapst/kimai2)
 [![License](https://poser.pugx.org/kevinpapst/kimai2/license)](https://packagist.org/packages/kevinpapst/kimai2)
@@ -12,13 +12,13 @@ Kimai v2 - the open source time-tracking application with a mobile-first approac
 ## Introduction
 
 This is the _reloaded_ version of the open source timetracker Kimai.
-The new version is built from scratch and doesn't share any source code with its [predecessor](http://www.kimai.org), 
-but it adapts the same ideas of time-tracking and the development team!
+It is built from scratch and doesn't share any source code with its [predecessor](http://www.kimai.org). 
+But it adapts the same ideas and a clean & simple UI for your time-tracking experience.
 
-By now its in an pre-stable development phase, it is usable and has most advanced features from Kimai 1, 
-you can even [import your timesheets](var/docs/migration_v1.md) and start testing and using it today.
+By now it is in an pre-stable development phase, usable and with most advanced features from Kimai 1, 
+you can even [import your data](var/docs/migration_v1.md) and start testing and using it today.
 
-Kimai is a [multi-language application](var/docs/translations.md) and already translated to: English, German, Italian, French, Spanish, Russian, Arabic, Hungarian and Portuguese.
+Kimai is a [multi-language application](var/docs/translations.md) and already translated to english, german, italian, french, spanish, russian, arabic, hungarian and portuguese.
 
 ### Requirements
 
@@ -30,7 +30,7 @@ Kimai is a [multi-language application](var/docs/translations.md) and already tr
 
 ## Documentation
 
-Looking for more information about using Kimai? Check out our detailed [documentation](var/docs/).
+Looking for more information about Kimai 2? Check out our detailed [documentation](var/docs/).
 
 ### Installation
 
@@ -52,15 +52,14 @@ Read the following documentations before you start your upgrade:
 
 ## Roadmap and releases
 
-You can see our development roadmap for the future in the [Milestones](https://github.com/kevinpapst/kimai2/milestones) sections.
-Our roadmap is open for changes and input from the community, your [ideas and questions](https://github.com/kevinpapst/kimai2/issues) are welcome!
+You can see our development roadmap in the [Milestones](https://github.com/kevinpapst/kimai2/milestones) sections.
+It is open for changes and input from the community, your [ideas and questions](https://github.com/kevinpapst/kimai2/issues) are welcome!
 
 > Kimai 2 uses a rolling release concept for delivering updates.
-> You can upgrade Kimai at any time, you don't need to wait for the next official release! 
+> You can upgrade Kimai at any time, you don't need to wait for the next official release.
 
-Release versions will be created on a regular base and you can use these tags if you are familiar with Git,  
+Release versions will be created on a regular base and you can use these tags if you are familiar with Git, 
 but we will not provide support for any specific version.
-
 Every code change, whether it's a new feature or bug fixes, will be done on the master branch and 
 intensively tested before merging. We have to go this way, as we develop Kimai in our free time and want to put our 
 effort into the software instead of backporting changes for old versions. 

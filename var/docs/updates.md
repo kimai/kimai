@@ -7,7 +7,7 @@ personal computer instead of a server. Read the [installation docu](installation
 
 **STOP** 
 
-1. It's important that you don't execute the Installation steps before or after your upgrade
+1. It is important that you don't execute the installation steps before or after your update
 2. Make sure that you have a working database backup before you start the update
 3. Read the [UPGRADING](https://github.com/kevinpapst/kimai2/blob/master/UPGRADING.md) guide and the [release information](https://github.com/kevinpapst/kimai2/releases) to check if there are further steps required
 
