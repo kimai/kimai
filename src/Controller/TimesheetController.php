@@ -30,12 +30,10 @@ class TimesheetController extends AbstractController
     use TimesheetControllerTrait;
 
     /**
-     * @param bool $durationOnly
      * @param int $hardLimit
      */
-    public function __construct(bool $durationOnly, int $hardLimit)
+    public function __construct(int $hardLimit)
     {
-        $this->setDurationMode($durationOnly);
         $this->setHardLimit($hardLimit);
     }
 
@@ -241,9 +239,7 @@ class TimesheetController extends AbstractController
     {
         return $this->createForm(TimesheetEditForm::class, $entry, [
             'action' => $this->generateUrl('timesheet_create'),
-            'method' => 'POST',
             'include_rate' => $this->isGranted('edit_rate', $entry),
-            'duration_only' => $this->isDurationOnlyMode(),
         ]);
     }
 
@@ -259,9 +255,7 @@ class TimesheetController extends AbstractController
                 'id' => $entry->getId(),
                 'page' => $page
             ]),
-            'method' => 'POST',
             'include_rate' => $this->isGranted('edit_rate', $entry),
-            'duration_only' => $this->isDurationOnlyMode(),
         ]);
     }
 

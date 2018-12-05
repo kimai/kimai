@@ -14,7 +14,6 @@ services:
                             # The best practice is to be explicit about your dependencies anyway.
         bind:
             $projectDirectory: "%kernel.project_dir%"
-            $durationOnly: "%kimai.timesheet.duration_only%"
             $hardLimit: "%kimai.timesheet.active_entries.hard_limit%"
 
     # makes classes in src/ available to be used as services
@@ -93,6 +92,10 @@ services:
         arguments: ["%kimai.theme.select_type%"]
         tags:
             - { name: form.type_extension, extended_type: Symfony\Bridge\Doctrine\Form\Type\EntityType }
+
+    App\Form\TimesheetEditForm:
+        arguments:
+            $durationOnly: "%kimai.timesheet.duration_only%"
 
     # ================================================================================
     # THEME

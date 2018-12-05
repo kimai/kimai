@@ -23,29 +23,9 @@ use Symfony\Component\HttpFoundation\Response;
 trait TimesheetControllerTrait
 {
     /**
-     * @var bool
-     */
-    private $durationOnly = false;
-    /**
      * @var int
      */
     private $hardLimit = 1;
-
-    /**
-     * @param bool $durationOnly
-     */
-    protected function setDurationMode(bool $durationOnly)
-    {
-        $this->durationOnly = $durationOnly;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isDurationOnlyMode()
-    {
-        return $this->durationOnly;
-    }
 
     /**
      * @param int $hardLimit
