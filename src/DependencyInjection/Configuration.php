@@ -85,7 +85,6 @@ class Configuration implements ConfigurationInterface
                     ->end()
                     ->defaultValue([])
                 ->end()
-
                 ->arrayNode('rates')
                     ->requiresAtLeastOneElement()
                     ->useAttributeAsKey('key')
@@ -112,7 +111,6 @@ class Configuration implements ConfigurationInterface
                     ->end()
                     ->defaultValue([])
                 ->end()
-
                 ->arrayNode('active_entries')
                     ->addDefaultsIfNotSet()
                         ->children()
@@ -122,7 +120,7 @@ class Configuration implements ConfigurationInterface
                                     ->ifTrue(function ($value) {
                                         return $value <= 0;
                                     })
-                                    ->thenInvalid('The hard_limit must be at least 1')
+                                    ->thenInvalid('The soft_limit must be at least 1')
                                 ->end()
                             ->end()
                             ->integerNode('hard_limit')
@@ -131,7 +129,7 @@ class Configuration implements ConfigurationInterface
                                     ->ifTrue(function ($value) {
                                         return $value <= 0;
                                     })
-                                    ->thenInvalid('The soft_limit must be at least 1')
+                                    ->thenInvalid('The hard_limit must be at least 1')
                                 ->end()
                             ->end()
                         ->end()
