@@ -7,7 +7,7 @@ FROM php:7.2.9-apache-stretch
 
 WORKDIR /opt/kimai
 
-RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer && \
+RUN php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer && \
     apt update && \
     apt install -y \
         git \
