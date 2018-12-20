@@ -14,6 +14,7 @@ RUN apt update && \
         libldb-dev \
         libpng-dev \
         unzip \
+        wget \
         zip \
         && \
     EXPECTED_SIGNATURE="$(wget -q -O - https://composer.github.io/installer.sig)" && \
@@ -30,8 +31,9 @@ RUN apt update && \
         ldap \
         pdo_mysql \
         zip && \
-    apt-get -y autoremove && \
-    apt-get clean && \
+    apt remove -y wget && \
+    apt -y autoremove && \
+    apt clean && \
     git clone https://github.com/kevinpapst/kimai2.git /opt/kimai && \
     sed "s/prod/dev/g" /opt/kimai/.env.dist > /opt/kimai/.env && \
     composer install --working-dir=/opt/kimai --dev --optimize-autoloader && \
