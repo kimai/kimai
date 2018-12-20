@@ -5,10 +5,7 @@
  
 FROM php:7.2.9-apache-stretch
 
-WORKDIR /opt/kimai
-
-RUN php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer && \
-    apt update && \
+RUN apt update && \
     apt install -y \
         git \
         libicu-dev \
@@ -19,6 +16,14 @@ RUN php -r "readfile('https://getcomposer.org/installer');" | php -- --install-d
         unzip \
         zip \
         && \
+    EXPECTED_SIGNATURE="$(wget -q -O - https://composer.github.io/installer.sig)" && \
+    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
+    ACTUAL_SIGNATURE="$(php -r "echo hash_file('sha384', 'composer-setup.php');")" && \
+    if [ "$EXPECTED_SIGNATURE" != "$ACTUAL_SIGNATURE" ]; then >&2 echo 'ERROR: Invalid installer signature'; rm composer-setup.php; exit 1; fi && \
+    php composer-setup.php --quiet && \
+    rm composer-setup.php && \
+    mv /var/www/html/composer.phar /usr/bin/composer && \
+    apt remove -y wget && \
     docker-php-ext-install \
         gd \
         intl \
@@ -28,13 +33,15 @@ RUN php -r "readfile('https://getcomposer.org/installer');" | php -- --install-d
     apt-get -y autoremove && \
     apt-get clean && \
     git clone https://github.com/kevinpapst/kimai2.git /opt/kimai && \
-    sed "s/prod/dev/g" .env.dist > .env && \
-    composer install --dev --optimize-autoloader && \
-    bin/console doctrine:database:create && \
-    bin/console doctrine:schema:create && \
-    bin/console doctrine:migrations:version --add --all && \
-    bin/console cache:warmup && \
-    chown -R www-data:www-data var
+    sed "s/prod/dev/g" /opt/kimai/.env.dist > /opt/kimai/.env && \
+    composer install --working-dir=/opt/kimai --dev --optimize-autoloader && \
+    /opt/kimai/bin/console doctrine:database:create && \
+    /opt/kimai/bin/console doctrine:schema:create && \
+    /opt/kimai/bin/console doctrine:migrations:version --add --all && \
+    /opt/kimai/bin/console cache:warmup && \
+    chown -R www-data:www-data /opt/kimai/var
+
+WORKDIR /opt/kimai
 
 EXPOSE 8001
 USER www-data
