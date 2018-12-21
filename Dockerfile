@@ -24,7 +24,6 @@ RUN apt update && \
     php composer-setup.php --quiet && \
     rm composer-setup.php && \
     mv /var/www/html/composer.phar /usr/bin/composer && \
-    apt remove -y wget && \
     docker-php-ext-install \
         gd \
         intl \
