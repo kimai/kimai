@@ -9,6 +9,7 @@
 namespace App\Form\Type;
 
 use App\Entity\Tag;
+use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -19,7 +20,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @package App\Form\Type
  */
-class TagTextType extends AbstractType {
+class TagsInputType extends AbstractType {
+
+  /** @var TagRepository */
+  private $tagRepository;
+
+  public function __construct() {
+  }
 
   /**
    * @inheritDoc
