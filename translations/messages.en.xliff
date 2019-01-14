@@ -183,6 +183,10 @@
                 <source>label.project</source>
                 <target>Project</target>
             </trans-unit>
+            <trans-unit id="label.tag">
+                <source>label.tag</source>
+                <target>Tags</target>
+            </trans-unit>
             <trans-unit id="label.hourly_rate">
                 <source>label.hourly_rate</source>
                 <target>Hourly rate</target>
