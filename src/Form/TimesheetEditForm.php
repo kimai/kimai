@@ -10,14 +10,17 @@
 namespace App\Form;
 
 use App\Entity\Timesheet;
+use App\Form\DataTransformer\TagArrayToStringTransformer;
 use App\Form\Type\ActivityType;
 use App\Form\Type\CustomerType;
 use App\Form\Type\DurationType;
 use App\Form\Type\ProjectType;
+use App\Form\Type\TagsInputType;
 use App\Form\Type\UserType;
 use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
+use Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -41,15 +44,21 @@ class TimesheetEditForm extends AbstractType
      * @var ProjectRepository
      */
     private $projects;
+  /**
+   * @var TagArrayToStringTransformer
+   */
+    private $transformer;
 
     /**
-     * @param CustomerRepository $customer
-     * @param ProjectRepository $project
+     * @param CustomerRepository          $customer
+     * @param ProjectRepository           $project
+     * @param TagArrayToStringTransformer $transformer
      */
-    public function __construct(CustomerRepository $customer, ProjectRepository $project)
+    public function __construct(CustomerRepository $customer, ProjectRepository $project, TagArrayToStringTransformer $transformer)
     {
         $this->customers = $customer;
         $this->projects = $project;
+        $this->transformer = $transformer;
     }
 
     /**
@@ -167,6 +176,46 @@ class TimesheetEditForm extends AbstractType
             ])
         ;
 
+      //$builder
+      //    ->add('tags', TagsInputType::class, [
+      //      // documentation is for NelmioApiDocBundle
+      //        'documentation' => [
+      //            'type'        => 'text',
+      //            'description' => 'Tags for timesheet entry',
+      //        ],
+      //        'required'      => FALSE,
+      //      //'query_builder' => function (ProjectRepository $repo) use ($project) {
+      //      //  return $repo->builderForEntityType($project);
+      //      //},
+      //        'attr'          => [
+      //            'data-related-select' => $this->getBlockPrefix() . '_activity',
+      //            'data-api-url'        => ['get_activities', ['project' => '-s-']],
+      //        ],
+      //    ]);
+      $builder
+          ->add('tags', TagsInputType::class, [
+            // documentation is for NelmioApiDocBundle
+              'documentation' => [
+                  'type'        => 'text',
+                  'description' => 'Tags for timesheet entry',
+              ],
+              'required'      => FALSE,
+              'attr'          => [
+                  'data-api-url' => ['get_tags', ['tag_name' => '-p-']],
+                  'class' => 'js-autocomplete',
+              ]
+            // TODO Überarbeiten für die API
+
+            //'attr'          => [
+            //              'data-related-select' => $this->getBlockPrefix() . '_activity',
+            //              'data-api-url'        => ['get_activities', ['project' => '-s-']],
+            //],
+          ]);
+
+      $builder->get('tags')
+          ->addModelTransformer(new CollectionToArrayTransformer(), TRUE)
+          ->addModelTransformer($this->transformer, TRUE);
+
         if ($options['include_rate']) {
             $builder
                 ->add('fixedRate', NumberType::class, [
@@ -212,6 +261,8 @@ class TimesheetEditForm extends AbstractType
                 ]);
             }
         );
+
+        //dump($builder);
 
         if ($options['include_user']) {
             $builder->add('user', UserType::class);
