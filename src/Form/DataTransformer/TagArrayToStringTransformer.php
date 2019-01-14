@@ -9,8 +9,7 @@
 namespace App\Form\DataTransformer;
 
 use App\Entity\Tag;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\TagRepository;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
@@ -21,56 +20,66 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
  */
 class TagArrayToStringTransformer implements DataTransformerInterface {
 
-  /** @var EntityManagerInterface */
-  private $entityManager;
+  /** @var TagRepository */
+  private $tagRepository;
 
-  public function _construct(EntityManagerInterface $entityManager) {
-    $this->entityManager = $entityManager;
+  /**
+   * Konstruktor
+   *
+   * @param TagRepository $tagRepository
+   */
+  public function __construct(TagRepository $tagRepository) {
+    dump($tagRepository);
+    $this->tagRepository = $tagRepository;
   }
 
   /**
    * Transforms an object (issue) to a string (number).
    *
-   * @param  Tag[]|ArrayCollection|null $tags
+   * @param  Tag[]|null $tags
    *
    * @return string
    */
-  public function transform($tags) {
-    if (NULL === $tags) {
+  public function transform($tags): string {
+    if (NULL === $tags || sizeof($tags) < 1) {
       return '';
     }
 
-    return implode(', ', $tags->toArray());
-    //return implode(', ', $tags->toArray());
+    return implode(', ', $tags);
   }
 
   /**
-   * Transforms a string (number) to an object (issue).
+   * Transforms a string to an array of tags.
    *
-   * @param  string $tagList
+   * @param  string $stringOfTags
    *
-   * @return Tag[]|ArrayCollection|null
+   * @return Tag[]
    * @throws TransformationFailedException if object (issue) is not found.
    */
-  public function reverseTransform($tagList) {
-    // no issue number? It's optional, so that's ok
-    if (NULL === $tagList) {
-      return new ArrayCollection();
+  public function reverseTransform($stringOfTags): array {
+    // check for empty tag list
+    if (NULL === $stringOfTags || '' === $stringOfTags) {
+      return [];
     }
 
-    $tagArray = explode(',', $tagList);
-    $collection = new ArrayCollection();
+    $names = array_filter(array_unique(array_map('trim', explode(',', $stringOfTags))));
 
-    foreach ($tagArray as $tagElem) {
-      $tagElem = trim($tagElem);
-      $tag = $this->entityManager->getRepository(Tag::class)->findBy(['tagName' => $tagElem]);
-      if (NULL === $tag) {
-        $tag = new Tag();
-        $tag->setName($tagElem);
-      }
-      $collection->add($tag);
+    // Get the current tags and find the new ones that should be created.
+    $tags = $this->tagRepository->findBy([
+        'tagName' => $names,
+    ]);
+    $newNames = array_diff($names, $tags);
+    foreach ($newNames as $name) {
+      $tag = new Tag();
+      $tag->setName($name);
+      $tags[] = $tag;
+
+      // There's no need to persist these new tags because Doctrine does that automatically
+      // thanks to the cascade={"persist"} option in the App\Entity\Timesheet::$tags property.
     }
 
-    return $collection;
+    // Return an array of tags to transform them back into a Doctrine Collection.
+    // See Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer::reverseTransform()
+    return $tags;
   }
 }
