@@ -149,6 +149,11 @@ services:
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Project']
 
+    App\Repository\TagRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\Tag']
+
     App\Repository\CustomerRepository:
         class:     Doctrine\ORM\EntityRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
