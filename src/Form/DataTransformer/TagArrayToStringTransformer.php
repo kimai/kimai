@@ -29,7 +29,6 @@ class TagArrayToStringTransformer implements DataTransformerInterface {
    * @param TagRepository $tagRepository
    */
   public function __construct(TagRepository $tagRepository) {
-    dump($tagRepository);
     $this->tagRepository = $tagRepository;
   }
 
