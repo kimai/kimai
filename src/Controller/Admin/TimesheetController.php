@@ -10,6 +10,7 @@
 namespace App\Controller\Admin;
 
 use App\Controller\AbstractController;
+use App\Controller\TagImplementationTrait;
 use App\Controller\TimesheetControllerTrait;
 use App\Entity\Timesheet;
 use App\Form\TimesheetEditForm;
@@ -65,6 +66,8 @@ class TimesheetController extends AbstractController
                 $query->getEnd()->setTime(23, 59, 59);
             }
         }
+
+        $this->prepareTagList($query);
 
         /* @var $entries Pagerfanta */
         $entries = $this->getRepository()->findByQuery($query);

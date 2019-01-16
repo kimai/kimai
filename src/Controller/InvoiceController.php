@@ -32,6 +32,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class InvoiceController extends AbstractController
 {
+    use TagImplementationTrait;
+
     /**
      * @var ServiceInvoice
      */
@@ -169,6 +171,8 @@ class InvoiceController extends AbstractController
         $query->setResultType(TimesheetQuery::RESULT_TYPE_QUERYBUILDER);
         $query->getBegin()->setTime(0, 0, 0);
         $query->getEnd()->setTime(23, 59, 59);
+
+        $this->prepareTagList($query);
 
         $queryBuilder = $this->timesheetRepository->findByQuery($query);
 

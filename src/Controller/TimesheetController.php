@@ -29,6 +29,8 @@ class TimesheetController extends AbstractController
 {
     use TimesheetControllerTrait;
 
+    use TagImplementationTrait;
+
     /**
      * @param bool $durationOnly
      */
@@ -65,6 +67,8 @@ class TimesheetController extends AbstractController
         }
 
         $query->setUser($this->getUser());
+
+        $this->prepareTagList($query);
 
         /* @var $entries Pagerfanta */
         $entries = $this->getRepository()->findByQuery($query);
