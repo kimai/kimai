@@ -31,6 +31,7 @@ class InvoiceToolbarForm extends AbstractToolbarForm
         $this->addCustomerChoice($builder);
         $this->addProjectChoice($builder);
         $this->addActivityChoice($builder);
+        $this->addTagInputField($builder);
     }
 
     protected function addTemplateChoice(FormBuilderInterface $builder)

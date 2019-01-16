@@ -13,6 +13,7 @@ use App\Form\Type\ActivityType;
 use App\Form\Type\CustomerType;
 use App\Form\Type\PageSizeType;
 use App\Form\Type\ProjectType;
+use App\Form\Type\TagsInputType;
 use App\Form\Type\UserRoleType;
 use App\Form\Type\UserType;
 use App\Form\Type\VisibilityType;
@@ -206,11 +207,20 @@ abstract class AbstractToolbarForm extends AbstractType
                         $query->setProject($data['project']);
                         $query->setOrderGlobalsFirst(true);
                         $query->setVisibility(ActivityQuery::SHOW_BOTH);
-
                         return $repo->findByQuery($query);
                     },
                 ]);
             }
         );
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     */
+    protected function addTagInputField(FormBuilderInterface $builder)
+    {
+        $builder->add('tags', TagsInputType::class, [
+            'required' => FALSE
+        ]);
     }
 }
