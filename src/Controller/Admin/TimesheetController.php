@@ -31,6 +31,8 @@ class TimesheetController extends AbstractController
 {
     use TimesheetControllerTrait;
 
+    use TagImplementationTrait;
+
     /**
      * TimesheetController constructor.
      * @param bool $durationOnly
