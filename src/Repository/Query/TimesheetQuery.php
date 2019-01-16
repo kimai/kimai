@@ -51,6 +51,14 @@ class TimesheetQuery extends ActivityQuery
      * @var \DateTime
      */
     protected $end;
+    /**
+     * @var string
+     */
+    protected $tags;
+    /**
+     * @var array
+     */
+    protected $tagIdList;
 
     /**
      * @return User
@@ -106,11 +114,11 @@ class TimesheetQuery extends ActivityQuery
      */
     public function setState($state)
     {
-        if (!is_int($state) && $state != (int) $state) {
+        if (!is_int($state) && $state != (int)$state) {
             return $this;
         }
 
-        $state = (int) $state;
+        $state = (int)$state;
         if (in_array($state, [self::STATE_ALL, self::STATE_RUNNING, self::STATE_STOPPED], true)) {
             $this->state = $state;
         }
@@ -154,5 +162,51 @@ class TimesheetQuery extends ActivityQuery
         $this->end = $end;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param $string
+     * @return $this
+     */
+    public function setTags($string)
+    {
+        $this->tags = $string;
+
+        return $this;
+    }
+
+    /**
+     * Wheather variable was setted
+     * @return bool
+     */
+    public function hasTags()
+    {
+        return NULL !== $this->tags && '' !== $this->tags;
+    }
+
+    /**
+     * Get array with tag-ids
+     * @return array
+     */
+    public function getTagIdArray()
+    {
+        return $this->tagIdList;
+    }
+
+    /**
+     * Set tagIds in query as list
+     * @param array $tagIdList
+     */
+    public function setTagIdArray($tagIdList = array())
+    {
+        $this->tagIdList = $tagIdList;
     }
 }
