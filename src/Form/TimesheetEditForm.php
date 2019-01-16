@@ -192,29 +192,29 @@ class TimesheetEditForm extends AbstractType
       //            'data-api-url'        => ['get_activities', ['project' => '-s-']],
       //        ],
       //    ]);
-      $builder
-          ->add('tags', TagsInputType::class, [
-            // documentation is for NelmioApiDocBundle
-              'documentation' => [
-                  'type'        => 'text',
-                  'description' => 'Tags for timesheet entry',
-              ],
-              'required'      => FALSE,
-              'attr'          => [
-                  'data-api-url' => ['get_tags', ['tag_name' => '-p-']],
-                  'class' => 'js-autocomplete',
-              ]
-            // TODO Überarbeiten für die API
+        $builder
+            ->add('tags', TagsInputType::class, [
+                // documentation is for NelmioApiDocBundle
+                'documentation' => [
+                    'type' => 'text',
+                    'description' => 'Tags for timesheet entry',
+                ],
+                'required' => FALSE,
+                'attr' => [
+                    'data-api-url' => ['get_tags', ['tag_name' => '-p-']],
+                    'class' => 'js-autocomplete',
+                ]
+                // TODO Überarbeiten für die API
 
-            //'attr'          => [
-            //              'data-related-select' => $this->getBlockPrefix() . '_activity',
-            //              'data-api-url'        => ['get_activities', ['project' => '-s-']],
-            //],
-          ]);
+                //'attr'          => [
+                //              'data-related-select' => $this->getBlockPrefix() . '_activity',
+                //              'data-api-url'        => ['get_activities', ['project' => '-s-']],
+                //],
+            ]);
 
-      $builder->get('tags')
-          ->addModelTransformer(new CollectionToArrayTransformer(), TRUE)
-          ->addModelTransformer($this->transformer, TRUE);
+        $builder->get('tags')
+            ->addModelTransformer(new CollectionToArrayTransformer(), TRUE)
+            ->addModelTransformer($this->transformer, TRUE);
 
         if ($options['include_rate']) {
             $builder
