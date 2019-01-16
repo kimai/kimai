@@ -23,7 +23,6 @@ class TagRepository extends AbstractRepository
      */
     public function findIdsByTagNameList($tagNameList)
     {
-        dump($tagNameList);
         $qb = $this
             ->createQueryBuilder('t')
             ->select('t.id');

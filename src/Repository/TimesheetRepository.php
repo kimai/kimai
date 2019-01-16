@@ -266,7 +266,6 @@ class TimesheetRepository extends AbstractRepository
      */
     public function findByQuery(TimesheetQuery $query)
     {
-      dump('query --- TimesheetRepository');
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb->select('t', 'a', 'p', 'c', 'u', 's')
@@ -314,11 +313,10 @@ class TimesheetRepository extends AbstractRepository
             }
         }
 
-      if ($query->hasTags()) {
-        $qb->andWhere('s.id IN (:tags)')
-            ->setParameter('tags', $query->getTagIdArray());
-      }
-      dump($qb->getDQL());
+        if ($query->hasTags()) {
+            $qb->andWhere('s.id IN (:tags)')
+                ->setParameter('tags', $query->getTagIdArray());
+        }
 
         return $this->getBaseQueryResult($qb, $query);
     }
