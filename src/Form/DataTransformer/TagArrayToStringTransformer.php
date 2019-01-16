@@ -1,9 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mathias
- * Date: 2019-01-07
- * Time: 07:14
+
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace App\Form\DataTransformer;
