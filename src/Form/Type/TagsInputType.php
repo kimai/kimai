@@ -1,9 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mathias
- * Date: 2019-01-05
- * Time: 14:23
+
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace App\Form\Type;
@@ -17,40 +18,30 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @package App\Form\Type
  */
-class TagsInputType extends AbstractType {
+class TagsInputType extends AbstractType
+{
 
-  ///** @var TagRepository */
-  //private $tagRepository;
-
-  /**
-   * Konstruktor übernimmt das
-   *
-   */
-  //public function __construct() {
-  //public function __construct(TagRepository $tagRepo) {
-  // * @param TagRepository $tagRepo
-  //$this->tagRepository = $tagRepo;
-  //}
-
-  /**
-   * @inheritDoc
-   */
-  public function configureOptions(OptionsResolver $resolver) {
-    $resolver->setDefaults([
-        'label' => 'label.tag'
-      // 'class' => Tag::class
-      // 'data_class' => Tag::class,
-      // 'required' => FALSE
-    ]);
-  }
+    /**
+     * @inheritDoc
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'label' => 'label.tag'
+            // 'class' => Tag::class
+            // 'data_class' => Tag::class,
+            // 'required' => FALSE
+        ]);
+    }
 
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getParent() {
-    return TextType::class;
-  }
+    /**
+     * {@inheritdoc}
+     */
+    public function getParent()
+    {
+        return TextType::class;
+    }
 
 
 }
