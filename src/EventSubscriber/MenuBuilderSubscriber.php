@@ -62,7 +62,6 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
     {
         $request = $event->getRequest();
         $isLoggedIn = $this->security->isGranted('IS_AUTHENTICATED_REMEMBERED');
-        $isTeamlead = $isLoggedIn && $this->security->isGranted('ROLE_TEAMLEAD');
 
         $event->addItem(
             new MenuItemModel('dashboard', 'menu.homepage', 'dashboard', [], 'fas fa-tachometer-alt')
@@ -76,17 +75,18 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
             )
         );
 
-        if ($isTeamlead) {
-            $admin = new MenuItemModel('admin', 'menu.admin', '', [], 'fas fa-wrench');
-            $event->addItem($admin);
+        $admin = new MenuItemModel('admin', 'menu.admin', '', [], 'fas fa-wrench');
 
-            $this->eventDispatcher->dispatch(
-                ConfigureAdminMenuEvent::CONFIGURE,
-                new ConfigureAdminMenuEvent(
-                    $request,
-                    $event
-                )
-            );
+        $this->eventDispatcher->dispatch(
+            ConfigureAdminMenuEvent::CONFIGURE,
+            new ConfigureAdminMenuEvent(
+                $request,
+                $admin
+            )
+        );
+
+        if ($admin->hasChildren()) {
+            $event->addItem($admin);
         }
 
         $this->activateByRoute(
