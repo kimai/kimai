@@ -6,7 +6,6 @@
 {% block main %}
 
     {% set replacer = {
-        '.md"': '"',
         '<table>': '<table class="table">',
         'href="../../': 'target="_blank" href="'~github~'blob/master/',
         ('href="' ~ github): 'target="_blank" href="'~github
