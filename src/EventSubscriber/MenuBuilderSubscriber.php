@@ -61,7 +61,6 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
     public function onSetupNavbar(SidebarMenuEvent $event)
     {
         $request = $event->getRequest();
-        $isLoggedIn = $this->security->isGranted('IS_AUTHENTICATED_REMEMBERED');
 
         $event->addItem(
             new MenuItemModel('dashboard', 'menu.homepage', 'dashboard', [], 'fas fa-tachometer-alt')

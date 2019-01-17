@@ -32,7 +32,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TimesheetEditForm extends AbstractType
 {
-
     /**
      * @var CustomerRepository
      */
