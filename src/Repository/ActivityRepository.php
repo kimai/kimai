@@ -206,7 +206,9 @@ class ActivityRepository extends AbstractRepository
             $qb->orderBy('a.project', 'ASC');
         }
 
-        $qb->andWhere($or);
+        if ($or->count() > 0) {
+            $qb->andWhere($or);
+        }
 
         return $this->getBaseQueryResult($qb, $query);
     }

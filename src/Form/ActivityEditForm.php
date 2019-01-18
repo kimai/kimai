@@ -59,6 +59,7 @@ class ActivityEditForm extends AbstractType
                 'query_builder' => function (CustomerRepository $repo) use ($customer) {
                     return $repo->builderForEntityType($customer);
                 },
+                'data' => $customer ? $customer : null,
                 'required' => false,
                 'mapped' => false,
                 'attr' => [
