@@ -71,30 +71,31 @@ The permission-names were chosen to be self-explanatory. In the hope that it wor
 | stop_own_timesheet | TIMESHEET  |   | -  |
 | create_own_timesheet | TIMESHEET  | X  | -  |
 | edit_own_timesheet | TIMESHEET  |   | -  |
-| export_own_timesheet | TIMESHEET  |   | -  |
+| export_own_timesheet | TIMESHEET  |   | export your own timesheet in the timesheet panel  |
 | delete_own_timesheet | TIMESHEET  |   | -  |
 | view_other_timesheet | TIMESHEET_OTHER  |   | allows access to the complete timesheet view  |
 | start_other_timesheet | TIMESHEET_OTHER  |   | -  |
 | stop_other_timesheet | TIMESHEET_OTHER  |   | -  |
 | create_other_timesheet | TIMESHEET_OTHER  |   | -  |
 | edit_other_timesheet | TIMESHEET_OTHER  |   | -  |
+| export_other_timesheet | TIMESHEET  |   | export timesheet in the timesheet admin panel  |
 | delete_other_timesheet | TIMESHEET_OTHER  |   | -  |
 | view_rate_own_timesheet | RATE |   | -  |
 | edit_rate_own_timesheet | RATE |   | -  |
 | view_rate_other_timesheet | RATE_OTHER |   | -  |
 | edit_rate_other_timesheet | RATE_OTHER |   | -  |
-| view_own_profile | PROFILE  |   | Allows access to the own profile view. Without this permission, users cannot access any of their profile settings or passwords ...  |
-| edit_own_profile | PROFILE  |   | -  |
-| delete_own_profile | PROFILE  |   | -  |
-| password_own_profile | PROFILE  |   | -  |
-| roles_own_profile | PROFILE  |   | -  |
-| preferences_own_profile | PROFILE  |   | -  |
-| api-token_own_profile | PROFILE  |   | -  |
+| view_own_profile | PROFILE  |   | allows access to the own profile view - without this permission, users cannot access any of their profile settings or passwords ...  |
+| edit_own_profile | PROFILE  |   | grants access to edit the own profile  |
+| delete_own_profile | PROFILE  |   | grants access to delete the own profile  |
+| password_own_profile | PROFILE  |   | grants access to change the own password  |
+| roles_own_profile | PROFILE  |   | SECURITY ALERT: grants access to the own roles  |
+| preferences_own_profile | PROFILE  |   | grants access to the own preferences  |
+| api-token_own_profile | PROFILE  |   | grants access to change the own API token  |
 | view_other_profile | PROFILE_OTHER  |   | -  |
 | edit_other_profile | PROFILE_OTHER  |   | -  |
 | delete_other_profile | PROFILE_OTHER  |   | -  |
 | password_other_profile | PROFILE_OTHER  |   | allows to change the password for another user  |
-| roles_other_profile | PROFILE_OTHER  |   | allows to change roles for other users |
+| roles_other_profile | PROFILE_OTHER  |   | SECURITY ALERT: allows to change roles for other users |
 | preferences_other_profile | PROFILE_OTHER  |   | allows to change the preferences for another user  |
 | api-token_other_profile | PROFILE_OTHER  |   | allows to set the API login token for other users  |
 | hourly-rate_own_profile | - |   | allows to edit the own user specific hourly rate | 
