@@ -6,7 +6,11 @@
 {% block page_title %}{{ 'admin_timesheet.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_timesheet.subtitle'|trans }}{% endblock %}
 {% block page_actions %}
-    {% set actions = {'filter': '#collapseTimesheetAdmin', 'visibility': '#modal_timesheet_admin'} %}
+    {% set actions = {'filter': '#collapseTimesheetAdmin'} %}
+    {% if is_granted('export_own_timesheet') %}
+        {% set actions = actions|merge({'download': 'onclick:return exportTimesheet()'}) %}
+    {% endif %}
+    {% set actions = actions|merge({'visibility': '#modal_timesheet_admin'}) %}
     {% if is_granted('create_other_timesheet') %}
         {% set actions = actions|merge({'create': path('admin_timesheet_create')}) %}
     {% endif %}
@@ -97,4 +101,18 @@
     {% endfor %}
 
     {{ tables.data_table_footer(entries, 'admin_timesheet_paginated') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        function exportTimesheet() {
+            var form = $("div.toolbar form.navbar-form");
+            var prevAction = form.attr('action');
+            form.attr('target', '_blank').attr('action', '{{ path('admin_timesheet_export') }}');
+            form.submit();
+            form.removeAttr('target').attr('action', prevAction);
+            return false;
+        }
+    </script>
 {% endblock %}
