@@ -62,6 +62,7 @@ class TimesheetVoterTest extends AbstractVoterTest
             yield [$timeEntry[0], $timeEntry[1], 'stop', $result];
             yield [$timeEntry[0], $timeEntry[1], 'edit', $result];
             yield [$timeEntry[0], $timeEntry[1], 'delete', $result];
+            yield [$timeEntry[0], $timeEntry[1], 'export', $result];
         }
 
         $result = VoterInterface::ACCESS_DENIED;
@@ -73,6 +74,7 @@ class TimesheetVoterTest extends AbstractVoterTest
             yield [$timeEntry[0], $timeEntry[1], 'stop', $result];
             yield [$timeEntry[0], $timeEntry[1], 'edit', $result];
             yield [$timeEntry[0], $timeEntry[1], 'delete', $result];
+            yield [$timeEntry[0], $timeEntry[1], 'export', $result];
         }
     }
 
