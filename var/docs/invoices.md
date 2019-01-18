@@ -67,8 +67,11 @@ GitHub to find out which variables can be used or debug it with:
 
 Docx templates are powered by [PHPWord](https://github.com/PHPOffice/PHPWord) and its `TemplateProcessor`.
 
-**Important:** The variable `${entry.description}` has to be set in one table row, otherwise no timesheet records will be rendered! 
-This row will then be cloned for every timesheet entry. 
+**Important:** You have to add one of the variables - either `${entry.description}` or `${entry.row}` - in one table row, 
+otherwise the rendering process will fail! The row containing this variable will be cloned for every included timesheet record.
+
+If you do not use `${entry.description}` then a fallback for `${entry.row}` is used and will be removed in the rendering process, 
+it will not show up in the generated invoice.
 
 See below in `Template variables` to find out which variables you can use in your template.
 
@@ -144,6 +147,7 @@ For each timesheet entry you can use the variables from the following table.
 
 | Key | Description | Example |
 |---|---|---|
+| ${entry.row} | An empty string, used as template row for docx | |
 | ${entry.description} | The entries description | _foo bar_ |
 | ${entry.amount} | The format duration/amount for this entry | 02:47 h |
 | ${entry.rate} | The rate for one unit of the entry (normally one hour) | 100 |

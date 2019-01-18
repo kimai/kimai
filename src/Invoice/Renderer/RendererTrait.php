@@ -161,6 +161,7 @@ trait RendererTrait
         $end = $timesheet->getEnd();
 
         return [
+            'entry.row' => '',
             'entry.description' => $description,
             'entry.amount' => $amount,
             'entry.rate' => $this->getFormattedMoney($hourlyRate),

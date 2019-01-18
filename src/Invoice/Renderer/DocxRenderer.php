@@ -13,6 +13,7 @@ use App\Entity\InvoiceDocument;
 use App\Invoice\RendererInterface;
 use App\Model\InvoiceModel;
 use PhpOffice\PhpWord\Escaper\Xml;
+use PhpOffice\PhpWord\Exception\Exception as OfficeException;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Symfony\Component\HttpFoundation\File\Stream;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,7 +41,12 @@ class DocxRenderer extends AbstractRenderer implements RendererInterface
             $template->setValue($search, $replace);
         }
 
-        $template->cloneRow('entry.description', count($model->getCalculator()->getEntries()));
+        try {
+            $template->cloneRow('entry.description', count($model->getCalculator()->getEntries()));
+        } catch (OfficeException $ex) {
+            $template->cloneRow('entry.row', count($model->getCalculator()->getEntries()));
+        }
+
         $i = 1;
         foreach ($model->getCalculator()->getEntries() as $entry) {
             $values = $this->timesheetToArray($entry);
