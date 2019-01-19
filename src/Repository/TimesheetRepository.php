@@ -184,8 +184,7 @@ class TimesheetRepository extends AbstractRepository
 
         $qb->select('SUM(t.rate) as rate, SUM(t.duration) as duration, MONTH(t.begin) as month, YEAR(t.begin) as year')
             ->from(Timesheet::class, 't')
-            ->where($qb->expr()->gt('t.begin', ':from'))
-        ;
+            ->where($qb->expr()->gt('t.begin', ':from'));
 
         if (!empty($begin)) {
             $qb->setParameter('from', $begin, Type::DATETIME);
@@ -218,7 +217,7 @@ class TimesheetRepository extends AbstractRepository
             if (!isset($years[$curYear])) {
                 $year = new Year($curYear);
                 for ($i = 1; $i < 13; $i++) {
-                    $month = $i < 10 ? '0' . $i : (string) $i;
+                    $month = $i < 10 ? '0' . $i : (string)$i;
                     $year->setMonth(new Month($month));
                 }
                 $years[$curYear] = $year;
@@ -268,13 +267,12 @@ class TimesheetRepository extends AbstractRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('t', 'a', 'p', 'c', 'u', 's')
+        $qb->select('t', 'a', 'p', 'c', 'u')
             ->from(Timesheet::class, 't')
             ->leftJoin('t.activity', 'a')
             ->leftJoin('t.user', 'u')
             ->leftJoin('t.project', 'p')
             ->leftJoin('p.customer', 'c')
-            ->leftJoin('t.tags', 's')
             ->orderBy('t.' . $query->getOrderBy(), $query->getOrder());
 
         if (null !== $query->getUser()) {
@@ -314,10 +312,30 @@ class TimesheetRepository extends AbstractRepository
         }
 
         if ($query->hasTags()) {
-            $qb->andWhere('s.id IN (:tags)')
-                ->setParameter('tags', $query->getTagIdArray());
+            $qb->andWhere('t.id IN (:timesheet_ids)')
+                ->setParameter('timesheet_ids', $query->getAffectedTimesheetIdArray());
         }
 
         return $this->getBaseQueryResult($qb, $query);
+    }
+
+    /**
+     * Find all timesheet ids which use one of tag ids
+     * @param array $tagIdList
+     * @return array
+     */
+    public function findIdsByTagIds($tagIdList)
+    {
+        if (NULL == $tagIdList) {
+            return [];
+        }
+
+        $qb = $this->createQueryBuilder('t');
+        $qb->select('t.id')
+            ->leftJoin('t.tags', 's')
+            ->where('s.id IN (:tags)')
+            ->setParameter('tags', $tagIdList);
+
+        return array_unique(array_column($qb->getQuery()->getScalarResult(), 'id'));
     }
 }

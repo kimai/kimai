@@ -58,7 +58,7 @@ class TimesheetQuery extends ActivityQuery
     /**
      * @var array
      */
-    protected $tagIdList;
+    protected $affectedTimesheetIdList;
 
     /**
      * @return User
@@ -193,20 +193,20 @@ class TimesheetQuery extends ActivityQuery
     }
 
     /**
-     * Get array with tag-ids
+     * Get array with affected timesheet-ids
      * @return array
      */
-    public function getTagIdArray()
+    public function getAffectedTimesheetIdArray()
     {
-        return $this->tagIdList;
+        return $this->affectedTimesheetIdList;
     }
 
     /**
-     * Set tagIds in query as list
-     * @param array $tagIdList
+     * Set timesheet ids in query as list
+     * @param array $timesheetIdList
      */
-    public function setTagIdArray($tagIdList = array())
+    public function setAffectedTimesheetIdArray($timesheetIdList = array())
     {
-        $this->tagIdList = $tagIdList;
+        $this->affectedTimesheetIdList = $timesheetIdList;
     }
 }

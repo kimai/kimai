@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Entity\Tag;
+use App\Entity\Timesheet;
 use App\Repository\Query\TimesheetQuery;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -29,8 +30,10 @@ trait TagImplementationTrait
     protected function prepareTagList(TimesheetQuery $query)
     {
         if ($query->hasTags() === TRUE) {
-            $query->setTagIdArray(
-                $this->getDoctrine()->getRepository(Tag::class)->findIdsByTagNameList($query->getTags())
+            $query->setAffectedTimesheetIdArray(
+                $this->getDoctrine()->getRepository(Timesheet::class)->findIdsByTagIds(
+                    $this->getDoctrine()->getRepository(Tag::class)->findIdsByTagNameList($query->getTags())
+                )
             );
         }
     }
