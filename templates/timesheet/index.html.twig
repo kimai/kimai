@@ -23,7 +23,6 @@
 {% endblock %}
 
 {% block main %}
-
     {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% endif %}
@@ -45,6 +44,7 @@
         'project': 'hidden-xs hidden-sm',
         'activity': 'hidden-xs hidden-sm',
         'description': 'hidden-xs hidden-sm',
+        'tags': 'hidden-xs hidden-sm',
         'actions': 'alwaysVisible',
     }) %}
 
@@ -82,6 +82,7 @@
             <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">{{ widgets.label_project(entry.project) }}</td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}">{{ widgets.label_activity(entry.activity) }}</td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }} timesheet-description">{{ entry.description|desc2html }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'tags') }}">{{ widgets.print_tags_as_list(entry.tags) }}</td>
             <td>
                 {% set actionButtons = {} %}
                 {% if is_granted('edit', entry) %}

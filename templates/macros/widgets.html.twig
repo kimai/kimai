@@ -169,3 +169,9 @@
         <i class="{{ icon|icon(icon) }}"></i>
     </a>
 {% endmacro %}
+
+{% macro print_tags_as_list(taglist) %}
+    {% for tag in taglist %}
+        {{ tag.tagName }}{% if not loop.last %}, {%  endif %}
+    {% endfor %}
+{% endmacro %}
