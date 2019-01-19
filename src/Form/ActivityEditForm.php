@@ -70,8 +70,8 @@ class ActivityEditForm extends AbstractType
             ->add('project', ProjectType::class, [
                 'label' => 'label.project',
                 'required' => false,
-                'query_builder' => function (ProjectRepository $repo) use ($project) {
-                    return $repo->builderForEntityType($project);
+                'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
+                    return $repo->builderForEntityType($project, $customer);
                 },
             ])
             ->add('fixedRate', NumberType::class, [
