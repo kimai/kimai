@@ -53,26 +53,23 @@ class MenuSubscriber implements EventSubscriberInterface
     {
         $auth = $this->security;
 
-        $isLoggedIn = $auth->isGranted('IS_AUTHENTICATED_REMEMBERED');
-        $isUser = $isLoggedIn && $auth->isGranted('ROLE_USER');
-        $isTeamlead = $isLoggedIn && $auth->isGranted('ROLE_TEAMLEAD');
-
-        if (!$isLoggedIn || !$isUser) {
+        if (!$auth->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return;
         }
 
         $menu = $event->getMenu();
-        $menu->addItem(
-            new MenuItemModel('timesheet', 'menu.timesheet', 'timesheet', [], 'far fa-clock')
-        );
 
-        if (!$isTeamlead) {
-            return;
+        if ($auth->isGranted('view_own_timesheet')) {
+            $menu->addItem(
+                new MenuItemModel('timesheet', 'menu.timesheet', 'timesheet', [], 'far fa-clock')
+            );
         }
 
-        $menu->addItem(
-            new MenuItemModel('invoice', 'menu.invoice', 'invoice', [], 'fas fa-file-invoice')
-        );
+        if ($auth->isGranted('view_invoice')) {
+            $menu->addItem(
+                new MenuItemModel('invoice', 'menu.invoice', 'invoice', [], 'fas fa-file-invoice')
+            );
+        }
     }
 
     /**
@@ -80,33 +77,42 @@ class MenuSubscriber implements EventSubscriberInterface
      */
     public function onAdminMenuConfigure(ConfigureAdminMenuEvent $event)
     {
-        $menu = $event->getAdminMenu();
         $auth = $this->security;
 
-        if (!$auth->isGranted('IS_AUTHENTICATED_REMEMBERED') || !$auth->isGranted('ROLE_TEAMLEAD')) {
+        if (!$auth->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return;
         }
 
-        $menu->addChild(
-            new MenuItemModel('timesheet_admin', 'menu.admin_timesheet', 'admin_timesheet', [], 'far fa-clock')
-        );
+        $menu = $event->getAdminMenu();
 
-        if (!$auth->isGranted('ROLE_ADMIN')) {
-            return;
+        if ($auth->isGranted('view_other_timesheet')) {
+            $menu->addChild(
+                new MenuItemModel('timesheet_admin', 'menu.admin_timesheet', 'admin_timesheet', [], 'far fa-clock')
+            );
         }
 
-        if ($auth->isGranted('ROLE_SUPER_ADMIN')) {
+        if ($auth->isGranted('view_user')) {
             $menu->addChild(
                 new MenuItemModel('user_admin', 'menu.admin_user', 'admin_user', [], 'fas fa-user')
             );
         }
 
-        $menu->addChild(
-            new MenuItemModel('customer_admin', 'menu.admin_customer', 'admin_customer', [], 'fas fa-users')
-        )->addChild(
-            new MenuItemModel('project_admin', 'menu.admin_project', 'admin_project', [], 'fas fa-project-diagram')
-        )->addChild(
-            new MenuItemModel('activity_admin', 'menu.admin_activity', 'admin_activity', [], 'fas fa-tasks')
-        );
+        if ($auth->isGranted('view_customer')) {
+            $menu->addChild(
+                new MenuItemModel('customer_admin', 'menu.admin_customer', 'admin_customer', [], 'fas fa-users')
+            );
+        }
+
+        if ($auth->isGranted('view_project')) {
+            $menu->addChild(
+                new MenuItemModel('project_admin', 'menu.admin_project', 'admin_project', [], 'fas fa-project-diagram')
+            );
+        }
+
+        if ($auth->isGranted('view_activity')) {
+            $menu->addChild(
+                new MenuItemModel('activity_admin', 'menu.admin_activity', 'admin_activity', [], 'fas fa-tasks')
+            );
+        }
     }
 }

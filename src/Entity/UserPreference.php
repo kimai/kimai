@@ -70,6 +70,11 @@ class UserPreference
     protected $type;
 
     /**
+     * @var bool
+     */
+    protected $enabled = true;
+
+    /**
      * @var Constraint[]
      */
     protected $constraints = [];
@@ -179,6 +184,25 @@ class UserPreference
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @param bool $enabled
+     * @return UserPreference
+     */
+    public function setEnabled(bool $enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
     }
 
     /**

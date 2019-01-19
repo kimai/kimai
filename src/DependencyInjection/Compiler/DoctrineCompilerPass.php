@@ -23,8 +23,6 @@ class DoctrineCompilerPass implements CompilerPassInterface
      */
     protected $allowedEngines = [
         'mysql',
-        'oracle',
-        'postgres',
         'sqlite'
     ];
 
@@ -36,15 +34,6 @@ class DoctrineCompilerPass implements CompilerPassInterface
     protected function findEngine(ContainerBuilder $container)
     {
         $engine = null;
-
-        // TODO - this does return the wrong connection. it used to be mysql, even if
-        // TODO - getenv('DATABASE_URL') returned an sqlite:// connection string
-        /*
-        $dbConfig = $container->getExtensionConfig('doctrine');
-        if (isset($dbConfig[0]['dbal']['driver'])) {
-            $engine = str_replace('pdo_', '', $dbConfig[0]['dbal']['driver']);
-        }
-        */
 
         if (null === $engine) {
             $dbConfig = explode('://', getenv('DATABASE_URL'));

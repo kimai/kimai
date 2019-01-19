@@ -11,57 +11,85 @@ namespace App\Tests\Voter;
 
 use App\Entity\Activity;
 use App\Entity\Customer;
+use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
-use App\Security\AclDecisionManager;
 use App\Voter\TimesheetVoter;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 /**
  * @covers \App\Voter\TimesheetVoter
  */
-class TimesheetVoterTest extends TestCase
+class TimesheetVoterTest extends AbstractVoterTest
 {
     /**
      * @dataProvider getTestData
      */
-    public function testVote($user, $roles, $allow, $subject, $attributes, $result)
+    public function testVote(User $user, $subject, $attribute, $result)
     {
-        $token = new UsernamePasswordToken($user, 'foo', 'bar', $roles);
+        $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
+        $sut = $this->getVoter(TimesheetVoter::class, $user);
 
-        $accessManager = $this->getMockBuilder(AclDecisionManager::class)->disableOriginalConstructor()->getMock();
-        $accessManager->method('isFullyAuthenticated')->willReturn($allow);
-        $accessManager->method('hasRole')->willReturn($allow);
-
-        $sut = new TimesheetVoter($accessManager);
-
-        $this->assertEquals($result, $sut->vote($token, $subject, $attributes));
+        $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]));
     }
 
     public function getTestData()
     {
-        $user0 = $this->getUser(0, User::ROLE_CUSTOMER);
+        $user0 = $this->getUser(0, null);
         $user1 = $this->getUser(1, User::ROLE_USER);
         $user2 = $this->getUser(2, User::ROLE_TEAMLEAD);
+        $user3 = $this->getUser(3, User::ROLE_ADMIN);
+        $user4 = $this->getUser(4, User::ROLE_SUPER_ADMIN);
 
-        return [
-            [$user0, $user0->getRoles(), false, new Customer(), [TimesheetVoter::EDIT], VoterInterface::ACCESS_ABSTAIN],
-            [$user1, $user1->getRoles(), false, $this->getTimesheet($user1), [TimesheetVoter::EDIT], VoterInterface::ACCESS_GRANTED],
-            [$user1, $user1->getRoles(), false, $this->getTimesheet($user0), [TimesheetVoter::EDIT], VoterInterface::ACCESS_DENIED],
-            [$user2, $user2->getRoles(), true, $this->getTimesheet($user1), [TimesheetVoter::EDIT], VoterInterface::ACCESS_GRANTED],
-            ['foo', [], false, $this->getTimesheet($user1), [TimesheetVoter::EDIT], VoterInterface::ACCESS_DENIED],
-            [$user2, $user2->getRoles(), true, new Activity(), [TimesheetVoter::EDIT], VoterInterface::ACCESS_ABSTAIN],
-            [$user2, $user2->getRoles(), true, $this->getTimesheet($user2), [TimesheetVoter::VIEW], VoterInterface::ACCESS_GRANTED],
-            [$user1, $user1->getRoles(), false, $this->getTimesheet($user2), [TimesheetVoter::VIEW], VoterInterface::ACCESS_DENIED],
+        $timesheet1 = $this->getTimesheet($user1);
+        $timesheet2 = $this->getTimesheet($user2);
+        $timesheet3 = $this->getTimesheet($user3);
+        $timesheet4 = $this->getTimesheet($user4);
+
+        $result = VoterInterface::ACCESS_GRANTED;
+        $times = [
+            [$user1, $timesheet1],
+            [$user2, $timesheet2],
+            [$user3, $timesheet3],
+            [$user4, $timesheet4],
+            [$user2, $timesheet1],
+            [$user3, $timesheet2],
+            [$user4, $timesheet3],
         ];
+        foreach ($times as $timeEntry) {
+            yield [$timeEntry[0], $timeEntry[1], 'start', $result];
+            yield [$timeEntry[0], $timeEntry[1], 'stop', $result];
+            yield [$timeEntry[0], $timeEntry[1], 'edit', $result];
+            yield [$timeEntry[0], $timeEntry[1], 'delete', $result];
+            yield [$timeEntry[0], $timeEntry[1], 'export', $result];
+        }
+
+        $result = VoterInterface::ACCESS_DENIED;
+        $times = [
+            [$user1, $timesheet4],
+        ];
+        foreach ($times as $timeEntry) {
+            yield [$timeEntry[0], $timeEntry[1], 'start', $result];
+            yield [$timeEntry[0], $timeEntry[1], 'stop', $result];
+            yield [$timeEntry[0], $timeEntry[1], 'edit', $result];
+            yield [$timeEntry[0], $timeEntry[1], 'delete', $result];
+            yield [$timeEntry[0], $timeEntry[1], 'export', $result];
+        }
     }
 
     protected function getTimesheet($user)
     {
         $timesheet = new Timesheet();
         $timesheet->setUser($user);
+
+        $activity = new Activity();
+        $project = new Project();
+        $activity->setProject($project);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+        $customer = new Customer();
+        $project->setCustomer($customer);
 
         return $timesheet;
     }

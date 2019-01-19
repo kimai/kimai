@@ -5,10 +5,20 @@
 
 {% block page_title %}{{ 'admin_timesheet.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_timesheet.subtitle'|trans }}{% endblock %}
-{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseTimesheetAdmin', 'visibility': '#modal_timesheet_admin', 'create': path('admin_timesheet_create')}) }}{% endblock %}
+{% block page_actions %}
+    {% set actions = {'filter': '#collapseTimesheetAdmin'} %}
+    {% if is_granted('export_own_timesheet') %}
+        {% set actions = actions|merge({'download': 'onclick:return exportTimesheet()'}) %}
+    {% endif %}
+    {% set actions = actions|merge({'visibility': '#modal_timesheet_admin'}) %}
+    {% if is_granted('create_other_timesheet') %}
+        {% set actions = actions|merge({'create': path('admin_timesheet_create')}) %}
+    {% endif %}
+    {{ widgets.page_actions(actions) }}
+{% endblock %}
 
 {% block main_before %}
-    {{ toolbar.toolbar(toolbarForm, 'collapseTimesheetAdmin') }}
+    {{ toolbar.toolbar(toolbarForm, 'collapseTimesheetAdmin', showFilter) }}
 {% endblock %}
 
 {% block main %}
@@ -16,7 +26,7 @@
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% endif %}
 
-    {% set columns = {'date': 'alwaysVisible'} %}
+    {% set columns = {'date': ''} %}
 
     {% if not duration_only %}
         {% set columns = columns|merge({'starttime': 'hidden-xs', 'endtime': 'hidden-xs'}) %}
@@ -25,6 +35,8 @@
     {% set columns = columns|merge({
         'duration': '',
         'rate': '',
+        'customer': 'hidden-xs hidden-sm',
+        'project': 'hidden-xs hidden-sm',
         'activity': 'hidden-xs hidden-sm',
         'username': 'hidden-xs',
         'description': 'hidden-xs hidden-sm',
@@ -37,7 +49,7 @@
 
     {% for entry in entries %}
         <tr>
-            <td>{{ entry.begin|date_short }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'date') }}">{{ entry.begin|date_short }}</td>
 
             {% if not duration_only %}
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'starttime') }}">{{ entry.begin|date("H:i") }}</td>
@@ -48,15 +60,25 @@
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'endtime') }}">{{ entry.end|date("H:i") }}</td>
                 {% endif %}
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}">{{ entry.duration|duration }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'rate') }}">{{ entry.rate|money(entry.project.customer.currency) }}</td>
             {% else %}
                 {% if not duration_only %}
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'endtime') }}">&dash;</td>
                 {% endif %}
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}"><i>{{ entry|duration }}</i></td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'rate') }}">&dash;</td>
             {% endif %}
-
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'rate') }}">
+                {% if not entry.end or not is_granted('view_rate', entry) %}
+                    &dash;
+                {% else %}
+                    {{ entry.rate|money(entry.project.customer.currency) }}
+                {% endif %}
+            </td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">
+                <a href="{{ path('admin_customer_edit', {'id': entry.project.customer.id}) }}">{{ widgets.label_customer(entry.project.customer) }}</a>
+            </td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">
+                <a href="{{ path('admin_project_edit', {'id': entry.project.id}) }}">{{ widgets.label_project(entry.project) }}</a>
+            </td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}">
                 <a href="{{ path('admin_activity_edit', {'id': entry.activity.id}) }}">{{ widgets.label_activity(entry.activity) }}</a>
             </td>
@@ -79,4 +101,18 @@
     {% endfor %}
 
     {{ tables.data_table_footer(entries, 'admin_timesheet_paginated') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        function exportTimesheet() {
+            var form = $("div.toolbar form.navbar-form");
+            var prevAction = form.attr('action');
+            form.attr('target', '_blank').attr('action', '{{ path('admin_timesheet_export') }}');
+            form.submit();
+            form.removeAttr('target').attr('action', prevAction);
+            return false;
+        }
+    </script>
 {% endblock %}

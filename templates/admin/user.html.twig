@@ -5,10 +5,17 @@
 
 {% block page_title %}{{ 'admin_user.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_user.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
-{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseUserAdmin', 'visibility': '#modal_user_admin', 'create': path('admin_user_create')}) }}{% endblock %}
+{% block page_actions %}
+    {% set actions = {'filter': '#collapseUserAdmin', 'visibility': '#modal_user_admin'} %}
+    {% if is_granted('create_user') %}
+        {% set actions = actions|merge({'create': path('admin_user_create')}) %}
+    {% endif %}
+    {{ widgets.page_actions(actions) }}
+{% endblock %}
+
 
 {% block main_before %}
-    {{ toolbar.toolbar(toolbarForm, 'collapseUserAdmin') }}
+    {{ toolbar.toolbar(toolbarForm, 'collapseUserAdmin', showFilter) }}
 {% endblock %}
 
 {% block main %}

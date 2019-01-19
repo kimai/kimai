@@ -9,8 +9,10 @@
 
 namespace App\Tests\Controller\Admin;
 
+use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\Controller\ControllerBaseTest;
+use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 
@@ -42,12 +44,20 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertNull($form->get('activity_edit_form[create_more]')->getValue());
         $client->submit($form, [
             'activity_edit_form' => [
-                'name' => 'Test 2',
+                'name' => 'An AcTiVitY Name',
+                'project' => '1',
             ]
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
         $client->followRedirect();
         $this->assertHasDataTable($client);
+
+        $this->request($client, '/admin/activity/2/edit');
+        $editForm = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
+        $this->assertEquals('An AcTiVitY Name', $editForm->get('activity_edit_form[name]')->getValue());
+        // make sure customer and project are pre-selected for none global activities
+        $this->assertEquals('1', $editForm->get('activity_edit_form[project]')->getValue());
+        $this->assertEquals('1', $editForm->get('activity_edit_form[customer]')->getValue());
     }
 
     public function testCreateActionWithCreateMore()
@@ -99,6 +109,9 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/activity/1/edit');
         $editForm = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
         $this->assertEquals('Test 2', $editForm->get('activity_edit_form[name]')->getValue());
+        // make sure no customer or project is pre-selected for global activities
+        $this->assertEquals('', $editForm->get('activity_edit_form[customer]')->getValue());
+        $this->assertEquals('', $editForm->get('activity_edit_form[project]')->getValue());
     }
 
     public function testDeleteAction()
@@ -127,6 +140,14 @@ class ActivityControllerTest extends ControllerBaseTest
         $fixture->setAmount(10);
         $this->importFixture($em, $fixture);
 
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        $this->assertEquals(10, count($timesheets));
+
+        /** @var Timesheet $entry */
+        foreach ($timesheets as $entry) {
+            $this->assertEquals(1, $entry->getActivity()->getId());
+        }
+
         $this->request($client, '/admin/activity/1/delete');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
@@ -138,6 +159,60 @@ class ActivityControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertHasDataTable($client);
         $this->assertHasFlashSuccess($client);
+
+        // SQLIte does not necessarly support onCascade delete, so these timesheet will stay after deletion
+        // $em->clear();
+        // $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        // $this->assertEquals(0, count($timesheets));
+
+        $this->request($client, '/admin/activity/1/edit');
+        $this->assertFalse($client->getResponse()->isSuccessful());
+    }
+
+    public function testDeleteActionWithTimesheetEntriesAndReplacement()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $fixture = new TimesheetFixtures();
+        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setAmount(10);
+        $this->importFixture($em, $fixture);
+        $fixture = new ActivityFixtures();
+        $fixture->setAmount(1)->setIsGlobal(true)->setIsVisible(true);
+        $this->importFixture($em, $fixture);
+
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        $this->assertEquals(10, count($timesheets));
+
+        /** @var Timesheet $entry */
+        foreach ($timesheets as $entry) {
+            $this->assertEquals(1, $entry->getActivity()->getId());
+        }
+
+        $this->request($client, '/admin/activity/1/delete');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=form]')->form();
+        $this->assertStringEndsWith($this->createUrl('/admin/activity/1/delete'), $form->getUri());
+        $client->submit($form, [
+            'form' => [
+                'activity' => 2
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
+        $client->followRedirect();
+        $this->assertHasDataTable($client);
+        $this->assertHasFlashSuccess($client);
+
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        $this->assertEquals(10, count($timesheets));
+
+        /** @var Timesheet $entry */
+        foreach ($timesheets as $entry) {
+            $this->assertEquals(2, $entry->getActivity()->getId());
+        }
 
         $this->request($client, '/admin/activity/1/edit');
         $this->assertFalse($client->getResponse()->isSuccessful());

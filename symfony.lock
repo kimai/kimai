@@ -560,7 +560,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "3.3",
-            "ref": "c72d107d077f1654428edaed69415d0228c1aefe"
+            "ref": "dae9b39fd6717970be7601101ce5aa960bf53d9a"
         }
     },
     "symfony/webpack-encore-pack": {
@@ -569,7 +569,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "1.0",
-            "ref": "a2f276eff6e95ca94be135d2d3e5c1247c6f8807"
+            "ref": "e18b0c550c3ee79142dc314b3e38193caafe4bb5"
         }
     },
     "symfony/yaml": {

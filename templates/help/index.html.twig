@@ -6,7 +6,6 @@
 {% block main %}
 
     {% set replacer = {
-        '.md"': '"',
         '<table>': '<table class="table">',
         'href="../../': 'target="_blank" href="'~github~'blob/master/',
         ('href="' ~ github): 'target="_blank" href="'~github
@@ -18,7 +17,7 @@
             <a href="{{ path('help') }}">{{ 'action.back'|trans }}</a>
         </div>
         {% endif %}
-        <div class="box-body">
+        <div class="box-body markdown-body">
             {{ documentation|md2html|replace(replacer)|raw }}
         </div>
     </div>

@@ -40,6 +40,7 @@ class Configuration implements ConfigurationInterface
                 ->append($this->getDashboardNode())
                 ->append($this->getWidgetsNode())
                 ->append($this->getDefaultsNode())
+                ->append($this->getPermissionsNode())
             ->end()
         ->end();
 
@@ -322,6 +323,53 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('timezone')->defaultValue('Europe/Berlin')->end()
                         ->scalarNode('country')->defaultValue('DE')->end()
                         ->scalarNode('currency')->defaultValue('EUR')->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    protected function getPermissionsNode()
+    {
+        $builder = new TreeBuilder();
+        $node = $builder->root('permissions');
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('sets')
+                    ->requiresAtLeastOneElement()
+                    ->useAttributeAsKey('key')
+                    ->performNoDeepMerging()
+                    ->arrayPrototype()
+                        ->useAttributeAsKey('key')
+                        ->isRequired()
+                        ->prototype('scalar')->end()
+                        ->defaultValue([])
+                    ->end()
+                ->end()
+                ->arrayNode('maps')
+                    ->requiresAtLeastOneElement()
+                    ->useAttributeAsKey('key')
+                    ->performNoDeepMerging()
+                    ->arrayPrototype()
+                        ->useAttributeAsKey('key')
+                        ->isRequired()
+                        ->prototype('scalar')->end()
+                        ->defaultValue([])
+                    ->end()
+                ->end()
+                ->arrayNode('roles')
+                    ->requiresAtLeastOneElement()
+                    ->useAttributeAsKey('key')
+                    ->performNoDeepMerging()
+                    ->arrayPrototype()
+                        ->useAttributeAsKey('key')
+                        ->isRequired()
+                        ->prototype('scalar')->end()
+                        ->defaultValue([])
                     ->end()
                 ->end()
             ->end()

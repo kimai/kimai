@@ -25,8 +25,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  * Controller used to manage users in the admin part of the site.
  *
  * @Route(path="/admin/user")
- * @Security("is_granted('ROLE_SUPER_ADMIN')")
- * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+ * @Security("is_granted('view_user')")
  */
 class UserController extends AbstractController
 {
@@ -54,7 +53,8 @@ class UserController extends AbstractController
     /**
      * @Route(path="/", defaults={"page": 1}, name="admin_user", methods={"GET"})
      * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_user_paginated", methods={"GET"})
-
+     * @Security("is_granted('view_user')")
+     *
      * @param int $page
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -77,13 +77,17 @@ class UserController extends AbstractController
         return $this->render('admin/user.html.twig', [
             'entries' => $entries,
             'query' => $query,
+            'showFilter' => $form->isSubmitted(),
             'toolbarForm' => $form->createView(),
         ]);
     }
 
     /**
      * @Route(path="/create", name="admin_user_create", methods={"GET", "POST"})
-     * @Security("is_granted('create', user)")
+     * @Security("is_granted('create_user')")
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createAction(Request $request)
     {
@@ -123,8 +127,6 @@ class UserController extends AbstractController
     }
 
     /**
-     * The route to delete an existing user.
-     *
      * @Route(path="/{id}/delete", name="admin_user_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', userToDelete)")
      *
@@ -135,6 +137,7 @@ class UserController extends AbstractController
      */
     public function deleteAction(User $userToDelete, Request $request)
     {
+        // $userToDelete MUST not be called $user, as $user is always the current user!
         $stats = $this->getDoctrine()->getRepository(Timesheet::class)->getUserStatistics($userToDelete);
 
         $deleteForm = $this->createFormBuilder()

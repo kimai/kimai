@@ -25,13 +25,24 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertUrlIsSecured('/profile/' . UserFixtures::USERNAME_USER);
     }
 
-    public function testIndexAction()
+    public function getTabTestData()
     {
-        $client = $this->getClientForAuthenticatedUser();
-        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER);
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        $userTabs = ['#charts', '#settings', '#password', '#api-token', '#preferences'];
 
-        $expectedTabs = ['#charts', '#settings', '#password', '#api-token', '#preferences'];
+        return [
+            [User::ROLE_USER, UserFixtures::USERNAME_USER, ['#charts', '#settings', '#password', '#api-token', '#preferences']],
+            [User::ROLE_SUPER_ADMIN, UserFixtures::USERNAME_SUPER_ADMIN, array_merge($userTabs, ['#roles'])],
+        ];
+    }
+
+    /**
+     * @dataProvider getTabTestData
+     */
+    public function testIndexAction($role, $username, $expectedTabs)
+    {
+        $client = $this->getClientForAuthenticatedUser($role);
+        $this->request($client, '/profile/' . $username);
+        $this->assertTrue($client->getResponse()->isSuccessful());
 
         $tabs = $client->getCrawler()->filter('div.nav-tabs-custom ul.nav-tabs li');
         $this->assertEquals(count($expectedTabs), $tabs->count());
@@ -208,16 +219,31 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertEquals(['ROLE_TEAMLEAD', 'ROLE_SUPER_ADMIN', 'ROLE_USER'], $user->getRoles());
     }
 
-    public function testPreferencesAction()
+    public function getPreferencesTestData()
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/prefs');
+        return [
+            // assert that the user doesn't have the "hourly-rate_own_profile" permission
+            [User::ROLE_USER, UserFixtures::USERNAME_USER, 82, 82, 'ar'],
+            // admins are allowed to update their own hourly rate
+            [User::ROLE_ADMIN, UserFixtures::USERNAME_ADMIN, 81, 37.5, 'ar'],
+            // admins are allowed to update other peoples hourly rate
+            [User::ROLE_SUPER_ADMIN, UserFixtures::USERNAME_USER, 82, 37.5, 'en'],
+        ];
+    }
+
+    /**
+     * @dataProvider getPreferencesTestData
+     */
+    public function testPreferencesAction($role, $username, $hourlyRateOriginal, $hourlyRate, $expectedLocale)
+    {
+        $client = $this->getClientForAuthenticatedUser($role);
+        $this->request($client, '/profile/' . $username . '/prefs');
 
         /** @var User $user */
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByName($em, $username);
 
-        $this->assertEquals(82, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
+        $this->assertEquals($hourlyRateOriginal, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
         $this->assertEquals('green', $user->getPreferenceValue(UserPreference::SKIN));
         $this->assertEquals(true, $user->getPreferenceValue('theme.fixed_layout'));
         $this->assertEquals(false, $user->getPreferenceValue('theme.boxed_layout'));
@@ -229,8 +255,8 @@ class ProfileControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'user_preferences_form' => [
                 'preferences' => [
-                    ['name' => UserPreference::HOURLY_RATE, 'value' => 37],
-                    ['name' => 'timezone', 'value' => 'America/Creston'],
+                    ['name' => UserPreference::HOURLY_RATE, 'value' => 37.5],
+//                    ['name' => 'timezone', 'value' => 'America/Creston'],
                     ['name' => 'language', 'value' => 'ar'],
                     ['name' => UserPreference::SKIN, 'value' => 'blue'],
                     ['name' => 'theme.fixed_layout', 'value' => false],
@@ -242,17 +268,19 @@ class ProfileControllerTest extends ControllerBaseTest
             ]
         ]);
 
-        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/prefs'));
+        $targetUrl = '/' . $expectedLocale . '/profile/' . urlencode($username) . '/prefs';
+
+        $this->assertIsRedirect($client, $targetUrl);
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasFlashSuccess($client);
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $user = $this->getUserByName($em, $username);
 
-        $this->assertEquals(37, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
-        $this->assertEquals('', $user->getPreferenceValue('America/Creston'));
+        $this->assertEquals($hourlyRate, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
+        //$this->assertEquals('', $user->getPreferenceValue('America/Creston'));
         $this->assertEquals('ar', $user->getPreferenceValue('language'));
         $this->assertEquals('blue', $user->getPreferenceValue(UserPreference::SKIN));
         $this->assertEquals(false, $user->getPreferenceValue('theme.fixed_layout'));

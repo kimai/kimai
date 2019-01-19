@@ -18,6 +18,15 @@ bin/console doctrine:migrations:migrate
 There might be version specific tasks that need to be executed before or after these steps, please see below 
 if your updated version is mentioned below.
 
+## [0.6.1](https://github.com/kevinpapst/kimai2/releases/tag/0.6.1) (2018-11-19)
+
+A bugfix release to address database compatibility issues with older MySQL/MariaDB versions.
+
+## [0.6](https://github.com/kevinpapst/kimai2/releases/tag/0.6) (2018-11-18)
+
+The API has some minor BC breaks: some fields were renamed and entities have a larger attribute set than collections. 
+Be aware that the API is still is development mode and shouldn't be considered stable for now.
+
 ## [0.5](https://github.com/kevinpapst/kimai2/releases/tag/0.5) (2018-09-27)
 
 Some configuration nodes were removed, if you have one of them in your `local.yaml` you need to delete them before you start the update:

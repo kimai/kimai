@@ -183,9 +183,20 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertEquals(1, $timesheet->getProject()->getId());
     }
 
-    public function testStopAction()
+    public function testStopActionDoesNotShowRateFieldsForUser()
     {
         $client = $this->getClientForAuthenticatedUser();
+        $this->request($client, '/timesheet/create');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $this->assertFalse($form->has('hourlyRate'));
+        $this->assertFalse($form->has('fixedRate'));
+    }
+
+    public function testStopAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/timesheet/create');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
@@ -222,7 +233,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
     public function testCreateActionWithFromAndToValues()
     {
-        $client = $this->getClientForAuthenticatedUser();
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/timesheet/create?from=2018-08-02T20%3A00%3A00&to=2018-08-02T20%3A30%3A00');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
@@ -256,7 +267,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
     public function testCreateActionWithBeginAndEndValues()
     {
-        $client = $this->getClientForAuthenticatedUser();
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/timesheet/create?begin=2018-08-02&end=2018-08-02');
         $this->assertTrue($client->getResponse()->isSuccessful());
 

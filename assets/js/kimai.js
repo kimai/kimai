@@ -106,6 +106,16 @@ $(function() {
                 });
             });
 
+            $('.markdown-body :header').prepend(function() {
+                $(this).prepend('<a class="anchor" href="#'+$(this).attr('id')+'"><i class="fas fa-link"></i>');
+            });
+
+            $('.markdown-body :header').hover(function(){
+                $(this).find('a.anchor').show();
+            }, function(){
+                $(this).find('a.anchor').hide();
+            });
+
             /*
             $('input').iCheck({
                 checkboxClass: 'icheckbox_square-blue',

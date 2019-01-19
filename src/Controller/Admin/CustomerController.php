@@ -13,7 +13,10 @@ use App\Controller\AbstractController;
 use App\Entity\Customer;
 use App\Form\CustomerEditForm;
 use App\Form\Toolbar\CustomerToolbarForm;
+use App\Form\Type\CustomerType;
+use App\Repository\CustomerRepository;
 use App\Repository\Query\CustomerQuery;
+use Doctrine\ORM\ORMException;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,8 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Controller used to manage activities in the admin part of the site.
  *
  * @Route(path="/admin/customer")
- * @Security("is_granted('ROLE_ADMIN')")
- * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+ * @Security("is_granted('view_customer')")
  */
 class CustomerController extends AbstractController
 {
@@ -52,6 +54,11 @@ class CustomerController extends AbstractController
     /**
      * @Route(path="/", defaults={"page": 1}, name="admin_customer", methods={"GET"})
      * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_customer_paginated", methods={"GET"})
+     * @Security("is_granted('view_customer')")
+     *
+     * @param int $page
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction($page, Request $request)
     {
@@ -71,12 +78,17 @@ class CustomerController extends AbstractController
         return $this->render('admin/customer.html.twig', [
             'entries' => $entries,
             'query' => $query,
+            'showFilter' => $form->isSubmitted(),
             'toolbarForm' => $form->createView(),
         ]);
     }
 
     /**
      * @Route(path="/create", name="admin_customer_create", methods={"GET", "POST"})
+     * @Security("is_granted('create_customer')")
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createAction(Request $request)
     {
@@ -91,10 +103,63 @@ class CustomerController extends AbstractController
     /**
      * @Route(path="/{id}/edit", name="admin_customer_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', customer)")
+     *
+     * @param Customer $customer
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Customer $customer, Request $request)
     {
         return $this->renderCustomerForm($customer, $request);
+    }
+
+    /**
+     * @Route(path="/{id}/delete", name="admin_customer_delete", methods={"GET", "POST"})
+     * @Security("is_granted('delete', customer)")
+     *
+     * @param Customer $customer
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteAction(Customer $customer, Request $request)
+    {
+        $stats = $this->getRepository()->getCustomerStatistics($customer);
+
+        $deleteForm = $this->createFormBuilder()
+            ->add('customer', CustomerType::class, [
+                'label' => 'label.customer',
+                'query_builder' => function (CustomerRepository $repo) use ($customer) {
+                    $query = new CustomerQuery();
+                    $query
+                        ->setResultType(CustomerQuery::RESULT_TYPE_QUERYBUILDER)
+                        ->addIgnoredEntity($customer);
+
+                    return $repo->findByQuery($query);
+                },
+                'required' => false,
+            ])
+            ->setAction($this->generateUrl('admin_customer_delete', ['id' => $customer->getId()]))
+            ->setMethod('POST')
+            ->getForm();
+
+        $deleteForm->handleRequest($request);
+
+        if (0 == $stats->getRecordAmount() || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
+            try {
+                $this->getRepository()->deleteCustomer($customer, $deleteForm->get('customer')->getData());
+                $this->flashSuccess('action.delete.success');
+            } catch (ORMException $ex) {
+                $this->flashError('action.delete.error');
+            }
+
+            return $this->redirectToRoute('admin_customer');
+        }
+
+        return $this->render('admin/customer_delete.html.twig', [
+            'customer' => $customer,
+            'stats' => $stats,
+            'form' => $deleteForm->createView(),
+        ]);
     }
 
     /**
@@ -121,44 +186,6 @@ class CustomerController extends AbstractController
         return $this->render('admin/customer_edit.html.twig', [
             'customer' => $customer,
             'form' => $editForm->createView()
-        ]);
-    }
-
-    /**
-     * The route to delete an existing entry.
-     *
-     * @Route(path="/{id}/delete", name="admin_customer_delete", methods={"GET", "POST"})
-     * @Security("is_granted('delete', customer)")
-     *
-     * @param Customer $customer
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function deleteAction(Customer $customer, Request $request)
-    {
-        $stats = $this->getRepository()->getCustomerStatistics($customer);
-
-        $deleteForm = $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_customer_delete', ['id' => $customer->getId()]))
-            ->setMethod('POST')
-            ->getForm();
-
-        $deleteForm->handleRequest($request);
-
-        if (0 == $stats->getRecordAmount() || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($customer);
-            $entityManager->flush();
-
-            $this->flashSuccess('action.delete.success');
-
-            return $this->redirectToRoute('admin_customer');
-        }
-
-        return $this->render('admin/customer_delete.html.twig', [
-            'customer' => $customer,
-            'stats' => $stats,
-            'form' => $deleteForm->createView(),
         ]);
     }
 

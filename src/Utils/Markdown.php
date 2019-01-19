@@ -9,8 +9,6 @@
 
 namespace App\Utils;
 
-use Parsedown as MarkdownParser;
-
 /**
  * A simple class to parse markdown syntax and return HTML.
  */
@@ -26,7 +24,7 @@ class Markdown
      */
     public function __construct()
     {
-        $this->parser = new MarkdownParser();
+        $this->parser = new ParsedownExtension();
     }
 
     /**

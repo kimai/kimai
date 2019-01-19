@@ -28,7 +28,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Controller used to manage invoices.
  *
  * @Route(path="/invoice")
- * @Security("is_granted('ROLE_TEAMLEAD')")
+ * @Security("is_granted('view_invoice') or is_granted('view_invoice_template')")
  */
 class InvoiceController extends AbstractController
 {
@@ -67,6 +67,7 @@ class InvoiceController extends AbstractController
         $end = new \DateTime('last day of this month');
 
         $query = new InvoiceQuery();
+        $query->setOrder(InvoiceQuery::ORDER_ASC);
         $query->setBegin($begin);
         $query->setEnd($end);
         $query->setUser($this->getUser());
@@ -77,7 +78,7 @@ class InvoiceController extends AbstractController
 
     /**
      * @Route(path="/", name="invoice", methods={"GET", "POST"})
-     * @Security("is_granted('view', 'invoice')")
+     * @Security("is_granted('view_invoice')")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -111,7 +112,7 @@ class InvoiceController extends AbstractController
 
     /**
      * @Route(path="/print", name="invoice_print", methods={"GET", "POST"})
-     * @Security("is_granted('create', 'invoice')")
+     * @Security("is_granted('create_invoice')")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -161,6 +162,7 @@ class InvoiceController extends AbstractController
      */
     protected function getEntries(InvoiceQuery $query)
     {
+        // customer needs to be defined, as we need the currency for the invoice
         if (null === $query->getCustomer()) {
             return [];
         }
@@ -211,7 +213,7 @@ class InvoiceController extends AbstractController
     /**
      * @Route(path="/template", defaults={"page": 1}, name="admin_invoice_template", methods={"GET", "POST"})
      * @Route(path="/template/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_invoice_template_paginated", methods={"GET", "POST"})
-     * @Security("is_granted('view', 'invoice_template')")
+     * @Security("is_granted('view_invoice_template')")
      *
      * @param $page
      * @return \Symfony\Component\HttpFoundation\Response
@@ -243,7 +245,7 @@ class InvoiceController extends AbstractController
     /**
      * @Route(path="/template/create", name="admin_invoice_template_create", methods={"GET", "POST"})
      * @Route(path="/template/create/{id}", name="admin_invoice_template_copy", methods={"GET", "POST"})
-     * @Security("is_granted('create', 'invoice_template')")
+     * @Security("is_granted('create_invoice_template')")
      *
      * @param Request $request
      * @param InvoiceTemplate|null $template

@@ -67,8 +67,11 @@ GitHub to find out which variables can be used or debug it with:
 
 Docx templates are powered by [PHPWord](https://github.com/PHPOffice/PHPWord) and its `TemplateProcessor`.
 
-**Important:** The variable `${entry.description}` has to be set in one table row, otherwise no timesheet records will be rendered! 
-This row will then be cloned for every timesheet entry. 
+**Important:** You have to add one of the variables - either `${entry.description}` or `${entry.row}` - in one table row, 
+otherwise the rendering process will fail! The row containing this variable will be cloned for every included timesheet record.
+
+If you do not use `${entry.description}` then a fallback for `${entry.row}` is used and will be removed in the rendering process, 
+it will not show up in the generated invoice.
 
 See below in `Template variables` to find out which variables you can use in your template.
 
@@ -114,40 +117,59 @@ You can use the following global variables in your templates:
 | ${query.end} | The query end as formatted short date |
 | ${query.month} | The month for this query (begin date) |
 | ${query.year} | The year for this query (begin date) |
+
+If a customer was selected the following values exist as well:
+
+| Key | Description |
+|---|---|
+| ${customer.id} | The customer ID |
 | ${customer.address} | The customer address |
 | ${customer.name} | The customer name |
-| ${customer.contact} | The customer contac |
+| ${customer.contact} | The customer contact |
 | ${customer.company} | The customer company |
 | ${customer.number} | The customer number |
 | ${customer.country} | The customer country |
 | ${customer.homepage} | The customer homepage |
 | ${customer.comment} | The customer comment |
 
-### Timesheet entry variables 
-
-For each timesheet entry you can use the following variables:
+If a project was selected the following values exist as well:
 
 | Key | Description |
 |---|---|
-| ${entry.description} | The entries description |
-| ${entry.amount} | The amount for this entry (normally the amount of hours) |
-| ${entry.rate} | The rate for one unit of the entry (normally one hour) |
-| ${entry.total} | The total rate for this entry |
-| ${entry.duration} | The duration in seconds |
-| ${entry.begin} | The begin date - _format may change and include the time in the future_ |
-| ${entry.begin_timestamp} | The timestamp for the begin of this entry |
-| ${entry.end} | The begin date - _format may change and include the time in the future_ |
-| ${entry.end_timestamp} | The timestamp for the end of this entry |
-| ${entry.date} | The start date when this record was created |
-| ${entry.user_id} | The user ID |
-| ${entry.user_name} | The username |
-| ${entry.user_alias} | The user alias |
-| ${entry.activity} | Activity name |
-| ${entry.activity_id} | Activity ID |
-| ${entry.project} | Project name |
-| ${entry.project_id} | Project ID |
-| ${entry.customer} | Customer name |
-| ${entry.customer_id} | Customer ID |
+| ${project.id} | The project ID |
+| ${project.name} | The project name |
+| ${project.comment} | The project name |
+| ${project.order_number} | The project order number |
+
+### Timesheet entry variables 
+
+For each timesheet entry you can use the variables from the following table.
+
+| Key | Description | Example |
+|---|---|---|
+| ${entry.row} | An empty string, used as template row for docx | |
+| ${entry.description} | The entries description | _foo bar_ |
+| ${entry.amount} | The format duration/amount for this entry | 02:47 h |
+| ${entry.rate} | The rate for one unit of the entry (normally one hour) | 100 |
+| ${entry.total} | The total rate for this entry | 278,33 |
+| ${entry.duration} | The duration in seconds | 10020 |
+| ${entry.duration_minutes} | The duration in minutes with no decimals | 167 |
+| ${entry.begin} | The begin date (format depends on the users language) | 27.10.2018 |
+| ${entry.begin_time} | The formatted time for the begin of this entry | 14:57 |
+| ${entry.begin_timestamp} | The timestamp for the begin of this entry | 1542016273 |
+| ${entry.end} | The begin date  (format depends on the users language) | 27.10.2018 |
+| ${entry.end_time} | The formatted time for the end of this entry | 17:44 |
+| ${entry.end_timestamp} | The timestamp for the end of this entry | 1542016273 |
+| ${entry.date} | The start date when this record was created | 27.10.2018 |
+| ${entry.user_id} | The user ID | 1 |
+| ${entry.user_name} | The username | susan_super |
+| ${entry.user_alias} | The user alias | Susan Miller |
+| ${entry.activity} | Activity name | Post production |
+| ${entry.activity_id} | Activity ID | 124 |
+| ${entry.project} | Project name | Nemesis |
+| ${entry.project_id} | Project ID | 10 |
+| ${entry.customer} | Customer name | Acme Studios |
+| ${entry.customer_id} | Customer ID | 3 |
 
 ## Configure search path
 

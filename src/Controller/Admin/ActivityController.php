@@ -13,7 +13,10 @@ use App\Controller\AbstractController;
 use App\Entity\Activity;
 use App\Form\ActivityEditForm;
 use App\Form\Toolbar\ActivityToolbarForm;
+use App\Form\Type\ActivityType;
+use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityQuery;
+use Doctrine\ORM\ORMException;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -24,8 +27,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Controller used to manage activities in the admin part of the site.
  *
  * @Route(path="/admin/activity")
- * @Security("is_granted('ROLE_ADMIN')")
- * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+ * @Security("is_granted('view_activity')")
  */
 class ActivityController extends AbstractController
 {
@@ -41,6 +43,11 @@ class ActivityController extends AbstractController
      * @Route(path="/", defaults={"page": 1}, name="admin_activity", methods={"GET"})
      * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_activity_paginated", methods={"GET"})
      * @Cache(smaxage="10")
+     * @Security("is_granted('view_activity')")
+     *
+     * @param int $page
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction($page, Request $request)
     {
@@ -61,12 +68,14 @@ class ActivityController extends AbstractController
         return $this->render('admin/activity.html.twig', [
             'entries' => $entries,
             'query' => $query,
+            'showFilter' => $form->isSubmitted(),
             'toolbarForm' => $form->createView(),
         ]);
     }
 
     /**
      * @Route(path="/create", name="admin_activity_create", methods={"GET", "POST"})
+     * @Security("is_granted('create_activity')")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -90,8 +99,6 @@ class ActivityController extends AbstractController
     }
 
     /**
-     * The route to delete an existing entry.
-     *
      * @Route(path="/{id}/delete", name="admin_activity_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', activity)")
      *
@@ -104,6 +111,22 @@ class ActivityController extends AbstractController
         $stats = $this->getRepository()->getActivityStatistics($activity);
 
         $deleteForm = $this->createFormBuilder()
+            ->add('activity', ActivityType::class, [
+                'label' => 'label.activity',
+                'query_builder' => function (ActivityRepository $repo) use ($activity) {
+                    $query = new ActivityQuery();
+                    $query
+                        ->setResultType(ActivityQuery::RESULT_TYPE_QUERYBUILDER)
+                        ->setProject($activity->getProject())
+                        ->setOrderGlobalsFirst(true)
+                        ->addIgnoredEntity($activity)
+                        ->setGlobalsOnly(null === $activity->getProject())
+                    ;
+
+                    return $repo->findByQuery($query);
+                },
+                'required' => false,
+            ])
             ->setAction($this->generateUrl('admin_activity_delete', ['id' => $activity->getId()]))
             ->setMethod('POST')
             ->getForm();
@@ -111,11 +134,12 @@ class ActivityController extends AbstractController
         $deleteForm->handleRequest($request);
 
         if (0 == $stats->getRecordAmount() || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($activity);
-            $entityManager->flush();
-
-            $this->flashSuccess('action.delete.success');
+            try {
+                $this->getRepository()->deleteActivity($activity, $deleteForm->get('activity')->getData());
+                $this->flashSuccess('action.delete.success');
+            } catch (ORMException $ex) {
+                $this->flashError('action.delete.error');
+            }
 
             return $this->redirectToRoute('admin_activity');
         }

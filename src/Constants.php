@@ -17,15 +17,15 @@ class Constants
     /**
      * The current release version
      */
-    public const VERSION = 0.6;
+    public const VERSION = '0.6.1';
     /**
-     * The release name
+     * The release name, will only change for new major version
      */
     public const NAME = 'Ayumi';
     /**
-     * The current release status
+     * The current release status, either "stable" or "dev"
      */
-    public const STATUS = 'dev';
+    public const STATUS = 'stable';
     /**
      * Used in multiple views
      */

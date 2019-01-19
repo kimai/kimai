@@ -5,10 +5,21 @@
 
 {% block page_title %}{{ 'timesheet.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'timesheet.subtitle'|trans }}{% endblock %}
-{% block page_actions %}{{ widgets.page_actions({'filter': '#collapseTimesheet', 'download': 'onclick:return exportTimesheet()', 'visibility': '#modal_timesheet', 'calendar': path('calendar'), 'create': path('timesheet_create')}) }}{% endblock %}
+{% block page_actions %}
+    {% set actions = {'filter': '#collapseTimesheet'} %}
+    {% if is_granted('export_own_timesheet') %}
+        {% set actions = actions|merge({'download': 'onclick:return exportTimesheet()'}) %}
+    {% endif %}
+    {% set actions = actions|merge({'visibility': '#modal_timesheet'}) %}
+    {% set actions = actions|merge({'calendar': path('calendar')}) %}
+    {% if is_granted('create_own_timesheet') %}
+        {% set actions = actions|merge({'create': path('timesheet_create')}) %}
+    {% endif %}
+    {{ widgets.page_actions(actions) }}
+{% endblock %}
 
 {% block main_before %}
-    {{ toolbar.toolbar(toolbarForm, 'collapseTimesheet') }}
+    {{ toolbar.toolbar(toolbarForm, 'collapseTimesheet', showFilter) }}
 {% endblock %}
 
 {% block main %}
@@ -17,15 +28,21 @@
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% endif %}
 
-    {% set columns = {'date': 'alwaysVisible'} %}
+    {% set columns = {'date': ''} %}
 
     {% if not duration_only %}
-        {% set columns = columns|merge({'starttime': '', 'endtime': ''}) %}
+        {% set columns = columns|merge({'starttime': '', 'endtime': 'hidden-xs'}) %}
+    {% endif %}
+
+    {% set columns = columns|merge({'duration': ''}) %}
+
+    {% if is_granted('view_rate_own_timesheet') %}
+        {% set columns = columns|merge({'rate': 'hidden-xs'}) %}
     {% endif %}
 
     {% set columns = columns|merge({
-        'duration': 'hidden-xs',
-        'rate': 'hidden-xs',
+        'customer': 'hidden-xs hidden-sm',
+        'project': 'hidden-xs hidden-sm',
         'activity': 'hidden-xs hidden-sm',
         'description': 'hidden-xs hidden-sm',
         'actions': 'alwaysVisible',
@@ -37,7 +54,7 @@
 
     {% for entry in entries %}
         <tr>
-            <td>{{ entry.begin|date_short }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'date') }}">{{ entry.begin|date_short }}</td>
 
             {% if not duration_only %}
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'starttime') }}">{{ entry.begin|date("H:i") }}</td>
@@ -48,23 +65,32 @@
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'endtime') }}">{{ entry.end|date("H:i") }}</td>
                 {% endif %}
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}">{{ entry.duration|duration }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'rate') }}">{{ entry.rate|money(entry.project.customer.currency) }}</td>
+                {% if is_granted('view_rate', entry) %}
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'rate') }}">{{ entry.rate|money(entry.project.customer.currency) }}</td>
+                {% endif %}
             {% else %}
                 {% if not duration_only %}
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'endtime') }}">&dash;</td>
                 {% endif %}
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}"><i>{{ entry|duration }}</i></td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'rate') }}">&dash;</td>
+                {% if is_granted('view_rate', entry) %}
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'rate') }}">&dash;</td>
+                {% endif %}
             {% endif %}
 
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">{{ widgets.label_customer(entry.project.customer) }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">{{ widgets.label_project(entry.project) }}</td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}">{{ widgets.label_activity(entry.activity) }}</td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }} timesheet-description">{{ entry.description|desc2html }}</td>
             <td>
-                {% set actionButtons = {'edit': path('timesheet_edit', {'id' : entry.id, 'page': page})} %}
+                {% set actionButtons = {} %}
+                {% if is_granted('edit', entry) %}
+                    {% set actionButtons = actionButtons|merge({'edit': path('timesheet_edit', {'id' : entry.id, 'page': page})}) %}
+                {% endif %}
 
                 {% if entry.end %}
-                    {% if is_granted('start', entry.activity) %}
-                        {% set actionButtons = {'repeat': path('timesheet_start', {'id' : entry.activity.id})}|merge(actionButtons) %}
+                    {% if is_granted('start', entry) %}
+                        {% set actionButtons = {'repeat': path('timesheet_start', {'id' : entry.id})}|merge(actionButtons) %}
                     {% endif %}
                 {% else %}
                     {% if is_granted('stop', entry) %}
@@ -72,7 +98,9 @@
                     {% endif %}
                 {% endif %}
 
-                {% set actionButtons = actionButtons|merge({'trash': path('timesheet_delete', {'id' : entry.id, 'page': page})}) %}
+                {% if is_granted('delete', entry) %}
+                    {% set actionButtons = actionButtons|merge({'trash': path('timesheet_delete', {'id' : entry.id, 'page': page})}) %}
+                {% endif %}
                 {{ widgets.button_group(actionButtons) }}
             </td>
         </tr>

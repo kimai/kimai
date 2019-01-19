@@ -1,16 +1,20 @@
 # Users
 
-## Roles & Permissions
+## Roles
 
-There are multiple pre-defined roles in Kimai, which define the ACLs. A user can only inherit one role, where the roles extend each user.
+There are multiple pre-defined roles in Kimai, which define the ACLs/permissions.
 
-| Role name | extends | Gives permission for |
+| Role name | extends | Description |
 |---|---|---|
-| ROLE_CUSTOMER | -  | Currently has no permissions, but was reserved for future functionality  |
-| ROLE_USER | ROLE_CUSTOMER  | Time-tracking  |
-| ROLE_TEAMLEAD | ROLE_USER  | All of the above, plus: editing other users timesheets  |
-| ROLE_ADMIN | ROLE_TEAMLEAD | All of the above, plus: editing customers, editing projects, editing activities |
-| ROLE_SUPER_ADMIN | ROLE_ADMIN  | All of the above, plus: editing users  |
+| ROLE_CUSTOMER | -  | Currently not used, reserved for future features |
+| ROLE_USER | ROLE_CUSTOMER  | Normal user that wants to track working times |
+| ROLE_TEAMLEAD | ROLE_USER  | This role manages teams of ROLE_USER (this feature is not yet implemented, but planned for the future) and has further permissions on invoices |
+| ROLE_ADMIN | ROLE_TEAMLEAD | Admins can do almost everything in Kimai, except some user specific tasks |
+| ROLE_SUPER_ADMIN | ROLE_ADMIN  | Evey Super-Admin can do anything Kimai |
+
+### Permissions
+
+The permission system is configurable through a configuration file. You can find further information in the [permissions](permissions.md) chapter. 
 
 ## Login
 

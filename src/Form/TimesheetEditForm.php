@@ -33,22 +33,50 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class TimesheetEditForm extends AbstractType
 {
     /**
+     * @var CustomerRepository
+     */
+    private $customers;
+    /**
+     * @var ProjectRepository
+     */
+    private $projects;
+
+    /**
+     * @param CustomerRepository $customer
+     * @param ProjectRepository $project
+     */
+    public function __construct(CustomerRepository $customer, ProjectRepository $project)
+    {
+        $this->customers = $customer;
+        $this->projects = $project;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var Timesheet $entry */
-        $entry = $options['data'];
+        $activity = null;
+        $project = null;
+        $customer = null;
+        $end = null;
 
-        $activity = $entry->getActivity();
-        $project = $entry->getProject();
-        $customer = null === $entry->getProject() ? null : $entry->getProject()->getCustomer();
+        if (isset($options['data'])) {
+            /** @var Timesheet $entry */
+            $entry = $options['data'];
 
-        if (null === $project && null !== $activity) {
-            $project = $activity->getProject();
+            $activity = $entry->getActivity();
+            $project = $entry->getProject();
+            $customer = null === $entry->getProject() ? null : $entry->getProject()->getCustomer();
+
+            if (null === $project && null !== $activity) {
+                $project = $activity->getProject();
+            }
+
+            $end = $entry->getEnd();
         }
 
-        if (null === $entry->getEnd() || !$options['duration_only']) {
+        if (null === $end || !$options['duration_only']) {
             $builder->add('begin', DateTimeType::class, [
                 'label' => 'label.begin',
                 'widget' => 'single_text',
@@ -73,24 +101,45 @@ class TimesheetEditForm extends AbstractType
             ]);
         }
 
+        $projectOptions = [];
+
+        if ($this->customers->countCustomer(true) > 1) {
+            $builder
+                ->add('customer', CustomerType::class, [
+                    // documentation is for NelmioApiDocBundle
+                    'documentation' => [
+                        'type' => 'integer',
+                        'description' => 'Customer ID',
+                    ],
+                    'query_builder' => function (CustomerRepository $repo) use ($customer) {
+                        return $repo->builderForEntityType($customer);
+                    },
+                    'data' => $customer ? $customer : '',
+                    'required' => false,
+                    'mapped' => false,
+                    'attr' => [
+                        'data-related-select' => $this->getBlockPrefix() . '_project',
+                        'data-api-url' => ['get_projects', ['customer' => '-s-']],
+                    ],
+                ]);
+        } else {
+            $projectOptions['group_by'] = null;
+        }
+
+        if ($this->projects->countProject(true) > 1) {
+            $projectOptions['placeholder'] = null;
+        } else {
+            $projectOptions['group_by'] = null;
+        }
+
         $builder
-            ->add('customer', CustomerType::class, [
-                'label' => 'label.customer',
-                'query_builder' => function (CustomerRepository $repo) use ($customer) {
-                    return $repo->builderForEntityType($customer);
-                },
-                'data' => $customer ? $customer : '',
-                'required' => false,
-                'mapped' => false,
-                'attr' => [
-                    'data-related-select' => $this->getBlockPrefix() . '_project',
-                    'data-api-url' => ['get_projects', ['customer' => '-s-']],
+            ->add('project', ProjectType::class, array_merge($projectOptions, [
+                // documentation is for NelmioApiDocBundle
+                'documentation' => [
+                    'type' => 'integer',
+                    'description' => 'Project ID',
                 ],
-            ])
-            ->add('project', ProjectType::class, [
                 'required' => true,
-                'placeholder' => '',
-                'label' => 'label.project',
                 'query_builder' => function (ProjectRepository $repo) use ($project) {
                     return $repo->builderForEntityType($project);
                 },
@@ -98,9 +147,15 @@ class TimesheetEditForm extends AbstractType
                     'data-related-select' => $this->getBlockPrefix() . '_activity',
                     'data-api-url' => ['get_activities', ['project' => '-s-']],
                 ],
-            ])
+            ]));
+
+        $builder
             ->add('activity', ActivityType::class, [
-                'label' => 'label.activity',
+                // documentation is for NelmioApiDocBundle
+                'documentation' => [
+                    'type' => 'integer',
+                    'description' => 'Activity ID',
+                ],
                 'query_builder' => function (ActivityRepository $repo) use ($activity) {
                     return $repo->builderForEntityType($activity);
                 },
@@ -109,15 +164,20 @@ class TimesheetEditForm extends AbstractType
                 'label' => 'label.description',
                 'required' => false,
             ])
-            ->add('fixedRate', NumberType::class, [
-                'label' => 'label.fixed_rate',
-                'required' => false,
-            ])
-            ->add('hourlyRate', NumberType::class, [
-                'label' => 'label.hourly_rate',
-                'required' => false,
-            ])
         ;
+
+        if ($options['include_rate']) {
+            $builder
+                ->add('fixedRate', NumberType::class, [
+                    'label' => 'label.fixed_rate',
+                    'required' => false,
+                ])
+                ->add('hourlyRate', NumberType::class, [
+                    'label' => 'label.hourly_rate',
+                    'required' => false,
+                ]);
+        }
+
         /*
         $builder->get('customer')->addEventListener(
             FormEvents::POST_SUBMIT,
@@ -138,6 +198,7 @@ class TimesheetEditForm extends AbstractType
             }
         );
         */
+
         $builder->get('project')->addEventListener(
             FormEvents::POST_SUBMIT,
             function (FormEvent $event) {
@@ -168,6 +229,7 @@ class TimesheetEditForm extends AbstractType
             'csrf_token_id' => 'timesheet_edit',
             'duration_only' => false,
             'include_user' => false,
+            'include_rate' => true,
             'docu_chapter' => 'timesheet',
         ]);
     }

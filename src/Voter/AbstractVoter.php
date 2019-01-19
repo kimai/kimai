@@ -9,12 +9,14 @@
 
 namespace App\Voter;
 
+use App\Entity\User;
 use App\Security\AclDecisionManager;
+use App\Security\RolePermissionManager;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
- * Abstract voter to help with checking user roles.
+ * Abstract voter to help with checking user permissions.
  */
 abstract class AbstractVoter extends Voter
 {
@@ -22,14 +24,19 @@ abstract class AbstractVoter extends Voter
      * @var AclDecisionManager
      */
     protected $decisionManager;
+    /**
+     * @var RolePermissionManager
+     */
+    protected $roleManager;
 
     /**
-     * AbstractVoter constructor.
      * @param AclDecisionManager $decisionManager
+     * @param RolePermissionManager $roleManager
      */
-    public function __construct(AclDecisionManager $decisionManager)
+    public function __construct(AclDecisionManager $decisionManager, RolePermissionManager $roleManager)
     {
         $this->decisionManager = $decisionManager;
+        $this->roleManager = $roleManager;
     }
 
     /**
@@ -49,5 +56,40 @@ abstract class AbstractVoter extends Voter
     protected function hasRole($role, TokenInterface $token)
     {
         return $this->decisionManager->hasRole($token, [$role]);
+    }
+
+    /**
+     * @param string $role
+     * @param string $permission
+     * @return bool
+     */
+    protected function hasPermission($role, $permission)
+    {
+        return $this->roleManager->hasPermission($role, $permission);
+    }
+
+    /**
+     * @param User $user
+     * @param string $permission
+     * @return bool
+     */
+    protected function hasRolePermission(User $user, $permission)
+    {
+        foreach ($user->getRoles() as $role) {
+            if ($this->hasPermission($role, $permission)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $permission
+     * @return bool
+     */
+    public function isRegisteredPermission($permission)
+    {
+        return $this->roleManager->isRegisteredPermission($permission);
     }
 }

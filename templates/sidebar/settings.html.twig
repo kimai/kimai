@@ -1,10 +1,14 @@
 {% import "@AdminLTE/Macros/default.html.twig" as macro %}
 {% import "macros/widgets.html.twig" as widgets %}
 
+{% set linkUserProfile = path('user_profile', {'username' : user.username}) %}
+{% if not is_granted('view_own_profile') %}
+    {% set linkUserProfile = '#' %}
+{% endif %}
 
 <ul class="control-sidebar-menu">
     <li>
-        <a href="{{ path('user_profile', {'username' : user.username}) }}">
+        <a href="{{ linkUserProfile }}">
             <div class="pull-left image">
                 {{  macro.avatar(user.avatar, user.username, 'img-circle') }}
             </div>
@@ -17,6 +21,7 @@
 </ul>
 
 <ul class="control-sidebar-menu">
+    {% if is_granted('edit_own_profile') %}
     <li>
         <a href="{{ path('user_profile_edit', {'username' : user.username}) }}">
             <div class="pull-left image">
@@ -27,8 +32,10 @@
             </div>
         </a>
     </li>
+    {% endif %}
+    {% if is_granted('preferences_own_profile') %}
     <li>
-        <a href="{{ path('user_profile_preferences', {'username' : user.username}) }}">
+        <a href="{{ path('user_profile_preferences', {'username' : user.username})  }}">
             <div class="pull-left image">
                 <i class="{{ 'settings'|icon }} text-gray"></i>
             </div>
@@ -37,6 +44,7 @@
             </div>
         </a>
     </li>
+    {% endif %}
     <li>
         <a href="{{ path('help') }}">
             <div class="pull-left image">

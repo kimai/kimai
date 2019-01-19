@@ -21,16 +21,23 @@ class TimesheetVoter extends AbstractVoter
 {
     public const START = 'start';
     public const STOP = 'stop';
-    public const VIEW = 'view';
     public const EDIT = 'edit';
     public const DELETE = 'delete';
+    public const EXPORT = 'export';
+    public const VIEW_RATE = 'view_rate';
+    public const EDIT_RATE = 'edit_rate';
 
+    /**
+     * support rules based on the given $subject (here: Timesheet)
+     */
     public const ALLOWED_ATTRIBUTES = [
         self::START,
         self::STOP,
-        self::VIEW,
         self::EDIT,
-        self::DELETE
+        self::DELETE,
+        self::EXPORT,
+        self::VIEW_RATE,
+        self::EDIT_RATE,
     ];
 
     /**
@@ -40,11 +47,11 @@ class TimesheetVoter extends AbstractVoter
      */
     protected function supports($attribute, $subject)
     {
-        if (!in_array($attribute, self::ALLOWED_ATTRIBUTES)) {
+        if (!$subject instanceof Timesheet) {
             return false;
         }
 
-        if (!$subject instanceof Timesheet) {
+        if (!in_array($attribute, self::ALLOWED_ATTRIBUTES)) {
             return false;
         }
 
@@ -61,40 +68,49 @@ class TimesheetVoter extends AbstractVoter
     {
         $user = $token->getUser();
 
-        if (!$user instanceof User) {
+        if (!($user instanceof User)) {
             return false;
         }
 
-        switch ($attribute) {
-            case self::STOP:
-                return $this->canStop($subject, $user, $token);
-
-            case self::START:
-                return $this->canStart($subject, $user, $token);
-
-            case self::VIEW:
-                return $this->canView($subject, $user, $token);
-
-            case self::EDIT:
-                return $this->canEdit($subject, $user, $token);
-
-            case self::DELETE:
-                return $this->canDelete($subject, $user, $token);
+        if (!($subject instanceof Timesheet)) {
+            return false;
         }
 
-        return false;
-    }
+        $permission = '';
 
-    /**
-     * @param Timesheet $timesheet
-     * @param User $user
-     * @param TokenInterface $token
-     * @return bool
-     */
-    protected function canStop(Timesheet $timesheet, User $user, TokenInterface $token)
-    {
-        // if a teamlead stops an entry for another user, check that this user is part of his team
-        return $this->isOwnOrTeamlead($timesheet, $user, $token);
+        switch ($attribute) {
+            case self::START:
+                if (!$this->canStart($subject, $user, $token)) {
+                    return false;
+                }
+                $permission .= $attribute;
+                break;
+
+            case self::VIEW_RATE:
+            case self::EDIT_RATE:
+            case self::STOP:
+            case self::EDIT:
+            case self::DELETE:
+            case self::EXPORT:
+                $permission .= $attribute;
+                break;
+
+            default:
+                return false;
+        }
+
+        $permission .= '_';
+
+        // extend me for "team" support later on
+        if ($subject->getUser()->getId() == $user->getId()) {
+            $permission .= 'own';
+        } else {
+            $permission .= 'other';
+        }
+
+        $permission .= '_timesheet';
+
+        return $this->hasRolePermission($user, $permission);
     }
 
     /**
@@ -117,66 +133,5 @@ class TimesheetVoter extends AbstractVoter
         }
 
         return true;
-    }
-
-    /**
-     * @param Timesheet $timesheet
-     * @param User $user
-     * @param TokenInterface $token
-     * @return bool
-     */
-    protected function canView(Timesheet $timesheet, User $user, TokenInterface $token)
-    {
-        return $this->isOwnOrTeamlead($timesheet, $user, $token);
-    }
-
-    /**
-     * @param Timesheet $timesheet
-     * @param User $user
-     * @param TokenInterface $token
-     * @return bool
-     */
-    protected function canEdit(Timesheet $timesheet, User $user, TokenInterface $token)
-    {
-        return $this->isOwnOrTeamlead($timesheet, $user, $token);
-    }
-
-    /**
-     * @param TokenInterface $token
-     * @return bool
-     */
-    protected function canDelete(Timesheet $timesheet, User $user, TokenInterface $token)
-    {
-        if (!$this->isFullyAuthenticated($token)) {
-            return false;
-        }
-
-        return $this->isOwnOrAdmin($timesheet, $user, $token);
-    }
-
-    /**
-     * @param TokenInterface $token
-     * @return bool
-     */
-    protected function isOwnOrTeamlead(Timesheet $timesheet, User $user, TokenInterface $token)
-    {
-        if ($timesheet->getUser()->getId() == $user->getId()) {
-            return true;
-        }
-
-        return $this->hasRole('ROLE_TEAMLEAD', $token);
-    }
-
-    /**
-     * @param TokenInterface $token
-     * @return bool
-     */
-    protected function isOwnOrAdmin(Timesheet $timesheet, User $user, TokenInterface $token)
-    {
-        if ($timesheet->getUser()->getId() == $user->getId()) {
-            return true;
-        }
-
-        return $this->hasRole('ROLE_ADMIN', $token);
     }
 }

@@ -44,6 +44,10 @@ abstract class AbstractMergedCalculator extends AbstractCalculator
             $timesheet->setActivity($entry->getActivity());
         }
 
+        if (null === $timesheet->getProject()) {
+            $timesheet->setProject($entry->getProject());
+        }
+
         if (empty($timesheet->getDescription())) {
             $timesheet->setDescription($entry->getActivity()->getName());
         }

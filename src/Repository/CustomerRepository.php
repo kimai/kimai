@@ -15,6 +15,7 @@ use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Model\CustomerStatistic;
 use App\Repository\Query\CustomerQuery;
+use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
@@ -34,10 +35,15 @@ class CustomerRepository extends AbstractRepository
     }
 
     /**
+     * @param null|bool $visible
      * @return int
      */
-    public function countCustomer()
+    public function countCustomer($visible = null)
     {
+        if (null !== $visible) {
+            return $this->count(['visible' => (int) $visible]);
+        }
+
         return $this->count([]);
     }
 
@@ -121,6 +127,43 @@ class CustomerRepository extends AbstractRepository
             $qb->andWhere('c.visible = 0');
         }
 
+        if (!empty($query->getIgnoredEntities())) {
+            $qb->andWhere('c.id NOT IN(:ignored)');
+            $qb->setParameter('ignored', $query->getIgnoredEntities());
+        }
+
         return $this->getBaseQueryResult($qb, $query);
+    }
+
+    /**
+     * @param Customer $delete
+     * @param Customer|null $replace
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function deleteCustomer(Customer $delete, ?Customer $replace = null)
+    {
+        $em = $this->getEntityManager();
+        $em->beginTransaction();
+
+        try {
+            if (null !== $replace) {
+                $qb = $em->createQueryBuilder();
+                $qb
+                    ->update(Project::class, 'p')
+                    ->set('p.customer', ':replace')
+                    ->where('p.customer = :delete')
+                    ->setParameter('delete', $delete)
+                    ->setParameter('replace', $replace)
+                    ->getQuery()
+                    ->execute();
+            }
+
+            $em->remove($delete);
+            $em->flush();
+            $em->commit();
+        } catch (ORMException $ex) {
+            $em->rollback();
+            throw $ex;
+        }
     }
 }

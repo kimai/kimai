@@ -36,6 +36,16 @@ trait KernelTestTrait
 
     /**
      * @param EntityManager $em
+     * @param string $username
+     * @return User|null
+     */
+    protected function getUserByName(EntityManager $em, string $username)
+    {
+        return $em->getRepository(User::class)->findOneBy(['username' => $username]);
+    }
+
+    /**
+     * @param EntityManager $em
      * @param string $role
      * @return User|null
      */
@@ -64,6 +74,6 @@ trait KernelTestTrait
                 return null;
         }
 
-        return $em->getRepository(User::class)->findOneBy(['username' => $name]);
+        return $this->getUserByName($em, $name);
     }
 }
