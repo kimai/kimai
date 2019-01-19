@@ -196,6 +196,10 @@ class Extensions extends \Twig_Extension
             }
         }
 
+        if ($seconds < 0) {
+            return '?';
+        }
+
         $locale = $this->getLocale();
         switch ($format) {
             case 'full':
