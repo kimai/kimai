@@ -95,6 +95,7 @@ class DebugRendererTest extends AbstractRendererTest
     protected function assertEntryStructure(array $model)
     {
         $keys = [
+            'entry.row',
             'entry.description',
             'entry.amount',
             'entry.rate',

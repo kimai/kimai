@@ -69,6 +69,7 @@ class InvoiceController extends AbstractController
         $end = new \DateTime('last day of this month');
 
         $query = new InvoiceQuery();
+        $query->setOrder(InvoiceQuery::ORDER_ASC);
         $query->setBegin($begin);
         $query->setEnd($end);
         $query->setUser($this->getUser());

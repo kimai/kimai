@@ -84,6 +84,39 @@ class TimesheetController extends AbstractController
     }
 
     /**
+     * @Route(path="/export", name="admin_timesheet_export", methods={"GET"})
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function exportAction(Request $request)
+    {
+        $query = new TimesheetQuery();
+        $query->setOrder(TimesheetQuery::ORDER_ASC);
+
+        $form = $this->getToolbarForm($query);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var TimesheetQuery $query */
+            $query = $form->getData();
+            if (null !== $query->getBegin()) {
+                $query->getBegin()->setTime(0, 0, 0);
+            }
+            if (null !== $query->getEnd()) {
+                $query->getEnd()->setTime(23, 59, 59);
+            }
+        }
+
+        /* @var $entries Pagerfanta */
+        $entries = $this->getRepository()->findByQuery($query);
+
+        return $this->render('admin/timesheet_export.html.twig', [
+            'entries' => $entries,
+            'query' => $query,
+        ]);
+    }
+
+    /**
      * @Route(path="/{id}/stop", name="admin_timesheet_stop", methods={"GET"})
      * @Security("is_granted('stop', entry)")
      *

@@ -60,6 +60,8 @@ class HelpController extends AbstractController
 
         $content = file_get_contents($chapterFile);
 
+        $content = preg_replace('/\[(.+)\]\(([\w\-\/]+)(\.md)(\#[\w\-]+){0,1}\)/i', '[$1]($2$4)', $content);
+
         return $this->render('help/index.html.twig', [
             'breadcrumb' => $breadcrumb,
             'chapter' => $chapter,

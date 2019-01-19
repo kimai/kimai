@@ -33,7 +33,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertHasDataTable($client);
 
         $result = $client->getCrawler()->filter('div.breadcrumb div.box-tools div.btn-group a.btn');
-        $this->assertEquals(3, count($result));
+        $this->assertEquals(4, count($result));
 
         foreach ($result as $item) {
             $this->assertEquals('btn btn-default', $item->getAttribute('class'));
@@ -69,6 +69,44 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertHasDataTable($client);
 
         // TODO more assertions
+    }
+
+    public function testExportAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $fixture = new TimesheetFixtures();
+        $fixture->setAmount(7);
+        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setStartDate(new \DateTime('-10 days'));
+        $this->importFixture($em, $fixture);
+        $fixture = new TimesheetFixtures();
+        $fixture->setAmount(3);
+        $fixture->setUser($this->getUserByRole($em, User::ROLE_TEAMLEAD));
+        $fixture->setStartDate(new \DateTime('-10 days'));
+        $this->importFixture($em, $fixture);
+
+        $this->request($client, '/team/timesheet/');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form.navbar-form')->form();
+        $form->getFormNode()->setAttribute('action', $this->createUrl('/team/timesheet/export'));
+        $client->submit($form, [
+            'state' => 1,
+            'pageSize' => 25,
+            'begin' => (new \DateTime('-10 days'))->format('Y-m-d'),
+            'end' => (new \DateTime())->format('Y-m-d'),
+            'customer' => null,
+        ]);
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $node = $client->getCrawler()->filter('body');
+        $this->assertEquals('invoice_print', $node->getNode(0)->getAttribute('class'));
+
+        $result = $node->filter('section.invoice table.table tbody tr');
+        $this->assertEquals(10, count($result));
     }
 
     public function testCreateAction()

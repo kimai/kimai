@@ -39,6 +39,7 @@ class UserRepository extends AbstractRepository implements UserLoaderInterface
 
         return parent::findOneBy($criteria, $orderBy);
     }
+
     /**
      * @return int
      */
