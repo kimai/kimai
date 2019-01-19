@@ -95,6 +95,7 @@ class ProjectRepository extends AbstractRepository
         $query->setHiddenEntity($entity);
         $query->setCustomer($customer);
         $query->setResultType(ProjectQuery::RESULT_TYPE_QUERYBUILDER);
+        $query->setOrderBy('name');
 
         return $this->findByQuery($query);
     }
