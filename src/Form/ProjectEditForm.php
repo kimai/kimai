@@ -17,7 +17,6 @@ use App\Repository\CustomerRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -37,8 +36,11 @@ class ProjectEditForm extends AbstractType
         $entry = $options['data'];
 
         $customer = null;
+        $currency = false;
+
         if ($entry->getId() !== null) {
             $customer = $entry->getCustomer();
+            $currency = $customer->getCurrency();
         }
 
         $builder
@@ -59,18 +61,20 @@ class ProjectEditForm extends AbstractType
                     return $repo->builderForEntityType($customer);
                 },
             ])
-            ->add('fixedRate', NumberType::class, [
+            ->add('fixedRate', MoneyType::class, [
                 'label' => 'label.fixed_rate',
                 'required' => false,
+                'currency' => $currency,
             ])
-            ->add('hourlyRate', NumberType::class, [
+            ->add('hourlyRate', MoneyType::class, [
                 'label' => 'label.hourly_rate',
                 'required' => false,
+                'currency' => $currency,
             ])
             ->add('budget', MoneyType::class, [
                 'label' => 'label.budget',
-                'currency' => $customer ? $customer->getCurrency() : $builder->getOption('currency'),
                 'required' => false,
+                'currency' => $currency,
             ])
             ->add('visible', YesNoType::class, [
                 'label' => 'label.visible',

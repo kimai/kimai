@@ -92,6 +92,7 @@ class UserController extends AbstractController
     public function createAction(Request $request)
     {
         $user = new User();
+        $user->setEnabled(true);
         $editForm = $this->createEditForm($user);
 
         $editForm->handleRequest($request);

@@ -236,13 +236,11 @@ class ProjectControllerTest extends ControllerBaseTest
                     'project_edit_form' => [
                         'name' => '',
                         'customer' => 0,
-                        'visible' => 3,
                     ]
                 ],
                 [
                     '#project_edit_form_name',
                     '#project_edit_form_customer',
-                    '#project_edit_form_visible',
                 ]
             ],
         ];

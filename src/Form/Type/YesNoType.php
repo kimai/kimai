@@ -10,7 +10,7 @@
 namespace App\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -24,9 +24,9 @@ class YesNoType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'choices' => ['yes' => true, 'no' => false],
-            'multiple' => false,
-            'expanded' => true,
+            'value' => true,
+            'false_values' => [null, 0, false],
+            'required' => false,
         ]);
     }
 
@@ -35,6 +35,6 @@ class YesNoType extends AbstractType
      */
     public function getParent()
     {
-        return ChoiceType::class;
+        return CheckboxType::class;
     }
 }

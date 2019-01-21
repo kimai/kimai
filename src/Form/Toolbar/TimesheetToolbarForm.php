@@ -40,6 +40,8 @@ class TimesheetToolbarForm extends AbstractToolbarForm
     {
         $builder->add('state', ChoiceType::class, [
             'label' => 'label.entryState',
+            'required' => false,
+            'placeholder' => null,
             'choices' => [
                 'entryState.all' => TimesheetQuery::STATE_ALL,
                 'entryState.running' => TimesheetQuery::STATE_RUNNING,

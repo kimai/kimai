@@ -20,7 +20,7 @@ use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -67,6 +67,7 @@ class TimesheetEditForm extends AbstractType
         $activity = null;
         $project = null;
         $customer = null;
+        $currency = false;
         $end = null;
 
         if (isset($options['data'])) {
@@ -75,10 +76,14 @@ class TimesheetEditForm extends AbstractType
 
             $activity = $entry->getActivity();
             $project = $entry->getProject();
-            $customer = null === $entry->getProject() ? null : $entry->getProject()->getCustomer();
+            $customer = null === $project ? null : $project->getCustomer();
 
             if (null === $project && null !== $activity) {
                 $project = $activity->getProject();
+            }
+
+            if (null !== $customer) {
+                $currency = $customer->getCurrency();
             }
 
             $end = $entry->getEnd();
@@ -124,10 +129,12 @@ class TimesheetEditForm extends AbstractType
                     },
                     'data' => $customer ? $customer : '',
                     'required' => false,
+                    'placeholder' => null === $customer ? '' : null,
                     'mapped' => false,
-                    'attr' => [
-                        'data-related-select' => $this->getBlockPrefix() . '_project',
-                        'data-api-url' => ['get_projects', ['customer' => '-s-']],
+                    'api_data' => [
+                        'select' => 'project',
+                        'route' => 'get_projects',
+                        'route_params' => ['customer' => '-s-']
                     ],
                 ]);
         } else {
@@ -148,12 +155,13 @@ class TimesheetEditForm extends AbstractType
                     'description' => 'Project ID',
                 ],
                 'required' => true,
-                'query_builder' => function (ProjectRepository $repo) use ($project) {
-                    return $repo->builderForEntityType($project);
+                'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
+                    return $repo->builderForEntityType($project, $customer);
                 },
-                'attr' => [
-                    'data-related-select' => $this->getBlockPrefix() . '_activity',
-                    'data-api-url' => ['get_activities', ['project' => '-s-']],
+                'api_data' => [
+                    'select' => 'activity',
+                    'route' => 'get_activities',
+                    'route_params' => ['project' => '-s-']
                 ],
             ]));
 
@@ -164,8 +172,8 @@ class TimesheetEditForm extends AbstractType
                     'type' => 'integer',
                     'description' => 'Activity ID',
                 ],
-                'query_builder' => function (ActivityRepository $repo) use ($activity) {
-                    return $repo->builderForEntityType($activity);
+                'query_builder' => function (ActivityRepository $repo) use ($activity, $project) {
+                    return $repo->builderForEntityType($activity, $project);
                 },
             ])
             ->add('description', TextareaType::class, [
@@ -176,13 +184,15 @@ class TimesheetEditForm extends AbstractType
 
         if ($options['include_rate']) {
             $builder
-                ->add('fixedRate', NumberType::class, [
+                ->add('fixedRate', MoneyType::class, [
                     'label' => 'label.fixed_rate',
                     'required' => false,
+                    'currency' => $currency,
                 ])
-                ->add('hourlyRate', NumberType::class, [
+                ->add('hourlyRate', MoneyType::class, [
                     'label' => 'label.hourly_rate',
                     'required' => false,
+                    'currency' => $currency,
                 ]);
         }
 
@@ -198,9 +208,10 @@ class TimesheetEditForm extends AbstractType
                     'query_builder' => function (ProjectRepository $repo) use ($customer) {
                         return $repo->builderForEntityType(null, $customer);
                     },
-                    'attr' => [
-                        'data-related-select' => $this->getBlockPrefix() . '_activity',
-                        'data-api-url' => ['get_activities', ['project' => '-s-']],
+                    'api_data' => [
+                        'select' => 'activity',
+                        'route' => 'get_activities',
+                        'route_params' => ['project' => '-s-']
                     ],
                 ]);
             }

@@ -19,7 +19,7 @@ use App\Form\Type\SkinType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\Range;
@@ -86,13 +86,13 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
             (new UserPreference())
                 ->setName(UserPreference::HOURLY_RATE)
                 ->setValue(0)
-                ->setType(NumberType::class)
+                ->setType(MoneyType::class)
                 ->setEnabled($enableHourlyRate)
                 ->addConstraint(new Range(['min' => 0])),
 
             (new UserPreference())
                 ->setName('language')
-                ->setValue('en') // TODO fetch from services.yaml
+                ->setValue('en')
                 ->setType(LanguageType::class),
 
             (new UserPreference())

@@ -240,13 +240,11 @@ class ActivityControllerTest extends ControllerBaseTest
                     'activity_edit_form' => [
                         'name' => '',
                         'project' => 0,
-                        'visible' => 3,
                     ]
                 ],
                 [
                     '#activity_edit_form_name',
                     '#activity_edit_form_project',
-                    '#activity_edit_form_visible',
                 ]
             ],
         ];
