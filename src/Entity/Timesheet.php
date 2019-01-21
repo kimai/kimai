@@ -25,6 +25,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\TimesheetRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @Assert\Callback("validate")
  */
 class Timesheet
 {
@@ -163,9 +164,9 @@ class Timesheet
     {
         $this->end = $end;
 
-        // FIXME test and then remove it, this should not be neccessary
         if (null === $end) {
             $this->duration = 0;
+            $this->rate = 0;
         }
 
         return $this;
@@ -345,12 +346,8 @@ class Timesheet
     }
 
     /**
-     * These validations are used in places, where we don't use a form yet (like the API).
-     *
      * @param ExecutionContextInterface $context
-     * @param mixed $payload
-     *
-     * @Assert\Callback
+     * @param $payload
      */
     public function validate(ExecutionContextInterface $context, $payload)
     {
@@ -411,5 +408,13 @@ class Timesheet
                 ->setTranslationDomain('validators')
                 ->addViolation();
         }
+
+        if (time() < $this->getBegin()->getTimestamp()) {
+            $context->buildViolation('The begin date cannot be in the future.')
+                ->atPath('begin')
+                ->setTranslationDomain('validators')
+                ->addViolation();
+        }
+
     }
 }
