@@ -18,6 +18,11 @@ bin/console doctrine:migrations:migrate
 There might be version specific tasks that need to be executed before or after these steps, please see below 
 if your updated version is mentioned below.
 
+## [0.7](https://github.com/kevinpapst/kimai2/releases/tag/0.7) (2019-01-21)
+
+The configuration `kimai.theme.active_warning` was deprecated and should be replaced in your local.yaml, 
+[read config docs for more information](https://github.com/kevinpapst/kimai2/blob/master/var/docs/configurations.md#limit-active-entries).
+
 ## [0.6.1](https://github.com/kevinpapst/kimai2/releases/tag/0.6.1) (2018-11-19)
 
 A bugfix release to address database compatibility issues with older MySQL/MariaDB versions.
