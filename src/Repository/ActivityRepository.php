@@ -142,8 +142,13 @@ class ActivityRepository extends AbstractRepository
         $qb->select('a', 'p', 'c')
             ->from(Activity::class, 'a')
             ->leftJoin('a.project', 'p')
-            ->leftJoin('p.customer', 'c')
-            ->orderBy('a.' . $query->getOrderBy(), $query->getOrder());
+            ->leftJoin('p.customer', 'c');
+
+        if ($query->isOrderGlobalsFirst()) {
+            $qb->orderBy('a.project', 'ASC');
+        }
+
+        $qb->addOrderBy('a.' . $query->getOrderBy(), $query->getOrder());
 
         $where = $qb->expr()->andX();
 
@@ -202,11 +207,9 @@ class ActivityRepository extends AbstractRepository
             $qb->setParameter('activity', $entity);
         }
 
-        if ($query->isOrderGlobalsFirst()) {
-            $qb->orderBy('a.project', 'ASC');
+        if ($or->count() > 0) {
+            $qb->andWhere($or);
         }
-
-        $qb->andWhere($or);
 
         return $this->getBaseQueryResult($qb, $query);
     }

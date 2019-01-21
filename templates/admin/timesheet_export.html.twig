@@ -1,0 +1,78 @@
+{% import "macros/widgets.html.twig" as widgets %}
+{% extends 'invoice/layout.html.twig' %}
+
+{% block invoice %}
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="page-header">
+                <span contenteditable="true">
+                    {% if query.begin is not empty and query.end is not empty %}
+                        {% if query.begin|date('m') != query.end|date('m') or query.begin|date('Y') != query.end|date('Y') %}
+                            {{ query.begin|date_short }} - {{ query.end|date_short }}
+                        {% elseif query.end is not empty %}
+                            {{ query.end|month_name|trans }} {{ query.end|date('Y') }}
+                        {% elseif query.begin is not empty %}
+                            {{ query.begin|month_name|trans }} {{ query.begin|date('Y') }}
+                        {% endif %}
+                    {% endif %}
+                    {% if query.user is not empty %}
+                        : {{ widgets.username(query.user) }}
+                    {% endif %}
+                </span>
+            </h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>{{ 'label.date'|trans }}</th>
+                    {% if query.user is empty %}
+                        <th>{{ 'label.username'|trans }}</th>
+                    {% endif %}
+                    <th>{{ 'label.description'|trans }}</th>
+                    <th>{{ 'label.hours'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% set timeWorked = 0 %}
+                {% for entry in entries %}
+                    {% set timeWorked = timeWorked + entry.duration %}
+                    <tr>
+                        <td>{{ entry.begin|date_short }}</td>
+                        {% if query.user is empty %}
+                            <td>{{ widgets.username(entry.user) }}</td>
+                        {% endif %}
+                        <td>
+                            {% if entry.description is not empty %}
+                            <div>
+                                {{ entry.description|desc2html }}
+                            </div>
+                            {% endif %}
+                            <span class="small">
+                                {{ 'label.activity'|trans }}: {{ entry.activity.name }} |
+                                {{ 'label.project'|trans }}: {{ entry.project.name }} |
+                                {{ 'label.customer'|trans }}: {{ entry.project.customer.name }}
+                            </span>
+                        </td>
+                        <td>{{ entry.duration|duration }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th></th>
+                    <th>{{ 'invoice.total_working_time'|trans }}</th>
+                    <th>{{ timeWorked|duration }}</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block print_button %}{% endblock %}

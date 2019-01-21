@@ -10,7 +10,6 @@
 namespace App\Tests\EventSubscriber;
 
 use App\Event\ConfigureAdminMenuEvent;
-use KevinPapst\AdminLTEBundle\Event\SidebarMenuEvent;
 use KevinPapst\AdminLTEBundle\Model\MenuItemModel;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,15 +24,10 @@ class ConfigureAdminMenuEventTest extends TestCase
         $request = new Request();
         $request->setLocale('de');
 
-        $event = new SidebarMenuEvent($request);
         $admin = new MenuItemModel('admin', 'foo', 'bar');
-        $event->addItem($admin);
-        $event->addItem(new MenuItemModel('foo', 'foo', 'bar'));
-
-        $sut = new ConfigureAdminMenuEvent($request, $event);
+        $sut = new ConfigureAdminMenuEvent($request, $admin);
 
         $this->assertEquals($request, $sut->getRequest());
-        $this->assertEquals($event, $sut->getMenu());
         $this->assertEquals($admin, $sut->getAdminMenu());
     }
 }

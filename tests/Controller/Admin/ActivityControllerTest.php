@@ -44,12 +44,20 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertNull($form->get('activity_edit_form[create_more]')->getValue());
         $client->submit($form, [
             'activity_edit_form' => [
-                'name' => 'Test 2',
+                'name' => 'An AcTiVitY Name',
+                'project' => '1',
             ]
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
         $client->followRedirect();
         $this->assertHasDataTable($client);
+
+        $this->request($client, '/admin/activity/2/edit');
+        $editForm = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
+        $this->assertEquals('An AcTiVitY Name', $editForm->get('activity_edit_form[name]')->getValue());
+        // make sure customer and project are pre-selected for none global activities
+        $this->assertEquals('1', $editForm->get('activity_edit_form[project]')->getValue());
+        $this->assertEquals('1', $editForm->get('activity_edit_form[customer]')->getValue());
     }
 
     public function testCreateActionWithCreateMore()
@@ -101,6 +109,9 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/activity/1/edit');
         $editForm = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
         $this->assertEquals('Test 2', $editForm->get('activity_edit_form[name]')->getValue());
+        // make sure no customer or project is pre-selected for global activities
+        $this->assertEquals('', $editForm->get('activity_edit_form[customer]')->getValue());
+        $this->assertEquals('', $editForm->get('activity_edit_form[project]')->getValue());
     }
 
     public function testDeleteAction()

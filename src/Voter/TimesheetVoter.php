@@ -23,6 +23,7 @@ class TimesheetVoter extends AbstractVoter
     public const STOP = 'stop';
     public const EDIT = 'edit';
     public const DELETE = 'delete';
+    public const EXPORT = 'export';
     public const VIEW_RATE = 'view_rate';
     public const EDIT_RATE = 'edit_rate';
 
@@ -34,6 +35,7 @@ class TimesheetVoter extends AbstractVoter
         self::STOP,
         self::EDIT,
         self::DELETE,
+        self::EXPORT,
         self::VIEW_RATE,
         self::EDIT_RATE,
     ];
@@ -89,6 +91,7 @@ class TimesheetVoter extends AbstractVoter
             case self::STOP:
             case self::EDIT:
             case self::DELETE:
+            case self::EXPORT:
                 $permission .= $attribute;
                 break;
 

@@ -10,23 +10,48 @@
 namespace App\Event;
 
 use KevinPapst\AdminLTEBundle\Model\MenuItemModel;
+use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The ConfigureAdminMenuEvent is used for populating the administration navigation.
  */
-class ConfigureAdminMenuEvent extends ConfigureMenuEvent
+class ConfigureAdminMenuEvent extends Event
 {
     public const CONFIGURE = 'app.admin_menu_configure';
 
     /**
-     * This function will either return a MenuItem or null.
-     *
-     * In case this returns null, the user has not the ROLE_ADMIN.
-     *
-     * @return MenuItemModel|null
+     * @var Request
+     */
+    private $request;
+    /**
+     * @var MenuItemModel
+     */
+    private $menu;
+
+    /**
+     * @param Request $request
+     * @param MenuItemModel $menu
+     */
+    public function __construct(Request $request, MenuItemModel $menu)
+    {
+        $this->request = $request;
+        $this->menu = $menu;
+    }
+
+    /**
+     * @return Request
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * @return MenuItemModel
      */
     public function getAdminMenu()
     {
-        return $this->getMenu()->getRootItem('admin');
+        return $this->menu;
     }
 }
