@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Repository\TimesheetRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -22,24 +23,24 @@ use Symfony\Component\HttpFoundation\Response;
 trait TimesheetControllerTrait
 {
     /**
-     * @var bool
+     * @var int
      */
-    private $durationOnly = false;
+    private $hardLimit = 1;
 
     /**
-     * @param bool $durationOnly
+     * @param int $hardLimit
      */
-    protected function setDurationMode(bool $durationOnly)
+    protected function setHardLimit(int $hardLimit)
     {
-        $this->durationOnly = $durationOnly;
+        $this->hardLimit = $hardLimit;
     }
 
     /**
-     * @return bool
+     * @return int
      */
-    protected function isDurationOnlyMode()
+    protected function getHardLimit()
     {
-        return $this->durationOnly;
+        return $this->hardLimit;
     }
 
     /**
@@ -169,11 +170,16 @@ trait TimesheetControllerTrait
             }
 
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($entry);
 
-            $entityManager->flush();
+            try {
+                $this->stopActiveEntries($entry->getUser());
+                $entityManager->persist($entry);
+                $entityManager->flush();
 
-            $this->flashSuccess('action.update.success');
+                $this->flashSuccess('action.update.success');
+            } catch (\Exception $ex) {
+                $this->flashError('timesheet.start.error', ['%reason%' => $ex->getMessage()]);
+            }
 
             return $this->redirectToRoute($redirectRoute);
         }
@@ -182,6 +188,17 @@ trait TimesheetControllerTrait
             'entry' => $entry,
             'form' => $createForm->createView(),
         ]);
+    }
+
+    /**
+     * @param User $user
+     * @throws \App\Repository\RepositoryException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    protected function stopActiveEntries(User $user)
+    {
+        $this->getRepository()->stopActiveEntries($user, $this->getHardLimit());
     }
 
     /**

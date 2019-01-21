@@ -118,6 +118,8 @@ class AppExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('kimai.timesheet.rounding', $config['rounding']);
         $container->setParameter('kimai.timesheet.duration_only', $config['duration_only']);
         $container->setParameter('kimai.timesheet.markdown', $config['markdown_content']);
+        $container->setParameter('kimai.timesheet.active_entries.soft_limit', $config['active_entries']['soft_limit']);
+        $container->setParameter('kimai.timesheet.active_entries.hard_limit', $config['active_entries']['hard_limit']);
     }
 
     /**

@@ -36,19 +36,27 @@ class TimesheetEditForm extends AbstractType
      * @var CustomerRepository
      */
     private $customers;
+
     /**
      * @var ProjectRepository
      */
     private $projects;
 
     /**
+     * @var bool
+     */
+    private $durationOnly = false;
+
+    /**
      * @param CustomerRepository $customer
      * @param ProjectRepository $project
+     * @param bool $durationOnly
      */
-    public function __construct(CustomerRepository $customer, ProjectRepository $project)
+    public function __construct(CustomerRepository $customer, ProjectRepository $project, bool $durationOnly)
     {
         $this->customers = $customer;
         $this->projects = $project;
+        $this->durationOnly = $durationOnly;
     }
 
     /**
@@ -238,10 +246,11 @@ class TimesheetEditForm extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'timesheet_edit',
-            'duration_only' => false,
+            'duration_only' => $this->durationOnly,
             'include_user' => false,
             'include_rate' => true,
             'docu_chapter' => 'timesheet',
+            'method' => 'POST',
         ]);
     }
 }

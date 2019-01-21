@@ -18,6 +18,10 @@
                 <source>timesheet.start.error</source>
                 <target>Zeitmessung konnte nicht gestartet werden: %reason%</target>
             </trans-unit>
+            <trans-unit id="timesheet.start.exceeded_limit">
+                <source>timesheet.start.exceeded_limit</source>
+                <target>das Limit aktiver Zeitmessungen wurde erreicht, bitte stoppen Sie zunächst laufen Zeitmessungen</target>
+            </trans-unit>
             <trans-unit id="action.update.success">
                 <source>action.update.success</source>
                 <target>Änderungen erfolgreich gespeichert</target>

@@ -31,15 +31,6 @@ class TimesheetController extends AbstractController
     use TimesheetControllerTrait;
 
     /**
-     * TimesheetController constructor.
-     * @param bool $durationOnly
-     */
-    public function __construct(bool $durationOnly)
-    {
-        $this->setDurationMode($durationOnly);
-    }
-
-    /**
      * @Route(path="/", defaults={"page": 1}, name="admin_timesheet", methods={"GET"})
      * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_timesheet_paginated", methods={"GET"})
      * @Security("is_granted('view_other_timesheet')")
@@ -179,8 +170,6 @@ class TimesheetController extends AbstractController
     {
         return $this->createForm(TimesheetEditForm::class, $entry, [
             'action' => $this->generateUrl('admin_timesheet_create'),
-            'method' => 'POST',
-            'duration_only' => $this->isDurationOnlyMode(),
             'include_rate' => $this->isGranted('edit_rate', $entry),
             'include_user' => true,
         ]);
@@ -198,8 +187,6 @@ class TimesheetController extends AbstractController
                 'id' => $entry->getId(),
                 'page' => $page
             ]),
-            'method' => 'POST',
-            'duration_only' => $this->isDurationOnlyMode(),
             'include_rate' => $this->isGranted('edit_rate', $entry),
             'include_user' => true,
         ]);
