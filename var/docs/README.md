@@ -1,16 +1,18 @@
 # Kimai documentation
 
-Welcome to the official Kimai v2 documentation. 
+This is the official Kimai v2 documentation. 
 
-We know there is a lot missing right now and would appreciate [any help](https://github.com/kevinpapst/kimai2/pulls) in writing. 
-If you need information which is not available right now, [ask us](https://github.com/kevinpapst/kimai2/issues) and we 
-try to add it as soon as possible. 
+Most parts of Kimai should be self-explanatory, but if you miss any information please [let us know](https://github.com/kevinpapst/kimai2/issues) 
+and we will add it as soon as possible. 
 
 ## User manual
 
-For the most parts Kimai usage should be self-explanatory, so we will only cover topics here which were 
-[requested](https://github.com/kevinpapst/kimai2/issues) by the community.
+- [Invoices](invoices.md) - export your data to different formats with customizable templates
+- [Timesheets](timesheet.md) - information about timesheets
+- [User and Security](users.md) - docu for user and security topics, like authentication, registration and roles
 
+## Admins and Developers
+  
 - [Configurations](configurations.md) - intro into the global application configs
     - [Calendar](calendar.md) - the Timesheet calendar view
     - [Dashboard & widgets](dashboard.md) - how to configure widgets and dashboard sections
@@ -19,11 +21,9 @@ For the most parts Kimai usage should be self-explanatory, so we will only cover
 - [Developer](developers.md) - docs about extending Kimai's feature set  
     - [API](developers_api.md) - how to use the JSON API 
     - [Theme settings](theme.md) - theme related settings
-- [FAQ](faq.md) - some answers to frequently asked questions 
 - [Installation](installation.md) - instructions about several installation methods
+    - [Update Kimai](updates.md) - updating an existing Kimai 2 installation to the latest version
     - [Docker](docker.md) - using the built-in Dockerfile for development
     - [Importing data](migration_v1.md) - how to import your timesheets from Kimai v1
-- [Invoices](invoices.md) - export your data to different formats with customizable templates
-- [Timesheets](timesheet.md) - information about timesheets
 - [Translations](translations.md) - all about languages and translations
-- [User and Security](users.md) - docu for user and security topics, like authentication, registration and roles  
+- [FAQ](faq.md) - some answers to frequently asked questions 
