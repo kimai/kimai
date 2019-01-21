@@ -261,6 +261,42 @@ class TimesheetRepository extends AbstractRepository
     }
 
     /**
+     * @param User $user
+     * @param int $limit
+     * @return int
+     * @throws RepositoryException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function stopActiveEntries(User $user, int $hardLimit)
+    {
+        $counter = 0;
+        $activeEntries = $this->getActiveEntries($user);
+
+        // reduce limit by one:
+        // this method is only called when a new entry is started
+        // -> all entries, including the new one must not exceed the $limit
+        $limit = $hardLimit - 1;
+
+        if (count($activeEntries) > $limit) {
+            $i = 1;
+            foreach ($activeEntries as $activeEntry) {
+                if ($i > $limit) {
+                    if ($hardLimit > 1) {
+                        throw new \Exception('timesheet.start.exceeded_limit');
+                    }
+
+                    $this->stopRecording($activeEntry);
+                    $counter++;
+                }
+                $i++;
+            }
+        }
+
+        return $counter;
+    }
+
+    /**
      * @param TimesheetQuery $query
      * @return QueryBuilder|Pagerfanta|array
      */

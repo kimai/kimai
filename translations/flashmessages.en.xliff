@@ -4,19 +4,23 @@
         <body>
             <trans-unit id="timesheet.stop.success">
                 <source>timesheet.stop.success</source>
-                <target>Time-recording was stopped</target>
+                <target>Time recording was stopped</target>
             </trans-unit>
             <trans-unit id="timesheet.stop.error">
                 <source>timesheet.stop.error</source>
-                <target>Time-recording could not be stopped: %reason%</target>
+                <target>Time recording could not be stopped: %reason%</target>
             </trans-unit>
             <trans-unit id="timesheet.start.success">
                 <source>timesheet.start.success</source>
-                <target>Time-recording was started</target>
+                <target>Time recording was started</target>
             </trans-unit>
             <trans-unit id="timesheet.start.error">
                 <source>timesheet.start.error</source>
-                <target>Time-recording could not be started: %reason%</target>
+                <target>Time recording could not be started: %reason%</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.exceeded_limit">
+                <source>timesheet.start.exceeded_limit</source>
+                <target>the limit of active time records has been reached, please stop running time measurements first</target>
             </trans-unit>
             <trans-unit id="action.update.success">
                 <source>action.update.success</source>

@@ -42,13 +42,20 @@ class TimesheetController extends BaseApiController
     protected $viewHandler;
 
     /**
+     * @var int
+     */
+    protected $hardLimit;
+
+    /**
      * @param ViewHandlerInterface $viewHandler
      * @param TimesheetRepository $repository
+     * @param int $hardLimit
      */
-    public function __construct(ViewHandlerInterface $viewHandler, TimesheetRepository $repository)
+    public function __construct(ViewHandlerInterface $viewHandler, TimesheetRepository $repository, int $hardLimit)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
+        $this->hardLimit = $hardLimit;
     }
 
     /**
@@ -161,8 +168,7 @@ class TimesheetController extends BaseApiController
 
         $form = $this->createForm(TimesheetEditForm::class, $timesheet, [
             'csrf_protection' => false,
-            'method' => 'POST',
-            'duration_only' => false,
+            'include_rate' => $this->isGranted('edit_rate', $timesheet),
         ]);
 
         $form->setData($timesheet);
@@ -177,6 +183,21 @@ class TimesheetController extends BaseApiController
                 return new Response('You are not allowed to start this timesheet record', Response::HTTP_BAD_REQUEST);
             }
 
+            if ($form->has('duration')) {
+                $duration = $form->get('duration')->getData();
+                if ($duration > 0) {
+                    /** @var Timesheet $record */
+                    $record = $form->getData();
+                    $end = clone $record->getBegin();
+                    $end->modify('+ ' . $duration . 'seconds');
+                    $record->setEnd($end);
+                }
+            }
+
+            $this->repository->stopActiveEntries(
+                $timesheet->getUser(),
+                $this->hardLimit
+            );
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($timesheet);
             $entityManager->flush();
