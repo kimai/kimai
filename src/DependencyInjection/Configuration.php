@@ -235,7 +235,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->integerNode('active_warning')
                     ->defaultValue(3)
-                    ->setDeprecated('The node "%node%" at path "%path%" is deprecated, please use "active_entries.soft_limit" instead.')
+                    ->setDeprecated('The node "%node%" at path "%path%" is deprecated, please use "kimai.timesheet.active_entries.soft_limit" instead.')
                 ->end()
                 ->scalarNode('box_color')
                     ->defaultValue('green')
