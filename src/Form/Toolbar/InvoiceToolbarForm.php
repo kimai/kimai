@@ -36,7 +36,8 @@ class InvoiceToolbarForm extends AbstractToolbarForm
     protected function addTemplateChoice(FormBuilderInterface $builder)
     {
         $builder->add('template', InvoiceTemplateType::class, [
-            'required' => true
+            'required' => false,
+            'placeholder' => null,
         ]);
     }
 

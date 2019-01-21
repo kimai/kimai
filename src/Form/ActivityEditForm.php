@@ -17,7 +17,7 @@ use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -38,10 +38,12 @@ class ActivityEditForm extends AbstractType
 
         $project = null;
         $customer = null;
+        $currency = false;
 
         if (null !== $entry->getProject()) {
             $project = $entry->getProject();
             $customer = $project->getCustomer();
+            $currency = $customer->getCurrency();
         }
 
         $builder
@@ -62,9 +64,10 @@ class ActivityEditForm extends AbstractType
                 'data' => $customer ? $customer : null,
                 'required' => false,
                 'mapped' => false,
-                'attr' => [
-                    'data-related-select' => $this->getBlockPrefix() . '_project',
-                    'data-api-url' => ['get_projects', ['customer' => '-s-']],
+                'api_data' => [
+                    'select' => 'project',
+                    'route' => 'get_projects',
+                    'route_params' => ['customer' => '-s-']
                 ],
             ])
             ->add('project', ProjectType::class, [
@@ -74,13 +77,15 @@ class ActivityEditForm extends AbstractType
                     return $repo->builderForEntityType($project, $customer);
                 },
             ])
-            ->add('fixedRate', NumberType::class, [
+            ->add('fixedRate', MoneyType::class, [
                 'label' => 'label.fixed_rate',
                 'required' => false,
+                'currency' => $currency,
             ])
-            ->add('hourlyRate', NumberType::class, [
+            ->add('hourlyRate', MoneyType::class, [
                 'label' => 'label.hourly_rate',
                 'required' => false,
+                'currency' => $currency,
             ])
             // boolean
             ->add('visible', YesNoType::class, [

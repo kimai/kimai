@@ -281,7 +281,6 @@ class TimesheetRepository extends AbstractRepository
                 ->setParameter('user', $query->getUser());
         }
 
-
         if (null !== $query->getBegin()) {
             $qb->andWhere('t.begin >= :begin')
                 ->setParameter('begin', $query->getBegin());

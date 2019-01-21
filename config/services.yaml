@@ -93,6 +93,10 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Symfony\Bridge\Doctrine\Form\Type\EntityType }
 
+    App\Form\Extension\SelectWithApiDataExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Bridge\Doctrine\Form\Type\EntityType }
+
     # ================================================================================
     # THEME
     # ================================================================================

@@ -78,10 +78,15 @@ abstract class AbstractToolbarForm extends AbstractType
 
     /**
      * @param FormBuilderInterface $builder
+     * @param null|string $label
      */
-    protected function addVisibilityChoice(FormBuilderInterface $builder)
+    protected function addVisibilityChoice(FormBuilderInterface $builder, ?string $label = null)
     {
-        $builder->add('visibility', VisibilityType::class, []);
+        $builder->add('visibility', VisibilityType::class, [
+            'required' => false,
+            'placeholder' => null,
+            'label' => $label
+        ]);
     }
 
     /**
