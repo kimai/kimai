@@ -9,6 +9,7 @@
 templates/invoice/renderer/.~lock*
 
 /var/data/*.sqlite
+/var/data/*.sqlite-journal
 !/var/data/kimai_test.sqlite
 /var/coverage/
 /var/cache/*
