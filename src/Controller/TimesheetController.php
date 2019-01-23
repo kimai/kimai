@@ -71,7 +71,7 @@ class TimesheetController extends AbstractController
 
         return $this->render('timesheet/index.html.twig', [
             'entries' => $entries,
-            'page' => $page,
+            'page' => $query->getPage(),
             'query' => $query,
             'showFilter' => $form->isSubmitted(),
             'toolbarForm' => $form->createView(),
@@ -88,7 +88,6 @@ class TimesheetController extends AbstractController
     public function exportAction(Request $request)
     {
         $query = new TimesheetQuery();
-        $query->setOrder(TimesheetQuery::ORDER_ASC);
 
         $form = $this->getToolbarForm($query);
         $form->handleRequest($request);

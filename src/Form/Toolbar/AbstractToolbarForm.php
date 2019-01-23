@@ -25,6 +25,7 @@ use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\ProjectQuery;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -212,5 +213,15 @@ abstract class AbstractToolbarForm extends AbstractType
                 ]);
             }
         );
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     */
+    protected function addHiddenPagination(FormBuilderInterface $builder)
+    {
+        $builder->add('page', HiddenType::class, [
+            'empty_data' => 1
+        ]);
     }
 }

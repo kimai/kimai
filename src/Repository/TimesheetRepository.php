@@ -333,7 +333,7 @@ class TimesheetRepository extends AbstractRepository
                 $qb->andWhere('t.end <= :end')
                     ->setParameter('end', $query->getEnd());
             }
-        } elseif (null !== $query->getBegin()) {
+        } elseif (null !== $query->getEnd()) {
             $qb->andWhere('t.begin <= :end')
                 ->setParameter('end', $query->getEnd());
         }

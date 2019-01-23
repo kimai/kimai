@@ -26,6 +26,7 @@ class UserToolbarForm extends AbstractToolbarForm
         $this->addPageSizeChoice($builder);
         $this->addVisibilityChoice($builder, 'label.active');
         $this->addUserRoleChoice($builder);
+        $this->addHiddenPagination($builder);
     }
 
     /**

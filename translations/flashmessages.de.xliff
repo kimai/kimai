@@ -20,7 +20,7 @@
             </trans-unit>
             <trans-unit id="timesheet.start.exceeded_limit">
                 <source>timesheet.start.exceeded_limit</source>
-                <target>das Limit aktiver Zeitmessungen wurde erreicht, bitte stoppen Sie zunächst laufen Zeitmessungen</target>
+                <target>das Limit aktiver Zeitmessungen wurde erreicht, bitte stoppen Sie mindestens eine laufende Zeitmessung.</target>
             </trans-unit>
             <trans-unit id="action.update.success">
                 <source>action.update.success</source>

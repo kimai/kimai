@@ -15,7 +15,6 @@
     {{ widgets.page_actions(actions) }}
 {% endblock %}
 
-
 {% block page_content_class %}{{ parent() }} invoice{% endblock %}
 
 {% block main_before %}
@@ -51,7 +50,7 @@
     {% if is_granted('create_invoice') %}
     <script type="text/javascript">
         $(document).ready(function () {
-            $( "#print-invoice-button" ).click(function() {
+            $("body").on('click', '#print-invoice-button', function() {
                 var prevAction = $( "#invoice-print-form" ).attr('action');
                 $( "#invoice-print-form" ).attr('target', '_blank').attr('action', '{{ path('invoice_print') }}');
                 $( "#invoice-print-form" ).submit();

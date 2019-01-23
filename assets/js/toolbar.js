@@ -6,23 +6,31 @@
  */
 $(document).ready(function () {
 
+    /* Submit the pagination including the toolbar filters */
+    $('body').on('click', 'div.navigation ul.pagination li a', function(event) {
+        var $pager = $(".toolbar form input[name='page']");
+        if ($pager.length === 0) {
+            return;
+        }
+        event.preventDefault();
+        event.stopPropagation();
+        var $urlParts = $(this).attr('href').split('/');
+        var page = $urlParts[$urlParts.length-1];
+        $pager.val(page);
+        $pager.trigger('change');
+        return false;
+    });
+
     $('.toolbar form input').change(function (event) {
         toolbarLoadDataAfterChange();
     });
 
     $('.toolbar form select').change(function (event) {
         switch (event.target.id) {
-            case 'customer':
-                $('.toolbar form select#project').val('');
-                if ($('.toolbar form select#activity').find(':selected').attr('data-project')) {
-                    $('.toolbar form select#activity').val('');
-                }
+            case 'page':
                 break;
-            case 'project':
-                if ($('.toolbar form select#activity').find(':selected').attr('data-project')) {
-                    $('.toolbar form select#activity').val('');
-                }
-                break;
+            default:
+                $('.toolbar form input#page').val(1);
         }
         toolbarLoadDataAfterChange();
     });
