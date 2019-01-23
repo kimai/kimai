@@ -71,7 +71,7 @@ class TimesheetController extends AbstractController
 
         return $this->render('timesheet/index.html.twig', [
             'entries' => $entries,
-            'page' => $page,
+            'page' => $query->getPage(),
             'query' => $query,
             'showFilter' => $form->isSubmitted(),
             'toolbarForm' => $form->createView(),
