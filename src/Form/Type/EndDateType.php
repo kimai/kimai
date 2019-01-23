@@ -29,7 +29,6 @@ class EndDateType extends AbstractType
             'widget' => 'single_text',
             'html5' => false,
             'format' => DateType::HTML5_FORMAT,
-            'empty_data' => (new \DateTime('last day of this month'))->format('Y-M-d')
         ]);
 
         $resolver->setDefault('attr', function (Options $options) {
