@@ -26,7 +26,7 @@ class PageSizeType extends AbstractType
         $resolver->setDefaults([
             'label' => 'label.pageSize',
             'choices' => [10 => 10, 25 => 25, 50 => 50, 75 => 75, 100 => 100],
-            //'attr' => ['class' => 'selectpicker', 'data-live-search' => false, 'data-width' => '100%']
+            'placeholder' => null,
         ]);
     }
 
