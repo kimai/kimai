@@ -39,6 +39,7 @@ class RateCalculator implements CalculatorInterface
     {
         if (null === $record->getEnd()) {
             $record->setRate(0);
+
             return;
         }
 

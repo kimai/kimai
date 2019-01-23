@@ -214,6 +214,7 @@ class TimesheetController extends AbstractController
         if ('calendar' === $request->get('origin')) {
             $route = 'calendar';
         }
+
         return $this->create($request, $route, 'timesheet/edit.html.twig');
     }
 
