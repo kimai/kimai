@@ -27,6 +27,7 @@ class ActivityToolbarForm extends AbstractToolbarForm
         $this->addVisibilityChoice($builder);
         $this->addCustomerChoice($builder);
         $this->addProjectChoice($builder);
+        $this->addHiddenPagination($builder);
     }
 
     /**
