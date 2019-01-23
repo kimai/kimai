@@ -97,11 +97,21 @@ $(function() {
                     method: 'GET',
                     dataType: 'json',
                     success: function(data){
-                        $('#' + targetSelect).find('option').remove().end().find('optgroup').remove().end();
+                        var selectName = '#' + targetSelect;
+                        var $select = $(selectName);
+                        var $emptyOption = $(selectName + ' option[value=""]');
+
+                        $select.find('option').remove().end().find('optgroup').remove().end();
+
+                        if ($emptyOption.length != 0) {
+                            $select.append('<option value="">' + $emptyOption.text() + '</option>');
+                        }
+
                         $.each(data, function(i, obj) {
-                            $('#' + targetSelect).append('<option value="' + obj.id + '">' + obj.name + '</option>');
+                            $select.append('<option value="' + obj.id + '">' + obj.name + '</option>');
                         });
-                        $('#' + targetSelect).trigger('change')
+
+                        $select.trigger('change');
                     }
                 });
             });
