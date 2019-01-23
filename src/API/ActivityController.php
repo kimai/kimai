@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace App\API;
 
-use App\Entity\Activity;
 use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityQuery;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -59,6 +58,9 @@ class ActivityController extends BaseApiController
      * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="Project ID to filter activities. If none is provided, only global activities will be returned.")
      * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter activities (1=visible, 2=hidden, 3=both)")
      * @Rest\QueryParam(name="globals", requirements="true", strict=true, nullable=true, description="Pass 'true' as string to fetch only global activities")
+     * @Rest\QueryParam(name="globalsFirst", requirements="false", strict=true, nullable=true, description="Pass 'false' as string if you don't want the global activities to be listed first")
+     * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order (allowed values: 'ASC', 'DESC')")
+     * @Rest\QueryParam(name="orderBy", requirements="id|name|project", strict=true, nullable=true, description="The field by which results will be ordered (allowed values: 'id', 'name', 'project')")
      *
      * @return Response
      */
@@ -66,10 +68,24 @@ class ActivityController extends BaseApiController
     {
         $query = new ActivityQuery();
         $query->setOrderGlobalsFirst(true)
-            ->setResultType(ActivityQuery::RESULT_TYPE_OBJECTS);
+            ->setResultType(ActivityQuery::RESULT_TYPE_OBJECTS)
+            ->setOrderBy('name')
+        ;
+
+        if (null !== ($order = $paramFetcher->get('order'))) {
+            $query->setOrder($order);
+        }
+
+        if (null !== ($orderBy = $paramFetcher->get('orderBy'))) {
+            $query->setOrderBy($orderBy);
+        }
 
         if (null !== ($globals = $paramFetcher->get('globals'))) {
             $query->setGlobalsOnly(true);
+        }
+
+        if ('false' === ($globalsFirst = $paramFetcher->get('globalsFirst'))) {
+            $query->setOrderGlobalsFirst(false);
         }
 
         if (null !== ($project = $paramFetcher->get('project'))) {

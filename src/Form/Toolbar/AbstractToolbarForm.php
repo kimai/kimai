@@ -10,7 +10,9 @@
 namespace App\Form\Toolbar;
 
 use App\Form\Type\ActivityType;
+use App\Form\Type\BeginDateType;
 use App\Form\Type\CustomerType;
+use App\Form\Type\EndDateType;
 use App\Form\Type\PageSizeType;
 use App\Form\Type\ProjectType;
 use App\Form\Type\UserRoleType;
@@ -23,8 +25,6 @@ use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\ProjectQuery;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -65,6 +65,8 @@ abstract class AbstractToolbarForm extends AbstractType
     {
         $builder->add('customer', CustomerType::class, [
             'required' => false,
+            'project_enabled' => true,
+            'project_visibility' => ProjectQuery::SHOW_BOTH,
             'query_builder' => function (CustomerRepository $repo) {
                 $query = new CustomerQuery();
                 $query->setVisibility(CustomerQuery::SHOW_BOTH); // this field is the reason for the query here
@@ -114,14 +116,8 @@ abstract class AbstractToolbarForm extends AbstractType
      */
     protected function addStartDateChoice(FormBuilderInterface $builder)
     {
-        $builder->add('begin', DateType::class, [
-            'label' => 'label.begin',
-            'widget' => 'single_text',
-            'html5' => false,
+        $builder->add('begin', BeginDateType::class, [
             'required' => false,
-            'format' => DateType::HTML5_FORMAT,
-            'attr' => ['autocomplete' => 'off', 'data-datepicker' => 'on'],
-            'empty_data' => (new \DateTime('first day of this month'))->format('Y-M-d')
         ]);
     }
 
@@ -130,14 +126,8 @@ abstract class AbstractToolbarForm extends AbstractType
      */
     protected function addEndDateChoice(FormBuilderInterface $builder)
     {
-        $builder->add('end', DateType::class, [
-            'label' => 'label.end',
-            'widget' => 'single_text',
-            'html5' => false,
+        $builder->add('end', EndDateType::class, [
             'required' => false,
-            'format' => DateType::HTML5_FORMAT,
-            'attr' => ['autocomplete' => 'off', 'data-datepicker' => 'on'],
-            'empty_data' => (new \DateTime('last day of this month'))->format('Y-M-d')
         ]);
     }
 
@@ -146,10 +136,11 @@ abstract class AbstractToolbarForm extends AbstractType
      */
     protected function addProjectChoice(FormBuilderInterface $builder)
     {
-        $builder->add('project', ChoiceType::class, [
-            'group_by' => null,
+        $builder->add('project', ProjectType::class, [
             'required' => false,
-            'label' => 'label.project',
+            'activity_enabled' => true,
+            'activity_visibility' => ActivityQuery::SHOW_BOTH,
+            'choices' => [],
         ]);
 
         $builder->addEventListener(
@@ -163,6 +154,8 @@ abstract class AbstractToolbarForm extends AbstractType
                 $event->getForm()->add('project', ProjectType::class, [
                     'group_by' => null,
                     'required' => false,
+                    'activity_enabled' => true,
+                    'activity_visibility' => ActivityQuery::SHOW_BOTH,
                     'query_builder' => function (ProjectRepository $repo) use ($data) {
                         $query = new ProjectQuery();
                         $query->setCustomer($data['customer']);

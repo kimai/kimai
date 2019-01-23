@@ -6,11 +6,8 @@
  */
 $(document).ready(function () {
 
-    //$('.navbar-form select').selectpicker({});
-
-    // DateRange - TODO improve me, so users can type without reloading in between
     $('.toolbar form input').change(function (event) {
-        $('.toolbar form').submit();
+        toolbarLoadDataAfterChange();
     });
 
     $('.toolbar form select').change(function (event) {
@@ -27,7 +24,25 @@ $(document).ready(function () {
                 }
                 break;
         }
-        $('.toolbar form').submit();
+        toolbarLoadDataAfterChange();
     });
+
+    function toolbarLoadDataAfterChange()
+    {
+        var $form = $('.toolbar form');
+        $.ajax({
+            url: $form.attr('action'),
+            type: $form.attr('method'),
+            data: $form.serialize(),
+            success: function(html) {
+                $('section.content').replaceWith(
+                    $(html).find('section.content')
+                );
+            },
+            error: function(xhr, err) {
+                $form.submit();
+            }
+        });
+    }
 
 });

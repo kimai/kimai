@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace App\API;
 
-use App\Entity\Customer;
 use App\Repository\CustomerRepository;
 use App\Repository\Query\CustomerQuery;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -57,13 +56,26 @@ class CustomerController extends BaseApiController
      *      @SWG\Schema(ref="#/definitions/CustomerCollection"),
      * )
      * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter activities (1=visible, 2=hidden, 3=both)")
+     * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order (allowed values: 'ASC', 'DESC')")
+     * @Rest\QueryParam(name="orderBy", requirements="id|name", strict=true, nullable=true, description="The field by which results will be ordered (allowed values: 'id', 'name')")
      *
      * @return Response
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher)
     {
         $query = new CustomerQuery();
-        $query->setResultType(CustomerQuery::RESULT_TYPE_OBJECTS);
+        $query
+            ->setResultType(CustomerQuery::RESULT_TYPE_OBJECTS)
+            ->setOrderBy('name')
+        ;
+
+        if (null !== ($order = $paramFetcher->get('order'))) {
+            $query->setOrder($order);
+        }
+
+        if (null !== ($orderBy = $paramFetcher->get('orderBy'))) {
+            $query->setOrderBy($orderBy);
+        }
 
         if (null !== ($visible = $paramFetcher->get('visible'))) {
             $query->setVisibility($visible);
