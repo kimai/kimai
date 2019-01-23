@@ -66,11 +66,11 @@ class TimesheetEntityTest extends TestCase
         $sut->setActivity('cccccccc');
         $this->assertEquals('cccccccc', $sut->getActivity());
 
-        $this->assertEquals('#f39c12', $sut->getBorderColor());
+        $this->assertEquals('367fa9', $sut->getBorderColor());
         $sut->setBorderColor('#cccccc');
         $this->assertEquals('#cccccc', $sut->getBorderColor());
 
-        $this->assertEquals('#f39c12', $sut->getBackgroundColor());
+        $this->assertEquals('#3c8dbc', $sut->getBackgroundColor());
         $sut->setBackgroundColor('#ffffff');
         $this->assertEquals('#ffffff', $sut->getBackgroundColor());
 
