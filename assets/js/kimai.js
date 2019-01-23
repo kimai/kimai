@@ -33,7 +33,7 @@ $(function() {
             moment.locale($.kimai.settings['locale']);
 
             // ask before a delete call is executed
-            $('a.btn-trash').click(function (event) {
+            $('body').on('click', 'a.btn-trash', function (event) {
                 return confirm($.kimai.settings['confirmDelete']);
             });
 
@@ -125,16 +125,6 @@ $(function() {
             }, function(){
                 $(this).find('a.anchor').hide();
             });
-
-            /*
-            $('input').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue',
-                increaseArea: '20%' // optional
-            });
-            */
-
-            // $.AdminLTE.pushMenu.expandOnHover();
         },
         pauseRecord: function(selector) {
             $(selector + ' .pull-left i').hover(function () {
