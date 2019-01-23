@@ -189,11 +189,15 @@ class TimesheetController extends AbstractController
      */
     public function editAction(Timesheet $entry, Request $request)
     {
+        $route = 'timesheet';
+
         if (null !== $request->get('page')) {
-            return $this->edit($entry, $request, 'timesheet_paginated', 'timesheet/edit.html.twig');
+            $route = 'timesheet_paginated';
+        } elseif ('calendar' === $request->get('origin')) {
+            $route = 'calendar';
         }
 
-        return $this->edit($entry, $request, 'timesheet', 'timesheet/edit.html.twig');
+        return $this->edit($entry, $request, $route, 'timesheet/edit.html.twig');
     }
 
     /**
@@ -205,7 +209,12 @@ class TimesheetController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        return $this->create($request, 'timesheet', 'timesheet/edit.html.twig');
+        $route = 'timesheet';
+        if ('calendar' === $request->get('origin')) {
+            $route = 'calendar';
+        }
+
+        return $this->create($request, $route, 'timesheet/edit.html.twig');
     }
 
     /**
@@ -233,12 +242,13 @@ class TimesheetController extends AbstractController
 
     /**
      * @param Timesheet $entry
+     * @param string $redirectRoute
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function getCreateForm(Timesheet $entry)
+    protected function getCreateForm(Timesheet $entry, string $redirectRoute)
     {
         return $this->createForm(TimesheetEditForm::class, $entry, [
-            'action' => $this->generateUrl('timesheet_create'),
+            'action' => $this->generateUrl('timesheet_create', ['origin' => $redirectRoute]),
             'include_rate' => $this->isGranted('edit_rate', $entry),
         ]);
     }
@@ -246,14 +256,16 @@ class TimesheetController extends AbstractController
     /**
      * @param Timesheet $entry
      * @param int $page
+     * @param string $redirectRoute
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function getEditForm(Timesheet $entry, $page)
+    protected function getEditForm(Timesheet $entry, $page, string $redirectRoute)
     {
         return $this->createForm(TimesheetEditForm::class, $entry, [
             'action' => $this->generateUrl('timesheet_edit', [
                 'id' => $entry->getId(),
-                'page' => $page
+                'page' => $page,
+                'origin' => $redirectRoute,
             ]),
             'include_rate' => $this->isGranted('edit_rate', $entry),
         ]);
