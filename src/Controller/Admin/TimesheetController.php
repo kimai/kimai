@@ -164,9 +164,10 @@ class TimesheetController extends AbstractController
 
     /**
      * @param Timesheet $entry
+     * @param string $redirectRoute
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function getCreateForm(Timesheet $entry)
+    protected function getCreateForm(Timesheet $entry, string $redirectRoute)
     {
         return $this->createForm(TimesheetEditForm::class, $entry, [
             'action' => $this->generateUrl('admin_timesheet_create'),
@@ -178,14 +179,15 @@ class TimesheetController extends AbstractController
     /**
      * @param Timesheet $entry
      * @param int $page
+     * @param string $redirectRoute
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function getEditForm(Timesheet $entry, $page)
+    protected function getEditForm(Timesheet $entry, $page, string $redirectRoute)
     {
         return $this->createForm(TimesheetEditForm::class, $entry, [
             'action' => $this->generateUrl('admin_timesheet_edit', [
                 'id' => $entry->getId(),
-                'page' => $page
+                'page' => $page,
             ]),
             'include_rate' => $this->isGranted('edit_rate', $entry),
             'include_user' => true,

@@ -91,10 +91,10 @@
                     });
                 },
                 eventClick: function(calEvent, jsEvent, view) {
-                    location.href = '{{ path('timesheet_edit', {id: '-XX-'}) }}'.replace('-XX-', calEvent.id);
+                    location.href = '{{ path('timesheet_edit', {id: '-XX-'}) }}?origin=calendar'.replace('-XX-', calEvent.id);
                 },
                 dayClick: function(date, jsEvent, view) {
-                    location.href = '{{ path('timesheet_create') }}' + '?begin=' + date.format();
+                    location.href = '{{ path('timesheet_create') }}' + '?origin=calendar&begin=' + date.format();
                 },
                 selectable: true,
                 select: function( start, end, jsEvent, view) {

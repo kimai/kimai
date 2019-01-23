@@ -15,7 +15,6 @@ use App\Form\Type\ProjectType;
 use App\Form\Type\YesNoType;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
-use App\Repository\Query\ProjectQuery;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
