@@ -1,6 +1,6 @@
 # Change Log
 
-## [0.7](https://github.com/kevinpapst/kimai2/tree/0.7) (2019-01-21)
+## [0.7](https://github.com/kevinpapst/kimai2/tree/0.7) (2019-01-23)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.6.1...0.7)
 
 **Fixed bugs:**
@@ -14,12 +14,14 @@
 - Possible to use a decimal in hourly rate field? [\#458](https://github.com/kevinpapst/kimai2/issues/458)
 - Invoice Number Generator possibly not compatible  [\#454](https://github.com/kevinpapst/kimai2/issues/454)
 - users can change their role to system-admin [\#440](https://github.com/kevinpapst/kimai2/issues/440)
+- fix wrong include filename in user registration [\#520](https://github.com/kevinpapst/kimai2/pull/520) ([kevinpapst](https://github.com/kevinpapst))
 - fix segmentation fault - rollback composer dependencies [\#463](https://github.com/kevinpapst/kimai2/pull/463) ([kevinpapst](https://github.com/kevinpapst))
 - fixed null project for advanced invoice calculator [\#462](https://github.com/kevinpapst/kimai2/pull/462) ([kevinpapst](https://github.com/kevinpapst))
 - fix the restart timesheet button [\#436](https://github.com/kevinpapst/kimai2/pull/436) ([kevinpapst](https://github.com/kevinpapst))
 
 **Closed issues:**
 
+- Editing from calendar view will return to my times table instead of calendar [\#515](https://github.com/kevinpapst/kimai2/issues/515)
 - Customer List Not Alphabetic [\#499](https://github.com/kevinpapst/kimai2/issues/499)
 - Redirecting when using Kimai on a subdirectory + reverse proxy [\#492](https://github.com/kevinpapst/kimai2/issues/492)
 - sorting of ${entry.X} values [\#487](https://github.com/kevinpapst/kimai2/issues/487)
@@ -32,6 +34,7 @@
 - Can you Add Brazilian Portuguese Translation? I can help it.. [\#444](https://github.com/kevinpapst/kimai2/issues/444)
 - replace all selects with smart-selects and live-search [\#441](https://github.com/kevinpapst/kimai2/issues/441)
 - global variables for reports/invoices [\#438](https://github.com/kevinpapst/kimai2/issues/438)
+- Configuration option: Only one active record for each user [\#427](https://github.com/kevinpapst/kimai2/issues/427)
 - User creating activity and projects [\#393](https://github.com/kevinpapst/kimai2/issues/393)
 - use parsedown-extra for rendering markdown [\#388](https://github.com/kevinpapst/kimai2/issues/388)
 - Configuration option to disable fixed rate and hourly rate from "edit timesheet" [\#330](https://github.com/kevinpapst/kimai2/issues/330)
@@ -41,6 +44,9 @@
 
 **Merged pull requests:**
 
+- pagination without reload while keeping filters applied [\#521](https://github.com/kevinpapst/kimai2/pull/521) ([kevinpapst](https://github.com/kevinpapst))
+- go back to calendar after editing and creation of time-records [\#519](https://github.com/kevinpapst/kimai2/pull/519) ([kevinpapst](https://github.com/kevinpapst))
+- fetch toolbar results without page reload [\#518](https://github.com/kevinpapst/kimai2/pull/518) ([kevinpapst](https://github.com/kevinpapst))
 - Form and theme improvements [\#513](https://github.com/kevinpapst/kimai2/pull/513) ([kevinpapst](https://github.com/kevinpapst))
 - validation for future and negative times [\#512](https://github.com/kevinpapst/kimai2/pull/512) ([kevinpapst](https://github.com/kevinpapst))
 - alphabetical order for selectboxes [\#510](https://github.com/kevinpapst/kimai2/pull/510) ([kevinpapst](https://github.com/kevinpapst))
