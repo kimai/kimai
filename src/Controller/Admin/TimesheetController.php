@@ -78,7 +78,6 @@ class TimesheetController extends AbstractController
     public function exportAction(Request $request)
     {
         $query = new TimesheetQuery();
-        $query->setOrder(TimesheetQuery::ORDER_ASC);
 
         $form = $this->getToolbarForm($query);
         $form->handleRequest($request);
