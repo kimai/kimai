@@ -96,12 +96,14 @@ class TimesheetEditForm extends AbstractType
                 'html5' => false,
                 'format' => 'yyyy-MM-dd HH:mm',
                 'with_seconds' => false,
-                'attr' => ['autocomplete' => 'off', 'data-datetimepicker' => 'on'],
+                'attr' => ['autocomplete' => 'off', 'data-datetimepicker' => 'on', 'placeholder' => 'yyyy-MM-dd HH:mm'],
             ]);
         }
 
         if ($options['duration_only']) {
-            $builder->add('duration', DurationType::class);
+            $builder->add('duration', DurationType::class, [
+                'required' => false,
+            ]);
         } else {
             $builder->add('end', DateTimeType::class, [
                 'label' => 'label.end',
@@ -110,7 +112,7 @@ class TimesheetEditForm extends AbstractType
                 'html5' => false,
                 'format' => 'yyyy-MM-dd HH:mm',
                 'with_seconds' => false,
-                'attr' => ['autocomplete' => 'off', 'data-datetimepicker' => 'on'],
+                'attr' => ['autocomplete' => 'off', 'data-datetimepicker' => 'on', 'placeholder' => 'yyyy-MM-dd HH:mm'],
             ]);
         }
 
@@ -131,11 +133,7 @@ class TimesheetEditForm extends AbstractType
                     'required' => false,
                     'placeholder' => null === $customer ? '' : null,
                     'mapped' => false,
-                    'api_data' => [
-                        'select' => 'project',
-                        'route' => 'get_projects',
-                        'route_params' => ['customer' => '-s-']
-                    ],
+                    'project_enabled' => true,
                 ]);
         } else {
             $projectOptions['group_by'] = null;
@@ -149,25 +147,41 @@ class TimesheetEditForm extends AbstractType
 
         $builder
             ->add('project', ProjectType::class, array_merge($projectOptions, [
+                'activity_enabled' => true,
                 // documentation is for NelmioApiDocBundle
                 'documentation' => [
                     'type' => 'integer',
                     'description' => 'Project ID',
                 ],
-                'required' => true,
                 'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
                     return $repo->builderForEntityType($project, $customer);
                 },
-                'api_data' => [
-                    'select' => 'activity',
-                    'route' => 'get_activities',
-                    'route_params' => ['project' => '-s-']
-                ],
-            ]));
+            ])
+        );
+
+        // replaces the project select after submission, to make sure only projects for the selected customer are displayed
+        $builder->addEventListener(
+            FormEvents::PRE_SUBMIT,
+            function (FormEvent $event) use ($project) {
+                $data = $event->getData();
+                if (!isset($data['customer']) || empty($data['customer'])) {
+                    return;
+                }
+
+                $event->getForm()->add('project', ProjectType::class, [
+                    'activity_enabled' => true,
+                    'group_by' => null,
+                    'query_builder' => function (ProjectRepository $repo) use ($data, $project) {
+                        return $repo->builderForEntityType($project, $data['customer']);
+                    },
+                ]);
+            }
+        );
 
         $builder
             ->add('activity', ActivityType::class, [
                 // documentation is for NelmioApiDocBundle
+                'placeholder' => null,
                 'documentation' => [
                     'type' => 'integer',
                     'description' => 'Activity ID',
@@ -176,6 +190,27 @@ class TimesheetEditForm extends AbstractType
                     return $repo->builderForEntityType($activity, $project);
                 },
             ])
+        ;
+
+        // replaces the activity select after submission, to make sure only activities for the selected project are displayed
+        $builder->addEventListener(
+            FormEvents::PRE_SUBMIT,
+            function (FormEvent $event) use ($activity) {
+                $data = $event->getData();
+                if (!isset($data['project']) || empty($data['project'])) {
+                    return;
+                }
+
+                $event->getForm()->add('activity', ActivityType::class, [
+                    'placeholder' => null,
+                    'query_builder' => function (ActivityRepository $repo) use ($data, $activity) {
+                        return $repo->builderForEntityType($activity, $data['project']);
+                    },
+                ]);
+            }
+        );
+
+        $builder
             ->add('description', TextareaType::class, [
                 'label' => 'label.description',
                 'required' => false,
@@ -195,41 +230,6 @@ class TimesheetEditForm extends AbstractType
                     'currency' => $currency,
                 ]);
         }
-
-        /*
-        $builder->get('customer')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $event) {
-                $customer = $event->getForm()->getData();
-                $event->getForm()->getParent()->add('project', ProjectType::class, [
-                    'required' => true,
-                    'placeholder' => '',
-                    'label' => 'label.project',
-                    'query_builder' => function (ProjectRepository $repo) use ($customer) {
-                        return $repo->builderForEntityType(null, $customer);
-                    },
-                    'api_data' => [
-                        'select' => 'activity',
-                        'route' => 'get_activities',
-                        'route_params' => ['project' => '-s-']
-                    ],
-                ]);
-            }
-        );
-        */
-
-        $builder->get('project')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $event) {
-                $project = $event->getForm()->getData();
-                $event->getForm()->getParent()->add('activity', ActivityType::class, [
-                    'label' => 'label.activity',
-                    'query_builder' => function (ActivityRepository $repo) use ($project) {
-                        return $repo->builderForEntityType(null, $project);
-                    },
-                ]);
-            }
-        );
 
         if ($options['include_user']) {
             $builder->add('user', UserType::class);

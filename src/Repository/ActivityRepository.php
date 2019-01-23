@@ -123,6 +123,7 @@ class ActivityRepository extends AbstractRepository
         $query->setResultType(ActivityQuery::RESULT_TYPE_QUERYBUILDER);
         $query->setProject($project);
         $query->setOrderGlobalsFirst(true);
+        $query->setOrderBy('name');
 
         if (null === $activity && $project === null) {
             $query->setGlobalsOnly(true);

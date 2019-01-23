@@ -161,13 +161,16 @@ class ExtensionsTest extends TestCase
         $sut = $this->getSut($this->localeEn, 'XX');
         $this->assertEquals('02:37 h', $sut->duration($record->getDuration()));
 
-        // test negative duratiobn
+        // test negative duration
         $sut = $this->getSut($this->localeEn, 'XX');
         $this->assertEquals('?', $sut->duration('-1'));
 
         // test zero duration
         $sut = $this->getSut($this->localeEn, 'XX');
         $this->assertEquals('00:00 h', $sut->duration('0'));
+
+        $sut = $this->getSut($this->localeEn, 'XX');
+        $this->assertNull($sut->duration(null));
     }
 
     protected function getTimesheet($seconds)

@@ -94,7 +94,8 @@ class ProjectControllerTest extends APIControllerBaseTest
 
     public function getCollectionTestData()
     {
-        yield ['/api/projects', [], [[true, 1], [false, 3], [false, 1]]];
+        // if you wonder why: SQLite does case-sensitive ordering, so "Title" > "fifth”
+        yield ['/api/projects', [], [[true, 1], [false, 1], [false, 3]]];
         yield ['/api/projects', ['customer' => '1'], [[true, 1], [false, 1]]];
         yield ['/api/projects', ['customer' => '1', 'visible' => VisibilityQuery::SHOW_VISIBLE], [[true, 1], [false, 1]]];
         yield ['/api/projects', ['customer' => '1', 'visible' => VisibilityQuery::SHOW_BOTH], [[true, 1], [false, 1], [false, 1]]];
