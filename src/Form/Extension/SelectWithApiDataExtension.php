@@ -55,8 +55,12 @@ class SelectWithApiDataExtension extends AbstractTypeExtension
 
         $apiData = $options['api_data'];
 
+        if (!is_array($apiData)) {
+            throw new \InvalidArgumentException('Option "api_data" must be an array for form "' . $form->getName() . '"');
+        }
+
         if (!isset($apiData['select'])) {
-            throw new \InvalidArgumentException('Missing "select" option for "api_data" option for form "' . $form->getName() . '"');
+            return;
         }
 
         if (!isset($apiData['route'])) {
@@ -67,8 +71,13 @@ class SelectWithApiDataExtension extends AbstractTypeExtension
             $apiData['route_params'] = [];
         }
 
+        $formPrefix = $form->getParent()->getName();
+        if (!empty($formPrefix)) {
+            $formPrefix .= '_';
+        }
+
         $view->vars['attr'] = array_merge($view->vars['attr'], [
-            'data-related-select' => $form->getParent()->getName() . '_' . $apiData['select'],
+            'data-related-select' => $formPrefix . $apiData['select'],
             'data-api-url' => $this->router->generate($apiData['route'], $apiData['route_params']),
         ]);
     }

@@ -79,13 +79,8 @@ class CalendarController extends AbstractController
             ->setUser($this->getUser())
             ->setState(TimesheetQuery::STATE_ALL)
             ->setResultType(TimesheetQuery::RESULT_TYPE_QUERYBUILDER)
+            ->setEnd($end)
         ;
-
-        // running entries should only occur for the current month, but they won't
-        // be found if we add the end to the query
-        if ((new \DateTime())->getTimestamp() > $end->getTimestamp()) {
-            $query->setEnd($end);
-        }
 
         $repository = $this->getDoctrine()->getRepository(Timesheet::class);
 

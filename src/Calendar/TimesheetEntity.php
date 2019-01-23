@@ -69,8 +69,8 @@ class TimesheetEntity
 
         if (null === $entry->getEnd()) {
             // TODO move these colors to the controller
-            $this->borderColor = '#f39c12';
-            $this->backgroundColor = '#f39c12';
+            $this->borderColor = '367fa9'; //'#f39c12';
+            $this->backgroundColor = '#3c8dbc'; //'#f39c12';
         } else {
             $this->end = $entry->getEnd();
         }

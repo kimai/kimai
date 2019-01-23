@@ -21,6 +21,8 @@ use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -64,11 +66,7 @@ class ActivityEditForm extends AbstractType
                 'data' => $customer ? $customer : null,
                 'required' => false,
                 'mapped' => false,
-                'api_data' => [
-                    'select' => 'project',
-                    'route' => 'get_projects',
-                    'route_params' => ['customer' => '-s-']
-                ],
+                'project_enabled' => true,
             ])
             ->add('project', ProjectType::class, [
                 'label' => 'label.project',
@@ -76,7 +74,27 @@ class ActivityEditForm extends AbstractType
                 'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
                     return $repo->builderForEntityType($project, $customer);
                 },
-            ])
+            ]);
+
+        // replaces the project select after submission, to make sure only projects for the selected customer are displayed
+        $builder->addEventListener(
+            FormEvents::PRE_SUBMIT,
+            function (FormEvent $event) use ($project) {
+                $data = $event->getData();
+                if (!isset($data['customer']) || empty($data['customer'])) {
+                    return;
+                }
+
+                $event->getForm()->add('project', ProjectType::class, [
+                    'group_by' => null,
+                    'query_builder' => function (ProjectRepository $repo) use ($data, $project) {
+                        return $repo->builderForEntityType($project, $data['customer']);
+                    },
+                ]);
+            }
+        );
+
+        $builder
             ->add('fixedRate', MoneyType::class, [
                 'label' => 'label.fixed_rate',
                 'required' => false,
@@ -93,7 +111,7 @@ class ActivityEditForm extends AbstractType
             ])
         ;
 
-        if ($entry->getId() === null) {
+        if (null === $entry->getId()) {
             $builder->add('create_more', CheckboxType::class, [
                 'label' => 'label.create_more',
                 'required' => false,

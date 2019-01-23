@@ -395,26 +395,25 @@ class Timesheet
             }
         }
 
-        if (null === $this->getBegin() && null !== $this->getEnd()) {
-            $context->buildViolation('You must submit a begin date before an end date is added.')
+        if (null === $this->getBegin()) {
+            $context->buildViolation('You must submit a begin date.')
                 ->atPath('begin')
                 ->setTranslationDomain('validators')
                 ->addViolation();
-        }
+        } else {
+            if (null !== $this->getBegin() && null !== $this->getEnd() && $this->getEnd()->getTimestamp() < $this->getBegin()->getTimestamp()) {
+                $context->buildViolation('End date must not be earlier then start date.')
+                    ->atPath('end')
+                    ->setTranslationDomain('validators')
+                    ->addViolation();
+            }
 
-        if (null !== $this->getBegin() && null !== $this->getEnd() && $this->getEnd()->getTimestamp() < $this->getBegin()->getTimestamp()) {
-            $context->buildViolation('End date must not be earlier then start date.')
-                ->atPath('end')
-                ->setTranslationDomain('validators')
-                ->addViolation();
+            if (time() < $this->getBegin()->getTimestamp()) {
+                $context->buildViolation('The begin date cannot be in the future.')
+                    ->atPath('begin')
+                    ->setTranslationDomain('validators')
+                    ->addViolation();
+            }
         }
-
-        if (time() < $this->getBegin()->getTimestamp()) {
-            $context->buildViolation('The begin date cannot be in the future.')
-                ->atPath('begin')
-                ->setTranslationDomain('validators')
-                ->addViolation();
-        }
-
     }
 }
