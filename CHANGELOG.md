@@ -1,6 +1,6 @@
 # Change Log
 
-## [0.7](https://github.com/kevinpapst/kimai2/tree/0.7) (2019-01-23)
+## [0.7](https://github.com/kevinpapst/kimai2/tree/0.7) (2019-01-28)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.6.1...0.7)
 
 **Implemented enhancements:**
