@@ -146,7 +146,10 @@ class TimesheetEditForm extends AbstractType
         }
 
         $builder
-            ->add('project', ProjectType::class, array_merge($projectOptions, [
+            ->add(
+                'project',
+                ProjectType::class,
+                array_merge($projectOptions, [
                 'activity_enabled' => true,
                 // documentation is for NelmioApiDocBundle
                 'documentation' => [

@@ -9,8 +9,6 @@
 
 namespace App\Tests\Controller;
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
-
 /**
  * This test makes sure the login and registration work as expected.
  * They live in the FOSUserBundle and are tested already, but we use a different layout.
