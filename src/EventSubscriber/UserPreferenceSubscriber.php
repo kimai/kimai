@@ -14,6 +14,7 @@ use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
 use App\Event\UserPreferenceEvent;
 use App\Form\Type\CalendarViewType;
+use App\Form\Type\InitialViewType;
 use App\Form\Type\LanguageType;
 use App\Form\Type\SkinType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -124,6 +125,11 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setName('calendar.initial_view')
                 ->setValue(CalendarViewType::DEFAULT_VIEW)
                 ->setType(CalendarViewType::class),
+
+            (new UserPreference())
+                ->setName('login.initial_view')
+                ->setValue(InitialViewType::DEFAULT_VIEW)
+                ->setType(InitialViewType::class),
         ];
     }
 
