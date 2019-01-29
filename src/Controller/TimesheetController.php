@@ -165,11 +165,12 @@ class TimesheetController extends AbstractController
             if (count($errors) > 0) {
                 $this->flashError('timesheet.start.error', ['%reason%' => $errors[0]->getPropertyPath() . ' = ' . $errors[0]->getMessage()]);
             } else {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($entry);
                 $this->stopActiveEntries($user);
 
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($entry);
                 $entityManager->flush();
+
                 $this->flashSuccess('timesheet.start.success');
             }
         } catch (\Exception $ex) {
