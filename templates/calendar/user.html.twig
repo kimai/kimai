@@ -5,7 +5,7 @@
 
 {% block page_title %}{{ 'calendar.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'calendar.subtitle'|trans }}{% endblock %}
-{% block page_actions %}{{ widgets.page_actions({'list': path('timesheet'), 'create': path('timesheet_create')}) }}{% endblock %}
+{% block page_actions %}{{ widgets.page_actions({'list': path('timesheet'), 'create': path('timesheet_create', {'origin': 'calendar'})}) }}{% endblock %}
 
 {% block main %}
     <div class="row">

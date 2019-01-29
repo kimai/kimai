@@ -194,10 +194,13 @@ class TimesheetController extends BaseApiController
                 }
             }
 
-            $this->repository->stopActiveEntries(
-                $timesheet->getUser(),
-                $this->hardLimit
-            );
+            if (null === $timesheet->getEnd()) {
+                $this->repository->stopActiveEntries(
+                    $timesheet->getUser(),
+                    $this->hardLimit
+                );
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($timesheet);
             $entityManager->flush();
