@@ -1,0 +1,9 @@
+
+.drp-calendar {
+    .calendar-table {
+        td.today:not(.active) {
+            background-color: lighten(#357ebd, 40);
+            color: #357ebd;
+        }
+    }
+}
