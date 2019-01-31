@@ -98,8 +98,8 @@ See below in `Template variables` to find out which variables you can use in you
 
 ## Template variables
 
-Be aware, that the following list of variables is onl working for the "document" based formats, but NOT for twig templates!
-As Twig templates are rendering active, its up to the developer to calculate what is needed. 
+Be aware, that the following list of variables is only working for the "document" based formats, but NOT for twig templates!
+As twig templates are rendered actively, it is up to the developer to calculate what is needed.  
 
 ### Global variables 
 
