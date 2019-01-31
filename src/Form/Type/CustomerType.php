@@ -11,8 +11,10 @@ namespace App\Form\Type;
 
 use App\Entity\Customer;
 use App\Repository\CustomerRepository;
+use App\Repository\Query\ProjectQuery;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -32,8 +34,21 @@ class CustomerType extends AbstractType
             'query_builder' => function (CustomerRepository $repo) {
                 return $repo->builderForEntityType(null);
             },
-            //'attr' => ['class' => 'selectpicker', 'data-size' => 10, 'data-live-search' => true, 'data-width' => '100%']
+            'project_enabled' => false,
+            'project_visibility' => ProjectQuery::SHOW_VISIBLE,
         ]);
+
+        $resolver->setDefault('api_data', function (Options $options) {
+            if (true === $options['project_enabled']) {
+                return [
+                    'select' => 'project',
+                    'route' => 'get_projects',
+                    'route_params' => ['customer' => '-s-', 'orderBy' => 'name', 'visible' => $options['project_visibility']],
+                ];
+            }
+
+            return [];
+        });
     }
 
     /**

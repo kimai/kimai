@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace App\API;
 
-use App\Entity\Project;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -58,6 +57,8 @@ class ProjectController extends BaseApiController
      * )
      * @Rest\QueryParam(name="customer", requirements="\d+", strict=true, nullable=true, description="Customer ID to filter projects")
      * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter projects (1=visible, 2=hidden, 3=both)")
+     * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order (allowed values: 'ASC', 'DESC')")
+     * @Rest\QueryParam(name="orderBy", requirements="id|name", strict=true, nullable=true, description="The field by which results will be ordered (allowed values: 'id', 'name')")
      *
      * @param ParamFetcherInterface $paramFetcher
      * @return Response
@@ -65,7 +66,18 @@ class ProjectController extends BaseApiController
     public function cgetAction(ParamFetcherInterface $paramFetcher)
     {
         $query = new ProjectQuery();
-        $query->setResultType(ProjectQuery::RESULT_TYPE_OBJECTS);
+        $query
+            ->setResultType(ProjectQuery::RESULT_TYPE_OBJECTS)
+            ->setOrderBy('name')
+        ;
+
+        if (null !== ($order = $paramFetcher->get('order'))) {
+            $query->setOrder($order);
+        }
+
+        if (null !== ($orderBy = $paramFetcher->get('orderBy'))) {
+            $query->setOrderBy($orderBy);
+        }
 
         if (null !== ($customer = $paramFetcher->get('customer'))) {
             $query->setCustomer($customer);

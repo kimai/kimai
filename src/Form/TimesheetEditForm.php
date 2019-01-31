@@ -20,7 +20,7 @@ use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -36,19 +36,27 @@ class TimesheetEditForm extends AbstractType
      * @var CustomerRepository
      */
     private $customers;
+
     /**
      * @var ProjectRepository
      */
     private $projects;
 
     /**
+     * @var bool
+     */
+    private $durationOnly = false;
+
+    /**
      * @param CustomerRepository $customer
      * @param ProjectRepository $project
+     * @param bool $durationOnly
      */
-    public function __construct(CustomerRepository $customer, ProjectRepository $project)
+    public function __construct(CustomerRepository $customer, ProjectRepository $project, bool $durationOnly)
     {
         $this->customers = $customer;
         $this->projects = $project;
+        $this->durationOnly = $durationOnly;
     }
 
     /**
@@ -59,6 +67,7 @@ class TimesheetEditForm extends AbstractType
         $activity = null;
         $project = null;
         $customer = null;
+        $currency = false;
         $end = null;
 
         if (isset($options['data'])) {
@@ -67,10 +76,14 @@ class TimesheetEditForm extends AbstractType
 
             $activity = $entry->getActivity();
             $project = $entry->getProject();
-            $customer = null === $entry->getProject() ? null : $entry->getProject()->getCustomer();
+            $customer = null === $project ? null : $project->getCustomer();
 
             if (null === $project && null !== $activity) {
                 $project = $activity->getProject();
+            }
+
+            if (null !== $customer) {
+                $currency = $customer->getCurrency();
             }
 
             $end = $entry->getEnd();
@@ -83,12 +96,14 @@ class TimesheetEditForm extends AbstractType
                 'html5' => false,
                 'format' => 'yyyy-MM-dd HH:mm',
                 'with_seconds' => false,
-                'attr' => ['autocomplete' => 'off', 'data-datetimepicker' => 'on'],
+                'attr' => ['autocomplete' => 'off', 'data-datetimepicker' => 'on', 'placeholder' => 'yyyy-MM-dd HH:mm'],
             ]);
         }
 
         if ($options['duration_only']) {
-            $builder->add('duration', DurationType::class);
+            $builder->add('duration', DurationType::class, [
+                'required' => false,
+            ]);
         } else {
             $builder->add('end', DateTimeType::class, [
                 'label' => 'label.end',
@@ -97,7 +112,7 @@ class TimesheetEditForm extends AbstractType
                 'html5' => false,
                 'format' => 'yyyy-MM-dd HH:mm',
                 'with_seconds' => false,
-                'attr' => ['autocomplete' => 'off', 'data-datetimepicker' => 'on'],
+                'attr' => ['autocomplete' => 'off', 'data-datetimepicker' => 'on', 'placeholder' => 'yyyy-MM-dd HH:mm'],
             ]);
         }
 
@@ -116,11 +131,9 @@ class TimesheetEditForm extends AbstractType
                     },
                     'data' => $customer ? $customer : '',
                     'required' => false,
+                    'placeholder' => null === $customer ? '' : null,
                     'mapped' => false,
-                    'attr' => [
-                        'data-related-select' => $this->getBlockPrefix() . '_project',
-                        'data-api-url' => ['get_projects', ['customer' => '-s-']],
-                    ],
+                    'project_enabled' => true,
                 ]);
         } else {
             $projectOptions['group_by'] = null;
@@ -133,33 +146,74 @@ class TimesheetEditForm extends AbstractType
         }
 
         $builder
-            ->add('project', ProjectType::class, array_merge($projectOptions, [
+            ->add(
+                'project',
+                ProjectType::class,
+                array_merge($projectOptions, [
+                'activity_enabled' => true,
                 // documentation is for NelmioApiDocBundle
                 'documentation' => [
                     'type' => 'integer',
                     'description' => 'Project ID',
                 ],
-                'required' => true,
-                'query_builder' => function (ProjectRepository $repo) use ($project) {
-                    return $repo->builderForEntityType($project);
+                'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
+                    return $repo->builderForEntityType($project, $customer);
                 },
-                'attr' => [
-                    'data-related-select' => $this->getBlockPrefix() . '_activity',
-                    'data-api-url' => ['get_activities', ['project' => '-s-']],
-                ],
-            ]));
+            ])
+        );
+
+        // replaces the project select after submission, to make sure only projects for the selected customer are displayed
+        $builder->addEventListener(
+            FormEvents::PRE_SUBMIT,
+            function (FormEvent $event) use ($project) {
+                $data = $event->getData();
+                if (!isset($data['customer']) || empty($data['customer'])) {
+                    return;
+                }
+
+                $event->getForm()->add('project', ProjectType::class, [
+                    'activity_enabled' => true,
+                    'group_by' => null,
+                    'query_builder' => function (ProjectRepository $repo) use ($data, $project) {
+                        return $repo->builderForEntityType($project, $data['customer']);
+                    },
+                ]);
+            }
+        );
 
         $builder
             ->add('activity', ActivityType::class, [
                 // documentation is for NelmioApiDocBundle
+                'placeholder' => null,
                 'documentation' => [
                     'type' => 'integer',
                     'description' => 'Activity ID',
                 ],
-                'query_builder' => function (ActivityRepository $repo) use ($activity) {
-                    return $repo->builderForEntityType($activity);
+                'query_builder' => function (ActivityRepository $repo) use ($activity, $project) {
+                    return $repo->builderForEntityType($activity, $project);
                 },
             ])
+        ;
+
+        // replaces the activity select after submission, to make sure only activities for the selected project are displayed
+        $builder->addEventListener(
+            FormEvents::PRE_SUBMIT,
+            function (FormEvent $event) use ($activity) {
+                $data = $event->getData();
+                if (!isset($data['project']) || empty($data['project'])) {
+                    return;
+                }
+
+                $event->getForm()->add('activity', ActivityType::class, [
+                    'placeholder' => null,
+                    'query_builder' => function (ActivityRepository $repo) use ($data, $activity) {
+                        return $repo->builderForEntityType($activity, $data['project']);
+                    },
+                ]);
+            }
+        );
+
+        $builder
             ->add('description', TextareaType::class, [
                 'label' => 'label.description',
                 'required' => false,
@@ -168,49 +222,17 @@ class TimesheetEditForm extends AbstractType
 
         if ($options['include_rate']) {
             $builder
-                ->add('fixedRate', NumberType::class, [
+                ->add('fixedRate', MoneyType::class, [
                     'label' => 'label.fixed_rate',
                     'required' => false,
+                    'currency' => $currency,
                 ])
-                ->add('hourlyRate', NumberType::class, [
+                ->add('hourlyRate', MoneyType::class, [
                     'label' => 'label.hourly_rate',
                     'required' => false,
+                    'currency' => $currency,
                 ]);
         }
-
-        /*
-        $builder->get('customer')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $event) {
-                $customer = $event->getForm()->getData();
-                $event->getForm()->getParent()->add('project', ProjectType::class, [
-                    'required' => true,
-                    'placeholder' => '',
-                    'label' => 'label.project',
-                    'query_builder' => function (ProjectRepository $repo) use ($customer) {
-                        return $repo->builderForEntityType(null, $customer);
-                    },
-                    'attr' => [
-                        'data-related-select' => $this->getBlockPrefix() . '_activity',
-                        'data-api-url' => ['get_activities', ['project' => '-s-']],
-                    ],
-                ]);
-            }
-        );
-        */
-
-        $builder->get('project')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $event) {
-                $project = $event->getForm()->getData();
-                $event->getForm()->getParent()->add('activity', ActivityType::class, [
-                    'label' => 'label.activity',
-                    'query_builder' => function (ActivityRepository $repo) use ($project) {
-                        return $repo->builderForEntityType(null, $project);
-                    },
-                ]);
-            }
-        );
 
         if ($options['include_user']) {
             $builder->add('user', UserType::class);
@@ -227,10 +249,11 @@ class TimesheetEditForm extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'timesheet_edit',
-            'duration_only' => false,
+            'duration_only' => $this->durationOnly,
             'include_user' => false,
             'include_rate' => true,
             'docu_chapter' => 'timesheet',
+            'method' => 'POST',
         ]);
     }
 }

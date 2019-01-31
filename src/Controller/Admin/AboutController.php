@@ -62,7 +62,7 @@ class AboutController extends AbstractController
             'open_basedir',
             'post_max_size',
             'sys_temp_dir',
-            'date.timezone'
+            'date.timezone',
         ];
 
         $settings = [];

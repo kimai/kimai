@@ -6,28 +6,51 @@
  */
 $(document).ready(function () {
 
-    //$('.navbar-form select').selectpicker({});
+    /* Submit the pagination including the toolbar filters */
+    $('body').on('click', 'div.navigation ul.pagination li a', function(event) {
+        var $pager = $(".toolbar form input[name='page']");
+        if ($pager.length === 0) {
+            return;
+        }
+        event.preventDefault();
+        event.stopPropagation();
+        var $urlParts = $(this).attr('href').split('/');
+        var page = $urlParts[$urlParts.length-1];
+        $pager.val(page);
+        $pager.trigger('change');
+        return false;
+    });
 
-    // DateRange - TODO improve me, so users can type without reloading in between
     $('.toolbar form input').change(function (event) {
-        $('.toolbar form').submit();
+        toolbarLoadDataAfterChange();
     });
 
     $('.toolbar form select').change(function (event) {
         switch (event.target.id) {
-            case 'customer':
-                $('.toolbar form select#project').val('');
-                if ($('.toolbar form select#activity').find(':selected').attr('data-project')) {
-                    $('.toolbar form select#activity').val('');
-                }
+            case 'page':
                 break;
-            case 'project':
-                if ($('.toolbar form select#activity').find(':selected').attr('data-project')) {
-                    $('.toolbar form select#activity').val('');
-                }
-                break;
+            default:
+                $('.toolbar form input#page').val(1);
         }
-        $('.toolbar form').submit();
+        toolbarLoadDataAfterChange();
     });
+
+    function toolbarLoadDataAfterChange()
+    {
+        var $form = $('.toolbar form');
+        $.ajax({
+            url: $form.attr('action'),
+            type: $form.attr('method'),
+            data: $form.serialize(),
+            success: function(html) {
+                $('section.content').replaceWith(
+                    $(html).find('section.content')
+                );
+            },
+            error: function(xhr, err) {
+                $form.submit();
+            }
+        });
+    }
 
 });

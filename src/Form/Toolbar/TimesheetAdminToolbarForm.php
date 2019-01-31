@@ -29,5 +29,6 @@ class TimesheetAdminToolbarForm extends TimesheetToolbarForm
         $this->addCustomerChoice($builder);
         $this->addProjectChoice($builder);
         $this->addActivityChoice($builder);
+        $this->addHiddenPagination($builder);
     }
 }

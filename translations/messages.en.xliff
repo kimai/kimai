@@ -387,6 +387,10 @@
                 <source>label.calendar.initial_view</source>
                 <target>Initial calendar view</target>
             </trans-unit>
+            <trans-unit id="label.login.initial_view">
+                <source>label.login.initial_view</source>
+                <target>Initial view after login</target>
+            </trans-unit>
             <!-- Options for user-preference label.calendar.initial_view -->
             <trans-unit id="month">
                 <source>month</source>
@@ -399,6 +403,18 @@
             <trans-unit id="agendaDay">
                 <source>agendaDay</source>
                 <target>Day</target>
+            </trans-unit>
+
+            <!--
+              User timesheet calendar
+            -->
+            <trans-unit id="calendar.title">
+                <source>calendar.title</source>
+                <target>Calendar</target>
+            </trans-unit>
+            <trans-unit id="calendar.subtitle">
+                <source>calendar.subtitle</source>
+                <target>View and manage your timesheet data within a calendar</target>
             </trans-unit>
 
             <!--

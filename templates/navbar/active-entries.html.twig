@@ -2,7 +2,7 @@
 <li class="dropdown messages-menu">
     <a href="#" class="dropdown-toggle ddt-large ticktac" data-toggle="dropdown">
         <i class="{{ 'start'|icon }} fa-2x"></i>
-        <span class="label label-{% if entries|length >= kimai_context.active_warning %}danger{% else %}warning{% endif %}">{{ entries|length }}</span>
+        <span class="label label-{% if entries|length > kimai_context.active_warning %}danger{% else %}warning{% endif %}">{{ entries|length }}</span>
     </a>
     <ul class="dropdown-menu">
         <li class="header">

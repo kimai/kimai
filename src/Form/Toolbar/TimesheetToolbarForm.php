@@ -31,6 +31,7 @@ class TimesheetToolbarForm extends AbstractToolbarForm
         $this->addCustomerChoice($builder);
         $this->addProjectChoice($builder);
         $this->addActivityChoice($builder);
+        $this->addHiddenPagination($builder);
     }
 
     /**
@@ -40,12 +41,13 @@ class TimesheetToolbarForm extends AbstractToolbarForm
     {
         $builder->add('state', ChoiceType::class, [
             'label' => 'label.entryState',
+            'required' => false,
+            'placeholder' => null,
             'choices' => [
                 'entryState.all' => TimesheetQuery::STATE_ALL,
                 'entryState.running' => TimesheetQuery::STATE_RUNNING,
                 'entryState.stopped' => TimesheetQuery::STATE_STOPPED
             ],
-            //'attr' => ['class' => 'selectpicker', 'data-live-search' => false, 'data-width' => '100%']
         ]);
     }
 

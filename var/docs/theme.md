@@ -29,15 +29,9 @@ Therefor your feedback is highly welcome, please post your opinion at GitHub.
 
 ## Active entries warning
 
-A small colored warning sign will be shown, if a user has more than 3 active timesheet entries.
+A small colored warning sign will be shown, if a user has more than X active timesheet entries.
 
-You can change this soft limit by setting the config key `kimai.theme.active_warning` in your `local.yaml`:
-
-```yaml
-kimai:
-    theme:
-        active_warning: 2
-```
+The amount `X` is configured in your `local.yaml` with the setting `timesheet.active_entries.soft_limit` (see [configurations.md](configurations.md)).
 
 ## Colors
 
@@ -56,7 +50,7 @@ Possible values are:
 
 ### Fallback color
 
-Whenever a color is required but none is configured, Kimai uses a fallback language from the config key `kimai.theme.box_color`.
+Whenever a color is required but none is configured, Kimai uses a fallback color from the config key `kimai.theme.box_color`.
 
 You can change the default color `green` to any one from the above in your `local.yaml`:
 

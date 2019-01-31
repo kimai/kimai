@@ -66,7 +66,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testPostAction()
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'activity' => 1,
             'project' => 1,

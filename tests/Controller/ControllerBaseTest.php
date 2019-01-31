@@ -210,8 +210,14 @@ abstract class ControllerBaseTest extends WebTestCase
             $this->assertNotNull($field, 'Could not find form field: ' . $name);
             $list = $field->nextAll();
             $this->assertNotNull($list, 'Form field has no validation message: ' . $name);
+
             $validation = $list->filter('li.text-danger');
-            $this->assertGreaterThanOrEqual(1, count($validation), 'Form field has no validation message: ' . $name);
+            if (count($validation) < 1) {
+                // decorated form fields with icon have a different html structure, see kimai-theme.html.twig
+                $classes = $field->parents()->getNode(1)->getAttribute('class');
+                $this->assertContains('has-feedback', $classes, 'Form field has no validation message: ' . $name);
+                $this->assertContains('has-error', $classes, 'Form field has no validation message: ' . $name);
+            }
         }
     }
 

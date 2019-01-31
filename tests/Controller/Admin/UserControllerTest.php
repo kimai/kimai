@@ -132,14 +132,12 @@ class UserControllerTest extends ControllerBaseTest
                         'title' => '34rtwrtewrt',
                         'avatar' => 'asdfawer',
                         'email' => 'ydfbvsdfgs',
-                        'enabled' => '3',
                     ]
                 ],
                 [
                     '#user_create_username',
                     '#user_create_plainPassword_first',
                     '#user_create_email',
-                    '#user_create_enabled',
                 ]
             ],
         ];

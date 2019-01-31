@@ -31,15 +31,6 @@ class TimesheetController extends AbstractController
     use TimesheetControllerTrait;
 
     /**
-     * TimesheetController constructor.
-     * @param bool $durationOnly
-     */
-    public function __construct(bool $durationOnly)
-    {
-        $this->setDurationMode($durationOnly);
-    }
-
-    /**
      * @Route(path="/", defaults={"page": 1}, name="admin_timesheet", methods={"GET"})
      * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_timesheet_paginated", methods={"GET"})
      * @Security("is_granted('view_other_timesheet')")
@@ -71,7 +62,7 @@ class TimesheetController extends AbstractController
 
         return $this->render('admin/timesheet.html.twig', [
             'entries' => $entries,
-            'page' => $page,
+            'page' => $query->getPage(),
             'query' => $query,
             'showFilter' => $form->isSubmitted(),
             'toolbarForm' => $form->createView(),
@@ -87,7 +78,6 @@ class TimesheetController extends AbstractController
     public function exportAction(Request $request)
     {
         $query = new TimesheetQuery();
-        $query->setOrder(TimesheetQuery::ORDER_ASC);
 
         $form = $this->getToolbarForm($query);
         $form->handleRequest($request);
@@ -173,14 +163,13 @@ class TimesheetController extends AbstractController
 
     /**
      * @param Timesheet $entry
+     * @param string $redirectRoute
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function getCreateForm(Timesheet $entry)
+    protected function getCreateForm(Timesheet $entry, string $redirectRoute)
     {
         return $this->createForm(TimesheetEditForm::class, $entry, [
             'action' => $this->generateUrl('admin_timesheet_create'),
-            'method' => 'POST',
-            'duration_only' => $this->isDurationOnlyMode(),
             'include_rate' => $this->isGranted('edit_rate', $entry),
             'include_user' => true,
         ]);
@@ -189,17 +178,16 @@ class TimesheetController extends AbstractController
     /**
      * @param Timesheet $entry
      * @param int $page
+     * @param string $redirectRoute
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function getEditForm(Timesheet $entry, $page)
+    protected function getEditForm(Timesheet $entry, $page, string $redirectRoute)
     {
         return $this->createForm(TimesheetEditForm::class, $entry, [
             'action' => $this->generateUrl('admin_timesheet_edit', [
                 'id' => $entry->getId(),
-                'page' => $page
+                'page' => $page,
             ]),
-            'method' => 'POST',
-            'duration_only' => $this->isDurationOnlyMode(),
             'include_rate' => $this->isGranted('edit_rate', $entry),
             'include_user' => true,
         ]);

@@ -33,7 +33,7 @@ $(function() {
             moment.locale($.kimai.settings['locale']);
 
             // ask before a delete call is executed
-            $('a.btn-trash').click(function (event) {
+            $('body').on('click', 'a.btn-trash', function (event) {
                 return confirm($.kimai.settings['confirmDelete']);
             });
 
@@ -97,11 +97,25 @@ $(function() {
                     method: 'GET',
                     dataType: 'json',
                     success: function(data){
-                        $('#' + targetSelect).find('option').remove().end().find('optgroup').remove().end();
+                        var selectName = '#' + targetSelect;
+                        var $select = $(selectName);
+                        var $emptyOption = $(selectName + ' option[value=""]');
+
+                        $select.find('option').remove().end().find('optgroup').remove().end();
+
+                        if ($emptyOption.length != 0) {
+                            $select.append('<option value="">' + $emptyOption.text() + '</option>');
+                        }
+
                         $.each(data, function(i, obj) {
-                            $('#' + targetSelect).append('<option value="' + obj.id + '">' + obj.name + '</option>');
+                            $select.append('<option value="' + obj.id + '">' + obj.name + '</option>');
                         });
-                        $('#' + targetSelect).trigger('change')
+
+                        // if we don't trigger the change, the other selects won't be resetted
+                        $select.trigger('change');
+
+                        // if the beta test kimai.theme.select_type is active, this will tell the selects to refresh
+                        $('.selectpicker').selectpicker('refresh');
                     }
                 });
             });
@@ -115,16 +129,6 @@ $(function() {
             }, function(){
                 $(this).find('a.anchor').hide();
             });
-
-            /*
-            $('input').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue',
-                increaseArea: '20%' // optional
-            });
-            */
-
-            // $.AdminLTE.pushMenu.expandOnHover();
         },
         pauseRecord: function(selector) {
             $(selector + ' .pull-left i').hover(function () {

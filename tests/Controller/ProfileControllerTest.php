@@ -83,7 +83,7 @@ class ProfileControllerTest extends ControllerBaseTest
                 'title' => 'Code Monkey',
                 'avatar' => '/fake/image.jpg',
                 'email' => 'updated@example.com',
-                'enabled' => 0,
+                'enabled' => false,
             ]
         ]);
 

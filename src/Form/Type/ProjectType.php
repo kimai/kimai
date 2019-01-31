@@ -11,8 +11,10 @@ namespace App\Form\Type;
 
 use App\Entity\Project;
 use App\Repository\ProjectRepository;
+use App\Repository\Query\ActivityQuery;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -57,8 +59,21 @@ class ProjectType extends AbstractType
             'query_builder' => function (ProjectRepository $repo) {
                 return $repo->builderForEntityType(null);
             },
-            //'attr' => ['class' => 'selectpicker', 'data-size' => 10, 'data-live-search' => true, 'data-width' => '100%']
+            'activity_enabled' => false,
+            'activity_visibility' => ActivityQuery::SHOW_VISIBLE,
         ]);
+
+        $resolver->setDefault('api_data', function (Options $options) {
+            if (true === $options['activity_enabled']) {
+                return [
+                    'select' => 'activity',
+                    'route' => 'get_activities',
+                    'route_params' => ['project' => '-s-', 'orderBy' => 'name', 'visible' => $options['activity_visibility']],
+                ];
+            }
+
+            return [];
+        });
     }
 
     /**
