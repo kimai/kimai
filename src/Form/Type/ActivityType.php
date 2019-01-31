@@ -75,7 +75,6 @@ class ActivityType extends AbstractType
             'query_builder' => function (ActivityRepository $repo) {
                 return $repo->builderForEntityType();
             },
-            //'attr' => ['class' => 'selectpicker', 'data-size' => 10, 'data-live-search' => true, 'data-width' => '100%']
         ]);
     }
 

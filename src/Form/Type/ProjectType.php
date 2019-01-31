@@ -61,7 +61,6 @@ class ProjectType extends AbstractType
             },
             'activity_enabled' => false,
             'activity_visibility' => ActivityQuery::SHOW_VISIBLE,
-            //'attr' => ['class' => 'selectpicker', 'data-size' => 10, 'data-live-search' => true, 'data-width' => '100%']
         ]);
 
         $resolver->setDefault('api_data', function (Options $options) {

@@ -36,7 +36,6 @@ class CustomerType extends AbstractType
             },
             'project_enabled' => false,
             'project_visibility' => ProjectQuery::SHOW_VISIBLE,
-            //'attr' => ['class' => 'selectpicker', 'data-size' => 10, 'data-live-search' => true, 'data-width' => '100%']
         ]);
 
         $resolver->setDefault('api_data', function (Options $options) {
