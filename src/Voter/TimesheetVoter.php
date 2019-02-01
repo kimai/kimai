@@ -47,7 +47,7 @@ class TimesheetVoter extends AbstractVoter
      */
     protected function supports($attribute, $subject)
     {
-        if (!$subject instanceof Timesheet) {
+        if (!($subject instanceof Timesheet)) {
             return false;
         }
 
@@ -69,10 +69,6 @@ class TimesheetVoter extends AbstractVoter
         $user = $token->getUser();
 
         if (!($user instanceof User)) {
-            return false;
-        }
-
-        if (!($subject instanceof Timesheet)) {
             return false;
         }
 

@@ -38,7 +38,7 @@ class InvoiceTemplateVoter extends AbstractVoter
      */
     protected function supports($attribute, $subject)
     {
-        if (!$subject instanceof InvoiceTemplate) {
+        if (!($subject instanceof InvoiceTemplate)) {
             return false;
         }
 
@@ -63,10 +63,6 @@ class InvoiceTemplateVoter extends AbstractVoter
             return false;
         }
 
-        if ($subject instanceof InvoiceTemplate) {
-            return $this->hasRolePermission($user, $attribute . '_invoice_template');
-        }
-
-        return false;
+        return $this->hasRolePermission($user, $attribute . '_invoice_template');
     }
 }
