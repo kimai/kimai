@@ -1,0 +1,249 @@
+{% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+{% import "macros/toolbar.html.twig" as toolbar %}
+{% import "macros/datatables.html.twig" as tables %}
+
+{% block page_title %}{{ 'export.title'|trans }}{% endblock %}
+{% block page_subtitle %}{{ 'export.subtitle'|trans }}{% endblock %}
+{% block page_actions %}
+    {% set actions = {
+        'filter': '#collapseExport',
+        'fas fa-toggle-off': {'id':'export-toggle-button'}
+    } %}
+    {{ widgets.page_actions(actions) }}
+{% endblock %}
+
+{% block main_before %}
+    {{ toolbar.toolbar(form, 'collapseExport', true) }}
+{% endblock %}
+
+{% block main_after %}
+    <div class="clearfix"></div>
+{% endblock %}
+
+{% block main %}
+
+    {% if entries is empty %}
+        {{ widgets.callout('warning', 'error.no_entries_found') }}
+    {% else %}
+        {#
+        {% set columns = {'date': ''} %}
+
+        {% if not duration_only %}
+            {% set columns = columns|merge({'starttime': 'hidden-xs', 'endtime': 'hidden-xs'}) %}
+        {% endif %}
+
+        {% set columns = columns|merge({
+            'duration': '',
+            'rate': '',
+            'customer': 'hidden-xs hidden-sm',
+            'project': 'hidden-xs hidden-sm',
+            'activity': 'hidden-xs hidden-sm',
+            'username': 'hidden-xs',
+            'description': 'hidden-xs hidden-sm',
+            'actions': 'alwaysVisible',
+        }) %}
+        #}
+        {% set columns = {
+            'date': '',
+            'user': 'hidden-xs hidden-sm',
+            'customer': 'hidden-xs hidden-sm',
+            'project': 'hidden-xs hidden-sm',
+            'activity': 'hidden-xs hidden-sm',
+            'description': 'hidden-xs hidden-sm',
+            'unit_price': '',
+            'duration': '',
+            'total_rate': '',
+            'exported': 'alwaysVisible',
+        } %}
+
+        {% set tableName = 'export' %}
+
+        {{ tables.data_table_header(tableName, columns) }}
+        {% for entry in entries %}
+            {% set currency = entry.project.customer.currency %}
+            {% set duration = entry.duration|duration() %}
+            {% if entry.fixedRate is not null %}
+                {% set rate = entry.fixedRate %}
+                {% set duration = 1 %}
+            {% elseif entry.hourlyRate is not null %}
+                {% set rate = entry.hourlyRate %}
+            {% else %}
+                {% set rate = entry.user.preferenceValue('hourly_rate') %}
+            {% endif %}
+            <tr>
+                <td class="text-nowrap">{{ entry.begin|date_short }}</td>
+                <td class="hidden-xs hidden-sm">{{ widgets.label_user(entry.user) }}</td>
+                <td class="hidden-xs hidden-sm">{{ widgets.label_customer(entry.project.customer) }}</td>
+                <td class="hidden-xs hidden-sm">{{ widgets.label_project(entry.project) }}</td>
+                <td class="hidden-xs hidden-sm">{{ widgets.label_activity(entry.activity) }}</td>
+                <td class="hidden-xs hidden-sm timesheet-description">
+                    {{ entry.description }}
+                </td>
+                <td class="text-nowrap">
+                    {{ rate|money(currency) }}
+                </td>
+                <td class="text-nowrap">
+                    {{ duration }}
+                </td>
+                <td class="text-nowrap">
+                    {{ entry.rate|money(currency) }}
+                </td>
+                <td>
+                {% if is_granted('edit_export', entry) %}
+                    {% if entry.exported %}
+                        <button type="button" class="btn btn-default exportBtn active" data-toggle="button" aria-pressed="true" autocomplete="off"
+                                data-exported-text="{{ 'entryState.exported'|trans }}" data-clean-text="{{ 'entryState.not_exported'|trans }}" data-timesheet="{{ entry.id }}">
+                        {{ 'entryState.exported'|trans }}
+                        </button>
+                    {% else %}
+                        <button type="button" class="btn btn-default exportBtn" data-toggle="button" aria-pressed="false" autocomplete="off"
+                                data-exported-text="{{ 'entryState.exported'|trans }}" data-clean-text="{{ 'entryState.not_exported'|trans }}" data-timesheet="{{ entry.id }}">
+                        {{ 'entryState.not_exported'|trans }}
+                        </button>
+                    {% endif %}
+                {% else %}
+                    {% if entry.exported %}
+                        {{ 'entryState.exported'|trans }}
+                    {% else %}
+                        {{ 'entryState.not_exported'|trans }}
+                    {% endif %}
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        {{ tables.data_table_footer(entries) }}
+
+        {% if is_granted('create_export') %}
+        <div class="row no-print">
+            <div class="col-xs-12">
+                <div class="btn-group pull-right" id="export-buttons" role="group">
+                    {% for button in renderer %}
+                        <button type="button" id="export-{{ button.id }}-button" class="btn btn-success startExportBtn" data-type="{{ button.id }}">
+                            <i class="{{ button.icon|icon }}"></i> {{ ('button.' ~ button.title)|trans }}
+                        </button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+
+        function confirmToggleState()
+        {
+            if ($('#export-toggle-button').hasClass('export-off')) {
+                if (confirm('{{ 'export.clear_all'|trans }}')) {
+                    $('.exportBtn').each(function () {
+                        if ($(this).hasClass('active')) {
+                            $(this).click();
+                        }
+                    });
+                    return true;
+                }
+            } else {
+                if (confirm('{{ 'export.mark_all'|trans }}')) {
+                    $('.exportBtn').each(function () {
+                        if (!$(this).hasClass('active')) {
+                            $(this).click();
+                        }
+                    });
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function updateTimesheetExportState(button, id, exported)
+        {
+            $.ajax({
+                url: '{{ path('patch_timesheet', {id: '-s-'}) }}'.replace('-s-', id),
+                headers: {
+                    'X-AUTH-SESSION': true,
+                    'Content-Type':'application/json'
+                },
+                method: 'PATCH',
+                dataType: 'json',
+                data: JSON.stringify({'exported': exported}),
+                success: function(data) {
+                    if (exported) {
+                        button.button('exported');
+                    } else {
+                        button.button('clean');
+                    }
+                    if ($('select#exported').val() !== '{{ constant('App\\Repository\\Query\\TimesheetQuery::STATE_ALL') }}') {
+                        button.closest('tr').hide('ease', function() {
+                            $(this).remove();
+                            if($(this).closest('table').find('tbody tr:visible').length === 0) {
+                                $('#export-buttons button').prop('disabled', true);
+                            }
+                        });
+                    }
+                }, error: function(jqXHR, textStatus, errorThrown) {
+                    var message = 'An error occured';
+                    if (jqXHR.responseJSON !== undefined) {
+                        console.log(jqXHR);
+                        message = jqXHR.responseJSON.message;
+                        if (jqXHR.responseJSON.errors !== undefined)
+                        {
+                            var errors = jqXHR.responseJSON.errors.errors;
+                            for (var i = 0; i < errors.length; i++) {
+                                message += ' / ' + errors[i];
+                            }
+                        }
+                    }
+                    alert('{{ 'action.update.error'|trans({}, 'flashmessages') }}'.replace('%reason%', message));
+                    button.button('reset');
+                    if (exported) {
+                        button.removeClass('active');
+                    } else {
+                        button.addClass('active');
+
+                    }
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $('body').on('click', '.exportBtn', function() {
+                var button = $(this);
+                var id = button.attr('data-timesheet');
+
+                if (button.hasClass('active')) {
+                    updateTimesheetExportState(button, id, false);
+                } else {
+                    updateTimesheetExportState(button, id, true);
+                }
+            });
+
+            $('#export-toggle-button').on('click', function () {
+                if (!confirmToggleState()) {
+                    return;
+                }
+                if ($(this).hasClass('export-off')) {
+                    $(this).removeClass('export-off');
+                    $(this).html('<i class="fas fa-toggle-off"></i>');
+                } else {
+                    $(this).addClass('export-off');
+                    $(this).html('<i class="fas fa-toggle-on"></i>');
+                }
+            });
+
+            $('body').on('click', '#export-buttons .startExportBtn', function() {
+                $('#type').val($(this).attr('data-type'));
+                var $form = $("#export-form");
+                var prevAction = $form.attr('action');
+                $form.attr('target', '_blank').attr('action', '{{ path('export_data') }}');
+                $form.submit();
+                $('#type').val('');
+                $form.removeAttr('target').attr('action', prevAction);
+            });
+
+        });
+    </script>
+{% endblock %}

@@ -19,6 +19,7 @@ use Twig\TwigFilter;
 class DateExtensions extends \Twig_Extension
 {
     private const FALLBACK_SHORT = 'Y-m-d';
+    private const FALLBACK_TIME = 'm-d H:i';
 
     /**
      * @var array
@@ -49,6 +50,7 @@ class DateExtensions extends \Twig_Extension
         return [
             new TwigFilter('month_name', [$this, 'monthName']),
             new TwigFilter('date_short', [$this, 'dateShort']),
+            new TwigFilter('date_time', [$this, 'dateTime']),
         ];
     }
 
@@ -61,7 +63,6 @@ class DateExtensions extends \Twig_Extension
     }
 
     /**
-     * @param array $context
      * @param DateTime $date
      * @return string
      */
@@ -72,6 +73,22 @@ class DateExtensions extends \Twig_Extension
 
         if (isset($this->dateSettings[$locale]['date_short'])) {
             $format = $this->dateSettings[$locale]['date_short'];
+        }
+
+        return date_format($date, $format);
+    }
+
+    /**
+     * @param DateTime $date
+     * @return string
+     */
+    public function dateTime(DateTime $date)
+    {
+        $locale = $this->getLocale();
+        $format = self::FALLBACK_TIME;
+
+        if (isset($this->dateSettings[$locale]['date_time'])) {
+            $format = $this->dateSettings[$locale]['date_time'];
         }
 
         return date_format($date, $format);

@@ -338,6 +338,12 @@ class TimesheetRepository extends AbstractRepository
                 ->setParameter('end', $query->getEnd());
         }
 
+        if ($query->getExported() === TimesheetQuery::STATE_EXPORTED) {
+            $qb->andWhere('t.exported = :exported')->setParameter('exported', true);
+        } elseif ($query->getExported() === TimesheetQuery::STATE_NOT_EXPORTED) {
+            $qb->andWhere('t.exported = :exported')->setParameter('exported', false);
+        }
+
         if (null !== $query->getActivity()) {
             $qb->andWhere('t.activity = :activity')
                 ->setParameter('activity', $query->getActivity());

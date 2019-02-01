@@ -848,7 +848,7 @@ class KimaiImporterCommand extends Command
      * ["description"]=> NULL
      * ["comment"]=> string(36) "a work description"
      * -- ["commentType"]=> string(1) "0"
-     * -- ["cleared"]=> string(1) "0"
+     * ["cleared"]=> string(1) "0"
      * -- ["location"]=> string(0) ""
      * -- ["trackingNumber"]=> NULL
      * ["rate"]=> string(5) "50.00"
@@ -936,6 +936,7 @@ class KimaiImporterCommand extends Command
                 ->setDuration($duration)
                 ->setActivity($activity)
                 ->setProject($project)
+                ->setExported(intval($oldRecord['cleared']) !== 0)
             ;
 
             if (!$this->validateImport($io, $timesheet)) {

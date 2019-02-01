@@ -167,6 +167,9 @@
     "monolog/monolog": {
         "version": "1.23.0"
     },
+    "mpdf/mpdf": {
+        "version": "v7.1.8"
+    },
     "myclabs/deep-copy": {
         "version": "1.7.0"
     },
@@ -310,6 +313,9 @@
             "version": "4.0",
             "ref": "aaddfdf43cdecd4cf91f992052d76c2cadc04543"
         }
+    },
+    "setasign/fpdi": {
+        "version": "1.6.2"
     },
     "squizlabs/php_codesniffer": {
         "version": "3.2.2"

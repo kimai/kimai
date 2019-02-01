@@ -172,7 +172,8 @@ class Configuration implements ConfigurationInterface
         $node
             ->arrayPrototype()
                 ->children()
-                    ->scalarNode('date_short')->end()
+                    ->scalarNode('date_time')->defaultValue('m-d H:i')->end()
+                    ->scalarNode('date_short')->defaultValue('Y-m-d')->end()
                     ->scalarNode('duration')->end()
                     ->scalarNode('duration_short')->end()
                 ->end()

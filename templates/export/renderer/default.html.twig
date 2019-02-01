@@ -1,0 +1,102 @@
+{% import "macros/widgets.html.twig" as widgets %}
+{% extends 'export/layout.html.twig' %}
+
+{% block export %}
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>
+                {{ query.begin|date_short }} - {{ query.end|date_short }}
+                {% if query.user is not empty %}: {{ widgets.username(query.user) }}{% endif %}
+            </h3>
+        </div>
+    </div>
+
+    {% set columns = [
+        'label.date',
+        'label.begin',
+        'label.end',
+        'label.username',
+        'label.customer',
+        'label.project',
+        'label.activity',
+        'label.description',
+        'label.exported',
+        'label.hourly_rate',
+        'label.fixed_rate',
+        'label.duration',
+        'label.rate',
+    ] %}
+
+    <div class="row">
+        <div class="col-xs-12 table-responsive">
+            <table class="table table-condensed table-bordered">
+                <thead>
+                <tr>
+                    {% for columnTitle in columns %}
+                    <th>{{ columnTitle|trans }}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% set timeWorked = 0 %}
+                {% set rateTotal = 0 %}
+                {% set currency = false %}
+                {% for entry in entries %}
+                    {% set timeWorked = timeWorked + entry.duration %}
+                    {% set rateTotal = rateTotal + entry.rate %}
+                    {% if currency is same as(false) %}
+                        {% set currency = entry.project.customer.currency %}
+                    {% endif %}
+                    {% if currency is not same as(entry.project.customer.currency) %}
+                        {% set currency = null %}
+                    {% endif %}
+                    <tr>
+                        <td class="text-nowrap">{{ entry.begin|date_short }}</td>
+                        <td class="text-nowrap">{{ entry.begin|date("H:i") }}</td>
+                        <td class="text-nowrap">{{ entry.end|date("H:i") }}</td>
+                        <td>{{ widgets.username(entry.user) }}</td>
+                        <td>{{ entry.project.customer.name }}</td>
+                        <td>{{ entry.project.name }}</td>
+                        <td>{{ entry.activity.name }}</td>
+                        <td>
+                            {% if entry.description is not empty %}
+                                {{ entry.description|desc2html }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if entry.exported %}
+                                {{ 'entryState.exported'|trans }}
+                            {% else %}
+                                {{ 'entryState.not_exported'|trans }}
+                            {% endif %}
+                        </td>
+                        <td class="text-nowrap">{{ entry.hourlyRate|money(entry.project.customer.currency) }}</td>
+                        <td class="text-nowrap">{{ entry.fixedRate|money(entry.project.customer.currency) }}</td>
+                        <td class="text-nowrap">{{ entry.duration|duration }}</td>
+                        <td class="text-nowrap">
+                            {{ entry.rate|money(entry.project.customer.currency) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="{{ ( columns|length ) - 2 }}" class="text-right"></th>
+                    <th class="text-nowrap">
+                        {{ timeWorked|duration }}
+                    </th>
+                    <th class="text-nowrap">
+                        {% if currency is not null and currency is not same as(false) %}
+                            {{ rateTotal|money(currency) }}
+                        {% else %}
+                            {{ rateTotal|money }}
+                        {% endif %}
+                    </th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

@@ -5,7 +5,9 @@
     "description": "Kimai Time-Tracking 2",
     "require": {
         "php": "^7.1.3",
+        "ext-gd": "*",
         "ext-intl": "*",
+        "ext-mbstring": "*",
         "ext-pdo": "*",
         "ext-zip": "*",
         "beberlei/DoctrineExtensions": "^1.0",
@@ -17,6 +19,7 @@
         "fzaninotto/faker": "^1.8",
         "jms/serializer-bundle": "^2.4",
         "kevinpapst/adminlte-bundle": "~2.1",
+        "mpdf/mpdf": "^7.1",
         "nelmio/api-doc-bundle": "^3.2",
         "ocramius/proxy-manager": "2.1.1",
         "phpoffice/phpspreadsheet": "^1.4",
@@ -77,6 +80,9 @@
         "symfony/polyfill-php71": "*",
         "symfony/polyfill-php70": "*",
         "symfony/polyfill-php56": "*"
+    },
+    "suggest": {
+        "ext-mbstring": "If ext-mbstring is not available you MUST install symfony/polyfill-mbstring"
     },
     "scripts": {
         "auto-scripts": {

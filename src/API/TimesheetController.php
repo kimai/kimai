@@ -169,6 +169,7 @@ class TimesheetController extends BaseApiController
         $form = $this->createForm(TimesheetEditForm::class, $timesheet, [
             'csrf_protection' => false,
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
+            'include_exported' => $this->isGranted('edit_export', $timesheet),
         ]);
 
         $form->setData($timesheet);
@@ -214,6 +215,64 @@ class TimesheetController extends BaseApiController
         $view = new View($form);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
 
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * @SWG\Post(
+     *      description="Update an existing timesheet entry, you can pass all or just a subset of all attributes",
+     *      @SWG\Schema(ref="#/definitions/TimesheetFormEntity"),
+     *      @SWG\Response(
+     *          response=200,
+     *          description="Returns the updated timesheet entry",
+     *          @SWG\Schema(ref="#/definitions/TimesheetEntity"),
+     *      )
+     * )
+     *
+     * @param Request $request
+     * @param string $id
+     * @return Response
+     */
+    public function patchAction(Request $request, string $id)
+    {
+        $timesheet = $this->repository->find($id);
+
+        if (!$this->isGranted('edit', $timesheet)) {
+            throw $this->createAccessDeniedException('User cannot update timesheet');
+        }
+
+        $form = $this->createForm(TimesheetEditForm::class, $timesheet, [
+            'csrf_protection' => false,
+            'include_rate' => $this->isGranted('edit_rate', $timesheet),
+            'include_exported' => $this->isGranted('edit_export', $timesheet),
+        ]);
+
+        $form->setData($timesheet);
+        $form->submit($request->request->all(), false);
+
+        if (false === $form->isValid()) {
+            $view = new View($form, Response::HTTP_OK);
+            $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
+            return $this->viewHandler->handle($view);
+        }
+
+        if ($form->has('duration')) {
+            $duration = $form->get('duration')->getData();
+            if ($duration > 0) {
+                /** @var Timesheet $record */
+                $record = $form->getData();
+                $end = clone $record->getBegin();
+                $end->modify('+ ' . $duration . 'seconds');
+                $record->setEnd($end);
+            }
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($timesheet);
+        $entityManager->flush();
+
+        $view = new View($timesheet, Response::HTTP_OK);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
         return $this->viewHandler->handle($view);
     }
 }

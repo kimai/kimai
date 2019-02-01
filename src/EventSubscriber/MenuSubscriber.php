@@ -70,6 +70,12 @@ class MenuSubscriber implements EventSubscriberInterface
                 new MenuItemModel('invoice', 'menu.invoice', 'invoice', [], 'fas fa-file-invoice')
             );
         }
+
+//        if ($auth->isGranted('view_export')) {
+            $menu->addItem(
+                new MenuItemModel('export', 'menu.export', 'export', [], 'fas fa-file-export')
+            );
+//        }
     }
 
     /**

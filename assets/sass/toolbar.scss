@@ -25,6 +25,10 @@
     }
 }
 
+.toolbar-pad {
+    padding: 10px;
+}
+
 /* The filter form is available on most pages above the datatable */
 @media (min-width: $screen-sm-min) {
     .toolbar {
@@ -42,6 +46,9 @@
                 width: 100%;
             }
         }
+    }
+    .toolbar-pad {
+        padding: 10px 0;
     }
 }
 
