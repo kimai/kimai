@@ -38,7 +38,7 @@ class UTCDateTimeType extends DateTimeType
     /**
      * @return \DateTimeZone
      */
-    public function getUtc()
+    public static function getUtc()
     {
         return self::$utc ? self::$utc : self::$utc = new \DateTimeZone('UTC');
     }

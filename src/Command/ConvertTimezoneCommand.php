@@ -49,8 +49,6 @@ class ConvertTimezoneCommand extends Command
      */
     protected function configure()
     {
-        $roles = implode(',', [User::DEFAULT_ROLE, User::ROLE_ADMIN]);
-
         $this
             ->setName('kimai:convert-timezone')
             ->setDescription('Convert timesheet dates between timezones, only made for updates from 0.7 to 0.8')
@@ -58,6 +56,48 @@ class ConvertTimezoneCommand extends Command
             ->addOption('first-id', 'f', InputArgument::OPTIONAL, 'The database ID which should be converted first')
             ->addOption('last-id', 'l', InputArgument::OPTIONAL, 'The database ID which should be converted last')
         ;
+    }
+
+    /**
+     * @param null $start
+     * @param null $end
+     * @return Timesheet[]
+     */
+    protected function getTimesheets($start = null, $end = null)
+    {
+        $qb = $this->repository->createQueryBuilder('t');
+
+        $qb->select('t');
+        if (!empty($start)) {
+            $qb->andWhere($qb->expr()->gte('t.id', $start));
+        }
+        if (!empty($end)) {
+            $qb->andWhere($qb->expr()->lte('t.id', $end));
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param Timesheet $timesheet
+     * @param \DateTimeZone $timeZone
+     * @return Timesheet
+     */
+    protected function convertTimesheet(Timesheet $timesheet, \DateTimeZone $timeZone): Timesheet
+    {
+        if (null !== $timesheet->getBegin()) {
+            $beginDate = clone $timesheet->getBegin();
+            $beginDate->setTimezone($timeZone);
+            $timesheet->setBegin($beginDate);
+        }
+
+        if (null !== $timesheet->getEnd()) {
+            $endDate = clone $timesheet->getEnd();
+            $endDate->setTimezone($timeZone);
+            $timesheet->setEnd($endDate);
+        }
+
+        return $timesheet;
     }
 
     /**
@@ -72,18 +112,7 @@ class ConvertTimezoneCommand extends Command
         $start = $input->getOption('first-id');
         $end = $input->getOption('last-id');
 
-        $qb = $this->repository->createQueryBuilder('t');
-
-        $qb->select('t');
-        if (!empty($start)) {
-            $qb->andWhere($qb->expr()->gte('t.id', $start));
-        }
-        if (!empty($end)) {
-            $qb->andWhere($qb->expr()->lte('t.id', $end));
-        }
-
-        $result = $qb->getQuery()->getResult();
-
+        $result = $this->getTimesheets($start, $end);
         $amount = count($result);
 
         $answer = $io->ask(sprintf('This will update %s timesheet records, continue (y/n) ? ', $amount));
@@ -99,26 +128,17 @@ class ConvertTimezoneCommand extends Command
 
         /** @var Timesheet $timesheet */
         foreach ($result as $timesheet) {
-            if (null !== $timesheet->getBegin()) {
-                $beginDate = clone $timesheet->getBegin();
-                $beginDate->setTimezone($utc);
-                $timesheet->setBegin($beginDate);
-            }
-
-            if (null !== $timesheet->getEnd()) {
-                $endDate = clone $timesheet->getEnd();
-                $endDate->setTimezone($utc);
-                $timesheet->setEnd($endDate);
-            }
+            $timesheet = $this->convertTimesheet($timesheet, $utc);
+            $this->repository->save($timesheet);
 
             if (++$i % 80 === 0) {
                 $io->writeln('. (' . $i . '/' . $amount . ')');
             } else {
                 $io->write('.');
             }
-
-            $this->repository->save($timesheet);
         }
+
+        $io->writeln('. (' . $i . '/' . $amount . ')');
         $io->writeln('');
     }
 }

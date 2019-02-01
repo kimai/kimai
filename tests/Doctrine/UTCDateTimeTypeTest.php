@@ -44,9 +44,9 @@ class UTCDateTimeTypeTest extends KernelTestCase
         $type = Type::getType(Type::DATETIME);
 
         $this->assertInstanceOf(UTCDateTimeType::class, $type);
-        $utc = $type->getUtc();
-        $this->assertSame($utc, $type->getUtc());
-        $this->assertEquals('UTC', $type->getUtc()->getName());
+        $utc = $type::getUtc();
+        $this->assertSame($utc, $type::getUtc());
+        $this->assertEquals('UTC', $type::getUtc()->getName());
     }
 
     public function testConvertToDatabaseValue()
@@ -65,7 +65,7 @@ class UTCDateTimeTypeTest extends KernelTestCase
         $this->assertEquals('Europe/Berlin', $date->getTimezone()->getName());
 
         $expected = clone $date;
-        $expected->setTimezone($type->getUtc());
+        $expected->setTimezone($type::getUtc());
         $bla = $expected->format($this->platform->getDateTimeFormatString());
 
         /** @var \DateTime $result */
@@ -100,6 +100,6 @@ class UTCDateTimeTypeTest extends KernelTestCase
         /** @var UTCDateTimeType $type */
         $type = Type::getType(Type::DATETIME);
 
-        $result = $type->convertToPHPValue('201xx01-17 13:30:00', $this->platform);
+        $type->convertToPHPValue('201xx01-17 13:30:00', $this->platform);
     }
 }
