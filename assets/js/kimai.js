@@ -9,6 +9,13 @@ if (typeof jQuery === 'undefined') {
     throw new Error('Kimai requires jQuery');
 }
 
+if (typeof moment === 'undefined') {
+    throw new Error('Kimai requires jQuery');
+}
+
+/** global: jQuery */
+/** global: moment */
+
 /* kimai
  *
  * @type Object

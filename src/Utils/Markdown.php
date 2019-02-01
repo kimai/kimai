@@ -15,7 +15,7 @@ namespace App\Utils;
 class Markdown
 {
     /**
-     * @var MarkdownParser
+     * @var ParsedownExtension
      */
     private $parser;
 
