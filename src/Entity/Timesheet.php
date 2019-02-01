@@ -175,7 +175,7 @@ class Timesheet
      * @param \DateTime $begin
      * @return Timesheet
      */
-    public function setBegin($begin)
+    public function setBegin(\DateTime $begin)
     {
         $this->begin = $begin;
         $this->timezone = $begin->getTimezone()->getName();
@@ -196,7 +196,7 @@ class Timesheet
      * @param \DateTime $end
      * @return Timesheet
      */
-    public function setEnd($end)
+    public function setEnd(?\DateTime $end)
     {
         $this->end = $end;
 
