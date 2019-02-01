@@ -90,6 +90,7 @@ class ConvertTimezoneCommand extends Command
 
         if ('y' !== $answer) {
             $io->text('Aborting.');
+
             return;
         }
 
@@ -111,9 +112,9 @@ class ConvertTimezoneCommand extends Command
             }
 
             if (++$i % 80 === 0) {
-                $io->writeln(". (".$i."/".$amount.")");
+                $io->writeln('. (' . $i . '/' . $amount . ')');
             } else {
-                $io->write(".");
+                $io->write('.');
             }
 
             $this->repository->save($timesheet);

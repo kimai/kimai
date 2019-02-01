@@ -8,6 +8,7 @@
  */
 
 namespace App\Doctrine;
+
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\DateTimeType;
@@ -17,7 +18,7 @@ class UTCDateTimeType extends DateTimeType
     /**
      * @var \DateTimeZone
      */
-    static private $utc;
+    private static $utc;
 
     /**
      * @param mixed $value

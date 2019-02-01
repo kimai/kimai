@@ -168,6 +168,7 @@ class Timesheet
     public function getBegin()
     {
         $this->localizeDates();
+
         return $this->begin;
     }
 
@@ -189,6 +190,7 @@ class Timesheet
     public function getEnd()
     {
         $this->localizeDates();
+
         return $this->end;
     }
 

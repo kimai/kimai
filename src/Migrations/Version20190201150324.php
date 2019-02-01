@@ -1,4 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace DoctrineMigrations;
 
@@ -11,7 +20,7 @@ use Doctrine\DBAL\Schema\Schema;
  */
 final class Version20190201150324 extends AbstractMigration
 {
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         $platform = $this->getPlatform();
 
@@ -31,7 +40,7 @@ final class Version20190201150324 extends AbstractMigration
             $this->addSql('CREATE TABLE ' . $timesheet . ' (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, user INTEGER NOT NULL, activity_id INTEGER NOT NULL, project_id INTEGER NOT NULL, start_time DATETIME NOT NULL --(DC2Type:datetime)
         , end_time DATETIME DEFAULT NULL --(DC2Type:datetime)
         , duration INTEGER DEFAULT NULL, description CLOB DEFAULT NULL COLLATE BINARY, rate NUMERIC(10, 2) NOT NULL, fixed_rate NUMERIC(10, 2) DEFAULT NULL, hourly_rate NUMERIC(10, 2) DEFAULT NULL, timezone VARCHAR(64) NOT NULL, CONSTRAINT FK_4F60C6B18D93D649 FOREIGN KEY (user) REFERENCES kimai2_users (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_4F60C6B181C06096 FOREIGN KEY (activity_id) REFERENCES kimai2_activities (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_4F60C6B1166D1F9C FOREIGN KEY (project_id) REFERENCES kimai2_projects (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE)');
-            $this->addSql('INSERT INTO ' . $timesheet . ' (id, user, activity_id, project_id, start_time, end_time, duration, description, rate, fixed_rate, hourly_rate, timezone) SELECT id, user, activity_id, project_id, start_time, end_time, duration, description, rate, fixed_rate, hourly_rate, "'.$timezone.'" FROM __temp__' . $timesheet);
+            $this->addSql('INSERT INTO ' . $timesheet . ' (id, user, activity_id, project_id, start_time, end_time, duration, description, rate, fixed_rate, hourly_rate, timezone) SELECT id, user, activity_id, project_id, start_time, end_time, duration, description, rate, fixed_rate, hourly_rate, "' . $timezone . '" FROM __temp__' . $timesheet);
             $this->addSql('DROP TABLE __temp__' . $timesheet);
             $this->addSql('CREATE INDEX IDX_4F60C6B181C06096 ON ' . $timesheet . ' (activity_id)');
             $this->addSql('CREATE INDEX IDX_4F60C6B18D93D649 ON ' . $timesheet . ' (user)');
@@ -43,7 +52,7 @@ final class Version20190201150324 extends AbstractMigration
         $this->addSql('UPDATE ' . $timesheet . ' SET timezone = "' . $timezone . '"');
     }
 
-    public function down(Schema $schema) : void
+    public function down(Schema $schema): void
     {
         $platform = $this->getPlatform();
 
