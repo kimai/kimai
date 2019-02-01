@@ -54,6 +54,18 @@ class Timesheet
     private $end;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="timezone", type="string", length=64, nullable=false)
+     */
+    private $timezone;
+
+    /**
+     * @var bool
+     */
+    private $localized = false;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="duration", type="integer", nullable=true)
@@ -130,10 +142,32 @@ class Timesheet
     }
 
     /**
+     * Make sure begin and end date have the correct timezone.
+     * This will be called once for each item after being loaded from the database.
+     */
+    protected function localizeDates()
+    {
+        if ($this->localized) {
+            return;
+        }
+
+        if (null !== $this->begin) {
+            $this->begin->setTimeZone(new \DateTimeZone($this->timezone));
+        }
+
+        if (null !== $this->end) {
+            $this->end->setTimeZone(new \DateTimeZone($this->timezone));
+        }
+
+        $this->localized = true;
+    }
+
+    /**
      * @return \DateTime
      */
     public function getBegin()
     {
+        $this->localizeDates();
         return $this->begin;
     }
 
@@ -144,6 +178,7 @@ class Timesheet
     public function setBegin($begin)
     {
         $this->begin = $begin;
+        $this->timezone = $begin->getTimezone()->getName();
 
         return $this;
     }
@@ -153,6 +188,7 @@ class Timesheet
      */
     public function getEnd()
     {
+        $this->localizeDates();
         return $this->end;
     }
 
@@ -167,14 +203,14 @@ class Timesheet
         if (null === $end) {
             $this->duration = 0;
             $this->rate = 0;
+        } else {
+            $this->timezone = $end->getTimezone()->getName();
         }
 
         return $this;
     }
 
     /**
-     * Set duration
-     *
      * @param int $duration
      * @return Timesheet
      */
@@ -186,8 +222,7 @@ class Timesheet
     }
 
     /**
-     * Get duration
-     * Do not rely on the results of this method for active records.
+     * Do not rely on the results of this method for running records.
      *
      * @return int
      */
@@ -197,8 +232,6 @@ class Timesheet
     }
 
     /**
-     * Set user
-     *
      * @param User $user
      * @return Timesheet
      */
@@ -210,8 +243,6 @@ class Timesheet
     }
 
     /**
-     * Get user
-     *
      * @return User
      */
     public function getUser()
@@ -220,8 +251,6 @@ class Timesheet
     }
 
     /**
-     * Set activity
-     *
      * @param Activity $activity
      * @return Timesheet
      */
@@ -233,8 +262,6 @@ class Timesheet
     }
 
     /**
-     * Get Activity
-     *
      * @return Activity
      */
     public function getActivity()
