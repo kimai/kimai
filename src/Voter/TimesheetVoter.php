@@ -9,7 +9,6 @@
 
 namespace App\Voter;
 
-use App\Entity\Activity;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;

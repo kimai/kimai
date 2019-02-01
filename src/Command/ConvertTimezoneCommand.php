@@ -10,7 +10,6 @@
 namespace App\Command;
 
 use App\Entity\Timesheet;
-use App\Entity\User;
 use App\Repository\TimesheetRepository;
 use Doctrine\DBAL\Types\DateTimeType;
 use Doctrine\DBAL\Types\Type;
