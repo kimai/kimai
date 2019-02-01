@@ -60,7 +60,7 @@ class TimesheetVoter extends AbstractVoter
 
     /**
      * @param string $attribute
-     * @param Timesheet|Activity $subject
+     * @param Timesheet $subject
      * @param TokenInterface $token
      * @return bool
      */

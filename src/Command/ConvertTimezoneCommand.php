@@ -59,8 +59,8 @@ class ConvertTimezoneCommand extends Command
     }
 
     /**
-     * @param null $start
-     * @param null $end
+     * @param null|string $start
+     * @param null|string $end
      * @return Timesheet[]
      */
     protected function getTimesheets($start = null, $end = null)
