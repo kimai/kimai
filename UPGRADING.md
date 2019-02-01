@@ -18,6 +18,14 @@ bin/console doctrine:migrations:migrate
 There might be version specific tasks that need to be executed before or after these steps, please see below 
 if your updated version is mentioned below.
 
+## [0.8](https://github.com/kevinpapst/kimai2/releases/tag/0.8) (unreleased)
+
+There was a change introduced regarding the storage of the date-time objects in timesheet records. 
+Please read this [Pull request](https://github.com/kevinpapst/kimai2/pull/372) carefully before you follow the instructions 
+to convert the timezones in your existing time records with `bin/console kimai:convert-timezone --help`.
+
+If you don't do that, you will end up with wrong times in your database. Be especially careful, when you previously imported data from Kimai v1.
+
 ## [0.7](https://github.com/kevinpapst/kimai2/releases/tag/0.7) (2019-01-28)
 
 The configuration `kimai.theme.active_warning` was deprecated and should be replaced in your local.yaml, 
