@@ -111,7 +111,11 @@ $(function() {
                             $select.append('<option value="' + obj.id + '">' + obj.name + '</option>');
                         });
 
+                        // if we don't trigger the change, the other selects won't be resetted
                         $select.trigger('change');
+
+                        // if the beta test kimai.theme.select_type is active, this will tell the selects to refresh
+                        $('.selectpicker').selectpicker('refresh');
                     }
                 });
             });

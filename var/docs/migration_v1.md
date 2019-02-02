@@ -4,8 +4,6 @@ Before importing your data from a Kimai v1 installation, please read the followi
 
 - Data from the existing v1 installation is only read and will never be changed
 - Data can only be imported from a Kimai installation with at least `v1.0.1` and database revision `1388` (check your `configuration` table)
-- Kimai v1 has support for activities without project assignment, a feature which Kimai v2 doesn't support (yet)
-   - global activities will be transformed and created for each project which has a timesheet record linking to that activity 
 - User-specific rates are not yet supported in Kimai 2
   - fixed-rates and hourly-rates for projects and activities are imported
   - fixed-rates and hourly-rates and total rate for timesheet entries are imported

@@ -172,7 +172,9 @@ trait TimesheetControllerTrait
             $entityManager = $this->getDoctrine()->getManager();
 
             try {
-                $this->stopActiveEntries($entry->getUser());
+                if (null === $entry->getEnd()) {
+                    $this->stopActiveEntries($entry->getUser());
+                }
                 $entityManager->persist($entry);
                 $entityManager->flush();
 
