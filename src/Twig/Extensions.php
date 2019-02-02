@@ -89,12 +89,12 @@ class Extensions extends \Twig_Extension
 
     /**
      * @param RequestStack $requestStack
-     * @param array $languages
+     * @param array $languageSettings
      */
-    public function __construct(RequestStack $requestStack, array $languages)
+    public function __construct(RequestStack $requestStack, array $languageSettings)
     {
         $this->requestStack = $requestStack;
-        $this->locales = $languages;
+        $this->locales = $languageSettings;
         $this->durationFormatter = new Duration();
     }
 

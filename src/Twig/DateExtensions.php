@@ -31,14 +31,13 @@ class DateExtensions extends \Twig_Extension
     protected $requestStack;
 
     /**
-     * DateExtensions constructor.
      * @param RequestStack $requestStack
-     * @param array $dateSettings
+     * @param array $languageSettings
      */
-    public function __construct(RequestStack $requestStack, array $dateSettings)
+    public function __construct(RequestStack $requestStack, array $languageSettings)
     {
         $this->requestStack = $requestStack;
-        $this->dateSettings = $dateSettings;
+        $this->dateSettings = $languageSettings;
     }
 
     /**
