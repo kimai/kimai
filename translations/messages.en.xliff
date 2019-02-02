@@ -988,6 +988,10 @@
                 <source>entryState.stopped</source>
                 <target>Stopped</target>
             </trans-unit>
+            <trans-unit id="export.mark_all">
+                <source>export.mark_all</source>
+                <target>Mark all shown records as cleared?</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
