@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class HtmlRenderer implements RendererInterface
 {
+    use RendererTrait;
+
     /**
      * @var \Twig_Environment
      */
@@ -42,6 +44,7 @@ class HtmlRenderer implements RendererInterface
         $content = $this->twig->render('export/renderer/default.html.twig', [
             'entries' => $timesheets,
             'query' => $query,
+            'summaries' => $this->calculateSummary($timesheets),
         ]);
 
         $response = new Response();

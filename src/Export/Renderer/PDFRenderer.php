@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class PDFRenderer implements RendererInterface
 {
+    use RendererTrait;
+
     /**
      * @var \Twig_Environment
      */
@@ -43,30 +45,11 @@ class PDFRenderer implements RendererInterface
      */
     public function render(array $timesheets, TimesheetQuery $query): Response
     {
-        $projects = [];
-
-        foreach ($timesheets as $timesheet) {
-            $id = $timesheet->getProject()->getCustomer()->getId() . '_' . $timesheet->getProject()->getId();
-            if (!isset($projects[$id])) {
-                $projects[$id] = [
-                    'customer' => $timesheet->getProject()->getCustomer()->getName(),
-                    'project' => $timesheet->getProject()->getName(),
-                    'currency' => $timesheet->getProject()->getCustomer()->getCurrency(),
-                    'rate' => 0,
-                    'duration' => 0,
-                ];
-            }
-            $projects[$id]['rate'] += $timesheet->getRate();
-            $projects[$id]['duration'] += $timesheet->getDuration();
-        }
-
-        asort($projects);
-
         $content = $this->twig->render('export/renderer/pdf.html.twig', [
             'entries' => $timesheets,
             'query' => $query,
             'now' => new \DateTime(),
-            'summaries' => $projects,
+            'summaries' => $this->calculateSummary($timesheets),
         ]);
 
         //return new Response($content);

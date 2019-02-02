@@ -2,13 +2,88 @@
 {% extends 'export/layout.html.twig' %}
 
 {% block export %}
+    <style>
+        .items tr.summary {
+        }
+        .items td.totals {
+            font-weight: bold;
+            text-align: right;
+        }
+        .items td.duration,
+        .items th.duration,
+        .items th.cost,
+        .items td.cost {
+            text-align: center;
+        }
+    </style>
 
     <div class="row">
         <div class="col-xs-12">
-            <h3>
+            <h2>{{ 'export.document_title'|trans }}</h2>
+            <p>
+                {{ 'export.period'|trans }}:
                 {{ query.begin|date_short }} - {{ query.end|date_short }}
-                {% if query.user is not empty %}: {{ widgets.username(query.user) }}{% endif %}
-            </h3>
+            </p>
+            <h3>{{ 'export.summary'|trans }}</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 table-responsive">
+            <table class="items table table-condensed table-bordered">
+                <thead>
+                <tr>
+                    <th>{{ 'label.customer'|trans }}</th>
+                    <th>{{ 'label.project'|trans }}</th>
+                    <th class="duration">{{ 'label.duration'|trans }}</th>
+                    <th class="cost">{{ 'label.rate'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% set customer = null %}
+                {% set customerDuration = 0 %}
+                {% set customerRate = 0 %}
+                {% set customerCurrency = null %}
+                {% for summary in summaries %}
+                    {% if customer is same as(null) %}
+                        {% set customer = summary.customer %}
+                        {% set customerCurrency = summary.currency %}
+                    {% endif %}
+                    {% if customer is not same as(summary.customer) %}
+                        <tr class="summary">
+                            <td colspan="2"></td>
+                            <td class="totals duration">{{ customerDuration|duration }}</td>
+                            <td class="totals cost">{{ customerRate|money(customerCurrency) }}</td>
+                        </tr>
+                        {% set customerCurrency = summary.currency %}
+                        {% set customer = summary.customer %}
+                        {% set customerDuration = 0 %}
+                        {% set customerRate = 0 %}
+                    {% endif %}
+                    <tr>
+                        <td>{{ summary.customer }}</td>
+                        <td>{{ summary.project }}</td>
+                        <td class="duration">{{ summary.duration|duration }}</td>
+                        <td class="cost">{{ summary.rate|money(summary.currency) }}</td>
+                    </tr>
+                    {% set customerDuration = customerDuration + summary.duration %}
+                    {% set customerRate = customerRate + summary.rate %}
+                {% endfor %}
+                {% if customer is not same as(null) %}
+                    <tr class="summary">
+                        <td colspan="2"></td>
+                        <td class="totals duration">{{ customerDuration|duration }}</td>
+                        <td class="totals cost">{{ customerRate|money(customerCurrency) }}</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>{{ 'export.full_list'|trans }}</h3>
         </div>
     </div>
 

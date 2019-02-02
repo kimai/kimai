@@ -1,21 +1,4 @@
 <html>
-{% macro summary_table_header() %}
-<table class="items" width="100%" style="font-size: 9pt; border-collapse: collapse; " cellpadding="8">
-    <thead>
-    <tr>
-        <td>{{ 'label.customer'|trans }}</td>
-        <td>{{ 'label.project'|trans }}</td>
-        <td>{{ 'label.duration'|trans }}</td>
-        <td>{{ 'label.rate'|trans }}</td>
-    </tr>
-    </thead>
-    <tbody>
-{% endmacro %}
-{% macro summary_table_footer() %}
-    </tbody>
-</table>
-{% endmacro %}
-{% import _self as macro %}
 <head>
     <style>
         body {font-family: sans-serif;
@@ -80,7 +63,16 @@ mpdf-->
     {{ query.begin|date_short }} - {{ query.end|date_short }}
 </p>
 <h3>{{ 'export.summary'|trans }}</h3>
-{{ macro.summary_table_header() }}
+<table class="items" width="100%" style="font-size: 9pt; border-collapse: collapse; " cellpadding="8">
+    <thead>
+    <tr>
+        <td>{{ 'label.customer'|trans }}</td>
+        <td>{{ 'label.project'|trans }}</td>
+        <td>{{ 'label.duration'|trans }}</td>
+        <td>{{ 'label.rate'|trans }}</td>
+    </tr>
+    </thead>
+    <tbody>
     {% set customer = null %}
     {% set customerDuration = 0 %}
     {% set customerRate = 0 %}
@@ -120,7 +112,8 @@ mpdf-->
         <td class="totals cost">{{ customerRate|money(customerCurrency) }}</td>
     </tr>
     {% endif %}
-{{ macro.summary_table_footer() }}
+    </tbody>
+</table>
 
 <pagebreak>
 
