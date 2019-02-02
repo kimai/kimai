@@ -51,37 +51,79 @@ $(function() {
                 );
             }
 
-            $('input[data-datepicker="on"]').daterangepicker({
-                singleDatePicker: true,
-                showDropdowns: true,
-                autoUpdateInput: false,
-                locale: {
-                    format: "YYYY-MM-DD",
-                    firstDay: 1
-                }
+            // ==== compound field in toolbar ====
+            $('input[data-daterangepickerenable="on"]').each(function(index) {
+                var localeFormat = $(this).data('format');
+
+                $(this).daterangepicker({
+                    showDropdowns: true,
+                    autoUpdateInput: false,
+                    autoApply: false,
+                    locale: {
+                        format: localeFormat,
+                        firstDay: 1
+                    },
+                    ranges: {
+                        // TODO translate
+                        'Today': [moment(), moment()],
+                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                        //'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                        //'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                        'This week': [moment().startOf('week'), moment().endOf('week')],
+                        'Last week': [moment().subtract(1, 'week').startOf('week'), moment().subtract(1, 'week').endOf('week')],
+                        'This month': [moment().startOf('month'), moment().endOf('month')],
+                        'Last month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                        'This year': [moment().startOf('year'), moment().endOf('year')],
+                        'Last year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
+                    },
+                    alwaysShowCalendars: true
+                });
+
+                $(this).on('apply.daterangepicker', function(ev, picker) {
+                    $(this).val(picker.startDate.format(localeFormat) + ' - ' + picker.endDate.format(localeFormat));
+                });
             });
 
-            $('input[data-datepicker="on"]').on('apply.daterangepicker', function(ev, picker) {
-                $(this).val(picker.startDate.format('YYYY-MM-DD'));
-                $(this).trigger("change");
+            // ==== single select boxes in toolbars ====
+            $('input[data-datepickerenable="on"]').each(function(index) {
+                var localeFormat = $(this).data('format');
+                $(this).daterangepicker({
+                    singleDatePicker: true,
+                    showDropdowns: true,
+                    autoUpdateInput: false,
+                    locale: {
+                        format: localeFormat,
+                        firstDay: 1
+                    }
+                });
+
+                $(this).on('apply.daterangepicker', function(ev, picker) {
+                    $(this).val(picker.startDate.format(localeFormat));
+                    $(this).trigger("change");
+                });
             });
 
-            $('input[data-datetimepicker="on"]').daterangepicker({
-                singleDatePicker: true,
-                timePicker: true,
-                timePicker24Hour: true,
-                showDropdowns: true,
-                autoUpdateInput: false,
-                locale: {
-                    cancelLabel: 'Clear',
-                    format: "YYYY-MM-DD HH:mm",
-                    firstDay: 1
-                }
-            });
+            // ==== edit timesheet - date with time ====
+            $('input[data-datetimepicker="on"]').each(function(index) {
+                var localeFormat = $(this).data('format');
+                $(this).daterangepicker({
+                    singleDatePicker: true,
+                    timePicker: true,
+                    timePicker24Hour: true,
+                    showDropdowns: true,
+                    autoUpdateInput: false,
+                    locale: {
+                        // TODO translate
+                        cancelLabel: 'Clear',
+                        format: localeFormat,
+                        firstDay: 1
+                    }
+                });
 
-            $('input[data-datetimepicker="on"]').on('apply.daterangepicker', function(ev, picker) {
-                $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm'));
-                $(this).trigger("change");
+                $(this).on('apply.daterangepicker', function(ev, picker) {
+                    $(this).val(picker.startDate.format(localeFormat));
+                    $(this).trigger("change");
+                });
             });
 
             $('select[data-related-select]').change(function() {
