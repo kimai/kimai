@@ -31,7 +31,9 @@ class TimesheetToolbarForm extends AbstractToolbarForm
         $this->addCustomerChoice($builder);
         $this->addProjectChoice($builder);
         $this->addActivityChoice($builder);
-        $this->addTagInputField($builder);
+        if ($options['use_tags']) {
+            $this->addTagInputField($builder);
+        }
     }
 
     /**
@@ -58,6 +60,7 @@ class TimesheetToolbarForm extends AbstractToolbarForm
         $resolver->setDefaults([
             'data_class' => TimesheetQuery::class,
             'csrf_protection' => false,
+            'use_tags' => false,
         ]);
     }
 }

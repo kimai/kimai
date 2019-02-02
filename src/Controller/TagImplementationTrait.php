@@ -18,6 +18,27 @@ trait TagImplementationTrait
 {
 
     /**
+     * @var bool
+     */
+    private $useTags = false;
+
+    /**
+     * @param bool $useTags
+     */
+    protected function setTagMode(bool $useTags)
+    {
+        $this->useTags = $useTags;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isTagMode()
+    {
+        return $this->useTags;
+    }
+
+    /**
      * Shortcut to return the Doctrine Registry service.
      *
      * @throws \LogicException If DoctrineBundle is not available

@@ -33,10 +33,12 @@ class TimesheetController extends AbstractController
 
     /**
      * @param bool $durationOnly
+     * @param bool $useTags
      */
-    public function __construct(bool $durationOnly)
+    public function __construct(bool $durationOnly, bool $useTags)
     {
         $this->setDurationMode($durationOnly);
+        $this->setTagMode($useTags);
     }
 
     /**
@@ -245,6 +247,7 @@ class TimesheetController extends AbstractController
             'method' => 'POST',
             'include_rate' => $this->isGranted('edit_rate', $entry),
             'duration_only' => $this->isDurationOnlyMode(),
+            'use_tags' => $this->isTagMode(),
         ]);
     }
 
@@ -263,6 +266,7 @@ class TimesheetController extends AbstractController
             'method' => 'POST',
             'include_rate' => $this->isGranted('edit_rate', $entry),
             'duration_only' => $this->isDurationOnlyMode(),
+            'use_tags' => $this->isTagMode(),
         ]);
     }
 
@@ -277,6 +281,7 @@ class TimesheetController extends AbstractController
                 'page' => $query->getPage(),
             ]),
             'method' => 'GET',
+            'use_tags' => $this->isTagMode(),
         ]);
     }
 }

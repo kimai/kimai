@@ -29,6 +29,8 @@ class TimesheetAdminToolbarForm extends TimesheetToolbarForm
         $this->addCustomerChoice($builder);
         $this->addProjectChoice($builder);
         $this->addActivityChoice($builder);
-        $this->addTagInputField($builder);
+        if ($options['use_tags']) {
+            $this->addTagInputField($builder);
+        }
     }
 }

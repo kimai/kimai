@@ -51,12 +51,14 @@ class InvoiceController extends AbstractController
      * @param ServiceInvoice $service
      * @param InvoiceTemplateRepository $invoice
      * @param TimesheetRepository $timesheet
+     * @param bool $useTags
      */
-    public function __construct(ServiceInvoice $service, InvoiceTemplateRepository $invoice, TimesheetRepository $timesheet)
+    public function __construct(ServiceInvoice $service, InvoiceTemplateRepository $invoice, TimesheetRepository $timesheet, bool $useTags)
     {
         $this->service = $service;
         $this->invoiceRepository = $invoice;
         $this->timesheetRepository = $timesheet;
+        $this->setTagMode($useTags);
     }
 
     /**
@@ -342,7 +344,8 @@ class InvoiceController extends AbstractController
             'method' => 'POST',
             'attr' => [
                 'id' => 'invoice-print-form'
-            ]
+            ],
+            'use_tags' => $this->isTagMode()
         ]);
     }
 

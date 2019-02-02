@@ -17,6 +17,10 @@ kimai:
         # Setting this to true will also change the "edit timesheet" forms, more infos available in the configurations docu.
         duration_only: false
 
+        # Flag for activating option using tags in timesheet for a simple brace to bundle actions over different project or
+        # activities
+        use_tags: false
+
         # Rounding rules are used to round the begin & end dates and the duration for timesheet records.
         # The "default" rule will round "begin" down and "end" up to the full minute, the "duration" will not be rounded.
         # Please read var/docs/configurations.md to find out more about rounding rules

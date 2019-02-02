@@ -175,45 +175,48 @@ class TimesheetEditForm extends AbstractType
             ])
         ;
 
-      //$builder
-      //    ->add('tags', TagsInputType::class, [
-      //      // documentation is for NelmioApiDocBundle
-      //        'documentation' => [
-      //            'type'        => 'text',
-      //            'description' => 'Tags for timesheet entry',
-      //        ],
-      //        'required'      => FALSE,
-      //      //'query_builder' => function (ProjectRepository $repo) use ($project) {
-      //      //  return $repo->builderForEntityType($project);
-      //      //},
-      //        'attr'          => [
-      //            'data-related-select' => $this->getBlockPrefix() . '_activity',
-      //            'data-api-url'        => ['get_activities', ['project' => '-s-']],
-      //        ],
-      //    ]);
-        $builder
-            ->add('tags', TagsInputType::class, [
-                // documentation is for NelmioApiDocBundle
-                'documentation' => [
-                    'type' => 'text',
-                    'description' => 'Tags for timesheet entry',
-                ],
-                'required' => FALSE,
-                'attr' => [
-                    'data-api-url' => ['get_tags', ['tag_name' => '-p-']],
-                    'class' => 'js-autocomplete',
-                ]
-                // TODO Überarbeiten für die API
+        //$builder
+        //    ->add('tags', TagsInputType::class, [
+        //      // documentation is for NelmioApiDocBundle
+        //        'documentation' => [
+        //            'type'        => 'text',
+        //            'description' => 'Tags for timesheet entry',
+        //        ],
+        //        'required'      => FALSE,
+        //      //'query_builder' => function (ProjectRepository $repo) use ($project) {
+        //      //  return $repo->builderForEntityType($project);
+        //      //},
+        //        'attr'          => [
+        //            'data-related-select' => $this->getBlockPrefix() . '_activity',
+        //            'data-api-url'        => ['get_activities', ['project' => '-s-']],
+        //        ],
+        //    ]);
 
-                //'attr'          => [
-                //              'data-related-select' => $this->getBlockPrefix() . '_activity',
-                //              'data-api-url'        => ['get_activities', ['project' => '-s-']],
-                //],
-            ]);
+        if($options['use_tags']) {
+            $builder
+                ->add('tags', TagsInputType::class, [
+                    // documentation is for NelmioApiDocBundle
+                    'documentation' => [
+                        'type' => 'text',
+                        'description' => 'Tags for timesheet entry',
+                    ],
+                    'required' => FALSE,
+                    'attr' => [
+                        'data-api-url' => ['get_tags', ['tag_name' => '-p-']],
+                        'class' => 'js-autocomplete',
+                    ]
+                    // TODO Überarbeiten für die API
 
-        $builder->get('tags')
-            ->addModelTransformer(new CollectionToArrayTransformer(), TRUE)
-            ->addModelTransformer($this->transformer, TRUE);
+                    //'attr'          => [
+                    //              'data-related-select' => $this->getBlockPrefix() . '_activity',
+                    //              'data-api-url'        => ['get_activities', ['project' => '-s-']],
+                    //],
+                ]);
+
+            $builder->get('tags')
+                ->addModelTransformer(new CollectionToArrayTransformer(), TRUE)
+                ->addModelTransformer($this->transformer, TRUE);
+        }
 
         if ($options['include_rate']) {
             $builder
@@ -279,6 +282,7 @@ class TimesheetEditForm extends AbstractType
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'timesheet_edit',
             'duration_only' => false,
+            'use_tags' => false,
             'include_user' => false,
             'include_rate' => true,
             'docu_chapter' => 'timesheet',
