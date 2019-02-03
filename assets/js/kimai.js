@@ -54,33 +54,38 @@ $(function() {
             // ==== compound field in toolbar ====
             $('input[data-daterangepickerenable="on"]').each(function(index) {
                 var localeFormat = $(this).data('format');
+                var separator = $(this).data('separator');
+                var transToday = $.kimai.settings['today'];
+                var rangesList = {};
+                rangesList[$.kimai.settings['today']] = [moment(), moment()];
+                rangesList[$.kimai.settings['yesterday']] = [moment().subtract(1, 'days'), moment().subtract(1, 'days')];
+                rangesList[$.kimai.settings['thisWeek']] = [moment().startOf('week'), moment().endOf('week')];
+                rangesList[$.kimai.settings['lastWeek']] = [moment().subtract(1, 'week').startOf('week'), moment().subtract(1, 'week').endOf('week')];
+                rangesList[$.kimai.settings['thisMonth']] = [moment().startOf('month'), moment().endOf('month')];
+                rangesList[$.kimai.settings['lastMonth']] = [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')];
+                rangesList[$.kimai.settings['thisYear']] = [moment().startOf('year'), moment().endOf('year')];
+                rangesList[$.kimai.settings['lastYear']] = [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')];
 
                 $(this).daterangepicker({
                     showDropdowns: true,
                     autoUpdateInput: false,
                     autoApply: false,
+                    linkedCalendars: false,
                     locale: {
+                        separator: separator,
                         format: localeFormat,
-                        firstDay: 1
+                        firstDay: 1,
+                        applyLabel: $.kimai.settings['apply'],
+                        cancelLabel: $.kimai.settings['cancel'],
+                        customRangeLabel: $.kimai.settings['customRange']
                     },
-                    ranges: {
-                        // TODO translate
-                        'Today': [moment(), moment()],
-                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                        //'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                        //'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                        'This week': [moment().startOf('week'), moment().endOf('week')],
-                        'Last week': [moment().subtract(1, 'week').startOf('week'), moment().subtract(1, 'week').endOf('week')],
-                        'This month': [moment().startOf('month'), moment().endOf('month')],
-                        'Last month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-                        'This year': [moment().startOf('year'), moment().endOf('year')],
-                        'Last year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
-                    },
+                    ranges: rangesList,
                     alwaysShowCalendars: true
                 });
 
                 $(this).on('apply.daterangepicker', function(ev, picker) {
                     $(this).val(picker.startDate.format(localeFormat) + ' - ' + picker.endDate.format(localeFormat));
+                    $(this).trigger("change");
                 });
             });
 
@@ -93,7 +98,10 @@ $(function() {
                     autoUpdateInput: false,
                     locale: {
                         format: localeFormat,
-                        firstDay: 1
+                        firstDay: 1,
+                        applyLabel: $.kimai.settings['apply'],
+                        cancelLabel: $.kimai.settings['cancel'],
+                        customRangeLabel: $.kimai.settings['customRange']
                     }
                 });
 
@@ -113,10 +121,11 @@ $(function() {
                     showDropdowns: true,
                     autoUpdateInput: false,
                     locale: {
-                        // TODO translate
-                        cancelLabel: 'Clear',
                         format: localeFormat,
-                        firstDay: 1
+                        firstDay: 1,
+                        applyLabel: $.kimai.settings['apply'],
+                        cancelLabel: $.kimai.settings['cancel'],
+                        customRangeLabel: $.kimai.settings['customRange']
                     }
                 });
 
@@ -188,8 +197,19 @@ $(function() {
     // default values
     $.kimai.defaults = {
         locale: 'en',
+        alertSuccessAutoHide: 5000,
         confirmDelete: 'Really delete?',
-        alertSuccessAutoHide: 5000
+        today: 'Today',
+        yesterday: 'Yesterday',
+        apply: 'Apply',
+        cancel: 'Cancel',
+        thisWeek: 'This week',
+        lastWeek: 'Last week',
+        thisMonth: 'This month',
+        lastMonth: 'Last month',
+        thisYear: 'This year',
+        lastYear: 'Last year',
+        customRange: 'Custom range'
     };
 
     // once initialized, here are all values
