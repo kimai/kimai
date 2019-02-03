@@ -15,7 +15,6 @@ services:
         bind:
             $projectDirectory: "%kernel.project_dir%"
             $hardLimit: "%kimai.timesheet.active_entries.hard_limit%"
-            $languageSettings: "%kimai.languages%"
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -55,7 +54,11 @@ services:
     App\Controller\Admin\CustomerController:
         arguments:
             $defaults: "%kimai.defaults%"
-            
+
+    App\Utils\LocaleSettings:
+        arguments:
+            $languageSettings: "%kimai.languages%"
+
     # ================================================================================
     # DATABASE
     # ================================================================================

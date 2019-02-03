@@ -94,7 +94,6 @@
     {# we do not call parent() as we use a custom built for the frontend assets and don't want the default <script> #}
     <script type="text/javascript">
         $(document).ready(function () {
-            {% spaceless %}
             $.kimai.init({
                 locale: '{{ app.request.locale }}',
                 confirmDelete: '{{ 'confirm.delete'|trans }}',
@@ -110,8 +109,7 @@
                 thisYear: '{{ 'daterangepicker.thisYear'|trans({}, 'daterangepicker') }}',
                 customRange: '{{ 'daterangepicker.customRange'|trans({}, 'daterangepicker') }}'
             });
-            {% endspaceless %}
-            //$.kimai.pauseRecord('li.messages-menu ul.menu li');
+            {# $.kimai.pauseRecord('li.messages-menu ul.menu li'); #}
         });
     </script>
 {% endblock %}

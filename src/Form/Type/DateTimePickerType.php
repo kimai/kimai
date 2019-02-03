@@ -9,9 +9,9 @@
 
 namespace App\Form\Type;
 
+use App\Utils\LocaleSettings;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,23 +21,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class DateTimePickerType extends AbstractType
 {
     /**
-     * @var array
+     * @var LocaleSettings
      */
-    protected $dateSettings;
+    protected $localeSettings;
 
     /**
-     * @var RequestStack
+     * @param LocaleSettings $localeSettings
      */
-    protected $requestStack;
-
-    /**
-     * @param RequestStack $requestStack
-     * @param array $languageSettings
-     */
-    public function __construct(RequestStack $requestStack, array $languageSettings)
+    public function __construct(LocaleSettings $localeSettings)
     {
-        $this->requestStack = $requestStack;
-        $this->dateSettings = $languageSettings;
+        $this->localeSettings = $localeSettings;
     }
 
     /**
@@ -45,10 +38,8 @@ class DateTimePickerType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $locale = $this->requestStack->getCurrentRequest()->getLocale();
-
-        $dateTimePicker = $this->dateSettings[$locale]['date_time_picker'];
-        $dateTimeFormat = $this->dateSettings[$locale]['date_time'];
+        $dateTimePicker = $this->localeSettings->getDateTimePickerFormat();
+        $dateTimeFormat = $this->localeSettings->getDateTimeTypeFormat();
 
         $resolver->setDefaults([
             'label' => 'label.begin',

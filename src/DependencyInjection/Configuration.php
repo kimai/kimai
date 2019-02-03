@@ -172,13 +172,12 @@ class Configuration implements ConfigurationInterface
         $node
             ->arrayPrototype()
                 ->children()
-                    ->scalarNode('date_time')->defaultValue('yyyy-MM-dd HH:mm')->end()          // for DateTimeType
+                    ->scalarNode('date_time_type')->defaultValue('yyyy-MM-dd HH:mm')->end()     // for DateTimeType
                     ->scalarNode('date_time_picker')->defaultValue('YYYY-MM-DD HH:mm')->end()   // for DateTimeType JS component
-                    ->scalarNode('date')->defaultValue('yyyy-MM-dd')->end()                     // for DateType
+                    ->scalarNode('date_type')->defaultValue('yyyy-MM-dd')->end()                // for DateType
                     ->scalarNode('date_picker')->defaultValue('YYYY-MM-DD')->end()              // for DateType JS component
-                    ->scalarNode('date_short')->defaultValue('Y-m-d')->end()                    // for display via twig
-                    ->scalarNode('duration')->defaultValue('%%h:%%m hours')->end()              // for display via twig
-                    ->scalarNode('duration_short')->defaultValue('%%h:%%m h')->end()            // for display via twig
+                    ->scalarNode('date')->defaultValue('Y-m-d')->end()                          // for display via twig
+                    ->scalarNode('duration')->defaultValue('%%h:%%m h')->end()                  // for display via twig
                 ->end()
             ->end()
         ;

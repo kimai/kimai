@@ -10,12 +10,12 @@
 namespace App\Form\Type;
 
 use App\Form\Model\DateRange;
+use App\Utils\LocaleSettings;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,23 +27,16 @@ class DateRangeType extends AbstractType
     public const DATE_SPACER = ' - ';
 
     /**
-     * @var array
+     * @var LocaleSettings
      */
-    protected $dateSettings;
+    protected $localeSettings;
 
     /**
-     * @var RequestStack
+     * @param LocaleSettings $localeSettings
      */
-    protected $requestStack;
-
-    /**
-     * @param RequestStack $requestStack
-     * @param array $languageSettings
-     */
-    public function __construct(RequestStack $requestStack, array $languageSettings)
+    public function __construct(LocaleSettings $localeSettings)
     {
-        $this->requestStack = $requestStack;
-        $this->dateSettings = $languageSettings;
+        $this->localeSettings = $localeSettings;
     }
 
     /**
@@ -51,10 +44,8 @@ class DateRangeType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $locale = $this->requestStack->getCurrentRequest()->getLocale();
-
-        $pickerFormat = $this->dateSettings[$locale]['date_picker'];
-        $dateFormat = $this->dateSettings[$locale]['date_short'];
+        $pickerFormat = $this->localeSettings->getDatePickerFormat();
+        $dateFormat = $this->localeSettings->getDateFormat();
 
         $resolver->setDefaults([
             'model_timezone' => null,

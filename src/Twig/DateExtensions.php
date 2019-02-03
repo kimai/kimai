@@ -9,8 +9,8 @@
 
 namespace App\Twig;
 
+use App\Utils\LocaleSettings;
 use DateTime;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\TwigFilter;
 
 /**
@@ -19,23 +19,16 @@ use Twig\TwigFilter;
 class DateExtensions extends \Twig_Extension
 {
     /**
-     * @var array
+     * @var LocaleSettings
      */
-    protected $dateSettings;
+    protected $localeSettings;
 
     /**
-     * @var RequestStack
+     * @param LocaleSettings $localeSettings
      */
-    protected $requestStack;
-
-    /**
-     * @param RequestStack $requestStack
-     * @param array $languageSettings
-     */
-    public function __construct(RequestStack $requestStack, array $languageSettings)
+    public function __construct(LocaleSettings $localeSettings)
     {
-        $this->requestStack = $requestStack;
-        $this->dateSettings = $languageSettings;
+        $this->localeSettings = $localeSettings;
     }
 
     /**
@@ -50,22 +43,12 @@ class DateExtensions extends \Twig_Extension
     }
 
     /**
-     * @return string
-     */
-    protected function getLocale()
-    {
-        return $this->requestStack->getCurrentRequest()->getLocale();
-    }
-
-    /**
-     * @param array $context
      * @param DateTime $date
      * @return string
      */
     public function dateShort(DateTime $date)
     {
-        $locale = $this->getLocale();
-        $format = $this->dateSettings[$locale]['date_short'];
+        $format = $this->localeSettings->getDateFormat();
 
         return date_format($date, $format);
     }

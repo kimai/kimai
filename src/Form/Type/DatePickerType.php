@@ -9,9 +9,9 @@
 
 namespace App\Form\Type;
 
+use App\Utils\LocaleSettings;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,23 +21,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class DatePickerType extends AbstractType
 {
     /**
-     * @var array
+     * @var LocaleSettings
      */
-    protected $dateSettings;
+    protected $localeSettings;
 
     /**
-     * @var RequestStack
+     * @param LocaleSettings $localeSettings
      */
-    protected $requestStack;
-
-    /**
-     * @param RequestStack $requestStack
-     * @param array $languageSettings
-     */
-    public function __construct(RequestStack $requestStack, array $languageSettings)
+    public function __construct(LocaleSettings $localeSettings)
     {
-        $this->requestStack = $requestStack;
-        $this->dateSettings = $languageSettings;
+        $this->localeSettings = $localeSettings;
     }
 
     /**
@@ -45,10 +38,8 @@ class DatePickerType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $locale = $this->requestStack->getCurrentRequest()->getLocale();
-
-        $pickerFormat = $this->dateSettings[$locale]['date_picker'];
-        $dateFormat = $this->dateSettings[$locale]['date'];
+        $pickerFormat = $this->localeSettings->getDatePickerFormat();
+        $dateFormat = $this->localeSettings->getDateTypeFormat();
 
         $resolver->setDefaults([
             'widget' => 'single_text',
