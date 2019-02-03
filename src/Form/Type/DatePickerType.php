@@ -47,15 +47,8 @@ class DatePickerType extends AbstractType
     {
         $locale = $this->requestStack->getCurrentRequest()->getLocale();
 
-        $pickerFormat = 'YYYY-MM-DD';
-        if (isset($this->dateSettings[$locale]['date_picker'])) {
-            $pickerFormat = $this->dateSettings[$locale]['date_picker'];
-        }
-
-        $dateFormat = 'yyyy-MM-dd';
-        if (isset($this->dateSettings[$locale]['date'])) {
-            $dateFormat = $this->dateSettings[$locale]['date'];
-        }
+        $pickerFormat = $this->dateSettings[$locale]['date_picker'];
+        $dateFormat = $this->dateSettings[$locale]['date'];
 
         $resolver->setDefaults([
             'widget' => 'single_text',

@@ -53,15 +53,8 @@ class DateRangeType extends AbstractType
     {
         $locale = $this->requestStack->getCurrentRequest()->getLocale();
 
-        $pickerFormat = 'YYYY-MM-DD';
-        if (isset($this->dateSettings[$locale]['date_picker'])) {
-            $pickerFormat = $this->dateSettings[$locale]['date_picker'];
-        }
-
-        $dateFormat = 'yyyy-MM-dd';
-        if (isset($this->dateSettings[$locale]['date_short'])) {
-            $dateFormat = $this->dateSettings[$locale]['date_short'];
-        }
+        $pickerFormat = $this->dateSettings[$locale]['date_picker'];
+        $dateFormat = $this->dateSettings[$locale]['date_short'];
 
         $resolver->setDefaults([
             'model_timezone' => null,

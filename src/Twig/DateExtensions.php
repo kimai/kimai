@@ -18,8 +18,6 @@ use Twig\TwigFilter;
  */
 class DateExtensions extends \Twig_Extension
 {
-    private const FALLBACK_SHORT = 'Y-m-d';
-
     /**
      * @var array
      */
@@ -67,11 +65,7 @@ class DateExtensions extends \Twig_Extension
     public function dateShort(DateTime $date)
     {
         $locale = $this->getLocale();
-        $format = self::FALLBACK_SHORT;
-
-        if (isset($this->dateSettings[$locale]['date_short'])) {
-            $format = $this->dateSettings[$locale]['date_short'];
-        }
+        $format = $this->dateSettings[$locale]['date_short'];
 
         return date_format($date, $format);
     }
