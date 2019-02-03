@@ -25,7 +25,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\TimesheetRepository")
  * @ORM\HasLifecycleCallbacks()
- * @Assert\Callback("validate")
+ * @App\Validator\Constraints\Timesheet
  */
 class Timesheet
 {
@@ -372,77 +372,5 @@ class Timesheet
         $this->hourlyRate = $hourlyRate;
 
         return $this;
-    }
-
-    /**
-     * @param ExecutionContextInterface $context
-     * @param $payload
-     */
-    public function validate(ExecutionContextInterface $context, $payload)
-    {
-        if (null === ($activity = $this->getActivity())) {
-            $context->buildViolation('A timesheet must have an activity.')
-                ->atPath('activity')
-                ->setTranslationDomain('validators')
-                ->addViolation();
-        }
-
-        if (null === ($project = $this->getProject())) {
-            $context->buildViolation('A timesheet must have a project.')
-                ->atPath('project')
-                ->setTranslationDomain('validators')
-                ->addViolation();
-        }
-
-        if (null !== $activity && null !== $project) {
-            if (null !== $activity->getProject() && $activity->getProject() !== $project) {
-                $context->buildViolation('Project mismatch, project specific activity and timesheet project are different.')
-                    ->atPath('project')
-                    ->setTranslationDomain('validators')
-                    ->addViolation();
-            }
-
-            if (null === $this->getEnd() && $activity->getVisible() === false) {
-                $context->buildViolation('Cannot start a disabled activity.')
-                    ->atPath('activity')
-                    ->setTranslationDomain('validators')
-                    ->addViolation();
-            }
-
-            if (null === $this->getEnd() && $project->getVisible() === false) {
-                $context->buildViolation('Cannot start a disabled project.')
-                    ->atPath('project')
-                    ->setTranslationDomain('validators')
-                    ->addViolation();
-            }
-
-            if (null === $this->getEnd() && $project->getCustomer()->getVisible() === false) {
-                $context->buildViolation('Cannot start a disabled customer.')
-                    ->atPath('customer')
-                    ->setTranslationDomain('validators')
-                    ->addViolation();
-            }
-        }
-
-        if (null === $this->getBegin()) {
-            $context->buildViolation('You must submit a begin date.')
-                ->atPath('begin')
-                ->setTranslationDomain('validators')
-                ->addViolation();
-        } else {
-            if (null !== $this->getBegin() && null !== $this->getEnd() && $this->getEnd()->getTimestamp() < $this->getBegin()->getTimestamp()) {
-                $context->buildViolation('End date must not be earlier then start date.')
-                    ->atPath('end')
-                    ->setTranslationDomain('validators')
-                    ->addViolation();
-            }
-
-            if (time() < $this->getBegin()->getTimestamp()) {
-                $context->buildViolation('The begin date cannot be in the future.')
-                    ->atPath('begin')
-                    ->setTranslationDomain('validators')
-                    ->addViolation();
-            }
-        }
     }
 }
