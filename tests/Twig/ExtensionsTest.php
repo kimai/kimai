@@ -11,6 +11,7 @@ namespace App\Tests\Twig;
 
 use App\Entity\Timesheet;
 use App\Twig\Extensions;
+use App\Utils\LocaleSettings;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -21,10 +22,10 @@ use Twig\TwigFilter;
  */
 class ExtensionsTest extends TestCase
 {
-    private $localeEn = ['en' => ['date_short' => 'Y-m-d', 'duration' => '%h:%m:%s h', 'duration_short' => '%h:%m h']];
-    private $localeDe = ['de' => ['date_short' => 'd.m.Y', 'duration' => '%h:%m:%s Stunden', 'duration_short' => '%h:%m h']];
-    private $localeRu = ['ru' => ['date_short' => 'd.m.Y', 'duration' => '%h:%m:%s h', 'duration_short' => '%h:%m h']];
-    private $localeFake = ['XX' => ['date_short' => 'd.m.Y', 'duration' => '%h Stunden, %m Minuten und %s Sekunden', 'duration_short' => '%h - %m - %s Zeit']];
+    private $localeEn = ['en' => ['date' => 'Y-m-d', 'duration' => '%h:%m h']];
+    private $localeDe = ['de' => ['date' => 'd.m.Y', 'duration' => '%h:%m h']];
+    private $localeRu = ['ru' => ['date' => 'd.m.Y', 'duration' => '%h:%m h']];
+    private $localeFake = ['XX' => ['date' => 'd.m.Y', 'duration' => '%h - %m - %s Zeit']];
 
     /**
      * @param array $locales
@@ -38,7 +39,9 @@ class ExtensionsTest extends TestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        return new Extensions($requestStack, $locales);
+        $localeSettings = new LocaleSettings($requestStack, $locales);
+
+        return new Extensions($requestStack, $localeSettings);
     }
 
     public function testGetFilters()
@@ -154,22 +157,17 @@ class ExtensionsTest extends TestCase
 
         // test extended format
         $sut = $this->getSut($this->localeFake, 'XX');
-        $this->assertEquals('02 - 37 - 17 Zeit', $sut->duration($record->getDuration(), 'short'));
-        $this->assertEquals('02 Stunden, 37 Minuten und 17 Sekunden', $sut->duration($record->getDuration(), 'full'));
-
-        // test fallback format
-        $sut = $this->getSut($this->localeEn, 'XX');
-        $this->assertEquals('02:37 h', $sut->duration($record->getDuration()));
+        $this->assertEquals('02 - 37 - 17 Zeit', $sut->duration($record->getDuration()));
 
         // test negative duration
-        $sut = $this->getSut($this->localeEn, 'XX');
+        $sut = $this->getSut($this->localeEn, 'en');
         $this->assertEquals('?', $sut->duration('-1'));
 
         // test zero duration
-        $sut = $this->getSut($this->localeEn, 'XX');
+        $sut = $this->getSut($this->localeEn, 'en');
         $this->assertEquals('00:00 h', $sut->duration('0'));
 
-        $sut = $this->getSut($this->localeEn, 'XX');
+        $sut = $this->getSut($this->localeEn, 'en');
         $this->assertNull($sut->duration(null));
     }
 

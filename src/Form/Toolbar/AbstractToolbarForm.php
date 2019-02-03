@@ -10,9 +10,8 @@
 namespace App\Form\Toolbar;
 
 use App\Form\Type\ActivityType;
-use App\Form\Type\BeginDateType;
 use App\Form\Type\CustomerType;
-use App\Form\Type\EndDateType;
+use App\Form\Type\DateRangeType;
 use App\Form\Type\PageSizeType;
 use App\Form\Type\ProjectType;
 use App\Form\Type\UserRoleType;
@@ -115,20 +114,11 @@ abstract class AbstractToolbarForm extends AbstractType
     /**
      * @param FormBuilderInterface $builder
      */
-    protected function addStartDateChoice(FormBuilderInterface $builder)
+    protected function addDateRangeChoice(FormBuilderInterface $builder, $allowEmpty = true)
     {
-        $builder->add('begin', BeginDateType::class, [
+        $builder->add('daterange', DateRangeType::class, [
             'required' => false,
-        ]);
-    }
-
-    /**
-     * @param FormBuilderInterface $builder
-     */
-    protected function addEndDateChoice(FormBuilderInterface $builder)
-    {
-        $builder->add('end', EndDateType::class, [
-            'required' => false,
+            'allow_empty' => $allowEmpty,
         ]);
     }
 

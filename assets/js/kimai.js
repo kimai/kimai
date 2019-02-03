@@ -58,37 +58,88 @@ $(function() {
                 );
             }
 
-            $('input[data-datepicker="on"]').daterangepicker({
-                singleDatePicker: true,
-                showDropdowns: true,
-                autoUpdateInput: false,
-                locale: {
-                    format: "YYYY-MM-DD",
-                    firstDay: 1
-                }
+            // ==== compound field in toolbar ====
+            $('input[data-daterangepickerenable="on"]').each(function(index) {
+                var localeFormat = $(this).data('format');
+                var separator = $(this).data('separator');
+                var transToday = $.kimai.settings['today'];
+                var rangesList = {};
+                rangesList[$.kimai.settings['today']] = [moment(), moment()];
+                rangesList[$.kimai.settings['yesterday']] = [moment().subtract(1, 'days'), moment().subtract(1, 'days')];
+                rangesList[$.kimai.settings['thisWeek']] = [moment().startOf('week'), moment().endOf('week')];
+                rangesList[$.kimai.settings['lastWeek']] = [moment().subtract(1, 'week').startOf('week'), moment().subtract(1, 'week').endOf('week')];
+                rangesList[$.kimai.settings['thisMonth']] = [moment().startOf('month'), moment().endOf('month')];
+                rangesList[$.kimai.settings['lastMonth']] = [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')];
+                rangesList[$.kimai.settings['thisYear']] = [moment().startOf('year'), moment().endOf('year')];
+                rangesList[$.kimai.settings['lastYear']] = [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')];
+
+                $(this).daterangepicker({
+                    showDropdowns: true,
+                    autoUpdateInput: false,
+                    autoApply: false,
+                    linkedCalendars: false,
+                    locale: {
+                        separator: separator,
+                        format: localeFormat,
+                        firstDay: 1,
+                        applyLabel: $.kimai.settings['apply'],
+                        cancelLabel: $.kimai.settings['cancel'],
+                        customRangeLabel: $.kimai.settings['customRange']
+                    },
+                    ranges: rangesList,
+                    alwaysShowCalendars: true
+                });
+
+                $(this).on('apply.daterangepicker', function(ev, picker) {
+                    $(this).val(picker.startDate.format(localeFormat) + ' - ' + picker.endDate.format(localeFormat));
+                    $(this).trigger("change");
+                });
             });
 
-            $('input[data-datepicker="on"]').on('apply.daterangepicker', function(ev, picker) {
-                $(this).val(picker.startDate.format('YYYY-MM-DD'));
-                $(this).trigger("change");
+            // ==== single select boxes in toolbars ====
+            $('input[data-datepickerenable="on"]').each(function(index) {
+                var localeFormat = $(this).data('format');
+                $(this).daterangepicker({
+                    singleDatePicker: true,
+                    showDropdowns: true,
+                    autoUpdateInput: false,
+                    locale: {
+                        format: localeFormat,
+                        firstDay: 1,
+                        applyLabel: $.kimai.settings['apply'],
+                        cancelLabel: $.kimai.settings['cancel'],
+                        customRangeLabel: $.kimai.settings['customRange']
+                    }
+                });
+
+                $(this).on('apply.daterangepicker', function(ev, picker) {
+                    $(this).val(picker.startDate.format(localeFormat));
+                    $(this).trigger("change");
+                });
             });
 
-            $('input[data-datetimepicker="on"]').daterangepicker({
-                singleDatePicker: true,
-                timePicker: true,
-                timePicker24Hour: true,
-                showDropdowns: true,
-                autoUpdateInput: false,
-                locale: {
-                    cancelLabel: 'Clear',
-                    format: "YYYY-MM-DD HH:mm",
-                    firstDay: 1
-                }
-            });
+            // ==== edit timesheet - date with time ====
+            $('input[data-datetimepicker="on"]').each(function(index) {
+                var localeFormat = $(this).data('format');
+                $(this).daterangepicker({
+                    singleDatePicker: true,
+                    timePicker: true,
+                    timePicker24Hour: true,
+                    showDropdowns: true,
+                    autoUpdateInput: false,
+                    locale: {
+                        format: localeFormat,
+                        firstDay: 1,
+                        applyLabel: $.kimai.settings['apply'],
+                        cancelLabel: $.kimai.settings['cancel'],
+                        customRangeLabel: $.kimai.settings['customRange']
+                    }
+                });
 
-            $('input[data-datetimepicker="on"]').on('apply.daterangepicker', function(ev, picker) {
-                $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm'));
-                $(this).trigger("change");
+                $(this).on('apply.daterangepicker', function(ev, picker) {
+                    $(this).val(picker.startDate.format(localeFormat));
+                    $(this).trigger("change");
+                });
             });
 
             $('select[data-related-select]').change(function() {
@@ -153,8 +204,19 @@ $(function() {
     // default values
     $.kimai.defaults = {
         locale: 'en',
+        alertSuccessAutoHide: 5000,
         confirmDelete: 'Really delete?',
-        alertSuccessAutoHide: 5000
+        today: 'Today',
+        yesterday: 'Yesterday',
+        apply: 'Apply',
+        cancel: 'Cancel',
+        thisWeek: 'This week',
+        lastWeek: 'Last week',
+        thisMonth: 'This month',
+        lastMonth: 'Last month',
+        thisYear: 'This year',
+        lastYear: 'Last year',
+        customRange: 'Custom range'
     };
 
     // once initialized, here are all values

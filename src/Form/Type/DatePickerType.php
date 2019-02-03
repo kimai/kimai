@@ -9,33 +9,50 @@
 
 namespace App\Form\Type;
 
+use App\Utils\LocaleSettings;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Custom form field type to display the end-date input field.
+ * Custom form field type to display the date input fields.
  */
-class EndDateType extends AbstractType
+class DatePickerType extends AbstractType
 {
+    /**
+     * @var LocaleSettings
+     */
+    protected $localeSettings;
+
+    /**
+     * @param LocaleSettings $localeSettings
+     */
+    public function __construct(LocaleSettings $localeSettings)
+    {
+        $this->localeSettings = $localeSettings;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $pickerFormat = $this->localeSettings->getDatePickerFormat();
+        $dateFormat = $this->localeSettings->getDateTypeFormat();
+
         $resolver->setDefaults([
-            'label' => 'label.end',
             'widget' => 'single_text',
             'html5' => false,
-            'format' => DateType::HTML5_FORMAT,
+            'format' => $dateFormat,
+            'format_picker' => $pickerFormat,
         ]);
 
         $resolver->setDefault('attr', function (Options $options) {
             return [
                 'autocomplete' => 'off',
-                'data-datepicker' => 'on',
                 'placeholder' => $options['format'],
+                'data-format' => $options['format_picker'],
             ];
         });
     }
