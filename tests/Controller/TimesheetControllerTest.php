@@ -11,6 +11,7 @@ namespace App\Tests\Controller;
 
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Form\Type\DateRangeType;
 use App\Tests\DataFixtures\TimesheetFixtures;
 
 /**
@@ -54,12 +55,13 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->request($client, '/timesheet/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
+        $dateRange = (new \DateTime('-10 days'))->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime())->format('Y-m-d');
+
         $form = $client->getCrawler()->filter('form.navbar-form')->form();
         $client->submit($form, [
             'state' => 1,
             'pageSize' => 25,
-            'begin' => (new \DateTime('-10 days'))->format('Y-m-d'),
-            'end' => (new \DateTime())->format('Y-m-d'),
+            'daterange' => $dateRange,
             'customer' => null,
         ]);
 
@@ -83,13 +85,14 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->request($client, '/timesheet/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
+        $dateRange = (new \DateTime('-10 days'))->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime())->format('Y-m-d');
+
         $form = $client->getCrawler()->filter('form.navbar-form')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/timesheet/export'));
         $client->submit($form, [
             'state' => 1,
             'pageSize' => 25,
-            'begin' => (new \DateTime('-10 days'))->format('Y-m-d'),
-            'end' => (new \DateTime())->format('Y-m-d'),
+            'daterange' => $dateRange,
             'customer' => null,
         ]);
 
