@@ -311,6 +311,10 @@
                 <source>label.end</source>
                 <target>To</target>
             </trans-unit>
+            <trans-unit id="label.daterange">
+                <source>label.daterange</source>
+                <target>Time range</target>
+            </trans-unit>
             <trans-unit id="modal.columns.title">
                 <source>modal.columns.title</source>
                 <target>Change column visibility</target>

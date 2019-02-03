@@ -94,8 +94,22 @@
     {# we do not call parent() as we use a custom built for the frontend assets and don't want the default <script> #}
     <script type="text/javascript">
         $(document).ready(function () {
-            $.kimai.init({locale: '{{ app.request.locale }}', confirmDelete: '{{ 'confirm.delete'|trans }}'});
-            //$.kimai.pauseRecord('li.messages-menu ul.menu li');
+            $.kimai.init({
+                locale: '{{ app.request.locale }}',
+                confirmDelete: '{{ 'confirm.delete'|trans }}',
+                apply: '{{ 'daterangepicker.apply'|trans({}, 'daterangepicker') }}',
+                cancel: '{{ 'daterangepicker.cancel'|trans({}, 'daterangepicker') }}',
+                today: '{{ 'daterangepicker.today'|trans({}, 'daterangepicker') }}',
+                yesterday: '{{ 'daterangepicker.yesterday'|trans({}, 'daterangepicker') }}',
+                lastWeek: '{{ 'daterangepicker.lastWeek'|trans({}, 'daterangepicker') }}',
+                thisWeek: '{{ 'daterangepicker.thisWeek'|trans({}, 'daterangepicker') }}',
+                lastMonth: '{{ 'daterangepicker.lastMonth'|trans({}, 'daterangepicker') }}',
+                thisMonth: '{{ 'daterangepicker.thisMonth'|trans({}, 'daterangepicker') }}',
+                lastYear: '{{ 'daterangepicker.lastYear'|trans({}, 'daterangepicker') }}',
+                thisYear: '{{ 'daterangepicker.thisYear'|trans({}, 'daterangepicker') }}',
+                customRange: '{{ 'daterangepicker.customRange'|trans({}, 'daterangepicker') }}'
+            });
+            {# $.kimai.pauseRecord('li.messages-menu ul.menu li'); #}
         });
     </script>
 {% endblock %}

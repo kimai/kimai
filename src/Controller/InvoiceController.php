@@ -168,6 +168,13 @@ class InvoiceController extends AbstractController
         }
 
         $query->setResultType(TimesheetQuery::RESULT_TYPE_QUERYBUILDER);
+
+        if (null === $query->getBegin()) {
+            $query->setBegin(new \DateTime('first day of this month'));
+        }
+        if (null === $query->getEnd()) {
+            $query->setEnd(new \DateTime('last day of this month'));
+        }
         $query->getBegin()->setTime(0, 0, 0);
         $query->getEnd()->setTime(23, 59, 59);
 

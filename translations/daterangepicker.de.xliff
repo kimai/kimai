@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file date="2019-02-02T10:00:00Z" source-language="en" target-language="de" datatype="plaintext" original="daterangepicker.en.xliff">
+        <body>
+            <trans-unit id="daterangepicker.apply">
+                <source>daterangepicker.apply</source>
+                <target>Bestätigen</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.cancel">
+                <source>daterangepicker.cancel</source>
+                <target>Abbrechen</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.today">
+                <source>daterangepicker.today</source>
+                <target>Heute</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.yesterday">
+                <source>daterangepicker.yesterday</source>
+                <target>Gestern</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.lastWeek">
+                <source>daterangepicker.lastWeek</source>
+                <target>Letzte Woche</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.thisWeek">
+                <source>daterangepicker.thisWeek</source>
+                <target>Diese Woche</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.lastMonth">
+                <source>daterangepicker.lastMonth</source>
+                <target>Letzter Monat</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.thisMonth">
+                <source>daterangepicker.thisMonth</source>
+                <target>Dieser Monat</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.lastYear">
+                <source>daterangepicker.lastYear</source>
+                <target>Letztes Jahr</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.thisYear">
+                <source>daterangepicker.thisYear</source>
+                <target>Dieses Jahr</target>
+            </trans-unit>
+            <trans-unit id="daterangepicker.customRange">
+                <source>daterangepicker.customRange</source>
+                <target>Benutzerdefiniert</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
