@@ -75,6 +75,7 @@ class TimesheetValidator extends ConstraintValidator
                 ->setTranslationDomain('validators')
                 ->setCode(TimesheetConstraint::MISSING_BEGIN_ERROR)
                 ->addViolation();
+
             return;
         }
 
@@ -86,7 +87,7 @@ class TimesheetValidator extends ConstraintValidator
                 ->addViolation();
         }
 
-        if (false === $this->getRule('allow_future_times', true) &&  time() < $timesheet->getBegin()->getTimestamp()) {
+        if (false === $this->getRule('allow_future_times', true) && time() < $timesheet->getBegin()->getTimestamp()) {
             $context->buildViolation('The begin date cannot be in the future.')
                 ->atPath('begin')
                 ->setTranslationDomain('validators')

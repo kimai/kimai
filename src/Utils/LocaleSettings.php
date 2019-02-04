@@ -143,5 +143,4 @@ class LocaleSettings
 
         return $this->settings[$locale][$key];
     }
-
 }
