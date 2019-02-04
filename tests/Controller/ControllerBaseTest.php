@@ -179,6 +179,17 @@ abstract class ControllerBaseTest extends WebTestCase
     }
 
     /**
+     * @param Client $client
+     * @param string $id
+     * @param int $count
+     */
+    protected function assertDataTableRowCount(Client $client, string $id, int $count)
+    {
+        $node = $client->getCrawler()->filter('section.content div#' . $id . ' table.table-striped tbody tr');
+        $this->assertEquals($count, $node->count());
+    }
+
+    /**
      * @param string $role the USER role to use for the request
      * @param string $url the URL of the page displaying the initial form to submit
      * @param string $formSelector a selector to find the form to test
