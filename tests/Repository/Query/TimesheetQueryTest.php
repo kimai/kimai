@@ -36,6 +36,7 @@ class TimesheetQueryTest extends BaseQueryTest
         $this->assertProject($sut);
         $this->assertActivity($sut);
         $this->assertState($sut);
+        $this->assertExported($sut);
     }
 
     protected function assertUser(TimesheetQuery $sut)
@@ -93,5 +94,22 @@ class TimesheetQueryTest extends BaseQueryTest
 
         $sut->setState(TimesheetQuery::STATE_ALL);
         $this->assertEquals(TimesheetQuery::STATE_ALL, $sut->getState());
+    }
+
+    protected function assertExported(TimesheetQuery $sut)
+    {
+        $this->assertEquals(TimesheetQuery::STATE_ALL, $sut->getExported());
+
+        $sut->setExported(PHP_INT_MAX);
+        $this->assertEquals(TimesheetQuery::STATE_ALL, $sut->getExported());
+
+        $sut->setExported(TimesheetQuery::STATE_EXPORTED);
+        $this->assertEquals(TimesheetQuery::STATE_EXPORTED, $sut->getExported());
+
+        $sut->setExported(TimesheetQuery::STATE_NOT_EXPORTED);
+        $this->assertEquals(TimesheetQuery::STATE_NOT_EXPORTED, $sut->getExported());
+
+        $sut->setExported(TimesheetQuery::STATE_ALL);
+        $this->assertEquals(TimesheetQuery::STATE_ALL, $sut->getExported());
     }
 }

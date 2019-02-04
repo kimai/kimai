@@ -39,10 +39,10 @@ class ExportQuery extends TimesheetQuery
      */
     public function setType(string $type)
     {
-        if (!in_array($type, [self::TYPE_PDF, self::TYPE_CSV, self::TYPE_HTML, self::TYPE_XLSX, self::TYPE_ODS])) {
-            throw new \InvalidArgumentException('Invalid export type');
+        if (in_array($type, [self::TYPE_PDF, self::TYPE_CSV, self::TYPE_HTML, self::TYPE_XLSX, self::TYPE_ODS])) {
+            $this->type = $type;
         }
-        $this->type = $type;
+
         return $this;
     }
 }
