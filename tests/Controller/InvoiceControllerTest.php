@@ -157,7 +157,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertNotEmpty($node->text());
         $this->assertContains('This is a preview of the data that will show up in your invoice document.', $node->text());
 
-        $node = $client->getCrawler()->filter('section.invoice div.table-responsive table.table-striped tbody tr');
+        $node = $client->getCrawler()->filter('section.content div#datatable_invoice table.table-striped tbody tr');
         $this->assertEquals(20, $node->count());
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();

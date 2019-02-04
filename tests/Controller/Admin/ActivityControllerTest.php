@@ -123,8 +123,8 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/activity/1/delete');
         $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
         $client->followRedirect();
-        $this->assertHasDataTable($client);
-        $this->assertHasFlashSuccess($client);
+        $this->assertHasFlashDeleteSuccess($client);
+        $this->assertHasNoEntriesWithFilter($client);
 
         $this->request($client, '/admin/activity/1/edit');
         $this->assertFalse($client->getResponse()->isSuccessful());
@@ -157,8 +157,8 @@ class ActivityControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
         $client->followRedirect();
-        $this->assertHasDataTable($client);
-        $this->assertHasFlashSuccess($client);
+        $this->assertHasFlashDeleteSuccess($client);
+        $this->assertHasNoEntriesWithFilter($client);
 
         // SQLIte does not necessarly support onCascade delete, so these timesheet will stay after deletion
         // $em->clear();

@@ -221,13 +221,32 @@ abstract class ControllerBaseTest extends WebTestCase
         }
     }
 
+    protected function assertHasNoEntriesWithFilter(Client $client)
+    {
+        $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
+        $this->assertContains('No entries were found based on your selected filters.', $node->text());
+    }
+
     /**
      * @param Client $client
+     * @param string|null $message
      */
-    protected function assertHasFlashSuccess(Client $client)
+    protected function assertHasFlashDeleteSuccess(Client $client)
+    {
+        $this->assertHasFlashSuccess($client, 'Entry was deleted successful');
+    }
+
+    /**
+     * @param Client $client
+     * @param string|null $message
+     */
+    protected function assertHasFlashSuccess(Client $client, string $message = null)
     {
         $node = $client->getCrawler()->filter('div.alert.alert-success.alert-dismissible');
         $this->assertNotEmpty($node->text());
+        if (null !== $message) {
+            $this->assertContains($message, $node->text());
+        }
     }
 
     /**
