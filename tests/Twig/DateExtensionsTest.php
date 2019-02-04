@@ -40,7 +40,7 @@ class DateExtensionsTest extends TestCase
 
     public function testGetFilters()
     {
-        $filters = ['month_name', 'date_short'];
+        $filters = ['month_name', 'date_short', 'date_time'];
         $sut = $this->getSut('de', []);
         $twigFilters = $sut->getFilters();
         $this->assertCount(count($filters), $twigFilters);

@@ -174,7 +174,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         if ($full) {
             $expectedKeys = array_merge($expectedKeys, [
-                'description', 'fixed_rate', 'hourly_rate'
+                'exported', 'description', 'fixed_rate', 'hourly_rate'
             ]);
         }
 
