@@ -26,6 +26,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CalendarController extends AbstractController
 {
+    use TagImplementationTrait;
+
     /**
      * @var Service
      */
@@ -33,10 +35,12 @@ class CalendarController extends AbstractController
 
     /**
      * @param Service $calendar
+     * @param bool $useTags
      */
-    public function __construct(Service $calendar)
+    public function __construct(Service $calendar, bool $useTags)
     {
         $this->calendar = $calendar;
+        $this->setTagMode($useTags);
     }
 
     /**
@@ -89,7 +93,7 @@ class CalendarController extends AbstractController
         $result = [];
 
         foreach ($entries as $entry) {
-            $result[] = new TimesheetEntity($entry);
+            $result[] = new TimesheetEntity($entry, $this->isTagMode());
         }
 
         return $this->json($result);

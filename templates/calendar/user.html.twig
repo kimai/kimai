@@ -64,6 +64,7 @@
                     end: '{{ config.businessTimeEnd }}'
                 },
                 eventRender: function(eventObj, $el) {
+                    console.log(eventObj);
                     if (eventObj.source.ajaxSettings.name !== 'kimaiUserTimeSource') {
                         return;
 
@@ -80,6 +81,7 @@
                                 '<li>' + '{{ 'label.customer'|trans }}: ' + eventObj.customer + '</li>' +
                                 '<li>' + '{{ 'label.project'|trans }}: ' + eventObj.project + '</li>' +
                                 '<li>' + '{{ 'label.activity'|trans }}: ' + eventObj.activity + '</li>' +
+                            (eventObj.tags !== null && eventObj.tags.length > 0 ? '<li>' + '{{ 'label.tags'|trans }}: ' + eventObj.tags + '</li>' : '') +
                             '</ul>' +
                             (eventObj.description ? '<hr><p>' + eventObj.description + '</p>' : '') +
                         '</div>'

@@ -9,6 +9,7 @@
 
 namespace App\Calendar;
 
+use App\Entity\Tag;
 use App\Entity\Timesheet;
 
 class TimesheetEntity
@@ -48,6 +49,10 @@ class TimesheetEntity
     /**
      * @var string|null
      */
+    protected $tags;
+    /**
+     * @var string|null
+     */
     protected $borderColor;
     /**
      * @var string|null
@@ -56,8 +61,9 @@ class TimesheetEntity
 
     /**
      * @param Timesheet $entry
+     * @param bool $useTags
      */
-    public function __construct(Timesheet $entry)
+    public function __construct(Timesheet $entry, bool $useTags = false)
     {
         $this->id = $entry->getId();
         $this->start = $entry->getBegin();
@@ -66,6 +72,14 @@ class TimesheetEntity
         $this->customer = $entry->getProject()->getCustomer()->getName();
         $this->project = $entry->getProject()->getName();
         $this->activity = $entry->getActivity()->getName();
+        if (true === $useTags && sizeof($entry->getTags()) > 0) {
+            $arr = [];
+            /** @var Tag $tag */
+            foreach ($entry->getTags() as $tag) {
+                array_push($arr, $tag->getTagName());
+            }
+            $this->tags = implode(', ', $arr);
+        }
 
         if (null === $entry->getEnd()) {
             // TODO move these colors to the controller
@@ -225,6 +239,24 @@ class TimesheetEntity
     {
         $this->activity = $activity;
 
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTags(): ?string
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param string|null $tags
+     * @return TimesheetEntity
+     */
+    public function setTags(?string $tags)
+    {
+        $this->tags = $tags;
         return $this;
     }
 
