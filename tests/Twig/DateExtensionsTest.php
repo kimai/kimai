@@ -10,6 +10,7 @@
 namespace App\Tests\Twig;
 
 use App\Twig\DateExtensions;
+use App\Utils\LocaleSettings;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -32,7 +33,9 @@ class DateExtensionsTest extends TestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        return new DateExtensions($requestStack, $dateSettings);
+        $localeSettings = new LocaleSettings($requestStack, $dateSettings);
+
+        return new DateExtensions($localeSettings);
     }
 
     public function testGetFilters()
@@ -57,9 +60,9 @@ class DateExtensionsTest extends TestCase
     public function testDateShort($locale, \DateTime $date, $result)
     {
         $sut = $this->getSut($locale, [
-            'de' => ['date_short' => 'd.m.Y'],
-            'en' => ['date_short' => 'Y-m-d'],
-            'ru' => ['date_short' => 'd.m.Y'],
+            'de' => ['date' => 'd.m.Y'],
+            'en' => ['date' => 'Y-m-d'],
+            'ru' => ['date' => 'd.m.Y'],
         ]);
         $this->assertEquals($result, $sut->dateShort($date));
     }

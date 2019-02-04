@@ -24,11 +24,11 @@ class TimesheetAdminToolbarForm extends TimesheetToolbarForm
         $this->addTimesheetStateChoice($builder);
         $this->addPageSizeChoice($builder);
         $this->addUserChoice($builder);
-        $this->addStartDateChoice($builder);
-        $this->addEndDateChoice($builder);
+        $this->addDateRangeChoice($builder);
         $this->addCustomerChoice($builder);
         $this->addProjectChoice($builder);
         $this->addActivityChoice($builder);
+        $this->addHiddenPagination($builder);
         if ($options['use_tags']) {
             $this->addTagInputField($builder);
         }

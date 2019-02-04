@@ -12,6 +12,7 @@ namespace App\Form;
 use App\Entity\User;
 use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,26 +28,21 @@ class UserEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            // string - length 160
             ->add('alias', TextType::class, [
                 'label' => 'label.alias',
                 'required' => false,
             ])
-            // string - length 50
             ->add('title', TextType::class, [
                 'label' => 'label.title',
                 'required' => false,
             ])
-            // string - length 255
             ->add('avatar', TextType::class, [
                 'label' => 'label.avatar',
                 'required' => false,
             ])
-            // string - length 160
-            ->add('email', TextType::class, [
+            ->add('email', EmailType::class, [
                 'label' => 'label.email',
             ])
-            // boolean
             ->add('enabled', YesNoType::class, [
                 'label' => 'label.active',
             ])

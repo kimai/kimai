@@ -23,6 +23,7 @@ use App\Model\InvoiceModel;
 use App\Repository\Query\InvoiceQuery;
 use App\Twig\DateExtensions;
 use App\Twig\Extensions;
+use App\Utils\LocaleSettings;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -56,16 +57,22 @@ abstract class AbstractRendererTest extends KernelTestCase
     protected function getAbstractRenderer(string $classname)
     {
         $requestStack = new RequestStack();
-        $dateSettings = [];
-        $languages = [];
+        $languages = [
+            'en' => [
+                'date' => 'Y.m.d',
+                'duration' => '%%h:%%m h'
+            ]
+        ];
 
         $request = new Request();
         $request->setLocale('en');
         $requestStack->push($request);
 
+        $localeSettings = new LocaleSettings($requestStack, $languages);
+
         $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $dateExtension = new DateExtensions($requestStack, $dateSettings);
-        $extensions = new Extensions($requestStack, $languages);
+        $dateExtension = new DateExtensions($localeSettings);
+        $extensions = new Extensions($requestStack, $localeSettings);
 
         return new $classname($translator, $dateExtension, $extensions);
     }

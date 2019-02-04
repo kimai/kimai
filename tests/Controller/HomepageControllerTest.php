@@ -11,6 +11,7 @@ namespace App\Tests\Controller;
 
 use App\Entity\User;
 use App\Entity\UserPreference;
+use App\Form\Type\InitialViewType;
 use App\Form\Type\LanguageType;
 
 /**
@@ -31,12 +32,19 @@ class HomepageControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, '/en/timesheet/');
     }
 
-    public function testIndexActionWithChangedLanguage()
+    public function testIndexActionWithChangedPreferences()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $user = $this->getUserByRole($em, User::ROLE_USER);
+
+        $pref = (new UserPreference())
+            ->setName('login.initial_view')
+            ->setValue('my_profile')
+            ->setType(InitialViewType::class);
+
+        $user->addPreference($pref);
 
         $pref = (new UserPreference())
             ->setName('language')
@@ -48,6 +56,6 @@ class HomepageControllerTest extends ControllerBaseTest
         $em->persist($pref);
 
         $this->request($client, '/homepage');
-        $this->assertIsRedirect($client, '/ar/timesheet/');
+        $this->assertIsRedirect($client, '/ar/profile/');
     }
 }

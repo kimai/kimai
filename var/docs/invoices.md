@@ -51,6 +51,7 @@ Be aware of the following rules:
   - hide the default templates
   - add additional template source directories
   - see below in `Configure search path` to find out how
+- After you created a new or updated an existing template, you might have to clear the cache with `bin/console cache:clear` to see the results
 
 ### Twig templates
 
@@ -62,6 +63,11 @@ GitHub to find out which variables can be used or debug it with:
 ```twig
 {{ dump(model) }}
 ```
+
+The `dump()` method is only available in `dev` environment, check your `.env` if you are unsure. 
+
+If you want more examples of the available methods for a timesheet record, you can have a look in the other existing templates, 
+like [the template which renders the "My times" page](https://github.com/kevinpapst/kimai2/tree/master/templates/timesheet/index.html.twig).
 
 ### Docx templates
 
@@ -92,9 +98,12 @@ See below in `Template variables` to find out which variables you can use in you
 
 ## Template variables
 
+Be aware, that the following list of variables is only working for the "document" based formats, but NOT for twig templates. 
+Twig templates are rendered actively, it is up to the developer to calculate what is needed.  
+
 ### Global variables 
 
-You can use the following global variables in your templates:
+The documents which are rendered passively (ODS, XLSX, CSV, DOCX) can use the following global variables:
 
 | Key | Description |
 |---|---|

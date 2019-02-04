@@ -88,7 +88,6 @@ class Configuration implements ConfigurationInterface
                     ->end()
                     ->defaultValue([])
                 ->end()
-
                 ->arrayNode('rates')
                     ->requiresAtLeastOneElement()
                     ->useAttributeAsKey('key')
@@ -114,6 +113,30 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                     ->defaultValue([])
+                ->end()
+                ->arrayNode('active_entries')
+                    ->addDefaultsIfNotSet()
+                        ->children()
+                            ->integerNode('soft_limit')
+                                ->defaultValue(1)
+                                ->validate()
+                                    ->ifTrue(function ($value) {
+                                        return $value <= 0;
+                                    })
+                                    ->thenInvalid('The soft_limit must be at least 1')
+                                ->end()
+                            ->end()
+                            ->integerNode('hard_limit')
+                                ->defaultValue(1)
+                                ->validate()
+                                    ->ifTrue(function ($value) {
+                                        return $value <= 0;
+                                    })
+                                    ->thenInvalid('The hard_limit must be at least 1')
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
                 ->end()
             ->end()
         ;
@@ -152,9 +175,12 @@ class Configuration implements ConfigurationInterface
         $node
             ->arrayPrototype()
                 ->children()
-                    ->scalarNode('date_short')->end()
-                    ->scalarNode('duration')->end()
-                    ->scalarNode('duration_short')->end()
+                    ->scalarNode('date_time_type')->defaultValue('yyyy-MM-dd HH:mm')->end()     // for DateTimeType
+                    ->scalarNode('date_time_picker')->defaultValue('YYYY-MM-DD HH:mm')->end()   // for DateTimeType JS component
+                    ->scalarNode('date_type')->defaultValue('yyyy-MM-dd')->end()                // for DateType
+                    ->scalarNode('date_picker')->defaultValue('YYYY-MM-DD')->end()              // for DateType JS component
+                    ->scalarNode('date')->defaultValue('Y-m-d')->end()                          // for display via twig
+                    ->scalarNode('duration')->defaultValue('%%h:%%m h')->end()                  // for display via twig
                 ->end()
             ->end()
         ;
@@ -215,6 +241,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->integerNode('active_warning')
                     ->defaultValue(3)
+                    ->setDeprecated('The node "%node%" at path "%path%" is deprecated, please use "kimai.timesheet.active_entries.soft_limit" instead.')
                 ->end()
                 ->scalarNode('box_color')
                     ->defaultValue('green')

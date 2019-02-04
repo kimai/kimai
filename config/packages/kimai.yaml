@@ -39,6 +39,18 @@ kimai:
         #        days: ['saturday','sunday']
         #        factor: 1.5
 
+        # If you want to limit the max. active entries per user, you can do it here.
+        #
+        # The soft_limit is used as theme setting (formerly "kimai.theme.active_warning"):
+        #   display a warning color if the user has at least X active recordings
+        #
+        # The hard_limit is used to detect how many active records are allowed per user:
+        #   By default a user can only have one active time-record. The first one is stopped when the new one starts.
+        #   When hard_limit is > 1: as soon as the limit is reached and warning is shown and the user has to stop one active entry.
+        active_entries:
+            soft_limit: 1
+            hard_limit: 3
+
     # --------------------------------------------------------------------------------
     # Invoice management
     #invoice:
@@ -89,41 +101,68 @@ kimai:
     # Language specific settings, like the date formats
     languages:
         de:
-            date_short: 'd.m.Y'
-            duration: '%%h:%%m Stunden'
-            duration_short: '%%h:%%m h'
+            date_time_type: 'dd.MM.yyyy HH:mm'
+            date_time_picker: 'DD.MM.YYYY HH:mm'
+            date_type: 'dd.MM.yyyy'
+            date_picker: 'DD.MM.YYYY'
+            date: 'd.m.Y'
+            duration: '%%h:%%m h'
         en:
-            date_short: 'Y-m-d'
-            duration: '%%h:%%m hours'
-            duration_short: '%%h:%%m h'
+            date_time_type: 'yyyy-MM-dd HH:mm'
+            date_time_picker: 'YYYY-MM-DD HH:mm'
+            date_type: 'yyyy-MM-dd'
+            date_picker: 'YYYY-MM-DD'
+            date: 'Y-m-d'
+            duration: '%%h:%%m h'
         pt_BR:
-            date_short: 'd-m-Y'
-            duration: '%%h:%%m horas'
-            duration_short: '%%h:%%m h'
+            date_time_type: 'dd-MM-yyyy HH:mm'
+            date_time_picker: 'DD-MM-YYYY HH:mm'
+            date_type: 'dd-MM-yyyy'
+            date_picker: 'DD-MM-YYYY'
+            date: 'd-m-Y'
+            duration: '%%h:%%m h'
         it:
-            date_short: 'd.m.Y'
+            date_time_type: 'dd.MM.yyyy HH:mm'
+            date_time_picker: 'DD.MM.YYYY HH:mm'
+            date_type: 'dd.MM.yyyy'
+            date_picker: 'DD.MM.YYYY'
+            date: 'd.m.Y'
             duration: '%%h:%%m h'
-            duration_short: '%%h:%%m h'
         fr:
-            date_short: 'd/m/Y'
-            duration: '%%h h %%m min'
-            duration_short: '%%h h %%m'
+            date_time_type: 'dd/MM/yyyy HH:mm'
+            date_time_picker: 'DD/MM/YYYY HH:mm'
+            date_type: 'dd/MM/yyyy'
+            date_picker: 'DD/MM/YYYY'
+            date: 'd/m/Y'
+            duration: '%%h h %%m'
         es:
-            date_short: 'd.m.Y'
+            date_time_type: 'dd.MM.yyyy HH:mm'
+            date_time_picker: 'DD.MM.YYYY HH:mm'
+            date_type: 'dd.MM.yyyy'
+            date_picker: 'DD.MM.YYYY'
+            date: 'd.m.Y'
             duration: '%%h:%%m h'
-            duration_short: '%%h:%%m h'
         ru:
-            date_short: 'd.m.Y'
-            duration: '%%h:%%m Часов'
-            duration_short: '%%h:%%m h'
+            date_time_type: 'dd.MM.yyyy HH:mm'
+            date_time_picker: 'DD.MM.YYYY HH:mm'
+            date_type: 'dd.MM.yyyy'
+            date_picker: 'DD.MM.YYYY'
+            date: 'd.m.Y'
+            duration: '%%h:%%m h'
         ar:
-            date_short: 'Y-m-d'
-            duration: '%%h:%%m hours'
-            duration_short: '%%h:%%m h'
+            date_time_type: 'yyyy-MM-dd HH:mm'
+            date_time_picker: 'YYYY-MM-DD HH:mm'
+            date_type: 'yyyy-MM-dd'
+            date_picker: 'YYYY-MM-DD'
+            date: 'Y-m-d'
+            duration: '%%h:%%m h'
         hu:
-            date_short: 'Y.m.d.'
-            duration: '%%h:%%m óra'
-            duration_short: '%%h:%%m h'
+            date_time_type: 'yyyy.MM.dd HH:mm'
+            date_time_picker: 'YYYY.MM.DD HH:mm'
+            date_type: 'yyyy.MM.dd'
+            date_picker: 'YYYY.MM.DD'
+            date: 'Y.m.d.'
+            duration: '%%h:%%m h'
 
     # --------------------------------------------------------------------------------
     # timesheet calendar configuration
@@ -151,8 +190,6 @@ kimai:
         # BETA test: If you set this to 'selectpicker' the customer/project/activity select boxes will be transformed
         # into a searchable and javascript enhanced input type
         select_type: ~
-        # display a warning color if the user has at least X active recordings
-        active_warning: 3
         # fallback color for all widgets that don't have a dedicated color
         # possible options: blue, black, purple, yellow, red, green
         box_color: 'green'
@@ -215,3 +252,10 @@ kimai:
         activeUsersYear: { title: stats.userActiveYear, query: users, begin: '01 january this year 00:00:00', end: '31 december this year 23:59:59', icon: user, color: yellow }
         activeUsersTotal: { title: stats.userActiveTotal, query: users, icon: user, color: red }
         activeRecordings: { title: stats.activeRecordings, query: active, icon: duration, color: red }
+
+    # Default settings used to populate forms
+    #defaults:
+    #    customer:
+    #        timezone: Europe/Berlin
+    #        country: DE
+    #        currency: EUR

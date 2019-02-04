@@ -30,6 +30,10 @@ class Duration
      */
     public function format($seconds, $format = self::FORMAT_NO_SECONDS)
     {
+        if (null === $seconds) {
+            return null;
+        }
+
         $hour = floor($seconds / 3600);
         $minute = floor(($seconds / 60) % 60);
 

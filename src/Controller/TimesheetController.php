@@ -32,12 +32,12 @@ class TimesheetController extends AbstractController
     use TagImplementationTrait;
 
     /**
-     * @param bool $durationOnly
+     * @param int $hardLimit
      * @param bool $useTags
      */
-    public function __construct(bool $durationOnly, bool $useTags)
+    public function __construct(int $hardLimit, bool $useTags)
     {
-        $this->setDurationMode($durationOnly);
+        $this->setHardLimit($hardLimit);
         $this->setTagMode($useTags);
     }
 
@@ -77,7 +77,7 @@ class TimesheetController extends AbstractController
 
         return $this->render('timesheet/index.html.twig', [
             'entries' => $entries,
-            'page' => $page,
+            'page' => $query->getPage(),
             'query' => $query,
             'showFilter' => $form->isSubmitted(),
             'toolbarForm' => $form->createView(),
@@ -94,7 +94,6 @@ class TimesheetController extends AbstractController
     public function exportAction(Request $request)
     {
         $query = new TimesheetQuery();
-        $query->setOrder(TimesheetQuery::ORDER_ASC);
 
         $form = $this->getToolbarForm($query);
         $form->handleRequest($request);
@@ -172,9 +171,12 @@ class TimesheetController extends AbstractController
             if (count($errors) > 0) {
                 $this->flashError('timesheet.start.error', ['%reason%' => $errors[0]->getPropertyPath() . ' = ' . $errors[0]->getMessage()]);
             } else {
+                $this->stopActiveEntries($user);
+
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($entry);
                 $entityManager->flush();
+
                 $this->flashSuccess('timesheet.start.success');
             }
         } catch (\Exception $ex) {
@@ -194,11 +196,15 @@ class TimesheetController extends AbstractController
      */
     public function editAction(Timesheet $entry, Request $request)
     {
+        $route = 'timesheet';
+
         if (null !== $request->get('page')) {
-            return $this->edit($entry, $request, 'timesheet_paginated', 'timesheet/edit.html.twig');
+            $route = 'timesheet_paginated';
+        } elseif ('calendar' === $request->get('origin')) {
+            $route = 'calendar';
         }
 
-        return $this->edit($entry, $request, 'timesheet', 'timesheet/edit.html.twig');
+        return $this->edit($entry, $request, $route, 'timesheet/edit.html.twig');
     }
 
     /**
@@ -210,7 +216,12 @@ class TimesheetController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        return $this->create($request, 'timesheet', 'timesheet/edit.html.twig');
+        $route = 'timesheet';
+        if ('calendar' === $request->get('origin')) {
+            $route = 'calendar';
+        }
+
+        return $this->create($request, $route, 'timesheet/edit.html.twig');
     }
 
     /**
@@ -238,15 +249,14 @@ class TimesheetController extends AbstractController
 
     /**
      * @param Timesheet $entry
+     * @param string $redirectRoute
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function getCreateForm(Timesheet $entry)
+    protected function getCreateForm(Timesheet $entry, string $redirectRoute)
     {
         return $this->createForm(TimesheetEditForm::class, $entry, [
-            'action' => $this->generateUrl('timesheet_create'),
-            'method' => 'POST',
+            'action' => $this->generateUrl('timesheet_create', ['origin' => $redirectRoute]),
             'include_rate' => $this->isGranted('edit_rate', $entry),
-            'duration_only' => $this->isDurationOnlyMode(),
             'use_tags' => $this->isTagMode(),
         ]);
     }
@@ -254,18 +264,18 @@ class TimesheetController extends AbstractController
     /**
      * @param Timesheet $entry
      * @param int $page
+     * @param string $redirectRoute
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function getEditForm(Timesheet $entry, $page)
+    protected function getEditForm(Timesheet $entry, $page, string $redirectRoute)
     {
         return $this->createForm(TimesheetEditForm::class, $entry, [
             'action' => $this->generateUrl('timesheet_edit', [
                 'id' => $entry->getId(),
-                'page' => $page
+                'page' => $page,
+                'origin' => $redirectRoute,
             ]),
-            'method' => 'POST',
             'include_rate' => $this->isGranted('edit_rate', $entry),
-            'duration_only' => $this->isDurationOnlyMode(),
             'use_tags' => $this->isTagMode(),
         ]);
     }

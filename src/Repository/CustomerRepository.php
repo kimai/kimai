@@ -99,6 +99,7 @@ class CustomerRepository extends AbstractRepository
         $query = new CustomerQuery();
         $query->setHiddenEntity($entity);
         $query->setResultType(CustomerQuery::RESULT_TYPE_QUERYBUILDER);
+        $query->setOrderBy('name');
 
         return $this->findByQuery($query);
     }

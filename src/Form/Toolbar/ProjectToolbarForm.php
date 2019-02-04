@@ -26,6 +26,7 @@ class ProjectToolbarForm extends AbstractToolbarForm
         $this->addPageSizeChoice($builder);
         $this->addVisibilityChoice($builder);
         $this->addCustomerChoice($builder);
+        $this->addHiddenPagination($builder);
     }
 
     /**

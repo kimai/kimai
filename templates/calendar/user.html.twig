@@ -3,9 +3,9 @@
 {% import "macros/datatables.html.twig" as tables %}
 {% import "macros/toolbar.html.twig" as toolbar %}
 
-{% block page_title %}{{ 'timesheet.title'|trans }}{% endblock %}
-{% block page_subtitle %}{{ 'timesheet.subtitle'|trans }}{% endblock %}
-{% block page_actions %}{{ widgets.page_actions({'list': path('timesheet'), 'create': path('timesheet_create')}) }}{% endblock %}
+{% block page_title %}{{ 'calendar.title'|trans }}{% endblock %}
+{% block page_subtitle %}{{ 'calendar.subtitle'|trans }}{% endblock %}
+{% block page_actions %}{{ widgets.page_actions({'list': path('timesheet'), 'create': path('timesheet_create', {'origin': 'calendar'})}) }}{% endblock %}
 
 {% block main %}
     <div class="row">
@@ -91,10 +91,10 @@
                     });
                 },
                 eventClick: function(calEvent, jsEvent, view) {
-                    location.href = '{{ path('timesheet_edit', {id: '-XX-'}) }}'.replace('-XX-', calEvent.id);
+                    location.href = '{{ path('timesheet_edit', {id: '-XX-'}) }}?origin=calendar'.replace('-XX-', calEvent.id);
                 },
                 dayClick: function(date, jsEvent, view) {
-                    location.href = '{{ path('timesheet_create') }}' + '?begin=' + date.format();
+                    location.href = '{{ path('timesheet_create') }}' + '?origin=calendar&begin=' + date.format();
                 },
                 selectable: true,
                 select: function( start, end, jsEvent, view) {

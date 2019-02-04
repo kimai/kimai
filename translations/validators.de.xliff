@@ -10,6 +10,10 @@
                 <source>End date must not be earlier then start date.</source>
                 <target>Das Enddatum darf nicht vor dem Startdatum liegen.</target>
             </trans-unit>
+            <trans-unit id="The begin date cannot be in the future.">
+                <source>The begin date cannot be in the future.</source>
+                <target>Das Startdatum darf nicht in der Zukunft liegen.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

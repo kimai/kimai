@@ -1,5 +1,6 @@
 {% extends "@AdminLTE/layout/form-theme.html.twig" %}
 
+{# Adds the help icon, including a link to the documentation #}
 {% block form_label %}
     {% if form.vars.docu_chapter is defined and form.vars.docu_chapter is not empty %}
         <a href="{{ path('help_chapter', {'chapter': form.vars.docu_chapter}) }}"><i class="{{ 'help'|icon }}"></i></a>
@@ -7,12 +8,17 @@
     {{ parent() }}
 {% endblock form_label %}
 
-{% block choice_widget_collapsed %}
-    {% if 'data-api-url' in attr|keys %}
-        {% set attr = attr|merge({'data-api-url': path(attr['data-api-url']|first, attr['data-api-url']|last)}) %}
-    {% endif %}
-    {{ parent() }}
-{% endblock %}
+{% block daterange_widget %}
+    <div class="input-group">
+        <div class="input-group-addon">
+            <i class="far fa-calendar-alt"></i>
+        </div>
+
+        {% set attr = attr|merge({'data-daterangepickerenable':'on'}) %}
+
+        {{ block('form_widget_simple') }}
+    </div>
+{% endblock daterange_widget %}
 
 {% block tags_input_widget %}
     {% if 'data-api-url' in attr|keys %}

@@ -1172,12 +1172,12 @@
             "version": "v2.6.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/doctrine/doctrine2.git",
+                "url": "https://github.com/doctrine/orm.git",
                 "reference": "d2b4dd71d2a276edd65d0c170375b445f8a4a4a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/d2b4dd71d2a276edd65d0c170375b445f8a4a4a8",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/d2b4dd71d2a276edd65d0c170375b445f8a4a4a8",
                 "reference": "d2b4dd71d2a276edd65d0c170375b445f8a4a4a8",
                 "shasum": ""
             },
@@ -2118,16 +2118,16 @@
         },
         {
             "name": "kevinpapst/adminlte-bundle",
-            "version": "2.1.2",
+            "version": "2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/AdminLTEBundle.git",
-                "reference": "6a085dbfbf46a24cf21b6a1d54fa0086e6ab4cc9"
+                "reference": "f30230e476eec0b22d1f850b6902488d14e0b95e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/6a085dbfbf46a24cf21b6a1d54fa0086e6ab4cc9",
-                "reference": "6a085dbfbf46a24cf21b6a1d54fa0086e6ab4cc9",
+                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/f30230e476eec0b22d1f850b6902488d14e0b95e",
+                "reference": "f30230e476eec0b22d1f850b6902488d14e0b95e",
                 "shasum": ""
             },
             "require": {
@@ -2175,7 +2175,7 @@
                 }
             ],
             "description": "Admin theme bundle for Symfony 4 based on AdminLTE 2.4.8 with FOSUserBundle support",
-            "time": "2018-10-10T11:38:54+00:00"
+            "time": "2019-01-20T16:36:22+00:00"
         },
         {
             "name": "markbaker/complex",

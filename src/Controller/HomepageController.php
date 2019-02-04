@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\Type\InitialViewType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,8 +31,9 @@ class HomepageController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        // make me configurable via UserPreference
-        $route = 'timesheet';
+        /** @var User $user */
+        $user = $this->getUser();
+        $route = $user->getPreferenceValue('login.initial_view', InitialViewType::DEFAULT_VIEW);
 
         /** @var User $user */
         $user = $this->getUser();

@@ -85,16 +85,17 @@ class ProjectRepository extends AbstractRepository
     /**
      * Returns a query builder that is used for ProjectType and your own 'query_builder' option.
      *
-     * @param Project|null $entity
-     * @param Customer|null $customer
+     * @param Project|int|null $entity
+     * @param Customer|int|null $customer
      * @return array|QueryBuilder|Pagerfanta
      */
-    public function builderForEntityType(Project $entity = null, Customer $customer = null)
+    public function builderForEntityType($entity = null, $customer = null)
     {
         $query = new ProjectQuery();
         $query->setHiddenEntity($entity);
         $query->setCustomer($customer);
         $query->setResultType(ProjectQuery::RESULT_TYPE_QUERYBUILDER);
+        $query->setOrderBy('name');
 
         return $this->findByQuery($query);
     }
@@ -120,7 +121,6 @@ class ProjectRepository extends AbstractRepository
             }
             $qb->andWhere('p.visible = 1');
 
-            /** @var Project $entity */
             $entity = $query->getHiddenEntity();
             if (null !== $entity) {
                 $qb->orWhere('p.id = :project')->setParameter('project', $entity);

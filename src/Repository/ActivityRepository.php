@@ -123,6 +123,7 @@ class ActivityRepository extends AbstractRepository
         $query->setResultType(ActivityQuery::RESULT_TYPE_QUERYBUILDER);
         $query->setProject($project);
         $query->setOrderGlobalsFirst(true);
+        $query->setOrderBy('name');
 
         if (null === $activity && $project === null) {
             $query->setGlobalsOnly(true);
@@ -142,8 +143,13 @@ class ActivityRepository extends AbstractRepository
         $qb->select('a', 'p', 'c')
             ->from(Activity::class, 'a')
             ->leftJoin('a.project', 'p')
-            ->leftJoin('p.customer', 'c')
-            ->orderBy('a.' . $query->getOrderBy(), $query->getOrder());
+            ->leftJoin('p.customer', 'c');
+
+        if ($query->isOrderGlobalsFirst()) {
+            $qb->orderBy('a.project', 'ASC');
+        }
+
+        $qb->addOrderBy('a.' . $query->getOrderBy(), $query->getOrder());
 
         $where = $qb->expr()->andX();
 
@@ -200,10 +206,6 @@ class ActivityRepository extends AbstractRepository
         if (null !== $entity) {
             $or->add($qb->expr()->eq('a.id', ':activity'));
             $qb->setParameter('activity', $entity);
-        }
-
-        if ($query->isOrderGlobalsFirst()) {
-            $qb->orderBy('a.project', 'ASC');
         }
 
         if ($or->count() > 0) {

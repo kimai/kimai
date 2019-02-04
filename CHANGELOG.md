@@ -1,5 +1,80 @@
 # Change Log
 
+## [0.7](https://github.com/kevinpapst/kimai2/tree/0.7) (2019-01-28)
+[Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.6.1...0.7)
+
+**Implemented enhancements:**
+
+- Editing from calendar view will return to my times table instead of calendar [\#515](https://github.com/kevinpapst/kimai2/issues/515)
+- Timesheet Export for Admins [\#503](https://github.com/kevinpapst/kimai2/issues/503)
+- Customer List Not Alphabetic [\#499](https://github.com/kevinpapst/kimai2/issues/499)
+- sorting of ${entry.X} values [\#487](https://github.com/kevinpapst/kimai2/issues/487)
+- ${entry.description} needed in Word-Docx [\#485](https://github.com/kevinpapst/kimai2/issues/485)
+- Automatic sort for activities, customers, etc. [\#477](https://github.com/kevinpapst/kimai2/issues/477)
+- User title in the timesheet invoice [\#461](https://github.com/kevinpapst/kimai2/issues/461)
+- global variables for reports/invoices [\#438](https://github.com/kevinpapst/kimai2/issues/438)
+- Configuration option: Only one active record for each user [\#427](https://github.com/kevinpapst/kimai2/issues/427)
+- User creating activity and projects [\#393](https://github.com/kevinpapst/kimai2/issues/393)
+- Configuration option to disable fixed rate and hourly rate from "edit timesheet" [\#330](https://github.com/kevinpapst/kimai2/issues/330)
+- Set other users hourly rate [\#303](https://github.com/kevinpapst/kimai2/issues/303)
+- Feature request - Make "Rate" hideable [\#217](https://github.com/kevinpapst/kimai2/issues/217)
+- fixed null project for advanced invoice calculator [\#462](https://github.com/kevinpapst/kimai2/pull/462) ([kevinpapst](https://github.com/kevinpapst))
+
+**Fixed bugs:**
+
+- This value should be greater than or equal to zero [\#511](https://github.com/kevinpapst/kimai2/issues/511)
+- Timesheet Export for Admins [\#503](https://github.com/kevinpapst/kimai2/issues/503)
+- admin activity: visibility "none" \(no filter\) causes sql-error [\#491](https://github.com/kevinpapst/kimai2/issues/491)
+- login-screen optimizations [\#483](https://github.com/kevinpapst/kimai2/issues/483)
+- Configuration of roles to add/edit customers, projects, activities... [\#479](https://github.com/kevinpapst/kimai2/issues/479)
+- Line breaks for address and payment information fields [\#464](https://github.com/kevinpapst/kimai2/issues/464)
+- Possible to use a decimal in hourly rate field? [\#458](https://github.com/kevinpapst/kimai2/issues/458)
+- Invoice Number Generator possibly not compatible  [\#454](https://github.com/kevinpapst/kimai2/issues/454)
+- users can change their role to system-admin [\#440](https://github.com/kevinpapst/kimai2/issues/440)
+- fix wrong include filename in user registration [\#520](https://github.com/kevinpapst/kimai2/pull/520) ([kevinpapst](https://github.com/kevinpapst))
+- fix segmentation fault - rollback composer dependencies [\#463](https://github.com/kevinpapst/kimai2/pull/463) ([kevinpapst](https://github.com/kevinpapst))
+-  fixed null project for advanced invoice calculator [\#462](https://github.com/kevinpapst/kimai2/pull/462) ([kevinpapst](https://github.com/kevinpapst))
+- fix the restart timesheet button [\#436](https://github.com/kevinpapst/kimai2/pull/436) ([kevinpapst](https://github.com/kevinpapst))
+
+**Closed issues:**
+
+- Redirecting when using Kimai on a subdirectory + reverse proxy [\#492](https://github.com/kevinpapst/kimai2/issues/492)
+- Installation \(Cannot declare.... in use\) [\#455](https://github.com/kevinpapst/kimai2/issues/455)
+- New Number Generator not recognized [\#453](https://github.com/kevinpapst/kimai2/issues/453)
+- de/help/invoices returns 404 error [\#452](https://github.com/kevinpapst/kimai2/issues/452)
+- Can you Add Brazilian Portuguese Translation? I can help it.. [\#444](https://github.com/kevinpapst/kimai2/issues/444)
+- replace all selects with smart-selects and live-search [\#441](https://github.com/kevinpapst/kimai2/issues/441)
+- use parsedown-extra for rendering markdown [\#388](https://github.com/kevinpapst/kimai2/issues/388)
+- Think about a cooler name [\#133](https://github.com/kevinpapst/kimai2/issues/133)
+
+**Merged pull requests:**
+
+- pagination without reload while keeping filters applied [\#521](https://github.com/kevinpapst/kimai2/pull/521) ([kevinpapst](https://github.com/kevinpapst))
+- go back to calendar after editing and creation of time-records [\#519](https://github.com/kevinpapst/kimai2/pull/519) ([kevinpapst](https://github.com/kevinpapst))
+- fetch toolbar results without page reload [\#518](https://github.com/kevinpapst/kimai2/pull/518) ([kevinpapst](https://github.com/kevinpapst))
+- Form and theme improvements [\#513](https://github.com/kevinpapst/kimai2/pull/513) ([kevinpapst](https://github.com/kevinpapst))
+- validation for future and negative times [\#512](https://github.com/kevinpapst/kimai2/pull/512) ([kevinpapst](https://github.com/kevinpapst))
+- alphabetical order for selectboxes [\#510](https://github.com/kevinpapst/kimai2/pull/510) ([kevinpapst](https://github.com/kevinpapst))
+- Export team timesheets [\#508](https://github.com/kevinpapst/kimai2/pull/508) ([kevinpapst](https://github.com/kevinpapst))
+- fix broken sql in activity admin [\#506](https://github.com/kevinpapst/kimai2/pull/506) ([kevinpapst](https://github.com/kevinpapst))
+- display invoice entries in ascending order [\#505](https://github.com/kevinpapst/kimai2/pull/505) ([kevinpapst](https://github.com/kevinpapst))
+- Improve DOCX template row [\#504](https://github.com/kevinpapst/kimai2/pull/504) ([kevinpapst](https://github.com/kevinpapst))
+- do not display admin menu if it has no children [\#500](https://github.com/kevinpapst/kimai2/pull/500) ([kevinpapst](https://github.com/kevinpapst))
+- login-screen optimizations [\#493](https://github.com/kevinpapst/kimai2/pull/493) ([lduer](https://github.com/lduer))
+- preg\_replace for md-file-extensions when rendering correct link… [\#482](https://github.com/kevinpapst/kimai2/pull/482) ([lduer](https://github.com/lduer))
+- Better composer install in the docker [\#481](https://github.com/kevinpapst/kimai2/pull/481) ([tobybatch](https://github.com/tobybatch))
+- Update dockerfile for https in composer installer [\#478](https://github.com/kevinpapst/kimai2/pull/478) ([scolson](https://github.com/scolson))
+- support line breaks in docx [\#466](https://github.com/kevinpapst/kimai2/pull/466) ([kevinpapst](https://github.com/kevinpapst))
+- updated README and docu [\#465](https://github.com/kevinpapst/kimai2/pull/465) ([kevinpapst](https://github.com/kevinpapst))
+- allow decimals in users hourly rate [\#460](https://github.com/kevinpapst/kimai2/pull/460) ([kevinpapst](https://github.com/kevinpapst))
+- updated all composer packages [\#459](https://github.com/kevinpapst/kimai2/pull/459) ([kevinpapst](https://github.com/kevinpapst))
+- moved some packages to dev requirements [\#456](https://github.com/kevinpapst/kimai2/pull/456) ([kevinpapst](https://github.com/kevinpapst))
+- Added portuguese translations [\#446](https://github.com/kevinpapst/kimai2/pull/446) ([marquesmatheus](https://github.com/marquesmatheus))
+- Simplify timesheet edit form if only one customer is existing [\#443](https://github.com/kevinpapst/kimai2/pull/443) ([kevinpapst](https://github.com/kevinpapst))
+- added project variables for invoice templates [\#439](https://github.com/kevinpapst/kimai2/pull/439) ([kevinpapst](https://github.com/kevinpapst))
+- added configurable permission system [\#424](https://github.com/kevinpapst/kimai2/pull/424) ([kevinpapst](https://github.com/kevinpapst))
+- Only one running timesheet: automatically stop others [\#386](https://github.com/kevinpapst/kimai2/pull/386) ([lduer](https://github.com/lduer))
+
 ## [0.6.1](https://github.com/kevinpapst/kimai2/tree/0.6.1) (2018-11-19)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.6...0.6.1)
 
@@ -20,6 +95,24 @@
 ## [0.6](https://github.com/kevinpapst/kimai2/tree/0.6) (2018-11-18)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.5...0.6)
 
+**Implemented enhancements:**
+
+- Language setting does not work immediately [\#418](https://github.com/kevinpapst/kimai2/issues/418)
+- Merge projects and/or activities [\#406](https://github.com/kevinpapst/kimai2/issues/406)
+- Global activities support for Kimai 1 importer [\#400](https://github.com/kevinpapst/kimai2/issues/400)
+- Invoice Grouped by Activity [\#379](https://github.com/kevinpapst/kimai2/issues/379)
+- Set the order of columns \(in my times page\) [\#371](https://github.com/kevinpapst/kimai2/issues/371)
+- Columns on small/narrow displays \(mobile\) on „my times“ page [\#370](https://github.com/kevinpapst/kimai2/issues/370)
+- Make settings more accessible [\#365](https://github.com/kevinpapst/kimai2/issues/365)
+- Data validation for register page username field. [\#360](https://github.com/kevinpapst/kimai2/issues/360)
+- Option for setting default calendar view [\#359](https://github.com/kevinpapst/kimai2/issues/359)
+- Activities just Duration [\#334](https://github.com/kevinpapst/kimai2/issues/334)
+- API: Add filtering/sorting/limits [\#333](https://github.com/kevinpapst/kimai2/issues/333)
+- API: Timesheets [\#315](https://github.com/kevinpapst/kimai2/issues/315)
+- Feature request: Quick search box for activities when creating new timesheet [\#307](https://github.com/kevinpapst/kimai2/issues/307)
+- Separate Customer / Project / Activity input when logging time [\#250](https://github.com/kevinpapst/kimai2/issues/250)
+- Interactive help after fresh installation [\#94](https://github.com/kevinpapst/kimai2/issues/94)
+
 **Fixed bugs:**
 
 - Invoicing export - 500: Internal Server Error [\#390](https://github.com/kevinpapst/kimai2/issues/390)
@@ -30,31 +123,16 @@
 
 **Closed issues:**
 
-- Language setting does not work immediately [\#418](https://github.com/kevinpapst/kimai2/issues/418)
 - After installation no graphic/background/icons shown [\#417](https://github.com/kevinpapst/kimai2/issues/417)
 - Form fields should be always visible [\#408](https://github.com/kevinpapst/kimai2/issues/408)
-- Merge projects and/or activities [\#406](https://github.com/kevinpapst/kimai2/issues/406)
 - Active filter should stay open [\#405](https://github.com/kevinpapst/kimai2/issues/405)
 - Make project field optional [\#401](https://github.com/kevinpapst/kimai2/issues/401)
-- Global activities support for Kimai 1 importer [\#400](https://github.com/kevinpapst/kimai2/issues/400)
 - Unrecognized Options "renderer, number\_generator" under "kimai.invoice" [\#381](https://github.com/kevinpapst/kimai2/issues/381)
-- Invoice Grouped by Activity [\#379](https://github.com/kevinpapst/kimai2/issues/379)
-- Set the order of columns \(in my times page\) [\#371](https://github.com/kevinpapst/kimai2/issues/371)
-- Columns on small/narrow displays \(mobile\) on „my times“ page [\#370](https://github.com/kevinpapst/kimai2/issues/370)
-- Make settings more accessible [\#365](https://github.com/kevinpapst/kimai2/issues/365)
-- Data validation for register page username field. [\#360](https://github.com/kevinpapst/kimai2/issues/360)
-- Option for setting default calendar view [\#359](https://github.com/kevinpapst/kimai2/issues/359)
 - 500: Internal Server Error after login \(new install\) [\#342](https://github.com/kevinpapst/kimai2/issues/342)
 - Invoices export error [\#341](https://github.com/kevinpapst/kimai2/issues/341)
-- Activities just Duration [\#334](https://github.com/kevinpapst/kimai2/issues/334)
-- API: Add filtering/sorting/limits [\#333](https://github.com/kevinpapst/kimai2/issues/333)
 - add the same activity for multiple projects [\#325](https://github.com/kevinpapst/kimai2/issues/325)
 - API: Endpoint for API docs needs session cookie [\#319](https://github.com/kevinpapst/kimai2/issues/319)
-- API: Timesheets [\#315](https://github.com/kevinpapst/kimai2/issues/315)
-- Feature request: Quick search box for activities when creating new timesheet [\#307](https://github.com/kevinpapst/kimai2/issues/307)
 - docker image for kimai2 [\#284](https://github.com/kevinpapst/kimai2/issues/284)
-- Separate Customer / Project / Activity input when logging time [\#250](https://github.com/kevinpapst/kimai2/issues/250)
-- Interactive help after fresh installation [\#94](https://github.com/kevinpapst/kimai2/issues/94)
 
 **Merged pull requests:**
 
@@ -94,16 +172,10 @@
 ## [0.5](https://github.com/kevinpapst/kimai2/tree/0.5) (2018-09-27)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.4...0.5)
 
-**Fixed bugs:**
+**Implemented enhancements:**
 
-- Excel Output not containing data [\#327](https://github.com/kevinpapst/kimai2/issues/327)
-
-**Closed issues:**
-
-- Creating database schema throws exceptions [\#322](https://github.com/kevinpapst/kimai2/issues/322)
 - API: Kimai metadata endpoint [\#320](https://github.com/kevinpapst/kimai2/issues/320)
 - Support Markdown in timesheet description [\#295](https://github.com/kevinpapst/kimai2/issues/295)
-- Add permission voter for invoices and templates [\#293](https://github.com/kevinpapst/kimai2/issues/293)
 - Add support for MS Office templates [\#283](https://github.com/kevinpapst/kimai2/issues/283)
 - Adding rates to customers, projects and tasks [\#271](https://github.com/kevinpapst/kimai2/issues/271)
 - Delete invoice templates [\#267](https://github.com/kevinpapst/kimai2/issues/267)
@@ -113,6 +185,15 @@
 - Add support for OpenOffice templates [\#223](https://github.com/kevinpapst/kimai2/issues/223)
 - Feature Request - Excel Output of times [\#221](https://github.com/kevinpapst/kimai2/issues/221)
 - Add hourly rate options [\#111](https://github.com/kevinpapst/kimai2/issues/111)
+
+**Fixed bugs:**
+
+- Excel Output not containing data [\#327](https://github.com/kevinpapst/kimai2/issues/327)
+
+**Closed issues:**
+
+- Creating database schema throws exceptions [\#322](https://github.com/kevinpapst/kimai2/issues/322)
+- Add permission voter for invoices and templates [\#293](https://github.com/kevinpapst/kimai2/issues/293)
 
 **Merged pull requests:**
 
@@ -135,6 +216,10 @@
 ## [0.4](https://github.com/kevinpapst/kimai2/tree/0.4) (2018-09-01)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.3...0.4)
 
+**Implemented enhancements:**
+
+- Delete user [\#225](https://github.com/kevinpapst/kimai2/issues/225)
+
 **Fixed bugs:**
 
 - Don't allow to stop an already stopped entry [\#282](https://github.com/kevinpapst/kimai2/issues/282)
@@ -148,7 +233,6 @@
 - Administration of projects throws error if locale is "de" [\#247](https://github.com/kevinpapst/kimai2/issues/247)
 - Web Installer Package for near-automated installs from browser [\#235](https://github.com/kevinpapst/kimai2/issues/235)
 - Improve dashboard display [\#280](https://github.com/kevinpapst/kimai2/issues/280)
-- Delete user [\#225](https://github.com/kevinpapst/kimai2/issues/225)
 - Feature request - Monthly overview / report [\#207](https://github.com/kevinpapst/kimai2/issues/207)
 
 **Merged pull requests:**
@@ -179,6 +263,16 @@
 ## [0.3](https://github.com/kevinpapst/kimai2/tree/0.3) (2018-07-22)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.2...0.3)
 
+**Implemented enhancements:**
+
+- Install Kimai as WebApp [\#203](https://github.com/kevinpapst/kimai2/issues/203)
+- Replace AvanzuAdminTheme with AdminLTE bundle [\#201](https://github.com/kevinpapst/kimai2/issues/201)
+- Add dynamic column filter [\#174](https://github.com/kevinpapst/kimai2/issues/174)
+- Add register user function [\#164](https://github.com/kevinpapst/kimai2/issues/164)
+- Add forgot password function - login screen [\#163](https://github.com/kevinpapst/kimai2/issues/163)
+- Integrate FOSUserBundle \(for registration, password-reset, etc.\) [\#144](https://github.com/kevinpapst/kimai2/issues/144)
+- added dynamic column filter \#174 [\#184](https://github.com/kevinpapst/kimai2/pull/184) ([kevinpapst](https://github.com/kevinpapst))
+
 **Fixed bugs:**
 
 - Missing assets in fresh installation [\#213](https://github.com/kevinpapst/kimai2/issues/213)
@@ -192,16 +286,10 @@
 - Error on bin/console doctrine:schema:create [\#191](https://github.com/kevinpapst/kimai2/issues/191)
 - Verifying email configuration [\#226](https://github.com/kevinpapst/kimai2/issues/226)
 - Add favicon [\#205](https://github.com/kevinpapst/kimai2/issues/205)
-- Install Kimai as WebApp [\#203](https://github.com/kevinpapst/kimai2/issues/203)
-- Replace AvanzuAdminTheme with AdminLTE bundle [\#201](https://github.com/kevinpapst/kimai2/issues/201)
 - Document DB requirements in install docu [\#196](https://github.com/kevinpapst/kimai2/issues/196)
 - easier creation of tasks [\#195](https://github.com/kevinpapst/kimai2/issues/195)
 - Integrate lock bot [\#183](https://github.com/kevinpapst/kimai2/issues/183)
 - Upgrade to FontAwesome 5 [\#179](https://github.com/kevinpapst/kimai2/issues/179)
-- Add dynamic column filter [\#174](https://github.com/kevinpapst/kimai2/issues/174)
-- Add register user function [\#164](https://github.com/kevinpapst/kimai2/issues/164)
-- Add forgot password function - login screen [\#163](https://github.com/kevinpapst/kimai2/issues/163)
-- Integrate FOSUserBundle \(for registration, password-reset, etc.\) [\#144](https://github.com/kevinpapst/kimai2/issues/144)
 
 **Merged pull requests:**
 
@@ -220,42 +308,24 @@
 - improved install docs and composer [\#187](https://github.com/kevinpapst/kimai2/pull/187) ([kevinpapst](https://github.com/kevinpapst))
 - added lock-bot config \#183 [\#186](https://github.com/kevinpapst/kimai2/pull/186) ([kevinpapst](https://github.com/kevinpapst))
 - Composer package name [\#185](https://github.com/kevinpapst/kimai2/pull/185) ([kevinpapst](https://github.com/kevinpapst))
-- added dynamic column filter \#174 [\#184](https://github.com/kevinpapst/kimai2/pull/184) ([kevinpapst](https://github.com/kevinpapst))
 - updated to font-awesome 5 \#179 [\#181](https://github.com/kevinpapst/kimai2/pull/181) ([kevinpapst](https://github.com/kevinpapst))
 - language specific money and date display [\#180](https://github.com/kevinpapst/kimai2/pull/180) ([kevinpapst](https://github.com/kevinpapst))
 
 ## [0.2](https://github.com/kevinpapst/kimai2/tree/0.2) (2018-06-23)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.1...0.2)
 
-**Fixed bugs:**
-
-- Change to users language after login [\#7](https://github.com/kevinpapst/kimai2/issues/7)
-- Prevent end time before start time [\#152](https://github.com/kevinpapst/kimai2/issues/152)
-- Importing old data fails [\#145](https://github.com/kevinpapst/kimai2/issues/145)
-- Translate LanguageType choices  [\#83](https://github.com/kevinpapst/kimai2/issues/83)
-- Mobile alignments and toolbar \#151 [\#157](https://github.com/kevinpapst/kimai2/pull/157) ([kevinpapst](https://github.com/kevinpapst))
-- Improved mobile view \#151 [\#150](https://github.com/kevinpapst/kimai2/pull/150) ([kevinpapst](https://github.com/kevinpapst))
-
-**Closed issues:**
+**Implemented enhancements:**
 
 - Add english translation [\#8](https://github.com/kevinpapst/kimai2/issues/8)
 - Add configurable system configuration [\#6](https://github.com/kevinpapst/kimai2/issues/6)
-- Add CHANGELOG.md [\#177](https://github.com/kevinpapst/kimai2/issues/177)
 - Hide notifications after some seconds [\#169](https://github.com/kevinpapst/kimai2/issues/169)
-- Add preview blog message and info text on old website [\#162](https://github.com/kevinpapst/kimai2/issues/162)
 - Setup Scrutinizer to run code sniffer [\#158](https://github.com/kevinpapst/kimai2/issues/158)
 - Local config to overwrite settings [\#153](https://github.com/kevinpapst/kimai2/issues/153)
 - Improve mobile view [\#151](https://github.com/kevinpapst/kimai2/issues/151)
-- Upgrade to Symfony 4.1 [\#149](https://github.com/kevinpapst/kimai2/issues/149)
-- Replace has\_role\(\) with is\_granted\(\) [\#148](https://github.com/kevinpapst/kimai2/issues/148)
 - Add help text to form elements [\#138](https://github.com/kevinpapst/kimai2/issues/138)
-- Duration mode: creating new timesheet records prefills duration with some seconds [\#137](https://github.com/kevinpapst/kimai2/issues/137)
 - Add duration-only mode [\#131](https://github.com/kevinpapst/kimai2/issues/131)
 - Add help controller [\#129](https://github.com/kevinpapst/kimai2/issues/129)
-- \[RFC\] Encore: configureFilenames with hash after filename instead of in the filename [\#125](https://github.com/kevinpapst/kimai2/issues/125)
-- \[RFC\] Kimai license header [\#124](https://github.com/kevinpapst/kimai2/issues/124)
 - Secure create-user command [\#123](https://github.com/kevinpapst/kimai2/issues/123)
-- Setup travis to run phpunit tests [\#120](https://github.com/kevinpapst/kimai2/issues/120)
 - Add command for building a production release [\#115](https://github.com/kevinpapst/kimai2/issues/115)
 - Add webpack and webpack-encore for frontend assets [\#113](https://github.com/kevinpapst/kimai2/issues/113)
 - Add time rounding option [\#112](https://github.com/kevinpapst/kimai2/issues/112)
@@ -265,7 +335,6 @@
 - Add importer from Kimai v1 [\#102](https://github.com/kevinpapst/kimai2/issues/102)
 - Setup error pages [\#100](https://github.com/kevinpapst/kimai2/issues/100)
 - Add basic HTML invoice rendering [\#97](https://github.com/kevinpapst/kimai2/issues/97)
-- Add russian translation [\#95](https://github.com/kevinpapst/kimai2/issues/95)
 - Filter user in timesheet admin [\#93](https://github.com/kevinpapst/kimai2/issues/93)
 - Support to switch theme settings [\#89](https://github.com/kevinpapst/kimai2/issues/89)
 - Roles should become a real table [\#86](https://github.com/kevinpapst/kimai2/issues/86)
@@ -274,6 +343,31 @@
 - Add remember me login [\#53](https://github.com/kevinpapst/kimai2/issues/53)
 - Add preferences sidebar [\#10](https://github.com/kevinpapst/kimai2/issues/10)
 - Add user settings [\#9](https://github.com/kevinpapst/kimai2/issues/9)
+- Mobile alignments and toolbar \#151 [\#157](https://github.com/kevinpapst/kimai2/pull/157) ([kevinpapst](https://github.com/kevinpapst))
+- Local config \#153 [\#156](https://github.com/kevinpapst/kimai2/pull/156) ([kevinpapst](https://github.com/kevinpapst))
+- Filter in hidden toolbar - improved mobile \#151 [\#155](https://github.com/kevinpapst/kimai2/pull/155) ([kevinpapst](https://github.com/kevinpapst))
+- Improved mobile view \#151 [\#150](https://github.com/kevinpapst/kimai2/pull/150) ([kevinpapst](https://github.com/kevinpapst))
+
+**Fixed bugs:**
+
+- Change to users language after login [\#7](https://github.com/kevinpapst/kimai2/issues/7)
+- Prevent end time before start time [\#152](https://github.com/kevinpapst/kimai2/issues/152)
+- Importing old data fails [\#145](https://github.com/kevinpapst/kimai2/issues/145)
+- Translate LanguageType choices  [\#83](https://github.com/kevinpapst/kimai2/issues/83)
+- Mobile alignments and toolbar \\#151 [\#157](https://github.com/kevinpapst/kimai2/pull/157) ([kevinpapst](https://github.com/kevinpapst))
+- Improved mobile view \\#151 [\#150](https://github.com/kevinpapst/kimai2/pull/150) ([kevinpapst](https://github.com/kevinpapst))
+
+**Closed issues:**
+
+- Add CHANGELOG.md [\#177](https://github.com/kevinpapst/kimai2/issues/177)
+- Add preview blog message and info text on old website [\#162](https://github.com/kevinpapst/kimai2/issues/162)
+- Upgrade to Symfony 4.1 [\#149](https://github.com/kevinpapst/kimai2/issues/149)
+- Replace has\_role\(\) with is\_granted\(\) [\#148](https://github.com/kevinpapst/kimai2/issues/148)
+- Duration mode: creating new timesheet records prefills duration with some seconds [\#137](https://github.com/kevinpapst/kimai2/issues/137)
+- \[RFC\] Encore: configureFilenames with hash after filename instead of in the filename [\#125](https://github.com/kevinpapst/kimai2/issues/125)
+- \[RFC\] Kimai license header [\#124](https://github.com/kevinpapst/kimai2/issues/124)
+- Setup travis to run phpunit tests [\#120](https://github.com/kevinpapst/kimai2/issues/120)
+- Add russian translation [\#95](https://github.com/kevinpapst/kimai2/issues/95)
 
 **Merged pull requests:**
 
@@ -289,8 +383,6 @@
 - added scrutinizer config \#158 [\#161](https://github.com/kevinpapst/kimai2/pull/161) ([kevinpapst](https://github.com/kevinpapst))
 - Update to Symfony 4.1 \#149 [\#160](https://github.com/kevinpapst/kimai2/pull/160) ([kevinpapst](https://github.com/kevinpapst))
 - Updated README [\#159](https://github.com/kevinpapst/kimai2/pull/159) ([kevinpapst](https://github.com/kevinpapst))
-- Local config \#153 [\#156](https://github.com/kevinpapst/kimai2/pull/156) ([kevinpapst](https://github.com/kevinpapst))
-- Filter in hidden toolbar - improved mobile \#151 [\#155](https://github.com/kevinpapst/kimai2/pull/155) ([kevinpapst](https://github.com/kevinpapst))
 - added russian translation \#95 [\#147](https://github.com/kevinpapst/kimai2/pull/147) ([kevinpapst](https://github.com/kevinpapst))
 - Bugfix importer \(\#145\) [\#146](https://github.com/kevinpapst/kimai2/pull/146) ([kevinpapst](https://github.com/kevinpapst))
 - help text and link for form labels \#138 [\#143](https://github.com/kevinpapst/kimai2/pull/143) ([kevinpapst](https://github.com/kevinpapst))
@@ -322,7 +414,7 @@
 - upgraded to symfony 4 \#74 [\#81](https://github.com/kevinpapst/kimai2/pull/81) ([kevinpapst](https://github.com/kevinpapst))
 
 ## [0.1](https://github.com/kevinpapst/kimai2/tree/0.1) (2018-01-10)
-**Closed issues:**
+**Implemented enhancements:**
 
 - Hide inactive delete user button [\#78](https://github.com/kevinpapst/kimai2/issues/78)
 - Delete activity [\#71](https://github.com/kevinpapst/kimai2/issues/71)

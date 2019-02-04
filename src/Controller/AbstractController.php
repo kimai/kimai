@@ -42,15 +42,7 @@ abstract class AbstractController extends Controller
      */
     protected function flashSuccess($translationKey, $parameter = [])
     {
-        if (!empty($parameter)) {
-            $translationKey = $this->getTranslator()->trans(
-                $translationKey,
-                $parameter,
-                self::DOMAIN_FLASH
-            );
-        }
-
-        $this->addFlash(self::FLASH_SUCCESS, $translationKey);
+        $this->addFlashTranslated(self::FLASH_SUCCESS, $translationKey, $parameter);
     }
 
     /**
@@ -61,15 +53,7 @@ abstract class AbstractController extends Controller
      */
     protected function flashWarning($translationKey, $parameter = [])
     {
-        if (!empty($parameter)) {
-            $translationKey = $this->getTranslator()->trans(
-                $translationKey,
-                $parameter,
-                self::DOMAIN_FLASH
-            );
-        }
-
-        $this->addFlash(self::FLASH_WARNING, $translationKey);
+        $this->addFlashTranslated(self::FLASH_WARNING, $translationKey, $parameter);
     }
 
     /**
@@ -80,14 +64,29 @@ abstract class AbstractController extends Controller
      */
     protected function flashError($translationKey, $parameter = [])
     {
+        $this->addFlashTranslated(self::FLASH_ERROR, $translationKey, $parameter);
+    }
+
+    /**
+     * Adds a fully translated (both $message and all keys in $parameter) flash message to the stack.
+     *
+     * @param string $type
+     * @param string $message
+     * @param array $parameter
+     */
+    protected function addFlashTranslated(string $type, string $message, array $parameter = [])
+    {
         if (!empty($parameter)) {
-            $translationKey = $this->getTranslator()->trans(
-                $translationKey,
+            foreach ($parameter as $key => $value) {
+                $parameter[$key] = $this->getTranslator()->trans($value, [], self::DOMAIN_FLASH);
+            }
+            $message = $this->getTranslator()->trans(
+                $message,
                 $parameter,
                 self::DOMAIN_FLASH
             );
         }
 
-        $this->addFlash(self::FLASH_ERROR, $translationKey);
+        $this->addFlash($type, $message);
     }
 }

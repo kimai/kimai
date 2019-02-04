@@ -26,8 +26,7 @@ class InvoiceToolbarForm extends AbstractToolbarForm
     {
         $this->addTemplateChoice($builder);
         $this->addUserChoice($builder);
-        $this->addStartDateChoice($builder);
-        $this->addEndDateChoice($builder);
+        $this->addDateRangeChoice($builder);
         $this->addCustomerChoice($builder);
         $this->addProjectChoice($builder);
         $this->addActivityChoice($builder);
@@ -39,7 +38,8 @@ class InvoiceToolbarForm extends AbstractToolbarForm
     protected function addTemplateChoice(FormBuilderInterface $builder)
     {
         $builder->add('template', InvoiceTemplateType::class, [
-            'required' => true
+            'required' => false,
+            'placeholder' => null,
         ]);
     }
 

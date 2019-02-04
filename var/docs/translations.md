@@ -33,7 +33,8 @@ Adjust the file `config/packages/kimai.yaml` and add the language settings below
 kimai:
     languages:
         xx:
-            date_short: 'd.m.Y'
+            date: 'd.m.Y'
+            # there are more settings, copy them from 'en'
 ```
 
 Append the new locale in the file `config/services.yaml` at `parameters.app_locales` divided by a pipe:
