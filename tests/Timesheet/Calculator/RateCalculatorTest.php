@@ -166,8 +166,11 @@ class RateCalculatorTest extends TestCase
         $seconds = 41837;
 
         $end = new \DateTime();
+        $end->setTime(18, 0, 0);
+        $end->setTimezone(new \DateTimeZone('UTC'));
         $start = clone $end;
         $start->setTimestamp($end->getTimestamp() - $seconds);
+        $start->setTimezone(new \DateTimeZone('UTC'));
 
         $record = new Timesheet();
         $record->setUser($this->getTestUser());
@@ -192,6 +195,7 @@ class RateCalculatorTest extends TestCase
     {
         $start = new \DateTime();
         $start->setTime(12, 0, 0);
+        $start->setTimezone(new \DateTimeZone('UTC'));
         $day = $start->format('l');
 
         return [
