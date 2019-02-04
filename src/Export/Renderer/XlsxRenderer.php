@@ -15,7 +15,6 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class XlsxRenderer extends AbstractSpreadsheetRenderer implements RendererInterface
 {
-
     /**
      * @return string
      */

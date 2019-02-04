@@ -368,6 +368,7 @@ class Timesheet
     public function setExported(bool $exported)
     {
         $this->exported = $exported;
+
         return $this;
     }
 

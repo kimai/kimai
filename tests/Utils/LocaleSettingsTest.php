@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class LocaleSettingsTest extends TestCase
 {
-
     protected function getRequestStack(string $locale)
     {
         $request = new Request();

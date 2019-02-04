@@ -121,8 +121,7 @@ abstract class AbstractSpreadsheetRenderer
         $currency = false;
         $rateTotal = 0;
 
-        foreach ($timesheets as $timesheet)
-        {
+        foreach ($timesheets as $timesheet) {
             $entryHeaderColumn = 1;
 
             $durationTotal += $timesheet->getDuration();

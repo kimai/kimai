@@ -15,7 +15,9 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class OdsRenderer extends AbstractSpreadsheetRenderer implements RendererInterface
 {
-
+    /**
+     * @return string
+     */
     public function getFileExtension(): string
     {
         return '.ods';

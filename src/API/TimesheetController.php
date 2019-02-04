@@ -253,6 +253,7 @@ class TimesheetController extends BaseApiController
         if (false === $form->isValid()) {
             $view = new View($form, Response::HTTP_OK);
             $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
+
             return $this->viewHandler->handle($view);
         }
 
@@ -273,6 +274,7 @@ class TimesheetController extends BaseApiController
 
         $view = new View($timesheet, Response::HTTP_OK);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
+
         return $this->viewHandler->handle($view);
     }
 }

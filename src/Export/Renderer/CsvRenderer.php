@@ -15,7 +15,6 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class CsvRenderer extends AbstractSpreadsheetRenderer implements RendererInterface
 {
-
     /**
      * @return string
      */
