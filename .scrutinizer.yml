@@ -4,7 +4,7 @@ build:
         php:
           version: 7.2
             ini:
-                'date.timezone': 'UTC'
+                date.timezone: 'UTC'
     nodes:
         analysis:
             tests:
