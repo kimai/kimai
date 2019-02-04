@@ -13,7 +13,7 @@ if (typeof jQuery === 'undefined') {
 }
 
 if (typeof moment === 'undefined') {
-    throw new Error('Kimai requires jQuery');
+    throw new Error('Kimai requires moment.js');
 }
 
 /* kimai
