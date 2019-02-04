@@ -177,7 +177,7 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('date_type')->defaultValue('yyyy-MM-dd')->end()                // for DateType
                     ->scalarNode('date_picker')->defaultValue('YYYY-MM-DD')->end()              // for DateType JS component
                     ->scalarNode('date')->defaultValue('Y-m-d')->end()                          // for display via twig
-                    ->scalarNode('date_time')->defaultValue('m-d H:i')->end()
+                    ->scalarNode('date_time')->defaultValue('m-d H:i')->end()                   // for display via twig
                     ->scalarNode('duration')->defaultValue('%%h:%%m h')->end()                  // for display via twig
                 ->end()
             ->end()

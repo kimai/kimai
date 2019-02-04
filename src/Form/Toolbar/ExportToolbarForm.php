@@ -28,8 +28,7 @@ class ExportToolbarForm extends AbstractToolbarForm
     {
         $this->addExportStateChoice($builder);
         $this->addUserChoice($builder);
-        $this->addStartDateChoice($builder);
-        $this->addEndDateChoice($builder);
+        $this->addDateRangeChoice($builder);
         $this->addCustomerChoice($builder);
         $this->addProjectChoice($builder);
         $this->addActivityChoice($builder);
