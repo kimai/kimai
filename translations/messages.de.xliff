@@ -315,6 +315,10 @@
                 <source>label.end</source>
                 <target>Bis</target>
             </trans-unit>
+            <trans-unit id="label.daterange">
+                <source>label.daterange</source>
+                <target>Zeitraum</target>
+            </trans-unit>
             <trans-unit id="modal.columns.title">
                 <source>modal.columns.title</source>
                 <target>Ändere Spalten-Sichtbarkeit</target>

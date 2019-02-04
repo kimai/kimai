@@ -11,6 +11,7 @@ namespace App\Repository\Query;
 
 use App\Entity\Activity;
 use App\Entity\User;
+use App\Form\Model\DateRange;
 
 /**
  * Can be used for advanced timesheet repository queries.
@@ -50,13 +51,14 @@ class TimesheetQuery extends ActivityQuery
      */
     protected $exported = self::STATE_ALL;
     /**
-     * @var \DateTime
+     * @var DateRange
      */
-    protected $begin;
-    /**
-     * @var \DateTime
-     */
-    protected $end;
+    protected $dateRange;
+
+    public function __construct()
+    {
+        $this->dateRange = new DateRange();
+    }
 
     /**
      * @return User
@@ -155,7 +157,7 @@ class TimesheetQuery extends ActivityQuery
      */
     public function getBegin()
     {
-        return $this->begin;
+        return $this->dateRange->getBegin();
     }
 
     /**
@@ -164,7 +166,7 @@ class TimesheetQuery extends ActivityQuery
      */
     public function setBegin($begin)
     {
-        $this->begin = $begin;
+        $this->dateRange->setBegin($begin);
 
         return $this;
     }
@@ -174,7 +176,7 @@ class TimesheetQuery extends ActivityQuery
      */
     public function getEnd()
     {
-        return $this->end;
+        return $this->dateRange->getEnd();
     }
 
     /**
@@ -183,7 +185,26 @@ class TimesheetQuery extends ActivityQuery
      */
     public function setEnd($end)
     {
-        $this->end = $end;
+        $this->dateRange->setEnd($end);
+
+        return $this;
+    }
+
+    /**
+     * @return DateRange
+     */
+    public function getDateRange(): DateRange
+    {
+        return $this->dateRange;
+    }
+
+    /**
+     * @param DateRange $dateRange
+     * @return TimesheetQuery
+     */
+    public function setDateRange(DateRange $dateRange)
+    {
+        $this->dateRange = $dateRange;
 
         return $this;
     }

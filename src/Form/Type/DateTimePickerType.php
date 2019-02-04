@@ -9,33 +9,53 @@
 
 namespace App\Form\Type;
 
+use App\Utils\LocaleSettings;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Custom form field type to display the begin-date input field.
+ * Custom form field type to display the date-time input fields.
  */
-class BeginDateType extends AbstractType
+class DateTimePickerType extends AbstractType
 {
+    /**
+     * @var LocaleSettings
+     */
+    protected $localeSettings;
+
+    /**
+     * @param LocaleSettings $localeSettings
+     */
+    public function __construct(LocaleSettings $localeSettings)
+    {
+        $this->localeSettings = $localeSettings;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $dateTimePicker = $this->localeSettings->getDateTimePickerFormat();
+        $dateTimeFormat = $this->localeSettings->getDateTimeTypeFormat();
+
         $resolver->setDefaults([
             'label' => 'label.begin',
             'widget' => 'single_text',
             'html5' => false,
-            'format' => DateType::HTML5_FORMAT,
+            'format' => $dateTimeFormat,
+            'format_picker' => $dateTimePicker,
+            'with_seconds' => false,
         ]);
 
         $resolver->setDefault('attr', function (Options $options) {
             return [
+                'data-datetimepicker' => 'on',
                 'autocomplete' => 'off',
-                'data-datepicker' => 'on',
                 'placeholder' => $options['format'],
+                'data-format' => $options['format_picker'],
             ];
         });
     }
@@ -45,6 +65,6 @@ class BeginDateType extends AbstractType
      */
     public function getParent()
     {
-        return DateType::class;
+        return DateTimeType::class;
     }
 }

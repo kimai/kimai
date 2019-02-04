@@ -12,6 +12,7 @@ namespace App\Form;
 use App\Entity\Timesheet;
 use App\Form\Type\ActivityType;
 use App\Form\Type\CustomerType;
+use App\Form\Type\DateTimePickerType;
 use App\Form\Type\DurationType;
 use App\Form\Type\ProjectType;
 use App\Form\Type\UserType;
@@ -20,7 +21,6 @@ use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -91,13 +91,8 @@ class TimesheetEditForm extends AbstractType
         }
 
         if (null === $end || !$options['duration_only']) {
-            $builder->add('begin', DateTimeType::class, [
+            $builder->add('begin', DateTimePickerType::class, [
                 'label' => 'label.begin',
-                'widget' => 'single_text',
-                'html5' => false,
-                'format' => 'yyyy-MM-dd HH:mm',
-                'with_seconds' => false,
-                'attr' => ['autocomplete' => 'off', 'data-datetimepicker' => 'on', 'placeholder' => 'yyyy-MM-dd HH:mm'],
             ]);
         }
 
@@ -106,14 +101,8 @@ class TimesheetEditForm extends AbstractType
                 'required' => false,
             ]);
         } else {
-            $builder->add('end', DateTimeType::class, [
+            $builder->add('end', DateTimePickerType::class, [
                 'label' => 'label.end',
-                'widget' => 'single_text',
-                'required' => false,
-                'html5' => false,
-                'format' => 'yyyy-MM-dd HH:mm',
-                'with_seconds' => false,
-                'attr' => ['autocomplete' => 'off', 'data-datetimepicker' => 'on', 'placeholder' => 'yyyy-MM-dd HH:mm'],
             ]);
         }
 

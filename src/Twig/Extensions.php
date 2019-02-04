@@ -11,6 +11,7 @@ namespace App\Twig;
 
 use App\Entity\Timesheet;
 use App\Utils\Duration;
+use App\Utils\LocaleSettings;
 use NumberFormatter;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Intl\Intl;
@@ -22,9 +23,9 @@ use Twig\TwigFilter;
 class Extensions extends \Twig_Extension
 {
     /**
-     * @var string[]
+     * @var LocaleSettings
      */
-    protected $locales;
+    protected $localeSettings;
 
     /**
      * @var string
@@ -96,12 +97,12 @@ class Extensions extends \Twig_Extension
 
     /**
      * @param RequestStack $requestStack
-     * @param array $languages
+     * @param LocaleSettings $localeSettings
      */
-    public function __construct(RequestStack $requestStack, array $languages)
+    public function __construct(RequestStack $requestStack, LocaleSettings $localeSettings)
     {
         $this->requestStack = $requestStack;
-        $this->locales = $languages;
+        $this->localeSettings = $localeSettings;
         $this->durationFormatter = new Duration();
     }
 
@@ -207,19 +208,8 @@ class Extensions extends \Twig_Extension
             return '?';
         }
 
-        $locale = $this->getLocale();
-        switch ($format) {
-            case 'full':
-                $format = isset($this->locales[$locale]) ? $this->locales[$locale]['duration'] : null;
-                break;
-            case null:
-            case 'short':
-                $format = isset($this->locales[$locale]) ? $this->locales[$locale]['duration_short'] : null;
-                break;
-        }
-
         if (null === $format) {
-            $format = '%h:%m h';
+            $format = $this->localeSettings->getDurationFormat();
         }
 
         return $this->durationFormatter->format($seconds, $format);
@@ -260,7 +250,7 @@ class Extensions extends \Twig_Extension
      */
     public function money($amount, $currency = null)
     {
-        $locale = $this->getLocale();
+        $locale = $this->localeSettings->getLocale();
 
         if ($this->locale !== $locale) {
             $this->locale = $locale;
@@ -279,14 +269,6 @@ class Extensions extends \Twig_Extension
     }
 
     /**
-     * @return string
-     */
-    protected function getLocale()
-    {
-        return $this->requestStack->getCurrentRequest()->getLocale();
-    }
-
-    /**
      * Takes the list of codes of the locales (languages) enabled in the
      * application and returns an array with the name of each locale written
      * in its own language (e.g. English, Français, Español, etc.)
@@ -296,7 +278,7 @@ class Extensions extends \Twig_Extension
     public function getLocales()
     {
         $locales = [];
-        foreach (array_keys($this->locales) as $locale) {
+        foreach ($this->localeSettings->getAvailableLanguages() as $locale) {
             $locales[] = ['code' => $locale, 'name' => Intl::getLocaleBundle()->getLocaleName($locale, $locale)];
         }
 

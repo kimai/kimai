@@ -9,8 +9,8 @@
 
 namespace App\Twig;
 
+use App\Utils\LocaleSettings;
 use DateTime;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\TwigFilter;
 
 /**
@@ -18,28 +18,20 @@ use Twig\TwigFilter;
  */
 class DateExtensions extends \Twig_Extension
 {
-    private const FALLBACK_SHORT = 'Y-m-d';
+    // FIXME remove me
     private const FALLBACK_TIME = 'm-d H:i';
 
     /**
-     * @var array
+     * @var LocaleSettings
      */
-    protected $dateSettings;
+    protected $localeSettings;
 
     /**
-     * @var RequestStack
+     * @param LocaleSettings $localeSettings
      */
-    protected $requestStack;
-
-    /**
-     * DateExtensions constructor.
-     * @param RequestStack $requestStack
-     * @param array $dateSettings
-     */
-    public function __construct(RequestStack $requestStack, array $dateSettings)
+    public function __construct(LocaleSettings $localeSettings)
     {
-        $this->requestStack = $requestStack;
-        $this->dateSettings = $dateSettings;
+        $this->localeSettings = $localeSettings;
     }
 
     /**
@@ -55,25 +47,12 @@ class DateExtensions extends \Twig_Extension
     }
 
     /**
-     * @return string
-     */
-    protected function getLocale()
-    {
-        return $this->requestStack->getCurrentRequest()->getLocale();
-    }
-
-    /**
      * @param DateTime $date
      * @return string
      */
     public function dateShort(DateTime $date)
     {
-        $locale = $this->getLocale();
-        $format = self::FALLBACK_SHORT;
-
-        if (isset($this->dateSettings[$locale]['date_short'])) {
-            $format = $this->dateSettings[$locale]['date_short'];
-        }
+        $format = $this->localeSettings->getDateFormat();
 
         return date_format($date, $format);
     }
@@ -84,6 +63,7 @@ class DateExtensions extends \Twig_Extension
      */
     public function dateTime(DateTime $date)
     {
+        // FIXME new logic using LocaleSettings
         $locale = $this->getLocale();
         $format = self::FALLBACK_TIME;
 

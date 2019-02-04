@@ -11,6 +11,7 @@ namespace App\Tests\Controller;
 
 use App\Entity\InvoiceTemplate;
 use App\Entity\User;
+use App\Form\Type\DateRangeType;
 use App\Tests\DataFixtures\InvoiceFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 
@@ -137,12 +138,13 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->request($client, '/invoice/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
+        $dateRange = $begin->format('Y-m-d') . DateRangeType::DATE_SPACER . $end->format('Y-m-d');
+
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
         $client->submit($form, [
             'template' => 1,
             'user' => '',
-            'begin' => $begin->format('Y-m-d'),
-            'end' => $end->format('Y-m-d'),
+            'daterange' => $dateRange,
             'customer' => 1,
         ]);
 
@@ -163,8 +165,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'template' => 1,
             'user' => '',
-            'begin' => $begin->format('Y-m-d'),
-            'end' => $end->format('Y-m-d'),
+            'daterange' => $dateRange,
             'customer' => 1,
             'project' => 1,
         ]);
