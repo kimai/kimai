@@ -349,6 +349,7 @@ class TimesheetRepository extends AbstractRepository
                 ->setParameter('activity', $query->getActivity());
         }
 
+        // TODO if activity is an int, this will fail
         if (null === $query->getActivity() || null === $query->getActivity()->getProject()) {
             if (null !== $query->getProject()) {
                 $qb->andWhere('t.project = :project')

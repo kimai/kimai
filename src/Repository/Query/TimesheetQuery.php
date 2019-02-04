@@ -90,10 +90,10 @@ class TimesheetQuery extends ActivityQuery
     }
 
     /**
-     * @param Activity $activity
+     * @param Activity|int $activity
      * @return TimesheetQuery
      */
-    public function setActivity(Activity $activity = null)
+    public function setActivity($activity = null)
     {
         $this->activity = $activity;
 
