@@ -71,11 +71,11 @@ class MenuSubscriber implements EventSubscriberInterface
             );
         }
 
-//        if ($auth->isGranted('view_export')) {
+        if ($auth->isGranted('view_export')) {
             $menu->addItem(
                 new MenuItemModel('export', 'menu.export', 'export', [], 'fas fa-file-export')
             );
-//        }
+        }
     }
 
     /**
