@@ -14,7 +14,6 @@ services:
                             # The best practice is to be explicit about your dependencies anyway.
         bind:
             $projectDirectory: "%kernel.project_dir%"
-            $durationOnly: "%kimai.timesheet.duration_only%"
             $useTags: "%kimai.timesheet.use_tags%"
             $hardLimit: "%kimai.timesheet.active_entries.hard_limit%"
 
