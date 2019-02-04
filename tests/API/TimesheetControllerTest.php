@@ -205,7 +205,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $data = [
-            'activity' => 1,
+            'activity' => 10,
             'project' => 1,
             'begin' => (new \DateTime())->format('Y-m-d H:m'),
             'end' => (new \DateTime('- 7 hours'))->format('Y-m-d H:m'),
