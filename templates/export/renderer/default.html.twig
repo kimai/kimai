@@ -24,13 +24,13 @@
                 {{ 'export.period'|trans }}:
                 {{ query.begin|date_short }} - {{ query.end|date_short }}
             </p>
-            <h3>{{ 'export.summary'|trans }}</h3>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-xs-12 table-responsive">
-            <table class="items table table-condensed table-bordered">
+        <div class="col-xs-12">
+            <h3>{{ 'export.summary'|trans }}</h3>
+            <table class="items table table-condensed table-bordered dataTable">
                 <thead>
                 <tr>
                     <th>{{ 'label.customer'|trans }}</th>
@@ -81,12 +81,6 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-xs-12">
-            <h3>{{ 'export.full_list'|trans }}</h3>
-        </div>
-    </div>
-
     {% set columns = [
         'label.date',
         'label.begin',
@@ -103,9 +97,10 @@
         'label.rate',
     ] %}
 
-    <div class="row">
-        <div class="col-xs-12 table-responsive">
-            <table class="table table-condensed table-bordered">
+    <div class="row" id="export-records">
+        <div class="col-xs-12">
+            <h3>{{ 'export.full_list'|trans }}</h3>
+            <table class="table table-condensed table-bordered dataTable">
                 <thead>
                 <tr>
                     {% for columnTitle in columns %}
