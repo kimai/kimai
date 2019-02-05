@@ -66,6 +66,34 @@ class ExportControllerTest extends ControllerBaseTest
         }
     }
 
+    public function testExportActionWithMissingRenderer()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $this->request($client, '/export/data');
+
+        $response = $client->getResponse();
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals(404, $response->getStatusCode());
+    }
+
+    public function testExportActionWithInvalidRenderer()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $this->request($client, '/export/');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('#export-form')->form();
+        $form->getFormNode()->setAttribute('action', $this->createUrl('/export/data'));
+        $client->submit($form, [
+            'type' => 'default'
+        ]);
+
+        $response = $client->getResponse();
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals(404, $response->getStatusCode());
+    }
+
     public function testExportAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);

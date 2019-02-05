@@ -39,8 +39,7 @@ class ServiceExport
 
     /**
      * @param string $id
-     * @return RendererInterface
-     * @throws \InvalidArgumentException
+     * @return RendererInterface|null
      */
     public function getRendererById(string $id)
     {
@@ -50,6 +49,6 @@ class ServiceExport
             }
         }
 
-        throw new \InvalidArgumentException('Unknown export renderer');
+        return null;
     }
 }

@@ -24,10 +24,7 @@ class ServiceExportTest extends TestCase
         $this->assertEmpty($sut->getRenderer());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testUnknownRendererThrowsException()
+    public function testUnknownRendererReturnsNull()
     {
         $sut = new ServiceExport();
         $this->assertNull($sut->getRendererById('default'));

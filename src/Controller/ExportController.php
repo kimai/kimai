@@ -112,7 +112,19 @@ class ExportController extends AbstractController
             $query = $form->getData();
         }
 
-        $renderer = $this->export->getRendererById($query->getType());
+        $type = $query->getType();
+        if (null === $type) {
+            throw $this->createNotFoundException('Missing export renderer');
+        }
+
+        $renderer = $this->export->getRendererById($type);
+
+        // this code should not be reached, as the query already filters invalid values
+        // when trying to call setType() with an unknown value
+        if (null === $renderer) {
+            throw $this->createNotFoundException('Invalid export renderer');
+        }
+
         $entries = $this->getEntries($query);
 
         return $renderer->render($entries, $query);
