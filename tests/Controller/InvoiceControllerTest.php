@@ -46,9 +46,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->request($client, '/invoice/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
-        $this->assertNotEmpty($node->text());
-        $this->assertContains('No entries were found based on your selected filters.', $node->text());
+        $this->assertHasNoEntriesWithFilter($client);
     }
 
     public function testListTemplateAction()
@@ -150,6 +148,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
+        // no datatable should be displayed
         $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
         $this->assertEquals(0, $node->count());
 
@@ -157,8 +156,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertNotEmpty($node->text());
         $this->assertContains('This is a preview of the data that will show up in your invoice document.', $node->text());
 
-        $node = $client->getCrawler()->filter('section.content div#datatable_invoice table.table-striped tbody tr');
-        $this->assertEquals(20, $node->count());
+        $this->assertDataTableRowCount($client, 'datatable_invoice', 20);
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/invoice/print'));
