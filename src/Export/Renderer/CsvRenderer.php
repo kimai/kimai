@@ -18,6 +18,14 @@ class CsvRenderer extends AbstractSpreadsheetRenderer implements RendererInterfa
     /**
      * @return string
      */
+    public function getFileExtension(): string
+    {
+        return '.csv';
+    }
+
+    /**
+     * @return string
+     */
     protected function getContentType(): string
     {
         return 'text/csv';

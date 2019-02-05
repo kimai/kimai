@@ -18,6 +18,14 @@ class XlsxRenderer extends AbstractSpreadsheetRenderer implements RendererInterf
     /**
      * @return string
      */
+    public function getFileExtension(): string
+    {
+        return '.xlsx';
+    }
+
+    /**
+     * @return string
+     */
     protected function getContentType(): string
     {
         return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';

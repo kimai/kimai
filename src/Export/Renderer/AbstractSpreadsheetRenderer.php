@@ -182,10 +182,7 @@ abstract class AbstractSpreadsheetRenderer
     /**
      * @return string
      */
-    public function getFileExtension(): string
-    {
-        return '';
-    }
+    abstract public function getFileExtension(): string;
 
     /**
      * @param mixed $file

@@ -36,7 +36,7 @@ abstract class AbstractRendererTest extends KernelTestCase
         $languages = [
             'en' => [
                 'date' => 'Y.m.d',
-                'duration' => '%%h:%%m h'
+                'duration' => '%h:%m h'
             ]
         ];
 
@@ -142,49 +142,6 @@ abstract class AbstractRendererTest extends KernelTestCase
         $query->setBegin(new \DateTime());
         $query->setEnd(new \DateTime());
         $query->setProject($project);
-
-        return $renderer->render($entries, $query);
-    }
-
-    /**
-     * @param RendererInterface $renderer
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    protected function renderOneEntry(RendererInterface $renderer)
-    {
-        $customer = new Customer();
-
-        $project = new Project();
-        $project->setName('project name');
-        $project->setCustomer($customer);
-
-        $activity = new Activity();
-        $activity->setName('activity description');
-        $activity->setProject($project);
-
-        $userMethods = ['getId', 'getPreferenceValue', 'getUsername'];
-        $user1 = $this->getMockBuilder(User::class)->setMethods($userMethods)->disableOriginalConstructor()->getMock();
-        $user1->method('getId')->willReturn(1);
-        $user1->method('getPreferenceValue')->willReturn('50');
-        $user1->method('getUsername')->willReturn('foo-bar');
-
-        $timesheet = new Timesheet();
-        $timesheet
-            ->setDuration(3600)
-            ->setRate(293.27)
-            ->setUser($user1)
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setBegin(new \DateTime())
-            ->setEnd(new \DateTime())
-        ;
-
-        $entries = [$timesheet];
-
-        $query = new TimesheetQuery();
-        $query->setActivity($activity);
-        $query->setBegin(new \DateTime());
-        $query->setEnd(new \DateTime());
 
         return $renderer->render($entries, $query);
     }
