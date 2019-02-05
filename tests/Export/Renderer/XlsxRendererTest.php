@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  */
 class XlsxRendererTest extends AbstractRendererTest
 {
-
     public function testConfiguration()
     {
         $sut = $this->getAbstractRenderer(XlsxRenderer::class);

@@ -111,5 +111,8 @@ class TimesheetQueryTest extends BaseQueryTest
 
         $sut->setExported(TimesheetQuery::STATE_ALL);
         $this->assertEquals(TimesheetQuery::STATE_ALL, $sut->getExported());
+
+        $sut->setExported('02');
+        $this->assertEquals(TimesheetQuery::STATE_ALL, $sut->getExported());
     }
 }

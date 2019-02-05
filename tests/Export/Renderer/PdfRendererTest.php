@@ -19,7 +19,6 @@ use Twig\Loader\FilesystemLoader;
  */
 class PdfRendererTest extends AbstractRendererTest
 {
-
     public function testConfiguration()
     {
         $sut = new PDFRenderer(

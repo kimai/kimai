@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  */
 class CsvRendererTest extends AbstractRendererTest
 {
-
     public function testConfiguration()
     {
         $sut = $this->getAbstractRenderer(CsvRenderer::class);
@@ -32,7 +31,7 @@ class CsvRendererTest extends AbstractRendererTest
     public function getTestModel()
     {
         return [
-            ["01:50 h", "2,437.12 €", '1,947.99 €', 7, 5, 1, 2, 2]
+            ['01:50 h', '2,437.12 €', '1,947.99 €', 7, 5, 1, 2, 2]
         ];
     }
 

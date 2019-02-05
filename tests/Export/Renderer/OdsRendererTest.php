@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  */
 class OdsRendererTest extends AbstractRendererTest
 {
-
     public function testConfiguration()
     {
         $sut = $this->getAbstractRenderer(OdsRenderer::class);

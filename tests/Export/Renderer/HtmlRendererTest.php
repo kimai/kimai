@@ -19,7 +19,6 @@ use Twig\Loader\FilesystemLoader;
  */
 class HtmlRendererTest extends AbstractRendererTest
 {
-
     public function testConfiguration()
     {
         $sut = new HtmlRenderer(

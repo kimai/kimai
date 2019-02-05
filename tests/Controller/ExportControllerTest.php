@@ -9,10 +9,7 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\InvoiceTemplate;
 use App\Entity\User;
-use App\Form\Type\DateRangeType;
-use App\Tests\DataFixtures\InvoiceFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 
 /**
@@ -63,7 +60,7 @@ class ExportControllerTest extends ControllerBaseTest
         $expected = ['csv', 'html', 'pdf', 'ods', 'xlsx'];
         $node = $client->getCrawler()->filter('#export-buttons button');
         $this->assertEquals(count($expected), $node->count());
-        foreach($node->getIterator() as $button) {
+        foreach ($node->getIterator() as $button) {
             $type = $button->getAttribute('data-type');
             $this->assertContains($type, $expected);
         }
@@ -105,6 +102,5 @@ class ExportControllerTest extends ControllerBaseTest
 
         $node = $client->getCrawler()->filter('section.export div#export-records table.dataTable tbody tr');
         $this->assertEquals(20, $node->count());
-
     }
 }
