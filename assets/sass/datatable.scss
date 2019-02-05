@@ -118,6 +118,11 @@ table.dataTable thead .sorting_asc_disabled:after,
 table.dataTable thead .sorting_desc_disabled:after {
     color: #eee;
 }
+
+table.dataTable thead > tr > th {
+    white-space: nowrap;
+}
+
 /*
 table.dataTable thead > tr > th {
     padding-right: 30px;
