@@ -17,6 +17,9 @@ use App\Invoice\ServiceInvoice;
 use App\Repository\InvoiceDocumentRepository;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \App\Invoice\ServiceInvoice
+ */
 class ServiceInvoiceTest extends TestCase
 {
     public function testEmptyObject()

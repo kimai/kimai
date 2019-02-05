@@ -7,12 +7,15 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Invoice;
+namespace App\Tests\Export;
 
 use App\Export\Renderer\HtmlRenderer;
 use App\Export\ServiceExport;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \App\Export\ServiceExport
+ */
 class ServiceExportTest extends TestCase
 {
     public function testEmptyObject()

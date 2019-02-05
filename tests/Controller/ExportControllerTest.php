@@ -107,24 +107,4 @@ class ExportControllerTest extends ControllerBaseTest
         $this->assertEquals(20, $node->count());
 
     }
-
-    public function testPrintActionRedirectsToCreateTemplate()
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-
-        $this->request($client, '/export/print');
-        $this->assertIsRedirect($client, '/export/template/create');
-    }
-
-    public function testPrintActionRedirectsToIndex()
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
-
-        $fixture = new InvoiceFixtures();
-        $this->importFixture($em, $fixture);
-
-        $this->request($client, '/export/print');
-        $this->assertIsRedirect($client, '/export/');
-    }
 }
