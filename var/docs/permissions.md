@@ -70,20 +70,24 @@ The permission-names were chosen to be self-explanatory. In the hope that it wor
 | start_own_timesheet | TIMESHEET  |   | -  |
 | stop_own_timesheet | TIMESHEET  |   | -  |
 | create_own_timesheet | TIMESHEET  | X  | -  |
-| edit_own_timesheet | TIMESHEET  |   | -  |
+| edit_own_timesheet | TIMESHEET  | X  | -  |
 | export_own_timesheet | TIMESHEET  |   | export your own timesheet in the timesheet panel  |
 | delete_own_timesheet | TIMESHEET  |   | -  |
 | view_other_timesheet | TIMESHEET_OTHER  |   | allows access to the complete timesheet view  |
 | start_other_timesheet | TIMESHEET_OTHER  |   | -  |
 | stop_other_timesheet | TIMESHEET_OTHER  |   | -  |
 | create_other_timesheet | TIMESHEET_OTHER  |   | -  |
-| edit_other_timesheet | TIMESHEET_OTHER  |   | -  |
+| edit_other_timesheet | TIMESHEET_OTHER  | X  | -  |
 | export_other_timesheet | TIMESHEET  |   | export timesheet in the timesheet admin panel  |
 | delete_other_timesheet | TIMESHEET_OTHER  |   | -  |
 | view_rate_own_timesheet | RATE |   | -  |
-| edit_rate_own_timesheet | RATE |   | -  |
+| edit_rate_own_timesheet | RATE | X  | -  |
 | view_rate_other_timesheet | RATE_OTHER |   | -  |
-| edit_rate_other_timesheet | RATE_OTHER |   | -  |
+| edit_rate_other_timesheet | RATE_OTHER | X  | -  |
+| view_export | EXPORT |   | allows access to the export module|
+| create_export | EXPORT |   | allows to create an export from the selected timesheet data  |
+| edit_export_own_timesheet | EXPORT | X  | set the export state of your own timesheet record  |
+| edit_export_other_timesheet | EXPORT | X  | set the export state of for other users timesheet records  |
 | view_own_profile | PROFILE  |   | allows access to the own profile view - without this permission, users cannot access any of their profile settings or passwords ...  |
 | edit_own_profile | PROFILE  |   | grants access to edit the own profile  |
 | delete_own_profile | PROFILE  |   | grants access to delete the own profile  |

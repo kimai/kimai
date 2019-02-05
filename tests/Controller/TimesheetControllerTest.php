@@ -30,7 +30,9 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser();
         $this->request($client, '/timesheet/');
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertHasDataTable($client);
+
+        // there are no records by default in the test database
+        $this->assertHasNoEntriesWithFilter($client);
 
         $result = $client->getCrawler()->filter('div.breadcrumb div.box-tools div.btn-group a.btn');
         $this->assertEquals(5, count($result));
@@ -43,7 +45,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
     public function testIndexActionWithQuery()
     {
-        $client = $this->getClientForAuthenticatedUser();
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new TimesheetFixtures();
@@ -67,8 +69,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasDataTable($client);
-
-        // TODO more assertions
+        $this->assertDataTableRowCount($client, 'datatable_timesheet', 5);
     }
 
     public function testExportAction()

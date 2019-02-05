@@ -28,7 +28,7 @@
             </div>
         </a>
     </li>
-    {% if is_granted('ROLE_SUPER_ADMIN') %}
+    {% if is_granted('system_information') %}
         <li>
             <a href="{{ path('about') }}">
                 <i class="menu-icon far fa-copyright bg-aqua"></i>

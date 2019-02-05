@@ -130,8 +130,8 @@ class CustomerControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/'));
         $client->followRedirect();
-        $this->assertHasDataTable($client);
-        $this->assertHasFlashSuccess($client);
+        $this->assertHasFlashDeleteSuccess($client);
+        $this->assertHasNoEntriesWithFilter($client);
 
         // SQLIte does not necessarly support onCascade delete, so these timesheet will stay after deletion
         // $em->clear();

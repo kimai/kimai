@@ -66,8 +66,8 @@ kimai:
     # --------------------------------------------------------------------------------
     # Free configurable permission system, see var/docs/permissions.md
     permissions:
-        # mapping complex rulesets of single permissions to named "sets" ("set name" = [array of "permissions"])
         sets:
+            # mapping complex rulesets of single permissions to named "sets" ("set name" = [array of "permissions"])
             ACTIVITIES: [view_activity,create_activity,edit_activity,delete_activity]
             PROJECTS: [view_project,create_project,edit_project,delete_project]
             CUSTOMERS: [view_customer,create_customer,edit_customer,delete_customer]
@@ -80,18 +80,19 @@ kimai:
             USER: [view_user,create_user,delete_user]
             RATE: [view_rate_own_timesheet,edit_rate_own_timesheet]
             RATE_OTHER: [view_rate_other_timesheet,edit_rate_other_timesheet]
-        # mapping "sets" or permissions to user roles ("role name" = [array of "set names"])
+            EXPORT: [view_export,create_export,edit_export_own_timesheet,edit_export_other_timesheet]
         maps:
+            # mapping "sets" or permissions to user roles ("role name" = [array of "set names"])
             ROLE_USER: [TIMESHEET,PROFILE]
-            ROLE_TEAMLEAD: [INVOICE,TIMESHEET,TIMESHEET_OTHER,PROFILE]
-            ROLE_ADMIN: [ACTIVITIES,PROJECTS,CUSTOMERS,INVOICE,INVOICE_TEMPLATE,TIMESHEET,TIMESHEET_OTHER,PROFILE,RATE,RATE_OTHER]
-            ROLE_SUPER_ADMIN: [ACTIVITIES,PROJECTS,CUSTOMERS,INVOICE,INVOICE_TEMPLATE,TIMESHEET,TIMESHEET_OTHER,PROFILE,PROFILE_OTHER,USER,RATE,RATE_OTHER]
-        # adding single permissions to user roles, extending the definition from "sets" ("role name" = [array of "permissions"])
+            ROLE_TEAMLEAD: [INVOICE,TIMESHEET,TIMESHEET_OTHER,PROFILE,EXPORT]
+            ROLE_ADMIN: [ACTIVITIES,PROJECTS,CUSTOMERS,INVOICE,INVOICE_TEMPLATE,TIMESHEET,TIMESHEET_OTHER,PROFILE,RATE,RATE_OTHER,EXPORT]
+            ROLE_SUPER_ADMIN: [ACTIVITIES,PROJECTS,CUSTOMERS,INVOICE,INVOICE_TEMPLATE,TIMESHEET,TIMESHEET_OTHER,PROFILE,PROFILE_OTHER,USER,RATE,RATE_OTHER,EXPORT]
         roles:
+            # adding single permissions to user roles, extending the definition from "sets" ("role name" = [array of "permissions"])
             ROLE_USER: []
             ROLE_TEAMLEAD: [view_invoice_template,create_invoice_template,edit_invoice_template,view_rate_own_timesheet,view_rate_other_timesheet,hourly-rate_own_profile]
             ROLE_ADMIN: [hourly-rate_own_profile]
-            ROLE_SUPER_ADMIN: [hourly-rate_own_profile,hourly-rate_other_profile,delete_own_profile,roles_own_profile]
+            ROLE_SUPER_ADMIN: [hourly-rate_own_profile,hourly-rate_other_profile,delete_own_profile,roles_own_profile,system_information]
 
     # --------------------------------------------------------------------------------
     # Language specific settings, like the date formats
@@ -102,6 +103,7 @@ kimai:
             date_type: 'dd.MM.yyyy'
             date_picker: 'DD.MM.YYYY'
             date: 'd.m.Y'
+            date_time: 'd.m. H:i'
             duration: '%%h:%%m h'
         en:
             date_time_type: 'yyyy-MM-dd HH:mm'
@@ -109,6 +111,7 @@ kimai:
             date_type: 'yyyy-MM-dd'
             date_picker: 'YYYY-MM-DD'
             date: 'Y-m-d'
+            date_time: 'm-d H:i'
             duration: '%%h:%%m h'
         pt_BR:
             date_time_type: 'dd-MM-yyyy HH:mm'
@@ -116,6 +119,7 @@ kimai:
             date_type: 'dd-MM-yyyy'
             date_picker: 'DD-MM-YYYY'
             date: 'd-m-Y'
+            date_time: 'd-m H:i'
             duration: '%%h:%%m h'
         it:
             date_time_type: 'dd.MM.yyyy HH:mm'
@@ -123,6 +127,7 @@ kimai:
             date_type: 'dd.MM.yyyy'
             date_picker: 'DD.MM.YYYY'
             date: 'd.m.Y'
+            date_time: 'd.m. H:i'
             duration: '%%h:%%m h'
         fr:
             date_time_type: 'dd/MM/yyyy HH:mm'
@@ -130,6 +135,7 @@ kimai:
             date_type: 'dd/MM/yyyy'
             date_picker: 'DD/MM/YYYY'
             date: 'd/m/Y'
+            date_time: 'd/m H:i'
             duration: '%%h h %%m'
         es:
             date_time_type: 'dd.MM.yyyy HH:mm'
@@ -137,6 +143,7 @@ kimai:
             date_type: 'dd.MM.yyyy'
             date_picker: 'DD.MM.YYYY'
             date: 'd.m.Y'
+            date_time: 'd.m. H:i'
             duration: '%%h:%%m h'
         ru:
             date_time_type: 'dd.MM.yyyy HH:mm'
@@ -144,6 +151,7 @@ kimai:
             date_type: 'dd.MM.yyyy'
             date_picker: 'DD.MM.YYYY'
             date: 'd.m.Y'
+            date_time: 'd.m. H:i'
             duration: '%%h:%%m h'
         ar:
             date_time_type: 'yyyy-MM-dd HH:mm'
@@ -151,6 +159,7 @@ kimai:
             date_type: 'yyyy-MM-dd'
             date_picker: 'YYYY-MM-DD'
             date: 'Y-m-d'
+            date_time: 'm-d H:i'
             duration: '%%h:%%m h'
         hu:
             date_time_type: 'yyyy.MM.dd HH:mm'
@@ -158,6 +167,7 @@ kimai:
             date_type: 'yyyy.MM.dd'
             date_picker: 'YYYY.MM.DD'
             date: 'Y.m.d.'
+            date_time: 'm.d. H:i'
             duration: '%%h:%%m h'
 
     # --------------------------------------------------------------------------------

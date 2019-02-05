@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Controller used for executing system relevant tasks.
  *
  * @Route(path="/admin/about")
- * @Security("is_granted('ROLE_SUPER_ADMIN')")
+ * @Security("is_granted('system_information')")
  */
 class AboutController extends AbstractController
 {

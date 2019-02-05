@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class LocaleSettingsTest extends TestCase
 {
-
     protected function getRequestStack(string $locale)
     {
         $request = new Request();
@@ -44,6 +43,7 @@ class LocaleSettingsTest extends TestCase
                 'date_type' => 'dd.MM.yyyy',
                 'date_picker' => 'DD.MM.YYYY',
                 'date' => 'd.m.Y',
+                'date_time' => 'd.m. H:i',
                 'duration' => '%h:%m h',
             ],
             'en' => [
@@ -52,6 +52,7 @@ class LocaleSettingsTest extends TestCase
                 'date_type' => 'yyyy-MM-dd',
                 'date_picker' => 'YYYY-MM-DD',
                 'date' => 'Y-m-d',
+                'date_time' => 'm-d H:i',
                 'duration' => '%h:%m h',
             ],
             'pt_BR' => [
@@ -160,6 +161,13 @@ class LocaleSettingsTest extends TestCase
         $sut = $this->getSut('en', $this->getDefaultSettings());
         $this->assertEquals('Y-m-d', $sut->getDateFormat());
         $this->assertEquals('d.m.Y', $sut->getDateFormat('de'));
+    }
+
+    public function testGetDateTimeFormat()
+    {
+        $sut = $this->getSut('en', $this->getDefaultSettings());
+        $this->assertEquals('m-d H:i', $sut->getDateTimeFormat());
+        $this->assertEquals('d.m. H:i', $sut->getDateTimeFormat('de'));
     }
 
     public function testGetDateTypeFormat()

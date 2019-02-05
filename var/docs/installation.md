@@ -4,7 +4,7 @@ The recommended way to install Kimai v2 is via SSH, you need GIT and [Composer](
 
 But there are further installation methods described: 
 - [Development setup](#development-installation) 
-- [Docker](var/docs/docker.md)
+- [Docker](#docker)
 - [1-click installations](#hosting-and-1-click-installations) 
 - [FTP](#ftp-installation) (not supported)
 - Hints for [local single-user setup](#installation-on-a-personal-computer) 

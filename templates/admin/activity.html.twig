@@ -18,54 +18,56 @@
 {% endblock %}
 
 {% block main %}
+
     {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
+    {% else %}
+        {% set columns = {
+            'name': 'alwaysVisible',
+            'customer': 'hidden-xs',
+            'project': '',
+            'comment': 'hidden-xs',
+            'visible': 'hidden-xs',
+            'actions': 'alwaysVisible',
+        } %}
+
+        {% set tableName = 'activity_admin' %}
+
+        {{ tables.data_table_header(tableName, columns) }}
+
+        {% for entry in entries %}
+            <tr>
+                <td>{{ entry.name }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">
+                    {% if entry.project and entry.project.customer %}
+                        <a href="{{ path('admin_customer_edit', {'id' : entry.project.customer.id}) }}">{{ widgets.label_customer(entry.project.customer) }}</a>
+                    {% else %}
+                        {#{ widgets.label('x', 'success') }#}
+                    {% endif %}
+                </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">
+                    {% if entry.project %}
+                        <a href="{{ path('admin_project_edit', {'id' : entry.project.id}) }}">{{ widgets.label_project(entry.project) }}</a>
+                    {% else %}
+                        {#{ widgets.label('x', 'success') }#}
+                    {% endif %}
+                </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
+                <td>
+                    {% set actionButtons = {} %}
+                    {% if is_granted('edit', entry) %}
+                        {% set actionButtons = {'edit': path('admin_activity_edit', {'id': entry.id})}|merge(actionButtons) %}
+                    {% endif %}
+                    {% if is_granted('delete', entry) %}
+                        {% set actionButtons = actionButtons|merge({'trash': path('admin_activity_delete', {'id': entry.id})}) %}
+                    {% endif %}
+                    {{ widgets.button_group(actionButtons) }}
+                </td>
+            </tr>
+        {% endfor %}
+
+        {{ tables.data_table_footer(entries, 'admin_activity_paginated') }}
     {% endif %}
 
-    {% set columns = {
-        'name': 'alwaysVisible',
-        'customer': 'hidden-xs',
-        'project': '',
-        'comment': 'hidden-xs',
-        'visible': 'hidden-xs',
-        'actions': 'alwaysVisible',
-    } %}
-
-    {% set tableName = 'activity_admin' %}
-
-    {{ tables.data_table_header(tableName, columns) }}
-
-    {% for entry in entries %}
-        <tr>
-            <td>{{ entry.name }}</td>
-            <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">
-                {% if entry.project and entry.project.customer %}
-                    <a href="{{ path('admin_customer_edit', {'id' : entry.project.customer.id}) }}">{{ widgets.label_customer(entry.project.customer) }}</a>
-                {% else %}
-                    {#{ widgets.label('x', 'success') }#}
-                {% endif %}
-            </td>
-            <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">
-                {% if entry.project %}
-                    <a href="{{ path('admin_project_edit', {'id' : entry.project.id}) }}">{{ widgets.label_project(entry.project) }}</a>
-                {% else %}
-                    {#{ widgets.label('x', 'success') }#}
-                {% endif %}
-            </td>
-            <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment }}</td>
-            <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
-            <td>
-                {% set actionButtons = {} %}
-                {% if is_granted('edit', entry) %}
-                    {% set actionButtons = {'edit': path('admin_activity_edit', {'id': entry.id})}|merge(actionButtons) %}
-                {% endif %}
-                {% if is_granted('delete', entry) %}
-                    {% set actionButtons = actionButtons|merge({'trash': path('admin_activity_delete', {'id': entry.id})}) %}
-                {% endif %}
-                {{ widgets.button_group(actionButtons) }}
-            </td>
-        </tr>
-    {% endfor %}
-
-    {{ tables.data_table_footer(entries, 'admin_activity_paginated') }}
 {% endblock %}

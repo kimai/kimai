@@ -179,6 +179,17 @@ abstract class ControllerBaseTest extends WebTestCase
     }
 
     /**
+     * @param Client $client
+     * @param string $id
+     * @param int $count
+     */
+    protected function assertDataTableRowCount(Client $client, string $id, int $count)
+    {
+        $node = $client->getCrawler()->filter('section.content div#' . $id . ' table.table-striped tbody tr');
+        $this->assertEquals($count, $node->count());
+    }
+
+    /**
      * @param string $role the USER role to use for the request
      * @param string $url the URL of the page displaying the initial form to submit
      * @param string $formSelector a selector to find the form to test
@@ -221,13 +232,32 @@ abstract class ControllerBaseTest extends WebTestCase
         }
     }
 
+    protected function assertHasNoEntriesWithFilter(Client $client)
+    {
+        $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
+        $this->assertContains('No entries were found based on your selected filters.', $node->text());
+    }
+
     /**
      * @param Client $client
+     * @param string|null $message
      */
-    protected function assertHasFlashSuccess(Client $client)
+    protected function assertHasFlashDeleteSuccess(Client $client)
+    {
+        $this->assertHasFlashSuccess($client, 'Entry was deleted successful');
+    }
+
+    /**
+     * @param Client $client
+     * @param string|null $message
+     */
+    protected function assertHasFlashSuccess(Client $client, string $message = null)
     {
         $node = $client->getCrawler()->filter('div.alert.alert-success.alert-dismissible');
         $this->assertNotEmpty($node->text());
+        if (null !== $message) {
+            $this->assertContains($message, $node->text());
+        }
     }
 
     /**

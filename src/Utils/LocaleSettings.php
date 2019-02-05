@@ -112,6 +112,17 @@ class LocaleSettings
     }
 
     /**
+     * Returns the locale specific datetime format, which should be used in combination with the twig filter "|date".
+     *
+     * @param null|string $locale
+     * @return string
+     */
+    public function getDateTimeFormat(?string $locale = null): string
+    {
+        return $this->getConfigByLocaleAndKey('date_time', $locale);
+    }
+
+    /**
      * Returns the format used in the "|duration" twig filter to display a Timesheet duration.
      *
      * @param null|string $locale
@@ -143,5 +154,4 @@ class LocaleSettings
 
         return $this->settings[$locale][$key];
     }
-
 }

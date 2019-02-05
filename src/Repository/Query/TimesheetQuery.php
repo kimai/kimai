@@ -21,6 +21,8 @@ class TimesheetQuery extends ActivityQuery
     public const STATE_ALL = 1;
     public const STATE_RUNNING = 2;
     public const STATE_STOPPED = 3;
+    public const STATE_EXPORTED = 4;
+    public const STATE_NOT_EXPORTED = 5;
 
     /**
      * Overwritten for different default order
@@ -44,6 +46,10 @@ class TimesheetQuery extends ActivityQuery
      * @var int
      */
     protected $state = self::STATE_ALL;
+    /**
+     * @var int
+     */
+    protected $exported = self::STATE_ALL;
     /**
      * @var DateRange
      */
@@ -84,10 +90,10 @@ class TimesheetQuery extends ActivityQuery
     }
 
     /**
-     * @param Activity $activity
+     * @param Activity|int $activity
      * @return TimesheetQuery
      */
-    public function setActivity(Activity $activity = null)
+    public function setActivity($activity = null)
     {
         $this->activity = $activity;
 
@@ -108,13 +114,39 @@ class TimesheetQuery extends ActivityQuery
      */
     public function setState($state)
     {
-        if (!is_int($state) && $state != (int) $state) {
+        if (!is_int($state) && $state !== (int) $state) {
             return $this;
         }
 
         $state = (int) $state;
         if (in_array($state, [self::STATE_ALL, self::STATE_RUNNING, self::STATE_STOPPED], true)) {
             $this->state = $state;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getExported()
+    {
+        return $this->exported;
+    }
+
+    /**
+     * @param int $exported
+     * @return TimesheetQuery
+     */
+    public function setExported($exported)
+    {
+        if (!is_int($exported) && $exported !== (int) $exported) {
+            return $this;
+        }
+
+        $exported = (int) $exported;
+        if (in_array($exported, [self::STATE_ALL, self::STATE_EXPORTED, self::STATE_NOT_EXPORTED], true)) {
+            $this->exported = $exported;
         }
 
         return $this;

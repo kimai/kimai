@@ -54,6 +54,19 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertDefaultStructure($result[0], false);
     }
 
+    public function testGetCollectionWithQuery()
+    {
+        $query = ['customer' => 1, 'project' => 1, 'page' => 2, 'size' => 5, 'order' => 'DESC', 'orderBy' => 'rate'];
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertInternalType('array', $result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(5, count($result));
+        $this->assertDefaultStructure($result[0], false);
+    }
+
     public function testGetEntity()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
@@ -166,6 +179,45 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/20');
     }
 
+    public function testPatchAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $data = [
+            'activity' => 1,
+            'project' => 1,
+            'begin' => (new \DateTime('- 7 hours'))->format('Y-m-d H:m'),
+            'end' => (new \DateTime())->format('Y-m-d H:m'),
+            'description' => 'foo',
+            'exported' => true,
+        ];
+        $this->request($client, '/api/timesheets/1', 'PATCH', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertInternalType('array', $result);
+        $this->assertDefaultStructure($result);
+        $this->assertNotEmpty($result['id']);
+        $this->assertEquals(25200, $result['duration']);
+        $this->assertEquals(1, $result['exported']);
+    }
+
+    public function testInvalidPatchAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $data = [
+            'activity' => 10,
+            'project' => 1,
+            'begin' => (new \DateTime())->format('Y-m-d H:m'),
+            'end' => (new \DateTime('- 7 hours'))->format('Y-m-d H:m'),
+            'description' => 'foo',
+        ];
+        $this->request($client, '/api/timesheets/1', 'PATCH', [], json_encode($data));
+
+        $response = $client->getResponse();
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['end', 'activity']);
+    }
+
     protected function assertDefaultStructure(array $result, $full = true)
     {
         $expectedKeys = [
@@ -174,7 +226,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         if ($full) {
             $expectedKeys = array_merge($expectedKeys, [
-                'description', 'fixed_rate', 'hourly_rate'
+                'exported', 'description', 'fixed_rate', 'hourly_rate'
             ]);
         }
 

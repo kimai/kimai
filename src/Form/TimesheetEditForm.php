@@ -16,6 +16,7 @@ use App\Form\Type\DateTimePickerType;
 use App\Form\Type\DurationType;
 use App\Form\Type\ProjectType;
 use App\Form\Type\UserType;
+use App\Form\Type\YesNoType;
 use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
@@ -226,6 +227,12 @@ class TimesheetEditForm extends AbstractType
         if ($options['include_user']) {
             $builder->add('user', UserType::class);
         }
+
+        if ($options['include_exported']) {
+            $builder->add('exported', YesNoType::class, [
+                'label' => 'label.exported'
+            ]);
+        }
     }
 
     /**
@@ -240,6 +247,7 @@ class TimesheetEditForm extends AbstractType
             'csrf_token_id' => 'timesheet_edit',
             'duration_only' => $this->durationOnly,
             'include_user' => false,
+            'include_exported' => false,
             'include_rate' => true,
             'docu_chapter' => 'timesheet',
             'method' => 'POST',

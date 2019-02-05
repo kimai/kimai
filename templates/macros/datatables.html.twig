@@ -89,11 +89,9 @@
                     <table class="table table-striped table-hover dataTable" role="grid">
                         <thead>
                         <tr>
-                            {% for title, class in entries %}
-                                <th class="{{ macro.data_table_column_class(name, entries, title) }}">
-                                    {{ ('label.' ~ title)|trans }}
-                                </th>
-                            {% endfor %}
+                            {%- for title, class in entries -%}
+                                <th class="{{ macro.data_table_column_class(name, entries, title) }}">{{ ('label.' ~ title)|trans }}</th>
+                            {%- endfor -%}
                         </tr>
                         </thead>
                         <tbody>
@@ -104,23 +102,12 @@
                     </table>
                 </div>
             </div>
-            {#<div class="row">
-                <div class="col-sm-5">
-                    {#<div class="dataTables_info" id="example2_info" role="status" aria-live="polite">
-                        {{ 'datatables.entry_counter'|trans({'%from%': '1', '%to%': '10', '%total%': entries.count}) }}
-                    </div># }
-                </div>
-                <div class="col-sm-7">
-                    <div class="dataTables_paginate paging_simple_numbers">
-                        {{ pagerfanta(entries, 'twitter_bootstrap3_translated', { routeName: route }) }}
-                    </div>
-                </div>
-            </div>#}
         </div>
     </div>
 </div>
-
+{% if route is not empty %}
 <div class="navigation text-center no-print">
     {{ pagerfanta(entries, 'twitter_bootstrap3_translated', { proximity: 1, routeName: route }) }}
 </div>
+{% endif %}
 {% endmacro %}

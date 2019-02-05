@@ -15,6 +15,10 @@ namespace App;
 class Constants
 {
     /**
+     * The software name
+     */
+    public const SOFTWARE = 'Kimai 2';
+    /**
      * The current release version
      */
     public const VERSION = '0.7';

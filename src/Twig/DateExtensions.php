@@ -39,6 +39,7 @@ class DateExtensions extends \Twig_Extension
         return [
             new TwigFilter('month_name', [$this, 'monthName']),
             new TwigFilter('date_short', [$this, 'dateShort']),
+            new TwigFilter('date_time', [$this, 'dateTime']),
         ];
     }
 
@@ -49,6 +50,17 @@ class DateExtensions extends \Twig_Extension
     public function dateShort(DateTime $date)
     {
         $format = $this->localeSettings->getDateFormat();
+
+        return date_format($date, $format);
+    }
+
+    /**
+     * @param DateTime $date
+     * @return string
+     */
+    public function dateTime(DateTime $date)
+    {
+        $format = $this->localeSettings->getDateTimeFormat();
 
         return date_format($date, $format);
     }
