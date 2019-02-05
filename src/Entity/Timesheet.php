@@ -399,4 +399,24 @@ class Timesheet
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getTimezone(): string
+    {
+        return $this->timezone;
+    }
+
+    /**
+     * BE WARNED: this method should NOT be used programmatically, there is very likely no reason for it!
+     *
+     * @param string $timezone
+     * @return Timesheet
+     */
+    public function setTimezone(string $timezone)
+    {
+        $this->timezone = $timezone;
+        return $this;
+    }
 }

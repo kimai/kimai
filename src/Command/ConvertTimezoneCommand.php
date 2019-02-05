@@ -84,6 +84,8 @@ class ConvertTimezoneCommand extends Command
      */
     protected function convertTimesheet(Timesheet $timesheet, \DateTimeZone $timeZone): Timesheet
     {
+        $oldTimezone = $timesheet->getTimezone();
+
         if (null !== $timesheet->getBegin()) {
             $beginDate = clone $timesheet->getBegin();
             $beginDate->setTimezone($timeZone);
@@ -95,6 +97,8 @@ class ConvertTimezoneCommand extends Command
             $endDate->setTimezone($timeZone);
             $timesheet->setEnd($endDate);
         }
+
+        $timesheet->setTimezone($oldTimezone);
 
         return $timesheet;
     }
