@@ -2,26 +2,58 @@
 <i class="{{ icon|icon(icon) }}"></i>
 {% endmacro %}
 
-{% macro page_actions(tools) %}
+{%- macro page_actions(tools) -%}
     <div class="breadcrumb">
         <div class="box-tools">
             <div class="btn-group">
-                {%- for icon,url in tools  %}
+                {%- for icon,values in tools  %}
+                    {% spaceless %}
+                    {% set id = null %}
+                    {% set onclick = null %}
+                    {% set modal = null %}
+                    {% set toggle = null %}
+                    {% set url = null %}
+
+                    {% if not values is iterable %}
+                        {% set url = values %}
+                        {% if 'onclick:' in url %}
+                            {% set onclick = url|replace({'onclick:': ''}) %}
+                            {% set url = '#' %}
+                        {% endif %}
+                        {% if '#collapse' in url %}
+                            {% set toggle = 'collapse' %}
+                        {% endif %}
+                        {% if '#modal' in url %}
+                            {% set modal = url %}
+                            {% set url = '#' %}
+                        {% endif %}
+                    {% else %}
+                        {% set url = values.url ?? '#' %}
+                        {% set onclick = values.onclick ?? null %}
+                        {% set modal = values.modal ?? null %}
+                        {% set toggle = values.toggle ?? null %}
+                        {% set id = values.id ?? null %}
+                    {% endif %}
+                    {% endspaceless %}
                     <a class="btn btn-default" href="{{ url }}"
-                            {% if '#collapse' in url %}
-                                data-toggle="collapse"
-                            {% elseif '#modal' in url %}
-                                data-toggle="modal" data-target="{{ url }}"
-                            {% endif %}
-                            {% if 'onclick:' in url %}
-                                onclick="{{ url|replace({'onclick:': ''}) }}"
-                            {% endif %}
+                        {%- if id is not empty -%}
+                            id="{{ id }}"
+                        {%- endif -%}
+                        {%- if toggle is not empty -%}
+                            data-toggle="{{ toggle }}"
+                        {%- endif -%}
+                        {%- if modal is not empty -%}
+                            data-toggle="modal" data-target="{{ modal }}"
+                        {%- endif -%}
+                        {%- if onclick is not empty -%}
+                            onclick="{{ onclick }}"
+                        {%- endif -%}
                     ><i class="{{ icon|icon(icon) }}"></i></a>
                 {% endfor -%}
             </div>
         </div>
     </div>
-{% endmacro %}
+{%- endmacro -%}
 
 {% macro page_header(title) %}
     <h2 class="page-header">{{ title|trans }}</h2>

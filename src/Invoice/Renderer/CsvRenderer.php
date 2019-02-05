@@ -38,7 +38,7 @@ class CsvRenderer extends AbstractSpreadsheetRenderer implements RendererInterfa
      */
     protected function saveSpreadsheet(Spreadsheet $spreadsheet)
     {
-        $filename = tempnam(sys_get_temp_dir(), 'kimai-csv');
+        $filename = tempnam(sys_get_temp_dir(), 'kimai-invoice-csv');
         $writer = IOFactory::createWriter($spreadsheet, 'Csv');
         $writer->save($filename);
 

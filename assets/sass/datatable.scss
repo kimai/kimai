@@ -120,9 +120,14 @@ table.dataTable thead .sorting_desc_disabled:after {
 }
 
 table.dataTable thead > tr > th {
-    padding-right: 30px;
+    white-space: nowrap;
 }
 
+/*
+table.dataTable thead > tr > th {
+    padding-right: 30px;
+}
+*/
 table.dataTable th:active {
     outline: none;
 }
@@ -223,14 +228,17 @@ div.dataTables_scrollHead table.table-bordered {
     background-color: #017ebc;
 }
 
-/*
-    Make sure that the action buttons do not line-break if another column takes all available space
-    See https://github.com/twbs/bootstrap/issues/9939#issuecomment-37682952
- */
 table.dataTable {
     td {
+        /*
+            Make sure that the action buttons do not line-break if another column takes all available space
+            See https://github.com/twbs/bootstrap/issues/9939#issuecomment-37682952
+         */
         .btn-group {
             display: flex;
+        }
+        .label {
+            font-size: 85%;
         }
     }
 }

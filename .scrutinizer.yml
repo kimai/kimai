@@ -1,6 +1,10 @@
 build:
     environment:
         node: v8.11.2
+        php:
+            version: 7.2
+            ini:
+                date.timezone: "UTC"
     nodes:
         analysis:
             tests:

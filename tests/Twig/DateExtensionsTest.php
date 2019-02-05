@@ -40,7 +40,7 @@ class DateExtensionsTest extends TestCase
 
     public function testGetFilters()
     {
-        $filters = ['month_name', 'date_short', 'time'];
+        $filters = ['month_name', 'date_short', 'date_time', 'time'];
         $sut = $this->getSut('de', []);
         $twigFilters = $sut->getFilters();
         $this->assertCount(count($filters), $twigFilters);
@@ -74,6 +74,29 @@ class DateExtensionsTest extends TestCase
             ['en', new \DateTime('2016-06-23'), '2016-06-23'],
             ['de', new \DateTime('1980-12-14'), '14.12.1980'],
             ['ru', new \DateTime('1980-12-14'), '14.12.1980'],
+        ];
+    }
+
+    /**
+     * @param string $locale
+     * @param \DateTime $date
+     * @param string $result
+     * @dataProvider getDateTimeData
+     */
+    public function testDateTime($locale, \DateTime $date, $result)
+    {
+        $sut = $this->getSut($locale, [
+            'de' => ['date_time' => 'd.m.Y H:i:s'],
+            'en' => ['date_time' => 'Y-m-d h:m A'],
+        ]);
+        $this->assertEquals($result, $sut->dateTime($date));
+    }
+
+    public function getDateTimeData()
+    {
+        return [
+            ['en', new \DateTime('7 January 2010'), '2010-01-07 12:01 AM'],
+            ['de', (new \DateTime('1980-12-14'))->setTime(13, 27, 55), '14.12.1980 13:27:55'],
         ];
     }
 

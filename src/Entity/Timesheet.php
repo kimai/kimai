@@ -131,6 +131,14 @@ class Timesheet
     private $hourlyRate = null;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="exported", type="boolean", nullable=false)
+     * @Assert\NotNull()
+     */
+    private $exported = false;
+
+    /**
      * Get entry id
      *
      * @return int
@@ -369,6 +377,25 @@ class Timesheet
     public function setHourlyRate(?float $hourlyRate)
     {
         $this->hourlyRate = $hourlyRate;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isExported(): bool
+    {
+        return $this->exported;
+    }
+
+    /**
+     * @param bool $exported
+     * @return Timesheet
+     */
+    public function setExported(bool $exported)
+    {
+        $this->exported = $exported;
 
         return $this;
     }

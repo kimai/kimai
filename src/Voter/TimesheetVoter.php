@@ -25,6 +25,7 @@ class TimesheetVoter extends AbstractVoter
     public const EXPORT = 'export';
     public const VIEW_RATE = 'view_rate';
     public const EDIT_RATE = 'edit_rate';
+    public const EDIT_EXPORT = 'edit_export';
 
     /**
      * support rules based on the given $subject (here: Timesheet)
@@ -37,6 +38,7 @@ class TimesheetVoter extends AbstractVoter
         self::EXPORT,
         self::VIEW_RATE,
         self::EDIT_RATE,
+        self::EDIT_EXPORT,
     ];
 
     /**
@@ -87,6 +89,7 @@ class TimesheetVoter extends AbstractVoter
             case self::EDIT:
             case self::DELETE:
             case self::EXPORT:
+            case self::EDIT_EXPORT:
                 $permission .= $attribute;
                 break;
 

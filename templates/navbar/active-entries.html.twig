@@ -18,7 +18,12 @@
                                 <i class="{{ 'stop-small'|icon }} fa-2x"></i>
                             </div>
                             <h4>
-                                {{ entry.activity.name }}
+                                {# TODO find a CSS solution for this #}
+                                {% if entry.activity.name|length > 23 %}
+                                    {{ entry.activity.name|slice(0,20) }}...
+                                {% else %}
+                                    {{ entry.activity.name }}
+                                {% endif %}
                                 <small><i class="{{ 'timesheet'|icon }}"></i> {{ entry|duration }}</small>
                             </h4>
                             <p>{{ entry.project.name }} ({{ entry.project.customer.name }})</p>

@@ -38,7 +38,7 @@ class OdsRenderer extends AbstractSpreadsheetRenderer implements RendererInterfa
      */
     protected function saveSpreadsheet(Spreadsheet $spreadsheet)
     {
-        $filename = tempnam(sys_get_temp_dir(), 'kimai-ods');
+        $filename = tempnam(sys_get_temp_dir(), 'kimai-invoice-ods');
         $writer = IOFactory::createWriter($spreadsheet, 'Ods');
         $writer->save($filename);
 

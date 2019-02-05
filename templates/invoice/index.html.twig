@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/toolbar.html.twig" as toolbar %}
+{% import "macros/datatables.html.twig" as tables %}
 
 {% block page_title %}{{ 'invoice.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'invoice.subtitle'|trans }}{% endblock %}
@@ -15,8 +16,6 @@
     {{ widgets.page_actions(actions) }}
 {% endblock %}
 
-{% block page_content_class %}{{ parent() }} invoice{% endblock %}
-
 {% block main_before %}
     {{ toolbar.toolbar(form, 'collapseInvoice', true) }}
 {% endblock %}
@@ -27,10 +26,54 @@
 
 {% block main %}
 
-    {% if model.entries is empty %}
-        {{ widgets.callout('warning', 'invoice.select_filter') }}
+    {% set entries = {} %}
+    {% if model.calculator is not empty and model.calculator.entries is not empty %}
+        {% set entries = model.calculator.entries %}
+    {% endif %}
+
+    {% if entries is empty %}
+        {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% else %}
-        {{ include('invoice/preview.html.twig') }}
+        {{ widgets.callout('success', 'invoice.preview') }}
+
+        {% set columns = {
+            'date': '',
+            'user': 'hidden-xs hidden-sm',
+            'activity': 'hidden-xs hidden-sm',
+            'unit_price': 'text-center',
+            'amount': 'text-center',
+            'total_rate': 'text-right',
+        } %}
+
+        {% set tableName = 'invoice' %}
+
+        {{ tables.data_table_header(tableName, columns) }}
+        {% for entry in entries %}
+            {% set duration = entry.duration|duration() %}
+            {% if entry.fixedRate is not null %}
+                {% set rate = entry.fixedRate %}
+                {% set duration = 1 %}
+            {% elseif entry.hourlyRate is not null %}
+                {% set rate = entry.hourlyRate %}
+            {% else %}
+                {% set rate = entry.user.preferenceValue('hourly_rate') %}
+            {% endif %}
+            <tr>
+                <td>{{ entry.begin|date_short }}</td>
+                <td class="hidden-xs hidden-sm">{{ widgets.username(entry.user) }}</td>
+                <td class="hidden-xs hidden-sm timesheet-description">
+                    {% if entry.description is not empty %}
+                        {{ entry.description|desc2html }}
+                    {% else %}
+                        {{ entry.activity.name }} / {{ entry.project.name }}
+                    {% endif %}
+                </td>
+                <td class="text-center">{{ rate|money(model.calculator.currency) }}</td>
+                <td class="text-center">{{ duration }}</td>
+                <td class="text-right">{{ entry.rate|money(model.calculator.currency) }}</td>
+            </tr>
+        {% endfor %}
+        {{ tables.data_table_footer(entries) }}
 
         {% if is_granted('create_invoice') %}
             <div class="row no-print">

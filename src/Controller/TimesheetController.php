@@ -269,6 +269,7 @@ class TimesheetController extends AbstractController
                 'origin' => $redirectRoute,
             ]),
             'include_rate' => $this->isGranted('edit_rate', $entry),
+            'include_exported' => $this->isGranted('edit_export', $entry),
         ]);
     }
 
