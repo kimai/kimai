@@ -86,7 +86,7 @@ class Extensions extends \Twig_Extension
         'user' => 'fas fa-user',
         'visibility' => 'far fa-eye',
         'settings' => 'fas fa-wrench',
-        'export' => 'fas fa-database',
+        'export' => 'fas fa-file-export',
         'pdf' => 'fas fa-file-pdf',
         'csv' => 'fas fa-table',
         'ods' => 'fas fa-table',
