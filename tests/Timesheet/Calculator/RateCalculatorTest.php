@@ -163,14 +163,14 @@ class RateCalculatorTest extends TestCase
      */
     public function testCalculateWithRules($rules, $expectedFactor)
     {
-        $seconds = 41837;
+        $seconds = 31837;
 
         $end = new \DateTime();
-        $end->setTime(18, 0, 0);
         $end->setTimezone(new \DateTimeZone('UTC'));
+        $end->setTime(12, 0, 0);
         $start = clone $end;
-        $start->setTimestamp($end->getTimestamp() - $seconds);
         $start->setTimezone(new \DateTimeZone('UTC'));
+        $start->setTimestamp($end->getTimestamp() - $seconds);
 
         $record = new Timesheet();
         $record->setUser($this->getTestUser());
@@ -194,8 +194,8 @@ class RateCalculatorTest extends TestCase
     public function getRuleDefinitions()
     {
         $start = new \DateTime();
-        $start->setTime(12, 0, 0);
         $start->setTimezone(new \DateTimeZone('UTC'));
+        $start->setTime(12, 0, 0);
         $day = $start->format('l');
 
         return [
@@ -223,7 +223,7 @@ class RateCalculatorTest extends TestCase
                         'factor' => 2.0
                     ],
                     'weekdays' => [
-                        'days' => ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
+                        'days' => ['MonDay', 'tUEsdAy', 'WEdnesday', 'THursday', 'friDay', 'SATURday', 'sunDAY'],
                         'factor' => 1.5
                     ],
                 ],
