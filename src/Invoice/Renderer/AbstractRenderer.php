@@ -54,6 +54,15 @@ abstract class AbstractRenderer
     }
 
     /**
+     * @param \DateTime $date
+     * @return mixed
+     */
+    protected function getFormattedTime(\DateTime $date)
+    {
+        return $this->dateExtension->time($date);
+    }
+
+    /**
      * @param $amount
      * @return mixed
      */

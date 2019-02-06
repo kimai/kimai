@@ -50,6 +50,12 @@ trait RendererTrait
     abstract protected function getFormattedDateTime(\DateTime $date);
 
     /**
+     * @param \DateTime $date
+     * @return mixed
+     */
+    abstract protected function getFormattedTime(\DateTime $date);
+
+    /**
      * @param $amount
      * @return mixed
      */
@@ -169,10 +175,10 @@ trait RendererTrait
             'entry.duration' => $timesheet->getDuration(),
             'entry.duration_minutes' => number_format($timesheet->getDuration() / 60),
             'entry.begin' => $this->getFormattedDateTime($begin),
-            'entry.begin_time' => date('H:i', $begin->getTimestamp()),
+            'entry.begin_time' => $this->getFormattedTime($begin),
             'entry.begin_timestamp' => $begin->getTimestamp(),
             'entry.end' => $this->getFormattedDateTime($end),
-            'entry.end_time' => date('H:i', $end->getTimestamp()),
+            'entry.end_time' => $this->getFormattedTime($end),
             'entry.end_timestamp' => $end->getTimestamp(),
             'entry.date' => $this->getFormattedDateTime($begin),
             'entry.user_id' => $user->getId(),
