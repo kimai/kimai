@@ -411,12 +411,14 @@ class Timesheet
     /**
      * BE WARNED: this method should NOT be used programmatically, there is very likely no reason for it!
      *
+     * @deprecated since it was introduced, only meant for the initial migration. Will be removed with 1.0.
      * @param string $timezone
      * @return Timesheet
      */
     public function setTimezone(string $timezone)
     {
         $this->timezone = $timezone;
+
         return $this;
     }
 }
