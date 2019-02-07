@@ -250,7 +250,7 @@ class Extensions extends \Twig_Extension
      */
     public function money($amount, $currency = null)
     {
-        $locale = $this->getLocale();
+        $locale = $this->localeSettings->getLocale();
 
         if ($this->locale !== $locale) {
             $this->locale = $locale;
