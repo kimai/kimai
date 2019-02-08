@@ -114,6 +114,7 @@ The documents which are rendered passively (ODS, XLSX, CSV, DOCX) can use the fo
 | ${invoice.total_time} | The total working time (entries with a fixed rate are always calculated with 1) |
 | ${invoice.total} | The invoices total (including tax) |
 | ${invoice.subtotal} | The invoices subtotal (excluding tax) |
+| ${invoice.currency} | The invoices currency as string (like EUR or USD) |
 | ${invoice.vat} | The VAT in percent for this invoice |
 | ${invoice.tax} | The tax of the invoice amount |
 | ${template.name} | The invoice name, as configured in your template |
@@ -161,6 +162,7 @@ For each timesheet entry you can use the variables from the following table.
 | ${entry.amount} | The format duration/amount for this entry | 02:47 h |
 | ${entry.rate} | The rate for one unit of the entry (normally one hour) | 100 |
 | ${entry.total} | The total rate for this entry | 278,33 |
+| ${entry.currency} | The currency for this record as string (like EUR or USD) | EUR |
 | ${entry.duration} | The duration in seconds | 10020 |
 | ${entry.duration_minutes} | The duration in minutes with no decimals | 167 |
 | ${entry.begin} | The begin date (format depends on the users language) | 27.10.2018 |

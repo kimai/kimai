@@ -100,6 +100,7 @@ class DebugRendererTest extends AbstractRendererTest
             'entry.amount',
             'entry.rate',
             'entry.total',
+            'entry.currency',
             'entry.duration',
             'entry.duration_minutes',
             'entry.begin',

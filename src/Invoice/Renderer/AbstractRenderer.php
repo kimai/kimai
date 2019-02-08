@@ -55,11 +55,12 @@ abstract class AbstractRenderer
 
     /**
      * @param $amount
-     * @return mixed
+     * @param $currency
+     * @return string
      */
-    protected function getFormattedMoney($amount)
+    protected function getFormattedMoney($amount, $currency)
     {
-        return $this->extension->money($amount);
+        return $this->extension->money($amount, $currency);
     }
 
     /**
