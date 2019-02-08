@@ -38,7 +38,7 @@ class ActivityVoter extends AbstractVoter
      */
     protected function supports($attribute, $subject)
     {
-        if (!$subject instanceof Activity) {
+        if (!($subject instanceof Activity)) {
             return false;
         }
 
@@ -63,10 +63,6 @@ class ActivityVoter extends AbstractVoter
             return false;
         }
 
-        if ($subject instanceof Activity) {
-            return $this->hasRolePermission($user, $attribute . '_activity');
-        }
-
-        return false;
+        return $this->hasRolePermission($user, $attribute . '_activity');
     }
 }

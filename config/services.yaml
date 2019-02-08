@@ -105,6 +105,10 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Symfony\Bridge\Doctrine\Form\Type\EntityType }
 
+    App\Validator\Constraints\TimesheetValidator:
+        arguments:
+            $ruleset: "%kimai.timesheet.rules%"
+
     # ================================================================================
     # THEME
     # ================================================================================

@@ -36,8 +36,8 @@ class CsvRendererTest extends AbstractRendererTest
 
     public function getTestModel()
     {
-        yield [$this->getInvoiceModel(), '1,947.99', 6, 5, 1, 2, 2];
-        yield [$this->getInvoiceModelOneEntry(), '293.27', 2, 1, 0, 1, 0];
+        yield [$this->getInvoiceModel(), '€1,947.99', 6, 5, 1, 2, 2];
+        yield [$this->getInvoiceModelOneEntry(), '$293.27', 2, 1, 0, 1, 0];
     }
 
     /**

@@ -86,7 +86,7 @@ class Extensions extends \Twig_Extension
         'user' => 'fas fa-user',
         'visibility' => 'far fa-eye',
         'settings' => 'fas fa-wrench',
-        'export' => 'fas fa-database',
+        'export' => 'fas fa-file-export',
         'pdf' => 'fas fa-file-pdf',
         'csv' => 'fas fa-table',
         'ods' => 'fas fa-table',
@@ -254,7 +254,7 @@ class Extensions extends \Twig_Extension
 
         if ($this->locale !== $locale) {
             $this->locale = $locale;
-            $this->numberFormatter = new NumberFormatter($locale, NumberFormatter::DECIMAL);
+            $this->numberFormatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
         }
 
         $fractionDigits = Intl::getCurrencyBundle()->getFractionDigits($currency);
@@ -262,7 +262,7 @@ class Extensions extends \Twig_Extension
         $result = $this->numberFormatter->format($amount);
 
         if (null !== $currency) {
-            $result .= ' ' . Intl::getCurrencyBundle()->getCurrencySymbol($currency, $locale);
+            $result = $this->numberFormatter->formatCurrency($amount, $currency);
         }
 
         return $result;

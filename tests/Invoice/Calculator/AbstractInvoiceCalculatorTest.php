@@ -68,6 +68,7 @@ abstract class AbstractCalculatorTest extends TestCase
         $timesheet = new Timesheet();
         $timesheet
             ->setDescription('timesheet description')
+            ->setBegin(new \DateTime())
             ->setDuration(3600)
             ->setRate(293.27)
             ->setUser(new User())

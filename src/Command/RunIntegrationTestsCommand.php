@@ -9,8 +9,6 @@
 
 namespace App\Command;
 
-use Symfony\Component\Console\Command\Command;
-
 /**
  * Command used to run all integration tests.
  */
@@ -29,11 +27,10 @@ class RunIntegrationTestsCommand extends RunUnitTestsCommand
     }
 
     /**
-     * @param $directory
      * @return string
      */
-    protected function createPhpunitCmdLine($directory)
+    protected function createPhpunitCmdLine()
     {
-        return $this->rootDir . '/bin/phpunit --group integration ' . $directory;
+        return '/bin/phpunit --group integration ' . $this->rootDir . '/tests';
     }
 }

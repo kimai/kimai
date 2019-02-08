@@ -20,6 +20,7 @@ matrix:
 before_install:
   - phpenv config-rm xdebug.ini
   - composer self-update
+  - php -i
 
 install:
   - composer install

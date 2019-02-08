@@ -123,8 +123,8 @@
                     {% endif %}
                     <tr>
                         <td class="text-nowrap">{{ entry.begin|date_short }}</td>
-                        <td class="text-nowrap">{{ entry.begin|date("H:i") }}</td>
-                        <td class="text-nowrap">{{ entry.end|date("H:i") }}</td>
+                        <td class="text-nowrap">{{ entry.begin|time }}</td>
+                        <td class="text-nowrap">{{ entry.end|time }}</td>
                         <td>{{ widgets.username(entry.user) }}</td>
                         <td>{{ entry.project.customer.name }}</td>
                         <td>{{ entry.project.name }}</td>

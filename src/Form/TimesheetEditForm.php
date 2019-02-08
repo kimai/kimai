@@ -103,6 +103,7 @@ class TimesheetEditForm extends AbstractType
         } else {
             $builder->add('end', DateTimePickerType::class, [
                 'label' => 'label.end',
+                'required' => false,
             ]);
         }
 
@@ -129,26 +130,22 @@ class TimesheetEditForm extends AbstractType
             $projectOptions['group_by'] = null;
         }
 
-        if ($this->projects->countProject(true) > 1) {
-            $projectOptions['placeholder'] = null;
-        } else {
+        if ($this->projects->countProject(true) <= 1) {
             $projectOptions['group_by'] = null;
         }
 
         $builder
-            ->add(
-                'project',
-                ProjectType::class,
-                array_merge($projectOptions, [
-                'activity_enabled' => true,
-                // documentation is for NelmioApiDocBundle
-                'documentation' => [
-                    'type' => 'integer',
-                    'description' => 'Project ID',
-                ],
-                'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
-                    return $repo->builderForEntityType($project, $customer);
-                },
+            ->add('project', ProjectType::class, array_merge($projectOptions, [
+                    'placeholder' => '',
+                    'activity_enabled' => true,
+                    // documentation is for NelmioApiDocBundle
+                    'documentation' => [
+                        'type' => 'integer',
+                        'description' => 'Project ID',
+                    ],
+                    'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
+                        return $repo->builderForEntityType($project, $customer);
+                    },
             ])
         );
 
@@ -162,6 +159,7 @@ class TimesheetEditForm extends AbstractType
                 }
 
                 $event->getForm()->add('project', ProjectType::class, [
+                    'placeholder' => '',
                     'activity_enabled' => true,
                     'group_by' => null,
                     'query_builder' => function (ProjectRepository $repo) use ($data, $project) {
@@ -174,7 +172,7 @@ class TimesheetEditForm extends AbstractType
         $builder
             ->add('activity', ActivityType::class, [
                 // documentation is for NelmioApiDocBundle
-                'placeholder' => null,
+                'placeholder' => '',
                 'documentation' => [
                     'type' => 'integer',
                     'description' => 'Activity ID',
@@ -195,7 +193,7 @@ class TimesheetEditForm extends AbstractType
                 }
 
                 $event->getForm()->add('activity', ActivityType::class, [
-                    'placeholder' => null,
+                    'placeholder' => '',
                     'query_builder' => function (ActivityRepository $repo) use ($data, $activity) {
                         return $repo->builderForEntityType($activity, $data['project']);
                     },

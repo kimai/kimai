@@ -9,7 +9,6 @@
 
 namespace App\Voter;
 
-use App\Entity\Activity;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -49,7 +48,7 @@ class TimesheetVoter extends AbstractVoter
      */
     protected function supports($attribute, $subject)
     {
-        if (!$subject instanceof Timesheet) {
+        if (!($subject instanceof Timesheet)) {
             return false;
         }
 
@@ -62,7 +61,7 @@ class TimesheetVoter extends AbstractVoter
 
     /**
      * @param string $attribute
-     * @param Timesheet|Activity $subject
+     * @param Timesheet $subject
      * @param TokenInterface $token
      * @return bool
      */
@@ -71,10 +70,6 @@ class TimesheetVoter extends AbstractVoter
         $user = $token->getUser();
 
         if (!($user instanceof User)) {
-            return false;
-        }
-
-        if (!($subject instanceof Timesheet)) {
             return false;
         }
 

@@ -38,7 +38,7 @@ class ProjectVoter extends AbstractVoter
      */
     protected function supports($attribute, $subject)
     {
-        if (!$subject instanceof Project) {
+        if (!($subject instanceof Project)) {
             return false;
         }
 
@@ -63,10 +63,6 @@ class ProjectVoter extends AbstractVoter
             return false;
         }
 
-        if ($subject instanceof Project) {
-            return $this->hasRolePermission($user, $attribute . '_project');
-        }
-
-        return false;
+        return $this->hasRolePermission($user, $attribute . '_project');
     }
 }

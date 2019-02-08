@@ -50,10 +50,16 @@ trait RendererTrait
     abstract protected function getFormattedDateTime(\DateTime $date);
 
     /**
+     * @param \DateTime $date
+     * @return mixed
+     */
+    abstract protected function getFormattedTime(\DateTime $date);
+
+    /**
      * @param $amount
      * @return mixed
      */
-    abstract protected function getFormattedMoney($amount);
+    abstract protected function getFormattedMoney($amount, $currency);
 
     /**
      * @param \DateTime $date
@@ -75,6 +81,7 @@ trait RendererTrait
     {
         $customer = $model->getCustomer();
         $project = $model->getQuery()->getProject();
+        $currency = $model->getCalculator()->getCurrency();
 
         $values = [
             'invoice.due_date' => $this->getFormattedDateTime($model->getDueDate()),
@@ -82,10 +89,10 @@ trait RendererTrait
             'invoice.number' => $model->getNumberGenerator()->getInvoiceNumber(),
             'invoice.currency' => $model->getCalculator()->getCurrency(),
             'invoice.vat' => $model->getCalculator()->getVat(),
-            'invoice.tax' => $this->getFormattedMoney($model->getCalculator()->getTax()),
+            'invoice.tax' => $this->getFormattedMoney($model->getCalculator()->getTax(), $currency),
             'invoice.total_time' => $this->getFormattedDuration($model->getCalculator()->getTimeWorked()),
-            'invoice.total' => $this->getFormattedMoney($model->getCalculator()->getTotal()),
-            'invoice.subtotal' => $this->getFormattedMoney($model->getCalculator()->getSubtotal()),
+            'invoice.total' => $this->getFormattedMoney($model->getCalculator()->getTotal(), $currency),
+            'invoice.subtotal' => $this->getFormattedMoney($model->getCalculator()->getSubtotal(), $currency),
 
             'template.name' => $model->getTemplate()->getName(),
             'template.company' => $model->getTemplate()->getCompany(),
@@ -156,6 +163,7 @@ trait RendererTrait
         $activity = $timesheet->getActivity();
         $project = $timesheet->getProject();
         $customer = $project->getCustomer();
+        $currency = $customer->getCurrency();
 
         $begin = $timesheet->getBegin();
         $end = $timesheet->getEnd();
@@ -164,15 +172,16 @@ trait RendererTrait
             'entry.row' => '',
             'entry.description' => $description,
             'entry.amount' => $amount,
-            'entry.rate' => $this->getFormattedMoney($hourlyRate),
-            'entry.total' => $this->getFormattedMoney($rate),
+            'entry.rate' => $this->getFormattedMoney($hourlyRate, $currency),
+            'entry.total' => $this->getFormattedMoney($rate, $currency),
+            'entry.currency' => $currency,
             'entry.duration' => $timesheet->getDuration(),
             'entry.duration_minutes' => number_format($timesheet->getDuration() / 60),
             'entry.begin' => $this->getFormattedDateTime($begin),
-            'entry.begin_time' => date('H:i', $begin->getTimestamp()),
+            'entry.begin_time' => $this->getFormattedTime($begin),
             'entry.begin_timestamp' => $begin->getTimestamp(),
             'entry.end' => $this->getFormattedDateTime($end),
-            'entry.end_time' => date('H:i', $end->getTimestamp()),
+            'entry.end_time' => $this->getFormattedTime($end),
             'entry.end_timestamp' => $end->getTimestamp(),
             'entry.date' => $this->getFormattedDateTime($begin),
             'entry.user_id' => $user->getId(),

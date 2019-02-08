@@ -21,15 +21,21 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class RunCodeSnifferCommand extends Command
 {
     /**
+     * @var BashExecutor
+     */
+    protected $executor;
+    /**
      * @var string
      */
     protected $rootDir = '';
 
     /**
+     * @param BashExecutor $executor
      * @param string $projectDirectory
      */
-    public function __construct($projectDirectory)
+    public function __construct(BashExecutor $executor, string $projectDirectory)
     {
+        $this->executor = $executor;
         $this->rootDir = realpath($projectDirectory);
         parent::__construct();
     }
@@ -42,7 +48,7 @@ class RunCodeSnifferCommand extends Command
         $this
             ->setName('kimai:phpcs')
             ->setDescription('Run PHP_CodeSniffer to check for the projects coding style')
-            ->addOption('fix', null, InputOption::VALUE_NONE, 'Fix all found problems (risky: modifies your files)')
+            ->addOption('fix', null, InputOption::VALUE_NONE, 'Fix all found problems')
             ->addOption('checkstyle', null, InputOption::VALUE_OPTIONAL, '')
         ;
     }
@@ -55,7 +61,6 @@ class RunCodeSnifferCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $filename = null;
-        ob_start();
 
         $args = [];
         if (!$input->getOption('fix')) {
@@ -78,13 +83,11 @@ class RunCodeSnifferCommand extends Command
             }
         }
 
-        $exitCode = 0;
-        passthru($this->rootDir . '/vendor/bin/php-cs-fixer fix ' . implode(' ', $args), $exitCode);
-        $result = ob_get_clean();
+        $result = $this->executor->execute('/vendor/bin/php-cs-fixer fix ' . implode(' ', $args));
 
-        $io->write($result);
+        $io->write($result->getResult());
 
-        if ($exitCode > 0) {
+        if ($result->getExitCode() > 0) {
             $io->error(
                 'Found problems while checking your code styles' .
                 (!empty($filename) ? '. Saved checkstyle data to: ' . $filename : '')
