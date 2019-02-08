@@ -69,6 +69,8 @@ class DateRangeType extends AbstractType
 
     protected function formatToPattern(string $format, string $separator)
     {
+        $format = preg_quote($format, '/');
+
         $pattern = str_replace('d', '[0-9]{2}', $format);
         $pattern = str_replace('m', '[0-9]{2}', $pattern);
         $pattern = str_replace('Y', '[0-9]{4}', $pattern);
