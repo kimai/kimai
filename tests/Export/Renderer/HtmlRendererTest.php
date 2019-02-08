@@ -55,7 +55,7 @@ class HtmlRendererTest extends AbstractRendererTest
         $this->assertContains('<td>Customer Name</td>', $content);
         $this->assertContains('<td>project name</td>', $content);
         $this->assertContains('<td class="duration">01:50 h</td>', $content);
-        $this->assertContains('<td class="cost">2,437.12 €</td>', $content);
+        $this->assertContains('<td class="cost">€2,437.12</td>', $content);
 
         $this->assertEquals(5, substr_count($content, '<td>activity description</td>'));
     }

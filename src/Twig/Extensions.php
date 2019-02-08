@@ -254,7 +254,7 @@ class Extensions extends \Twig_Extension
 
         if ($this->locale !== $locale) {
             $this->locale = $locale;
-            $this->numberFormatter = new NumberFormatter($locale, NumberFormatter::DECIMAL);
+            $this->numberFormatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
         }
 
         $fractionDigits = Intl::getCurrencyBundle()->getFractionDigits($currency);
@@ -262,7 +262,7 @@ class Extensions extends \Twig_Extension
         $result = $this->numberFormatter->format($amount);
 
         if (null !== $currency) {
-            $result .= ' ' . Intl::getCurrencyBundle()->getCurrencySymbol($currency, $locale);
+            $result = $this->numberFormatter->formatCurrency($amount, $currency);
         }
 
         return $result;
