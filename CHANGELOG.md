@@ -1,5 +1,45 @@
 # Change Log
 
+## [0.8](https://github.com/kevinpapst/kimai2/tree/0.8) (2019-02-08)
+[Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.7...0.8)
+
+**Implemented enhancements:**
+
+- Export timesheet only exports entries on the current page [\#534](https://github.com/kevinpapst/kimai2/issues/534)
+- Highlight current day in datepickers and not only the selected day [\#522](https://github.com/kevinpapst/kimai2/issues/522)
+- Configuration of first page after login [\#501](https://github.com/kevinpapst/kimai2/issues/501)
+- add currency field to invoice template [\#422](https://github.com/kevinpapst/kimai2/issues/422)
+
+**Fixed bugs:**
+
+- New time picker not working on languages without updated translation [\#546](https://github.com/kevinpapst/kimai2/issues/546)
+- Export timesheet only exports entries on the current page [\#534](https://github.com/kevinpapst/kimai2/issues/534)
+- Kimai2 will not allow me to enter times in the future [\#531](https://github.com/kevinpapst/kimai2/issues/531)
+- This value should be greater than or equal to zero [\#511](https://github.com/kevinpapst/kimai2/issues/511)
+- Wrong time after migration kimai v1 data [\#507](https://github.com/kevinpapst/kimai2/issues/507)
+
+**Closed issues:**
+
+- Feedback for improving installation setup [\#541](https://github.com/kevinpapst/kimai2/issues/541)
+- No projects in filter section [\#525](https://github.com/kevinpapst/kimai2/issues/525)
+- Error after update in AppExtension [\#524](https://github.com/kevinpapst/kimai2/issues/524)
+- Global Projects [\#413](https://github.com/kevinpapst/kimai2/issues/413)
+
+**Merged pull requests:**
+
+- improved installation docs [\#548](https://github.com/kevinpapst/kimai2/pull/548) ([kevinpapst](https://github.com/kevinpapst))
+- fix daterange-picker for fr, hu and ar [\#547](https://github.com/kevinpapst/kimai2/pull/547) ([kevinpapst](https://github.com/kevinpapst))
+- do not limit users timesheet export page size [\#545](https://github.com/kevinpapst/kimai2/pull/545) ([kevinpapst](https://github.com/kevinpapst))
+- Use Symfony formatter for currency symbol placement [\#542](https://github.com/kevinpapst/kimai2/pull/542) ([sanjitlpatel](https://github.com/sanjitlpatel))
+- Localized date-inputs and daterange-picker [\#540](https://github.com/kevinpapst/kimai2/pull/540) ([kevinpapst](https://github.com/kevinpapst))
+- added export module [\#538](https://github.com/kevinpapst/kimai2/pull/538) ([kevinpapst](https://github.com/kevinpapst))
+- updated documentation [\#536](https://github.com/kevinpapst/kimai2/pull/536) ([kevinpapst](https://github.com/kevinpapst))
+- support remote data in beta-test selectpicker [\#529](https://github.com/kevinpapst/kimai2/pull/529) ([kevinpapst](https://github.com/kevinpapst))
+- Improve allowed running records [\#528](https://github.com/kevinpapst/kimai2/pull/528) ([kevinpapst](https://github.com/kevinpapst))
+- Improve daterangepicker [\#527](https://github.com/kevinpapst/kimai2/pull/527) ([kevinpapst](https://github.com/kevinpapst))
+- added configurable view after login [\#523](https://github.com/kevinpapst/kimai2/pull/523) ([kevinpapst](https://github.com/kevinpapst))
+- convert timesheets to UTC with support for user timezone [\#372](https://github.com/kevinpapst/kimai2/pull/372) ([kevinpapst](https://github.com/kevinpapst))
+
 ## [0.7](https://github.com/kevinpapst/kimai2/tree/0.7) (2019-01-28)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.6.1...0.7)
 
@@ -18,11 +58,10 @@
 - Configuration option to disable fixed rate and hourly rate from "edit timesheet" [\#330](https://github.com/kevinpapst/kimai2/issues/330)
 - Set other users hourly rate [\#303](https://github.com/kevinpapst/kimai2/issues/303)
 - Feature request - Make "Rate" hideable [\#217](https://github.com/kevinpapst/kimai2/issues/217)
-- fixed null project for advanced invoice calculator [\#462](https://github.com/kevinpapst/kimai2/pull/462) ([kevinpapst](https://github.com/kevinpapst))
+-  fixed null project for advanced invoice calculator [\#462](https://github.com/kevinpapst/kimai2/pull/462) ([kevinpapst](https://github.com/kevinpapst))
 
 **Fixed bugs:**
 
-- This value should be greater than or equal to zero [\#511](https://github.com/kevinpapst/kimai2/issues/511)
 - Timesheet Export for Admins [\#503](https://github.com/kevinpapst/kimai2/issues/503)
 - admin activity: visibility "none" \(no filter\) causes sql-error [\#491](https://github.com/kevinpapst/kimai2/issues/491)
 - login-screen optimizations [\#483](https://github.com/kevinpapst/kimai2/issues/483)
@@ -51,7 +90,7 @@
 
 - pagination without reload while keeping filters applied [\#521](https://github.com/kevinpapst/kimai2/pull/521) ([kevinpapst](https://github.com/kevinpapst))
 - go back to calendar after editing and creation of time-records [\#519](https://github.com/kevinpapst/kimai2/pull/519) ([kevinpapst](https://github.com/kevinpapst))
-- fetch toolbar results without page reload [\#518](https://github.com/kevinpapst/kimai2/pull/518) ([kevinpapst](https://github.com/kevinpapst))
+-  fetch toolbar results without page reload [\#518](https://github.com/kevinpapst/kimai2/pull/518) ([kevinpapst](https://github.com/kevinpapst))
 - Form and theme improvements [\#513](https://github.com/kevinpapst/kimai2/pull/513) ([kevinpapst](https://github.com/kevinpapst))
 - validation for future and negative times [\#512](https://github.com/kevinpapst/kimai2/pull/512) ([kevinpapst](https://github.com/kevinpapst))
 - alphabetical order for selectboxes [\#510](https://github.com/kevinpapst/kimai2/pull/510) ([kevinpapst](https://github.com/kevinpapst))

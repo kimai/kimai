@@ -20,11 +20,14 @@ if your updated version is mentioned below.
 
 ## [0.8](https://github.com/kevinpapst/kimai2/releases/tag/0.8) (unreleased)
 
-There was a change introduced regarding the storage of the date-time objects in timesheet records. 
-Please read this [Pull request](https://github.com/kevinpapst/kimai2/pull/372) carefully before you follow the instructions 
-to convert the timezones in your existing time records with `bin/console kimai:convert-timezone --help`.
+After you followed the normal update and database migration process (see above), you need to execute a bash command (see below)  and check if you want to apply changes to your `local.yaml`. 
 
-If you don't do that, you will end up with wrong times in your database. Be especially careful, when you previously imported data from Kimai v1.
+- There was a change introduced regarding the storage of the date-time objects in the database. 
+Please read this [pull request](https://github.com/kevinpapst/kimai2/pull/372) BEFORE you follow the instructions 
+to convert the timezones in your existing time records with `bin/console kimai:convert-timezone`.
+Without that, you will end up with wrong times in your database. Be careful, when you previously imported data from Kimai v1.
+- A new boolean setting `kimai.timesheet.rules.allow_future_times` was introduced
+- Some new permissions need to be applied if you use custom rulesets: `view_export,create_export,edit_export_own_timesheet,edit_export_other_timesheet,system_information`
 
 ## [0.7](https://github.com/kevinpapst/kimai2/releases/tag/0.7) (2019-01-28)
 
