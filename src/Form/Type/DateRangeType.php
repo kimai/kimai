@@ -67,6 +67,42 @@ class DateRangeType extends AbstractType
         });
     }
 
+    /**
+     * A better way would be to use the Intl NumberFormatter, but if that is not available
+     * and the Symfony polyfill is used, this method would not work properly.
+     *
+     * @param $string
+     * @return string
+     */
+    protected function convertArabicPersian($string)
+    {
+        return strtr(
+            $string,
+            [
+                '۰' => '0',
+                '۱' => '1',
+                '۲' => '2',
+                '۳' => '3',
+                '۴' => '4',
+                '۵' => '5',
+                '۶' => '6',
+                '۷' => '7',
+                '۸' => '8',
+                '۹' => '9',
+                '٠' => '0',
+                '١' => '1',
+                '٢' => '2',
+                '٣' => '3',
+                '٤' => '4',
+                '٥' => '5',
+                '٦' => '6',
+                '٧' => '7',
+                '٨' => '8',
+                '٩' => '9'
+            ]
+        );
+    }
+
     protected function formatToPattern(string $format, string $separator)
     {
         $format = preg_quote($format, '/');
@@ -106,6 +142,8 @@ class DateRangeType extends AbstractType
                 if (empty($dates) && $allowEmpty) {
                     return $range;
                 }
+
+                $dates = $this->convertArabicPersian($dates);
 
                 if (preg_match($pattern, $dates) !== 1) {
                     throw new TransformationFailedException('Invalid date range given');
