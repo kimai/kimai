@@ -5,8 +5,15 @@
  * file that was distributed with this source code.
  */
 
+/** global: jQuery */
+/** global: moment */
+
 if (typeof jQuery === 'undefined') {
     throw new Error('Kimai requires jQuery');
+}
+
+if (typeof moment === 'undefined') {
+    throw new Error('Kimai requires moment.js');
 }
 
 /* kimai

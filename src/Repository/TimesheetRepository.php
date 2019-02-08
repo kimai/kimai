@@ -30,6 +30,18 @@ class TimesheetRepository extends AbstractRepository
     public const STATS_QUERY_MONTHLY = 'monthly';
 
     /**
+     * @param Timesheet $timesheet
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function save(Timesheet $timesheet)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($timesheet);
+        $entityManager->flush();
+    }
+
+    /**
      * @param Timesheet $entry
      * @return bool
      * @throws RepositoryException

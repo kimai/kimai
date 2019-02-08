@@ -114,6 +114,7 @@ class AppExtension extends Extension implements PrependExtensionInterface
      */
     protected function createTimesheetParameter(array $config, ContainerBuilder $container)
     {
+        $container->setParameter('kimai.timesheet.rules', $config['rules']);
         $container->setParameter('kimai.timesheet.rates', $config['rates']);
         $container->setParameter('kimai.timesheet.rounding', $config['rounding']);
         $container->setParameter('kimai.timesheet.duration_only', $config['duration_only']);

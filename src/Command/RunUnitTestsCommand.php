@@ -20,16 +20,21 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class RunUnitTestsCommand extends Command
 {
     /**
+     * @var BashExecutor
+     */
+    protected $executor;
+    /**
      * @var string
      */
     protected $rootDir;
 
     /**
-     * RunCodeSnifferCommand constructor.
+     * @param BashExecutor $executor
      * @param string $projectDirectory
      */
-    public function __construct($projectDirectory)
+    public function __construct(BashExecutor $executor, string $projectDirectory)
     {
+        $this->executor = $executor;
         $this->rootDir = realpath($projectDirectory);
         parent::__construct();
     }
@@ -53,36 +58,24 @@ class RunUnitTestsCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $this->executeTests($io, '/tests');
+        $result = $this->executor->execute($this->createPhpunitCmdLine());
+
+        $io->write($result->getResult());
+
+        if ($result->getExitCode() > 0) {
+            $io->error('Found problems while running tests');
+
+            return;
+        }
+
+        $io->success('All tests were successful');
     }
 
     /**
-     * @param $directory
      * @return string
      */
-    protected function createPhpunitCmdLine($directory)
+    protected function createPhpunitCmdLine()
     {
-        return $this->rootDir . '/bin/phpunit --exclude-group integration ' . $directory;
-    }
-
-    /**
-     * @param string $directory
-     */
-    protected function executeTests(SymfonyStyle $io, $directory)
-    {
-        $directory = $this->rootDir . $directory;
-
-        $exitCode = 0;
-        ob_start();
-        passthru($this->createPhpunitCmdLine($directory), $exitCode);
-        $result = ob_get_clean();
-
-        $io->write($result);
-
-        if ($exitCode > 0) {
-            $io->error('Found problems while running tests at: ' . $directory);
-        } else {
-            $io->success('All tests performed good at: ' . $directory);
-        }
+        return '/bin/phpunit --exclude-group integration ' . $this->rootDir . '/tests';
     }
 }

@@ -19,6 +19,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Types\DateTimeType;
+use Doctrine\DBAL\Types\Type;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -132,6 +134,10 @@ class KimaiImporterCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        // do not convert the times, Kimai 1 stored them already in UTC
+        Type::overrideType(Type::DATETIME, DateTimeType::class);
+
+        // don't calculate rates ... this was done in Kimai 1
         $this->deactivateLifecycleCallbacks($this->getDoctrine()->getConnection());
 
         $io = new SymfonyStyle($input, $output);

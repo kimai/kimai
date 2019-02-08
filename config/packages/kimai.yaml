@@ -47,6 +47,11 @@ kimai:
             soft_limit: 1
             hard_limit: 3
 
+        # Rules that define the Timesheet validation and behaviour
+        rules:
+            # whether records in the future can be created
+            allow_future_times: true
+
     # --------------------------------------------------------------------------------
     # Invoice management
     #invoice:

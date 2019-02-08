@@ -54,7 +54,7 @@ abstract class AbstractSpreadsheetRenderer
      */
     protected function getFormattedDateTime(\DateTime $date)
     {
-        return $this->dateExtension->dateShort($date) . ' ' . date('H:i', $date->getTimestamp());
+        return $this->dateExtension->dateShort($date) . ' ' . $this->dateExtension->time($date);
     }
 
     /**

@@ -56,6 +56,13 @@
                 </a>
             </li>
         {% endif %}
+        {% if is_granted('view_export') %}
+            <li class="visible-xs-inline-block">
+                <a href="{{ path('export') }}" class="ddt-large">
+                    <i class="{{ 'export'|icon }} fa-2x"></i>
+                </a>
+            </li>
+        {% endif %}
         {% block navbar_extensions %}{% endblock %}
         {{ render(controller('App\\Controller\\TimesheetController::activeEntriesAction')) }}
     {% endif %}

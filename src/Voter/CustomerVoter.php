@@ -38,7 +38,7 @@ class CustomerVoter extends AbstractVoter
      */
     protected function supports($attribute, $subject)
     {
-        if (!$subject instanceof Customer) {
+        if (!($subject instanceof Customer)) {
             return false;
         }
 
@@ -63,10 +63,6 @@ class CustomerVoter extends AbstractVoter
             return false;
         }
 
-        if ($subject instanceof Customer) {
-            return $this->hasRolePermission($user, $attribute . '_customer');
-        }
-
-        return false;
+        return $this->hasRolePermission($user, $attribute . '_customer');
     }
 }

@@ -72,6 +72,7 @@ class UserVoterTest extends AbstractVoterTest
             yield [$user, $user4, 'edit', $result];
             yield [$user, $user4, 'delete', $result];
             yield [$user, $user4, 'hourly-rate', $result];
+            yield [$user, $user4, 'hourly-rate', $result];
         }
 
         $result = VoterInterface::ACCESS_ABSTAIN;

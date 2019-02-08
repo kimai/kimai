@@ -11,7 +11,6 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Timesheet entity.
@@ -25,7 +24,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\TimesheetRepository")
  * @ORM\HasLifecycleCallbacks()
- * @Assert\Callback("validate")
+ * @App\Validator\Constraints\Timesheet
  */
 class Timesheet
 {
@@ -52,6 +51,18 @@ class Timesheet
      * @ORM\Column(name="end_time", type="datetime", nullable=true)
      */
     private $end;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="timezone", type="string", length=64, nullable=false)
+     */
+    private $timezone;
+
+    /**
+     * @var bool
+     */
+    private $localized = false;
 
     /**
      * @var int
@@ -138,10 +149,33 @@ class Timesheet
     }
 
     /**
+     * Make sure begin and end date have the correct timezone.
+     * This will be called once for each item after being loaded from the database.
+     */
+    protected function localizeDates()
+    {
+        if ($this->localized) {
+            return;
+        }
+
+        if (null !== $this->begin) {
+            $this->begin->setTimeZone(new \DateTimeZone($this->timezone));
+        }
+
+        if (null !== $this->end) {
+            $this->end->setTimeZone(new \DateTimeZone($this->timezone));
+        }
+
+        $this->localized = true;
+    }
+
+    /**
      * @return \DateTime
      */
     public function getBegin()
     {
+        $this->localizeDates();
+
         return $this->begin;
     }
 
@@ -149,9 +183,10 @@ class Timesheet
      * @param \DateTime $begin
      * @return Timesheet
      */
-    public function setBegin($begin)
+    public function setBegin(\DateTime $begin)
     {
         $this->begin = $begin;
+        $this->timezone = $begin->getTimezone()->getName();
 
         return $this;
     }
@@ -161,6 +196,8 @@ class Timesheet
      */
     public function getEnd()
     {
+        $this->localizeDates();
+
         return $this->end;
     }
 
@@ -168,21 +205,21 @@ class Timesheet
      * @param \DateTime $end
      * @return Timesheet
      */
-    public function setEnd($end)
+    public function setEnd(?\DateTime $end)
     {
         $this->end = $end;
 
         if (null === $end) {
             $this->duration = 0;
             $this->rate = 0;
+        } else {
+            $this->timezone = $end->getTimezone()->getName();
         }
 
         return $this;
     }
 
     /**
-     * Set duration
-     *
      * @param int $duration
      * @return Timesheet
      */
@@ -194,8 +231,7 @@ class Timesheet
     }
 
     /**
-     * Get duration
-     * Do not rely on the results of this method for active records.
+     * Do not rely on the results of this method for running records.
      *
      * @return int
      */
@@ -205,8 +241,6 @@ class Timesheet
     }
 
     /**
-     * Set user
-     *
      * @param User $user
      * @return Timesheet
      */
@@ -218,8 +252,6 @@ class Timesheet
     }
 
     /**
-     * Get user
-     *
      * @return User
      */
     public function getUser()
@@ -228,8 +260,6 @@ class Timesheet
     }
 
     /**
-     * Set activity
-     *
      * @param Activity $activity
      * @return Timesheet
      */
@@ -241,8 +271,6 @@ class Timesheet
     }
 
     /**
-     * Get Activity
-     *
      * @return Activity
      */
     public function getActivity()
@@ -373,74 +401,24 @@ class Timesheet
     }
 
     /**
-     * @param ExecutionContextInterface $context
-     * @param $payload
+     * @return string
      */
-    public function validate(ExecutionContextInterface $context, $payload)
+    public function getTimezone(): string
     {
-        if (null === ($activity = $this->getActivity())) {
-            $context->buildViolation('A timesheet must have an activity.')
-                ->atPath('activity')
-                ->setTranslationDomain('validators')
-                ->addViolation();
-        }
+        return $this->timezone;
+    }
 
-        if (null === ($project = $this->getProject())) {
-            $context->buildViolation('A timesheet must have a project.')
-                ->atPath('project')
-                ->setTranslationDomain('validators')
-                ->addViolation();
-        }
+    /**
+     * BE WARNED: this method should NOT be used programmatically, there is very likely no reason for it!
+     *
+     * @deprecated since it was introduced, only meant for the initial migration. Will be removed with 1.0.
+     * @param string $timezone
+     * @return Timesheet
+     */
+    public function setTimezone(string $timezone)
+    {
+        $this->timezone = $timezone;
 
-        if (null !== $activity && null !== $project) {
-            if (null !== $activity->getProject() && $activity->getProject() !== $project) {
-                $context->buildViolation('Project mismatch, project specific activity and timesheet project are different.')
-                    ->atPath('project')
-                    ->setTranslationDomain('validators')
-                    ->addViolation();
-            }
-
-            if (null === $this->getEnd() && $activity->getVisible() === false) {
-                $context->buildViolation('Cannot start a disabled activity.')
-                    ->atPath('activity')
-                    ->setTranslationDomain('validators')
-                    ->addViolation();
-            }
-
-            if (null === $this->getEnd() && $project->getVisible() === false) {
-                $context->buildViolation('Cannot start a disabled project.')
-                    ->atPath('project')
-                    ->setTranslationDomain('validators')
-                    ->addViolation();
-            }
-
-            if (null === $this->getEnd() && $project->getCustomer()->getVisible() === false) {
-                $context->buildViolation('Cannot start a disabled customer.')
-                    ->atPath('customer')
-                    ->setTranslationDomain('validators')
-                    ->addViolation();
-            }
-        }
-
-        if (null === $this->getBegin()) {
-            $context->buildViolation('You must submit a begin date.')
-                ->atPath('begin')
-                ->setTranslationDomain('validators')
-                ->addViolation();
-        } else {
-            if (null !== $this->getBegin() && null !== $this->getEnd() && $this->getEnd()->getTimestamp() < $this->getBegin()->getTimestamp()) {
-                $context->buildViolation('End date must not be earlier then start date.')
-                    ->atPath('end')
-                    ->setTranslationDomain('validators')
-                    ->addViolation();
-            }
-
-            if (time() < $this->getBegin()->getTimestamp()) {
-                $context->buildViolation('The begin date cannot be in the future.')
-                    ->atPath('begin')
-                    ->setTranslationDomain('validators')
-                    ->addViolation();
-            }
-        }
+        return $this;
     }
 }

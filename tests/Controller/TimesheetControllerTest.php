@@ -116,6 +116,11 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'timesheet_edit_form' => [
                 'description' => 'Testing is fun!',
+                // begin is always pre-filled with the current datetime
+                // 'begin' => null,
+                // end must be allowed to be null, to start a record
+                // there was a bug with end begin required, so we manually set this field to be empty
+                'end' => null,
                 'project' => 1,
                 'activity' => 1,
             ]
