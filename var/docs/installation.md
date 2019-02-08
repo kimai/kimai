@@ -38,10 +38,10 @@ DATABASE_URL=mysql://user:password@127.0.0.1:3306/database
 ```
 
 Now install all dependencies for Kimai 2:
-
 ```bash
 sudo -u www-data composer install --no-dev --optimize-autoloader
 ```
+If you see a `Malformed patameter "url"` error, see below in the FAQ.
 
 Optionally create the database:
 ```bash
@@ -52,6 +52,7 @@ Create all schema tables:
 ```bash
 bin/console doctrine:schema:create
 ```
+You can safely ignore the message: *This operation should not be executed in a production environment*!
 
 Make sure that upcoming updates can be correctly applied by setting the initial database version:
 ```bash
@@ -206,7 +207,24 @@ yarn install
 npm run prod
 ```
 
-## Installation on a personal computer
+## FAQ and common problems
+
+### Malformed parameter "url"
+
+If you see an error message like this, then you have a special character in your DATABASE_URL. 
+```
+!!  
+!!  In DriverManager.php line 259:
+!!                                
+!!    Malformed parameter "url".  
+!!
+```
+This can be a character like `@` or `/` or some others, which need to be urlencoded. 
+This can easily be done with one command, lets assume your password is `mG0/d1@3aT.Z)s` then you get your password like this:
+```
+$ php -r "echo urlencode('mG0/d1@3aT.Z)s');"
+mG0%2Fd1%403aT.Z%29s
+```
 
 ### Which user to use - no need to use www-data user?!
 
