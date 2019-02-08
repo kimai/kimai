@@ -15,6 +15,7 @@ use App\Utils\LocaleSettings;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Intl\Util\IntlTestHelper;
 use Twig\TwigFilter;
 
 /**
@@ -112,10 +113,6 @@ class ExtensionsTest extends TestCase
     }
 
     /**
-     * @param string $result
-     * @param int $amount
-     * @param string $currency
-     * @param string $locale
      * @dataProvider getMoneyData
      */
     public function testMoney($result, $amount, $currency, $locale)
@@ -135,11 +132,28 @@ class ExtensionsTest extends TestCase
             ['$13.75', 13.75, 'USD', 'en'],
             ['13,75 $', 13.75, 'USD', 'de'],
             ['13,75 RUB', 13.75, 'RUB', 'de'],
-            ['RUB 13.50', 13.50, 'RUB', 'en'],
-            ['13,75 ₽', 13.75, 'RUB', 'ru'],
             ['14 ¥', 13.75, 'JPY', 'de'],
             ['13 933 ¥', 13933.49, 'JPY', 'ru'],
             ['1.234.567,89 $', 1234567.891234567890000, 'USD', 'de'],
+        ];
+    }
+
+    /**
+     * @dataProvider getMoneyData62_1
+     */
+    public function testMoney62_1($result, $amount, $currency, $locale)
+    {
+        IntlTestHelper::requireFullIntl($this, '62.1');
+
+        $sut = $this->getSut($this->localeEn, $locale);
+        $this->assertEquals($result, $sut->money($amount, $currency));
+    }
+
+    public function getMoneyData62_1()
+    {
+        return [
+            ['RUB 13.50', 13.50, 'RUB', 'en'],
+            ['13,75 ₽', 13.75, 'RUB', 'ru'],
         ];
     }
 
