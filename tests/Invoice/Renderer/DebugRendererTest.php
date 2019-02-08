@@ -55,7 +55,6 @@ class DebugRendererTest extends AbstractRendererTest
             'invoice.total_time',
             'invoice.total',
             'invoice.subtotal',
-            'invoice.currency',
             'template.name',
             'template.company',
             'template.address',

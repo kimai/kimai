@@ -87,7 +87,6 @@ trait RendererTrait
             'invoice.total_time' => $this->getFormattedDuration($model->getCalculator()->getTimeWorked()),
             'invoice.total' => $this->getFormattedMoney($model->getCalculator()->getTotal(), $currency),
             'invoice.subtotal' => $this->getFormattedMoney($model->getCalculator()->getSubtotal(), $currency),
-            'invoice.currency' => $currency,
 
             'template.name' => $model->getTemplate()->getName(),
             'template.company' => $model->getTemplate()->getCompany(),
