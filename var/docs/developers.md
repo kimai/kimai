@@ -10,7 +10,7 @@ All you need is:
 
 You can install php 7.2 and all dependencies on debian based linux with this command: 
 ```
-apt install php7.2 php7.2-sqlite3 php7.2-intl php7.2-zip php7.2-xml
+apt install php7.2 php7.2-sqlite3 php7.2-intl php7.2-zip php7.2-gd php7.2-mbstring php7.2-xml 
 ```
 
 Optional requirement:
