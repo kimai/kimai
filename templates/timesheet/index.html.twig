@@ -65,7 +65,7 @@
             {% endif %}
             {% if showSummary and day is not same as(entry.begin|date_short) %}
                 <tr class="summary info">
-                    <td>{{ day }}</td>
+                    <td class="text-nowrap">{{ day }}</td>
                     <td></td>
                     <td></td>
                     <td class="text-nowrap">{{ dayDuration|duration }}</td>
