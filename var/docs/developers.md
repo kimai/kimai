@@ -6,7 +6,12 @@ This page is dedicated to all developers who want to contribute to Kimai. You ar
 
 All you need is:
 - PHP >= 7.1.3
-- PHP extensions: `PDO-SQLite`, `intl` and `zip`
+- PHP extensions: `PDO-SQLite`, `intl`, `zip`, `gd`, `mbstring`, `xml`
+
+You can install php 7.2 and all dependencies on debian based linux with this command: 
+```
+apt install php7.2 php7.2-sqlite3 php7.2-intl php7.2-zip php7.2-xml
+```
 
 Optional requirement:
 - a MySQL/MariaDB instance
