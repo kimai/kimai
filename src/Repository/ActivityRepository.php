@@ -35,6 +35,7 @@ class ActivityRepository extends AbstractRepository
     }
 
     /**
+     * TODO this method executes max 11 SQL queries and is terrible slow - as it is called on every page... refactor me!
      * @param User|null $user
      * @param \DateTime|null $startFrom
      * @return Timesheet[]
@@ -43,7 +44,7 @@ class ActivityRepository extends AbstractRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('t', 'a', 'p', 'c')
+        $qb->select(['a.id as activity', 'p.id as project'])
             ->distinct()
             ->from(Timesheet::class, 't')
             ->join('t.activity', 'a')
@@ -53,7 +54,7 @@ class ActivityRepository extends AbstractRepository
             ->andWhere('a.visible = 1')
             ->andWhere('p.visible = 1')
             ->andWhere('c.visible = 1')
-            ->groupBy('a.id', 't.id')
+            ->groupBy('a.id', 'p.id')
             ->orderBy('t.end', 'DESC')
             ->setMaxResults(10)
         ;
@@ -68,7 +69,25 @@ class ActivityRepository extends AbstractRepository
                 ->setParameter('begin', $startFrom);
         }
 
-        return $qb->getQuery()->getResult();
+        $results = $qb->getQuery()->getScalarResult();
+
+        $timesheets = [];
+        foreach ($results as $result) {
+            $qb = $this->getEntityManager()->createQueryBuilder();
+            $qb->select('t', 'a', 'p', 'c')
+                ->from(Timesheet::class, 't')
+                ->join('t.activity', 'a')
+                ->join('t.project', 'p')
+                ->join('p.customer', 'c')
+                ->andWhere('t.activity = :activity')->setParameter('activity', $result['activity'])
+                ->andWhere('t.project = :project')->setParameter('project', $result['project'])
+                ->orderBy('t.end', 'DESC')
+                ->setMaxResults(1)
+            ;
+            $timesheets[] = $qb->getQuery()->getSingleResult();
+        }
+
+        return $timesheets;
     }
 
     /**
