@@ -35,7 +35,6 @@ class ActivityRepository extends AbstractRepository
     }
 
     /**
-     * TODO this method executes max 11 SQL queries and is terrible slow - as it is called on every page... refactor me!
      * @param User|null $user
      * @param \DateTime|null $startFrom
      * @return Timesheet[]
@@ -44,9 +43,9 @@ class ActivityRepository extends AbstractRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select(['a.id as activity', 'p.id as project'])
-            ->distinct()
+        $qb->select(['max(t.id) as timesheet', 'a.id as activity', 'p.id as project'])
             ->from(Timesheet::class, 't')
+            ->indexBy('t', 't.id')
             ->join('t.activity', 'a')
             ->join('t.project', 'p')
             ->join('p.customer', 'c')
@@ -71,23 +70,22 @@ class ActivityRepository extends AbstractRepository
 
         $results = $qb->getQuery()->getScalarResult();
 
-        $timesheets = [];
+        $ids = [];
         foreach ($results as $result) {
-            $qb = $this->getEntityManager()->createQueryBuilder();
-            $qb->select('t', 'a', 'p', 'c')
-                ->from(Timesheet::class, 't')
-                ->join('t.activity', 'a')
-                ->join('t.project', 'p')
-                ->join('p.customer', 'c')
-                ->andWhere('t.activity = :activity')->setParameter('activity', $result['activity'])
-                ->andWhere('t.project = :project')->setParameter('project', $result['project'])
-                ->orderBy('t.end', 'DESC')
-                ->setMaxResults(1)
-            ;
-            $timesheets[] = $qb->getQuery()->getSingleResult();
+            $ids[] = $result['timesheet'];
         }
 
-        return $timesheets;
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('t', 'a', 'p', 'c')
+            ->from(Timesheet::class, 't')
+            ->join('t.activity', 'a')
+            ->join('t.project', 'p')
+            ->join('p.customer', 'c')
+            ->andWhere($qb->expr()->in('t.id', $ids))
+            ->orderBy('t.end', 'DESC')
+        ;
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
