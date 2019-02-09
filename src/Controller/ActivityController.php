@@ -37,7 +37,7 @@ class ActivityController extends AbstractController
     public function recentActivitiesAction()
     {
         $user = $this->getUser();
-        $entries = $this->getRepository()->getRecentActivities($user, new \DateTime('-30 days'));
+        $entries = $this->getRepository()->getRecentActivities($user, new \DateTime('-1 year'));
 
         return $this->render(
             'navbar/recent-activities.html.twig',
