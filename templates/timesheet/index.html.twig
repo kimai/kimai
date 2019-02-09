@@ -48,10 +48,45 @@
         }) %}
 
         {% set tableName = 'timesheet' %}
+        {% set showSummary = app.user.preferenceValue('timesheet.daily_stats') %}
 
-        {{ tables.data_table_header(tableName, columns) }}
+        {{ tables.data_table_header(tableName, columns, showSummary) }}
 
+        {% set day = null %}
+        {% set dayDuration = 0 %}
+        {% set dayRate = 0 %}
+        {% set customerCurrency = false %}
         {% for entry in entries %}
+            {% if customerCurrency is same as(false) %}
+                {% set customerCurrency = entry.project.customer.currency %}
+            {% endif %}
+            {% if day is same as(null) %}
+                {% set day = entry.begin|date_short %}
+            {% endif %}
+            {% if showSummary and day is not same as(entry.begin|date_short) %}
+                <tr class="summary info">
+                    <td>{{ day }}</td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-nowrap">{{ dayDuration|duration }}</td>
+                {% if is_granted('view_rate_own_timesheet') %}
+                    <td class="text-nowrap">{{ dayRate|money(customerCurrency) }}</td>
+                    <td colspan="{{ (columns|length) - 5 }}"></td>
+                {% else %}
+                    <td colspan="{{ (columns|length) - 4 }}"></td>
+                {% endif %}
+                </tr>
+                {% set day = entry.begin|date_short %}
+                {% set dayDuration = 0 %}
+                {% set dayRate = 0 %}
+                {% set customerCurrency = false %}
+            {% endif %}
+            {% if customerCurrency is same as(false) %}
+                {% set customerCurrency = entry.project.customer.currency %}
+            {% endif %}
+            {% if customerCurrency is not same as(entry.project.customer.currency) %}
+                {% set customerCurrency = null %}
+            {% endif %}
             <tr>
                 <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'date') }}">{{ entry.begin|date_short }}</td>
 
@@ -103,6 +138,8 @@
                     {{ widgets.button_group(actionButtons) }}
                 </td>
             </tr>
+            {% set dayRate = dayRate + entry.rate %}
+            {% set dayDuration = dayDuration + entry.duration %}
         {% endfor %}
 
         {{ tables.data_table_footer(entries, 'timesheet_paginated') }}

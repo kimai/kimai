@@ -112,6 +112,15 @@ class ExtensionsTest extends TestCase
         }
     }
 
+    public function testMoneyNull()
+    {
+        $sut = $this->getSut($this->localeEn, 'en');
+        $this->assertEquals('123.75', $sut->money(123.75));
+
+        $sut = $this->getSut($this->localeEn, 'de');
+        $this->assertEquals('123.234,755', $sut->money(123234.7554));
+    }
+
     /**
      * @dataProvider getMoneyData
      */
