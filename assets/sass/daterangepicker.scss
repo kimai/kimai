@@ -5,5 +5,8 @@
             background-color: lighten(#357ebd, 40);
             color: #357ebd;
         }
+        select.yearselect{
+            width: unset;
+        }
     }
 }
