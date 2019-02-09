@@ -38,14 +38,15 @@ class ActivityRepository extends AbstractRepository
      * @param User|null $user
      * @param \DateTime|null $startFrom
      * @return Timesheet[]
+     * @throws Query\QueryException
      */
     public function getRecentActivities(User $user = null, \DateTime $startFrom = null)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('t', 'a', 'p', 'c')
-            ->distinct()
+        $qb->select($qb->expr()->max('t.id'))
             ->from(Timesheet::class, 't')
+            ->indexBy('t', 't.id')
             ->join('t.activity', 'a')
             ->join('t.project', 'p')
             ->join('p.customer', 'c')
@@ -53,7 +54,7 @@ class ActivityRepository extends AbstractRepository
             ->andWhere('a.visible = 1')
             ->andWhere('p.visible = 1')
             ->andWhere('c.visible = 1')
-            ->groupBy('a.id', 't.id')
+            ->groupBy('a.id', 'p.id')
             ->orderBy('t.end', 'DESC')
             ->setMaxResults(10)
         ;
@@ -67,6 +68,27 @@ class ActivityRepository extends AbstractRepository
             $qb->andWhere($qb->expr()->gt('t.begin', ':begin'))
                 ->setParameter('begin', $startFrom);
         }
+
+        $results = $qb->getQuery()->getScalarResult();
+
+        if (empty($results)) {
+            return [];
+        }
+
+        $ids = [];
+        foreach ($results as $result) {
+            $ids[] = $result[1];
+        }
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('t', 'a', 'p', 'c')
+            ->from(Timesheet::class, 't')
+            ->join('t.activity', 'a')
+            ->join('t.project', 'p')
+            ->join('p.customer', 'c')
+            ->andWhere($qb->expr()->in('t.id', $ids))
+            ->orderBy('t.end', 'DESC')
+        ;
 
         return $qb->getQuery()->getResult();
     }
@@ -219,7 +241,6 @@ class ActivityRepository extends AbstractRepository
      * @param Activity $delete
      * @param Activity|null $replace
      * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function deleteActivity(Activity $delete, ?Activity $replace = null)
     {
@@ -229,15 +250,13 @@ class ActivityRepository extends AbstractRepository
         try {
             if (null !== $replace) {
                 $qb = $em->createQueryBuilder();
-                $query = $qb
-                    ->update(Timesheet::class, 't')
+                $qb->update(Timesheet::class, 't')
                     ->set('t.activity', ':replace')
                     ->where('t.activity = :delete')
                     ->setParameter('delete', $delete)
-                    ->setParameter('replace', $replace)
-                    ->getQuery();
+                    ->setParameter('replace', $replace);
 
-                $result = $query->execute();
+                $qb->getQuery()->execute();
             }
 
             $em->remove($delete);
