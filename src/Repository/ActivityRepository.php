@@ -38,12 +38,13 @@ class ActivityRepository extends AbstractRepository
      * @param User|null $user
      * @param \DateTime|null $startFrom
      * @return Timesheet[]
+     * @throws Query\QueryException
      */
     public function getRecentActivities(User $user = null, \DateTime $startFrom = null)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select(['max(t.id) as timesheet', 'a.id as activity', 'p.id as project'])
+        $qb->select($qb->expr()->max('t.id'))
             ->from(Timesheet::class, 't')
             ->indexBy('t', 't.id')
             ->join('t.activity', 'a')
@@ -70,9 +71,13 @@ class ActivityRepository extends AbstractRepository
 
         $results = $qb->getQuery()->getScalarResult();
 
+        if (empty($results)) {
+            return [];
+        }
+
         $ids = [];
         foreach ($results as $result) {
-            $ids[] = $result['timesheet'];
+            $ids[] = $result[1];
         }
 
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -236,7 +241,6 @@ class ActivityRepository extends AbstractRepository
      * @param Activity $delete
      * @param Activity|null $replace
      * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function deleteActivity(Activity $delete, ?Activity $replace = null)
     {
@@ -246,15 +250,13 @@ class ActivityRepository extends AbstractRepository
         try {
             if (null !== $replace) {
                 $qb = $em->createQueryBuilder();
-                $query = $qb
-                    ->update(Timesheet::class, 't')
+                $qb->update(Timesheet::class, 't')
                     ->set('t.activity', ':replace')
                     ->where('t.activity = :delete')
                     ->setParameter('delete', $delete)
-                    ->setParameter('replace', $replace)
-                    ->getQuery();
+                    ->setParameter('replace', $replace);
 
-                $result = $query->execute();
+                $qb->getQuery()->execute();
             }
 
             $em->remove($delete);
