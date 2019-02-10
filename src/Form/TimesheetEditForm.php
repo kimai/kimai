@@ -20,6 +20,7 @@ use App\Form\Type\YesNoType;
 use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
+use App\Timesheet\UserDateTimeFactory;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -49,14 +50,21 @@ class TimesheetEditForm extends AbstractType
     private $durationOnly = false;
 
     /**
+     * @var UserDateTimeFactory
+     */
+    protected $dateTime;
+
+    /**
      * @param CustomerRepository $customer
      * @param ProjectRepository $project
+     * @param UserDateTimeFactory $dateTime
      * @param bool $durationOnly
      */
-    public function __construct(CustomerRepository $customer, ProjectRepository $project, bool $durationOnly)
+    public function __construct(CustomerRepository $customer, ProjectRepository $project, UserDateTimeFactory $dateTime, bool $durationOnly)
     {
         $this->customers = $customer;
         $this->projects = $project;
+        $this->dateTime = $dateTime;
         $this->durationOnly = $durationOnly;
     }
 
@@ -70,6 +78,7 @@ class TimesheetEditForm extends AbstractType
         $customer = null;
         $currency = false;
         $end = null;
+        $begin = null;
 
         if (isset($options['data'])) {
             /** @var Timesheet $entry */
@@ -87,12 +96,21 @@ class TimesheetEditForm extends AbstractType
                 $currency = $customer->getCurrency();
             }
 
+            $begin = $entry->getBegin();
             $end = $entry->getEnd();
+        }
+
+        $timezone = $this->dateTime->getTimezone()->getName();
+
+        if (null !== $begin) {
+            $timezone = $begin->getTimezone()->getName();
         }
 
         if (null === $end || !$options['duration_only']) {
             $builder->add('begin', DateTimePickerType::class, [
                 'label' => 'label.begin',
+                'model_timezone' => $timezone,
+                'view_timezone' => $timezone,
             ]);
         }
 
@@ -102,7 +120,9 @@ class TimesheetEditForm extends AbstractType
             ]);
         } else {
             $builder->add('end', DateTimePickerType::class, [
-                'label' => 'label.end',
+                'label' => 'label.begin',
+                'model_timezone' => $timezone,
+                'view_timezone' => $timezone,
                 'required' => false,
             ]);
         }
