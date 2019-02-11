@@ -10,7 +10,7 @@
         "ext-mbstring": "*",
         "ext-pdo": "*",
         "ext-zip": "*",
-        "beberlei/DoctrineExtensions": "^1.0",
+        "beberlei/doctrineextensions": "^1.2",
         "dama/doctrine-test-bundle": "^5.0",
         "doctrine/doctrine-fixtures-bundle": "^3.0",
         "erusev/parsedown": "^1.6",
