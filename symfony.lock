@@ -1,6 +1,6 @@
 {
     "beberlei/doctrineextensions": {
-        "version": "v1.0.20"
+        "version": "v1.2.0"
     },
     "composer/semver": {
         "version": "1.4.2"
@@ -163,6 +163,9 @@
     },
     "markbaker/complex": {
         "version": "1.4.6"
+    },
+    "markbaker/matrix": {
+        "version": "1.1.4"
     },
     "monolog/monolog": {
         "version": "1.23.0"
