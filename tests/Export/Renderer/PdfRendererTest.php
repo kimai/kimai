@@ -23,7 +23,6 @@ use Twig\Loader\FilesystemLoader;
  */
 class PdfRendererTest extends AbstractRendererTest
 {
-
     protected function getDateTimeFactory()
     {
         $token = $this->getMockBuilder(UsernamePasswordToken::class)->setMethods(['getUser'])->disableOriginalConstructor()->getMock();
