@@ -212,15 +212,15 @@ class CustomerControllerTest extends ControllerBaseTest
                 [
                     'customer_edit_form' => [
                         'name' => '',
-                        'country' => '00', // TODO why does it not fail?
-                        'currency' => '00', // TODO why does it not fail?
+                        'country' => '00',
+                        'currency' => '00',
                         'timezone' => 'XXX'
                     ]
                 ],
                 [
                     '#customer_edit_form_name',
-                    //'#customer_edit_form_country',
-                    //'#customer_edit_form_currency',
+                    '#customer_edit_form_country',
+                    '#customer_edit_form_currency',
                     '#customer_edit_form_timezone',
                 ]
             ],
