@@ -23,9 +23,9 @@ Kimai is a [multi-language application](var/docs/translations.md) and already tr
 ### Requirements
 
 - PHP 7.1.3 or higher (test your system compatibility with the [requirements-checker](http://symfony.com/doc/current/reference/requirements.html))
-- The PHP extensions [mbstring](http://php.net/manual/en/book.mbstring.php), [gd](http://php.net/manual/en/book.image.php), [intl](https://php.net/manual/en/book.intl.php), [zip](https://php.net/manual/en/book.zip.php) and [PDO](https://php.net/manual/en/book.pdo.php) with either [pdo_sqlite](https://php.net/manual/en/ref.pdo-sqlite.php) or [pdo_mysql](https://php.net/manual/en/ref.pdo-mysql.php) enabled
+- The PHP extensions [xml](http://php.net/manual/en/book.xml.php), [mbstring](http://php.net/manual/en/book.mbstring.php), [gd](http://php.net/manual/en/book.image.php), [intl](https://php.net/manual/en/book.intl.php), [zip](https://php.net/manual/en/book.zip.php) and [PDO](https://php.net/manual/en/book.pdo.php) with either [pdo_sqlite](https://php.net/manual/en/ref.pdo-sqlite.php) or [pdo_mysql](https://php.net/manual/en/ref.pdo-mysql.php) enabled
+- Kimai needs its own sub-domain or you need to [recompile the frontend assets](var/docs/developers.md) for usage in a sub-directory
 - If you use MariaDB, make sure its at least v10.2.7 (see [FAQ](var/docs/faq.md))
-- Kimai needs to be installed in the root directory of a domain or you need to [recompile the frontend assets](var/docs/developers.md)
 - A modern browser, Kimai v2 might be broken on old browsers like IE 10
 
 ## Documentation
@@ -56,12 +56,12 @@ You can see our development roadmap in the [Milestones](https://github.com/kevin
 It is open for changes and input from the community, your [ideas and questions](https://github.com/kevinpapst/kimai2/issues) are welcome!
 
 > Kimai 2 uses a rolling release concept for delivering updates.
-> You can upgrade Kimai at any time, you don't need to wait for the next official release.
+> You can upgrade Kimai at any time, you don't need to wait for the next official release. Read the [upgrade docs](UPGRADING.md) first!
 
 Release versions will be created on a regular base and you can use these tags if you are familiar with Git, 
 but we will not provide support for any specific version.
-Every code change, whether it's a new feature or a bug fix, will be done on the master branch and 
-intensively tested before merging. We have to do it this way, as we develop Kimai in our free time and want to put our 
+Every code change, whether it's a new feature or a bug fix, will be done on the master branch. 
+I have to do it this way, as I develop Kimai in my free time and want to put most
 effort into the software instead of backporting changes for old versions. 
 
 ## Extensions for Kimai 2
