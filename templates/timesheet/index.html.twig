@@ -63,7 +63,6 @@
         }) %}
 
         {% set tableName = 'timesheet' %}
-        {% set showSummary = app.user.preferenceValue('timesheet.daily_stats') %}
 
         {{ tables.data_table_header(tableName, columns, showSummary) }}
 
@@ -145,7 +144,10 @@
             {% set dayRate = dayRate + entry.rate %}
             {% set dayDuration = dayDuration + entry.duration %}
         {% endfor %}
-        {{ timesheet.summary(day, dayDuration, dayRate, customerCurrency, columns) }}
+
+        {% if showSummary %}
+            {{ timesheet.summary(day, dayDuration, dayRate, customerCurrency, columns) }}
+        {% endif %}
 
         {{ tables.data_table_footer(entries, 'timesheet_paginated') }}
     {% endif %}

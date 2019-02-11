@@ -75,6 +75,7 @@ class TimesheetController extends AbstractController
             'query' => $query,
             'showFilter' => $form->isSubmitted(),
             'toolbarForm' => $form->createView(),
+            'showSummary' => $this->getUser()->getPreferenceValue('timesheet.daily_stats', false),
         ]);
     }
 
