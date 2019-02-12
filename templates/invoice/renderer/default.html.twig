@@ -75,7 +75,13 @@
                 {% endif %}
                 <tr>
                     <td>{{ entry.begin|date_short }}</td>
-                    <td>{{ entry.activity.name }} / {{ entry.project.name }}</td>
+                    <td>
+                        {% if entry.description %}
+                            {{ entry.description }}
+                        {% else %}
+                            {{ entry.activity.name }} / {{ entry.project.name }}
+                        {% endif %}
+                    </td>
                     <td contenteditable="true">{{ rate|money(model.calculator.currency) }}</td>
                     <td>{{ duration }}</td>
                     <td>{{ entry.rate|money(model.calculator.currency) }}</td>

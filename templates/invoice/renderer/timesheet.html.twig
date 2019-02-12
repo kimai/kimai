@@ -10,9 +10,9 @@
     </div>
 </div>
 
-<div class="row invoice-info" style="padding: 10px 0 20px 0">
-    <div class="col-sm-12 invoice-col">
-        <table>
+<div class="row">
+    <div class="col-xs-12">
+        <table class="table no-border table-condensed">
             <tr>
                 <th>{{ 'invoice.from'|trans }}</th>
                 <td contenteditable="true">
@@ -24,7 +24,7 @@
                 </td>
             </tr>
             <tr>
-                <th style="width:50%">{{ 'label.date'|trans }}</th>
+                <th>{{ 'label.date'|trans }}</th>
                 <td contenteditable="true">
                     {% if model.query.begin|date('m') != model.query.end|date('m') or model.query.begin|date('Y') != model.query.end|date('Y') %}
                         {{ model.query.begin|date_short }} - {{ model.query.end|date_short }}
@@ -72,7 +72,13 @@
                 {% if model.query.user is empty %}
                     <td>{{ widgets.username(entry.user) }}</td>
                 {% endif %}
-                <td>{{ entry.activity.name }} / {{ entry.project.name }}</td>
+                <td>
+                    {% if entry.description %}
+                        {{ entry.description }}
+                    {% else %}
+                        {{ entry.activity.name }} / {{ entry.project.name }}
+                    {% endif %}
+                </td>
                 <td>{{ entry.duration|duration }}</td>
             </tr>
             {% endfor %}
