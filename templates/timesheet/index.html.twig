@@ -3,14 +3,21 @@
 {% import "macros/datatables.html.twig" as tables %}
 {% import "macros/toolbar.html.twig" as toolbar %}
 
-{% macro summary(day, duration, rate, currency, columns) %}
+{% macro summary(day, duration, dayRates, columns) %}
     <tr class="summary info">
         <td class="text-nowrap">{{ day }}</td>
         <td></td>
         <td></td>
         <td class="text-nowrap">{{ duration|duration }}</td>
         {% if is_granted('view_rate_own_timesheet') %}
-            <td class="text-nowrap">{{ rate|money(currency) }}</td>
+            <td class="text-nowrap">
+                {% for currency, rate in dayRates %}
+                    {{ rate|money(currency) }}
+                    {% if not loop.last %}
+                         <br>
+                    {% endif %}
+                {% endfor %}
+            </td>
             <td colspan="{{ (columns|length) - 5 }}"></td>
         {% else %}
             <td colspan="{{ (columns|length) - 4 }}"></td>
@@ -68,27 +75,17 @@
 
         {% set day = null %}
         {% set dayDuration = 0 %}
-        {% set dayRate = 0 %}
-        {% set customerCurrency = false %}
+        {% set dayRate = {} %}
         {% for entry in entries %}
-            {% if customerCurrency is same as(false) %}
-                {% set customerCurrency = entry.project.customer.currency %}
-            {% endif %}
+            {% set customerCurrency = entry.project.customer.currency %}
             {% if day is same as(null) %}
                 {% set day = entry.begin|date_short %}
             {% endif %}
             {% if showSummary and day is not same as(entry.begin|date_short) %}
-                {{ timesheet.summary(day, dayDuration, dayRate, customerCurrency, columns) }}
+                {{ timesheet.summary(day, dayDuration, dayRate, columns) }}
                 {% set day = entry.begin|date_short %}
                 {% set dayDuration = 0 %}
-                {% set dayRate = 0 %}
-                {% set customerCurrency = false %}
-            {% endif %}
-            {% if customerCurrency is same as(false) %}
-                {% set customerCurrency = entry.project.customer.currency %}
-            {% endif %}
-            {% if customerCurrency is not same as(entry.project.customer.currency) %}
-                {% set customerCurrency = null %}
+                {% set dayRate = {} %}
             {% endif %}
             <tr>
                 <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'date') }}">{{ entry.begin|date_short }}</td>
@@ -141,12 +138,17 @@
                     {{ widgets.button_group(actionButtons) }}
                 </td>
             </tr>
-            {% set dayRate = dayRate + entry.rate %}
+            {% if entry.end %}
+                {% if dayRate[customerCurrency] is not defined %}
+                    {% set dayRate = dayRate|merge({(customerCurrency): 0}) %}
+                {% endif %}
+                {% set dayRate = dayRate|merge({(customerCurrency): dayRate[customerCurrency] + entry.rate}) %}
+            {% endif %}
             {% set dayDuration = dayDuration + entry.duration %}
         {% endfor %}
 
         {% if showSummary %}
-            {{ timesheet.summary(day, dayDuration, dayRate, customerCurrency, columns) }}
+            {{ timesheet.summary(day, dayDuration, dayRate, columns) }}
         {% endif %}
 
         {{ tables.data_table_footer(entries, 'timesheet_paginated') }}
