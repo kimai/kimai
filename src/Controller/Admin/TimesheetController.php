@@ -13,7 +13,7 @@ use App\Controller\AbstractController;
 use App\Controller\TimesheetControllerTrait;
 use App\Entity\Timesheet;
 use App\Form\TimesheetEditForm;
-use App\Form\Toolbar\TimesheetAdminToolbarForm;
+use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\Query\TimesheetQuery;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -206,11 +206,12 @@ class TimesheetController extends AbstractController
      */
     protected function getToolbarForm(TimesheetQuery $query)
     {
-        return $this->createForm(TimesheetAdminToolbarForm::class, $query, [
+        return $this->createForm(TimesheetToolbarForm::class, $query, [
             'action' => $this->generateUrl('admin_timesheet', [
                 'page' => $query->getPage(),
             ]),
             'method' => 'GET',
+            'include_user' => true,
         ]);
     }
 }
