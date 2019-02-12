@@ -76,7 +76,7 @@
                 <tr>
                     <td>{{ entry.begin|date_short }}</td>
                     <td>
-                        {% if entry.description %}
+                        {% if entry.description is not empty %}
                             {{ entry.description }}
                         {% else %}
                             {{ entry.activity.name }} / {{ entry.project.name }}

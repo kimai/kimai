@@ -73,7 +73,7 @@
                     <td>{{ widgets.username(entry.user) }}</td>
                 {% endif %}
                 <td>
-                    {% if entry.description %}
+                    {% if entry.description is not empty %}
                         {{ entry.description }}
                     {% else %}
                         {{ entry.activity.name }} / {{ entry.project.name }}
