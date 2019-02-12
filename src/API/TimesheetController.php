@@ -64,6 +64,7 @@ class TimesheetController extends BaseApiController
      *      description="Returns the collection of all existing timesheets for the user",
      *      @SWG\Schema(ref="#/definitions/TimesheetCollection"),
      * )
+     * @Rest\QueryParam(name="user", requirements="\d+|all", strict=true, nullable=true, description="User ID to filter timesheets (needs permission 'view_other_timesheet', pass 'all' to fetch data for all user)")
      * @Rest\QueryParam(name="customer", requirements="\d+", strict=true, nullable=true, description="Customer ID to filter timesheets")
      * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="Project ID to filter timesheets")
      * @Rest\QueryParam(name="activity", requirements="\d+", strict=true, nullable=true, description="Activity ID to filter timesheets")
@@ -72,7 +73,7 @@ class TimesheetController extends BaseApiController
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order (allowed values: 'ASC', 'DESC')")
      * @Rest\QueryParam(name="orderBy", requirements="id|begin|end|rate", strict=true, nullable=true, description="The field by which results will be ordered (allowed values: 'id', 'begin', 'end', 'rate')")
      *
-     * @Security("is_granted('view_own_timesheet')")
+     * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
      *
      * @return Response
      */
@@ -81,6 +82,13 @@ class TimesheetController extends BaseApiController
         $query = new TimesheetQuery();
         $query->setUser($this->getUser());
         $query->setResultType(TimesheetQuery::RESULT_TYPE_PAGER);
+
+        if ($this->isGranted('view_other_timesheet') && null !== ($user = $paramFetcher->get('user'))) {
+            if ('all' === $user) {
+                $user = null;
+            }
+            $query->setUser($user);
+        }
 
         if (null !== ($customer = $paramFetcher->get('customer'))) {
             $query->setCustomer($customer);

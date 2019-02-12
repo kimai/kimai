@@ -48,10 +48,71 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/timesheets');
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(10, count($result));
         $this->assertDefaultStructure($result[0], false);
+    }
+
+    public function testGetCollectionForOtherUser()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setFixedRate(true)
+            ->setHourlyRate(true)
+            ->setAmount(7)
+            ->setUser($this->getUserByRole($em, User::ROLE_ADMIN))
+            ->setStartDate(new \DateTime('-10 days'))
+        ;
+        $this->importFixture($em, $fixture);
+
+        $query = ['user' => 2];
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(10, count($result));
+        $this->assertDefaultStructure($result[0], false);
+    }
+
+    public function testGetCollectionForAllUser()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setFixedRate(true)
+            ->setHourlyRate(true)
+            ->setAmount(7)
+            ->setUser($this->getUserByRole($em, User::ROLE_ADMIN))
+            ->setStartDate(new \DateTime('-10 days'))
+        ;
+        $this->importFixture($em, $fixture);
+
+        $query = ['user' => 'all'];
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(17, count($result));
+        $this->assertDefaultStructure($result[0], false);
+    }
+
+    public function testGetCollectionForEmptyResult()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $this->assertAccessIsGranted($client, '/api/timesheets');
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertEmpty($result);
     }
 
     public function testGetCollectionWithQuery()
@@ -61,7 +122,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(5, count($result));
         $this->assertDefaultStructure($result[0], false);
@@ -73,7 +134,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/timesheets/1');
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertDefaultStructure($result);
     }
 
@@ -93,7 +154,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertDefaultStructure($result);
         $this->assertNotEmpty($result['id']);
         $this->assertEquals(28800, $result['duration']);
@@ -194,7 +255,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertDefaultStructure($result);
         $this->assertNotEmpty($result['id']);
         $this->assertEquals(25200, $result['duration']);
