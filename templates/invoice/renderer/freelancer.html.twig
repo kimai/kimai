@@ -4,7 +4,7 @@
 
 {% block invoice %}
 
-{# You can overwrite these settings in your config/packages.local.yaml under the key "twig.globals.company" #}
+{# You can overwrite these settings in your config/packages/local.yaml under the key "twig.globals.company" #}
 {% set company = company|default({
     name: 'Kimai Inc.',
     homepage: 'www.kimai.org',
