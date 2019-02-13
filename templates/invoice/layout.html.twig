@@ -12,15 +12,6 @@
     <section class="invoice">
         {% block invoice %}{% endblock %}
     </section>
-    {% block print_button %}
-        <div class="row no-print">
-            <div class="col-xs-12">
-                <button type="button" class="btn btn-success pull-right" onclick="window.print();return false;">
-                    <i class="{{ 'print'|icon }}"></i> {{ 'button.print'|trans }}
-                </button>
-            </div>
-        </div>
-    {% endblock %}
 </div>
 </body>
 </html>

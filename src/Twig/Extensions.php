@@ -41,6 +41,10 @@ class Extensions extends \Twig_Extension
      * @var NumberFormatter
      */
     protected $numberFormatter;
+    /**
+     * @var NumberFormatter
+     */
+    protected $moneyFormatter;
 
     /**
      * @var RequestStack
@@ -254,18 +258,15 @@ class Extensions extends \Twig_Extension
 
         if ($this->locale !== $locale) {
             $this->locale = $locale;
-            $this->numberFormatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
+            $this->numberFormatter = new NumberFormatter($locale, NumberFormatter::DECIMAL);
+            $this->moneyFormatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
         }
-
-        $fractionDigits = Intl::getCurrencyBundle()->getFractionDigits($currency);
-        $amount = round($amount, $fractionDigits);
-        $result = $this->numberFormatter->format($amount);
 
         if (null !== $currency) {
-            $result = $this->numberFormatter->formatCurrency($amount, $currency);
+            return $this->moneyFormatter->formatCurrency($amount, $currency);
         }
 
-        return $result;
+        return $this->numberFormatter->format($amount);
     }
 
     /**

@@ -5,18 +5,14 @@
  * file that was distributed with this source code.
  */
 
-body.invoice_print
-{
-    margin: 20px;
-}
-
 .invoice {
     margin: 0;
+    border: none;
 }
 
 @media (min-width: $screen-sm-min) {
     .invoice {
-        margin: 10px 25px;
+        margin: 25px;
     }
 }
 
@@ -43,7 +39,7 @@ table.invoice-sum th, table.invoice-sum td  {
 /* ================================ FREELANCER INVOICE ================================ */
 
 #freelancer-invoice {
-    font: 16px/1 'Open Sans', sans-serif;
+    font: 15px/1 $font-family-sans-serif;
     box-sizing: border-box;
 
     h1 {
@@ -94,6 +90,7 @@ table.invoice-sum th, table.invoice-sum td  {
     article address {
         font-size: 1em;
         float: left;
+        margin: 1em 0;
     }
 
     article.address {
@@ -106,8 +103,8 @@ table.invoice-sum th, table.invoice-sum td  {
 
     /* article */
 
-    article, article address, table.meta, table.inventory {
-        margin: 2em 0 2em;
+    article, table.meta, table.inventory {
+        margin: 1em 0;
     }
 
     article:after {
@@ -138,7 +135,7 @@ table.invoice-sum th, table.invoice-sum td  {
     table.meta {
         float: right;
         width: 50%;
-        font-size: 90%;
+        font-size: 85%;
 
         th {
             text-align: right;
@@ -300,5 +297,9 @@ table.invoice-sum th, table.invoice-sum td  {
         .add, .cut {
             display: none;
         }
+    }
+
+    .invoice {
+        width: unset;
     }
 }

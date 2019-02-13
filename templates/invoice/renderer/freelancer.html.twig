@@ -88,7 +88,13 @@
                     {% endif %}
 
                     <tr>
-                        <td contenteditable="true">{{ entry.description }}</td>
+                        <td contenteditable="true">
+                            {% if entry.description is not empty %}
+                                {{ entry.description }}
+                            {% else %}
+                                {{ entry.activity.name }} / {{ entry.project.name }}
+                            {% endif %}
+                        </td>
                         <td contenteditable="true">{{ rate|money(model.calculator.currency) }}</td>
                         <td contenteditable="true">{{ duration }}</td>
                         <td>{{ entry.rate|money(model.calculator.currency) }}</td>
