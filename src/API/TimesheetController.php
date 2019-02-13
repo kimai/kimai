@@ -15,6 +15,7 @@ use App\Entity\Timesheet;
 use App\Form\TimesheetEditForm;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TimesheetRepository;
+use App\Timesheet\UserDateTimeFactory;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -47,15 +48,22 @@ class TimesheetController extends BaseApiController
     protected $hardLimit;
 
     /**
+     * @var UserDateTimeFactory
+     */
+    protected $dateTime;
+
+    /**
      * @param ViewHandlerInterface $viewHandler
      * @param TimesheetRepository $repository
+     * @param UserDateTimeFactory $dateTime
      * @param int $hardLimit
      */
-    public function __construct(ViewHandlerInterface $viewHandler, TimesheetRepository $repository, int $hardLimit)
+    public function __construct(ViewHandlerInterface $viewHandler, TimesheetRepository $repository, UserDateTimeFactory $dateTime, int $hardLimit)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
         $this->hardLimit = $hardLimit;
+        $this->dateTime = $dateTime;
     }
 
     /**
@@ -164,7 +172,7 @@ class TimesheetController extends BaseApiController
     {
         $timesheet = new Timesheet();
         $timesheet->setUser($this->getUser());
-        $timesheet->setBegin(new \DateTime());
+        $timesheet->setBegin($this->dateTime->createDateTime());
 
         $form = $this->createForm(TimesheetEditForm::class, $timesheet, [
             'csrf_protection' => false,

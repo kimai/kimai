@@ -9,8 +9,12 @@
 
 namespace App\Tests\Export\Renderer;
 
+use App\Entity\User;
 use App\Export\Renderer\PDFRenderer;
+use App\Timesheet\UserDateTimeFactory;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Twig\Loader\FilesystemLoader;
 
 /**
@@ -19,10 +23,21 @@ use Twig\Loader\FilesystemLoader;
  */
 class PdfRendererTest extends AbstractRendererTest
 {
+    protected function getDateTimeFactory()
+    {
+        $token = $this->getMockBuilder(UsernamePasswordToken::class)->setMethods(['getUser'])->disableOriginalConstructor()->getMock();
+        $token->expects($this->once())->method('getUser')->willReturn(new User());
+        $tokenStorage = new TokenStorage();
+        $tokenStorage->setToken($token);
+
+        return new UserDateTimeFactory($tokenStorage);
+    }
+
     public function testConfiguration()
     {
         $sut = new PDFRenderer(
-            $this->getMockBuilder(\Twig_Environment::class)->disableOriginalConstructor()->getMock()
+            $this->getMockBuilder(\Twig_Environment::class)->disableOriginalConstructor()->getMock(),
+            $this->getDateTimeFactory()
         );
 
         $this->assertEquals('pdf', $sut->getId());
@@ -43,7 +58,7 @@ class PdfRendererTest extends AbstractRendererTest
         /** @var FilesystemLoader $loader */
         $loader = $twig->getLoader();
 
-        $sut = new PDFRenderer($twig);
+        $sut = new PDFRenderer($twig, $this->getDateTimeFactory());
 
         $response = $this->render($sut);
 

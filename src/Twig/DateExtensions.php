@@ -40,6 +40,7 @@ class DateExtensions extends \Twig_Extension
             new TwigFilter('month_name', [$this, 'monthName']),
             new TwigFilter('date_short', [$this, 'dateShort']),
             new TwigFilter('date_time', [$this, 'dateTime']),
+            new TwigFilter('date_format', [$this, 'dateFormat']),
             new TwigFilter('time', [$this, 'time']),
         ];
     }
@@ -63,6 +64,16 @@ class DateExtensions extends \Twig_Extension
     {
         $format = $this->localeSettings->getDateTimeFormat();
 
+        return date_format($date, $format);
+    }
+
+    /**
+     * @param DateTime $date
+     * @param string $format
+     * @return false|string
+     */
+    public function dateFormat(DateTime $date, string $format)
+    {
         return date_format($date, $format);
     }
 
