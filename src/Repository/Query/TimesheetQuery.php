@@ -69,10 +69,10 @@ class TimesheetQuery extends ActivityQuery
     }
 
     /**
-     * @param User $user
+     * @param User|int $user
      * @return TimesheetQuery
      */
-    public function setUser(User $user = null)
+    public function setUser($user = null)
     {
         $this->user = $user;
 
