@@ -55,6 +55,8 @@ Be aware of the following rules:
 
 ### Twig templates
 
+If you are looking for a way to set the advanced contact data, see below in _Configure contact data_.
+
 Generally speaking, you should use only the variable `model` in your template which is an instance of `App\Model\InvoiceModel`.
 
 Please see the [default templates](https://github.com/kevinpapst/kimai2/tree/master/templates/invoice/renderer) at 
@@ -194,3 +196,28 @@ kimai:
 ```
 
 This would disable the default documents, as Kimai will onl look in the directory `var/invoices/` for files.
+
+## Configure contact data
+
+Some HTML invoice templates need additional data, that can't be edited through the UI.
+These values should be added to your `local.yaml`:
+```yaml
+twig:
+    globals:
+        company:
+            name: 'Kimai Inc.',
+            homepage: 'www.kimai.org',
+            email: 'kimai@example.com',
+            phone: '0123-4567890',
+            tax_number: 'YourTaxNumber',
+            signature: '/build/images/signature.png',
+            address: 'Kimai Inc.
+                Example road 42
+                D – 12345 City
+            ',
+            bank_account: '
+                Kimai Inc.
+                IBAN: DE00 0000 0000 0000 0000 00
+                BIC: XXXXXXXX (a bank name)
+            '
+```

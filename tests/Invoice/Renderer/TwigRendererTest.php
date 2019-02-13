@@ -60,6 +60,6 @@ class TwigRendererTest extends AbstractRendererTest
         $this->assertContains('<h2 class="page-header">
            <span contenteditable="true">a test invoice template title</span>
         </h2>', $content);
-        $this->assertEquals(5, substr_count($content, '<td>activity description / project name</td>'));
+        $this->assertEquals(5, substr_count($content, 'activity description / project name'));
     }
 }
