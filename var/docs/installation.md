@@ -75,9 +75,9 @@ For available roles, please refer to the [user documentation](users.md).
 > **NOTE**
 >
 > If you want to use a fully-featured web server (like Nginx or Apache) to run
-> Kimai, configure it to point at the `public/` directory of the project.
+> Kimai, configure it to point its DocumentRoot at the `public/` directory.
 > For more details, see:
-> http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html
+> https://symfony.com/doc/current/setup/web_server_configuration.html
 
 Installation complete: enjoy time-tracking :-)
 
