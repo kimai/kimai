@@ -2,17 +2,12 @@ nelmio_api_doc:
     models:
         use_jms: true
         names:
-            - { alias: CustomerEntity,          type: App\Entity\Customer,          groups: [Default, Entity, Customer] }
-            - { alias: CustomerCollection,      type: App\Entity\Customer,          groups: [Default, Collection, Customer] }
-            - { alias: ProjectEntity,           type: App\Entity\Project,           groups: [Default, Entity, Project] }
-            - { alias: ProjectCollection,       type: App\Entity\Project,           groups: [Default, Collection, Project] }
-            - { alias: ActivityEntity,          type: App\Entity\Activity,          groups: [Default, Entity, Activity] }
-            - { alias: ActivityCollection,      type: App\Entity\Activity,          groups: [Default, Collection, Activity] }
-            - { alias: TimesheetFormEntity,     type: App\Form\TimesheetEditForm,   groups: [Default, Entity, Timesheet] }
-            - { alias: TimesheetEntity,         type: App\Entity\Timesheet,         groups: [Default, Entity, Timesheet] }
-            - { alias: TimesheetCollection,     type: App\Entity\Timesheet,         groups: [Default, Collection, Timesheet] }
-            - { alias: UserEntity,              type: App\Entity\User,              groups: [Default, Entity, User] }
-            - { alias: UserCollection,          type: App\Entity\User,              groups: [Default, Collection, User] }
+            - { alias: CustomerEntity,          type: App\Entity\Customer,                      groups: [Default, Entity, Customer] }
+            - { alias: ProjectEntity,           type: App\Entity\Project,                       groups: [Default, Entity, Project] }
+            - { alias: ActivityEntity,          type: App\Entity\Activity,                      groups: [Default, Entity, Activity] }
+            - { alias: TimesheetEditForm,       type: App\Form\TimesheetEditForm,               groups: [Default, Entity, Timesheet] }
+            - { alias: TimesheetEntity,         type: App\Entity\Timesheet,                     groups: [Default, Entity, Timesheet] }
+            - { alias: UserEntity,              type: App\Entity\User,                          groups: [Default, Entity, User] }
     areas:
         path_patterns:
             - ^/api(?!/doc)
