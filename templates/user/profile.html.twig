@@ -135,7 +135,7 @@
                 {% if is_granted('view_rate_own_timesheet') %}
                 <li><a href="#">{{ 'label.hourly_rate'|trans }} <span class="pull-right badge bg-blue">{{ user.preferenceValue('hourly_rate') }}</span></a></li>
                 {% endif %}
-                <li><a href="#">{{ 'label.local_time'|trans }} <span class="pull-right badge bg-blue">{{ local_time|date_short }} {{ local_time|time }}</span></a></li>
+                <li><a href="#">{{ 'label.now'|trans }} <span class="pull-right badge bg-blue">{{ local_time|date_short }} {{ local_time|time }}</span></a></li>
             </ul>
         </div>
     </div>

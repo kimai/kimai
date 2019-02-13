@@ -13,6 +13,7 @@ use App\Calendar\Service;
 use App\Calendar\TimesheetEntity;
 use App\Entity\Timesheet;
 use App\Repository\Query\TimesheetQuery;
+use App\Timesheet\UserDateTimeFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,13 +31,19 @@ class CalendarController extends AbstractController
      * @var Service
      */
     protected $calendar;
+    /**
+     * @var UserDateTimeFactory
+     */
+    protected $dateTime;
 
     /**
      * @param Service $calendar
+     * @param UserDateTimeFactory $dateTime
      */
-    public function __construct(Service $calendar)
+    public function __construct(Service $calendar, UserDateTimeFactory $dateTime)
     {
         $this->calendar = $calendar;
+        $this->dateTime = $dateTime;
     }
 
     /**
@@ -47,7 +54,8 @@ class CalendarController extends AbstractController
     {
         return $this->render('calendar/user.html.twig', [
             'config' => $this->calendar->getConfig(),
-            'google' => $this->calendar->getGoogle()
+            'google' => $this->calendar->getGoogle(),
+            'now' => $this->dateTime->createDateTime(),
         ]);
     }
 

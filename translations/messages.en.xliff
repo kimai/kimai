@@ -412,6 +412,10 @@
                 <source>agendaDay</source>
                 <target>Day</target>
             </trans-unit>
+            <trans-unit id="label.now">
+                <source>label.now</source>
+                <target>Current time</target>
+            </trans-unit>
 
             <!--
               User timesheet calendar
