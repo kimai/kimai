@@ -46,7 +46,7 @@ class TimezoneSubscriber implements EventSubscriberInterface
      */
     public function setTimezone(GetResponseEvent $event)
     {
-        if (null === $this->storage->getToken()) {
+        if (!$this->canHandleEvent()) {
             return;
         }
 
@@ -55,4 +55,24 @@ class TimezoneSubscriber implements EventSubscriberInterface
         $timezone = $user->getPreferenceValue('timezone', date_default_timezone_get());
         date_default_timezone_set($timezone);
     }
+
+    /**
+     * @return bool
+     */
+    protected function canHandleEvent(): bool
+    {
+        if (null === $this->storage->getToken()) {
+            return false;
+        }
+
+        /* @var $user User */
+        $user = $this->storage->getToken()->getUser();
+
+        if (null === $user) {
+            return false;
+        }
+
+        return ($user instanceof User);
+    }
+
 }

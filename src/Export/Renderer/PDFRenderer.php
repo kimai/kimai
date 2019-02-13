@@ -12,6 +12,7 @@ namespace App\Export\Renderer;
 use App\Entity\Timesheet;
 use App\Export\RendererInterface;
 use App\Repository\Query\TimesheetQuery;
+use App\Timesheet\UserDateTimeFactory;
 use Mpdf\Mpdf;
 use Mpdf\Output\Destination;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,11 +28,18 @@ class PDFRenderer implements RendererInterface
     protected $twig;
 
     /**
-     * @param \Twig_Environment $twig
+     * @var UserDateTimeFactory
      */
-    public function __construct(\Twig_Environment $twig)
+    protected $dateTime;
+
+    /**
+     * @param \Twig_Environment $twig
+     * @param UserDateTimeFactory $dateTime
+     */
+    public function __construct(\Twig_Environment $twig, UserDateTimeFactory $dateTime)
     {
         $this->twig = $twig;
+        $this->dateTime = $dateTime;
     }
 
     /**
@@ -48,7 +56,7 @@ class PDFRenderer implements RendererInterface
         $content = $this->twig->render('export/renderer/pdf.html.twig', [
             'entries' => $timesheets,
             'query' => $query,
-            'now' => new \DateTime(),
+            'now' => $this->dateTime->createDateTime(),
             'summaries' => $this->calculateSummary($timesheets),
         ]);
 
