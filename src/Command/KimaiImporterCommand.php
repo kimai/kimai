@@ -126,7 +126,7 @@ class KimaiImporterCommand extends Command
             )
             ->addArgument('prefix', InputArgument::REQUIRED, 'The database prefix for the old Kimai v1 tables')
             ->addArgument('password', InputArgument::REQUIRED, 'The new password for all imported user')
-            ->addArgument('country', InputArgument::OPTIONAL, 'The default country for customer', 'de')
+            ->addArgument('country', InputArgument::OPTIONAL, 'The default country for customer (2-character uppercase)', 'DE')
         ;
     }
 
