@@ -254,7 +254,7 @@ trait TimesheetControllerTrait
     /**
      * Get a user from the Security Token Storage.
      *
-     * @return mixed
+     * @return User
      * @throws \LogicException If SecurityBundle is not available
      */
     abstract protected function getUser();

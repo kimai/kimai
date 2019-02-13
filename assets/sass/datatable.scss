@@ -229,6 +229,11 @@ div.dataTables_scrollHead table.table-bordered {
 }
 
 table.dataTable {
+    /* summary row, like the timesheet table provides */
+    tr.summary td {
+        font-weight: bold;
+        border-bottom: 1px solid #ccc;
+    }
     td {
         /*
             Make sure that the action buttons do not line-break if another column takes all available space

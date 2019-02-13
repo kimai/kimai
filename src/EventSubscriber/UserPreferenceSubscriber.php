@@ -77,13 +77,6 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
             $enableHourlyRate = true;
         }
 
-        /*
-            (new UserPreference())
-                ->setName('timezone')
-                ->setValue(date_default_timezone_get())
-                ->setType(TimezoneType::class),
-        */
-
         return [
             (new UserPreference())
                 ->setName(UserPreference::HOURLY_RATE)
@@ -136,6 +129,11 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setName('login.initial_view')
                 ->setValue(InitialViewType::DEFAULT_VIEW)
                 ->setType(InitialViewType::class),
+
+            (new UserPreference())
+                ->setName('timesheet.daily_stats')
+                ->setValue(false)
+                ->setType(CheckboxType::class),
         ];
     }
 
