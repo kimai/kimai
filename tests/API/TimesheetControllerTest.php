@@ -33,6 +33,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setAmount(10)
             ->setUser($this->getUserByRole($em, User::ROLE_USER))
             ->setStartDate(new \DateTime('-10 days'))
+            ->setAllowEmptyDescriptions(false)
         ;
         $this->importFixture($em, $fixture);
     }
