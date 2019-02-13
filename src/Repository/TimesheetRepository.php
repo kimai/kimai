@@ -55,8 +55,11 @@ class TimesheetRepository extends AbstractRepository
         }
 
         // seems to be necessary so Doctrine will recognize a changed timestamp
-        $entry->setBegin(clone $entry->getBegin());
-        $entry->setEnd(new DateTime());
+        $begin = clone $entry->getBegin();
+        $end = new \DateTime('now', $begin->getTimezone());
+
+        $entry->setBegin($begin);
+        $entry->setEnd($end);
 
         $entityManager = $this->getEntityManager();
         $entityManager->persist($entry);
@@ -103,11 +106,11 @@ class TimesheetRepository extends AbstractRepository
 
     /**
      * @param $select
-     * @param User|null $user
+     * @param User $user
      * @return int
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    protected function queryThisMonth($select, ?User $user)
+    protected function queryThisMonth($select, User $user)
     {
         $begin = new DateTime('first day of this month 00:00:00');
         $end = new DateTime('last day of this month 23:59:59');

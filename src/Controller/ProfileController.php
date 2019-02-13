@@ -18,6 +18,7 @@ use App\Form\UserPasswordType;
 use App\Form\UserPreferencesForm;
 use App\Form\UserRolesType;
 use App\Repository\TimesheetRepository;
+use App\Timesheet\UserDateTimeFactory;
 use App\Voter\UserVoter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -45,12 +46,20 @@ class ProfileController extends AbstractController
     protected $encoder;
 
     /**
-     * @param UserPasswordEncoderInterface $encoder
+     * @var UserDateTimeFactory
      */
-    public function __construct(UserPasswordEncoderInterface $encoder, EventDispatcherInterface $dispatcher)
+    protected $dateTime;
+
+    /**
+     * @param UserPasswordEncoderInterface $encoder
+     * @param EventDispatcherInterface $dispatcher
+     * @param UserDateTimeFactory $dateTime
+     */
+    public function __construct(UserPasswordEncoderInterface $encoder, EventDispatcherInterface $dispatcher, UserDateTimeFactory $dateTime)
     {
         $this->encoder = $encoder;
         $this->dispatcher = $dispatcher;
+        $this->dateTime = $dateTime;
     }
 
     /**
@@ -252,6 +261,7 @@ class ProfileController extends AbstractController
             'user' => $user,
             'stats' => $userStats,
             'years' => $monthlyStats,
+            'local_time' => $this->dateTime->createDateTime(),
             'forms' => []
         ];
 

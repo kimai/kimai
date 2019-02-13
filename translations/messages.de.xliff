@@ -416,6 +416,10 @@
                 <source>label.timesheet.daily_stats</source>
                 <target>Tägliche Statistiken im Timesheet anzeigen</target>
             </trans-unit>
+            <trans-unit id="label.now">
+                <source>label.now</source>
+                <target>Aktuelle Zeit</target>
+            </trans-unit>
 
             <!--
               User timesheet calendar

@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-md-3">
             {{ macro.profile_box(user, stats) }}
-            {{ macro.profile_infos(user, stats) }}
+            {{ macro.profile_infos(user, stats, local_time) }}
         </div>
         <div class="col-md-9">
 
@@ -121,7 +121,7 @@
     </div>
 {% endblock %}
 
-{% macro profile_infos(user, stats) %}
+{% macro profile_infos(user, stats, local_time) %}
     <div class="box box-primary">
         <div class="box-header with-border">
             <h3 class="box-title">{{ 'profile.about_me'|trans }}</h3>
@@ -129,10 +129,13 @@
         <div class="box-body">
             <ul class="nav nav-stacked">
                 {# colors = purple, blue, aqua, red, green #}
-                {# FIXME hourly rate must be dynamic <li><a href="#">{{ 'label.hourly_rate'|trans }} <span class="pull-right badge bg-blue">70</span></a></li> #}
                 <li><a href="#">{{ 'label.id'|trans }} <span class="pull-right badge bg-aqua">{{ user.id }}</span></a></li>
                 <li><a href="#">{{ 'label.username'|trans }} <span class="pull-right badge bg-blue">{{ user.username }}</span></a></li>
                 <li><a href="#">{{ 'profile.first_entry'|trans }} <span class="pull-right badge bg-purple">{{ stats.firstEntry|date }}</span></a></li>
+                {% if is_granted('view_rate_own_timesheet') %}
+                <li><a href="#">{{ 'label.hourly_rate'|trans }} <span class="pull-right badge bg-blue">{{ user.preferenceValue('hourly_rate') }}</span></a></li>
+                {% endif %}
+                <li><a href="#">{{ 'label.now'|trans }} <span class="pull-right badge bg-blue">{{ local_time|date_short }} {{ local_time|time }}</span></a></li>
             </ul>
         </div>
     </div>
@@ -155,7 +158,7 @@
                     <b>{{ 'stats.durationMonth'|trans }}</b> <a class="pull-right">{{ stats.durationThisMonth|duration }}</a>
                 </li>
 
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if is_granted('view_rate_own_timesheet') %}
                 <li class="list-group-item">
                     <b>{{ 'stats.amountMonth'|trans }}</b> <a class="pull-right">{{ stats.amountThisMonth|money }}</a>
                 </li>
@@ -165,7 +168,7 @@
                     <b>{{ 'stats.durationTotal'|trans }}</b> <a class="pull-right">{{ stats.durationTotal|duration }}</a>
                 </li>
 
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if is_granted('view_rate_own_timesheet') %}
                 <li class="list-group-item">
                     <b>{{ 'stats.amountTotal'|trans }}</b> <a class="pull-right">{{ stats.amountTotal|money }}</a>
                 </li>

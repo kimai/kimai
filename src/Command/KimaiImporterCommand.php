@@ -15,6 +15,7 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Entity\UserPreference;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
@@ -125,7 +126,7 @@ class KimaiImporterCommand extends Command
             )
             ->addArgument('prefix', InputArgument::REQUIRED, 'The database prefix for the old Kimai v1 tables')
             ->addArgument('password', InputArgument::REQUIRED, 'The new password for all imported user')
-            ->addArgument('country', InputArgument::OPTIONAL, 'The default country for customer', 'de')
+            ->addArgument('country', InputArgument::OPTIONAL, 'The default country for customer (2-character uppercase)', 'DE')
         ;
     }
 
@@ -249,7 +250,7 @@ class KimaiImporterCommand extends Command
         $allImports = 0;
 
         try {
-            $counter = $this->importUsers($io, $password, $users);
+            $counter = $this->importUsers($io, $password, $users, $rates);
             $allImports += $counter;
             $io->success('Imported users: ' . $counter);
         } catch (\Exception $ex) {
@@ -398,16 +399,21 @@ class KimaiImporterCommand extends Command
     }
 
     /**
-     * @param string $table
+     * @param $table
+     * @param array $where
      * @return array
      */
-    protected function fetchAllFromImport($table)
+    protected function fetchAllFromImport($table, array $where = [])
     {
-        return $this->connection->createQueryBuilder()
+        $query = $this->connection->createQueryBuilder()
             ->select('*')
-            ->from($this->connection->quoteIdentifier($this->dbPrefix . $table))
-            ->execute()
-            ->fetchAll();
+            ->from($this->connection->quoteIdentifier($this->dbPrefix . $table));
+
+        foreach ($where as $column => $value) {
+            $query->andWhere($query->expr()->eq($column, $value));
+        }
+
+        return $query->execute()->fetchAll();
     }
 
     /**
@@ -467,10 +473,11 @@ class KimaiImporterCommand extends Command
      * @param SymfonyStyle $io
      * @param string $password
      * @param array $users
+     * @param array $rates
      * @return int
      * @throws \Exception
      */
-    protected function importUsers(SymfonyStyle $io, $password, $users)
+    protected function importUsers(SymfonyStyle $io, $password, $users, $rates)
     {
         $counter = 0;
         $entityManager = $this->getDoctrine()->getManager();
@@ -493,6 +500,34 @@ class KimaiImporterCommand extends Command
 
             if (!$this->validateImport($io, $user)) {
                 throw new \Exception('Failed to validate user: ' . $user->getUsername());
+            }
+
+            // find and migrate user preferences
+            $prefsToImport = ['ui.lang' => 'language', 'timezone' => 'timezone'];
+            $preferences = $this->fetchAllFromImport('preferences', ['userID' => $oldUser['userID']]);
+            foreach ($preferences as $pref) {
+                $key = $pref['option'];
+
+                if (!array_key_exists($key, $prefsToImport)) {
+                    continue;
+                }
+
+                $newPref = new UserPreference();
+                $newPref
+                    ->setName($prefsToImport[$key])
+                    ->setValue($pref['value']);
+                $user->addPreference($newPref);
+            }
+
+            // find hourly rate
+            foreach ($rates as $ratesRow) {
+                if ($ratesRow['userID'] === $oldUser['userID'] && $ratesRow['activityID'] === null && $ratesRow['projectID'] === null) {
+                    $newPref = new UserPreference();
+                    $newPref
+                        ->setName(UserPreference::HOURLY_RATE)
+                        ->setValue($ratesRow['rate']);
+                    $user->addPreference($newPref);
+                }
             }
 
             try {
@@ -571,7 +606,7 @@ class KimaiImporterCommand extends Command
                 ->setAddress($oldCustomer['street'] . PHP_EOL . $oldCustomer['zipcode'] . ' ' . $oldCustomer['city'])
                 ->setTimezone($oldCustomer['timezone'])
                 ->setVisible($isActive)
-                ->setCountry($country)
+                ->setCountry(strtoupper($country))
             ;
 
             if (!$this->validateImport($io, $customer)) {
@@ -908,11 +943,17 @@ class KimaiImporterCommand extends Command
             }
 
             if (null === $activity) {
-                $io->error('Could not create timesheet record, missing activity with ID: ' . $activityId . '/' . $projectId . '/' . $customerId);
+                $io->error('Could not import timesheet record, missing activity with ID: ' . $activityId . '/' . $projectId . '/' . $customerId);
                 continue;
             }
 
             $duration = $oldRecord['end'] - $oldRecord['start'];
+
+            // FIXME create user on the fly
+            if (!isset($this->users[$oldRecord['userID']])) {
+                $io->error('Could not import timesheet record, unknown user: ' . $oldRecord['userID']);
+                continue;
+            }
 
             $timesheet = new Timesheet();
 
@@ -934,15 +975,30 @@ class KimaiImporterCommand extends Command
                 $timesheet->setRate(round($rate, 2));
             }
 
+            $user = $this->users[$oldRecord['userID']];
+            $timezone = $user->getPreferenceValue('timezone', date_default_timezone_get());
+            $dateTimezone = new \DateTimeZone('UTC');
+
+            $begin = new \DateTime('@' . $oldRecord['start']);
+            $begin->setTimezone($dateTimezone);
+            $end = new \DateTime('@' . $oldRecord['end']);
+            $end->setTimezone($dateTimezone);
+
+            // ---------- workaround for localizeDates ----------
+            // if getBegin() is not execute first, then the dates will we re-written in validateImport() below
+            $timesheet->setBegin($begin)->setEnd($end)->getBegin();
+            // --------------------------------------------------
+
             $timesheet
                 ->setDescription($oldRecord['description'] ?: ($oldRecord['comment'] ?: null))
                 ->setUser($this->users[$oldRecord['userID']])
-                ->setBegin(new \DateTime('@' . $oldRecord['start']))
-                ->setEnd(new \DateTime('@' . $oldRecord['end']))
+                ->setBegin($begin)
+                ->setEnd($end)
                 ->setDuration($duration)
                 ->setActivity($activity)
                 ->setProject($project)
                 ->setExported(intval($oldRecord['cleared']) !== 0)
+                ->setTimezone($timezone)
             ;
 
             if (!$this->validateImport($io, $timesheet)) {

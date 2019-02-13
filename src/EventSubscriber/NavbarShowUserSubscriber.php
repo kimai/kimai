@@ -16,9 +16,6 @@ use KevinPapst\AdminLTEBundle\Model\UserModel;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-/**
- * Class NavbarShowUserSubscriber
- */
 class NavbarShowUserSubscriber implements EventSubscriberInterface
 {
     /**
@@ -27,7 +24,6 @@ class NavbarShowUserSubscriber implements EventSubscriberInterface
     protected $storage;
 
     /**
-     * NavbarShowUserListener constructor.
      * @param TokenStorageInterface $tokenStorage
      */
     public function __construct(TokenStorageInterface $tokenStorage)
@@ -64,7 +60,7 @@ class NavbarShowUserSubscriber implements EventSubscriberInterface
             ->setIsOnline(true)
             ->setTitle($myUser->getTitle())
             ->setAvatar($myUser->getAvatar())
-            ->setMemberSince(new \DateTime());
+            ->setMemberSince($myUser->getRegisteredAt());
 
         $event->setUser($user);
     }
