@@ -127,6 +127,7 @@ class KimaiImporterCommand extends Command
             ->addArgument('prefix', InputArgument::REQUIRED, 'The database prefix for the old Kimai v1 tables')
             ->addArgument('password', InputArgument::REQUIRED, 'The new password for all imported user')
             ->addArgument('country', InputArgument::OPTIONAL, 'The default country for customer (2-character uppercase)', 'DE')
+            ->addArgument('currency', InputArgument::OPTIONAL, 'The default currency for customer (code like EUR, CHF, GBP or USD)', 'EUR')
         ;
     }
 
@@ -158,7 +159,14 @@ class KimaiImporterCommand extends Command
 
         $country = $input->getArgument('country');
         if (2 != trim(strlen($country))) {
-            $io->error('Country length needs to be exactly 2 character');
+            $io->error('Country code needs to be exactly 2 character');
+
+            return;
+        }
+
+        $currency = $input->getArgument('currency');
+        if (3 != trim(strlen($currency))) {
+            $io->error('Currency code needs to be exactly 3 character');
 
             return;
         }
@@ -260,7 +268,7 @@ class KimaiImporterCommand extends Command
         }
 
         try {
-            $counter = $this->importCustomers($io, $customer, $country);
+            $counter = $this->importCustomers($io, $customer, $country, $currency);
             $allImports += $counter;
             $io->success('Imported customers: ' . $counter);
         } catch (\Exception $ex) {
@@ -576,10 +584,11 @@ class KimaiImporterCommand extends Command
      * @param SymfonyStyle $io
      * @param array $customers
      * @param string $country
+     * @param string $currency
      * @return int
      * @throws \Exception
      */
-    protected function importCustomers(SymfonyStyle $io, $customers, $country)
+    protected function importCustomers(SymfonyStyle $io, $customers, $country, $currency)
     {
         $counter = 0;
         $entityManager = $this->getDoctrine()->getManager();
@@ -607,6 +616,7 @@ class KimaiImporterCommand extends Command
                 ->setTimezone($oldCustomer['timezone'])
                 ->setVisible($isActive)
                 ->setCountry(strtoupper($country))
+                ->setCurrency(strtoupper($currency))
             ;
 
             if (!$this->validateImport($io, $customer)) {
