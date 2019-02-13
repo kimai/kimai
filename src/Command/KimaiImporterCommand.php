@@ -910,6 +910,7 @@ class KimaiImporterCommand extends Command
     {
         $counter = 0;
         $activityCounter = 0;
+        $userCounter = 0;
         $entityManager = $this->getDoctrine()->getManager();
         $total = count($records);
 
@@ -949,11 +950,45 @@ class KimaiImporterCommand extends Command
 
             $duration = $oldRecord['end'] - $oldRecord['start'];
 
-            // FIXME create user on the fly
+            // ----------------------- unknown user, damned missing data integrity in Kimai v1 -----------------------
             if (!isset($this->users[$oldRecord['userID']])) {
-                $io->error('Could not import timesheet record, unknown user: ' . $oldRecord['userID']);
-                continue;
+
+                $tempUserName = uniqid();
+                $tempPassword = uniqid() . uniqid();
+
+                $user = new User();
+                $user->setUsername($tempUserName)
+                    ->setAlias('Import: ' . $tempUserName)
+                    ->setEmail($tempUserName . '@example.com')
+                    ->setPlainPassword($tempPassword)
+                    ->setEnabled(false)
+                    ->setRoles([USER::ROLE_USER])
+                ;
+
+                $pwd = $this->encoder->encodePassword($user, $user->getPlainPassword());
+                $user->setPassword($pwd);
+
+                if (!$this->validateImport($io, $user)) {
+                    $io->error('Found timesheet record for unknown user and failed to create user, skipping timesheet: ' . $oldRecord['timeEntryID']);
+                    continue;
+                }
+
+                try {
+                    $entityManager->persist($user);
+                    $entityManager->flush();
+                    if ($this->debug) {
+                        $io->success('Created deactivated user: ' . $user->getUsername());
+                    }
+                    $userCounter++;
+                } catch (\Exception $ex) {
+                    $io->error('Failed to create user: ' . $user->getUsername());
+                    $io->error('Reason: ' . $ex->getMessage());
+                    continue;
+                }
+
+                $this->users[$oldRecord['userID']] = $user;
             }
+            // ----------------------- unknown user end -----------------------
 
             $timesheet = new Timesheet();
 
@@ -1028,6 +1063,9 @@ class KimaiImporterCommand extends Command
         }
         $io->writeln(' (' . $counter . '/' . $total . ')');
 
+        if ($userCounter > 0) {
+            $io->success('Created new users during timesheet import: ' . $userCounter);
+        }
         if ($activityCounter > 0) {
             $io->success('Created new activities during timesheet import: ' . $activityCounter);
         }
