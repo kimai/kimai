@@ -53,7 +53,10 @@ class CustomerController extends BaseApiController
      * @SWG\Response(
      *      response=200,
      *      description="Returns the collection of all existing customer",
-     *      @SWG\Schema(ref="#/definitions/CustomerCollection"),
+     *      @SWG\Schema(
+     *          type="array",
+     *          @SWG\Items(ref="#/definitions/CustomerEntity")
+     *      )
      * )
      * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter activities (1=visible, 2=hidden, 3=both)")
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order (allowed values: 'ASC', 'DESC')")
