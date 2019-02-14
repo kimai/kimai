@@ -35,7 +35,7 @@ class ApiDocControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/doc.json');
         $this->assertContains('"title":"Kimai 2 - API Docs"', $client->getResponse()->getContent());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertNotEmpty($result);
     }
 

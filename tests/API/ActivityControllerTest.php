@@ -67,7 +67,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, $url, 'GET', $parameters);
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(count($expected), count($result));
         for ($i = 0; $i < count($result); $i++) {
@@ -118,7 +118,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/activities/1');
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
 
         $expectedKeys = ['id', 'name', 'comment', 'visible'];
         $actual = array_keys($result);

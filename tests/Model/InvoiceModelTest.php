@@ -33,7 +33,7 @@ class InvoiceModelTest extends TestCase
         $this->assertNull($sut->getQuery());
         $this->assertNull($sut->getDueDate());
         $this->assertEmpty($sut->getEntries());
-        $this->assertInternalType('array', $sut->getEntries());
+        $this->assertIsArray($sut->getEntries());
         $this->assertInstanceOf(\DateTime::class, $sut->getInvoiceDate());
     }
 
