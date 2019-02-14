@@ -53,7 +53,10 @@ class ProjectController extends BaseApiController
      * @SWG\Response(
      *      response=200,
      *      description="Returns the collection of all existing projects",
-     *      @SWG\Schema(ref="#/definitions/ProjectCollection"),
+     *      @SWG\Schema(
+     *          type="array",
+     *          @SWG\Items(ref="#/definitions/ProjectEntity")
+     *      )
      * )
      * @Rest\QueryParam(name="customer", requirements="\d+", strict=true, nullable=true, description="Customer ID to filter projects")
      * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter projects (1=visible, 2=hidden, 3=both)")

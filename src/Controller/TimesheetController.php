@@ -30,14 +30,6 @@ class TimesheetController extends AbstractController
     use TimesheetControllerTrait;
 
     /**
-     * @param int $hardLimit
-     */
-    public function __construct(int $hardLimit)
-    {
-        $this->setHardLimit($hardLimit);
-    }
-
-    /**
      * @Route(path="/", defaults={"page": 1}, name="timesheet", methods={"GET"})
      * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="timesheet_paginated", methods={"GET"})
      * @Security("is_granted('view_own_timesheet')")
@@ -75,6 +67,7 @@ class TimesheetController extends AbstractController
             'query' => $query,
             'showFilter' => $form->isSubmitted(),
             'toolbarForm' => $form->createView(),
+            'showSummary' => $this->getUser()->getPreferenceValue('timesheet.daily_stats', false),
         ]);
     }
 
@@ -161,7 +154,7 @@ class TimesheetController extends AbstractController
         try {
             $entry = new Timesheet();
             $entry
-                ->setBegin(new \DateTime())
+                ->setBegin($this->dateTime->createDateTime())
                 ->setUser($user)
                 ->setActivity($timesheet->getActivity())
                 ->setProject($timesheet->getProject())

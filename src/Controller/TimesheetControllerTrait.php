@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
+use App\Timesheet\UserDateTimeFactory;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,6 +27,21 @@ trait TimesheetControllerTrait
      * @var int
      */
     private $hardLimit = 1;
+
+    /**
+     * @var UserDateTimeFactory
+     */
+    protected $dateTime;
+
+    /**
+     * @param UserDateTimeFactory $dateTime
+     * @param int $hardLimit
+     */
+    public function __construct(UserDateTimeFactory $dateTime, int $hardLimit)
+    {
+        $this->dateTime = $dateTime;
+        $this->setHardLimit($hardLimit);
+    }
 
     /**
      * @param int $hardLimit
@@ -118,7 +134,7 @@ trait TimesheetControllerTrait
     {
         $entry = new Timesheet();
         $entry->setUser($this->getUser());
-        $entry->setBegin(new \DateTime());
+        $entry->setBegin($this->dateTime->createDateTime());
 
         $start = $request->get('begin');
         if ($start !== null) {
@@ -254,7 +270,7 @@ trait TimesheetControllerTrait
     /**
      * Get a user from the Security Token Storage.
      *
-     * @return mixed
+     * @return User
      * @throws \LogicException If SecurityBundle is not available
      */
     abstract protected function getUser();

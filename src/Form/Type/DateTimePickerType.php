@@ -9,6 +9,7 @@
 
 namespace App\Form\Type;
 
+use App\Timesheet\UserDateTimeFactory;
 use App\Utils\LocaleSettings;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -26,11 +27,17 @@ class DateTimePickerType extends AbstractType
     protected $localeSettings;
 
     /**
+     * @var UserDateTimeFactory
+     */
+    protected $dateTime;
+
+    /**
      * @param LocaleSettings $localeSettings
      */
-    public function __construct(LocaleSettings $localeSettings)
+    public function __construct(LocaleSettings $localeSettings, UserDateTimeFactory $dateTime)
     {
         $this->localeSettings = $localeSettings;
+        $this->dateTime = $dateTime;
     }
 
     /**
@@ -40,6 +47,7 @@ class DateTimePickerType extends AbstractType
     {
         $dateTimePicker = $this->localeSettings->getDateTimePickerFormat();
         $dateTimeFormat = $this->localeSettings->getDateTimeTypeFormat();
+        $timezone = $this->dateTime->getTimezone()->getName();
 
         $resolver->setDefaults([
             'label' => 'label.begin',
@@ -48,6 +56,8 @@ class DateTimePickerType extends AbstractType
             'format' => $dateTimeFormat,
             'format_picker' => $dateTimePicker,
             'with_seconds' => false,
+            'model_timezone' => $timezone,
+            'view_timezone' => $timezone,
         ]);
 
         $resolver->setDefault('attr', function (Options $options) {

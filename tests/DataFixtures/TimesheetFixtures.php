@@ -51,6 +51,20 @@ class TimesheetFixtures extends Fixture
      * @var bool
      */
     protected $hourlyRate = false;
+    /**
+     * @var bool
+     */
+    protected $allowEmptyDescriptions = true;
+
+    /**
+     * @param bool $allowEmptyDescriptions
+     * @return TimesheetFixtures
+     */
+    public function setAllowEmptyDescriptions(bool $allowEmptyDescriptions)
+    {
+        $this->allowEmptyDescriptions = $allowEmptyDescriptions;
+        return $this;
+    }
 
     /**
      * @param bool $fixedRate
@@ -148,11 +162,13 @@ class TimesheetFixtures extends Fixture
         $user = $this->user;
 
         for ($i = 0; $i < $this->amount; $i++) {
-            $description = null;
-            if ($i % 3 == 0) {
-                $description = $faker->text;
-            } elseif ($i % 2 == 0) {
-                $description = '';
+            $description = $faker->text;
+            if ($this->allowEmptyDescriptions) {
+                if ($i % 3 == 0) {
+                    $description = null;
+                } elseif ($i % 2 == 0) {
+                    $description = '';
+                }
             }
 
             $activity = $activities[array_rand($activities)];

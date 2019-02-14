@@ -22,16 +22,17 @@ $(document).ready(function () {
     });
 
     $('.toolbar form input').change(function (event) {
-        toolbarLoadDataAfterChange();
-    });
-
-    $('.toolbar form select').change(function (event) {
         switch (event.target.id) {
             case 'page':
                 break;
             default:
                 $('.toolbar form input#page').val(1);
         }
+        toolbarLoadDataAfterChange();
+    });
+
+    $('.toolbar form select').change(function (event) {
+        $('.toolbar form input#page').val(1);
         toolbarLoadDataAfterChange();
     });
 
