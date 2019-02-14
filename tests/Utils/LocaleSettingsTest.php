@@ -142,6 +142,7 @@ class LocaleSettingsTest extends TestCase
 
     /**
      * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Unknown locale given: xx
      */
     public function testInvalidLocaleWithGivenLocale()
     {
@@ -196,5 +197,17 @@ class LocaleSettingsTest extends TestCase
         $sut = $this->getSut('en', $this->getDefaultSettings());
         $this->assertEquals('YYYY-MM-DD HH:mm', $sut->getDateTimePickerFormat());
         $this->assertEquals('DD.MM.YYYY HH:mm', $sut->getDateTimePickerFormat('de'));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Unknown setting for locale en: date_time_picker
+     */
+    public function testUnknownSetting()
+    {
+        $sut = $this->getSut('en', ['en' => [
+            'xxx' => 'dd.MM.yyyy HH:mm',
+        ]]);
+        $sut->getDateTimePickerFormat('en');
     }
 }

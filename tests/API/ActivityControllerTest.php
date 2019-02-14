@@ -93,6 +93,25 @@ class ActivityControllerTest extends APIControllerBaseTest
         yield ['/api/activities', ['project' => '2', 'visible' => VisibilityQuery::SHOW_HIDDEN], [[false], [true, 2]]];
     }
 
+    public function testGetCollectionWithQuery()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->loadActivityTestData($client);
+
+        $query = ['order' => 'ASC', 'orderBy' => 'project', 'globalsFirst' => 'false'];
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertAccessIsGranted($client, '/api/activities', 'GET', $query);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(5, count($result));
+        $this->assertStructure($result[0], false);
+        $this->assertEquals(1, $result[2]['project']);
+        $this->assertEquals(2, $result[3]['project']);
+        $this->assertEquals(2, $result[4]['project']);
+    }
+
     public function testGetEntity()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);

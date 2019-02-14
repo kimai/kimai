@@ -9,6 +9,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Activity;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Model\Statistic\Month;
@@ -364,8 +365,7 @@ class TimesheetRepository extends AbstractRepository
                 ->setParameter('activity', $query->getActivity());
         }
 
-        // TODO if activity is an int, this will fail
-        if (null === $query->getActivity() || null === $query->getActivity()->getProject()) {
+        if (null === $query->getActivity() || ($query->getActivity() instanceof Activity && null === $query->getActivity()->getProject())) {
             if (null !== $query->getProject()) {
                 $qb->andWhere('t.project = :project')
                     ->setParameter('project', $query->getProject());

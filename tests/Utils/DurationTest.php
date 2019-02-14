@@ -20,6 +20,8 @@ class DurationTest extends TestCase
     public function testFormat()
     {
         $sut = new Duration();
+
+        $this->assertNull($sut->format(null));
         $this->assertEquals('02:38', $sut->format(9494));
         $this->assertEquals('02:38:14', $sut->format(9494, Duration::FORMAT_WITH_SECONDS));
     }
@@ -73,7 +75,7 @@ class DurationTest extends TestCase
             ['13', Duration::FORMAT_COLON],
             ['13-13', Duration::FORMAT_COLON],
             ['13.13', Duration::FORMAT_COLON],
-            [1111, 1111, Duration::FORMAT_NATURAL],
+            [1111, Duration::FORMAT_NATURAL],
 
             // invalid modes
             [17, 'foo'],

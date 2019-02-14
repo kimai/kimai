@@ -14,6 +14,7 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @coversDefaultClass \App\API\TimesheetController
@@ -118,7 +119,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testGetCollectionWithQuery()
     {
-        $query = ['customer' => 1, 'project' => 1, 'page' => 2, 'size' => 5, 'order' => 'DESC', 'orderBy' => 'rate'];
+        $query = ['customer' => 1, 'project' => 1, 'activity' => 1, 'page' => 2, 'size' => 5, 'order' => 'DESC', 'orderBy' => 'rate'];
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
         $result = json_decode($client->getResponse()->getContent(), true);
@@ -218,24 +219,6 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertApiCallValidationError($client->getResponse(), ['activity']);
     }
 
-    public function testPostActionWithIdIsNotAllowed()
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $data = [
-            'id' => 1,
-            'activity' => 1,
-            'project' => 1,
-            'begin' => (new \DateTime('- 8 hours'))->format('Y-m-d H:m'),
-            'end' => (new \DateTime())->format('Y-m-d H:m'),
-            'description' => 'foo',
-            'fixedRate' => 2016,
-            'hourlyRate' => 127
-        ];
-        $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
-        $this->assertFalse($client->getResponse()->isSuccessful());
-        $this->assertEquals(400, $client->getResponse()->getStatusCode());
-    }
-
     public function testNotFound()
     {
         $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/20');
@@ -261,6 +244,38 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result['id']);
         $this->assertEquals(25200, $result['duration']);
         $this->assertEquals(1, $result['exported']);
+    }
+
+    public function testPatchActionWithInvalidUser()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setFixedRate(true)
+            ->setHourlyRate(true)
+            ->setAmount(10)
+            ->setUser($this->getUserByRole($em, User::ROLE_TEAMLEAD))
+            ->setStartDate(new \DateTime('-10 days'))
+            ->setAllowEmptyDescriptions(false)
+        ;
+        $this->importFixture($em, $fixture);
+
+        $data = [
+            'activity' => 1,
+            'project' => 1,
+            'begin' => (new \DateTime('- 7 hours'))->format('Y-m-d H:m'),
+            'end' => (new \DateTime())->format('Y-m-d H:m'),
+            'description' => 'foo',
+            'exported' => true,
+        ];
+        $this->request($client, '/api/timesheets/15', 'PATCH', [], json_encode($data));
+        $response = $client->getResponse();
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        $json = json_decode($response->getContent(), true);
+        $this->assertEquals('User cannot update timesheet', $json['message']);
     }
 
     public function testInvalidPatchAction()
