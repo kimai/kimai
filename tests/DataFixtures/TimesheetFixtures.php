@@ -63,6 +63,7 @@ class TimesheetFixtures extends Fixture
     public function setAllowEmptyDescriptions(bool $allowEmptyDescriptions)
     {
         $this->allowEmptyDescriptions = $allowEmptyDescriptions;
+
         return $this;
     }
 

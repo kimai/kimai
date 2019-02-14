@@ -964,7 +964,6 @@ class KimaiImporterCommand extends Command
 
             // ----------------------- unknown user, damned missing data integrity in Kimai v1 -----------------------
             if (!isset($this->users[$oldRecord['userID']])) {
-
                 $tempUserName = uniqid();
                 $tempPassword = uniqid() . uniqid();
 

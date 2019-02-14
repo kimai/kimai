@@ -61,10 +61,10 @@ EOT;
         $sut = new Markdown();
 
         $html = <<<'EOT'
-<h1 id="test-2">test</h1>
-<h2 id="test-3">test</h2>
-<h3 id="test-4">test</h3>
-<h1 id="test-5">test</h1>
+<h1 id="test">test</h1>
+<h2 id="test-1">test</h2>
+<h3 id="test-2">test</h3>
+<h1 id="test-3">test</h1>
 EOT;
 
         $markdown = <<<EOT
