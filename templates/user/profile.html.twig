@@ -131,7 +131,7 @@
                 {# colors = purple, blue, aqua, red, green #}
                 <li><a href="#">{{ 'label.id'|trans }} <span class="pull-right badge bg-aqua">{{ user.id }}</span></a></li>
                 <li><a href="#">{{ 'label.username'|trans }} <span class="pull-right badge bg-blue">{{ user.username }}</span></a></li>
-                <li><a href="#">{{ 'profile.first_entry'|trans }} <span class="pull-right badge bg-purple">{{ stats.firstEntry|date }}</span></a></li>
+                <li><a href="#">{{ 'profile.first_entry'|trans }} <span class="pull-right badge bg-purple">{{ stats.firstEntry|date_short }}</span></a></li>
                 {% if is_granted('view_rate_own_timesheet') %}
                 <li><a href="#">{{ 'label.hourly_rate'|trans }} <span class="pull-right badge bg-blue">{{ user.preferenceValue('hourly_rate') }}</span></a></li>
                 {% endif %}
