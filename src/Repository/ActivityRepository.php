@@ -55,7 +55,6 @@ class ActivityRepository extends AbstractRepository
             ->andWhere('p.visible = 1')
             ->andWhere('c.visible = 1')
             ->groupBy('a.id', 'p.id')
-            ->orderBy('t.end', 'DESC')
             ->setMaxResults(10)
         ;
 
