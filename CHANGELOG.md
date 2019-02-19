@@ -13,7 +13,6 @@
 - Highlight current day in datepickers and not only the selected day [\#522](https://github.com/kevinpapst/kimai2/issues/522)
 - Configuration of first page after login [\#501](https://github.com/kevinpapst/kimai2/issues/501)
 - Visual Grouping of entry from same day or same week with some stats of that group [\#495](https://github.com/kevinpapst/kimai2/issues/495)
-- add currency field to invoice template [\#422](https://github.com/kevinpapst/kimai2/issues/422)
 
 **Fixed bugs:**
 
@@ -31,7 +30,6 @@
 
 - Feedback for improving installation setup [\#541](https://github.com/kevinpapst/kimai2/issues/541)
 - template entry.end\_time shows empty field [\#535](https://github.com/kevinpapst/kimai2/issues/535)
-- Global Projects [\#413](https://github.com/kevinpapst/kimai2/issues/413)
 
 **Merged pull requests:**
 

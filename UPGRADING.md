@@ -1,11 +1,8 @@
 # Upgrading Kimai 2
 
-Database upgrades are currently ONLY provided for MySQL/MariaDB and SQLite. 
+_Database upgrades are currently ONLY provided for MySQL/MariaDB and SQLite._ 
 
-If you plan on using e.g. PostgreSQL, please read more about the `bin/console doctrine:migrations:diff` and 
-`bin/console doctrine:migrations:migrate` commands and contact us, so we can integrate them into the official releases.
-
-Upgrading to the latest available  version can be achieved with these commands: 
+Upgrading to the latest available version can be achieved with these commands: 
 
 ```bash
 git fetch --tags
@@ -16,35 +13,39 @@ sudo -u www-data bin/console cache:warmup --env=prod
 bin/console doctrine:migrations:migrate
 ```
 
-Be careful when upgrading multiple versions at once: follow each version specific information!
+There might be more steps required, which are version specific and need to be executed after following the above list of commands.
+Read and follow each version info below, otherwise you risk data inconsistency or a broken installation!
 
-There might be version specific tasks that need to be executed before or after these steps, please see below 
-if your updated version is mentioned below.
+And make sure to **create a backup before you start**.
 
-## [0.8](https://github.com/kevinpapst/kimai2/releases/tag/0.8) (unreleased)
 
-After you followed the normal update and database migration process (see above), you need to execute a bash command (see below)  and check if you want to apply changes to your `local.yaml`. 
+## [0.8](https://github.com/kevinpapst/kimai2/releases/tag/0.8)
+
+After you followed the normal update and database migration process (see above), you need to execute a bash command to convert your timesheet data for timezone support:
 
 - An important change was introduced regarding the storage of date-time objects in the database. Please read this [pull request](https://github.com/kevinpapst/kimai2/pull/372) BEFORE you follow the instructions 
 to convert the timezones in your existing time records with `bin/console kimai:convert-timezone`. Without that, you will end up with wrong times in your database.
-- A new boolean setting `kimai.timesheet.rules.allow_future_times` was introduced
-- New [permissions](var/docs/permissions.md) are available: `view_export,create_export,edit_export_own_timesheet,edit_export_other_timesheet,system_information`
 
-## [0.7](https://github.com/kevinpapst/kimai2/releases/tag/0.7) (2019-01-28)
+Check if you want to apply changes to your `local.yaml`: 
+
+- A new boolean setting `kimai.timesheet.rules.allow_future_times` was introduced
+- New permissions are available: `view_export, create_export, edit_export_own_timesheet, edit_export_other_timesheet, system_information`
+
+## [0.7](https://github.com/kevinpapst/kimai2/releases/tag/0.7)
 
 The configuration `kimai.theme.active_warning` was deprecated and should be replaced in your local.yaml, 
 [read config docs for more information](https://github.com/kevinpapst/kimai2/blob/master/var/docs/configurations.md#limit-active-entries).
 
-## [0.6.1](https://github.com/kevinpapst/kimai2/releases/tag/0.6.1) (2018-11-19)
+## [0.6.1](https://github.com/kevinpapst/kimai2/releases/tag/0.6.1)
 
 A bugfix release to address database compatibility issues with older MySQL/MariaDB versions.
 
-## [0.6](https://github.com/kevinpapst/kimai2/releases/tag/0.6) (2018-11-18)
+## [0.6](https://github.com/kevinpapst/kimai2/releases/tag/0.6)
 
 The API has some minor BC breaks: some fields were renamed and entities have a larger attribute set than collections. 
 Be aware that the API is still is development mode and shouldn't be considered stable for now.
 
-## [0.5](https://github.com/kevinpapst/kimai2/releases/tag/0.5) (2018-09-27)
+## [0.5](https://github.com/kevinpapst/kimai2/releases/tag/0.5)
 
 Some configuration nodes were removed, if you have one of them in your `local.yaml` you need to delete them before you start the update:
 - `kimai.invoice.calculator`
@@ -56,7 +57,7 @@ The new config `kimai.invoice.documents` was introduced, holding a list of direc
 **BC break:** InvoiceTemplate name was changed from 255 characters to 60. If you used longer invoice-template names, they will be truncated when upgrading the database.
 Please make sure that they are unique in the first 60 character before you upgrade your database with `doctrine:migrations:migrate`. 
 
-## [0.4](https://github.com/kevinpapst/kimai2/releases/tag/0.4) (2018-09-01)
+## [0.4](https://github.com/kevinpapst/kimai2/releases/tag/0.4)
 
 In the time between 0.3 and 0.4 there was a release of composer that introduced a BC break, 
 which leads to problems between Composer and Symfony Flex, resulting in an error like this when running it:
@@ -72,9 +73,7 @@ sudo composer self-update
 sudo -u www-data composer update symfony/flex --no-plugins --no-scripts
 ```
 
-## [0.3](https://github.com/kevinpapst/kimai2/releases/tag/0.3) (2018-07-22)
-
-**Update from 0.2:**
+## [0.3](https://github.com/kevinpapst/kimai2/releases/tag/0.3)
 
 You need to adjust your `.env` file and add your `from` address for [all emails](https://github.com/kevinpapst/kimai2/blob/master/var/docs/emails.md) generated by Kimai 2:
 ```
