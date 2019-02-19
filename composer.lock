@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ad6acff0271ed9ad59d9b4ad54ed59cf",
+    "content-hash": "914ae23fdd5515561bdc7a996cc2e7e8",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -2148,16 +2148,16 @@
         },
         {
             "name": "kevinpapst/adminlte-bundle",
-            "version": "2.2",
+            "version": "dev-horizontal-form",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/AdminLTEBundle.git",
-                "reference": "f30230e476eec0b22d1f850b6902488d14e0b95e"
+                "reference": "3eb293f558407f20808ddadbcb6faa325f36f99d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/f30230e476eec0b22d1f850b6902488d14e0b95e",
-                "reference": "f30230e476eec0b22d1f850b6902488d14e0b95e",
+                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/3eb293f558407f20808ddadbcb6faa325f36f99d",
+                "reference": "3eb293f558407f20808ddadbcb6faa325f36f99d",
                 "shasum": ""
             },
             "require": {
@@ -2205,7 +2205,7 @@
                 }
             ],
             "description": "Admin theme bundle for Symfony 4 based on AdminLTE 2.4.8 with FOSUserBundle support",
-            "time": "2019-01-20T16:36:22+00:00"
+            "time": "2019-02-19T16:08:26+00:00"
         },
         {
             "name": "markbaker/complex",
@@ -9245,7 +9245,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "kevinpapst/adminlte-bundle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

@@ -18,7 +18,7 @@
         "friendsofsymfony/user-bundle": "~2.0",
         "fzaninotto/faker": "^1.8",
         "jms/serializer-bundle": "^2.4",
-        "kevinpapst/adminlte-bundle": "~2.1",
+        "kevinpapst/adminlte-bundle": "dev-horizontal-form",
         "mpdf/mpdf": "^7.1",
         "nelmio/api-doc-bundle": "^3.2",
         "ocramius/proxy-manager": "2.1.1",

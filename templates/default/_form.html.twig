@@ -1,3 +1,4 @@
+{{ form_start(form) }}
 <div class="box box-primary">
     <div class="box-header with-border">
         <h3 class="box-title">
@@ -7,7 +8,6 @@
             {% endif %}
         </h3>
     </div>
-    {{ form_start(form) }}
     <div class="box-body">
          {{ form_widget(form) }}
     </div>
@@ -17,5 +17,5 @@
             <a href="{{ back }}" class="btn btn-link">{{ 'action.back'|trans }}</a>
         {% endif %}
     </div>
-    {{ form_end(form) }}
 </div>
+{{ form_end(form) }}

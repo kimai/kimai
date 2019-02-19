@@ -1,0 +1,13 @@
+{% extends "@AdminLTE/layout/form-theme.html.twig" %}
+
+{% block daterange_widget %}
+    <div class="input-group">
+        <div class="input-group-addon">
+            <i class="far fa-calendar-alt"></i>
+        </div>
+
+        {% set attr = attr|merge({'data-daterangepickerenable':'on'}) %}
+
+        {{ block('form_widget_simple') }}
+    </div>
+{% endblock daterange_widget %}
