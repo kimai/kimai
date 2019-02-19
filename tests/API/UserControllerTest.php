@@ -29,7 +29,7 @@ class UserControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/users');
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(6, count($result));
         $this->assertStructure($result[0], false);
@@ -41,7 +41,7 @@ class UserControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/users/1');
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertStructure($result);
     }
 

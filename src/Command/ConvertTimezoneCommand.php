@@ -25,6 +25,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  * You should convert all timesheet records that were saved with Kimai 2 directly, but NOT the ones migrated from Kimai v1.
  *
  * Please read https://github.com/kevinpapst/kimai2/pull/372 to find out more!
+ *
+ * @codeCoverageIgnore
  */
 class ConvertTimezoneCommand extends Command
 {

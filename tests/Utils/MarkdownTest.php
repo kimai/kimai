@@ -14,6 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Utils\Markdown
+ * @covers \App\Utils\ParsedownExtension
  */
 class MarkdownTest extends TestCase
 {
@@ -51,6 +52,26 @@ sdfsdf [asdfasdf](#test-1) asdfasdf
 
 # test
 aasdfasdf
+EOT;
+        $this->assertEquals($html, $sut->toHtml($markdown));
+    }
+
+    public function testDuplicateIds()
+    {
+        $sut = new Markdown();
+
+        $html = <<<'EOT'
+<h1 id="test">test</h1>
+<h2 id="test-1">test</h2>
+<h3 id="test-2">test</h3>
+<h1 id="test-3">test</h1>
+EOT;
+
+        $markdown = <<<EOT
+# test
+## test
+### test
+# test
 EOT;
         $this->assertEquals($html, $sut->toHtml($markdown));
     }

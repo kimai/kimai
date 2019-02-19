@@ -74,5 +74,4 @@ class TimezoneSubscriber implements EventSubscriberInterface
 
         return ($user instanceof User);
     }
-
 }

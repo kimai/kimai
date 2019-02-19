@@ -45,7 +45,7 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
 
         $query->setResultType(BaseQuery::RESULT_TYPE_OBJECTS);
         $result = $repository->findByQuery($query);
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
     }
 
     public function testStoppedEntriesCannotBeStoppedAgain()

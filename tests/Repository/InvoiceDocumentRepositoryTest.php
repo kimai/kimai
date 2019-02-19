@@ -36,7 +36,7 @@ class InvoiceDocumentRepositoryTest extends TestCase
     {
         $sut = new InvoiceDocumentRepository([]);
         $this->assertEmpty($sut->findAll());
-        $this->assertInternalType('array', $sut->findAll());
+        $this->assertIsArray($sut->findAll());
         $this->assertNull($sut->findByName('default'));
     }
 

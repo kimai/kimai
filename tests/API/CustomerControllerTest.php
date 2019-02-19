@@ -28,7 +28,20 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/customers');
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(1, count($result));
+        $this->assertStructure($result[0], false);
+    }
+
+    public function testGetCollectionWithQuery()
+    {
+        $query = ['order' => 'ASC', 'orderBy' => 'name', 'visible' => 3];
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertAccessIsGranted($client, '/api/customers', 'GET', $query);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(1, count($result));
         $this->assertStructure($result[0], false);
@@ -40,7 +53,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/customers/1');
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertStructure($result, true);
     }
 

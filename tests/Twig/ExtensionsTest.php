@@ -220,7 +220,7 @@ class ExtensionsTest extends TestCase
         foreach ($icons as $icon) {
             $result = $sut->icon($icon);
             $this->assertNotEmpty($result, 'Problem with icon definition: ' . $icon);
-            $this->assertInternalType('string', $result);
+            $this->assertIsString($result);
         }
 
         // test fallback will be returned

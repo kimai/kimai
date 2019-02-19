@@ -5,26 +5,30 @@ Database upgrades are currently ONLY provided for MySQL/MariaDB and SQLite.
 If you plan on using e.g. PostgreSQL, please read more about the `bin/console doctrine:migrations:diff` and 
 `bin/console doctrine:migrations:migrate` commands and contact us, so we can integrate them into the official releases.
 
-A normal upgrade can be executed with these commands: 
+Upgrading to the latest available  version can be achieved with these commands: 
 
 ```bash
-git pull origin master
+git fetch --tags
+git checkout 0.8
 sudo -u www-data composer install --no-dev --optimize-autoloader
 sudo -u www-data bin/console cache:clear --env=prod
 sudo -u www-data bin/console cache:warmup --env=prod
 bin/console doctrine:migrations:migrate
 ```
 
+Be careful when upgrading multiple versions at once: follow each version specific information!
+
 There might be version specific tasks that need to be executed before or after these steps, please see below 
 if your updated version is mentioned below.
 
 ## [0.8](https://github.com/kevinpapst/kimai2/releases/tag/0.8) (unreleased)
 
-There was a change introduced regarding the storage of the date-time objects in timesheet records. 
-Please read this [Pull request](https://github.com/kevinpapst/kimai2/pull/372) carefully before you follow the instructions 
-to convert the timezones in your existing time records with `bin/console kimai:convert-timezone --help`.
+After you followed the normal update and database migration process (see above), you need to execute a bash command (see below)  and check if you want to apply changes to your `local.yaml`. 
 
-If you don't do that, you will end up with wrong times in your database. Be especially careful, when you previously imported data from Kimai v1.
+- An important change was introduced regarding the storage of date-time objects in the database. Please read this [pull request](https://github.com/kevinpapst/kimai2/pull/372) BEFORE you follow the instructions 
+to convert the timezones in your existing time records with `bin/console kimai:convert-timezone`. Without that, you will end up with wrong times in your database.
+- A new boolean setting `kimai.timesheet.rules.allow_future_times` was introduced
+- New [permissions](var/docs/permissions.md) are available: `view_export,create_export,edit_export_own_timesheet,edit_export_other_timesheet,system_information`
 
 ## [0.7](https://github.com/kevinpapst/kimai2/releases/tag/0.7) (2019-01-28)
 
@@ -66,16 +70,6 @@ This can be fixed by updating Composer and Flex before executing the Kimai updat
 ```
 sudo composer self-update
 sudo -u www-data composer update symfony/flex --no-plugins --no-scripts
-```
-
-Then the full update can be executed as usual:
-
-```bash
-git pull origin master
-sudo -u www-data composer install --no-dev --optimize-autoloader
-sudo -u www-data bin/console cache:clear --env=prod
-sudo -u www-data bin/console cache:warmup --env=prod
-bin/console doctrine:migrations:migrate
 ```
 
 ## [0.3](https://github.com/kevinpapst/kimai2/releases/tag/0.3) (2018-07-22)
