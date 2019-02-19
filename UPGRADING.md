@@ -9,7 +9,7 @@ Upgrading to the latest available  version can be achieved with these commands:
 
 ```bash
 git fetch --tags
-git checkout 0.7
+git checkout 0.8
 sudo -u www-data composer install --no-dev --optimize-autoloader
 sudo -u www-data bin/console cache:clear --env=prod
 sudo -u www-data bin/console cache:warmup --env=prod

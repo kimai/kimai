@@ -1,32 +1,50 @@
 # Change Log
 
-## [0.8](https://github.com/kevinpapst/kimai2/tree/0.8) (2019-02-08)
+## [0.8](https://github.com/kevinpapst/kimai2/tree/0.8) (2019-02-19)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.7...0.8)
 
 **Implemented enhancements:**
 
+- Export other users' timesheets using the API [\#562](https://github.com/kevinpapst/kimai2/issues/562)
+- Some importer bugs/improvements [\#553](https://github.com/kevinpapst/kimai2/issues/553)
 - Export timesheet only exports entries on the current page [\#534](https://github.com/kevinpapst/kimai2/issues/534)
+- On the last activities dropdown show tha last ten DIFFERENT activities [\#533](https://github.com/kevinpapst/kimai2/issues/533)
+- Better user expierence on "My Times" [\#526](https://github.com/kevinpapst/kimai2/issues/526)
 - Highlight current day in datepickers and not only the selected day [\#522](https://github.com/kevinpapst/kimai2/issues/522)
 - Configuration of first page after login [\#501](https://github.com/kevinpapst/kimai2/issues/501)
+- Visual Grouping of entry from same day or same week with some stats of that group [\#495](https://github.com/kevinpapst/kimai2/issues/495)
 - add currency field to invoice template [\#422](https://github.com/kevinpapst/kimai2/issues/422)
 
 **Fixed bugs:**
 
+- Error 404 on 'My times' page 2+ if the time range is changed to something smaller [\#558](https://github.com/kevinpapst/kimai2/issues/558)
+- Timezone is not working correctly [\#554](https://github.com/kevinpapst/kimai2/issues/554)
 - New time picker not working on languages without updated translation [\#546](https://github.com/kevinpapst/kimai2/issues/546)
 - Export timesheet only exports entries on the current page [\#534](https://github.com/kevinpapst/kimai2/issues/534)
 - Kimai2 will not allow me to enter times in the future [\#531](https://github.com/kevinpapst/kimai2/issues/531)
+- No projects in filter section [\#525](https://github.com/kevinpapst/kimai2/issues/525)
 - This value should be greater than or equal to zero [\#511](https://github.com/kevinpapst/kimai2/issues/511)
 - Wrong time after migration kimai v1 data [\#507](https://github.com/kevinpapst/kimai2/issues/507)
+- SQL-Error for getRecentActivities\(\) caused by GROUP BY  [\#488](https://github.com/kevinpapst/kimai2/issues/488)
 
 **Closed issues:**
 
 - Feedback for improving installation setup [\#541](https://github.com/kevinpapst/kimai2/issues/541)
-- No projects in filter section [\#525](https://github.com/kevinpapst/kimai2/issues/525)
-- Error after update in AppExtension [\#524](https://github.com/kevinpapst/kimai2/issues/524)
+- template entry.end\_time shows empty field [\#535](https://github.com/kevinpapst/kimai2/issues/535)
 - Global Projects [\#413](https://github.com/kevinpapst/kimai2/issues/413)
 
 **Merged pull requests:**
 
+- handle deleted user during import from v1 [\#569](https://github.com/kevinpapst/kimai2/pull/569) ([kevinpapst](https://github.com/kevinpapst))
+- fix pagination in combination with daterange picker [\#568](https://github.com/kevinpapst/kimai2/pull/568) ([kevinpapst](https://github.com/kevinpapst))
+- allow to query other users timesheets via api [\#563](https://github.com/kevinpapst/kimai2/pull/563) ([kevinpapst](https://github.com/kevinpapst))
+- Updated HTML invoice templates [\#560](https://github.com/kevinpapst/kimai2/pull/560) ([kevinpapst](https://github.com/kevinpapst))
+- updated composer packages [\#559](https://github.com/kevinpapst/kimai2/pull/559) ([kevinpapst](https://github.com/kevinpapst))
+- fix timezone problems in timesheet forms [\#555](https://github.com/kevinpapst/kimai2/pull/555) ([kevinpapst](https://github.com/kevinpapst))
+- Daily stats in timesheet [\#552](https://github.com/kevinpapst/kimai2/pull/552) ([kevinpapst](https://github.com/kevinpapst))
+- Added more php requirements to documentation [\#551](https://github.com/kevinpapst/kimai2/pull/551) ([infeeeee](https://github.com/infeeeee))
+- improve recent activities [\#550](https://github.com/kevinpapst/kimai2/pull/550) ([kevinpapst](https://github.com/kevinpapst))
+- scss fixes: year selector width, dropdown menu width, navbar refactoring [\#549](https://github.com/kevinpapst/kimai2/pull/549) ([infeeeee](https://github.com/infeeeee))
 - improved installation docs [\#548](https://github.com/kevinpapst/kimai2/pull/548) ([kevinpapst](https://github.com/kevinpapst))
 - fix daterange-picker for fr, hu and ar [\#547](https://github.com/kevinpapst/kimai2/pull/547) ([kevinpapst](https://github.com/kevinpapst))
 - do not limit users timesheet export page size [\#545](https://github.com/kevinpapst/kimai2/pull/545) ([kevinpapst](https://github.com/kevinpapst))
