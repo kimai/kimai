@@ -37,5 +37,5 @@ class Constants
     /**
      * Used in multiple views
      */
-    public const HOMEPAGE = 'https://v2.kimai.org';
+    public const HOMEPAGE = 'https://www.kimai.org';
 }
