@@ -101,23 +101,8 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setType(SkinType::class),
 
             (new UserPreference())
-                ->setName('theme.fixed_layout')
-                ->setValue(true)
-                ->setType(CheckboxType::class),
-
-            (new UserPreference())
-                ->setName('theme.boxed_layout')
-                ->setValue(false)
-                ->setType(CheckboxType::class),
-
-            (new UserPreference())
                 ->setName('theme.collapsed_sidebar')
                 ->setValue(false)
-                ->setType(CheckboxType::class),
-
-            (new UserPreference())
-                ->setName('theme.mini_sidebar')
-                ->setValue(true)
                 ->setType(CheckboxType::class),
 
             (new UserPreference())

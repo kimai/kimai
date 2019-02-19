@@ -66,13 +66,16 @@ class ThemeOptionsSubscriber implements EventSubscriberInterface
 
         $skin = '';
         foreach ($user->getPreferences() as $ref) {
-            $name = $ref->getName();
-            if (UserPreference::SKIN === $name) {
-                $skin = 'skin-' . $ref->getValue();
-            }
 
-            if (false !== strpos($name, 'theme.')) {
-                $this->helper->setOption(str_replace('theme.', '', $name), $ref->getValue());
+            $name = $ref->getName();
+            switch ($name) {
+                case UserPreference::SKIN:
+                    $skin = 'skin-' . $ref->getValue();
+                    break;
+
+                case 'theme.collapsed_sidebar':
+                    $this->helper->setOption('collapsed_sidebar', $ref->getValue());
+                    break;
             }
         }
 

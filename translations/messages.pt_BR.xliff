@@ -367,21 +367,9 @@
                 <source>profile.preferences</source>
                 <target>Preferências</target>
             </trans-unit>
-            <trans-unit id="label.theme.fixed_layout">
-                <source>label.theme.fixed_layout</source>
-                <target>Ative o layout fixo. Você não pode usar layouts fixos e encaixados juntos.</target>
-            </trans-unit>
-            <trans-unit id="label.theme.boxed_layout">
-                <source>label.theme.boxed_layout</source>
-                <target>Ativar o layout em caixa (melhor em telas grandes)</target>
-            </trans-unit>
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
                 <target>Alterna o estado da barra lateral esquerda no carregamento da página (abrir ou recolher)</target>
-            </trans-unit>
-            <trans-unit id="label.theme.mini_sidebar">
-                <source>label.theme.mini_sidebar</source>
-                <target>Alterna o tamanho do cabeçalho da barra lateral esquerda (completo ou recolhido)</target>
             </trans-unit>
             <trans-unit id="label.calendar.initial_view">
                 <source>label.calendar.initial_view</source>
