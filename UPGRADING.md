@@ -13,7 +13,7 @@ sudo -u www-data bin/console cache:warmup --env=prod
 bin/console doctrine:migrations:migrate
 ```
 
-There might be more steps required, which are version specific and need to be executed after following the above list of commands.
+There might be more steps required which are version specific and need to be executed after following the above list of commands.
 Read and follow each version info below, otherwise you risk data inconsistency or a broken installation!
 
 And make sure to **create a backup before you start**.
@@ -23,8 +23,8 @@ And make sure to **create a backup before you start**.
 
 After you followed the normal update and database migration process (see above), you need to execute a bash command to convert your timesheet data for timezone support:
 
-- An important change was introduced regarding the storage of date-time objects in the database. Please read this [pull request](https://github.com/kevinpapst/kimai2/pull/372) BEFORE you follow the instructions 
-to convert the timezones in your existing time records with `bin/console kimai:convert-timezone`. Without that, you will end up with wrong times in your database.
+- Read this [pull request](https://github.com/kevinpapst/kimai2/pull/372) BEFORE you follow the instructions to convert the 
+timezones in your existing time records with `bin/console kimai:convert-timezone`. Without that, you will end up with wrong times in your database.
 
 Check if you want to apply changes to your `local.yaml`: 
 
