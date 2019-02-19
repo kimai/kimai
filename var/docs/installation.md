@@ -17,7 +17,7 @@ You need to install Git and [Composer](https://getcomposer.org/doc/00-intro.md) 
 First clone this repo:
 
 ```bash
-git clone https://github.com/kevinpapst/kimai2.git
+git clone -b 0.8 --depth 1 https://github.com/kevinpapst/kimai2.git
 cd kimai2/
 ```
 

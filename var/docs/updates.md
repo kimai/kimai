@@ -16,7 +16,8 @@ personal computer instead of a server. Read the [installation docu](installation
 Change into your Kimai 2 installation directory, then fetch the latest code and install all dependencies:
 
 ```bash
-git pull origin master
+git fetch --tags
+git checkout 0.8
 sudo -u www-data composer install --no-dev --optimize-autoloader
 ```
 
