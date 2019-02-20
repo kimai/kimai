@@ -43,13 +43,6 @@ Further readings:
 - [MariaDB - JSON support was added with 10.2.7](https://mariadb.com/kb/en/library/json-data-type/)
 - [Using JSON fields with Doctrine ORM on PostgreSQL & MySQL](https://symfony.fi/entry/using-json-fields-with-doctrine-orm-on-postgresql-mysql)
 
-## SQLite not recommended for production usage
-
-SQLite is a great database engine for testing, but when it comes to production usage it fails due to several reasons:
-
-- It does not support ALTER TABLE commands and makes update procedures very clunky and problematic (we still try to support updates, but they are heavy on large databases)
-- It does not support FOREIGN KEY constraints [out of the box](https://www.sqlite.org/foreignkeys.html#fk_enable), which can lead to critical bugs when deleting users/activities/projects/customers 
-
 ## Dotenv::populate() must be an instance of Symfony\\Component\\Dotenv\\void
 
 If you encounter an error like this:
