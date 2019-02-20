@@ -66,12 +66,8 @@ class Kernel extends BaseKernel
                 yield new $class();
             }
         }
-        $this->registerKimaiPlugins();
-    }
 
-    protected function registerKimaiPlugins()
-    {
-        $pluginsDir = __DIR__ . '/../var/plugins';
+        $pluginsDir = $this->getProjectDir() . '/var/plugins';
         if (!file_exists($pluginsDir)) {
             return;
         }
@@ -136,6 +132,10 @@ class Kernel extends BaseKernel
 
         // load application routes
         $routes->import($confDir . '/routes' . self::CONFIG_EXTS, '/', 'glob');
+
+        // load plugin routes
+        $pluginsDir = $this->getProjectDir() . '/var/plugins';
+        $routes->import($pluginsDir . '/*Bundle/Resources/config/routes'. self::CONFIG_EXTS, '/', 'glob');
     }
 
     protected function configureFosUserRoutes(RouteCollectionBuilder $routes)
