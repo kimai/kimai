@@ -120,7 +120,7 @@ class TimesheetEditForm extends AbstractType
             ]);
         } else {
             $builder->add('end', DateTimePickerType::class, [
-                'label' => 'label.begin',
+                'label' => 'label.end',
                 'model_timezone' => $timezone,
                 'view_timezone' => $timezone,
                 'required' => false,
