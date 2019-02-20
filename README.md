@@ -64,19 +64,17 @@ Every code change, whether it's a new feature or a bug fix, will be done on the 
 I have to do it this way, as I develop Kimai in my free time and want to put most
 effort into the software instead of backporting changes for old versions. 
 
-## Extensions for Kimai 2
+## Plugins for Kimai 2
 
-As Kimai 2 was built on top of Symfony, it can be extended like every other Symfony application.
-We call these extensions bundles, but you might also know them as add-ons, extensions or plugins.
+Kimai 2 was built on top of the Symfony framework and can be extended in various ways:
 
-All available Kimai 2 bundles can be found at the [Kimai recipes](https://github.com/kimai/recipes) repository.
+- Developer start with the [developer documentation](var/docs/developers.md)
+- Users looking for existing plugins go to our [plugin marketplace](xxxx FIXME xxxx) 
 
-## Developer
+## Credits
 
-Kimai 2 is developed with modern frameworks like [Symfony v4](https://github.com/symfony/symfony), [Doctrine](https://github.com/doctrine/),
-[AdminLTE](https://github.com/kevinpapst/AdminLTEBundle/) and [many](composer.json) [more](package.json).
-
-If you want to start developing for Kimai 2, please read the following documentation:
-
-- an example on how to extend Kimai 2 can be found in this [GitHub repository](https://github.com/kevinpapst/kimai2-invoice)
-- the [developer documentation](var/docs/developers.md) is available both on GitHub and your local installation
+Kimai 2 is developed with modern frameworks like 
+[Symfony v4](https://github.com/symfony/symfony), 
+[Doctrine](https://github.com/doctrine/),
+[AdminLTE](https://github.com/kevinpapst/AdminLTEBundle/) and 
+[many](composer.json) [more](package.json).

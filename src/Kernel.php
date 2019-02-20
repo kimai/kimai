@@ -23,6 +23,8 @@ use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
 
@@ -63,6 +65,34 @@ class Kernel extends BaseKernel
             if (isset($envs['all']) || isset($envs[$this->environment])) {
                 yield new $class();
             }
+        }
+        $this->registerKimaiPlugins();
+    }
+
+    protected function registerKimaiPlugins()
+    {
+        $pluginsDir = __DIR__ . '/../var/plugins';
+        if (!file_exists($pluginsDir)) {
+            return;
+        }
+
+        $finder = new Finder();
+        $finder->ignoreUnreadableDirs()->directories()->name('*Bundle');
+        /** @var SplFileInfo $bundleDir */
+        foreach ($finder->in($pluginsDir) as $bundleDir) {
+            $bundleName = $bundleDir->getRelativePathname();
+
+            $bundleFilename = $bundleDir->getRealPath() . '/' . $bundleName . '.php';
+            if (!file_exists($bundleFilename)) {
+                continue;
+            }
+
+            $pluginClass = 'KimaiPlugin\\' . $bundleName . '\\' . $bundleName;
+            if (!class_exists($pluginClass)) {
+                continue;
+            }
+
+            yield new $pluginClass;
         }
     }
 
