@@ -29,13 +29,13 @@ chmod -R g+rw var/
 cp .env.dist .env
 ```
 
-It's up to you which database server you want to use, Kimai v2 supports MySQL/MariaDB and SQLite (SQLite is [not recommended](faq.md) for production usage).
-Configure the database connection string in your the `.env` file:
+Configure the database connection string in your the `.env` file (Kimai v2 supports MySQL/MariaDB and SQLite):
 ```
 # adjust all settings in .env to your needs
 APP_ENV=prod
 DATABASE_URL=mysql://user:password@127.0.0.1:3306/database
 ```
+SQLite is not recommended for production usage, check FAQ below. 
 
 Now install all dependencies for Kimai 2:
 ```bash
