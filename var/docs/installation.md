@@ -29,7 +29,7 @@ chmod -R g+rw var/
 cp .env.dist .env
 ```
 
-It's up to you which database server you want to use, Kimai v2 supports MySQL/MariaDB and SQLite, but SQLite is [not recommended](faq.md) for production usage.
+It's up to you which database server you want to use, Kimai v2 supports MySQL/MariaDB and SQLite (SQLite is [not recommended](faq.md) for production usage).
 Configure the database connection string in your the `.env` file:
 ```
 # adjust all settings in .env to your needs
@@ -208,6 +208,16 @@ npm run prod
 ```
 
 ## FAQ and common problems
+
+## SQLite not recommended for production usage
+
+SQLite is a great database engine for testing, but when it comes to production usage it is imperfect due to several reasons:
+
+- It does not support ALTER TABLE commands and makes update procedures very clunky and problematic (we still try to support updates, but they are heavy on large databases)
+- It does [not support FOREIGN KEY](https://www.sqlite.org/quirks.html#foreign_key_enforcement_is_off_by_default) constraints [out of the box](https://www.sqlite.org/foreignkeys.html#fk_enable), which can lead to critical bugs when deleting users/activities/projects/customers
+
+Kimai works around the Foreign Keys issue by using a [Doctrine PostConnect EventSubscriber]({{ site.kimai_v2_file }}/src/Doctrine/SqliteSessionInitSubscriber.php) since v0.8.1, 
+but it is not guaranteed that SQLite handles everything as expected.
 
 ### Malformed parameter "url"
 
