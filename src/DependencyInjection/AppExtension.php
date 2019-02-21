@@ -33,6 +33,10 @@ class AppExtension extends Extension implements PrependExtensionInterface
             $config = [];
         }
 
+        // safe alternatives to %kernel.project_dir%
+        $container->setParameter('kimai.data_dir', $container->getParameter('kernel.project_dir') . '/var/data');
+        $container->setParameter('kimai.plugin_dir', $container->getParameter('kernel.project_dir') . '/var/plugins');
+
         $container->setParameter('kimai.languages', $config['languages']);
         $container->setParameter('kimai.calendar', $config['calendar']);
         $container->setParameter('kimai.dashboard', $config['dashboard']);
