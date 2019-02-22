@@ -29,6 +29,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Defines the form used to manipulate Timesheet entries.
@@ -44,9 +45,10 @@ class TimesheetEditForm extends AbstractType
      * @var ProjectRepository
      */
     private $projects;
-  /**
-   * @var TagArrayToStringTransformer
-   */
+
+    /**
+     * @var TagArrayToStringTransformer
+     */
     private $transformer;
 
     /**
@@ -55,17 +57,24 @@ class TimesheetEditForm extends AbstractType
     private $durationOnly = false;
 
     /**
+     * @var UrlGeneratorInterface
+     */
+    private $router;
+
+    /**
      * @param CustomerRepository $customer
      * @param ProjectRepository $project
      * @param bool $durationOnly
      * @param TagArrayToStringTransformer $transformer
+     * @param UrlGeneratorInterface $router
      */
-    public function __construct(CustomerRepository $customer, ProjectRepository $project, bool $durationOnly, TagArrayToStringTransformer $transformer)
+    public function __construct(CustomerRepository $customer, ProjectRepository $project, bool $durationOnly, TagArrayToStringTransformer $transformer, UrlGeneratorInterface $router)
     {
         $this->customers = $customer;
         $this->projects = $project;
         $this->transformer = $transformer;
         $this->durationOnly = $durationOnly;
+        $this->router = $router;
     }
 
     /**
@@ -148,17 +157,17 @@ class TimesheetEditForm extends AbstractType
                 'project',
                 ProjectType::class,
                 array_merge($projectOptions, [
-                'activity_enabled' => true,
-                // documentation is for NelmioApiDocBundle
-                'documentation' => [
-                    'type' => 'integer',
-                    'description' => 'Project ID',
-                ],
-                'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
-                    return $repo->builderForEntityType($project, $customer);
-                },
-            ])
-        );
+                    'activity_enabled' => true,
+                    // documentation is for NelmioApiDocBundle
+                    'documentation' => [
+                        'type' => 'integer',
+                        'description' => 'Project ID',
+                    ],
+                    'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
+                        return $repo->builderForEntityType($project, $customer);
+                    },
+                ])
+            );
 
         // replaces the project select after submission, to make sure only projects for the selected customer are displayed
         $builder->addEventListener(
@@ -190,8 +199,7 @@ class TimesheetEditForm extends AbstractType
                 'query_builder' => function (ActivityRepository $repo) use ($activity, $project) {
                     return $repo->builderForEntityType($activity, $project);
                 },
-            ])
-        ;
+            ]);
 
         // replaces the activity select after submission, to make sure only activities for the selected project are displayed
         $builder->addEventListener(
@@ -215,8 +223,7 @@ class TimesheetEditForm extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'label.description',
                 'required' => false,
-            ])
-        ;
+            ]);
 
         //$builder
         //    ->add('tags', TagsInputType::class, [
@@ -235,7 +242,7 @@ class TimesheetEditForm extends AbstractType
         //        ],
         //    ]);
 
-        if($options['use_tags']) {
+        if ($options['use_tags']) {
             $builder
                 ->add('tags', TagsInputType::class, [
                     // documentation is for NelmioApiDocBundle
@@ -245,7 +252,7 @@ class TimesheetEditForm extends AbstractType
                     ],
                     'required' => FALSE,
                     'attr' => [
-                        'data-api-url' => ['get_tags', ['tag_name' => '-p-']],
+                        'data-autocomplete-url' => $this->router->generate('tag_names'),
                         'class' => 'js-autocomplete',
                     ]
                     // TODO Überarbeiten für die API
