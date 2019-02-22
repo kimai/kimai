@@ -16,3 +16,6 @@ require('./js/datatable.js');
 require('./js/toolbar.js');
 require('./images/default_avatar.png');
 require('./images/signature.png');
+
+// ------ Autocomplete ------
+require('jquery-ui/ui/widgets/autocomplete');
