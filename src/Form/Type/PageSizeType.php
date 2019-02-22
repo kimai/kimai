@@ -25,7 +25,17 @@ class PageSizeType extends AbstractType
     {
         $resolver->setDefaults([
             'label' => 'label.pageSize',
-            'choices' => [10 => 10, 25 => 25, 50 => 50, 75 => 75, 100 => 100],
+            'choices' => [
+                10 => 10,
+                25 => 25,
+                50 => 50,
+                75 => 75,
+                100 => 100,
+                200 => 200,
+                300 => 300,
+                400 => 400,
+                500 => 500
+            ],
             'placeholder' => null,
         ]);
     }

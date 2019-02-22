@@ -17,7 +17,7 @@ class BaseQuery
     public const ORDER_ASC = 'ASC';
     public const ORDER_DESC = 'DESC';
 
-    public const DEFAULT_PAGESIZE = 25;
+    public const DEFAULT_PAGESIZE = 100;
     public const DEFAULT_PAGE = 1;
 
     public const RESULT_TYPE_OBJECTS = 'Objects';
