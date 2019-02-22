@@ -1,5 +1,20 @@
 # Change Log
 
+## [0.8.1](https://github.com/kevinpapst/kimai2/tree/0.8.1) (2019-02-22)
+[Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.8...0.8.1)
+
+**Fixed bugs:**
+
+- deletion of customers leads to internal server error 500 [\#589](https://github.com/kevinpapst/kimai2/issues/589)
+- Entry editor label wrong \(from/to\) [\#587](https://github.com/kevinpapst/kimai2/issues/587)
+- resize mobile navbar buttons [\#582](https://github.com/kevinpapst/kimai2/issues/582)
+- Mobile navbar size [\#583](https://github.com/kevinpapst/kimai2/pull/583) ([kevinpapst](https://github.com/kevinpapst))
+
+**Merged pull requests:**
+
+- Support foreign keys with SQLite [\#590](https://github.com/kevinpapst/kimai2/pull/590) ([kevinpapst](https://github.com/kevinpapst))
+- post release fixes [\#584](https://github.com/kevinpapst/kimai2/pull/584) ([kevinpapst](https://github.com/kevinpapst))
+
 ## [0.8](https://github.com/kevinpapst/kimai2/tree/0.8) (2019-02-19)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.7...0.8)
 
@@ -25,6 +40,7 @@
 - This value should be greater than or equal to zero [\#511](https://github.com/kevinpapst/kimai2/issues/511)
 - Wrong time after migration kimai v1 data [\#507](https://github.com/kevinpapst/kimai2/issues/507)
 - SQL-Error for getRecentActivities\(\) caused by GROUP BY  [\#488](https://github.com/kevinpapst/kimai2/issues/488)
+- fix sql for only\_full\_group\_by [\#581](https://github.com/kevinpapst/kimai2/pull/581) ([kevinpapst](https://github.com/kevinpapst))
 
 **Closed issues:**
 
