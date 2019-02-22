@@ -19,11 +19,3 @@
         {{ block('form_widget_simple') }}
     </div>
 {% endblock daterange_widget %}
-
-{% block tags_input_widget %}
-    {% if 'data-api-url' in attr|keys %}
-        {% set attr = attr|merge({'data-api-url': 'https://localhost'})%}
-        {#hello world!#}
-    {% endif %}
-    {{- block('form_widget_simple') }}
-{% endblock %}
