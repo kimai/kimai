@@ -78,6 +78,12 @@ services:
             - { name: doctrine.event_listener, event: prePersist, lazy: true }
             - { name: doctrine.event_listener, event: preUpdate, lazy: true }
 
+    # make sure, that sqlite supports foreign keys and cascade deletes
+    App\Doctrine\SqliteSessionInitSubscriber:
+        class: App\Doctrine\SqliteSessionInitSubscriber
+        tags:
+            - { name: doctrine.event_listener, event: postConnect }
+
     # ================================================================================
     # FORMS
     # ================================================================================
