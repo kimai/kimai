@@ -39,4 +39,23 @@ class TagRepository extends AbstractRepository
         return array_column($qb->getQuery()->getScalarResult(), 'id');
     }
 
+    /**
+     * Find all tag names in an alphabetical order
+     */
+    public function findAllTagNamesAlphabetical($filter = NULL)
+    {
+        $qb = $this->createQueryBuilder('t');
+
+        $qb
+            ->select('t.tagName')
+            ->addOrderBy('t.tagName', 'ASC');
+        if ($qb != NULL) {
+            $qb
+                ->andWhere('t.tagName LIKE :filter')
+                ->setParameter('filter', '%' . $filter . '%');
+        }
+
+        return array_column($qb->getQuery()->getScalarResult(), 'tagName');
+    }
+
 }
