@@ -371,21 +371,9 @@
                 <source>profile.preferences</source>
                 <target>Preferencias</target>
             </trans-unit>
-            <trans-unit id="label.theme.fixed_layout">
-                <source>label.theme.fixed_layout</source>
-                <target>Activar vista fija. No se pueden utilizar ambas juntas.</target>
-            </trans-unit>
-            <trans-unit id="label.theme.boxed_layout">
-                <source>label.theme.boxed_layout</source>
-                <target>Activar la vista de recuadro (mejor en pantallas grandes)</target>
-            </trans-unit>
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
                 <target>Alternar la vista de la barra lateral izquierda al cargar la página (abrierta o colapsar)</target>
-            </trans-unit>
-            <trans-unit id="label.theme.mini_sidebar">
-                <source>label.theme.mini_sidebar</source>
-                <target>Alternar el tamaño de la barra lateral izquierda (completa o sin encabezado)</target>
             </trans-unit>
 
             <!--

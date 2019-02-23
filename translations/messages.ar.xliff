@@ -367,21 +367,9 @@
                 <source>profile.preferences</source>
                 <target>تفضيلات</target>
             </trans-unit>
-            <trans-unit id="label.theme.fixed_layout">
-                <source>label.theme.fixed_layout</source>
-                <target>تنشيط التنسيق الثابت. لا يمكنك استخدام التخطيطات الثابتة والمعبأة معًا.</target>
-            </trans-unit>
-            <trans-unit id="label.theme.boxed_layout">
-                <source>label.theme.boxed_layout</source>
-                <target>تنشيط التنسيق المضمن (أجمل للشاشات الكبيرة)</target>
-            </trans-unit>
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
                 <target>تبديل حالة صفحة الشريط الجانبي الأيسر في صفحة (فتح أو طي)</target>
-            </trans-unit>
-            <trans-unit id="label.theme.mini_sidebar">
-                <source>label.theme.mini_sidebar</source>
-                <target>تبديل حجم رأس الشريط الجانبي الأيسر (ممتلئ أو طي)</target>
             </trans-unit>
 
             <!--

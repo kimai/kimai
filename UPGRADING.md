@@ -19,6 +19,10 @@ Read and follow each version info below, otherwise you risk data inconsistency o
 And make sure to **create a backup before you start**.
 
 
+## [0.8.1](https://github.com/kevinpapst/kimai2/releases/tag/0.8.1)
+
+A bug fixing release. Remember to execute the necessary timezone conversion script, if you haven't updated to 0.8 before (see below)!
+
 ## [0.8](https://github.com/kevinpapst/kimai2/releases/tag/0.8)
 
 After you followed the normal update and database migration process (see above), you need to execute a bash command to convert your timesheet data for timezone support:

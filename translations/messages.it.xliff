@@ -359,21 +359,9 @@
                 <source>profile.preferences</source>
                 <target>Preferenze</target>
             </trans-unit>
-            <trans-unit id="label.theme.fixed_layout">
-                <source>label.theme.fixed_layout</source>
-                <target>Attiva il layout fisso. Non é possibile usare il layout fisso e boxato allo stesso tempo.</target>
-            </trans-unit>
-            <trans-unit id="label.theme.boxed_layout">
-                <source>label.theme.boxed_layout</source>
-                <target>Attiva il layout boxato (consigliato su schermi grandi)</target>
-            </trans-unit>
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
                 <target>Auto collassa la sidebar di sinistra</target>
-            </trans-unit>
-            <trans-unit id="label.theme.mini_sidebar">
-                <source>label.theme.mini_sidebar</source>
-                <target>Nascondi sidebar di sinistra. Usa il bottone sull'header</target>
             </trans-unit>
 
             <!--
