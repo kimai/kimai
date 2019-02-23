@@ -21,7 +21,7 @@ class Constants
     /**
      * The current release version
      */
-    public const VERSION = '0.8';
+    public const VERSION = '0.8.1';
     /**
      * The release name, will only change for new major version
      */
@@ -37,5 +37,5 @@ class Constants
     /**
      * Used in multiple views
      */
-    public const HOMEPAGE = 'https://v2.kimai.org';
+    public const HOMEPAGE = 'https://www.kimai.org';
 }

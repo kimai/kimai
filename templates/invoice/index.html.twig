@@ -60,7 +60,7 @@
             {% endif %}
             <tr>
                 <td>{{ entry.begin|date_short }}</td>
-                <td class="hidden-xs hidden-sm">{{ widgets.username(entry.user) }}</td>
+                <td class="hidden-xs hidden-sm">{{ widgets.label_user(entry.user) }}</td>
                 <td class="hidden-xs hidden-sm timesheet-description">
                     {% if entry.description is not empty %}
                         {{ entry.description|desc2html }}
