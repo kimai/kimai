@@ -52,8 +52,11 @@ class ActivityController extends AbstractController
     public function indexAction($page, Request $request)
     {
         $query = new ActivityQuery();
-        $query->setExclusiveVisibility(true);
-        $query->setPage($page);
+        $query
+            ->setOrderBy('name')
+            ->setExclusiveVisibility(true)
+            ->setPage($page)
+        ;
 
         $form = $this->getToolbarForm($query);
         $form->handleRequest($request);

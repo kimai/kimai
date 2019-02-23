@@ -63,7 +63,10 @@ class CustomerController extends AbstractController
     public function indexAction($page, Request $request)
     {
         $query = new CustomerQuery();
-        $query->setPage($page);
+        $query
+            ->setOrderBy('name')
+            ->setPage($page)
+        ;
 
         $form = $this->getToolbarForm($query);
         $form->handleRequest($request);
