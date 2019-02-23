@@ -368,21 +368,9 @@
                 <source>profile.preferences</source>
                 <target>Beállítások</target>
             </trans-unit>
-            <trans-unit id="label.theme.fixed_layout">
-                <source>label.theme.fixed_layout</source>
-                <target>Rögzitett elrendezés. Nem használhatod egyszerre a dobozos elrendezéssel</target>
-            </trans-unit>
-            <trans-unit id="label.theme.boxed_layout">
-                <source>label.theme.boxed_layout</source>
-                <target>Dobozos elrendezés (nagy kijelzőkön jobban néz ki)</target>
-            </trans-unit>
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
                 <target>A bal oldali oldalsáv automatikus elrejtése</target>
-            </trans-unit>
-            <trans-unit id="label.theme.mini_sidebar">
-                <source>label.theme.mini_sidebar</source>
-                <target>A bal oldali oldalsáv fejlécének automatikus összecsukása</target>
             </trans-unit>
             <trans-unit id="label.calendar.initial_view">
                 <source>label.calendar.initial_view</source>

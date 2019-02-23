@@ -363,21 +363,9 @@
                 <source>profile.preferences</source>
                 <target>Настройки</target>
             </trans-unit>
-            <trans-unit id="label.theme.fixed_layout">
-                <source>label.theme.fixed_layout</source>
-                <target>Активизирует "статическую раскладку" (левая панель навигации и заголовок остаются при прокрутке страницы на своих местах)</target>
-            </trans-unit>
-            <trans-unit id="label.theme.boxed_layout">
-                <source>label.theme.boxed_layout</source>
-                <target>Активизирует "Сжатую раскладку" (подходит для больших экранов, но не для одновременного применения со "статичной раскладкой")</target>
-            </trans-unit>
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
                 <target>Управление статусом левой панели навигации (скрыта или открыта)</target>
-            </trans-unit>
-            <trans-unit id="label.theme.mini_sidebar">
-                <source>label.theme.mini_sidebar</source>
-                <target>Активизирует уменьшенную версию панели навигации</target>
             </trans-unit>
 
             <!--

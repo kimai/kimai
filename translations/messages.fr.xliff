@@ -371,21 +371,9 @@
                 <source>profile.preferences</source>
                 <target>Préférences</target>
             </trans-unit>
-            <trans-unit id="label.theme.fixed_layout">
-                <source>label.theme.fixed_layout</source>
-                <target>Activer la mise en page fixe. Les boîtes flexibles seront inactives.</target>
-            </trans-unit>
-            <trans-unit id="label.theme.boxed_layout">
-                <source>label.theme.boxed_layout</source>
-                <target>Activer la mise en page en boîtes flexibles (plus agréable sur les grands écrans)</target>
-            </trans-unit>
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
                 <target>Faire basculer l'état de la barre latérale gauche lors du chargement de la page (ouverture ou fermeture).</target>
-            </trans-unit>
-            <trans-unit id="label.theme.mini_sidebar">
-                <source>label.theme.mini_sidebar</source>
-                <target>Changer la taille de la barre latérale gauche (large ou réduite)</target>
             </trans-unit>
 
             <!--

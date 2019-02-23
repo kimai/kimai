@@ -375,21 +375,9 @@
                 <source>profile.preferences</source>
                 <target>Preferences</target>
             </trans-unit>
-            <trans-unit id="label.theme.fixed_layout">
-                <source>label.theme.fixed_layout</source>
-                <target>Activate the fixed layout. You can't use fixed and boxed layouts together.</target>
-            </trans-unit>
-            <trans-unit id="label.theme.boxed_layout">
-                <source>label.theme.boxed_layout</source>
-                <target>Activate the boxed layout (nicer on large screens)</target>
-            </trans-unit>
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
-                <target>Toggle the left sidebar's state on page load (open or collapse)</target>
-            </trans-unit>
-            <trans-unit id="label.theme.mini_sidebar">
-                <source>label.theme.mini_sidebar</source>
-                <target>Toggle the size of the left sidebar's header (full or collapse)</target>
+                <target>Minimize the left sidebar</target>
             </trans-unit>
             <trans-unit id="label.calendar.initial_view">
                 <source>label.calendar.initial_view</source>
