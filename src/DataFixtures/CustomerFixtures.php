@@ -32,10 +32,10 @@ class CustomerFixtures extends Fixture
     public const MAX_BUDGET = 100000;
     public const MIN_GLOBAL_ACTIVITIES = 5;
     public const MAX_GLOBAL_ACTIVITIES = 50;
-    public const MIN_PROJECTS_PER_CUSTOMER = 10;
-    public const MAX_PROJECTS_PER_CUSTOMER = 50;
+    public const MIN_PROJECTS_PER_CUSTOMER = 1;
+    public const MAX_PROJECTS_PER_CUSTOMER = 25;
     public const MIN_ACTIVITIES_PER_PROJECT = 0;
-    public const MAX_ACTIVITIES_PER_PROJECT = 15;
+    public const MAX_ACTIVITIES_PER_PROJECT = 25;
 
     /**
      * @param ObjectManager $manager
@@ -46,18 +46,18 @@ class CustomerFixtures extends Fixture
 
         $amountCustomers = rand(self::MIN_CUSTOMERS, self::MAX_CUSTOMERS);
         for ($c = 1; $c <= $amountCustomers; $c++) {
-            $visibleCustomer = 0 != $c % 3;
+            $visibleCustomer = 0 != $c % 5;
             $customer = $this->createCustomer($faker, $visibleCustomer);
 
             $projectForCustomer = rand(self::MIN_PROJECTS_PER_CUSTOMER, self::MAX_PROJECTS_PER_CUSTOMER);
             for ($p = 1; $p <= $projectForCustomer; $p++) {
-                $visibleProject = 0 != $p % 3;
+                $visibleProject = 0 != $p % 7;
                 $project = $this->createProject($faker, $customer, $visibleProject);
                 $manager->persist($project);
 
                 $activityForProject = rand(self::MIN_ACTIVITIES_PER_PROJECT, self::MAX_ACTIVITIES_PER_PROJECT);
                 for ($a = 1; $a <= $activityForProject; $a++) {
-                    $visibleActivity = 0 != $a % 3;
+                    $visibleActivity = 0 != $a % 6;
                     $activity = $this->createActivity($faker, $project, $visibleActivity);
                     $manager->persist($activity);
                 }

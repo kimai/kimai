@@ -89,12 +89,14 @@
 {% block stylesheets %}
     {# we do not call parent() as we use a custom built for the frontend assets and don't want the default <stylesheet> #}
     <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+    {{ render(controller('App\\Controller\\EventController::trigger', {'request':app.request, 'event':constant('App\\Event\\ThemeEvent::STYLESHEET')})) }}
 {% endblock %}
 
 {% block head %}
     {{ parent() }}
     <script src="{{ asset('build/app.js') }}"></script>
     {% include 'partials/head.html.twig' %}
+    {{ render(controller('App\\Controller\\EventController::trigger', {'request':app.request, 'event':constant('App\\Event\\ThemeEvent::HTML_HEAD')})) }}
 {% endblock %}
 
 {% block javascripts %}
@@ -119,4 +121,5 @@
             {# $.kimai.pauseRecord('li.messages-menu ul.menu li'); #}
         });
     </script>
+    {{ render(controller('App\\Controller\\EventController::trigger', {'request':app.request, 'event':constant('App\\Event\\ThemeEvent::JAVASCRIPT')})) }}
 {% endblock %}
