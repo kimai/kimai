@@ -42,14 +42,14 @@
                     {% if entry.project and entry.project.customer %}
                         <a href="{{ path('admin_customer_edit', {'id' : entry.project.customer.id}) }}">{{ widgets.label_customer(entry.project.customer) }}</a>
                     {% else %}
-                        {#{ widgets.label('x', 'success') }#}
+                        {# GLOBAL ACTIVTITY DOES NOT HAVE A CUSTOMER #}
                     {% endif %}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">
                     {% if entry.project %}
                         <a href="{{ path('admin_project_edit', {'id' : entry.project.id}) }}">{{ widgets.label_project(entry.project) }}</a>
                     {% else %}
-                        {#{ widgets.label('x', 'success') }#}
+                        {# GLOBAL ACTIVTITY DOES NOT HAVE A PROJECT #}
                     {% endif %}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment }}</td>
