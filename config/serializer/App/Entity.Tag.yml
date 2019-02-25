@@ -1,0 +1,15 @@
+App\Entity\Tag:
+    exlusion_policy: All
+    custom_accessor_order: [tagName]
+    properties:
+        id:
+            include: false
+            exclude: true
+            groups: [Excluded]
+        tagName:
+            include: true
+            groups: [Default]
+        timesheets:
+            include: false
+            exclude: true
+            groups: [Excluded]
