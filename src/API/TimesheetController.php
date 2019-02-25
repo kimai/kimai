@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace App\API;
 
+use App\Controller\TagImplementationTrait;
+use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Form\TimesheetEditForm;
 use App\Repository\Query\TimesheetQuery;
@@ -31,6 +33,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class TimesheetController extends BaseApiController
 {
+    use TagImplementationTrait;
+
     /**
      * @var TimesheetRepository
      */
@@ -50,12 +54,14 @@ class TimesheetController extends BaseApiController
      * @param ViewHandlerInterface $viewHandler
      * @param TimesheetRepository $repository
      * @param int $hardLimit
+     * @param bool $useTags
      */
-    public function __construct(ViewHandlerInterface $viewHandler, TimesheetRepository $repository, int $hardLimit)
+    public function __construct(ViewHandlerInterface $viewHandler, TimesheetRepository $repository, int $hardLimit, bool $useTags)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
         $this->hardLimit = $hardLimit;
+        $this->setTagMode($useTags);
     }
 
     /**
@@ -69,6 +75,7 @@ class TimesheetController extends BaseApiController
      * @Rest\QueryParam(name="activity", requirements="\d+", strict=true, nullable=true, description="Activity ID to filter timesheets")
      * @Rest\QueryParam(name="page", requirements="\d+", strict=true, nullable=true, description="The page to display, renders a 404 if not found (default: 1)")
      * @Rest\QueryParam(name="size", requirements="\d+", strict=true, nullable=true, description="The amount of entries for each page (default: 25)")
+     * @Rest\QueryParam(name="tags", requirements="[a-zA-Z0-9 -]+", strict=true, nullable=true, description="The name of tags which are in the datasets")
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order (allowed values: 'ASC', 'DESC')")
      * @Rest\QueryParam(name="orderBy", requirements="id|begin|end|rate", strict=true, nullable=true, description="The field by which results will be ordered (allowed values: 'id', 'begin', 'end', 'rate')")
      *
@@ -100,6 +107,11 @@ class TimesheetController extends BaseApiController
 
         if (null !== ($size = $paramFetcher->get('size'))) {
             $query->setPageSize($size);
+        }
+
+        if ($this->useTags === TRUE && null !== ($tags = $paramFetcher->get('tags'))) {
+            $query->setTags($tags);
+            $this->prepareTagList($query);
         }
 
         if (null !== ($order = $paramFetcher->get('order'))) {
