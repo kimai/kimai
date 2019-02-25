@@ -41,7 +41,7 @@ class TagRepository extends AbstractRepository
 
     /**
      * Find all tag names in an alphabetical order
-     * @param $filter string Filter for tags
+     * @param string $filter Filter for tags
      * @return array
      */
     public function findAllTagNamesAlphabetical($filter = NULL)
