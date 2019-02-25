@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace App\API;
 
 use App\Controller\TagImplementationTrait;
-use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Form\TimesheetEditForm;
 use App\Repository\Query\TimesheetQuery;
