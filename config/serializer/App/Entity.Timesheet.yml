@@ -1,6 +1,6 @@
 App\Entity\Timesheet:
     exclusion_policy: All
-    custom_accessor_order: [id, begin, end, duration, rate, activity, project, user, description, fixedRate, hourlyRate]
+    custom_accessor_order: [id, begin, end, duration, rate, activity, project, user, description, fixedRate, hourlyRate, tags]
     properties:
         id:
             include: true
@@ -26,6 +26,10 @@ App\Entity\Timesheet:
         hourlyRate:
             include: true
             groups: [Entity]
+        tags:
+            include: false
+            exclude: true
+            groups: [Default]
         activity:
             include: false
             exclude: true
@@ -53,4 +57,9 @@ App\Entity\Timesheet:
             serialized_name: user
             exp: "object.getUser().getId()"
             type: integer
+            groups: [Default]
+        getTags:
+            serialized_name: tags
+            exp: "object.getTagsAsString()"
+            type: string
             groups: [Default]
