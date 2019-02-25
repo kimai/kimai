@@ -12,3 +12,64 @@
         'back': path('admin_timesheet')
     }) }}
 {% endblock %}
+
+{% block javascripts %}
+    {# Block aus dem Base.html.twig aufrufen und ausführen #}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(function () {
+            function split(val) {
+                return val.split(/,\s*/);
+            }
+
+            function extractLast(term) {
+                return split(term).pop();
+            }
+
+            $(".js-autocomplete")
+            // don't navigate away from the field on tab when selecting an item
+                .on("keydown", function (event) {
+                    if (event.keyCode === $.ui.keyCode.TAB &&
+                        $(this).autocomplete("instance").menu.active) {
+                        event.preventDefault();
+                    }
+                })
+                .autocomplete({
+                    source: function (request, response) {
+                        // console.log($('.js-autocomplete').attr('data-autocomplete-url'));
+                        var lastEntry = extractLast(request.term);
+                        $.getJSON($('.js-autocomplete').attr('data-autocomplete-url'), {
+                            term: lastEntry
+                        }).done(function (data) {
+                            response(data);
+                            // response(data.filter(function (d) {
+                            //     return d.match(new RegExp(lastEntry, 'gi'))
+                            // }));
+                        });
+                    },
+                    search: function () {
+                        // custom minLength
+                        var term = extractLast(this.value);
+                        if (term.length < 2) {
+                            return false;
+                        }
+                    },
+                    focus: function () {
+                        // prevent value inserted on focus
+                        return false;
+                    },
+                    select: function (event, ui) {
+                        var terms = split(this.value);
+                        // remove the current input
+                        terms.pop();
+                        // add the selected item
+                        terms.push(ui.item.value);
+                        // add placeholder to get the comma-and-space at the end
+                        terms.push("");
+                        this.value = terms.join(", ");
+                        return false;
+                    }
+                });
+        });
+    </script>
+{% endblock %}
