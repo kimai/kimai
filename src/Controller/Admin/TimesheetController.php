@@ -16,6 +16,7 @@ use App\Entity\Timesheet;
 use App\Form\TimesheetEditForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\Query\TimesheetQuery;
+use App\Timesheet\UserDateTimeFactory;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,10 +36,14 @@ class TimesheetController extends AbstractController
 
     /**
      * TimesheetController constructor.
+     * @param UserDateTimeFactory $dateTime
+     * @param int $hardLimit
      * @param bool $useTags
      */
-    public function __construct(bool $useTags)
+    public function __construct(UserDateTimeFactory $dateTime, int $hardLimit, bool $useTags)
     {
+        $this->dateTime = $dateTime;
+        $this->setHardLimit($hardLimit);
         $this->setTagMode($useTags);
     }
 
