@@ -69,31 +69,20 @@
 {% endspaceless %}
 {% endmacro %}
 
-{% macro data_table_header(name, entries, form, collapseClass) %}
+{% macro data_table_header(name, entries, skipStripped) %}
 {% import _self as macro %}
 {{ macro.data_table_column_modal(name, entries) }}
 <div class="box data_table" id="datatable_{{ name }}">
-    {% if form %}
-        {% import "macros/toolbar.html.twig" as macro %}
-        {{ macro.toolbar(form, collapseClass) }}
-    {% endif %}
-
     <div class="box-body no-padding">
         <div class="dataTables_wrapper form-inline dt-bootstrap">
             <div class="row">
-                <div class="col-sm-6"></div>
-                <div class="col-sm-6"></div>
-            </div>
-            <div class="row">
                 <div class="col-sm-12">
-                    <table class="table table-striped table-hover dataTable" role="grid">
+                    <table class="table {% if not skipStripped %}table-striped {% endif %}table-hover dataTable" role="grid">
                         <thead>
                         <tr>
-                            {% for title, class in entries %}
-                                <th class="{{ macro.data_table_column_class(name, entries, title) }}">
-                                    {{ ('label.' ~ title)|trans }}
-                                </th>
-                            {% endfor %}
+                            {%- for title, class in entries -%}
+                                <th class="{{ macro.data_table_column_class(name, entries, title) }}">{{ ('label.' ~ title)|trans }}</th>
+                            {%- endfor -%}
                         </tr>
                         </thead>
                         <tbody>
@@ -104,23 +93,12 @@
                     </table>
                 </div>
             </div>
-            {#<div class="row">
-                <div class="col-sm-5">
-                    {#<div class="dataTables_info" id="example2_info" role="status" aria-live="polite">
-                        {{ 'datatables.entry_counter'|trans({'%from%': '1', '%to%': '10', '%total%': entries.count}) }}
-                    </div># }
-                </div>
-                <div class="col-sm-7">
-                    <div class="dataTables_paginate paging_simple_numbers">
-                        {{ pagerfanta(entries, 'twitter_bootstrap3_translated', { routeName: route }) }}
-                    </div>
-                </div>
-            </div>#}
         </div>
     </div>
 </div>
-
+{% if route is not empty %}
 <div class="navigation text-center no-print">
     {{ pagerfanta(entries, 'twitter_bootstrap3_translated', { proximity: 1, routeName: route }) }}
 </div>
+{% endif %}
 {% endmacro %}

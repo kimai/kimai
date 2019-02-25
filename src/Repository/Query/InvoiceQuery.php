@@ -22,6 +22,8 @@ class InvoiceQuery extends TimesheetQuery
     protected $template;
 
     /**
+     * TODO can this be removed ???
+     *
      * @var InvoiceTemplate[]
      */
     protected $templates = [];

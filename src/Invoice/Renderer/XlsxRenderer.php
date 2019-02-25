@@ -38,7 +38,7 @@ class XlsxRenderer extends AbstractSpreadsheetRenderer implements RendererInterf
      */
     protected function saveSpreadsheet(Spreadsheet $spreadsheet)
     {
-        $filename = tempnam(sys_get_temp_dir(), 'kimai-xslx');
+        $filename = tempnam(sys_get_temp_dir(), 'kimai-invoice-xlsx');
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save($filename);
 

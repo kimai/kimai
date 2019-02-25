@@ -16,6 +16,7 @@ use App\Entity\Timesheet;
 use App\Form\TimesheetEditForm;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TimesheetRepository;
+use App\Timesheet\UserDateTimeFactory;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -50,25 +51,37 @@ class TimesheetController extends BaseApiController
     protected $hardLimit;
 
     /**
+     * @var UserDateTimeFactory
+     */
+    protected $dateTime;
+
+    /**
      * @param ViewHandlerInterface $viewHandler
      * @param TimesheetRepository $repository
+     * @param UserDateTimeFactory $dateTime
      * @param int $hardLimit
      * @param bool $useTags
      */
-    public function __construct(ViewHandlerInterface $viewHandler, TimesheetRepository $repository, int $hardLimit, bool $useTags)
+    public function __construct(ViewHandlerInterface $viewHandler, TimesheetRepository $repository, UserDateTimeFactory $dateTime, int $hardLimit, bool $useTags)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
         $this->hardLimit = $hardLimit;
         $this->setTagMode($useTags);
+        $this->dateTime = $dateTime;
     }
 
     /**
      * @SWG\Response(
      *      response=200,
      *      description="Returns the collection of all existing timesheets for the user",
-     *      @SWG\Schema(ref="#/definitions/TimesheetCollection"),
+     *      @SWG\Schema(
+     *          type="array",
+     *          @SWG\Items(ref="#/definitions/TimesheetEntity")
+     *      )
      * )
+     *
+     * @Rest\QueryParam(name="user", requirements="\d+|all", strict=true, nullable=true, description="User ID to filter timesheets (needs permission 'view_other_timesheet', pass 'all' to fetch data for all user)")
      * @Rest\QueryParam(name="customer", requirements="\d+", strict=true, nullable=true, description="Customer ID to filter timesheets")
      * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="Project ID to filter timesheets")
      * @Rest\QueryParam(name="activity", requirements="\d+", strict=true, nullable=true, description="Activity ID to filter timesheets")
@@ -78,7 +91,7 @@ class TimesheetController extends BaseApiController
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order (allowed values: 'ASC', 'DESC')")
      * @Rest\QueryParam(name="orderBy", requirements="id|begin|end|rate", strict=true, nullable=true, description="The field by which results will be ordered (allowed values: 'id', 'begin', 'end', 'rate')")
      *
-     * @Security("is_granted('view_own_timesheet')")
+     * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
      *
      * @return Response
      */
@@ -87,6 +100,13 @@ class TimesheetController extends BaseApiController
         $query = new TimesheetQuery();
         $query->setUser($this->getUser());
         $query->setResultType(TimesheetQuery::RESULT_TYPE_PAGER);
+
+        if ($this->isGranted('view_other_timesheet') && null !== ($user = $paramFetcher->get('user'))) {
+            if ('all' === $user) {
+                $user = null;
+            }
+            $query->setUser($user);
+        }
 
         if (null !== ($customer = $paramFetcher->get('customer'))) {
             $query->setCustomer($customer);
@@ -158,31 +178,39 @@ class TimesheetController extends BaseApiController
     /**
      * @SWG\Post(
      *      description="Creates a new timesheet entry and returns it afterwards",
-     *      @SWG\Schema(ref="#/definitions/TimesheetFormEntity"),
      *      @SWG\Response(
      *          response=200,
      *          description="Returns the new created timesheet entry",
      *          @SWG\Schema(ref="#/definitions/TimesheetEntity"),
      *      )
      * )
+     * @SWG\Parameter(
+     *      name="body",
+     *      in="body",
+     *      required=true,
+     *      @SWG\Schema(ref="#/definitions/TimesheetEditForm")
+     * )
      *
      * @Security("is_granted('create_own_timesheet')")
      *
      * @param Request $request
      * @return Response
+     * @throws \App\Repository\RepositoryException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function postAction(Request $request)
     {
         $timesheet = new Timesheet();
         $timesheet->setUser($this->getUser());
-        $timesheet->setBegin(new \DateTime());
+        $timesheet->setBegin($this->dateTime->createDateTime());
 
         $form = $this->createForm(TimesheetEditForm::class, $timesheet, [
             'csrf_protection' => false,
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
+            'include_exported' => $this->isGranted('edit_export', $timesheet),
         ]);
 
-        $form->setData($timesheet);
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
@@ -223,6 +251,71 @@ class TimesheetController extends BaseApiController
         }
 
         $view = new View($form);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * @SWG\Patch(
+     *      description="Update an existing timesheet entry, you can pass all or just a subset of all attributes",
+     *      @SWG\Response(
+     *          response=200,
+     *          description="Returns the updated timesheet entry",
+     *          @SWG\Schema(ref="#/definitions/TimesheetEntity")
+     *      )
+     * )
+     * @SWG\Parameter(
+     *      name="body",
+     *      in="body",
+     *      required=true,
+     *      @SWG\Schema(ref="#/definitions/TimesheetEditForm")
+     * )
+     *
+     * @param Request $request
+     * @param string $id
+     * @return Response
+     */
+    public function patchAction(Request $request, string $id)
+    {
+        $timesheet = $this->repository->find($id);
+
+        if (!$this->isGranted('edit', $timesheet)) {
+            throw $this->createAccessDeniedException('User cannot update timesheet');
+        }
+
+        $form = $this->createForm(TimesheetEditForm::class, $timesheet, [
+            'csrf_protection' => false,
+            'include_rate' => $this->isGranted('edit_rate', $timesheet),
+            'include_exported' => $this->isGranted('edit_export', $timesheet),
+        ]);
+
+        $form->setData($timesheet);
+        $form->submit($request->request->all(), false);
+
+        if (false === $form->isValid()) {
+            $view = new View($form, Response::HTTP_OK);
+            $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
+
+            return $this->viewHandler->handle($view);
+        }
+
+        if ($form->has('duration')) {
+            $duration = $form->get('duration')->getData();
+            if ($duration > 0) {
+                /** @var Timesheet $record */
+                $record = $form->getData();
+                $end = clone $record->getBegin();
+                $end->modify('+ ' . $duration . 'seconds');
+                $record->setEnd($end);
+            }
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($timesheet);
+        $entityManager->flush();
+
+        $view = new View($timesheet, Response::HTTP_OK);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
 
         return $this->viewHandler->handle($view);

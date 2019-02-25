@@ -5,8 +5,15 @@
  * file that was distributed with this source code.
  */
 
+/** global: jQuery */
+/** global: moment */
+
 if (typeof jQuery === 'undefined') {
     throw new Error('Kimai requires jQuery');
+}
+
+if (typeof moment === 'undefined') {
+    throw new Error('Kimai requires moment.js');
 }
 
 /* kimai
@@ -55,7 +62,6 @@ $(function() {
             $('input[data-daterangepickerenable="on"]').each(function(index) {
                 var localeFormat = $(this).data('format');
                 var separator = $(this).data('separator');
-                var transToday = $.kimai.settings['today'];
                 var rangesList = {};
                 rangesList[$.kimai.settings['today']] = [moment(), moment()];
                 rangesList[$.kimai.settings['yesterday']] = [moment().subtract(1, 'days'), moment().subtract(1, 'days')];

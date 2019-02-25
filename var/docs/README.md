@@ -7,8 +7,9 @@ and we will add it as soon as possible.
 
 ## User manual
 
-- [Invoices](invoices.md) - export your data to different formats with customizable templates
 - [Timesheets](timesheet.md) - information about timesheets
+- [Export](export.md) - export filtered timesheet data
+- [Invoices](invoices.md) - create invoices from timesheet data in different formats with customizable templates
 - [User and Security](users.md) - docu for user and security topics, like authentication, registration and roles
 
 ## Admins and Developers

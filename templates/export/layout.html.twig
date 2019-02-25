@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+    <script src="{{ asset('build/app.js') }}"></script>
+</head>
+<body class="pad export_print">
+<div class="wrapper">
+    <section class="export">
+        {% block export %}{% endblock %}
+    </section>
+</div>
+</body>
+</html>

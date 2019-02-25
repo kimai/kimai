@@ -32,7 +32,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/projects');
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(1, count($result));
         $this->assertStructure($result[0], false);
@@ -81,7 +81,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, $url, 'GET', $parameters);
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertEquals(count($expected), count($result), 'Found wrong amount of projects');
 
         for ($i = 0; $i < count($expected); $i++) {
@@ -111,7 +111,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/projects/1');
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertStructure($result);
     }
 

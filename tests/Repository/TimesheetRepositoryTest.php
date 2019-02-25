@@ -9,6 +9,8 @@
 
 namespace App\Tests\Repository;
 
+use App\Entity\Activity;
+use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Repository\Query\BaseQuery;
@@ -43,7 +45,7 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
 
         $query->setResultType(BaseQuery::RESULT_TYPE_OBJECTS);
         $result = $repository->findByQuery($query);
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
     }
 
     public function testStoppedEntriesCannotBeStoppedAgain()
@@ -92,5 +94,29 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
         $result = $repository->stopRecording($timesheet);
         $this->assertTrue($result);
         $this->assertInstanceOf(\DateTime::class, $timesheet->getEnd());
+    }
+
+    public function testSave()
+    {
+        $em = $this->getEntityManager();
+        $activityRepository = $em->getRepository(Activity::class);
+        $activity = $activityRepository->find(1);
+        $projectRepository = $em->getRepository(Project::class);
+        $project = $projectRepository->find(1);
+
+        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $repository = $em->getRepository(Timesheet::class);
+        $timesheet = new Timesheet();
+        $timesheet
+            ->setBegin(new \DateTime())
+            ->setEnd(new \DateTime())
+            ->setDescription('foo')
+            ->setUser($user)
+            ->setActivity($activity)
+            ->setProject($project);
+
+        $this->assertNull($timesheet->getId());
+        $repository->save($timesheet);
+        $this->assertEquals(1, $timesheet->getId());
     }
 }

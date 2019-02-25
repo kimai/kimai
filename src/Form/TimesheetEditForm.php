@@ -18,10 +18,12 @@ use App\Form\Type\DurationType;
 use App\Form\Type\ProjectType;
 use App\Form\Type\TagsInputType;
 use App\Form\Type\UserType;
+use App\Form\Type\YesNoType;
 use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer;
+use App\Timesheet\UserDateTimeFactory;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -57,6 +59,11 @@ class TimesheetEditForm extends AbstractType
     private $durationOnly = false;
 
     /**
+     * @var UserDateTimeFactory
+     */
+    protected $dateTime;
+
+    /**
      * @var bool
      */
     private $useTags = false;
@@ -69,16 +76,18 @@ class TimesheetEditForm extends AbstractType
     /**
      * @param CustomerRepository $customer
      * @param ProjectRepository $project
+     * @param UserDateTimeFactory $dateTime
      * @param bool $durationOnly
      * @param TagArrayToStringTransformer $transformer
      * @param UrlGeneratorInterface $router
      * @param bool $useTags
      */
-    public function __construct(CustomerRepository $customer, ProjectRepository $project, bool $durationOnly, TagArrayToStringTransformer $transformer, UrlGeneratorInterface $router, bool $useTags)
+    public function __construct(CustomerRepository $customer, ProjectRepository $project, UserDateTimeFactory $dateTime, bool $durationOnly, TagArrayToStringTransformer $transformer, UrlGeneratorInterface $router, bool $useTags)
     {
         $this->customers = $customer;
         $this->projects = $project;
         $this->transformer = $transformer;
+        $this->dateTime = $dateTime;
         $this->durationOnly = $durationOnly;
         $this->router = $router;
         $this->useTags = $useTags;
@@ -94,6 +103,7 @@ class TimesheetEditForm extends AbstractType
         $customer = null;
         $currency = false;
         $end = null;
+        $begin = null;
 
         if (isset($options['data'])) {
             /** @var Timesheet $entry */
@@ -111,12 +121,21 @@ class TimesheetEditForm extends AbstractType
                 $currency = $customer->getCurrency();
             }
 
+            $begin = $entry->getBegin();
             $end = $entry->getEnd();
+        }
+
+        $timezone = $this->dateTime->getTimezone()->getName();
+
+        if (null !== $begin) {
+            $timezone = $begin->getTimezone()->getName();
         }
 
         if (null === $end || !$options['duration_only']) {
             $builder->add('begin', DateTimePickerType::class, [
                 'label' => 'label.begin',
+                'model_timezone' => $timezone,
+                'view_timezone' => $timezone,
             ]);
         }
 
@@ -127,6 +146,9 @@ class TimesheetEditForm extends AbstractType
         } else {
             $builder->add('end', DateTimePickerType::class, [
                 'label' => 'label.end',
+                'model_timezone' => $timezone,
+                'view_timezone' => $timezone,
+                'required' => false,
             ]);
         }
 
@@ -153,9 +175,7 @@ class TimesheetEditForm extends AbstractType
             $projectOptions['group_by'] = null;
         }
 
-        if ($this->projects->countProject(true) > 1) {
-            $projectOptions['placeholder'] = null;
-        } else {
+        if ($this->projects->countProject(true) <= 1) {
             $projectOptions['group_by'] = null;
         }
 
@@ -164,6 +184,7 @@ class TimesheetEditForm extends AbstractType
                 'project',
                 ProjectType::class,
                 array_merge($projectOptions, [
+                    'placeholder' => '',
                     'activity_enabled' => true,
                     // documentation is for NelmioApiDocBundle
                     'documentation' => [
@@ -173,8 +194,8 @@ class TimesheetEditForm extends AbstractType
                     'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
                         return $repo->builderForEntityType($project, $customer);
                     },
-                ])
-            );
+            ])
+        );
 
         // replaces the project select after submission, to make sure only projects for the selected customer are displayed
         $builder->addEventListener(
@@ -186,6 +207,7 @@ class TimesheetEditForm extends AbstractType
                 }
 
                 $event->getForm()->add('project', ProjectType::class, [
+                    'placeholder' => '',
                     'activity_enabled' => true,
                     'group_by' => null,
                     'query_builder' => function (ProjectRepository $repo) use ($data, $project) {
@@ -198,7 +220,7 @@ class TimesheetEditForm extends AbstractType
         $builder
             ->add('activity', ActivityType::class, [
                 // documentation is for NelmioApiDocBundle
-                'placeholder' => null,
+                'placeholder' => '',
                 'documentation' => [
                     'type' => 'integer',
                     'description' => 'Activity ID',
@@ -206,7 +228,8 @@ class TimesheetEditForm extends AbstractType
                 'query_builder' => function (ActivityRepository $repo) use ($activity, $project) {
                     return $repo->builderForEntityType($activity, $project);
                 },
-            ]);
+            ])
+        ;
 
         // replaces the activity select after submission, to make sure only activities for the selected project are displayed
         $builder->addEventListener(
@@ -218,7 +241,7 @@ class TimesheetEditForm extends AbstractType
                 }
 
                 $event->getForm()->add('activity', ActivityType::class, [
-                    'placeholder' => null,
+                    'placeholder' => '',
                     'query_builder' => function (ActivityRepository $repo) use ($data, $activity) {
                         return $repo->builderForEntityType($activity, $data['project']);
                     },
@@ -231,23 +254,6 @@ class TimesheetEditForm extends AbstractType
                 'label' => 'label.description',
                 'required' => false,
             ]);
-
-        //$builder
-        //    ->add('tags', TagsInputType::class, [
-        //      // documentation is for NelmioApiDocBundle
-        //        'documentation' => [
-        //            'type'        => 'text',
-        //            'description' => 'Tags for timesheet entry',
-        //        ],
-        //        'required'      => FALSE,
-        //      //'query_builder' => function (ProjectRepository $repo) use ($project) {
-        //      //  return $repo->builderForEntityType($project);
-        //      //},
-        //        'attr'          => [
-        //            'data-related-select' => $this->getBlockPrefix() . '_activity',
-        //            'data-api-url'        => ['get_activities', ['project' => '-s-']],
-        //        ],
-        //    ]);
 
         if ($options['use_tags']) {
             $builder
@@ -286,6 +292,12 @@ class TimesheetEditForm extends AbstractType
         if ($options['include_user']) {
             $builder->add('user', UserType::class);
         }
+
+        if ($options['include_exported']) {
+            $builder->add('exported', YesNoType::class, [
+                'label' => 'label.exported'
+            ]);
+        }
     }
 
     /**
@@ -301,6 +313,7 @@ class TimesheetEditForm extends AbstractType
             'duration_only' => $this->durationOnly,
             'use_tags' => $this->useTags,
             'include_user' => false,
+            'include_exported' => false,
             'include_rate' => true,
             'docu_chapter' => 'timesheet',
             'method' => 'POST',

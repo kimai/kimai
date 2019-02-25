@@ -21,6 +21,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\Range;
@@ -76,13 +77,6 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
             $enableHourlyRate = true;
         }
 
-        /*
-            (new UserPreference())
-                ->setName('timezone')
-                ->setValue(date_default_timezone_get())
-                ->setType(TimezoneType::class),
-        */
-
         return [
             (new UserPreference())
                 ->setName(UserPreference::HOURLY_RATE)
@@ -90,6 +84,11 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setType(MoneyType::class)
                 ->setEnabled($enableHourlyRate)
                 ->addConstraint(new Range(['min' => 0])),
+
+            (new UserPreference())
+                ->setName('timezone')
+                ->setValue(date_default_timezone_get())
+                ->setType(TimezoneType::class),
 
             (new UserPreference())
                 ->setName('language')
@@ -102,23 +101,8 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setType(SkinType::class),
 
             (new UserPreference())
-                ->setName('theme.fixed_layout')
-                ->setValue(true)
-                ->setType(CheckboxType::class),
-
-            (new UserPreference())
-                ->setName('theme.boxed_layout')
-                ->setValue(false)
-                ->setType(CheckboxType::class),
-
-            (new UserPreference())
                 ->setName('theme.collapsed_sidebar')
                 ->setValue(false)
-                ->setType(CheckboxType::class),
-
-            (new UserPreference())
-                ->setName('theme.mini_sidebar')
-                ->setValue(true)
                 ->setType(CheckboxType::class),
 
             (new UserPreference())
@@ -130,6 +114,11 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setName('login.initial_view')
                 ->setValue(InitialViewType::DEFAULT_VIEW)
                 ->setType(InitialViewType::class),
+
+            (new UserPreference())
+                ->setName('timesheet.daily_stats')
+                ->setValue(false)
+                ->setType(CheckboxType::class),
         ];
     }
 

@@ -245,10 +245,7 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertEquals($hourlyRateOriginal, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
         $this->assertEquals('green', $user->getPreferenceValue(UserPreference::SKIN));
-        $this->assertEquals(true, $user->getPreferenceValue('theme.fixed_layout'));
-        $this->assertEquals(false, $user->getPreferenceValue('theme.boxed_layout'));
         $this->assertEquals(false, $user->getPreferenceValue('theme.collapsed_sidebar'));
-        $this->assertEquals(true, $user->getPreferenceValue('theme.mini_sidebar'));
         $this->assertEquals('month', $user->getPreferenceValue('calendar.initial_view'));
 
         $form = $client->getCrawler()->filter('form[name=user_preferences_form]')->form();
@@ -256,13 +253,10 @@ class ProfileControllerTest extends ControllerBaseTest
             'user_preferences_form' => [
                 'preferences' => [
                     ['name' => UserPreference::HOURLY_RATE, 'value' => 37.5],
-//                    ['name' => 'timezone', 'value' => 'America/Creston'],
+                    ['name' => 'timezone', 'value' => 'America/Creston'],
                     ['name' => 'language', 'value' => 'ar'],
                     ['name' => UserPreference::SKIN, 'value' => 'blue'],
-                    ['name' => 'theme.fixed_layout', 'value' => false],
-                    ['name' => 'theme.boxed_layout', 'value' => true],
                     ['name' => 'theme.collapsed_sidebar', 'value' => true],
-                    ['name' => 'theme.mini_sidebar', 'value' => false],
                     ['name' => 'calendar.initial_view', 'value' => 'agendaDay'],
                 ]
             ]
@@ -280,13 +274,10 @@ class ProfileControllerTest extends ControllerBaseTest
         $user = $this->getUserByName($em, $username);
 
         $this->assertEquals($hourlyRate, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
-        //$this->assertEquals('', $user->getPreferenceValue('America/Creston'));
+        $this->assertEquals('', $user->getPreferenceValue('America/Creston'));
         $this->assertEquals('ar', $user->getPreferenceValue('language'));
         $this->assertEquals('blue', $user->getPreferenceValue(UserPreference::SKIN));
-        $this->assertEquals(false, $user->getPreferenceValue('theme.fixed_layout'));
-        $this->assertEquals(true, $user->getPreferenceValue('theme.boxed_layout'));
         $this->assertEquals(true, $user->getPreferenceValue('theme.collapsed_sidebar'));
-        $this->assertEquals(false, $user->getPreferenceValue('theme.mini_sidebar'));
         $this->assertEquals('agendaDay', $user->getPreferenceValue('calendar.initial_view'));
     }
 }

@@ -45,6 +45,15 @@ class DebugRenderer implements RendererInterface
     }
 
     /**
+     * @param \DateTime $date
+     * @return mixed
+     */
+    protected function getFormattedTime(\DateTime $date)
+    {
+        return $date->format('H:i');
+    }
+
+    /**
      * @param $amount
      * @return mixed
      */

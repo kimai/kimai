@@ -1,6 +1,6 @@
 App\Entity\Timesheet:
     exclusion_policy: All
-    custom_accessor_order: [id, begin, end, duration, rate, activity, project, user, description, fixedRate, hourlyRate, tags]
+    custom_accessor_order: [id, begin, end, duration, rate, activity, project, user, description, fixedRate, hourlyRate, tags, exported]
     properties:
         id:
             include: true
@@ -16,7 +16,7 @@ App\Entity\Timesheet:
             groups: [Default]
         description:
             include: true
-            groups: [Entity]
+            groups: [Default]
         rate:
             include: true
             groups: [Default]
@@ -24,6 +24,9 @@ App\Entity\Timesheet:
             include: true
             groups: [Entity]
         hourlyRate:
+            include: true
+            groups: [Entity]
+        exported:
             include: true
             groups: [Entity]
         tags:

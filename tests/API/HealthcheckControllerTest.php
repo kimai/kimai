@@ -29,7 +29,7 @@ class HealthcheckControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/ping');
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertEquals(['message' => 'pong'], $result);
     }
 
@@ -39,7 +39,7 @@ class HealthcheckControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/version');
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
 
         $this->assertArrayHasKey('version', $result);
         $this->assertArrayHasKey('candidate', $result);

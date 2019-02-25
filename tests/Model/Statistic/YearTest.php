@@ -23,7 +23,7 @@ class YearTest extends TestCase
         $sut = new Year('1999');
         $this->assertNull($sut->getMonth('01'));
         $this->assertEmpty($sut->getMonths());
-        $this->assertInternalType('array', $sut->getMonths());
+        $this->assertIsArray($sut->getMonths());
         $this->assertEquals('1999', $sut->getYear());
     }
 

@@ -2,26 +2,58 @@
 <i class="{{ icon|icon(icon) }}"></i>
 {% endmacro %}
 
-{% macro page_actions(tools) %}
+{%- macro page_actions(tools) -%}
     <div class="breadcrumb">
         <div class="box-tools">
             <div class="btn-group">
-                {%- for icon,url in tools  %}
+                {%- for icon,values in tools  %}
+                    {% spaceless %}
+                    {% set id = null %}
+                    {% set onclick = null %}
+                    {% set modal = null %}
+                    {% set toggle = null %}
+                    {% set url = null %}
+
+                    {% if not values is iterable %}
+                        {% set url = values %}
+                        {% if 'onclick:' in url %}
+                            {% set onclick = url|replace({'onclick:': ''}) %}
+                            {% set url = '#' %}
+                        {% endif %}
+                        {% if '#collapse' in url %}
+                            {% set toggle = 'collapse' %}
+                        {% endif %}
+                        {% if '#modal' in url %}
+                            {% set modal = url %}
+                            {% set url = '#' %}
+                        {% endif %}
+                    {% else %}
+                        {% set url = values.url ?? '#' %}
+                        {% set onclick = values.onclick ?? null %}
+                        {% set modal = values.modal ?? null %}
+                        {% set toggle = values.toggle ?? null %}
+                        {% set id = values.id ?? null %}
+                    {% endif %}
+                    {% endspaceless %}
                     <a class="btn btn-default" href="{{ url }}"
-                            {% if '#collapse' in url %}
-                                data-toggle="collapse"
-                            {% elseif '#modal' in url %}
-                                data-toggle="modal" data-target="{{ url }}"
-                            {% endif %}
-                            {% if 'onclick:' in url %}
-                                onclick="{{ url|replace({'onclick:': ''}) }}"
-                            {% endif %}
+                        {%- if id is not empty -%}
+                            id="{{ id }}"
+                        {%- endif -%}
+                        {%- if toggle is not empty -%}
+                            data-toggle="{{ toggle }}"
+                        {%- endif -%}
+                        {%- if modal is not empty -%}
+                            data-toggle="modal" data-target="{{ modal }}"
+                        {%- endif -%}
+                        {%- if onclick is not empty -%}
+                            onclick="{{ onclick }}"
+                        {%- endif -%}
                     ><i class="{{ icon|icon(icon) }}"></i></a>
                 {% endfor -%}
             </div>
         </div>
     </div>
-{% endmacro %}
+{%- endmacro -%}
 
 {% macro page_header(title) %}
     <h2 class="page-header">{{ title|trans }}</h2>
@@ -32,7 +64,7 @@
     {% if visible %}
         {{ macro.label('badge.visible', 'success') }}
     {% else %}
-        {{ macro.label('badge.invisible', 'warning') }}
+        {{ macro.label('badge.invisible', 'default') }}
     {% endif %}
 {% endmacro %}
 
@@ -67,7 +99,7 @@
     {% if not activity.project is null %}
         {% set label = activity.project.customer.name ~ ': ' ~ activity.project.name %}
     {% endif %}
-    {{ macro.label(activity.name, (isVisible ? 'primary' : 'warning'), label) }}
+    {{ macro.label(activity.name, (isVisible ? 'primary' : 'default'), label) }}
 {% endmacro %}
 
 {% macro label_project(project) %}
@@ -75,7 +107,7 @@
     {% if project.visible and project.customer.visible %}
         {{ macro.label(project.name, 'primary', project.customer.name) }}
     {% else %}
-        {{ macro.label(project.name, 'warning', project.customer.name) }}
+        {{ macro.label(project.name, 'default', project.customer.name) }}
     {% endif %}
 {% endmacro %}
 
@@ -84,7 +116,7 @@
     {% if customer.visible %}
         {{ macro.label(customer.name, 'primary') }}
     {% else %}
-        {{ macro.label(customer.name, 'warning') }}
+        {{ macro.label(customer.name, 'default') }}
     {% endif %}
 {% endmacro %}
 

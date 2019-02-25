@@ -58,6 +58,8 @@
                 droppable : false,
                 height: 'auto',
                 nowIndicator: true,
+                now: '{{ now|date_format('c') }}',
+                //timezone: '{{ app.user.preferenceValue("timezone") }}',
                 businessHours: {
                     dow: [{{ config.businessDays|join(',') }}],
                     start: '{{ config.businessTimeBegin }}',

@@ -6,7 +6,12 @@ This page is dedicated to all developers who want to contribute to Kimai. You ar
 
 All you need is:
 - PHP >= 7.1.3
-- PHP extensions: `PDO-SQLite`, `intl` and `zip`
+- PHP extensions: `PDO-SQLite`, `intl`, `zip`, `gd`, `mbstring`, `xml`
+
+You can install php 7.2 and all dependencies on debian based linux with this command: 
+```
+apt install php7.2 php7.2-sqlite3 php7.2-intl php7.2-zip php7.2-gd php7.2-mbstring php7.2-xml 
+```
 
 Optional requirement:
 - a MySQL/MariaDB instance
@@ -188,10 +193,10 @@ In the config `kimai.invoice.documents`, you can add a list of directories with 
 
 ## Adding invoice calculator
 
-An invoice calculator is a class extending `App\Invoice\CalculatorInterface` and is responsible for calculating 
+An invoice calculator is a class implementing `App\Invoice\CalculatorInterface` and it is responsible for calculating 
 invoice rates, taxes and taking care of all timesheet entries that should be displayed.   
 
-Every invoice calculator class will be picked up when refreshing the application cache by the [InvoiceServiceCompilerPass](https://github.com/kevinpapst/kimai2/blob/master/src/DependencyInjection/Compiler/InvoiceServiceCompilerPass.php):
+Every invoice calculator class will be automatically available when refreshing the application cache by the [InvoiceServiceCompilerPass](../../src/DependencyInjection/Compiler/InvoiceServiceCompilerPass.php):
 
 The ID of the calculator must be unique, please prefix it with your vendor or bundle name and make sure it only contains
 character as it will be stored in a database column.
@@ -200,15 +205,29 @@ Translations are stored in the `invoice-calculator.xx.xliff`.
 
 ## Adding invoice-number generator
 
-An invoice-number generator is a class extending `App\Invoice\NumberGeneratorInterface` and its only task is to generate 
+An invoice-number generator is a class implementing `App\Invoice\NumberGeneratorInterface` and its only task is to generate 
 a number for the invoice. In most cases you do not want to mix multiple invoice-number generators throughout your invoices.   
 
-Every invoice number-generator class will be picked up when refreshing the application cache by the [InvoiceServiceCompilerPass](https://github.com/kevinpapst/kimai2/blob/master/src/DependencyInjection/Compiler/InvoiceServiceCompilerPass.php):
+Every invoice number-generator class will be automatically available up when refreshing the application cache by the [InvoiceServiceCompilerPass](../../src/DependencyInjection/Compiler/InvoiceServiceCompilerPass.php):
 
 The ID of the number generator must be unique, please prefix it with your vendor or bundle name and make sure it only contains
 character as it will be stored in a database column.
 
 Translations are stored in the `invoice-numbergenerator.xx.xliff`.
+
+## Adding invoice renderer
+
+An invoice renderer is a class implementing `App\Invoice\RendererInterface` and it is responsible to convert an `InvoiceModel` (the actual data) 
+with the use of an `InvoiceDocument` (the template file) into a downloadable/printable document. 
+
+Every invoice renderer class will be automatically available when refreshing the application cache by the [InvoiceServiceCompilerPass](../../src/DependencyInjection/Compiler/InvoiceServiceCompilerPass.php):
+
+## Adding export renderer
+
+An export renderer is a class implementing `App\Export\RendererInterface` and it is responsible to convert ar array of `Timesheet` objects  
+into a downloadable/printable document. 
+
+Every export renderer class will be automatically available when refreshing the application cache by the [ExportServiceCompilerPass](../../src/DependencyInjection/Compiler/ExportServiceCompilerPass.php):
 
 ## Adding timesheet calculator
 

@@ -367,21 +367,9 @@
                 <source>profile.preferences</source>
                 <target>تفضيلات</target>
             </trans-unit>
-            <trans-unit id="label.theme.fixed_layout">
-                <source>label.theme.fixed_layout</source>
-                <target>تنشيط التنسيق الثابت. لا يمكنك استخدام التخطيطات الثابتة والمعبأة معًا.</target>
-            </trans-unit>
-            <trans-unit id="label.theme.boxed_layout">
-                <source>label.theme.boxed_layout</source>
-                <target>تنشيط التنسيق المضمن (أجمل للشاشات الكبيرة)</target>
-            </trans-unit>
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
                 <target>تبديل حالة صفحة الشريط الجانبي الأيسر في صفحة (فتح أو طي)</target>
-            </trans-unit>
-            <trans-unit id="label.theme.mini_sidebar">
-                <source>label.theme.mini_sidebar</source>
-                <target>تبديل حجم رأس الشريط الجانبي الأيسر (ممتلئ أو طي)</target>
             </trans-unit>
 
             <!--
@@ -681,10 +669,6 @@
                 <source>invoice.subtitle</source>
                 <target>م بإنشاء فواتير من بيانات ورقة التوقيت الخاصة بك.</target>
             </trans-unit>
-            <trans-unit id="invoice.select_filter">
-                <source>invoice.select_filter</source>
-                <target>لم يتم العثور على بيانات الفواتير بناءً على الفلاتر المحددة.</target>
-            </trans-unit>
             <trans-unit id="invoice.preview">
                 <source>invoice.preview</source>
                 <target>هذه معاينة للبيانات التي ستظهر في مستند الفاتورة.</target>
@@ -737,16 +721,16 @@
                 <source>invoice.service_date</source>
                 <target>تاريخ الخدمة</target>
             </trans-unit>
-            <trans-unit id="invoice.amount">
-                <source>invoice.amount</source>
+            <trans-unit id="label.amount">
+                <source>label.amount</source>
                 <target>كمية</target>
             </trans-unit>
-            <trans-unit id="invoice.total_rate">
-                <source>invoice.total_rate</source>
+            <trans-unit id="label.total_rate">
+                <source>label.total_rate</source>
                 <target>السعر الكلي</target>
             </trans-unit>
-            <trans-unit id="invoice.unit_price">
-                <source>invoice.unit_price</source>
+            <trans-unit id="label.unit_price">
+                <source>label.unit_price</source>
                 <target>سعر الوحدة</target>
             </trans-unit>
             <trans-unit id="label.payment_terms">

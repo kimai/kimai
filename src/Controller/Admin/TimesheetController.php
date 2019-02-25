@@ -14,7 +14,7 @@ use App\Controller\TagImplementationTrait;
 use App\Controller\TimesheetControllerTrait;
 use App\Entity\Timesheet;
 use App\Form\TimesheetEditForm;
-use App\Form\Toolbar\TimesheetAdminToolbarForm;
+use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\Query\TimesheetQuery;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -92,19 +92,25 @@ class TimesheetController extends AbstractController
     public function exportAction(Request $request)
     {
         $query = new TimesheetQuery();
+        $query->setResultType(TimesheetQuery::RESULT_TYPE_OBJECTS);
 
         $form = $this->getToolbarForm($query);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var TimesheetQuery $query */
             $query = $form->getData();
-            if (null !== $query->getBegin()) {
-                $query->getBegin()->setTime(0, 0, 0);
-            }
-            if (null !== $query->getEnd()) {
-                $query->getEnd()->setTime(23, 59, 59);
-            }
         }
+
+        // by default the current month is exported, but it can be overwritten
+        if (null === $query->getBegin()) {
+            $query->setBegin(new \DateTime('first day of this month'));
+        }
+        $query->getBegin()->setTime(0, 0, 0);
+
+        if (null === $query->getEnd()) {
+            $query->setEnd(new \DateTime('last day of this month'));
+        }
+        $query->getEnd()->setTime(23, 59, 59);
 
         /* @var $entries Pagerfanta */
         $entries = $this->getRepository()->findByQuery($query);
@@ -205,6 +211,7 @@ class TimesheetController extends AbstractController
             ]),
             'use_tags' => $this->isTagMode(),
             'include_rate' => $this->isGranted('edit_rate', $entry),
+            'include_exported' => $this->isGranted('edit_export', $entry),
             'include_user' => true,
         ]);
     }
@@ -215,11 +222,12 @@ class TimesheetController extends AbstractController
      */
     protected function getToolbarForm(TimesheetQuery $query)
     {
-        return $this->createForm(TimesheetAdminToolbarForm::class, $query, [
+        return $this->createForm(TimesheetToolbarForm::class, $query, [
             'action' => $this->generateUrl('admin_timesheet', [
                 'page' => $query->getPage(),
             ]),
             'method' => 'GET',
+            'include_user' => true,
             'use_tags' => $this->isTagMode(),
         ]);
     }

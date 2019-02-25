@@ -17,6 +17,9 @@ use App\Invoice\ServiceInvoice;
 use App\Repository\InvoiceDocumentRepository;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \App\Invoice\ServiceInvoice
+ */
 class ServiceInvoiceTest extends TestCase
 {
     public function testEmptyObject()
@@ -25,13 +28,13 @@ class ServiceInvoiceTest extends TestCase
         $sut = new ServiceInvoice($repo);
 
         $this->assertEmpty($sut->getCalculator());
-        $this->assertInternalType('array', $sut->getCalculator());
+        $this->assertIsArray($sut->getCalculator());
         $this->assertEmpty($sut->getRenderer());
-        $this->assertInternalType('array', $sut->getRenderer());
+        $this->assertIsArray($sut->getRenderer());
         $this->assertEmpty($sut->getNumberGenerator());
-        $this->assertInternalType('array', $sut->getNumberGenerator());
+        $this->assertIsArray($sut->getNumberGenerator());
         $this->assertEmpty($sut->getDocuments());
-        $this->assertInternalType('array', $sut->getDocuments());
+        $this->assertIsArray($sut->getDocuments());
 
         $this->assertNull($sut->getCalculatorByName('default'));
         $this->assertNull($sut->getDocumentByName('default'));

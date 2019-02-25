@@ -60,7 +60,7 @@ abstract class AbstractRendererTest extends KernelTestCase
         $languages = [
             'en' => [
                 'date' => 'Y.m.d',
-                'duration' => '%%h:%%m h'
+                'duration' => '%h:%m h'
             ]
         ];
 
@@ -83,6 +83,7 @@ abstract class AbstractRendererTest extends KernelTestCase
     protected function getInvoiceModel()
     {
         $customer = new Customer();
+        $customer->setCurrency('EUR');
         $template = new InvoiceTemplate();
         $template->setTitle('a test invoice template title');
         $template->setVat(19);
@@ -194,6 +195,7 @@ abstract class AbstractRendererTest extends KernelTestCase
     protected function getInvoiceModelOneEntry()
     {
         $customer = new Customer();
+        $customer->setCurrency('USD');
         $template = new InvoiceTemplate();
         $template->setTitle('a test invoice template title');
         $template->setVat(19);

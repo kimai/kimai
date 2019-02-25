@@ -26,6 +26,9 @@ class TimesheetToolbarForm extends AbstractToolbarForm
     {
         $this->addTimesheetStateChoice($builder);
         $this->addPageSizeChoice($builder);
+        if ($options['include_user']) {
+            $this->addUserChoice($builder);
+        }
         $this->addDateRangeChoice($builder);
         $this->addCustomerChoice($builder);
         $this->addProjectChoice($builder);
@@ -61,6 +64,7 @@ class TimesheetToolbarForm extends AbstractToolbarForm
         $resolver->setDefaults([
             'data_class' => TimesheetQuery::class,
             'csrf_protection' => false,
+            'include_user' => false,
             'use_tags' => false,
         ]);
     }

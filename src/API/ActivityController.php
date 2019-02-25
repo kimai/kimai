@@ -53,7 +53,10 @@ class ActivityController extends BaseApiController
      * @SWG\Response(
      *      response=200,
      *      description="Returns the collection of all existing activities",
-     *      @SWG\Schema(ref="#/definitions/ActivityCollection"),
+     *      @SWG\Schema(
+     *          type="array",
+     *          @SWG\Items(ref="#/definitions/ActivityEntity")
+     *      )
      * )
      * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="Project ID to filter activities. If none is provided, only global activities will be returned.")
      * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter activities (1=visible, 2=hidden, 3=both)")
@@ -80,11 +83,11 @@ class ActivityController extends BaseApiController
             $query->setOrderBy($orderBy);
         }
 
-        if (null !== ($globals = $paramFetcher->get('globals'))) {
+        if (null !== $paramFetcher->get('globals')) {
             $query->setGlobalsOnly(true);
         }
 
-        if ('false' === ($globalsFirst = $paramFetcher->get('globalsFirst'))) {
+        if ('false' === $paramFetcher->get('globalsFirst')) {
             $query->setOrderGlobalsFirst(false);
         }
 

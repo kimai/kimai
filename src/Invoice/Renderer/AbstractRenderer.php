@@ -54,12 +54,22 @@ abstract class AbstractRenderer
     }
 
     /**
-     * @param $amount
+     * @param \DateTime $date
      * @return mixed
      */
-    protected function getFormattedMoney($amount)
+    protected function getFormattedTime(\DateTime $date)
     {
-        return $this->extension->money($amount);
+        return $this->dateExtension->time($date);
+    }
+
+    /**
+     * @param $amount
+     * @param $currency
+     * @return string
+     */
+    protected function getFormattedMoney($amount, $currency)
+    {
+        return $this->extension->money($amount, $currency);
     }
 
     /**

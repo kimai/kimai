@@ -95,6 +95,10 @@
                 <source>menu.invoice</source>
                 <target>Rechnungen</target>
             </trans-unit>
+            <trans-unit id="menu.export">
+                <source>menu.export</source>
+                <target>Export</target>
+            </trans-unit>
             <trans-unit id="menu.admin_timesheet">
                 <source>menu.admin_timesheet</source>
                 <target>Zeiterfassung</target>
@@ -121,7 +125,7 @@
             -->
             <trans-unit id="error.no_entries_found">
                 <source>error.no_entries_found</source>
-                <target>Keine Einträge vorhanden</target>
+                <target>Anhand ihrer ausgewählten Filter wurden keine Einträge gefunden.</target>
             </trans-unit>
 
             <!--
@@ -379,21 +383,9 @@
                 <source>profile.preferences</source>
                 <target>Einstellungen</target>
             </trans-unit>
-            <trans-unit id="label.theme.fixed_layout">
-                <source>label.theme.fixed_layout</source>
-                <target>Aktiviert das "statische Layout" (linke Navigationsleiste und Header bleiben beim Scrollen an ihrer Stelle)</target>
-            </trans-unit>
-            <trans-unit id="label.theme.boxed_layout">
-                <source>label.theme.boxed_layout</source>
-                <target>Aktiviert das "Boxlayout" (gut für große Bildschirme, lässt sich aber nicht mit dem "statischen Layout" gemeinsam verwenden)</target>
-            </trans-unit>
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
-                <target>Steuert den Status der linken Navigationsleiste (zugeklappt oder geöffnet)</target>
-            </trans-unit>
-            <trans-unit id="label.theme.mini_sidebar">
-                <source>label.theme.mini_sidebar</source>
-                <target>Aktiviert die minimierte Version der linken Navigationsleiste</target>
+                <target>Minimiert die linke Navigationsleiste</target>
             </trans-unit>
             <trans-unit id="label.calendar.initial_view">
                 <source>label.calendar.initial_view</source>
@@ -415,6 +407,14 @@
             <trans-unit id="agendaDay">
                 <source>agendaDay</source>
                 <target>Tag</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.daily_stats">
+                <source>label.timesheet.daily_stats</source>
+                <target>Tägliche Statistiken im Timesheet anzeigen</target>
+            </trans-unit>
+            <trans-unit id="label.now">
+                <source>label.now</source>
+                <target>Aktuelle Zeit</target>
             </trans-unit>
 
             <!--
@@ -730,10 +730,6 @@
                 <source>invoice.subtitle</source>
                 <target>Hier erstellen Sie Rechnungen für ihre aufgezeichneten Zeiten.</target>
             </trans-unit>
-            <trans-unit id="invoice.select_filter">
-                <source>invoice.select_filter</source>
-                <target>Anhand ihrer ausgewählten Filter wurden keine Rechnungseinträge gefunden.</target>
-            </trans-unit>
             <trans-unit id="invoice.preview">
                 <source>invoice.preview</source>
                 <target>Dies ist eine Vorschau der Daten, die in Ihrer Rechnung enthalten sein werden.</target>
@@ -741,6 +737,22 @@
             <trans-unit id="button.print">
                 <source>button.print</source>
                 <target>Drucken</target>
+            </trans-unit>
+            <trans-unit id="button.csv">
+                <source>button.csv</source>
+                <target>CSV</target>
+            </trans-unit>
+            <trans-unit id="button.xlsx">
+                <source>button.xlsx</source>
+                <target>Excel</target>
+            </trans-unit>
+            <trans-unit id="button.pdf">
+                <source>button.pdf</source>
+                <target>PDF</target>
+            </trans-unit>
+            <trans-unit id="button.ods">
+                <source>button.ods</source>
+                <target>ODS</target>
             </trans-unit>
             <trans-unit id="invoice_print">
                 <source>invoice_print</source>
@@ -786,16 +798,16 @@
                 <source>invoice.service_date</source>
                 <target>Leistungsdatum</target>
             </trans-unit>
-            <trans-unit id="invoice.amount">
-                <source>invoice.amount</source>
+            <trans-unit id="label.amount">
+                <source>label.amount</source>
                 <target>Anzahl</target>
             </trans-unit>
-            <trans-unit id="invoice.total_rate">
-                <source>invoice.total_rate</source>
+            <trans-unit id="label.total_rate">
+                <source>label.total_rate</source>
                 <target>Gesamtpreis</target>
             </trans-unit>
-            <trans-unit id="invoice.unit_price">
-                <source>invoice.unit_price</source>
+            <trans-unit id="label.unit_price">
+                <source>label.unit_price</source>
                 <target>Einzelbetrag</target>
             </trans-unit>
             <trans-unit id="label.payment_terms">
@@ -833,6 +845,42 @@
 
                     für Ihren Auftrag bedanke ich mich und berechne für meine Leistungen:
                 </target>
+            </trans-unit>
+
+            <!--
+              Export
+            -->
+            <trans-unit id="export.title">
+                <source>export.title</source>
+                <target>Export</target>
+            </trans-unit>
+            <trans-unit id="export.subtitle">
+                <source>export.subtitle</source>
+                <target>Exportieren Sie geloggte Zeiten in veschiedene Zielformate</target>
+            </trans-unit>
+            <trans-unit id="export.period">
+                <source>export.period</source>
+                <target>Zeitraum</target>
+            </trans-unit>
+            <trans-unit id="export.document_title">
+                <source>export.document_title</source>
+                <target>Aufstellung zu Aufwänden</target>
+            </trans-unit>
+            <trans-unit id="export.full_list">
+                <source>export.full_list</source>
+                <target>Vollständige Auflistung</target>
+            </trans-unit>
+            <trans-unit id="export.summary">
+                <source>export.summary</source>
+                <target>Zusammenfassung</target>
+            </trans-unit>
+            <trans-unit id="export.page_of">
+                <source>export.page_of</source>
+                <target>Seite %page% von %pages%</target>
+            </trans-unit>
+            <trans-unit id="export.date_copyright">
+                <source>export.date_copyright</source>
+                <target>Erstellt %date% mit %kimai%</target>
             </trans-unit>
 
             <!--
@@ -924,6 +972,18 @@
                 <source>label.entryState</source>
                 <target>Zeiten</target>
             </trans-unit>
+            <trans-unit id="label.exported">
+                <source>label.exported</source>
+                <target>Exportiert</target>
+            </trans-unit>
+            <trans-unit id="entryState.exported">
+                <source>entryState.exported</source>
+                <target>Abgerechnet</target>
+            </trans-unit>
+            <trans-unit id="entryState.not_exported">
+                <source>entryState.not_exported</source>
+                <target>Offen</target>
+            </trans-unit>
             <trans-unit id="entryState.all">
                 <source>entryState.all</source>
                 <target>Alle</target>
@@ -935,6 +995,14 @@
             <trans-unit id="entryState.stopped">
                 <source>entryState.stopped</source>
                 <target>Beendete</target>
+            </trans-unit>
+            <trans-unit id="export.clear_all">
+                <source>export.clear_all</source>
+                <target>Alle angezeigten Einträge als offen markieren?</target>
+            </trans-unit>
+            <trans-unit id="export.mark_all">
+                <source>export.mark_all</source>
+                <target>Alle angezeigten Einträge als abgerechnet markieren?</target>
             </trans-unit>
         </body>
     </file>

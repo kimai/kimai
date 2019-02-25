@@ -40,7 +40,7 @@ class DateExtensionsTest extends TestCase
 
     public function testGetFilters()
     {
-        $filters = ['month_name', 'date_short'];
+        $filters = ['month_name', 'date_short', 'date_time', 'date_format', 'time'];
         $sut = $this->getSut('de', []);
         $twigFilters = $sut->getFilters();
         $this->assertCount(count($filters), $twigFilters);
@@ -78,6 +78,29 @@ class DateExtensionsTest extends TestCase
     }
 
     /**
+     * @param string $locale
+     * @param \DateTime $date
+     * @param string $result
+     * @dataProvider getDateTimeData
+     */
+    public function testDateTime($locale, \DateTime $date, $result)
+    {
+        $sut = $this->getSut($locale, [
+            'de' => ['date_time' => 'd.m.Y H:i:s'],
+            'en' => ['date_time' => 'Y-m-d h:m A'],
+        ]);
+        $this->assertEquals($result, $sut->dateTime($date));
+    }
+
+    public function getDateTimeData()
+    {
+        return [
+            ['en', new \DateTime('7 January 2010'), '2010-01-07 12:01 AM'],
+            ['de', (new \DateTime('1980-12-14'))->setTime(13, 27, 55), '14.12.1980 13:27:55'],
+        ];
+    }
+
+    /**
      * @param \DateTime $date
      * @param string $result
      * @dataProvider getMonthData
@@ -95,5 +118,21 @@ class DateExtensionsTest extends TestCase
             [new \DateTime('2016-06-23'), 'month.6'],
             [new \DateTime('2016-12-23'), 'month.12'],
         ];
+    }
+
+    public function testDateFormat()
+    {
+        $date = new \DateTime('7 January 2010 17:43:21', new \DateTimeZone('Europe/Berlin'));
+        $sut = $this->getSut('en', []);
+        $this->assertEquals('2010-01-07T17:43:21+01:00', $sut->dateFormat($date, 'c'));
+    }
+
+    public function testTime()
+    {
+        $time = new \DateTime('2016-06-23');
+        $time->setTime(17, 53, 23);
+
+        $sut = $this->getSut('en', []);
+        $this->assertEquals('17:53', $sut->time($time));
     }
 }

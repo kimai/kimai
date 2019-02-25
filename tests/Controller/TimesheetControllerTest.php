@@ -30,7 +30,9 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser();
         $this->request($client, '/timesheet/');
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertHasDataTable($client);
+
+        // there are no records by default in the test database
+        $this->assertHasNoEntriesWithFilter($client);
 
         $result = $client->getCrawler()->filter('div.breadcrumb div.box-tools div.btn-group a.btn');
         $this->assertEquals(5, count($result));
@@ -43,7 +45,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
     public function testIndexActionWithQuery()
     {
-        $client = $this->getClientForAuthenticatedUser();
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new TimesheetFixtures();
@@ -67,8 +69,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasDataTable($client);
-
-        // TODO more assertions
+        $this->assertDataTableRowCount($client, 'datatable_timesheet', 5);
     }
 
     public function testExportAction()
@@ -115,6 +116,11 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'timesheet_edit_form' => [
                 'description' => 'Testing is fun!',
+                // begin is always pre-filled with the current datetime
+                // 'begin' => null,
+                // end must be allowed to be null, to start a record
+                // there was a bug with end begin required, so we manually set this field to be empty
+                'end' => null,
                 'project' => 1,
                 'activity' => 1,
             ]

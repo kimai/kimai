@@ -48,7 +48,7 @@ class CalendarControllerTest extends ControllerBaseTest
         $response = $client->getResponse();
         $this->assertTrue($response->isSuccessful());
         $json = json_decode($response->getContent(), true);
-        $this->assertInternalType('array', $json);
+        $this->assertIsArray($json);
         $this->assertEmpty($json);
     }
 
@@ -68,11 +68,11 @@ class CalendarControllerTest extends ControllerBaseTest
         $response = $client->getResponse();
         $this->assertTrue($response->isSuccessful());
         $json = json_decode($response->getContent(), true);
-        $this->assertInternalType('array', $json);
+        $this->assertIsArray($json);
         $this->assertNotEmpty($json);
         $this->assertEquals(10, count($json));
         foreach ($json as $result) {
-            $this->assertInternalType('array', $result);
+            $this->assertIsArray($result);
             $this->assertCalendarStructure($result);
         }
     }

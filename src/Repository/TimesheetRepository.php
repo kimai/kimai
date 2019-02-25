@@ -9,6 +9,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Activity;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Model\Statistic\Month;
@@ -30,6 +31,18 @@ class TimesheetRepository extends AbstractRepository
     public const STATS_QUERY_MONTHLY = 'monthly';
 
     /**
+     * @param Timesheet $timesheet
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function save(Timesheet $timesheet)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($timesheet);
+        $entityManager->flush();
+    }
+
+    /**
      * @param Timesheet $entry
      * @return bool
      * @throws RepositoryException
@@ -43,8 +56,11 @@ class TimesheetRepository extends AbstractRepository
         }
 
         // seems to be necessary so Doctrine will recognize a changed timestamp
-        $entry->setBegin(clone $entry->getBegin());
-        $entry->setEnd(new DateTime());
+        $begin = clone $entry->getBegin();
+        $end = new \DateTime('now', $begin->getTimezone());
+
+        $entry->setBegin($begin);
+        $entry->setEnd($end);
 
         $entityManager = $this->getEntityManager();
         $entityManager->persist($entry);
@@ -91,11 +107,11 @@ class TimesheetRepository extends AbstractRepository
 
     /**
      * @param $select
-     * @param User|null $user
+     * @param User $user
      * @return int
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    protected function queryThisMonth($select, ?User $user)
+    protected function queryThisMonth($select, User $user)
     {
         $begin = new DateTime('first day of this month 00:00:00');
         $end = new DateTime('last day of this month 23:59:59');
@@ -337,12 +353,18 @@ class TimesheetRepository extends AbstractRepository
                 ->setParameter('end', $query->getEnd());
         }
 
+        if ($query->getExported() === TimesheetQuery::STATE_EXPORTED) {
+            $qb->andWhere('t.exported = :exported')->setParameter('exported', true);
+        } elseif ($query->getExported() === TimesheetQuery::STATE_NOT_EXPORTED) {
+            $qb->andWhere('t.exported = :exported')->setParameter('exported', false);
+        }
+
         if (null !== $query->getActivity()) {
             $qb->andWhere('t.activity = :activity')
                 ->setParameter('activity', $query->getActivity());
         }
 
-        if (null === $query->getActivity() || null === $query->getActivity()->getProject()) {
+        if (null === $query->getActivity() || ($query->getActivity() instanceof Activity && null === $query->getActivity()->getProject())) {
             if (null !== $query->getProject()) {
                 $qb->andWhere('t.project = :project')
                     ->setParameter('project', $query->getProject());

@@ -44,11 +44,11 @@ class UserVoter extends AbstractVoter
      */
     protected function supports($attribute, $subject)
     {
-        if (!in_array($attribute, self::ALLOWED_ATTRIBUTES)) {
+        if (!($subject instanceof User)) {
             return false;
         }
 
-        if (!($subject instanceof User)) {
+        if (!in_array($attribute, self::ALLOWED_ATTRIBUTES)) {
             return false;
         }
 

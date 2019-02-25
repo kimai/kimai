@@ -116,25 +116,32 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->arrayNode('active_entries')
                     ->addDefaultsIfNotSet()
-                        ->children()
-                            ->integerNode('soft_limit')
-                                ->defaultValue(1)
-                                ->validate()
-                                    ->ifTrue(function ($value) {
-                                        return $value <= 0;
-                                    })
-                                    ->thenInvalid('The soft_limit must be at least 1')
-                                ->end()
+                    ->children()
+                        ->integerNode('soft_limit')
+                            ->defaultValue(1)
+                            ->validate()
+                                ->ifTrue(function ($value) {
+                                    return $value <= 0;
+                                })
+                                ->thenInvalid('The soft_limit must be at least 1')
                             ->end()
-                            ->integerNode('hard_limit')
-                                ->defaultValue(1)
-                                ->validate()
-                                    ->ifTrue(function ($value) {
-                                        return $value <= 0;
-                                    })
-                                    ->thenInvalid('The hard_limit must be at least 1')
-                                ->end()
+                        ->end()
+                        ->integerNode('hard_limit')
+                            ->defaultValue(1)
+                            ->validate()
+                                ->ifTrue(function ($value) {
+                                    return $value <= 0;
+                                })
+                                ->thenInvalid('The hard_limit must be at least 1')
                             ->end()
+                        ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('rules')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode('allow_future_times')
+                            ->defaultTrue()
                         ->end()
                     ->end()
                 ->end()
@@ -180,6 +187,7 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('date_type')->defaultValue('yyyy-MM-dd')->end()                // for DateType
                     ->scalarNode('date_picker')->defaultValue('YYYY-MM-DD')->end()              // for DateType JS component
                     ->scalarNode('date')->defaultValue('Y-m-d')->end()                          // for display via twig
+                    ->scalarNode('date_time')->defaultValue('m-d H:i')->end()                   // for display via twig
                     ->scalarNode('duration')->defaultValue('%%h:%%m h')->end()                  // for display via twig
                 ->end()
             ->end()

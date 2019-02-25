@@ -11,16 +11,20 @@ namespace App;
 
 use App\DependencyInjection\AppExtension;
 use App\DependencyInjection\Compiler\DoctrineCompilerPass;
+use App\DependencyInjection\Compiler\ExportServiceCompilerPass;
 use App\DependencyInjection\Compiler\InvoiceServiceCompilerPass;
 use App\DependencyInjection\Compiler\TwigContextCompilerPass;
+use App\Export\RendererInterface as ExportRendererInterface;
 use App\Invoice\CalculatorInterface as InvoiceCalculator;
 use App\Invoice\NumberGeneratorInterface;
-use App\Invoice\RendererInterface;
+use App\Invoice\RendererInterface as InvoiceRendererInterface;
 use App\Timesheet\CalculatorInterface as TimesheetCalculator;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
 
@@ -30,6 +34,7 @@ class Kernel extends BaseKernel
 
     public const CONFIG_EXTS = '.{php,xml,yaml,yml}';
 
+    public const TAG_EXPORT_RENDERER = 'export.renderer';
     public const TAG_INVOICE_RENDERER = 'invoice.renderer';
     public const TAG_INVOICE_NUMBER_GENERATOR = 'invoice.number_generator';
     public const TAG_INVOICE_CALCULATOR = 'invoice.calculator';
@@ -47,7 +52,8 @@ class Kernel extends BaseKernel
     protected function build(ContainerBuilder $container)
     {
         $container->registerForAutoconfiguration(TimesheetCalculator::class)->addTag('timesheet.calculator');
-        $container->registerForAutoconfiguration(RendererInterface::class)->addTag(self::TAG_INVOICE_RENDERER);
+        $container->registerForAutoconfiguration(ExportRendererInterface::class)->addTag(self::TAG_EXPORT_RENDERER);
+        $container->registerForAutoconfiguration(InvoiceRendererInterface::class)->addTag(self::TAG_INVOICE_RENDERER);
         $container->registerForAutoconfiguration(NumberGeneratorInterface::class)->addTag(self::TAG_INVOICE_NUMBER_GENERATOR);
         $container->registerForAutoconfiguration(InvoiceCalculator::class)->addTag(self::TAG_INVOICE_CALCULATOR);
     }
@@ -59,6 +65,30 @@ class Kernel extends BaseKernel
             if (isset($envs['all']) || isset($envs[$this->environment])) {
                 yield new $class();
             }
+        }
+
+        $pluginsDir = $this->getProjectDir() . '/var/plugins';
+        if (!file_exists($pluginsDir)) {
+            return;
+        }
+
+        $finder = new Finder();
+        $finder->ignoreUnreadableDirs()->directories()->name('*Bundle');
+        /** @var SplFileInfo $bundleDir */
+        foreach ($finder->in($pluginsDir) as $bundleDir) {
+            $bundleName = $bundleDir->getRelativePathname();
+
+            $bundleFilename = $bundleDir->getRealPath() . '/' . $bundleName . '.php';
+            if (!file_exists($bundleFilename)) {
+                continue;
+            }
+
+            $pluginClass = 'KimaiPlugin\\' . $bundleName . '\\' . $bundleName;
+            if (!class_exists($pluginClass)) {
+                continue;
+            }
+
+            yield new $pluginClass;
         }
     }
 
@@ -80,6 +110,7 @@ class Kernel extends BaseKernel
         $container->addCompilerPass(new DoctrineCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new TwigContextCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new InvoiceServiceCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
+        $container->addCompilerPass(new ExportServiceCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
     }
 
     protected function configureRoutes(RouteCollectionBuilder $routes)
@@ -101,6 +132,10 @@ class Kernel extends BaseKernel
 
         // load application routes
         $routes->import($confDir . '/routes' . self::CONFIG_EXTS, '/', 'glob');
+
+        // load plugin routes
+        $pluginsDir = $this->getProjectDir() . '/var/plugins';
+        $routes->import($pluginsDir . '/*Bundle/Resources/config/routes'. self::CONFIG_EXTS, '/', 'glob');
     }
 
     protected function configureFosUserRoutes(RouteCollectionBuilder $routes)

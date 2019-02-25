@@ -31,7 +31,10 @@ class TimesheetControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->assertAccessIsGranted($client, '/team/timesheet/');
-        $this->assertHasDataTable($client);
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        // there are no records by default in the test database
+        $this->assertHasNoEntriesWithFilter($client);
 
         $result = $client->getCrawler()->filter('div.breadcrumb div.box-tools div.btn-group a.btn');
         $this->assertEquals(4, count($result));
@@ -47,9 +50,10 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $this->getUserByRole($em, User::ROLE_USER);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setUser($user);
         $fixture->setStartDate(new \DateTime('-10 days'));
         $this->importFixture($em, $fixture);
 
@@ -61,7 +65,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form.navbar-form')->form();
         $client->submit($form, [
             'state' => 1,
-            'user' => 1,
+            'user' => $user->getId(),
             'pageSize' => 25,
             'daterange' => $dateRange,
             'customer' => null,
@@ -69,8 +73,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasDataTable($client);
-
-        // TODO more assertions
+        $this->assertDataTableRowCount($client, 'datatable_timesheet_admin', 10);
     }
 
     public function testExportAction()

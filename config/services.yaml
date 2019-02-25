@@ -79,6 +79,12 @@ services:
             - { name: doctrine.event_listener, event: prePersist, lazy: true }
             - { name: doctrine.event_listener, event: preUpdate, lazy: true }
 
+    # make sure, that sqlite supports foreign keys and cascade deletes
+    App\Doctrine\SqliteSessionInitSubscriber:
+        class: App\Doctrine\SqliteSessionInitSubscriber
+        tags:
+            - { name: doctrine.event_listener, event: postConnect }
+
     # ================================================================================
     # FORMS
     # ================================================================================
@@ -106,6 +112,10 @@ services:
     App\Form\Extension\SelectWithApiDataExtension:
         tags:
             - { name: form.type_extension, extended_type: Symfony\Bridge\Doctrine\Form\Type\EntityType }
+
+    App\Validator\Constraints\TimesheetValidator:
+        arguments:
+            $ruleset: "%kimai.timesheet.rules%"
 
     # ================================================================================
     # THEME

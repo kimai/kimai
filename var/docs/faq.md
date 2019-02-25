@@ -2,10 +2,22 @@
 
 ## I have a problem
 
-Please open a new issue at [GitHub](https://github.com/kevinpapst/kimai2/issues/).
-Add the last entries from your logfile at `var/log/prod.log`.
+Please check your logfile at `var/log/prod.log`. Many problems reveal themselves after checking it.
 
-## I have only FTP available ...
+If that doesn't help, open a new issue at [GitHub](https://github.com/kevinpapst/kimai2/issues/) and we try to find a solution.
+
+## Changed configs/templates do not load
+
+Kimai is built on top of Symfony, a framework that optimizes its speed by caching most files.
+Therefor, if you are running Kimai in `production`, you have to clear the cache before changes will show up:
+
+```bash
+bin/console cache:clear
+``` 
+
+See also the [configurations docs](configurations.md).
+
+## I have only FTP available
 
 So you want to install Kimai v2 but have no SSH access to your server? 
 There is a workaround available, read the additional [installation instructions](installation.md). 
@@ -26,22 +38,10 @@ used by executing `mysql --version` or by checking the server information e.g. w
 
 There is a [discussion in the issue tracker](https://github.com/kevinpapst/kimai2/issues/191) about this topic.
 
-There are two solution for this: 
-
-- Update your MariaDB server to at least 10.2.7
-- Switch to SQLite (that can be changed in your `.env` file)
-
 Further readings:
 
 - [MariaDB - JSON support was added with 10.2.7](https://mariadb.com/kb/en/library/json-data-type/)
 - [Using JSON fields with Doctrine ORM on PostgreSQL & MySQL](https://symfony.fi/entry/using-json-fields-with-doctrine-orm-on-postgresql-mysql)
-
-## Why is SQLite not recommended for production usage
-
-SQLite is a great database engine for testing, but when it comes to production usage it fails due to several reasons:
-
-- It does not support ALTER TABLE commands and makes update procedures very clunky and problematic/errorsome (we still try to support updates, but they are heavy on large databases)
-- It does not support FOREIGN KEY constraints out of the box, which can lead to critical bugs when deleting activities/projects/customers 
 
 ## Dotenv::populate() must be an instance of Symfony\\Component\\Dotenv\\void
 

@@ -1,0 +1,169 @@
+<html>
+<head>
+    <style>
+        body {font-family: sans-serif;
+            font-size: 10pt;
+        }
+        p {	margin: 0pt; }
+        table.items {
+            border: 0.1mm solid #000000;
+        }
+        td { vertical-align: top; }
+        .items td {
+            border-left: 0.1mm solid #000000;
+            border-right: 0.1mm solid #000000;
+        }
+        .items tr.even {
+            background-color: #e0ebff;
+        }
+        .items tr.summary {
+            background-color: #efefef;
+        }
+        .items tr.summary td {
+            font-weight: bold;
+            border-top: 0.1mm solid #000000;
+            border-bottom: 0.1mm solid #000000;
+        }
+        table thead td {
+            background-color: #ececec;
+            text-align: center;
+            border: 0.1mm solid #000000;
+            font-variant: small-caps;
+        }
+        .items td.totals {
+            font-weight: bold;
+            text-align: right;
+            border: 0.1mm solid #000000;
+        }
+        .items td.duration,
+        .items td.cost {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<!--mpdf
+<htmlpagefooter name="myfooter">
+<table style="border-top: 1px solid #000000; font-size: 9pt; padding-top: 3mm; width: 100%">
+<tr>
+    <td align="left">
+    {{ 'export.page_of'|trans({'%page%': '{PAGENO}', '%pages%': '{nb}'}) }}
+    </td>
+    <td align="right">
+    {{ 'export.date_copyright'|trans({'%date%': now|date_short ~ ' ' ~ now|date('H:i'), '%kimai%': '<a href="' ~ constant('App\\Constants::HOMEPAGE') ~ '">' ~ constant('App\\Constants::SOFTWARE') ~ '</a>'})|raw }}
+    </td>
+</tr>
+</table>
+</htmlpagefooter>
+<sethtmlpagefooter name="myfooter" value="on" />
+mpdf-->
+<h2 style="margin-bottom: 0; padding-bottom: 0">{{ 'export.document_title'|trans }}</h2>
+<p>
+    {{ 'export.period'|trans }}:
+    {{ query.begin|date_short }} - {{ query.end|date_short }}
+</p>
+<h3>{{ 'export.summary'|trans }}</h3>
+<table class="items" width="100%" style="font-size: 9pt; border-collapse: collapse; " cellpadding="8">
+    <thead>
+    <tr>
+        <td>{{ 'label.customer'|trans }}</td>
+        <td>{{ 'label.project'|trans }}</td>
+        <td>{{ 'label.duration'|trans }}</td>
+        <td>{{ 'label.rate'|trans }}</td>
+    </tr>
+    </thead>
+    <tbody>
+    {% set customer = null %}
+    {% set customerDuration = 0 %}
+    {% set customerRate = 0 %}
+    {% set customerCurrency = null %}
+    {% set customerCount = 0 %}
+    {% for summary in summaries %}
+        {% if customer is same as(null) %}
+            {% set customer = summary.customer %}
+            {% set customerCurrency = summary.currency %}
+        {% endif %}
+        {% if customer is not same as(summary.customer) %}
+                <tr class="summary">
+                    <td colspan="2"></td>
+                    <td class="totals duration">{{ customerDuration|duration }}</td>
+                    <td class="totals cost">{{ customerRate|money(customerCurrency) }}</td>
+                </tr>
+            {% set customerCurrency = summary.currency %}
+            {% set customer = summary.customer %}
+            {% set customerDuration = 0 %}
+            {% set customerRate = 0 %}
+            {% set customerCount = 0 %}
+        {% endif %}
+        <tr class="{{ cycle(['odd', 'even'], customerCount) }}">
+            <td>{{ summary.customer }}</td>
+            <td>{{ summary.project }}</td>
+            <td class="duration">{{ summary.duration|duration }}</td>
+            <td class="cost">{{ summary.rate|money(summary.currency) }}</td>
+        </tr>
+        {% set customerDuration = customerDuration + summary.duration %}
+        {% set customerRate = customerRate + summary.rate %}
+        {% set customerCount = customerCount + 1 %}
+    {% endfor %}
+    {% if customer is not same as(null) %}
+    <tr class="summary">
+        <td colspan="2"></td>
+        <td class="totals duration">{{ customerDuration|duration }}</td>
+        <td class="totals cost">{{ customerRate|money(customerCurrency) }}</td>
+    </tr>
+    {% endif %}
+    </tbody>
+</table>
+
+<pagebreak>
+
+<h3>{{ 'export.full_list'|trans }}</h3>
+
+{% set duration = 0 %}
+{% set rate = 0 %}
+{% set currency = false %}
+<table class="items" width="100%" style="font-size: 9pt; border-collapse: collapse; " cellpadding="8">
+    <thead>
+    <tr>
+        <td>{{ 'label.date'|trans }}</td>
+        <td width="">{{ 'label.description'|trans }}</td>
+        <td>{{ 'label.duration'|trans }}</td>
+        <td>{{ 'label.rate'|trans }}</td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for entry in entries %}
+        {% set duration = duration + entry.duration %}
+        {% set rate = rate + entry.rate %}
+        {% if currency is same as(false) %}
+            {% set currency = entry.project.customer.currency %}
+        {% endif %}
+        {% if currency is not same as(entry.project.customer.currency) %}
+            {% set currency = null %}
+        {% endif %}
+        <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
+            <td>
+                {{ entry.begin|date_time }}
+                <br>
+                {{ entry.end|date_time }}
+            </td>
+            <td>
+                {{ entry.project.customer.name }} - {{ entry.project.name }} - {{ entry.activity.name }}
+                {% if entry.description is not empty %}
+                    <br>
+                    <i>{{ entry.description|desc2html }}</i>
+                {% endif %}
+            </td>
+            <td class="duration">{{ entry.duration|duration }}</td>
+            <td class="cost">{{ entry.rate|money(entry.project.customer.currency) }}</td>
+        </tr>
+    {% endfor %}
+    <tr class="summary">
+        <td colspan="2"></td>
+        <td class="totals duration">{{ duration|duration }}</td>
+        <td class="totals cost">{{ rate|money(currency) }}</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # Kimai 2 - Time-tracking made easy
 
-Kimai - the open source time-tracker application with a mobile-first approach (read more at the [official website](http://v2.kimai.org)).
+Kimai - the open source time-tracker application with a mobile-first approach (read more at the [official website](https://www.kimai.org)).
 
 [![Latest Stable Version](https://poser.pugx.org/kevinpapst/kimai2/v/stable)](https://packagist.org/packages/kevinpapst/kimai2)
 [![License](https://poser.pugx.org/kevinpapst/kimai2/license)](https://packagist.org/packages/kevinpapst/kimai2)
@@ -23,60 +23,58 @@ Kimai is a [multi-language application](var/docs/translations.md) and already tr
 ### Requirements
 
 - PHP 7.1.3 or higher (test your system compatibility with the [requirements-checker](http://symfony.com/doc/current/reference/requirements.html))
-- The PHP extensions [intl](https://php.net/manual/en/book.intl.php), [zip](https://php.net/manual/en/book.zip.php) and [PDO](https://php.net/manual/en/book.pdo.php) with either [pdo_sqlite](https://php.net/manual/en/ref.pdo-sqlite.php) or [pdo_mysql](https://php.net/manual/en/ref.pdo-mysql.php) enabled
+- The PHP extensions [xml](http://php.net/manual/en/book.xml.php), [mbstring](http://php.net/manual/en/book.mbstring.php), [gd](http://php.net/manual/en/book.image.php), [intl](https://php.net/manual/en/book.intl.php), [zip](https://php.net/manual/en/book.zip.php) and [PDO](https://php.net/manual/en/book.pdo.php) with either [pdo_sqlite](https://php.net/manual/en/ref.pdo-sqlite.php) or [pdo_mysql](https://php.net/manual/en/ref.pdo-mysql.php) enabled
+- Kimai needs its own sub-domain or you need to [recompile the frontend assets](var/docs/developers.md) for usage in a sub-directory
 - If you use MariaDB, make sure its at least v10.2.7 (see [FAQ](var/docs/faq.md))
-- Kimai needs to be installed in the root directory of a domain or you need to [recompile the frontend assets](var/docs/developers.md)
 - A modern browser, Kimai v2 might be broken on old browsers like IE 10
 
 ## Documentation
 
-Looking for more information about Kimai 2? Check out our detailed [documentation](var/docs/).
+Looking for more information about Kimai 2? Check out our detailed [documentation](https://www.kimai.org/documentation/).
 
 ### Installation
 
-There are multiple ways to install Kimai, all of them described in the [installation docu](var/docs/installation.md):
+There are multiple ways to install Kimai, all of them described in the [installation docu](https://www.kimai.org/documentation/installation.html):
 
-- [Recommended installation with GIT and Composer](var/docs/installation.md#recommended-setup)
-- [Development setup](var/docs/installation.md#development-installation) 
-- [Docker](var/docs/docker.md)
-- [1-click installations](var/docs/installation.md#hosting-and-1-click-installations) 
-- [FTP](var/docs/installation.md#ftp-installation)
+- [Recommended installation with GIT and Composer](https://www.kimai.org/documentation/installation.html#recommended-setup)
+- [Development setup](https://www.kimai.org/documentation/installation.html#development-installation) 
+- [Docker](https://www.kimai.org/documentation/docker.html)
+- [1-click installations](https://www.kimai.org/documentation/installation.html#hosting-and-1-click-installations) 
+- [FTP](https://www.kimai.org/documentation/installation.html#ftp-installation)
 
 ### Updating Kimai
 
 Read the following documentations before you start your upgrade:
 
-- The [update documentation](var/docs/updates.md)
+- The [update documentation](https://www.kimai.org/documentation/updates.html)
 - The version specific [UPGRADING guide](UPGRADING.md)
 - The [release information](https://github.com/kevinpapst/kimai2/releases)
 
 ## Roadmap and releases
 
-You can see our development roadmap in the [Milestones](https://github.com/kevinpapst/kimai2/milestones) sections.
+You can see a rough development roadmap in the [Milestones](https://github.com/kevinpapst/kimai2/milestones) sections.
 It is open for changes and input from the community, your [ideas and questions](https://github.com/kevinpapst/kimai2/issues) are welcome!
 
 > Kimai 2 uses a rolling release concept for delivering updates.
-> You can upgrade Kimai at any time, you don't need to wait for the next official release.
+> You can upgrade Kimai at any time, you don't need to wait for the next official release. Read the [upgrade docs](UPGRADING.md) first!
 
-Release versions will be created on a regular base and you can use these tags if you are familiar with Git, 
-but we will not provide support for any specific version.
-Every code change, whether it's a new feature or a bug fix, will be done on the master branch and 
-intensively tested before merging. We have to do it this way, as we develop Kimai in our free time and want to put our 
+Release versions will be created on a regular base (approx. 1 per month) and you can use these tags if you are familiar with Git, 
+but we cannot provide support for any specific version (especially older ones).
+Every code change, whether it's a new feature or a bug fix, will be done on the master branch. 
+I have to do it this way, as I develop Kimai in my free time and want to put most
 effort into the software instead of backporting changes for old versions. 
 
-## Extensions for Kimai 2
+## Plugins for Kimai 2
 
-As Kimai 2 was built on top of Symfony, it can be extended like every other Symfony application.
-We call these extensions bundles, but you might also know them as add-ons, extensions or plugins.
+Kimai 2 was built on top of the Symfony framework and can be extended in various ways:
 
-All available Kimai 2 bundles can be found at the [Kimai recipes](https://github.com/kimai/recipes) repository.
+- Users looking for existing plugins go to our [plugin marketplace](https://www.kimai.org/store/) 
+- Developer start with the [developer documentation](https://www.kimai.org/documentation/developers.html)
 
-## Developer
+## Credits
 
-Kimai 2 is developed with modern frameworks like [Symfony v4](https://github.com/symfony/symfony), [Doctrine](https://github.com/doctrine/),
-[AdminLTE](https://github.com/kevinpapst/AdminLTEBundle/) and [many](composer.json) [more](package.json).
-
-If you want to start developing for Kimai 2, please read the following documentation:
-
-- an example on how to extend Kimai 2 can be found in this [GitHub repository](https://github.com/kevinpapst/kimai2-invoice)
-- the [developer documentation](var/docs/developers.md) is available both on GitHub and your local installation
+Kimai 2 is developed with modern frameworks like 
+[Symfony v4](https://github.com/symfony/symfony), 
+[Doctrine](https://github.com/doctrine/),
+[AdminLTEBundle](https://github.com/kevinpapst/AdminLTEBundle/) (based on [AdminLTE theme](https://github.com/almasaeed2010/AdminLTE)) and 
+[many](composer.json) [more](package.json).

@@ -1,6 +1,6 @@
 {
     "beberlei/doctrineextensions": {
-        "version": "v1.0.20"
+        "version": "v1.2.0"
     },
     "composer/semver": {
         "version": "1.4.2"
@@ -164,8 +164,14 @@
     "markbaker/complex": {
         "version": "1.4.6"
     },
+    "markbaker/matrix": {
+        "version": "1.1.4"
+    },
     "monolog/monolog": {
         "version": "1.23.0"
+    },
+    "mpdf/mpdf": {
+        "version": "v7.1.8"
     },
     "myclabs/deep-copy": {
         "version": "1.7.0"
@@ -310,6 +316,9 @@
             "version": "4.0",
             "ref": "aaddfdf43cdecd4cf91f992052d76c2cadc04543"
         }
+    },
+    "setasign/fpdi": {
+        "version": "1.6.2"
     },
     "squizlabs/php_codesniffer": {
         "version": "3.2.2"

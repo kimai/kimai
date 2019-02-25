@@ -4,7 +4,7 @@ The recommended way to install Kimai v2 is via SSH, you need GIT and [Composer](
 
 But there are further installation methods described: 
 - [Development setup](#development-installation) 
-- [Docker](var/docs/docker.md)
+- [Docker](#docker)
 - [1-click installations](#hosting-and-1-click-installations) 
 - [FTP](#ftp-installation) (not supported)
 - Hints for [local single-user setup](#installation-on-a-personal-computer) 
@@ -17,7 +17,7 @@ You need to install Git and [Composer](https://getcomposer.org/doc/00-intro.md) 
 First clone this repo:
 
 ```bash
-git clone https://github.com/kevinpapst/kimai2.git
+git clone -b 0.8 --depth 1 https://github.com/kevinpapst/kimai2.git
 cd kimai2/
 ```
 
@@ -29,19 +29,19 @@ chmod -R g+rw var/
 cp .env.dist .env
 ```
 
-It's up to you which database server you want to use, Kimai v2 supports MySQL/MariaDB and SQLite, but SQLite is [not recommended](faq.md) for production usage.
-Configure the database connection string in your the `.env` file:
+Configure the database connection string in your the `.env` file (Kimai v2 supports MySQL/MariaDB and SQLite):
 ```
 # adjust all settings in .env to your needs
 APP_ENV=prod
 DATABASE_URL=mysql://user:password@127.0.0.1:3306/database
 ```
+SQLite is not recommended for production usage, check FAQ below. 
 
 Now install all dependencies for Kimai 2:
-
 ```bash
 sudo -u www-data composer install --no-dev --optimize-autoloader
 ```
+If you see a `Malformed patameter "url"` error, see below in the FAQ.
 
 Optionally create the database:
 ```bash
@@ -52,6 +52,7 @@ Create all schema tables:
 ```bash
 bin/console doctrine:schema:create
 ```
+You can safely ignore the message: *This operation should not be executed in a production environment*!
 
 Make sure that upcoming updates can be correctly applied by setting the initial database version:
 ```bash
@@ -74,9 +75,9 @@ For available roles, please refer to the [user documentation](users.md).
 > **NOTE**
 >
 > If you want to use a fully-featured web server (like Nginx or Apache) to run
-> Kimai, configure it to point at the `public/` directory of the project.
+> Kimai, configure it to point its DocumentRoot at the `public/` directory.
 > For more details, see:
-> http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html
+> https://symfony.com/doc/current/setup/web_server_configuration.html
 
 Installation complete: enjoy time-tracking :-)
 
@@ -206,7 +207,34 @@ yarn install
 npm run prod
 ```
 
-## Installation on a personal computer
+## FAQ and common problems
+
+## SQLite not recommended for production usage
+
+SQLite is a great database engine for testing, but when it comes to production usage it is imperfect due to several reasons:
+
+- It does not support ALTER TABLE commands and makes update procedures very clunky and problematic (we still try to support updates, but they are heavy on large databases)
+- It does [not support FOREIGN KEY](https://www.sqlite.org/quirks.html#foreign_key_enforcement_is_off_by_default) constraints [out of the box](https://www.sqlite.org/foreignkeys.html#fk_enable), which can lead to critical bugs when deleting users/activities/projects/customers
+
+Kimai works around the Foreign Keys issue by using a [Doctrine PostConnect EventSubscriber]({{ site.kimai_v2_file }}/src/Doctrine/SqliteSessionInitSubscriber.php) since v0.8.1, 
+but it is not guaranteed that SQLite handles everything as expected.
+
+### Malformed parameter "url"
+
+If you see an error message like this, then you have a special character in your DATABASE_URL. 
+```
+!!  
+!!  In DriverManager.php line 259:
+!!                                
+!!    Malformed parameter "url".  
+!!
+```
+This can be a character like `@` or `/` or some others, which need to be urlencoded. 
+This can easily be done with one command, lets assume your password is `mG0/d1@3aT.Z)s` then you get your password like this:
+```
+$ php -r "echo urlencode('mG0/d1@3aT.Z)s');"
+mG0%2Fd1%403aT.Z%29s
+```
 
 ### Which user to use - no need to use www-data user?!
 

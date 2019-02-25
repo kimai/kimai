@@ -9,7 +9,6 @@
 
 namespace App\Voter;
 
-use App\Entity\Activity;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -26,6 +25,7 @@ class TimesheetVoter extends AbstractVoter
     public const EXPORT = 'export';
     public const VIEW_RATE = 'view_rate';
     public const EDIT_RATE = 'edit_rate';
+    public const EDIT_EXPORT = 'edit_export';
 
     /**
      * support rules based on the given $subject (here: Timesheet)
@@ -38,6 +38,7 @@ class TimesheetVoter extends AbstractVoter
         self::EXPORT,
         self::VIEW_RATE,
         self::EDIT_RATE,
+        self::EDIT_EXPORT,
     ];
 
     /**
@@ -47,7 +48,7 @@ class TimesheetVoter extends AbstractVoter
      */
     protected function supports($attribute, $subject)
     {
-        if (!$subject instanceof Timesheet) {
+        if (!($subject instanceof Timesheet)) {
             return false;
         }
 
@@ -60,7 +61,7 @@ class TimesheetVoter extends AbstractVoter
 
     /**
      * @param string $attribute
-     * @param Timesheet|Activity $subject
+     * @param Timesheet $subject
      * @param TokenInterface $token
      * @return bool
      */
@@ -69,10 +70,6 @@ class TimesheetVoter extends AbstractVoter
         $user = $token->getUser();
 
         if (!($user instanceof User)) {
-            return false;
-        }
-
-        if (!($subject instanceof Timesheet)) {
             return false;
         }
 
@@ -92,6 +89,7 @@ class TimesheetVoter extends AbstractVoter
             case self::EDIT:
             case self::DELETE:
             case self::EXPORT:
+            case self::EDIT_EXPORT:
                 $permission .= $attribute;
                 break;
 
@@ -121,8 +119,17 @@ class TimesheetVoter extends AbstractVoter
      */
     protected function canStart(Timesheet $timesheet, User $user, TokenInterface $token)
     {
-        // we could check the amount of active entries
-        // if a teamlead starts an entry for another user, check that this user is part of his team
+        // possible improvements for the future:
+        // we could check the amount of active entries (maybe slow)
+        // if a teamlead starts an entry for another user, check that this user is part of his team (needs to be done for teams)
+
+        if (null === $timesheet->getActivity()) {
+            return false;
+        }
+
+        if (null === $timesheet->getProject()) {
+            return false;
+        }
 
         if (!$timesheet->getActivity()->getVisible() || !$timesheet->getProject()->getVisible()) {
             return false;

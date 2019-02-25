@@ -15,6 +15,7 @@ use App\Utils\LocaleSettings;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Intl\Util\IntlTestHelper;
 use Twig\TwigFilter;
 
 /**
@@ -111,11 +112,16 @@ class ExtensionsTest extends TestCase
         }
     }
 
+    public function testMoneyNull()
+    {
+        $sut = $this->getSut($this->localeEn, 'en');
+        $this->assertEquals('123.75', $sut->money(123.75));
+
+        $sut = $this->getSut($this->localeEn, 'de');
+        $this->assertEquals('123.234,755', $sut->money(123234.7554));
+    }
+
     /**
-     * @param string $result
-     * @param int $amount
-     * @param string $currency
-     * @param string $locale
      * @dataProvider getMoneyData
      */
     public function testMoney($result, $amount, $currency, $locale)
@@ -127,19 +133,36 @@ class ExtensionsTest extends TestCase
     public function getMoneyData()
     {
         return [
-            ['0 €', null, 'EUR', 'de'],
-            ['2.345 €', 2345, 'EUR', 'de'],
-            ['2,345 €', 2345, 'EUR', 'en'],
-            ['2,345.01 €', 2345.009, 'EUR', 'en'],
-            ['2.345,01 €', 2345.009, 'EUR', 'de'],
-            ['13.75 $', 13.75, 'USD', 'en'],
-            ['13,75 $', 13.75, 'USD', 'de'],
-            ['13,75 RUB', 13.75, 'RUB', 'de'],
-            ['13,5 RUB', 13.50, 'RUB', 'de'],
-            ['13,75 ₽', 13.75, 'RUB', 'ru'],
-            ['14 ¥', 13.75, 'JPY', 'de'],
-            ['13 933 ¥', 13933.49, 'JPY', 'ru'],
-            ['1.234.567,89 $', 1234567.891234567890000, 'USD', 'de'],
+            ['0,00 €', null, 'EUR', 'de'],
+            ['2.345,00 €', 2345, 'EUR', 'de'],
+            ['€2,345.00', 2345, 'EUR', 'en'],
+            ['€2,345.01', 2345.009, 'EUR', 'en'],
+            ['2.345,01 €', 2345.009, 'EUR', 'de'],
+            ['$13.75', 13.75, 'USD', 'en'],
+            ['13,75 $', 13.75, 'USD', 'de'],
+            ['13,75 RUB', 13.75, 'RUB', 'de'],
+            ['14 ¥', 13.75, 'JPY', 'de'],
+            ['13 933 ¥', 13933.49, 'JPY', 'ru'],
+            ['1.234.567,89 $', 1234567.891234567890000, 'USD', 'de'],
+        ];
+    }
+
+    /**
+     * @dataProvider getMoneyData62_1
+     */
+    public function testMoney62_1($result, $amount, $currency, $locale)
+    {
+        IntlTestHelper::requireFullIntl($this, '62.1');
+
+        $sut = $this->getSut($this->localeEn, $locale);
+        $this->assertEquals($result, $sut->money($amount, $currency));
+    }
+
+    public function getMoneyData62_1()
+    {
+        return [
+            ['RUB 13.50', 13.50, 'RUB', 'en'],
+            ['13,75 ₽', 13.75, 'RUB', 'ru'],
         ];
     }
 
@@ -197,7 +220,7 @@ class ExtensionsTest extends TestCase
         foreach ($icons as $icon) {
             $result = $sut->icon($icon);
             $this->assertNotEmpty($result, 'Problem with icon definition: ' . $icon);
-            $this->assertInternalType('string', $result);
+            $this->assertIsString($result);
         }
 
         // test fallback will be returned

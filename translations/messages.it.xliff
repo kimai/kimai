@@ -359,21 +359,9 @@
                 <source>profile.preferences</source>
                 <target>Preferenze</target>
             </trans-unit>
-            <trans-unit id="label.theme.fixed_layout">
-                <source>label.theme.fixed_layout</source>
-                <target>Attiva il layout fisso. Non é possibile usare il layout fisso e boxato allo stesso tempo.</target>
-            </trans-unit>
-            <trans-unit id="label.theme.boxed_layout">
-                <source>label.theme.boxed_layout</source>
-                <target>Attiva il layout boxato (consigliato su schermi grandi)</target>
-            </trans-unit>
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
                 <target>Auto collassa la sidebar di sinistra</target>
-            </trans-unit>
-            <trans-unit id="label.theme.mini_sidebar">
-                <source>label.theme.mini_sidebar</source>
-                <target>Nascondi sidebar di sinistra. Usa il bottone sull'header</target>
             </trans-unit>
 
             <!--
@@ -631,10 +619,6 @@
                 <source>invoice.subtitle</source>
                 <target>Crea fattura dalle registrazioni.</target>
             </trans-unit>
-            <trans-unit id="invoice.select_filter">
-                <source>invoice.select_filter</source>
-                <target>Prima di creare una fattura, devi selezionare almeno un cliente.</target>
-            </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
                 <target>Stampa</target>
@@ -683,12 +667,12 @@
                 <source>invoice.service_date</source>
                 <target>Data di servizio</target>
             </trans-unit>
-            <trans-unit id="invoice.amount">
-                <source>invoice.amount</source>
+            <trans-unit id="label.amount">
+                <source>label.amount</source>
                 <target>Quantità</target>
             </trans-unit>
-            <trans-unit id="invoice.total_rate">
-                <source>invoice.total_rate</source>
+            <trans-unit id="label.total_rate">
+                <source>label.total_rate</source>
                 <target>Prezzo totale</target>
             </trans-unit>
             <trans-unit id="label.payment_terms">

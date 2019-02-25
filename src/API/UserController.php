@@ -49,7 +49,10 @@ class UserController extends BaseApiController
      * @SWG\Response(
      *      response=200,
      *      description="Returns the collection of all registered users",
-     *      @SWG\Schema(ref="#/definitions/UserCollection"),
+     *      @SWG\Schema(
+     *          type="array",
+     *          @SWG\Items(ref="#/definitions/UserEntity")
+     *      )
      * )
      *
      * @Security("is_granted('view_user')")

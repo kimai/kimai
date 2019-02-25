@@ -1,4 +1,4 @@
 unreleased=true
-future-release=0.7
+future-release=0.8.1
 exclude-labels=duplicate,question,invalid,wontfix,release
 enhancement_labels=>enhancement,Enhancement,feature request

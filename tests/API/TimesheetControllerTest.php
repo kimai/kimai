@@ -14,6 +14,7 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @coversDefaultClass \App\API\TimesheetController
@@ -33,6 +34,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setAmount(10)
             ->setUser($this->getUserByRole($em, User::ROLE_USER))
             ->setStartDate(new \DateTime('-10 days'))
+            ->setAllowEmptyDescriptions(false)
         ;
         $this->importFixture($em, $fixture);
     }
@@ -48,9 +50,83 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/timesheets');
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(10, count($result));
+        $this->assertDefaultStructure($result[0], false);
+    }
+
+    public function testGetCollectionForOtherUser()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setFixedRate(true)
+            ->setHourlyRate(true)
+            ->setAmount(7)
+            ->setUser($this->getUserByRole($em, User::ROLE_ADMIN))
+            ->setStartDate(new \DateTime('-10 days'))
+        ;
+        $this->importFixture($em, $fixture);
+
+        $query = ['user' => 2];
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(10, count($result));
+        $this->assertDefaultStructure($result[0], false);
+    }
+
+    public function testGetCollectionForAllUser()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setFixedRate(true)
+            ->setHourlyRate(true)
+            ->setAmount(7)
+            ->setUser($this->getUserByRole($em, User::ROLE_ADMIN))
+            ->setStartDate(new \DateTime('-10 days'))
+        ;
+        $this->importFixture($em, $fixture);
+
+        $query = ['user' => 'all'];
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(17, count($result));
+        $this->assertDefaultStructure($result[0], false);
+    }
+
+    public function testGetCollectionForEmptyResult()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $this->assertAccessIsGranted($client, '/api/timesheets');
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertEmpty($result);
+    }
+
+    public function testGetCollectionWithQuery()
+    {
+        $query = ['customer' => 1, 'project' => 1, 'activity' => 1, 'page' => 2, 'size' => 5, 'order' => 'DESC', 'orderBy' => 'rate'];
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(5, count($result));
         $this->assertDefaultStructure($result[0], false);
     }
 
@@ -60,7 +136,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/timesheets/1');
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertDefaultStructure($result);
     }
 
@@ -80,7 +156,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertDefaultStructure($result);
         $this->assertNotEmpty($result['id']);
         $this->assertEquals(28800, $result['duration']);
@@ -143,38 +219,91 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertApiCallValidationError($client->getResponse(), ['activity']);
     }
 
-    public function testPostActionWithIdIsNotAllowed()
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $data = [
-            'id' => 1,
-            'activity' => 1,
-            'project' => 1,
-            'begin' => (new \DateTime('- 8 hours'))->format('Y-m-d H:m'),
-            'end' => (new \DateTime())->format('Y-m-d H:m'),
-            'description' => 'foo',
-            'fixedRate' => 2016,
-            'hourlyRate' => 127
-        ];
-        $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
-        $this->assertFalse($client->getResponse()->isSuccessful());
-        $this->assertEquals(400, $client->getResponse()->getStatusCode());
-    }
-
     public function testNotFound()
     {
         $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/20');
     }
 
+    public function testPatchAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $data = [
+            'activity' => 1,
+            'project' => 1,
+            'begin' => (new \DateTime('- 7 hours'))->format('Y-m-d H:m'),
+            'end' => (new \DateTime())->format('Y-m-d H:m'),
+            'description' => 'foo',
+            'exported' => true,
+        ];
+        $this->request($client, '/api/timesheets/1', 'PATCH', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertDefaultStructure($result);
+        $this->assertNotEmpty($result['id']);
+        $this->assertEquals(25200, $result['duration']);
+        $this->assertEquals(1, $result['exported']);
+    }
+
+    public function testPatchActionWithInvalidUser()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setFixedRate(true)
+            ->setHourlyRate(true)
+            ->setAmount(10)
+            ->setUser($this->getUserByRole($em, User::ROLE_TEAMLEAD))
+            ->setStartDate(new \DateTime('-10 days'))
+            ->setAllowEmptyDescriptions(false)
+        ;
+        $this->importFixture($em, $fixture);
+
+        $data = [
+            'activity' => 1,
+            'project' => 1,
+            'begin' => (new \DateTime('- 7 hours'))->format('Y-m-d H:m'),
+            'end' => (new \DateTime())->format('Y-m-d H:m'),
+            'description' => 'foo',
+            'exported' => true,
+        ];
+        $this->request($client, '/api/timesheets/15', 'PATCH', [], json_encode($data));
+        $response = $client->getResponse();
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        $json = json_decode($response->getContent(), true);
+        $this->assertEquals('User cannot update timesheet', $json['message']);
+    }
+
+    public function testInvalidPatchAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $data = [
+            'activity' => 10,
+            'project' => 1,
+            'begin' => (new \DateTime())->format('Y-m-d H:m'),
+            'end' => (new \DateTime('- 7 hours'))->format('Y-m-d H:m'),
+            'description' => 'foo',
+        ];
+        $this->request($client, '/api/timesheets/1', 'PATCH', [], json_encode($data));
+
+        $response = $client->getResponse();
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['end', 'activity']);
+    }
+
     protected function assertDefaultStructure(array $result, $full = true)
     {
         $expectedKeys = [
-            'id', 'begin', 'end', 'duration', 'rate', 'activity', 'project', 'user'
+            'id', 'begin', 'end', 'duration', 'description', 'rate', 'activity', 'project', 'user'
         ];
 
         if ($full) {
             $expectedKeys = array_merge($expectedKeys, [
-                'description', 'fixed_rate', 'hourly_rate'
+                'exported', 'fixed_rate', 'hourly_rate'
             ]);
         }
 

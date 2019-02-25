@@ -1,7 +1,7 @@
 {% extends '@AdminLTE/layout/default-layout-avanzu.html.twig' %}
 
 {% block avanzu_page_content_before %}
-    <div class="pad no-print">
+    <div class="toolbar-pad no-print">
         {% block main_before %}{% endblock %}
     </div>
 {% endblock %}
@@ -42,17 +42,24 @@
 
 {% block avanzu_navbar_messages %}
     {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-        {% if is_granted('ROLE_USER') %}
+        {% if is_granted('view_own_timesheet') %}
             <li class="visible-xs-inline-block">
                 <a href="{{ path('timesheet') }}" class="ddt-large">
                     <i class="{{ 'timesheet'|icon }} fa-2x"></i>
                 </a>
             </li>
         {% endif %}
-        {% if is_granted('ROLE_TEAMLEAD') %}
+        {% if is_granted('view_invoice') %}
             <li class="visible-xs-inline-block">
                 <a href="{{ path('invoice') }}" class="ddt-large">
                     <i class="{{ 'invoice'|icon }} fa-2x"></i>
+                </a>
+            </li>
+        {% endif %}
+        {% if is_granted('view_export') %}
+            <li class="visible-xs-inline-block">
+                <a href="{{ path('export') }}" class="ddt-large">
+                    <i class="{{ 'export'|icon }} fa-2x"></i>
                 </a>
             </li>
         {% endif %}
@@ -82,12 +89,14 @@
 {% block stylesheets %}
     {# we do not call parent() as we use a custom built for the frontend assets and don't want the default <stylesheet> #}
     <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+    {{ render(controller('App\\Controller\\EventController::trigger', {'request':app.request, 'event':constant('App\\Event\\ThemeEvent::STYLESHEET')})) }}
 {% endblock %}
 
 {% block head %}
     {{ parent() }}
     <script src="{{ asset('build/app.js') }}"></script>
     {% include 'partials/head.html.twig' %}
+    {{ render(controller('App\\Controller\\EventController::trigger', {'request':app.request, 'event':constant('App\\Event\\ThemeEvent::HTML_HEAD')})) }}
 {% endblock %}
 
 {% block javascripts %}
@@ -112,4 +121,5 @@
             {# $.kimai.pauseRecord('li.messages-menu ul.menu li'); #}
         });
     </script>
+    {{ render(controller('App\\Controller\\EventController::trigger', {'request':app.request, 'event':constant('App\\Event\\ThemeEvent::JAVASCRIPT')})) }}
 {% endblock %}

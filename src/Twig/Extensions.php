@@ -41,6 +41,10 @@ class Extensions extends \Twig_Extension
      * @var NumberFormatter
      */
     protected $numberFormatter;
+    /**
+     * @var NumberFormatter
+     */
+    protected $moneyFormatter;
 
     /**
      * @var RequestStack
@@ -86,6 +90,13 @@ class Extensions extends \Twig_Extension
         'user' => 'fas fa-user',
         'visibility' => 'far fa-eye',
         'settings' => 'fas fa-wrench',
+        'export' => 'fas fa-file-export',
+        'pdf' => 'fas fa-file-pdf',
+        'csv' => 'fas fa-table',
+        'ods' => 'fas fa-table',
+        'xlsx' => 'fas fa-file-excel',
+        'on' => 'fas fa-toggle-on',
+        'off' => 'fas fa-toggle-off',
     ];
 
     /**
@@ -248,17 +259,14 @@ class Extensions extends \Twig_Extension
         if ($this->locale !== $locale) {
             $this->locale = $locale;
             $this->numberFormatter = new NumberFormatter($locale, NumberFormatter::DECIMAL);
+            $this->moneyFormatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
         }
-
-        $fractionDigits = Intl::getCurrencyBundle()->getFractionDigits($currency);
-        $amount = round($amount, $fractionDigits);
-        $result = $this->numberFormatter->format($amount);
 
         if (null !== $currency) {
-            $result .= ' ' . Intl::getCurrencyBundle()->getCurrencySymbol($currency, $locale);
+            return $this->moneyFormatter->formatCurrency($amount, $currency);
         }
 
-        return $result;
+        return $this->numberFormatter->format($amount);
     }
 
     /**
