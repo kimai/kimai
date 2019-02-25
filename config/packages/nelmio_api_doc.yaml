@@ -13,6 +13,8 @@ nelmio_api_doc:
             - { alias: TimesheetCollection,     type: App\Entity\Timesheet,         groups: [Default, Collection, Timesheet] }
             - { alias: UserEntity,              type: App\Entity\User,              groups: [Default, Entity, User] }
             - { alias: UserCollection,          type: App\Entity\User,              groups: [Default, Collection, User] }
+            - { alias: TagEntity,               type: App\Entity\Tag,               groups: [Default, Entity] }
+            - { alias: TagCollection,           type: App\Entity\Tag,               groups: [Default, Collection] }
     areas:
         path_patterns:
             - ^/api(?!/doc)
