@@ -57,6 +57,11 @@ class TimesheetEditForm extends AbstractType
     private $durationOnly = false;
 
     /**
+     * @var bool
+     */
+    private $useTags = false;
+
+    /**
      * @var UrlGeneratorInterface
      */
     private $router;
@@ -67,14 +72,16 @@ class TimesheetEditForm extends AbstractType
      * @param bool $durationOnly
      * @param TagArrayToStringTransformer $transformer
      * @param UrlGeneratorInterface $router
+     * @param bool $useTags
      */
-    public function __construct(CustomerRepository $customer, ProjectRepository $project, bool $durationOnly, TagArrayToStringTransformer $transformer, UrlGeneratorInterface $router)
+    public function __construct(CustomerRepository $customer, ProjectRepository $project, bool $durationOnly, TagArrayToStringTransformer $transformer, UrlGeneratorInterface $router, bool $useTags)
     {
         $this->customers = $customer;
         $this->projects = $project;
         $this->transformer = $transformer;
         $this->durationOnly = $durationOnly;
         $this->router = $router;
+        $this->useTags = $useTags;
     }
 
     /**
@@ -255,12 +262,6 @@ class TimesheetEditForm extends AbstractType
                         'data-autocomplete-url' => $this->router->generate('tag_names'),
                         'class' => 'js-autocomplete',
                     ]
-                    // TODO Überarbeiten für die API
-
-                    //'attr'          => [
-                    //              'data-related-select' => $this->getBlockPrefix() . '_activity',
-                    //              'data-api-url'        => ['get_activities', ['project' => '-s-']],
-                    //],
                 ]);
 
             $builder->get('tags')
@@ -298,7 +299,7 @@ class TimesheetEditForm extends AbstractType
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'timesheet_edit',
             'duration_only' => $this->durationOnly,
-            'use_tags' => false,
+            'use_tags' => $this->useTags,
             'include_user' => false,
             'include_rate' => true,
             'docu_chapter' => 'timesheet',
