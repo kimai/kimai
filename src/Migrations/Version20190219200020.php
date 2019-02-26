@@ -29,9 +29,9 @@ final class Version20190219200020 extends AbstractMigration
 
         $userPrefs = $this->getTableName('user_preferences');
 
-        $this->addSql('DELETE FROM ' . $userPrefs. ' WHERE name = "theme.fixed_layout"');
-        $this->addSql('DELETE FROM ' . $userPrefs. ' WHERE name = "theme.boxed_layout"');
-        $this->addSql('DELETE FROM ' . $userPrefs. ' WHERE name = "theme.mini_sidebar"');
+        $this->addSql('DELETE FROM ' . $userPrefs . ' WHERE name = "theme.fixed_layout"');
+        $this->addSql('DELETE FROM ' . $userPrefs . ' WHERE name = "theme.boxed_layout"');
+        $this->addSql('DELETE FROM ' . $userPrefs . ' WHERE name = "theme.mini_sidebar"');
     }
 
     public function down(Schema $schema): void

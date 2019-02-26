@@ -73,6 +73,7 @@ class ThemeEvent extends Event
     public function addContent(string $content)
     {
         $this->content .= $content;
+
         return $this;
     }
 }

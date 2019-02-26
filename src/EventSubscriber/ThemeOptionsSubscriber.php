@@ -66,7 +66,6 @@ class ThemeOptionsSubscriber implements EventSubscriberInterface
 
         $skin = '';
         foreach ($user->getPreferences() as $ref) {
-
             $name = $ref->getName();
             switch ($name) {
                 case UserPreference::SKIN:
