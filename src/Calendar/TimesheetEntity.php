@@ -257,6 +257,7 @@ class TimesheetEntity
     public function setTags(?string $tags)
     {
         $this->tags = $tags;
+
         return $this;
     }
 

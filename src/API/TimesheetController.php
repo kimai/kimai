@@ -128,7 +128,7 @@ class TimesheetController extends BaseApiController
             $query->setPageSize($size);
         }
 
-        if ($this->useTags === TRUE && null !== ($tags = $paramFetcher->get('tags'))) {
+        if ($this->useTags === true && null !== ($tags = $paramFetcher->get('tags'))) {
             $query->setTags($tags);
             $this->prepareTagList($query);
         }

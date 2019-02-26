@@ -15,14 +15,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Custom form field type to enter tags or use one of autocompleted field
- *
- * @package App\Form\Type
  */
 class TagsInputType extends AbstractType
 {
-
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -34,7 +31,6 @@ class TagsInputType extends AbstractType
         ]);
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -42,6 +38,4 @@ class TagsInputType extends AbstractType
     {
         return TextType::class;
     }
-
-
 }

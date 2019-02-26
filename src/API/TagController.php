@@ -69,7 +69,7 @@ class TagController extends BaseApiController
     {
         $data = $this->repository->findAllTagNames();
         if (null === $data) {
-            $data = array();
+            $data = [];
         }
         $view = new View($data, 200);
         $view->getContext()->setGroups(['Default', 'Collection']);

@@ -9,7 +9,6 @@
 
 namespace App\Controller;
 
-
 use App\Repository\TagRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;

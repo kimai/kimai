@@ -19,95 +19,98 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="tags")
  * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
  */
-class Tag {
+class Tag
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
 
-  /**
-   * @var int
-   *
-   * @ORM\Column(name="id", type="integer")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="IDENTITY")
-   */
-  private $id;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tag_name", type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=2, max=255)
+     */
+    private $tagName;
 
-  /**
-   * @var string
-   *
-   * @ORM\Column(name="tag_name", type="string", length=255, nullable=false)
-   * @Assert\NotBlank()
-   * @Assert\Length(min=2, max=255)
-   */
-  private $tagName;
+    /**
+     * @var \App\Entity\Timesheet[]
+     *
+     * @ORM\ManyToMany(targetEntity="Timesheet", mappedBy="tags")
+     */
+    protected $timesheets;
 
-  /**
-   * @var \App\Entity\Timesheet[]
-   *
-   * @ORM\ManyToMany(targetEntity="Timesheet", mappedBy="tags")
-   */
-  protected $timesheets;
-
-  /**
-   * Default constructor, initializes collections
-   */
-  public function __construct()
-  {
-    $this->timesheets = new ArrayCollection();
-  }
-
-  /**
-   * @return int
-   */
-  public function getId() {
-    return $this->id;
-  }
-
-  /**
-   * @param string $tagName
-   *
-   * @return Tag
-   */
-  public function setName($tagName) {
-    $this->tagName = $tagName;
-
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getTagName() {
-    return $this->tagName;
-  }
-
-  /**
-   * @param Timesheet $timesheet
-   */
-  public function addTimesheet(Timesheet $timesheet)
-  {
-    if ($this->timesheets->contains($timesheet)) {
-      return;
+    /**
+     * Default constructor, initializes collections
+     */
+    public function __construct()
+    {
+        $this->timesheets = new ArrayCollection();
     }
-    $this->timesheets->add($timesheet);
-    $timesheet->addTag($this);
-  }
 
-  /**
-   * @param Timesheet $timesheet
-   */
-  public function removeTimesheet(Timesheet $timesheet)
-  {
-    if (!$this->timesheets->contains($timesheet)) {
-      return;
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
     }
-    $this->timesheets->removeElement($timesheet);
-    $timesheet->removeTag($this);
-  }
 
-  /**
-   * @return string
-   */
-  public function __toString() {
-    return $this->getTagName();
-  }
+    /**
+     * @param string $tagName
+     *
+     * @return Tag
+     */
+    public function setName($tagName)
+    {
+        $this->tagName = $tagName;
 
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTagName()
+    {
+        return $this->tagName;
+    }
+
+    /**
+     * @param Timesheet $timesheet
+     */
+    public function addTimesheet(Timesheet $timesheet)
+    {
+        if ($this->timesheets->contains($timesheet)) {
+            return;
+        }
+        $this->timesheets->add($timesheet);
+        $timesheet->addTag($this);
+    }
+
+    /**
+     * @param Timesheet $timesheet
+     */
+    public function removeTimesheet(Timesheet $timesheet)
+    {
+        if (!$this->timesheets->contains($timesheet)) {
+            return;
+        }
+        $this->timesheets->removeElement($timesheet);
+        $timesheet->removeTag($this);
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getTagName();
+    }
 }

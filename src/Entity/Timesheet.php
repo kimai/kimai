@@ -449,6 +449,7 @@ class Timesheet
         if (sizeof($arrayElement) == 0) {
             return null;
         }
+
         return implode(', ', $arrayElement);
     }
 

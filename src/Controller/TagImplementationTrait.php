@@ -16,7 +16,6 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 
 trait TagImplementationTrait
 {
-
     /**
      * @var bool
      */
@@ -50,7 +49,7 @@ trait TagImplementationTrait
      */
     protected function prepareTagList(TimesheetQuery $query)
     {
-        if ($query->hasTags() === TRUE) {
+        if ($query->hasTags() === true) {
             $query->setAffectedTimesheetIdArray(
                 $this->getDoctrine()->getRepository(Timesheet::class)->findIdsByTagIds(
                     $this->getDoctrine()->getRepository(Tag::class)->findIdsByTagNameList($query->getTags())

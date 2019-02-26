@@ -242,7 +242,7 @@ class TimesheetQuery extends ActivityQuery
      */
     public function hasTags()
     {
-        return NULL !== $this->tags && '' !== $this->tags;
+        return null !== $this->tags && '' !== $this->tags;
     }
 
     /**
@@ -258,7 +258,7 @@ class TimesheetQuery extends ActivityQuery
      * Set timesheet ids in query as list
      * @param array $timesheetIdList
      */
-    public function setAffectedTimesheetIdArray($timesheetIdList = array())
+    public function setAffectedTimesheetIdArray($timesheetIdList = [])
     {
         $this->affectedTimesheetIdList = $timesheetIdList;
     }

@@ -22,8 +22,8 @@ use App\Form\Type\YesNoType;
 use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
-use Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer;
 use App\Timesheet\UserDateTimeFactory;
+use Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -263,7 +263,7 @@ class TimesheetEditForm extends AbstractType
                         'type' => 'text',
                         'description' => 'Tags for timesheet entry',
                     ],
-                    'required' => FALSE,
+                    'required' => false,
                     'attr' => [
                         'data-autocomplete-url' => $this->router->generate('tag_names'),
                         'class' => 'js-autocomplete',
@@ -271,8 +271,8 @@ class TimesheetEditForm extends AbstractType
                 ]);
 
             $builder->get('tags')
-                ->addModelTransformer(new CollectionToArrayTransformer(), TRUE)
-                ->addModelTransformer($this->transformer, TRUE);
+                ->addModelTransformer(new CollectionToArrayTransformer(), true)
+                ->addModelTransformer($this->transformer, true);
         }
 
         if ($options['include_rate']) {

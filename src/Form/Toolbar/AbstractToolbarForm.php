@@ -222,7 +222,7 @@ abstract class AbstractToolbarForm extends AbstractType
     protected function addTagInputField(FormBuilderInterface $builder)
     {
         $builder->add('tags', TagsInputType::class, [
-            'required' => FALSE
+            'required' => false
         ]);
     }
 }

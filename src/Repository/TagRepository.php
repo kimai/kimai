@@ -11,12 +11,9 @@ namespace App\Repository;
 
 /**
  * Class TagRepository
- *
- * @package App\Repository
  */
 class TagRepository extends AbstractRepository
 {
-
     /**
      * Find ids of the given list of tagNames
      * @param $tagNameList
@@ -44,14 +41,14 @@ class TagRepository extends AbstractRepository
      * @param string $filter Filter for tags
      * @return array
      */
-    public function findAllTagNamesAlphabetical($filter = NULL)
+    public function findAllTagNamesAlphabetical($filter = null)
     {
         $qb = $this->createQueryBuilder('t');
 
         $qb
             ->select('t.tagName')
             ->addOrderBy('t.tagName', 'ASC');
-        if ($qb != NULL) {
+        if ($qb != null) {
             $qb
                 ->andWhere('t.tagName LIKE :filter')
                 ->setParameter('filter', '%' . $filter . '%');
@@ -71,5 +68,4 @@ class TagRepository extends AbstractRepository
 
         return $qb->getQuery()->getResult();
     }
-
 }
