@@ -88,7 +88,7 @@ class Kernel extends BaseKernel
                 continue;
             }
 
-            yield new $pluginClass;
+            yield new $pluginClass();
         }
     }
 
@@ -135,7 +135,7 @@ class Kernel extends BaseKernel
 
         // load plugin routes
         $pluginsDir = $this->getProjectDir() . '/var/plugins';
-        $routes->import($pluginsDir . '/*Bundle/Resources/config/routes'. self::CONFIG_EXTS, '/', 'glob');
+        $routes->import($pluginsDir . '/*Bundle/Resources/config/routes' . self::CONFIG_EXTS, '/', 'glob');
     }
 
     protected function configureFosUserRoutes(RouteCollectionBuilder $routes)
