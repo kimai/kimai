@@ -30,12 +30,12 @@
 {% block page_actions %}
     {% set actions = {'filter': '#collapseTimesheet'} %}
     {% if is_granted('export_own_timesheet') %}
-        {% set actions = actions|merge({'download': 'onclick:return exportTimesheet()'}) %}
+        {% set actions = actions|merge({'download': {'onclick': 'return exportTimesheet()'}}) %}
     {% endif %}
     {% set actions = actions|merge({'visibility': '#modal_timesheet'}) %}
     {% set actions = actions|merge({'calendar': path('calendar')}) %}
     {% if is_granted('create_own_timesheet') %}
-        {% set actions = actions|merge({'create': path('timesheet_create')}) %}
+        {% set actions = actions|merge({'create': {'url': path('timesheet_create'), 'class': 'modal-ajax-form'}}) %}
     {% endif %}
     {{ widgets.page_actions(actions) }}
 {% endblock %}
@@ -119,7 +119,7 @@
                 <td>
                     {% set actionButtons = {} %}
                     {% if is_granted('edit', entry) %}
-                        {% set actionButtons = actionButtons|merge({'edit': path('timesheet_edit', {'id' : entry.id, 'page': page})}) %}
+                        {% set actionButtons = actionButtons|merge({'edit': {'url': path('timesheet_edit', {'id': entry.id, 'page': page}), 'class': 'modal-ajax-form'}}) %}
                     {% endif %}
 
                     {% if entry.end %}

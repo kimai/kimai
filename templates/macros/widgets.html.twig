@@ -3,54 +3,10 @@
 {% endmacro %}
 
 {%- macro page_actions(tools) -%}
+    {% import _self as macro %}
     <div class="breadcrumb">
         <div class="box-tools">
-            <div class="btn-group">
-                {%- for icon,values in tools  %}
-                    {% spaceless %}
-                    {% set id = null %}
-                    {% set onclick = null %}
-                    {% set modal = null %}
-                    {% set toggle = null %}
-                    {% set url = null %}
-
-                    {% if not values is iterable %}
-                        {% set url = values %}
-                        {% if 'onclick:' in url %}
-                            {% set onclick = url|replace({'onclick:': ''}) %}
-                            {% set url = '#' %}
-                        {% endif %}
-                        {% if '#collapse' in url %}
-                            {% set toggle = 'collapse' %}
-                        {% endif %}
-                        {% if '#modal' in url %}
-                            {% set modal = url %}
-                            {% set url = '#' %}
-                        {% endif %}
-                    {% else %}
-                        {% set url = values.url ?? '#' %}
-                        {% set onclick = values.onclick ?? null %}
-                        {% set modal = values.modal ?? null %}
-                        {% set toggle = values.toggle ?? null %}
-                        {% set id = values.id ?? null %}
-                    {% endif %}
-                    {% endspaceless %}
-                    <a class="btn btn-default" href="{{ url }}"
-                        {%- if id is not empty -%}
-                            id="{{ id }}"
-                        {%- endif -%}
-                        {%- if toggle is not empty -%}
-                            data-toggle="{{ toggle }}"
-                        {%- endif -%}
-                        {%- if modal is not empty -%}
-                            data-toggle="modal" data-target="{{ modal }}"
-                        {%- endif -%}
-                        {%- if onclick is not empty -%}
-                            onclick="{{ onclick }}"
-                        {%- endif -%}
-                    ><i class="{{ icon|icon(icon) }}"></i></a>
-                {% endfor -%}
-            </div>
+            {{ macro.button_group(tools) }}
         </div>
     </div>
 {%- endmacro -%}
@@ -190,14 +146,57 @@
 {% macro button_group(actions) %}
     {% import _self as macro %}
     <div class="btn-group">
-        {% for icon, url in actions %}
-            {{ macro.button_action(icon, url) }}
-        {% endfor %}
+        {%- for icon,values in actions  %}
+            {% spaceless %}
+                {% set id = null %}
+                {% set onclick = null %}
+                {% set modal = null %}
+                {% set toggle = null %}
+                {% set url = null %}
+                {% set class = "btn btn-default btn-" ~ icon ~ " " %}
+
+                {% if not values is iterable %}
+                    {% set url = values %}
+                    {% if 'onclick:' in url %}
+                        {% set onclick = url|replace({'onclick:': ''}) %}
+                        {% set url = '#' %}
+                    {% endif %}
+                    {% if '#collapse' in url %}
+                        {% set toggle = 'collapse' %}
+                    {% endif %}
+                    {% if '#modal' in url %}
+                        {% set modal = url %}
+                        {% set url = '#' %}
+                    {% endif %}
+                {% else %}
+                    {% set url = values.url ?? '#' %}
+                    {% set onclick = values.onclick ?? null %}
+                    {% set modal = values.modal ?? null %}
+                    {% set toggle = values.toggle ?? null %}
+                    {% set id = values.id ?? null %}
+                    {% set class = class ~ ( values.class | default("")) %}
+                {% endif %}
+            {% endspaceless %}
+            <a class="{{ class | trim }}" href="{{ url }}"
+                    {%- if id is not empty -%}
+                        id="{{ id }}"
+                    {%- endif -%}
+                    {%- if toggle is not empty -%}
+                        data-toggle="{{ toggle }}"
+                    {%- endif -%}
+                    {%- if modal is not empty -%}
+                        data-toggle="modal" data-target="{{ modal }}"
+                    {%- endif -%}
+                    {%- if onclick is not empty -%}
+                        onclick="{{ onclick }}"
+                    {%- endif -%}
+            >{{ macro.icon(icon) }}</a>
+        {% endfor -%}
     </div>
 {% endmacro %}
 
 {% macro button_action(icon, url) %}
     <a href="{{ url }}" class="btn btn-default btn-{{ icon }}">
-        <i class="{{ icon|icon(icon) }}"></i>
+        {{ macro.icon(icon) }}
     </a>
 {% endmacro %}
