@@ -9,6 +9,7 @@
 
 namespace App\Tests\Controller;
 
+use App\Constants;
 use App\Entity\User;
 
 /**
@@ -33,7 +34,7 @@ class SidebarControllerTest extends ControllerBaseTest
         $this->assertContains('<a href="/en/profile/' . $user->getUsername() . '">', $content);
         $this->assertContains('<a href="/en/profile/' . $user->getUsername() . '/edit">', $content);
         $this->assertContains('<a href="/en/profile/' . $user->getUsername() . '/prefs">', $content);
-        $this->assertContains('<a href="/en/help/">', $content);
+        $this->assertContains('<a href="' . Constants::HOMEPAGE . '/documentation/" target="_blank">', $content);
         $this->assertContains('<a href="/en/logout">', $content);
     }
 }
