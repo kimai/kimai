@@ -120,11 +120,7 @@ $(function() {
         {
             var $form = $('.toolbar form');
             var loading = '<div class="overlay"><i class="fas fa-sync fa-spin"></i></div>';
-            if ($('section.content div.box.data_table').length > 0) {
-                $('section.content div.box.data_table').append(loading);
-            } else {
-                $('section.content div.callout.lead').append(loading);
-            }
+            $('section.content').append(loading);
             $.ajax({
                 url: $form.attr('action'),
                 type: $form.attr('method'),

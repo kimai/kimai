@@ -7,14 +7,39 @@
 
 /* Loading indicator: overwritten from AdminLTE for positioning and supporting fas classes */
 .box .overlay > .fas,
+section.content .overlay > .fas,
 .overlay-wrapper .overlay > .fas {
     position: absolute;
-    top: 50px;
-    left: 50%;
+    top: 50vh;
+    left: 50vw;
     margin-left: -15px;
     margin-top: -15px;
     color: #000;
     font-size: 30px;
+}
+
+.box > .overlay,
+.overlay-wrapper > .overlay,
+section.content > .overlay,
+.box > .loading-img,
+.overlay-wrapper > .loading-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.box .overlay,
+section.content .overlay,
+.overlay-wrapper .overlay {
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 3px;
+}
+.box .overlay.dark,
+section.content .overlay.dark,
+.overlay-wrapper .overlay.dark {
+    background: rgba(0, 0, 0, 0.5);
 }
 
 /*

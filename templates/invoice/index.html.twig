@@ -59,7 +59,7 @@
                 {% set rate = entry.user.preferenceValue('hourly_rate') %}
             {% endif %}
             <tr>
-                <td>{{ entry.begin|date_short }}</td>
+                <td class="text-nowrap">{{ entry.begin|date_short }}</td>
                 <td class="hidden-xs hidden-sm">{{ widgets.label_user(entry.user) }}</td>
                 <td class="hidden-xs hidden-sm timesheet-description">
                     {% if entry.description is not empty %}
@@ -69,8 +69,8 @@
                     {% endif %}
                 </td>
                 <td class="text-center">{{ rate|money(model.calculator.currency) }}</td>
-                <td class="text-center">{{ duration }}</td>
-                <td class="text-right">{{ entry.rate|money(model.calculator.currency) }}</td>
+                <td class="text-center text-nowrap">{{ duration }}</td>
+                <td class="text-right text-nowrap">{{ entry.rate|money(model.calculator.currency) }}</td>
             </tr>
         {% endfor %}
         {{ tables.data_table_footer(entries) }}
