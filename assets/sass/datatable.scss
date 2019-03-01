@@ -5,6 +5,18 @@
  * file that was distributed with this source code.
  */
 
+/* Loading indicator: overwritten from AdminLTE for positioning and supporting fas classes */
+.box .overlay > .fas,
+.overlay-wrapper .overlay > .fas {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    margin-left: -15px;
+    margin-top: -15px;
+    color: #000;
+    font-size: 30px;
+}
+
 /*
 dataTables.bootstrap.css
 */
