@@ -25,9 +25,6 @@ class TagsInputType extends AbstractType
     {
         $resolver->setDefaults([
             'label' => 'label.tag'
-            // 'class' => Tag::class
-            // 'data_class' => Tag::class,
-            // 'required' => FALSE
         ]);
     }
 

@@ -384,7 +384,7 @@ class TimesheetRepository extends AbstractRepository
 
     /**
      * Find all timesheet ids which use one of tag ids
-     * @param array $tagIdList
+     * @param array $tagIdList List with id of table tags
      * @return array
      */
     public function findIdsByTagIds($tagIdList)
