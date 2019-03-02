@@ -202,8 +202,9 @@
     </a>
 {% endmacro %}
 
-{% macro print_tags_as_list(taglist) %}
+{% macro tag_list(taglist) %}
+    {% import _self as macro %}
     {% for tag in taglist %}
-        {{ tag.tagName }}{% if not loop.last %}, {%  endif %}
+        {{ macro.badge(tag.name , 'green') }}
     {% endfor %}
 {% endmacro %}

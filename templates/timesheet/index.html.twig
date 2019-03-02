@@ -126,7 +126,7 @@
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}">{{ widgets.label_activity(entry.activity) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }} timesheet-description">{{ entry.description|desc2html }}</td>
                 {% if use_tags %}
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'tags') }}">{{ widgets.print_tags_as_list(entry.tags) }}</td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'tags') }}">{{ widgets.tag_list(entry.tags) }}</td>
                 {% endif %}
                 <td>
                     {% set actionButtons = {} %}
