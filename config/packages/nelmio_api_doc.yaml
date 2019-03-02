@@ -8,7 +8,6 @@ nelmio_api_doc:
             - { alias: TimesheetEditForm,       type: App\Form\TimesheetEditForm,               groups: [Default, Entity, Timesheet] }
             - { alias: TimesheetEntity,         type: App\Entity\Timesheet,                     groups: [Default, Entity, Timesheet] }
             - { alias: UserEntity,              type: App\Entity\User,                          groups: [Default, Entity, User] }
-            - { alias: TagEntity,               type: App\Entity\Tag,                           groups: [Default, Entity] }
     areas:
         path_patterns:
             - ^/api(?!/doc)

@@ -67,8 +67,8 @@ class TimesheetController extends BaseApiController
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
         $this->hardLimit = $hardLimit;
-        $this->setTagMode($useTags);
         $this->dateTime = $dateTime;
+        $this->setTagMode($useTags);
     }
 
     /**
@@ -209,6 +209,7 @@ class TimesheetController extends BaseApiController
             'csrf_protection' => false,
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
+            'use_tags' => $this->isTagMode(),
         ]);
 
         $form->submit($request->request->all());
@@ -288,6 +289,7 @@ class TimesheetController extends BaseApiController
             'csrf_protection' => false,
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
+            'use_tags' => $this->isTagMode(),
         ]);
 
         $form->setData($timesheet);

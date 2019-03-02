@@ -14,6 +14,7 @@ namespace App\API;
 use App\Repository\TagRepository;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
+use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -48,22 +49,24 @@ class TagController extends BaseApiController
     /**
      * @SWG\Response(
      *      response=200,
-     *      description="Returns the collection of all existing tags",
+     *      description="Returns the collection of all existing tags as string array",
      *      @SWG\Schema(
      *          type="array",
-     *          @SWG\Items(ref="#/definitions/TagEntity")
+     *          @SWG\Items(type="string")
      *      )
      * )
+     *
+     * @Rest\QueryParam(name="name", requirements="[a-zA-Z0-9 -]+", strict=true, nullable=true, description="Search term to filter tag list")
      *
      * @Security("is_granted('view_tags')")
      *
      * @return Response
-     *
-     * @Rest\Get(path="/tags")
      */
-    public function cgetAction()
+    public function cgetAction(ParamFetcherInterface $paramFetcher)
     {
-        $data = $this->repository->findAllTagNames();
+        $filter = $paramFetcher->get('name');
+
+        $data = $this->repository->findAllTagNamesAlphabetical($filter);
         if (null === $data) {
             $data = [];
         }
