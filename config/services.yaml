@@ -107,7 +107,6 @@ services:
     App\Form\TimesheetEditForm:
         arguments:
             $durationOnly: "%kimai.timesheet.duration_only%"
-            $useTags: "%kimai.timesheet.use_tags%"
 
     App\Form\Extension\SelectWithApiDataExtension:
         tags:

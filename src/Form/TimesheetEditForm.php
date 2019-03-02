@@ -49,11 +49,6 @@ class TimesheetEditForm extends AbstractType
     private $projects;
 
     /**
-     * @var TagArrayToStringTransformer
-     */
-    private $transformer;
-
-    /**
      * @var bool
      */
     private $durationOnly = false;
@@ -64,33 +59,17 @@ class TimesheetEditForm extends AbstractType
     protected $dateTime;
 
     /**
-     * @var bool
-     */
-    private $useTags = false;
-
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $router;
-
-    /**
      * @param CustomerRepository $customer
      * @param ProjectRepository $project
      * @param UserDateTimeFactory $dateTime
      * @param bool $durationOnly
-     * @param TagArrayToStringTransformer $transformer
-     * @param UrlGeneratorInterface $router
-     * @param bool $useTags
      */
-    public function __construct(CustomerRepository $customer, ProjectRepository $project, UserDateTimeFactory $dateTime, bool $durationOnly, TagArrayToStringTransformer $transformer, UrlGeneratorInterface $router, bool $useTags)
+    public function __construct(CustomerRepository $customer, ProjectRepository $project, UserDateTimeFactory $dateTime, bool $durationOnly)
     {
         $this->customers = $customer;
         $this->projects = $project;
-        $this->transformer = $transformer;
         $this->dateTime = $dateTime;
         $this->durationOnly = $durationOnly;
-        $this->router = $router;
-        $this->useTags = $useTags;
     }
 
     /**
@@ -264,15 +243,7 @@ class TimesheetEditForm extends AbstractType
                         'description' => 'Tags for timesheet entry',
                     ],
                     'required' => false,
-                    'attr' => [
-                        'data-autocomplete-url' => $this->router->generate('tag_names'),
-                        'class' => 'js-autocomplete',
-                    ]
                 ]);
-
-            $builder->get('tags')
-                ->addModelTransformer(new CollectionToArrayTransformer(), true)
-                ->addModelTransformer($this->transformer, true);
         }
 
         if ($options['include_rate']) {
@@ -311,7 +282,7 @@ class TimesheetEditForm extends AbstractType
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'timesheet_edit',
             'duration_only' => $this->durationOnly,
-            'use_tags' => $this->useTags,
+            'use_tags' => false,
             'include_user' => false,
             'include_exported' => false,
             'include_rate' => true,
