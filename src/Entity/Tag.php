@@ -14,8 +14,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Tag
- *
  * @ORM\Table(name="tags")
  * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
  */
@@ -33,22 +31,19 @@ class Tag
     /**
      * @var string
      *
-     * @ORM\Column(name="tag_name", type="string", length=255, nullable=false)
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
      * @Assert\NotBlank()
      * @Assert\Length(min=2, max=255)
      */
-    private $tagName;
+    private $name;
 
     /**
-     * @var \App\Entity\Timesheet[]
+     * @var Timesheet[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Timesheet", mappedBy="tags")
      */
     protected $timesheets;
 
-    /**
-     * Default constructor, initializes collections
-     */
     public function __construct()
     {
         $this->timesheets = new ArrayCollection();
@@ -64,12 +59,11 @@ class Tag
 
     /**
      * @param string $tagName
-     *
      * @return Tag
      */
     public function setName($tagName)
     {
-        $this->tagName = $tagName;
+        $this->name = $tagName;
 
         return $this;
     }
@@ -77,9 +71,9 @@ class Tag
     /**
      * @return string
      */
-    public function getTagName()
+    public function getName()
     {
-        return $this->tagName;
+        return $this->name;
     }
 
     /**
@@ -90,6 +84,7 @@ class Tag
         if ($this->timesheets->contains($timesheet)) {
             return;
         }
+
         $this->timesheets->add($timesheet);
         $timesheet->addTag($this);
     }
@@ -102,6 +97,7 @@ class Tag
         if (!$this->timesheets->contains($timesheet)) {
             return;
         }
+
         $this->timesheets->removeElement($timesheet);
         $timesheet->removeTag($this);
     }
@@ -111,6 +107,6 @@ class Tag
      */
     public function __toString()
     {
-        return $this->getTagName();
+        return $this->getName();
     }
 }

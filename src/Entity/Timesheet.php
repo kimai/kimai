@@ -440,17 +440,16 @@ class Timesheet
     }
 
     /**
-     * @return null|string
+     * @return string[]
      */
-    public function getTagsAsString()
+    public function getTagsAsArray()
     {
-        $transformer = new CollectionToArrayTransformer();
-        $arrayElement = $transformer->transform($this->getTags());
-        if (sizeof($arrayElement) == 0) {
-            return null;
-        }
-
-        return implode(', ', $arrayElement);
+        return array_map(
+            function(Tag $element) {
+                return $element->getName();
+            },
+            $this->getTags()->toArray()
+        );
     }
 
     /**
