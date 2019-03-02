@@ -53,13 +53,9 @@ class Version20190226205245 extends AbstractMigration
 
         if ($platform === 'sqlite') {
             $this->addSql('DROP TABLE ' . $timesheetTags);
-            $this->addSql('DROP INDEX IDX_E3284EFEABDD46BE');
-            $this->addSql('DROP INDEX IDX_E3284EFEBAD26311');
             $this->addSql('DROP TABLE ' . $tags);
         } else {
             $this->addSql('DROP TABLE ' . $timesheetTags);
-            $this->addSql('DROP INDEX IDX_E3284EFEABDD46BE');
-            $this->addSql('DROP INDEX IDX_E3284EFEBAD26311');
             $this->addSql('DROP TABLE ' . $tags);
         }
     }

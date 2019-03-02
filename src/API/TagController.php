@@ -36,20 +36,13 @@ class TagController extends BaseApiController
     protected $viewHandler;
 
     /**
-     * @var int
-     */
-    protected $hardLimit;
-
-    /**
      * @param ViewHandlerInterface $viewHandler
      * @param TagRepository $repository
-     * @param int $hardLimit
      */
-    public function __construct(ViewHandlerInterface $viewHandler, TagRepository $repository, int $hardLimit)
+    public function __construct(ViewHandlerInterface $viewHandler, TagRepository $repository)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
-        $this->hardLimit = $hardLimit;
     }
 
     /**

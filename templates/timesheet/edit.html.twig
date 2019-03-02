@@ -14,7 +14,6 @@
 {% endblock %}
 
 {% block javascripts %}
-    {# Block aus dem Base.html.twig aufrufen und ausführen #}
     {{ parent() }}
     <script type="text/javascript">
         $(function () {
@@ -36,15 +35,11 @@
                 })
                 .autocomplete({
                     source: function (request, response) {
-                        // console.log($('.js-autocomplete').attr('data-autocomplete-url'));
                         var lastEntry = extractLast(request.term);
                         $.getJSON($('.js-autocomplete').attr('data-autocomplete-url'), {
                             term: lastEntry
                         }).done(function (data) {
                             response(data);
-                            // response(data.filter(function (d) {
-                            //     return d.match(new RegExp(lastEntry, 'gi'))
-                            // }));
                         });
                     },
                     search: function () {

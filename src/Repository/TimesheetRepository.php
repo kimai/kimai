@@ -387,7 +387,7 @@ class TimesheetRepository extends AbstractRepository
      * @param array $tagIdList List with id of table tags
      * @return array
      */
-    public function findIdsByTagIds($tagIdList)
+    public function findIdsByTagIds(array $tagIdList)
     {
         if (null == $tagIdList) {
             return [];
