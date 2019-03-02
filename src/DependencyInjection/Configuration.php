@@ -11,6 +11,7 @@ namespace App\DependencyInjection;
 
 use App\Model\DashboardSection;
 use App\Model\Widget;
+use App\Timesheet\Rounding\RoundingInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -80,6 +81,21 @@ class Configuration implements ConfigurationInterface
                             ->end()
                             ->integerNode('duration')
                                 ->defaultValue(0)
+                            ->end()
+                            ->scalarNode('mode')
+                                ->defaultValue('default')
+                                ->validate()
+                                    ->thenInvalid('Chosen rounding mode is invalid')
+                                    ->ifTrue(function ($value) {
+                                        $class = 'App\\Timesheet\\Rounding\\' . ucfirst($value) . 'Rounding';
+                                        if (class_exists($class)) {
+                                            $rounding = new $class();
+                                            return !($rounding instanceof RoundingInterface);
+                                        }
+                                        return false;
+                                    })
+                                    ->thenInvalid('Chosen rounding mode is invalid')
+                                ->end()
                             ->end()
                         ->end()
                     ->end()

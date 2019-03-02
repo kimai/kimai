@@ -11,6 +11,7 @@ namespace App\Timesheet\Calculator;
 
 use App\Entity\Timesheet;
 use App\Timesheet\CalculatorInterface;
+use App\Timesheet\Rounding\RoundingInterface;
 
 /**
  * Implementation to calculate the durations for a timesheet record.
@@ -66,10 +67,13 @@ class DurationCalculator implements CalculatorInterface
             $days = array_map('strtolower', $rounding['days']);
 
             if (in_array(strtolower($weekday), $days)) {
-                $this->roundBegin($record, $rounding['begin']);
-                $this->roundEnd($record, $rounding['end']);
+                $class = 'App\\Timesheet\\Rounding\\' . ucfirst($rounding['mode']) . 'Rounding';
+                /* @var $rounder RoundingInterface */
+                $rounder = new $class();
+                $rounder->roundBegin($record, $rounding['begin']);
+                $rounder->roundEnd($record, $rounding['end']);
                 $this->applyDuration($record);
-                $this->roundDuration($record, $rounding['duration']);
+                $rounder->roundDuration($record, $rounding['duration']);
             }
         }
     }
