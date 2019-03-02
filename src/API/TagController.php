@@ -49,7 +49,10 @@ class TagController extends BaseApiController
      * @SWG\Response(
      *      response=200,
      *      description="Returns the collection of all existing tags",
-     *      @SWG\Schema(ref="#/definitions/TagCollection")
+     *      @SWG\Schema(
+     *          type="array",
+     *          @SWG\Items(ref="#/definitions/TagEntity")
+     *      )
      * )
      *
      * @Security("is_granted('view_tags')")
