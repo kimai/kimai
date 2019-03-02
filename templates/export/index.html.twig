@@ -8,7 +8,7 @@
 {% block page_actions %}
     {% set actions = {
         'filter': '#collapseExport',
-        'fas fa-toggle-off': {'id':'export-toggle-button'}
+        'off': {'id':'export-toggle-button'}
     } %}
     {{ widgets.page_actions(actions) }}
 {% endblock %}
@@ -26,24 +26,6 @@
     {% if entries is empty %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% else %}
-        {#
-        {% set columns = {'date': ''} %}
-
-        {% if not duration_only %}
-            {% set columns = columns|merge({'starttime': 'hidden-xs', 'endtime': 'hidden-xs'}) %}
-        {% endif %}
-
-        {% set columns = columns|merge({
-            'duration': '',
-            'rate': '',
-            'customer': 'hidden-xs hidden-sm',
-            'project': 'hidden-xs hidden-sm',
-            'activity': 'hidden-xs hidden-sm',
-            'username': 'hidden-xs',
-            'description': 'hidden-xs hidden-sm',
-            'actions': 'alwaysVisible',
-        }) %}
-        #}
         {% set columns = {
             'date': '',
             'user': 'hidden-xs hidden-sm',
