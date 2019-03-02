@@ -11,7 +11,6 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -445,7 +444,7 @@ class Timesheet
     public function getTagsAsArray()
     {
         return array_map(
-            function(Tag $element) {
+            function (Tag $element) {
                 return $element->getName();
             },
             $this->getTags()->toArray()
