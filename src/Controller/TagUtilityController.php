@@ -26,7 +26,6 @@ class TagUtilityController extends AbstractController
     public function getTagNames(TagRepository $tagRepository, Request $request)
     {
         $tags = $tagRepository->findAllTagNamesAlphabetical($request->get('term'));
-//        if ($)
 
         return $this->json($tags, 200);
     }
