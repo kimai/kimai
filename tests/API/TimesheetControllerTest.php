@@ -298,7 +298,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
     protected function assertDefaultStructure(array $result, $full = true)
     {
         $expectedKeys = [
-            'id', 'begin', 'end', 'duration', 'description', 'rate', 'activity', 'project', 'user'
+            'id', 'begin', 'end', 'duration', 'description', 'rate', 'activity', 'project', 'tags', 'user'
         ];
 
         if ($full) {
