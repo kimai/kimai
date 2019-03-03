@@ -1,12 +1,10 @@
-{% extends 'base.html.twig' %}
-{% import "macros/widgets.html.twig" as widgets %}
-{% import "macros/datatables.html.twig" as tables %}
+{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
 
 {% block page_title %}{{ 'admin_activity.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_activity.subtitle'|trans }}{% endblock %}
 
 {% block main %}
-    {{ include('default/_form.html.twig', {
+    {{ include(app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig', {
         'title': activity.name|default('create'|trans),
         'form': form,
         'back': path('admin_activity')
