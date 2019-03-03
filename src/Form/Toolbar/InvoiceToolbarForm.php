@@ -30,9 +30,7 @@ class InvoiceToolbarForm extends AbstractToolbarForm
         $this->addCustomerChoice($builder);
         $this->addProjectChoice($builder);
         $this->addActivityChoice($builder);
-        if ($options['use_tags']) {
-            $this->addTagInputField($builder);
-        }
+        $this->addTagInputField($builder);
     }
 
     protected function addTemplateChoice(FormBuilderInterface $builder)
@@ -51,7 +49,6 @@ class InvoiceToolbarForm extends AbstractToolbarForm
         $resolver->setDefaults([
             'data_class' => InvoiceQuery::class,
             'csrf_protection' => false,
-            'use_tags' => false,
         ]);
     }
 }

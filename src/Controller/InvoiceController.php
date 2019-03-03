@@ -32,7 +32,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class InvoiceController extends AbstractController
 {
-    use TagImplementationTrait;
 
     /**
      * @var ServiceInvoice
@@ -51,14 +50,12 @@ class InvoiceController extends AbstractController
      * @param ServiceInvoice $service
      * @param InvoiceTemplateRepository $invoice
      * @param TimesheetRepository $timesheet
-     * @param bool $useTags
      */
-    public function __construct(ServiceInvoice $service, InvoiceTemplateRepository $invoice, TimesheetRepository $timesheet, bool $useTags)
+    public function __construct(ServiceInvoice $service, InvoiceTemplateRepository $invoice, TimesheetRepository $timesheet)
     {
         $this->service = $service;
         $this->invoiceRepository = $invoice;
         $this->timesheetRepository = $timesheet;
-        $this->setTagMode($useTags);
     }
 
     /**
@@ -180,8 +177,6 @@ class InvoiceController extends AbstractController
         }
         $query->getBegin()->setTime(0, 0, 0);
         $query->getEnd()->setTime(23, 59, 59);
-
-        $this->prepareTagList($query);
 
         $queryBuilder = $this->timesheetRepository->findByQuery($query);
 
@@ -351,7 +346,6 @@ class InvoiceController extends AbstractController
             'attr' => [
                 'id' => 'invoice-print-form'
             ],
-            'use_tags' => $this->isTagMode()
         ]);
     }
 

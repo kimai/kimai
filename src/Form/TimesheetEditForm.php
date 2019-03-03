@@ -231,17 +231,15 @@ class TimesheetEditForm extends AbstractType
                 'required' => false,
             ]);
 
-        if ($options['use_tags']) {
-            $builder
-                ->add('tags', TagsInputType::class, [
-                    // documentation is for NelmioApiDocBundle
-                    'documentation' => [
-                        'type' => 'text',
-                        'description' => 'Tags for timesheet entry',
-                    ],
-                    'required' => false,
-                ]);
-        }
+        $builder
+            ->add('tags', TagsInputType::class, [
+                // documentation is for NelmioApiDocBundle
+                'documentation' => [
+                    'type' => 'text',
+                    'description' => 'Tags for timesheet entry',
+                ],
+                'required' => false,
+            ]);
 
         if ($options['include_rate']) {
             $builder
@@ -279,7 +277,6 @@ class TimesheetEditForm extends AbstractType
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'timesheet_edit',
             'duration_only' => $this->durationOnly,
-            'use_tags' => false,
             'include_user' => false,
             'include_exported' => false,
             'include_rate' => true,

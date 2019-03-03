@@ -30,18 +30,14 @@ class TimesheetController extends AbstractController
 {
     use TimesheetControllerTrait;
 
-    use TagImplementationTrait;
-
     /**
      * @param UserDateTimeFactory $dateTime
      * @param int $hardLimit
-     * @param bool $useTags
      */
-    public function __construct(UserDateTimeFactory $dateTime, int $hardLimit, bool $useTags)
+    public function __construct(UserDateTimeFactory $dateTime, int $hardLimit)
     {
         $this->dateTime = $dateTime;
         $this->setHardLimit($hardLimit);
-        $this->setTagMode($useTags);
     }
 
     /**
@@ -72,8 +68,6 @@ class TimesheetController extends AbstractController
         }
 
         $query->setUser($this->getUser());
-
-        $this->prepareTagList($query);
 
         /* @var $entries Pagerfanta */
         $entries = $this->getRepository()->findByQuery($query);
@@ -268,7 +262,6 @@ class TimesheetController extends AbstractController
         return $this->createForm(TimesheetEditForm::class, $entry, [
             'action' => $this->generateUrl('timesheet_create', ['origin' => $redirectRoute]),
             'include_rate' => $this->isGranted('edit_rate', $entry),
-            'use_tags' => $this->isTagMode(),
         ]);
     }
 
@@ -287,7 +280,6 @@ class TimesheetController extends AbstractController
                 'origin' => $redirectRoute,
             ]),
             'include_rate' => $this->isGranted('edit_rate', $entry),
-            'use_tags' => $this->isTagMode(),
             'include_exported' => $this->isGranted('edit_export', $entry),
         ]);
     }
@@ -303,7 +295,6 @@ class TimesheetController extends AbstractController
                 'page' => $query->getPage(),
             ]),
             'method' => 'GET',
-            'use_tags' => $this->isTagMode(),
         ]);
     }
 }

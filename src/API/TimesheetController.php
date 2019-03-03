@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace App\API;
 
-use App\Controller\TagImplementationTrait;
 use App\Entity\Timesheet;
 use App\Form\TimesheetEditForm;
 use App\Repository\Query\TimesheetQuery;
@@ -33,7 +32,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class TimesheetController extends BaseApiController
 {
-    use TagImplementationTrait;
 
     /**
      * @var TimesheetRepository
@@ -60,15 +58,13 @@ class TimesheetController extends BaseApiController
      * @param TimesheetRepository $repository
      * @param UserDateTimeFactory $dateTime
      * @param int $hardLimit
-     * @param bool $useTags
      */
-    public function __construct(ViewHandlerInterface $viewHandler, TimesheetRepository $repository, UserDateTimeFactory $dateTime, int $hardLimit, bool $useTags)
+    public function __construct(ViewHandlerInterface $viewHandler, TimesheetRepository $repository, UserDateTimeFactory $dateTime, int $hardLimit)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
         $this->hardLimit = $hardLimit;
         $this->dateTime = $dateTime;
-        $this->setTagMode($useTags);
     }
 
     /**
@@ -128,10 +124,12 @@ class TimesheetController extends BaseApiController
             $query->setPageSize($size);
         }
 
+        // FIXME
+        /*
         if ($this->useTags === true && null !== ($tags = $paramFetcher->get('tags'))) {
             $query->setTags($tags);
-            $this->prepareTagList($query);
         }
+        */
 
         if (null !== ($order = $paramFetcher->get('order'))) {
             $query->setOrder($order);
@@ -209,7 +207,6 @@ class TimesheetController extends BaseApiController
             'csrf_protection' => false,
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
-            'use_tags' => $this->isTagMode(),
         ]);
 
         $form->submit($request->request->all());
@@ -289,7 +286,6 @@ class TimesheetController extends BaseApiController
             'csrf_protection' => false,
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
-            'use_tags' => $this->isTagMode(),
         ]);
 
         $form->setData($timesheet);

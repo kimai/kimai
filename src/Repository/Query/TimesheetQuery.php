@@ -55,13 +55,9 @@ class TimesheetQuery extends ActivityQuery
      */
     protected $dateRange;
     /**
-     * @var string
+     * @var iterable
      */
     protected $tags;
-    /**
-     * @var array
-     */
-    protected $affectedTimesheetIdList;
 
     public function __construct()
     {
@@ -218,7 +214,7 @@ class TimesheetQuery extends ActivityQuery
     }
 
     /**
-     * @return string
+     * @return iterable
      */
     public function getTags()
     {
@@ -226,40 +222,21 @@ class TimesheetQuery extends ActivityQuery
     }
 
     /**
-     * @param $string
+     * @param iterable $tags
      * @return $this
      */
-    public function setTags($string)
+    public function setTags(iterable $tags)
     {
-        $this->tags = $string;
+        $this->tags = $tags;
 
         return $this;
     }
 
     /**
-     * Wheather variable was setted
      * @return bool
      */
     public function hasTags()
     {
-        return null !== $this->tags && '' !== $this->tags;
-    }
-
-    /**
-     * Get array with affected timesheet-ids
-     * @return array
-     */
-    public function getAffectedTimesheetIdArray()
-    {
-        return $this->affectedTimesheetIdList;
-    }
-
-    /**
-     * Set timesheet ids in query as list
-     * @param array $timesheetIdList
-     */
-    public function setAffectedTimesheetIdArray($timesheetIdList = [])
-    {
-        $this->affectedTimesheetIdList = $timesheetIdList;
+        return !empty($this->tags) && count($this->tags) > 0;
     }
 }

@@ -80,7 +80,6 @@ The permission-names were chosen to be self-explanatory. In the hope that it wor
 | edit_other_timesheet | TIMESHEET_OTHER  | X  | -  |
 | export_other_timesheet | TIMESHEET  |   | export timesheet in the timesheet admin panel  |
 | delete_other_timesheet | TIMESHEET_OTHER  |   | -  |
-| view_tags | TIMESHEET | X | permission for reading tags |
 | view_rate_own_timesheet | RATE |   | -  |
 | edit_rate_own_timesheet | RATE | X  | -  |
 | view_rate_other_timesheet | RATE_OTHER |   | -  |

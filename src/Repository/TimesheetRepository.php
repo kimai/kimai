@@ -376,30 +376,10 @@ class TimesheetRepository extends AbstractRepository
         }
 
         if ($query->hasTags()) {
-            $qb->andWhere('t.id IN (:timesheet_ids)')
-                ->setParameter('timesheet_ids', $query->getAffectedTimesheetIdArray());
+            $qb->andWhere('tags.id IN (:tags)')
+                ->setParameter('tags', $query->getTags()->toArray());
         }
 
         return $this->getBaseQueryResult($qb, $query);
-    }
-
-    /**
-     * Find all timesheet ids which use one of tag ids
-     * @param array $tagIdList List with id of table tags
-     * @return array
-     */
-    public function findIdsByTagIds(array $tagIdList)
-    {
-        if (null === $tagIdList) {
-            return [];
-        }
-
-        $qb = $this->createQueryBuilder('t');
-        $qb->select('t.id')
-            ->leftJoin('t.tags', 's')
-            ->where('s.id IN (:tags)')
-            ->setParameter('tags', $tagIdList);
-
-        return array_unique(array_column($qb->getQuery()->getScalarResult(), 'id'));
     }
 }

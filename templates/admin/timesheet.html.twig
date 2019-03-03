@@ -40,15 +40,7 @@
             'activity': 'hidden-xs hidden-sm',
             'username': 'hidden-xs',
             'description': 'hidden-xs hidden-sm',
-        }) %}
-
-        {% if use_tags %}
-            {% set columns = columns|merge({
-                'tags': 'hidden-xs hidden-sm',
-            }) %}
-        {% endif %}
-
-        {% set columns = columns|merge({
+            'tags': 'hidden-xs hidden-sm',
             'actions': 'alwaysVisible',
         }) %}
 
@@ -93,9 +85,7 @@
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'username') }}"><a href="{{ path('user_profile'|route_alias, {'username' : entry.user.username}) }}">{{ widgets.label_user(entry.user) }}</a></td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">{{ entry.description|nl2br }}</td>
-                {% if use_tags %}
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'tags') }}">{{ widgets.tag_list(entry.tags) }}</td>
-                {% endif %}
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'tags') }}">{{ widgets.tag_list(entry.tags) }}</td>
                 <td>
                     {% set actionButtons = {} %}
                     {% if is_granted('edit', entry) %}

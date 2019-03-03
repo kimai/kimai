@@ -14,7 +14,6 @@ services:
                             # The best practice is to be explicit about your dependencies anyway.
         bind:
             $projectDirectory: "%kernel.project_dir%"
-            $useTags: "%kimai.timesheet.use_tags%"
             $hardLimit: "%kimai.timesheet.active_entries.hard_limit%"
 
     # makes classes in src/ available to be used as services

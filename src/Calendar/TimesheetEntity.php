@@ -61,9 +61,8 @@ class TimesheetEntity
 
     /**
      * @param Timesheet $entry
-     * @param bool $useTags
      */
-    public function __construct(Timesheet $entry, bool $useTags = false)
+    public function __construct(Timesheet $entry)
     {
         $this->id = $entry->getId();
         $this->start = $entry->getBegin();
@@ -72,11 +71,11 @@ class TimesheetEntity
         $this->customer = $entry->getProject()->getCustomer()->getName();
         $this->project = $entry->getProject()->getName();
         $this->activity = $entry->getActivity()->getName();
-        if (true === $useTags && sizeof($entry->getTags()) > 0) {
+        if (sizeof($entry->getTags()) > 0) {
             $arr = [];
             /** @var Tag $tag */
             foreach ($entry->getTags() as $tag) {
-                array_push($arr, $tag->getTagName());
+                array_push($arr, $tag->getName());
             }
             $this->tags = implode(', ', $arr);
         }

@@ -66,15 +66,7 @@
             'project': 'hidden-xs hidden-sm',
             'activity': 'hidden-xs hidden-sm',
             'description': 'hidden-xs hidden-sm',
-        }) %}
-
-        {% if use_tags %}
-            {% set columns = columns|merge({
-                'tags': 'hidden-xs hidden-sm',
-            }) %}
-        {% endif %}
-
-        {% set columns = columns|merge({
+            'tags': 'hidden-xs hidden-sm',
             'actions': 'alwaysVisible',
         }) %}
 
@@ -125,9 +117,7 @@
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">{{ widgets.label_project(entry.project) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}">{{ widgets.label_activity(entry.activity) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }} timesheet-description">{{ entry.description|desc2html }}</td>
-                {% if use_tags %}
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'tags') }}">{{ widgets.tag_list(entry.tags) }}</td>
-                {% endif %}
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'tags') }}">{{ widgets.tag_list(entry.tags) }}</td>
                 <td>
                     {% set actionButtons = {} %}
                     {% if is_granted('edit', entry) %}

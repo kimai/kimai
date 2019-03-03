@@ -9,63 +9,28 @@
 
 namespace App\Repository;
 
-/**
- * Class TagRepository
- */
 class TagRepository extends AbstractRepository
 {
     /**
-     * Find ids of the given list of tagNames
-     * @param $tagNameList
-     * @return array
-     */
-    public function findIdsByTagNameList($tagNameList)
-    {
-        $qb = $this
-            ->createQueryBuilder('t')
-            ->select('t.id');
-        $list = array_filter(array_unique(array_map('trim', explode(',', $tagNameList))));
-        $cnt = 0;
-        foreach ($list as $listElem) {
-            $qb
-                ->orWhere('t.tagName like :elem' . $cnt)
-                ->setParameter('elem' . $cnt, '%' . $listElem . '%');
-            $cnt++;
-        }
-
-        return array_column($qb->getQuery()->getScalarResult(), 'id');
-    }
-
-    /**
      * Find all tag names in an alphabetical order
-     * @param string $filter Filter for tags
+     *
+     * @param string $filter
      * @return array
      */
-    public function findAllTagNamesAlphabetical($filter = null)
+    public function findAllTagNames($filter = null)
     {
         $qb = $this->createQueryBuilder('t');
 
         $qb
-            ->select('t.tagName')
-            ->addOrderBy('t.tagName', 'ASC');
-        if ($qb != null) {
+            ->select('t.name')
+            ->addOrderBy('t.name', 'ASC');
+
+        if (null !== $filter) {
             $qb
-                ->andWhere('t.tagName LIKE :filter')
+                ->andWhere('t.name LIKE :filter')
                 ->setParameter('filter', '%' . $filter . '%');
         }
 
-        return array_column($qb->getQuery()->getScalarResult(), 'tagName');
-    }
-
-    /**
-     * Find all tag names and sort in alphabetical way
-     * @return mixed
-     */
-    public function findAllTagNames()
-    {
-        $qb = $this->createQueryBuilder('t');
-        $qb->addOrderBy('t.tagName', 'ASC');
-
-        return $qb->getQuery()->getResult();
+        return array_column($qb->getQuery()->getScalarResult(), 'name');
     }
 }

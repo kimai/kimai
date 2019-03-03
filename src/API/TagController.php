@@ -58,15 +58,13 @@ class TagController extends BaseApiController
      *
      * @Rest\QueryParam(name="name", requirements="[a-zA-Z0-9 -]+", strict=true, nullable=true, description="Search term to filter tag list")
      *
-     * @Security("is_granted('view_tags')")
-     *
      * @return Response
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher)
     {
         $filter = $paramFetcher->get('name');
 
-        $data = $this->repository->findAllTagNamesAlphabetical($filter);
+        $data = $this->repository->findAllTagNames($filter);
         if (null === $data) {
             $data = [];
         }
