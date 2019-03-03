@@ -11,6 +11,7 @@ namespace App\Timesheet\Calculator;
 
 use App\Entity\Timesheet;
 use App\Timesheet\CalculatorInterface;
+use App\Timesheet\Rounding\RoundingInterface;
 
 /**
  * Implementation to calculate the durations for a timesheet record.
@@ -66,74 +67,14 @@ class DurationCalculator implements CalculatorInterface
             $days = array_map('strtolower', $rounding['days']);
 
             if (in_array(strtolower($weekday), $days)) {
-                $this->roundBegin($record, $rounding['begin']);
-                $this->roundEnd($record, $rounding['end']);
+                $class = 'App\\Timesheet\\Rounding\\' . ucfirst($rounding['mode']) . 'Rounding';
+                /* @var $rounder RoundingInterface */
+                $rounder = new $class();
+                $rounder->roundBegin($record, $rounding['begin']);
+                $rounder->roundEnd($record, $rounding['end']);
                 $this->applyDuration($record);
-                $this->roundDuration($record, $rounding['duration']);
+                $rounder->roundDuration($record, $rounding['duration']);
             }
         }
-    }
-
-    /**
-     * @param Timesheet $record
-     * @param int $minutes
-     */
-    protected function roundBegin(Timesheet $record, $minutes)
-    {
-        if ($minutes <= 0) {
-            return;
-        }
-
-        $timestamp = $record->getBegin()->getTimestamp();
-        $seconds = $minutes * 60;
-        $diff = $timestamp % $seconds;
-
-        if (0 === $diff) {
-            return;
-        }
-
-        $record->getBegin()->setTimestamp($timestamp - $diff);
-    }
-
-    /**
-     * @param Timesheet $record
-     * @param int $minutes
-     */
-    protected function roundEnd(Timesheet $record, $minutes)
-    {
-        if ($minutes <= 0) {
-            return;
-        }
-
-        $timestamp = $record->getEnd()->getTimestamp();
-        $seconds = $minutes * 60;
-        $diff = $timestamp % $seconds;
-
-        if (0 === $diff) {
-            return;
-        }
-
-        $record->getEnd()->setTimestamp($timestamp - $diff + $seconds);
-    }
-
-    /**
-     * @param Timesheet $record
-     * @param int $minutes
-     */
-    protected function roundDuration(Timesheet $record, $minutes)
-    {
-        if ($minutes <= 0) {
-            return;
-        }
-
-        $timestamp = $record->getDuration();
-        $seconds = $minutes * 60;
-        $diff = $timestamp % $seconds;
-
-        if (0 === $diff) {
-            return;
-        }
-
-        $record->setDuration($timestamp - $diff + $seconds);
     }
 }
