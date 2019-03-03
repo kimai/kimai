@@ -32,7 +32,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class InvoiceController extends AbstractController
 {
-
     /**
      * @var ServiceInvoice
      */

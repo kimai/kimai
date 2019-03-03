@@ -32,7 +32,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class TimesheetController extends BaseApiController
 {
-
     /**
      * @var TimesheetRepository
      */
