@@ -1,11 +1,16 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "macros/datatables.html.twig" as tables %}
-{% import "macros/toolbar.html.twig" as toolbar %}
 
 {% block page_title %}{{ 'calendar.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'calendar.subtitle'|trans }}{% endblock %}
-{% block page_actions %}{{ widgets.page_actions({'list': path('timesheet'), 'create': path('timesheet_create', {'origin': 'calendar'})}) }}{% endblock %}
+
+{% block page_actions %}
+    {% set actions = {'list': path('timesheet')} %}
+    {% if is_granted('create_own_timesheet') %}
+        {% set actions = actions|merge({'create': {'url': path('timesheet_create', {'origin': 'calendar'})}}) %}
+    {% endif %}
+    {{ widgets.page_actions(actions) }}
+{% endblock %}
 
 {% block main %}
     <div class="row">

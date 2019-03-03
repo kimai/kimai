@@ -40,7 +40,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertEquals(4, count($result));
 
         foreach ($result as $item) {
-            $this->assertEquals('btn btn-default', $item->getAttribute('class'));
+            $this->assertContains('btn btn-default', $item->getAttribute('class'));
             $this->assertEquals('i', $item->firstChild->tagName);
         }
     }

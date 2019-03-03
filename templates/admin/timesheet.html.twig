@@ -12,7 +12,7 @@
     {% endif %}
     {% set actions = actions|merge({'visibility': '#modal_timesheet_admin'}) %}
     {% if is_granted('create_other_timesheet') %}
-        {% set actions = actions|merge({'create': path('admin_timesheet_create')}) %}
+        {% set actions = actions|merge({'create': {'url': path('admin_timesheet_create'), 'class': 'modal-ajax-form'}}) %}
     {% endif %}
     {{ widgets.page_actions(actions) }}
 {% endblock %}
@@ -87,7 +87,7 @@
                 <td>
                     {% set actionButtons = {} %}
                     {% if is_granted('edit', entry) %}
-                        {% set actionButtons = {'edit': path('admin_timesheet_edit', {'id' : entry.id, 'page': page})}|merge(actionButtons) %}
+                        {% set actionButtons = actionButtons|merge({'edit': {'url': path('admin_timesheet_edit', {'id': entry.id, 'page': page}), 'class': 'modal-ajax-form'}}) %}
                     {% endif %}
                     {% if not entry.end and is_granted('stop', entry) %}
                         {% set actionButtons = {'stop': path('admin_timesheet_stop', {'id' : entry.id})}|merge(actionButtons) %}

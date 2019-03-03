@@ -1,0 +1,18 @@
+<div class="modal fade" id="{{ block('modal_id') }}" tabindex="-1" role="dialog" aria-labelledby="{{ block('modal_id') }}_label">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            {% if block('modal_before') is defined %}{{ block('modal_before') }}{% endif %}
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'action.close'|trans }}"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="{{ block('modal_id') }}_label">{{ block('modal_title') }}</h4>
+            </div>
+            <div class="modal-body">
+                {{ block('modal_body') }}
+            </div>
+            <div class="modal-footer">
+                {{ block('modal_footer') }}
+            </div>
+            {% if block('modal_end') is defined %}{{ block('modal_end') }}{% endif %}
+        </div>
+    </div>
+</div>
