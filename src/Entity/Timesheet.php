@@ -25,6 +25,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\TimesheetRepository")
  * @ORM\HasLifecycleCallbacks()
  * @App\Validator\Constraints\Timesheet
+ * @App\Validator\Constraints\TimesheetPermission
  */
 class Timesheet
 {

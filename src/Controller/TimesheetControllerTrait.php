@@ -98,15 +98,13 @@ trait TimesheetControllerTrait
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             if ($editForm->has('duration')) {
-                /** @var Timesheet $record */
-                $record = $editForm->getData();
                 $duration = $editForm->get('duration')->getData();
                 $end = null;
                 if ($duration > 0) {
-                    $end = clone $record->getBegin();
+                    $end = clone $entry->getBegin();
                     $end->modify('+ ' . $duration . 'seconds');
                 }
-                $record->setEnd($end);
+                $entry->setEnd($end);
             }
 
             $entityManager = $this->getDoctrine()->getManager();
