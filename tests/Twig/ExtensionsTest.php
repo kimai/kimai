@@ -243,6 +243,5 @@ class ExtensionsTest extends TestCase
             $result = $sut->documentationLink($input);
             $this->assertEquals($expected, $result);
         }
-
     }
 }

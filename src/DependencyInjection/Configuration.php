@@ -90,8 +90,10 @@ class Configuration implements ConfigurationInterface
                                         $class = 'App\\Timesheet\\Rounding\\' . ucfirst($value) . 'Rounding';
                                         if (class_exists($class)) {
                                             $rounding = new $class();
+
                                             return !($rounding instanceof RoundingInterface);
                                         }
+
                                         return false;
                                     })
                                     ->thenInvalid('Chosen rounding mode is invalid')

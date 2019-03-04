@@ -45,6 +45,7 @@ class UserDateTimeFactoryTest extends TestCase
         $token->expects($this->once())->method('getUser')->willReturn($user);
         $tokenStorage = new TokenStorage();
         $tokenStorage->setToken($token);
+
         return new CurrentUser($tokenStorage, $repository);
     }
 

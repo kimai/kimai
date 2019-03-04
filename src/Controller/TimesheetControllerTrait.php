@@ -97,7 +97,6 @@ trait TimesheetControllerTrait
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($entry);
             $entityManager->flush();
