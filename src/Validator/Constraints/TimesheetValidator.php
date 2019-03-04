@@ -23,20 +23,25 @@ class TimesheetValidator extends ConstraintValidator
      * @var AuthorizationCheckerInterface
      */
     protected $auth;
-
     /**
      * @var array
      */
     protected $rules = [];
+    /**
+     * @var bool
+     */
+    protected $durationOnly = false;
 
     /**
      * @param AuthorizationCheckerInterface $auth
      * @param array $ruleset
+     * @param bool $durationOnly
      */
-    public function __construct(AuthorizationCheckerInterface $auth, array $ruleset)
+    public function __construct(AuthorizationCheckerInterface $auth, array $ruleset, bool $durationOnly)
     {
         $this->auth = $auth;
         $this->rules = $ruleset;
+        $this->durationOnly = $durationOnly;
     }
 
     /**
@@ -84,7 +89,7 @@ class TimesheetValidator extends ConstraintValidator
         if ($context->getViolations()->count() == 0 && null === $timesheet->getEnd()) {
             if (!$this->auth->isGranted('start', $timesheet)) {
                 $context->buildViolation('You are not allowed to start this timesheet record.')
-                    ->atPath('end')
+                    ->atPath($this->durationOnly ? 'duration' : 'end')
                     ->setTranslationDomain('validators')
                     ->setCode(TimesheetConstraint::START_DISALLOWED)
                     ->addViolation();

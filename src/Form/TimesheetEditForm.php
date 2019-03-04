@@ -117,8 +117,22 @@ class TimesheetEditForm extends AbstractType
         if ($options['duration_only']) {
             $builder->add('duration', DurationType::class, [
                 'required' => false,
-                'docu_chapter' => 'timesheet.html#duration-format'
+                'docu_chapter' => 'timesheet.html#duration-format',
+                'attr' => [
+                    'placeholder' => '00:00',
+                ]
             ]);
+
+            $builder->addEventListener(
+                FormEvents::POST_SET_DATA,
+                function (FormEvent $event) {
+                    /** @var Timesheet $data */
+                    $data = $event->getData();
+                    if (null === $data->getEnd()) {
+                        $event->getForm()->get('duration')->setData(null);
+                    }
+                }
+            );
 
             // make sure that duration is mapped back to end field
             $builder->addEventListener(
@@ -128,7 +142,7 @@ class TimesheetEditForm extends AbstractType
                     $data = $event->getData();
                     $duration = $data->getDuration();
                     $end = null;
-                    if ($duration > 0) {
+                    if (null !== $duration) {
                         $end = clone $data->getBegin();
                         $end->modify('+ ' . $duration . 'seconds');
                     }

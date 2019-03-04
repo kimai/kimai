@@ -272,7 +272,11 @@ $(function() {
                     data: $form.serialize(),
                     success: function(html) {
                         btn.button('reset');
-                        if ($(html).find('#form_modal .modal-content .has-error').length > 0 || $(html).find(flashErrorIdentifier).length > 0) {
+                        var hasFieldError = $(html).find('#form_modal .modal-content .has-error').length > 0;
+                        var hasFormError = $(html).find('#form_modal .modal-content ul.list-unstyled li.text-danger').length > 0;
+                        var hasFlashError = $(html).find(flashErrorIdentifier).length > 0;
+
+                        if (hasFieldError || hasFormError || hasFlashError) {
                             $.kimai.ajaxFormInModal(html);
                         } else {
                             $.kimai.reloadDatatableWithToolbarFilter();
