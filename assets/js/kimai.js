@@ -253,9 +253,11 @@ $(function() {
                         // remove the current input
                         terms.pop();
 
-                        // --- TODO check if selected tag is already in list ---
-                        // add the selected item
-                        terms.push(ui.item.value);
+                        // check if selected tag is already in list
+                        if (!terms.includes(ui.item.value)) {
+                            // add the selected item
+                            terms.push(ui.item.value);
+                        }
                         // add placeholder to get the comma-and-space at the end
                         terms.push("");
                         // -----------------------------------------------------
