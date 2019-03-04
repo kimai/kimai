@@ -19,13 +19,14 @@ kimai:
 
         # Rounding rules are used to round the begin & end dates and the duration for timesheet records.
         # The "default" rule will round "begin" down and "end" up to the full minute, the "duration" will not be rounded.
-        # Please read var/docs/configurations.md to find out more about rounding rules
+        # Find out more about rounding rules at https://www.kimai.org/documentation/timesheet.html
         rounding:
             default:
                 days: ['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
                 begin: 1
                 end: 1
                 duration: 0
+                mode: default
 
         # If you want to apply different hourly rates for specific weekdays, you can uncomment the "rates" configuration.
         # The "weekend" rule will add 50% to each timesheet entry that will be recorded on "saturdays" or "sundays".
@@ -69,7 +70,7 @@ kimai:
     #        currency: EUR
 
     # --------------------------------------------------------------------------------
-    # Free configurable permission system, see var/docs/permissions.md
+    # Find out more about the configurable permission system at https://www.kimai.org/documentation/permissions.html
     permissions:
         sets:
             # mapping complex rulesets of single permissions to named "sets" ("set name" = [array of "permissions"])
@@ -186,7 +187,7 @@ kimai:
             end: '20:00'
 
         # You can configure unlimited google calendars to display events for your company (e.g. holidays)
-        # Please read var/docs/configurations.md to find out more about calendar integration
+        # Find out more about calendar integration at https://www.kimai.org/documentation/calendar.html
         # google:
         #     api_key: 'your-restricted-google-api-key'
         #     sources:
@@ -235,7 +236,7 @@ kimai:
             widgets: [amountToday, amountWeek, amountMonth, amountYear]
 
     # --------------------------------------------------------------------------------
-    # All available widgets, please see documentation at var/docs/dashboard.md
+    # Find out more about dashboard widgets at https://www.kimai.org/documentation/dashboard.html
     widgets:
         userDurationToday: { title: stats.durationToday, query: duration, user: true, begin: '00:00:00', end: '23:59:59', icon: duration, color: green }
         userDurationWeek: { title: stats.durationWeek, query: duration, user: true, begin: 'monday this week 00:00:00', end: 'sunday this week 23:59:59', icon: duration, color: blue }

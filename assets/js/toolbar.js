@@ -28,30 +28,28 @@ $(document).ready(function () {
             default:
                 $('.toolbar form input#page').val(1);
         }
-        toolbarLoadDataAfterChange();
+        $.kimai.reloadDatatableWithToolbarFilter();
     });
 
     $('.toolbar form select').change(function (event) {
-        $('.toolbar form input#page').val(1);
-        toolbarLoadDataAfterChange();
-    });
+        var reload = true;
+        switch (event.target.id) {
+            case 'customer':
+                if ($('.toolbar form select#project').length > 0) {
+                    reload = false;
+                }
+                break;
 
-    function toolbarLoadDataAfterChange()
-    {
-        var $form = $('.toolbar form');
-        $.ajax({
-            url: $form.attr('action'),
-            type: $form.attr('method'),
-            data: $form.serialize(),
-            success: function(html) {
-                $('section.content').replaceWith(
-                    $(html).find('section.content')
-                );
-            },
-            error: function(xhr, err) {
-                $form.submit();
-            }
-        });
-    }
+            case 'project':
+                if ($('.toolbar form select#activity').length > 0) {
+                    reload = false;
+                }
+                break;
+        }
+        $('.toolbar form input#page').val(1);
+        if (reload) {
+            $.kimai.reloadDatatableWithToolbarFilter();
+        }
+    });
 
 });

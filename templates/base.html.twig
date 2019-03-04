@@ -4,6 +4,12 @@
     <div class="toolbar-pad no-print">
         {% block main_before %}{% endblock %}
     </div>
+    {% embed 'embeds/modal.html.twig' %}
+        {% block modal_id %}remote_form_modal{% endblock %}
+        {% block modal_title %}{% endblock %}
+        {% block modal_body %}{% endblock %}
+        {% block modal_footer %}{% endblock %}
+    {% endembed %}
 {% endblock %}
 
 {% block avanzu_page_content_after %}
@@ -100,7 +106,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    {# we do not call parent() as we use a custom built for the frontend assets and don't want the default <script> #}
+    {# no call to parent(), as we use a custom built for the frontend assets and don't want the default <script> #}
     <script type="text/javascript">
         $(document).ready(function () {
             $.kimai.init({

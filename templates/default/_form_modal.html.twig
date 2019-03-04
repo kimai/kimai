@@ -1,0 +1,18 @@
+{% embed 'embeds/modal.html.twig' %}
+    {% block modal_id %}form_modal{% endblock %}
+    {% block modal_before %}{{ form_start(form) }}{% endblock %}
+    {% block modal_title %}
+        {{ title }}
+        {% if form.vars.docu_chapter is defined and form.vars.docu_chapter is not empty %}
+            <a href="{{ path('help_chapter', {'chapter': form.vars.docu_chapter}) }}"><i class="{{ 'help'|icon }}"></i></a>
+        {% endif %}
+    {% endblock %}
+    {% block modal_body %}
+        {{ form_widget(form) }}
+    {% endblock %}
+    {% block modal_footer %}
+        <button type="button" class="btn btn-default btn-cancel" data-dismiss="modal">{{ 'action.close'|trans }}</button>
+        <button type="submit" class="btn btn-primary modal-form-save" data-loading-text="Loading..." id="{{ block('modal_id') }}_save">{{ 'action.save'|trans }}</button>
+    {% endblock %}
+    {% block modal_end %}{{ form_end(form) }}{% endblock %}
+{% endembed %}

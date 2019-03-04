@@ -39,11 +39,6 @@ $(function() {
             // set the current locale for all javascript components
             moment.locale($.kimai.settings['locale']);
 
-            // ask before a delete call is executed
-            $('body').on('click', 'a.btn-trash', function (event) {
-                return confirm($.kimai.settings['confirmDelete']);
-            });
-
             // activate the dropdown functionality
             $('.dropdown-toggle').dropdown();
 
@@ -61,90 +56,24 @@ $(function() {
                 );
             }
 
-            // ==== compound field in toolbar ====
-            $('input[data-daterangepickerenable="on"]').each(function(index) {
-                var localeFormat = $(this).data('format');
-                var separator = $(this).data('separator');
-                var rangesList = {};
-                rangesList[$.kimai.settings['today']] = [moment(), moment()];
-                rangesList[$.kimai.settings['yesterday']] = [moment().subtract(1, 'days'), moment().subtract(1, 'days')];
-                rangesList[$.kimai.settings['thisWeek']] = [moment().startOf('week'), moment().endOf('week')];
-                rangesList[$.kimai.settings['lastWeek']] = [moment().subtract(1, 'week').startOf('week'), moment().subtract(1, 'week').endOf('week')];
-                rangesList[$.kimai.settings['thisMonth']] = [moment().startOf('month'), moment().endOf('month')];
-                rangesList[$.kimai.settings['lastMonth']] = [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')];
-                rangesList[$.kimai.settings['thisYear']] = [moment().startOf('year'), moment().endOf('year')];
-                rangesList[$.kimai.settings['lastYear']] = [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')];
-
-                $(this).daterangepicker({
-                    showDropdowns: true,
-                    autoUpdateInput: false,
-                    autoApply: false,
-                    linkedCalendars: false,
-                    locale: {
-                        separator: separator,
-                        format: localeFormat,
-                        firstDay: 1,
-                        applyLabel: $.kimai.settings['apply'],
-                        cancelLabel: $.kimai.settings['cancel'],
-                        customRangeLabel: $.kimai.settings['customRange']
-                    },
-                    ranges: rangesList,
-                    alwaysShowCalendars: true
-                });
-
-                $(this).on('apply.daterangepicker', function(ev, picker) {
-                    $(this).val(picker.startDate.format(localeFormat) + ' - ' + picker.endDate.format(localeFormat));
-                    $(this).trigger("change");
-                });
+            // ask before a delete call is executed
+            $('body').on('click', 'a.btn-trash', function (event) {
+                return confirm($.kimai.settings['confirmDelete']);
             });
 
-            // ==== single select boxes in toolbars ====
-            $('input[data-datepickerenable="on"]').each(function(index) {
-                var localeFormat = $(this).data('format');
-                $(this).daterangepicker({
-                    singleDatePicker: true,
-                    showDropdowns: true,
-                    autoUpdateInput: false,
-                    locale: {
-                        format: localeFormat,
-                        firstDay: 1,
-                        applyLabel: $.kimai.settings['apply'],
-                        cancelLabel: $.kimai.settings['cancel'],
-                        customRangeLabel: $.kimai.settings['customRange']
-                    }
-                });
+            // compound field in toolbar
+            this.activateDateRangePicker('.content-wrapper');
 
-                $(this).on('apply.daterangepicker', function(ev, picker) {
-                    $(this).val(picker.startDate.format(localeFormat));
-                    $(this).trigger("change");
-                });
-            });
+            // single select boxes in toolbars
+            this.activateDatePicker('.content-wrapper');
 
-            // ==== edit timesheet - date with time ====
-            $('input[data-datetimepicker="on"]').each(function(index) {
-                var localeFormat = $(this).data('format');
-                $(this).daterangepicker({
-                    singleDatePicker: true,
-                    timePicker: true,
-                    timePicker24Hour: true,
-                    showDropdowns: true,
-                    autoUpdateInput: false,
-                    locale: {
-                        format: localeFormat,
-                        firstDay: 1,
-                        applyLabel: $.kimai.settings['apply'],
-                        cancelLabel: $.kimai.settings['cancel'],
-                        customRangeLabel: $.kimai.settings['customRange']
-                    }
-                });
+            // edit timesheet - date with time
+            this.activateDateTimePicker('.content-wrapper');
 
-                $(this).on('apply.daterangepicker', function(ev, picker) {
-                    $(this).val(picker.startDate.format(localeFormat));
-                    $(this).trigger("change");
-                });
-            });
+            // some actions can be performed in a modal for a better UX
+            this.activateAjaxFormInModal('a.modal-ajax-form');
 
-            $('select[data-related-select]').change(function() {
+            $('body').on('change', 'select[data-related-select]', function(event) {
                 var apiUrl = $(this).attr('data-api-url').replace('-s-', $(this).val());
                 var targetSelect = $(this).attr('data-related-select');
 
@@ -190,6 +119,25 @@ $(function() {
                 $(this).find('a.anchor').hide();
             });
         },
+        reloadDatatableWithToolbarFilter: function()
+        {
+            var $form = $('.toolbar form');
+            var loading = '<div class="overlay"><i class="fas fa-sync fa-spin"></i></div>';
+            $('section.content').append(loading);
+            $.ajax({
+                url: $form.attr('action'),
+                type: $form.attr('method'),
+                data: $form.serialize(),
+                success: function(html) {
+                    $('section.content').replaceWith(
+                        $(html).find('section.content')
+                    );
+                },
+                error: function(xhr, err) {
+                    $form.submit();
+                }
+            });
+        },
         pauseRecord: function(selector) {
             $(selector + ' .pull-left i').hover(function () {
                 var link = $(this).parents('a');
@@ -199,6 +147,164 @@ $(function() {
                 var link = $(this).parents('a');
                 link.attr('href', link.attr('href').replace('/pause', '/stop'));
                 $(this).removeClass('fa-pause-circle').removeClass('text-orange').addClass('fa-stop-circle');
+            });
+        },
+        activateDatePicker: function(selector) {
+            $(selector + ' input[data-datepickerenable="on"]').each(function(index) {
+                var localeFormat = $(this).data('format');
+                $(this).daterangepicker({
+                    singleDatePicker: true,
+                    showDropdowns: true,
+                    autoUpdateInput: false,
+                    locale: {
+                        format: localeFormat,
+                        firstDay: 1,
+                        applyLabel: $.kimai.settings['apply'],
+                        cancelLabel: $.kimai.settings['cancel'],
+                        customRangeLabel: $.kimai.settings['customRange']
+                    }
+                });
+
+                $(this).on('apply.daterangepicker', function(ev, picker) {
+                    $(this).val(picker.startDate.format(localeFormat));
+                    $(this).trigger("change");
+                });
+            });
+        },
+        activateDateTimePicker: function(selector) {
+            $(selector + ' input[data-datetimepicker="on"]').each(function(index) {
+                var localeFormat = $(this).data('format');
+                $(this).daterangepicker({
+                    singleDatePicker: true,
+                    timePicker: true,
+                    timePicker24Hour: true,
+                    showDropdowns: true,
+                    autoUpdateInput: false,
+                    locale: {
+                        format: localeFormat,
+                        firstDay: 1,
+                        applyLabel: $.kimai.settings['apply'],
+                        cancelLabel: $.kimai.settings['cancel'],
+                        customRangeLabel: $.kimai.settings['customRange']
+                    }
+                });
+
+                $(this).on('apply.daterangepicker', function(ev, picker) {
+                    $(this).val(picker.startDate.format(localeFormat));
+                    $(this).trigger("change");
+                });
+            });
+        },
+        activateDateRangePicker: function(selector) {
+            $(selector + ' input[data-daterangepickerenable="on"]').each(function(index) {
+                var localeFormat = $(this).data('format');
+                var separator = $(this).data('separator');
+                var rangesList = {};
+                rangesList[$.kimai.settings['today']] = [moment(), moment()];
+                rangesList[$.kimai.settings['yesterday']] = [moment().subtract(1, 'days'), moment().subtract(1, 'days')];
+                rangesList[$.kimai.settings['thisWeek']] = [moment().startOf('week'), moment().endOf('week')];
+                rangesList[$.kimai.settings['lastWeek']] = [moment().subtract(1, 'week').startOf('week'), moment().subtract(1, 'week').endOf('week')];
+                rangesList[$.kimai.settings['thisMonth']] = [moment().startOf('month'), moment().endOf('month')];
+                rangesList[$.kimai.settings['lastMonth']] = [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')];
+                rangesList[$.kimai.settings['thisYear']] = [moment().startOf('year'), moment().endOf('year')];
+                rangesList[$.kimai.settings['lastYear']] = [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')];
+
+                $(this).daterangepicker({
+                    showDropdowns: true,
+                    autoUpdateInput: false,
+                    autoApply: false,
+                    linkedCalendars: false,
+                    locale: {
+                        separator: separator,
+                        format: localeFormat,
+                        firstDay: 1,
+                        applyLabel: $.kimai.settings['apply'],
+                        cancelLabel: $.kimai.settings['cancel'],
+                        customRangeLabel: $.kimai.settings['customRange']
+                    },
+                    ranges: rangesList,
+                    alwaysShowCalendars: true
+                });
+
+                $(this).on('apply.daterangepicker', function(ev, picker) {
+                    $(this).val(picker.startDate.format(localeFormat) + ' - ' + picker.endDate.format(localeFormat));
+                    $(this).trigger("change");
+                });
+            });
+        },
+        ajaxFormInModal: function(html) {
+            // the modal that we use to render the form in
+            var formIdentifier = '#remote_form_modal .modal-content form';
+            var flashErrorIdentifier = 'div.alert-error';
+            var $form = $(formIdentifier);
+            var $modal = $('#remote_form_modal');
+
+            // will be (re-)activated later
+            $form.off('submit');
+
+            // load new form from given content
+            if ($(html).find('#form_modal .modal-content').length > 0 ) {
+                // TODO cleanup widgets before replacing the content?
+                $('#remote_form_modal .modal-content').replaceWith(
+                    $(html).find('#form_modal .modal-content')
+                );
+                // activate new loaded widgets
+                $.kimai.activateDateTimePicker(formIdentifier);
+                $.kimai.activateAutocomplete(formIdentifier + " .js-autocomplete");
+            }
+
+            // show error flash messages
+            if ($(html).find(flashErrorIdentifier).length > 0) {
+                $('#remote_form_modal .modal-body').prepend(
+                    $(html).find(flashErrorIdentifier)
+                );
+            }
+
+            $modal.modal('show');
+
+            // the new form that was loaded via ajax
+            $form = $(formIdentifier);
+
+            // click handler for modal save button, to send forms via ajax
+            $form.on('submit', function(event){
+                var btn = $(formIdentifier + ' button[type=submit]').button('loading');
+                event.preventDefault();
+                event.stopPropagation();
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: $form.attr('method'),
+                    data: $form.serialize(),
+                    success: function(html) {
+                        btn.button('reset');
+                        if ($(html).find('#form_modal .modal-content .has-error').length > 0 || $(html).find(flashErrorIdentifier).length > 0) {
+                            $.kimai.ajaxFormInModal(html);
+                        } else {
+                            $.kimai.reloadDatatableWithToolbarFilter();
+                            $modal.modal('hide');
+                        }
+                        return false;
+                    },
+                    error: function(xhr, err) {
+                        // what else could we do? submitting again at least gives us the opportunity to see errors,
+                        // which maybe would be hidden otherwise... this one is totally up for discussion!
+                        $form.submit();
+                    }
+                });
+            });
+        },
+        activateAjaxFormInModal: function(selector) {
+            $('body').on('click', selector, function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                $.ajax({
+                    url: $(this).attr('href'),
+                    success: function(html) {
+                        $.kimai.ajaxFormInModal(html);
+                    },
+                    error: function(xhr, err) {
+                        window.location = $(this).attr('href');
+                    }
+                });
             });
         },
         splitTagList: function(val) {
@@ -233,6 +339,7 @@ $(function() {
                             dataType: 'json',
                             success: function(data){
                                 response(data);
+                                console.log(data);
                             }
                         });
                     },
