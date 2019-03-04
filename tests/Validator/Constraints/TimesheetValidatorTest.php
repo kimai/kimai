@@ -33,7 +33,7 @@ class TimesheetValidatorTest extends ConstraintValidatorTestCase
         $authMock = $this->getMockBuilder(AuthorizationCheckerInterface::class)->getMock();
         $authMock->method('isGranted')->willReturn($isGranted);
 
-        return new TimesheetValidator($authMock, $options);
+        return new TimesheetValidator($authMock, $options, false);
     }
 
     /**
