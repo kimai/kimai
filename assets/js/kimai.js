@@ -339,7 +339,6 @@ $(function() {
                             dataType: 'json',
                             success: function(data){
                                 response(data);
-                                console.log(data);
                             }
                         });
                     },
