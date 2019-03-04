@@ -14,8 +14,10 @@ namespace App\API;
 use App\Entity\Timesheet;
 use App\Form\TimesheetEditForm;
 use App\Repository\Query\TimesheetQuery;
+use App\Repository\TagRepository;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\UserDateTimeFactory;
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -52,18 +54,21 @@ class TimesheetController extends BaseApiController
      */
     protected $dateTime;
 
+    protected $tagRepository;
+
     /**
      * @param ViewHandlerInterface $viewHandler
      * @param TimesheetRepository $repository
      * @param UserDateTimeFactory $dateTime
      * @param int $hardLimit
      */
-    public function __construct(ViewHandlerInterface $viewHandler, TimesheetRepository $repository, UserDateTimeFactory $dateTime, int $hardLimit)
+    public function __construct(ViewHandlerInterface $viewHandler, TimesheetRepository $repository, UserDateTimeFactory $dateTime, int $hardLimit, TagRepository $tagRepository)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
         $this->hardLimit = $hardLimit;
         $this->dateTime = $dateTime;
+        $this->tagRepository = $tagRepository;
     }
 
     /**
@@ -82,7 +87,7 @@ class TimesheetController extends BaseApiController
      * @Rest\QueryParam(name="activity", requirements="\d+", strict=true, nullable=true, description="Activity ID to filter timesheets")
      * @Rest\QueryParam(name="page", requirements="\d+", strict=true, nullable=true, description="The page to display, renders a 404 if not found (default: 1)")
      * @Rest\QueryParam(name="size", requirements="\d+", strict=true, nullable=true, description="The amount of entries for each page (default: 25)")
-     * @Rest\QueryParam(name="tags", requirements="[a-zA-Z0-9 -]+", strict=true, nullable=true, description="The name of tags which are in the datasets")
+     * @Rest\QueryParam(name="tags", requirements="[a-zA-Z0-9 -,]+", strict=true, nullable=true, description="The name of tags which are in the datasets")
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order (allowed values: 'ASC', 'DESC')")
      * @Rest\QueryParam(name="orderBy", requirements="id|begin|end|rate", strict=true, nullable=true, description="The field by which results will be ordered (allowed values: 'id', 'begin', 'end', 'rate')")
      *
@@ -123,12 +128,12 @@ class TimesheetController extends BaseApiController
             $query->setPageSize($size);
         }
 
-        // FIXME
-        /*
-        if ($this->useTags === true && null !== ($tags = $paramFetcher->get('tags'))) {
-            $query->setTags($tags);
+        if (null !== ($tags = $paramFetcher->get('tags'))) {
+            $dbResult = $this->tagRepository->findIdsByTagNameList($tags);
+            if ($dbResult !== null && sizeof($dbResult) > 0) {
+                $query->setTags(new ArrayCollection($dbResult));
+            }
         }
-        */
 
         if (null !== ($order = $paramFetcher->get('order'))) {
             $query->setOrder($order);

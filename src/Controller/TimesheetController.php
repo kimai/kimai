@@ -9,11 +9,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Form\TimesheetEditForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\Query\TimesheetQuery;
 use App\Timesheet\UserDateTimeFactory;
+use Doctrine\Common\Collections\ArrayCollection;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -68,6 +70,14 @@ class TimesheetController extends AbstractController
         }
 
         $query->setUser($this->getUser());
+
+        if ($query->hasTags()) {
+            $query->setTags(
+                new ArrayCollection(
+                    $this->getDoctrine()->getRepository(Tag::class)->findIdsByTagNameList(implode(',', $query->getTags()->toArray()))
+                )
+            );
+        }
 
         /* @var $entries Pagerfanta */
         $entries = $this->getRepository()->findByQuery($query);
@@ -168,8 +178,7 @@ class TimesheetController extends AbstractController
                 ->setBegin($this->dateTime->createDateTime())
                 ->setUser($user)
                 ->setActivity($timesheet->getActivity())
-                ->setProject($timesheet->getProject())
-            ;
+                ->setProject($timesheet->getProject());
 
             $errors = $validator->validate($entry);
 
