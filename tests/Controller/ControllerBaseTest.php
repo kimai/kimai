@@ -226,7 +226,6 @@ abstract class ControllerBaseTest extends WebTestCase
             if (count($validation) < 1) {
                 // decorated form fields with icon have a different html structure, see kimai-theme.html.twig
                 $classes = $field->parents()->getNode(1)->getAttribute('class');
-                $this->assertContains('has-feedback', $classes, 'Form field has no validation message: ' . $name);
                 $this->assertContains('has-error', $classes, 'Form field has no validation message: ' . $name);
             }
         }
