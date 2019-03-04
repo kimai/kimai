@@ -97,15 +97,6 @@ trait TimesheetControllerTrait
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            if ($editForm->has('duration')) {
-                $duration = $editForm->get('duration')->getData();
-                $end = null;
-                if ($duration > 0) {
-                    $end = clone $entry->getBegin();
-                    $end->modify('+ ' . $duration . 'seconds');
-                }
-                $entry->setEnd($end);
-            }
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($entry);
@@ -172,17 +163,6 @@ trait TimesheetControllerTrait
         $createForm->handleRequest($request);
 
         if ($createForm->isSubmitted() && $createForm->isValid()) {
-            if ($createForm->has('duration')) {
-                $duration = $createForm->get('duration')->getData();
-                if ($duration > 0) {
-                    /** @var Timesheet $record */
-                    $record = $createForm->getData();
-                    $end = clone $record->getBegin();
-                    $end->modify('+ ' . $duration . 'seconds');
-                    $record->setEnd($end);
-                }
-            }
-
             $entityManager = $this->getDoctrine()->getManager();
 
             try {

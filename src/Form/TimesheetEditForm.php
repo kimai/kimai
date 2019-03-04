@@ -117,7 +117,24 @@ class TimesheetEditForm extends AbstractType
         if ($options['duration_only']) {
             $builder->add('duration', DurationType::class, [
                 'required' => false,
+                'docu_chapter' => 'timesheet.html#duration-format'
             ]);
+
+            // make sure that duration is mapped back to end field
+            $builder->addEventListener(
+                FormEvents::SUBMIT,
+                function (FormEvent $event) {
+                    /** @var Timesheet $data */
+                    $data = $event->getData();
+                    $duration = $data->getDuration();
+                    $end = null;
+                    if ($duration > 0) {
+                        $end = clone $data->getBegin();
+                        $end->modify('+ ' . $duration . 'seconds');
+                    }
+                    $data->setEnd($end);
+                }
+            );
         } else {
             $builder->add('end', DateTimePickerType::class, [
                 'label' => 'label.end',
@@ -270,7 +287,7 @@ class TimesheetEditForm extends AbstractType
             'include_user' => false,
             'include_exported' => false,
             'include_rate' => true,
-            'docu_chapter' => 'timesheet',
+            'docu_chapter' => 'timesheet.html',
             'method' => 'POST',
         ]);
     }
