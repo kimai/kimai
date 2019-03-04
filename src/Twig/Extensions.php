@@ -9,6 +9,7 @@
 
 namespace App\Twig;
 
+use App\Constants;
 use App\Entity\Timesheet;
 use App\Utils\Duration;
 use App\Utils\LocaleSettings;
@@ -121,6 +122,7 @@ class Extensions extends \Twig_Extension
             new TwigFilter('currency', [$this, 'currency']),
             new TwigFilter('country', [$this, 'country']),
             new TwigFilter('icon', [$this, 'icon']),
+            new TwigFilter('docu_link', [$this, 'documentationLink']),
         ];
     }
 
@@ -245,6 +247,15 @@ class Extensions extends \Twig_Extension
     public function icon($name, $default = '')
     {
         return self::$icons[$name] ?? $default;
+    }
+
+    /**
+     * @param string $url
+     * @return string
+     */
+    public function documentationLink($url = '')
+    {
+        return Constants::HOMEPAGE . '/documentation/' . $url;
     }
 
     /**
