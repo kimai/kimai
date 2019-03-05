@@ -10,6 +10,7 @@
 namespace App\Form\Toolbar;
 
 use App\Repository\Query\ActivityQuery;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,6 +26,15 @@ class ActivityToolbarForm extends AbstractToolbarForm
     {
         $this->addPageSizeChoice($builder);
         $this->addVisibilityChoice($builder);
+        $builder->add('globalsOnly', ChoiceType::class, [
+            'choices' => [
+                'yes' => 1,
+                'no' => 0,
+            ],
+            'placeholder' => null,
+            'required' => false,
+            'label' => 'label.globalsOnly',
+        ]);
         $this->addCustomerChoice($builder);
         $this->addProjectChoice($builder);
         $this->addHiddenPagination($builder);

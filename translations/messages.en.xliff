@@ -279,14 +279,6 @@
                 <source>more.info.link</source>
                 <target>More infos</target>
             </trans-unit>
-            <trans-unit id="badge.visible">
-                <source>badge.visible</source>
-                <target>Yes</target>
-            </trans-unit>
-            <trans-unit id="badge.invisible">
-                <source>badge.invisible</source>
-                <target>No</target>
-            </trans-unit>
             <trans-unit id="label.toggle_dropdown">
                 <source>label.toggle_dropdown</source>
                 <target>Show menu</target>
@@ -995,6 +987,10 @@
             <trans-unit id="export.mark_all">
                 <source>export.mark_all</source>
                 <target>Mark all shown records as cleared?</target>
+            </trans-unit>
+            <trans-unit id="label.globalsOnly">
+                <source>label.globalsOnly</source>
+                <target>Only global</target>
             </trans-unit>
         </body>
     </file>
