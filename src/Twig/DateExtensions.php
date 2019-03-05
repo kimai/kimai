@@ -19,6 +19,10 @@ use Twig\TwigFilter;
 class DateExtensions extends \Twig_Extension
 {
     /**
+     * @var LocaleSettings|null
+     */
+    protected $localeSettings = null;
+    /**
      * @var string
      */
     protected $dateFormat = null;
@@ -33,17 +37,14 @@ class DateExtensions extends \Twig_Extension
     /**
      * @var bool
      */
-    protected $isTwentyFourHour = true;
+    protected $isTwentyFourHour = null;
 
     /**
      * @param LocaleSettings $localeSettings
      */
     public function __construct(LocaleSettings $localeSettings)
     {
-        $this->dateFormat = $localeSettings->getDateFormat();
-        $this->dateTimeFormat = $localeSettings->getDateTimeFormat();
-        $this->timeFormat = $localeSettings->getTimeFormat();
-        $this->isTwentyFourHour = $localeSettings->isTwentyFourHours();
+        $this->localeSettings = $localeSettings;
     }
 
     /**
@@ -67,6 +68,10 @@ class DateExtensions extends \Twig_Extension
      */
     public function dateShort(DateTime $date)
     {
+        if (null === $this->dateFormat) {
+            $this->dateFormat = $this->localeSettings->getDateFormat();
+        }
+
         return date_format($date, $this->dateFormat);
     }
 
@@ -76,6 +81,10 @@ class DateExtensions extends \Twig_Extension
      */
     public function dateTime(DateTime $date)
     {
+        if (null === $this->dateTimeFormat) {
+            $this->dateTimeFormat = $this->localeSettings->getDateTimeFormat();
+        }
+
         return date_format($date, $this->dateTimeFormat);
     }
 
@@ -95,6 +104,10 @@ class DateExtensions extends \Twig_Extension
      */
     public function time(DateTime $date)
     {
+        if (null === $this->timeFormat) {
+            $this->timeFormat = $this->localeSettings->getTimeFormat();
+        }
+
         return date_format($date, $this->timeFormat);
     }
 
@@ -114,7 +127,11 @@ class DateExtensions extends \Twig_Extension
      */
     public function hour24($twentyFour, $twelveHour)
     {
-        if ($this->isTwentyFourHour) {
+        if (null === $this->isTwentyFourHour) {
+            $this->isTwentyFourHour = $this->localeSettings->isTwentyFourHours();
+        }
+
+        if (true === $this->isTwentyFourHour) {
             return $twentyFour;
         }
 
