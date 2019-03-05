@@ -18,9 +18,9 @@
 {% macro label_visible(visible) %}
     {% import _self as macro %}
     {% if visible %}
-        {{ macro.label('badge.visible', 'success') }}
+        {{ macro.label('yes', 'success') }}
     {% else %}
-        {{ macro.label('badge.invisible', 'default') }}
+        {{ macro.label('no', 'default') }}
     {% endif %}
 {% endmacro %}
 

@@ -283,14 +283,6 @@
                 <source>more.info.link</source>
                 <target>Ver más...</target>
             </trans-unit>
-            <trans-unit id="badge.visible">
-                <source>badge.visible</source>
-                <target>Si</target>
-            </trans-unit>
-            <trans-unit id="badge.invisible">
-                <source>badge.invisible</source>
-                <target>No</target>
-            </trans-unit>
             <trans-unit id="label.toggle_dropdown">
                 <source>label.toggle_dropdown</source>
                 <target>Mostrar menú</target>
