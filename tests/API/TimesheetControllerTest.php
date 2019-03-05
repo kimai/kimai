@@ -354,20 +354,5 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result);
         $this->assertEquals(20, count($result));
         $this->assertDefaultStructure($result[0], false);
-
-//        $data = [
-//            'activity' => 1,
-//            'project' => 1,
-//            'begin' => (new \DateTime('- 7 hours'))->format('Y-m-d H:m'),
-//            'end' => (new \DateTime())->format('Y-m-d H:m'),
-//            'description' => 'foo',
-//            'exported' => true,
-//        ];
-//        $this->request($client, '/api/timesheets/15', 'PATCH', [], json_encode($data));
-//        $response = $client->getResponse();
-//        $this->assertFalse($response->isSuccessful());
-//        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
-//        $json = json_decode($response->getContent(), true);
-//        $this->assertEquals('User cannot update timesheet', $json['message']);
     }
 }
