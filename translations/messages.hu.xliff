@@ -276,14 +276,6 @@
                 <source>more.info.link</source>
                 <target>További információ</target>
             </trans-unit>
-            <trans-unit id="badge.visible">
-                <source>badge.visible</source>
-                <target>Igen</target>
-            </trans-unit>
-            <trans-unit id="badge.invisible">
-                <source>badge.invisible</source>
-                <target>Nem</target>
-            </trans-unit>
             <trans-unit id="label.toggle_dropdown">
                 <source>label.toggle_dropdown</source>
                 <target>Menü megjelenítése</target>
