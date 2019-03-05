@@ -408,14 +408,17 @@ class Timesheet
 
     /**
      * @param Tag $tag
+     * @return Timesheet
      */
     public function addTag(Tag $tag)
     {
         if ($this->tags->contains($tag)) {
-            return;
+            return $this;
         }
         $this->tags->add($tag);
         $tag->addTimesheet($this);
+
+        return $this;
     }
 
     /**

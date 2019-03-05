@@ -11,6 +11,7 @@ namespace App\Tests\DataFixtures;
 
 use App\Entity\Activity;
 use App\Entity\Project;
+use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
@@ -55,6 +56,14 @@ class TimesheetFixtures extends Fixture
      * @var bool
      */
     protected $allowEmptyDescriptions = true;
+    /**
+     * @var bool
+     */
+    protected $useTags = false;
+    /**
+     * @var array
+     */
+    protected $tags = [];
 
     /**
      * @param bool $allowEmptyDescriptions
@@ -148,6 +157,28 @@ class TimesheetFixtures extends Fixture
     }
 
     /**
+     * @param bool $useTags
+     * @return TimesheetFixtures
+     */
+    public function setUseTags(bool $useTags)
+    {
+        $this->useTags = $useTags;
+
+        return $this;
+    }
+
+    /**
+     * @param array $tags
+     * @return TimesheetFixtures
+     */
+    public function setTags(array $tags)
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
@@ -179,12 +210,15 @@ class TimesheetFixtures extends Fixture
                 $project = $projects[array_rand($projects)];
             }
 
+            $tags = $this->getTagObjectList($i);
+
             $entry = $this->createTimesheetEntry(
                 $user,
                 $activity,
                 $project,
                 $description,
-                $this->getDateTime($i)
+                $this->getDateTime($i),
+                $tags
             );
 
             $manager->persist($entry);
@@ -198,18 +232,37 @@ class TimesheetFixtures extends Fixture
                 $project = $projects[array_rand($projects)];
             }
 
+            $tags = $this->getTagObjectList($i);
+
             $entry = $this->createTimesheetEntry(
                 $user,
                 $activity,
                 $project,
                 $faker->text,
                 $this->getDateTime($i),
+                $tags,
                 false
             );
             $manager->persist($entry);
         }
 
         $manager->flush();
+    }
+
+    /**
+     * @param $cnt
+     * @return array
+     */
+    protected function getTagObjectList($cnt)
+    {
+        if (true === $this->useTags) {
+            $tagObject = new Tag();
+            $tagObject->setName($this->tags[($cnt % count($this->tags))]);
+
+            return [$tagObject];
+        }
+
+        return [];
     }
 
     /**
@@ -262,10 +315,11 @@ class TimesheetFixtures extends Fixture
      * @param Project $project
      * @param string $description
      * @param \DateTime $start
+     * @param null|array $tagArray
      * @param bool $setEndDate
      * @return Timesheet
      */
-    private function createTimesheetEntry(User $user, Activity $activity, Project $project, $description, \DateTime $start, $setEndDate = true)
+    private function createTimesheetEntry(User $user, Activity $activity, Project $project, $description, \DateTime $start, $tagArray = [], $setEndDate = true)
     {
         $end = clone $start;
         $end = $end->modify('+ ' . (rand(1, 172800)) . ' seconds');
@@ -281,6 +335,12 @@ class TimesheetFixtures extends Fixture
             ->setUser($user)
             ->setRate(round(($duration / 3600) * $rate))
             ->setBegin($start);
+
+        if (0 < count($tagArray)) {
+            foreach ($tagArray as $item) {
+                $entry->addTag($item);
+            }
+        }
 
         if ($this->fixedRate) {
             $entry->setFixedRate(rand(10, 100));

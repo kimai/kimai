@@ -67,8 +67,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setHourlyRate(true)
             ->setAmount(7)
             ->setUser($this->getUserByRole($em, User::ROLE_ADMIN))
-            ->setStartDate(new \DateTime('-10 days'))
-        ;
+            ->setStartDate(new \DateTime('-10 days'));
         $this->importFixture($em, $fixture);
 
         $query = ['user' => 2];
@@ -92,8 +91,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setHourlyRate(true)
             ->setAmount(7)
             ->setUser($this->getUserByRole($em, User::ROLE_ADMIN))
-            ->setStartDate(new \DateTime('-10 days'))
-        ;
+            ->setStartDate(new \DateTime('-10 days'));
         $this->importFixture($em, $fixture);
 
         $query = ['user' => 'all'];
@@ -258,8 +256,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setAmount(10)
             ->setUser($this->getUserByRole($em, User::ROLE_TEAMLEAD))
             ->setStartDate(new \DateTime('-10 days'))
-            ->setAllowEmptyDescriptions(false)
-        ;
+            ->setAllowEmptyDescriptions(false);
         $this->importFixture($em, $fixture);
 
         $data = [
@@ -312,5 +309,65 @@ class TimesheetControllerTest extends APIControllerBaseTest
         sort($expectedKeys);
 
         $this->assertEquals($expectedKeys, $actual, 'Timesheet structure does not match');
+    }
+
+    public function testGetCollectionWithTags()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setFixedRate(true)
+            ->setHourlyRate(true)
+            ->setAmount(10)
+            ->setUser($this->getUserByRole($em, User::ROLE_USER))
+            ->setStartDate(new \DateTime('-10 days'))
+            ->setAllowEmptyDescriptions(false)
+            ->setUseTags(true)
+            ->setTags(['Test', 'Administration']);
+        $this->importFixture($em, $fixture);
+
+        $query = ['tags' => 'Test'];
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(5, count($result));
+        $this->assertDefaultStructure($result[0], false);
+
+        $query = ['tags' => 'Test,Admin'];
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(10, count($result));
+        $this->assertDefaultStructure($result[0], false);
+
+        $query = ['tags' => 'Nothing'];
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(20, count($result));
+        $this->assertDefaultStructure($result[0], false);
+
+//        $data = [
+//            'activity' => 1,
+//            'project' => 1,
+//            'begin' => (new \DateTime('- 7 hours'))->format('Y-m-d H:m'),
+//            'end' => (new \DateTime())->format('Y-m-d H:m'),
+//            'description' => 'foo',
+//            'exported' => true,
+//        ];
+//        $this->request($client, '/api/timesheets/15', 'PATCH', [], json_encode($data));
+//        $response = $client->getResponse();
+//        $this->assertFalse($response->isSuccessful());
+//        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+//        $json = json_decode($response->getContent(), true);
+//        $this->assertEquals('User cannot update timesheet', $json['message']);
     }
 }
