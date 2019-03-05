@@ -112,13 +112,15 @@ kimai:
             date_time: 'd.m. H:i'
             duration: '%%h:%%m h'
         en:
-            date_time_type: 'yyyy-MM-dd HH:mm'
-            date_time_picker: 'YYYY-MM-DD HH:mm'
+            date_time_type: 'yyyy-MM-dd hh:mm a'
+            date_time_picker: 'YYYY-MM-DD hh:mm A'
             date_type: 'yyyy-MM-dd'
             date_picker: 'YYYY-MM-DD'
             date: 'Y-m-d'
             date_time: 'm-d H:i'
             duration: '%%h:%%m h'
+            time: 'h:i a'
+            24_hours: false
         pt_BR:
             date_time_type: 'dd-MM-yyyy HH:mm'
             date_time_picker: 'DD-MM-YYYY HH:mm'

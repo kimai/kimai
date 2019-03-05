@@ -19,16 +19,31 @@ use Twig\TwigFilter;
 class DateExtensions extends \Twig_Extension
 {
     /**
-     * @var LocaleSettings
+     * @var string
      */
-    protected $localeSettings;
+    protected $dateFormat = null;
+    /**
+     * @var string
+     */
+    protected $dateTimeFormat = null;
+    /**
+     * @var string
+     */
+    protected $timeFormat = null;
+    /**
+     * @var bool
+     */
+    protected $isTwentyFourHour = true;
 
     /**
      * @param LocaleSettings $localeSettings
      */
     public function __construct(LocaleSettings $localeSettings)
     {
-        $this->localeSettings = $localeSettings;
+        $this->dateFormat = $localeSettings->getDateFormat();
+        $this->dateTimeFormat = $localeSettings->getDateTimeFormat();
+        $this->timeFormat = $localeSettings->getTimeFormat();
+        $this->isTwentyFourHour = $localeSettings->isTwentyFourHours();
     }
 
     /**
@@ -42,6 +57,7 @@ class DateExtensions extends \Twig_Extension
             new TwigFilter('date_time', [$this, 'dateTime']),
             new TwigFilter('date_format', [$this, 'dateFormat']),
             new TwigFilter('time', [$this, 'time']),
+            new TwigFilter('hour24', [$this, 'hour24']),
         ];
     }
 
@@ -51,9 +67,7 @@ class DateExtensions extends \Twig_Extension
      */
     public function dateShort(DateTime $date)
     {
-        $format = $this->localeSettings->getDateFormat();
-
-        return date_format($date, $format);
+        return date_format($date, $this->dateFormat);
     }
 
     /**
@@ -62,9 +76,7 @@ class DateExtensions extends \Twig_Extension
      */
     public function dateTime(DateTime $date)
     {
-        $format = $this->localeSettings->getDateTimeFormat();
-
-        return date_format($date, $format);
+        return date_format($date, $this->dateTimeFormat);
     }
 
     /**
@@ -83,7 +95,7 @@ class DateExtensions extends \Twig_Extension
      */
     public function time(DateTime $date)
     {
-        return date_format($date, 'H:i');
+        return date_format($date, $this->timeFormat);
     }
 
     /**
@@ -93,5 +105,19 @@ class DateExtensions extends \Twig_Extension
     public function monthName(\DateTime $date)
     {
         return 'month.' . $date->format('n');
+    }
+
+    /**
+     * @param mixed $twentyFour
+     * @param mixed $twelveHour
+     * @return mixed
+     */
+    public function hour24($twentyFour, $twelveHour)
+    {
+        if ($this->isTwentyFourHour) {
+            return $twentyFour;
+        }
+
+        return $twelveHour;
     }
 }
