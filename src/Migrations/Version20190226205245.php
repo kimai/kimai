@@ -34,7 +34,7 @@ class Version20190226205245 extends AbstractMigration
             $this->addSql('CREATE TABLE ' . $timesheetTags . ' (timesheet_id INTEGER NOT NULL, tag_id INTEGER (11) NOT NULL, PRIMARY KEY(timesheet_id, tag_id))');
             $this->addSql('CREATE INDEX IDX_E3284EFEABDD46BE ON ' . $timesheetTags . ' (timesheet_id ASC)');
             $this->addSql('CREATE INDEX IDX_E3284EFEBAD26311 ON ' . $timesheetTags . ' (tag_id ASC)');
-            $this->addSql('CREATE TABLE ' . $tags . ' (id INTEGER(11) NOT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY (id))');
+            $this->addSql('CREATE TABLE ' . $tags . ' (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name VARCHAR(255) NOT NULL)');
         } else {
             $this->addSql('CREATE TABLE ' . $timesheetTags . ' (timesheet_id INT(11) NOT NULL, tag_id INT(11) NOT NULL, PRIMARY KEY (timesheet_id, tag_id))');
             $this->addSql('CREATE INDEX IDX_E3284EFEABDD46BE ON ' . $timesheetTags . ' (timesheet_id ASC)');
