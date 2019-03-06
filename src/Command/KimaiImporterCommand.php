@@ -960,6 +960,11 @@ class KimaiImporterCommand extends Command
                 continue;
             }
 
+            if (empty($oldRecord['end']) || $oldRecord['end'] === 0) {
+                $io->error('Cannot import running timesheet record, skipping: ' . $oldRecord['timeEntryID']);
+                continue;
+            }
+
             $duration = $oldRecord['end'] - $oldRecord['start'];
 
             // ----------------------- unknown user, damned missing data integrity in Kimai v1 -----------------------

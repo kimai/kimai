@@ -174,7 +174,7 @@ $(function() {
                 $(this).daterangepicker({
                     singleDatePicker: true,
                     timePicker: true,
-                    timePicker24Hour: true,
+                    timePicker24Hour: $.kimai.settings['twentyFourHours'],
                     showDropdowns: true,
                     autoUpdateInput: false,
                     locale: {
@@ -324,7 +324,8 @@ $(function() {
         lastMonth: 'Last month',
         thisYear: 'This year',
         lastYear: 'Last year',
-        customRange: 'Custom range'
+        customRange: 'Custom range',
+        twentyFourHours: true
     };
 
     // once initialized, here are all values

@@ -36,7 +36,8 @@ abstract class AbstractRendererTest extends KernelTestCase
         $languages = [
             'en' => [
                 'date' => 'Y.m.d',
-                'duration' => '%h:%m h'
+                'duration' => '%h:%m h',
+                'time' => 'H:i',
             ]
         ];
 

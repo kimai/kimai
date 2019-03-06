@@ -195,6 +195,7 @@ class Configuration implements ConfigurationInterface
         $node = $builder->root('languages');
 
         $node
+            ->useAttributeAsKey('name', false) // see https://github.com/symfony/symfony/issues/18988
             ->arrayPrototype()
                 ->children()
                     ->scalarNode('date_time_type')->defaultValue('yyyy-MM-dd HH:mm')->end()     // for DateTimeType
@@ -204,6 +205,8 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('date')->defaultValue('Y-m-d')->end()                          // for display via twig
                     ->scalarNode('date_time')->defaultValue('m-d H:i')->end()                   // for display via twig
                     ->scalarNode('duration')->defaultValue('%%h:%%m h')->end()                  // for display via twig
+                    ->scalarNode('time')->defaultValue('H:i')->end()                            // for display via twig
+                    ->booleanNode('24_hours')->defaultTrue()->end()                             // for DateTimeType JS component
                 ->end()
             ->end()
         ;
