@@ -195,6 +195,7 @@ class Configuration implements ConfigurationInterface
         $node = $builder->root('languages');
 
         $node
+            ->useAttributeAsKey('name', false) // see https://github.com/symfony/symfony/issues/18988
             ->arrayPrototype()
                 ->children()
                     ->scalarNode('date_time_type')->defaultValue('yyyy-MM-dd HH:mm')->end()     // for DateTimeType
