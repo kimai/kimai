@@ -1,4 +1,4 @@
-{% if entries is defined and entries is not empty %}
+{% if entries is defined and entries is not empty and is_granted('start_own_timesheet') %}
     <li class="dropdown notifications-menu">
         <a href="#" class="dropdown-toggle ddt-large" data-toggle="dropdown">
             <i class="{{ 'activity'|icon }} fa-2x"></i>

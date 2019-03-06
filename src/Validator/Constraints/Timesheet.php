@@ -27,6 +27,7 @@ class Timesheet extends Constraint
     public const DISABLED_ACTIVITY_ERROR = 'xd5hffg-dsfef3-426a-83d7-1f2d33hs5d87';
     public const DISABLED_PROJECT_ERROR = 'xd5hffg-dsfef3-426a-83d7-1f2d33hs5d88';
     public const DISABLED_CUSTOMER_ERROR = 'xd5hffg-dsfef3-426a-83d7-1f2d33hs5d89';
+    public const START_DISALLOWED = 'xd5hffg-dsfef3-426a-83d7-1f2d33hs5d90';
 
     protected static $errorNames = [
         self::MISSING_BEGIN_ERROR => 'You must submit a begin date.',
@@ -38,6 +39,7 @@ class Timesheet extends Constraint
         self::DISABLED_ACTIVITY_ERROR => 'Cannot start a disabled activity.',
         self::DISABLED_PROJECT_ERROR => 'Cannot start a disabled project.',
         self::DISABLED_CUSTOMER_ERROR => 'Cannot start a disabled customer.',
+        self::START_DISALLOWED => 'You are not allowed to start this timesheet record.',
     ];
 
     public $message = 'This timesheet has invalid settings.';

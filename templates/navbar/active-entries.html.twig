@@ -32,10 +32,12 @@
                 </div>
             {% endif %}
         </li>
+        {% if is_granted('create_own_timesheet') %}
         <li class="footer"><a href="{{ path('timesheet_create') }}">{{ 'timesheet.start'|trans }}</a></li>
+        {% endif %}
     </ul>
 </li>
-{% else %}
+{% elseif is_granted('create_own_timesheet') %}
     <li class="messages-menu">
         <a href="{{ path('timesheet_create') }}" class="ddt-large">
             <i class="{{ 'start'|icon }} fa-2x"></i>

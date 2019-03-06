@@ -33,5 +33,4 @@ interface RoundingInterface
      * @param $minutes
      */
     public function roundDuration(Timesheet $record, $minutes);
-
 }

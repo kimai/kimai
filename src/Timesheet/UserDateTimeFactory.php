@@ -10,7 +10,7 @@
 namespace App\Timesheet;
 
 use App\Entity\User;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use App\Security\CurrentUser;
 
 class UserDateTimeFactory
 {
@@ -20,18 +20,13 @@ class UserDateTimeFactory
     protected $timezone;
 
     /**
-     * @param TokenStorageInterface $tokenStorage
+     * @param CurrentUser $user
      */
-    public function __construct(TokenStorageInterface $tokenStorage)
+    public function __construct(CurrentUser $user)
     {
-        if (null === $tokenStorage->getToken()) {
-            return;
-        }
-
-        /* @var $user User */
-        $user = $tokenStorage->getToken()->getUser();
         $timezone = date_default_timezone_get();
 
+        $user = $user->getUser();
         if ($user instanceof User && null !== $user->getPreferenceValue('timezone')) {
             $timezone = $user->getPreferenceValue('timezone');
         }
