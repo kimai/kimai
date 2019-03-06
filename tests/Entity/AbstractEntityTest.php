@@ -40,8 +40,7 @@ abstract class AbstractEntityTest extends KernelTestCase
         foreach ($violations as $validation) {
             $violatedFields[$validation->getPropertyPath()] = $validation->getPropertyPath();
         }
-
-        $this->assertEquals($expected, count($violatedFields), sprintf('Expected %s violations, found %s in %s.', $expected, $actual, implode(', ', array_keys($violatedFields))));
+        $countViolations = count($violatedFields);
 
         foreach ($fieldNames as $id => $propertyPath) {
             $foundField = false;
@@ -54,6 +53,7 @@ abstract class AbstractEntityTest extends KernelTestCase
         }
 
         $this->assertEmpty($violatedFields, sprintf('Unexpected violations found: %s', implode(', ', $violatedFields)));
+        $this->assertEquals($expected, $countViolations, sprintf('Expected %s violations, found %s in %s.', $expected, $actual, implode(', ', array_keys($violatedFields))));
     }
 
     protected function assertHasNoViolations($entity)

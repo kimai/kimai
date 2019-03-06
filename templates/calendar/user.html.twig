@@ -73,7 +73,6 @@
                 eventRender: function(eventObj, $el) {
                     if (eventObj.source.ajaxSettings.name !== 'kimaiUserTimeSource') {
                         return;
-
                     }
                     $el.popover({
                         title: eventObj.title,
@@ -98,17 +97,23 @@
                     });
                 },
                 eventClick: function(calEvent, jsEvent, view) {
+                    {% if is_granted('edit_own_timesheet') %}
                     location.href = '{{ path('timesheet_edit', {id: '-XX-'}) }}?origin=calendar'.replace('-XX-', calEvent.id);
+                    {% endif %}
                 },
                 dayClick: function(date, jsEvent, view) {
+                    {% if is_granted('create_own_timesheet') %}
                     location.href = '{{ path('timesheet_create') }}' + '?origin=calendar&begin=' + date.format();
+                    {% endif %}
                 },
                 selectable: true,
                 select: function( start, end, jsEvent, view) {
                     if(view.type === 'month') {
                         return;
                     }
+                    {% if is_granted('create_own_timesheet') %}
                     location.href = '{{ path('timesheet_create') }}' + '?from=' + start.format() + '&to=' + end.format();
+                    {% endif %}
                 }
             })
         })

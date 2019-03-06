@@ -114,6 +114,7 @@ services:
     App\Validator\Constraints\TimesheetValidator:
         arguments:
             $ruleset: "%kimai.timesheet.rules%"
+            $durationOnly: "%kimai.timesheet.duration_only%"
 
     # ================================================================================
     # THEME

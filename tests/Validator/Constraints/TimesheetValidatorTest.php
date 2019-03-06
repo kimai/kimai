@@ -15,6 +15,7 @@ use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Validator\Constraints\Timesheet as TimesheetConstraint;
 use App\Validator\Constraints\TimesheetValidator;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
@@ -23,13 +24,16 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
  */
 class TimesheetValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator($isGranted = true)
     {
         $options = [
             'allow_future_times' => false
         ];
 
-        return new TimesheetValidator($options);
+        $authMock = $this->getMockBuilder(AuthorizationCheckerInterface::class)->getMock();
+        $authMock->method('isGranted')->willReturn($isGranted);
+
+        return new TimesheetValidator($authMock, $options, false);
     }
 
     /**
@@ -74,6 +78,33 @@ class TimesheetValidatorTest extends ConstraintValidatorTestCase
             ->buildNextViolation('A timesheet must have a project.')
             ->atPath('property.path.project')
             ->setCode(TimesheetConstraint::MISSING_PROJECT_ERROR)
+            ->assertRaised();
+    }
+
+    public function testRestartDisallowed()
+    {
+        $this->validator = $this->createValidator(false);
+        $this->validator->initialize($this->context);
+
+        $begin = new \DateTime('-10 hour');
+        $customer = new Customer();
+        $activity = new Activity();
+        $project = new Project();
+        $project->setCustomer($customer);
+        $activity->setProject($project);
+
+        $timesheet = new Timesheet();
+        $timesheet
+            ->setBegin($begin)
+            ->setActivity($activity)
+            ->setProject($project)
+        ;
+
+        $this->validator->validate($timesheet, new TimesheetConstraint(['message' => 'myMessage']));
+
+        $this->buildViolation('You are not allowed to start this timesheet record.')
+            ->atPath('property.path.end')
+            ->setCode(TimesheetConstraint::START_DISALLOWED)
             ->assertRaised();
     }
 
