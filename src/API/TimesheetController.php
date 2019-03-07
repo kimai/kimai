@@ -129,9 +129,9 @@ class TimesheetController extends BaseApiController
         }
 
         if (null !== ($tags = $paramFetcher->get('tags'))) {
-            $dbResult = $this->tagRepository->findIdsByTagNameList($tags);
-            if ($dbResult !== null && sizeof($dbResult) > 0) {
-                $query->setTags(new ArrayCollection($dbResult));
+            $ids = $this->tagRepository->findIdsByTagNameList($tags);
+            if ($ids !== null && sizeof($ids) > 0) {
+                $query->setTags(new ArrayCollection($ids));
             }
         }
 
