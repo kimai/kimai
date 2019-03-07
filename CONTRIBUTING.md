@@ -11,7 +11,7 @@ Send us your ideas, code reviews, pull requests and feature requests to help us 
 - With sending in a PR, you accept that your contributions/code will be published under MIT license (see the [LICENSE](LICENSE) file as well).
 - If one of the PR checks fails, please fix them before asking us for a review.
 
-Further documentation can be found in the [developer documentation](var/docs/developers.md).
+Further documentation can be found in the [developer documentation](https://www.kimai.org/documentation/developers.html).
 
 ### File-header template 
 ```
