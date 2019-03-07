@@ -73,12 +73,18 @@ class DurationType extends AbstractType
                 }
             },
             function ($formatToInt) use ($formatter, $pattern) {
+                if (null === $formatToInt) {
+                    return null;
+                }
+
                 if (empty($formatToInt)) {
                     return 0;
                 }
+
                 if (!preg_match($pattern, $formatToInt)) {
                     throw new TransformationFailedException('Invalid duration format given');
                 }
+
                 try {
                     return $formatter->parseDurationString($formatToInt);
                 } catch (\Exception $e) {

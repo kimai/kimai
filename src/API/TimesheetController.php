@@ -224,17 +224,6 @@ class TimesheetController extends BaseApiController
                 return new Response('You are not allowed to start this timesheet record', Response::HTTP_BAD_REQUEST);
             }
 
-            if ($form->has('duration')) {
-                $duration = $form->get('duration')->getData();
-                if ($duration > 0) {
-                    /** @var Timesheet $record */
-                    $record = $form->getData();
-                    $end = clone $record->getBegin();
-                    $end->modify('+ ' . $duration . 'seconds');
-                    $record->setEnd($end);
-                }
-            }
-
             if (null === $timesheet->getEnd()) {
                 $this->repository->stopActiveEntries(
                     $timesheet->getUser(),
@@ -300,17 +289,6 @@ class TimesheetController extends BaseApiController
             $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
 
             return $this->viewHandler->handle($view);
-        }
-
-        if ($form->has('duration')) {
-            $duration = $form->get('duration')->getData();
-            if ($duration > 0) {
-                /** @var Timesheet $record */
-                $record = $form->getData();
-                $end = clone $record->getBegin();
-                $end->modify('+ ' . $duration . 'seconds');
-                $record->setEnd($end);
-            }
         }
 
         $entityManager = $this->getDoctrine()->getManager();

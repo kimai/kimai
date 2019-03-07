@@ -177,7 +177,7 @@ $(function() {
                 $(this).daterangepicker({
                     singleDatePicker: true,
                     timePicker: true,
-                    timePicker24Hour: true,
+                    timePicker24Hour: $.kimai.settings['twentyFourHours'],
                     showDropdowns: true,
                     autoUpdateInput: false,
                     locale: {
@@ -276,7 +276,11 @@ $(function() {
                     data: $form.serialize(),
                     success: function(html) {
                         btn.button('reset');
-                        if ($(html).find('#form_modal .modal-content .has-error').length > 0 || $(html).find(flashErrorIdentifier).length > 0) {
+                        var hasFieldError = $(html).find('#form_modal .modal-content .has-error').length > 0;
+                        var hasFormError = $(html).find('#form_modal .modal-content ul.list-unstyled li.text-danger').length > 0;
+                        var hasFlashError = $(html).find(flashErrorIdentifier).length > 0;
+
+                        if (hasFieldError || hasFormError || hasFlashError) {
                             $.kimai.ajaxFormInModal(html);
                         } else {
                             $.kimai.reloadDatatableWithToolbarFilter();
@@ -390,7 +394,8 @@ $(function() {
         lastMonth: 'Last month',
         thisYear: 'This year',
         lastYear: 'Last year',
-        customRange: 'Custom range'
+        customRange: 'Custom range',
+        twentyFourHours: true
     };
 
     // once initialized, here are all values

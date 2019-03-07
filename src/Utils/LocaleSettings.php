@@ -112,6 +112,17 @@ class LocaleSettings
     }
 
     /**
+     * Returns the locale specific time format, which should be used in combination with the twig filter "|time".
+     *
+     * @param null|string $locale
+     * @return string
+     */
+    public function getTimeFormat(?string $locale = null): string
+    {
+        return $this->getConfigByLocaleAndKey('time', $locale);
+    }
+
+    /**
      * Returns the locale specific datetime format, which should be used in combination with the twig filter "|date".
      *
      * @param null|string $locale
@@ -131,6 +142,17 @@ class LocaleSettings
     public function getDurationFormat(?string $locale = null): string
     {
         return $this->getConfigByLocaleAndKey('duration', $locale);
+    }
+
+    /**
+     * Returns whether this locale uses the 24 hour format.
+     *
+     * @param null|string $locale
+     * @return bool
+     */
+    public function isTwentyFourHours(?string $locale = null): bool
+    {
+        return $this->getConfigByLocaleAndKey('24_hours', $locale);
     }
 
     /**

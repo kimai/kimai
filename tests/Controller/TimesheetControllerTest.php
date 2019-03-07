@@ -324,9 +324,8 @@ class TimesheetControllerTest extends ControllerBaseTest
         $response = $client->getResponse();
         $this->assertTrue($response->isSuccessful());
 
-        $docuUrl = $this->createUrl('/help/timesheet');
         $this->assertContains(
-            '<a href="' . $docuUrl . '"><i class="far fa-question-circle"></i></a>',
+            'href="https://www.kimai.org/documentation/timesheet.html"',
             $response->getContent(),
             'Could not find link to documentation'
         );

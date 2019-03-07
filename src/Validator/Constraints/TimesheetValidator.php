@@ -11,6 +11,7 @@ namespace App\Validator\Constraints;
 
 use App\Entity\Timesheet;
 use App\Validator\Constraints\Timesheet as TimesheetConstraint;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -19,16 +20,28 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class TimesheetValidator extends ConstraintValidator
 {
     /**
+     * @var AuthorizationCheckerInterface
+     */
+    protected $auth;
+    /**
      * @var array
      */
     protected $rules = [];
+    /**
+     * @var bool
+     */
+    protected $durationOnly = false;
 
     /**
+     * @param AuthorizationCheckerInterface $auth
      * @param array $ruleset
+     * @param bool $durationOnly
      */
-    public function __construct(array $ruleset)
+    public function __construct(AuthorizationCheckerInterface $auth, array $ruleset, bool $durationOnly)
     {
+        $this->auth = $auth;
         $this->rules = $ruleset;
+        $this->durationOnly = $durationOnly;
     }
 
     /**
@@ -61,6 +74,31 @@ class TimesheetValidator extends ConstraintValidator
 
         $this->validateBeginAndEnd($value, $this->context);
         $this->validateActivityAndProject($value, $this->context);
+        $this->validatePermissions($value, $this->context);
+    }
+
+    /**
+     * @param Timesheet $timesheet
+     * @param ExecutionContextInterface $context
+     */
+    protected function validatePermissions(Timesheet $timesheet, ExecutionContextInterface $context)
+    {
+        // special case that would otherwise need to be validated in several controllers:
+        // an entry is edited and the end date is removed (or duration deleted) would restart the record,
+        // which might be disallowed for the current user
+        if ($context->getViolations()->count() == 0 && null === $timesheet->getEnd()) {
+            if (!$this->auth->isGranted('start', $timesheet)) {
+                $context->buildViolation('You are not allowed to start this timesheet record.')
+                    ->atPath($this->durationOnly ? 'duration' : 'end')
+                    ->setTranslationDomain('validators')
+                    ->setCode(TimesheetConstraint::START_DISALLOWED)
+                    ->addViolation();
+
+                return;
+            }
+        }
+
+        // TODO check active entries against hard_limit
     }
 
     /**
