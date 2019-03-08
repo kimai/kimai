@@ -20,9 +20,6 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
-/**
- * Class ActivityRepository
- */
 class ActivityRepository extends AbstractRepository
 {
     /**
@@ -44,7 +41,7 @@ class ActivityRepository extends AbstractRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select($qb->expr()->max('t.id'))
+        $qb->select($qb->expr()->max('t.id') . ' AS maxid')
             ->from(Timesheet::class, 't')
             ->indexBy('t', 't.id')
             ->join('t.activity', 'a')
@@ -55,6 +52,7 @@ class ActivityRepository extends AbstractRepository
             ->andWhere('p.visible = 1')
             ->andWhere('c.visible = 1')
             ->groupBy('a.id', 'p.id')
+            ->orderBy('maxid', 'DESC')
             ->setMaxResults(10)
         ;
 
@@ -74,10 +72,7 @@ class ActivityRepository extends AbstractRepository
             return [];
         }
 
-        $ids = [];
-        foreach ($results as $result) {
-            $ids[] = $result[1];
-        }
+        $ids = array_column($results, 'maxid');
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('t', 'a', 'p', 'c')
