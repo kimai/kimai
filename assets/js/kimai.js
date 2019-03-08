@@ -116,8 +116,7 @@ $(function() {
                 $(this).find('a.anchor').hide();
             });
         },
-        reloadDatatableWithToolbarFilter: function()
-        {
+        reloadDatatableWithToolbarFilter: function() {
             var $form = $('.toolbar form');
             var loading = '<div class="overlay"><i class="fas fa-sync fa-spin"></i></div>';
             $('section.content').append(loading);
@@ -255,6 +254,17 @@ $(function() {
                     $(html).find(flashErrorIdentifier)
                 );
             }
+
+            // -----------------------------------------------------------------------
+            // a fix for firefox focus problems with datepicker in modal
+            // see https://github.com/kevinpapst/kimai2/issues/618
+            var enforceModalFocusFn = $.fn.modal.Constructor.prototype.enforceFocus;
+            $.fn.modal.Constructor.prototype.enforceFocus = function() {};
+            $modal.on('hidden', function() {
+                $.fn.modal.Constructor.prototype.enforceFocus = enforceModalFocusFn;
+            });
+            $modal.modal({ backdrop : false });
+            // -----------------------------------------------------------------------
 
             $modal.modal('show');
 
