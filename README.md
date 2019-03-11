@@ -24,7 +24,6 @@ Kimai is a [multi-language application](var/docs/translations.md) and already tr
 
 - PHP 7.1.3 or higher (test your system compatibility with the [requirements-checker](http://symfony.com/doc/current/reference/requirements.html))
 - The PHP extensions [xml](http://php.net/manual/en/book.xml.php), [mbstring](http://php.net/manual/en/book.mbstring.php), [gd](http://php.net/manual/en/book.image.php), [intl](https://php.net/manual/en/book.intl.php), [zip](https://php.net/manual/en/book.zip.php) and [PDO](https://php.net/manual/en/book.pdo.php) with either [pdo_sqlite](https://php.net/manual/en/ref.pdo-sqlite.php) or [pdo_mysql](https://php.net/manual/en/ref.pdo-mysql.php) enabled
-- Kimai needs its own sub-domain or you need to [recompile the frontend assets](var/docs/developers.md) for usage in a sub-directory
 - If you use MariaDB, make sure its at least v10.2.7 (see [FAQ](var/docs/faq.md))
 - A modern browser, Kimai v2 might be broken on old browsers like IE 10
 
