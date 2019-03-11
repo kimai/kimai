@@ -133,7 +133,7 @@ class ProjectController extends AbstractController
 
         $deleteForm->handleRequest($request);
 
-        if (0 == $stats->getRecordAmount() || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
+        if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
             try {
                 $this->getRepository()->deleteProject($project, $deleteForm->get('project')->getData());
                 $this->flashSuccess('action.delete.success');

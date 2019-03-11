@@ -116,9 +116,13 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $this->request($client, '/admin/project/2/edit');
         $this->assertTrue($client->getResponse()->isSuccessful());
-
         $this->request($client, '/admin/project/2/delete');
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/'));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=form]')->form();
+        $this->assertStringEndsWith($this->createUrl('/admin/project/2/delete'), $form->getUri());
+        $client->submit($form);
+
         $client->followRedirect();
         $this->assertHasDataTable($client);
         $this->assertHasFlashSuccess($client);

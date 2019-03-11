@@ -603,7 +603,7 @@ class KimaiImporterCommand extends Command
                 ->setFax($oldCustomer['fax'])
                 ->setHomepage($oldCustomer['homepage'])
                 ->setMobile($oldCustomer['mobile'])
-                ->setMail($oldCustomer['mail'])
+                ->setEmail($oldCustomer['mail'])
                 ->setPhone($oldCustomer['phone'])
                 ->setContact($oldCustomer['contact'])
                 ->setAddress($oldCustomer['street'] . PHP_EOL . $oldCustomer['zipcode'] . ' ' . $oldCustomer['city'])

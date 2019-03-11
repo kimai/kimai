@@ -135,7 +135,7 @@ class ActivityController extends AbstractController
 
         $deleteForm->handleRequest($request);
 
-        if (0 == $stats->getRecordAmount() || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
+        if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
             try {
                 $this->getRepository()->deleteActivity($activity, $deleteForm->get('activity')->getData());
                 $this->flashSuccess('action.delete.success');

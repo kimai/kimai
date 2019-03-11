@@ -19,8 +19,8 @@
         {% if is_granted('edit', activity) %}
             {% set actions = actions|merge({'edit': path('admin_activity_edit', {'id': activity.id})}) %}
         {% endif %}
-        {% if is_granted('delete', activity) %}
-            {% set actions = actions|merge({'trash': path('admin_activity_delete', {'id': activity.id})}) %}
+        {% if view == 'index' and is_granted('delete', activity) %}
+            {% set actions = actions|merge({'trash': {'url': path('admin_activity_delete', {'id': activity.id}), 'class': 'modal-ajax-form'}}) %}
         {% endif %}
     {% endif %}
 
@@ -59,8 +59,8 @@
         {% if is_granted('view_activity') %}
             {% set actions = actions|merge({'activity': path('admin_activity', {'customer': project.customer.id, 'project': project.id})}) %}
         {% endif %}
-        {% if is_granted('delete', project) %}
-            {% set actions = actions|merge({'trash': path('admin_project_delete', {'id': project.id})}) %}
+        {% if view == 'index' and is_granted('delete', project) %}
+            {% set actions = actions|merge({'trash': {'url': path('admin_project_delete', {'id': project.id}), 'class': 'modal-ajax-form'}}) %}
         {% endif %}
     {% endif %}
 
@@ -99,8 +99,8 @@
         {% if is_granted('view_project') %}
             {% set actions = actions|merge({'project': path('admin_project', {'customer': customer.id})}) %}
         {% endif %}
-        {% if is_granted('delete', customer) %}
-            {% set actions = actions|merge({'trash': path('admin_customer_delete', {'id': customer.id})}) %}
+        {% if view == 'index' and is_granted('delete', customer) %}
+            {% set actions = actions|merge({'trash': {'url': path('admin_customer_delete', {'id': customer.id}), 'class': 'modal-ajax-form'}}) %}
         {% endif %}
     {% endif %}
 

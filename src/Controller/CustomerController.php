@@ -146,7 +146,7 @@ class CustomerController extends AbstractController
 
         $deleteForm->handleRequest($request);
 
-        if (0 == $stats->getRecordAmount() || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
+        if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
             try {
                 $this->getRepository()->deleteCustomer($customer, $deleteForm->get('customer')->getData());
                 $this->flashSuccess('action.delete.success');

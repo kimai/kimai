@@ -1,4 +1,4 @@
-<div class="modal fade" id="{{ block('modal_id') }}" tabindex="-1" role="dialog" aria-labelledby="{{ block('modal_id') }}_label">
+<div class="modal{% if block('modal_class') is defined %} {{ block('modal_class') }}{% endif %} fade" id="{{ block('modal_id') }}" tabindex="-1" role="dialog" aria-labelledby="{{ block('modal_id') }}_label">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             {% if block('modal_before') is defined %}{{ block('modal_before') }}{% endif %}

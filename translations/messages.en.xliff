@@ -39,9 +39,11 @@
             </trans-unit>
             <trans-unit id="confirm.delete_message">
                 <source>confirm.delete_message</source>
-                <target>
-                    You have to confirm the deletion, as there are linked objects which will be deleted as well.
-                </target>
+                <target>You have to confirm the deletion, as there are linked objects which will be deleted as well.</target>
+            </trans-unit>
+            <trans-unit id="delete.not_in_use">
+                <source>delete.not_in_use</source>
+                <target>This item can be safely deleted.</target>
             </trans-unit>
 
             <!--
