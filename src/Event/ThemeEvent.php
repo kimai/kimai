@@ -11,7 +11,6 @@ namespace App\Event;
 
 use App\Entity\User;
 use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\HttpFoundation\Request;
 
 class ThemeEvent extends Event
 {
@@ -24,22 +23,21 @@ class ThemeEvent extends Event
      */
     protected $user;
     /**
-     * @var Request
-     */
-    protected $request;
-    /**
      * @var string
      */
     protected $content = '';
+    /**
+     * @var mixed
+     */
+    protected $payload = null;
 
     /**
-     * @param Request $request
-     * @param User $user
+     * @param string $name
      */
-    public function __construct(Request $request, User $user)
+    public function __construct(User $user, $payload = null)
     {
-        $this->request = $request;
         $this->user = $user;
+        $this->payload = $payload;
     }
 
     /**
@@ -48,14 +46,6 @@ class ThemeEvent extends Event
     public function getUser()
     {
         return $this->user;
-    }
-
-    /**
-     * @return Request
-     */
-    public function getRequest(): Request
-    {
-        return $this->request;
     }
 
     /**
@@ -74,6 +64,24 @@ class ThemeEvent extends Event
     {
         $this->content .= $content;
 
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPayload()
+    {
+        return $this->payload;
+    }
+
+    /**
+     * @param mixed $payload
+     * @return ThemeEvent
+     */
+    public function setPayload($payload)
+    {
+        $this->payload = $payload;
         return $this;
     }
 }

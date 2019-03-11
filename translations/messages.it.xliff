@@ -183,8 +183,8 @@
                 <source>label.project</source>
                 <target>Progetto</target>
             </trans-unit>
-            <trans-unit id="label.hourly_rate">
-                <source>label.hourly_rate</source>
+            <trans-unit id="label.hourlyRate">
+                <source>label.hourlyRate</source>
                 <target>Tariffa oraria</target>
             </trans-unit>
             <trans-unit id="label.skin">
@@ -419,8 +419,8 @@
                 <source>admin_customer.subtitle</source>
                 <target>I tuoi clienti sono la base per creare i progetti e le attività</target>
             </trans-unit>
-            <trans-unit id="label.customer_number">
-                <source>label.customer_number</source>
+            <trans-unit id="label.number">
+                <source>label.number</source>
                 <target>Account</target>
             </trans-unit>
             <trans-unit id="label.company">
@@ -667,8 +667,8 @@
                 <source>invoice.signature_customer</source>
                 <target>Accettazopme: Data / Nome Cliente / Firma</target>
             </trans-unit>
-            <trans-unit id="label.order_number">
-                <source>label.order_number</source>
+            <trans-unit id="label.orderNumber">
+                <source>label.orderNumber</source>
                 <target>Ordine n.</target>
             </trans-unit>
 

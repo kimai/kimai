@@ -7,9 +7,8 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Controller\Admin;
+namespace App\Controller;
 
-use App\Controller\AbstractController;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Form\ProjectEditForm;
@@ -69,7 +68,7 @@ class ProjectController extends AbstractController
         /* @var $entries Pagerfanta */
         $entries = $this->getDoctrine()->getRepository(Project::class)->findByQuery($query);
 
-        return $this->render('admin/project.html.twig', [
+        return $this->render('project/index.html.twig', [
             'entries' => $entries,
             'query' => $query,
             'showFilter' => $form->isSubmitted(),
@@ -145,7 +144,7 @@ class ProjectController extends AbstractController
             return $this->redirectToRoute('admin_project');
         }
 
-        return $this->render('admin/project_delete.html.twig', [
+        return $this->render('project/delete.html.twig', [
             'project' => $project,
             'stats' => $stats,
             'form' => $deleteForm->createView(),
@@ -181,7 +180,7 @@ class ProjectController extends AbstractController
             }
         }
 
-        return $this->render('admin/project_edit.html.twig', [
+        return $this->render('project/edit.html.twig', [
             'project' => $project,
             'form' => $editForm->createView()
         ]);

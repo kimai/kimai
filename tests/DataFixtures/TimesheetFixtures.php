@@ -14,6 +14,7 @@ use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
+use App\Timesheet\Util;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
@@ -271,7 +272,8 @@ class TimesheetFixtures extends Fixture
         $end = $end->modify('+ ' . (rand(1, 172800)) . ' seconds');
 
         $duration = $end->getTimestamp() - $start->getTimestamp();
-        $rate = $user->getPreferenceValue(UserPreference::HOURLY_RATE);
+        $hourlyRate = (float) $user->getPreferenceValue(UserPreference::HOURLY_RATE);
+        $rate = Util::calculateRate($hourlyRate, $duration);
 
         $entry = new Timesheet();
         $entry
@@ -279,7 +281,7 @@ class TimesheetFixtures extends Fixture
             ->setProject($project)
             ->setDescription($description)
             ->setUser($user)
-            ->setRate(round(($duration / 3600) * $rate))
+            ->setRate($rate)
             ->setBegin($start);
 
         if ($this->fixedRate) {
@@ -287,13 +289,14 @@ class TimesheetFixtures extends Fixture
         }
 
         if ($this->hourlyRate) {
-            $entry->setHourlyRate($rate);
+            $entry->setHourlyRate($hourlyRate);
         }
 
         if ($setEndDate) {
             $entry
                 ->setEnd($end)
-                ->setDuration($duration);
+                ->setDuration($duration)
+            ;
         }
 
         return $entry;

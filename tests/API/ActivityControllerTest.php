@@ -10,6 +10,7 @@
 namespace App\Tests\API;
 
 use App\Entity\Activity;
+use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Repository\Query\VisibilityQuery;
@@ -31,9 +32,11 @@ class ActivityControllerTest extends APIControllerBaseTest
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
 
         $project = $em->getRepository(Project::class)->find(1);
+        $customer = $em->getRepository(Customer::class)->find(1);
 
         $project2 = new Project();
         $project2->setName('Activity Test');
+        $project2->setCustomer($customer);
         $em->persist($project2);
 
         $activity = (new Activity())->setName('first one')->setComment('1')->setProject($project2);

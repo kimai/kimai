@@ -66,10 +66,8 @@ abstract class AbstractToolbarForm extends AbstractType
         $builder->add('customer', CustomerType::class, [
             'required' => false,
             'project_enabled' => true,
-            'project_visibility' => ProjectQuery::SHOW_BOTH,
             'query_builder' => function (CustomerRepository $repo) {
                 $query = new CustomerQuery();
-                $query->setVisibility(CustomerQuery::SHOW_BOTH); // this field is the reason for the query here
                 $query->setResultType(CustomerQuery::RESULT_TYPE_QUERYBUILDER);
                 $query->setOrderBy('name');
 
@@ -130,7 +128,6 @@ abstract class AbstractToolbarForm extends AbstractType
         $builder->add('project', ProjectType::class, [
             'required' => false,
             'activity_enabled' => true,
-            'activity_visibility' => ActivityQuery::SHOW_BOTH,
             'choices' => [],
         ]);
 
@@ -146,12 +143,10 @@ abstract class AbstractToolbarForm extends AbstractType
                     'group_by' => null,
                     'required' => false,
                     'activity_enabled' => true,
-                    'activity_visibility' => ActivityQuery::SHOW_BOTH,
                     'query_builder' => function (ProjectRepository $repo) use ($data) {
                         $query = new ProjectQuery();
                         $query->setCustomer($data['customer']);
                         $query->setResultType(ProjectQuery::RESULT_TYPE_QUERYBUILDER);
-                        $query->setVisibility(ProjectQuery::SHOW_BOTH);
                         $query->setOrderBy('name');
 
                         return $repo->findByQuery($query);
@@ -173,7 +168,6 @@ abstract class AbstractToolbarForm extends AbstractType
                 $query->setResultType(ActivityQuery::RESULT_TYPE_QUERYBUILDER);
                 $query->setGlobalsOnly(true);
                 $query->setOrderGlobalsFirst(true);
-                $query->setVisibility(ActivityQuery::SHOW_BOTH);
                 $query->setOrderBy('name');
 
                 return $repo->findByQuery($query);
@@ -195,7 +189,6 @@ abstract class AbstractToolbarForm extends AbstractType
                         $query->setResultType(ActivityQuery::RESULT_TYPE_QUERYBUILDER);
                         $query->setProject($data['project']);
                         $query->setOrderGlobalsFirst(true);
-                        $query->setVisibility(ActivityQuery::SHOW_BOTH);
                         $query->setOrderBy('name');
 
                         return $repo->findByQuery($query);

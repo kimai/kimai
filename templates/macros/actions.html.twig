@@ -1,0 +1,222 @@
+{# This file contains twig macros used to display possible actions for all available entities #}
+{% macro activities(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set actions = {'filter': '#collapseActivityAdmin', 'visibility': '#modal_activity_admin'} %}
+
+    {% if is_granted('create_activity') %}
+        {% set actions = actions|merge({'create': path('admin_activity_create')}) %}
+    {% endif %}
+
+    {% set event = trigger('actions.activities', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}
+
+{% macro activity(activity, view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set actions = {} %}
+
+    {% if activity.id is not empty %}
+        {% if is_granted('edit', activity) %}
+            {% set actions = actions|merge({'edit': path('admin_activity_edit', {'id': activity.id})}) %}
+        {% endif %}
+        {% if is_granted('delete', activity) %}
+            {% set actions = actions|merge({'trash': path('admin_activity_delete', {'id': activity.id})}) %}
+        {% endif %}
+    {% endif %}
+
+    {% if view != 'index' %}
+        {% set actions = actions|merge({'list': path('admin_activity')}) %}
+    {% endif %}
+
+    {% set event = trigger('actions.activity', {'actions': actions, 'view': view, 'activity': activity}) %}
+    {% if view == 'index' %}
+        {{ widgets.button_group(event.payload.actions) }}
+    {% else %}
+        {{ widgets.page_actions(event.payload.actions) }}
+    {% endif %}
+{% endmacro %}
+
+{% macro projects(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set actions = {'filter': '#collapseProjectAdmin', 'visibility': '#modal_project_admin'} %}
+
+    {% if is_granted('create_project') %}
+        {% set actions = actions|merge({'create': path('admin_project_create')}) %}
+    {% endif %}
+
+    {% set event = trigger('actions.projects', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}
+
+{% macro project(project, view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set actions = {} %}
+
+    {% if project.id is not empty %}
+        {% if is_granted('edit', project) %}
+            {% set actions = actions|merge({'edit': path('admin_project_edit', {'id': project.id})}) %}
+        {% endif %}
+        {% if is_granted('view_activity') %}
+            {% set actions = actions|merge({'activity': path('admin_activity', {'customer': project.customer.id, 'project': project.id})}) %}
+        {% endif %}
+        {% if is_granted('delete', project) %}
+            {% set actions = actions|merge({'trash': path('admin_project_delete', {'id': project.id})}) %}
+        {% endif %}
+    {% endif %}
+
+    {% if view != 'index' %}
+        {% set actions = actions|merge({'list': path('admin_project')}) %}
+    {% endif %}
+
+    {% set event = trigger('actions.project', {'actions': actions, 'view': view, 'project': project}) %}
+    {% if view == 'index' %}
+        {{ widgets.button_group(event.payload.actions) }}
+    {% else %}
+        {{ widgets.page_actions(event.payload.actions) }}
+    {% endif %}
+{% endmacro %}
+
+{% macro customers(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {'filter': '#collapseCustomerAdmin', 'visibility': '#modal_customer_admin'} %}
+    {% if is_granted('create_customer') %}
+        {% set actions = actions|merge({'create': path('admin_customer_create')}) %}
+    {% endif %}
+
+    {% set event = trigger('actions.customers', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}
+
+{% macro customer(customer, view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set actions = {} %}
+
+    {% if customer.id is not empty %}
+        {% if is_granted('edit', customer) %}
+            {% set actions = actions|merge({'edit': path('admin_customer_edit', {'id': customer.id})}) %}
+        {% endif %}
+        {% if is_granted('view_project') %}
+            {% set actions = actions|merge({'project': path('admin_project', {'customer': customer.id})}) %}
+        {% endif %}
+        {% if is_granted('delete', customer) %}
+            {% set actions = actions|merge({'trash': path('admin_customer_delete', {'id': customer.id})}) %}
+        {% endif %}
+    {% endif %}
+
+    {% if view != 'index' %}
+        {% set actions = actions|merge({'list': path('admin_customer')}) %}
+    {% endif %}
+
+    {% set event = trigger('actions.customer', {'actions': actions, 'view': view, 'customer': customer}) %}
+    {% if view == 'index' %}
+        {{ widgets.button_group(event.payload.actions) }}
+    {% else %}
+        {{ widgets.page_actions(event.payload.actions) }}
+    {% endif %}
+{% endmacro %}
+
+{% macro timesheets(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {'filter': '#collapseTimesheet'} %}
+    {% if is_granted('export_own_timesheet') %}
+        {% set actions = actions|merge({'download': {'onclick': 'return exportTimesheet()'}}) %}
+    {% endif %}
+    {% set actions = actions|merge({'visibility': '#modal_timesheet'}) %}
+    {% set actions = actions|merge({'calendar': path('calendar')}) %}
+    {% if is_granted('create_own_timesheet') %}
+        {% set actions = actions|merge({'create': {'url': path('timesheet_create'), 'class': 'modal-ajax-form'}}) %}
+    {% endif %}
+
+    {% set event = trigger('actions.timesheets', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}
+
+{% macro timesheet(timesheet, view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set actions = {} %}
+
+    {% if timesheet.id is not empty %}
+        {% if timesheet.end %}
+            {% if is_granted('start', timesheet) %}
+                {% set actions = actions|merge({'repeat': path('timesheet_start', {'id' : timesheet.id})}) %}
+            {% endif %}
+        {% else %}
+            {% if is_granted('stop', timesheet) %}
+                {% set actions = actions|merge({'stop': path('timesheet_stop', {'id' : timesheet.id})}) %}
+            {% endif %}
+        {% endif %}
+
+        {% if is_granted('edit', timesheet) %}
+            {% set class = '' %}
+            {% if view != 'edit' %}
+                {% set class = 'modal-ajax-form' %}
+            {% endif %}
+            {% set actions = actions|merge({'edit': {'url': path('timesheet_edit', {'id': timesheet.id}), 'class': class}}) %}
+        {% endif %}
+
+        {% if is_granted('delete', timesheet) %}
+            {% set actions = actions|merge({'trash': path('timesheet_delete', {'id' : timesheet.id})}) %}
+        {% endif %}
+    {% endif %}
+
+    {% if view != 'index' %}
+        {% set actions = actions|merge({'list': path('timesheet')}) %}
+    {% endif %}
+
+    {% set event = trigger('actions.timesheet', {'actions': actions, 'view': view, 'timesheet': timesheet}) %}
+    {% if view == 'index' %}
+        {{ widgets.button_group(event.payload.actions) }}
+    {% else %}
+        {{ widgets.page_actions(event.payload.actions) }}
+    {% endif %}
+{% endmacro %}
+
+{% macro timesheets_team(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {'filter': '#collapseTimesheetAdmin'} %}
+    {% if is_granted('export_own_timesheet') %}
+        {% set actions = actions|merge({'download': 'onclick:return exportTimesheet()'}) %}
+    {% endif %}
+    {% set actions = actions|merge({'visibility': '#modal_timesheet_admin'}) %}
+    {% if is_granted('create_other_timesheet') %}
+        {% set actions = actions|merge({'create': {'url': path('admin_timesheet_create'), 'class': 'modal-ajax-form'}}) %}
+    {% endif %}
+
+    {% set event = trigger('actions.timesheets_team', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}
+
+{% macro timesheet_team(timesheet, view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set actions = {} %}
+
+    {% if timesheet.id is not empty %}
+        {% if not timesheet.end and is_granted('stop', timesheet) %}
+            {% set actions = actions|merge({'stop': path('admin_timesheet_stop', {'id' : timesheet.id})}) %}
+        {% endif %}
+        {% if is_granted('edit', timesheet) %}
+            {% set class = '' %}
+            {% if view != 'edit' %}
+                {% set class = 'modal-ajax-form' %}
+            {% endif %}
+            {% set actions = actions|merge({'edit': {'url': path('admin_timesheet_edit', {'id': timesheet.id}), 'class': class}}) %}
+        {% endif %}
+        {% if is_granted('delete', timesheet) %}
+            {% set actions = actions|merge({'trash': path('admin_timesheet_delete', {'id' : timesheet.id})}) %}
+        {% endif %}
+    {% endif %}
+
+    {% if view != 'index' %}
+        {% set actions = actions|merge({'list': path('admin_timesheet')}) %}
+    {% endif %}
+
+    {% set event = trigger('actions.timesheet_team', {'actions': actions, 'view': view, 'timesheet': timesheet}) %}
+    {% if view == 'index' %}
+        {{ widgets.button_group(event.payload.actions) }}
+    {% else %}
+        {{ widgets.page_actions(event.payload.actions) }}
+    {% endif %}
+{% endmacro %}

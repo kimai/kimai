@@ -184,8 +184,8 @@
                 <source>label.project</source>
                 <target>Projekt</target>
             </trans-unit>
-            <trans-unit id="label.hourly_rate">
-                <source>label.hourly_rate</source>
+            <trans-unit id="label.hourlyRate">
+                <source>label.hourlyRate</source>
                 <target>Órabér</target>
             </trans-unit>
             <trans-unit id="label.skin">
@@ -312,8 +312,8 @@
                 <source>modal.columns.description</source>
                 <target>A megjelenítendő oszlopok egy böngésző sütiben lesznek tárolva. Ha törlöd az oldalhoz tartozó sütiket, akkor ez a beállítás visszaáll az alapértelmezett értékre.</target>
             </trans-unit>
-            <trans-unit id="label.fixed_rate">
-                <source>label.fixed_rate</source>
+            <trans-unit id="label.fixedRate">
+                <source>label.fixedRate</source>
                 <target>Fix órabér</target>
             </trans-unit>
 
@@ -445,8 +445,8 @@
                 <source>admin_customer.subtitle</source>
                 <target>Az ügyfelekhez hozzárendelve hozhatsz létre projekteket és tevékenységeket</target>
             </trans-unit>
-            <trans-unit id="label.customer_number">
-                <source>label.customer_number</source>
+            <trans-unit id="label.number">
+                <source>label.number</source>
                 <target>Adószám</target>
             </trans-unit>
             <trans-unit id="label.company">
@@ -749,8 +749,8 @@
                 <source>invoice.total_working_time</source>
                 <target>Teljes munkaidő</target>
             </trans-unit>
-            <trans-unit id="label.order_number">
-                <source>label.order_number</source>
+            <trans-unit id="label.orderNumber">
+                <source>label.orderNumber</source>
                 <target>Megbízás száma</target>
             </trans-unit>
             <trans-unit id="label.invoice_tax_number">

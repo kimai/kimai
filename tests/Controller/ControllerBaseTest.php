@@ -137,7 +137,20 @@ abstract class ControllerBaseTest extends WebTestCase
             $client->getResponse()->isSuccessful(),
             sprintf('The secure URL %s is not protected for role %s', $url, $role)
         );
-        $this->assertContains('Symfony\Component\Security\Core\Exception\AccessDeniedException', $client->getResponse()->getContent());
+        $this->assertAccessDenied($client);
+    }
+
+    protected function assertAccessDenied(Client $client)
+    {
+        $this->assertFalse(
+            $client->getResponse()->isSuccessful(),
+            'Access is not denied for URL: ' . $client->getRequest()->getUri()
+        );
+        $this->assertContains(
+            'Symfony\Component\Security\Core\Exception\AccessDeniedException',
+            $client->getResponse()->getContent(),
+            'Could not find AccessDeniedException in response'
+        );
     }
 
     /**
@@ -231,10 +244,22 @@ abstract class ControllerBaseTest extends WebTestCase
         }
     }
 
+    /**
+     * @param Client $client
+     */
     protected function assertHasNoEntriesWithFilter(Client $client)
     {
+        $this->assertCalloutWidgetWithMessage($client, 'No entries were found based on your selected filters.');
+    }
+
+    /**
+     * @param Client $client
+     * @param string $message
+     */
+    protected function assertCalloutWidgetWithMessage(Client $client, string $message)
+    {
         $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
-        $this->assertContains('No entries were found based on your selected filters.', $node->text());
+        $this->assertContains($message, $node->text());
     }
 
     /**

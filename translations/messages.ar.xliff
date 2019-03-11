@@ -183,8 +183,8 @@
                 <source>label.project</source>
                 <target>مشروع</target>
             </trans-unit>
-            <trans-unit id="label.hourly_rate">
-                <source>label.hourly_rate</source>
+            <trans-unit id="label.hourlyRate">
+                <source>label.hourlyRate</source>
                 <target>بالساعة</target>
             </trans-unit>
             <trans-unit id="label.skin">
@@ -311,8 +311,8 @@
                 <source>modal.columns.description</source>
                 <target>عند حفظ الخانات غير المحددة سيتم إخفاؤها وسيتم تخزين هذا الإعداد في ملف تعريف ارتباط المتصفح. إذا قمت بحذف ملفات تعريف الارتباط الخاصة بك ، سيتم عكس الإعدادات.</target>
             </trans-unit>
-            <trans-unit id="label.fixed_rate">
-                <source>label.fixed_rate</source>
+            <trans-unit id="label.fixedRate">
+                <source>label.fixedRate</source>
                 <target>معدل ثابت</target>
             </trans-unit>
 
@@ -427,8 +427,8 @@
                 <source>admin_customer.subtitle</source>
                 <target>عميلك هو الأساس لإنشاء المشاريع والأنشطة</target>
             </trans-unit>
-            <trans-unit id="label.customer_number">
-                <source>label.customer_number</source>
+            <trans-unit id="label.number">
+                <source>label.number</source>
                 <target>حساب</target>
             </trans-unit>
             <trans-unit id="label.company">
@@ -729,8 +729,8 @@
                 <source>invoice.total_working_time</source>
                 <target>المدة الإجمالية</target>
             </trans-unit>
-            <trans-unit id="label.order_number">
-                <source>label.order_number</source>
+            <trans-unit id="label.orderNumber">
+                <source>label.orderNumber</source>
                 <target>رقم الطلب</target>
             </trans-unit>
             <trans-unit id="label.invoice_tax_number">

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ad6acff0271ed9ad59d9b4ad54ed59cf",
+    "content-hash": "df4ac341f40ef97bcd3b78174125b1c5",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -59,6 +59,50 @@
                 "orm"
             ],
             "time": "2019-02-04T15:31:57+00:00"
+        },
+        {
+            "name": "behat/transliterator",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Behat/Transliterator.git",
+                "reference": "826ce7e9c2a6664c0d1f381cbb38b1fb80a7ee2c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Behat/Transliterator/zipball/826ce7e9c2a6664c0d1f381cbb38b1fb80a7ee2c",
+                "reference": "826ce7e9c2a6664c0d1f381cbb38b1fb80a7ee2c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "chuyskywalker/rolling-curl": "^3.1",
+                "php-yaoi/php-yaoi": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Behat\\Transliterator": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Artistic-1.0"
+            ],
+            "description": "String transliterator",
+            "keywords": [
+                "i18n",
+                "slug",
+                "transliterator"
+            ],
+            "time": "2017-04-04T11:38:05+00:00"
         },
         {
             "name": "dama/doctrine-test-bundle",
@@ -1849,6 +1893,87 @@
             "time": "2018-07-12T10:23:15+00:00"
         },
         {
+            "name": "gedmo/doctrine-extensions",
+            "version": "v2.4.36",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Atlantic18/DoctrineExtensions.git",
+                "reference": "87c78ff9fd4b90460386f753d95622f6fbbfcb27"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/87c78ff9fd4b90460386f753d95622f6fbbfcb27",
+                "reference": "87c78ff9fd4b90460386f753d95622f6fbbfcb27",
+                "shasum": ""
+            },
+            "require": {
+                "behat/transliterator": "~1.2",
+                "doctrine/common": "~2.4",
+                "php": ">=5.3.2"
+            },
+            "conflict": {
+                "doctrine/annotations": "<1.2"
+            },
+            "require-dev": {
+                "doctrine/common": ">=2.5.0",
+                "doctrine/mongodb-odm": ">=1.0.2",
+                "doctrine/orm": ">=2.5.0",
+                "phpunit/phpunit": "^4.8.35|^5.7|^6.5",
+                "symfony/yaml": "~2.6|~3.0|~4.0"
+            },
+            "suggest": {
+                "doctrine/mongodb-odm": "to use the extensions with the MongoDB ODM",
+                "doctrine/orm": "to use the extensions with the ORM"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Gedmo\\": "lib/Gedmo"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "David Buchmann",
+                    "email": "david@liip.ch"
+                },
+                {
+                    "name": "Gediminas Morkevicius",
+                    "email": "gediminas.morkevicius@gmail.com"
+                },
+                {
+                    "name": "Gustavo Falco",
+                    "email": "comfortablynumb84@gmail.com"
+                }
+            ],
+            "description": "Doctrine2 behavioral extensions",
+            "homepage": "http://gediminasm.org/",
+            "keywords": [
+                "Blameable",
+                "behaviors",
+                "doctrine2",
+                "extensions",
+                "gedmo",
+                "loggable",
+                "nestedset",
+                "sluggable",
+                "sortable",
+                "timestampable",
+                "translatable",
+                "tree",
+                "uploadable"
+            ],
+            "time": "2018-07-26T12:16:35+00:00"
+        },
+        {
             "name": "jdorn/sql-formatter",
             "version": "v1.2.17",
             "source": {
@@ -2148,16 +2273,16 @@
         },
         {
             "name": "kevinpapst/adminlte-bundle",
-            "version": "2.2",
+            "version": "2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/AdminLTEBundle.git",
-                "reference": "f30230e476eec0b22d1f850b6902488d14e0b95e"
+                "reference": "0d095f9ee7ec1450100f65ea392b938296e15863"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/f30230e476eec0b22d1f850b6902488d14e0b95e",
-                "reference": "f30230e476eec0b22d1f850b6902488d14e0b95e",
+                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/0d095f9ee7ec1450100f65ea392b938296e15863",
+                "reference": "0d095f9ee7ec1450100f65ea392b938296e15863",
                 "shasum": ""
             },
             "require": {
@@ -2205,7 +2330,59 @@
                 }
             ],
             "description": "Admin theme bundle for Symfony 4 based on AdminLTE 2.4.8 with FOSUserBundle support",
-            "time": "2019-01-20T16:36:22+00:00"
+            "time": "2019-03-05T20:06:11+00:00"
+        },
+        {
+            "name": "kimai/kimai2-composer",
+            "version": "0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kimai/kimai2-composer.git",
+                "reference": "7ff68f4270d2e48920309a3c1530f4d247a24905"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kimai/kimai2-composer/zipball/7ff68f4270d2e48920309a3c1530f4d247a24905",
+                "reference": "7ff68f4270d2e48920309a3c1530f4d247a24905",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0"
+            },
+            "require-dev": {
+                "composer/composer": "^1.0",
+                "composer/semver": "^1.0",
+                "friendsofphp/php-cs-fixer": "^2.10"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Kimai2\\Composer\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kimai2\\Composer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kevin Papst",
+                    "email": "kpapst@gmx.net",
+                    "homepage": "https://github.com/kevinpapst"
+                }
+            ],
+            "description": "An installer for Kimai 2 plugins",
+            "homepage": "https://github.com/kimai/kimai2-composer",
+            "keywords": [
+                "Kimai",
+                "installer",
+                "time-tracker",
+                "time-tracking"
+            ],
+            "time": "2019-03-10T19:34:31+00:00"
         },
         {
             "name": "markbaker/complex",

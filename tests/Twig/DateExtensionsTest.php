@@ -40,7 +40,7 @@ class DateExtensionsTest extends TestCase
 
     public function testGetFilters()
     {
-        $filters = ['month_name', 'date_short', 'date_time', 'date_format', 'time', 'hour24'];
+        $filters = ['month_name', 'date_short', 'date_time', 'date_full', 'date_format', 'time', 'hour24'];
         $sut = $this->getSut('de', []);
         $twigFilters = $sut->getFilters();
         $this->assertCount(count($filters), $twigFilters);
@@ -147,5 +147,18 @@ class DateExtensionsTest extends TestCase
             'de' => ['24_hours' => true],
         ]);
         $this->assertEquals('foo', $sut->hour24('foo', 'bar'));
+    }
+
+    public function testDateTimeFull()
+    {
+        $sut = $this->getSut('en', [
+            'en' => ['date_time_type' => 'yyyy-MM-dd HH:mm:ss'],
+        ]);
+
+        $dateTime = new \DateTime('2019-08-17 12:29:47', new \DateTimeZone(date_default_timezone_get()));
+        $dateTime->setDate(2019, 8, 17);
+        $dateTime->setTime(12, 29, 47);
+
+        $this->assertEquals('2019-08-17 12:29:47', $sut->dateTimeFull($dateTime));
     }
 }

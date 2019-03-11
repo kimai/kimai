@@ -7,10 +7,8 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Controller\Admin;
+namespace App\Controller;
 
-use App\Controller\AbstractController;
-use App\Controller\TimesheetControllerTrait;
 use App\Entity\Timesheet;
 use App\Form\TimesheetEditForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
@@ -26,7 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route(path="/team/timesheet")
  * @Security("is_granted('view_other_timesheet')")
  */
-class TimesheetController extends AbstractController
+class TimesheetTeamController extends AbstractController
 {
     use TimesheetControllerTrait;
 
@@ -60,7 +58,7 @@ class TimesheetController extends AbstractController
         /* @var $entries Pagerfanta */
         $entries = $this->getRepository()->findByQuery($query);
 
-        return $this->render('admin/timesheet.html.twig', [
+        return $this->render('timesheet-team/index.html.twig', [
             'entries' => $entries,
             'page' => $query->getPage(),
             'query' => $query,
@@ -101,7 +99,7 @@ class TimesheetController extends AbstractController
         /* @var $entries Pagerfanta */
         $entries = $this->getRepository()->findByQuery($query);
 
-        return $this->render('admin/timesheet_export.html.twig', [
+        return $this->render('timesheet-team/export.html.twig', [
             'entries' => $entries,
             'query' => $query,
         ]);
@@ -129,7 +127,7 @@ class TimesheetController extends AbstractController
      */
     public function editAction(Timesheet $entry, Request $request)
     {
-        return $this->edit($entry, $request, 'admin_timesheet_paginated', 'admin/timesheet_edit.html.twig');
+        return $this->edit($entry, $request, 'admin_timesheet_paginated', 'timesheet-team/edit.html.twig');
     }
 
     /**
@@ -141,7 +139,7 @@ class TimesheetController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        return $this->create($request, 'admin_timesheet', 'admin/timesheet_edit.html.twig');
+        return $this->create($request, 'admin_timesheet', 'timesheet-team/edit.html.twig');
     }
 
     /**
@@ -164,7 +162,7 @@ class TimesheetController extends AbstractController
             $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
         }
 
-        return $this->redirectToRoute('admin_timesheet_paginated', ['page' => $request->get('page')]);
+        return $this->redirectToRoute('admin_timesheet_paginated', ['page' => $request->get('page', 1)]);
     }
 
     /**

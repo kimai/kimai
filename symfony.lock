@@ -2,6 +2,9 @@
     "beberlei/doctrineextensions": {
         "version": "v1.2.0"
     },
+    "behat/transliterator": {
+        "version": "v1.2.0"
+    },
     "composer/semver": {
         "version": "1.4.2"
     },
@@ -137,6 +140,9 @@
     "fzaninotto/faker": {
         "version": "v1.8.0"
     },
+    "gedmo/doctrine-extensions": {
+        "version": "v2.4.36"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
@@ -160,6 +166,9 @@
     },
     "kevinpapst/adminlte-bundle": {
         "version": "0.3"
+    },
+    "kimai/kimai2-composer": {
+        "version": "0.1"
     },
     "markbaker/complex": {
         "version": "1.4.6"

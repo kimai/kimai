@@ -2,16 +2,11 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
 {% import "macros/toolbar.html.twig" as toolbar %}
+{% import "macros/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'admin_project.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_project.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
-{% block page_actions %}
-    {% set actions = {'filter': '#collapseProjectAdmin', 'visibility': '#modal_project_admin'} %}
-    {% if is_granted('create_project') %}
-        {% set actions = actions|merge({'create': path('admin_project_create')}) %}
-    {% endif %}
-    {{ widgets.page_actions(actions) }}
-{% endblock %}
+{% block page_actions %}{{ actions.projects('index') }}{% endblock %}
 
 {% block main_before %}
     {{ toolbar.toolbar(toolbarForm, 'collapseProjectAdmin', showFilter) }}
@@ -45,17 +40,7 @@
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'budget') }}">{{ entry.budget|money(entry.customer.currency) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
                 <td>
-                    {% set actionButtons = {} %}
-                    {% if is_granted('edit', entry) %}
-                        {% set actionButtons = {'edit': path('admin_project_edit', {'id': entry.id})}|merge(actionButtons) %}
-                    {% endif %}
-                    {% if is_granted('view_activity') %}
-                        {% set actionButtons = actionButtons|merge({'activity': path('admin_activity', {'customer': entry.customer.id, 'project': entry.id})}) %}
-                    {% endif %}
-                    {% if is_granted('delete', entry) %}
-                        {% set actionButtons = actionButtons|merge({'trash': path('admin_project_delete', {'id': entry.id})}) %}
-                    {% endif %}
-                    {{ widgets.button_group(actionButtons) }}
+                    {{ actions.project(entry, 'index') }}
                 </td>
             </tr>
         {% endfor %}

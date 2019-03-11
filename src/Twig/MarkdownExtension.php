@@ -10,12 +10,13 @@
 namespace App\Twig;
 
 use App\Utils\Markdown;
+use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
 /**
  * A twig extension to handle markdown parser.
  */
-class MarkdownExtension extends \Twig_Extension
+class MarkdownExtension extends AbstractExtension
 {
     /**
      * @var Markdown
