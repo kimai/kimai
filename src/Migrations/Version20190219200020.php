@@ -16,6 +16,8 @@ use Doctrine\DBAL\Schema\Schema;
 
 /**
  * Cleanup the user_preferences table from old configs.
+ *
+ * @version 0.9
  */
 final class Version20190219200020 extends AbstractMigration
 {

@@ -76,7 +76,7 @@
 
 {% block avanzu_navbar_notifications %}
     {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-        {{ render(controller('App\\Controller\\ActivityController::recentActivitiesAction')) }}
+        {{ render(controller('App\\Controller\\NavbarController::recentActivitiesAction')) }}
     {% endif %}
 {% endblock %}
 
@@ -95,14 +95,16 @@
 {% block stylesheets %}
     {# we do not call parent() as we use a custom built for the frontend assets and don't want the default <stylesheet> #}
     <link rel="stylesheet" href="{{ asset('build/app.css') }}">
-    {{ render(controller('App\\Controller\\EventController::trigger', {'request':app.request, 'event':constant('App\\Event\\ThemeEvent::STYLESHEET')})) }}
+    {% set event = trigger(constant('App\\Event\\ThemeEvent::STYLESHEET')) %}
+    {{ event.content|raw }}
 {% endblock %}
 
 {% block head %}
     {{ parent() }}
     <script src="{{ asset('build/app.js') }}"></script>
     {% include 'partials/head.html.twig' %}
-    {{ render(controller('App\\Controller\\EventController::trigger', {'request':app.request, 'event':constant('App\\Event\\ThemeEvent::HTML_HEAD')})) }}
+    {% set event = trigger(constant('App\\Event\\ThemeEvent::HTML_HEAD')) %}
+    {{ event.content|raw }}
 {% endblock %}
 
 {% block javascripts %}
@@ -128,5 +130,6 @@
             {# $.kimai.pauseRecord('li.messages-menu ul.menu li'); #}
         });
     </script>
-    {{ render(controller('App\\Controller\\EventController::trigger', {'request':app.request, 'event':constant('App\\Event\\ThemeEvent::JAVASCRIPT')})) }}
+    {% set event = trigger(constant('App\\Event\\ThemeEvent::JAVASCRIPT')) %}
+    {{ event.content|raw }}
 {% endblock %}

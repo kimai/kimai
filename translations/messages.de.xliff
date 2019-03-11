@@ -187,8 +187,8 @@
                 <source>label.project</source>
                 <target>Projekt</target>
             </trans-unit>
-            <trans-unit id="label.hourly_rate">
-                <source>label.hourly_rate</source>
+            <trans-unit id="label.hourlyRate">
+                <source>label.hourlyRate</source>
                 <target>Stundenlohn</target>
             </trans-unit>
             <trans-unit id="label.skin">
@@ -319,8 +319,8 @@
                 <source>modal.columns.description</source>
                 <target>Beim Speichern werden die nicht ausgewählten Spalten ausgeblendet und diese Einstellungen in einem Browser Cookie hinterlegt. Sollten Sie Ihre Cookies löschen, werden die Einstellungen rückgängig gemacht.</target>
             </trans-unit>
-            <trans-unit id="label.fixed_rate">
-                <source>label.fixed_rate</source>
+            <trans-unit id="label.fixedRate">
+                <source>label.fixedRate</source>
                 <target>Festbetrag</target>
             </trans-unit>
 
@@ -490,8 +490,8 @@
                 <source>admin_customer.subtitle</source>
                 <target>Ihre Kunden stellen die Basis dar, auf der Sie Projekte und Tätigkeiten anlegen können</target>
             </trans-unit>
-            <trans-unit id="label.customer_number">
-                <source>label.customer_number</source>
+            <trans-unit id="label.number">
+                <source>label.number</source>
                 <target>Kundennummer</target>
             </trans-unit>
             <trans-unit id="label.company">
@@ -810,8 +810,8 @@
                 <source>invoice.total_working_time</source>
                 <target>Gesamtdauer</target>
             </trans-unit>
-            <trans-unit id="label.order_number">
-                <source>label.order_number</source>
+            <trans-unit id="label.orderNumber">
+                <source>label.orderNumber</source>
                 <target>Bestellnummer</target>
             </trans-unit>
             <trans-unit id="label.invoice_tax_number">

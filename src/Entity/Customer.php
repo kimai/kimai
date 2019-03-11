@@ -13,8 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Customer
- *
  * @ORM\Table(name="customers")
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
  */
@@ -130,9 +128,9 @@ class Customer
     /**
      * @var string
      *
-     * @ORM\Column(name="mail", type="string", length=255, nullable=true)
+     * @ORM\Column(name="email", type="string", length=255, nullable=true)
      */
-    private $mail;
+    private $email;
 
     /**
      * @var string
@@ -152,7 +150,7 @@ class Customer
     /**
      * @var float
      *
-     * @ORM\Column(name="fixed_rate", type="decimal", precision=10, scale=2, nullable=true)
+     * @ORM\Column(name="fixed_rate", type="float", precision=10, scale=2, nullable=true)
      * @Assert\GreaterThanOrEqual(0)
      */
     private $fixedRate = null;
@@ -160,7 +158,7 @@ class Customer
     /**
      * @var float
      *
-     * @ORM\Column(name="hourly_rate", type="decimal", precision=10, scale=2, nullable=true)
+     * @ORM\Column(name="hourly_rate", type="float", precision=10, scale=2, nullable=true)
      * @Assert\GreaterThanOrEqual(0)
      */
     private $hourlyRate = null;
@@ -443,9 +441,9 @@ class Customer
      * @param string $mail
      * @return Customer
      */
-    public function setMail($mail)
+    public function setEmail($mail)
     {
-        $this->mail = $mail;
+        $this->email = $mail;
 
         return $this;
     }
@@ -455,9 +453,9 @@ class Customer
      *
      * @return string
      */
-    public function getMail()
+    public function getEmail()
     {
-        return $this->mail;
+        return $this->email;
     }
 
     /**

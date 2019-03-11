@@ -7,27 +7,43 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Controller;
+namespace App\Twig;
 
+use App\Entity\User;
 use App\Event\ThemeEvent;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Security\CurrentUser;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class EventController extends Controller
+class EventExtensions extends AbstractExtension
 {
     /**
      * @var EventDispatcherInterface
      */
     protected $eventDispatcher;
+    /**
+     * @var User
+     */
+    protected $user;
 
     /**
      * @param EventDispatcherInterface $dispatcher
      */
-    public function __construct(EventDispatcherInterface $dispatcher)
+    public function __construct(EventDispatcherInterface $dispatcher, CurrentUser $user)
     {
         $this->eventDispatcher = $dispatcher;
+        $this->user = $user->getUser();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFunctions()
+    {
+        return [
+            new TwigFunction('trigger', [$this, 'triggerEvent']),
+        ];
     }
 
     /**
@@ -49,19 +65,19 @@ class EventController extends Controller
     }
 
     /**
-     * @param Request $request
      * @param string $eventName
-     * @return ThemeEvent|Response
+     * @param mixed $payload
+     * @return ThemeEvent
      */
-    public function trigger(Request $request, string $event)
+    public function triggerEvent(string $eventName, $payload = null)
     {
-        if (!$this->hasListener($event)) {
-            return new Response();
+        $themeEvent = new ThemeEvent($this->user, $payload);
+
+        if ($this->hasListener($eventName)) {
+            $this->getDispatcher()->dispatch($eventName, $themeEvent);
         }
 
-        $themeEvent = new ThemeEvent($request, $this->getUser());
-        $this->getDispatcher()->dispatch($event, $themeEvent);
-
-        return new Response($themeEvent->getContent());
+        return $themeEvent;
     }
+
 }

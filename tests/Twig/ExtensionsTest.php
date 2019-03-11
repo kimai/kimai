@@ -10,6 +10,7 @@
 namespace App\Tests\Twig;
 
 use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Twig\Extensions;
 use App\Utils\LocaleSettings;
 use PHPUnit\Framework\TestCase;
@@ -60,7 +61,7 @@ class ExtensionsTest extends TestCase
 
     public function testGetFunctions()
     {
-        $functions = ['locales', 'is_visible_column', 'is_datatable_configured'];
+        $functions = ['locales', 'is_visible_column', 'is_datatable_configured', 'class_name'];
         $sut = $this->getSut($this->localeDe);
         $twigFunctions = $sut->getFunctions();
         $this->assertCount(count($functions), $twigFunctions);
@@ -243,5 +244,15 @@ class ExtensionsTest extends TestCase
             $result = $sut->documentationLink($input);
             $this->assertEquals($expected, $result);
         }
+    }
+
+    public function testGetClassName()
+    {
+        $sut = $this->getSut($this->localeEn);
+        $this->assertEquals('DateTime', $sut->getClassName(new \DateTime()));
+        $this->assertEquals('stdClass', $sut->getClassName(new \stdClass()));
+        $this->assertNull($sut->getClassName(''));
+        $this->assertNull($sut->getClassName(null));
+        $this->assertEquals('App\Entity\User', $sut->getClassName(new User()));
     }
 }

@@ -7,9 +7,8 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Controller\Admin;
+namespace App\Controller;
 
-use App\Controller\AbstractController;
 use App\Entity\Customer;
 use App\Form\CustomerEditForm;
 use App\Form\Toolbar\CustomerToolbarForm;
@@ -23,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Controller used to manage activities in the admin part of the site.
+ * Controller used to manage customer in the admin part of the site.
  *
  * @Route(path="/admin/customer")
  * @Security("is_granted('view_customer')")
@@ -78,7 +77,7 @@ class CustomerController extends AbstractController
         /* @var $entries Pagerfanta */
         $entries = $this->getRepository()->findByQuery($query);
 
-        return $this->render('admin/customer.html.twig', [
+        return $this->render('customer/index.html.twig', [
             'entries' => $entries,
             'query' => $query,
             'showFilter' => $form->isSubmitted(),
@@ -158,7 +157,7 @@ class CustomerController extends AbstractController
             return $this->redirectToRoute('admin_customer');
         }
 
-        return $this->render('admin/customer_delete.html.twig', [
+        return $this->render('customer/delete.html.twig', [
             'customer' => $customer,
             'stats' => $stats,
             'form' => $deleteForm->createView(),
@@ -186,7 +185,7 @@ class CustomerController extends AbstractController
             return $this->redirectToRoute('admin_customer');
         }
 
-        return $this->render('admin/customer_edit.html.twig', [
+        return $this->render('customer/edit.html.twig', [
             'customer' => $customer,
             'form' => $editForm->createView()
         ]);

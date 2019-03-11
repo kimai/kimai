@@ -2,43 +2,11 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
 {% import "macros/toolbar.html.twig" as toolbar %}
-
-{% macro summary(day, duration, dayRates, columns) %}
-    <tr class="summary info">
-        <td class="text-nowrap">{{ day }}</td>
-        <td></td>
-        <td></td>
-        <td class="text-nowrap">{{ duration|duration }}</td>
-        {% if is_granted('view_rate_own_timesheet') %}
-            <td class="text-nowrap">
-                {% for currency, rate in dayRates %}
-                    {{ rate|money(currency) }}
-                    {% if not loop.last %}
-                         <br>
-                    {% endif %}
-                {% endfor %}
-            </td>
-            <td colspan="{{ (columns|length) - 5 }}"></td>
-        {% else %}
-            <td colspan="{{ (columns|length) - 4 }}"></td>
-        {% endif %}
-    </tr>
-{% endmacro %}
+{% import "macros/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'timesheet.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'timesheet.subtitle'|trans }}{% endblock %}
-{% block page_actions %}
-    {% set actions = {'filter': '#collapseTimesheet'} %}
-    {% if is_granted('export_own_timesheet') %}
-        {% set actions = actions|merge({'download': {'onclick': 'return exportTimesheet()'}}) %}
-    {% endif %}
-    {% set actions = actions|merge({'visibility': '#modal_timesheet'}) %}
-    {% set actions = actions|merge({'calendar': path('calendar')}) %}
-    {% if is_granted('create_own_timesheet') %}
-        {% set actions = actions|merge({'create': {'url': path('timesheet_create'), 'class': 'modal-ajax-form'}}) %}
-    {% endif %}
-    {{ widgets.page_actions(actions) }}
-{% endblock %}
+{% block page_actions %}{{ actions.timesheets('index') }}{% endblock %}
 
 {% block main_before %}
     {{ toolbar.toolbar(toolbarForm, 'collapseTimesheet', showFilter) }}
@@ -117,25 +85,7 @@
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}">{{ widgets.label_activity(entry.activity) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }} timesheet-description">{{ entry.description|desc2html }}</td>
                 <td>
-                    {% set actionButtons = {} %}
-                    {% if is_granted('edit', entry) %}
-                        {% set actionButtons = actionButtons|merge({'edit': {'url': path('timesheet_edit', {'id': entry.id, 'page': page}), 'class': 'modal-ajax-form'}}) %}
-                    {% endif %}
-
-                    {% if entry.end %}
-                        {% if is_granted('start', entry) %}
-                            {% set actionButtons = {'repeat': path('timesheet_start', {'id' : entry.id})}|merge(actionButtons) %}
-                        {% endif %}
-                    {% else %}
-                        {% if is_granted('stop', entry) %}
-                            {% set actionButtons = {'stop': path('timesheet_stop', {'id' : entry.id})}|merge(actionButtons) %}
-                        {% endif %}
-                    {% endif %}
-
-                    {% if is_granted('delete', entry) %}
-                        {% set actionButtons = actionButtons|merge({'trash': path('timesheet_delete', {'id' : entry.id, 'page': page})}) %}
-                    {% endif %}
-                    {{ widgets.button_group(actionButtons) }}
+                    {{ actions.timesheet(entry, 'index') }}
                 </td>
             </tr>
             {% if entry.end %}
@@ -169,3 +119,25 @@
         }
     </script>
 {% endblock %}
+
+{% macro summary(day, duration, dayRates, columns) %}
+    <tr class="summary info">
+        <td class="text-nowrap">{{ day }}</td>
+        <td></td>
+        <td></td>
+        <td class="text-nowrap">{{ duration|duration }}</td>
+        {% if is_granted('view_rate_own_timesheet') %}
+            <td class="text-nowrap">
+                {% for currency, rate in dayRates %}
+                    {{ rate|money(currency) }}
+                    {% if not loop.last %}
+                        <br>
+                    {% endif %}
+                {% endfor %}
+            </td>
+            <td colspan="{{ (columns|length) - 5 }}"></td>
+        {% else %}
+            <td colspan="{{ (columns|length) - 4 }}"></td>
+        {% endif %}
+    </tr>
+{% endmacro %}

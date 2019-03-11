@@ -17,6 +17,8 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Adds the timezone column to the timesheet table
  * See https://github.com/kevinpapst/kimai2/pull/372 for further information.
+ *
+ * @version 0.8
  */
 final class Version20190201150324 extends AbstractMigration
 {

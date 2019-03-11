@@ -22,6 +22,8 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  *
  * Execute this command to load the data:
  * $ php bin/console doctrine:fixtures:load
+ *
+ * @codeCoverageIgnore
  */
 class UserFixtures extends Fixture
 {

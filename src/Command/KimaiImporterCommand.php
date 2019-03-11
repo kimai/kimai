@@ -16,6 +16,7 @@ use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
+use App\Timesheet\Util;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
@@ -177,18 +178,9 @@ class KimaiImporterCommand extends Command
             return;
         }
 
-        // pre-load all data to make sure we can fully import everything
-        $users = null;
-        $customer = null;
-        $projects = null;
-        $activities = null;
-        $records = null;
-        $activityToProject = null;
-        $fixedRates = null;
-        $rates = null;
-
         $bytesStart = memory_get_usage(true);
 
+        // pre-load all data to make sure we can fully import everything
         try {
             $users = $this->fetchAllFromImport('users');
         } catch (\Exception $ex) {
@@ -965,7 +957,7 @@ class KimaiImporterCommand extends Command
                 continue;
             }
 
-            $duration = $oldRecord['end'] - $oldRecord['start'];
+            $duration = (int) ($oldRecord['end'] - $oldRecord['start']);
 
             // ----------------------- unknown user, damned missing data integrity in Kimai v1 -----------------------
             if (!isset($this->users[$oldRecord['userID']])) {
@@ -1021,9 +1013,9 @@ class KimaiImporterCommand extends Command
             if ($timesheet->getFixedRate() !== null) {
                 $timesheet->setRate($timesheet->getFixedRate());
             } elseif ($timesheet->getHourlyRate() !== null) {
-                $hourlyRate = $timesheet->getHourlyRate();
-                $rate = (float) $hourlyRate * ($duration / 3600);
-                $timesheet->setRate(round($rate, 2));
+                $hourlyRate = (float) $timesheet->getHourlyRate();
+                $rate = Util::calculateRate($hourlyRate, $duration);
+                $timesheet->setRate($rate);
             }
 
             $user = $this->users[$oldRecord['userID']];

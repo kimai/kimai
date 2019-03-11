@@ -7,9 +7,8 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Controller\Admin;
+namespace App\Controller;
 
-use App\Controller\AbstractController;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Form\Toolbar\UserToolbarForm;
@@ -74,7 +73,7 @@ class UserController extends AbstractController
         /* @var $entries Pagerfanta */
         $entries = $this->getRepository()->findByQuery($query);
 
-        return $this->render('admin/user.html.twig', [
+        return $this->render('user/index.html.twig', [
             'entries' => $entries,
             'query' => $query,
             'showFilter' => $form->isSubmitted(),
@@ -119,7 +118,7 @@ class UserController extends AbstractController
         }
 
         return $this->render(
-            'admin/user_edit.html.twig',
+            'user/edit.html.twig',
             [
                 'user' => $user,
                 'form' => $editForm->createView()
@@ -159,7 +158,7 @@ class UserController extends AbstractController
         }
 
         return $this->render(
-            'admin/user_delete.html.twig',
+            'user/delete.html.twig',
             [
                 'user' => $userToDelete,
                 'stats' => $stats,

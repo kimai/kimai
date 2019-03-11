@@ -51,7 +51,7 @@ services:
         arguments:
             $timesheetAsMarkdown: "%kimai.timesheet.markdown%"
 
-    App\Controller\Admin\CustomerController:
+    App\Controller\CustomerController:
         arguments:
             $defaults: "%kimai.defaults%"
 
@@ -75,8 +75,7 @@ services:
         class: App\Doctrine\TimesheetSubscriber
         arguments: [!tagged timesheet.calculator]
         tags:
-            - { name: doctrine.event_listener, event: prePersist, lazy: true }
-            - { name: doctrine.event_listener, event: preUpdate, lazy: true }
+            - { name: doctrine.event_subscriber, priority: 50 }
 
     # make sure, that sqlite supports foreign keys and cascade deletes
     App\Doctrine\SqliteSessionInitSubscriber:
@@ -177,4 +176,3 @@ services:
     App\Repository\InvoiceDocumentRepository:
         class: App\Repository\InvoiceDocumentRepository
         arguments: ['%kimai.invoice.documents%']
-

@@ -82,10 +82,10 @@ class TimesheetRepository extends AbstractRepository
         switch ($type) {
             case self::STATS_QUERY_ACTIVE:
                 return count($this->getActiveEntries($user));
-                break;
+
             case self::STATS_QUERY_MONTHLY:
                 return $this->getMonthlyStats($user, $begin, $end);
-                break;
+
             case self::STATS_QUERY_DURATION:
                 $what = 'SUM(t.duration)';
                 break;

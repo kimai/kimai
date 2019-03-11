@@ -23,8 +23,6 @@ use PHPUnit\Framework\TestCase;
  */
 class RateCalculatorTest extends TestCase
 {
-    public const HOURLY_RATE = 75;
-
     public function testCalculateWithTimesheetHourlyRate()
     {
         $record = new Timesheet();
@@ -130,7 +128,7 @@ class RateCalculatorTest extends TestCase
         $this->assertEquals($exptectedRate, $timesheet->getRate());
     }
 
-    protected function getTestUser($rate = self::HOURLY_RATE)
+    protected function getTestUser($rate = 75)
     {
         $pref = new UserPreference();
         $pref->setName(UserPreference::HOURLY_RATE);
@@ -159,23 +157,23 @@ class RateCalculatorTest extends TestCase
     }
 
     /**
+     * Uses the hourly rate from user_preferences to calculate the rate.
+     *
      * @dataProvider getRuleDefinitions
      */
-    public function testCalculateWithRules($rules, $expectedFactor)
+    public function testCalculateWithRulesByUsersHourlyRate($duration, $rules, $expectedRate)
     {
-        $seconds = 31837;
-
         $end = new \DateTime();
         $end->setTimezone(new \DateTimeZone('UTC'));
         $end->setTime(12, 0, 0);
         $start = clone $end;
         $start->setTimezone(new \DateTimeZone('UTC'));
-        $start->setTimestamp($end->getTimestamp() - $seconds);
+        $start->setTimestamp($end->getTimestamp() - $duration);
 
         $record = new Timesheet();
         $record->setUser($this->getTestUser());
         $record->setBegin($start);
-        $record->setDuration($seconds);
+        $record->setDuration($duration);
         $record->setActivity(new Activity());
 
         $this->assertEquals(0, $record->getRate());
@@ -185,10 +183,7 @@ class RateCalculatorTest extends TestCase
         $sut = new RateCalculator($rules);
         $sut->calculate($record);
 
-        $this->assertEquals(
-            $this->rateForSeconds(self::HOURLY_RATE, $seconds) * $expectedFactor,
-            $record->getRate()
-        );
+        $this->assertEquals($expectedRate, $record->getRate());
     }
 
     public function getRuleDefinitions()
@@ -200,10 +195,12 @@ class RateCalculatorTest extends TestCase
 
         return [
             [
+                31837,
                 [],
-                1
+                663.27
             ],
             [
+                31837,
                 [
                     'default' => [
                         'days' => [$day],
@@ -214,9 +211,10 @@ class RateCalculatorTest extends TestCase
                         'factor' => 1.5
                     ],
                 ],
-                2.0
+                1326.54
             ],
             [
+                31837,
                 [
                     'default' => [
                         'days' => [$day],
@@ -227,13 +225,8 @@ class RateCalculatorTest extends TestCase
                         'factor' => 1.5
                     ],
                 ],
-                3.5
+                2321.45
             ],
         ];
-    }
-
-    protected function rateForSeconds($hourlyRate, $seconds)
-    {
-        return (float) $hourlyRate * ($seconds / 3600);
     }
 }

@@ -53,14 +53,14 @@ class ActivityQuery extends ProjectQuery
      */
     public function isGlobalsOnly(): bool
     {
-        return $this->globalsOnly;
+        return (bool) $this->globalsOnly;
     }
 
     /**
      * @param bool $globalsOnly
      * @return ActivityQuery
      */
-    public function setGlobalsOnly(bool $globalsOnly)
+    public function setGlobalsOnly($globalsOnly)
     {
         $this->globalsOnly = $globalsOnly;
 

@@ -191,8 +191,8 @@
                 <source>label.project</source>
                 <target>Proyecto</target>
             </trans-unit>
-            <trans-unit id="label.hourly_rate">
-                <source>label.hourly_rate</source>
+            <trans-unit id="label.hourlyRate">
+                <source>label.hourlyRate</source>
                 <target>Tarifa por hora</target>
             </trans-unit>
             <trans-unit id="label.skin">
@@ -443,8 +443,8 @@
                 <source>admin_customer.subtitle</source>
                 <target>Sus clientes son la base para crear proyectos y actividades</target>
             </trans-unit>
-            <trans-unit id="label.customer_number">
-                <source>label.customer_number</source>
+            <trans-unit id="label.number">
+                <source>label.number</source>
                 <target>Cuenta</target>
             </trans-unit>
             <trans-unit id="label.company">
@@ -701,8 +701,8 @@
                 <source>invoice.signature_customer</source>
                 <target>Confirmación: Fecha / Nombre / Firma</target>
             </trans-unit>
-            <trans-unit id="label.order_number">
-                <source>label.order_number</source>
+            <trans-unit id="label.orderNumber">
+                <source>label.orderNumber</source>
                 <target>Número de orden</target>
             </trans-unit>
 

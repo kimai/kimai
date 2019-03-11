@@ -238,7 +238,7 @@ class TimesheetController extends AbstractController
             $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
         }
 
-        return $this->redirectToRoute('timesheet_paginated', ['page' => $request->get('page')]);
+        return $this->redirectToRoute('timesheet_paginated', ['page' => $request->get('page', 1)]);
     }
 
     /**

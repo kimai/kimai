@@ -21,6 +21,8 @@ use Faker\Generator;
  *
  * Execute this command to load the data:
  * $ php bin/console doctrine:fixtures:load
+ *
+ * @codeCoverageIgnore
  */
 class InvoiceFixtures extends Fixture
 {

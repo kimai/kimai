@@ -7,16 +7,17 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Controller\Admin;
+namespace App\Tests\Controller;
 
+use App\Entity\Customer;
 use App\Entity\Timesheet;
 use App\Entity\User;
-use App\Tests\Controller\ControllerBaseTest;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use Gedmo\Loggable\Entity\LogEntry;
 
 /**
- * @coversDefaultClass \App\Controller\Admin\CustomerController
+ * @coversDefaultClass \App\Controller\CustomerController
  * @group integration
  */
 class CustomerControllerTest extends ControllerBaseTest

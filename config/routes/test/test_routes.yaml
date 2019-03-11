@@ -1,6 +1,6 @@
 app.test.activity_recent:
     path: /{_locale}/activities/recent
-    controller: App\Controller\ActivityController::recentActivitiesAction
+    controller: App\Controller\NavbarController::recentActivitiesAction
     requirements:
         _locale: '%app_locales%'
     defaults:

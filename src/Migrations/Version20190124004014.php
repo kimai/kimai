@@ -16,6 +16,8 @@ use Doctrine\DBAL\Schema\Schema;
 
 /**
  * Adds the exported column to the timesheet table
+ *
+ * @version 0.8
  */
 final class Version20190124004014 extends AbstractMigration
 {

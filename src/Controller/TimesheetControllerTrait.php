@@ -103,11 +103,11 @@ trait TimesheetControllerTrait
 
             $this->flashSuccess('action.update.success');
 
-            return $this->redirectToRoute($redirectRoute, ['page' => $request->get('page')]);
+            return $this->redirectToRoute($redirectRoute, ['page' => $request->get('page', 1)]);
         }
 
         return $this->render($renderTemplate, [
-            'entry' => $entry,
+            'timesheet' => $entry,
             'form' => $editForm->createView(),
         ]);
     }
@@ -180,7 +180,7 @@ trait TimesheetControllerTrait
         }
 
         return $this->render($renderTemplate, [
-            'entry' => $entry,
+            'timesheet' => $entry,
             'form' => $createForm->createView(),
         ]);
     }

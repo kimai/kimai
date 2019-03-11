@@ -96,12 +96,12 @@ class ActivityEditForm extends AbstractType
 
         $builder
             ->add('fixedRate', MoneyType::class, [
-                'label' => 'label.fixed_rate',
+                'label' => 'label.fixedRate',
                 'required' => false,
                 'currency' => $currency,
             ])
             ->add('hourlyRate', MoneyType::class, [
-                'label' => 'label.hourly_rate',
+                'label' => 'label.hourlyRate',
                 'required' => false,
                 'currency' => $currency,
             ])

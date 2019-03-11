@@ -7,13 +7,12 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Controller\Admin;
+namespace App\Tests\Controller;
 
 use App\Entity\User;
-use App\Tests\Controller\ControllerBaseTest;
 
 /**
- * @coversDefaultClass \App\Controller\Admin\AboutController
+ * @coversDefaultClass \App\Controller\AboutController
  * @group integration
  */
 class AboutControllerTest extends ControllerBaseTest
