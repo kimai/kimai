@@ -120,7 +120,7 @@ class ConvertTimezoneCommand extends Command
         $result = $this->getTimesheets($start, $end);
         $amount = count($result);
 
-        $answer = $io->ask(sprintf('This will update %s timesheet records, continue (y/n) ? ', $amount));
+        $answer = $io->ask(sprintf('This will update %s timesheet records, continue (y/n) ? ', $amount), 'y');
 
         if ('y' !== $answer) {
             $io->text('Aborting.');
