@@ -382,18 +382,6 @@
             </trans-unit>
 
             <!--
-              Help - Manual
-            -->
-            <trans-unit id="help.title">
-                <source>help.title</source>
-                <target>Ajuda</target>
-            </trans-unit>
-            <trans-unit id="help.subtitle">
-                <source>help.subtitle</source>
-                <target>Instruções para usar e configurar o Kimai</target>
-            </trans-unit>
-
-            <!--
               Admin: Timesheet
             -->
             <trans-unit id="admin_timesheet.title">

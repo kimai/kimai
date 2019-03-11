@@ -105,16 +105,6 @@ $(function() {
                     }
                 });
             });
-
-            $('.markdown-body :header').prepend(function() {
-                $(this).prepend('<a class="anchor" href="#'+$(this).attr('id')+'"><i class="fas fa-link"></i>');
-            });
-
-            $('.markdown-body :header').hover(function(){
-                $(this).find('a.anchor').show();
-            }, function(){
-                $(this).find('a.anchor').hide();
-            });
         },
         reloadDatatableWithToolbarFilter: function() {
             var $form = $('.toolbar form');
