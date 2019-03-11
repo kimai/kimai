@@ -12,6 +12,7 @@ namespace App\Timesheet\Calculator;
 use App\Entity\Timesheet;
 use App\Entity\UserPreference;
 use App\Timesheet\CalculatorInterface;
+use App\Timesheet\Util;
 
 /**
  * Implementation to calculate the rate for a timesheet record.
@@ -54,8 +55,8 @@ class RateCalculator implements CalculatorInterface
         $hourlyRate = $this->findHourlyRate($record);
         $factor = $this->getRateFactor($record);
 
-        $hourlyRate = (float) $hourlyRate * $factor;
-        $rate = (float) $hourlyRate * ($record->getDuration() / 3600);
+        $hourlyRate = (float) ($hourlyRate * $factor);
+        $rate = Util::calculateRate($hourlyRate, $record->getDuration());
 
         $record->setHourlyRate($hourlyRate);
         $record->setRate($rate);

@@ -69,7 +69,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         if ($full) {
             $expectedKeys = [
                 'id', 'name', 'number', 'comment', 'visible', 'company', 'contact', 'address', 'country', 'currency',
-                'phone', 'fax', 'mobile', 'mail', 'timezone'
+                'phone', 'fax', 'mobile', 'email', 'timezone'
             ];
         }
 

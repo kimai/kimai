@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
+{% import "macros/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'admin_customer.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_customer.subtitle'|trans }}{% endblock %}
+{% block page_actions %}{{ actions.customer(customer, 'delete') }}{% endblock %}
 
 {% block main %}
 

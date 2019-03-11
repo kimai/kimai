@@ -187,8 +187,8 @@
                 <source>label.project</source>
                 <target>Project</target>
             </trans-unit>
-            <trans-unit id="label.hourly_rate">
-                <source>label.hourly_rate</source>
+            <trans-unit id="label.hourlyRate">
+                <source>label.hourlyRate</source>
                 <target>Hourly rate</target>
             </trans-unit>
             <trans-unit id="label.skin">
@@ -319,8 +319,8 @@
                 <source>modal.columns.description</source>
                 <target>Upon saving the un-checked columns will be hidden and this setting will be stored in a browser cookie. If you delete your cookies, the settings will be reversed.</target>
             </trans-unit>
-            <trans-unit id="label.fixed_rate">
-                <source>label.fixed_rate</source>
+            <trans-unit id="label.fixedRate">
+                <source>label.fixedRate</source>
                 <target>Fixed rate</target>
             </trans-unit>
 
@@ -490,8 +490,8 @@
                 <source>admin_customer.subtitle</source>
                 <target>Your customer are the base for creating projects and activities</target>
             </trans-unit>
-            <trans-unit id="label.customer_number">
-                <source>label.customer_number</source>
+            <trans-unit id="label.number">
+                <source>label.number</source>
                 <target>Account</target>
             </trans-unit>
             <trans-unit id="label.company">
@@ -810,8 +810,8 @@
                 <source>invoice.total_working_time</source>
                 <target>Total duration</target>
             </trans-unit>
-            <trans-unit id="label.order_number">
-                <source>label.order_number</source>
+            <trans-unit id="label.orderNumber">
+                <source>label.orderNumber</source>
                 <target>Order number</target>
             </trans-unit>
             <trans-unit id="label.invoice_tax_number">

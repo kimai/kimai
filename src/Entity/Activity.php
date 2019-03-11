@@ -13,8 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Activity
- *
  * @ORM\Table(name="activities")
  * @ORM\Entity(repositoryClass="App\Repository\ActivityRepository")
  */
@@ -71,7 +69,7 @@ class Activity
     /**
      * @var float
      *
-     * @ORM\Column(name="fixed_rate", type="decimal", precision=10, scale=2, nullable=true)
+     * @ORM\Column(name="fixed_rate", type="float", precision=10, scale=2, nullable=true)
      * @Assert\GreaterThanOrEqual(0)
      */
     private $fixedRate = null;
@@ -79,7 +77,7 @@ class Activity
     /**
      * @var float
      *
-     * @ORM\Column(name="hourly_rate", type="decimal", precision=10, scale=2, nullable=true)
+     * @ORM\Column(name="hourly_rate", type="float", precision=10, scale=2, nullable=true)
      * @Assert\GreaterThanOrEqual(0)
      */
     private $hourlyRate = null;

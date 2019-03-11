@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
+{% import "macros/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'admin_activity.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_activity.subtitle'|trans }}{% endblock %}
+{% block page_actions %}{{ actions.activity(activity, 'delete') }}{% endblock %}
 
 {% block main %}
 

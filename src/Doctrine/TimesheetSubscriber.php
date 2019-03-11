@@ -12,8 +12,8 @@ namespace App\Doctrine;
 use App\Entity\Timesheet;
 use App\Timesheet\CalculatorInterface;
 use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Event\LifecycleEventArgs;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
+use Doctrine\ORM\Event\OnFlushEventArgs;
+use Doctrine\ORM\Events;
 
 /**
  * A listener to make sure all Timesheet entries will have a proper duration.
@@ -26,7 +26,6 @@ class TimesheetSubscriber implements EventSubscriber
     protected $calculator;
 
     /**
-     * TimesheetSubscriber constructor.
      * @param iterable $calculators
      */
     public function __construct(iterable $calculators)
@@ -48,38 +47,43 @@ class TimesheetSubscriber implements EventSubscriber
     public function getSubscribedEvents()
     {
         return [
-            'prePersist',
-            'preUpdate',
+            Events::onFlush,
         ];
     }
 
     /**
-     * @param PreUpdateEventArgs $args
+     * @param OnFlushEventArgs $args
      */
-    public function preUpdate(PreUpdateEventArgs $args)
+    public function onFlush(OnFlushEventArgs $args)
     {
-        $this->calculateFields($args);
-    }
+        $em = $args->getEntityManager();
+        $uow = $em->getUnitOfWork();
+        $meta = $em->getClassMetadata(Timesheet::class);
 
-    /**
-     * @param LifecycleEventArgs $args
-     */
-    public function prePersist(LifecycleEventArgs $args)
-    {
-        $this->calculateFields($args);
-    }
+        foreach ($uow->getScheduledEntityUpdates() as $entity) {
+            if (!($entity instanceof Timesheet)) {
+                continue;
+            }
 
-    /**
-     * @param LifecycleEventArgs $args
-     */
-    protected function calculateFields(LifecycleEventArgs $args)
-    {
-        $entity = $args->getObject();
-
-        if (!($entity instanceof Timesheet)) {
-            return;
+            $this->calculateFields($entity);
+            $uow->recomputeSingleEntityChangeSet($meta, $entity);
         }
 
+        foreach ($uow->getScheduledEntityInsertions() as $entity) {
+            if (!($entity instanceof Timesheet)) {
+                continue;
+            }
+
+            $this->calculateFields($entity);
+            $uow->recomputeSingleEntityChangeSet($meta, $entity);
+        }
+    }
+
+    /**
+     * @param Timesheet $entity
+     */
+    protected function calculateFields(Timesheet $entity)
+    {
         foreach ($this->calculator as $calculator) {
             $calculator->calculate($entity);
         }

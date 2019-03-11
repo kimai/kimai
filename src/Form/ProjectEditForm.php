@@ -52,7 +52,7 @@ class ProjectEditForm extends AbstractType
                 'required' => false,
             ])
             ->add('orderNumber', TextType::class, [
-                'label' => 'label.order_number',
+                'label' => 'label.orderNumber',
                 'required' => false,
             ])
             ->add('customer', CustomerType::class, [
@@ -62,12 +62,12 @@ class ProjectEditForm extends AbstractType
                 },
             ])
             ->add('fixedRate', MoneyType::class, [
-                'label' => 'label.fixed_rate',
+                'label' => 'label.fixedRate',
                 'required' => false,
                 'currency' => $currency,
             ])
             ->add('hourlyRate', MoneyType::class, [
-                'label' => 'label.hourly_rate',
+                'label' => 'label.hourlyRate',
                 'required' => false,
                 'currency' => $currency,
             ])

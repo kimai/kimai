@@ -183,8 +183,8 @@
                 <source>label.project</source>
                 <target>Проект</target>
             </trans-unit>
-            <trans-unit id="label.hourly_rate">
-                <source>label.hourly_rate</source>
+            <trans-unit id="label.hourlyRate">
+                <source>label.hourlyRate</source>
                 <target>Почасовая заработная плата</target>
             </trans-unit>
             <trans-unit id="label.skin">
@@ -435,8 +435,8 @@
                 <source>admin_customer.subtitle</source>
                 <target>Журнал записи клиентской базы, включающий проекты и деятельность.</target>
             </trans-unit>
-            <trans-unit id="label.customer_number">
-                <source>label.customer_number</source>
+            <trans-unit id="label.number">
+                <source>label.number</source>
                 <target>Клиентский номер</target>
             </trans-unit>
             <trans-unit id="label.company">
@@ -725,8 +725,8 @@
                 <source>invoice.signature_customer</source>
                 <target>Подтверждение: Дата / Имя клиента / Подпись</target>
             </trans-unit>
-            <trans-unit id="label.order_number">
-                <source>label.order_number</source>
+            <trans-unit id="label.orderNumber">
+                <source>label.orderNumber</source>
                 <target>Номер заказа</target>
             </trans-unit>
 

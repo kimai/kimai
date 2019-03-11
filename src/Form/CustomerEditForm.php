@@ -42,7 +42,7 @@ class CustomerEditForm extends AbstractType
                 'label' => 'label.name',
             ])
             ->add('number', TextType::class, [
-                'label' => 'label.customer_number',
+                'label' => 'label.number',
                 'required' => false,
             ])
             ->add('comment', TextareaType::class, [
@@ -81,7 +81,7 @@ class CustomerEditForm extends AbstractType
                 'required' => false,
                 'attr' => ['icon' => 'mobile'],
             ])
-            ->add('mail', EmailType::class, [
+            ->add('email', EmailType::class, [
                 'label' => 'label.email',
                 'required' => false,
             ])
@@ -93,12 +93,12 @@ class CustomerEditForm extends AbstractType
                 'label' => 'label.timezone',
             ])
             ->add('fixedRate', MoneyType::class, [
-                'label' => 'label.fixed_rate',
+                'label' => 'label.fixedRate',
                 'required' => false,
                 'currency' => $customer->getCurrency() ?? false,
             ])
             ->add('hourlyRate', MoneyType::class, [
-                'label' => 'label.hourly_rate',
+                'label' => 'label.hourlyRate',
                 'required' => false,
                 'currency' => $customer->getCurrency() ?? false,
             ])

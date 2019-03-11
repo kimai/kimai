@@ -28,9 +28,9 @@
                 <br>
                 {{ 'label.phone'|trans }}: {{ model.customer.phone }}
             {% endif %}
-            {% if model.customer.mail is not empty %}
+            {% if model.customer.email is not empty %}
                 <br>
-                {{ 'label.email'|trans }}: {{ model.customer.mail }}
+                {{ 'label.email'|trans }}: {{ model.customer.email }}
             {% endif %}
         </address>
     </div>
@@ -41,10 +41,10 @@
         <p contenteditable="true">
             <b>{{ 'invoice.due_days'|trans }}:</b> {{ model.dueDate|date_short }}
             {% if model.customer.number is not empty %}
-                <br><b>{{ 'label.customer_number'|trans }}:</b> {{ model.customer.number }}
+                <br><b>{{ 'label.number'|trans }}:</b> {{ model.customer.number }}
             {% endif %}
             {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
-                <br><b>{{ 'label.order_number'|trans }}:</b> {{ model.query.project.orderNumber }}
+                <br><b>{{ 'label.orderNumber'|trans }}:</b> {{ model.query.project.orderNumber }}
             {% endif %}
         </p>
     </div>

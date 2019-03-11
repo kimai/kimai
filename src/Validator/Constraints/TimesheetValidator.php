@@ -9,7 +9,7 @@
 
 namespace App\Validator\Constraints;
 
-use App\Entity\Timesheet;
+use App\Entity\Timesheet as TimesheetEntity;
 use App\Validator\Constraints\Timesheet as TimesheetConstraint;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraint;
@@ -59,7 +59,7 @@ class TimesheetValidator extends ConstraintValidator
     }
 
     /**
-     * @param Timesheet $value
+     * @param TimesheetEntity $value
      * @param Constraint $constraint
      */
     public function validate($value, Constraint $constraint)
@@ -68,7 +68,7 @@ class TimesheetValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\Timesheet');
         }
 
-        if (!is_object($value) || !($value instanceof Timesheet)) {
+        if (!is_object($value) || !($value instanceof TimesheetEntity)) {
             return;
         }
 
@@ -78,10 +78,10 @@ class TimesheetValidator extends ConstraintValidator
     }
 
     /**
-     * @param Timesheet $timesheet
+     * @param TimesheetEntity $timesheet
      * @param ExecutionContextInterface $context
      */
-    protected function validatePermissions(Timesheet $timesheet, ExecutionContextInterface $context)
+    protected function validatePermissions(TimesheetEntity $timesheet, ExecutionContextInterface $context)
     {
         // special case that would otherwise need to be validated in several controllers:
         // an entry is edited and the end date is removed (or duration deleted) would restart the record,
@@ -102,10 +102,10 @@ class TimesheetValidator extends ConstraintValidator
     }
 
     /**
-     * @param Timesheet $timesheet
+     * @param TimesheetEntity $timesheet
      * @param ExecutionContextInterface $context
      */
-    protected function validateBeginAndEnd(Timesheet $timesheet, ExecutionContextInterface $context)
+    protected function validateBeginAndEnd(TimesheetEntity $timesheet, ExecutionContextInterface $context)
     {
         if (null === $timesheet->getBegin()) {
             $context->buildViolation('You must submit a begin date.')
@@ -135,10 +135,10 @@ class TimesheetValidator extends ConstraintValidator
     }
 
     /**
-     * @param Timesheet $timesheet
+     * @param TimesheetEntity $timesheet
      * @param ExecutionContextInterface $context
      */
-    protected function validateActivityAndProject(Timesheet $timesheet, ExecutionContextInterface $context)
+    protected function validateActivityAndProject(TimesheetEntity $timesheet, ExecutionContextInterface $context)
     {
         if (null === ($activity = $timesheet->getActivity())) {
             $context->buildViolation('A timesheet must have an activity.')

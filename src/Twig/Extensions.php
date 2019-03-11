@@ -16,12 +16,14 @@ use App\Utils\LocaleSettings;
 use NumberFormatter;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Intl\Intl;
+use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
  * Multiple Twig extensions: filters and functions
  */
-class Extensions extends \Twig_Extension
+class Extensions extends AbstractExtension
 {
     /**
      * @var LocaleSettings
@@ -98,6 +100,7 @@ class Extensions extends \Twig_Extension
         'xlsx' => 'fas fa-file-excel',
         'on' => 'fas fa-toggle-on',
         'off' => 'fas fa-toggle-off',
+        'audit' => 'fas fa-history',
     ];
 
     /**
@@ -132,10 +135,24 @@ class Extensions extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('locales', [$this, 'getLocales']),
-            new \Twig_SimpleFunction('is_visible_column', [$this, 'isColumnVisible']),
-            new \Twig_SimpleFunction('is_datatable_configured', [$this, 'isDatatableConfigured']),
+            new TwigFunction('locales', [$this, 'getLocales']),
+            new TwigFunction('is_visible_column', [$this, 'isColumnVisible']),
+            new TwigFunction('is_datatable_configured', [$this, 'isDatatableConfigured']),
+            new TwigFunction('class_name', [$this, 'getClassName']),
         ];
+    }
+
+    /**
+     * @param $object
+     * @return null|string
+     */
+    public function getClassName($object)
+    {
+        if (!is_object($object)) {
+            return null;
+        }
+
+        return get_class($object);
     }
 
     /**

@@ -7,12 +7,10 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Controller\Admin;
+namespace App\Controller;
 
 use App\Constants;
-use App\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -38,11 +36,10 @@ class AboutController extends AbstractController
 
     /**
      * @Route(path="", name="about", methods={"GET"})
-
-     * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $phpInfo = $this->getPhpInfo();
         unset($phpInfo[0]);
@@ -74,7 +71,7 @@ class AboutController extends AbstractController
             }
         }
 
-        return $this->render('admin/system.html.twig', [
+        return $this->render('about/system.html.twig', [
             'modules' => get_loaded_extensions(),
             'dotenv' => [
                 'APP_ENV' => getenv('APP_ENV'),

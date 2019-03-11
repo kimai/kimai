@@ -14,12 +14,13 @@ use App\Entity\User;
 use App\Form\Type\DateRangeType;
 use App\Tests\Controller\ControllerBaseTest;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use Gedmo\Loggable\Entity\LogEntry;
 
 /**
- * @coversDefaultClass \App\Controller\Admin\TimesheetController
+ * @coversDefaultClass \App\Controller\TimesheetTeamController
  * @group integration
  */
-class TimesheetControllerTest extends ControllerBaseTest
+class TimesheetTeamControllerTest extends ControllerBaseTest
 {
     public function testIsSecure()
     {

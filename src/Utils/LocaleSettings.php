@@ -152,7 +152,7 @@ class LocaleSettings
      */
     public function isTwentyFourHours(?string $locale = null): bool
     {
-        return $this->getConfigByLocaleAndKey('24_hours', $locale);
+        return (bool) $this->getConfigByLocaleAndKey('24_hours', $locale);
     }
 
     /**
