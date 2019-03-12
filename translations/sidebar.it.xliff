@@ -11,6 +11,10 @@
                     To help me improve Kimai, please send your message on the linked website. Whether you have questions, error messages or ideas for enhancements, your feedback is valuable!
                 ]]></target>
             </trans-unit>
+            <trans-unit id="home.help">
+                <source>home.help</source>
+                <target>Aiuto</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -44,19 +44,12 @@ $(function() {
 
             // auto hide success message after x seconds, as they are just meant as quick feedback and
             // not as a permanent source of information
-            if ($.kimai.settings['alertSuccessAutoHide'] > 0) {
-                setTimeout(
-                    function() {
-                        $('div.alert-success').alert('close');
-                    },
-                    $.kimai.settings['alertSuccessAutoHide']
-                );
-            }
-
-            // ask before a delete call is executed
-            $('body').on('click', 'a.btn-trash', function (event) {
-                return confirm($.kimai.settings['confirmDelete']);
-            });
+            setTimeout(
+                function() {
+                    $('div.alert-success').alert('close');
+                },
+                5000
+            );
 
             // compound field in toolbar
             this.activateDateRangePicker('.content-wrapper');
@@ -107,6 +100,7 @@ $(function() {
             });
         },
         reloadDatatableWithToolbarFilter: function() {
+            // TODO check if toolbar form is present, if not, reload current URL
             var $form = $('.toolbar form');
             var loading = '<div class="overlay"><i class="fas fa-sync fa-spin"></i></div>';
             $('section.content').append(loading);
@@ -230,6 +224,8 @@ $(function() {
 
             // load new form from given content
             if ($(html).find('#form_modal .modal-content').length > 0 ) {
+                // switch classes, in case the modal type changed
+                $('#remote_form_modal').attr('class', $(html).find('#form_modal').attr('class'));
                 // TODO cleanup widgets before replacing the content?
                 $('#remote_form_modal .modal-content').replaceWith(
                     $(html).find('#form_modal .modal-content')
@@ -255,6 +251,11 @@ $(function() {
             });
             $modal.modal({ backdrop : false });
             // -----------------------------------------------------------------------
+
+            // workaround for autofocus attribute, as the modal "steals" it
+            $modal.on('shown.bs.modal', function () {
+                $(this).find('input:visible:first').focus().delay(1000).focus();
+            });
 
             $modal.modal('show');
 
@@ -312,8 +313,6 @@ $(function() {
     // default values
     $.kimai.defaults = {
         locale: 'en',
-        alertSuccessAutoHide: 5000,
-        confirmDelete: 'Really delete?',
         today: 'Today',
         yesterday: 'Yesterday',
         apply: 'Apply',

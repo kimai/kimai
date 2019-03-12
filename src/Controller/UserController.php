@@ -147,7 +147,7 @@ class UserController extends AbstractController
 
         $deleteForm->handleRequest($request);
 
-        if (0 == $stats->getRecordsTotal() || ($deleteForm->isSubmitted() && $deleteForm->isValid())) {
+        if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($userToDelete);
             $entityManager->flush();

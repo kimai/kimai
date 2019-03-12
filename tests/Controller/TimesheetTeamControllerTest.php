@@ -146,21 +146,6 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertNull($timesheet->getFixedRate());
     }
 
-    public function testDeleteActionIsNotAllowedForTeamlead()
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
-        $fixture = new TimesheetFixtures();
-        $fixture->setAmount(10);
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
-        $fixture->setStartDate('2017-05-01');
-        $this->importFixture($em, $fixture);
-
-        $this->request($client, '/team/timesheet/1/delete');
-        $this->assertFalse($client->getResponse()->isSuccessful());
-    }
-
     public function testDeleteAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
@@ -176,10 +161,16 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->request($client, '/team/timesheet/1/delete');
-        $this->assertIsRedirect($client, $this->createUrl('/team/timesheet/page/1'));
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $form = $client->getCrawler()->filter('form[name=form]')->form();
+        $this->assertStringEndsWith($this->createUrl('/team/timesheet/1/delete'), $form->getUri());
+        $client->submit($form);
+
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertHasFlashSuccess($client);
+        $this->assertHasFlashDeleteSuccess($client);
+        $this->assertHasDataTable($client);
 
         $this->request($client, '/team/timesheet/1/edit');
         $this->assertFalse($client->getResponse()->isSuccessful());

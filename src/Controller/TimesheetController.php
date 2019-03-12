@@ -13,6 +13,7 @@ use App\Entity\Timesheet;
 use App\Form\TimesheetEditForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\Query\TimesheetQuery;
+use Doctrine\ORM\ORMException;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -228,17 +229,28 @@ class TimesheetController extends AbstractController
      */
     public function deleteAction(Timesheet $entry, Request $request)
     {
-        try {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($entry);
-            $entityManager->flush();
+        $deleteForm = $this->createFormBuilder()
+            ->setAction($this->generateUrl('timesheet_delete', ['id' => $entry->getId()]))
+            ->setMethod('POST')
+            ->getForm();
 
-            $this->flashSuccess('action.delete.success');
-        } catch (\Exception $ex) {
-            $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
+        $deleteForm->handleRequest($request);
+
+        if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
+            try {
+                $this->getRepository()->delete($entry);
+                $this->flashSuccess('action.delete.success');
+            } catch (ORMException $ex) {
+                $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
+            }
+
+            return $this->redirectToRoute('timesheet');
         }
 
-        return $this->redirectToRoute('timesheet_paginated', ['page' => $request->get('page', 1)]);
+        return $this->render('timesheet/delete.html.twig', [
+            'timesheet' => $entry,
+            'form' => $deleteForm->createView(),
+        ]);
     }
 
     /**
