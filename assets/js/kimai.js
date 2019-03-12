@@ -252,6 +252,11 @@ $(function() {
             $modal.modal({ backdrop : false });
             // -----------------------------------------------------------------------
 
+            // workaround for autofocus attribute, as the modal "steals" it
+            $modal.on('shown.bs.modal', function () {
+                $(this).find('input:visible:first').focus().delay(1000).focus();
+            });
+
             $modal.modal('show');
 
             // the new form that was loaded via ajax
