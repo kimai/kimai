@@ -40,6 +40,9 @@ class CustomerEditForm extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'label.name',
+                'attr' => [
+                    'autofocus' => 'autofocus'
+                ],
             ])
             ->add('number', TextType::class, [
                 'label' => 'label.number',

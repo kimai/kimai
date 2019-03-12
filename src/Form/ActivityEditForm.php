@@ -52,6 +52,9 @@ class ActivityEditForm extends AbstractType
             // string - length 255
             ->add('name', TextType::class, [
                 'label' => 'label.name',
+                'attr' => [
+                    'autofocus' => 'autofocus'
+                ],
             ])
             // text
             ->add('comment', TextareaType::class, [

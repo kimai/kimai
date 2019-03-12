@@ -46,6 +46,9 @@ class ProjectEditForm extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'label.name',
+                'attr' => [
+                    'autofocus' => 'autofocus'
+                ],
             ])
             ->add('comment', TextareaType::class, [
                 'label' => 'label.comment',
