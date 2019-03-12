@@ -156,8 +156,8 @@
             {% set actions = actions|merge({'edit': {'url': path('timesheet_edit', {'id': timesheet.id}), 'class': class}}) %}
         {% endif %}
 
-        {% if is_granted('delete', timesheet) %}
-            {% set actions = actions|merge({'trash': path('timesheet_delete', {'id' : timesheet.id})}) %}
+        {% if view == 'index' and is_granted('delete', timesheet) %}
+            {% set actions = actions|merge({'trash': {'url': path('timesheet_delete', {'id' : timesheet.id}), 'class': 'modal-ajax-form'}}) %}
         {% endif %}
     {% endif %}
 
@@ -197,6 +197,7 @@
         {% if not timesheet.end and is_granted('stop', timesheet) %}
             {% set actions = actions|merge({'stop': path('admin_timesheet_stop', {'id' : timesheet.id})}) %}
         {% endif %}
+
         {% if is_granted('edit', timesheet) %}
             {% set class = '' %}
             {% if view != 'edit' %}
@@ -204,8 +205,9 @@
             {% endif %}
             {% set actions = actions|merge({'edit': {'url': path('admin_timesheet_edit', {'id': timesheet.id}), 'class': class}}) %}
         {% endif %}
-        {% if is_granted('delete', timesheet) %}
-            {% set actions = actions|merge({'trash': path('admin_timesheet_delete', {'id' : timesheet.id})}) %}
+
+        {% if view == 'index' and is_granted('delete', timesheet) %}
+            {% set actions = actions|merge({'trash': {'url': path('admin_timesheet_delete', {'id' : timesheet.id}), 'class': 'modal-ajax-form'}}) %}
         {% endif %}
     {% endif %}
 

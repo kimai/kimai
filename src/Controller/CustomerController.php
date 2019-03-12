@@ -151,7 +151,7 @@ class CustomerController extends AbstractController
                 $this->getRepository()->deleteCustomer($customer, $deleteForm->get('customer')->getData());
                 $this->flashSuccess('action.delete.success');
             } catch (ORMException $ex) {
-                $this->flashError('action.delete.error');
+                $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
             }
 
             return $this->redirectToRoute('admin_customer');
