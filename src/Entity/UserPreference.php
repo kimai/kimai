@@ -30,6 +30,8 @@ class UserPreference
 {
     public const HOURLY_RATE = 'hourly_rate';
     public const SKIN = 'skin';
+    public const LOCALE = 'language';
+    public const TIMEZONE = 'timezone';
 
     /**
      * @var int
