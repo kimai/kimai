@@ -55,7 +55,7 @@ services:
         arguments:
             $defaults: "%kimai.defaults%"
 
-    App\Utils\LocaleSettings:
+    App\Configuration\LanguageFormattings:
         arguments:
             $languageSettings: "%kimai.languages%"
 
