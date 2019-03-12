@@ -120,7 +120,9 @@ class TimesheetControllerTest extends APIControllerBaseTest
     public function testGetCollectionWithQuery()
     {
         $begin = new \DateTime('-10 days');
+        $begin->setTime(0, 0, 0);
         $end = new \DateTime();
+        $end->setTime(23, 59, 59);
 
         $query = [
             'customer' => 1,
