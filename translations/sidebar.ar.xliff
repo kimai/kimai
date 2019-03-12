@@ -9,6 +9,10 @@
                      لمساعدتي في تحسين Kimai, الرجاء إرسال رسالتك على موقع الويب المرتبط. سواء كان لديك أسئلة أو للتبليغ عن خطأ أو عطل أو أفكار للتحسينات ، فإن تعليقاتك ذات قيمة!
                 ]]></target>
             </trans-unit>
+            <trans-unit id="home.help">
+                <source>home.help</source>
+                <target>مساعدة</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

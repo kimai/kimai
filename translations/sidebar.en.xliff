@@ -19,6 +19,10 @@
                 <source>home.website</source>
                 <target>Homepage</target>
             </trans-unit>
+            <trans-unit id="home.help">
+                <source>home.help</source>
+                <target>Help</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

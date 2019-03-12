@@ -21,6 +21,10 @@
                 <source>home.website</source>
                 <target>Weboldal</target>
             </trans-unit>
+            <trans-unit id="home.help">
+                <source>home.help</source>
+                <target>Súgó</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
