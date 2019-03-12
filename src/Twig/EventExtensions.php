@@ -79,5 +79,4 @@ class EventExtensions extends AbstractExtension
 
         return $themeEvent;
     }
-
 }

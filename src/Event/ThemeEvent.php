@@ -82,6 +82,7 @@ class ThemeEvent extends Event
     public function setPayload($payload)
     {
         $this->payload = $payload;
+
         return $this;
     }
 }

@@ -14,7 +14,6 @@ use App\Entity\User;
 use App\Form\Type\DateRangeType;
 use App\Tests\Controller\ControllerBaseTest;
 use App\Tests\DataFixtures\TimesheetFixtures;
-use Gedmo\Loggable\Entity\LogEntry;
 
 /**
  * @coversDefaultClass \App\Controller\TimesheetTeamController

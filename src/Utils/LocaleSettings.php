@@ -14,9 +14,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Use this class, when you want information about formats for the "current request locale".
- * Otherwise use
- *
- * @package App\Utils
  */
 class LocaleSettings
 {

@@ -8,6 +8,7 @@ nelmio_api_doc:
             - { alias: TimesheetEditForm,       type: App\Form\TimesheetEditForm,               groups: [Default, Entity, Timesheet] }
             - { alias: TimesheetEntity,         type: App\Entity\Timesheet,                     groups: [Default, Entity, Timesheet] }
             - { alias: UserEntity,              type: App\Entity\User,                          groups: [Default, Entity, User] }
+            - { alias: I18nConfig,              type: App\API\Model\I18n,                       groups: [Default] }
     areas:
         path_patterns:
             - ^/api(?!/doc)
@@ -16,7 +17,7 @@ nelmio_api_doc:
         schemes: [http, https]
         info:
             title: Kimai 2 - API Docs
-            description: REST API description for the Kimai 2 time-tracking software. Do not rely on the example values/models, they are currently generated wrong. Please fetch the request and response structure from the API itself.
+            description: REST API for the Kimai 2 time-tracking software. It's rather limited by now. If you need other methods, please let me know at GitHub!
             version: 0.2
 #        parameters:
 #            hostname:

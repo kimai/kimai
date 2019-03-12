@@ -26,6 +26,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints;
 
 /**
  * @RouteResource("Timesheet")
@@ -84,6 +85,8 @@ class TimesheetController extends BaseApiController
      * @Rest\QueryParam(name="size", requirements="\d+", strict=true, nullable=true, description="The amount of entries for each page (default: 25)")
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order (allowed values: 'ASC', 'DESC')")
      * @Rest\QueryParam(name="orderBy", requirements="id|begin|end|rate", strict=true, nullable=true, description="The field by which results will be ordered (allowed values: 'id', 'begin', 'end', 'rate')")
+     * @Rest\QueryParam(name="begin", requirements=@Constraints\DateTime, strict=true, nullable=true, description="Only records after this date will be included (format: Y-m-d H:i:s)")
+     * @Rest\QueryParam(name="end", requirements=@Constraints\DateTime, strict=true, nullable=true, description="Only records before this date will be included (format: Y-m-d H:i:s)")
      *
      * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
      *
@@ -128,6 +131,14 @@ class TimesheetController extends BaseApiController
 
         if (null !== ($orderBy = $paramFetcher->get('orderBy'))) {
             $query->setOrderBy($orderBy);
+        }
+
+        if (null !== ($begin = $paramFetcher->get('begin'))) {
+            $query->setBegin(new \DateTime($begin));
+        }
+
+        if (null !== ($end = $paramFetcher->get('end'))) {
+            $query->setEnd(new \DateTime($end));
         }
 
         /** @var Pagerfanta $data */

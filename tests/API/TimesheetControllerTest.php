@@ -119,7 +119,20 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testGetCollectionWithQuery()
     {
-        $query = ['customer' => 1, 'project' => 1, 'activity' => 1, 'page' => 2, 'size' => 5, 'order' => 'DESC', 'orderBy' => 'rate'];
+        $begin = new \DateTime('-10 days');
+        $end = new \DateTime();
+
+        $query = [
+            'customer' => 1,
+            'project' => 1,
+            'activity' => 1,
+            'page' => 2,
+            'size' => 5,
+            'order' => 'DESC',
+            'orderBy' => 'rate',
+            'begin' => $begin->format('Y-m-d H:i:s'),
+            'end' => $end->format('Y-m-d H:i:s'),
+        ];
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
         $result = json_decode($client->getResponse()->getContent(), true);
