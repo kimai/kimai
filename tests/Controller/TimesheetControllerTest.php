@@ -157,10 +157,16 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->request($client, '/timesheet/1/delete');
-        $this->assertIsRedirect($client, $this->createUrl('/timesheet/page/1'));
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $form = $client->getCrawler()->filter('form[name=form]')->form();
+        $this->assertStringEndsWith($this->createUrl('/timesheet/1/delete'), $form->getUri());
+        $client->submit($form);
+
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertHasFlashSuccess($client);
+        $this->assertHasFlashDeleteSuccess($client);
+        $this->assertHasDataTable($client);
 
         $this->request($client, '/timesheet/1/edit');
         $this->assertFalse($client->getResponse()->isSuccessful());

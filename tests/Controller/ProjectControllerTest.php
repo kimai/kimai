@@ -9,13 +9,11 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
-use Gedmo\Loggable\Entity\LogEntry;
 
 /**
  * @coversDefaultClass \App\Controller\ProjectController
@@ -116,9 +114,13 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $this->request($client, '/admin/project/2/edit');
         $this->assertTrue($client->getResponse()->isSuccessful());
-
         $this->request($client, '/admin/project/2/delete');
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/'));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=form]')->form();
+        $this->assertStringEndsWith($this->createUrl('/admin/project/2/delete'), $form->getUri());
+        $client->submit($form);
+
         $client->followRedirect();
         $this->assertHasDataTable($client);
         $this->assertHasFlashSuccess($client);

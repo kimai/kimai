@@ -9,13 +9,11 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\Activity;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
-use Gedmo\Loggable\Entity\LogEntry;
 
 /**
  * @coversDefaultClass \App\Controller\ActivityController
@@ -122,7 +120,12 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->request($client, '/admin/activity/1/delete');
-        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $form = $client->getCrawler()->filter('form[name=form]')->form();
+        $this->assertStringEndsWith($this->createUrl('/admin/activity/1/delete'), $form->getUri());
+        $client->submit($form);
+
         $client->followRedirect();
         $this->assertHasFlashDeleteSuccess($client);
         $this->assertHasNoEntriesWithFilter($client);
