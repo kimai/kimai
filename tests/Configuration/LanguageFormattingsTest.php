@@ -7,33 +7,19 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Utils;
+namespace App\Tests\Configuration;
 
 use App\Configuration\LanguageFormattings;
-use App\Utils\LocaleSettings;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- * @covers \App\Utils\LocaleSettings
  * @covers \App\Configuration\LanguageFormattings
  */
-class LocaleSettingsTest extends TestCase
+class LanguageFormattingsTest extends TestCase
 {
-    protected function getRequestStack(string $locale)
+    protected function getSut(array $settings)
     {
-        $request = new Request();
-        $request->setLocale($locale);
-        $requestStack = new RequestStack();
-        $requestStack->push($request);
-
-        return $requestStack;
-    }
-
-    protected function getSut(string $locale, array $settings)
-    {
-        return new LocaleSettings($this->getRequestStack($locale), new LanguageFormattings($settings));
+        return new LanguageFormattings($settings);
     }
 
     protected function getDefaultSettings()
@@ -120,30 +106,13 @@ class LocaleSettingsTest extends TestCase
         ];
     }
 
-    public function testGetLocale()
-    {
-        $sut = $this->getSut('en', []);
-        $this->assertEquals('en', $sut->getLocale());
-        $sut = $this->getSut('ar', []);
-        $this->assertEquals('ar', $sut->getLocale());
-    }
-
     public function testGetAvailableLanguages()
     {
-        $sut = $this->getSut('en', []);
+        $sut = $this->getSut([]);
         $this->assertEquals([], $sut->getAvailableLanguages());
 
-        $sut = $this->getSut('en', $this->getDefaultSettings());
+        $sut = $this->getSut($this->getDefaultSettings());
         $this->assertEquals(['de', 'en', 'pt_BR', 'it', 'fr', 'es', 'ru', 'ar', 'hu'], $sut->getAvailableLanguages());
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testInvalidLocaleWithDefaultLocale()
-    {
-        $sut = $this->getSut('en', []);
-        $sut->getDateFormat();
     }
 
     /**
@@ -152,62 +121,64 @@ class LocaleSettingsTest extends TestCase
      */
     public function testInvalidLocaleWithGivenLocale()
     {
-        $sut = $this->getSut('xx', $this->getDefaultSettings());
-        $sut->getDateFormat();
+        $sut = $this->getSut($this->getDefaultSettings());
+        $sut->getDateFormat('xx');
     }
 
     public function testGetDurationFormat()
     {
-        $sut = $this->getSut('en', $this->getDefaultSettings());
-        $this->assertEquals('%h:%m h', $sut->getDurationFormat());
+        $sut = $this->getSut($this->getDefaultSettings());
+        $this->assertEquals('%h:%m h', $sut->getDurationFormat('de'));
     }
 
     public function testGetDateFormat()
     {
-        $sut = $this->getSut('de', $this->getDefaultSettings());
-        $this->assertEquals('d.m.Y', $sut->getDateFormat());
+        $sut = $this->getSut($this->getDefaultSettings());
+        $this->assertEquals('d.m.Y', $sut->getDateFormat('de'));
     }
 
     public function testGetDateTimeFormat()
     {
-        $sut = $this->getSut('en', $this->getDefaultSettings());
-        $this->assertEquals('m-d H:i', $sut->getDateTimeFormat());
+        $sut = $this->getSut($this->getDefaultSettings());
+        $this->assertEquals('d.m. H:i', $sut->getDateTimeFormat('de'));
     }
 
     public function testGetDateTypeFormat()
     {
-        $sut = $this->getSut('de', $this->getDefaultSettings());
-        $this->assertEquals('dd.MM.yyyy', $sut->getDateTypeFormat());
+        $sut = $this->getSut($this->getDefaultSettings());
+        $this->assertEquals('dd.MM.yyyy', $sut->getDateTypeFormat('de'));
     }
 
     public function testGetDatePickerFormat()
     {
-        $sut = $this->getSut('en', $this->getDefaultSettings());
-        $this->assertEquals('YYYY-MM-DD', $sut->getDatePickerFormat());
+        $sut = $this->getSut($this->getDefaultSettings());
+        $this->assertEquals('DD.MM.YYYY', $sut->getDatePickerFormat('de'));
     }
 
     public function testGetDateTimeTypeFormat()
     {
-        $sut = $this->getSut('en', $this->getDefaultSettings());
-        $this->assertEquals('yyyy-MM-dd HH:mm', $sut->getDateTimeTypeFormat());
+        $sut = $this->getSut($this->getDefaultSettings());
+        $this->assertEquals('dd.MM.yyyy HH:mm', $sut->getDateTimeTypeFormat('de'));
     }
 
     public function testGetDateTimePickerFormat()
     {
-        $sut = $this->getSut('en', $this->getDefaultSettings());
-        $this->assertEquals('YYYY-MM-DD HH:mm', $sut->getDateTimePickerFormat());
+        $sut = $this->getSut($this->getDefaultSettings());
+        $this->assertEquals('DD.MM.YYYY HH:mm', $sut->getDateTimePickerFormat('de'));
     }
 
     public function testIs24Hours()
     {
-        $sut = $this->getSut('en', $this->getDefaultSettings());
-        $this->assertFalse($sut->isTwentyFourHours());
+        $sut = $this->getSut($this->getDefaultSettings());
+        $this->assertTrue($sut->isTwentyFourHours('de'));
+        $this->assertFalse($sut->isTwentyFourHours('en'));
     }
 
     public function testGetTimeFormat()
     {
-        $sut = $this->getSut('en', $this->getDefaultSettings());
-        $this->assertEquals('H:i:s', $sut->getTimeFormat());
+        $sut = $this->getSut($this->getDefaultSettings());
+        $this->assertEquals('H:i', $sut->getTimeFormat('de'));
+        $this->assertEquals('H:i:s', $sut->getTimeFormat('en'));
     }
 
     /**
@@ -216,9 +187,9 @@ class LocaleSettingsTest extends TestCase
      */
     public function testUnknownSetting()
     {
-        $sut = $this->getSut('en', ['en' => [
+        $sut = $this->getSut(['en' => [
             'xxx' => 'dd.MM.yyyy HH:mm',
         ]]);
-        $sut->getDateTimePickerFormat();
+        $sut->getDateTimePickerFormat('en');
     }
 }
