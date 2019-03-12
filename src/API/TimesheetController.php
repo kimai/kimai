@@ -87,6 +87,7 @@ class TimesheetController extends BaseApiController
      * @Rest\QueryParam(name="orderBy", requirements="id|begin|end|rate", strict=true, nullable=true, description="The field by which results will be ordered (allowed values: 'id', 'begin', 'end', 'rate')")
      * @Rest\QueryParam(name="begin", requirements=@Constraints\DateTime, strict=true, nullable=true, description="Only records after this date will be included (format: Y-m-d H:i:s)")
      * @Rest\QueryParam(name="end", requirements=@Constraints\DateTime, strict=true, nullable=true, description="Only records before this date will be included (format: Y-m-d H:i:s)")
+     * @Rest\QueryParam(name="exported", requirements="0|1", strict=true, nullable=true, description="Use this flag if you want to filter for export state (0=not exported, 1=exported, null=all")
      *
      * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
      *
@@ -139,6 +140,14 @@ class TimesheetController extends BaseApiController
 
         if (null !== ($end = $paramFetcher->get('end'))) {
             $query->setEnd(new \DateTime($end));
+        }
+
+        if (null !== ($exported = (int) $paramFetcher->get('exported'))) {
+            if ($exported === 1) {
+                $query->setExported(TimesheetQuery::STATE_EXPORTED);
+            } elseif ($exported === 0) {
+                $query->setExported(TimesheetQuery::STATE_NOT_EXPORTED);
+            }
         }
 
         /** @var Pagerfanta $data */

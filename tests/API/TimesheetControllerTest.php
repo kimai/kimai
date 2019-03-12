@@ -132,6 +132,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'orderBy' => 'rate',
             'begin' => $begin->format('Y-m-d H:i:s'),
             'end' => $end->format('Y-m-d H:i:s'),
+            'exported' => 0,
         ];
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
