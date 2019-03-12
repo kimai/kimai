@@ -12,7 +12,7 @@
     {% endblock %}
     {% block modal_footer %}
         <button type="button" class="btn btn-default btn-cancel" data-dismiss="modal">{{ 'action.close'|trans }}</button>
-        <button type="submit" class="btn btn-primary modal-form-save" data-loading-text="Loading..." id="{{ block('modal_id') }}_save">{{ 'action.save'|trans }}</button>
+        <button type="submit" class="btn btn-primary modal-form-save" data-loading-text="{{ 'action.save'|trans }}..." id="{{ block('modal_id') }}_save">{{ 'action.save'|trans }}</button>
     {% endblock %}
     {% block modal_end %}{{ form_end(form) }}{% endblock %}
 {% endembed %}

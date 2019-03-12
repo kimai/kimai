@@ -1,0 +1,24 @@
+{% embed 'embeds/modal.html.twig' %}
+    {% block modal_id %}form_modal{% endblock %}
+    {% block modal_class %}{% if used %}modal-danger{% endif %}{% endblock %}
+    {% block modal_before %}{{ form_start(form) }}{% endblock %}
+    {% block modal_title %}
+        {{ title|default('confirm.delete'|trans) }}
+    {% endblock %}
+    {% block modal_body %}
+        {% if used is same as (false) %}
+            {{ 'delete.not_in_use'|trans }}
+            <div class="hidden">
+                {{ form_widget(form) }}
+            </div>
+        {% else %}
+            <p>{{ message|default('confirm.delete_message'|trans)|raw }}</p>
+            {{ form_widget(form) }}
+        {% endif %}
+    {% endblock %}
+    {% block modal_footer %}
+        <button type="button" class="btn btn-default btn-cancel" data-dismiss="modal">{{ 'action.close'|trans }}</button>
+        <button type="submit" class="btn {% if used %}btn-outline{% else %}btn-primary{% endif %} modal-form-save" data-loading-text="{{ 'action.delete'|trans }}..." id="{{ block('modal_id') }}_save">{{ 'action.delete'|trans }}</button>
+    {% endblock %}
+    {% block modal_end %}{{ form_end(form) }}{% endblock %}
+{% endembed %}

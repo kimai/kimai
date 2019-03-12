@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
 
@@ -7,16 +7,19 @@
 
 {% block main %}
 
+    {% set inUse = (stats.recordsTotal > 0) %}
+
     {% set params = {
         '%user%': '<strong>' ~ widgets.username(user) ~ '</strong>',
         '%records%': '<strong>' ~ stats.recordsTotal ~ '</strong>',
         '%duration%': '<strong>' ~ stats.durationTotal|duration ~ '</strong>'
     } %}
 
-    {{ include('default/_form_delete.html.twig', {
+    {{ include(app.request.xmlHttpRequest ? 'default/_form_delete_modal.html.twig' : 'default/_form_delete.html.twig', {
         'message': "admin_user.delete_confirm"|trans(params)|raw,
         'form': form,
-        'back': path('admin_activity')
+        'used': inUse,
+        'back': path('admin_user')
     }) }}
 
 {% endblock %}

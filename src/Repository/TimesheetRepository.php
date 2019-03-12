@@ -35,6 +35,18 @@ class TimesheetRepository extends AbstractRepository
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
+    public function delete(Timesheet $timesheet)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->remove($timesheet);
+        $entityManager->flush();
+    }
+
+    /**
+     * @param Timesheet $timesheet
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function save(Timesheet $timesheet)
     {
         $entityManager = $this->getEntityManager();
