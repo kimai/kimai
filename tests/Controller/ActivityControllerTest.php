@@ -9,13 +9,11 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\Activity;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
-use Gedmo\Loggable\Entity\LogEntry;
 
 /**
  * @coversDefaultClass \App\Controller\ActivityController

@@ -9,12 +9,10 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\Customer;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
-use Gedmo\Loggable\Entity\LogEntry;
 
 /**
  * @coversDefaultClass \App\Controller\CustomerController
