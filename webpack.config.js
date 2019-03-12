@@ -4,8 +4,12 @@ Encore
     // the project directory where compiled assets will be stored
     .setOutputPath('public/build/')
 
-    // the public path used by the web server to access the previous directory
-    .setPublicPath('/build/')
+    // the public path is ONLY used to reference fonts from within CSS
+    // you can ignore the warning message triggered by webpack encore
+    .setPublicPath('./')
+
+    // used by the asset twig helper to find the correct entry from manifest.json (prefix for each manifest entry)
+    .setManifestKeyPrefix('build/')
 
     // empty the outputPath directory before each build
     .cleanupOutputBeforeBuild()
