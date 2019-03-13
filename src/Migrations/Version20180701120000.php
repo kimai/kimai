@@ -86,12 +86,12 @@ final class Version20180701120000 extends AbstractMigration
         $timesheets = $this->getTableName('timesheet');
         $invoiceTemplates = $this->getTableName('invoice_templates');
 
-        $this->addSql('DROP TABLE ' . $users);
-        $this->addSql('DROP TABLE ' . $userPreferences);
-        $this->addSql('DROP TABLE ' . $customers);
-        $this->addSql('DROP TABLE ' . $projects);
-        $this->addSql('DROP TABLE ' . $activities);
-        $this->addSql('DROP TABLE ' . $timesheets);
         $this->addSql('DROP TABLE ' . $invoiceTemplates);
+        $this->addSql('DROP TABLE ' . $timesheets);
+        $this->addSql('DROP TABLE ' . $userPreferences);
+        $this->addSql('DROP TABLE ' . $users);
+        $this->addSql('DROP TABLE ' . $activities);
+        $this->addSql('DROP TABLE ' . $projects);
+        $this->addSql('DROP TABLE ' . $customers);
     }
 }
