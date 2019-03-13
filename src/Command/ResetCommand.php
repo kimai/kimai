@@ -49,6 +49,10 @@ EOT
     {
         $io = new SymfonyStyle($input, $output);
 
+        if (getenv('APP_ENV') === 'prod') {
+            $io->error('kimai:reset-dev is not allowed in production');
+        }
+
         if ($this->askConfirmation($input, $output, 'Do you want to create the database y/N ?')) {
             try {
                 $command = $this->getApplication()->find('doctrine:database:create');
