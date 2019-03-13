@@ -87,8 +87,16 @@ class CreateReleaseCommand extends Command
         $io->success('Create new packages for Kimai ' . Constants::VERSION . ' in ' . $directory);
 
         $gitCmd = sprintf(self::CLONE_CMD, 'master');
-        $tar = 'kimai-release-' . Constants::VERSION . '.tar.gz';
-        $zip = 'kimai-release-' . Constants::VERSION . '.zip';
+        $tar = 'kimai-release-' . Constants::VERSION;
+        $zip = 'kimai-release-' . Constants::VERSION;
+
+        if (Constants::STATUS !== 'stable') {
+            $tar .= '_' . Constants::STATUS;
+            $zip .= '_' . Constants::STATUS;
+        }
+
+        $tar .= '.tar.gz';
+        $zip .= '.zip';
 
         // this removes the current env settings, as they might differ from the release ones
         // if we don't unset them, the .env file won't be read when executing bin/console commands
