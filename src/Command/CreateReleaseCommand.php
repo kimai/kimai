@@ -84,6 +84,8 @@ class CreateReleaseCommand extends Command
             return 1;
         }
 
+        $io->success('Create new packages for Kimai ' . Constants::VERSION . ' in ' . $directory);
+
         $gitCmd = sprintf(self::CLONE_CMD, 'master');
         $tar = 'kimai-release-' . Constants::VERSION . '.tar.gz';
         $zip = 'kimai-release-' . Constants::VERSION . '.zip';
@@ -100,16 +102,25 @@ class CreateReleaseCommand extends Command
             'Create database' => 'cd ' . $tmpDir . ' && bin/console doctrine:database:create -n',
             'Create tables' => 'cd ' . $tmpDir . ' && bin/console doctrine:schema:create -n',
             'Add all migrations' => 'cd ' . $tmpDir . ' && bin/console doctrine:migrations:version --add --all -n',
-            'Delete .git' => 'cd ' . $tmpDir . ' && rm -rf .git/*',
-            'Delete .github' => 'cd ' . $tmpDir . ' && rm -rf .github/*',
-            'Delete cache' => 'cd ' . $tmpDir . ' && rm -rf var/cache/*',
-            'Delete test DB' => 'cd ' . $tmpDir . ' && rm -f var/data/kimai_test.sqlite',
-            'Delete logs' => 'cd ' . $tmpDir . ' && rm -f var/log/*.log',
-            'Delete sessions' => 'cd ' . $tmpDir . ' && rm -rf var/sessions/*',
+        ];
+
+        $filesToDelete = [
+            '.git*',
+            'var/cache/*',
+            'var/data/kimai_test.sqlite',
+            'var/log/*.log',
+            'var/sessions/*',
+        ];
+
+        foreach($filesToDelete as $deleteMe) {
+            $commands['Delete ' . $deleteMe] = 'cd ' . $tmpDir . ' && rm -rf ' . $deleteMe;
+        }
+
+        $commands = array_merge($commands, [
             'Create tar' => 'cd ' . $tmpDir . ' && tar -czf ' . $directory. '/' . $tar . ' .',
             'Create zip' => 'cd ' . $tmpDir . ' && zip -r ' . $directory. '/' . $zip . ' .',
             'Remove tmp directory' => 'rm -rf ' . $tmpDir,
-        ];
+        ]);
 
         $exitCode = 0;
         foreach($commands as $title => $command) {
