@@ -51,6 +51,7 @@ EOT
 
         if (getenv('APP_ENV') === 'prod') {
             $io->error('kimai:reset-dev is not allowed in production');
+            return -1;
         }
 
         if ($this->askConfirmation($input, $output, 'Do you want to create the database y/N ?')) {
