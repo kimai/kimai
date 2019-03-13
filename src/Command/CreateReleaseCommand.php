@@ -47,6 +47,7 @@ class CreateReleaseCommand extends Command
             ->setDescription('Create a pre-installed release package')
             ->setHelp('This command will create a release package with pre-installed composer, SQLite database and user.')
             ->addOption('directory', null, InputOption::VALUE_OPTIONAL, 'Directory where the release package will be stored', 'var/data/')
+            ->addOption('release', null, InputOption::VALUE_OPTIONAL, 'The version that should be zipped', Constants::VERSION)
         ;
     }
 
@@ -60,7 +61,7 @@ class CreateReleaseCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         if (getenv('APP_ENV') === 'prod') {
-            $io->error('kimai:reset-dev is not allowed in production');
+            $io->error('kimai:create-release is not allowed in production');
             return -2;
         }
 
@@ -84,13 +85,15 @@ class CreateReleaseCommand extends Command
             return 1;
         }
 
-        $io->success('Create new packages for Kimai ' . Constants::VERSION . ' in ' . $directory);
+        $version = $input->getOption('release');
 
-        $gitCmd = sprintf(self::CLONE_CMD, 'master');
-        $tar = 'kimai-release-' . Constants::VERSION;
-        $zip = 'kimai-release-' . Constants::VERSION;
+        $io->success('Prepare new packages for Kimai ' . $version . ' in ' . $tmpDir);
 
-        if (Constants::STATUS !== 'stable') {
+        $gitCmd = sprintf(self::CLONE_CMD, $version);
+        $tar = 'kimai-release-' . $version;
+        $zip = 'kimai-release-' . $version;
+
+        if ($version === Constants::VERSION && Constants::STATUS !== 'stable') {
             $tar .= '_' . Constants::STATUS;
             $zip .= '_' . Constants::STATUS;
         }
@@ -132,12 +135,12 @@ class CreateReleaseCommand extends Command
 
         $exitCode = 0;
         foreach($commands as $title => $command) {
+            $io->success($title);
             passthru($command, $exitCode);
             if ($exitCode !== 0) {
                 $io->error('Failed with command: ' . $command);
                 return -1;
             }
-            $io->success($title);
         }
 
         $io->success(
