@@ -66,9 +66,12 @@ class CreateReleaseCommand extends Command
 
         $directory = $input->getOption('directory');
 
-        if ($directory[0] !== '/') {
+        if ($directory[0] === '/') {
+            $directory = realpath($directory);
+        } else {
             $directory = realpath($this->rootDir . '/' . $directory);
         }
+
         $tmpDir = $directory . '/' . uniqid('kimai_release_');
 
         if (!is_dir($directory)) {
@@ -82,8 +85,13 @@ class CreateReleaseCommand extends Command
         }
 
         $gitCmd = sprintf(self::CLONE_CMD, 'master');
-
         $tar = 'kimai-release-' . str_replace('.', '_', Constants::VERSION) . '.tar.gz';
+        $zip = 'kimai-release-' . Constants::VERSION . '.zip';
+
+        // this removes the current env settings, as they might differ from the release ones
+        // if we don't unset them, the .env file won't be read when executing bin/console commands
+        putenv('DATABASE_URL');
+        putenv('APP_ENV');
 
         $commands = [
             'Clone repository' => $gitCmd . ' ' . $tmpDir,
@@ -92,12 +100,14 @@ class CreateReleaseCommand extends Command
             'Create database' => 'cd ' . $tmpDir . ' && bin/console doctrine:database:create -n',
             'Create tables' => 'cd ' . $tmpDir . ' && bin/console doctrine:schema:create -n',
             'Add all migrations' => 'cd ' . $tmpDir . ' && bin/console doctrine:migrations:version --add --all -n',
+            'Delete .git' => 'cd ' . $tmpDir . ' && rm -rf .git/*',
+            'Delete .github' => 'cd ' . $tmpDir . ' && rm -rf .github/*',
             'Delete cache' => 'cd ' . $tmpDir . ' && rm -rf var/cache/*',
             'Delete test DB' => 'cd ' . $tmpDir . ' && rm -f var/data/kimai_test.sqlite',
             'Delete logs' => 'cd ' . $tmpDir . ' && rm -f var/log/*.log',
             'Delete sessions' => 'cd ' . $tmpDir . ' && rm -rf var/sessions/*',
-            'Create tar' => 'cd ' . $tmpDir . ' && tar -czf ' . $tar . ' *',
-            'Move tar' => 'mv ' . $tmpDir . '/' . $tar . ' ' . $directory,
+            'Create tar' => 'cd ' . $tmpDir . ' && tar -czf ' . $directory. '/' . $tar . ' .',
+            'Create zip' => 'cd ' . $tmpDir . ' && zip -r ' . $directory. '/' . $zip . ' .',
             'Remove tmp directory' => 'rm -rf ' . $tmpDir,
         ];
 
@@ -111,7 +121,11 @@ class CreateReleaseCommand extends Command
             $io->success($title);
         }
 
-        $io->success('New release package available at: ' . $directory . '/' . $tar);
+        $io->success(
+            'New release packages available at: ' . PHP_EOL .
+            $directory . '/' . $tar. PHP_EOL .
+            $directory . '/' . $zip
+        );
 
         return 0;
     }
