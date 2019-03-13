@@ -1,6 +1,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    env(CLOUD_ACCOUNT): ''
     locale: en
     app_locales: en|de|it|fr|es|ru|ar|hu|pt_BR
 
@@ -58,6 +59,9 @@ services:
     App\Utils\LocaleSettings:
         arguments:
             $languageSettings: "%kimai.languages%"
+
+    App\Plugin\PluginManager:
+        arguments: ["%env(resolve:CLOUD_ACCOUNT)%"]
 
     # ================================================================================
     # DATABASE

@@ -13,11 +13,13 @@ use App\DependencyInjection\AppExtension;
 use App\DependencyInjection\Compiler\DoctrineCompilerPass;
 use App\DependencyInjection\Compiler\ExportServiceCompilerPass;
 use App\DependencyInjection\Compiler\InvoiceServiceCompilerPass;
+use App\DependencyInjection\Compiler\PluginManagerCompilerPass;
 use App\DependencyInjection\Compiler\TwigContextCompilerPass;
 use App\Export\RendererInterface as ExportRendererInterface;
 use App\Invoice\CalculatorInterface as InvoiceCalculator;
 use App\Invoice\NumberGeneratorInterface;
 use App\Invoice\RendererInterface as InvoiceRendererInterface;
+use App\Plugin\PluginInterface;
 use App\Timesheet\CalculatorInterface as TimesheetCalculator;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -25,6 +27,7 @@ use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
 
@@ -34,6 +37,7 @@ class Kernel extends BaseKernel
 
     public const CONFIG_EXTS = '.{php,xml,yaml,yml}';
 
+    public const TAG_PLUGIN = 'kimai.plugin';
     public const TAG_EXPORT_RENDERER = 'export.renderer';
     public const TAG_INVOICE_RENDERER = 'invoice.renderer';
     public const TAG_INVOICE_NUMBER_GENERATOR = 'invoice.number_generator';
@@ -56,6 +60,8 @@ class Kernel extends BaseKernel
         $container->registerForAutoconfiguration(InvoiceRendererInterface::class)->addTag(self::TAG_INVOICE_RENDERER);
         $container->registerForAutoconfiguration(NumberGeneratorInterface::class)->addTag(self::TAG_INVOICE_NUMBER_GENERATOR);
         $container->registerForAutoconfiguration(InvoiceCalculator::class)->addTag(self::TAG_INVOICE_CALCULATOR);
+        $container->registerForAutoconfiguration(PluginInterface::class)->addTag(self::TAG_PLUGIN);
+        $container->registerForAutoconfiguration(Bundle::class)->addTag('kimai.bundle');
     }
 
     public function registerBundles()
@@ -111,6 +117,7 @@ class Kernel extends BaseKernel
         $container->addCompilerPass(new TwigContextCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new InvoiceServiceCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new ExportServiceCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
+        $container->addCompilerPass(new PluginManagerCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
     }
 
     protected function configureRoutes(RouteCollectionBuilder $routes)
