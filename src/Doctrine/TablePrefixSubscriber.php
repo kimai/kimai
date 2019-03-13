@@ -18,15 +18,7 @@ use Doctrine\ORM\Events;
  */
 class TablePrefixSubscriber implements EventSubscriber
 {
-    protected $prefix = '';
-
-    /**
-     * @param string $prefix
-     */
-    public function __construct($prefix)
-    {
-        $this->prefix = (string) $prefix;
-    }
+    public const PREFIX = 'kimai2_';
 
     /**
      * @return array|string[]
@@ -49,7 +41,7 @@ class TablePrefixSubscriber implements EventSubscriber
             return;
         }
 
-        $classMetadata->setPrimaryTable(['name' => $this->prefix . $classMetadata->getTableName()]);
+        $classMetadata->setPrimaryTable(['name' => self::PREFIX . $classMetadata->getTableName()]);
 
         foreach ($classMetadata->getAssociationMappings() as $fieldName => $mapping) {
             if (\Doctrine\ORM\Mapping\ClassMetadataInfo::MANY_TO_MANY == $mapping['type']
@@ -57,7 +49,7 @@ class TablePrefixSubscriber implements EventSubscriber
                 // it can be null if this field is the reverse side of a ManyToMany relationship
                 && array_key_exists('name', $classMetadata->associationMappings[$fieldName]['joinTable'])) {
                 $mappedTableName = $classMetadata->associationMappings[$fieldName]['joinTable']['name'];
-                $classMetadata->associationMappings[$fieldName]['joinTable']['name'] = $this->prefix . $mappedTableName;
+                $classMetadata->associationMappings[$fieldName]['joinTable']['name'] = self::PREFIX . $mappedTableName;
             }
         }
     }
