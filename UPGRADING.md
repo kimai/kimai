@@ -24,7 +24,12 @@ Follow the normal update and database migration process (see above).
 
 Remember to execute the necessary timezone conversion script, if you haven't updated to 0.8 before (see below)!
 
-- API BC break: DateTime objects will be returned including timezone identifier (previously 2019-03-02 14:23 - now 2019-03-02T14:23:00+00:00)
+**BC BREAKS**
+- in an ongoing effort to simplify future installation and upgrade processes the `.env` variable `DATABASE_PREFIX` was removed.
+The table prefix is now hardcoded to `kimai2_`. If you used another prefix, you have to rename your tables manually 
+before starting the update process.
+- API: DateTime objects will be returned including timezone identifier (previously 2019-03-02 14:23 - now 2019-03-02T14:23:00+00:00)
+
 
 ## [0.8.1](https://github.com/kevinpapst/kimai2/releases/tag/0.8.1)
 
