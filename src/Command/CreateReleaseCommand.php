@@ -85,7 +85,7 @@ class CreateReleaseCommand extends Command
         }
 
         $gitCmd = sprintf(self::CLONE_CMD, 'master');
-        $tar = 'kimai-release-' . str_replace('.', '_', Constants::VERSION) . '.tar.gz';
+        $tar = 'kimai-release-' . Constants::VERSION . '.tar.gz';
         $zip = 'kimai-release-' . Constants::VERSION . '.zip';
 
         // this removes the current env settings, as they might differ from the release ones
