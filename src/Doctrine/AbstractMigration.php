@@ -48,7 +48,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
      */
     protected function getTableName($name)
     {
-        return getenv('DATABASE_PREFIX') . $name;
+        return TablePrefixSubscriber::PREFIX . $name;
     }
 
     /**

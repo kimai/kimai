@@ -18,6 +18,11 @@ Read and follow each version info below, otherwise you risk data inconsistency o
 
 And make sure to **create a backup before you start**.
 
+## [0.9](https://github.com/kevinpapst/kimai2/releases/tag/0.9)
+
+**BC BREAK** - in an ongoing effort to simplify future installation and upgrade processes the `.env` variable `DATABASE_PREFIX` was removed.
+The table prefix is now hardcoded to `kimai2_`. If you used another prefix, you have to rename your tables manually 
+before starting the update process.
 
 ## [0.8.1](https://github.com/kevinpapst/kimai2/releases/tag/0.8.1)
 
