@@ -75,7 +75,6 @@ class AboutController extends AbstractController
             'modules' => get_loaded_extensions(),
             'dotenv' => [
                 'APP_ENV' => getenv('APP_ENV'),
-                'DATABASE_PREFIX' => getenv('DATABASE_PREFIX'),
                 'MAILER_FROM' => getenv('MAILER_FROM'),
                 'MAILER_URL' => getenv('MAILER_URL'),
                 'CORS_ALLOW_ORIGIN' => getenv('CORS_ALLOW_ORIGIN'),
