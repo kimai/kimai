@@ -56,6 +56,10 @@ class TimesheetFixtures extends Fixture
      * @var bool
      */
     protected $allowEmptyDescriptions = true;
+    /**
+     * @var int
+     */
+    protected $exported = false;
 
     /**
      * @param bool $allowEmptyDescriptions
@@ -65,6 +69,16 @@ class TimesheetFixtures extends Fixture
     {
         $this->allowEmptyDescriptions = $allowEmptyDescriptions;
 
+        return $this;
+    }
+
+    /**
+     * @param bool $exported
+     * @return TimesheetFixtures
+     */
+    public function setExported(bool $exported)
+    {
+        $this->exported = $exported;
         return $this;
     }
 
@@ -290,6 +304,10 @@ class TimesheetFixtures extends Fixture
 
         if ($this->hourlyRate) {
             $entry->setHourlyRate($hourlyRate);
+        }
+
+        if (null !== $this->exported) {
+            $entry->setExported($this->exported);
         }
 
         if ($setEndDate) {

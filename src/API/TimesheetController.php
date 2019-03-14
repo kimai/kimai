@@ -142,7 +142,8 @@ class TimesheetController extends BaseApiController
             $query->setEnd(new \DateTime($end));
         }
 
-        if (null !== ($exported = (int) $paramFetcher->get('exported'))) {
+        if (null !== ($exported = $paramFetcher->get('exported'))) {
+            $exported = (int) $exported;
             if ($exported === 1) {
                 $query->setExported(TimesheetQuery::STATE_EXPORTED);
             } elseif ($exported === 0) {
