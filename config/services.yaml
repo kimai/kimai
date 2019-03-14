@@ -20,7 +20,7 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{Entity,Migrations,Tests}'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php,Constants.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -55,7 +55,7 @@ services:
         arguments:
             $defaults: "%kimai.defaults%"
 
-    App\Utils\LocaleSettings:
+    App\Configuration\LanguageFormattings:
         arguments:
             $languageSettings: "%kimai.languages%"
 

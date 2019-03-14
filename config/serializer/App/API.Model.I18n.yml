@@ -1,0 +1,32 @@
+App\API\Model\I18n:
+    exclusion_policy: All
+    custom_accessor_order: [formDateTime, formDate, dateTime, date, time, duration, is24hours]
+    properties:
+        formDateTime:
+            include: true
+            type: string
+            groups: [Default]
+        formDate:
+            include: true
+            type: string
+            groups: [Default]
+        dateTime:
+            include: true
+            type: string
+            groups: [Default]
+        time:
+            include: true
+            type: string
+            groups: [Default]
+        date:
+            include: true
+            type: string
+            groups: [Default]
+        duration:
+            include: true
+            type: string
+            groups: [Default]
+        is24hours:
+            include: true
+            type: boolean
+            groups: [Default]

@@ -86,13 +86,13 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->addConstraint(new Range(['min' => 0])),
 
             (new UserPreference())
-                ->setName('timezone')
+                ->setName(UserPreference::TIMEZONE)
                 ->setValue(date_default_timezone_get())
                 ->setType(TimezoneType::class),
 
             (new UserPreference())
-                ->setName('language')
-                ->setValue('en')
+                ->setName(UserPreference::LOCALE)
+                ->setValue(User::DEFAULT_LANGUAGE)
                 ->setType(LanguageType::class),
 
             (new UserPreference())

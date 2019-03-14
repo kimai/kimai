@@ -268,11 +268,17 @@ class TimesheetEditForm extends AbstractType
         if ($options['include_rate']) {
             $builder
                 ->add('fixedRate', MoneyType::class, [
+                    'documentation' => [
+                        'type' => 'float'
+                    ],
                     'label' => 'label.fixedRate',
                     'required' => false,
                     'currency' => $currency,
                 ])
                 ->add('hourlyRate', MoneyType::class, [
+                    'documentation' => [
+                        'type' => 'float'
+                    ],
                     'label' => 'label.hourlyRate',
                     'required' => false,
                     'currency' => $currency,
