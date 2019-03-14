@@ -17,7 +17,6 @@ use PHPUnit\Framework\TestCase;
  */
 class I18nTest extends TestCase
 {
-
     public function testDefaultValues()
     {
         $sut = new I18n();

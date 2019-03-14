@@ -79,6 +79,7 @@ class TimesheetFixtures extends Fixture
     public function setExported(bool $exported)
     {
         $this->exported = $exported;
+
         return $this;
     }
 
