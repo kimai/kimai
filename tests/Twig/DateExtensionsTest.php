@@ -9,6 +9,7 @@
 
 namespace App\Tests\Twig;
 
+use App\Configuration\LanguageFormattings;
 use App\Twig\DateExtensions;
 use App\Utils\LocaleSettings;
 use PHPUnit\Framework\TestCase;
@@ -33,7 +34,7 @@ class DateExtensionsTest extends TestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        $localeSettings = new LocaleSettings($requestStack, $dateSettings);
+        $localeSettings = new LocaleSettings($requestStack, new LanguageFormattings($dateSettings));
 
         return new DateExtensions($localeSettings);
     }

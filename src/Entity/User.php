@@ -38,7 +38,9 @@ class User extends BaseUser implements UserInterface
     public const ROLE_TEAMLEAD = 'ROLE_TEAMLEAD';
     public const ROLE_ADMIN = 'ROLE_ADMIN';
     public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+
     public const DEFAULT_ROLE = self::ROLE_USER;
+    public const DEFAULT_LANGUAGE = 'en';
 
     /**
      * @var int
@@ -265,6 +267,14 @@ class User extends BaseUser implements UserInterface
         }
 
         return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->getPreferenceValue(UserPreference::LOCALE, User::DEFAULT_LANGUAGE);
     }
 
     /**

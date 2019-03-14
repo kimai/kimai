@@ -9,14 +9,18 @@
 
 namespace App\Utils;
 
+use App\Configuration\LanguageFormattings;
 use Symfony\Component\HttpFoundation\RequestStack;
 
+/**
+ * Use this class, when you want information about formats for the "current request locale".
+ */
 class LocaleSettings
 {
     /**
      * @var array
      */
-    protected $settings;
+    protected $formats;
 
     /**
      * @var string
@@ -25,15 +29,15 @@ class LocaleSettings
 
     /**
      * @param RequestStack $requestStack
-     * @param array $languageSettings
+     * @param LanguageFormattings $formats
      */
-    public function __construct(RequestStack $requestStack, array $languageSettings)
+    public function __construct(RequestStack $requestStack, LanguageFormattings $formats)
     {
         // It can be null in a console command
         if (null !== $requestStack->getMasterRequest()) {
             $this->locale = $requestStack->getMasterRequest()->getLocale();
         }
-        $this->settings = $languageSettings;
+        $this->formats = $formats;
     }
 
     /**
@@ -43,7 +47,7 @@ class LocaleSettings
      */
     public function getAvailableLanguages(): array
     {
-        return array_keys($this->settings);
+        return $this->formats->getAvailableLanguages();
     }
 
     /**
@@ -59,121 +63,90 @@ class LocaleSettings
     /**
      * Returns the format which is used by the form component to handle date values.
      *
-     * @param null|string $locale
      * @return string
      */
-    public function getDateTypeFormat(?string $locale = null): string
+    public function getDateTypeFormat(): string
     {
-        return $this->getConfigByLocaleAndKey('date_type', $locale);
+        return $this->formats->getDateTypeFormat($this->getLocale());
     }
 
     /**
      * Returns the format which is used by the Javascript component to handle date values.
      *
-     * @param null|string $locale
      * @return string
      */
-    public function getDatePickerFormat(?string $locale = null): string
+    public function getDatePickerFormat(): string
     {
-        return $this->getConfigByLocaleAndKey('date_picker', $locale);
+        return $this->formats->getDatePickerFormat($this->getLocale());
     }
 
     /**
      * Returns the format which is used by the form component to handle datetime values.
      *
-     * @param null|string $locale
      * @return string
      */
-    public function getDateTimeTypeFormat(?string $locale = null): string
+    public function getDateTimeTypeFormat(): string
     {
-        return $this->getConfigByLocaleAndKey('date_time_type', $locale);
+        return $this->formats->getDateTimeTypeFormat($this->getLocale());
     }
 
     /**
      * Returns the format which is used by the Javascript component to handle datetime values.
      *
-     * @param null|string $locale
      * @return string
      */
-    public function getDateTimePickerFormat(?string $locale = null): string
+    public function getDateTimePickerFormat(): string
     {
-        return $this->getConfigByLocaleAndKey('date_time_picker', $locale);
+        return $this->formats->getDateTimePickerFormat($this->getLocale());
     }
 
     /**
      * Returns the locale specific date format, which should be used in combination with the twig filter "|date".
      *
-     * @param null|string $locale
      * @return string
      */
-    public function getDateFormat(?string $locale = null): string
+    public function getDateFormat(): string
     {
-        return $this->getConfigByLocaleAndKey('date', $locale);
+        return $this->formats->getDateFormat($this->getLocale());
     }
 
     /**
      * Returns the locale specific time format, which should be used in combination with the twig filter "|time".
      *
-     * @param null|string $locale
      * @return string
      */
-    public function getTimeFormat(?string $locale = null): string
+    public function getTimeFormat(): string
     {
-        return $this->getConfigByLocaleAndKey('time', $locale);
+        return $this->formats->getTimeFormat($this->getLocale());
     }
 
     /**
      * Returns the locale specific datetime format, which should be used in combination with the twig filter "|date".
      *
-     * @param null|string $locale
      * @return string
      */
-    public function getDateTimeFormat(?string $locale = null): string
+    public function getDateTimeFormat(): string
     {
-        return $this->getConfigByLocaleAndKey('date_time', $locale);
+        return $this->formats->getDateTimeFormat($this->getLocale());
     }
 
     /**
      * Returns the format used in the "|duration" twig filter to display a Timesheet duration.
      *
-     * @param null|string $locale
      * @return string
      */
-    public function getDurationFormat(?string $locale = null): string
+    public function getDurationFormat(): string
     {
-        return $this->getConfigByLocaleAndKey('duration', $locale);
+        return $this->formats->getDurationFormat($this->getLocale());
     }
 
     /**
      * Returns whether this locale uses the 24 hour format.
      *
-     * @param null|string $locale
      * @return bool
      */
-    public function isTwentyFourHours(?string $locale = null): bool
+    public function isTwentyFourHours(): bool
     {
-        return (bool) $this->getConfigByLocaleAndKey('24_hours', $locale);
-    }
-
-    /**
-     * @param string $key
-     * @param null|string $locale
-     * @return string
-     */
-    protected function getConfigByLocaleAndKey(string $key, ?string $locale = null): string
-    {
-        if (null === $locale) {
-            $locale = $this->getLocale();
-        }
-
-        if (!isset($this->settings[$locale])) {
-            throw new \InvalidArgumentException(sprintf('Unknown locale given: %s', $locale));
-        }
-
-        if (!isset($this->settings[$locale][$key])) {
-            throw new \InvalidArgumentException(sprintf('Unknown setting for locale %s: %s', $locale, $key));
-        }
-
-        return $this->settings[$locale][$key];
+        return $this->formats->isTwentyFourHours($this->getLocale());
     }
 }

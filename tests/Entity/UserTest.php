@@ -107,4 +107,17 @@ class UserTest extends AbstractEntityTest
         $this->assertEquals('foo', (string) $user);
         $this->assertEquals('foo', $user->getAlias());
     }
+
+    public function testGetLocale()
+    {
+        $sut = new User();
+        $this->assertEquals(User::DEFAULT_LANGUAGE, $sut->getLocale());
+
+        $language = new UserPreference();
+        $language->setName(UserPreference::LOCALE);
+        $language->setValue('fr');
+        $sut->addPreference($language);
+
+        $this->assertEquals('fr', $sut->getLocale());
+    }
 }

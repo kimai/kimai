@@ -8,6 +8,7 @@ FOS\UserBundle\Model\User:
             include: true
             groups: [Entity]
         roles:
+            type: array<string>
             include: true
             groups: [Entity]
         email:

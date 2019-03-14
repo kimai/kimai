@@ -125,10 +125,19 @@ class DateRangeType extends AbstractType
         $pattern = $this->formatToPattern($formatDate, $separator);
 
         $builder->addModelTransformer(new CallbackTransformer(
-            function (DateRange $range) use ($formatDate, $separator) {
+            function ($range) use ($formatDate, $separator) {
+                if (null === $range) {
+                    return '';
+                }
+
+                if (!($range instanceof DateRange)) {
+                    throw new \InvalidArgumentException('Invalid DateRange given');
+                }
+
                 if (null === $range->getBegin()) {
                     return '';
                 }
+
                 $display = $range->getBegin()->format($formatDate);
                 if (null !== $range->getEnd()) {
                     $display .= $separator . $range->getEnd()->format($formatDate);
