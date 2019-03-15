@@ -85,6 +85,10 @@
                 <source>menu.admin</source>
                 <target>Administration</target>
             </trans-unit>
+            <trans-unit id="menu.system">
+                <source>menu.system</source>
+                <target>System</target>
+            </trans-unit>
             <trans-unit id="menu.logout">
                 <source>menu.logout</source>
                 <target>Logout</target>

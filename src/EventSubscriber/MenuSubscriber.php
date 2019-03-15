@@ -42,7 +42,6 @@ class MenuSubscriber implements EventSubscriberInterface
     {
         return [
             ConfigureMainMenuEvent::CONFIGURE => ['onMainMenuConfigure', 100],
-            ConfigureAdminMenuEvent::CONFIGURE => ['onAdminMenuConfigure', 100],
         ];
     }
 
@@ -76,30 +75,13 @@ class MenuSubscriber implements EventSubscriberInterface
                 new MenuItemModel('export', 'menu.export', 'export', [], 'fas fa-file-export')
             );
         }
-    }
 
-    /**
-     * @param \App\Event\ConfigureAdminMenuEvent $event
-     */
-    public function onAdminMenuConfigure(ConfigureAdminMenuEvent $event)
-    {
-        $auth = $this->security;
-
-        if (!$auth->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            return;
-        }
-
+        // ====================== admin menu ======================
         $menu = $event->getAdminMenu();
 
         if ($auth->isGranted('view_other_timesheet')) {
             $menu->addChild(
                 new MenuItemModel('timesheet_admin', 'menu.admin_timesheet', 'admin_timesheet', [], 'far fa-clock')
-            );
-        }
-
-        if ($auth->isGranted('view_user')) {
-            $menu->addChild(
-                new MenuItemModel('user_admin', 'menu.admin_user', 'admin_user', [], 'fas fa-user')
             );
         }
 
@@ -118,6 +100,21 @@ class MenuSubscriber implements EventSubscriberInterface
         if ($auth->isGranted('view_activity')) {
             $menu->addChild(
                 new MenuItemModel('activity_admin', 'menu.admin_activity', 'admin_activity', [], 'fas fa-tasks')
+            );
+        }
+
+        // ====================== admin menu ======================
+        $menu = $event->getSystemMenu();
+
+        if ($auth->isGranted('view_user')) {
+            $menu->addChild(
+                new MenuItemModel('user_admin', 'menu.admin_user', 'admin_user', [], 'fas fa-user')
+            );
+        }
+
+        if ($auth->isGranted('ROLE_SUPER_ADMIN')) {
+            $menu->addChild(
+                new MenuItemModel('plugins', 'menu.plugin', 'plugins', [], 'fas fa-puzzle-piece')
             );
         }
     }
