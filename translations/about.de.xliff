@@ -10,6 +10,34 @@
                 <source>about.subtitle</source>
                 <target>System Informationen</target>
             </trans-unit>
+            <trans-unit id="tab.plugins">
+                <source>tab.plugins</source>
+                <target>Erweiterungen</target>
+            </trans-unit>
+            <trans-unit id="tab.system">
+                <source>tab.system</source>
+                <target>System Info</target>
+            </trans-unit>
+            <trans-unit id="tab.license">
+                <source>tab.license</source>
+                <target>Kimai Lizenz</target>
+            </trans-unit>
+            <trans-unit id="label.licensed">
+                <source>label.licensed</source>
+                <target>Lizensiert</target>
+            </trans-unit>
+            <trans-unit id="label.valid_until">
+                <source>label.valid_until</source>
+                <target>Lizenz gültig bis</target>
+            </trans-unit>
+            <trans-unit id="label.license_key">
+                <source>label.license_key</source>
+                <target>Lizenzschlüssel</target>
+            </trans-unit>
+            <trans-unit id="plugin.none_installed">
+                <source>plugin.none_installed</source>
+                <target>Sie haben noch kein Plugin installiert.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

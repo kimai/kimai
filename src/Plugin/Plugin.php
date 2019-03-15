@@ -9,31 +9,81 @@
 
 namespace App\Plugin;
 
+use App\License\PluginLicense;
+
 class Plugin
 {
-    public const LICENSE_EXPIRED = 'expired';
-    public const LICENSE_CURRENT = 'current';
-
-    private $id = '';
+    /**
+     * @var string
+     */
     private $name = '';
-    private $allowedLicenses = [];
-    private $path = '';
+    /**
+     * @var PluginLicense
+     */
+    private $license;
+    /**
+     * @var bool
+     */
+    private $isLicensed = true;
+    /**
+     * @var bool
+     */
+    private $isExpired = false;
 
     /**
-     * @return string
+     * @return PluginLicense|null
      */
-    public function getId(): string
+    public function getLicense(): ?PluginLicense
     {
-        return $this->id;
+        return $this->license;
     }
 
     /**
-     * @param string $id
+     * @param PluginLicense $license
      * @return Plugin
      */
-    public function setId(string $id)
+    public function setLicense(PluginLicense $license)
     {
-        $this->id = $id;
+        $this->license = $license;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isExpired(): bool
+    {
+        return $this->isExpired;
+    }
+
+    /**
+     * @param bool $isExpired
+     * @return Plugin
+     */
+    public function setIsExpired(bool $isExpired)
+    {
+        $this->isExpired = $isExpired;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLicensed(): bool
+    {
+        return $this->isLicensed;
+    }
+
+    /**
+     * @param bool $isLicensed
+     * @return Plugin
+     */
+    public function setIsLicensed(bool $isLicensed)
+    {
+        $this->isLicensed = $isLicensed;
+
         return $this;
     }
 
@@ -52,51 +102,7 @@ class Plugin
     public function setName(string $name)
     {
         $this->name = $name;
-        return $this;
-    }
 
-    /**
-     * @return array
-     */
-    public function getAllowedLicenses(): array
-    {
-        return $this->allowedLicenses;
-    }
-
-    /**
-     * @param string[] $allowedLicenses
-     * @return Plugin
-     */
-    public function setAllowedLicenses(array $allowedLicenses)
-    {
-        $this->allowedLicenses = $allowedLicenses;
-        return $this;
-    }
-    /**
-     * @param string $allowedLicense
-     * @return Plugin
-     */
-    public function addAllowedLicense($allowedLicense)
-    {
-        $this->allowedLicenses[] = $allowedLicense;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPath(): string
-    {
-        return $this->path;
-    }
-
-    /**
-     * @param string $path
-     * @return Plugin
-     */
-    public function setPath(string $path)
-    {
-        $this->path = $path;
         return $this;
     }
 }

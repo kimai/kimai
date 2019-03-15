@@ -9,11 +9,8 @@
 
 namespace App\Plugin;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+use App\License\PluginLicense;
 
-/**
- * A service to manage plugins.
- */
 class PluginManager
 {
     /**
@@ -21,25 +18,34 @@ class PluginManager
      */
     private $plugins;
     /**
-     * @var
+     * @var PluginLicense[]
      */
-    private $licenseKey;
+    private $licenses = [];
 
     /**
-     * @param string $licenseKey
+     * @param PluginLicense $license
      */
-    public function __construct(string $licenseKey)
+    public function addLicense(array $licenseData)
     {
-        $this->licenseKey = $licenseKey;
+        $license = new PluginLicense();
+        $license->setName($licenseData['name']);
+        $license->setStatus($licenseData['status']);
+        $license->setValidUntil(\DateTime::createFromFormat(DATE_ATOM, $licenseData['valid_until']));
+
+        $this->licenses[] = $license;
     }
 
     /**
-     * @param Bundle $bundle
+     * @param PluginInterface $plugin
+     * @throws \Exception
      */
-    public function addPlugin(Bundle $bundle)
+    public function addPlugin(PluginInterface $plugin)
     {
-        $plugin = $this->getPlugin($bundle);
-        $this->plugins[$plugin->getId()] = $plugin;
+        if (isset($this->plugins[$plugin->getName()])) {
+            return;
+        }
+
+        $this->plugins[$plugin->getName()] = $this->getPlugin($plugin);
     }
 
     /**
@@ -51,35 +57,46 @@ class PluginManager
     }
 
     /**
-     * @param Bundle $bundle
+     * @param PluginInterface $bundle
      * @return Plugin
      */
-    protected function getPlugin(Bundle $bundle)
+    protected function getPlugin(PluginInterface $bundle)
     {
         $plugin = new Plugin();
         $plugin
-            ->setId($bundle->getName())
             ->setName($bundle->getName())
-            ->setPath($bundle->getPath())
         ;
 
-        if ($bundle instanceof PluginInterface) {
-            // TODO
-            $plugin->setAllowedLicenses([]);
+        foreach ($this->licenses as $license) {
+            if ($license->getName() === $plugin->getName()) {
+                $plugin->setLicense($license);
+            }
+        }
+
+        if (empty($bundle->getLicenseRequirements())) {
+            return $plugin;
+        }
+
+        $plugin->setIsLicensed(false);
+        $plugin->setIsExpired(true);
+        $license = $plugin->getLicense();
+
+        if (null === $license) {
+            return $plugin;
+        }
+
+        if (in_array($license->getStatus(), $bundle->getLicenseRequirements())) {
+            $plugin->setIsLicensed(true);
+        }
+
+        if ($license->getValidUntil()->getTimestamp() > (new \DateTime())->getTimestamp()) {
+            $plugin->setIsExpired(false);
         } else {
-            // TODO
-            $this->detectLicenseRequirementsViaComposer($plugin);
+            if (!in_array(PluginLicense::LICENSE_EXPIRED, $bundle->getLicenseRequirements())) {
+                $plugin->setIsLicensed(false);
+            }
         }
 
         return $plugin;
-    }
-
-    /**
-     * @param Plugin $plugin
-     */
-    protected function detectLicenseRequirementsViaComposer(Plugin $plugin)
-    {
-        // TODO
-        $plugin->setAllowedLicenses([]);
     }
 }

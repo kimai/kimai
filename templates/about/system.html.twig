@@ -1,25 +1,64 @@
 {% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
 
 {% block page_title %}{{ 'about.title'|trans({}, 'about') }}{% endblock %}
 {% block page_subtitle %}{{ 'about.subtitle'|trans({}, 'about') }}{% endblock %}
 
 {% block main %}
+    {{ widgets.callout('info', 'Thanks for using Kimai ' ~ constant('App\\Constants::VERSION') ~ ' ' ~  constant('App\\Constants::STATUS') ~ ' (' ~ constant('App\\Constants::NAME') ~ ')', 'Kimai ' ~ constant('App\\Constants::VERSION'), 'fas fa-thumbs-up') }}
     <div class="row">
         <div class="col-md-12">
 
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#kimai" data-toggle="tab" aria-expanded="true">Kimai</a></li>
-                    <li><a href="#system" data-toggle="tab" aria-expanded="true">System</a></li>
-                    <li><a href="#license" data-toggle="tab" aria-expanded="true">License</a></li>
+                    <li class="active"><a href="#kimai" data-toggle="tab" aria-expanded="true">{{ 'tab.plugins'|trans({}, 'about') }}</a></li>
+                    <li><a href="#system" data-toggle="tab" aria-expanded="true">{{ 'tab.system'|trans({}, 'about') }}</a></li>
+                    <li><a href="#license" data-toggle="tab" aria-expanded="true">{{ 'tab.license'|trans({}, 'about') }}</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="kimai">
-                        <dl>
-                            <dt>Version</dt><dd>{{ constant('App\\Constants::VERSION') }}</dd>
-                            <dt>Status</dt><dd>{{ constant('App\\Constants::STATUS') }}</dd>
-                            <dt>Name</dt><dd>{{ constant('App\\Constants::NAME') }}</dd>
-                        </dl>
+                        <table class="table table-bordered table-striped">
+                            <tr>
+                                <th>{{ 'label.name'|trans }}</th>
+                                <th>{{ 'label.licensed'|trans({}, 'about') }}</th>
+                                <th>{{ 'label.valid_until'|trans({}, 'about') }}</th>
+                            </tr>
+                            {% if cloud.plugins|length == 0 %}
+                                {{ widgets.callout('warning', 'plugin.none_installed'|trans({}, 'about')) }}
+                            {% endif %}
+                            {% for plugin in cloud.plugins %}
+                                <tr>
+                                    <td>{{ plugin.name }}</td>
+                                    <td>
+                                        {% if plugin.licensed %}
+                                            {{ widgets.label('yes', 'success') }}
+                                        {% else %}
+                                            {{ widgets.label('no', 'danger') }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if plugin.expired %}
+                                            {% if plugin.license %}
+                                                {{ widgets.label(plugin.license.validUntil|date_full , 'warning') }}
+                                            {% else %}
+                                                {{ widgets.label('no' , 'warning') }}
+                                            {% endif %}
+                                        {% else %}
+                                            {{ widgets.label('no', 'success') }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                        <div class="form-group">
+                            <label class="control-label" for="license_key">{{ 'label.license_key'|trans({}, 'about') }}</label>
+                            <div class="input-group">
+                                <div class="input-group-addon" onclick="$('#license_key').select();document.execCommand('copy');">
+                                    <i class="fas fa-key"></i>
+                                </div>
+                                <input type="text" id="license_key" class="form-control" disabled="disabled" value="{{ cloud.publicKey }}">
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-pane" id="system">
 
