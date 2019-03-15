@@ -16,7 +16,11 @@ class Plugin
     /**
      * @var string
      */
-    private $name = '';
+    private $name;
+    /**
+     * @var string
+     */
+    private $path;
     /**
      * @var PluginLicense
      */
@@ -29,6 +33,46 @@ class Plugin
      * @var bool
      */
     private $isExpired = false;
+    /**
+     * @var PluginMetadata
+     */
+    private $metadata;
+
+    /**
+     * @return PluginMetadata
+     */
+    public function getMetadata(): PluginMetadata
+    {
+        return $this->metadata;
+    }
+
+    /**
+     * @param PluginMetadata $metadata
+     * @return Plugin
+     */
+    public function setMetadata(PluginMetadata $metadata)
+    {
+        $this->metadata = $metadata;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath(): string
+    {
+        return $this->path;
+    }
+
+    /**
+     * @param string $path
+     * @return Plugin
+     */
+    public function setPath(string $path)
+    {
+        $this->path = $path;
+        return $this;
+    }
 
     /**
      * @return PluginLicense|null

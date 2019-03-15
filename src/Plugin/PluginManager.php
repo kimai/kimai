@@ -9,6 +9,7 @@
 
 namespace App\Plugin;
 
+use App\Constants;
 use App\License\PluginLicense;
 
 class PluginManager
@@ -65,6 +66,7 @@ class PluginManager
         $plugin = new Plugin();
         $plugin
             ->setName($bundle->getName())
+            ->setPath($bundle->getPath())
         ;
 
         foreach ($this->licenses as $license) {
@@ -98,5 +100,32 @@ class PluginManager
         }
 
         return $plugin;
+    }
+
+    /**
+     * Call this method and pass a plugin, to set its metdata.
+     * This is not pre-filled by default, as it would mean to parse several composer.json on each request.
+     *
+     * @param Plugin $plugin
+     * @return null
+     */
+    public function loadMetadata(Plugin $plugin)
+    {
+        $composer = $plugin->getPath() . '/composer.json';
+        if (!file_exists($composer) || !is_readable($composer)) {
+            return null;
+        }
+
+        $json = json_decode(file_get_contents($composer), true);
+
+        $homepage = isset($json['homepage']) ? $json['homepage'] : Constants::HOMEPAGE . '/store/';
+        $metadata = new PluginMetadata();
+        $metadata
+            ->setHomepage($homepage)
+            ->setKimaiVersion($json['extra']['kimai']['require'])
+            ->setVersion($json['extra']['kimai']['version'])
+        ;
+
+        $plugin->setMetadata($metadata);
     }
 }

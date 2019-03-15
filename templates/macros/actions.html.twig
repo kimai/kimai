@@ -222,3 +222,25 @@
         {{ widgets.page_actions(event.payload.actions) }}
     {% endif %}
 {% endmacro %}
+
+{% macro plugins(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {'home': {'url': constant('App\\Constants::HOMEPAGE') ~ '/store/'}} %}
+
+    {% set event = trigger('actions.plugins', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}
+
+{% macro plugin(plugin, view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {'home': {'url': plugin.metadata.homepage}} %}
+
+    {% set event = trigger('actions.plugin', {'actions': actions, 'view': view}) %}
+    {% if view == 'index' %}
+        {{ widgets.button_group(event.payload.actions) }}
+    {% else %}
+        {{ widgets.page_actions(event.payload.actions) }}
+    {% endif %}
+{% endmacro %}

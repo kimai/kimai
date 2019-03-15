@@ -9,11 +9,13 @@
 
 namespace App\EventSubscriber;
 
+use App\Constants;
 use App\Entity\User;
 use App\Event\ThemeEvent;
 use App\Plugin\PluginManager;
 use App\Security\CurrentUser;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class PluginSubscriber implements EventSubscriberInterface
 {
@@ -29,14 +31,21 @@ class PluginSubscriber implements EventSubscriberInterface
      * @var string[]
      */
     protected $unlicensed = [];
+    /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
 
     /**
+     * @param CurrentUser $user
      * @param PluginManager $plugins
+     * @param TranslatorInterface $translator
      */
-    public function __construct(CurrentUser $user, PluginManager $plugins)
+    public function __construct(CurrentUser $user, PluginManager $plugins, TranslatorInterface $translator)
     {
         $this->plugins = $plugins;
         $this->user = $user->getUser();
+        $this->translator = $translator;
     }
 
     /**
@@ -68,16 +77,25 @@ class PluginSubscriber implements EventSubscriberInterface
 
         $this->unlicensed = $unlicensed;
 
-        // FIXME translations
-        $html = '
-            <div class="callout callout-danger">
-                <h4>License problems</h4>
-                You are running the following plugin(s) without valid license: <strong>' . implode(', ', $unlicensed) . '</strong>. 
-                Find out how to buy a (new) license <a href="https://www.kimai.org/store/" target="_blank">at the Kimai marketplace</a>.   
-            </div>
-        ';
+        $title = $this->translate('title.unlicensed');
+        $message = $this->translate('message.unlicensed', [
+            '%plugins%' => '<strong>' . implode(', ', $unlicensed) . '</strong>',
+            '%marketplace%' => '<a href="https://www.kimai.org/store/" target="_blank">'.$this->translate('plugin.marketplace').'</a>'
+        ]);
+
+        $html = '<div class="callout callout-danger"><h4>' . $title . '</h4>' . $message . '</div>';
 
         $event->addContent($html);
+    }
+
+    /**
+     * @param string $key
+     * @param array $replacer
+     * @return string
+     */
+    protected function translate(string $key, array $replacer = []): string
+    {
+        return $this->translator->trans($key, $replacer, 'plugins');
     }
 
     /**
@@ -100,12 +118,12 @@ class PluginSubscriber implements EventSubscriberInterface
             return;
         }
 
-        // FIXME translations
-        $html = '
-            <div class="callout callout-warning">
-                The following plugin(s) have expired: <strong>' . implode(', ', $expired) . '</strong>. Please consider to re-new your license and support further development of open source software.  
-            </div>
-        ';
+        $message = $this->translate('message.expired', [
+            '%plugins%' => '<strong>' . implode(', ', $expired) . '</strong>',
+            '%marketplace%' => '<a href="' . Constants::HOMEPAGE . '/store/' . '" target="_blank">'.$this->translate('plugin.marketplace').'</a>'
+        ]);
+
+        $html = '<div class="callout callout-warning">' . $message . '</div>';
 
         $event->addContent($html);
     }

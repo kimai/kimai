@@ -29,4 +29,9 @@ interface PluginInterface
      * @return string
      */
     public function getName();
+
+    /**
+     * @return string
+     */
+    public function getPath();
 }

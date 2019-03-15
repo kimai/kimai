@@ -27,24 +27,12 @@ class AboutController extends AbstractController
      * @var string
      */
     protected $projectDirectory;
-    /**
-     * @var PluginManager
-     */
-    protected $plugins;
-    /**
-     * @var LicenseKeyInterface
-     */
-    protected $licenseKey;
 
     /**
-     * @param PluginManager $manager
-     * @param LicenseKeyInterface $license
      * @param string $projectDirectory
      */
-    public function __construct(PluginManager $manager, LicenseKeyInterface $license, string $projectDirectory)
+    public function __construct(string $projectDirectory)
     {
-        $this->plugins = $manager;
-        $this->licenseKey = $license;
         $this->projectDirectory = $projectDirectory;
     }
 
@@ -96,10 +84,6 @@ class AboutController extends AbstractController
             'info' => $phpInfo,
             'settings' => $settings,
             'license' => $this->getLicense(),
-            'cloud' => [
-                'publicKey' => $this->licenseKey->getPublicKey(),
-                'plugins' => $this->plugins->getPlugins(),
-            ]
         ]);
     }
 

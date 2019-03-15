@@ -121,6 +121,10 @@
                 <source>menu.admin_user</source>
                 <target>Benutzer</target>
             </trans-unit>
+            <trans-unit id="menu.plugin">
+                <source>menu.plugin</source>
+                <target>Erweiterungen</target>
+            </trans-unit>
 
             <!--
               Error templates

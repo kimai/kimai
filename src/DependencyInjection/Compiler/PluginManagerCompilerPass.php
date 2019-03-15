@@ -96,5 +96,13 @@ class PluginManagerCompilerPass implements CompilerPassInterface
                 throw new RuntimeException('License requirement mismatch in ' . $path);
             }
         }
+
+        if (!isset($composer['extra']['kimai']['version'])) {
+            throw new RuntimeException('Incomplete composer data, missing extra.kimai.version in ' . $path);
+        }
+
+        if (!isset($composer['extra']['kimai']['require'])) {
+            throw new RuntimeException('Incomplete composer data, missing extra.kimai.require in ' . $path);
+        }
     }
 }
