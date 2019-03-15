@@ -41,7 +41,7 @@
                                             {% if plugin.license %}
                                                 {{ widgets.label(plugin.license.validUntil|date_full , 'warning') }}
                                             {% else %}
-                                                {{ widgets.label('no' , 'warning') }}
+                                                {{ widgets.label('no' , 'danger') }}
                                             {% endif %}
                                         {% else %}
                                             {{ widgets.label('no', 'success') }}

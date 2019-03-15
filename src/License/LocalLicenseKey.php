@@ -9,7 +9,9 @@
 
 namespace App\License;
 
+use ParagonIE\Halite\Asymmetric\EncryptionPublicKey;
 use ParagonIE\Halite\KeyFactory;
+use ParagonIE\HiddenString\HiddenString;
 
 class LocalLicenseKey implements LicenseKeyInterface
 {
@@ -126,8 +128,11 @@ class LocalLicenseKey implements LicenseKeyInterface
             $decrypted = \ParagonIE\Halite\Asymmetric\Crypto::decrypt(
                 $message,
                 KeyFactory::loadEncryptionSecretKey($this->getFullFilenameForKey(true)),
-                // FIXME find a better way to store public cloud key
-                KeyFactory::loadEncryptionPublicKey(__DIR__ . '/kimai-cloud-public.key')
+                new EncryptionPublicKey(
+                    new HiddenString(
+                        sodium_hex2bin('ec116439f21cc54db6825d7b1a907e39bfbd183875044aa591d366b977412672')
+                    )
+                )
             );
         } catch (\Exception $ex) {
             throw new LicenseException('Could not decrypt message', $ex->getCode(), $ex);
