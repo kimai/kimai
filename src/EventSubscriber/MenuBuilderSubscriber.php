@@ -11,7 +11,6 @@ namespace App\EventSubscriber;
 
 use App\Event\ConfigureAdminMenuEvent;
 use App\Event\ConfigureMainMenuEvent;
-use App\Event\ConfigureSystemMenuEvent;
 use KevinPapst\AdminLTEBundle\Event\SidebarMenuEvent;
 use KevinPapst\AdminLTEBundle\Event\ThemeEvents;
 use KevinPapst\AdminLTEBundle\Model\MenuItemModel;
