@@ -44,8 +44,8 @@
             <trans-unit id="message.expired">
                 <source>message.expired</source>
                 <target>
-                    The following plugin(s) have expired: %plugins%.
-                    Please consider to re-new your license and support further development of Kimai.
+                    The following plugin license(s) have expired: %plugins%.
+                    Please consider to re-new them and support further development of Kimai.
                 </target>
             </trans-unit>
             <trans-unit id="plugin.marketplace">

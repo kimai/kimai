@@ -66,7 +66,7 @@ class MenuSubscriber implements EventSubscriberInterface
 
         if ($auth->isGranted('view_invoice')) {
             $menu->addItem(
-                new MenuItemModel('invoice', 'menu.invoice', 'invoice', [], 'fas fa-file-invoice')
+                new MenuItemModel('invoice', 'menu.invoice', 'invoice', [], 'far fa-file-alt')
             );
         }
 
@@ -81,13 +81,13 @@ class MenuSubscriber implements EventSubscriberInterface
 
         if ($auth->isGranted('view_other_timesheet')) {
             $menu->addChild(
-                new MenuItemModel('timesheet_admin', 'menu.admin_timesheet', 'admin_timesheet', [], 'far fa-clock')
+                new MenuItemModel('timesheet_admin', 'menu.admin_timesheet', 'admin_timesheet', [], 'fas fa-user-clock')
             );
         }
 
         if ($auth->isGranted('view_customer')) {
             $menu->addChild(
-                new MenuItemModel('customer_admin', 'menu.admin_customer', 'admin_customer', [], 'fas fa-users')
+                new MenuItemModel('customer_admin', 'menu.admin_customer', 'admin_customer', [], 'fas fa-user-tie')
             );
         }
 
@@ -108,13 +108,13 @@ class MenuSubscriber implements EventSubscriberInterface
 
         if ($auth->isGranted('view_user')) {
             $menu->addChild(
-                new MenuItemModel('user_admin', 'menu.admin_user', 'admin_user', [], 'fas fa-user')
+                new MenuItemModel('user_admin', 'menu.admin_user', 'admin_user', [], 'fas fa-users')
             );
         }
 
         if ($auth->isGranted('ROLE_SUPER_ADMIN')) {
             $menu->addChild(
-                new MenuItemModel('plugins', 'menu.plugin', 'plugins', [], 'fas fa-puzzle-piece')
+                new MenuItemModel('plugins', 'menu.plugin', 'plugins', [], 'fas fa-plug')
             );
         }
     }

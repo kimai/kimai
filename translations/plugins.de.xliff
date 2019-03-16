@@ -45,7 +45,7 @@
                 <source>message.expired</source>
                 <target>
                     Die Lizenz der folgenden Plugins ist abgelaufen: %plugins%.
-                    Bitte überlegen Sie, ob Sie Ihre Lizenz erneuern und die Weiterentwicklung von Kimai unterstützen wollen.
+                    Bitte denken Sie darüber nach, diese zu erneuern und die Weiterentwicklung von Kimai zu unterstützen.
                 </target>
             </trans-unit>
             <trans-unit id="plugin.marketplace">
