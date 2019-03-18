@@ -18,7 +18,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * Command used to check and apply the projects coding styles.
  */
-class RunCodeSnifferCommand extends Command
+class RunCodestyleCommand extends Command
 {
     /**
      * @var BashExecutor
@@ -46,8 +46,8 @@ class RunCodeSnifferCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('kimai:phpcs')
-            ->setDescription('Run PHP_CodeSniffer to check for the projects coding style')
+            ->setName('kimai:codestyle')
+            ->setDescription('Check and fix the projects coding style')
             ->addOption('fix', null, InputOption::VALUE_NONE, 'Fix all found problems')
             ->addOption('checkstyle', null, InputOption::VALUE_OPTIONAL, '')
         ;
