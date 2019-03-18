@@ -9,6 +9,7 @@
 
 namespace App\Tests\Twig;
 
+use App\Configuration\LanguageFormattings;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Twig\Extensions;
@@ -41,7 +42,7 @@ class ExtensionsTest extends TestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        $localeSettings = new LocaleSettings($requestStack, $locales);
+        $localeSettings = new LocaleSettings($requestStack, new LanguageFormattings($locales));
 
         return new Extensions($requestStack, $localeSettings);
     }

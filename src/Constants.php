@@ -21,7 +21,7 @@ class Constants
     /**
      * The current release version
      */
-    public const VERSION = '0.8.1';
+    public const VERSION = '0.9';
     /**
      * The release name, will only change for new major version
      */
@@ -29,7 +29,7 @@ class Constants
     /**
      * The current release status, either "stable" or "dev"
      */
-    public const STATUS = 'stable';
+    public const STATUS = 'dev';
     /**
      * Used in multiple views
      */

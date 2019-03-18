@@ -119,7 +119,23 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testGetCollectionWithQuery()
     {
-        $query = ['customer' => 1, 'project' => 1, 'activity' => 1, 'page' => 2, 'size' => 5, 'order' => 'DESC', 'orderBy' => 'rate'];
+        $begin = new \DateTime('-10 days');
+        $begin->setTime(0, 0, 0);
+        $end = new \DateTime();
+        $end->setTime(23, 59, 59);
+
+        $query = [
+            'customer' => 1,
+            'project' => 1,
+            'activity' => 1,
+            'page' => 2,
+            'size' => 5,
+            'order' => 'DESC',
+            'orderBy' => 'rate',
+            'begin' => $begin->format('Y-m-d H:i:s'),
+            'end' => $end->format('Y-m-d H:i:s'),
+            'exported' => 0,
+        ];
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
         $result = json_decode($client->getResponse()->getContent(), true);
@@ -127,6 +143,74 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(5, count($result));
+        $this->assertDefaultStructure($result[0], false);
+    }
+
+    public function testExportedFilter()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setExported(true)
+            ->setAmount(7)
+            ->setUser($this->getUserByRole($em, User::ROLE_USER))
+            ->setStartDate(new \DateTime('-10 days'))
+            ->setAllowEmptyDescriptions(false)
+        ;
+        $this->importFixture($em, $fixture);
+
+        $begin = new \DateTime('-10 days');
+        $begin->setTime(0, 0, 0);
+        $end = new \DateTime();
+        $end->setTime(23, 59, 59);
+
+        $query = [
+            'page' => 1,
+            'size' => 50,
+            'begin' => $begin->format('Y-m-d H:i:s'),
+            'end' => $end->format('Y-m-d H:i:s'),
+            'exported' => 1,
+        ];
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(7, count($result));
+        $this->assertDefaultStructure($result[0], false);
+
+        $query = [
+            'page' => 1,
+            'size' => 50,
+            'begin' => $begin->format('Y-m-d H:i:s'),
+            'end' => $end->format('Y-m-d H:i:s'),
+            'exported' => 0,
+        ];
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(10, count($result));
+        $this->assertDefaultStructure($result[0], false);
+
+        $query = [
+            'page' => 1,
+            'size' => 50,
+            'begin' => $begin->format('Y-m-d H:i:s'),
+            'end' => $end->format('Y-m-d H:i:s'),
+        ];
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(17, count($result));
         $this->assertDefaultStructure($result[0], false);
     }
 
