@@ -3,6 +3,13 @@
     "license": "MIT",
     "type": "project",
     "description": "Kimai Time-Tracking 2",
+    "authors": [
+        {
+            "name": "Kevin Papst",
+            "email": "kpapst@gmx.net",
+            "homepage": "https://www.kevinpapst.de"
+        }
+    ],
     "require": {
         "php": "^7.2",
         "ext-gd": "*",
@@ -10,7 +17,7 @@
         "ext-mbstring": "*",
         "ext-pdo": "*",
         "ext-zip": "*",
-        "ext-libsodium": "*",
+        "ext-sodium": "*",
         "beberlei/doctrineextensions": "^1.2",
         "dama/doctrine-test-bundle": "^5.0",
         "doctrine/doctrine-fixtures-bundle": "^3.0",
@@ -57,7 +64,6 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.10",
         "phpunit/phpunit": "^7.0",
-        "squizlabs/php_codesniffer": "^3.2",
         "symfony/browser-kit": "^4.0",
         "symfony/css-selector": "^4.0",
         "symfony/phpunit-bridge": "^4.0",
