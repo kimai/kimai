@@ -102,6 +102,7 @@ class Extensions extends AbstractExtension
         'off' => 'fas fa-toggle-off',
         'audit' => 'fas fa-history',
         'home' => 'fas fa-home',
+        'shop' => 'fas fa-shopping-cart',
     ];
 
     /**

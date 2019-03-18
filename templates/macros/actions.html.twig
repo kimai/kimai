@@ -226,7 +226,7 @@
 {% macro plugins(view) %}
     {% import "macros/widgets.html.twig" as widgets %}
 
-    {% set actions = {'home': {'url': constant('App\\Constants::HOMEPAGE') ~ '/store/'}} %}
+    {% set actions = {'shop': {'url': constant('App\\Constants::HOMEPAGE') ~ '/store/', 'target': '_blank'}} %}
 
     {% set event = trigger('actions.plugins', {'actions': actions, 'view': view}) %}
     {{ widgets.page_actions(event.payload.actions) }}

@@ -17,7 +17,7 @@ class PluginManager
     /**
      * @var Plugin[]
      */
-    private $plugins;
+    private $plugins = [];
     /**
      * @var PluginLicense[]
      */
