@@ -5,27 +5,53 @@
 {% block page_subtitle %}{{ 'about.subtitle'|trans({}, 'about') }}{% endblock %}
 
 {% block main %}
+
+    {{ widgets.callout('info', 'Thank you for using Kimai ' ~ constant('App\\Constants::VERSION') ~ ' ' ~  constant('App\\Constants::STATUS') ~ ' - ' ~ constant('App\\Constants::NAME'), 'Kimai ' ~ constant('App\\Constants::VERSION'), 'fas fa-thumbs-up') }}
+
     <div class="row">
         <div class="col-md-12">
 
             <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#system" data-toggle="tab" aria-expanded="true">{{ 'tab.system'|trans({}, 'about') }}</a></li>
-                    <li><a href="#license" data-toggle="tab" aria-expanded="true">{{ 'tab.license'|trans({}, 'about') }}</a></li>
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation"class ="active"><a href="#systeminfo" aria-controls="systeminfo" role="tab" data-toggle="tab">{{ 'tab.system'|trans({}, 'about') }}</a></li>
+                    <li role="presentation"><a href="#license" aria-controls="license" role="tab" data-toggle="tab">{{ 'tab.license'|trans({}, 'about') }}</a></li>
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane active" id="system">
-
+                    <div role="tabpanel" class="tab-pane active" id="systeminfo">
                         <div class="box-group" id="accordion">
+                            {% if is_granted('system_actions') %}
                             <div class="panel box">
                                 <div class="box-header with-border">
                                     <h4 class="box-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="" aria-expanded="true">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseSystemAction" aria-expanded="true">
+                                            {{ 'label.actions'|trans }}
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseSystemAction" class="panel-collapse collapse in" aria-expanded="true">
+                                    <div class="box-body">
+                                        <p>
+                                            <a href="{{ path('system_flush_cache') }}" class="btn btn-primary">Clear cache</a>
+                                        </p>
+
+                                        {% if content_action is defined and content_action is not empty %}
+                                        <pre>
+                                            {{ content_action }}
+                                        </pre>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            <div class="panel box">
+                                <div class="box-header with-border">
+                                    <h4 class="box-title">
+                                        <a data-toggle="collapse" role="button" data-parent="#accordion" href="#collapseEnvironment" aria-expanded="false" aria-controls="collapseEnvironment">
                                             Environment
                                         </a>
                                     </h4>
                                 </div>
-                                <div id="collapseTwo" class="panel-collapse collapse in" aria-expanded="true" style="">
+                                <div id="collapseEnvironment" class="panel-collapse collapse" aria-expanded="false" role="tabpanel">
                                     <div class="box-body">
 
                                         <dl>
@@ -41,12 +67,12 @@
                             <div class="panel box">
                                 <div class="box-header with-border">
                                     <h4 class="box-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="collapsed" aria-expanded="false">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapsePhp" class="collapsed" aria-expanded="false">
                                             PHP
                                         </a>
                                     </h4>
                                 </div>
-                                <div id="collapseThree" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                <div id="collapsePhp" class="panel-collapse collapse" aria-expanded="false">
                                     <div class="box-body">
 
                                         <dl>
@@ -70,12 +96,12 @@
                             <div class="panel box">
                                 <div class="box-header with-border">
                                     <h4 class="box-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour" class="collapsed" aria-expanded="false">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseSystem" class="collapsed" aria-expanded="false">
                                             Server
                                         </a>
                                     </h4>
                                 </div>
-                                <div id="collapseFour" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                <div id="collapseSystem" class="panel-collapse collapse" aria-expanded="false">
                                     <div class="box-body">
 
                                         <dl>
@@ -89,9 +115,8 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                    <div class="tab-pane" id="license">
+                    <div role="tabpanel" class="tab-pane" id="license">
                         <pre>{{ license }}</pre>
                         <p>
                             <a href="https://choosealicense.com/licenses/mit/" target="_blank">choosealicense.com</a>,

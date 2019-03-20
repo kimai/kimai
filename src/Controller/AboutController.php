@@ -10,8 +10,11 @@
 namespace App\Controller;
 
 use App\Constants;
-use App\License\LicenseKeyInterface;
-use App\Plugin\PluginManager;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -43,6 +46,11 @@ class AboutController extends AbstractController
      */
     public function indexAction()
     {
+        return $this->getAboutView();
+    }
+
+    protected function getAboutView(array $additional = [])
+    {
         $phpInfo = $this->getPhpInfo();
         unset($phpInfo[0]);
         unset($phpInfo[1]);
@@ -73,7 +81,7 @@ class AboutController extends AbstractController
             }
         }
 
-        return $this->render('about/system.html.twig', [
+        return $this->render('about/system.html.twig', array_merge([
             'modules' => get_loaded_extensions(),
             'dotenv' => [
                 'APP_ENV' => getenv('APP_ENV'),
@@ -84,7 +92,8 @@ class AboutController extends AbstractController
             'info' => $phpInfo,
             'settings' => $settings,
             'license' => $this->getLicense(),
-        ]);
+            ], $additional
+        ));
     }
 
     /**
@@ -143,5 +152,27 @@ class AboutController extends AbstractController
         }
 
         return $phpinfo['phpinfo'];
+    }
+
+    /**
+     * @Route(path="/flush-cache", name="system_flush_cache", methods={"GET"})
+     *
+     * @Security("is_granted('system_actions')")
+     */
+    public function rebuildContainer(KernelInterface $kernel)
+    {
+        $application = new Application($kernel);
+        $application->setAutoExit(false);
+
+        $input = new ArrayInput([
+            'command' => 'cache:clear',
+            '--env' => $kernel->getEnvironment(),
+            '-n',
+        ]);
+
+        $output = new BufferedOutput();
+        $application->run($input, $output);
+
+        return $this->getAboutView(['content_action' => $output->fetch()]);
     }
 }
