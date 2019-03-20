@@ -235,7 +235,7 @@
 {% macro plugin(plugin, view) %}
     {% import "macros/widgets.html.twig" as widgets %}
 
-    {% set actions = {'home': {'url': plugin.metadata.homepage}} %}
+    {% set actions = {'home': {'url': plugin.metadata.homepage, 'target': '_blank'}} %}
 
     {% set event = trigger('actions.plugin', {'actions': actions, 'view': view}) %}
     {% if view == 'index' %}

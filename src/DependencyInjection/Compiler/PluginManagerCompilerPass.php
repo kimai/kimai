@@ -9,7 +9,6 @@
 
 namespace App\DependencyInjection\Compiler;
 
-use App\Kernel;
 use App\License\LicenseManager;
 use App\Plugin\PluginInterface;
 use App\Plugin\PluginManager;
@@ -41,9 +40,19 @@ class PluginManagerCompilerPass implements CompilerPassInterface
             $pluginManager->addMethodCall('addLicense', [$license->toArray()]);
         }
 
-        $taggedBundles = $container->findTaggedServiceIds(Kernel::TAG_BUNDLE);
-        foreach ($taggedBundles as $id => $tags) {
+        $bundles = $container->getParameter('kernel.bundles');
+        $taggedBundles = [];
+        foreach ($bundles as $id => $className) {
+            if (substr($className, 0, 12) === 'KimaiPlugin\\') {
+                $taggedBundles[] = $className;
+            }
+        }
+        foreach ($taggedBundles as $id) {
             $this->validateBundle($id);
+            // a fallback if the Bundle itself was not registered as service
+            if (!$container->has($id)) {
+                $container->register($id, $id);
+            }
             $pluginManager->addMethodCall('addPlugin', [new Reference($id)]);
         }
     }
@@ -57,11 +66,12 @@ class PluginManagerCompilerPass implements CompilerPassInterface
     {
         $class = new \ReflectionClass($id);
 
+        $path = dirname($class->getFileName());
+
         if (!$class->implementsInterface(PluginInterface::class)) {
-            throw new RuntimeException('Invalid or outdated Kimai bundle: ' . $class->getName());
+            throw new RuntimeException('Invalid or outdated Kimai bundle, update or remove it: ' . $path);
         }
 
-        $path = dirname($class->getFileName());
         $composerFile = $path . '/composer.json';
         if (!file_exists($composerFile) || !is_readable($composerFile)) {
             throw new RuntimeException('Missing composer.json in ' . $path);

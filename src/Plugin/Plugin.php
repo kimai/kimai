@@ -53,6 +53,7 @@ class Plugin
     public function setMetadata(PluginMetadata $metadata)
     {
         $this->metadata = $metadata;
+
         return $this;
     }
 
@@ -71,6 +72,7 @@ class Plugin
     public function setPath(string $path)
     {
         $this->path = $path;
+
         return $this;
     }
 

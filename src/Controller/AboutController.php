@@ -10,12 +10,12 @@
 namespace App\Controller;
 
 use App\Constants;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -81,7 +81,8 @@ class AboutController extends AbstractController
             }
         }
 
-        return $this->render('about/system.html.twig', array_merge([
+        return $this->render('about/system.html.twig', array_merge(
+            [
             'modules' => get_loaded_extensions(),
             'dotenv' => [
                 'APP_ENV' => getenv('APP_ENV'),
@@ -92,7 +93,8 @@ class AboutController extends AbstractController
             'info' => $phpInfo,
             'settings' => $settings,
             'license' => $this->getLicense(),
-            ], $additional
+            ],
+            $additional
         ));
     }
 

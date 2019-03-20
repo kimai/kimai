@@ -64,7 +64,7 @@ class LicenseManager implements LicenseManagerInterface
      */
     protected function getLicenseData(): array
     {
-        $licenseFile = realpath($this->projectDirectory . '/var/data') . '/LICENSE';
+        $licenseFile = realpath($this->projectDirectory . '/var/data') . '/LICENSE.txt';
 
         if (!file_exists($licenseFile)) {
             return [];

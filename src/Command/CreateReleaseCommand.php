@@ -21,7 +21,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class CreateReleaseCommand extends Command
 {
-    const CLONE_CMD = 'git clone -b %s --depth 1 https://github.com/kevinpapst/kimai2.git';
+    public const CLONE_CMD = 'git clone -b %s --depth 1 https://github.com/kevinpapst/kimai2.git';
 
     /**
      * @var string
@@ -62,6 +62,7 @@ class CreateReleaseCommand extends Command
 
         if (getenv('APP_ENV') === 'prod') {
             $io->error('kimai:create-release is not allowed in production');
+
             return -2;
         }
 
@@ -77,11 +78,13 @@ class CreateReleaseCommand extends Command
 
         if (!is_dir($directory)) {
             $io->error('Given directory is not existing: ' . $directory);
+
             return 1;
         }
 
         if (is_dir($directory) && !is_writable($directory)) {
             $io->error('Cannot write in directory: ' . $directory);
+
             return 1;
         }
 
@@ -123,29 +126,30 @@ class CreateReleaseCommand extends Command
             'var/sessions/*',
         ];
 
-        foreach($filesToDelete as $deleteMe) {
+        foreach ($filesToDelete as $deleteMe) {
             $commands['Delete ' . $deleteMe] = 'cd ' . $tmpDir . ' && rm -rf ' . $deleteMe;
         }
 
         $commands = array_merge($commands, [
-            'Create tar' => 'cd ' . $tmpDir . ' && tar -czf ' . $directory. '/' . $tar . ' .',
-            'Create zip' => 'cd ' . $tmpDir . ' && zip -r ' . $directory. '/' . $zip . ' .',
+            'Create tar' => 'cd ' . $tmpDir . ' && tar -czf ' . $directory . '/' . $tar . ' .',
+            'Create zip' => 'cd ' . $tmpDir . ' && zip -r ' . $directory . '/' . $zip . ' .',
             'Remove tmp directory' => 'rm -rf ' . $tmpDir,
         ]);
 
         $exitCode = 0;
-        foreach($commands as $title => $command) {
+        foreach ($commands as $title => $command) {
             $io->success($title);
             passthru($command, $exitCode);
             if ($exitCode !== 0) {
                 $io->error('Failed with command: ' . $command);
+
                 return -1;
             }
         }
 
         $io->success(
             'New release packages available at: ' . PHP_EOL .
-            $directory . '/' . $tar. PHP_EOL .
+            $directory . '/' . $tar . PHP_EOL .
             $directory . '/' . $zip
         );
 

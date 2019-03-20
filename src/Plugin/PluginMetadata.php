@@ -39,6 +39,7 @@ class PluginMetadata
     public function setVersion(string $version)
     {
         $this->version = $version;
+
         return $this;
     }
 
@@ -57,6 +58,7 @@ class PluginMetadata
     public function setKimaiVersion(string $kimaiVersion)
     {
         $this->kimaiVersion = $kimaiVersion;
+
         return $this;
     }
 
@@ -75,6 +77,7 @@ class PluginMetadata
     public function setHomepage(string $homepage)
     {
         $this->homepage = $homepage;
+
         return $this;
     }
 }

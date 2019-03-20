@@ -44,7 +44,8 @@ class ConfigureMainMenuEvent extends Event
      * @param MenuItemModel $admin
      * @param MenuItemModel $system
      */
-    public function __construct(Request $request, SidebarMenuEvent $event, MenuItemModel $admin, MenuItemModel $system) {
+    public function __construct(Request $request, SidebarMenuEvent $event, MenuItemModel $admin, MenuItemModel $system)
+    {
         $this->request = $request;
         $this->event = $event;
         $this->admin = $admin;

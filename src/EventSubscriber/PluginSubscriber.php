@@ -80,7 +80,7 @@ class PluginSubscriber implements EventSubscriberInterface
         $title = $this->translate('title.unlicensed');
         $message = $this->translate('message.unlicensed', [
             '%plugins%' => '<strong>' . implode(', ', $unlicensed) . '</strong>',
-            '%marketplace%' => '<a href="https://www.kimai.org/store/" target="_blank">'.$this->translate('plugin.marketplace').'</a>'
+            '%marketplace%' => '<a href="https://www.kimai.org/store/" target="_blank">' . $this->translate('plugin.marketplace') . '</a>'
         ]);
 
         $html = '<div class="callout callout-danger"><h4>' . $title . '</h4>' . $message . '</div>';
@@ -120,7 +120,7 @@ class PluginSubscriber implements EventSubscriberInterface
 
         $message = $this->translate('message.expired', [
             '%plugins%' => '<strong>' . implode(', ', $expired) . '</strong>',
-            '%marketplace%' => '<a href="' . Constants::HOMEPAGE . '/store/' . '" target="_blank">'.$this->translate('plugin.marketplace').'</a>'
+            '%marketplace%' => '<a href="' . Constants::HOMEPAGE . '/store/' . '" target="_blank">' . $this->translate('plugin.marketplace') . '</a>'
         ]);
 
         $html = '<div class="callout callout-warning">' . $message . '</div>';

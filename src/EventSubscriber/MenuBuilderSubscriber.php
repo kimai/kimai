@@ -86,14 +86,14 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
 
         if ($menuEvent->getAdminMenu()->hasChildren()) {
             $event->addItem(new MenuItemModel('admin', 'menu.admin', ''));
-            foreach($menuEvent->getAdminMenu()->getChildren() as $child) {
+            foreach ($menuEvent->getAdminMenu()->getChildren() as $child) {
                 $event->addItem($child);
             }
         }
 
         if ($menuEvent->getSystemMenu()->hasChildren()) {
             $event->addItem(new MenuItemModel('system', 'menu.system', ''));
-            foreach($menuEvent->getSystemMenu()->getChildren() as $child) {
+            foreach ($menuEvent->getSystemMenu()->getChildren() as $child) {
                 $event->addItem($child);
             }
         }

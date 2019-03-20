@@ -46,7 +46,7 @@ class PluginManager
             return;
         }
 
-        $this->plugins[$plugin->getName()] = $this->getPlugin($plugin);
+        $this->plugins[$plugin->getName()] = $this->createPlugin($plugin);
     }
 
     /**
@@ -58,10 +58,23 @@ class PluginManager
     }
 
     /**
+     * @param string $name
+     * @return Plugin|null
+     */
+    public function getPlugin(string $name): ?Plugin
+    {
+        if (!isset($this->plugins[$name])) {
+            return null;
+        }
+
+        return $this->plugins[$name];
+    }
+
+    /**
      * @param PluginInterface $bundle
      * @return Plugin
      */
-    protected function getPlugin(PluginInterface $bundle)
+    protected function createPlugin(PluginInterface $bundle)
     {
         $plugin = new Plugin();
         $plugin
@@ -107,7 +120,6 @@ class PluginManager
      * This is not pre-filled by default, as it would mean to parse several composer.json on each request.
      *
      * @param Plugin $plugin
-     * @return null
      */
     public function loadMetadata(Plugin $plugin)
     {
@@ -118,7 +130,7 @@ class PluginManager
 
         $json = json_decode(file_get_contents($composer), true);
 
-        $homepage = isset($json['homepage']) ? $json['homepage'] : Constants::HOMEPAGE . '/store/';
+        $homepage = $json['homepage'] ?? Constants::HOMEPAGE . '/store/';
         $metadata = new PluginMetadata();
         $metadata
             ->setHomepage($homepage)

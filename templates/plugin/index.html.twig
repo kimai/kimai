@@ -38,12 +38,16 @@
                                         {% endif %}
                                     </td>
                                     <td class="hidden-xs">
-                                        {% if plugin.expired %}
+                                        {% if plugin.licensed %}
                                             {% if plugin.license %}
-                                                {{ widgets.label(plugin.license.validUntil|date_full, 'warning') }}
-                                            {% else %}
-                                                {{ widgets.label('no' , 'danger') }}
+                                                {% if plugin.expired %}
+                                                    {{ widgets.label(plugin.license.validUntil|date_full, 'warning') }}
+                                                {% else %}
+                                                    {{ widgets.label(plugin.license.validUntil|date_full, 'success') }}
+                                                {% endif %}
                                             {% endif %}
+                                        {% else %}
+                                            {{ widgets.label('no' , 'danger') }}
                                         {% endif %}
                                     </td>
                                     <td class="hidden-xs hidden-sm">

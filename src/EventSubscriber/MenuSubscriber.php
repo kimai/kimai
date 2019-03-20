@@ -9,7 +9,6 @@
 
 namespace App\EventSubscriber;
 
-use App\Event\ConfigureAdminMenuEvent;
 use App\Event\ConfigureMainMenuEvent;
 use KevinPapst\AdminLTEBundle\Model\MenuItemModel;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
