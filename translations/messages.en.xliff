@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="en" datatype="plaintext" original="none">
+    <file source-language="en" target-language="en" datatype="plaintext" original="messages.en.xliff">
         <body>
             <!--
               Global template keys
@@ -120,6 +120,10 @@
             <trans-unit id="menu.admin_user">
                 <source>menu.admin_user</source>
                 <target>User</target>
+            </trans-unit>
+            <trans-unit id="menu.system_configuration">
+                <source>menu.system_configuration</source>
+                <target>Einstellungen</target>
             </trans-unit>
 
             <!--
