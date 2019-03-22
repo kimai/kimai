@@ -38,16 +38,14 @@ class TimesheetController extends BaseApiController
      * @var TimesheetRepository
      */
     protected $repository;
-
     /**
      * @var ViewHandlerInterface
      */
     protected $viewHandler;
-
     /**
-     * @var int
+     * @var TimesheetConfiguration
      */
-    protected $hardLimit;
+    protected $configuration;
 
     /**
      * @var UserDateTimeFactory
@@ -64,7 +62,7 @@ class TimesheetController extends BaseApiController
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
-        $this->hardLimit = $configuration->getActiveEntriesHardLimit();
+        $this->configuration = $configuration;
         $this->dateTime = $dateTime;
     }
 
@@ -236,7 +234,7 @@ class TimesheetController extends BaseApiController
             if (null === $timesheet->getEnd()) {
                 $this->repository->stopActiveEntries(
                     $timesheet->getUser(),
-                    $this->hardLimit
+                    $this->configuration->getActiveEntriesHardLimit()
                 );
             }
 

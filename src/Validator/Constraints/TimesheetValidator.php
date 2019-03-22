@@ -25,24 +25,18 @@ class TimesheetValidator extends ConstraintValidator
      */
     protected $auth;
     /**
-     * @var bool
+     * @var TimesheetConfiguration
      */
-    protected $durationOnly = false;
-    /**
-     * @var bool
-     */
-    protected $allowFutureTimes = true;
+    protected $configuration;
 
     /**
      * @param AuthorizationCheckerInterface $auth
-     * @param array $ruleset
-     * @param bool $durationOnly
+     * @param TimesheetConfiguration $configuration
      */
     public function __construct(AuthorizationCheckerInterface $auth, TimesheetConfiguration $configuration)
     {
         $this->auth = $auth;
-        $this->durationOnly = $configuration->isDurationOnly();
-        $this->allowFutureTimes = $configuration->isAllowFutureTimes();
+        $this->configuration = $configuration;
     }
 
     /**
@@ -76,7 +70,7 @@ class TimesheetValidator extends ConstraintValidator
         if ($context->getViolations()->count() == 0 && null === $timesheet->getEnd()) {
             if (!$this->auth->isGranted('start', $timesheet)) {
                 $context->buildViolation('You are not allowed to start this timesheet record.')
-                    ->atPath($this->durationOnly ? 'duration' : 'end')
+                    ->atPath($this->configuration->isDurationOnly() ? 'duration' : 'end')
                     ->setTranslationDomain('validators')
                     ->setCode(TimesheetConstraint::START_DISALLOWED)
                     ->addViolation();
@@ -112,7 +106,7 @@ class TimesheetValidator extends ConstraintValidator
                 ->addViolation();
         }
 
-        if (false === $this->allowFutureTimes && time() < $timesheet->getBegin()->getTimestamp()) {
+        if (false === $this->configuration->isAllowFutureTimes() && time() < $timesheet->getBegin()->getTimestamp()) {
             $context->buildViolation('The begin date cannot be in the future.')
                 ->atPath('begin')
                 ->setTranslationDomain('validators')

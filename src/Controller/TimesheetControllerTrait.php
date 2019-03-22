@@ -25,32 +25,22 @@ use Symfony\Component\HttpFoundation\Response;
 trait TimesheetControllerTrait
 {
     /**
-     * @var int
-     */
-    private $hardLimit = 1;
-    /**
      * @var UserDateTimeFactory
      */
     protected $dateTime;
     /**
-     * @var bool
+     * @var TimesheetConfiguration
      */
-    protected $durationOnly = false;
-    /**
-     * @var int
-     */
-    protected $softLimit = 3;
+    protected $configuration;
 
     /**
      * @param UserDateTimeFactory $dateTime
-     * @param int $hardLimit
+     * @param TimesheetConfiguration $configuration
      */
     public function __construct(UserDateTimeFactory $dateTime, TimesheetConfiguration $configuration)
     {
         $this->dateTime = $dateTime;
-        $this->durationOnly = $configuration->isDurationOnly();
-        $this->hardLimit = $configuration->getActiveEntriesHardLimit();
-        $this->softLimit = $configuration->getActiveEntriesSoftLimit();
+        $this->configuration = $configuration;
     }
 
     /**
@@ -58,7 +48,15 @@ trait TimesheetControllerTrait
      */
     protected function getHardLimit()
     {
-        return $this->hardLimit;
+        return $this->configuration->getActiveEntriesHardLimit();
+    }
+
+    /**
+     * @return int
+     */
+    protected function getSoftLimit()
+    {
+        return $this->configuration->getActiveEntriesSoftLimit();
     }
 
     /**
@@ -195,7 +193,7 @@ trait TimesheetControllerTrait
      */
     protected function stopActiveEntries(User $user)
     {
-        $this->getRepository()->stopActiveEntries($user, $this->hardLimit);
+        $this->getRepository()->stopActiveEntries($user, $this->getHardLimit());
     }
 
     /**

@@ -39,21 +39,18 @@ class TimesheetEditForm extends AbstractType
      * @var CustomerRepository
      */
     private $customers;
-
     /**
      * @var ProjectRepository
      */
     private $projects;
-
-    /**
-     * @var bool
-     */
-    private $durationOnly = false;
-
     /**
      * @var UserDateTimeFactory
      */
     protected $dateTime;
+    /**
+     * @var TimesheetConfiguration
+     */
+    private $configuration;
 
     /**
      * @param CustomerRepository $customer
@@ -66,7 +63,7 @@ class TimesheetEditForm extends AbstractType
         $this->customers = $customer;
         $this->projects = $project;
         $this->dateTime = $dateTime;
-        $this->durationOnly = $config->isDurationOnly();
+        $this->configuration = $config;
     }
 
     /**
@@ -107,7 +104,7 @@ class TimesheetEditForm extends AbstractType
             $timezone = $begin->getTimezone()->getName();
         }
 
-        if (null === $end || !$this->durationOnly) {
+        if (null === $end || !$this->configuration->isDurationOnly()) {
             $builder->add('begin', DateTimePickerType::class, [
                 'label' => 'label.begin',
                 'model_timezone' => $timezone,
@@ -118,7 +115,7 @@ class TimesheetEditForm extends AbstractType
             ]);
         }
 
-        if ($this->durationOnly) {
+        if ($this->configuration->isDurationOnly()) {
             $builder->add('duration', DurationType::class, [
                 'required' => false,
                 'docu_chapter' => 'timesheet.html#duration-format',

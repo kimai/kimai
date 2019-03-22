@@ -50,10 +50,12 @@ services:
         arguments: ["%kimai.languages%"]
 
     App\Configuration\TimesheetConfiguration:
-        factory: 'App\Configuration\SystemConfiguration:createTimesheetConfiguration'
+        arguments:
+            $settings: "%kimai.timesheet%"
 
     App\Configuration\FormConfiguration:
-        factory: 'App\Configuration\SystemConfiguration:createFormConfiguration'
+        arguments:
+            $settings: "%kimai.defaults%"
 
     App\Configuration\SystemConfiguration:
         arguments:

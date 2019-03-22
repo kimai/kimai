@@ -9,19 +9,63 @@
 
 namespace App\Configuration;
 
+use App\Repository\ConfigurationRepository;
+
 trait StringAccessibleConfigTrait
 {
     /**
      * @var array
      */
     protected $settings;
+    /**
+     * @var ConfigurationRepository
+     */
+    protected $repository;
+    /**
+     * @var bool
+     */
+    protected $initialized = false;
 
     /**
      * @param array $settings
      */
-    public function __construct(array $settings)
+    public function __construct(ConfigurationRepository $repository, array $settings)
     {
+        $this->repository = $repository;
         $this->settings = $settings;
+    }
+
+    protected function prepare()
+    {
+        if ($this->initialized) {
+            return;
+        }
+
+        // this foreach should be replaced by a better piece of code,
+        // especially the pointers could be a problem in the future
+        foreach ($this->repository->getAllConfigurations() as $key => $value) {
+            $temp = explode('.', $key);
+            $array = &$this->settings;
+            if ($temp[0] === $this->getPrefix()) {
+                $temp = array_slice($temp, 1);
+            }
+            foreach ($temp as $key2) {
+                if (!isset($array[$key2])) {
+                    continue 2;
+                }
+                if (is_array($array[$key2])) {
+                    $array = &$array[$key2];
+                } elseif (is_bool($array[$key2])) {
+                    $array[$key2] = (bool) $value;
+                } elseif (is_int($array[$key2])) {
+                    $array[$key2] = (int) $value;
+                } else {
+                    $array[$key2] = $value;
+                }
+            }
+        }
+
+        $this->initialized = true;
     }
 
     /**
@@ -35,6 +79,7 @@ trait StringAccessibleConfigTrait
      */
     public function find(string $key)
     {
+        $this->prepare();
         $prefix = $this->getPrefix() . '.';
         $length = strlen($prefix);
 
@@ -50,7 +95,7 @@ trait StringAccessibleConfigTrait
      * @param array $config
      * @return mixed
      */
-    protected function get(string $key, array $config)
+    private function get(string $key, array $config)
     {
         $keys = explode('.', $key);
         $search = array_shift($keys);

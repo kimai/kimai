@@ -69,7 +69,7 @@ class TimesheetController extends AbstractController
             'showFilter' => $form->isSubmitted(),
             'toolbarForm' => $form->createView(),
             'showSummary' => $this->getUser()->getPreferenceValue('timesheet.daily_stats', false),
-            'duration_only' => $this->durationOnly,
+            'duration_only' => $this->configuration->isDurationOnly(),
         ]);
     }
 
@@ -127,7 +127,7 @@ class TimesheetController extends AbstractController
             'navbar/active-entries.html.twig',
             [
                 'entries' => $activeEntries,
-                'soft_limit' => $this->softLimit,
+                'soft_limit' => $this->getSoftLimit(),
             ]
         );
     }

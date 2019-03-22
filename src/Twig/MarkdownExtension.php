@@ -24,9 +24,9 @@ class MarkdownExtension extends AbstractExtension
      */
     private $markdown;
     /**
-     * @var bool
+     * @var TimesheetConfiguration
      */
-    private $timesheetIsMarkdown = false;
+    protected $configuration;
 
     /**
      * MarkdownExtension constructor.
@@ -35,7 +35,7 @@ class MarkdownExtension extends AbstractExtension
     public function __construct(Markdown $parser, TimesheetConfiguration $configuration)
     {
         $this->markdown = $parser;
-        $this->timesheetIsMarkdown = $configuration->isMarkdownEnabled();
+        $this->configuration = $configuration;
     }
 
     /**
@@ -61,7 +61,7 @@ class MarkdownExtension extends AbstractExtension
             return '';
         }
 
-        if ($this->timesheetIsMarkdown) {
+        if ($this->configuration->isMarkdownEnabled()) {
             return $this->markdown->toHtml($content, false);
         }
 
