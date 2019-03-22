@@ -14,7 +14,6 @@ services:
                             # The best practice is to be explicit about your dependencies anyway.
         bind:
             $projectDirectory: "%kernel.project_dir%"
-            $hardLimit: "%kimai.timesheet.active_entries.hard_limit%"
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -47,17 +46,18 @@ services:
         arguments:
             $dashboard: "%kimai.dashboard%"
 
-    App\Twig\MarkdownExtension:
-        arguments:
-            $timesheetAsMarkdown: "%kimai.timesheet.markdown%"
-
-    App\Controller\CustomerController:
-        arguments:
-            $defaults: "%kimai.defaults%"
-
     App\Configuration\LanguageFormattings:
+        arguments: ["%kimai.languages%"]
+
+    App\Configuration\TimesheetConfiguration:
+        factory: 'App\Configuration\SystemConfiguration:createTimesheetConfiguration'
+
+    App\Configuration\FormConfiguration:
+        factory: 'App\Configuration\SystemConfiguration:createFormConfiguration'
+
+    App\Configuration\SystemConfiguration:
         arguments:
-            $languageSettings: "%kimai.languages%"
+            $settings: "%kimai.config%"
 
     # ================================================================================
     # DATABASE
@@ -101,18 +101,9 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Symfony\Bridge\Doctrine\Form\Type\EntityType }
 
-    App\Form\TimesheetEditForm:
-        arguments:
-            $durationOnly: "%kimai.timesheet.duration_only%"
-
     App\Form\Extension\SelectWithApiDataExtension:
         tags:
             - { name: form.type_extension, extended_type: Symfony\Bridge\Doctrine\Form\Type\EntityType }
-
-    App\Validator\Constraints\TimesheetValidator:
-        arguments:
-            $ruleset: "%kimai.timesheet.rules%"
-            $durationOnly: "%kimai.timesheet.duration_only%"
 
     # ================================================================================
     # THEME
@@ -171,6 +162,11 @@ services:
         class:     Doctrine\ORM\EntityRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\InvoiceTemplate']
+
+    App\Repository\ConfigurationRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\Configuration']
 
     App\Repository\InvoiceDocumentRepository:
         class: App\Repository\InvoiceDocumentRepository

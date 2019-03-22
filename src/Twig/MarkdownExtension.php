@@ -9,6 +9,7 @@
 
 namespace App\Twig;
 
+use App\Configuration\TimesheetConfiguration;
 use App\Utils\Markdown;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -31,10 +32,10 @@ class MarkdownExtension extends AbstractExtension
      * MarkdownExtension constructor.
      * @param Markdown $parser
      */
-    public function __construct(Markdown $parser, bool $timesheetAsMarkdown = false)
+    public function __construct(Markdown $parser, TimesheetConfiguration $configuration)
     {
         $this->markdown = $parser;
-        $this->timesheetIsMarkdown = $timesheetAsMarkdown;
+        $this->timesheetIsMarkdown = $configuration->isMarkdownEnabled();
     }
 
     /**

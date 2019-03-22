@@ -32,6 +32,24 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->scalarNode('data_dir')
+                    ->isRequired()
+                    ->validate()
+                        ->ifTrue(function ($value) {
+                            return !file_exists($value);
+                        })
+                        ->thenInvalid('Data directory does not exist')
+                    ->end()
+                ->end()
+                ->scalarNode('plugin_dir')
+                    ->isRequired()
+                    ->validate()
+                        ->ifTrue(function ($value) {
+                            return !file_exists($value);
+                        })
+                        ->thenInvalid('Plugin directory does not exist')
+                    ->end()
+                ->end()
                 ->append($this->getUserNode())
                 ->append($this->getTimesheetNode())
                 ->append($this->getInvoiceNode())
@@ -85,7 +103,6 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('mode')
                                 ->defaultValue('default')
                                 ->validate()
-                                    ->thenInvalid('Chosen rounding mode is invalid')
                                     ->ifTrue(function ($value) {
                                         $class = 'App\\Timesheet\\Rounding\\' . ucfirst($value) . 'Rounding';
                                         if (class_exists($class)) {

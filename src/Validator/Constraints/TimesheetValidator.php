@@ -9,6 +9,7 @@
 
 namespace App\Validator\Constraints;
 
+use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet as TimesheetEntity;
 use App\Validator\Constraints\Timesheet as TimesheetConstraint;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -24,38 +25,24 @@ class TimesheetValidator extends ConstraintValidator
      */
     protected $auth;
     /**
-     * @var array
-     */
-    protected $rules = [];
-    /**
      * @var bool
      */
     protected $durationOnly = false;
+    /**
+     * @var bool
+     */
+    protected $allowFutureTimes = true;
 
     /**
      * @param AuthorizationCheckerInterface $auth
      * @param array $ruleset
      * @param bool $durationOnly
      */
-    public function __construct(AuthorizationCheckerInterface $auth, array $ruleset, bool $durationOnly)
+    public function __construct(AuthorizationCheckerInterface $auth, TimesheetConfiguration $configuration)
     {
         $this->auth = $auth;
-        $this->rules = $ruleset;
-        $this->durationOnly = $durationOnly;
-    }
-
-    /**
-     * @param string $key
-     * @param null $default
-     * @return mixed|null
-     */
-    protected function getRule(string $key, $default = null)
-    {
-        if (!isset($this->rules[$key])) {
-            return $default;
-        }
-
-        return $this->rules[$key];
+        $this->durationOnly = $configuration->isDurationOnly();
+        $this->allowFutureTimes = $configuration->isAllowFutureTimes();
     }
 
     /**
@@ -125,7 +112,7 @@ class TimesheetValidator extends ConstraintValidator
                 ->addViolation();
         }
 
-        if (false === $this->getRule('allow_future_times', true) && time() < $timesheet->getBegin()->getTimestamp()) {
+        if (false === $this->allowFutureTimes && time() < $timesheet->getBegin()->getTimestamp()) {
             $context->buildViolation('The begin date cannot be in the future.')
                 ->atPath('begin')
                 ->setTranslationDomain('validators')

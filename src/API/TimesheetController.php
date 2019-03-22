@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace App\API;
 
+use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet;
 use App\Form\TimesheetEditForm;
 use App\Repository\Query\TimesheetQuery;
@@ -57,13 +58,13 @@ class TimesheetController extends BaseApiController
      * @param ViewHandlerInterface $viewHandler
      * @param TimesheetRepository $repository
      * @param UserDateTimeFactory $dateTime
-     * @param int $hardLimit
+     * @param TimesheetConfiguration $configuration
      */
-    public function __construct(ViewHandlerInterface $viewHandler, TimesheetRepository $repository, UserDateTimeFactory $dateTime, int $hardLimit)
+    public function __construct(ViewHandlerInterface $viewHandler, TimesheetRepository $repository, UserDateTimeFactory $dateTime, TimesheetConfiguration $configuration)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
-        $this->hardLimit = $hardLimit;
+        $this->hardLimit = $configuration->getActiveEntriesHardLimit();
         $this->dateTime = $dateTime;
     }
 

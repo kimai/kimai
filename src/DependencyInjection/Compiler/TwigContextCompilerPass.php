@@ -25,12 +25,8 @@ class TwigContextCompilerPass implements CompilerPassInterface
     {
         $twig = $container->getDefinition('twig');
         $theme = $container->getParameter('kimai.theme');
-        $durationOnly = $container->getParameter('kimai.timesheet.duration_only');
 
-        $twig->addMethodCall('addGlobal', ['kimai_context', array_merge($theme, [
-            'active_warning' => $container->getParameter('kimai.timesheet.active_entries.soft_limit')
-        ])]);
-        $twig->addMethodCall('addGlobal', ['duration_only', $durationOnly]);
+        $twig->addMethodCall('addGlobal', ['kimai_context', $theme]);
 
         if ($container->hasDefinition('twig.loader.native_filesystem')) {
             $definition = $container->getDefinition('twig.loader.native_filesystem');

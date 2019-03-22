@@ -65,6 +65,7 @@ class TimesheetTeamController extends AbstractController
             'query' => $query,
             'showFilter' => $form->isSubmitted(),
             'toolbarForm' => $form->createView(),
+            'duration_only' => $this->durationOnly,
         ]);
     }
 

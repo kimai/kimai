@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
@@ -27,28 +28,29 @@ trait TimesheetControllerTrait
      * @var int
      */
     private $hardLimit = 1;
-
     /**
      * @var UserDateTimeFactory
      */
     protected $dateTime;
+    /**
+     * @var bool
+     */
+    protected $durationOnly = false;
+    /**
+     * @var int
+     */
+    protected $softLimit = 3;
 
     /**
      * @param UserDateTimeFactory $dateTime
      * @param int $hardLimit
      */
-    public function __construct(UserDateTimeFactory $dateTime, int $hardLimit)
+    public function __construct(UserDateTimeFactory $dateTime, TimesheetConfiguration $configuration)
     {
         $this->dateTime = $dateTime;
-        $this->setHardLimit($hardLimit);
-    }
-
-    /**
-     * @param int $hardLimit
-     */
-    protected function setHardLimit(int $hardLimit)
-    {
-        $this->hardLimit = $hardLimit;
+        $this->durationOnly = $configuration->isDurationOnly();
+        $this->hardLimit = $configuration->getActiveEntriesHardLimit();
+        $this->softLimit = $configuration->getActiveEntriesSoftLimit();
     }
 
     /**
@@ -193,7 +195,7 @@ trait TimesheetControllerTrait
      */
     protected function stopActiveEntries(User $user)
     {
-        $this->getRepository()->stopActiveEntries($user, $this->getHardLimit());
+        $this->getRepository()->stopActiveEntries($user, $this->hardLimit);
     }
 
     /**

@@ -9,6 +9,7 @@
 
 namespace App\Tests\Twig;
 
+use App\Configuration\TimesheetConfiguration;
 use App\Twig\MarkdownExtension;
 use App\Utils\Markdown;
 use PHPUnit\Framework\TestCase;
@@ -20,7 +21,8 @@ class MarkdownExtensionTest extends TestCase
 {
     public function testGetFilters()
     {
-        $sut = new MarkdownExtension(new Markdown());
+        $config = new TimesheetConfiguration(['markdown_content' => true]);
+        $sut = new MarkdownExtension(new Markdown(), $config);
         $filters = $sut->getFilters();
         $this->assertCount(2, $filters);
         $this->assertEquals('md2html', $filters[0]->getName());
@@ -29,14 +31,16 @@ class MarkdownExtensionTest extends TestCase
 
     public function testMarkdownToHtml()
     {
-        $sut = new MarkdownExtension(new Markdown());
+        $config = new TimesheetConfiguration(['markdown_content' => true]);
+        $sut = new MarkdownExtension(new Markdown(), $config);
         $this->assertEquals('<p><em>test</em></p>', $sut->markdownToHtml('*test*'));
         $this->assertEquals('<h1 id="foobar">foobar</h1>', $sut->markdownToHtml('# foobar'));
     }
 
     public function testTimesheetContent()
     {
-        $sut = new MarkdownExtension(new Markdown(), false);
+        $config = new TimesheetConfiguration(['markdown_content' => false]);
+        $sut = new MarkdownExtension(new Markdown(), $config);
         $this->assertEquals(
             "- test<br />\n- foo",
             $sut->timesheetContent("- test\n- foo")
@@ -44,7 +48,8 @@ class MarkdownExtensionTest extends TestCase
         $this->assertEquals('', $sut->timesheetContent(null));
         $this->assertEquals('', $sut->timesheetContent(''));
 
-        $sut = new MarkdownExtension(new Markdown(), true);
+        $config = new TimesheetConfiguration(['markdown_content' => true]);
+        $sut = new MarkdownExtension(new Markdown(), $config);
         $this->assertEquals(
             "<ul>\n<li>test</li>\n<li>foo</li>\n</ul>\n<p>foo <strong>bar</strong></p>",
             $sut->timesheetContent("- test\n- foo\n\nfoo __bar__")

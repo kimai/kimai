@@ -9,6 +9,7 @@
 
 namespace App\Form;
 
+use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet;
 use App\Form\Type\ActivityType;
 use App\Form\Type\CustomerType;
@@ -58,14 +59,14 @@ class TimesheetEditForm extends AbstractType
      * @param CustomerRepository $customer
      * @param ProjectRepository $project
      * @param UserDateTimeFactory $dateTime
-     * @param bool $durationOnly
+     * @param TimesheetConfiguration $config
      */
-    public function __construct(CustomerRepository $customer, ProjectRepository $project, UserDateTimeFactory $dateTime, bool $durationOnly)
+    public function __construct(CustomerRepository $customer, ProjectRepository $project, UserDateTimeFactory $dateTime, TimesheetConfiguration $config)
     {
         $this->customers = $customer;
         $this->projects = $project;
         $this->dateTime = $dateTime;
-        $this->durationOnly = $durationOnly;
+        $this->durationOnly = $config->isDurationOnly();
     }
 
     /**
@@ -106,7 +107,7 @@ class TimesheetEditForm extends AbstractType
             $timezone = $begin->getTimezone()->getName();
         }
 
-        if (null === $end || !$options['duration_only']) {
+        if (null === $end || !$this->durationOnly) {
             $builder->add('begin', DateTimePickerType::class, [
                 'label' => 'label.begin',
                 'model_timezone' => $timezone,
@@ -117,7 +118,7 @@ class TimesheetEditForm extends AbstractType
             ]);
         }
 
-        if ($options['duration_only']) {
+        if ($this->durationOnly) {
             $builder->add('duration', DurationType::class, [
                 'required' => false,
                 'docu_chapter' => 'timesheet.html#duration-format',
@@ -306,7 +307,6 @@ class TimesheetEditForm extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'timesheet_edit',
-            'duration_only' => $this->durationOnly,
             'include_user' => false,
             'include_exported' => false,
             'include_rate' => true,
