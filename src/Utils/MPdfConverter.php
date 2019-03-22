@@ -9,6 +9,7 @@
 
 namespace App\Utils;
 
+use App\Constants;
 use Mpdf\Mpdf;
 use Mpdf\Output\Destination;
 
@@ -32,6 +33,7 @@ class MPdfConverter implements HtmlToPdfConverter
     public function convertToPdf(string $html)
     {
         $mpdf = new Mpdf([['tempDir' => $this->cacheDirectory]]);
+        $mpdf->creator = Constants::SOFTWARE;
         $mpdf->WriteHTML($html);
 
         return $mpdf->Output('', Destination::STRING_RETURN);
