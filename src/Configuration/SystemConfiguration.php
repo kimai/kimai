@@ -9,8 +9,6 @@
 
 namespace App\Configuration;
 
-use App\Repository\ConfigurationRepository;
-
 class SystemConfiguration implements SystemBundleConfiguration
 {
     use StringAccessibleConfigTrait;
@@ -20,8 +18,8 @@ class SystemConfiguration implements SystemBundleConfiguration
         return 'kimai';
     }
 
-    protected function getConfigurations(ConfigurationRepository $repository): array
+    protected function getConfigurations(ConfigLoaderInterface $repository): array
     {
-        return $repository->getConfiguration(null);
+        return $repository->getConfiguration();
     }
 }

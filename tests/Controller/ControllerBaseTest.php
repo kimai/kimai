@@ -275,9 +275,30 @@ abstract class ControllerBaseTest extends WebTestCase
      * @param Client $client
      * @param string|null $message
      */
+    protected function assertHasFlashSaveSuccess(Client $client)
+    {
+        $this->assertHasFlashSuccess($client, 'Saved changes successful');
+    }
+
+    /**
+     * @param Client $client
+     * @param string|null $message
+     */
     protected function assertHasFlashSuccess(Client $client, string $message = null)
     {
         $node = $client->getCrawler()->filter('div.alert.alert-success.alert-dismissible');
+        $this->assertNotEmpty($node->text());
+        if (null !== $message) {
+            $this->assertContains($message, $node->text());
+        }
+    }
+    /**
+     * @param Client $client
+     * @param string|null $message
+     */
+    protected function assertHasFlashError(Client $client, string $message = null)
+    {
+        $node = $client->getCrawler()->filter('div.alert.alert-error.alert-dismissible');
         $this->assertNotEmpty($node->text());
         if (null !== $message) {
             $this->assertContains($message, $node->text());
