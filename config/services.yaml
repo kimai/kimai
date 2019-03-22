@@ -59,6 +59,9 @@ services:
         arguments:
             $languageSettings: "%kimai.languages%"
 
+    App\Utils\MPdfConverter:
+        arguments: ['%kernel.cache_dir%']
+
     # ================================================================================
     # DATABASE
     # ================================================================================
