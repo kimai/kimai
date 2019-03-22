@@ -9,22 +9,30 @@
 
 namespace App\Repository;
 
+use App\Configuration\ConfigLoaderInterface;
 use App\Entity\Configuration;
 use App\Form\Model\SystemConfiguration;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Query;
 
-class ConfigurationRepository extends AbstractRepository
+class ConfigurationRepository extends AbstractRepository implements ConfigLoaderInterface
 {
-    public function getAllConfigurations(): array
+    /**
+     * @param string $prefix
+     * @return Configuration[]
+     */
+    public function getConfiguration(?string $prefix = null): array
     {
-        $configs = $this->findAll();
-        $all = [];
-        /** @var Configuration $config */
-        foreach ($configs as $config) {
-            $all[$config->getName()] = $config->getValue();
+        if (null === $prefix) {
+            return $this->findAll();
         }
 
-        return $all;
+        $qb = $this->createQueryBuilder('c');
+        $qb->select('c.name, c.value')
+            ->where($qb->expr()->like('c.name', ':prefix'))
+        ->setParameter(':prefix', $prefix . '%');
+
+        return $qb->getQuery()->getResult(Query::HYDRATE_OBJECT);
     }
 
     public function saveSystemConfiguration(SystemConfiguration $model)

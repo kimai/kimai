@@ -9,6 +9,7 @@
 
 namespace App\Tests\Validator\Constraints;
 
+use App\Configuration\ConfigLoaderInterface;
 use App\Configuration\TimesheetConfiguration;
 use App\Entity\Activity;
 use App\Entity\Customer;
@@ -30,7 +31,8 @@ class TimesheetValidatorTest extends ConstraintValidatorTestCase
         $authMock = $this->getMockBuilder(AuthorizationCheckerInterface::class)->getMock();
         $authMock->method('isGranted')->willReturn($isGranted);
 
-        $config = new TimesheetConfiguration([
+        $loader = $this->getMockBuilder(ConfigLoaderInterface::class)->getMock();
+        $config = new TimesheetConfiguration($loader, [
             'rules' => [
                 'allow_future_times' => false,
             ],

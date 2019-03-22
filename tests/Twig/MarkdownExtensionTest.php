@@ -9,6 +9,7 @@
 
 namespace App\Tests\Twig;
 
+use App\Configuration\ConfigLoaderInterface;
 use App\Configuration\TimesheetConfiguration;
 use App\Twig\MarkdownExtension;
 use App\Utils\Markdown;
@@ -21,7 +22,8 @@ class MarkdownExtensionTest extends TestCase
 {
     public function testGetFilters()
     {
-        $config = new TimesheetConfiguration(['markdown_content' => true]);
+        $loader = $this->getMockBuilder(ConfigLoaderInterface::class)->getMock();
+        $config = new TimesheetConfiguration($loader, ['markdown_content' => true]);
         $sut = new MarkdownExtension(new Markdown(), $config);
         $filters = $sut->getFilters();
         $this->assertCount(2, $filters);
@@ -31,7 +33,8 @@ class MarkdownExtensionTest extends TestCase
 
     public function testMarkdownToHtml()
     {
-        $config = new TimesheetConfiguration(['markdown_content' => true]);
+        $loader = $this->getMockBuilder(ConfigLoaderInterface::class)->getMock();
+        $config = new TimesheetConfiguration($loader, ['markdown_content' => true]);
         $sut = new MarkdownExtension(new Markdown(), $config);
         $this->assertEquals('<p><em>test</em></p>', $sut->markdownToHtml('*test*'));
         $this->assertEquals('<h1 id="foobar">foobar</h1>', $sut->markdownToHtml('# foobar'));
@@ -39,7 +42,8 @@ class MarkdownExtensionTest extends TestCase
 
     public function testTimesheetContent()
     {
-        $config = new TimesheetConfiguration(['markdown_content' => false]);
+        $loader = $this->getMockBuilder(ConfigLoaderInterface::class)->getMock();
+        $config = new TimesheetConfiguration($loader, ['markdown_content' => false]);
         $sut = new MarkdownExtension(new Markdown(), $config);
         $this->assertEquals(
             "- test<br />\n- foo",
@@ -48,7 +52,7 @@ class MarkdownExtensionTest extends TestCase
         $this->assertEquals('', $sut->timesheetContent(null));
         $this->assertEquals('', $sut->timesheetContent(''));
 
-        $config = new TimesheetConfiguration(['markdown_content' => true]);
+        $config = new TimesheetConfiguration($loader, ['markdown_content' => true]);
         $sut = new MarkdownExtension(new Markdown(), $config);
         $this->assertEquals(
             "<ul>\n<li>test</li>\n<li>foo</li>\n</ul>\n<p>foo <strong>bar</strong></p>",

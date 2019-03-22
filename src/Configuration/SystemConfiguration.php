@@ -19,4 +19,9 @@ class SystemConfiguration implements SystemBundleConfiguration
     {
         return 'kimai';
     }
+
+    protected function getConfigurations(ConfigurationRepository $repository): array
+    {
+        return $repository->getConfiguration(null);
+    }
 }

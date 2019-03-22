@@ -9,7 +9,7 @@
 
 namespace App\Configuration;
 
-use App\Repository\ConfigurationRepository;
+use App\Entity\Configuration;
 
 trait StringAccessibleConfigTrait
 {
@@ -18,7 +18,7 @@ trait StringAccessibleConfigTrait
      */
     protected $settings;
     /**
-     * @var ConfigurationRepository
+     * @var ConfigLoaderInterface
      */
     protected $repository;
     /**
@@ -29,10 +29,19 @@ trait StringAccessibleConfigTrait
     /**
      * @param array $settings
      */
-    public function __construct(ConfigurationRepository $repository, array $settings)
+    public function __construct(ConfigLoaderInterface $repository, array $settings)
     {
         $this->repository = $repository;
         $this->settings = $settings;
+    }
+
+    /**
+     * @param ConfigLoaderInterface $repository
+     * @return Configuration[]
+     */
+    protected function getConfigurations(ConfigLoaderInterface $repository): array
+    {
+        return $repository->getConfiguration($this->getPrefix() . '.');
     }
 
     protected function prepare()
@@ -43,8 +52,8 @@ trait StringAccessibleConfigTrait
 
         // this foreach should be replaced by a better piece of code,
         // especially the pointers could be a problem in the future
-        foreach ($this->repository->getAllConfigurations() as $key => $value) {
-            $temp = explode('.', $key);
+        foreach ($this->getConfigurations($this->repository) as $configuration) {
+            $temp = explode('.', $configuration->getName());
             $array = &$this->settings;
             if ($temp[0] === $this->getPrefix()) {
                 $temp = array_slice($temp, 1);
@@ -56,11 +65,11 @@ trait StringAccessibleConfigTrait
                 if (is_array($array[$key2])) {
                     $array = &$array[$key2];
                 } elseif (is_bool($array[$key2])) {
-                    $array[$key2] = (bool) $value;
+                    $array[$key2] = (bool) $configuration->getValue();
                 } elseif (is_int($array[$key2])) {
-                    $array[$key2] = (int) $value;
+                    $array[$key2] = (int) $configuration->getValue();
                 } else {
-                    $array[$key2] = $value;
+                    $array[$key2] = $configuration->getValue();
                 }
             }
         }
