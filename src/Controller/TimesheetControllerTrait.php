@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
@@ -24,31 +25,22 @@ use Symfony\Component\HttpFoundation\Response;
 trait TimesheetControllerTrait
 {
     /**
-     * @var int
-     */
-    private $hardLimit = 1;
-
-    /**
      * @var UserDateTimeFactory
      */
     protected $dateTime;
+    /**
+     * @var TimesheetConfiguration
+     */
+    protected $configuration;
 
     /**
      * @param UserDateTimeFactory $dateTime
-     * @param int $hardLimit
+     * @param TimesheetConfiguration $configuration
      */
-    public function __construct(UserDateTimeFactory $dateTime, int $hardLimit)
+    public function __construct(UserDateTimeFactory $dateTime, TimesheetConfiguration $configuration)
     {
         $this->dateTime = $dateTime;
-        $this->setHardLimit($hardLimit);
-    }
-
-    /**
-     * @param int $hardLimit
-     */
-    protected function setHardLimit(int $hardLimit)
-    {
-        $this->hardLimit = $hardLimit;
+        $this->configuration = $configuration;
     }
 
     /**
@@ -56,7 +48,15 @@ trait TimesheetControllerTrait
      */
     protected function getHardLimit()
     {
-        return $this->hardLimit;
+        return $this->configuration->getActiveEntriesHardLimit();
+    }
+
+    /**
+     * @return int
+     */
+    protected function getSoftLimit()
+    {
+        return $this->configuration->getActiveEntriesSoftLimit();
     }
 
     /**

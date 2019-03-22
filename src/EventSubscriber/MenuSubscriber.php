@@ -120,5 +120,11 @@ class MenuSubscriber implements EventSubscriberInterface
                 new MenuItemModel('activity_admin', 'menu.admin_activity', 'admin_activity', [], 'fas fa-tasks')
             );
         }
+
+        if ($auth->isGranted('system_configuration')) {
+            $menu->addChild(
+                new MenuItemModel('system_configuration', 'menu.system_configuration', 'system_configuration', [], 'fas fa-cogs')
+            );
+        }
     }
 }

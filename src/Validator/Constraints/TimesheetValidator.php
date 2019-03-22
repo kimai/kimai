@@ -9,6 +9,7 @@
 
 namespace App\Validator\Constraints;
 
+use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet as TimesheetEntity;
 use App\Validator\Constraints\Timesheet as TimesheetConstraint;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -24,38 +25,18 @@ class TimesheetValidator extends ConstraintValidator
      */
     protected $auth;
     /**
-     * @var array
+     * @var TimesheetConfiguration
      */
-    protected $rules = [];
-    /**
-     * @var bool
-     */
-    protected $durationOnly = false;
+    protected $configuration;
 
     /**
      * @param AuthorizationCheckerInterface $auth
-     * @param array $ruleset
-     * @param bool $durationOnly
+     * @param TimesheetConfiguration $configuration
      */
-    public function __construct(AuthorizationCheckerInterface $auth, array $ruleset, bool $durationOnly)
+    public function __construct(AuthorizationCheckerInterface $auth, TimesheetConfiguration $configuration)
     {
         $this->auth = $auth;
-        $this->rules = $ruleset;
-        $this->durationOnly = $durationOnly;
-    }
-
-    /**
-     * @param string $key
-     * @param null $default
-     * @return mixed|null
-     */
-    protected function getRule(string $key, $default = null)
-    {
-        if (!isset($this->rules[$key])) {
-            return $default;
-        }
-
-        return $this->rules[$key];
+        $this->configuration = $configuration;
     }
 
     /**
@@ -89,7 +70,7 @@ class TimesheetValidator extends ConstraintValidator
         if ($context->getViolations()->count() == 0 && null === $timesheet->getEnd()) {
             if (!$this->auth->isGranted('start', $timesheet)) {
                 $context->buildViolation('You are not allowed to start this timesheet record.')
-                    ->atPath($this->durationOnly ? 'duration' : 'end')
+                    ->atPath($this->configuration->isDurationOnly() ? 'duration' : 'end')
                     ->setTranslationDomain('validators')
                     ->setCode(TimesheetConstraint::START_DISALLOWED)
                     ->addViolation();
@@ -125,7 +106,7 @@ class TimesheetValidator extends ConstraintValidator
                 ->addViolation();
         }
 
-        if (false === $this->getRule('allow_future_times', true) && time() < $timesheet->getBegin()->getTimestamp()) {
+        if (false === $this->configuration->isAllowFutureTimes() && time() < $timesheet->getBegin()->getTimestamp()) {
             $context->buildViolation('The begin date cannot be in the future.')
                 ->atPath('begin')
                 ->setTranslationDomain('validators')

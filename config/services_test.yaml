@@ -3,3 +3,11 @@ services:
         public: true
 
     test.PasswordEncoder: "@security.encoder_factory"
+
+    App\Configuration\SystemConfiguration:
+        arguments: ['@App\Repository\ConfigurationRepository', "%kimai.config%"]
+
+    App\Repository\ConfigurationRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\Configuration']
