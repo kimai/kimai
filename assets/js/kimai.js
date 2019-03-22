@@ -262,7 +262,7 @@ $(function() {
 
             // workaround for autofocus attribute, as the modal "steals" it
             $modal.on('shown.bs.modal', function () {
-                $(this).find('input:visible:first').focus().delay(1000).focus();
+                $(this).find('input[type=text],textarea,select').filter(':not("[data-datetimepicker=on]")').filter(':visible:first').focus().delay(1000).focus();
             });
 
             $modal.modal('show');

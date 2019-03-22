@@ -14,6 +14,8 @@ use App\Export\Renderer\PDFRenderer;
 use App\Repository\UserRepository;
 use App\Security\CurrentUser;
 use App\Timesheet\UserDateTimeFactory;
+use App\Utils\HtmlToPdfConverter;
+use App\Utils\MPdfConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -44,7 +46,8 @@ class PdfRendererTest extends AbstractRendererTest
     {
         $sut = new PDFRenderer(
             $this->getMockBuilder(\Twig_Environment::class)->disableOriginalConstructor()->getMock(),
-            $this->getDateTimeFactory()
+            $this->getDateTimeFactory(),
+            $this->getMockBuilder(HtmlToPdfConverter::class)->getMock()
         );
 
         $this->assertEquals('pdf', $sut->getId());
@@ -58,6 +61,8 @@ class PdfRendererTest extends AbstractRendererTest
         /** @var \Twig_Environment $twig */
         $twig = $kernel->getContainer()->get('twig');
         $stack = $kernel->getContainer()->get('request_stack');
+        $cacheDir = $kernel->getContainer()->getParameter('kernel.cache_dir');
+        $converter = new MPdfConverter($cacheDir);
         $request = new Request();
         $request->setLocale('en');
         $stack->push($request);
@@ -65,7 +70,7 @@ class PdfRendererTest extends AbstractRendererTest
         /** @var FilesystemLoader $loader */
         $loader = $twig->getLoader();
 
-        $sut = new PDFRenderer($twig, $this->getDateTimeFactory());
+        $sut = new PDFRenderer($twig, $this->getDateTimeFactory(), $converter);
 
         $response = $this->render($sut);
 
