@@ -138,11 +138,13 @@ class SystemConfigurationController extends AbstractController
         $configurations = [];
         foreach ($configSettings as $configModel) {
             if ($section !== $configModel->getSection()) {
-                $form = $this->createConfigurationsForm($configModel);
+                $form2 = $this->createConfigurationsForm($configModel);
+            } else {
+                $form2 = $form;
             }
             $configurations[] = [
                 'model' => $configModel,
-                'form' => $form->createView(),
+                'form' => $form2->createView(),
             ];
         }
 
@@ -161,6 +163,7 @@ class SystemConfigurationController extends AbstractController
             SystemConfigurationForm::class,
             $configuration,
             [
+                'attr' => ['id' => 'system_configuration_form_' . $configuration->getSection()],
                 'action' => $this->generateUrl('system_configuration_' . $configuration->getSection()),
                 'method' => 'POST'
             ]
