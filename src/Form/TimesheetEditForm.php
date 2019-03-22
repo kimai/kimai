@@ -111,9 +111,6 @@ class TimesheetEditForm extends AbstractType
                 'label' => 'label.begin',
                 'model_timezone' => $timezone,
                 'view_timezone' => $timezone,
-                'attr' => [
-                    'autofocus' => 'autofocus',
-                ],
             ]);
         }
 
