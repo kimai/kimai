@@ -13,8 +13,7 @@ use App\Entity\Timesheet;
 use App\Export\RendererInterface;
 use App\Repository\Query\TimesheetQuery;
 use App\Timesheet\UserDateTimeFactory;
-use Mpdf\Mpdf;
-use Mpdf\Output\Destination;
+use App\Utils\HtmlToPdfConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
@@ -26,20 +25,24 @@ class PDFRenderer implements RendererInterface
      * @var \Twig_Environment
      */
     protected $twig;
-
     /**
      * @var UserDateTimeFactory
      */
     protected $dateTime;
+    /**
+     * @var HtmlToPdfConverter
+     */
+    protected $converter;
 
     /**
      * @param \Twig_Environment $twig
      * @param UserDateTimeFactory $dateTime
      */
-    public function __construct(\Twig_Environment $twig, UserDateTimeFactory $dateTime)
+    public function __construct(\Twig_Environment $twig, UserDateTimeFactory $dateTime, HtmlToPdfConverter $converter)
     {
         $this->twig = $twig;
         $this->dateTime = $dateTime;
+        $this->converter = $converter;
     }
 
     /**
@@ -60,11 +63,7 @@ class PDFRenderer implements RendererInterface
             'summaries' => $this->calculateSummary($timesheets),
         ]);
 
-        //return new Response($content);
-
-        $mpdf = new Mpdf();
-        $mpdf->WriteHTML($content);
-        $content = $mpdf->Output('test', Destination::STRING_RETURN);
+        $content = $this->converter->convertToPdf($content);
 
         $response = new Response($content);
 
