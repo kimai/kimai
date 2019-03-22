@@ -27,6 +27,7 @@ class SystemConfigurationTest extends TestCase
     protected function getSut(array $settings, array $loaderSettings = [])
     {
         $loader = new TestConfigLoader($loaderSettings);
+
         return new SystemConfiguration($loader, $settings);
     }
 
@@ -72,7 +73,6 @@ class SystemConfigurationTest extends TestCase
         $sut = $this->getSut($this->getDefaultSettings(), []);
         $this->assertEquals('kimai', $sut->getPrefix());
     }
-
 
     public function testDefaultWithoutLoader()
     {

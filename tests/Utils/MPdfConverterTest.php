@@ -17,9 +17,9 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  */
 class MPdfConverterTest extends KernelTestCase
 {
-    function unicode_hex($unicode_dec)
+    public function unicode_hex($unicode_dec)
     {
-        return (sprintf("%05s", strtoupper(dechex($unicode_dec))));
+        return (sprintf('%05s', strtoupper(dechex($unicode_dec))));
     }
 
     public function test()

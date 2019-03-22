@@ -22,6 +22,7 @@ class FormConfigurationTest extends TestCase
     protected function getSut(array $settings, array $loaderSettings = [])
     {
         $loader = new TestConfigLoader($loaderSettings);
+
         return new FormConfiguration($loader, $settings);
     }
 

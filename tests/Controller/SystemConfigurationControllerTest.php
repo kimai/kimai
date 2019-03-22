@@ -94,7 +94,6 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
 
     public function testUpdateTimesheetConfigValidation()
     {
-
         $this->assertFormHasValidationError(
             User::ROLE_SUPER_ADMIN,
             '/admin/system-config/',
@@ -152,7 +151,6 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
 
     public function testUpdateCustomerConfigValidation()
     {
-
         $this->assertFormHasValidationError(
             User::ROLE_SUPER_ADMIN,
             '/admin/system-config/',

@@ -71,6 +71,7 @@ class DateTimePickerType extends AbstractType
             if ($options['autofocus']) {
                 $values['autofocus'] = 'autofocus';
             }
+
             return $values;
         });
     }

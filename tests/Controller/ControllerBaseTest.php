@@ -292,6 +292,7 @@ abstract class ControllerBaseTest extends WebTestCase
             $this->assertContains($message, $node->text());
         }
     }
+
     /**
      * @param Client $client
      * @param string|null $message

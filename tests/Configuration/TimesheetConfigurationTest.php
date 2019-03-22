@@ -27,6 +27,7 @@ class TimesheetConfigurationTest extends TestCase
     protected function getSut(array $settings, array $loaderSettings = [])
     {
         $loader = new TestConfigLoader($loaderSettings);
+
         return new TimesheetConfiguration($loader, $settings);
     }
 
@@ -61,7 +62,6 @@ class TimesheetConfigurationTest extends TestCase
         $sut = $this->getSut($this->getDefaultSettings(), []);
         $this->assertEquals('timesheet', $sut->getPrefix());
     }
-
 
     public function testDefaultWithoutLoader()
     {

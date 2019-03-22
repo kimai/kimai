@@ -246,7 +246,6 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertNull($timesheet->getHourlyRate());
     }
 
-
     public function testStopActionFailsOnStoppedEntry()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
