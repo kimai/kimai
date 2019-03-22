@@ -28,9 +28,10 @@ class ConfigurationRepository extends AbstractRepository implements ConfigLoader
         }
 
         $qb = $this->createQueryBuilder('c');
-        $qb->select('c.name, c.value')
+        $qb
+            ->select('c')
             ->where($qb->expr()->like('c.name', ':prefix'))
-        ->setParameter(':prefix', $prefix . '%');
+            ->setParameter(':prefix', $prefix . '%');
 
         return $qb->getQuery()->getResult(Query::HYDRATE_OBJECT);
     }

@@ -60,6 +60,7 @@ trait StringAccessibleConfigTrait
             }
             foreach ($temp as $key2) {
                 if (!isset($array[$key2])) {
+                    // unknown values will silently be skipped
                     continue 2;
                 }
                 if (is_array($array[$key2])) {
