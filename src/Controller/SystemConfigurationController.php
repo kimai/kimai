@@ -69,7 +69,7 @@ class SystemConfigurationController extends AbstractController
         $configSettings = $this->getInitializedConfigurations();
 
         $configurations = [];
-        foreach($configSettings as $configModel) {
+        foreach ($configSettings as $configModel) {
             $configurations[] = [
                 'model' => $configModel,
                 'form' => $this->createConfigurationsForm($configModel)->createView(),
@@ -99,7 +99,6 @@ class SystemConfigurationController extends AbstractController
     public function formDefaults(Request $request)
     {
         return $this->handleConfigUpdate($request, SystemConfigurationModel::SECTION_FORM_CUSTOMER);
-
     }
 
     /**
@@ -137,7 +136,7 @@ class SystemConfigurationController extends AbstractController
         $configSettings = $this->getInitializedConfigurations();
 
         $configurations = [];
-        foreach($configSettings as $configModel) {
+        foreach ($configSettings as $configModel) {
             if ($section !== $configModel->getSection()) {
                 $form = $this->createConfigurationsForm($configModel);
             }
@@ -178,8 +177,8 @@ class SystemConfigurationController extends AbstractController
         $event = new SystemConfigurationEvent($types);
         $this->eventDispatcher->dispatch(SystemConfigurationEvent::CONFIGURE, $event);
 
-        foreach($event->getConfigurations() as $configs) {
-            foreach($configs->getConfiguration() as $config) {
+        foreach ($event->getConfigurations() as $configs) {
+            foreach ($configs->getConfiguration() as $config) {
                 $config->setValue($this->configurations->find($config->getName()));
             }
         }

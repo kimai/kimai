@@ -57,6 +57,7 @@ class Configuration
     public function setName(string $name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -75,6 +76,7 @@ class Configuration
     public function setValue($value)
     {
         $this->value = $value;
+
         return $this;
     }
 
@@ -93,6 +95,7 @@ class Configuration
     public function setType(string $type)
     {
         $this->type = $type;
+
         return $this;
     }
 
@@ -111,6 +114,7 @@ class Configuration
     public function setEnabled(bool $enabled)
     {
         $this->enabled = $enabled;
+
         return $this;
     }
 
@@ -129,6 +133,7 @@ class Configuration
     public function setLabel(string $label)
     {
         $this->label = $label;
+
         return $this;
     }
 
@@ -147,6 +152,7 @@ class Configuration
     public function setConstraints(array $constraints)
     {
         $this->constraints = $constraints;
+
         return $this;
     }
 
@@ -165,6 +171,7 @@ class Configuration
     public function setTranslationDomain(string $translationDomain)
     {
         $this->translationDomain = $translationDomain;
+
         return $this;
     }
 }

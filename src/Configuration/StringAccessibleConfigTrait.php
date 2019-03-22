@@ -27,7 +27,7 @@ trait StringAccessibleConfigTrait
     /**
      * @return string
      */
-    protected abstract function getPrefix(): string;
+    abstract protected function getPrefix(): string;
 
     /**
      * @param string $key
@@ -38,7 +38,7 @@ trait StringAccessibleConfigTrait
         $prefix = $this->getPrefix() . '.';
         $length = strlen($prefix);
 
-        if (substr($key, 0, $length) ===  $prefix) {
+        if (substr($key, 0, $length) === $prefix) {
             $key = substr($key, $length);
         }
 

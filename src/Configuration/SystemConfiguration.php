@@ -22,18 +22,18 @@ class SystemConfiguration implements SystemBundleConfiguration
     {
         // this foreach should be replaced by a better piece of code,
         // especially the pointers could be a problem in the future
-        foreach($repository->getAllConfigurations() as $key => $value) {
+        foreach ($repository->getAllConfigurations() as $key => $value) {
             $temp = explode('.', $key);
             $array = &$settings;
-            foreach($temp as $key2) {
+            foreach ($temp as $key2) {
                 if (!isset($array[$key2])) {
                     continue 2;
                 }
                 if (is_array($array[$key2])) {
                     $array = &$array[$key2];
-                } elseif(is_bool($array[$key2])) {
+                } elseif (is_bool($array[$key2])) {
                     $array[$key2] = (bool) $value;
-                } elseif(is_int($array[$key2])) {
+                } elseif (is_int($array[$key2])) {
                     $array[$key2] = (int) $value;
                 } else {
                     $array[$key2] = $value;

@@ -20,9 +20,10 @@ class ConfigurationRepository extends AbstractRepository
         $configs = $this->findAll();
         $all = [];
         /** @var Configuration $config */
-        foreach($configs as $config) {
+        foreach ($configs as $config) {
             $all[$config->getName()] = $config->getValue();
         }
+
         return $all;
     }
 
@@ -32,8 +33,7 @@ class ConfigurationRepository extends AbstractRepository
         $em->beginTransaction();
 
         try {
-            foreach ($model->getConfiguration() as $configuration)
-            {
+            foreach ($model->getConfiguration() as $configuration) {
                 $entity = $this->findOneBy(['name' => $configuration->getName()]);
                 $value = $configuration->getValue();
 

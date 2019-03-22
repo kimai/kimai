@@ -11,8 +11,8 @@ namespace App\Form\Model;
 
 class SystemConfiguration
 {
-    const SECTION_TIMESHEET = 'timesheet';
-    const SECTION_FORM_CUSTOMER = 'form_customer';
+    public const SECTION_TIMESHEET = 'timesheet';
+    public const SECTION_FORM_CUSTOMER = 'form_customer';
 
     /**
      * @var string
@@ -38,6 +38,7 @@ class SystemConfiguration
     public function setSection(string $section)
     {
         $this->section = $section;
+
         return $this;
     }
 
@@ -56,6 +57,7 @@ class SystemConfiguration
     public function setConfiguration(array $configuration)
     {
         $this->configuration = $configuration;
+
         return $this;
     }
 }
