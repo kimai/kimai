@@ -35,6 +35,10 @@ before starting the update process. You can also delete the row `DATABASE_PREFIX
 
 - New permissions are available: `system_configuration`, `system_actions`, `plugins`
 
+**Check if you want to apply changes to your `local.yaml`:** 
+
+- New permission is available available: `system_configuration`
+
 ## [0.8.1](https://github.com/kevinpapst/kimai2/releases/tag/0.8.1)
 
 A bug fixing release. Remember to execute the necessary timezone conversion script, if you haven't updated to 0.8 before (see below)!

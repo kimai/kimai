@@ -194,6 +194,15 @@
             "ref": "c8e0c38e1a280ab9e37587a8fa32b251d5bc1c94"
         }
     },
+    "nelmio/cors-bundle": {
+        "version": "1.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.5",
+            "ref": "f0436fc35fca88eada758311f8de43bfb61f1980"
+        }
+    },
     "nikic/php-parser": {
         "version": "v4.0.2"
     },
