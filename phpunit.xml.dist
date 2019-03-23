@@ -25,6 +25,10 @@
         <!-- ###+ symfony/swiftmailer-bundle ### -->
         <env name="MAILER_URL" value="null://localhost" force="true"/>
         <!-- ###- symfony/swiftmailer-bundle ### -->
+
+        <!-- ###+ nelmio/cors-bundle ### -->
+        <env name="CORS_ALLOW_ORIGIN" value="^https?://localhost(:[0-9]+)?$"/>
+        <!-- ###- nelmio/cors-bundle ### -->
     </php>
 
     <testsuites>
