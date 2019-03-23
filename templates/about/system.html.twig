@@ -31,7 +31,7 @@
                                 <div id="collapseSystemAction" class="panel-collapse collapse in" aria-expanded="true">
                                     <div class="box-body">
                                         <p>
-                                            <a href="{{ path('system_flush_cache') }}" class="btn btn-primary">Clear cache</a>
+                                            <a href="{{ path('system_flush_cache') }}" class="btn btn-primary" onclick="$(this).html('Clear cache <i class=\'fas fa-spinner fa-spin\'></i>')">Clear cache</a>
                                         </p>
 
                                         {% if content_action is defined and content_action is not empty %}
