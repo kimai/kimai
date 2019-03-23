@@ -23,6 +23,7 @@
         "kimai/kimai2-composer": "^0.1",
         "mpdf/mpdf": "^7.1",
         "nelmio/api-doc-bundle": "^3.2",
+        "nelmio/cors-bundle": "^1.5",
         "ocramius/proxy-manager": "2.1.1",
         "phpoffice/phpspreadsheet": "^1.4",
         "phpoffice/phpword": "^0.15.0",
