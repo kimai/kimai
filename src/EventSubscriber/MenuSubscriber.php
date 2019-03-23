@@ -116,5 +116,11 @@ class MenuSubscriber implements EventSubscriberInterface
                 new MenuItemModel('plugins', 'menu.plugin', 'plugins', [], 'fas fa-plug')
             );
         }
+
+        if ($auth->isGranted('system_configuration')) {
+            $menu->addChild(
+                new MenuItemModel('system_configuration', 'menu.system_configuration', 'system_configuration', [], 'fas fa-cogs')
+            );
+        }
     }
 }

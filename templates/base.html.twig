@@ -1,17 +1,20 @@
 {% extends '@AdminLTE/layout/default-layout-avanzu.html.twig' %}
 
-{% block avanzu_page_content_before %}
-    {% set event = trigger(constant('App\\Event\\ThemeEvent::CONTENT_BEFORE')) %}
-    {{ event.content|raw }}
-    <div class="toolbar-pad no-print">
-        {% block main_before %}{% endblock %}
-    </div>
+{% block avanzu_after_body_start %}
     {% embed 'embeds/modal.html.twig' %}
         {% block modal_id %}remote_form_modal{% endblock %}
         {% block modal_title %}{% endblock %}
         {% block modal_body %}{% endblock %}
         {% block modal_footer %}{% endblock %}
     {% endembed %}
+{% endblock %}
+
+{% block avanzu_page_content_before %}
+    {% set event = trigger(constant('App\\Event\\ThemeEvent::CONTENT_BEFORE')) %}
+    {{ event.content|raw }}
+    <div class="toolbar-pad no-print">
+        {% block main_before %}{% endblock %}
+    </div>
 {% endblock %}
 
 {% block avanzu_page_content_after %}

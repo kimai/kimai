@@ -58,15 +58,21 @@ class DateTimePickerType extends AbstractType
             'with_seconds' => false,
             'model_timezone' => $timezone,
             'view_timezone' => $timezone,
+            'autofocus' => false,
         ]);
 
         $resolver->setDefault('attr', function (Options $options) {
-            return [
+            $values = [
                 'data-datetimepicker' => 'on',
                 'autocomplete' => 'off',
                 'placeholder' => $options['format'],
                 'data-format' => $options['format_picker'],
             ];
+            if ($options['autofocus']) {
+                $values['autofocus'] = 'autofocus';
+            }
+
+            return $values;
         });
     }
 

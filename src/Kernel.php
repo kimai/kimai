@@ -140,6 +140,10 @@ class Kernel extends BaseKernel
 
         // load plugin routes
         $pluginsDir = $this->getProjectDir() . '/var/plugins';
+        if (!file_exists($pluginsDir)) {
+            return;
+        }
+
         $routes->import($pluginsDir . '/*Bundle/Resources/config/routes' . self::CONFIG_EXTS, '/', 'glob');
     }
 

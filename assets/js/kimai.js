@@ -225,7 +225,16 @@ $(function() {
             // load new form from given content
             if ($(html).find('#form_modal .modal-content').length > 0 ) {
                 // switch classes, in case the modal type changed
-                $('#remote_form_modal').attr('class', $(html).find('#form_modal').attr('class'));
+                $modal.on('hidden.bs.modal', function () {
+                    if ($modal.hasClass('modal-danger')) {
+                        $modal.removeClass('modal-danger');
+                    }
+                });
+
+                if ($(html).find('#form_modal').hasClass('modal-danger')) {
+                    $modal.addClass('modal-danger');
+                }
+
                 // TODO cleanup widgets before replacing the content?
                 $('#remote_form_modal .modal-content').replaceWith(
                     $(html).find('#form_modal .modal-content')
@@ -246,15 +255,14 @@ $(function() {
             // see https://github.com/kevinpapst/kimai2/issues/618
             var enforceModalFocusFn = $.fn.modal.Constructor.prototype.enforceFocus;
             $.fn.modal.Constructor.prototype.enforceFocus = function() {};
-            $modal.on('hidden', function() {
+            $modal.on('hidden.bs.modal', function () {
                 $.fn.modal.Constructor.prototype.enforceFocus = enforceModalFocusFn;
             });
-            $modal.modal({ backdrop : false });
             // -----------------------------------------------------------------------
 
             // workaround for autofocus attribute, as the modal "steals" it
             $modal.on('shown.bs.modal', function () {
-                $(this).find('input:visible:first').focus().delay(1000).focus();
+                $(this).find('input[type=text],textarea,select').filter(':not("[data-datetimepicker=on]")').filter(':visible:first').focus().delay(1000).focus();
             });
 
             $modal.modal('show');
@@ -286,6 +294,7 @@ $(function() {
                         return false;
                     },
                     error: function(xhr, err) {
+                        // FIXME problem in google and 500 error, keeps on submitting...
                         // what else could we do? submitting again at least gives us the opportunity to see errors,
                         // which maybe would be hidden otherwise... this one is totally up for discussion!
                         $form.submit();
