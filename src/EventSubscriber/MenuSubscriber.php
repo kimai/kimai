@@ -111,7 +111,7 @@ class MenuSubscriber implements EventSubscriberInterface
             );
         }
 
-        if ($auth->isGranted('ROLE_SUPER_ADMIN')) {
+        if ($auth->isGranted('plugins')) {
             $menu->addChild(
                 new MenuItemModel('plugins', 'menu.plugin', 'plugins', [], 'fas fa-plug')
             );

@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route(path="/admin/plugins")
- * @Security("is_granted('ROLE_SUPER_ADMIN')")
+ * @Security("is_granted('plugins')")
  */
 class PluginController extends AbstractController
 {
