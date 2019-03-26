@@ -383,7 +383,7 @@
             </trans-unit>
             <trans-unit id="label.login.initial_view">
                 <source>label.login.initial_view</source>
-                <target>Bjelentkezés után megjelenített nézet/target>
+                <target>Bejelentkezés után megjelenített nézet</target>
             </trans-unit>
             <!-- Options for user-preference label.calendar.initial_view -->
             <trans-unit id="month">
