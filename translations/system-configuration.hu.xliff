@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="hu" datatype="plaintext" original="system-configuration.en.xliff">
+        <body>
+            <trans-unit id="title">
+                <source>title</source>
+                <target>Rendszer beállítások</target>
+            </trans-unit>
+            <trans-unit id="subtitle">
+                <source>subtitle</source>
+                <target>Az időrögzítő globális beállításainak a módosítása</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target>Rögzített órák</target>
+            </trans-unit>
+            <trans-unit id="form_customer">
+                <source>form_customer</source>
+                <target>Új ügyfél alapértelmezett értékei</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.markdown_content">
+                <source>label.timesheet.markdown_content</source>
+                <target>Markdown használatának engedélyezése a rögzítések leírásában</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.duration_only">
+                <source>label.timesheet.duration_only</source>
+                <target>"Csak időtartam" mód - a befejezés mezőt kicseréli időtartamra</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.allow_future_times">
+                <source>label.timesheet.rules.allow_future_times</source>
+                <target>Jövőbeli rögzítések engedélyezése</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.active_entries.hard_limit">
+                <source>label.timesheet.active_entries.hard_limit</source>
+                <target>Egyszerre futtatható rögzítések száma</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.active_entries.soft_limit">
+                <source>label.timesheet.active_entries.soft_limit</source>
+                <target>Figyelmeztetés megjelenítése ennyi rögzítés elérésekor</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
