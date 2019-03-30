@@ -12,20 +12,6 @@ namespace App\Plugin;
 interface PluginInterface
 {
     /**
-     * Returns an array of strings, which mark the allowed license states.
-     *
-     * @return array
-     */
-    public function getLicenseRequirements(): array;
-
-    /**
-     * Returns the MD5 checksum of your composer.json.
-     *
-     * @return string
-     */
-    public function getChecksum(): string;
-
-    /**
      * @return string
      */
     public function getName();

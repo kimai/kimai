@@ -6,18 +6,16 @@
     "authors": [
         {
             "name": "Kevin Papst",
-            "email": "kpapst@gmx.net",
             "homepage": "https://www.kevinpapst.de"
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.1.3",
         "ext-gd": "*",
         "ext-intl": "*",
         "ext-mbstring": "*",
         "ext-pdo": "*",
         "ext-zip": "*",
-        "ext-sodium": "*",
         "beberlei/doctrineextensions": "^1.2",
         "dama/doctrine-test-bundle": "^5.0",
         "doctrine/doctrine-fixtures-bundle": "^3.0",
@@ -33,7 +31,6 @@
         "nelmio/api-doc-bundle": "^3.2",
         "nelmio/cors-bundle": "^1.5",
         "ocramius/proxy-manager": "2.1.1",
-        "paragonie/halite": "^4",
         "phpoffice/phpspreadsheet": "^1.4",
         "phpoffice/phpword": "^0.15.0",
         "sensio/framework-extra-bundle": "^5.2",

@@ -20,8 +20,8 @@
                             <thead>
                             <tr>
                                 <th>{{ 'label.name'|trans }}</th>
-                                <th>{{ 'label.licensed'|trans({}, 'plugins') }}</th>
-                                <th class="hidden-xs">{{ 'label.valid_until'|trans({}, 'plugins') }}</th>
+                                <th>{{ 'label.version'|trans({}, 'plugins') }}</th>
+                                <th class="hidden-xs">{{ 'label.description'|trans }}</th>
                                 <th class="hidden-xs hidden-sm">{{ 'label.required_version'|trans({}, 'plugins') }}</th>
                                 <th>{{ 'label.actions'|trans }}</th>
                             </tr>
@@ -29,27 +29,9 @@
                             <tbody>
                             {% for plugin in plugins %}
                                 <tr>
-                                    <td>{{ plugin.name }} {{ plugin.metadata.version }}</td>
-                                    <td>
-                                        {% if plugin.licensed %}
-                                            {{ widgets.label('yes', 'success') }}
-                                        {% else %}
-                                            {{ widgets.label('no', 'danger') }}
-                                        {% endif %}
-                                    </td>
-                                    <td class="hidden-xs">
-                                        {% if plugin.licensed %}
-                                            {% if plugin.license %}
-                                                {% if plugin.expired %}
-                                                    {{ widgets.label(plugin.license.validUntil|date_full, 'warning') }}
-                                                {% else %}
-                                                    {{ widgets.label(plugin.license.validUntil|date_full, 'success') }}
-                                                {% endif %}
-                                            {% endif %}
-                                        {% else %}
-                                            {{ widgets.label('no' , 'danger') }}
-                                        {% endif %}
-                                    </td>
+                                    <td>{{ plugin.name }}</td>
+                                    <td>{{ widgets.label(plugin.metadata.version, 'primary') }}</td>
+                                    <td class="hidden-xs">{{ plugin.metadata.description }}</td>
                                     <td class="hidden-xs hidden-sm">
                                         {% if plugin.metadata.kimaiVersion > constant('App\\Constants::VERSION') %}
                                             {{ widgets.label(plugin.metadata.kimaiVersion, 'danger') }}
@@ -72,15 +54,5 @@
         </div>
     </div>
 {% endif %}
-
-<div class="form-group">
-    <label class="control-label" for="license_key">{{ 'label.license_key'|trans({}, 'plugins') }}</label>
-    <div class="input-group">
-        <div class="input-group-addon" onclick="$('#license_key').select();document.execCommand('copy');">
-            <i class="fas fa-key"></i>
-        </div>
-        <input type="text" id="license_key" class="form-control" disabled="disabled" value="{{ publicKey }}">
-    </div>
-</div>
 
 {% endblock %}

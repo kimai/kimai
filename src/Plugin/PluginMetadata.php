@@ -23,6 +23,28 @@ class PluginMetadata
      * @var string
      */
     private $homepage;
+    /**
+     * @var string
+     */
+    private $description;
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     * @return PluginMetadata
+     */
+    public function setDescription(string $description)
+    {
+        $this->description = $description;
+        return $this;
+    }
 
     /**
      * @return string

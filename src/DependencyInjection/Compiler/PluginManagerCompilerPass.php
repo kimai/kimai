@@ -9,6 +9,7 @@
 
 namespace App\DependencyInjection\Compiler;
 
+use App\Kernel;
 use App\License\LicenseManager;
 use App\Plugin\PluginInterface;
 use App\Plugin\PluginManager;
@@ -30,40 +31,26 @@ class PluginManagerCompilerPass implements CompilerPassInterface
         }
 
         $pluginManager = $container->findDefinition(PluginManager::class);
+        $plugins = $container->findTaggedServiceIds(Kernel::TAG_PLUGIN);
 
-        if (!$container->has(LicenseManager::class)) {
-            throw new RuntimeException('Missing LicenseManager, cannot build container');
-        }
-
-        $manager = $container->get(LicenseManager::class);
-        foreach ($manager->getPluginLicenses() as $license) {
-            $pluginManager->addMethodCall('addLicense', [$license->toArray()]);
-        }
-
-        $bundles = $container->getParameter('kernel.bundles');
-        $taggedBundles = [];
-        foreach ($bundles as $id => $className) {
-            if (substr($className, 0, 12) === 'KimaiPlugin\\') {
-                $taggedBundles[] = $className;
+        foreach ($plugins as $id => $tags) {
+            if ($this->validateBundle($id)) {
+                $pluginManager->addMethodCall('addPlugin', [new Reference($id)]);
             }
-        }
-        foreach ($taggedBundles as $id) {
-            $this->validateBundle($id);
-            // a fallback if the Bundle itself was not registered as service
-            if (!$container->has($id)) {
-                $container->register($id, $id);
-            }
-            $pluginManager->addMethodCall('addPlugin', [new Reference($id)]);
         }
     }
 
     /**
-     * @param $id
+     * @param string $id
+     * @return bool
      * @throws \ReflectionException
-     * @throws RuntimeException
      */
     protected function validateBundle($id)
     {
+        if (substr($id, 0, 12) !== 'KimaiPlugin\\') {
+            throw new RuntimeException('Invalid Kimai bundle, namespace must start with "KimaiPlugin\\"');
+        }
+
         $class = new \ReflectionClass($id);
 
         $path = dirname($class->getFileName());
@@ -72,47 +59,6 @@ class PluginManagerCompilerPass implements CompilerPassInterface
             throw new RuntimeException('Invalid or outdated Kimai bundle, update or remove it: ' . $path);
         }
 
-        $composerFile = $path . '/composer.json';
-        if (!file_exists($composerFile) || !is_readable($composerFile)) {
-            throw new RuntimeException('Missing composer.json in ' . $path);
-        }
-
-        $composer = md5_file($composerFile);
-
-        $bundle = $class->newInstance();
-        $method = $class->getMethod('getChecksum');
-        $checksum = $method->invoke($bundle);
-
-        if ($composer !== $checksum) {
-            throw new RuntimeException('Manipulated bundle found in ' . $path);
-        }
-
-        $composer = json_decode(file_get_contents($composerFile), true);
-        $method = $class->getMethod('getLicenseRequirements');
-        $allowed = $method->invoke($bundle);
-
-        if (!isset($composer['extra']) || !isset($composer['extra']['kimai']) || !isset($composer['extra']['kimai']['license'])) {
-            throw new RuntimeException('Missing license information in composer.json at ' . $path);
-        }
-
-        foreach ($composer['extra']['kimai']['license'] as $licenseStatus) {
-            if (!in_array($licenseStatus, $allowed)) {
-                throw new RuntimeException('License requirement mismatch in ' . $path);
-            }
-        }
-
-        foreach ($allowed as $licenseStatus) {
-            if (!in_array($licenseStatus, $composer['extra']['kimai']['license'])) {
-                throw new RuntimeException('License requirement mismatch in ' . $path);
-            }
-        }
-
-        if (!isset($composer['extra']['kimai']['version'])) {
-            throw new RuntimeException('Incomplete composer data, missing extra.kimai.version in ' . $path);
-        }
-
-        if (!isset($composer['extra']['kimai']['require'])) {
-            throw new RuntimeException('Incomplete composer data, missing extra.kimai.require in ' . $path);
-        }
+        return true;
     }
 }

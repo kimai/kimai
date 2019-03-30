@@ -10,7 +10,6 @@
 namespace App\Plugin;
 
 use App\Constants;
-use App\License\PluginLicense;
 
 class PluginManager
 {
@@ -18,23 +17,6 @@ class PluginManager
      * @var Plugin[]
      */
     private $plugins = [];
-    /**
-     * @var PluginLicense[]
-     */
-    private $licenses = [];
-
-    /**
-     * @param PluginLicense $license
-     */
-    public function addLicense(array $licenseData)
-    {
-        $license = new PluginLicense();
-        $license->setName($licenseData['name']);
-        $license->setStatus($licenseData['status']);
-        $license->setValidUntil(\DateTime::createFromFormat(DATE_ATOM, $licenseData['valid_until']));
-
-        $this->licenses[] = $license;
-    }
 
     /**
      * @param PluginInterface $plugin
@@ -82,36 +64,6 @@ class PluginManager
             ->setPath($bundle->getPath())
         ;
 
-        foreach ($this->licenses as $license) {
-            if ($license->getName() === $plugin->getName()) {
-                $plugin->setLicense($license);
-            }
-        }
-
-        if (empty($bundle->getLicenseRequirements())) {
-            return $plugin;
-        }
-
-        $plugin->setIsLicensed(false);
-        $plugin->setIsExpired(true);
-        $license = $plugin->getLicense();
-
-        if (null === $license) {
-            return $plugin;
-        }
-
-        if (in_array($license->getStatus(), $bundle->getLicenseRequirements())) {
-            $plugin->setIsLicensed(true);
-        }
-
-        if ($license->getValidUntil()->getTimestamp() > (new \DateTime())->getTimestamp()) {
-            $plugin->setIsExpired(false);
-        } else {
-            if (!in_array(PluginLicense::LICENSE_EXPIRED, $bundle->getLicenseRequirements())) {
-                $plugin->setIsLicensed(false);
-            }
-        }
-
         return $plugin;
     }
 
@@ -130,12 +82,17 @@ class PluginManager
 
         $json = json_decode(file_get_contents($composer), true);
 
+        $reqVersion = isset($json['extra']['kimai']['require']) ? $json['extra']['kimai']['require'] : 'unknown';
+        $version = isset($json['extra']['kimai']['version']) ? $json['extra']['kimai']['version'] : 'unknown';
+        $description = isset($json['description']) ? $json['description'] : '';
+
         $homepage = $json['homepage'] ?? Constants::HOMEPAGE . '/store/';
         $metadata = new PluginMetadata();
         $metadata
             ->setHomepage($homepage)
-            ->setKimaiVersion($json['extra']['kimai']['require'])
-            ->setVersion($json['extra']['kimai']['version'])
+            ->setKimaiVersion($reqVersion)
+            ->setVersion($version)
+            ->setDescription($description)
         ;
 
         $plugin->setMetadata($metadata);

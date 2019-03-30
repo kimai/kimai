@@ -24,19 +24,13 @@ class PluginController extends AbstractController
      * @var PluginManager
      */
     protected $plugins;
-    /**
-     * @var LicenseKeyInterface
-     */
-    protected $licenseKey;
 
     /**
      * @param PluginManager $manager
-     * @param LicenseKeyInterface $license
      */
-    public function __construct(PluginManager $manager, LicenseKeyInterface $license)
+    public function __construct(PluginManager $manager)
     {
         $this->plugins = $manager;
-        $this->licenseKey = $license;
     }
 
     /**
@@ -52,7 +46,6 @@ class PluginController extends AbstractController
         }
 
         return $this->render('plugin/index.html.twig', [
-            'publicKey' => $this->licenseKey->getPublicKey(),
             'plugins' => $plugins,
         ]);
     }

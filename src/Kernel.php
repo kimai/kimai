@@ -36,7 +36,7 @@ class Kernel extends BaseKernel
 
     public const CONFIG_EXTS = '.{php,xml,yaml,yml}';
 
-    public const TAG_BUNDLE = 'kimai.bundle';
+    public const TAG_PLUGIN = 'kimai-plugin';
     public const TAG_EXPORT_RENDERER = 'export.renderer';
     public const TAG_INVOICE_RENDERER = 'invoice.renderer';
     public const TAG_INVOICE_NUMBER_GENERATOR = 'invoice.number_generator';
@@ -59,7 +59,7 @@ class Kernel extends BaseKernel
         $container->registerForAutoconfiguration(InvoiceRendererInterface::class)->addTag(self::TAG_INVOICE_RENDERER);
         $container->registerForAutoconfiguration(NumberGeneratorInterface::class)->addTag(self::TAG_INVOICE_NUMBER_GENERATOR);
         $container->registerForAutoconfiguration(InvoiceCalculator::class)->addTag(self::TAG_INVOICE_CALCULATOR);
-        $container->registerForAutoconfiguration(PluginInterface::class)->addTag(self::TAG_BUNDLE);
+        $container->registerForAutoconfiguration(PluginInterface::class)->addTag(self::TAG_PLUGIN);
     }
 
     public function registerBundles()

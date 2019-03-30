@@ -215,20 +215,8 @@
     "pagerfanta/pagerfanta": {
         "version": "v1.0.5"
     },
-    "paragonie/constant_time_encoding": {
-        "version": "v2.2.3"
-    },
-    "paragonie/halite": {
-        "version": "v4.5.3"
-    },
-    "paragonie/hidden-string": {
-        "version": "v1.0.0"
-    },
     "paragonie/random_compat": {
         "version": "v2.0.17"
-    },
-    "paragonie/sodium_compat": {
-        "version": "v1.9.0"
     },
     "pclzip/pclzip": {
         "version": "2.8.2"

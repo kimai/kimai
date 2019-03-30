@@ -10,17 +10,9 @@
                 <source>plugins.subtitle</source>
                 <target>You can enhance the functionality of Kimai with plugins</target>
             </trans-unit>
-            <trans-unit id="label.licensed">
-                <source>label.licensed</source>
-                <target>Licensed</target>
-            </trans-unit>
-            <trans-unit id="label.valid_until">
-                <source>label.valid_until</source>
-                <target>License valid until</target>
-            </trans-unit>
-            <trans-unit id="label.license_key">
-                <source>label.license_key</source>
-                <target>License key</target>
+            <trans-unit id="label.version">
+                <source>label.version</source>
+                <target>Version</target>
             </trans-unit>
             <trans-unit id="label.required_version">
                 <source>label.required_version</source>
@@ -29,24 +21,6 @@
             <trans-unit id="plugin.none_installed">
                 <source>plugin.none_installed</source>
                 <target>You have no plugin installed yet.</target>
-            </trans-unit>
-            <trans-unit id="title.unlicensed">
-                <source>title.unlicensed</source>
-                <target>License problems</target>
-            </trans-unit>
-            <trans-unit id="message.unlicensed">
-                <source>message.unlicensed</source>
-                <target>
-                    You are running the following plugin(s) without valid license: %plugins%.
-                    Find out how to buy a (new) license at the %marketplace%.
-                </target>
-            </trans-unit>
-            <trans-unit id="message.expired">
-                <source>message.expired</source>
-                <target>
-                    The following plugin license(s) have expired: %plugins%.
-                    Please consider to re-new them and support further development of Kimai.
-                </target>
             </trans-unit>
             <trans-unit id="plugin.marketplace">
                 <source>plugin.marketplace</source>

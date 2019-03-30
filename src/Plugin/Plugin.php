@@ -9,8 +9,6 @@
 
 namespace App\Plugin;
 
-use App\License\PluginLicense;
-
 class Plugin
 {
     /**
@@ -21,18 +19,6 @@ class Plugin
      * @var string
      */
     private $path;
-    /**
-     * @var PluginLicense
-     */
-    private $license;
-    /**
-     * @var bool
-     */
-    private $isLicensed = true;
-    /**
-     * @var bool
-     */
-    private $isExpired = false;
     /**
      * @var PluginMetadata
      */
@@ -72,63 +58,6 @@ class Plugin
     public function setPath(string $path)
     {
         $this->path = $path;
-
-        return $this;
-    }
-
-    /**
-     * @return PluginLicense|null
-     */
-    public function getLicense(): ?PluginLicense
-    {
-        return $this->license;
-    }
-
-    /**
-     * @param PluginLicense $license
-     * @return Plugin
-     */
-    public function setLicense(PluginLicense $license)
-    {
-        $this->license = $license;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isExpired(): bool
-    {
-        return $this->isExpired;
-    }
-
-    /**
-     * @param bool $isExpired
-     * @return Plugin
-     */
-    public function setIsExpired(bool $isExpired)
-    {
-        $this->isExpired = $isExpired;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isLicensed(): bool
-    {
-        return $this->isLicensed;
-    }
-
-    /**
-     * @param bool $isLicensed
-     * @return Plugin
-     */
-    public function setIsLicensed(bool $isLicensed)
-    {
-        $this->isLicensed = $isLicensed;
 
         return $this;
     }
