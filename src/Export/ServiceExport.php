@@ -17,6 +17,16 @@ class ServiceExport
     protected $renderer = [];
 
     /**
+     * @param RendererInterface[] $renderer
+     */
+    public function __construct(iterable $renderer)
+    {
+        foreach ($renderer as $render) {
+            $this->addRenderer($render);
+        }
+    }
+
+    /**
      * @param RendererInterface $renderer
      * @return $this
      */

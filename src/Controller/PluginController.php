@@ -9,7 +9,6 @@
 
 namespace App\Controller;
 
-use App\License\LicenseKeyInterface;
 use App\Plugin\PluginManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;

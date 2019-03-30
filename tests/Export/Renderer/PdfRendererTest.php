@@ -19,6 +19,7 @@ use App\Utils\MPdfConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 /**
@@ -45,7 +46,7 @@ class PdfRendererTest extends AbstractRendererTest
     public function testConfiguration()
     {
         $sut = new PDFRenderer(
-            $this->getMockBuilder(\Twig_Environment::class)->disableOriginalConstructor()->getMock(),
+            $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock(),
             $this->getDateTimeFactory(),
             $this->getMockBuilder(HtmlToPdfConverter::class)->getMock()
         );
@@ -58,7 +59,7 @@ class PdfRendererTest extends AbstractRendererTest
     public function testRender()
     {
         $kernel = self::bootKernel();
-        /** @var \Twig_Environment $twig */
+        /** @var Environment $twig */
         $twig = $kernel->getContainer()->get('twig');
         $stack = $kernel->getContainer()->get('request_stack');
         $cacheDir = $kernel->getContainer()->getParameter('kernel.cache_dir');

@@ -11,6 +11,7 @@ namespace App\Tests\Export\Renderer;
 
 use App\Export\Renderer\HtmlRenderer;
 use Symfony\Component\HttpFoundation\Request;
+use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 /**
@@ -22,7 +23,7 @@ class HtmlRendererTest extends AbstractRendererTest
     public function testConfiguration()
     {
         $sut = new HtmlRenderer(
-            $this->getMockBuilder(\Twig_Environment::class)->disableOriginalConstructor()->getMock()
+            $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock()
         );
 
         $this->assertEquals('html', $sut->getId());
@@ -33,7 +34,7 @@ class HtmlRendererTest extends AbstractRendererTest
     public function testRender()
     {
         $kernel = self::bootKernel();
-        /** @var \Twig_Environment $twig */
+        /** @var Environment $twig */
         $twig = $kernel->getContainer()->get('twig');
         $stack = $kernel->getContainer()->get('request_stack');
         $request = new Request();

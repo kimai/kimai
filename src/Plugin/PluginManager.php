@@ -19,6 +19,17 @@ class PluginManager
     private $plugins = [];
 
     /**
+     * @param Plugin[] $plugins
+     * @throws \Exception
+     */
+    public function __construct(iterable $plugins)
+    {
+        foreach ($plugins as $plugin) {
+            $this->addPlugin($plugin);
+        }
+    }
+
+    /**
      * @param PluginInterface $plugin
      * @throws \Exception
      */
@@ -82,9 +93,9 @@ class PluginManager
 
         $json = json_decode(file_get_contents($composer), true);
 
-        $reqVersion = isset($json['extra']['kimai']['require']) ? $json['extra']['kimai']['require'] : 'unknown';
-        $version = isset($json['extra']['kimai']['version']) ? $json['extra']['kimai']['version'] : 'unknown';
-        $description = isset($json['description']) ? $json['description'] : '';
+        $reqVersion = $json['extra']['kimai']['require'] ?? 'unknown';
+        $version = $json['extra']['kimai']['version'] ?? 'unknown';
+        $description = $json['description'] ?? '';
 
         $homepage = $json['homepage'] ?? Constants::HOMEPAGE . '/store/';
         $metadata = new PluginMetadata();

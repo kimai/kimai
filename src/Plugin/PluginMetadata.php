@@ -43,6 +43,7 @@ class PluginMetadata
     public function setDescription(string $description)
     {
         $this->description = $description;
+
         return $this;
     }
 

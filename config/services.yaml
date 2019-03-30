@@ -64,6 +64,12 @@ services:
     App\Utils\MPdfConverter:
         arguments: ['%kernel.cache_dir%']
 
+    App\Plugin\PluginManager:
+        arguments: [!tagged kimai.plugin]
+
+    App\Export\ServiceExport:
+        arguments: [!tagged export.renderer]
+
     # ================================================================================
     # DATABASE
     # ================================================================================
