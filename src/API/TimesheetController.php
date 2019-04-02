@@ -307,4 +307,37 @@ class TimesheetController extends BaseApiController
 
         return $this->viewHandler->handle($view);
     }
+
+    /**
+     * @SWG\Delete(
+     *      response=200,
+     *      description="Deletes one timesheet entity",
+     *      @SWG\Schema(ref="#/definitions/TimesheetEntity")
+     * )
+     *
+     *
+     * @param int $id
+     * @return Response
+     */
+    
+    public function deleteAction($id)
+    {
+        $timesheet = $this->repository->find($id);
+        if (null === $timesheet) {
+            throw new NotFoundException();
+        }
+        if (!$this->isGranted('edit', $timesheet)) {
+            throw $this->createAccessDeniedException('User cannot delete timesheet');
+        }
+        
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($timesheet);
+        $entityManager->flush();
+
+        $view = new View($data, 200);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
+
+        return $this->viewHandler->handle($view);
+    }
+    
 }
