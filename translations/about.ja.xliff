@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file  source-language="en" target-language="ja" datatype="plaintext" original="about.en.xliff">
+        <body>
+            <trans-unit id="about.title">
+                <source>about.title</source>
+                <target>Kimaiについて</target>
+            </trans-unit>
+            <trans-unit id="about.subtitle">
+                <source>about.subtitle</source>
+                <target>システムのインフォメーション</target>
+            </trans-unit>
+            <trans-unit id="tab.system">
+                <source>tab.system</source>
+                <target>システムのインフォメーション</target>
+            </trans-unit>
+            <trans-unit id="tab.license">
+                <source>tab.license</source>
+                <target>Kimaiのライセンス</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

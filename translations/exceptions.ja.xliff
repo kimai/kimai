@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="ja" datatype="plaintext" original="exceptions.en.xliff">
+        <body>
+            <trans-unit id="access.denied">
+                <source>access.denied</source>
+                <target>Access was denied</target>
+            </trans-unit>
+            <trans-unit id="stacktrace">
+                <source>stacktrace</source>
+                <target>The problem occured here</target>
+            </trans-unit>
+            <trans-unit id="http_error.title">
+                <source>http_error.title</source>
+                <target>エーラー</target>
+            </trans-unit>
+            <trans-unit id="http_error.description">
+                <source>http_error.description</source>
+                <target>Oops! An error occured.</target>
+            </trans-unit>
+            <trans-unit id="http_error.suggestion">
+                <source>http_error.suggestion</source>
+                <target>
+                    An unexpected error occured, please try again.
+                    You may have found a bug, so please contact your administrator if the problem
+                    doesn't go away after you tried it again.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_404.description">
+                <source>http_error_404.description</source>
+                <target>このページは見つかりません</target>
+            </trans-unit>
+            <trans-unit id="http_error_404.suggestion">
+                <source>http_error_404.suggestion</source>
+                <target>
+                    We could not find the page you were looking for.
+                    Meanwhile, you may return to your dashboard and start over.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_403.description">
+                <source>http_error_403.description</source>
+                <target>This page is restricted.</target>
+            </trans-unit>
+            <trans-unit id="http_error_403.suggestion">
+                <source>http_error_403.suggestion</source>
+                <target>
+                    Sorry, but you do not have sufficient permissions to see this page.
+                    Please talk to your administrator if you think this is an error.
+                </target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
