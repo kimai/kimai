@@ -23,15 +23,13 @@ Encore
     // generate only two files: app.js and app.css
     .addEntry('app', './assets/app.js')
 
-    // enable sass/scss parser
-    .enableSassLoader()
-
     // show OS notifications when builds finish/fail
     .enableBuildNotifications()
 
     // load jquery as Kimai and AdminLTE rely on it
     .autoProvidejQuery()
 
+    // enable sass/scss parser
     // see https://symfony.com/doc/current/frontend/encore/bootstrap.html
     .enableSassLoader(function(sassOptions) {}, {
         resolveUrlLoader: false

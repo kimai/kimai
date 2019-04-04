@@ -36,6 +36,10 @@ security:
                 path: fos_user_security_logout
                 target: homepage
 
+    access_decision_manager:
+        strategy: unanimous
+        allow_if_all_abstain: false
+
     role_hierarchy:
         ROLE_USER:        ROLE_CUSTOMER
         ROLE_TEAMLEAD:    ROLE_USER
