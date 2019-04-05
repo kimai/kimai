@@ -10,6 +10,8 @@
 namespace App\Tests\Controller;
 
 use App\Entity\User;
+use App\Plugin\PluginManager;
+use App\Tests\Plugin\Fixtures\TestPlugin;
 
 /**
  * @coversDefaultClass \App\Controller\PluginController
@@ -29,5 +31,18 @@ class PluginControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/plugins/');
         $this->assertCalloutWidgetWithMessage($client, 'You have no plugin installed yet');
         $this->assertPageActions($client, ['shop' => 'https://www.kimai.org/store/']);
+    }
+
+    public function testIndexActionWithInstalledPlugins()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        /** @var PluginManager $manager */
+        $manager = self::$container->get(PluginManager::class);
+        $manager->addPlugin(new TestPlugin());
+
+        $this->assertAccessIsGranted($client, '/admin/plugins/');
+        $this->assertHasDataTable($client);
+        $this->assertDataTableRowCount($client, 'datatable_plugins', 1);
     }
 }

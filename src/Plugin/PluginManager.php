@@ -19,7 +19,7 @@ class PluginManager
     private $plugins = [];
 
     /**
-     * @param Plugin[] $plugins
+     * @param PluginInterface[] $plugins
      * @throws \Exception
      */
     public function __construct(iterable $plugins)
@@ -86,9 +86,12 @@ class PluginManager
      */
     public function loadMetadata(Plugin $plugin)
     {
+        $metadata = new PluginMetadata();
+        $plugin->setMetadata($metadata);
+
         $composer = $plugin->getPath() . '/composer.json';
         if (!file_exists($composer) || !is_readable($composer)) {
-            return null;
+            return;
         }
 
         $json = json_decode(file_get_contents($composer), true);
@@ -98,14 +101,11 @@ class PluginManager
         $description = $json['description'] ?? '';
 
         $homepage = $json['homepage'] ?? Constants::HOMEPAGE . '/store/';
-        $metadata = new PluginMetadata();
         $metadata
             ->setHomepage($homepage)
             ->setKimaiVersion($reqVersion)
             ->setVersion($version)
             ->setDescription($description)
         ;
-
-        $plugin->setMetadata($metadata);
     }
 }

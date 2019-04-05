@@ -31,7 +31,7 @@ class PluginMetadata
     /**
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -50,7 +50,7 @@ class PluginMetadata
     /**
      * @return string
      */
-    public function getVersion(): string
+    public function getVersion(): ?string
     {
         return $this->version;
     }
@@ -69,7 +69,7 @@ class PluginMetadata
     /**
      * @return string
      */
-    public function getKimaiVersion(): string
+    public function getKimaiVersion(): ?string
     {
         return $this->kimaiVersion;
     }
@@ -88,7 +88,7 @@ class PluginMetadata
     /**
      * @return string
      */
-    public function getHomepage(): string
+    public function getHomepage(): ?string
     {
         return $this->homepage;
     }
