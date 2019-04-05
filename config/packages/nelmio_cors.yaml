@@ -20,6 +20,6 @@ nelmio_cors:
     paths:
         '^/api/':
             allow_origin: ['*']
-            allow_headers: ['X-AUTH-USER', 'X-AUTH-TOKEN']
+            allow_headers: ['X-AUTH-USER', 'X-AUTH-TOKEN', 'Content-Type']
             allow_methods: ['GET', 'OPTIONS', 'POST', 'PUT', 'PATCH', 'DELETE']
             max_age: 3600
