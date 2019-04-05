@@ -49,7 +49,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
      */
     protected function getTableName($name)
     {
-        return 'kimai2_'. $name;
+        return 'kimai2_' . $name;
     }
 
     /**
