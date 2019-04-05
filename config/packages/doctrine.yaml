@@ -10,7 +10,7 @@ doctrine:
         default_connection: default
         connections:
             default:
-                url: '%env(DATABASE_URL)%'
+                url: '%env(resolve:DATABASE_URL)%'
                 driver: 'pdo_mysql'
                 server_version: '5.7'
                 charset: utf8mb4
