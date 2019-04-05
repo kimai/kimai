@@ -74,12 +74,6 @@ services:
     # DATABASE
     # ================================================================================
 
-    # service that prefixes every database table
-    App\Doctrine\TablePrefixSubscriber:
-        class: App\Doctrine\TablePrefixSubscriber
-        tags:
-            - { name: doctrine.event_subscriber }
-
     # updates timesheet records and apply configured rate & rounding rules
     App\Doctrine\TimesheetSubscriber:
         class: App\Doctrine\TimesheetSubscriber

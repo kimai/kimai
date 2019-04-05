@@ -27,7 +27,7 @@ Remember to execute the necessary timezone conversion script, if you haven't upd
 **BC BREAKS**
 - in an ongoing effort to simplify future installation and upgrade processes the `.env` variable `DATABASE_PREFIX` was removed.
 The table prefix is now hardcoded to `kimai2_`. If you used another prefix, you have to rename your tables manually 
-before starting the update process. You can also delete the row `DATABASE_PREFIX` from your `.env` file.
+before starting the update process. And delete the row `DATABASE_PREFIX` from your `.env` file.
 - API: DateTime objects will be returned including timezone identifier (previously 2019-03-02 14:23 - now 2019-03-02T14:23:00+00:00)
 - Plugin mechanism changed: existing Plugins have to be deleted or updated
 

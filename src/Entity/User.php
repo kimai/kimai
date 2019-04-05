@@ -18,11 +18,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Application main User entity.
- *
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ORM\Table(
- *      name="users",
+ * @ORM\Table(name="kimai2_users",
  *      uniqueConstraints={
  *          @ORM\UniqueConstraint(columns={"username"}),
  *          @ORM\UniqueConstraint(columns={"email"})
