@@ -27,7 +27,7 @@ class Plugin
     /**
      * @return PluginMetadata
      */
-    public function getMetadata(): PluginMetadata
+    public function getMetadata(): ?PluginMetadata
     {
         return $this->metadata;
     }
@@ -46,7 +46,7 @@ class Plugin
     /**
      * @return string
      */
-    public function getPath(): string
+    public function getPath(): ?string
     {
         return $this->path;
     }
@@ -65,7 +65,7 @@ class Plugin
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }

@@ -73,6 +73,7 @@ class PluginManager
         $plugin
             ->setName($bundle->getName())
             ->setPath($bundle->getPath())
+            ->setMetadata(new PluginMetadata())
         ;
 
         return $plugin;
@@ -86,9 +87,6 @@ class PluginManager
      */
     public function loadMetadata(Plugin $plugin)
     {
-        $metadata = new PluginMetadata();
-        $plugin->setMetadata($metadata);
-
         $composer = $plugin->getPath() . '/composer.json';
         if (!file_exists($composer) || !is_readable($composer)) {
             return;
@@ -101,7 +99,9 @@ class PluginManager
         $description = $json['description'] ?? '';
 
         $homepage = $json['homepage'] ?? Constants::HOMEPAGE . '/store/';
-        $metadata
+
+        $plugin
+            ->getMetadata()
             ->setHomepage($homepage)
             ->setKimaiVersion($reqVersion)
             ->setVersion($version)
