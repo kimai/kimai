@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="customers")
+ * @ORM\Table(name="kimai2_customers")
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
  */
 class Customer

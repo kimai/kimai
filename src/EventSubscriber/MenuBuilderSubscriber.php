@@ -66,26 +66,36 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
             new MenuItemModel('dashboard', 'menu.homepage', 'dashboard', [], 'fas fa-tachometer-alt')
         );
 
-        $this->eventDispatcher->dispatch(
-            ConfigureMainMenuEvent::CONFIGURE,
-            new ConfigureMainMenuEvent(
-                $request,
-                $event
-            )
+        $menuEvent = new ConfigureMainMenuEvent(
+            $request,
+            $event,
+            new MenuItemModel('admin', 'menu.admin', ''),
+            new MenuItemModel('system', 'menu.system', '')
         );
 
-        $admin = new MenuItemModel('admin', 'menu.admin', '', [], 'fas fa-wrench');
+        $this->eventDispatcher->dispatch(ConfigureMainMenuEvent::CONFIGURE, $menuEvent);
 
+        // @deprecated since 0.9, will be removed with 1.0
         $this->eventDispatcher->dispatch(
             ConfigureAdminMenuEvent::CONFIGURE,
             new ConfigureAdminMenuEvent(
                 $request,
-                $admin
+                $menuEvent->getAdminMenu()
             )
         );
 
-        if ($admin->hasChildren()) {
-            $event->addItem($admin);
+        if ($menuEvent->getAdminMenu()->hasChildren()) {
+            $event->addItem(new MenuItemModel('admin', 'menu.admin', ''));
+            foreach ($menuEvent->getAdminMenu()->getChildren() as $child) {
+                $event->addItem($child);
+            }
+        }
+
+        if ($menuEvent->getSystemMenu()->hasChildren()) {
+            $event->addItem(new MenuItemModel('system', 'menu.system', ''));
+            foreach ($menuEvent->getSystemMenu()->getChildren() as $child) {
+                $event->addItem($child);
+            }
         }
 
         $this->activateByRoute(

@@ -29,9 +29,9 @@ class AboutControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/about');
 
         $result = $client->getCrawler()->filter('div.nav-tabs-custom ul.nav.nav-tabs li');
-        $this->assertEquals(3, count($result));
+        $this->assertEquals(2, count($result));
 
         $result = $client->getCrawler()->filter('div.nav-tabs-custom div.tab-content div.tab-pane');
-        $this->assertEquals(3, count($result));
+        $this->assertEquals(2, count($result));
     }
 }

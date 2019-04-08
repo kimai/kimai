@@ -11,6 +11,7 @@ namespace App\Tests\Invoice\Renderer;
 
 use App\Invoice\Renderer\TwigRenderer;
 use Symfony\Component\HttpFoundation\Request;
+use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 /**
@@ -21,7 +22,7 @@ class TwigRendererTest extends AbstractRendererTest
     public function testSupports()
     {
         $loader = new FilesystemLoader();
-        $env = new \Twig_Environment($loader);
+        $env = new Environment($loader);
         $sut = new TwigRenderer($env);
 
         $this->assertTrue($sut->supports($this->getInvoiceDocument('default.html.twig')));
@@ -37,7 +38,7 @@ class TwigRendererTest extends AbstractRendererTest
     public function testRender()
     {
         $kernel = self::bootKernel();
-        /** @var \Twig_Environment $twig */
+        /** @var Environment $twig */
         $twig = $kernel->getContainer()->get('twig');
         $stack = $kernel->getContainer()->get('request_stack');
         $request = new Request();

@@ -203,6 +203,23 @@ abstract class ControllerBaseTest extends WebTestCase
     }
 
     /**
+     * @param Client $client
+     * @param array $buttons
+     */
+    protected function assertPageActions(Client $client, array $buttons)
+    {
+        $node = $client->getCrawler()->filter('section.content-header div.breadcrumb div.box-tools div.btn-group a.btn');
+        $this->assertEquals(count($buttons), $node->count());
+
+        foreach ($node->getIterator() as $element) {
+            $expectedClass = str_replace('btn btn-default btn-', '', $element->getAttribute('class'));
+            $this->assertArrayHasKey($expectedClass, $buttons);
+            $expectedUrl = $buttons[$expectedClass];
+            $this->assertEquals($expectedUrl, $element->getAttribute('href'));
+        }
+    }
+
+    /**
      * @param string $role the USER role to use for the request
      * @param string $url the URL of the page displaying the initial form to submit
      * @param string $formSelector a selector to find the form to test

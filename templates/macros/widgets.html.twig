@@ -153,6 +153,7 @@
                 {% set modal = null %}
                 {% set toggle = null %}
                 {% set url = null %}
+                {% set target = null %}
                 {% set class = "btn btn-default btn-" ~ icon ~ " " %}
 
                 {% if not values is iterable %}
@@ -173,6 +174,7 @@
                     {% set onclick = values.onclick ?? null %}
                     {% set modal = values.modal ?? null %}
                     {% set toggle = values.toggle ?? null %}
+                    {% set target = values.target ?? null %}
                     {% set id = values.id ?? null %}
                     {% set class = class ~ ( values.class | default("")) %}
                 {% endif %}
@@ -189,6 +191,9 @@
                     {%- endif -%}
                     {%- if onclick is not empty -%}
                         onclick="{{ onclick }}"
+                    {%- endif -%}
+                    {%- if target is not empty -%}
+                        target="{{ target }}"
                     {%- endif -%}
             >{{ macro.icon(icon) }}</a>
         {% endfor -%}

@@ -16,6 +16,7 @@ use App\Invoice\Renderer\TwigRenderer;
 use App\Invoice\ServiceInvoice;
 use App\Repository\InvoiceDocumentRepository;
 use PHPUnit\Framework\TestCase;
+use Twig\Environment;
 
 /**
  * @covers \App\Invoice\ServiceInvoice
@@ -65,7 +66,7 @@ class ServiceInvoiceTest extends TestCase
         $sut->addNumberGenerator(new DateNumberGenerator());
         $sut->addRenderer(
             new TwigRenderer(
-                $this->getMockBuilder(\Twig_Environment::class)->disableOriginalConstructor()->getMock()
+                $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock()
             )
         );
 

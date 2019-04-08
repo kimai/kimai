@@ -15,8 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ConfigurationRepository")
- * @ORM\Table(
- *      name="configuration",
+ * @ORM\Table(name="kimai2_configuration",
  *      uniqueConstraints={
  *          @ORM\UniqueConstraint(columns={"name"})
  *      }

@@ -13,8 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(
- *     name="timesheet",
+ * @ORM\Table(name="kimai2_timesheet",
  *     indexes={
  *          @ORM\Index(columns={"user"}),
  *          @ORM\Index(columns={"activity_id"})

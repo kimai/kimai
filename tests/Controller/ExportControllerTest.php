@@ -40,7 +40,6 @@ class ExportControllerTest extends ControllerBaseTest
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
 
         $begin = new \DateTime('first day of this month');
-        $end = new \DateTime('last day of this month');
         $fixture = new TimesheetFixtures();
         $fixture
             ->setUser($this->getUserByRole($em, User::ROLE_USER))

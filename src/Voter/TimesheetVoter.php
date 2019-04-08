@@ -77,7 +77,7 @@ class TimesheetVoter extends AbstractVoter
 
         switch ($attribute) {
             case self::START:
-                if (!$this->canStart($subject, $user, $token)) {
+                if (!$this->canStart($subject)) {
                     return false;
                 }
                 $permission .= $attribute;
@@ -113,11 +113,9 @@ class TimesheetVoter extends AbstractVoter
 
     /**
      * @param Timesheet $timesheet
-     * @param User $user
-     * @param TokenInterface $token
      * @return bool
      */
-    protected function canStart(Timesheet $timesheet, User $user, TokenInterface $token)
+    protected function canStart(Timesheet $timesheet)
     {
         // possible improvements for the future:
         // we could check the amount of active entries (maybe slow)
