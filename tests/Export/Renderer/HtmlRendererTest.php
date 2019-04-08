@@ -12,7 +12,6 @@ namespace App\Tests\Export\Renderer;
 use App\Export\Renderer\HtmlRenderer;
 use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
 
 /**
  * @covers \App\Export\Renderer\HtmlRenderer
@@ -40,9 +39,6 @@ class HtmlRendererTest extends AbstractRendererTest
         $request = new Request();
         $request->setLocale('en');
         $stack->push($request);
-
-        /** @var FilesystemLoader $loader */
-        $loader = $twig->getLoader();
 
         $sut = new HtmlRenderer($twig);
 

@@ -31,10 +31,10 @@ class ConfigurationControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(7, count($result));
-        $this->assertStructure($result, false);
+        $this->assertStructure($result);
     }
 
-    protected function assertStructure(array $result, $full = true)
+    protected function assertStructure(array $result)
     {
         $expectedKeys = ['date', 'date_time', 'duration', 'form_date', 'form_date_time', 'is24hours', 'time'];
         $actual = array_keys($result);

@@ -74,7 +74,7 @@ class UserVoter extends AbstractVoter
         switch ($attribute) {
             // special case for the UserController
             case self::DELETE:
-                if (!$this->canDelete($subject, $user, $token)) {
+                if (!$this->canDelete($subject, $user)) {
                     return false;
                 }
 
@@ -114,7 +114,7 @@ class UserVoter extends AbstractVoter
      * @param User $user
      * @return bool
      */
-    protected function canDelete(User $profile, User $user, TokenInterface $token)
+    protected function canDelete(User $profile, User $user)
     {
         return $profile->getId() !== $user->getId();
     }

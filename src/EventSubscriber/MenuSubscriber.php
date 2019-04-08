@@ -10,13 +10,13 @@
 namespace App\EventSubscriber;
 
 use App\Event\ConfigureMainMenuEvent;
+use KevinPapst\AdminLTEBundle\Event\SidebarMenuEvent;
 use KevinPapst\AdminLTEBundle\Model\MenuItemModel;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
- * Menu event subscriber for timesheet, customer, projects, activities.
- * This is a sample implementation for developer who want to add new navigation entries in their bundles.
+ * Menu event subscriber is creating the Kimai default menu structure.
  */
 class MenuSubscriber implements EventSubscriberInterface
 {
@@ -55,7 +55,17 @@ class MenuSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $menu = $event->getMenu();
+        $this->configureMainMenu($event->getMenu());
+        $this->configureAdminMenu($event->getAdminMenu());
+        $this->configureSystemMenu($event->getSystemMenu());
+    }
+
+    /**
+     * @param SidebarMenuEvent $menu
+     */
+    protected function configureMainMenu(SidebarMenuEvent $menu)
+    {
+        $auth = $this->security;
 
         if ($auth->isGranted('view_own_timesheet')) {
             $menu->addItem(
@@ -74,9 +84,14 @@ class MenuSubscriber implements EventSubscriberInterface
                 new MenuItemModel('export', 'menu.export', 'export', [], 'fas fa-file-export')
             );
         }
+    }
 
-        // ====================== admin menu ======================
-        $menu = $event->getAdminMenu();
+    /**
+     * @param MenuItemModel $menu
+     */
+    protected function configureAdminMenu(MenuItemModel $menu)
+    {
+        $auth = $this->security;
 
         if ($auth->isGranted('view_other_timesheet')) {
             $menu->addChild(
@@ -101,9 +116,14 @@ class MenuSubscriber implements EventSubscriberInterface
                 new MenuItemModel('activity_admin', 'menu.admin_activity', 'admin_activity', [], 'fas fa-tasks')
             );
         }
+    }
 
-        // ====================== admin menu ======================
-        $menu = $event->getSystemMenu();
+    /**
+     * @param MenuItemModel $menu
+     */
+    protected function configureSystemMenu(MenuItemModel $menu)
+    {
+        $auth = $this->security;
 
         if ($auth->isGranted('view_user')) {
             $menu->addChild(
