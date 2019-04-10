@@ -23,19 +23,6 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  */
 class UserEditType extends AbstractType
 {
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    private $security;
-
-    /**
-     * MenuSubscriber constructor.
-     * @param AuthorizationCheckerInterface $security
-     */
-    public function __construct(AuthorizationCheckerInterface $security)
-    {
-        $this->security = $security;
-    }
 
     /**
      * {@inheritdoc}
@@ -60,8 +47,7 @@ class UserEditType extends AbstractType
             ])
         ;
 
-        $auth = $this->security;
-        if ($auth->isGranted('system_configuration')) {
+        if ($options['include_active_flag']) {
             $builder
                 ->add('enabled', YesNoType::class, [
                     'label' => 'label.active',
@@ -80,6 +66,7 @@ class UserEditType extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'edit_user_profile',
+            'include_active_flag' => false,
         ]);
     }
 }
