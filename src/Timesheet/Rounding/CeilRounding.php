@@ -31,7 +31,7 @@ class CeilRounding implements RoundingInterface
             return;
         }
 
-        $record->getEnd()->setTimestamp($timestamp - $diff + $seconds);
+        $record->getBegin()->setTimestamp($timestamp - $diff + $seconds);
     }
 
     /**
@@ -73,6 +73,6 @@ class CeilRounding implements RoundingInterface
             return;
         }
 
-        $record->getEnd()->setTimestamp($timestamp - $diff + $seconds);
+        $record->setDuration($timestamp - $diff + $seconds);
     }
 }
