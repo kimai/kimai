@@ -37,8 +37,8 @@ class CeilRoundingTest extends TestCase
         $sut->roundDuration($record, $roundDuration);
 
         $this->assertEquals($expectedStart->getTimestamp(), $record->getBegin()->getTimestamp());
-//        $this->assertEquals($expectedEnd->getTimestamp(), $record->getEnd()->getTimestamp());
-//        $this->assertEquals($expectedDuration, $record->getDuration());
+        $this->assertEquals($expectedEnd->getTimestamp(), $record->getEnd()->getTimestamp());
+        $this->assertEquals($expectedDuration, $record->getDuration());
     }
 
     public function getTestData()
@@ -95,7 +95,7 @@ class CeilRoundingTest extends TestCase
                 (clone $start)->setTime(14, 40, 52),
                 (clone $start)->setTime(12, 10, 51),
                 (clone $start)->setTime(14, 40, 52),
-                9000
+                10800
             ],
             [
                 0,
@@ -105,7 +105,7 @@ class CeilRoundingTest extends TestCase
                 (clone $start)->setTime(14, 32, 52), // 14:33 => 2:18 => 2:30
                 (clone $start)->setTime(12, 27, 35),
                 (clone $start)->setTime(14, 33, 00),
-                7200
+                9000
             ],
             [
                 15,
@@ -115,7 +115,7 @@ class CeilRoundingTest extends TestCase
                 (clone $start)->setTime(14, 32, 52), // 14:33 => 2:18 (second duration will not be rounded)
                 (clone $start)->setTime(12, 30, 00), // 12:15
                 (clone $start)->setTime(14, 32, 52), // 14:33 => 2:18 (second duration will not be rounded)
-                7200
+                9000
             ],
             [
                 0,
