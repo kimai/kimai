@@ -83,7 +83,6 @@ class ProfileControllerTest extends ControllerBaseTest
                 'title' => 'Code Monkey',
                 'avatar' => '/fake/image.jpg',
                 'email' => 'updated@example.com',
-                'enabled' => false,
             ]
         ]);
 
@@ -101,7 +100,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertEquals('Code Monkey', $user->getTitle());
         $this->assertEquals('/fake/image.jpg', $user->getAvatar());
         $this->assertEquals('updated@example.com', $user->getEmail());
-        $this->assertFalse($user->isEnabled());
+        $this->assertTrue($user->isEnabled());
     }
 
     public function testPasswordAction()
