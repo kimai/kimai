@@ -16,12 +16,27 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Defines the form used to edit the profile of a User.
  */
 class UserEditType extends AbstractType
 {
+    /**
+     * @var AuthorizationCheckerInterface
+     */
+    private $security;
+
+    /**
+     * MenuSubscriber constructor.
+     * @param AuthorizationCheckerInterface $security
+     */
+    public function __construct(AuthorizationCheckerInterface $security)
+    {
+        $this->security = $security;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -43,10 +58,16 @@ class UserEditType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'label.email',
             ])
-            ->add('enabled', YesNoType::class, [
-                'label' => 'label.active',
-            ])
         ;
+
+        $auth = $this->security;
+        if ($auth->isGranted('system_configuration')) {
+            $builder
+                ->add('enabled', YesNoType::class, [
+                    'label' => 'label.active',
+                ])
+            ;
+        }
     }
 
     /**
