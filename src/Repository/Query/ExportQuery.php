@@ -14,16 +14,26 @@ namespace App\Repository\Query;
  */
 class ExportQuery extends TimesheetQuery
 {
-    public const TYPE_HTML = 'html';
-    public const TYPE_CSV = 'csv';
-    public const TYPE_PDF = 'pdf';
-    public const TYPE_XLSX = 'xlsx';
-    public const TYPE_ODS = 'ods';
+    /**
+     * @var array
+     */
+    protected $typeArray = [];
 
     /**
      * @var string
      */
     protected $type;
+
+    /**
+     * @var string $type
+     * @return ExportQuery
+     */
+    public function addType(string $type)
+    {
+        $this->typeArray[] = $type;
+
+        return $this;
+    }
 
     /**
      * @return string
@@ -39,7 +49,7 @@ class ExportQuery extends TimesheetQuery
      */
     public function setType(string $type)
     {
-        if (in_array($type, [self::TYPE_PDF, self::TYPE_CSV, self::TYPE_HTML, self::TYPE_XLSX, self::TYPE_ODS])) {
+        if (in_array($type, $this->typeArray)) {
             $this->type = $type;
         }
 

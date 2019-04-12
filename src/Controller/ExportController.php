@@ -37,6 +37,11 @@ class ExportController extends AbstractController
     protected $export;
 
     /**
+     * @var ExportQuery
+     */
+    protected $query;
+
+    /**
      * @param TimesheetRepository $timesheet
      * @param ServiceExport $export
      */
@@ -44,6 +49,21 @@ class ExportController extends AbstractController
     {
         $this->timesheetRepository = $timesheet;
         $this->export = $export;
+        $this->query = $this->createExportQueryWithExports();
+    }
+
+    /**
+     * @return ExportQuery
+     */
+    protected function createExportQueryWithExports()
+    {
+        $query = new ExportQuery();
+
+        foreach ($this->export->getRenderer() as $export) {
+            $query->addType($export->getId());
+        }
+
+        return $query;
     }
 
     /**
@@ -55,7 +75,7 @@ class ExportController extends AbstractController
         $begin = new \DateTime('first day of this month');
         $end = new \DateTime('last day of this month');
 
-        $query = new ExportQuery();
+        $query = (clone $this->query);
         $query->setOrder(ExportQuery::ORDER_ASC);
         $query->setBegin($begin);
         $query->setEnd($end);
