@@ -117,15 +117,5 @@ class ExportQueryTest extends BaseQueryTest
     protected function assertType(ExportQuery $sut)
     {
         $this->assertNull($sut->getType());
-
-        $allowed = ['html', 'csv', 'pdf', 'xlsx', 'ods'];
-
-        foreach ($allowed as $type) {
-            $sut->setType($type);
-            $this->assertEquals($type, $sut->getType());
-        }
-
-        $sut->setType('foo');
-        $this->assertEquals('ods', $sut->getType());
     }
 }
