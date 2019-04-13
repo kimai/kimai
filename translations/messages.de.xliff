@@ -85,6 +85,10 @@
                 <source>menu.admin</source>
                 <target>Administration</target>
             </trans-unit>
+            <trans-unit id="menu.system">
+                <source>menu.system</source>
+                <target>System</target>
+            </trans-unit>
             <trans-unit id="menu.logout">
                 <source>menu.logout</source>
                 <target>Abmelden</target>
@@ -120,6 +124,10 @@
             <trans-unit id="menu.admin_user">
                 <source>menu.admin_user</source>
                 <target>Benutzer</target>
+            </trans-unit>
+            <trans-unit id="menu.plugin">
+                <source>menu.plugin</source>
+                <target>Erweiterungen</target>
             </trans-unit>
             <trans-unit id="menu.system_configuration">
                 <source>menu.system_configuration</source>

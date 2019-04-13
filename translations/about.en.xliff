@@ -10,6 +10,14 @@
                 <source>about.subtitle</source>
                 <target>System information</target>
             </trans-unit>
+            <trans-unit id="tab.system">
+                <source>tab.system</source>
+                <target>System Info</target>
+            </trans-unit>
+            <trans-unit id="tab.license">
+                <source>tab.license</source>
+                <target>Kimai License</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

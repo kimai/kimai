@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Intl\Util\IntlTestHelper;
 use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
  * @covers \App\Twig\Extensions
@@ -68,7 +69,7 @@ class ExtensionsTest extends TestCase
         $this->assertCount(count($functions), $twigFunctions);
         $i = 0;
         foreach ($twigFunctions as $filter) {
-            $this->assertInstanceOf(\Twig_SimpleFunction::class, $filter);
+            $this->assertInstanceOf(TwigFunction::class, $filter);
             $this->assertEquals($functions[$i++], $filter->getName());
         }
     }

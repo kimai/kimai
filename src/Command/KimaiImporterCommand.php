@@ -781,9 +781,7 @@ class KimaiImporterCommand extends Command
                     );
                 }
 
-                $project = $this->projects[$projectId];
-
-                $this->createActivity($io, $entityManager, $oldActivity, $fixedRates, $rates, $project);
+                $this->createActivity($io, $entityManager, $oldActivity, $fixedRates, $rates, $projectId);
                 ++$counter;
             }
         }
@@ -797,7 +795,7 @@ class KimaiImporterCommand extends Command
      * @param array $oldActivity
      * @param array $fixedRates
      * @param array $rates
-     * @param Project $project
+     * @param int $projectId
      * @return Activity
      * @throws \Exception
      */
@@ -807,10 +805,9 @@ class KimaiImporterCommand extends Command
         array $oldActivity,
         array $fixedRates,
         array $rates,
-        ?Project $project
+        $projectId
     ) {
         $activityId = $oldActivity['activityID'];
-        $projectId = null !== $project ? $project->getId() : null;
 
         if (isset($this->activities[$activityId][$projectId])) {
             return $this->activities[$activityId][$projectId];
@@ -823,13 +820,23 @@ class KimaiImporterCommand extends Command
             $io->warning('Found empty activity name, setting it to: ' . $name);
         }
 
+        if (null !== $projectId && !isset($this->projects[$projectId])) {
+            throw new \Exception(
+                sprintf('Did not find project [%s], skipping activity creation [%s] %s', $projectId, $activityId, $name)
+            );
+        }
+
         $activity = new Activity();
         $activity
             ->setName($name)
             ->setComment($oldActivity['comment'] ?: null)
             ->setVisible($isActive)
-            ->setProject($project)
         ;
+
+        if (null !== $projectId) {
+            $project = $this->projects[$projectId];
+            $activity->setProject($project);
+        }
 
         foreach ($fixedRates as $fixedRow) {
             if ($fixedRow['activityID'] === null) {
@@ -907,12 +914,16 @@ class KimaiImporterCommand extends Command
      * @param array $records
      * @param array $fixedRates
      * @param array $rates
-     * @return int
+     * @return array
      * @throws \Exception
      */
     protected function importTimesheetRecords(SymfonyStyle $io, array $records, array $fixedRates, array $rates)
     {
+        $errors = [
+            'projectActivityMismatch' => [],
+        ];
         $counter = 0;
+        $failed = 0;
         $activityCounter = 0;
         $userCounter = 0;
         $entityManager = $this->getDoctrine()->getManager();
@@ -930,6 +941,7 @@ class KimaiImporterCommand extends Command
                 $project = $this->projects[$projectId];
             } else {
                 $io->error('Could not create timesheet record, missing project with ID: ' . $projectId);
+                $failed++;
                 continue;
             }
 
@@ -943,17 +955,20 @@ class KimaiImporterCommand extends Command
 
             if (null === $activity && isset($this->oldActivities[$activityId])) {
                 $oldActivity = $this->oldActivities[$activityId];
-                $activity = $this->createActivity($io, $entityManager, $oldActivity, $fixedRates, $rates, $project);
+                $activity = $this->createActivity($io, $entityManager, $oldActivity, $fixedRates, $rates, $projectId);
                 ++$activityCounter;
             }
 
+            // this should not happen at all
             if (null === $activity) {
                 $io->error('Could not import timesheet record, missing activity with ID: ' . $activityId . '/' . $projectId . '/' . $customerId);
+                $failed++;
                 continue;
             }
 
             if (empty($oldRecord['end']) || $oldRecord['end'] === 0) {
                 $io->error('Cannot import running timesheet record, skipping: ' . $oldRecord['timeEntryID']);
+                $failed++;
                 continue;
             }
 
@@ -978,6 +993,7 @@ class KimaiImporterCommand extends Command
 
                 if (!$this->validateImport($io, $user)) {
                     $io->error('Found timesheet record for unknown user and failed to create user, skipping timesheet: ' . $oldRecord['timeEntryID']);
+                    $failed++;
                     continue;
                 }
 
@@ -991,6 +1007,7 @@ class KimaiImporterCommand extends Command
                 } catch (\Exception $ex) {
                     $io->error('Failed to create user: ' . $user->getUsername());
                     $io->error('Reason: ' . $ex->getMessage());
+                    $failed++;
                     continue;
                 }
 
@@ -1028,9 +1045,16 @@ class KimaiImporterCommand extends Command
             $end->setTimezone($dateTimezone);
 
             // ---------- workaround for localizeDates ----------
-            // if getBegin() is not execute first, then the dates will we re-written in validateImport() below
+            // if getBegin() is not executed first, then the dates will we re-written in validateImport() below
             $timesheet->setBegin($begin)->setEnd($end)->getBegin();
             // --------------------------------------------------
+
+            // ---------- this was a bug in the past, should not happen anymore ----------
+            if ($activity->getProject() !== null && $project->getId() !== $activity->getProject()->getId()) {
+                $errors['projectActivityMismatch'][] = $oldRecord['timeEntryID'];
+                continue;
+            }
+            // ---------------------------------------------------------------------
 
             $timesheet
                 ->setDescription($oldRecord['description'] ?: ($oldRecord['comment'] ?: null))
@@ -1045,7 +1069,9 @@ class KimaiImporterCommand extends Command
             ;
 
             if (!$this->validateImport($io, $timesheet)) {
-                throw new \Exception('Failed to validate timesheet record: ' . $oldRecord['timeEntryID']);
+                $io->error('Failed to validate timesheet record: ' . $oldRecord['timeEntryID'] . ' - skipping!');
+                $failed++;
+                continue;
             }
 
             try {
@@ -1057,6 +1083,7 @@ class KimaiImporterCommand extends Command
                 ++$counter;
             } catch (\Exception $ex) {
                 $io->error('Failed to create timesheet record: ' . $ex->getMessage());
+                $failed++;
             }
 
             $io->write('.');
@@ -1076,6 +1103,12 @@ class KimaiImporterCommand extends Command
         }
         if ($activityCounter > 0) {
             $io->success('Created new activities during timesheet import: ' . $activityCounter);
+        }
+        if (count($errors['projectActivityMismatch']) > 0) {
+            $io->error('Found invalid mapped project - activity combinations in these old timesheet recors: ' . implode(',', $errors['projectActivityMismatch']));
+        }
+        if ($failed > 0) {
+            $io->error(sprintf('Failed importing %s timesheet records', count($failed)));
         }
 
         return $counter;

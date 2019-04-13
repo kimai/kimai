@@ -13,11 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * InvoiceTemplate
- *
  * @ORM\Entity(repositoryClass="App\Repository\InvoiceTemplateRepository")
- * @ORM\Table(
- *      name="invoice_templates",
+ * @ORM\Table(name="kimai2_invoice_templates",
  *      uniqueConstraints={
  *          @ORM\UniqueConstraint(columns={"name"})
  *      }

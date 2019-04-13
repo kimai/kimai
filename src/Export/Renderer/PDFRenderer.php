@@ -16,13 +16,14 @@ use App\Timesheet\UserDateTimeFactory;
 use App\Utils\HtmlToPdfConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Twig\Environment;
 
 class PDFRenderer implements RendererInterface
 {
     use RendererTrait;
 
     /**
-     * @var \Twig_Environment
+     * @var Environment
      */
     protected $twig;
     /**
@@ -35,10 +36,11 @@ class PDFRenderer implements RendererInterface
     protected $converter;
 
     /**
-     * @param \Twig_Environment $twig
+     * @param Environment $twig
      * @param UserDateTimeFactory $dateTime
+     * @param HtmlToPdfConverter $converter
      */
-    public function __construct(\Twig_Environment $twig, UserDateTimeFactory $dateTime, HtmlToPdfConverter $converter)
+    public function __construct(Environment $twig, UserDateTimeFactory $dateTime, HtmlToPdfConverter $converter)
     {
         $this->twig = $twig;
         $this->dateTime = $dateTime;
@@ -49,10 +51,9 @@ class PDFRenderer implements RendererInterface
      * @param Timesheet[] $timesheets
      * @param TimesheetQuery $query
      * @return Response
-     * @throws \Mpdf\MpdfException
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
     public function render(array $timesheets, TimesheetQuery $query): Response
     {

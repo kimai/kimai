@@ -13,20 +13,21 @@ use App\Entity\Timesheet;
 use App\Export\RendererInterface;
 use App\Repository\Query\TimesheetQuery;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Environment;
 
 class HtmlRenderer implements RendererInterface
 {
     use RendererTrait;
 
     /**
-     * @var \Twig_Environment
+     * @var Environment
      */
     protected $twig;
 
     /**
-     * @param \Twig_Environment $twig
+     * @param Environment $twig
      */
-    public function __construct(\Twig_Environment $twig)
+    public function __construct(Environment $twig)
     {
         $this->twig = $twig;
     }
@@ -35,9 +36,9 @@ class HtmlRenderer implements RendererInterface
      * @param Timesheet[] $timesheets
      * @param TimesheetQuery $query
      * @return Response
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
     public function render(array $timesheets, TimesheetQuery $query): Response
     {

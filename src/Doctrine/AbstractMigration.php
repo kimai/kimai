@@ -45,10 +45,11 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     /**
      * @param string $name
      * @return string
+     * @deprecated since 0.9
      */
     protected function getTableName($name)
     {
-        return TablePrefixSubscriber::PREFIX . $name;
+        return 'kimai2_' . $name;
     }
 
     /**
