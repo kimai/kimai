@@ -111,7 +111,7 @@ class CreateUserCommand extends Command
         $pwd = $this->encoder->encodePassword($user, $user->getPlainPassword());
         $user->setPassword($pwd);
 
-        $errors = $this->validator->validate($user, null, ['registration']);
+        $errors = $this->validator->validate($user, null, ['Registration']);
         if ($errors->count() > 0) {
             /** @var \Symfony\Component\Validator\ConstraintViolation $error */
             foreach ($errors as $error) {
