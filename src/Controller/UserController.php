@@ -189,7 +189,8 @@ class UserController extends AbstractController
     {
         return $this->createForm(UserCreateType::class, $user, [
             'action' => $this->generateUrl('admin_user_create'),
-            'method' => 'POST'
+            'method' => 'POST',
+            'include_active_flag' => true
         ]);
     }
 }

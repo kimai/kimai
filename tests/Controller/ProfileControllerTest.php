@@ -83,6 +83,38 @@ class ProfileControllerTest extends ControllerBaseTest
                 'title' => 'Code Monkey',
                 'avatar' => '/fake/image.jpg',
                 'email' => 'updated@example.com',
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/edit'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertHasFlashSuccess($client);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $this->getUserByRole($em, User::ROLE_USER);
+
+        $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUsername());
+        $this->assertEquals('Johnny', $user->getAlias());
+        $this->assertEquals('Code Monkey', $user->getTitle());
+        $this->assertEquals('/fake/image.jpg', $user->getAvatar());
+        $this->assertEquals('updated@example.com', $user->getEmail());
+        $this->assertTrue($user->isEnabled());
+    }
+
+    public function testEditActionWithActiveFlag()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/edit');
+
+        $form = $client->getCrawler()->filter('form[name=user_edit]')->form();
+        $client->submit($form, [
+            'user_edit' => [
+                'alias' => 'Johnny',
+                'title' => 'Code Monkey',
+                'avatar' => '/fake/image.jpg',
+                'email' => 'updated@example.com',
                 'enabled' => false,
             ]
         ]);
