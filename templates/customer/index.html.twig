@@ -5,7 +5,7 @@
 {% import "macros/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'admin_customer.title'|trans }}{% endblock %}
-{% block page_subtitle %}{{ 'admin_customer.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
+{% block page_subtitle %}{{ 'admin_customer.subtitle'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.customers('index') }}{% endblock %}
 
 {% block main_before %}

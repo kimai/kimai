@@ -5,7 +5,7 @@
 {% import "macros/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'admin_activity.title'|trans }}{% endblock %}
-{% block page_subtitle %}{{ 'admin_activity.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
+{% block page_subtitle %}{{ 'admin_activity.subtitle'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.activities('index') }}{% endblock %}
 
 {% block main_before %}

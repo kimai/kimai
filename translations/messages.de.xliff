@@ -21,10 +21,6 @@
                 <source>both</source>
                 <target></target>
             </trans-unit>
-            <trans-unit id="subtitle.amount">
-                <source>subtitle.amount</source>
-                <target>(insgesamt %count%)</target>
-            </trans-unit>
             <trans-unit id="This is a mandatory field">
                 <source>This is a mandatory field</source>
                 <target>Pflichtfeld</target>
