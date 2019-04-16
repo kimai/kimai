@@ -14,7 +14,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -29,7 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity("username")
  * @UniqueEntity("email")
  */
-class User extends BaseUser implements UserInterface, EquatableInterface
+class User extends BaseUser implements UserInterface
 {
     public const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
     public const ROLE_USER = 'ROLE_USER';
@@ -300,32 +299,6 @@ class User extends BaseUser implements UserInterface, EquatableInterface
         $preference->setUser($this);
 
         return $this;
-    }
-
-    /**
-     * Checks if the user has to be logged out of the session,
-     * due to changed fields / security related settings (like roles and teams).
-     *
-     * @param UserInterface $user
-     * @return bool
-     */
-    public function isEqualTo(UserInterface $user)
-    {
-        if (!($user instanceof User)) {
-            return false;
-        }
-
-        if (count($this->getRoles()) !== count($user->getRoles())) {
-            return false;
-        }
-
-        foreach ($this->getRoles() as $role) {
-            if (!in_array($role, $user->getRoles())) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     /**
