@@ -13,43 +13,47 @@ use App\Entity\Timesheet;
 use App\Export\RendererInterface;
 use App\Repository\Query\TimesheetQuery;
 use App\Timesheet\UserDateTimeFactory;
-use Mpdf\Mpdf;
-use Mpdf\Output\Destination;
+use App\Utils\HtmlToPdfConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Twig\Environment;
 
 class PDFRenderer implements RendererInterface
 {
     use RendererTrait;
 
     /**
-     * @var \Twig_Environment
+     * @var Environment
      */
     protected $twig;
-
     /**
      * @var UserDateTimeFactory
      */
     protected $dateTime;
+    /**
+     * @var HtmlToPdfConverter
+     */
+    protected $converter;
 
     /**
-     * @param \Twig_Environment $twig
+     * @param Environment $twig
      * @param UserDateTimeFactory $dateTime
+     * @param HtmlToPdfConverter $converter
      */
-    public function __construct(\Twig_Environment $twig, UserDateTimeFactory $dateTime)
+    public function __construct(Environment $twig, UserDateTimeFactory $dateTime, HtmlToPdfConverter $converter)
     {
         $this->twig = $twig;
         $this->dateTime = $dateTime;
+        $this->converter = $converter;
     }
 
     /**
      * @param Timesheet[] $timesheets
      * @param TimesheetQuery $query
      * @return Response
-     * @throws \Mpdf\MpdfException
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
     public function render(array $timesheets, TimesheetQuery $query): Response
     {
@@ -60,11 +64,7 @@ class PDFRenderer implements RendererInterface
             'summaries' => $this->calculateSummary($timesheets),
         ]);
 
-        //return new Response($content);
-
-        $mpdf = new Mpdf();
-        $mpdf->WriteHTML($content);
-        $content = $mpdf->Output('test', Destination::STRING_RETURN);
+        $content = $this->converter->convertToPdf($content);
 
         $response = new Response($content);
 

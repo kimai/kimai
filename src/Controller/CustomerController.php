@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use App\Configuration\FormConfiguration;
 use App\Entity\Customer;
 use App\Form\CustomerEditForm;
 use App\Form\Toolbar\CustomerToolbarForm;
@@ -30,16 +31,22 @@ use Symfony\Component\Routing\Annotation\Route;
 class CustomerController extends AbstractController
 {
     /**
-     * @var array
+     * @var CustomerRepository
      */
-    private $defaults;
+    private $repository;
+    /**
+     * @var FormConfiguration
+     */
+    private $configuration;
 
     /**
-     * @param array $defaults
+     * @param CustomerRepository $repository
+     * @param FormConfiguration $configuration
      */
-    public function __construct(array $defaults)
+    public function __construct(CustomerRepository $repository, FormConfiguration $configuration)
     {
-        $this->defaults = $defaults;
+        $this->repository = $repository;
+        $this->configuration = $configuration;
     }
 
     /**
@@ -47,7 +54,7 @@ class CustomerController extends AbstractController
      */
     protected function getRepository()
     {
-        return $this->getDoctrine()->getRepository(Customer::class);
+        return $this->repository;
     }
 
     /**
@@ -95,9 +102,9 @@ class CustomerController extends AbstractController
     public function createAction(Request $request)
     {
         $customer = new Customer();
-        $customer->setCountry($this->defaults['customer']['country']);
-        $customer->setCurrency($this->defaults['customer']['currency']);
-        $customer->setTimezone($this->defaults['customer']['timezone']);
+        $customer->setCountry($this->configuration->getCustomerDefaultCountry());
+        $customer->setCurrency($this->configuration->getCustomerDefaultCurrency());
+        $customer->setTimezone($this->configuration->getCustomerDefaultTimezone());
 
         return $this->renderCustomerForm($customer, $request);
     }

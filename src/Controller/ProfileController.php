@@ -320,7 +320,8 @@ class ProfileController extends AbstractController
             $user,
             [
                 'action' => $this->generateUrl('user_profile_edit', ['username' => $user->getUsername()]),
-                'method' => 'POST'
+                'method' => 'POST',
+                'include_active_flag' => ($user->getId() !== $this->getUser()->getId())
             ]
         );
     }

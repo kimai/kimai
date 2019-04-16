@@ -31,6 +31,7 @@ class CalendarControllerTest extends ControllerBaseTest
 
         $crawler = $client->getCrawler();
         $calendar = $crawler->filter('div#calendar');
+        $this->assertEquals(1, $calendar->count());
     }
 
     public function testCalendarEntriesAction()

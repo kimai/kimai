@@ -16,12 +16,14 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Defines the form used to edit the profile of a User.
  */
 class UserEditType extends AbstractType
 {
+
     /**
      * {@inheritdoc}
      */
@@ -43,10 +45,15 @@ class UserEditType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'label.email',
             ])
-            ->add('enabled', YesNoType::class, [
-                'label' => 'label.active',
-            ])
         ;
+
+        if ($options['include_active_flag']) {
+            $builder
+                ->add('enabled', YesNoType::class, [
+                    'label' => 'label.active',
+                ])
+            ;
+        }
     }
 
     /**
@@ -59,6 +66,7 @@ class UserEditType extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'edit_user_profile',
+            'include_active_flag' => false,
         ]);
     }
 }

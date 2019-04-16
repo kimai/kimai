@@ -187,7 +187,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertHasFlashSuccess($client);
+        $this->assertHasFlashSuccess($client, 'Time recording was started');
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         /** @var Timesheet $timesheet */
@@ -198,7 +198,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertEquals(1, $timesheet->getProject()->getId());
     }
 
-    public function testStopActionDoesNotShowRateFieldsForUser()
+    public function testCreateActionDoesNotShowRateFieldsForUser()
     {
         $client = $this->getClientForAuthenticatedUser();
         $this->request($client, '/timesheet/create');
@@ -244,6 +244,40 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertEquals(100, $timesheet->getRate());
         $this->assertEquals(100, $timesheet->getFixedRate());
         $this->assertNull($timesheet->getHourlyRate());
+    }
+
+    public function testStopActionFailsOnStoppedEntry()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/timesheet/create');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $client->submit($form, [
+            'timesheet_edit_form' => [
+                'description' => 'Testing is fun!',
+                'fixedRate' => 100,
+                'project' => 1,
+                'activity' => 1,
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasFlashSuccess($client);
+
+        $this->request($client, '/timesheet/1/stop');
+        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasFlashSuccess($client);
+
+        $this->request($client, '/timesheet/1/stop');
+        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasFlashError($client, 'Time recording could not be stopped: Timesheet entry already stopped');
     }
 
     public function testCreateActionWithFromAndToValues()
@@ -336,6 +370,21 @@ class TimesheetControllerTest extends ControllerBaseTest
             'Could not find link to documentation'
         );
 
-        // TODO more assertions
+        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $client->submit($form, [
+            'timesheet_edit_form' => [
+                'description' => 'foo-bar'
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasFlashSaveSuccess($client);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var Timesheet $timesheet */
+        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $this->assertEquals('foo-bar', $timesheet->getDescription());
     }
 }

@@ -1,9 +1,6 @@
 {% extends '@AdminLTE/layout/default-layout-avanzu.html.twig' %}
 
-{% block avanzu_page_content_before %}
-    <div class="toolbar-pad no-print">
-        {% block main_before %}{% endblock %}
-    </div>
+{% block avanzu_after_body_start %}
     {% embed 'embeds/modal.html.twig' %}
         {% block modal_id %}remote_form_modal{% endblock %}
         {% block modal_title %}{% endblock %}
@@ -12,12 +9,26 @@
     {% endembed %}
 {% endblock %}
 
+{% block avanzu_page_content_before %}
+    {% set event = trigger(constant('App\\Event\\ThemeEvent::CONTENT_BEFORE')) %}
+    {{ event.content|raw }}
+    <div class="toolbar-pad no-print">
+        {% block main_before %}{% endblock %}
+    </div>
+{% endblock %}
+
 {% block avanzu_page_content_after %}
     {% block main_after %}{% endblock %}
+    {% set event = trigger(constant('App\\Event\\ThemeEvent::CONTENT_AFTER')) %}
+    {{ event.content|raw }}
 {% endblock %}
 
 {% block avanzu_page_content %}
+    {% set event = trigger(constant('App\\Event\\ThemeEvent::CONTENT_START')) %}
+    {{ event.content|raw }}
     {% block main %}{% endblock %}
+    {% set event = trigger(constant('App\\Event\\ThemeEvent::CONTENT_END')) %}
+    {{ event.content|raw }}
 {% endblock %}
 
 {% block avanzu_document_title %}

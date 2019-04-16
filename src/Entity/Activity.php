@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="activities")
+ * @ORM\Table(name="kimai2_activities")
  * @ORM\Entity(repositoryClass="App\Repository\ActivityRepository")
  */
 class Activity

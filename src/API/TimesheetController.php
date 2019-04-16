@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace App\API;
 
+use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet;
 use App\Form\TimesheetEditForm;
 use App\Repository\Query\TimesheetQuery;
@@ -37,16 +38,14 @@ class TimesheetController extends BaseApiController
      * @var TimesheetRepository
      */
     protected $repository;
-
     /**
      * @var ViewHandlerInterface
      */
     protected $viewHandler;
-
     /**
-     * @var int
+     * @var TimesheetConfiguration
      */
-    protected $hardLimit;
+    protected $configuration;
 
     /**
      * @var UserDateTimeFactory
@@ -57,13 +56,13 @@ class TimesheetController extends BaseApiController
      * @param ViewHandlerInterface $viewHandler
      * @param TimesheetRepository $repository
      * @param UserDateTimeFactory $dateTime
-     * @param int $hardLimit
+     * @param TimesheetConfiguration $configuration
      */
-    public function __construct(ViewHandlerInterface $viewHandler, TimesheetRepository $repository, UserDateTimeFactory $dateTime, int $hardLimit)
+    public function __construct(ViewHandlerInterface $viewHandler, TimesheetRepository $repository, UserDateTimeFactory $dateTime, TimesheetConfiguration $configuration)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
-        $this->hardLimit = $hardLimit;
+        $this->configuration = $configuration;
         $this->dateTime = $dateTime;
     }
 
@@ -235,7 +234,7 @@ class TimesheetController extends BaseApiController
             if (null === $timesheet->getEnd()) {
                 $this->repository->stopActiveEntries(
                     $timesheet->getUser(),
-                    $this->hardLimit
+                    $this->configuration->getActiveEntriesHardLimit()
                 );
             }
 

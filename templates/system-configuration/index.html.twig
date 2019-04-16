@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title %}{{ 'title'|trans({}, 'system-configuration') }}{% endblock %}
+{% block page_subtitle %}{{ 'subtitle'|trans({}, 'system-configuration') }}{% endblock %}
+
+{% block main %}
+
+    {% for section in sections %}
+        {{ include('default/_form.html.twig', {
+            'title': section.model.section|trans({}, 'system-configuration'),
+            'form': section.form,
+        }) }}
+    {% endfor %}
+
+{% endblock %}

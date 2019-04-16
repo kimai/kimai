@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="de" datatype="plaintext" original="messages.en.xliff">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages.en.xliff">
         <body>
             <!--
               Global template keys
@@ -20,10 +20,6 @@
             <trans-unit id="both">
                 <source>both</source>
                 <target></target>
-            </trans-unit>
-            <trans-unit id="subtitle.amount">
-                <source>subtitle.amount</source>
-                <target>(insgesamt %count%)</target>
             </trans-unit>
             <trans-unit id="This is a mandatory field">
                 <source>This is a mandatory field</source>
@@ -85,6 +81,10 @@
                 <source>menu.admin</source>
                 <target>Administration</target>
             </trans-unit>
+            <trans-unit id="menu.system">
+                <source>menu.system</source>
+                <target>System</target>
+            </trans-unit>
             <trans-unit id="menu.logout">
                 <source>menu.logout</source>
                 <target>Abmelden</target>
@@ -120,6 +120,14 @@
             <trans-unit id="menu.admin_user">
                 <source>menu.admin_user</source>
                 <target>Benutzer</target>
+            </trans-unit>
+            <trans-unit id="menu.plugin">
+                <source>menu.plugin</source>
+                <target>Erweiterungen</target>
+            </trans-unit>
+            <trans-unit id="menu.system_configuration">
+                <source>menu.system_configuration</source>
+                <target>Settings</target>
             </trans-unit>
 
             <!--
