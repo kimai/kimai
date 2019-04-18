@@ -29,6 +29,7 @@ class EventExtensions extends AbstractExtension
 
     /**
      * @param EventDispatcherInterface $dispatcher
+     * @param CurrentUser $user
      */
     public function __construct(EventDispatcherInterface $dispatcher, CurrentUser $user)
     {
