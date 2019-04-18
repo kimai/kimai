@@ -542,10 +542,6 @@
                 <source>ROLE_USER</source>
                 <target>Usager</target>
             </trans-unit>
-            <trans-unit id="ROLE_CUSTOMER">
-                <source>ROLE_CUSTOMER</source>
-                <target>Client</target>
-            </trans-unit>
 
             <!--
               Données statistiques pour le tableau de bord et les profils des usagers

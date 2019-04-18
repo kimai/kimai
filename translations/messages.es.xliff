@@ -541,10 +541,6 @@
                 <source>ROLE_USER</source>
                 <target>Usuario</target>
             </trans-unit>
-            <trans-unit id="ROLE_CUSTOMER">
-                <source>ROLE_CUSTOMER</source>
-                <target>Cliente</target>
-            </trans-unit>
 
             <!--
               Statistics

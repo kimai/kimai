@@ -596,10 +596,6 @@
                 <source>ROLE_USER</source>
                 <target>Felhasználó</target>
             </trans-unit>
-            <trans-unit id="ROLE_CUSTOMER">
-                <source>ROLE_CUSTOMER</source>
-                <target>Ügyfél</target>
-            </trans-unit>
 
             <!--
               Statistics data for Dashboard & Users profile

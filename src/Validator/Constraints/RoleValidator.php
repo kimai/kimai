@@ -14,16 +14,12 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-/**
- * Class RoleValidator
- */
 class RoleValidator extends ConstraintValidator
 {
     /**
      * @var string[]
      */
     protected $allowedRoles = [
-        User::ROLE_CUSTOMER,
         User::ROLE_USER,
         User::ROLE_TEAMLEAD,
         User::ROLE_ADMIN,

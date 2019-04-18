@@ -52,7 +52,7 @@ class UserTest extends AbstractEntityTest
     {
         return [
             [str_pad('#', 3, '-'), 'test@x.x'], // shortest possible username
-            [str_pad('#', 60, '-'), 'test@x.x', ['ROLE_CUSTOMER']], // longest possible password and valid role
+            [str_pad('#', 60, '-'), 'test@x.x', ['ROLE_TEAMLEAD']], // longest possible password and valid role
         ];
     }
 
