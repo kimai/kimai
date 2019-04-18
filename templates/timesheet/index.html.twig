@@ -17,6 +17,7 @@
     {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% else %}
+        {% set canSeeRate = is_granted('view_rate_own_timesheet') %}
         {% set columns = {'date': ''} %}
 
         {% if not duration_only %}
@@ -25,7 +26,7 @@
 
         {% set columns = columns|merge({'duration': ''}) %}
 
-        {% if is_granted('view_rate_own_timesheet') %}
+        {% if canSeeRate %}
             {% set columns = columns|merge({'rate': 'hidden-xs'}) %}
         {% endif %}
 
@@ -50,7 +51,7 @@
                 {% set day = entry.begin|date_short %}
             {% endif %}
             {% if showSummary and day is not same as(entry.begin|date_short) %}
-                {{ timesheet.summary(day, dayDuration, dayRate, columns) }}
+                {{ timesheet.summary(day, dayDuration, dayRate, columns, canSeeRate) }}
                 {% set day = entry.begin|date_short %}
                 {% set dayDuration = 0 %}
                 {% set dayRate = {} %}
@@ -67,7 +68,7 @@
                         <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'endtime') }}">{{ entry.end|time }}</td>
                     {% endif %}
                     <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'duration') }}">{{ entry.duration|duration }}</td>
-                    {% if is_granted('view_rate', entry) %}
+                    {% if canSeeRate %}
                         <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'rate') }}">{{ entry.rate|money(entry.project.customer.currency) }}</td>
                     {% endif %}
                 {% else %}
@@ -75,7 +76,7 @@
                         <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'endtime') }}">&dash;</td>
                     {% endif %}
                     <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'duration') }}"><i>{{ entry|duration }}</i></td>
-                    {% if is_granted('view_rate', entry) %}
+                    {% if canSeeRate %}
                         <td class="{{ tables.data_table_column_class(tableName, columns, 'rate') }}">&dash;</td>
                     {% endif %}
                 {% endif %}
@@ -98,7 +99,7 @@
         {% endfor %}
 
         {% if showSummary %}
-            {{ timesheet.summary(day, dayDuration, dayRate, columns) }}
+            {{ timesheet.summary(day, dayDuration, dayRate, columns, canSeeRate) }}
         {% endif %}
 
         {{ tables.data_table_footer(entries, 'timesheet_paginated') }}
@@ -120,13 +121,13 @@
     </script>
 {% endblock %}
 
-{% macro summary(day, duration, dayRates, columns) %}
+{% macro summary(day, duration, dayRates, columns, canSeeRate) %}
     <tr class="summary info">
         <td class="text-nowrap">{{ day }}</td>
         <td></td>
         <td></td>
         <td class="text-nowrap">{{ duration|duration }}</td>
-        {% if is_granted('view_rate_own_timesheet') %}
+        {% if canSeeRate %}
             <td class="text-nowrap">
                 {% for currency, rate in dayRates %}
                     {{ rate|money(currency) }}

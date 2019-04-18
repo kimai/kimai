@@ -254,7 +254,7 @@ class InvoiceController extends AbstractController
      * @Security("is_granted('create_invoice_template')")
      *
      * @param Request $request
-     * @param InvoiceTemplate|null $template
+     * @param InvoiceTemplate|null $copyFrom
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */

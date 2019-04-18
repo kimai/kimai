@@ -27,8 +27,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('kimai');
+        $treeBuilder = new TreeBuilder('kimai');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()
@@ -68,8 +68,8 @@ class Configuration implements ConfigurationInterface
 
     protected function getTimesheetNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('timesheet');
+        $builder = new TreeBuilder('timesheet');
+        $node = $builder->getRootNode();
 
         $node
             ->children()
@@ -185,8 +185,8 @@ class Configuration implements ConfigurationInterface
 
     protected function getInvoiceNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('invoice');
+        $builder = new TreeBuilder('invoice');
+        $node = $builder->getRootNode();
 
         $node
             ->addDefaultsIfNotSet()
@@ -208,8 +208,8 @@ class Configuration implements ConfigurationInterface
 
     protected function getLanguagesNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('languages');
+        $builder = new TreeBuilder('languages');
+        $node = $builder->getRootNode();
 
         $node
             ->useAttributeAsKey('name', false) // see https://github.com/symfony/symfony/issues/18988
@@ -233,8 +233,8 @@ class Configuration implements ConfigurationInterface
 
     protected function getCalendarNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('calendar');
+        $builder = new TreeBuilder('calendar');
+        $node = $builder->getRootNode();
 
         $node
             ->children()
@@ -276,8 +276,8 @@ class Configuration implements ConfigurationInterface
 
     protected function getThemeNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('theme');
+        $builder = new TreeBuilder('theme');
+        $node = $builder->getRootNode();
 
         $node
             ->addDefaultsIfNotSet()
@@ -300,8 +300,8 @@ class Configuration implements ConfigurationInterface
 
     protected function getUserNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('user');
+        $builder = new TreeBuilder('user');
+        $node = $builder->getRootNode();
 
         $node
             ->addDefaultsIfNotSet()
@@ -320,8 +320,8 @@ class Configuration implements ConfigurationInterface
 
     protected function getWidgetsNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('widgets');
+        $builder = new TreeBuilder('widgets');
+        $node = $builder->getRootNode();
 
         $node
             ->requiresAtLeastOneElement()
@@ -351,8 +351,8 @@ class Configuration implements ConfigurationInterface
 
     protected function getDashboardNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('dashboard');
+        $builder = new TreeBuilder('dashboard');
+        $node = $builder->getRootNode();
 
         $node
             ->requiresAtLeastOneElement()
@@ -384,8 +384,8 @@ class Configuration implements ConfigurationInterface
 
     protected function getDefaultsNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('defaults');
+        $builder = new TreeBuilder('defaults');
+        $node = $builder->getRootNode();
 
         $node
             ->addDefaultsIfNotSet()
@@ -406,8 +406,8 @@ class Configuration implements ConfigurationInterface
 
     protected function getPermissionsNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('permissions');
+        $builder = new TreeBuilder('permissions');
+        $node = $builder->getRootNode();
 
         $node
             ->addDefaultsIfNotSet()

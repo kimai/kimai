@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace App\API;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-abstract class BaseApiController extends Controller
+abstract class BaseApiController extends AbstractController
 {
 }
