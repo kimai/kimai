@@ -922,7 +922,7 @@
             -->
             <trans-unit id="active.entries">
                 <source>active.entries</source>
-                <target>Sie haben %count% aktiven Eintrag|Sie haben %count% aktive Einträge</target>
+                <target>Sie haben einen aktiven Eintrag|Sie haben %count% aktive Einträge</target>
             </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
