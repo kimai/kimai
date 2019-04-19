@@ -31,13 +31,12 @@ before starting the update process. And delete the row `DATABASE_PREFIX` from yo
 - API: DateTime objects will be returned including timezone identifier (previously 2019-03-02 14:23 - now 2019-03-02T14:23:00+00:00)
 - Plugin mechanism changed: existing Plugins have to be deleted or updated
 
-**Check if you want to apply changes to your `local.yaml`:** 
+**Apply necessary changes to your `local.yaml`:** 
 
-- New permissions are available: `system_configuration`, `system_actions`, `plugins`
-
-**Check if you want to apply changes to your `local.yaml`:** 
-
-- New permission is available available: `system_configuration`
+New permissions are available: 
+- `system_configuration` - for accessing the new system configuration screen
+- `system_actions` - for the experimental feature to flush your cache from the about screen
+- `plugins` - for accessing the new plugins screen
 
 ## [0.8.1](https://github.com/kevinpapst/kimai2/releases/tag/0.8.1)
 
@@ -50,10 +49,15 @@ After you followed the normal update and database migration process (see above),
 - Read this [pull request](https://github.com/kevinpapst/kimai2/pull/372) BEFORE you follow the instructions to convert the 
 timezones in your existing time records with `bin/console kimai:convert-timezone`. Without that, you will end up with wrong times in your database.
 
-Check if you want to apply changes to your `local.yaml`: 
+**Apply necessary changes to your `local.yaml`:** 
 
 - A new boolean setting `kimai.timesheet.rules.allow_future_times` was introduced
-- New permissions are available: `view_export, create_export, edit_export_own_timesheet, edit_export_other_timesheet, system_information`
+- New permissions are available: 
+  - `view_export` - for the new export feature
+  - `create_export` - for the new export feature
+  - `edit_export_own_timesheet` - for the new export feature
+  - `edit_export_other_timesheet` - for the new export feature
+  - `system_information` - to see the new about screen
 
 ## [0.7](https://github.com/kevinpapst/kimai2/releases/tag/0.7)
 
