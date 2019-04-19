@@ -533,10 +533,6 @@
                 <source>ROLE_USER</source>
                 <target>Пользователь</target>
             </trans-unit>
-            <trans-unit id="ROLE_CUSTOMER">
-                <source>ROLE_CUSTOMER</source>
-                <target>Клиент</target>
-            </trans-unit>
 
             <!--
               Statistics data for Dashboard & Users profile

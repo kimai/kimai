@@ -154,10 +154,6 @@ class UserFixtures extends Fixture
     {
         return [
             [
-                'Clara Haynes', 'CFO', 'clara_customer', 'clara_customer@example.com', User::ROLE_CUSTOMER,
-                'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=monsterid&f=y', true
-            ],
-            [
                 'John Doe', 'Developer', self::USERNAME_USER, 'john_user@example.com', User::ROLE_USER,
                 self::DEFAULT_AVATAR, true
             ],

@@ -41,7 +41,6 @@ security:
         allow_if_all_abstain: false
 
     role_hierarchy:
-        ROLE_USER:        ROLE_CUSTOMER
         ROLE_TEAMLEAD:    ROLE_USER
         ROLE_ADMIN:       ROLE_TEAMLEAD
         ROLE_SUPER_ADMIN: ROLE_ADMIN

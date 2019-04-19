@@ -30,7 +30,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User extends BaseUser implements UserInterface
 {
-    public const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_TEAMLEAD = 'ROLE_TEAMLEAD';
     public const ROLE_ADMIN = 'ROLE_ADMIN';

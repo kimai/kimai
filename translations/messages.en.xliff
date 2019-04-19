@@ -604,10 +604,6 @@
                 <source>ROLE_USER</source>
                 <target>User</target>
             </trans-unit>
-            <trans-unit id="ROLE_CUSTOMER">
-                <source>ROLE_CUSTOMER</source>
-                <target>Customer</target>
-            </trans-unit>
 
             <!--
               Statistics data for Dashboard & Users profile
