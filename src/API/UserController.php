@@ -22,6 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @RouteResource("User")
+ *
+ * @Security("is_granted('api')")
  */
 class UserController extends BaseApiController
 {

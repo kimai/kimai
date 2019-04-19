@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @RouteResource("Customer")
  *
- * @Security("is_granted('ROLE_USER')")
+ * @Security("is_granted('api')")
  */
 class CustomerController extends BaseApiController
 {

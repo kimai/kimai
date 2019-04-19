@@ -73,6 +73,7 @@ kimai:
     permissions:
         sets:
             # mapping complex rulesets of single permissions to named "sets" ("set name" = [array of "permissions"])
+            API: [api]
             ACTIVITIES: [view_activity,create_activity,edit_activity,delete_activity]
             PROJECTS: [view_project,create_project,edit_project,delete_project]
             CUSTOMERS: [view_customer,create_customer,edit_customer,delete_customer]
@@ -88,10 +89,10 @@ kimai:
             EXPORT: [view_export,create_export,edit_export_own_timesheet,edit_export_other_timesheet]
         maps:
             # mapping "sets" or permissions to user roles ("role name" = [array of "set names"])
-            ROLE_USER: [TIMESHEET,PROFILE]
-            ROLE_TEAMLEAD: [INVOICE,TIMESHEET,TIMESHEET_OTHER,PROFILE,EXPORT]
-            ROLE_ADMIN: [ACTIVITIES,PROJECTS,CUSTOMERS,INVOICE,INVOICE_TEMPLATE,TIMESHEET,TIMESHEET_OTHER,PROFILE,RATE,RATE_OTHER,EXPORT]
-            ROLE_SUPER_ADMIN: [ACTIVITIES,PROJECTS,CUSTOMERS,INVOICE,INVOICE_TEMPLATE,TIMESHEET,TIMESHEET_OTHER,PROFILE,PROFILE_OTHER,USER,RATE,RATE_OTHER,EXPORT]
+            ROLE_USER: [API,TIMESHEET,PROFILE]
+            ROLE_TEAMLEAD: [API,INVOICE,TIMESHEET,TIMESHEET_OTHER,PROFILE,EXPORT]
+            ROLE_ADMIN: [API,ACTIVITIES,PROJECTS,CUSTOMERS,INVOICE,INVOICE_TEMPLATE,TIMESHEET,TIMESHEET_OTHER,PROFILE,RATE,RATE_OTHER,EXPORT]
+            ROLE_SUPER_ADMIN: [API,ACTIVITIES,PROJECTS,CUSTOMERS,INVOICE,INVOICE_TEMPLATE,TIMESHEET,TIMESHEET_OTHER,PROFILE,PROFILE_OTHER,USER,RATE,RATE_OTHER,EXPORT]
         roles:
             # adding single permissions to user roles, extending the definition from "sets" ("role name" = [array of "permissions"])
             ROLE_USER: []

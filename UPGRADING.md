@@ -31,13 +31,13 @@ before starting the update process. And delete the row `DATABASE_PREFIX` from yo
 - API: DateTime objects will be returned including timezone identifier (previously 2019-03-02 14:23 - now 2019-03-02T14:23:00+00:00)
 - Plugin mechanism changed: existing Plugins have to be deleted or updated
 
-**Check if you want to apply changes to your `local.yaml`:** 
+**Add permissions to your `local.yaml`:** 
 
-- New permissions are available: `system_configuration`, `system_actions`, `plugins`
-
-**Check if you want to apply changes to your `local.yaml`:** 
-
-- New permission is available available: `system_configuration`
+New permissions are available: 
+- `system_configuration` - for accessing the new system configuration screen
+- `system_actions` - for the experimental feature to flush your cache from the about screen
+- `plugins` - for accessing the new plugins screen
+- `api` - for using the API
 
 ## [0.8.1](https://github.com/kevinpapst/kimai2/releases/tag/0.8.1)
 

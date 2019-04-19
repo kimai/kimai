@@ -31,6 +31,8 @@ use Symfony\Component\Validator\Constraints;
 
 /**
  * @RouteResource("Timesheet")
+ *
+ * @Security("is_granted('api')")
  */
 class TimesheetController extends BaseApiController
 {
