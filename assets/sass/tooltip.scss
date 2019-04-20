@@ -1,0 +1,36 @@
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+ * These styles are not yet used and need some love before actively promoted in the UI.
+ * They could be used in: templates/macros/widgets.html.twig::label
+ */
+
+[data-tooltip] {
+    position: relative;
+    overflow: visible;
+}
+[data-tooltip]:after {
+    transition: all .2s ease;
+    content: attr(data-tooltip);
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: $gray;
+    color: #fff;
+    padding: 2px 12px;
+    pointer-events: none;
+    white-space: nowrap;
+    font-size: 11px;
+    line-height: 18px;
+    border-radius: $border-radius-small;
+    z-index: 2;
+}
+[data-tooltip]:not(:hover):after {
+    opacity: 0;
+}

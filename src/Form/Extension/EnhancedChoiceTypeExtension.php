@@ -34,12 +34,9 @@ class EnhancedChoiceTypeExtension extends AbstractTypeExtension
         $this->type = $type;
     }
 
-    /**
-     * @return string
-     */
-    public function getExtendedType()
+    public static function getExtendedTypes(): iterable
     {
-        return EntityType::class;
+        return [EntityType::class];
     }
 
     /**
