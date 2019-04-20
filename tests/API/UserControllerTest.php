@@ -55,7 +55,9 @@ class UserControllerTest extends APIControllerBaseTest
         $expectedKeys = ['id', 'username', 'enabled', 'alias'];
 
         if ($full) {
-            $expectedKeys = ['id', 'username', 'enabled', 'roles', 'alias', 'title', 'avatar'];
+            $expectedKeys = array_merge(
+                $expectedKeys, ['title', 'avatar', 'roles']
+            );
         }
 
         $actual = array_keys($result);

@@ -1,5 +1,6 @@
 App\Entity\User:
     exclusion_policy: All
+    custom_accessor_order: [id, alias, title, avatar]
     properties:
         id:
             include: true

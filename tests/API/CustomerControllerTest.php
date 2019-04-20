@@ -64,13 +64,12 @@ class CustomerControllerTest extends APIControllerBaseTest
 
     protected function assertStructure(array $result, $full = true)
     {
-        $expectedKeys = ['id', 'name', 'visible'];
+        $expectedKeys = ['id', 'name', 'visible', 'hourly_rate', 'fixed_rate'];
 
         if ($full) {
-            $expectedKeys = [
-                'id', 'name', 'number', 'comment', 'visible', 'company', 'contact', 'address', 'country', 'currency',
-                'phone', 'fax', 'mobile', 'email', 'timezone'
-            ];
+            $expectedKeys = array_merge($expectedKeys, [
+                'homepage', 'number', 'comment', 'company', 'contact', 'address', 'country', 'currency', 'phone', 'fax', 'mobile', 'email', 'timezone'
+            ]);
         }
 
         $actual = array_keys($result);

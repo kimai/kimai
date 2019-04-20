@@ -76,7 +76,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         for ($i = 0; $i < count($result); $i++) {
             $activity = $result[$i];
             $hasProject = $expected[$i][0];
-            $this->assertStructure($activity, $hasProject);
+            $this->assertStructure($activity, false);
             if ($hasProject) {
                 $this->assertEquals($expected[$i][0], $activity['project']);
             }
@@ -122,10 +122,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
-
-        $expectedKeys = ['id', 'name', 'comment', 'visible'];
-        $actual = array_keys($result);
-        $this->assertEquals($expectedKeys, $actual);
+        $this->assertStructure($result, true);
     }
 
     public function testNotFound()
@@ -135,10 +132,10 @@ class ActivityControllerTest extends APIControllerBaseTest
 
     protected function assertStructure(array $result, $full = true)
     {
-        $expectedKeys = ['id', 'name', 'visible'];
+        $expectedKeys = ['id', 'name', 'visible', 'project', 'hourly_rate', 'fixed_rate'];
 
         if ($full) {
-            $expectedKeys = ['id', 'name', 'visible', 'project'];
+            $expectedKeys = array_merge($expectedKeys, ['comment']);
         }
 
         $actual = array_keys($result);

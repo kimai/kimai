@@ -123,13 +123,13 @@ class ProjectControllerTest extends APIControllerBaseTest
     protected function assertStructure(array $result, $full = true)
     {
         $expectedKeys = [
-            'id', 'name', 'comment', 'visible', 'budget', 'order_number', 'customer'
+            'id', 'name', 'visible', 'customer', 'hourly_rate', 'fixed_rate'
         ];
 
-        if (!$full) {
-            $expectedKeys = [
-                'id', 'name', 'visible', 'customer'
-            ];
+        if ($full) {
+            $expectedKeys = array_merge(
+                $expectedKeys, ['comment', 'budget', 'order_number']
+            );
         }
 
         $actual = array_keys($result);
