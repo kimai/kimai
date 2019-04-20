@@ -77,7 +77,7 @@ class UserDateTimeFactory
 
     /**
      * @param string $format
-     * @param string $datetime
+     * @param null|string $datetime
      * @return bool|\DateTime
      */
     public function createDateTimeFromFormat(string $format, ?string $datetime = 'now')
