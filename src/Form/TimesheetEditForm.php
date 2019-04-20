@@ -127,7 +127,7 @@ class TimesheetEditForm extends AbstractType
                 function (FormEvent $event) {
                     /** @var Timesheet $data */
                     $data = $event->getData();
-                    if (null === $data->getEnd()) {
+                    if (null === $data || null === $data->getEnd()) {
                         $event->getForm()->get('duration')->setData(null);
                     }
                 }
