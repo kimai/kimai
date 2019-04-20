@@ -16,9 +16,8 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Swagger\Annotations as SWG;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class HealthcheckController extends Controller
+class HealthcheckController extends BaseApiController
 {
     /**
      * @var ViewHandlerInterface

@@ -9,4 +9,4 @@ services:
     Twig\Extensions\IntlExtension: ~
     #Twig\Extensions\TextExtension: ~
     Twig\Extensions\StringLoader:
-        class: Twig_Extension_StringLoader
+        class: Twig\Extension\StringLoaderExtension

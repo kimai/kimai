@@ -51,29 +51,26 @@
             {% set isVisible = activity.project.customer.visible %}
         {% endif %}
     {% endif %}
-    {% set label = '' %}
-    {% if not activity.project is null %}
-        {% set label = activity.project.customer.name ~ ': ' ~ activity.project.name %}
-    {% endif %}
-    {{ macro.label(activity.name, (isVisible ? 'primary' : 'default'), label) }}
+    {% set type = (isVisible ? 'primary' : 'default') %}
+    <span class="label label-{{ type }}">{{ activity.name }}</span>
 {% endmacro %}
 
 {% macro label_project(project) %}
     {% import _self as macro %}
+    {% set type = 'default' %}
     {% if project.visible and project.customer.visible %}
-        {{ macro.label(project.name, 'primary', project.customer.name) }}
-    {% else %}
-        {{ macro.label(project.name, 'default', project.customer.name) }}
+        {% set type = 'primary' %}
     {% endif %}
+    <span class="label label-{{ type }}">{{ project.name }}</span>
 {% endmacro %}
 
 {% macro label_customer(customer) %}
     {% import _self as macro %}
+    {% set type = 'default' %}
     {% if customer.visible %}
-        {{ macro.label(customer.name, 'primary') }}
-    {% else %}
-        {{ macro.label(customer.name, 'default') }}
+        {% set type = 'primary' %}
     {% endif %}
+    <span class="label label-{{ type }}">{{ customer.name }}</span>
 {% endmacro %}
 
 {% macro badge_counter(count, url) %}
@@ -86,7 +83,7 @@
 
 {% macro label(title, type, tooltip) %}
     {# success, warning, danger, primary #}
-    <span {%  if tooltip %}title="{{ tooltip }}" {% endif %}class="label label-{{ type|default('success') }}">{{ title|trans }}</span>
+    <span {%  if tooltip %}data-tooltip="{{ tooltip }}" {% endif %}class="label label-{{ type|default('success') }}">{{ title|trans }}</span>
 {% endmacro %}
 
 {% macro badge(title, color) %}

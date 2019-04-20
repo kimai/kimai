@@ -5,7 +5,7 @@
             <span class="label label-success">{{ entries|length }}</span>
         </a>
         <ul class="dropdown-menu">
-            <li class="header">{{ 'recent.activities'|transchoice(entries|length) }}</li>
+            <li class="header">{{ 'recent.activities'|trans({'%count%':(entries|length)}) }}</li>
             <li>
                 <ul class="menu">
                     {% for timesheet in entries %}
