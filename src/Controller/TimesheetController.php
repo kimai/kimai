@@ -94,12 +94,12 @@ class TimesheetController extends AbstractController
 
         // by default the current month is exported, but it can be overwritten
         if (null === $query->getBegin()) {
-            $query->setBegin(new \DateTime('first day of this month'));
+            $query->setBegin($this->dateTime->createDateTime('first day of this month'));
         }
         $query->getBegin()->setTime(0, 0, 0);
 
         if (null === $query->getEnd()) {
-            $query->setEnd(new \DateTime('last day of this month'));
+            $query->setEnd($this->dateTime->createDateTime('last day of this month'));
         }
         $query->getEnd()->setTime(23, 59, 59);
 

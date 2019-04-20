@@ -26,6 +26,7 @@ install:
   - composer install
 
 script:
+  - php -r "echo date(DATE_RFC850);"
   - vendor/bin/phpunit tests/
   - cp tests/.env.dist.sqlite .env
   - bin/console doctrine:database:create -n

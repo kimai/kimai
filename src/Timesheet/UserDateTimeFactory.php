@@ -74,4 +74,16 @@ class UserDateTimeFactory
 
         return $date;
     }
+
+    /**
+     * @param string $format
+     * @param string $datetime
+     * @return bool|\DateTime
+     */
+    public function createDateTimeFromFormat(string $format, string $datetime = 'now')
+    {
+        $date = \DateTime::createFromFormat($format, $datetime, $this->timezone);
+
+        return $date;
+    }
 }
