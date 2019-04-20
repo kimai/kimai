@@ -10,12 +10,13 @@
 namespace App\Form;
 
 use App\Entity\Customer;
+use App\Form\Type\FixedRateType;
+use App\Form\Type\HourlyRateType;
 use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -95,14 +96,10 @@ class CustomerEditForm extends AbstractType
             ->add('timezone', TimezoneType::class, [
                 'label' => 'label.timezone',
             ])
-            ->add('fixedRate', MoneyType::class, [
-                'label' => 'label.fixedRate',
-                'required' => false,
+            ->add('fixedRate', FixedRateType::class, [
                 'currency' => $customer->getCurrency() ?? false,
             ])
-            ->add('hourlyRate', MoneyType::class, [
-                'label' => 'label.hourlyRate',
-                'required' => false,
+            ->add('hourlyRate', HourlyRateType::class, [
                 'currency' => $customer->getCurrency() ?? false,
             ])
             ->add('visible', YesNoType::class, [

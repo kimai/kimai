@@ -28,6 +28,11 @@ class CustomerType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            // documentation is for NelmioApiDocBundle
+            'documentation' => [
+                'type' => 'integer',
+                'description' => 'Customer ID',
+            ],
             'label' => 'label.customer',
             'class' => Customer::class,
             'choice_label' => 'name',

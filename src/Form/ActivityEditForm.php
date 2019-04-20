@@ -11,13 +11,14 @@ namespace App\Form;
 
 use App\Entity\Activity;
 use App\Form\Type\CustomerType;
+use App\Form\Type\FixedRateType;
+use App\Form\Type\HourlyRateType;
 use App\Form\Type\ProjectType;
 use App\Form\Type\YesNoType;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -62,7 +63,6 @@ class ActivityEditForm extends AbstractType
                 'required' => false,
             ])
             ->add('customer', CustomerType::class, [
-                'label' => 'label.customer',
                 'query_builder' => function (CustomerRepository $repo) use ($customer) {
                     return $repo->builderForEntityType($customer);
                 },
@@ -72,7 +72,6 @@ class ActivityEditForm extends AbstractType
                 'project_enabled' => true,
             ])
             ->add('project', ProjectType::class, [
-                'label' => 'label.project',
                 'required' => false,
                 'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
                     return $repo->builderForEntityType($project, $customer);
@@ -98,14 +97,10 @@ class ActivityEditForm extends AbstractType
         );
 
         $builder
-            ->add('fixedRate', MoneyType::class, [
-                'label' => 'label.fixedRate',
-                'required' => false,
+            ->add('fixedRate', FixedRateType::class, [
                 'currency' => $currency,
             ])
-            ->add('hourlyRate', MoneyType::class, [
-                'label' => 'label.hourlyRate',
-                'required' => false,
+            ->add('hourlyRate', HourlyRateType::class, [
                 'currency' => $currency,
             ])
             // boolean

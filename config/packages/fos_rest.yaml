@@ -75,7 +75,7 @@ fos_rest:
 #        decoders:
 #            name:                 ~
         array_normalizer:
-            service:              null
+            service:              fos_rest.normalizer.camel_keys
             forms:                true
     format_listener:
         enabled: true

@@ -15,6 +15,8 @@ use App\Form\Type\ActivityType;
 use App\Form\Type\CustomerType;
 use App\Form\Type\DateTimePickerType;
 use App\Form\Type\DurationType;
+use App\Form\Type\FixedRateType;
+use App\Form\Type\HourlyRateType;
 use App\Form\Type\ProjectType;
 use App\Form\Type\UserType;
 use App\Form\Type\YesNoType;
@@ -23,7 +25,6 @@ use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use App\Timesheet\UserDateTimeFactory;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -161,11 +162,6 @@ class TimesheetEditForm extends AbstractType
         if ($this->customers->countCustomer(true) > 1) {
             $builder
                 ->add('customer', CustomerType::class, [
-                    // documentation is for NelmioApiDocBundle
-                    'documentation' => [
-                        'type' => 'integer',
-                        'description' => 'Customer ID',
-                    ],
                     'query_builder' => function (CustomerRepository $repo) use ($customer) {
                         return $repo->builderForEntityType($customer);
                     },
@@ -184,20 +180,12 @@ class TimesheetEditForm extends AbstractType
         }
 
         $builder
-            ->add(
-                'project',
-                ProjectType::class,
-                array_merge($projectOptions, [
-                    'placeholder' => '',
-                    'activity_enabled' => true,
-                    // documentation is for NelmioApiDocBundle
-                    'documentation' => [
-                        'type' => 'integer',
-                        'description' => 'Project ID',
-                    ],
-                    'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
-                        return $repo->builderForEntityType($project, $customer);
-                    },
+            ->add('project', ProjectType::class, array_merge($projectOptions, [
+                'placeholder' => '',
+                'activity_enabled' => true,
+                'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
+                    return $repo->builderForEntityType($project, $customer);
+                },
             ])
         );
 
@@ -223,12 +211,7 @@ class TimesheetEditForm extends AbstractType
 
         $builder
             ->add('activity', ActivityType::class, [
-                // documentation is for NelmioApiDocBundle
                 'placeholder' => '',
-                'documentation' => [
-                    'type' => 'integer',
-                    'description' => 'Activity ID',
-                ],
                 'query_builder' => function (ActivityRepository $repo) use ($activity, $project) {
                     return $repo->builderForEntityType($activity, $project);
                 },
@@ -262,20 +245,10 @@ class TimesheetEditForm extends AbstractType
 
         if ($options['include_rate']) {
             $builder
-                ->add('fixedRate', MoneyType::class, [
-                    'documentation' => [
-                        'type' => 'float'
-                    ],
-                    'label' => 'label.fixedRate',
-                    'required' => false,
+                ->add('fixedRate', FixedRateType::class, [
                     'currency' => $currency,
                 ])
-                ->add('hourlyRate', MoneyType::class, [
-                    'documentation' => [
-                        'type' => 'float'
-                    ],
-                    'label' => 'label.hourlyRate',
-                    'required' => false,
+                ->add('hourlyRate', HourlyRateType::class, [
                     'currency' => $currency,
                 ]);
         }
