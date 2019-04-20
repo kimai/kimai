@@ -51,7 +51,6 @@ class ActivityEditForm extends AbstractType
             }
 
             $id = $entry->getId();
-
         }
 
         $builder
