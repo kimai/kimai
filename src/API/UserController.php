@@ -51,7 +51,7 @@ class UserController extends BaseApiController
      *      description="Returns the collection of all registered users",
      *      @SWG\Schema(
      *          type="array",
-     *          @SWG\Items(ref="#/definitions/UserEntity")
+     *          @SWG\Items(ref="#/definitions/UserCollection")
      *      )
      * )
      *

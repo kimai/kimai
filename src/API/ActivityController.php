@@ -55,7 +55,7 @@ class ActivityController extends BaseApiController
      *      description="Returns the collection of all existing activities",
      *      @SWG\Schema(
      *          type="array",
-     *          @SWG\Items(ref="#/definitions/ActivityEntity")
+     *          @SWG\Items(ref="#/definitions/ActivityCollection")
      *      )
      * )
      * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="Project ID to filter activities. If none is provided, only global activities will be returned.")

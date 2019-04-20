@@ -55,7 +55,7 @@ class ProjectController extends BaseApiController
      *      description="Returns the collection of all existing projects",
      *      @SWG\Schema(
      *          type="array",
-     *          @SWG\Items(ref="#/definitions/ProjectEntity")
+     *          @SWG\Items(ref="#/definitions/ProjectCollection")
      *      )
      * )
      * @Rest\QueryParam(name="customer", requirements="\d+", strict=true, nullable=true, description="Customer ID to filter projects")

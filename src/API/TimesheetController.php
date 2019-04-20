@@ -72,7 +72,7 @@ class TimesheetController extends BaseApiController
      *      description="Returns the collection of all existing timesheets for the user",
      *      @SWG\Schema(
      *          type="array",
-     *          @SWG\Items(ref="#/definitions/TimesheetEntity")
+     *          @SWG\Items(ref="#/definitions/TimesheetCollection")
      *      )
      * )
      *
