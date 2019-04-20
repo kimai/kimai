@@ -147,8 +147,6 @@ class ActivityController extends BaseApiController
      *      @SWG\Schema(ref="#/definitions/ActivityEditForm")
      * )
      *
-     * @Security("is_granted('create_activity')")
-     *
      * @param Request $request
      * @return Response
      * @throws \App\Repository\RepositoryException
@@ -157,6 +155,10 @@ class ActivityController extends BaseApiController
      */
     public function postAction(Request $request)
     {
+        if (!$this->isGranted('create_activity')) {
+            throw $this->createAccessDeniedException('User cannot create activities');
+        }
+
         $activity = new Activity();
 
         $form = $this->createForm(ActivityEditForm::class, $activity, [

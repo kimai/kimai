@@ -161,7 +161,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertFalse($response->isSuccessful());
         $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $json = json_decode($response->getContent(), true);
-        $this->assertEquals('Access denied.', $json['message']);
+        $this->assertEquals('User cannot create activities', $json['message']);
     }
 
     public function testNotFound()
