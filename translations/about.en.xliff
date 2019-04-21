@@ -18,6 +18,10 @@
                 <source>tab.license</source>
                 <target>Kimai License</target>
             </trans-unit>
+            <trans-unit id="tab.thanks">
+                <source>tab.thanks</source>
+                <target>Special thanks</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
