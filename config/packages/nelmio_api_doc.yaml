@@ -24,9 +24,10 @@ nelmio_api_doc:
         info:
             title: Kimai 2 - API Docs
             description: |
-                REST API for the Kimai 2 time-tracking software. It's rather limited by now... Be aware that collections return less data than explicit entity calls.
-                If you think a field should be included in the collection or if you need further methods, let me know at GitHub!
-            version: 0.2
+                REST API for the Kimai 2 time-tracking software. It is not yet considered stable and BC breaks might happen, even though I try to avoid them as much as possible.
+                - Collections return less data than explicit entity calls
+                - DateTime formats are explained in detail at https://www.kimai.org/documentation/rest-api.html
+            version: 0.3
 #        parameters:
 #            hostname:
 #                name: hostname
