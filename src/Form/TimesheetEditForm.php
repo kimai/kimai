@@ -105,12 +105,20 @@ class TimesheetEditForm extends AbstractType
             $timezone = $begin->getTimezone()->getName();
         }
 
+        $dateTimeOptions = [
+            'model_timezone' => $timezone,
+            'view_timezone' => $timezone,
+        ];
+
+        // primarily for API usage, where we cannot use a user/locale specific format
+        if (null !== $options['date_format']) {
+            $dateTimeOptions['format'] = $options['date_format'];
+        }
+
         if (null === $end || !$this->configuration->isDurationOnly()) {
-            $builder->add('begin', DateTimePickerType::class, [
-                'label' => 'label.begin',
-                'model_timezone' => $timezone,
-                'view_timezone' => $timezone,
-            ]);
+            $builder->add('begin', DateTimePickerType::class, array_merge($dateTimeOptions, [
+                'label' => 'label.begin'
+            ]));
         }
 
         if ($this->configuration->isDurationOnly()) {
@@ -149,12 +157,10 @@ class TimesheetEditForm extends AbstractType
                 }
             );
         } else {
-            $builder->add('end', DateTimePickerType::class, [
+            $builder->add('end', DateTimePickerType::class, array_merge($dateTimeOptions, [
                 'label' => 'label.end',
-                'model_timezone' => $timezone,
-                'view_timezone' => $timezone,
                 'required' => false,
-            ]);
+            ]));
         }
 
         $projectOptions = [];
@@ -279,6 +285,7 @@ class TimesheetEditForm extends AbstractType
             'include_rate' => true,
             'docu_chapter' => 'timesheet.html',
             'method' => 'POST',
+            'date_format' => null,
         ]);
     }
 }

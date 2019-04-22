@@ -69,24 +69,25 @@ class TimesheetController extends BaseApiController
     /**
      * @SWG\Response(
      *      response=200,
-     *      description="Returns the collection of all existing timesheets for the user",
+     *      description="Returns the collection of all existing timesheets for the user. Be aware that the datetime fields are given in the users local time including the timezone offset via ISO8601.",
      *      @SWG\Schema(
      *          type="array",
      *          @SWG\Items(ref="#/definitions/TimesheetCollection")
      *      )
      * )
      *
-     * @Rest\QueryParam(name="user", requirements="\d+|all", strict=true, nullable=true, description="User ID to filter timesheets (needs permission 'view_other_timesheet', pass 'all' to fetch data for all user)")
+     * @Rest\QueryParam(name="user", requirements="\d+|all", strict=true, nullable=true, description="User ID to filter timesheets. Needs permission 'view_other_timesheet', pass 'all' to fetch data for all user (default: current user)")
      * @Rest\QueryParam(name="customer", requirements="\d+", strict=true, nullable=true, description="Customer ID to filter timesheets")
      * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="Project ID to filter timesheets")
      * @Rest\QueryParam(name="activity", requirements="\d+", strict=true, nullable=true, description="Activity ID to filter timesheets")
      * @Rest\QueryParam(name="page", requirements="\d+", strict=true, nullable=true, description="The page to display, renders a 404 if not found (default: 1)")
      * @Rest\QueryParam(name="size", requirements="\d+", strict=true, nullable=true, description="The amount of entries for each page (default: 25)")
-     * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order (allowed values: 'ASC', 'DESC')")
-     * @Rest\QueryParam(name="orderBy", requirements="id|begin|end|rate", strict=true, nullable=true, description="The field by which results will be ordered (allowed values: 'id', 'begin', 'end', 'rate')")
-     * @Rest\QueryParam(name="begin", requirements=@Constraints\DateTime, strict=true, nullable=true, description="Only records after this date will be included (format: Y-m-d H:i:s)")
-     * @Rest\QueryParam(name="end", requirements=@Constraints\DateTime, strict=true, nullable=true, description="Only records before this date will be included (format: Y-m-d H:i:s)")
-     * @Rest\QueryParam(name="exported", requirements="0|1", strict=true, nullable=true, description="Use this flag if you want to filter for export state (0=not exported, 1=exported, null=all")
+     * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: DESC)")
+     * @Rest\QueryParam(name="orderBy", requirements="id|begin|end|rate", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, begin, end, rate (default: begin)")
+     * @Rest\QueryParam(name="begin", requirements=@Constraints\DateTime, strict=true, nullable=true, description="Only records after this date will be included (format: IOS8601)")
+     * @Rest\QueryParam(name="end", requirements=@Constraints\DateTime, strict=true, nullable=true, description="Only records before this date will be included (format: IOS8601)")
+     * @Rest\QueryParam(name="exported", requirements="0|1", strict=true, nullable=true, description="Use this flag if you want to filter for export state. Allowed values: 0=not exported, 1=exported (default: all)")
+     * @Rest\QueryParam(name="active", requirements="0|1", strict=true, nullable=true, description="Filter for running/active records. Allowed values: 0=stopped, 1=active. (default: all)")
      *
      * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
      *
@@ -141,6 +142,15 @@ class TimesheetController extends BaseApiController
             $query->setEnd(new \DateTime($end));
         }
 
+        if (null !== ($active = $paramFetcher->get('active'))) {
+            $active = (int) $active;
+            if ($active === 1) {
+                $query->setState(TimesheetQuery::STATE_RUNNING);
+            } elseif ($active === 0) {
+                $query->setState(TimesheetQuery::STATE_STOPPED);
+            }
+        }
+
         if (null !== ($exported = $paramFetcher->get('exported'))) {
             $exported = (int) $exported;
             if ($exported === 1) {
@@ -163,7 +173,7 @@ class TimesheetController extends BaseApiController
     /**
      * @SWG\Response(
      *      response=200,
-     *      description="Returns one timesheet entity",
+     *      description="Returns one timesheet entity. Be aware that the datetime fields are given in the users local time including the timezone offset via ISO8601.",
      *      @SWG\Schema(ref="#/definitions/TimesheetEntity")
      * )
      *
@@ -186,7 +196,7 @@ class TimesheetController extends BaseApiController
 
     /**
      * @SWG\Post(
-     *      description="Creates a new timesheet entry and returns it afterwards",
+     *      description="Creates a new timesheet entry and returns it afterwards.",
      *      @SWG\Response(
      *          response=200,
      *          description="Returns the new created timesheet entry",
@@ -218,6 +228,7 @@ class TimesheetController extends BaseApiController
             'csrf_protection' => false,
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
+            'date_format' => self::DATE_FORMAT,
         ]);
 
         $form->submit($request->request->all());
@@ -286,6 +297,7 @@ class TimesheetController extends BaseApiController
             'csrf_protection' => false,
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
+            'date_format' => self::DATE_FORMAT,
         ]);
 
         $form->setData($timesheet);

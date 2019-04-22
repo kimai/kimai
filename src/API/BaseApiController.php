@@ -12,7 +12,9 @@ declare(strict_types=1);
 namespace App\API;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 abstract class BaseApiController extends AbstractController
 {
+    public const DATE_FORMAT = DateTimeType::HTML5_FORMAT;
 }

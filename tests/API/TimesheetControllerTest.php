@@ -265,8 +265,8 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $data = [
             'activity' => $activity->getId(),
             'project' => $project->getId(),
-            'begin' => (new \DateTime('- 8 hours'))->format('Y-m-d H:m'),
-            'end' => (new \DateTime())->format('Y-m-d H:m'),
+            'begin' => (new \DateTime('- 8 hours'))->format('Y-m-d H:m:s'),
+            'end' => (new \DateTime())->format('Y-m-d H:m:s'),
             'description' => 'foo',
             'fixedRate' => 2016,
             'hourlyRate' => 127
@@ -314,8 +314,8 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $data = [
             'activity' => 1,
             'project' => 1,
-            'begin' => (new \DateTime('- 7 hours'))->format('Y-m-d H:m'),
-            'end' => (new \DateTime())->format('Y-m-d H:m'),
+            'begin' => (new \DateTime('- 7 hours'))->format('Y-m-d\TH:m'),
+            'end' => (new \DateTime())->format('Y-m-d\TH:m'),
             'description' => 'foo',
             'exported' => true,
         ];
@@ -349,8 +349,8 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $data = [
             'activity' => 1,
             'project' => 1,
-            'begin' => (new \DateTime('- 7 hours'))->format('Y-m-d H:m'),
-            'end' => (new \DateTime())->format('Y-m-d H:m'),
+            'begin' => (new \DateTime('- 7 hours'))->format('Y-m-d\TH:m:s'),
+            'end' => (new \DateTime())->format('Y-m-d\TH:m:s'),
             'description' => 'foo',
             'exported' => true,
         ];
