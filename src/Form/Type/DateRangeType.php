@@ -10,6 +10,7 @@
 namespace App\Form\Type;
 
 use App\Form\Model\DateRange;
+use App\Timesheet\UserDateTimeFactory;
 use App\Utils\LocaleSettings;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -30,13 +31,19 @@ class DateRangeType extends AbstractType
      * @var LocaleSettings
      */
     protected $localeSettings;
+    /**
+     * @var UserDateTimeFactory
+     */
+    protected $dateFactory;
 
     /**
      * @param LocaleSettings $localeSettings
+     * @param UserDateTimeFactory $dateTime
      */
-    public function __construct(LocaleSettings $localeSettings)
+    public function __construct(LocaleSettings $localeSettings, UserDateTimeFactory $dateTime)
     {
         $this->localeSettings = $localeSettings;
+        $this->dateFactory = $dateTime;
     }
 
     /**
@@ -164,13 +171,13 @@ class DateRangeType extends AbstractType
                     throw new TransformationFailedException('Invalid date range given');
                 }
 
-                $begin = \DateTime::createFromFormat($formatDate, $values[0]);
+                $begin = \DateTime::createFromFormat($formatDate, $values[0], $this->dateFactory->getTimezone());
                 if ($begin === false) {
                     throw new TransformationFailedException('Invalid begin date given');
                 }
                 $range->setBegin($begin);
 
-                $end = \DateTime::createFromFormat($formatDate, $values[1]);
+                $end = \DateTime::createFromFormat($formatDate, $values[1], $this->dateFactory->getTimezone());
                 if ($end === false) {
                     throw new TransformationFailedException('Invalid end date given');
                 }
