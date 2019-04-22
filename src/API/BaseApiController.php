@@ -17,4 +17,5 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 abstract class BaseApiController extends AbstractController
 {
     public const DATE_FORMAT = DateTimeType::HTML5_FORMAT;
+    public const DATE_FORMAT_PHP = 'Y-m-d\TH:m:s';
 }

@@ -67,9 +67,11 @@ class TimesheetController extends BaseApiController
     }
 
     /**
+     * Returns a collection of timesheet records.
+     *
      * @SWG\Response(
      *      response=200,
-     *      description="Returns the collection of all existing timesheets for the user. Be aware that the datetime fields are given in the users local time including the timezone offset via ISO 8601, read https://www.kimai.org/documentation/rest-api.html to find out more.",
+     *      description="Returns a collection of timesheets records. Be aware that the datetime fields are given in the users local time including the timezone offset via ISO 8601, read https://www.kimai.org/documentation/rest-api.html to find out more.",
      *      @SWG\Schema(
      *          type="array",
      *          @SWG\Items(ref="#/definitions/TimesheetCollection")
@@ -84,8 +86,8 @@ class TimesheetController extends BaseApiController
      * @Rest\QueryParam(name="size", requirements="\d+", strict=true, nullable=true, description="The amount of entries for each page (default: 25)")
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: DESC)")
      * @Rest\QueryParam(name="orderBy", requirements="id|begin|end|rate", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, begin, end, rate (default: begin)")
-     * @Rest\QueryParam(name="begin", requirements=@Constraints\DateTime, strict=true, nullable=true, description="Only records after this date will be included (format: IOS8601)")
-     * @Rest\QueryParam(name="end", requirements=@Constraints\DateTime, strict=true, nullable=true, description="Only records before this date will be included (format: IOS8601)")
+     * @Rest\QueryParam(name="begin", requirements=@Constraints\DateTime, strict=true, nullable=true, description="Only records after this date will be included (format: ISO 8601)")
+     * @Rest\QueryParam(name="end", requirements=@Constraints\DateTime, strict=true, nullable=true, description="Only records before this date will be included (format: ISO 8601)")
      * @Rest\QueryParam(name="exported", requirements="0|1", strict=true, nullable=true, description="Use this flag if you want to filter for export state. Allowed values: 0=not exported, 1=exported (default: all)")
      * @Rest\QueryParam(name="active", requirements="0|1", strict=true, nullable=true, description="Filter for running/active records. Allowed values: 0=stopped, 1=active. (default: all)")
      *
@@ -171,10 +173,19 @@ class TimesheetController extends BaseApiController
     }
 
     /**
+     * Returns one timesheet record.
+     *
      * @SWG\Response(
      *      response=200,
-     *      description="Returns one timesheet entity. Be aware that the datetime fields are given in the users local time including the timezone offset via ISO 8601, read https://www.kimai.org/documentation/rest-api.html to find out more.",
+     *      description="Returns one timesheet record. Be aware that the datetime fields are given in the users local time including the timezone offset via ISO 8601, read https://www.kimai.org/documentation/rest-api.html to find out more.",
      *      @SWG\Schema(ref="#/definitions/TimesheetEntity")
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="Timesheet record ID",
+     *      required=true,
      * )
      *
      * @Security("is_granted('view_own_timesheet')")
@@ -195,8 +206,10 @@ class TimesheetController extends BaseApiController
     }
 
     /**
+     * Creates a new timesheet record.
+     *
      * @SWG\Post(
-     *      description="Creates a new timesheet entry and returns it afterwards. The datetime format for the body is shown wrong here, read https://www.kimai.org/documentation/rest-api.html to find out more.",
+     *      description="Creates a new timesheet entry and returns it afterwards. Read more about the date-time format at https://www.kimai.org/documentation/rest-api.html.",
      *      @SWG\Response(
      *          response=200,
      *          description="Returns the new created timesheet entry",
@@ -266,8 +279,10 @@ class TimesheetController extends BaseApiController
     }
 
     /**
+     * Update an existing timesheet record.
+     *
      * @SWG\Patch(
-     *      description="Update an existing timesheet entry, you can pass all or just a subset of the attributes. The datetime format for the body is shown wrong here, read https://www.kimai.org/documentation/rest-api.html to find out more.",
+     *      description="Update an existing timesheet record, you can pass all or just a subset of the attributes. Read more about the date-time format at https://www.kimai.org/documentation/rest-api.html.",
      *      @SWG\Response(
      *          response=200,
      *          description="Returns the updated timesheet entry",
@@ -280,12 +295,19 @@ class TimesheetController extends BaseApiController
      *      required=true,
      *      @SWG\Schema(ref="#/definitions/TimesheetEditForm")
      * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="Timesheet record ID",
+     *      required=true,
+     * )
      *
      * @param Request $request
-     * @param string $id
+     * @param int $id the timesheet to update
      * @return Response
      */
-    public function patchAction(Request $request, string $id)
+    public function patchAction(Request $request, int $id)
     {
         $timesheet = $this->repository->find($id);
 
