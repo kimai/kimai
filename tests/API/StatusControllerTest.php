@@ -13,10 +13,10 @@ use App\Constants;
 use App\Entity\User;
 
 /**
- * @coversDefaultClass \App\API\HealthcheckController
+ * @coversDefaultClass \App\API\StatusController
  * @group integration
  */
-class HealthcheckControllerTest extends APIControllerBaseTest
+class StatusControllerTest extends APIControllerBaseTest
 {
     public function testIsSecure()
     {
