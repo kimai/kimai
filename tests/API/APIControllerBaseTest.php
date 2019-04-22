@@ -198,6 +198,21 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
     }
 
     /**
+     * @param Client $client
+     * @param string $url
+     * @param string $message
+     */
+    protected function assertAccessForbidden(Client $client, string $url, string $message)
+    {
+        $this->request($client, $url);
+        $response = $client->getResponse();
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        $expected = ['code' => Response::HTTP_FORBIDDEN, 'message' => $message];
+        $this->assertEquals($expected, json_decode($response->getContent(), true));
+    }
+
+    /**
      * @param Response $response
      * @param string[] $failedFields
      */
