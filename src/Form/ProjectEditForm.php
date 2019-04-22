@@ -34,15 +34,19 @@ class ProjectEditForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var Project $entry */
-        $entry = $options['data'];
-
         $customer = null;
         $currency = false;
+        $id = null;
 
-        if ($entry->getId() !== null) {
-            $customer = $entry->getCustomer();
-            $currency = $customer->getCurrency();
+        if (isset($options['data'])) {
+            /** @var Project $entry */
+            $entry = $options['data'];
+            $id = $entry->getId();
+
+            if ($id !== null) {
+                $customer = $entry->getCustomer();
+                $currency = $customer->getCurrency();
+            }
         }
 
         $builder
@@ -81,7 +85,7 @@ class ProjectEditForm extends AbstractType
             ])
         ;
 
-        if ($entry->getId() === null) {
+        if (null === $id && $options['create_more']) {
             $builder->add('create_more', CheckboxType::class, [
                 'label' => 'label.create_more',
                 'required' => false,
@@ -101,6 +105,7 @@ class ProjectEditForm extends AbstractType
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'admin_project_edit',
             'currency' => Customer::DEFAULT_CURRENCY,
+            'create_more' => false,
         ]);
     }
 }

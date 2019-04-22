@@ -35,8 +35,13 @@ class CustomerEditForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var Customer $customer */
-        $customer = $options['data'];
+        $currency = false;
+
+        if (isset($options['data'])) {
+            /** @var Customer $customer */
+            $customer = $options['data'];
+            $currency = $customer->getCurrency();
+        }
 
         $builder
             ->add('name', TextType::class, [
@@ -97,10 +102,10 @@ class CustomerEditForm extends AbstractType
                 'label' => 'label.timezone',
             ])
             ->add('fixedRate', FixedRateType::class, [
-                'currency' => $customer->getCurrency() ?? false,
+                'currency' => $currency ?? false,
             ])
             ->add('hourlyRate', HourlyRateType::class, [
-                'currency' => $customer->getCurrency() ?? false,
+                'currency' => $currency ?? false,
             ])
             ->add('visible', YesNoType::class, [
                 'label' => 'label.visible',
