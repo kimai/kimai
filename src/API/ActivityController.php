@@ -53,7 +53,7 @@ class ActivityController extends BaseApiController
     }
 
     /**
-     * Returns a collection of activities.
+     * Returns a collection of activities
      *
      * @SWG\Response(
      *      response=200,
@@ -112,7 +112,7 @@ class ActivityController extends BaseApiController
     }
 
     /**
-     * Returns one activity.
+     * Returns one activity
      *
      * @SWG\Response(
      *      response=200,
@@ -123,7 +123,7 @@ class ActivityController extends BaseApiController
      *      name="id",
      *      in="path",
      *      type="integer",
-     *      description="Activity ID to update",
+     *      description="Activity ID to fetch",
      *      required=true,
      * )
      *
@@ -143,7 +143,7 @@ class ActivityController extends BaseApiController
     }
 
     /**
-     * Creates a new activity.
+     * Creates a new activity
      *
      * @SWG\Post(
      *      description="Creates a new activity and returns it afterwards",
@@ -202,7 +202,7 @@ class ActivityController extends BaseApiController
     }
 
     /**
-     * Update an existing activity.
+     * Update an existing activity
      *
      * @SWG\Patch(
      *      description="Update an existing activity, you can pass all or just a subset of all attributes",

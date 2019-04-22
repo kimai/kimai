@@ -34,7 +34,7 @@ class StatusController extends BaseApiController
     }
 
     /**
-     * A testing route for the API.
+     * A testing route for the API
      *
      * @SWG\Response(
      *     response=200,
@@ -52,7 +52,7 @@ class StatusController extends BaseApiController
     }
 
     /**
-     * Returns information about the Kimai release.
+     * Returns information about the Kimai release
      *
      * @SWG\Response(
      *     response=200,
