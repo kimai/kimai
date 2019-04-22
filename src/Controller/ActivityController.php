@@ -222,7 +222,9 @@ class ActivityController extends AbstractController
 
         return $this->createForm(ActivityEditForm::class, $activity, [
             'action' => $url,
-            'method' => 'POST'
+            'method' => 'POST',
+            'create_more' => true,
+            'customer' => true,
         ]);
     }
 }

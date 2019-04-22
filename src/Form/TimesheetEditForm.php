@@ -78,6 +78,7 @@ class TimesheetEditForm extends AbstractType
         $currency = false;
         $end = null;
         $begin = null;
+        $customerCount = $this->customers->countCustomer(true);
 
         if (isset($options['data'])) {
             /** @var Timesheet $entry */
@@ -165,7 +166,9 @@ class TimesheetEditForm extends AbstractType
 
         $projectOptions = [];
 
-        if ($this->customers->countCustomer(true) > 1) {
+        if ($customerCount < 2) {
+            $projectOptions['group_by'] = null;
+        } elseif ($options['customer']) {
             $builder
                 ->add('customer', CustomerType::class, [
                     'query_builder' => function (CustomerRepository $repo) use ($customer) {
@@ -177,8 +180,6 @@ class TimesheetEditForm extends AbstractType
                     'mapped' => false,
                     'project_enabled' => true,
                 ]);
-        } else {
-            $projectOptions['group_by'] = null;
         }
 
         if ($this->projects->countProject(true) <= 1) {
@@ -286,6 +287,7 @@ class TimesheetEditForm extends AbstractType
             'docu_chapter' => 'timesheet.html',
             'method' => 'POST',
             'date_format' => null,
+            'customer' => false,
         ]);
     }
 }

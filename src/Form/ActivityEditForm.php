@@ -67,15 +67,22 @@ class ActivityEditForm extends AbstractType
                 'label' => 'label.comment',
                 'required' => false,
             ])
-            ->add('customer', CustomerType::class, [
-                'query_builder' => function (CustomerRepository $repo) use ($customer) {
-                    return $repo->builderForEntityType($customer);
-                },
-                'data' => $customer ? $customer : null,
-                'required' => false,
-                'mapped' => false,
-                'project_enabled' => true,
-            ])
+        ;
+
+        if ($options['customer']) {
+            $builder
+                ->add('customer', CustomerType::class, [
+                    'query_builder' => function (CustomerRepository $repo) use ($customer) {
+                        return $repo->builderForEntityType($customer);
+                    },
+                    'data' => $customer ? $customer : null,
+                    'required' => false,
+                    'mapped' => false,
+                    'project_enabled' => true,
+                ]);
+        }
+
+        $builder
             ->add('project', ProjectType::class, [
                 'required' => false,
                 'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
@@ -114,7 +121,7 @@ class ActivityEditForm extends AbstractType
             ])
         ;
 
-        if (null === $id) {
+        if (null === $id && $options['create_more']) {
             $builder->add('create_more', CheckboxType::class, [
                 'label' => 'label.create_more',
                 'required' => false,
@@ -133,6 +140,8 @@ class ActivityEditForm extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'admin_activity_edit',
+            'create_more' => false,
+            'customer' => false,
         ]);
     }
 }
