@@ -15,6 +15,7 @@ use App\Entity\Project;
 use App\Entity\User;
 use App\Repository\Query\VisibilityQuery;
 use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @coversDefaultClass \App\API\ActivityController
@@ -125,9 +126,98 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertStructure($result, true);
     }
 
+    public function testPostAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'customer' => 1,
+            'project' => 1,
+            'visible' => true
+        ];
+        $this->request($client, '/api/activities', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertStructure($result);
+        $this->assertNotEmpty($result['id']);
+    }
+
+    public function testPostActionWithInvalidUser()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $data = [
+            'name' => 'foo',
+            'customer' => 1,
+            'project' => 1,
+            'visible' => true
+        ];
+        $this->request($client, '/api/activities', 'POST', [], json_encode($data));
+        $response = $client->getResponse();
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        $json = json_decode($response->getContent(), true);
+        $this->assertEquals('User cannot create activities', $json['message']);
+    }
+
     public function testNotFound()
     {
         $this->assertEntityNotFound(User::ROLE_USER, '/api/activities/2');
+    }
+
+    public function testPatchAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'comment' => '',
+            'customer' => 1,
+            'project' => 1,
+            'visible' => true
+        ];
+        $this->request($client, '/api/activities/1', 'PATCH', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertStructure($result);
+        $this->assertNotEmpty($result['id']);
+    }
+
+    public function testPatchActionWithInvalidUser()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $data = [
+            'name' => 'foo',
+            'comment' => '',
+            'customer' => 1,
+            'project' => 1,
+            'visible' => true
+        ];
+        $this->request($client, '/api/activities/15', 'PATCH', [], json_encode($data));
+        $response = $client->getResponse();
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        $json = json_decode($response->getContent(), true);
+        $this->assertEquals('User cannot update activity', $json['message']);
+    }
+
+    public function testInvalidPatchAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'customer' => 255,
+            'project' => 1,
+            'visible' => true
+        ];
+        $this->request($client, '/api/activities/1', 'PATCH', [], json_encode($data));
+
+        $response = $client->getResponse();
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['project']);
     }
 
     protected function assertStructure(array $result, $full = true)

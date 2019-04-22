@@ -126,7 +126,7 @@ trait TimesheetControllerTrait
 
         $start = $request->get('begin');
         if ($start !== null) {
-            $start = \DateTime::createFromFormat('Y-m-d', $start);
+            $start = $this->dateTime->createDateTimeFromFormat('Y-m-d', $start);
             if ($start !== false) {
                 $start->setTime(10, 0, 0); // TODO make me configurable
                 $entry->setBegin($start);
@@ -135,7 +135,7 @@ trait TimesheetControllerTrait
 
         $end = $request->get('end');
         if ($end !== null) {
-            $end = \DateTime::createFromFormat('Y-m-d', $end);
+            $end = $this->dateTime->createDateTimeFromFormat('Y-m-d', $end);
             if ($end !== false) {
                 $end->setTime(18, 0, 0); // TODO make me configurable
                 $entry->setEnd($end);
@@ -144,7 +144,7 @@ trait TimesheetControllerTrait
 
         $from = $request->get('from');
         if ($from !== null) {
-            $from = new \DateTime($from);
+            $from = $this->dateTime->createDateTime($from);
             if ($from !== false) {
                 $entry->setBegin($from);
             }
@@ -152,7 +152,7 @@ trait TimesheetControllerTrait
 
         $to = $request->get('to');
         if ($to !== null) {
-            $to = new \DateTime($to);
+            $to = $this->dateTime->createDateTime($to);
             if ($to !== false) {
                 $entry->setEnd($to);
             }

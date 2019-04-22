@@ -20,6 +20,7 @@ use App\Repository\Query\BaseQuery;
 use App\Repository\Query\InvoiceQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TimesheetRepository;
+use App\Timesheet\UserDateTimeFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -44,17 +45,17 @@ class InvoiceController extends AbstractController
      * @var TimesheetRepository
      */
     protected $timesheetRepository;
+    protected $dateTimeFactory;
 
     /**
      * @param ServiceInvoice $service
      * @param InvoiceTemplateRepository $invoice
-     * @param TimesheetRepository $timesheet
      */
-    public function __construct(ServiceInvoice $service, InvoiceTemplateRepository $invoice, TimesheetRepository $timesheet)
+    public function __construct(ServiceInvoice $service, InvoiceTemplateRepository $invoice, UserDateTimeFactory $dateTimeFactory)
     {
         $this->service = $service;
         $this->invoiceRepository = $invoice;
-        $this->timesheetRepository = $timesheet;
+        $this->dateTimeFactory = $dateTimeFactory;
     }
 
     /**
@@ -63,8 +64,8 @@ class InvoiceController extends AbstractController
      */
     protected function getDefaultQuery()
     {
-        $begin = new \DateTime('first day of this month');
-        $end = new \DateTime('last day of this month');
+        $begin = $this->dateTimeFactory->createDateTime('first day of this month');
+        $end = $this->dateTimeFactory->createDateTime('last day of this month');
 
         $query = new InvoiceQuery();
         $query->setOrder(InvoiceQuery::ORDER_ASC);
@@ -83,7 +84,7 @@ class InvoiceController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, TimesheetRepository $repository)
     {
         if (!$this->invoiceRepository->hasTemplate()) {
             return $this->redirectToRoute('admin_invoice_template_create');
@@ -98,7 +99,7 @@ class InvoiceController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var InvoiceQuery $query */
             $query = $form->getData();
-            $entries = $this->getEntries($query);
+            $entries = $this->getEntries($query, $repository);
         }
 
         $model = $this->prepareModel($query, $entries);
@@ -117,7 +118,7 @@ class InvoiceController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function printAction(Request $request)
+    public function printAction(Request $request, TimesheetRepository $repository)
     {
         if (!$this->invoiceRepository->hasTemplate()) {
             return $this->redirectToRoute('admin_invoice_template_create');
@@ -133,7 +134,7 @@ class InvoiceController extends AbstractController
 
         /** @var InvoiceQuery $query */
         $query = $form->getData();
-        $entries = $this->getEntries($query);
+        $entries = $this->getEntries($query, $repository);
         $model = $this->prepareModel($query, $entries);
 
         $document = $this->service->getDocumentByName($model->getTemplate()->getRenderer());
@@ -159,7 +160,7 @@ class InvoiceController extends AbstractController
      * @param InvoiceQuery $query
      * @return Timesheet[]
      */
-    protected function getEntries(InvoiceQuery $query)
+    protected function getEntries(InvoiceQuery $query, TimesheetRepository $repository)
     {
         // customer needs to be defined, as we need the currency for the invoice
         if (null === $query->getCustomer()) {
@@ -169,15 +170,15 @@ class InvoiceController extends AbstractController
         $query->setResultType(TimesheetQuery::RESULT_TYPE_QUERYBUILDER);
 
         if (null === $query->getBegin()) {
-            $query->setBegin(new \DateTime('first day of this month'));
+            $query->setBegin($this->dateTimeFactory->createDateTime('first day of this month'));
         }
         if (null === $query->getEnd()) {
-            $query->setEnd(new \DateTime('last day of this month'));
+            $query->setEnd($this->dateTimeFactory->createDateTime('last day of this month'));
         }
         $query->getBegin()->setTime(0, 0, 0);
         $query->getEnd()->setTime(23, 59, 59);
 
-        $queryBuilder = $this->timesheetRepository->findByQuery($query);
+        $queryBuilder = $repository->findByQuery($query);
 
         return $queryBuilder->getQuery()->getResult();
     }
