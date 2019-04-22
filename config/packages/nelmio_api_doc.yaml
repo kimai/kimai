@@ -5,6 +5,7 @@ nelmio_api_doc:
             - { alias: CustomerEntity,          type: App\Entity\Customer,                      groups: [Default, Entity, Customer] }
             - { alias: ProjectEntity,           type: App\Entity\Project,                       groups: [Default, Entity, Project] }
             - { alias: ActivityEntity,          type: App\Entity\Activity,                      groups: [Default, Entity, Activity] }
+            - { alias: ActivityEditForm,        type: App\Form\ActivityEditForm,                groups: [Default, Entity, Activity] }
             - { alias: TimesheetEditForm,       type: App\Form\TimesheetEditForm,               groups: [Default, Entity, Timesheet] }
             - { alias: TimesheetEntity,         type: App\Entity\Timesheet,                     groups: [Default, Entity, Timesheet] }
             - { alias: UserEntity,              type: App\Entity\User,                          groups: [Default, Entity, User] }

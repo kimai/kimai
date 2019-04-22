@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace App\API;
 
+use App\Entity\Activity;
+use App\Form\ActivityEditForm;
 use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityQuery;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -20,6 +22,7 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -123,6 +126,115 @@ class ActivityController extends BaseApiController
             throw new NotFoundException();
         }
         $view = new View($data, 200);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Activity']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * @SWG\Post(
+     *      description="Creates a new activity entry and returns it afterwards",
+     *      @SWG\Response(
+     *          response=200,
+     *          description="Returns the new created activity entry",
+     *          @SWG\Schema(ref="#/definitions/ActivityEntity"),
+     *      )
+     * )
+     * @SWG\Parameter(
+     *      name="body",
+     *      in="body",
+     *      required=true,
+     *      @SWG\Schema(ref="#/definitions/ActivityEditForm")
+     * )
+     *
+     * @param Request $request
+     * @return Response
+     * @throws \App\Repository\RepositoryException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function postAction(Request $request)
+    {
+        if (!$this->isGranted('create_activity')) {
+            throw $this->createAccessDeniedException('User cannot create activities');
+        }
+
+        $activity = new Activity();
+
+        $form = $this->createForm(ActivityEditForm::class, $activity, [
+            'csrf_protection' => false,
+        ]);
+
+        $form->submit($request->request->all());
+
+        if ($form->isValid()) {
+            if (null !== $activity->getId()) {
+                return new Response('This method does not support updates', Response::HTTP_BAD_REQUEST);
+            }
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($activity);
+            $entityManager->flush();
+
+            $view = new View($activity, 200);
+            $view->getContext()->setGroups(['Default', 'Entity', 'Activity']);
+
+            return $this->viewHandler->handle($view);
+        }
+
+        $view = new View($form);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Activity']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * @SWG\Patch(
+     *      description="Update an existing activity entry, you can pass all or just a subset of all attributes",
+     *      @SWG\Response(
+     *          response=200,
+     *          description="Returns the updated activity entry",
+     *          @SWG\Schema(ref="#/definitions/ActivityEntity")
+     *      )
+     * )
+     * @SWG\Parameter(
+     *      name="body",
+     *      in="body",
+     *      required=true,
+     *      @SWG\Schema(ref="#/definitions/ActivityEditForm")
+     * )
+     *
+     * @param Request $request
+     * @param string $id
+     * @return Response
+     */
+    public function patchAction(Request $request, string $id)
+    {
+        $activity = $this->repository->find($id);
+
+        if (!$this->isGranted('edit', $activity)) {
+            throw $this->createAccessDeniedException('User cannot update activity');
+        }
+
+        $form = $this->createForm(ActivityEditForm::class, $activity, [
+            'csrf_protection' => false,
+        ]);
+
+        $form->setData($activity);
+        $form->submit($request->request->all(), false);
+
+        if (false === $form->isValid()) {
+            $view = new View($form, Response::HTTP_OK);
+            $view->getContext()->setGroups(['Default', 'Entity', 'Activity']);
+
+            return $this->viewHandler->handle($view);
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($activity);
+        $entityManager->flush();
+
+        $view = new View($activity, Response::HTTP_OK);
         $view->getContext()->setGroups(['Default', 'Entity', 'Activity']);
 
         return $this->viewHandler->handle($view);

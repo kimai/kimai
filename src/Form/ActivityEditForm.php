@@ -35,17 +35,22 @@ class ActivityEditForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var Activity $entry */
-        $entry = $options['data'];
-
         $project = null;
         $customer = null;
         $currency = false;
+        $id = null;
 
-        if (null !== $entry->getProject()) {
-            $project = $entry->getProject();
-            $customer = $project->getCustomer();
-            $currency = $customer->getCurrency();
+        if (isset($options['data'])) {
+            /** @var Activity $entry */
+            $entry = $options['data'];
+
+            if (null !== $entry->getProject()) {
+                $project = $entry->getProject();
+                $customer = $project->getCustomer();
+                $currency = $customer->getCurrency();
+            }
+
+            $id = $entry->getId();
         }
 
         $builder
@@ -114,7 +119,7 @@ class ActivityEditForm extends AbstractType
             ])
         ;
 
-        if (null === $entry->getId()) {
+        if (null === $id) {
             $builder->add('create_more', CheckboxType::class, [
                 'label' => 'label.create_more',
                 'required' => false,
