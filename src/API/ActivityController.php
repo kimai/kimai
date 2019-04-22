@@ -53,20 +53,22 @@ class ActivityController extends BaseApiController
     }
 
     /**
+     * Returns a collection of activities.
+     *
      * @SWG\Response(
      *      response=200,
-     *      description="Returns the collection of all existing activities",
+     *      description="Returns a collection of activities",
      *      @SWG\Schema(
      *          type="array",
      *          @SWG\Items(ref="#/definitions/ActivityCollection")
      *      )
      * )
-     * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="Project ID to filter activities. If none is provided, only global activities will be returned.")
-     * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter activities (1=visible, 2=hidden, 3=both)")
-     * @Rest\QueryParam(name="globals", requirements="true", strict=true, nullable=true, description="Pass 'true' as string to fetch only global activities")
-     * @Rest\QueryParam(name="globalsFirst", requirements="false", strict=true, nullable=true, description="Pass 'false' as string if you don't want the global activities to be listed first")
-     * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order (allowed values: 'ASC', 'DESC')")
-     * @Rest\QueryParam(name="orderBy", requirements="id|name|project", strict=true, nullable=true, description="The field by which results will be ordered (allowed values: 'id', 'name', 'project')")
+     * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="Project ID to filter activities. If none is provided, all activities will be returned.")
+     * @Rest\QueryParam(name="visible", requirements="1|2|3", strict=true, nullable=true, description="Visibility status to filter activities. Allowed values: 1=visible, 2=hidden, 3=all (default: 1)")
+     * @Rest\QueryParam(name="globals", requirements="true", strict=true, nullable=true, description="Use if you want to fetch only global activities. Allowed values: true (default: false)")
+     * @Rest\QueryParam(name="globalsFirst", requirements="false", strict=true, nullable=true, description="Use if you don't want global activities to be listed first. Allowed values: false (default: true)")
+     * @Rest\QueryParam(name="orderBy", requirements="id|name|project", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, name, project (default: id)")
+     * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: ASC)")
      *
      * @return Response
      */
@@ -110,10 +112,19 @@ class ActivityController extends BaseApiController
     }
 
     /**
+     * Returns one activity.
+     *
      * @SWG\Response(
      *      response=200,
      *      description="Returns one activity entity",
      *      @SWG\Schema(ref="#/definitions/ActivityEntity"),
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="Activity ID to update",
+     *      required=true,
      * )
      *
      * @param int $id
@@ -132,8 +143,10 @@ class ActivityController extends BaseApiController
     }
 
     /**
+     * Creates a new activity.
+     *
      * @SWG\Post(
-     *      description="Creates a new activity entry and returns it afterwards",
+     *      description="Creates a new activity and returns it afterwards",
      *      @SWG\Response(
      *          response=200,
      *          description="Returns the new created activity entry",
@@ -189,8 +202,10 @@ class ActivityController extends BaseApiController
     }
 
     /**
+     * Update an existing activity.
+     *
      * @SWG\Patch(
-     *      description="Update an existing activity entry, you can pass all or just a subset of all attributes",
+     *      description="Update an existing activity, you can pass all or just a subset of all attributes",
      *      @SWG\Response(
      *          response=200,
      *          description="Returns the updated activity entry",
@@ -203,6 +218,13 @@ class ActivityController extends BaseApiController
      *      required=true,
      *      @SWG\Schema(ref="#/definitions/ActivityEditForm")
      * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="Activity ID to update",
+     *      required=true,
+     * )
      *
      * @param Request $request
      * @param string $id
@@ -211,6 +233,10 @@ class ActivityController extends BaseApiController
     public function patchAction(Request $request, string $id)
     {
         $activity = $this->repository->find($id);
+
+        if (null === $activity) {
+            throw new NotFoundException();
+        }
 
         if (!$this->isGranted('edit', $activity)) {
             throw $this->createAccessDeniedException('User cannot update activity');

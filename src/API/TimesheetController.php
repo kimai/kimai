@@ -84,8 +84,8 @@ class TimesheetController extends BaseApiController
      * @Rest\QueryParam(name="activity", requirements="\d+", strict=true, nullable=true, description="Activity ID to filter timesheets")
      * @Rest\QueryParam(name="page", requirements="\d+", strict=true, nullable=true, description="The page to display, renders a 404 if not found (default: 1)")
      * @Rest\QueryParam(name="size", requirements="\d+", strict=true, nullable=true, description="The amount of entries for each page (default: 25)")
-     * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: DESC)")
      * @Rest\QueryParam(name="orderBy", requirements="id|begin|end|rate", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, begin, end, rate (default: begin)")
+     * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: DESC)")
      * @Rest\QueryParam(name="begin", requirements=@Constraints\DateTime, strict=true, nullable=true, description="Only records after this date will be included (format: ISO 8601)")
      * @Rest\QueryParam(name="end", requirements=@Constraints\DateTime, strict=true, nullable=true, description="Only records before this date will be included (format: ISO 8601)")
      * @Rest\QueryParam(name="exported", requirements="0|1", strict=true, nullable=true, description="Use this flag if you want to filter for export state. Allowed values: 0=not exported, 1=exported (default: all)")
@@ -209,7 +209,7 @@ class TimesheetController extends BaseApiController
      * Creates a new timesheet record.
      *
      * @SWG\Post(
-     *      description="Creates a new timesheet entry and returns it afterwards. Read more about the date-time format at https://www.kimai.org/documentation/rest-api.html.",
+     *      description="Creates a new timesheet entry for the current user and returns it afterwards. Read more about the date-time format at https://www.kimai.org/documentation/rest-api.html.",
      *      @SWG\Response(
      *          response=200,
      *          description="Returns the new created timesheet entry",
@@ -251,11 +251,10 @@ class TimesheetController extends BaseApiController
                 return new Response('This method does not support updates', Response::HTTP_BAD_REQUEST);
             }
 
-            if (!$this->isGranted('start', $timesheet)) {
-                return new Response('You are not allowed to start this timesheet record', Response::HTTP_BAD_REQUEST);
-            }
-
             if (null === $timesheet->getEnd()) {
+                if (!$this->isGranted('start', $timesheet)) {
+                    return new Response('You are not allowed to start this timesheet record', Response::HTTP_BAD_REQUEST);
+                }
                 $this->repository->stopActiveEntries(
                     $timesheet->getUser(),
                     $this->configuration->getActiveEntriesHardLimit()
@@ -299,7 +298,7 @@ class TimesheetController extends BaseApiController
      *      name="id",
      *      in="path",
      *      type="integer",
-     *      description="Timesheet record ID",
+     *      description="Timesheet record ID to update",
      *      required=true,
      * )
      *
@@ -310,6 +309,10 @@ class TimesheetController extends BaseApiController
     public function patchAction(Request $request, int $id)
     {
         $timesheet = $this->repository->find($id);
+
+        if (null === $timesheet) {
+            throw new NotFoundException();
+        }
 
         if (!$this->isGranted('edit', $timesheet)) {
             throw $this->createAccessDeniedException('User cannot update timesheet');

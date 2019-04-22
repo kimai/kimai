@@ -33,7 +33,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setHourlyRate(true)
             ->setAmount(10)
             ->setUser($this->getUserByRole($em, User::ROLE_USER))
-            ->setStartDate(new \DateTime('-10 days'))
+            ->setStartDate((new \DateTime('-10 days'))->setTime(0, 0, 1))
             ->setAllowEmptyDescriptions(false)
         ;
         $this->importFixture($em, $fixture);
@@ -132,6 +132,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'size' => 5,
             'order' => 'DESC',
             'orderBy' => 'rate',
+            'active' => 0,
             'begin' => $begin->format('Y-m-d H:i:s'),
             'end' => $end->format('Y-m-d H:i:s'),
             'exported' => 0,
@@ -224,6 +225,11 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertDefaultStructure($result);
     }
 
+    public function testGetEntityNotFound()
+    {
+        $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/20');
+    }
+
     public function testPostAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
@@ -303,11 +309,6 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertApiCallValidationError($client->getResponse(), ['activity']);
     }
 
-    public function testNotFound()
-    {
-        $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/20');
-    }
-
     public function testPatchAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
@@ -360,6 +361,11 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $json = json_decode($response->getContent(), true);
         $this->assertEquals('User cannot update timesheet', $json['message']);
+    }
+
+    public function testPatchActionWithUnknownTimesheet()
+    {
+        $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/timesheets/255', []);
     }
 
     public function testInvalidPatchAction()
