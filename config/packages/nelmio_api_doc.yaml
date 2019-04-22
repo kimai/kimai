@@ -2,8 +2,10 @@ nelmio_api_doc:
     models:
         use_jms: true
         names:
+            - { alias: CustomerEditForm,        type: App\Form\CustomerEditForm,                groups: [Default, Entity, Customer] }
             - { alias: CustomerEntity,          type: App\Entity\Customer,                      groups: [Default, Entity, Customer] }
             - { alias: CustomerCollection,      type: App\Entity\Customer,                      groups: [Default, Collection, Customer] }
+            - { alias: ProjectEditForm,         type: App\Form\ProjectEditForm,                 groups: [Default, Entity, Project] }
             - { alias: ProjectEntity,           type: App\Entity\Project,                       groups: [Default, Entity, Project] }
             - { alias: ProjectCollection,       type: App\Entity\Project,                       groups: [Default, Collection, Project] }
             - { alias: ActivityEditForm,        type: App\Form\ActivityEditForm,                groups: [Default, Entity, Activity] }
