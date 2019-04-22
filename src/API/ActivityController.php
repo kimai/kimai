@@ -24,6 +24,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * @RouteResource("Activity")
@@ -57,7 +58,7 @@ class ActivityController extends BaseApiController
      *
      * @SWG\Response(
      *      response=200,
-     *      description="Returns a collection of activities",
+     *      description="Returns a collection of activity entities",
      *      @SWG\Schema(
      *          type="array",
      *          @SWG\Items(ref="#/definitions/ActivityCollection")
@@ -133,9 +134,11 @@ class ActivityController extends BaseApiController
     public function getAction($id)
     {
         $data = $this->repository->find($id);
+
         if (null === $data) {
             throw new NotFoundException();
         }
+
         $view = new View($data, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Activity']);
 
@@ -169,7 +172,7 @@ class ActivityController extends BaseApiController
     public function postAction(Request $request)
     {
         if (!$this->isGranted('create_activity')) {
-            throw $this->createAccessDeniedException('User cannot create activities');
+            throw new AccessDeniedHttpException('User cannot create activities');
         }
 
         $activity = new Activity();
@@ -181,10 +184,6 @@ class ActivityController extends BaseApiController
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
-            if (null !== $activity->getId()) {
-                return new Response('This method does not support updates', Response::HTTP_BAD_REQUEST);
-            }
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($activity);
             $entityManager->flush();
@@ -239,7 +238,7 @@ class ActivityController extends BaseApiController
         }
 
         if (!$this->isGranted('edit', $activity)) {
-            throw $this->createAccessDeniedException('User cannot update activity');
+            throw new AccessDeniedHttpException('User cannot update activity');
         }
 
         $form = $this->createForm(ActivityEditForm::class, $activity, [

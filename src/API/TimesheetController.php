@@ -257,10 +257,6 @@ class TimesheetController extends BaseApiController
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
-            if (null !== $timesheet->getId()) {
-                throw new BadRequestHttpException('This method does not support updates');
-            }
-
             if (null === $timesheet->getEnd()) {
                 if (!$this->isGranted('start', $timesheet)) {
                     throw new AccessDeniedHttpException('You are not allowed to start this timesheet record');
