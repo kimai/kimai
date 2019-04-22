@@ -202,7 +202,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
      * @param string $url
      * @param string $message
      */
-    protected function assertAccessForbidden(Client $client, string $url, string $message)
+    protected function assertApiAccessDenied(Client $client, string $url, string $message)
     {
         $this->request($client, $url);
         $response = $client->getResponse();
