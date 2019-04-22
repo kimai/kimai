@@ -222,7 +222,7 @@ class TimesheetController extends BaseApiController
      *      description="Creates a new timesheet record for the current user and returns it afterwards.",
      *      @SWG\Response(
      *          response=200,
-     *          description="Returns the new created timesheet entry",
+     *          description="Returns the new created timesheet",
      *          @SWG\Schema(ref="#/definitions/TimesheetEntity"),
      *      )
      * )
@@ -290,7 +290,7 @@ class TimesheetController extends BaseApiController
      *      description="Update an existing timesheet record, you can pass all or just a subset of the attributes.",
      *      @SWG\Response(
      *          response=200,
-     *          description="Returns the updated timesheet entry",
+     *          description="Returns the updated timesheet",
      *          @SWG\Schema(ref="#/definitions/TimesheetEntity")
      *      )
      * )

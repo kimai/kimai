@@ -68,7 +68,7 @@ class ActivityController extends BaseApiController
      * @Rest\QueryParam(name="visible", requirements="1|2|3", strict=true, nullable=true, description="Visibility status to filter activities. Allowed values: 1=visible, 2=hidden, 3=all (default: 1)")
      * @Rest\QueryParam(name="globals", requirements="true", strict=true, nullable=true, description="Use if you want to fetch only global activities. Allowed values: true (default: false)")
      * @Rest\QueryParam(name="globalsFirst", requirements="false", strict=true, nullable=true, description="Use if you don't want global activities to be listed first. Allowed values: false (default: true)")
-     * @Rest\QueryParam(name="orderBy", requirements="id|name|project", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, name, project (default: id)")
+     * @Rest\QueryParam(name="orderBy", requirements="id|name|project", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, name, project (default: name)")
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: ASC)")
      *
      * @return Response
@@ -152,7 +152,7 @@ class ActivityController extends BaseApiController
      *      description="Creates a new activity and returns it afterwards",
      *      @SWG\Response(
      *          response=200,
-     *          description="Returns the new created activity entry",
+     *          description="Returns the new created activity",
      *          @SWG\Schema(ref="#/definitions/ActivityEntity"),
      *      )
      * )
@@ -207,7 +207,7 @@ class ActivityController extends BaseApiController
      *      description="Update an existing activity, you can pass all or just a subset of all attributes",
      *      @SWG\Response(
      *          response=200,
-     *          description="Returns the updated activity entry",
+     *          description="Returns the updated activity",
      *          @SWG\Schema(ref="#/definitions/ActivityEntity")
      *      )
      * )
