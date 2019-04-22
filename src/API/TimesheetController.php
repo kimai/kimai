@@ -27,10 +27,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\Constraints;
 
 /**
  * @RouteResource("Timesheet")
+ *
+ * @Security("is_granted('ROLE_USER')")
  */
 class TimesheetController extends BaseApiController
 {
@@ -67,11 +71,11 @@ class TimesheetController extends BaseApiController
     }
 
     /**
-     * Returns a collection of timesheet records.
+     * Returns a collection of timesheet records
      *
      * @SWG\Response(
      *      response=200,
-     *      description="Returns a collection of timesheets records. Be aware that the datetime fields are given in the users local time including the timezone offset via ISO 8601, read https://www.kimai.org/documentation/rest-api.html to find out more.",
+     *      description="Returns a collection of timesheets records. Be aware that the datetime fields are given in the users local time including the timezone offset via ISO 8601.",
      *      @SWG\Schema(
      *          type="array",
      *          @SWG\Items(ref="#/definitions/TimesheetCollection")
@@ -173,43 +177,49 @@ class TimesheetController extends BaseApiController
     }
 
     /**
-     * Returns one timesheet record.
+     * Returns one timesheet record
      *
      * @SWG\Response(
      *      response=200,
-     *      description="Returns one timesheet record. Be aware that the datetime fields are given in the users local time including the timezone offset via ISO 8601, read https://www.kimai.org/documentation/rest-api.html to find out more.",
+     *      description="Returns one timesheet record. Be aware that the datetime fields are given in the users local time including the timezone offset via ISO 8601.",
      *      @SWG\Schema(ref="#/definitions/TimesheetEntity")
      * )
      * @SWG\Parameter(
      *      name="id",
      *      in="path",
      *      type="integer",
-     *      description="Timesheet record ID",
+     *      description="Timesheet record ID to fetch",
      *      required=true,
      * )
      *
-     * @Security("is_granted('view_own_timesheet')")
+     * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
      *
      * @param int $id
      * @return Response
      */
     public function getAction($id)
     {
-        $data = $this->repository->find($id);
-        if (null === $data) {
+        $timesheet = $this->repository->find($id);
+
+        if (null === $timesheet) {
             throw new NotFoundException();
         }
-        $view = new View($data, 200);
+
+        if (!$this->isGranted('view', $timesheet)) {
+            throw new AccessDeniedHttpException('You are not allowed to view this timesheet');
+        }
+
+        $view = new View($timesheet, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
 
         return $this->viewHandler->handle($view);
     }
 
     /**
-     * Creates a new timesheet record.
+     * Creates a new timesheet record
      *
      * @SWG\Post(
-     *      description="Creates a new timesheet entry for the current user and returns it afterwards. Read more about the date-time format at https://www.kimai.org/documentation/rest-api.html.",
+     *      description="Creates a new timesheet record for the current user and returns it afterwards.",
      *      @SWG\Response(
      *          response=200,
      *          description="Returns the new created timesheet entry",
@@ -248,12 +258,12 @@ class TimesheetController extends BaseApiController
 
         if ($form->isValid()) {
             if (null !== $timesheet->getId()) {
-                return new Response('This method does not support updates', Response::HTTP_BAD_REQUEST);
+                throw new BadRequestHttpException('This method does not support updates');
             }
 
             if (null === $timesheet->getEnd()) {
                 if (!$this->isGranted('start', $timesheet)) {
-                    return new Response('You are not allowed to start this timesheet record', Response::HTTP_BAD_REQUEST);
+                    throw new AccessDeniedHttpException('You are not allowed to start this timesheet record');
                 }
                 $this->repository->stopActiveEntries(
                     $timesheet->getUser(),
@@ -278,10 +288,10 @@ class TimesheetController extends BaseApiController
     }
 
     /**
-     * Update an existing timesheet record.
+     * Update an existing timesheet record
      *
      * @SWG\Patch(
-     *      description="Update an existing timesheet record, you can pass all or just a subset of the attributes. Read more about the date-time format at https://www.kimai.org/documentation/rest-api.html.",
+     *      description="Update an existing timesheet record, you can pass all or just a subset of the attributes.",
      *      @SWG\Response(
      *          response=200,
      *          description="Returns the updated timesheet entry",
@@ -315,7 +325,7 @@ class TimesheetController extends BaseApiController
         }
 
         if (!$this->isGranted('edit', $timesheet)) {
-            throw $this->createAccessDeniedException('User cannot update timesheet');
+            throw new AccessDeniedHttpException('You are not allowed to update this timesheet');
         }
 
         $form = $this->createForm(TimesheetEditForm::class, $timesheet, [

@@ -24,7 +24,12 @@ class TimesheetControllerTest extends APIControllerBaseTest
 {
     public function setUp()
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->importFixtureForUser(User::ROLE_USER);
+    }
+
+    protected function importFixtureForUser(string $role)
+    {
+        $client = $this->getClientForAuthenticatedUser($role);
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
 
         $fixture = new TimesheetFixtures();
@@ -32,7 +37,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setFixedRate(true)
             ->setHourlyRate(true)
             ->setAmount(10)
-            ->setUser($this->getUserByRole($em, User::ROLE_USER))
+            ->setUser($this->getUserByRole($em, $role))
             ->setStartDate((new \DateTime('-10 days'))->setTime(0, 0, 1))
             ->setAllowEmptyDescriptions(false)
         ;
@@ -225,6 +230,24 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertDefaultStructure($result);
     }
 
+    public function testGetEntityAccessDenied()
+    {
+        $this->importFixtureForUser(User::ROLE_ADMIN);
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertApiAccessDenied($client, '/api/timesheets/15', 'You are not allowed to view this timesheet');
+    }
+
+    public function testGetEntityAccessAllowedForAdmin()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/api/timesheets/1');
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertDefaultStructure($result);
+    }
+
     public function testGetEntityNotFound()
     {
         $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/20');
@@ -360,7 +383,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertFalse($response->isSuccessful());
         $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $json = json_decode($response->getContent(), true);
-        $this->assertEquals('User cannot update timesheet', $json['message']);
+        $this->assertEquals('You are not allowed to update this timesheet', $json['message']);
     }
 
     public function testPatchActionWithUnknownTimesheet()
