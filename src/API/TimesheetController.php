@@ -69,7 +69,7 @@ class TimesheetController extends BaseApiController
     /**
      * @SWG\Response(
      *      response=200,
-     *      description="Returns the collection of all existing timesheets for the user. Be aware that the datetime fields are given in the users local time including the timezone offset via ISO8601.",
+     *      description="Returns the collection of all existing timesheets for the user. Be aware that the datetime fields are given in the users local time including the timezone offset via ISO 8601, read https://www.kimai.org/documentation/rest-api.html to find out more.",
      *      @SWG\Schema(
      *          type="array",
      *          @SWG\Items(ref="#/definitions/TimesheetCollection")
@@ -173,7 +173,7 @@ class TimesheetController extends BaseApiController
     /**
      * @SWG\Response(
      *      response=200,
-     *      description="Returns one timesheet entity. Be aware that the datetime fields are given in the users local time including the timezone offset via ISO8601.",
+     *      description="Returns one timesheet entity. Be aware that the datetime fields are given in the users local time including the timezone offset via ISO 8601, read https://www.kimai.org/documentation/rest-api.html to find out more.",
      *      @SWG\Schema(ref="#/definitions/TimesheetEntity")
      * )
      *
@@ -196,7 +196,7 @@ class TimesheetController extends BaseApiController
 
     /**
      * @SWG\Post(
-     *      description="Creates a new timesheet entry and returns it afterwards.",
+     *      description="Creates a new timesheet entry and returns it afterwards. The datetime format for the body is shown wrong here, read https://www.kimai.org/documentation/rest-api.html to find out more.",
      *      @SWG\Response(
      *          response=200,
      *          description="Returns the new created timesheet entry",
@@ -267,7 +267,7 @@ class TimesheetController extends BaseApiController
 
     /**
      * @SWG\Patch(
-     *      description="Update an existing timesheet entry, you can pass all or just a subset of all attributes",
+     *      description="Update an existing timesheet entry, you can pass all or just a subset of the attributes. The datetime format for the body is shown wrong here, read https://www.kimai.org/documentation/rest-api.html to find out more.",
      *      @SWG\Response(
      *          response=200,
      *          description="Returns the updated timesheet entry",
