@@ -75,7 +75,7 @@ class Extensions extends AbstractExtension
         'duration' => 'far fa-hourglass',
         'edit' => 'far fa-edit',
         'filter' => 'fas fa-filter',
-        'help' => 'fas fa-question',
+        'help' => 'far fa-question-circle',
         'invoice' => 'fas fa-file-invoice',
         'list' => 'fas fa-list',
         'logout' => 'fas fa-sign-out-alt',
