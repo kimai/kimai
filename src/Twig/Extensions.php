@@ -75,7 +75,7 @@ class Extensions extends AbstractExtension
         'duration' => 'far fa-hourglass',
         'edit' => 'far fa-edit',
         'filter' => 'fas fa-filter',
-        'help' => 'far fa-question-circle',
+        'help' => 'fas fa-question',
         'invoice' => 'fas fa-file-invoice',
         'list' => 'fas fa-list',
         'logout' => 'fas fa-sign-out-alt',
@@ -103,6 +103,9 @@ class Extensions extends AbstractExtension
         'audit' => 'fas fa-history',
         'home' => 'fas fa-home',
         'shop' => 'fas fa-shopping-cart',
+        'about' => 'fas fa-info-circle',
+        'debug' => 'far fa-file-alt',
+        'profile-stats' => 'far fa-chart-bar',
     ];
 
     /**
