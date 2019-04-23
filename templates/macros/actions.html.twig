@@ -244,3 +244,15 @@
         {{ widgets.page_actions(event.payload.actions) }}
     {% endif %}
 {% endmacro %}
+
+{% macro about(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {'about': {'url': path('about')}} %}
+    {% if is_granted('system_information') %}
+        {% set actions = actions|merge({'debug': path('about_debug')}) %}
+    {% endif %}
+
+    {% set event = trigger('actions.about', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}

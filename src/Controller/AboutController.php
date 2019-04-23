@@ -18,10 +18,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Controller used for executing system relevant tasks.
- *
- * @Route(path="/admin/about")
- * @Security("is_granted('system_information')")
+ * @Route(path="/about")
  */
 class AboutController extends AbstractController
 {
@@ -39,7 +36,9 @@ class AboutController extends AbstractController
     }
 
     /**
-     * @Route(path="", name="about", methods={"GET"})
+     * @Route(path="/debug", name="about_debug", methods={"GET"})
+     *
+     * @Security("is_granted('system_information')")
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -90,16 +89,17 @@ class AboutController extends AbstractController
             ],
             'info' => $phpInfo,
             'settings' => $settings,
-            'license' => $this->getLicense(),
             ],
             $additional
         ));
     }
 
     /**
-     * @return string
+     * @Route(path="", name="about", methods={"GET"})
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function getLicense()
+    public function license()
     {
         $filename = $this->projectDirectory . '/LICENSE';
 
@@ -114,7 +114,31 @@ class AboutController extends AbstractController
                 'Check this instead: ' . Constants::GITHUB . 'blob/master/LICENSE';
         }
 
-        return $license;
+        return $this->render('about/license.html.twig', [
+            'license' => $license
+        ]);
+    }
+
+    /**
+     * @Route(path="/flush-cache", name="system_flush_cache", methods={"GET"})
+     *
+     * @Security("is_granted('system_actions')")
+     */
+    public function rebuildContainer(KernelInterface $kernel)
+    {
+        $application = new Application($kernel);
+        $application->setAutoExit(false);
+
+        $input = new ArrayInput([
+            'command' => 'cache:clear',
+            '--env' => $kernel->getEnvironment(),
+            '-n',
+        ]);
+
+        $output = new BufferedOutput();
+        $application->run($input, $output);
+
+        return $this->getAboutView(['content_action' => $output->fetch()]);
     }
 
     /**
@@ -152,27 +176,5 @@ class AboutController extends AbstractController
         }
 
         return $phpinfo['phpinfo'];
-    }
-
-    /**
-     * @Route(path="/flush-cache", name="system_flush_cache", methods={"GET"})
-     *
-     * @Security("is_granted('system_actions')")
-     */
-    public function rebuildContainer(KernelInterface $kernel)
-    {
-        $application = new Application($kernel);
-        $application->setAutoExit(false);
-
-        $input = new ArrayInput([
-            'command' => 'cache:clear',
-            '--env' => $kernel->getEnvironment(),
-            '-n',
-        ]);
-
-        $output = new BufferedOutput();
-        $application->run($input, $output);
-
-        return $this->getAboutView(['content_action' => $output->fetch()]);
     }
 }

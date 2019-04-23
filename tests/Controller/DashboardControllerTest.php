@@ -37,4 +37,26 @@ class DashboardControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertMainContentClass($client, 'dashboard');
     }
+
+    /**
+     * This is not a test for the dashbaord, but for the general layout
+     */
+    public function testUserMenuIsAvailable()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $this->getUserByRole($em, User::ROLE_USER);
+
+        $this->request($client, '/dashboard/');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+
+        $this->assertContains('<li class="dropdown user-menu">', $content);
+        $this->assertContains('<a href="/en/profile/' . $user->getUsername() . '">', $content);
+        $this->assertContains('<a href="/en/profile/' . $user->getUsername() . '/prefs">', $content);
+        $this->assertContains('<a href="/en/logout">', $content);
+    }
+
 }

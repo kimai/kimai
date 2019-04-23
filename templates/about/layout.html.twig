@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+{% import "macros/actions.html.twig" as actions %}
+
+{% block page_title %}{{ 'about.title'|trans({}, 'about') }}{% endblock %}
+{% block page_actions %}{{ actions.about('index') }}{% endblock %}
+
+{% block main %}
+
+    {#
+        FIXME: REMOVE TRANSLATIONS
+
+        <li role="presentation"class ="active"><a href="#systeminfo" aria-controls="systeminfo" role="tab" data-toggle="tab">{{ 'tab.system'|trans({}, 'about') }}</a></li>
+        <li role="presentation"><a href="#license" aria-controls="license" role="tab" data-toggle="tab">{{ 'tab.license'|trans({}, 'about') }}</a></li>
+        {{ 'home.github'|trans({}, 'sidebar')|raw }}
+
+    #}
+    <div class="row">
+        <div class="col-md-2">
+
+            <div class="box">
+                <div class="box-body">
+                    <img src="{{ asset('apple-touch-icon.png') }}" class="profile-user-img img-responsive img-circle" alt="Kimai logo" style="border: 0;">
+                    <h3 class="profile-username text-center">{{ constant('App\\Constants::SOFTWARE') }}</h3>
+
+                    <p class="text-muted text-center">
+                        {{ constant('App\\Constants::VERSION') }}
+                        {{ constant('App\\Constants::STATUS') }}
+                        ({{ constant('App\\Constants::NAME') }})
+                    </p>
+
+                    <hr>
+
+                    <ul class="nav nav-stacked">
+                        <li>
+                            <a href="{{ ''|docu_link }}" target="_blank">
+                                <i class="menu-icon {{ 'help'|icon }} bg-navy"></i>
+                                {{ 'home.help'|trans({}, 'about') }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ constant('App\\Constants::HOMEPAGE') }}" target="_blank">
+                                <i class="menu-icon fa fa-home bg-green"></i>
+                                {{ 'home.website'|trans({}, 'about') }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ constant('App\\Constants::GITHUB') }}" target="_blank">
+                                <i class="menu-icon fab fa-github bg-gray"></i>
+                                {{ 'home.github'|trans({}, 'about') }}
+                            </a>
+                        </li>
+                    </ul>
+
+                    <hr>
+
+                    <p class="text-center">
+                        Made with ♥ by <a href="https://www.kevinpapst.de/">Kevin Papst</a> and <a href="{{ constant('App\\Constants::GITHUB') }}graphs/contributors" target="_blank">great contributors</a>.
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-10">
+
+            {% block about %}{% endblock %}
+
+        </div>
+    </div>
+{% endblock %}
