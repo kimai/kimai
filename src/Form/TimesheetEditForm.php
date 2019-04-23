@@ -187,7 +187,10 @@ class TimesheetEditForm extends AbstractType
         }
 
         $builder
-            ->add('project', ProjectType::class, array_merge($projectOptions, [
+            ->add(
+                'project',
+                ProjectType::class,
+                array_merge($projectOptions, [
                 'placeholder' => '',
                 'activity_enabled' => true,
                 'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {

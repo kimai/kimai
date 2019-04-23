@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace App\API;
 
+use App\Entity\Project;
+use App\Form\ProjectEditForm;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -20,7 +22,9 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * @RouteResource("Project")
@@ -50,9 +54,11 @@ class ProjectController extends BaseApiController
     }
 
     /**
+     * Returns a collection of projects
+     *
      * @SWG\Response(
      *      response=200,
-     *      description="Returns the collection of all existing projects",
+     *      description="Returns a collection of project entities",
      *      @SWG\Schema(
      *          type="array",
      *          @SWG\Items(ref="#/definitions/ProjectCollection")
@@ -60,8 +66,8 @@ class ProjectController extends BaseApiController
      * )
      * @Rest\QueryParam(name="customer", requirements="\d+", strict=true, nullable=true, description="Customer ID to filter projects")
      * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter projects (1=visible, 2=hidden, 3=both)")
-     * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order (allowed values: 'ASC', 'DESC')")
-     * @Rest\QueryParam(name="orderBy", requirements="id|name", strict=true, nullable=true, description="The field by which results will be ordered (allowed values: 'id', 'name')")
+     * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: ASC)")
+     * @Rest\QueryParam(name="orderBy", requirements="id|name|customer", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, name, customer (default: name)")
      *
      * @param ParamFetcherInterface $paramFetcher
      * @return Response
@@ -98,6 +104,8 @@ class ProjectController extends BaseApiController
     }
 
     /**
+     * Returns one project
+     *
      * @SWG\Response(
      *      response=200,
      *      description="Returns one project entity",
@@ -114,6 +122,126 @@ class ProjectController extends BaseApiController
             throw new NotFoundException();
         }
         $view = new View($data, 200);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Creates a new project
+     *
+     * @SWG\Post(
+     *      description="Creates a new project and returns it afterwards",
+     *      @SWG\Response(
+     *          response=200,
+     *          description="Returns the new created project",
+     *          @SWG\Schema(ref="#/definitions/ProjectEntity"),
+     *      )
+     * )
+     * @SWG\Parameter(
+     *      name="body",
+     *      in="body",
+     *      required=true,
+     *      @SWG\Schema(ref="#/definitions/ProjectEditForm")
+     * )
+     *
+     * @param Request $request
+     * @return Response
+     * @throws \App\Repository\RepositoryException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function postAction(Request $request)
+    {
+        if (!$this->isGranted('create_project')) {
+            throw new AccessDeniedHttpException('User cannot create projects');
+        }
+
+        $project = new Project();
+
+        $form = $this->createForm(ProjectEditForm::class, $project, [
+            'csrf_protection' => false,
+        ]);
+
+        $form->submit($request->request->all());
+
+        if ($form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($project);
+            $entityManager->flush();
+
+            $view = new View($project, 200);
+            $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
+
+            return $this->viewHandler->handle($view);
+        }
+
+        $view = new View($form);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Update an existing project
+     *
+     * @SWG\Patch(
+     *      description="Update an existing project, you can pass all or just a subset of all attributes",
+     *      @SWG\Response(
+     *          response=200,
+     *          description="Returns the updated project",
+     *          @SWG\Schema(ref="#/definitions/ProjectEntity")
+     *      )
+     * )
+     * @SWG\Parameter(
+     *      name="body",
+     *      in="body",
+     *      required=true,
+     *      @SWG\Schema(ref="#/definitions/ProjectEditForm")
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="Project ID to update",
+     *      required=true,
+     * )
+     *
+     * @param Request $request
+     * @param string $id
+     * @return Response
+     */
+    public function patchAction(Request $request, string $id)
+    {
+        $project = $this->repository->find($id);
+
+        if (null === $project) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('edit', $project)) {
+            throw new AccessDeniedHttpException('User cannot update project');
+        }
+
+        $form = $this->createForm(ProjectEditForm::class, $project, [
+            'csrf_protection' => false,
+        ]);
+
+        $form->setData($project);
+        $form->submit($request->request->all(), false);
+
+        if (false === $form->isValid()) {
+            $view = new View($form, Response::HTTP_OK);
+            $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
+
+            return $this->viewHandler->handle($view);
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($project);
+        $entityManager->flush();
+
+        $view = new View($project, Response::HTTP_OK);
         $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
 
         return $this->viewHandler->handle($view);
