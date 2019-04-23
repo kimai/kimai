@@ -24,17 +24,18 @@ Follow the normal update and database migration process (see above).
 
 Remember to execute the necessary timezone conversion script, if you haven't updated to 0.8 before (see below)!
 
-**BC BREAKS**
+### BC BREAKS
 
 This release contains some BC breaks, which were necessary before 1.0 will be released: "now or never" ;-) sorry for the troubles! 
 
+- **Kimai requires PHP 7.2 now => [PHP 7.1 expired 4 month ago](https://www.php.net/supported-versions.php)**
 - The `.env` variable `DATABASE_PREFIX` was removed and the table prefix is now hardcoded to `kimai2_`. If you used another prefix, 
 you have to rename your tables manually before starting the update process. You can delete the row `DATABASE_PREFIX` from your `.env` file.
 - API: Format for DateTime objects changed, now including timezone identifier (previously 2019-03-02 14:23 - now 2019-03-02T14:23:00+00:00), see [#718](https://github.com/kevinpapst/kimai2/pull/718)
 - API: changed from snake_case to camelCase (hourlyRate vs hourly_rate / fixedRate vs fixed_rate / orderNumber vs order_number / i18n config)
 - Plugin mechanism changed: existing Plugins have to be deleted or updated
 
-**Apply necessary changes to your `local.yaml`:** 
+### Apply necessary changes to your `local.yaml`: 
 
 New permissions are available: 
 - `system_configuration` - for accessing the new system configuration screen
@@ -52,7 +53,7 @@ After you followed the normal update and database migration process (see above),
 - Read this [pull request](https://github.com/kevinpapst/kimai2/pull/372) BEFORE you follow the instructions to convert the 
 timezones in your existing time records with `bin/console kimai:convert-timezone`. Without that, you will end up with wrong times in your database.
 
-**Apply necessary changes to your `local.yaml`:** 
+### Apply necessary changes to your `local.yaml`: 
 
 - A new boolean setting `kimai.timesheet.rules.allow_future_times` was introduced
 - New permissions are available: 
