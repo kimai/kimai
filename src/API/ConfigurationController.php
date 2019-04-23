@@ -47,7 +47,7 @@ class ConfigurationController extends BaseApiController
     /**
      * Returns the user specific locale configuration
      *
-     *  @SWG\Response(
+     * @SWG\Response(
      *      response=200,
      *      description="Returns the locale specific configurations for this user",
      *      @SWG\Schema(ref="#/definitions/I18nConfig")
