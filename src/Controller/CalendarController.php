@@ -30,7 +30,6 @@ class CalendarController extends AbstractController
 {
     /**
      * @Route(path="/", name="calendar", methods={"GET"})
-     * @Cache(smaxage="10")
      */
     public function userCalendar(Service $calendar, UserDateTimeFactory $dateTime)
     {
@@ -43,7 +42,6 @@ class CalendarController extends AbstractController
 
     /**
      * @Route(path="/user", name="calendar_entries", methods={"GET"})
-     * @Cache(smaxage="10")
      */
     public function calendarEntries(Request $request, UserDateTimeFactory $dateTime, TimesheetRepository $repository)
     {

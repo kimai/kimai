@@ -41,7 +41,6 @@ class ActivityController extends AbstractController
     /**
      * @Route(path="/", defaults={"page": 1}, name="admin_activity", methods={"GET"})
      * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_activity_paginated", methods={"GET"})
-     * @Cache(smaxage="10")
      * @Security("is_granted('view_activity')")
      *
      * @param int $page

@@ -42,7 +42,6 @@ class ProjectController extends AbstractController
     /**
      * @Route(path="/", defaults={"page": 1}, name="admin_project", methods={"GET"})
      * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_project_paginated", methods={"GET"})
-     * @Cache(smaxage="10")
      * @Security("is_granted('view_project')")
      *
      * @param int $page
