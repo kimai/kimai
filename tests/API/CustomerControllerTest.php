@@ -63,7 +63,6 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertEntityNotFound(User::ROLE_USER, '/api/customers/2');
     }
 
-    // ===================================================================
     public function testPostAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
@@ -163,11 +162,9 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertApiCallValidationError($response, ['currency']);
     }
 
-    // ===================================================================
-
     protected function assertStructure(array $result, $full = true)
     {
-        $expectedKeys = ['id', 'name', 'visible', 'hourly_rate', 'fixed_rate'];
+        $expectedKeys = ['id', 'name', 'visible', 'hourlyRate', 'fixedRate'];
 
         if ($full) {
             $expectedKeys = array_merge($expectedKeys, [

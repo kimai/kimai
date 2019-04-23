@@ -221,7 +221,7 @@ class ActivityControllerTest extends APIControllerBaseTest
 
     protected function assertStructure(array $result, $full = true)
     {
-        $expectedKeys = ['id', 'name', 'visible', 'project', 'hourly_rate', 'fixed_rate'];
+        $expectedKeys = ['id', 'name', 'visible', 'project', 'hourlyRate', 'fixedRate'];
 
         if ($full) {
             $expectedKeys = array_merge($expectedKeys, ['comment']);
