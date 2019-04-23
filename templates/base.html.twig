@@ -35,6 +35,8 @@
     {{ 'browser.title'|trans }}
 {% endblock %}
 
+{% block page_subtitle %}{% endblock %}
+
 {% block logo_mini %}
     <b>K</b>TT
 {% endblock %}
@@ -83,14 +85,67 @@
 
 {# deactivated blocks #}
 {% block navbar_tasks %}{% endblock %}
-{% block navbar_user %}{% endblock %}
 {% block sidebar_user %}{% endblock %}
 {% block sidebar_search %}{% endblock %}
+
+{% block navbar_user %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    <li class="dropdown user-menu">
+        <a href="#" class="dropdown-toggle ddt-large" data-toggle="dropdown">
+            <i class="{{ 'user'|icon }} fa-2x"></i>
+        </a>
+        <ul class="dropdown-menu">
+            {% if app.user is not null %}
+                {% set linkUserProfile = path('user_profile', {'username' : app.user.username}) %}
+                {% if not is_granted('view_own_profile') %}
+                    {% set linkUserProfile = '#' %}
+                {% endif %}
+                <li>
+                    <a href="{{ linkUserProfile }}">
+                        <h4 class="control-sidebar-subheading">
+                            <i class="{{ 'user'|icon }}"></i>
+                            {{ widgets.username(app.user) }}
+                        </h4>
+                    </a>
+                </li>
+                <li class="divider"></li>
+                {% if is_granted('preferences_own_profile') %}
+                    <li>
+                        <a href="{{ path('user_profile_preferences', {'username' : app.user.username})  }}">
+                            <h4 class="control-sidebar-subheading">
+                                <i class="{{ 'settings'|icon }}"></i>
+                                {{ 'profile.preferences'|trans }}
+                            </h4>
+                        </a>
+                    </li>
+                {% endif %}
+                <li>
+                    <a href="{{ path('fos_user_security_logout') }}">
+                        <h4 class="control-sidebar-subheading">
+                            <i class="{{ 'logout'|icon }}"></i>
+                            {{ 'menu.logout'|trans }}
+                        </h4>
+                    </a>
+                </li>
+            {% endif %}
+            {% if kimai_context.show_about %}
+            <li class="divider"></li>
+            <li>
+                <a href="{{ path('about') }}">
+                    <h4 class="control-sidebar-subheading">
+                        <i class="{{ 'about'|icon }}"></i>
+                        {{ 'about.title'|trans({}, 'about') }}
+                    </h4>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </li>
+{% endblock %}
 
 {% block breadcrumb %}
     {% block page_actions %}{% endblock %}
 {% endblock %}
-
 
 {% block stylesheets %}
     {# we do not call parent() as we use a custom built for the frontend assets and don't want the default <stylesheet> #}

@@ -93,6 +93,7 @@ class AppExtension extends Extension
     {
         $container->setParameter('kimai.theme', $config);
         $container->setParameter('kimai.theme.select_type', $config['select_type']);
+        $container->setParameter('kimai.theme.show_about', $config['show_about']);
     }
 
     /**

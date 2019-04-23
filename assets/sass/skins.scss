@@ -1,0 +1,26 @@
+
+$skins: blue, blue, black, green, purple, red, yellow;
+
+@each $skinColor in $skins {
+    @media (max-width: $screen-sm-min) {
+        .skin-#{$skinColor} .main-header .navbar .dropdown-menu li.divider {
+            background-color: #ccc;
+        }
+        .skin-#{$skinColor} .main-header .navbar .dropdown-menu li a {
+            color: #444;
+        }
+        .skin-#{$skinColor} .main-header .navbar .dropdown-menu li a:hover {
+            background: #fff;
+        }
+
+        .skin-#{$skinColor}-light .main-header .navbar .dropdown-menu li.divider {
+            background-color: #ccc;
+        }
+        .skin-#{$skinColor}-light .main-header .navbar .dropdown-menu li a {
+            color: #444;
+        }
+        .skin-#{$skinColor}-light .main-header .navbar .dropdown-menu li a:hover {
+            background: #fff;
+        }
+    }
+}
