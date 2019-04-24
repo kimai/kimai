@@ -31,8 +31,38 @@ class UserControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
+        $this->assertEquals(5, count($result));
+        foreach ($result as $user) {
+            $this->assertStructure($user, false);
+        }
+    }
+
+    public function testGetCollectionWithQuery()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/api/users', 'GET', ['visible' => 2, 'orderBy' => 'email', 'order' => 'DESC']);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(1, count($result));
+        foreach ($result as $user) {
+            $this->assertStructure($user, false);
+        }
+    }
+
+    public function testGetCollectionWithQuery2()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/api/users', 'GET', ['visible' => 3, 'orderBy' => 'email', 'order' => 'DESC']);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
         $this->assertEquals(6, count($result));
-        $this->assertStructure($result[0], false);
+        foreach ($result as $user) {
+            $this->assertStructure($user, false);
+        }
     }
 
     public function testGetEntity()
@@ -50,12 +80,31 @@ class UserControllerTest extends APIControllerBaseTest
         $this->assertEntityNotFound(User::ROLE_SUPER_ADMIN, '/api/users/99');
     }
 
+    public function testGetEntityAccessDenied()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertApiAccessDenied($client, '/api/users/4', 'You are not allowed to view this profile');
+    }
+
+    public function testGetEntityAccessAllowedForOwnProfile()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertAccessIsGranted($client, '/api/users/2');
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertStructure($result);
+    }
+
     protected function assertStructure(array $result, $full = true)
     {
         $expectedKeys = ['id', 'username', 'enabled', 'alias'];
 
         if ($full) {
-            $expectedKeys = ['id', 'username', 'enabled', 'roles', 'alias', 'title', 'avatar'];
+            $expectedKeys = array_merge(
+                $expectedKeys,
+                ['title', 'avatar', 'roles', 'language', 'timezone']
+            );
         }
 
         $actual = array_keys($result);

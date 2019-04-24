@@ -36,7 +36,7 @@ class ConfigurationControllerTest extends APIControllerBaseTest
 
     protected function assertStructure(array $result)
     {
-        $expectedKeys = ['date', 'date_time', 'duration', 'form_date', 'form_date_time', 'is24hours', 'time'];
+        $expectedKeys = ['date', 'dateTime', 'duration', 'formDate', 'formDateTime', 'is24hours', 'time'];
         $actual = array_keys($result);
         sort($actual);
         sort($expectedKeys);

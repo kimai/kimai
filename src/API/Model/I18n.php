@@ -14,13 +14,13 @@ namespace App\API\Model;
 class I18n
 {
     /**
-     * Format used for 'begin' and 'end' in TimesheetEditForm: POST, PATCH
+     * Format used for 'begin' and 'end'
      *
      * @var string
      */
     protected $formDateTime = '';
     /**
-     * Format used for Timesheet queries in: GET
+     * Format used for toolbar queries
      *
      * @var string
      */

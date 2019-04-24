@@ -29,10 +29,10 @@ fos_rest:
 #        view_handler:         fos_rest.view_handler.default
 #        inflector:            fos_rest.inflector.doctrine
 #        validator:            validator
-#    serializer:
+    serializer:
 #        version:              null
 #        groups:               []
-#        serialize_null:       false
+        serialize_null:       true
     view:
         default_engine:       twig
 #        force_redirects:
@@ -75,7 +75,7 @@ fos_rest:
 #        decoders:
 #            name:                 ~
         array_normalizer:
-            service:              null
+            service:              fos_rest.normalizer.camel_keys
             forms:                true
     format_listener:
         enabled: true

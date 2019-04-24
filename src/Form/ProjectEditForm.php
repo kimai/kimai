@@ -12,6 +12,8 @@ namespace App\Form;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Form\Type\CustomerType;
+use App\Form\Type\FixedRateType;
+use App\Form\Type\HourlyRateType;
 use App\Form\Type\YesNoType;
 use App\Repository\CustomerRepository;
 use Symfony\Component\Form\AbstractType;
@@ -32,15 +34,19 @@ class ProjectEditForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var Project $entry */
-        $entry = $options['data'];
-
         $customer = null;
         $currency = false;
+        $id = null;
 
-        if ($entry->getId() !== null) {
-            $customer = $entry->getCustomer();
-            $currency = $customer->getCurrency();
+        if (isset($options['data'])) {
+            /** @var Project $entry */
+            $entry = $options['data'];
+            $id = $entry->getId();
+
+            if ($id !== null) {
+                $customer = $entry->getCustomer();
+                $currency = $customer->getCurrency();
+            }
         }
 
         $builder
@@ -59,19 +65,14 @@ class ProjectEditForm extends AbstractType
                 'required' => false,
             ])
             ->add('customer', CustomerType::class, [
-                'label' => 'label.customer',
                 'query_builder' => function (CustomerRepository $repo) use ($customer) {
                     return $repo->builderForEntityType($customer);
                 },
             ])
-            ->add('fixedRate', MoneyType::class, [
-                'label' => 'label.fixedRate',
-                'required' => false,
+            ->add('fixedRate', FixedRateType::class, [
                 'currency' => $currency,
             ])
-            ->add('hourlyRate', MoneyType::class, [
-                'label' => 'label.hourlyRate',
-                'required' => false,
+            ->add('hourlyRate', HourlyRateType::class, [
                 'currency' => $currency,
             ])
             ->add('budget', MoneyType::class, [
@@ -84,7 +85,7 @@ class ProjectEditForm extends AbstractType
             ])
         ;
 
-        if ($entry->getId() === null) {
+        if (null === $id && $options['create_more']) {
             $builder->add('create_more', CheckboxType::class, [
                 'label' => 'label.create_more',
                 'required' => false,
@@ -104,6 +105,7 @@ class ProjectEditForm extends AbstractType
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'admin_project_edit',
             'currency' => Customer::DEFAULT_CURRENCY,
+            'create_more' => false,
         ]);
     }
 }

@@ -189,6 +189,7 @@ class TimesheetTeamController extends AbstractController
             'action' => $this->generateUrl('admin_timesheet_create'),
             'include_rate' => $this->isGranted('edit_rate', $entry),
             'include_user' => true,
+            'customer' => true,
         ]);
     }
 
@@ -208,6 +209,7 @@ class TimesheetTeamController extends AbstractController
             'include_rate' => $this->isGranted('edit_rate', $entry),
             'include_exported' => $this->isGranted('edit_export', $entry),
             'include_user' => true,
+            'customer' => true,
         ]);
     }
 

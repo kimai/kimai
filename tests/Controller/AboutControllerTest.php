@@ -50,4 +50,5 @@ class AboutControllerTest extends ControllerBaseTest
         $this->assertContains('', $content);
         $this->assertContains('PHP', $content);
         $this->assertContains('<a href="/en/about/flush-cache"', $content);
-    }}
+    }
+}

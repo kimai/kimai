@@ -284,7 +284,7 @@ class TimesheetFixtures extends Fixture
     private function createTimesheetEntry(User $user, Activity $activity, Project $project, $description, \DateTime $start, $setEndDate = true)
     {
         $end = clone $start;
-        $end = $end->modify('+ ' . (rand(1, 172800)) . ' seconds');
+        $end = $end->modify('+ ' . (rand(1, 86400)) . ' seconds');
 
         $duration = $end->getTimestamp() - $start->getTimestamp();
         $hourlyRate = (float) $user->getPreferenceValue(UserPreference::HOURLY_RATE);
