@@ -1,0 +1,16 @@
+{% extends 'user/layout.html.twig' %}
+{% import "macros/actions.html.twig" as actions %}
+
+{% block main %}
+
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% block box_title %}{{ ('profile.' ~ tab)|trans }}{% endblock %}
+        {% block box_body %}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
+            {{ form_end(form) }}
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}

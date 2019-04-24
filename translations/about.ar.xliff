@@ -2,8 +2,8 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" target-language="ar" datatype="plaintext" original="about.en.xliff">
         <body>
-            <trans-unit id="home.help">
-                <source>home.help</source>
+            <trans-unit id="help">
+                <source>help</source>
                 <target>مساعدة</target>
             </trans-unit>
         </body>

@@ -256,3 +256,19 @@
     {% set event = trigger('actions.about', {'actions': actions, 'view': view}) %}
     {{ widgets.page_actions(event.payload.actions) }}
 {% endmacro %}
+
+{% macro profile(view, user) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {'profile-stats': {'url': path('user_profile', {'username' : user.username})}} %}
+
+    {% if is_granted('edit', user) %}
+        {% set actions = actions|merge({'profile': {'url': path('user_profile_edit', {'username' : user.username})}}) %}
+    {% endif %}
+    {% if is_granted('preferences', user) %}
+        {% set actions = actions|merge({'settings': {'url': path('user_profile_preferences', {'username' : user.username})}}) %}
+    {% endif %}
+
+    {% set event = trigger('actions.profile', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}

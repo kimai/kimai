@@ -236,7 +236,7 @@ class TimesheetFixtures extends Fixture
     {
         $start = \DateTime::createFromFormat('Y-m-d', $this->startDate);
         $start->modify("+ $i days");
-        $start->modify('+ ' . rand(1, 172.800) . ' seconds'); // up to 2 days
+        $start->modify('+ ' . rand(1, 172800) . ' seconds'); // up to 2 days
         return $start;
     }
 

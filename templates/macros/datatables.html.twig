@@ -21,8 +21,9 @@
                 <p>{{ 'modal.columns.description'|trans }}</p>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-primary pull-left" onclick="$.datatable.saveVisibility('#modal_{{ name }}')">{{ 'action.save'|trans }}</button>
+                <button type="button" class="btn btn-warning pull-left" onclick="$.datatable.resetVisibility('#modal_{{ name }}')">{{ 'action.delete'|trans }}</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'action.close'|trans }}</button>
-                <button type="button" class="btn btn-primary" onclick="$.datatable.saveVisibility('#modal_{{ name }}')">{{ 'action.save'|trans }}</button>
             </div>
         </div>
     </div>

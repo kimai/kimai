@@ -96,29 +96,30 @@
         </a>
         <ul class="dropdown-menu">
             {% if app.user is not null %}
-                {% set linkUserProfile = path('user_profile', {'username' : app.user.username}) %}
-                {% if not is_granted('view_own_profile') %}
-                    {% set linkUserProfile = '#' %}
-                {% endif %}
                 <li>
-                    <a href="{{ linkUserProfile }}">
+                    <a href="{{ path('user_profile', {'username' : app.user.username}) }}">
                         <h4 class="control-sidebar-subheading">
-                            <i class="{{ 'user'|icon }}"></i>
+                            <i class="{{ 'profile-stats'|icon }}"></i>
                             {{ widgets.username(app.user) }}
                         </h4>
                     </a>
                 </li>
-                <li class="divider"></li>
-                {% if is_granted('preferences_own_profile') %}
-                    <li>
-                        <a href="{{ path('user_profile_preferences', {'username' : app.user.username})  }}">
-                            <h4 class="control-sidebar-subheading">
-                                <i class="{{ 'settings'|icon }}"></i>
-                                {{ 'profile.preferences'|trans }}
-                            </h4>
-                        </a>
-                    </li>
-                {% endif %}
+                <li>
+                    <a href="{{ path('user_profile_edit', {'username' : app.user.username}) }}">
+                        <h4 class="control-sidebar-subheading">
+                            <i class="{{ 'profile'|icon }}"></i>
+                            {{ 'profile.title'|trans }}
+                        </h4>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('user_profile_preferences', {'username' : app.user.username})  }}">
+                        <h4 class="control-sidebar-subheading">
+                            <i class="{{ 'settings'|icon }}"></i>
+                            {{ 'profile.preferences'|trans }}
+                        </h4>
+                    </a>
+                </li>
                 <li>
                     <a href="{{ path('fos_user_security_logout') }}">
                         <h4 class="control-sidebar-subheading">

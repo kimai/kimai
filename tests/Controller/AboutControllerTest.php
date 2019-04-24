@@ -41,13 +41,13 @@ class AboutControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/about/debug');
 
-        $result = $client->getCrawler()->filter('div.box-body.about_debug');
-        $this->assertEquals(1, count($result));
-
-        $content = $result->text();
+        $content = $client->getResponse()->getContent();
+        $this->assertContains('<h3 class="box-title">Environment</h3>', $content);
+        $this->assertContains('<h3 class="box-title">PHP</h3>', $content);
+        $this->assertContains('<h3 class="box-title">Server</h3>', $content);
 
         $this->assertContains('Actions', $content);
-        $this->assertContains('Environment', $content);
+        $this->assertContains('', $content);
         $this->assertContains('PHP', $content);
-        $this->assertContains('Server', $content);
+        $this->assertContains('<a href="/en/about/flush-cache"', $content);
     }}

@@ -18,7 +18,6 @@ use App\Form\UserPasswordType;
 use App\Form\UserPreferencesForm;
 use App\Form\UserRolesType;
 use App\Repository\TimesheetRepository;
-use App\Timesheet\UserDateTimeFactory;
 use App\Voter\UserVoter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -46,20 +45,13 @@ class ProfileController extends AbstractController
     protected $encoder;
 
     /**
-     * @var UserDateTimeFactory
-     */
-    protected $dateTime;
-
-    /**
      * @param UserPasswordEncoderInterface $encoder
      * @param EventDispatcherInterface $dispatcher
-     * @param UserDateTimeFactory $dateTime
      */
-    public function __construct(UserPasswordEncoderInterface $encoder, EventDispatcherInterface $dispatcher, UserDateTimeFactory $dateTime)
+    public function __construct(UserPasswordEncoderInterface $encoder, EventDispatcherInterface $dispatcher)
     {
         $this->encoder = $encoder;
         $this->dispatcher = $dispatcher;
-        $this->dateTime = $dateTime;
     }
 
     /**
@@ -77,7 +69,7 @@ class ProfileController extends AbstractController
      */
     public function indexAction(User $profile)
     {
-        return $this->getProfileView($profile, 'charts');
+        return $this->renderProfileView($profile, 'charts', 'user/stats.html.twig', []);
     }
 
     /**
@@ -149,7 +141,7 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('user_profile_api_token', ['username' => $profile->getUsername()]);
         }
 
-        return $this->getProfileView($profile, 'api-token', null, null, null, null, $form);
+        return $this->getProfileView($profile, 'api-token', null, null, null, $form);
     }
 
     /**
@@ -178,7 +170,7 @@ class ProfileController extends AbstractController
      * @Route(path="/{username}/prefs", name="user_profile_preferences", methods={"GET", "POST"})
      * @Security("is_granted('preferences', profile)")
      */
-    public function savePreferencesAction(User $profile, Request $request)
+    public function preferencesAction(User $profile, Request $request)
     {
         // we need to prepare the user preferences, which is done via an EventSubscriber
         $event = new PrepareUserEvent($profile);
@@ -228,7 +220,11 @@ class ProfileController extends AbstractController
             ]);
         }
 
-        return $this->getProfileView($profile, 'preferences', null, null, null, $form);
+        return $this->render('user/form.html.twig', [
+            'tab' => 'preferences',
+            'user' => $profile,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
@@ -237,7 +233,6 @@ class ProfileController extends AbstractController
      * @param Form|null $editForm
      * @param Form|null $pwdForm
      * @param Form|null $rolesForm
-     * @param Form|null $prefsForm
      * @param Form|null $apiTokenForm
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -248,9 +243,35 @@ class ProfileController extends AbstractController
         Form $editForm = null,
         Form $pwdForm = null,
         Form $rolesForm = null,
-        Form $prefsForm = null,
         Form $apiTokenForm = null
     ) {
+        $forms = [];
+
+        if ($this->isGranted(UserVoter::EDIT, $user)) {
+            $editForm = $editForm ?: $this->createEditForm($user);
+            $forms['settings'] = $editForm->createView();
+        }
+        if ($this->isGranted(UserVoter::PASSWORD, $user)) {
+            $pwdForm = $pwdForm ?: $this->createPasswordForm($user);
+            $forms['password'] = $pwdForm->createView();
+        }
+        if ($this->isGranted(UserVoter::API_TOKEN, $user)) {
+            $apiTokenForm = $apiTokenForm ?: $this->createApiTokenForm($user);
+            $forms['api-token'] = $apiTokenForm->createView();
+        }
+        if ($this->isGranted(UserVoter::ROLES, $user)) {
+            $rolesForm = $rolesForm ?: $this->createRolesForm($user);
+            $forms['roles'] = $rolesForm->createView();
+        }
+
+        return $this->render('user/profile.html.twig', [
+            'tab' => $tab,
+            'user' => $user,
+            'forms' => $forms
+        ]);
+    }
+
+    protected function renderProfileView(User $user, string $tab, string $template, array $vars) {
         /* @var $timesheetRepo TimesheetRepository */
         $timesheetRepo = $this->getDoctrine()->getRepository(Timesheet::class);
         $userStats = $timesheetRepo->getUserStatistics($user);
@@ -261,33 +282,10 @@ class ProfileController extends AbstractController
             'user' => $user,
             'stats' => $userStats,
             'years' => $monthlyStats,
-            'local_time' => $this->dateTime->createDateTime(),
-            'forms' => []
         ];
-
-        if ($this->isGranted(UserVoter::EDIT, $user)) {
-            $editForm = $editForm ?: $this->createEditForm($user);
-            $viewVars['forms']['settings'] = $editForm->createView();
-        }
-        if ($this->isGranted(UserVoter::PASSWORD, $user)) {
-            $pwdForm = $pwdForm ?: $this->createPasswordForm($user);
-            $viewVars['forms']['password'] = $pwdForm->createView();
-        }
-        if ($this->isGranted(UserVoter::API_TOKEN, $user)) {
-            $apiTokenForm = $apiTokenForm ?: $this->createApiTokenForm($user);
-            $viewVars['forms']['api-token'] = $apiTokenForm->createView();
-        }
-        if ($this->isGranted(UserVoter::ROLES, $user)) {
-            $rolesForm = $rolesForm ?: $this->createRolesForm($user);
-            $viewVars['forms']['roles'] = $rolesForm->createView();
-        }
-        if ($this->isGranted(UserVoter::PREFERENCES, $user)) {
-            $prefsForm = $prefsForm ?: $this->createPreferencesForm($user);
-            $viewVars['forms']['preferences'] = $prefsForm->createView();
-        }
-
-        return $this->render('user/profile.html.twig', $viewVars);
+        return $this->render($template, array_merge($viewVars, $vars));
     }
+
 
     /**
      * @param User $user

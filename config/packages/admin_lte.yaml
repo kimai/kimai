@@ -17,6 +17,10 @@ admin_lte:
         # whether the logo collapses or not
         mini_sidebar: true
 
+    theme:
+        widget:
+          use_footer: false
+
     routes:
         adminlte_profile: user_profile
         adminlte_welcome: homepage

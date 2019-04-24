@@ -1,19 +1,16 @@
 {% extends 'about/layout.html.twig' %}
 
 {% block about %}
-
-<div class="box">
-    <div class="box-body about_license">
-
-        <pre>
-            {{ license }}
-        </pre>
-        <p>
-            <a href="https://choosealicense.com/licenses/mit/" target="_blank">choosealicense.com</a>,
-            <a href="https://en.wikipedia.org/wiki/MIT_License" target="_blank">wikipedia.org</a>
-        </p>
-
-    </div>
-</div>
-
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% block box_title %}MIT License{% endblock %}
+        {% block box_body %}
+            <pre>
+                {{ license }}
+            </pre>
+        {% endblock %}
+        {% block box_footer %}
+            <a class="btn btn-default" href="https://choosealicense.com/licenses/mit/" target="_blank">choosealicense.com</a>
+            <a class="btn btn-default" href="https://en.wikipedia.org/wiki/MIT_License" target="_blank">wikipedia.org</a>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

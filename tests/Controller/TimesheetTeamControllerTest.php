@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Controller\Admin;
+namespace App\Tests\Controller;
 
 use App\Entity\Timesheet;
 use App\Entity\User;
