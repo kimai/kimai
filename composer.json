@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": "^7.1.3",
+        "php": "^7.2",
         "ext-gd": "*",
         "ext-intl": "*",
         "ext-mbstring": "*",
@@ -23,7 +23,9 @@
         "friendsofsymfony/user-bundle": "~2.0",
         "fzaninotto/faker": "^1.8",
         "gedmo/doctrine-extensions": "^2.4",
-        "jms/serializer-bundle": "^2.4",
+        "jms/metadata": "^2.0",
+        "jms/serializer": "^2.3",
+        "jms/serializer-bundle": "^3.2",
         "kevinpapst/adminlte-bundle": "~2.1",
         "kimai/kimai2-composer": "^0.1",
         "mpdf/mpdf": "^7.1",

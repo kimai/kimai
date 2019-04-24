@@ -16,14 +16,12 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Defines the form used to edit the profile of a User.
  */
 class UserEditType extends AbstractType
 {
-
     /**
      * {@inheritdoc}
      */

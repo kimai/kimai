@@ -24,7 +24,12 @@ class TimesheetControllerTest extends APIControllerBaseTest
 {
     public function setUp()
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->importFixtureForUser(User::ROLE_USER);
+    }
+
+    protected function importFixtureForUser(string $role)
+    {
+        $client = $this->getClientForAuthenticatedUser($role);
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
 
         $fixture = new TimesheetFixtures();
@@ -32,8 +37,8 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setFixedRate(true)
             ->setHourlyRate(true)
             ->setAmount(10)
-            ->setUser($this->getUserByRole($em, User::ROLE_USER))
-            ->setStartDate(new \DateTime('-10 days'))
+            ->setUser($this->getUserByRole($em, $role))
+            ->setStartDate((new \DateTime('-10 days'))->setTime(0, 0, 1))
             ->setAllowEmptyDescriptions(false)
         ;
         $this->importFixture($em, $fixture);
@@ -132,6 +137,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'size' => 5,
             'order' => 'DESC',
             'orderBy' => 'rate',
+            'active' => 0,
             'begin' => $begin->format('Y-m-d H:i:s'),
             'end' => $end->format('Y-m-d H:i:s'),
             'exported' => 0,
@@ -224,6 +230,29 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertDefaultStructure($result);
     }
 
+    public function testGetEntityAccessDenied()
+    {
+        $this->importFixtureForUser(User::ROLE_ADMIN);
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertApiAccessDenied($client, '/api/timesheets/15', 'You are not allowed to view this timesheet');
+    }
+
+    public function testGetEntityAccessAllowedForAdmin()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/api/timesheets/1');
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertDefaultStructure($result);
+    }
+
+    public function testGetEntityNotFound()
+    {
+        $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/20');
+    }
+
     public function testPostAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
@@ -265,8 +294,8 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $data = [
             'activity' => $activity->getId(),
             'project' => $project->getId(),
-            'begin' => (new \DateTime('- 8 hours'))->format('Y-m-d H:m'),
-            'end' => (new \DateTime())->format('Y-m-d H:m'),
+            'begin' => (new \DateTime('- 8 hours'))->format('Y-m-d H:m:s'),
+            'end' => (new \DateTime())->format('Y-m-d H:m:s'),
             'description' => 'foo',
             'fixedRate' => 2016,
             'hourlyRate' => 127
@@ -303,19 +332,14 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertApiCallValidationError($client->getResponse(), ['activity']);
     }
 
-    public function testNotFound()
-    {
-        $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/20');
-    }
-
     public function testPatchAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $data = [
             'activity' => 1,
             'project' => 1,
-            'begin' => (new \DateTime('- 7 hours'))->format('Y-m-d H:m'),
-            'end' => (new \DateTime())->format('Y-m-d H:m'),
+            'begin' => (new \DateTime('- 7 hours'))->format('Y-m-d\TH:m'),
+            'end' => (new \DateTime())->format('Y-m-d\TH:m'),
             'description' => 'foo',
             'exported' => true,
         ];
@@ -349,8 +373,8 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $data = [
             'activity' => 1,
             'project' => 1,
-            'begin' => (new \DateTime('- 7 hours'))->format('Y-m-d H:m'),
-            'end' => (new \DateTime())->format('Y-m-d H:m'),
+            'begin' => (new \DateTime('- 7 hours'))->format('Y-m-d\TH:m:s'),
+            'end' => (new \DateTime())->format('Y-m-d\TH:m:s'),
             'description' => 'foo',
             'exported' => true,
         ];
@@ -359,7 +383,12 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertFalse($response->isSuccessful());
         $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $json = json_decode($response->getContent(), true);
-        $this->assertEquals('User cannot update timesheet', $json['message']);
+        $this->assertEquals('You are not allowed to update this timesheet', $json['message']);
+    }
+
+    public function testPatchActionWithUnknownTimesheet()
+    {
+        $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/timesheets/255', []);
     }
 
     public function testInvalidPatchAction()
@@ -387,7 +416,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         if ($full) {
             $expectedKeys = array_merge($expectedKeys, [
-                'exported', 'fixed_rate', 'hourly_rate'
+                'exported', 'fixedRate', 'hourlyRate'
             ]);
         }
 

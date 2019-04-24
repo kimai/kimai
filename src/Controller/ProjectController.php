@@ -214,14 +214,11 @@ class ProjectController extends AbstractController
             $currency = $project->getCustomer()->getCurrency();
         }
 
-        return $this->createForm(
-            ProjectEditForm::class,
-            $project,
-            [
-                'action' => $url,
-                'method' => 'POST',
-                'currency' => $currency,
-            ]
-        );
+        return $this->createForm(ProjectEditForm::class, $project, [
+            'action' => $url,
+            'method' => 'POST',
+            'currency' => $currency,
+            'create_more' => true,
+        ]);
     }
 }

@@ -267,6 +267,7 @@ class TimesheetController extends AbstractController
         return $this->createForm(TimesheetEditForm::class, $entry, [
             'action' => $this->generateUrl('timesheet_create', ['origin' => $redirectRoute]),
             'include_rate' => $this->isGranted('edit_rate', $entry),
+            'customer' => true,
         ]);
     }
 
@@ -286,6 +287,7 @@ class TimesheetController extends AbstractController
             ]),
             'include_rate' => $this->isGranted('edit_rate', $entry),
             'include_exported' => $this->isGranted('edit_export', $entry),
+            'customer' => true,
         ]);
     }
 

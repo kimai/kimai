@@ -18,6 +18,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
  */
 class TimesheetVoter extends AbstractVoter
 {
+    public const VIEW = 'view';
     public const START = 'start';
     public const STOP = 'stop';
     public const EDIT = 'edit';
@@ -31,6 +32,7 @@ class TimesheetVoter extends AbstractVoter
      * support rules based on the given $subject (here: Timesheet)
      */
     public const ALLOWED_ATTRIBUTES = [
+        self::VIEW,
         self::START,
         self::STOP,
         self::EDIT,
@@ -87,6 +89,7 @@ class TimesheetVoter extends AbstractVoter
             case self::EDIT_RATE:
             case self::STOP:
             case self::EDIT:
+            case self::VIEW:
             case self::DELETE:
             case self::EXPORT:
             case self::EDIT_EXPORT:

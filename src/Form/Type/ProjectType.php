@@ -49,6 +49,11 @@ class ProjectType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            // documentation is for NelmioApiDocBundle
+            'documentation' => [
+                'type' => 'integer',
+                'description' => 'Project ID',
+            ],
             'label' => 'label.project',
             'class' => Project::class,
             'choice_label' => 'name',

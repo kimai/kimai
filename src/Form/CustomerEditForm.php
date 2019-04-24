@@ -10,12 +10,13 @@
 namespace App\Form;
 
 use App\Entity\Customer;
+use App\Form\Type\FixedRateType;
+use App\Form\Type\HourlyRateType;
 use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -34,8 +35,13 @@ class CustomerEditForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var Customer $customer */
-        $customer = $options['data'];
+        $currency = false;
+
+        if (isset($options['data'])) {
+            /** @var Customer $customer */
+            $customer = $options['data'];
+            $currency = $customer->getCurrency();
+        }
 
         $builder
             ->add('name', TextType::class, [
@@ -95,15 +101,11 @@ class CustomerEditForm extends AbstractType
             ->add('timezone', TimezoneType::class, [
                 'label' => 'label.timezone',
             ])
-            ->add('fixedRate', MoneyType::class, [
-                'label' => 'label.fixedRate',
-                'required' => false,
-                'currency' => $customer->getCurrency() ?? false,
+            ->add('fixedRate', FixedRateType::class, [
+                'currency' => $currency ?? false,
             ])
-            ->add('hourlyRate', MoneyType::class, [
-                'label' => 'label.hourlyRate',
-                'required' => false,
-                'currency' => $customer->getCurrency() ?? false,
+            ->add('hourlyRate', HourlyRateType::class, [
+                'currency' => $currency ?? false,
             ])
             ->add('visible', YesNoType::class, [
                 'label' => 'label.visible',

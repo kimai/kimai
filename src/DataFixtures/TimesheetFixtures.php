@@ -170,6 +170,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
         $start = new \DateTime();
         $start = $start->modify('- ' . (rand(1, self::TIMERANGE_DAYS)) . ' days');
         $start = $start->modify('- ' . (rand(1, 86400)) . ' seconds');
+        $start->setTimezone(new \DateTimeZone($user->getPreferenceValue(UserPreference::TIMEZONE, date_default_timezone_get())));
 
         $entry = new Timesheet();
         $entry

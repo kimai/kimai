@@ -22,10 +22,10 @@ App\Entity\Project:
             groups: [Entity]
         fixedRate:
             include: true
-            groups: [Entity]
+            groups: [Default]
         hourlyRate:
             include: true
-            groups: [Entity]
+            groups: [Default]
         customer:
             include: false
             exclude: true
