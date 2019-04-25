@@ -42,11 +42,6 @@ class ExportController extends AbstractController
     protected $dateFactory;
 
     /**
-     * @var ExportQuery
-     */
-    protected $query;
-
-    /**
      * @param TimesheetRepository $timesheet
      * @param ServiceExport $export
      */
@@ -55,21 +50,6 @@ class ExportController extends AbstractController
         $this->timesheetRepository = $timesheet;
         $this->export = $export;
         $this->dateFactory = $dateTime;
-        $this->query = $this->createExportQueryWithExports();
-    }
-
-    /**
-     * @return ExportQuery
-     */
-    protected function createExportQueryWithExports()
-    {
-        $query = new ExportQuery();
-
-        foreach ($this->export->getRenderer() as $export) {
-            $query->addType($export->getId());
-        }
-
-        return $query;
     }
 
     /**
@@ -81,7 +61,7 @@ class ExportController extends AbstractController
         $begin = $this->dateFactory->createDateTime('first day of this month 00:00:00');
         $end = $this->dateFactory->createDateTime('last day of this month 23:59:59');
 
-        $query = (clone $this->query);
+        $query = new ExportQuery();
         $query->setOrder(ExportQuery::ORDER_ASC);
         $query->setBegin($begin);
         $query->setEnd($end);
@@ -148,7 +128,7 @@ class ExportController extends AbstractController
         // this code should not be reached, as the query already filters invalid values
         // when trying to call setType() with an unknown value
         if (null === $renderer) {
-            throw $this->createNotFoundException('Invalid export renderer');
+            throw $this->createNotFoundException('Unknown export renderer');
         }
 
         $entries = $this->getEntries($query);
