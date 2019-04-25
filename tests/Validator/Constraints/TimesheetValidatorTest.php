@@ -36,7 +36,7 @@ class TimesheetValidatorTest extends ConstraintValidatorTestCase
             'rules' => [
                 'allow_future_times' => false,
             ],
-            'duration_only' => false,
+            'mode' => 'default',
         ]);
 
         return new TimesheetValidator($authMock, $config);

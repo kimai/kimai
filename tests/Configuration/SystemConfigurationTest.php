@@ -38,7 +38,7 @@ class SystemConfigurationTest extends TestCase
                 'rules' => [
                     'allow_future_times' => false,
                 ],
-                'duration_only' => true,
+                'mode' => 'duration_only',
                 'markdown_content' => false,
                 'active_entries' => [
                     'hard_limit' => 99,
@@ -61,7 +61,7 @@ class SystemConfigurationTest extends TestCase
             (new Configuration())->setName('defaults.customer.timezone')->setValue('Russia/Moscov'),
             (new Configuration())->setName('defaults.customer.currency')->setValue('RUB'),
             (new Configuration())->setName('timesheet.rules.allow_future_times')->setValue('1'),
-            (new Configuration())->setName('timesheet.duration_only')->setValue('0'),
+            (new Configuration())->setName('timesheet.mode')->setValue('default'),
             (new Configuration())->setName('timesheet.markdown_content')->setValue('1'),
             (new Configuration())->setName('timesheet.active_entries.hard_limit')->setValue('7'),
             (new Configuration())->setName('timesheet.active_entries.soft_limit')->setValue('3'),
@@ -95,9 +95,9 @@ class SystemConfigurationTest extends TestCase
     public function testDefaultWithMixedConfigs()
     {
         $sut = $this->getSut($this->getDefaultSettings(), [
-            (new Configuration())->setName('timesheet.duration_only')->setValue(''),
+            (new Configuration())->setName('timesheet.rules.allow_future_times')->setValue(''),
         ]);
-        $this->assertEquals(false, $sut->find('timesheet.duration_only'));
+        $this->assertEquals(false, $sut->find('timesheet.rules.allow_future_times'));
     }
 
     /**

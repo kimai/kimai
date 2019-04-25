@@ -23,10 +23,11 @@ kimai:
         # render timesheet descriptions with markdown
         markdown_content: false
 
-        # Whether we display start and end time columns (false) or durations only (true).
-        # Setting this to true will also change the "edit timesheet" forms.
-        # See https://www.kimai.org/documentation/timesheet.html#duration-only-mode
-        duration_only: false
+        # The time-tracking mode that should be used (allowed values: default, duration_only)
+        #
+        # default:        display start and end time columns in timesheet view and form
+        # duration_only:  display start time and duration, https://www.kimai.org/documentation/timesheet.html#duration-only-mode
+        mode: default
 
         # Rounding rules are used to round the begin & end dates and the duration for timesheet records.
         # The "default" rule will round "begin" down and "end" up to the full minute, the "duration" will not be rounded.
