@@ -94,12 +94,12 @@ class TimesheetController extends AbstractController
 
         // by default the current month is exported, but it can be overwritten
         if (null === $query->getBegin()) {
-            $query->setBegin(new \DateTime('first day of this month'));
+            $query->setBegin($this->dateTime->createDateTime('first day of this month'));
         }
         $query->getBegin()->setTime(0, 0, 0);
 
         if (null === $query->getEnd()) {
-            $query->setEnd(new \DateTime('last day of this month'));
+            $query->setEnd($this->dateTime->createDateTime('last day of this month'));
         }
         $query->getEnd()->setTime(23, 59, 59);
 
@@ -267,6 +267,7 @@ class TimesheetController extends AbstractController
         return $this->createForm(TimesheetEditForm::class, $entry, [
             'action' => $this->generateUrl('timesheet_create', ['origin' => $redirectRoute]),
             'include_rate' => $this->isGranted('edit_rate', $entry),
+            'customer' => true,
         ]);
     }
 
@@ -286,6 +287,7 @@ class TimesheetController extends AbstractController
             ]),
             'include_rate' => $this->isGranted('edit_rate', $entry),
             'include_exported' => $this->isGranted('edit_export', $entry),
+            'customer' => true,
         ]);
     }
 

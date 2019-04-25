@@ -6,7 +6,7 @@
     </a>
     <ul class="dropdown-menu">
         <li class="header">
-            {{ 'active.entries'|transchoice(entries|length) }}
+            {{ 'active.entries'|trans({'%count%':(entries|length)})  }}
         </li>
         <li>
             {% if entries is not empty %}

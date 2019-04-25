@@ -17,8 +17,8 @@
         {% endif %}
     {% endblock %}
     {% block modal_footer %}
+        <button type="submit" class="btn {% if used %}btn-outline{% else %}btn-primary{% endif %} pull-left modal-form-save" data-loading-text="{{ 'action.delete'|trans }}..." id="{{ block('modal_id') }}_save">{{ 'action.delete'|trans }}</button>
         <button type="button" class="btn btn-default btn-cancel" data-dismiss="modal">{{ 'action.close'|trans }}</button>
-        <button type="submit" class="btn {% if used %}btn-outline{% else %}btn-primary{% endif %} modal-form-save" data-loading-text="{{ 'action.delete'|trans }}..." id="{{ block('modal_id') }}_save">{{ 'action.delete'|trans }}</button>
     {% endblock %}
     {% block modal_end %}{{ form_end(form) }}{% endblock %}
 {% endembed %}

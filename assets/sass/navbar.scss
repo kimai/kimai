@@ -21,8 +21,37 @@
         text-align: center;
     }
     .dropdown-menu {
+        box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         max-width: 90vw;
         width: unset !important;
+    }
+    .user-menu {
+        margin-right: 10px;
+        ul {
+            li {
+                a {
+                    color: #444;
+                    i {
+                        padding-right: 10px;
+                    }
+                }
+                hr {
+                    margin: 0;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $screen-sm-min) {
+    .navbar-custom-menu>.navbar-nav>li>.dropdown-menu {
+        right: 0;
+    }
+    .navbar-nav .user-menu {
+        margin-right: 0;
+    }
+    .navbar-nav .user-menu.open .dropdown-menu > li > a {
+        padding: 5px 25px 5px 25px
     }
 }
 

@@ -201,6 +201,10 @@
                 <source>label.hourlyRate</source>
                 <target>Hourly rate</target>
             </trans-unit>
+            <trans-unit id="label.hourly_rate">
+                <source>label.hourly_rate</source>
+                <target>Hourly rate</target>
+            </trans-unit>
             <trans-unit id="label.skin">
                 <source>label.skin</source>
                 <target>Kimai-Theme</target>
@@ -353,10 +357,6 @@
                 <source>profile.first_entry</source>
                 <target>Working since</target>
             </trans-unit>
-            <trans-unit id="profile.tab_monthly">
-                <source>profile.tab_monthly</source>
-                <target>Yearly statistic</target>
-            </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>
                 <target>Profile</target>
@@ -405,10 +405,6 @@
             <trans-unit id="label.timesheet.daily_stats">
                 <source>label.timesheet.daily_stats</source>
                 <target>Show daily stats in timesheet</target>
-            </trans-unit>
-            <trans-unit id="label.now">
-                <source>label.now</source>
-                <target>Current time</target>
             </trans-unit>
 
             <!--

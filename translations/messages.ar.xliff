@@ -183,6 +183,10 @@
                 <source>label.hourlyRate</source>
                 <target>بالساعة</target>
             </trans-unit>
+            <trans-unit id="label.hourly_rate">
+                <source>label.hourly_rate</source>
+                <target>بالساعة</target>
+            </trans-unit>
             <trans-unit id="label.skin">
                 <source>label.skin</source>
                 <target>Kimai-Theme</target>
@@ -330,10 +334,6 @@
             <trans-unit id="profile.first_entry">
                 <source>profile.first_entry</source>
                 <target>العمل منذ</target>
-            </trans-unit>
-            <trans-unit id="profile.tab_monthly">
-                <source>profile.tab_monthly</source>
-                <target>إحصاء سنوي</target>
             </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>

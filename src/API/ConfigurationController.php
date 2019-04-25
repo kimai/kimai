@@ -17,10 +17,13 @@ use App\Entity\User;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class ConfigurationController extends Controller
+/**
+ * @Security("is_granted('ROLE_USER')")
+ */
+class ConfigurationController extends BaseApiController
 {
     /**
      * @var ViewHandlerInterface
@@ -42,7 +45,9 @@ class ConfigurationController extends Controller
     }
 
     /**
-     *  @SWG\Response(
+     * Returns the user specific locale configuration
+     *
+     * @SWG\Response(
      *      response=200,
      *      description="Returns the locale specific configurations for this user",
      *      @SWG\Schema(ref="#/definitions/I18nConfig")

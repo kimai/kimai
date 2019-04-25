@@ -10,47 +10,27 @@
 namespace App\Controller;
 
 use App\Repository\ActivityRepository;
+use App\Timesheet\UserDateTimeFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Controller used to manage navigation-bar contents.
+ * Controller used to render recent activities and quick-start new recordings in the navigation-bar.
  *
  * @Security("is_granted('ROLE_USER')")
  */
 class NavbarController extends AbstractController
 {
     /**
-     * @var ActivityRepository
-     */
-    private $repository;
-
-    /**
      * @param ActivityRepository $repository
-     */
-    public function __construct(ActivityRepository $repository)
-    {
-        $this->repository = $repository;
-    }
-
-    /**
-     * @return ActivityRepository
-     */
-    protected function getRepository()
-    {
-        return $this->repository;
-    }
-
-    /**
-     * The flyout to render recent activities and quick-start new recordings.
-     *
+     * @param UserDateTimeFactory $dateTimeFactory
      * @return Response
      * @throws \Doctrine\ORM\Query\QueryException
      */
-    public function recentActivitiesAction()
+    public function recentActivitiesAction(ActivityRepository $repository, UserDateTimeFactory $dateTimeFactory)
     {
         $user = $this->getUser();
-        $entries = $this->getRepository()->getRecentActivities($user, new \DateTime('-1 year'));
+        $entries = $repository->getRecentActivities($user, $dateTimeFactory->createDateTime('-1 year'));
 
         return $this->render(
             'navbar/recent-activities.html.twig',

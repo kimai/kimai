@@ -13,8 +13,8 @@ use App\Calendar\Service;
 use App\Calendar\TimesheetEntity;
 use App\Entity\Timesheet;
 use App\Repository\Query\TimesheetQuery;
+use App\Repository\TimesheetRepository;
 use App\Timesheet\UserDateTimeFactory;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,53 +28,32 @@ use Symfony\Component\Routing\Annotation\Route;
 class CalendarController extends AbstractController
 {
     /**
-     * @var Service
-     */
-    protected $calendar;
-    /**
-     * @var UserDateTimeFactory
-     */
-    protected $dateTime;
-
-    /**
-     * @param Service $calendar
-     * @param UserDateTimeFactory $dateTime
-     */
-    public function __construct(Service $calendar, UserDateTimeFactory $dateTime)
-    {
-        $this->calendar = $calendar;
-        $this->dateTime = $dateTime;
-    }
-
-    /**
      * @Route(path="/", name="calendar", methods={"GET"})
-     * @Cache(smaxage="10")
      */
-    public function userCalendar()
+    public function userCalendar(Service $calendar, UserDateTimeFactory $dateTime)
     {
         return $this->render('calendar/user.html.twig', [
-            'config' => $this->calendar->getConfig(),
-            'google' => $this->calendar->getGoogle(),
-            'now' => $this->dateTime->createDateTime(),
+            'config' => $calendar->getConfig(),
+            'google' => $calendar->getGoogle(),
+            'now' => $dateTime->createDateTime(),
         ]);
     }
 
     /**
      * @Route(path="/user", name="calendar_entries", methods={"GET"})
-     * @Cache(smaxage="10")
      */
-    public function calendarEntries(Request $request)
+    public function calendarEntries(Request $request, UserDateTimeFactory $dateTime, TimesheetRepository $repository)
     {
         $start = $request->get('start');
         $end = $request->get('end');
 
-        $start = \DateTime::createFromFormat('Y-m-d', $start);
+        $start = $dateTime->createDateTimeFromFormat('Y-m-d', $start);
         if ($start === false) {
-            $start = new \DateTime('first day of this month');
+            $start = $dateTime->createDateTime('first day of this month');
         }
         $start->setTime(0, 0, 0);
 
-        $end = \DateTime::createFromFormat('Y-m-d', $end);
+        $end = $dateTime->createDateTimeFromFormat('Y-m-d', $end);
         if ($end === false) {
             $end = clone $start;
             $end = $end->modify('last day of this month');
@@ -89,8 +68,6 @@ class CalendarController extends AbstractController
             ->setResultType(TimesheetQuery::RESULT_TYPE_QUERYBUILDER)
             ->setEnd($end)
         ;
-
-        $repository = $this->getDoctrine()->getRepository(Timesheet::class);
 
         /* @var $entries Timesheet[] */
         $entries = $repository->findByQuery($query)->getQuery()->execute();

@@ -21,7 +21,7 @@ build:
                             file: 'clover.xml'
                             format: 'clover'
                     -
-                        command: 'bin/console kimai:phpcs --checkstyle=checkstyle'
+                        command: 'bin/console kimai:codestyle --checkstyle=checkstyle'
                         stop_on_failure: true
                         analysis:
                             file: 'checkstyle'

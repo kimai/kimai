@@ -84,7 +84,7 @@ $(function() {
 
                         $select.find('option').remove().end().find('optgroup').remove().end();
 
-                        if ($emptyOption.length != 0) {
+                        if ($emptyOption.length !== 0) {
                             $select.append('<option value="">' + $emptyOption.text() + '</option>');
                         }
 

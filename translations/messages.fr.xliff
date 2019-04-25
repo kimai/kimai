@@ -191,6 +191,10 @@
                 <source>label.hourlyRate</source>
                 <target>Tarif horaire</target>
             </trans-unit>
+            <trans-unit id="label.hourly_rate">
+                <source>label.hourly_rate</source>
+                <target>Tarif horaire</target>
+            </trans-unit>
             <trans-unit id="label.skin">
                 <source>label.skin</source>
                 <target>Thème</target>
@@ -334,10 +338,6 @@
             <trans-unit id="profile.first_entry">
                 <source>profile.first_entry</source>
                 <target>Activités suivies depuis</target>
-            </trans-unit>
-            <trans-unit id="profile.tab_monthly">
-                <source>profile.tab_monthly</source>
-                <target>Statistiques annuelles</target>
             </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>

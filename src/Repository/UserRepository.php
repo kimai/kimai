@@ -50,7 +50,7 @@ class UserRepository extends AbstractRepository implements UserLoaderInterface
 
     /**
      * @param UserQuery $query
-     * @return \Pagerfanta\Pagerfanta
+     * @return array|\Doctrine\ORM\QueryBuilder|\Pagerfanta\Pagerfanta
      */
     public function findByQuery(UserQuery $query)
     {
@@ -77,7 +77,7 @@ class UserRepository extends AbstractRepository implements UserLoaderInterface
             $qb->andWhere($rolesWhere);
         }
 
-        return $this->getPager($qb->getQuery(), $query->getPage(), $query->getPageSize());
+        return $this->getBaseQueryResult($qb, $query);
     }
 
     /**

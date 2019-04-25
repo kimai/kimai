@@ -43,7 +43,7 @@ class BaseQuery
     /**
      * @var string
      */
-    protected $order = 'ASC';
+    protected $order = self::ORDER_ASC;
     /**
      * @var string
      */

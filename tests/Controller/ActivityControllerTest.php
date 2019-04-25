@@ -100,6 +100,26 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertFalse($form->has('activity_edit_form[create_more]'));
         $this->assertEquals('Test', $form->get('activity_edit_form[name]')->getValue());
         $client->submit($form, [
+            'activity_edit_form' => ['name' => 'Test 2', 'customer' => 1, 'project' => '1']
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
+        $client->followRedirect();
+        $this->assertHasDataTable($client);
+        $this->request($client, '/admin/activity/1/edit');
+        $editForm = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
+        $this->assertEquals('Test 2', $editForm->get('activity_edit_form[name]')->getValue());
+        $this->assertEquals('1', $editForm->get('activity_edit_form[customer]')->getValue());
+        $this->assertEquals('1', $editForm->get('activity_edit_form[project]')->getValue());
+    }
+
+    public function testEditActionForGlobalActivity()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/activity/1/edit');
+        $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
+        $this->assertFalse($form->has('activity_edit_form[create_more]'));
+        $this->assertEquals('Test', $form->get('activity_edit_form[name]')->getValue());
+        $client->submit($form, [
             'activity_edit_form' => ['name' => 'Test 2']
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));

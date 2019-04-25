@@ -29,6 +29,7 @@ class UTCDateTimeType extends DateTimeType
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
         if ($value instanceof \DateTime) {
+            $value = clone $value;
             $value->setTimezone(self::getUtc());
         }
 

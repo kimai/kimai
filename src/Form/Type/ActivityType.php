@@ -67,6 +67,11 @@ class ActivityType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            // documentation is for NelmioApiDocBundle
+            'documentation' => [
+                'type' => 'integer',
+                'description' => 'Activity ID',
+            ],
             'label' => 'label.activity',
             'class' => Activity::class,
             'choice_label' => [$this, 'choiceLabel'],

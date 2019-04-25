@@ -15,14 +15,14 @@ This is the _reloaded_ version of the open source timetracker Kimai.
 It is built from scratch and doesn't share any source code with its [predecessor](http://www.kimai.org). 
 But it adapts the same ideas and a clean & simple UI for your time-tracking experience.
 
-By now it is in an pre-stable development phase, usable and with most advanced features from Kimai 1. 
+By now it is in an almost-stable development phase, usable and with most advanced features from Kimai 1.
 You can even [import your data](https://www.kimai.org/documentation/migration-v1.html) and start testing and using it today.
 
 Kimai is a [multi-language application](https://www.kimai.org/documentation/translations.html) and already translated to english, german, italian, french, spanish, russian, arabic, hungarian and portuguese.
 
 ### Requirements
 
-- PHP 7.1.3 or higher (test your system compatibility with the [requirements-checker](http://symfony.com/doc/current/reference/requirements.html))
+- PHP 7.2 or higher (test your system compatibility with the [requirements-checker](http://symfony.com/doc/current/reference/requirements.html))
 - The PHP extensions [xml](http://php.net/manual/en/book.xml.php), [mbstring](http://php.net/manual/en/book.mbstring.php), [gd](http://php.net/manual/en/book.image.php), [intl](https://php.net/manual/en/book.intl.php), [zip](https://php.net/manual/en/book.zip.php) and [PDO](https://php.net/manual/en/book.pdo.php) with either [pdo_sqlite](https://php.net/manual/en/ref.pdo-sqlite.php) or [pdo_mysql](https://php.net/manual/en/ref.pdo-mysql.php) enabled
 - If you use MariaDB, make sure its at least v10.2.7 (see [FAQ](https://www.kimai.org/documentation/faq.html))
 - A modern browser, Kimai v2 might be broken on old browsers like IE 10

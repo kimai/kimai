@@ -6,11 +6,9 @@ App\Entity\Timesheet:
             include: true
             groups: [Default]
         begin:
-            include: true
-            groups: [Default]
+            exclude: true
         end:
-            include: true
-            groups: [Default]
+            exclude: true
         duration:
             include: true
             groups: [Default]
@@ -30,18 +28,22 @@ App\Entity\Timesheet:
             include: true
             groups: [Entity]
         activity:
-            include: false
             exclude: true
-            groups: [Default]
         project:
-            include: false
             exclude: true
-            groups: [Default]
         user:
-            include: false
             exclude: true
-            groups: [Default]
     virtual_properties:
+        getBegin:
+            serialized_name: begin
+            exp: "object.getBegin() === null ? null : object.getBegin()"
+            type: DateTime
+            groups: [Default]
+        getEnd:
+            serialized_name: end
+            exp: "object.getEnd() === null ? null : object.getEnd()"
+            type: DateTime
+            groups: [Default]
         getActivity:
             serialized_name: activity
             exp: "object.getActivity() === null ? null : object.getActivity().getId()"

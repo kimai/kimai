@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file  source-language="en" target-language="en" datatype="plaintext" original="about.en.xliff">
+    <file source-language="en" target-language="en" datatype="plaintext" original="about.en.xliff">
         <body>
             <trans-unit id="about.title">
                 <source>about.title</source>
@@ -10,13 +10,21 @@
                 <source>about.subtitle</source>
                 <target>System information</target>
             </trans-unit>
-            <trans-unit id="tab.system">
-                <source>tab.system</source>
-                <target>System Info</target>
+            <trans-unit id="support">
+                <source>support</source>
+                <target>Support</target>
             </trans-unit>
-            <trans-unit id="tab.license">
-                <source>tab.license</source>
-                <target>Kimai License</target>
+            <trans-unit id="website">
+                <source>website</source>
+                <target>Homepage</target>
+            </trans-unit>
+            <trans-unit id="help">
+                <source>help</source>
+                <target>Documentation</target>
+            </trans-unit>
+            <trans-unit id="tab.thanks">
+                <source>tab.thanks</source>
+                <target>Special thanks</target>
             </trans-unit>
         </body>
     </file>

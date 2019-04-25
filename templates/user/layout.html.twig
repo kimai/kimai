@@ -1,0 +1,151 @@
+{% extends 'base.html.twig' %}
+{% import "macros/actions.html.twig" as actions %}
+
+{% block page_title %}{{ 'profile.title'|trans }}{% endblock %}
+{% block page_subtitle %}{{ 'profile.subtitle'|trans }}{% endblock %}
+{% block page_actions %}{{ actions.profile(tab, user) }}{% endblock %}
+
+{% block main %}
+    {% import _self as macro %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    <div class="row">
+        <div class="col-md-9">
+
+            {% block profile_content %}{% endblock %}
+
+        </div>
+
+        <div class="col-md-3">
+            {{ macro.profile_box(user, stats) }}
+            {{ macro.profile_infos(user, stats) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% macro profile_infos(user, stats) %}
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">{{ 'profile.about_me'|trans }}</h3>
+        </div>
+        <div class="box-body">
+            <ul class="nav nav-stacked">
+                {# colors = purple, blue, aqua, red, green #}
+                <li><a href="#">{{ 'label.id'|trans }} <span class="pull-right badge bg-aqua">{{ user.id }}</span></a></li>
+                <li><a href="#">{{ 'label.username'|trans }} <span class="pull-right badge bg-blue">{{ user.username }}</span></a></li>
+                <li><a href="#">{{ 'profile.first_entry'|trans }} <span class="pull-right badge bg-purple">{{ stats.firstEntry|date_short }}</span></a></li>
+                {% if is_granted('view_rate_own_timesheet') %}
+                <li><a href="#">{{ 'label.hourlyRate'|trans }} <span class="pull-right badge bg-blue">{{ user.preferenceValue('hourly_rate') }}</span></a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro profile_box(user, stats) %}
+    {% import "@AdminLTE/Macros/default.html.twig" as macro %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    <div class="box box-primary">
+        <div class="box-body box-profile">
+            {{ macro.avatar(user.avatar, user.username, 'profile-user-img img-responsive img-circle') }}
+            <h3 class="profile-username text-center">{{ widgets.username(user) }}</h3>
+
+            <p class="text-muted text-center">{{ user.title }}</p>
+
+            <ul class="list-group list-group-unbordered">
+
+                <li class="list-group-item">
+                    <b>{{ 'stats.durationMonth'|trans }}</b> <a class="pull-right">{{ stats.durationThisMonth|duration }}</a>
+                </li>
+
+                {% if is_granted('view_rate_own_timesheet') %}
+                <li class="list-group-item">
+                    <b>{{ 'stats.amountMonth'|trans }}</b> <a class="pull-right">{{ stats.amountThisMonth|money }}</a>
+                </li>
+                {% endif %}
+
+                <li class="list-group-item">
+                    <b>{{ 'stats.durationTotal'|trans }}</b> <a class="pull-right">{{ stats.durationTotal|duration }}</a>
+                </li>
+
+                {% if is_granted('view_rate_own_timesheet') %}
+                <li class="list-group-item">
+                    <b>{{ 'stats.amountTotal'|trans }}</b> <a class="pull-right">{{ stats.amountTotal|money }}</a>
+                </li>
+                {% endif %}
+
+            </ul>
+
+        </div>
+    </div>
+{% endmacro %}
+
+{# -------------------------------- UNUSED FOR NOW -------------------------------- #}
+{% macro profile_list_unused(user, items, color) %}
+    {% import "@AdminLTE/Macros/default.html.twig" as macro %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    <div class="box box-widget widget-user-2">
+        <!-- Add the bg color to the header using any of the bg-* classes -->
+        <div class="widget-user-header bg-{{ color|default(kimai_context.box_color) }}">
+            <div class="widget-user-image">
+                {{ macro.avatar(user.avatar, user.username) }}
+            </div>
+            <!-- /.widget-user-image -->
+            <h3 class="widget-user-username">{{ widgets.username(user) }}</h3>
+            <h5 class="widget-user-desc">{{ user.title }}</h5>
+        </div>
+        <div class="box-footer no-padding">
+            <ul class="nav nav-stacked">
+                {% for entry in items %}
+                    <li><a href="{{ entry.url }}">{{ entry.title|trans }} <span class="pull-right badge bg-{{ entry.color }}">{{ entry.value }}</span></a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endmacro %}
+
+{# -------------------------------- UNUSED FOR NOW -------------------------------- #}
+{% macro profile_box_unused(user, stats, color) %}
+    {% import "@AdminLTE/Macros/default.html.twig" as macro %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    <div class="box box-widget widget-user">
+        <div class="widget-user-header bg-{{ color|default(kimai_context.box_color) }}">
+            <h3 class="widget-user-username">{{ widgets.username(user) }}</h3>
+            <h5 class="widget-user-desc">{{ user.title }}</h5>
+        </div>
+        <div class="widget-user-image">
+            {{ macro.avatar(user.avatar, user.username) }}
+        </div>
+        <div class="box-footer">
+            <div class="row">
+                <div class="col-sm-6 border-right">
+                    <div class="description-block">
+                        <h5 class="description-header">{{ stats.durationTotal|duration }}</h5>
+                        <span class="description-text">{{ 'stats.durationTotal'|trans }}</span>
+                    </div>
+                </div>
+                <div class="col-sm-6 border-right">
+                    <div class="description-block">
+                        <h5 class="description-header">{{ stats.amountTotal|money }}</h5>
+                        <span class="description-text">{{ 'stats.amountTotal'|trans }}</span>
+                    </div>
+                </div>
+                <div class="col-sm-6 border-right">
+                    <div class="description-block">
+                        <h5 class="description-header">{{ stats.durationThisMonth|duration }}</h5>
+                        <span class="description-text">{{ 'stats.durationMonth'|trans }}</span>
+                    </div>
+                </div>
+                <div class="col-sm-6 border-right">
+                    <div class="description-block">
+                        <h5 class="description-header">{{ stats.amountThisMonth|money }}</h5>
+                        <span class="description-text">{{ 'stats.amountMonth'|trans }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
