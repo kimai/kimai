@@ -292,6 +292,9 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('select_type')
                     ->defaultNull()
                 ->end()
+                ->booleanNode('show_about')
+                    ->defaultTrue()
+                ->end()
             ->end()
         ;
 

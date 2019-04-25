@@ -15,7 +15,7 @@ This is the _reloaded_ version of the open source timetracker Kimai.
 It is built from scratch and doesn't share any source code with its [predecessor](http://www.kimai.org). 
 But it adapts the same ideas and a clean & simple UI for your time-tracking experience.
 
-By now it is in an pre-stable development phase, usable and with most advanced features from Kimai 1. 
+By now it is in an almost-stable development phase, usable and with most advanced features from Kimai 1.
 You can even [import your data](https://www.kimai.org/documentation/migration-v1.html) and start testing and using it today.
 
 Kimai is a [multi-language application](https://www.kimai.org/documentation/translations.html) and already translated to english, german, italian, french, spanish, russian, arabic, hungarian and portuguese.

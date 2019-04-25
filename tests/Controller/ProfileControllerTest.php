@@ -12,6 +12,8 @@ namespace App\Tests\Controller;
 use App\DataFixtures\UserFixtures;
 use App\Entity\User;
 use App\Entity\UserPreference;
+use App\Tests\DataFixtures\TimesheetFixtures;
+use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 /**
@@ -25,12 +27,75 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertUrlIsSecured('/profile/' . UserFixtures::USERNAME_USER);
     }
 
+    public function testIndexActionWithoutData()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER);
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertHasNoEntriesWithFilter($client);
+        $this->assertHasProfileBox($client, UserFixtures::USERNAME_USER);
+        $this->assertHasAboutMeBox($client, UserFixtures::USERNAME_USER);
+    }
+
+    public function testIndexAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $dates = [
+            new \DateTime('-10 days'),
+            new \DateTime('-1 year'),
+        ];
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        foreach ($dates as $start) {
+            $fixture = new TimesheetFixtures();
+            $fixture->setAmount(10);
+            $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+            $fixture->setStartDate($start);
+            $this->importFixture($em, $fixture);
+        }
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER);
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $content = $client->getResponse()->getContent();
+
+        foreach ($dates as $start) {
+            $year = $start->format('Y');
+            $this->assertContains('<h3 class="box-title">' . $year . '</h3>', $content);
+            $this->assertContains('var userProfileChart' . $year . ' = new Chart(', $content);
+        }
+
+        $this->assertHasProfileBox($client, UserFixtures::USERNAME_USER);
+        $this->assertHasAboutMeBox($client, UserFixtures::USERNAME_USER);
+    }
+
+    protected function assertHasProfileBox(Client $client, string $username)
+    {
+        $profileBox = $client->getCrawler()->filter('div.box-body.box-profile');
+        $this->assertEquals(1, $profileBox->count());
+        $profileAvatar = $profileBox->filter('img.profile-user-img');
+        $this->assertEquals(1, $profileAvatar->count());
+        $alt = $profileAvatar->attr('alt');
+
+        $this->assertEquals($username, $alt);
+    }
+
+    protected function assertHasAboutMeBox(Client $client, string $username)
+    {
+        $content = $client->getResponse()->getContent();
+
+        $this->assertContains('<h3 class="box-title">About me</h3>', $content);
+        $this->assertContains('<span class="pull-right badge bg-blue">' . $username . '</span>', $content);
+    }
+
     public function getTabTestData()
     {
-        $userTabs = ['#charts', '#settings', '#password', '#api-token', '#preferences'];
+        $userTabs = ['#settings', '#password', '#api-token'];
 
         return [
-            [User::ROLE_USER, UserFixtures::USERNAME_USER, ['#charts', '#settings', '#password', '#api-token', '#preferences']],
+            [User::ROLE_USER, UserFixtures::USERNAME_USER, ['#settings', '#password', '#api-token']],
             [User::ROLE_SUPER_ADMIN, UserFixtures::USERNAME_SUPER_ADMIN, array_merge($userTabs, ['#roles'])],
         ];
     }
@@ -38,10 +103,10 @@ class ProfileControllerTest extends ControllerBaseTest
     /**
      * @dataProvider getTabTestData
      */
-    public function testIndexAction($role, $username, $expectedTabs)
+    public function testEditActionTabs($role, $username, $expectedTabs)
     {
         $client = $this->getClientForAuthenticatedUser($role);
-        $this->request($client, '/profile/' . $username);
+        $this->request($client, '/profile/' . $username . '/edit');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $tabs = $client->getCrawler()->filter('div.nav-tabs-custom ul.nav-tabs li');

@@ -914,7 +914,7 @@ class KimaiImporterCommand extends Command
      * @param array $records
      * @param array $fixedRates
      * @param array $rates
-     * @return array
+     * @return int
      * @throws \Exception
      */
     protected function importTimesheetRecords(SymfonyStyle $io, array $records, array $fixedRates, array $rates)

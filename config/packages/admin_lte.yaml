@@ -1,10 +1,7 @@
-
-#
 # Configuration file for the AdminLTE bundle
 #
 # For more information about the settings visit:
 # https://github.com/kevinpapst/AdminLTEBundle/blob/master/Resources/docs/configurations.md
-#
 admin_lte:
     options:
         # default image for missing user avatar images
@@ -20,15 +17,9 @@ admin_lte:
         # whether the logo collapses or not
         mini_sidebar: true
 
-    # tabs in the control_sidebar (right screen) can be configured, see:
-    # https://github.com/kevinpapst/AdminLTEBundle/blob/master/Resources/docs/control_sidebar.md
-    control_sidebar:
-        settings:
-            icon: "fas fa-user"
-            controller: 'App\Controller\SidebarController::settingsAction'
-        home:
-            icon: "fas fa-question-circle"
-            template: sidebar/home.html.twig
+    theme:
+        widget:
+          use_footer: false
 
     routes:
         adminlte_profile: user_profile

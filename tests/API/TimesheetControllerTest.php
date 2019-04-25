@@ -38,7 +38,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setHourlyRate(true)
             ->setAmount(10)
             ->setUser($this->getUserByRole($em, $role))
-            ->setStartDate((new \DateTime('-10 days'))->setTime(0, 0, 1))
+            ->setStartDate((new \DateTime('first day of this month'))->setTime(0, 0, 1))
             ->setAllowEmptyDescriptions(false)
         ;
         $this->importFixture($em, $fixture);
@@ -124,9 +124,9 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testGetCollectionWithQuery()
     {
-        $begin = new \DateTime('-10 days');
+        $begin = new \DateTime('first day of this month');
         $begin->setTime(0, 0, 0);
-        $end = new \DateTime();
+        $end = new \DateTime('last day of this month');
         $end->setTime(23, 59, 59);
 
         $query = [
@@ -162,14 +162,14 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setExported(true)
             ->setAmount(7)
             ->setUser($this->getUserByRole($em, User::ROLE_USER))
-            ->setStartDate(new \DateTime('-10 days'))
+            ->setStartDate(new \DateTime('first day of this month'))
             ->setAllowEmptyDescriptions(false)
         ;
         $this->importFixture($em, $fixture);
 
-        $begin = new \DateTime('-10 days');
+        $begin = new \DateTime('first day of this month');
         $begin->setTime(0, 0, 0);
-        $end = new \DateTime();
+        $end = new \DateTime('last day of this month');
         $end->setTime(23, 59, 59);
 
         $query = [
