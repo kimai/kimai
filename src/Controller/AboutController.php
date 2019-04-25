@@ -42,7 +42,7 @@ class AboutController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction()
+    public function debugAction()
     {
         return $this->getAboutView();
     }
