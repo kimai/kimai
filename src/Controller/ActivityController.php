@@ -17,7 +17,6 @@ use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityQuery;
 use Doctrine\ORM\ORMException;
 use Pagerfanta\Pagerfanta;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

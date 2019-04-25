@@ -271,7 +271,8 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    protected function renderProfileView(User $user, string $tab, string $template, array $vars) {
+    protected function renderProfileView(User $user, string $tab, string $template, array $vars)
+    {
         /* @var $timesheetRepo TimesheetRepository */
         $timesheetRepo = $this->getDoctrine()->getRepository(Timesheet::class);
         $userStats = $timesheetRepo->getUserStatistics($user);
@@ -283,9 +284,9 @@ class ProfileController extends AbstractController
             'stats' => $userStats,
             'years' => $monthlyStats,
         ];
+
         return $this->render($template, array_merge($viewVars, $vars));
     }
-
 
     /**
      * @param User $user

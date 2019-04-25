@@ -58,5 +58,4 @@ class DashboardControllerTest extends ControllerBaseTest
         $this->assertContains('<a href="/en/profile/' . $user->getUsername() . '/prefs">', $content);
         $this->assertContains('<a href="/en/logout">', $content);
     }
-
 }

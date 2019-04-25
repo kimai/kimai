@@ -12,7 +12,6 @@ namespace App\Tests\Controller;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Form\Type\DateRangeType;
-use App\Tests\Controller\ControllerBaseTest;
 use App\Tests\DataFixtures\TimesheetFixtures;
 
 /**
