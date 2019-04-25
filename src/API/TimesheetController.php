@@ -349,4 +349,47 @@ class TimesheetController extends BaseApiController
 
         return $this->viewHandler->handle($view);
     }
+
+    /**
+     * Delete an existing timesheet record
+     *
+     * @SWG\Delete(
+     *      @SWG\Response(
+     *          response=204,
+     *          description="Delete one timesheet record"
+     *      ),
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="Timesheet record ID to delete",
+     *      required=true,
+     * )
+     *
+     * @Security("is_granted('delete_own_timesheet') or is_granted('delete_other_timesheet')")
+     *
+     * @param int $id
+     * @return Response
+     */
+    public function deleteAction($id)
+    {
+        $timesheet = $this->repository->find($id);
+
+        if (null === $timesheet) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('delete', $timesheet)) {
+            throw $this->createAccessDeniedException('You are not allowed to delete this timesheet');
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($timesheet);
+        $entityManager->flush();
+
+        $view = new View(null, Response::HTTP_NO_CONTENT);
+
+        return $this->viewHandler->handle($view);
+    }
 }

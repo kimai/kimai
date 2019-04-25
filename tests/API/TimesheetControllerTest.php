@@ -408,6 +408,58 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertApiCallValidationError($response, ['end', 'activity']);
     }
 
+    public function testDeleteAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertAccessIsGranted($client, '/api/timesheets/1');
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertDefaultStructure($result);
+        $this->assertNotEmpty($result['id']);
+        $id = $result['id'];
+
+        $this->request($client, '/api/timesheets/' . $id, 'DELETE');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
+        $this->assertEmpty($client->getResponse()->getContent());
+
+        $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/' . $id);
+    }
+
+    public function testDeleteActionForDifferentUser()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/api/timesheets/1');
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertDefaultStructure($result);
+        $this->assertNotEmpty($result['id']);
+        $id = $result['id'];
+
+        $this->request($client, '/api/timesheets/' . $id, 'DELETE');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
+        $this->assertEmpty($client->getResponse()->getContent());
+
+        $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/' . $id);
+    }
+
+    public function testDeleteActionWithoutAuthorization()
+    {
+        $this->importFixtureForUser(User::ROLE_ADMIN);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $this->request($client, '/api/timesheets/15', 'DELETE');
+
+        $response = $client->getResponse();
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        $json = json_decode($response->getContent(), true);
+        $this->assertEquals('You are not allowed to delete this timesheet', $json['message']);
+    }
+
     protected function assertDefaultStructure(array $result, $full = true)
     {
         $expectedKeys = [
