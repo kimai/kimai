@@ -124,9 +124,9 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testGetCollectionWithQuery()
     {
-        $begin = new \DateTime('-10 days');
+        $begin = new \DateTime('first day of this month');
         $begin->setTime(0, 0, 0);
-        $end = new \DateTime();
+        $end = new \DateTime('last day of this month');
         $end->setTime(23, 59, 59);
 
         $query = [
