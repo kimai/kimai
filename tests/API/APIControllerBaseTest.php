@@ -172,6 +172,47 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
     }
 
     /**
+     * @param string $role
+     * @param string $url
+     * @param array $data
+     */
+    protected function assertEntityNotFoundForPatch(string $role, string $url, array $data)
+    {
+        $client = $this->getClientForAuthenticatedUser($role);
+
+        $this->request($client, $url, 'PATCH', [], json_encode($data));
+        $response = $client->getResponse();
+        $this->assertFalse($response->isSuccessful());
+
+        $expected = [
+            'code' => 404,
+            'message' => 'Not found'
+        ];
+
+        $this->assertEquals(404, $client->getResponse()->getStatusCode());
+
+        $this->assertEquals(
+            $expected,
+            json_decode($client->getResponse()->getContent(), true)
+        );
+    }
+
+    /**
+     * @param Client $client
+     * @param string $url
+     * @param string $message
+     */
+    protected function assertApiAccessDenied(Client $client, string $url, string $message)
+    {
+        $this->request($client, $url);
+        $response = $client->getResponse();
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        $expected = ['code' => Response::HTTP_FORBIDDEN, 'message' => $message];
+        $this->assertEquals($expected, json_decode($response->getContent(), true));
+    }
+
+    /**
      * @param Response $response
      * @param string[] $failedFields
      */

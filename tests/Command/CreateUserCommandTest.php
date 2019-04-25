@@ -72,8 +72,10 @@ class CreateUserCommandTest extends KernelTestCase
     {
         $commandTester = $this->createUser('xx', '', 'ROLE_USER', '');
         $output = $commandTester->getDisplay();
+        $this->assertContains('[ERROR] email ()', $output);
+        $this->assertContains('Please enter an email', $output);
         $this->assertContains('[ERROR] plainPassword ()', $output);
-        // TODO the test validator is misconfigured, doesn't find "short username" and "empty email"
+        $this->assertContains('Please enter a password', $output);
     }
 
     public function testUserAlreadyExisting()
@@ -82,6 +84,16 @@ class CreateUserCommandTest extends KernelTestCase
         $commandTester = $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar');
 
         $output = $commandTester->getDisplay();
-        $this->assertContains('[ERROR] Failed to create user: MyTestUser', $output);
+        $this->assertContains('[ERROR] username (mytestuser)', $output);
+        $this->assertContains('The username is already used', $output);
+    }
+
+    public function testUserEmail()
+    {
+        $commandTester = $this->createUser('MyTestUser', 'ROLE_USER', 'ROLE_USER', 'foobar');
+
+        $output = $commandTester->getDisplay();
+        $this->assertContains('[ERROR] email (ROLE_USER)', $output);
+        $this->assertContains('The email is not valid', $output);
     }
 }

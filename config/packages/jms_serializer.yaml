@@ -1,6 +1,9 @@
 jms_serializer:
+    handlers:
+        datetime:
+            default_format: 'Y-m-d\TH:i:sO' # DATE_ISO8601
     visitors:
-        xml:
+        xml_serialization:
             format_output: '%kernel.debug%'
     metadata:
         directories:
@@ -10,3 +13,5 @@ jms_serializer:
             App:
                 namespace_prefix: "App"
                 path: "%kernel.root_dir%/../config/serializer/App"
+    property_naming:
+        id: 'jms_serializer.identical_property_naming_strategy'

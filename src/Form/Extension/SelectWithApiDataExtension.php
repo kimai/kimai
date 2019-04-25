@@ -34,12 +34,9 @@ class SelectWithApiDataExtension extends AbstractTypeExtension
         $this->router = $router;
     }
 
-    /**
-     * @return string
-     */
-    public function getExtendedType()
+    public static function getExtendedTypes(): iterable
     {
-        return EntityType::class;
+        return [EntityType::class];
     }
 
     /**

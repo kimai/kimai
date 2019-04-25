@@ -10,16 +10,16 @@
 namespace App\Tests\Command;
 
 use App\Command\BashResult;
-use App\Command\RunCodeSnifferCommand;
+use App\Command\RunCodestyleCommand;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
- * @coversDefaultClass \App\Command\RunCodeSnifferCommand
+ * @coversDefaultClass \App\Command\RunCodestyleCommand
  * @group integration
  */
-class RunCodeSnifferCommandTest extends KernelTestCase
+class RunCodestyleCommandTest extends KernelTestCase
 {
     /**
      * @var Application
@@ -41,7 +41,7 @@ class RunCodeSnifferCommandTest extends KernelTestCase
         $this->directory = realpath(__DIR__ . '/../../');
         $this->executor = new TestBashExecutor($this->directory);
 
-        $this->application->add(new RunCodeSnifferCommand($this->executor, $this->directory));
+        $this->application->add(new RunCodestyleCommand($this->executor, $this->directory));
     }
 
     public function testSuccessCommandNoOptions()
@@ -68,7 +68,7 @@ class RunCodeSnifferCommandTest extends KernelTestCase
         $result = new BashResult(0, 'FooBar');
         $this->executor->setResult($result);
 
-        $command = $this->application->find('kimai:phpcs');
+        $command = $this->application->find('kimai:codestyle');
         $commandTester = new CommandTester($command);
         $inputs = array_merge(['command' => $command->getName()], $options);
         $commandTester->execute($inputs);
@@ -85,7 +85,7 @@ class RunCodeSnifferCommandTest extends KernelTestCase
         $result = new BashResult(1, 'BarFoo');
         $this->executor->setResult($result);
 
-        $command = $this->application->find('kimai:phpcs');
+        $command = $this->application->find('kimai:codestyle');
         $commandTester = new CommandTester($command);
         $inputs = array_merge(['command' => $command->getName()], ['--fix' => true]);
         $commandTester->execute($inputs);

@@ -21,10 +21,6 @@
                 <source>both</source>
                 <target>Ambos</target>
             </trans-unit>
-            <trans-unit id="subtitle.amount">
-                <source>subtitle.amount</source>
-                <target>(total %count%)</target>
-            </trans-unit>
             <trans-unit id="This is a mandatory field">
                 <source>This is a mandatory field</source>
                 <target>Mandatório</target>
@@ -187,6 +183,10 @@
                 <source>label.hourlyRate</source>
                 <target>Taxa horária</target>
             </trans-unit>
+            <trans-unit id="label.hourly_rate">
+                <source>label.hourly_rate</source>
+                <target>Taxa horária</target>
+            </trans-unit>
             <trans-unit id="label.skin">
                 <source>label.skin</source>
                 <target>Tema Kimai</target>
@@ -334,10 +334,6 @@
             <trans-unit id="profile.first_entry">
                 <source>profile.first_entry</source>
                 <target>Trabalhando desde</target>
-            </trans-unit>
-            <trans-unit id="profile.tab_monthly">
-                <source>profile.tab_monthly</source>
-                <target>Estatística anual</target>
             </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>
@@ -561,10 +557,6 @@
             <trans-unit id="ROLE_USER">
                 <source>ROLE_USER</source>
                 <target>Usuário</target>
-            </trans-unit>
-            <trans-unit id="ROLE_CUSTOMER">
-                <source>ROLE_CUSTOMER</source>
-                <target>Cliente</target>
             </trans-unit>
 
             <!--

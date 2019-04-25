@@ -92,7 +92,7 @@ class Extensions extends AbstractExtension
         'trash' => 'far fa-trash-alt',
         'user' => 'fas fa-user',
         'visibility' => 'far fa-eye',
-        'settings' => 'fas fa-wrench',
+        'settings' => 'fas fa-cog',
         'export' => 'fas fa-file-export',
         'pdf' => 'fas fa-file-pdf',
         'csv' => 'fas fa-table',
@@ -103,6 +103,10 @@ class Extensions extends AbstractExtension
         'audit' => 'fas fa-history',
         'home' => 'fas fa-home',
         'shop' => 'fas fa-shopping-cart',
+        'about' => 'fas fa-info-circle',
+        'debug' => 'far fa-file-alt',
+        'profile-stats' => 'far fa-chart-bar',
+        'profile' => 'fas fa-user-edit',
     ];
 
     /**

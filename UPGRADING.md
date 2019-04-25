@@ -24,20 +24,23 @@ Follow the normal update and database migration process (see above).
 
 Remember to execute the necessary timezone conversion script, if you haven't updated to 0.8 before (see below)!
 
-**BC BREAKS**
-- in an ongoing effort to simplify future installation and upgrade processes the `.env` variable `DATABASE_PREFIX` was removed.
-The table prefix is now hardcoded to `kimai2_`. If you used another prefix, you have to rename your tables manually 
-before starting the update process. And delete the row `DATABASE_PREFIX` from your `.env` file.
-- API: DateTime objects will be returned including timezone identifier (previously 2019-03-02 14:23 - now 2019-03-02T14:23:00+00:00)
+### BC BREAKS
+
+This release contains some BC breaks, which were necessary before 1.0 will be released: "now or never" ;-) sorry for the troubles! 
+
+- **Kimai requires PHP 7.2 now => [PHP 7.1 expired 4 month ago](https://www.php.net/supported-versions.php)**
+- The `.env` variable `DATABASE_PREFIX` was removed and the table prefix is now hardcoded to `kimai2_`. If you used another prefix, 
+you have to rename your tables manually before starting the update process. You can delete the row `DATABASE_PREFIX` from your `.env` file.
+- API: Format for DateTime objects changed, now including timezone identifier (previously 2019-03-02 14:23 - now 2019-03-02T14:23:00+00:00), see [#718](https://github.com/kevinpapst/kimai2/pull/718)
+- API: changed from snake_case to camelCase (hourlyRate vs hourly_rate / fixedRate vs fixed_rate / orderNumber vs order_number / i18n config)
 - Plugin mechanism changed: existing Plugins have to be deleted or updated
 
-**Check if you want to apply changes to your `local.yaml`:** 
+### Apply necessary changes to your `local.yaml`: 
 
-- New permissions are available: `system_configuration`, `system_actions`, `plugins`
-
-**Check if you want to apply changes to your `local.yaml`:** 
-
-- New permission is available available: `system_configuration`
+New permissions are available: 
+- `system_configuration` - for accessing the new system configuration screen
+- `system_actions` - for the experimental feature to flush your cache from the about screen
+- `plugins` - for accessing the new plugins screen
 
 ## [0.8.1](https://github.com/kevinpapst/kimai2/releases/tag/0.8.1)
 
@@ -50,10 +53,15 @@ After you followed the normal update and database migration process (see above),
 - Read this [pull request](https://github.com/kevinpapst/kimai2/pull/372) BEFORE you follow the instructions to convert the 
 timezones in your existing time records with `bin/console kimai:convert-timezone`. Without that, you will end up with wrong times in your database.
 
-Check if you want to apply changes to your `local.yaml`: 
+### Apply necessary changes to your `local.yaml`: 
 
 - A new boolean setting `kimai.timesheet.rules.allow_future_times` was introduced
-- New permissions are available: `view_export, create_export, edit_export_own_timesheet, edit_export_other_timesheet, system_information`
+- New permissions are available: 
+  - `view_export` - for the new export feature
+  - `create_export` - for the new export feature
+  - `edit_export_own_timesheet` - for the new export feature
+  - `edit_export_other_timesheet` - for the new export feature
+  - `system_information` - to see the new about screen
 
 ## [0.7](https://github.com/kevinpapst/kimai2/releases/tag/0.7)
 

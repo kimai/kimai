@@ -6,7 +6,7 @@
 {% block page_title %}{{ 'invoice.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'invoice.subtitle'|trans }}{% endblock %}
 {% block page_actions %}
-    {% set actions = {'filter': '#collapseInvoice'} %}
+    {% set actions = {'filter': '#collapseInvoice', 'visibility': '#modal_invoice'} %}
     {% if is_granted('create_invoice_template') %}
         {% set actions = actions|merge({'create': path('admin_invoice_template_create')}) %}
     {% endif %}
@@ -37,10 +37,10 @@
         {{ widgets.callout('success', 'invoice.preview') }}
 
         {% set columns = {
-            'date': '',
-            'user': 'hidden-xs hidden-sm',
-            'activity': 'hidden-xs hidden-sm',
-            'unit_price': 'text-center',
+            'date': 'alwaysVisible',
+            'user': 'hidden-sm',
+            'description': 'hidden-xs hidden-sm',
+            'unit_price': 'hidden-xs text-center',
             'amount': 'text-center',
             'total_rate': 'text-right',
         } %}
@@ -60,17 +60,17 @@
             {% endif %}
             <tr>
                 <td class="text-nowrap">{{ entry.begin|date_short }}</td>
-                <td class="hidden-xs hidden-sm">{{ widgets.label_user(entry.user) }}</td>
-                <td class="hidden-xs hidden-sm timesheet-description">
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}">{{ widgets.label_user(entry.user) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }} timesheet-description">
                     {% if entry.description is not empty %}
                         {{ entry.description|desc2html }}
                     {% else %}
                         {{ entry.activity.name }} / {{ entry.project.name }}
                     {% endif %}
                 </td>
-                <td class="text-center">{{ rate|money(model.calculator.currency) }}</td>
-                <td class="text-center text-nowrap">{{ duration }}</td>
-                <td class="text-right text-nowrap">{{ entry.rate|money(model.calculator.currency) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }} text-center">{{ rate|money(model.calculator.currency) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'amount') }} text-center text-nowrap">{{ duration }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'total_rate') }} text-right text-nowrap">{{ entry.rate|money(model.calculator.currency) }}</td>
             </tr>
         {% endfor %}
         {{ tables.data_table_footer(entries) }}

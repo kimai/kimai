@@ -10,6 +10,14 @@
                 <source>about.subtitle</source>
                 <target>Informação do Sistema</target>
             </trans-unit>
+            <trans-unit id="website">
+                <source>website</source>
+                <target>Homepage</target>
+            </trans-unit>
+            <trans-unit id="help">
+                <source>help</source>
+                <target>Ajuda</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

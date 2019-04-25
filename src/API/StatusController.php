@@ -11,14 +11,14 @@ declare(strict_types=1);
 
 namespace App\API;
 
-use App\Constants;
+use App\API\Model\Version;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class HealthcheckController extends Controller
+class StatusController extends BaseApiController
 {
     /**
      * @var ViewHandlerInterface
@@ -34,6 +34,8 @@ class HealthcheckController extends Controller
     }
 
     /**
+     * A testing route for the API
+     *
      * @SWG\Response(
      *     response=200,
      *     description="A simple route that returns a 'pong', which you can use for testing the API",
@@ -50,23 +52,18 @@ class HealthcheckController extends Controller
     }
 
     /**
+     * Returns information about the Kimai release
+     *
      * @SWG\Response(
      *     response=200,
      *     description="Returns version information about the current release",
+     *      @SWG\Schema(ref=@Model(type=Version::class))
      * )
      *
      * @Rest\Get(path="/version")
      */
     public function versionAction()
     {
-        $version = [
-            'version' => Constants::VERSION,
-            'candidate' => Constants::STATUS,
-            'semver' => Constants::VERSION . '-' . Constants::STATUS,
-            'name' => Constants::NAME,
-            'copyright' => 'Kimai 2 - ' . Constants::VERSION . ' ' . Constants::STATUS . ' (' . Constants::NAME . ') by Kevin Papst and contributors.',
-        ];
-
-        return $this->viewHandler->handle(new View($version, 200));
+        return $this->viewHandler->handle(new View(new Version(), 200));
     }
 }

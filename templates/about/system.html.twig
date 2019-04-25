@@ -1,130 +1,69 @@
-{% extends 'base.html.twig' %}
+{% extends 'about/layout.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 
-{% block page_title %}{{ 'about.title'|trans({}, 'about') }}{% endblock %}
 {% block page_subtitle %}{{ 'about.subtitle'|trans({}, 'about') }}{% endblock %}
 
-{% block main %}
+{% block about_box %}
+    {% if is_granted('system_actions') %}
+        {% embed '@AdminLTE/Widgets/box-widget.html.twig' with {'boxtype': 'warning'} %}
+            {% block box_title %}{{ 'label.actions'|trans }}{% endblock %}
+            {% block box_body %}
+                {% if content_action is defined and content_action is not empty %}
+                    <pre>
+                    {{ content_action }}
+                    </pre>
+                {% endif %}
 
-    {{ widgets.callout('info', 'Thank you for using Kimai ' ~ constant('App\\Constants::VERSION') ~ ' ' ~  constant('App\\Constants::STATUS') ~ ' - ' ~ constant('App\\Constants::NAME'), 'Kimai ' ~ constant('App\\Constants::VERSION'), 'fas fa-thumbs-up') }}
+                <p>
+                    <a href="{{ path('system_flush_cache') }}" class="btn btn-primary" onclick="$(this).html('Clear cache <i class=\'fas fa-spinner fa-spin\'></i>')">Clear cache</a>
+                </p>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+{% endblock %}
 
-    <div class="row">
-        <div class="col-md-12">
+{% block about %}
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% block box_title %}Environment{% endblock %}
+        {% block box_body %}
+            <dl>
+                {% for name, value in dotenv %}
+                    <dt>{{ name }}</dt>
+                    <dd>{{ value }}</dd>
+                {% endfor %}
+            </dl>
+        {% endblock %}
+    {% endembed %}
 
-            <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation"class ="active"><a href="#systeminfo" aria-controls="systeminfo" role="tab" data-toggle="tab">{{ 'tab.system'|trans({}, 'about') }}</a></li>
-                    <li role="presentation"><a href="#license" aria-controls="license" role="tab" data-toggle="tab">{{ 'tab.license'|trans({}, 'about') }}</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="systeminfo">
-                        <div class="box-group" id="accordion">
-                            {% if is_granted('system_actions') %}
-                            <div class="panel box">
-                                <div class="box-header with-border">
-                                    <h4 class="box-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseSystemAction" aria-expanded="true">
-                                            {{ 'label.actions'|trans }}
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseSystemAction" class="panel-collapse collapse in" aria-expanded="true">
-                                    <div class="box-body">
-                                        <p>
-                                            <a href="{{ path('system_flush_cache') }}" class="btn btn-primary" onclick="$(this).html('Clear cache <i class=\'fas fa-spinner fa-spin\'></i>')">Clear cache</a>
-                                        </p>
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% block box_title %}PHP{% endblock %}
+        {% block box_body %}
+            <dl>
+                <dt>Version</dt><dd>{{ constant('PHP_VERSION') }}</dd>
+                <dt>Modules</dt><dd>{{ modules|join(', ') }}</dd>
+                {% for name, value in settings %}
+                    <dt>{{ name }}</dt>
+                    <dd>
+                        {% if value is empty %}
+                            <i>unknown</i>
+                        {% else %}
+                            {{ value }}
+                        {% endif %}
+                    </dd>
+                {% endfor %}
+            </dl>
+        {% endblock %}
+    {% endembed %}
 
-                                        {% if content_action is defined and content_action is not empty %}
-                                        <pre>
-                                            {{ content_action }}
-                                        </pre>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                            {% endif %}
-                            <div class="panel box">
-                                <div class="box-header with-border">
-                                    <h4 class="box-title">
-                                        <a data-toggle="collapse" role="button" data-parent="#accordion" href="#collapseEnvironment" aria-expanded="false" aria-controls="collapseEnvironment">
-                                            Environment
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseEnvironment" class="panel-collapse collapse" aria-expanded="false" role="tabpanel">
-                                    <div class="box-body">
-
-                                        <dl>
-                                            {% for name, value in dotenv %}
-                                                <dt>{{ name }}</dt>
-                                                <dd>{{ value }}</dd>
-                                            {% endfor %}
-                                        </dl>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel box">
-                                <div class="box-header with-border">
-                                    <h4 class="box-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapsePhp" class="collapsed" aria-expanded="false">
-                                            PHP
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapsePhp" class="panel-collapse collapse" aria-expanded="false">
-                                    <div class="box-body">
-
-                                        <dl>
-                                            <dt>Version</dt><dd>{{ constant('PHP_VERSION') }}</dd>
-                                            <dt>Modules</dt><dd>{{ modules|join(', ') }}</dd>
-                                            {% for name, value in settings %}
-                                                <dt>{{ name }}</dt>
-                                                <dd>
-                                                    {% if value is empty %}
-                                                        <i>unknown</i>
-                                                    {% else %}
-                                                        {{ value }}
-                                                    {% endif %}
-                                                </dd>
-                                            {% endfor %}
-                                        </dl>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel box">
-                                <div class="box-header with-border">
-                                    <h4 class="box-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseSystem" class="collapsed" aria-expanded="false">
-                                            Server
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseSystem" class="panel-collapse collapse" aria-expanded="false">
-                                    <div class="box-body">
-
-                                        <dl>
-                                            {% for name, value in info %}
-                                                <dt>{{ name }}</dt>
-                                                <dd>{{ value|raw }}</dd>
-                                            {% endfor %}
-                                        </dl>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="license">
-                        <pre>{{ license }}</pre>
-                        <p>
-                            <a href="https://choosealicense.com/licenses/mit/" target="_blank">choosealicense.com</a>,
-                            <a href="https://en.wikipedia.org/wiki/MIT_License" target="_blank">wikipedia.org</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% block box_title %}Server{% endblock %}
+        {% block box_body %}
+            <dl>
+                {% for name, value in info %}
+                    <dt>{{ name }}</dt>
+                    <dd>{{ value|raw }}</dd>
+                {% endfor %}
+            </dl>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

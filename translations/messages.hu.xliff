@@ -21,10 +21,6 @@
                 <source>both</source>
                 <target></target>
             </trans-unit>
-            <trans-unit id="subtitle.amount">
-                <source>subtitle.amount</source>
-                <target>(total %count%)</target>
-            </trans-unit>
             <trans-unit id="This is a mandatory field">
                 <source>This is a mandatory field</source>
                 <target>Kötelező</target>
@@ -197,6 +193,10 @@
                 <source>label.hourlyRate</source>
                 <target>Órabér</target>
             </trans-unit>
+            <trans-unit id="label.hourly_rate">
+                <source>label.hourly_rate</source>
+                <target>Órabér</target>
+            </trans-unit>
             <trans-unit id="label.skin">
                 <source>label.skin</source>
                 <target>Kimai téma</target>
@@ -349,10 +349,6 @@
                 <source>profile.first_entry</source>
                 <target>Munka kezdete</target>
             </trans-unit>
-            <trans-unit id="profile.tab_monthly">
-                <source>profile.tab_monthly</source>
-                <target>Éves statisztika</target>
-            </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>
                 <target>Profil</target>
@@ -401,10 +397,6 @@
             <trans-unit id="label.timesheet.daily_stats">
                 <source>label.timesheet.daily_stats</source>
                 <target>Napi statisztika megjelenítése a rögzített óráknál</target>
-            </trans-unit>
-            <trans-unit id="label.now">
-                <source>label.now</source>
-                <target>Pillanatnyi idő</target>
             </trans-unit>
 
             <!--
@@ -599,10 +591,6 @@
             <trans-unit id="ROLE_USER">
                 <source>ROLE_USER</source>
                 <target>Felhasználó</target>
-            </trans-unit>
-            <trans-unit id="ROLE_CUSTOMER">
-                <source>ROLE_CUSTOMER</source>
-                <target>Ügyfél</target>
             </trans-unit>
 
             <!--

@@ -5,7 +5,7 @@
 {% import "macros/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'admin_activity.title'|trans }}{% endblock %}
-{% block page_subtitle %}{{ 'admin_activity.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
+{% block page_subtitle %}{{ 'admin_activity.subtitle'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.activities('index') }}{% endblock %}
 
 {% block main_before %}
@@ -20,9 +20,9 @@
         {% set columns = {
             'name': 'alwaysVisible',
             'customer': 'hidden-xs',
-            'project': '',
+            'project': 'hidden-xs',
             'comment': 'hidden-xs',
-            'visible': 'hidden-xs',
+            'visible': '',
             'actions': 'alwaysVisible',
         } %}
 

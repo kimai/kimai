@@ -43,10 +43,15 @@ class UserEditType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'label.email',
             ])
-            ->add('enabled', YesNoType::class, [
-                'label' => 'label.active',
-            ])
         ;
+
+        if ($options['include_active_flag']) {
+            $builder
+                ->add('enabled', YesNoType::class, [
+                    'label' => 'label.active',
+                ])
+            ;
+        }
     }
 
     /**
@@ -59,6 +64,7 @@ class UserEditType extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'edit_user_profile',
+            'include_active_flag' => false,
         ]);
     }
 }

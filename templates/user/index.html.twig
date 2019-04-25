@@ -4,7 +4,7 @@
 {% import "macros/toolbar.html.twig" as toolbar %}
 
 {% block page_title %}{{ 'admin_user.title'|trans }}{% endblock %}
-{% block page_subtitle %}{{ 'admin_user.subtitle'|trans }} {{ 'subtitle.amount'|trans({'%count%': entries.count}) }}{% endblock %}
+{% block page_subtitle %}{{ 'admin_user.subtitle'|trans }}{% endblock %}
 {% block page_actions %}
     {% set actions = {'filter': '#collapseUserAdmin', 'visibility': '#modal_user_admin'} %}
     {% if is_granted('create_user') %}
@@ -28,7 +28,7 @@
             'username': 'hidden-xs',
             'email': 'hidden-xs hidden-sm',
             'title': 'hidden-xs',
-            'roles': '',
+            'roles': 'hidden-xs',
             'active': '',
             'actions': 'alwaysVisible',
         } %}

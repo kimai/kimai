@@ -43,7 +43,17 @@ $(function() {
                 }
             );
             $(modalSelector).modal('toggle');
-            location.reload();
+            $.kimai.reloadDatatableWithToolbarFilter();
+        },
+        resetVisibility: function (modalSelector) {
+            $(modalSelector).find('form').each(
+                function() {
+                    var cookieName = $(this).attr('name');
+                    Cookies.remove(cookieName);
+                }
+            );
+            $(modalSelector).modal('toggle');
+            $.kimai.reloadDatatableWithToolbarFilter();
         },
         changeVisibility: function (column) {
             var tbl = $('table.dataTable');

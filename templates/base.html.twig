@@ -1,6 +1,6 @@
-{% extends '@AdminLTE/layout/default-layout-avanzu.html.twig' %}
+{% extends '@AdminLTE/layout/default-layout.html.twig' %}
 
-{% block avanzu_after_body_start %}
+{% block after_body_start %}
     {% embed 'embeds/modal.html.twig' %}
         {% block modal_id %}remote_form_modal{% endblock %}
         {% block modal_title %}{% endblock %}
@@ -9,7 +9,7 @@
     {% endembed %}
 {% endblock %}
 
-{% block avanzu_page_content_before %}
+{% block page_content_before %}
     {% set event = trigger(constant('App\\Event\\ThemeEvent::CONTENT_BEFORE')) %}
     {{ event.content|raw }}
     <div class="toolbar-pad no-print">
@@ -17,13 +17,13 @@
     </div>
 {% endblock %}
 
-{% block avanzu_page_content_after %}
+{% block page_content_after %}
     {% block main_after %}{% endblock %}
     {% set event = trigger(constant('App\\Event\\ThemeEvent::CONTENT_AFTER')) %}
     {{ event.content|raw }}
 {% endblock %}
 
-{% block avanzu_page_content %}
+{% block page_content %}
     {% set event = trigger(constant('App\\Event\\ThemeEvent::CONTENT_START')) %}
     {{ event.content|raw }}
     {% block main %}{% endblock %}
@@ -31,33 +31,25 @@
     {{ event.content|raw }}
 {% endblock %}
 
-{% block avanzu_document_title %}
-    {% block title %}{{ 'browser.title'|trans }}{% endblock %}
+{% block title %}
+    {{ 'browser.title'|trans }}
 {% endblock %}
 
-{% block avanzu_page_title %}
-    {% block page_title %}{% endblock %}
-{% endblock %}
+{% block page_subtitle %}{% endblock %}
 
-{% block avanzu_page_subtitle %}
-    {% block page_subtitle %}{% endblock %}
-{% endblock %}
-
-{% block avanzu_logo_mini %}
+{% block logo_mini %}
     <b>K</b>TT
 {% endblock %}
 
-{% block avanzu_logo_lg %}
+{% block logo_large %}
     <b>Kimai</b> - Time Tracking
 {% endblock %}
 
-{% block avanzu_footer %}
-    {% block footer %}
+{% block footer %}
     <!-- Page rendered on {{ 'now'|localizeddate('long', 'long', null, 'UTC') }} -->
-    {% endblock %}
 {% endblock %}
 
-{% block avanzu_navbar_messages %}
+{% block navbar_messages %}
     {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         {% if is_granted('view_own_timesheet') %}
             <li class="visible-xs-inline-block">
@@ -85,23 +77,76 @@
     {% endif %}
 {% endblock %}
 
-{% block avanzu_navbar_notifications %}
+{% block navbar_notifications %}
     {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         {{ render(controller('App\\Controller\\NavbarController::recentActivitiesAction')) }}
     {% endif %}
 {% endblock %}
 
 {# deactivated blocks #}
-{% block avanzu_navbar_tasks %}{% endblock %}
-{% block avanzu_navbar_user %}{% endblock %}
-{% block avanzu_sidebar_user %}{% endblock %}
-{% block avanzu_sidebar_search %}{% endblock %}
+{% block navbar_tasks %}{% endblock %}
+{% block sidebar_user %}{% endblock %}
+{% block sidebar_search %}{% endblock %}
 
-{% block avanzu_breadcrumb %}
-    {{ block('page_actions') }}
+{% block navbar_user %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    <li class="dropdown user-menu">
+        <a href="#" class="dropdown-toggle ddt-large" data-toggle="dropdown">
+            <i class="{{ 'user'|icon }} fa-2x"></i>
+        </a>
+        <ul class="dropdown-menu">
+            {% if app.user is not null %}
+                <li>
+                    <a href="{{ path('user_profile', {'username' : app.user.username}) }}">
+                        <h4 class="control-sidebar-subheading">
+                            <i class="{{ 'profile-stats'|icon }}"></i>
+                            {{ widgets.username(app.user) }}
+                        </h4>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('user_profile_edit', {'username' : app.user.username}) }}">
+                        <h4 class="control-sidebar-subheading">
+                            <i class="{{ 'profile'|icon }}"></i>
+                            {{ 'profile.title'|trans }}
+                        </h4>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('user_profile_preferences', {'username' : app.user.username})  }}">
+                        <h4 class="control-sidebar-subheading">
+                            <i class="{{ 'settings'|icon }}"></i>
+                            {{ 'profile.preferences'|trans }}
+                        </h4>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('fos_user_security_logout') }}">
+                        <h4 class="control-sidebar-subheading">
+                            <i class="{{ 'logout'|icon }}"></i>
+                            {{ 'menu.logout'|trans }}
+                        </h4>
+                    </a>
+                </li>
+            {% endif %}
+            {% if kimai_context.show_about %}
+            <li class="divider"></li>
+            <li>
+                <a href="{{ path('about') }}">
+                    <h4 class="control-sidebar-subheading">
+                        <i class="{{ 'about'|icon }}"></i>
+                        {{ 'about.title'|trans({}, 'about') }}
+                    </h4>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </li>
 {% endblock %}
 
-{% block page_actions %}{% endblock %}
+{% block breadcrumb %}
+    {% block page_actions %}{% endblock %}
+{% endblock %}
 
 {% block stylesheets %}
     {# we do not call parent() as we use a custom built for the frontend assets and don't want the default <stylesheet> #}
