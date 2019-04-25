@@ -9,17 +9,8 @@
 
 namespace App\Repository\Query;
 
-/**
- * Can be used for export queries.
- */
 class ExportQuery extends TimesheetQuery
 {
-    public const TYPE_HTML = 'html';
-    public const TYPE_CSV = 'csv';
-    public const TYPE_PDF = 'pdf';
-    public const TYPE_XLSX = 'xlsx';
-    public const TYPE_ODS = 'ods';
-
     /**
      * @var string
      */
@@ -39,9 +30,7 @@ class ExportQuery extends TimesheetQuery
      */
     public function setType(string $type)
     {
-        if (in_array($type, [self::TYPE_PDF, self::TYPE_CSV, self::TYPE_HTML, self::TYPE_XLSX, self::TYPE_ODS])) {
-            $this->type = $type;
-        }
+        $this->type = $type;
 
         return $this;
     }

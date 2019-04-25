@@ -128,7 +128,7 @@ class ExportController extends AbstractController
         // this code should not be reached, as the query already filters invalid values
         // when trying to call setType() with an unknown value
         if (null === $renderer) {
-            throw $this->createNotFoundException('Invalid export renderer');
+            throw $this->createNotFoundException('Unknown export renderer');
         }
 
         $entries = $this->getEntries($query);

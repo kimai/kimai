@@ -73,6 +73,7 @@ class ExportControllerTest extends ControllerBaseTest
         $response = $client->getResponse();
         $this->assertFalse($response->isSuccessful());
         $this->assertEquals(404, $response->getStatusCode());
+        $this->assertContains('Missing export renderer', $response->getContent());
     }
 
     public function testExportActionWithInvalidRenderer()
@@ -91,6 +92,7 @@ class ExportControllerTest extends ControllerBaseTest
         $response = $client->getResponse();
         $this->assertFalse($response->isSuccessful());
         $this->assertEquals(404, $response->getStatusCode());
+        $this->assertContains('Unknown export renderer', $response->getContent());
     }
 
     public function testExportAction()
