@@ -48,19 +48,20 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
     public function testIndexActionWithQuery()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $start = new \DateTime('first day of this month');
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $user = $this->getUserByRole($em, User::ROLE_USER);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
         $fixture->setUser($user);
-        $fixture->setStartDate(new \DateTime('-10 days'));
+        $fixture->setStartDate($start);
         $this->importFixture($em, $fixture);
 
         $this->request($client, '/team/timesheet/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $dateRange = (new \DateTime('-10 days'))->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime())->format('Y-m-d');
+        $dateRange = ($start)->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime('last day of this month'))->format('Y-m-d');
 
         $form = $client->getCrawler()->filter('form.navbar-form')->form();
         $client->submit($form, [
