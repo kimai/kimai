@@ -26,7 +26,7 @@
         "jms/metadata": "^2.0",
         "jms/serializer": "^2.3",
         "jms/serializer-bundle": "^3.2",
-        "kevinpapst/adminlte-bundle": "~2.1",
+        "kevinpapst/adminlte-bundle": "dev-security-layout",
         "kimai/kimai2-composer": "^0.1",
         "mpdf/mpdf": "^7.1",
         "nelmio/api-doc-bundle": "^3.2",
