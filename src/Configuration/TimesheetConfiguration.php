@@ -11,6 +11,9 @@ namespace App\Configuration;
 
 class TimesheetConfiguration implements SystemBundleConfiguration
 {
+    public const MODE_DURATION_ONLY = 'duration_only';
+    public const MODE_DEFAULT = 'default';
+
     use StringAccessibleConfigTrait;
 
     public function getPrefix(): string
@@ -25,7 +28,7 @@ class TimesheetConfiguration implements SystemBundleConfiguration
 
     public function isDurationOnly(): bool
     {
-        return (bool) $this->find('duration_only');
+        return $this->find('mode') === self::MODE_DURATION_ONLY;
     }
 
     public function isMarkdownEnabled(): bool

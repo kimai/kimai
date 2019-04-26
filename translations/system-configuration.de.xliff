@@ -22,9 +22,17 @@
                 <source>label.timesheet.markdown_content</source>
                 <target>Erlaube Markdown in den Beschreibungen der erfassten Zeiten</target>
             </trans-unit>
-            <trans-unit id="label.timesheet.duration_only">
-                <source>label.timesheet.duration_only</source>
-                <target>"Duration only" Modus - ersetzt das Enddatum durch ein Eingabefeld für Zeitdauer</target>
+            <trans-unit id="label.timesheet.mode">
+                <source>label.timesheet.mode</source>
+                <target>Zeiterfassungs Modus</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_default">
+                <source>label.timesheet.mode_default</source>
+                <target>Standard Modus: erfasst Start und Enddatum</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_duration_only">
+                <source>label.timesheet.mode_duration_only</source>
+                <target>Dauer: ersetzt das Enddatum durch ein Eingabefeld für Dauer</target>
             </trans-unit>
             <trans-unit id="label.timesheet.rules.allow_future_times">
                 <source>label.timesheet.rules.allow_future_times</source>
