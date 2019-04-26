@@ -9,13 +9,15 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseAbstractController;
 use Symfony\Component\Translation\DataCollectorTranslator;
+use Symfony\Contracts\Service\ServiceSubscriberInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * The abstract base controller.
  */
-abstract class AbstractController extends Controller
+abstract class AbstractController extends BaseAbstractController implements ServiceSubscriberInterface
 {
     public const FLASH_SUCCESS = 'success';
     public const FLASH_WARNING = 'warning';
@@ -88,5 +90,12 @@ abstract class AbstractController extends Controller
         }
 
         $this->addFlash($type, $message);
+    }
+
+    public static function getSubscribedServices()
+    {
+        return array_merge(parent::getSubscribedServices(), [
+            'translator' => TranslatorInterface::class
+        ]);
     }
 }

@@ -17,7 +17,7 @@ class AssetExtension extends BaseAssetExtension
      * Overwritten to support subdirectories and subdomains at the same time.
      *
      * @param string $path
-     * @param null $packageName
+     * @param null|string $packageName
      * @return mixed|string
      */
     public function getAssetUrl($path, $packageName = null)
