@@ -60,14 +60,14 @@ class SecurityControllerTest extends ControllerBaseTest
         $this->assertContains('Register a new account', $content);
         $this->assertContains('<form name="fos_user_registration_form" method="post" action="/en/register/" class="fos_user_registration_register">', $content);
         $this->assertContains('<input type="email"', $content);
-        $this->assertContains('id="fos_user_registration_form_email" name="fos_user_registration_form[email]" required="required" class="form-control"', $content);
+        $this->assertContains('id="fos_user_registration_form_email" name="fos_user_registration_form[email]" required="required"', $content);
         $this->assertContains('<input type="text"', $content);
-        $this->assertContains('id="fos_user_registration_form_username" name="fos_user_registration_form[username]" required="required" maxlength="60" pattern=".{3,}" class="form-control"', $content);
+        $this->assertContains('id="fos_user_registration_form_username" name="fos_user_registration_form[username]" required="required" maxlength="60" pattern=".{3,}"', $content);
         $this->assertContains('<input type="password"', $content);
-        $this->assertContains('id="fos_user_registration_form_plainPassword_first" name="fos_user_registration_form[plainPassword][first]" required="required" autocomplete="new-password" class="form-control"', $content);
-        $this->assertContains('id="fos_user_registration_form_plainPassword_second" name="fos_user_registration_form[plainPassword][second]" required="required" autocomplete="new-password" class="form-control"', $content);
+        $this->assertContains('id="fos_user_registration_form_plainPassword_first" name="fos_user_registration_form[plainPassword][first]" required="required"', $content);
+        $this->assertContains('id="fos_user_registration_form_plainPassword_second" name="fos_user_registration_form[plainPassword][second]" required="required"', $content);
         $this->assertContains('<input type="hidden"', $content);
-        $this->assertContains('id="fos_user_registration_form__token" name="fos_user_registration_form[_token]" class=" form-control"', $content);
+        $this->assertContains('id="fos_user_registration_form__token" name="fos_user_registration_form[_token]"', $content);
         $this->assertContains('>Register</button>', $content);
     }
 

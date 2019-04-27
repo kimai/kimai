@@ -188,9 +188,6 @@
     "jms/metadata": {
         "version": "1.6.0"
     },
-    "jms/parser-lib": {
-        "version": "1.0.0"
-    },
     "jms/serializer": {
         "version": "1.13.0"
     },
@@ -269,9 +266,6 @@
     "php-cs-fixer/diff": {
         "version": "v1.2.0"
     },
-    "phpcollection/phpcollection": {
-        "version": "0.5.0"
-    },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
     },
@@ -289,9 +283,6 @@
     },
     "phpoffice/phpword": {
         "version": "0.15.0"
-    },
-    "phpoption/phpoption": {
-        "version": "1.5.0"
     },
     "phpspec/prophecy": {
         "version": "1.7.3"

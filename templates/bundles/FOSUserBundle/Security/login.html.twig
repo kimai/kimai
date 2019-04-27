@@ -3,6 +3,10 @@
 {% block logo_login %}{% include 'partials/logo_login.html.twig' %}{% endblock %}
 {% block title %}{{ 'browser.title'|trans }}{% endblock %}
 
+{% block login_box_icon %}
+    <span class="glyphicon glyphicon-user"></span>
+{% endblock %}
+
 {% block head %}
     {{ parent() }}
     {% include 'partials/head.html.twig' %}
