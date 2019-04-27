@@ -127,7 +127,7 @@
             </trans-unit>
             <trans-unit id="menu.system_configuration">
                 <source>menu.system_configuration</source>
-                <target>System configuration</target>
+                <target>Settings</target>
             </trans-unit>
 
             <!--
