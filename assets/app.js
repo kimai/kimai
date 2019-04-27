@@ -1,8 +1,8 @@
 // ------------------- INLINED ADMIN-LTE DEFINITIONS -------------------
-// this was done to save around 400kb by:
-// - removing the moment locales which are not used
-// - removing the fullcalendar locales which are not used
-// removin icheck which is not used
+// this was done to save around 300kb by:
+// - removing moment locales which are not used
+// - removing fullcalendar locales which are not used
+// - removing icheck which is not used
 
 //require('../vendor/kevinpapst/adminlte-bundle/Resources/assets/admin-lte');
 
