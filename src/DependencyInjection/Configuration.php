@@ -75,6 +75,16 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->booleanNode('duration_only')
                     ->defaultValue(false)
+                    ->setDeprecated()
+                ->end()
+                ->scalarNode('mode')
+                    ->defaultValue('default')
+                    ->validate()
+                        ->ifTrue(function ($value) {
+                            return !in_array($value, ['default', 'duration_only']);
+                        })
+                        ->thenInvalid('Chosen timesheet mode is invalid, allowed values: default, duration_only')
+                    ->end()
                 ->end()
                 ->booleanNode('markdown_content')
                     ->defaultValue(false)

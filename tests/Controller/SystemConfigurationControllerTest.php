@@ -61,7 +61,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
 
         $configService = $client->getContainer()->get(SystemConfiguration::class);
         $this->assertEquals(false, $configService->find('timesheet.markdown_content'));
-        $this->assertEquals(false, $configService->find('timesheet.duration_only'));
+        $this->assertEquals('default', $configService->find('timesheet.mode'));
         $this->assertEquals(true, $configService->find('timesheet.rules.allow_future_times'));
         $this->assertEquals(3, $configService->find('timesheet.active_entries.hard_limit'));
         $this->assertEquals(1, $configService->find('timesheet.active_entries.soft_limit'));
@@ -70,8 +70,8 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'system_configuration_form' => [
                 'configuration' => [
+                    ['name' => 'timesheet.mode', 'value' => 'duration_only'],
                     ['name' => 'timesheet.markdown_content', 'value' => 1],
-                    ['name' => 'timesheet.duration_only', 'value' => 1],
                     ['name' => 'timesheet.rules.allow_future_times', 'value' => false],
                     ['name' => 'timesheet.active_entries.hard_limit', 'value' => 99],
                     ['name' => 'timesheet.active_entries.soft_limit', 'value' => 77],
@@ -86,7 +86,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
 
         $configService = $client->getContainer()->get(SystemConfiguration::class);
         $this->assertEquals(true, $configService->find('timesheet.markdown_content'));
-        $this->assertEquals(true, $configService->find('timesheet.duration_only'));
+        $this->assertEquals('duration_only', $configService->find('timesheet.mode'));
         $this->assertEquals(false, $configService->find('timesheet.rules.allow_future_times'));
         $this->assertEquals(99, $configService->find('timesheet.active_entries.hard_limit'));
         $this->assertEquals(77, $configService->find('timesheet.active_entries.soft_limit'));
@@ -101,8 +101,8 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
             [
                 'system_configuration_form' => [
                     'configuration' => [
+                        ['name' => 'timesheet.mode', 'value' => 'foo'],
                         ['name' => 'timesheet.markdown_content', 'value' => 1],
-                        ['name' => 'timesheet.duration_only', 'value' => 1],
                         ['name' => 'timesheet.rules.allow_future_times', 'value' => 1],
                         ['name' => 'timesheet.active_entries.hard_limit', 'value' => -1],
                         ['name' => 'timesheet.active_entries.soft_limit', 'value' => -1],
@@ -110,10 +110,11 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                 ]
             ],
             [
-                '#system_configuration_form_configuration_3_value',
-                '#system_configuration_form_configuration_4_value',
+                '#system_configuration_form_configuration_0_value', // mode
+                '#system_configuration_form_configuration_3_value', // hard_limit
+                '#system_configuration_form_configuration_4_value', // soft_limit
             ],
-            false
+            true
         );
     }
 

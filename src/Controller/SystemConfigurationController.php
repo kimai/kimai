@@ -14,6 +14,7 @@ use App\Event\SystemConfigurationEvent;
 use App\Form\Model\Configuration;
 use App\Form\Model\SystemConfiguration as SystemConfigurationModel;
 use App\Form\SystemConfigurationForm;
+use App\Form\Type\TimesheetModeType;
 use App\Repository\ConfigurationRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -199,11 +200,11 @@ class SystemConfigurationController extends AbstractController
                 ->setSection(SystemConfigurationModel::SECTION_TIMESHEET)
                 ->setConfiguration([
                     (new Configuration())
-                        ->setName('timesheet.markdown_content')
-                        ->setType(CheckboxType::class)
+                        ->setName('timesheet.mode')
+                        ->setType(TimesheetModeType::class)
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration())
-                        ->setName('timesheet.duration_only')
+                        ->setName('timesheet.markdown_content')
                         ->setType(CheckboxType::class)
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration())

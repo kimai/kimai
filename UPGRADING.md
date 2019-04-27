@@ -26,13 +26,13 @@ Remember to execute the necessary timezone conversion script, if you haven't upd
 
 ### BC BREAKS
 
-This release contains some BC breaks, which were necessary before 1.0 will be released: "now or never" ;-) sorry for the troubles! 
+This release contains some BC breaks which were necessary before 1.0 will be released (_now or never_), to prevent those BC breaks after 1.0. 
 
 - **Kimai requires PHP 7.2 now => [PHP 7.1 expired 4 month ago](https://www.php.net/supported-versions.php)**
 - The `.env` variable `DATABASE_PREFIX` was removed and the table prefix is now hardcoded to `kimai2_`. If you used another prefix, 
 you have to rename your tables manually before starting the update process. You can delete the row `DATABASE_PREFIX` from your `.env` file.
-- API: Format for DateTime objects changed, now including timezone identifier (previously 2019-03-02 14:23 - now 2019-03-02T14:23:00+00:00), see [#718](https://github.com/kevinpapst/kimai2/pull/718)
-- API: changed from snake_case to camelCase (hourlyRate vs hourly_rate / fixedRate vs fixed_rate / orderNumber vs order_number / i18n config)
+- API: Format for DateTime objects changed, now including timezone identifier (previously `2019-03-02 14:23` - now `2019-03-02T14:23:00+00:00`), see [#718](https://github.com/kevinpapst/kimai2/pull/718)
+- API: changed from snake_case to camelCase (affected fields: hourlyRate vs hourly_rate / fixedRate vs fixed_rate / orderNumber vs order_number / i18n config object)
 - Plugin mechanism changed: existing Plugins have to be deleted or updated
 
 ### Apply necessary changes to your `local.yaml`: 
@@ -41,6 +41,20 @@ New permissions are available:
 - `system_configuration` - for accessing the new system configuration screen
 - `system_actions` - for the experimental feature to flush your cache from the about screen
 - `plugins` - for accessing the new plugins screen
+
+The setting `kimai.timesheet.mode` replaces the setting `kimai.timesheet.duration_only`. If you used the duration_only mode, you need to change your config:
+```yaml
+# Before
+kimai:
+    timesheet:
+        duration_only: true
+        
+# After
+kimai:
+    timesheet:
+        mode: duration_only
+```
+Or switch the mode directly in the new System configuration screen within Kimai.  
 
 ## [0.8.1](https://github.com/kevinpapst/kimai2/releases/tag/0.8.1)
 
