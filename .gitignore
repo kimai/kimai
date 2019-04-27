@@ -47,13 +47,14 @@ templates/invoice/renderer/.~lock*
 .php_cs
 .php_cs.cache
 ###< friendsofphp/php-cs-fixer ###
+
 ###> symfony/phpunit-bridge ###
 .phpunit
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 
-###> symfony/webpack-encore-pack ###
+###> symfony/webpack-encore-bundle ###
 /node_modules/
 npm-debug.log
 yarn-error.log
-###< symfony/webpack-encore-pack ###
+###< symfony/webpack-encore-bundle ###
