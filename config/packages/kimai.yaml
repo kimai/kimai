@@ -188,6 +188,14 @@ kimai:
             date: 'Y.m.d.'
             date_time: 'm.d. H:i'
             duration: '%%h:%%m h'
+        sv:
+            date_time_type: 'yyyy-MM-dd HH:mm'
+            date_time_picker: 'YYYY-MM-DD HH:mm'
+            date_type: 'yyyy-MM-dd'
+            date_picker: 'YYYY-MM-DD'
+            date: 'Y-m-d'
+            date_time: 'm-d H:i'
+            duration: '%%h:%%m tim'
 
     # --------------------------------------------------------------------------------
     # timesheet calendar configuration

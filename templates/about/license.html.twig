@@ -2,7 +2,7 @@
 
 {% block about %}
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-        {% block box_title %}{{ constant('App\\Constants::SOFTWARE') }} is published under{% endblock %}
+        {% block box_title %}{{ 'published_under'|trans({'%kimai%': constant('App\\Constants::SOFTWARE')}, 'about') }}{% endblock %}
         {% block box_body %}
             <pre>
                 {{ license }}
@@ -15,9 +15,9 @@
     {% endembed %}
 
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-        {% block box_title %}Special thanks ...{% endblock %}
+        {% block box_title %}{{ 'special_thanks'|trans({}, 'about') }}{% endblock %}
         {% block box_body %}
-            <p>... to the authors of the following libraries, Kimai wouldn't be possible without them:</p>
+            <p>{{ 'library_authors'|trans({}, 'about') }}</p>
             <ul>
                 <li>AdminLTE: <a href="https://adminlte.io" target="_blank">https://adminlte.io</a></li>
                 <li>Bootstrap: <a href="https://getbootstrap.com" target="_blank">https://getbootstrap.com</a></li>
@@ -32,7 +32,7 @@
                 <li>MomentJS: <a href="https://momentjs.com" target="_blank">https://momentjs.com</a></li>
                 <li>PHPOffice: <a href="https://github.com/PHPOffice" target="_blank">https://github.com/PHPOffice</a></li>
                 <li>Symfony: <a href="https://symfony.com" target="_blank">https://symfony.com</a></li>
-                <li>...</li>
+                <li>…</li>
             </ul>
         {% endblock %}
     {% endembed %}
