@@ -18,7 +18,7 @@ But it adapts the same ideas and a clean & simple UI for your time-tracking expe
 By now it is in an almost-stable development phase, usable and with most advanced features from Kimai 1.
 You can even [import your data](https://www.kimai.org/documentation/migration-v1.html) and start testing and using it today.
 
-Kimai is a [multi-language application](https://www.kimai.org/documentation/translations.html) and already translated to english, german, italian, french, spanish, russian, arabic, hungarian and portuguese.
+Kimai is a [multi-language application](https://www.kimai.org/documentation/translations.html) and already translated to english, german, italian, french, spanish, russian, arabic, hungarian, portuguese (brazilian) and swedish.
 
 ### Requirements
 
