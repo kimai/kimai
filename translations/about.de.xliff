@@ -26,6 +26,22 @@
                 <source>tab.thanks</source>
                 <target>Danke!</target>
             </trans-unit>
+            <trans-unit id="donate">
+                <source>donate</source>
+                <target>Spende für die Zukunft von Kimai</target>
+            </trans-unit>
+            <trans-unit id="published_under">
+                <source>published_under</source>
+                <target>%kimai% wird veröffentlicht unter</target>
+            </trans-unit>
+            <trans-unit id="special_thanks">
+                <source>special_thanks</source>
+                <target>Besonderer Dank geht an …</target>
+            </trans-unit>
+            <trans-unit id="library_authors">
+                <source>library_authors</source>
+                <target>… die Autoren der folgenden Software-Bibliotheken, ohne Euch wäre Kimai nicht möglich 👍</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
