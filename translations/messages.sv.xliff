@@ -201,8 +201,8 @@
                 <source>label.project</source>
                 <target state="translated">Projekt</target>
             </trans-unit>
-            <trans-unit id="label.hourly_rate">
-                <source>label.hourly_rate</source>
+            <trans-unit id="label.hourlyRate">
+                <source>label.hourlyRate</source>
                 <target state="translated">Timpris</target>
             </trans-unit>
             <trans-unit id="label.skin">
@@ -457,12 +457,10 @@
             </trans-unit>
             <trans-unit id="admin_project.delete_confirm">
                 <source>admin_project.delete_confirm</source>
-                <target>
-                    Currently the project %project% for the customer %customer% has %activities%
-                    activities and %records% time-records, which count up to a total of %duration%.
-                    These activities and time-records will be deleted as well!
-                    Alternatively, you can select a project to which all existing activities and entries are transferred:
-                </target>
+                <target state="translated">Projektet %project% för kunden %customer% har %activities% för närvarande %activities% 
+                     aktiviteter och %records% time-records, som räknas upp till totalt %duration%.
+                     Dessa aktiviteter och tidsposter kommer också att raderas!
+                     Alternativt kan du välja ett projekt till vilket alla befintliga aktiviteter och poster överförs:</target>
             </trans-unit>
 
             <!--
@@ -470,20 +468,19 @@
             -->
             <trans-unit id="admin_activity.title">
                 <source>admin_activity.title</source>
-                <target>Activities</target>
+                <target state="translated">Aktiviteter</target>
             </trans-unit>
             <trans-unit id="admin_activity.subtitle">
                 <source>admin_activity.subtitle</source>
-                <target>Tasks that can be chosen for time-records</target>
+                <target state="translated">Uppgifter som kan väljas för tidsposter</target>
             </trans-unit>
             <trans-unit id="admin_activity.delete_confirm">
                 <source>admin_activity.delete_confirm</source>
-                <target>
-                    Currently the activity %activity% in the project %project% for the customer %customer%
-                    has %records% time-records, which count up to a total of %duration%.
-                    These time-records will be deleted as well!
-                    Alternatively, you can select an activity to which all existing entries are transferred:
-                </target>
+                <target state="translated">
+                     För närvarande aktiviteten %activity% i projektet %project% för kunden %customer%
+                     har %records% tidsrekord, vilket räknas upp till totalt %duration%.
+                     Dessa tidsposter kommer också att raderas!
+                     Alternativt kan du välja en aktivitet som alla befintliga poster överförs:</target>
             </trans-unit>
 
             <!--
@@ -491,39 +488,39 @@
             -->
             <trans-unit id="admin_customer.title">
                 <source>admin_customer.title</source>
-                <target>Customer</target>
+                <target state="translated">Kunder</target>
             </trans-unit>
             <trans-unit id="admin_customer.subtitle">
                 <source>admin_customer.subtitle</source>
-                <target>Your customer are the base for creating projects and activities</target>
+                <target state="translated">Din kund är grunden för att skapa projekt och aktiviteter</target>
             </trans-unit>
             <trans-unit id="label.number">
                 <source>label.number</source>
-                <target>Account</target>
+                <target state="translated">Konto</target>
             </trans-unit>
             <trans-unit id="label.company">
                 <source>label.company</source>
-                <target>Company name</target>
+                <target state="translated">Företagsnamn</target>
             </trans-unit>
             <trans-unit id="label.vat">
                 <source>label.vat</source>
-                <target>Tax</target>
+                <target state="translated">Moms</target>
             </trans-unit>
             <trans-unit id="label.contact">
                 <source>label.contact</source>
-                <target>Contact</target>
+                <target state="translated">Kontakt</target>
             </trans-unit>
             <trans-unit id="label.address">
                 <source>label.address</source>
-                <target>Address</target>
+                <target state="translated">Adress</target>
             </trans-unit>
             <trans-unit id="label.country">
                 <source>label.country</source>
-                <target>Country</target>
+                <target state="translated">Land</target>
             </trans-unit>
             <trans-unit id="label.phone">
                 <source>label.phone</source>
-                <target>Phone</target>
+                <target state="translated">Telefon</target>
             </trans-unit>
             <trans-unit id="label.fax">
                 <source>label.fax</source>
@@ -531,28 +528,27 @@
             </trans-unit>
             <trans-unit id="label.mobile">
                 <source>label.mobile</source>
-                <target>Mobile</target>
+                <target state="translated">Mobil</target>
             </trans-unit>
             <trans-unit id="label.homepage">
                 <source>label.homepage</source>
-                <target>Homepage</target>
+                <target state="translated">Hemsida</target>
             </trans-unit>
             <trans-unit id="label.timezone">
                 <source>label.timezone</source>
-                <target>Timezone</target>
+                <target state="translated">Timezon</target>
             </trans-unit>
             <trans-unit id="label.currency">
                 <source>label.currency</source>
-                <target>Currency</target>
+                <target state="translated">Valuta</target>
             </trans-unit>
             <trans-unit id="admin_customer.delete_confirm">
                 <source>admin_customer.delete_confirm</source>
-                <target>
-                    Currently the customer %customer% has %project% projects with %activity% activities, which count up
-                    in %records% time-records to a total of %duration%.
-                    These projects, activities and time-records will be deleted as well!
-                    Alternatively, you can select a customer to whom all data is transferred:
-                </target>
+                <target state="translated">
+För närvarande kunden %customer% har %project% projekt med% aktivitet% aktiviteter, som räknas upp
+                     i %activity% tidposter till totalt %duration%.
+                     Dessa projekt, aktiviteter och tidsposter kommer också att raderas!
+                     Alternativt kan du välja en kund till vilken alla data överförs:</target>
             </trans-unit>
 
             <!--
@@ -560,38 +556,37 @@
             -->
             <trans-unit id="admin_user.title">
                 <source>admin_user.title</source>
-                <target>User</target>
+                <target state="translated">Användare</target>
             </trans-unit>
             <trans-unit id="admin_user.subtitle">
                 <source>admin_user.subtitle</source>
-                <target>All registered user of your Kimai installation</target>
+                <target state="translated">Alla registrerade användare av din Kimai-installation</target>
             </trans-unit>
             <trans-unit id="label.alias">
                 <source>label.alias</source>
-                <target>Name</target>
+                <target state="translated">Namn</target>
             </trans-unit>
             <trans-unit id="label.title">
                 <source>label.title</source>
-                <target>Title</target>
+                <target state="translated">Titel</target>
             </trans-unit>
             <trans-unit id="label.avatar">
                 <source>label.avatar</source>
-                <target>Profile image</target>
+                <target state="translated">Profilbild</target>
             </trans-unit>
             <trans-unit id="label.active">
                 <source>label.active</source>
-                <target>Active</target>
+                <target state="translated">Aktiv</target>
             </trans-unit>
             <trans-unit id="label.roles">
                 <source>label.roles</source>
-                <target>Role</target>
+                <target state="translated">Roll</target>
             </trans-unit>
             <trans-unit id="admin_user.delete_confirm">
                 <source>admin_user.delete_confirm</source>
-                <target>
-                    Currently the user %user% has %records% time-records which count up to a total of %duration%.
-                    These time-records will be deleted as well!
-                </target>
+                <target state="translated">
+För närvarande har %user% användare %records% tidsrekord som räknas upp till totalt %duration%.
+                     Dessa tidsposter kommer också att raderas!</target>
             </trans-unit>
 
             <!--
@@ -603,19 +598,19 @@
             </trans-unit>
             <trans-unit id="ROLE_ADMIN">
                 <source>ROLE_ADMIN</source>
-                <target>Administrator</target>
+                <target state="translated">Administratör</target>
             </trans-unit>
             <trans-unit id="ROLE_TEAMLEAD">
                 <source>ROLE_TEAMLEAD</source>
-                <target>Teamlead</target>
+                <target state="translated">Teamledare</target>
             </trans-unit>
             <trans-unit id="ROLE_USER">
                 <source>ROLE_USER</source>
-                <target>User</target>
+                <target state="translated">Användare</target>
             </trans-unit>
             <trans-unit id="ROLE_CUSTOMER">
                 <source>ROLE_CUSTOMER</source>
-                <target>Customer</target>
+                <target state="translated">Kund</target>
             </trans-unit>
 
             <!--
@@ -623,83 +618,83 @@
             -->
             <trans-unit id="stats.durationToday">
                 <source>stats.durationToday</source>
-                <target>Working hours today</target>
+                <target state="translated">Arbetstider idag</target>
             </trans-unit>
             <trans-unit id="stats.durationWeek">
                 <source>stats.durationWeek</source>
-                <target>Working hours this week</target>
+                <target state="translated">Arbetstid i veckan</target>
             </trans-unit>
             <trans-unit id="stats.durationMonth">
                 <source>stats.durationMonth</source>
-                <target>Working hours this month</target>
+                <target state="translated">Arbetstid i den här månaden</target>
             </trans-unit>
             <trans-unit id="stats.durationYear">
                 <source>stats.durationYear</source>
-                <target>Working hours this year</target>
+                <target state="translated">Arbetstid i det här året</target>
             </trans-unit>
             <trans-unit id="stats.durationTotal">
                 <source>stats.durationTotal</source>
-                <target>Working hours total</target>
+                <target state="translated">Arbetstid totalt</target>
             </trans-unit>
             <trans-unit id="stats.amountToday">
                 <source>stats.amountToday</source>
-                <target>Revenue today</target>
+                <target state="translated">Intäkter idag</target>
             </trans-unit>
             <trans-unit id="stats.amountWeek">
                 <source>stats.amountWeek</source>
-                <target>Revenue this week</target>
+                <target state="translated">Intäkter denna vecka</target>
             </trans-unit>
             <trans-unit id="stats.amountMonth">
                 <source>stats.amountMonth</source>
-                <target>Revenue this month</target>
+                <target state="translated">Intäkter denna månad</target>
             </trans-unit>
             <trans-unit id="stats.amountYear">
                 <source>stats.amountYear</source>
-                <target>Revenue this year</target>
+                <target state="translated">Intäkter i år</target>
             </trans-unit>
             <trans-unit id="stats.amountTotal">
                 <source>stats.amountTotal</source>
-                <target>Revenue total</target>
+                <target state="translated">Inkomster totalt</target>
             </trans-unit>
             <trans-unit id="stats.userActiveToday">
                 <source>stats.userActiveToday</source>
-                <target>Active users today</target>
+                <target state="translated">Aktiva användare idag</target>
             </trans-unit>
             <trans-unit id="stats.userActiveWeek">
                 <source>stats.userActiveWeek</source>
-                <target>Active users this week</target>
+                <target state="translated">Aktiva användare den här veckan</target>
             </trans-unit>
             <trans-unit id="stats.userActiveMonth">
                 <source>stats.userActiveMonth</source>
-                <target>Active users this month</target>
+                <target state="translated">Aktiva användare den här månaden</target>
             </trans-unit>
             <trans-unit id="stats.userActiveYear">
                 <source>stats.userActiveYear</source>
-                <target>Active users this year</target>
+                <target state="translated">Aktiva användare i år</target>
             </trans-unit>
             <trans-unit id="stats.userActiveTotal">
                 <source>stats.userActiveTotal</source>
-                <target>Active users ever</target>
+                <target state="translated">Aktiva användare någonsin</target>
             </trans-unit>
             <trans-unit id="stats.activeRecordings">
                 <source>stats.activeRecordings</source>
-                <target>Active records</target>
+                <target state="translated">Aktiva poster</target>
             </trans-unit>
             <trans-unit id="stats.userTotal">
                 <source>stats.userTotal</source>
-                <target>Amount users</target>
+                <target state="translated">Antal användare</target>
             </trans-unit>
             <trans-unit id="stats.activityTotal">
                 <source>stats.activityTotal</source>
-                <target>Amount activities</target>
+                <target state="translated">Antal aktiviter</target>
             </trans-unit>
             <trans-unit id="stats.projectTotal">
                 <source>stats.projectTotal</source>
-                <target>Amount projects</target>
+                <target state="translated">Antal projekt</target>
             </trans-unit>
             <trans-unit id="stats.customerTotal">
                 <source>stats.customerTotal</source>
-                <target>Amount customers</target>
+                <target state="translated">Antal kunder</target>
             </trans-unit>
 
             <!--
@@ -707,23 +702,23 @@
             -->
             <trans-unit id="admin_invoice_template.title">
                 <source>admin_invoice_template.title</source>
-                <target>Invoice template</target>
+                <target state="translated">Fakturamall</target>
             </trans-unit>
             <trans-unit id="admin_invoice_template.subtitle">
                 <source>admin_invoice_template.subtitle</source>
-                <target>Administrate your invoice templates which can be used to data export.</target>
+                <target state="translated">Administrera dina fakturamallar som kan användas för dataexport.</target>
             </trans-unit>
             <trans-unit id="invoice.title">
                 <source>invoice.title</source>
-                <target>Invoices</target>
+                <target state="translated">Fakturor</target>
             </trans-unit>
             <trans-unit id="invoice.subtitle">
                 <source>invoice.subtitle</source>
-                <target>Create invoices from your recorded timesheet entries.</target>
+                <target state="translated">Skapa fakturor från dina inspelade tidskriftsuppgifter.</target>
             </trans-unit>
             <trans-unit id="invoice.preview">
                 <source>invoice.preview</source>
-                <target>This is a preview of the data that will show up in your invoice document.</target>
+                <target state="translated">Detta är en förhandsvisning av de data som kommer att visas i ditt fakturatokument.</target>
             </trans-unit>
             <trans-unit id="invoice_renderer.timesheet">
                 <source>invoice_renderer.timesheet</source>
@@ -732,7 +727,7 @@
 
             <trans-unit id="button.print">
                 <source>button.print</source>
-                <target>Print</target>
+                <target state="translated">Skriv ut</target>
             </trans-unit>
             <trans-unit id="button.csv">
                 <source>button.csv</source>
@@ -752,31 +747,31 @@
             </trans-unit>
             <trans-unit id="invoice_print">
                 <source>invoice_print</source>
-                <target>Invoice</target>
+                <target state="translated">Faktura</target>
             </trans-unit>
             <trans-unit id="label.template">
                 <source>label.template</source>
-                <target>Template</target>
+                <target state="translated">Mail</target>
             </trans-unit>
             <trans-unit id="label.due_days">
                 <source>label.due_days</source>
-                <target>Payment term in days</target>
+                <target state="translated">Betalningsperiod i dagar</target>
             </trans-unit>
             <trans-unit id="invoice.due_days">
                 <source>invoice.due_days</source>
-                <target>Payment target</target>
+                <target state="translated">Förfallodatum</target>
             </trans-unit>
             <trans-unit id="invoice.from">
                 <source>invoice.from</source>
-                <target>From</target>
+                <target state="translated">Från</target>
             </trans-unit>
             <trans-unit id="invoice.to">
                 <source>invoice.to</source>
-                <target>To</target>
+                <target state="translated">Till</target>
             </trans-unit>
             <trans-unit id="invoice.number">
                 <source>invoice.number</source>
-                <target>Invoice number</target>
+                <target state="translated">Fakturanummer</target>
             </trans-unit>
             <trans-unit id="invoice.subtotal">
                 <source>invoice.subtotal</source>
@@ -784,43 +779,43 @@
             </trans-unit>
             <trans-unit id="invoice.tax">
                 <source>invoice.tax</source>
-                <target>Tax</target>
+                <target state="translated">Moms</target>
             </trans-unit>
             <trans-unit id="invoice.total">
                 <source>invoice.total</source>
-                <target>Total</target>
+                <target state="translated">Totalt</target>
             </trans-unit>
             <trans-unit id="invoice.service_date">
                 <source>invoice.service_date</source>
-                <target>Service date</target>
+                <target state="translated">Inventaredatum</target>
             </trans-unit>
             <trans-unit id="label.amount">
                 <source>label.amount</source>
-                <target>Quantity</target>
+                <target state="translated">Antal</target>
             </trans-unit>
             <trans-unit id="label.total_rate">
                 <source>label.total_rate</source>
-                <target>Total price</target>
+                <target state="translated">Totaleres</target>
             </trans-unit>
             <trans-unit id="label.unit_price">
                 <source>label.unit_price</source>
-                <target>Unit price</target>
+                <target state="translated">Enhetspris</target>
             </trans-unit>
             <trans-unit id="label.payment_terms">
                 <source>label.payment_terms</source>
-                <target>Terms of payment</target>
+                <target state="translated">Betalningsvillkor</target>
             </trans-unit>
             <trans-unit id="invoice.signature_user">
                 <source>invoice.signature_user</source>
-                <target>Confirmation: Date / Name Consultant / Signature</target>
+                <target state="translated">Bekräftelse: Datum / Säljarens Namen / Signatur</target>
             </trans-unit>
             <trans-unit id="invoice.signature_customer">
                 <source>invoice.signature_customer</source>
-                <target>Confirmation: Date / Name Customer / Signature</target>
+                <target state="translated">Bekräftelse: Datum / Kunden Name / Signatur</target>
             </trans-unit>
             <trans-unit id="invoice.total_working_time">
                 <source>invoice.total_working_time</source>            
-                <target>Total duration</target>
+                <target state="translated">Total varaktighet</target>
             </trans-unit>
             <trans-unit id="label.order_number">
                 <source>label.order_number</source>
@@ -828,23 +823,21 @@
             </trans-unit>
             <trans-unit id="label.orderNumber">
                 <source>label.orderNumber</source>
-                <target>Order number</target>
+                <target state="translated">Ordernummer</target>
             </trans-unit>
             <trans-unit id="label.invoice_tax_number">
                 <source>label.invoice_tax_number</source>
-                <target>VAT no.:</target>
+                <target state="translated">VAT nr.:</target>
             </trans-unit>
             <trans-unit id="label.invoice_bank_account">
                 <source>label.invoice_bank_account</source>
-                <target>Bank account</target>
+                <target state="translated">Bankkonto</target>
             </trans-unit>
             <trans-unit id="label.invoice_salutation">
                 <source>label.invoice_salutation</source>
-                <target>
-                    Ladies and gentlemen,
+                <target state="translated">Damer och herrar,
 
-                    I thank you for your order and charge for my services:
-                </target>
+                     Jag tackar för din beställning och tar betalt för mina tjänster:</target>
             </trans-unit>
 
             <!--
@@ -852,11 +845,11 @@
             -->
             <trans-unit id="export.title">
                 <source>export.title</source>
-                <target>Export</target>
+                <target state="translated">Exportera</target>
             </trans-unit>
             <trans-unit id="export.subtitle">
                 <source>export.subtitle</source>
-                <target>Export timesheet data to various formats</target>
+                <target state="translated">Exportera tidsrapport till olika format</target>
             </trans-unit>
             <trans-unit id="export.period">
                 <source>export.period</source>
@@ -864,23 +857,23 @@
             </trans-unit>
             <trans-unit id="export.document_title">
                 <source>export.document_title</source>
-                <target>List of expenses</target>
+                <target state="translated">Förteckning över utgifter</target>
             </trans-unit>
             <trans-unit id="export.full_list">
                 <source>export.full_list</source>
-                <target>Full list</target>
+                <target state="translated">Full lista</target>
             </trans-unit>
             <trans-unit id="export.summary">
                 <source>export.summary</source>
-                <target>Summary</target>
+                <target state="translated">Sammanfattning</target>
             </trans-unit>
             <trans-unit id="export.page_of">
                 <source>export.page_of</source>
-                <target>Page %page% of %pages%</target>
+                <target state="translated">Sida %page% av %pages%</target>
             </trans-unit>
             <trans-unit id="export.date_copyright">
                 <source>export.date_copyright</source>
-                <target>Created %date% with %kimai%</target>
+                <target state="translated">Skapad %date% med %kimai%</target>
             </trans-unit>
 
             <!--
@@ -888,35 +881,35 @@
             -->
             <trans-unit id="month.1">
                 <source>month.1</source>
-                <target>January</target>
+                <target state="translated">Januari</target>
             </trans-unit>
             <trans-unit id="month.2">
                 <source>month.2</source>
-                <target>February</target>
+                <target state="translated">Februari</target>
             </trans-unit>
             <trans-unit id="month.3">
                 <source>month.3</source>
-                <target>March</target>
+                <target state="translated">Mars</target>
             </trans-unit>
             <trans-unit id="month.4">
                 <source>month.4</source>
-                <target>April</target>
+                <target state="translated">April</target>
             </trans-unit>
             <trans-unit id="month.5">
                 <source>month.5</source>
-                <target>May</target>
+                <target state="translated">Maj</target>
             </trans-unit>
             <trans-unit id="month.6">
                 <source>month.6</source>
-                <target>June</target>
+                <target state="translated">Juni</target>
             </trans-unit>
             <trans-unit id="month.7">
                 <source>month.7</source>
-                <target>July</target>
+                <target state="translated">Juli</target>
             </trans-unit>
             <trans-unit id="month.8">
                 <source>month.8</source>
-                <target>August</target>
+                <target state="translated">Augusti</target>
             </trans-unit>
             <trans-unit id="month.9">
                 <source>month.9</source>
@@ -924,7 +917,7 @@
             </trans-unit>
             <trans-unit id="month.10">
                 <source>month.10</source>
-                <target>October</target>
+                <target state="translated">Oktober</target>
             </trans-unit>
             <trans-unit id="month.11">
                 <source>month.11</source>
@@ -940,25 +933,24 @@
             -->
             <trans-unit id="active.entries">
                 <source>active.entries</source>
-                <target>You have %count% active record|You have %count% active records</target>
+                <target state="translated">Du har %count% aktiv post | Du har %count% aktiva poster</target>
             </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
-                <target>Show all records</target>
+                <target state="translated">Visa alla Poster</target>
             </trans-unit>
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
-                <target>
-                    Restart your last recorded activity|Restart one of your %count% last activities
-                </target>
+                <target state="translated">
+Starta din senaste registrerade aktiviteten|starta en av dina %count% sista aktiviteter</target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>
-                <target>%activity% in %project% for %customer%</target>
+                <target state="translated">%activity% i %project% för %customer%</target>
             </trans-unit>
             <trans-unit id="timesheet.start">
                 <source>timesheet.start</source>
-                <target>Create new time-record</target>
+                <target state="translated">Skapa ny tidpost</target>
             </trans-unit>
 
             <!--
@@ -966,47 +958,47 @@
             -->
             <trans-unit id="label.pageSize">
                 <source>label.pageSize</source>
-                <target>Page size</target>
+                <target state="translated">Pappersstorlek</target>
             </trans-unit>
             <trans-unit id="label.entryState">
                 <source>label.entryState</source>
-                <target>Records</target>
+                <target state="translated">Post</target>
             </trans-unit>
             <trans-unit id="label.exported">
                 <source>label.exported</source>
-                <target>Exported</target>
+                <target state="translated">Exporterad</target>
             </trans-unit>
             <trans-unit id="entryState.exported">
                 <source>entryState.exported</source>
-                <target>Cleared</target>
+                <target state="translated">Rennrad</target>
             </trans-unit>
             <trans-unit id="entryState.not_exported">
                 <source>entryState.not_exported</source>
-                <target>Open</target>
+                <target state="translated">Öppen</target>
             </trans-unit>
             <trans-unit id="entryState.all">
                 <source>entryState.all</source>
-                <target>All</target>
+                <target state="translated">Alla</target>
             </trans-unit>
             <trans-unit id="entryState.running">
                 <source>entryState.running</source>
-                <target>Active</target>
+                <target state="translated">Aktiv</target>
             </trans-unit>
             <trans-unit id="entryState.stopped">
                 <source>entryState.stopped</source>
-                <target>Stopped</target>
+                <target state="translated">Stoppad</target>
             </trans-unit>
             <trans-unit id="export.clear_all">
                 <source>export.clear_all</source>
-                <target>Mark all shown records as open?</target>
+                <target state="translated">Markera alla visade poster som öppna?</target>
             </trans-unit>
             <trans-unit id="export.mark_all">
                 <source>export.mark_all</source>
-                <target>Mark all shown records as cleared?</target>
+                <target state="translated">Markera alla visade poster som rensade?</target>
             </trans-unit>
             <trans-unit id="label.globalsOnly">
                 <source>label.globalsOnly</source>
-                <target>Only global</target>
+                <target state="translated">Endast globalt</target>
             </trans-unit>
             <!--
               HELP

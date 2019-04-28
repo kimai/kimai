@@ -12,7 +12,7 @@
             </trans-unit>
             <trans-unit id="support">
                 <source>support</source>
-                <target>Hjälp</target>
+                <target state="translated">Support</target>
             </trans-unit>
             <trans-unit id="website">
                 <source>website</source>
@@ -20,11 +20,11 @@
             </trans-unit>
             <trans-unit id="help">
                 <source>help</source>
-                <target>Dokumentation</target>
+                <target state="translated">Dokumentation</target>
             </trans-unit>
             <trans-unit id="tab.thanks">
                 <source>tab.thanks</source>
-                <target>Danke!</target>
+                <target state="translated">Speciellt tack</target>
             </trans-unit>
         </body>
     </file>
