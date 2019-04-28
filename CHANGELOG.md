@@ -1,10 +1,11 @@
 # Change Log
 
-## [0.9](https://github.com/kevinpapst/kimai2/tree/0.9) (unreleased)
+## [0.9](https://github.com/kevinpapst/kimai2/tree/0.9) (2019-04-29)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.8.1...0.9)
 
 **Implemented enhancements:**
 
+- Translation to Swedish [\#731](https://github.com/kevinpapst/kimai2/issues/731)
 - Remove active flag in user preferences form for non admin user [\#694](https://github.com/kevinpapst/kimai2/issues/694)
 - Add floor and ceil rounding [\#692](https://github.com/kevinpapst/kimai2/issues/692)
 - POST/PUT API endpoints for projects and activities [\#683](https://github.com/kevinpapst/kimai2/issues/683)
@@ -20,6 +21,8 @@
 - add timerange filter to timesheet export api [\#577](https://github.com/kevinpapst/kimai2/issues/577)
 - Extend rounding options with "to closest" mode [\#576](https://github.com/kevinpapst/kimai2/issues/576)
 - Custom CSS [\#516](https://github.com/kevinpapst/kimai2/issues/516)
+- reduce config complexity by converting php format to js format [\#734](https://github.com/kevinpapst/kimai2/pull/734) ([kevinpapst](https://github.com/kevinpapst))
+- Updated authorization screens [\#727](https://github.com/kevinpapst/kimai2/pull/727) ([kevinpapst](https://github.com/kevinpapst))
 - added delete timesheet API endpoint [\#726](https://github.com/kevinpapst/kimai2/pull/726) ([kevinpapst](https://github.com/kevinpapst))
 - Design updates [\#723](https://github.com/kevinpapst/kimai2/pull/723) ([kevinpapst](https://github.com/kevinpapst))
 - added api/activities POST and PATCH [\#717](https://github.com/kevinpapst/kimai2/pull/717) ([horlabs](https://github.com/horlabs))
@@ -75,6 +78,7 @@
 
 **Merged pull requests:**
 
+- added svenska [\#732](https://github.com/kevinpapst/kimai2/pull/732) ([kevinpapst](https://github.com/kevinpapst))
 - apply users timezone to toolbar queries [\#716](https://github.com/kevinpapst/kimai2/pull/716) ([kevinpapst](https://github.com/kevinpapst))
 - remove unused role ROLE\_CUSTOMER [\#712](https://github.com/kevinpapst/kimai2/pull/712) ([kevinpapst](https://github.com/kevinpapst))
 - Update to Symfony 4.2 [\#710](https://github.com/kevinpapst/kimai2/pull/710) ([kevinpapst](https://github.com/kevinpapst))
@@ -118,7 +122,6 @@
 
 **Merged pull requests:**
 
-- release 0.8.1 [\#595](https://github.com/kevinpapst/kimai2/pull/595) ([kevinpapst](https://github.com/kevinpapst))
 - Support foreign keys with SQLite [\#590](https://github.com/kevinpapst/kimai2/pull/590) ([kevinpapst](https://github.com/kevinpapst))
 - post release fixes [\#584](https://github.com/kevinpapst/kimai2/pull/584) ([kevinpapst](https://github.com/kevinpapst))
 - Mobile navbar size [\#583](https://github.com/kevinpapst/kimai2/pull/583) ([kevinpapst](https://github.com/kevinpapst))
