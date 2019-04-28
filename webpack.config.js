@@ -1,4 +1,5 @@
 var Encore = require('@symfony/webpack-encore');
+var webpack = require('webpack');
 
 Encore
     // the project directory where compiled assets will be stored
@@ -35,9 +36,12 @@ Encore
         resolveUrlLoader: false
     })
 
+    // prevent that all moment locales will be included
+    .addPlugin(new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/))
+
     // add hash after file name
     .configureFilenames({
-        js: '[name].js?[chunkhash]',
+        js: '[name].js?[contenthash]',
         css: '[name].css?[contenthash]',
         images: 'images/[name].[ext]?[hash:8]',
         fonts: 'fonts/[name].[ext]?[hash:8]'
