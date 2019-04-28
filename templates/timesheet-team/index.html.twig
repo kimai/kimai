@@ -4,12 +4,33 @@
 {% import "macros/toolbar.html.twig" as toolbar %}
 {% import "macros/actions.html.twig" as actions %}
 
+{% set duration_only = is_duration_only() %}
+{% set columns = {'date': ''} %}
+
+{% if not duration_only %}
+    {% set columns = columns|merge({'starttime': 'hidden-xs', 'endtime': 'hidden-xs'}) %}
+{% endif %}
+
+{% set columns = columns|merge({
+    'duration': '',
+    'rate': '',
+    'customer': 'hidden-xs hidden-sm',
+    'project': 'hidden-xs hidden-sm',
+    'activity': 'hidden-xs hidden-sm',
+    'username': 'hidden-xs',
+    'description': 'hidden-xs hidden-sm',
+    'actions': 'alwaysVisible',
+}) %}
+
+{% set tableName = 'timesheet_admin' %}
+
 {% block page_title %}{{ 'admin_timesheet.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_timesheet.subtitle'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.timesheets_team('index') }}{% endblock %}
 
 {% block main_before %}
     {{ toolbar.toolbar(toolbarForm, 'collapseTimesheetAdmin', showFilter) }}
+    {{ tables.data_table_column_modal(tableName, columns) }}
 {% endblock %}
 
 {% block main %}
@@ -17,26 +38,6 @@
     {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% else %}
-        {% set duration_only = is_duration_only() %}
-        {% set columns = {'date': ''} %}
-
-        {% if not duration_only %}
-            {% set columns = columns|merge({'starttime': 'hidden-xs', 'endtime': 'hidden-xs'}) %}
-        {% endif %}
-
-        {% set columns = columns|merge({
-            'duration': '',
-            'rate': '',
-            'customer': 'hidden-xs hidden-sm',
-            'project': 'hidden-xs hidden-sm',
-            'activity': 'hidden-xs hidden-sm',
-            'username': 'hidden-xs',
-            'description': 'hidden-xs hidden-sm',
-            'actions': 'alwaysVisible',
-        }) %}
-
-        {% set tableName = 'timesheet_admin' %}
-
         {{ tables.data_table_header(tableName, columns) }}
 
         {% for entry in entries %}

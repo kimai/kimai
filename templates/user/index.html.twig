@@ -3,6 +3,18 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/toolbar.html.twig" as toolbar %}
 
+{% set columns = {
+    'alias': 'alwaysVisible',
+    'username': 'hidden-xs',
+    'email': 'hidden-xs hidden-sm',
+    'title': 'hidden-xs',
+    'roles': 'hidden-xs',
+    'active': '',
+    'actions': 'alwaysVisible',
+} %}
+
+{% set tableName = 'user_admin' %}
+
 {% block page_title %}{{ 'admin_user.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_user.subtitle'|trans }}{% endblock %}
 {% block page_actions %}
@@ -13,9 +25,9 @@
     {{ widgets.page_actions(actions) }}
 {% endblock %}
 
-
 {% block main_before %}
     {{ toolbar.toolbar(toolbarForm, 'collapseUserAdmin', showFilter) }}
+    {{ tables.data_table_column_modal(tableName, columns) }}
 {% endblock %}
 
 {% block main %}
@@ -23,18 +35,6 @@
     {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% else %}
-        {% set columns = {
-            'alias': 'alwaysVisible',
-            'username': 'hidden-xs',
-            'email': 'hidden-xs hidden-sm',
-            'title': 'hidden-xs',
-            'roles': 'hidden-xs',
-            'active': '',
-            'actions': 'alwaysVisible',
-        } %}
-
-        {% set tableName = 'user_admin' %}
-
         {{ tables.data_table_header(tableName, columns) }}
 
         {% for entry in entries %}

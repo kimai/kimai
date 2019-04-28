@@ -3,6 +3,21 @@
 {% import "macros/toolbar.html.twig" as toolbar %}
 {% import "macros/datatables.html.twig" as tables %}
 
+{% set columns = {
+    'date': 'alwaysVisible',
+    'user': 'hidden-xs hidden-sm',
+    'customer': 'hidden-xs hidden-sm',
+    'project': 'hidden-xs hidden-sm',
+    'activity': 'hidden-xs hidden-sm',
+    'description': 'hidden-xs hidden-sm',
+    'unit_price': 'hidden-xs',
+    'duration': '',
+    'total_rate': '',
+    'exported': 'alwaysVisible',
+} %}
+
+{% set tableName = 'export' %}
+
 {% block page_title %}{{ 'export.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'export.subtitle'|trans }}{% endblock %}
 {% block page_actions %}
@@ -16,6 +31,7 @@
 
 {% block main_before %}
     {{ toolbar.toolbar(form, 'collapseExport', true) }}
+    {{ tables.data_table_column_modal(tableName, columns) }}
 {% endblock %}
 
 {% block main_after %}
@@ -27,21 +43,6 @@
     {% if entries is empty %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% else %}
-        {% set columns = {
-            'date': 'alwaysVisible',
-            'user': 'hidden-xs hidden-sm',
-            'customer': 'hidden-xs hidden-sm',
-            'project': 'hidden-xs hidden-sm',
-            'activity': 'hidden-xs hidden-sm',
-            'description': 'hidden-xs hidden-sm',
-            'unit_price': 'hidden-xs',
-            'duration': '',
-            'total_rate': '',
-            'exported': 'alwaysVisible',
-        } %}
-
-        {% set tableName = 'export' %}
-
         {{ tables.data_table_header(tableName, columns) }}
         {% for entry in entries %}
             {% set currency = entry.project.customer.currency %}
