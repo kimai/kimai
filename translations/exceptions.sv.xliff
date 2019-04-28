@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="sv" datatype="plaintext" original="exceptions.en.xliff">
+        <body>
+            <trans-unit id="access.denied">
+                <source>access.denied</source>
+                <target state="translated">Åtkomst nekas</target>
+            </trans-unit>
+            <trans-unit id="stacktrace">
+                <source>stacktrace</source>
+                <target state="translated">Ett problem uppstod</target>
+            </trans-unit>
+            <trans-unit id="http_error.title">
+                <source>http_error.title</source>
+                <target state="translated">Fel</target>
+            </trans-unit>
+            <trans-unit id="http_error.description">
+                <source>http_error.description</source>
+                <target state="translated">Oj! Ett fel uppstod.</target>
+            </trans-unit>
+            <trans-unit id="http_error.suggestion">
+                <source>http_error.suggestion</source>
+                <target state="translated">
+Ett oväntat fel inträffade, försök igen.
+                     Du kan ha hittat en bugg, så kontakta din administratör om problemet
+                     går inte bort efter att du försökt det igen.</target>
+            </trans-unit>
+            <trans-unit id="http_error_404.description">
+                <source>http_error_404.description</source>
+                <target state="translated">Oj! Hittade inte sidan.</target>
+            </trans-unit>
+            <trans-unit id="http_error_404.suggestion">
+                <source>http_error_404.suggestion</source>
+                <target state="translated">Vi kunde inte hitta den sida du letade efter.
+                     Under tiden kan du återvända till din dashboard och börja om.
+</target>
+            </trans-unit>
+            <trans-unit id="http_error_403.description">
+                <source>http_error_403.description</source>
+                <target state="translated">Den här sidan är begränsad.</target>
+            </trans-unit>
+            <trans-unit id="http_error_403.suggestion">
+                <source>http_error_403.suggestion</source>
+                <target state="translated">
+Tyvärr, men du har inte tillräckligt med behörigheter för att se den här sidan.
+                     Snälla prata med din administratör om du tycker att det här är ett fel.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
