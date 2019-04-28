@@ -807,11 +807,11 @@ För närvarande har %user% användare %records% tidsrekord som räknas upp till
             </trans-unit>
             <trans-unit id="invoice.signature_user">
                 <source>invoice.signature_user</source>
-                <target state="translated">Bekräftelse: Datum / Säljarens Namen / Signatur</target>
+                <target state="translated">Bekräftelse: Datum / Säljarens namn / Signatur</target>
             </trans-unit>
             <trans-unit id="invoice.signature_customer">
                 <source>invoice.signature_customer</source>
-                <target state="translated">Bekräftelse: Datum / Kunden Name / Signatur</target>
+                <target state="translated">Bekräftelse: Datum / Kunden namn / Signatur</target>
             </trans-unit>
             <trans-unit id="invoice.total_working_time">
                 <source>invoice.total_working_time</source>            
