@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" target-language="de" datatype="plaintext" original="about.en.xliff">
+    <file source-language="en" target-language="sv" datatype="plaintext" original="about.en.xliff">
         <body>
-            <trans-unit id="about.title">
+  <trans-unit id="about.title">
                 <source>about.title</source>
-                <target>Über Kimai</target>
+                <target>Om Kimai</target>
             </trans-unit>
             <trans-unit id="about.subtitle">
                 <source>about.subtitle</source>
-                <target>System Informationen</target>
+                <target>Systeminformation</target>
             </trans-unit>
             <trans-unit id="support">
                 <source>support</source>
@@ -16,7 +16,7 @@
             </trans-unit>
             <trans-unit id="website">
                 <source>website</source>
-                <target>Homepage</target>
+                <target>Hemsida</target>
             </trans-unit>
             <trans-unit id="help">
                 <source>help</source>
@@ -24,23 +24,23 @@
             </trans-unit>
             <trans-unit id="tab.thanks">
                 <source>tab.thanks</source>
-                <target>Danke!</target>
+                <target state="translated">Speciellt tack</target>
             </trans-unit>
-            <trans-unit id="donate">
+           <trans-unit id="donate">
                 <source>donate</source>
-                <target>Spende für die Zukunft von Kimai</target>
+                <target state="translated">Donera för framtiden för Kimai</target>
             </trans-unit>
             <trans-unit id="published_under">
                 <source>published_under</source>
-                <target>%kimai% wird veröffentlicht unter</target>
+                <target state="translated">%kimai% är publicerad under</target>
             </trans-unit>
             <trans-unit id="special_thanks">
                 <source>special_thanks</source>
-                <target>Besonderer Dank geht an …</target>
+                <target state="translated">Särskilt tack gå till …</target>
             </trans-unit>
             <trans-unit id="library_authors">
                 <source>library_authors</source>
-                <target>… die Autoren der folgenden Software-Bibliotheken, ohne Euch wäre Kimai nicht möglich 👍</target>
+                <target state="translated">… författarna till följande mjukvarubibliotek, Kimai skulle inte vara möjliga utan dig 👍</target>
             </trans-unit>
         </body>
     </file>
