@@ -27,15 +27,15 @@
             </trans-unit>
             <trans-unit id="This is a mandatory field">
                 <source>This is a mandatory field</source>
-                <target>Mandatory</target>
+                <target>必須</target>
             </trans-unit>
             <trans-unit id="create">
                 <source>create</source>
-                <target>Create</target>
+                <target>つくる</target>
             </trans-unit>
             <trans-unit id="confirm.delete">
                 <source>confirm.delete</source>
-                <target>Do you really want to delete it?</target>
+                <target>本当にこのアイテムを削除しますか？</target>
             </trans-unit>
             <trans-unit id="confirm.delete_message">
                 <source>confirm.delete_message</source>
@@ -43,7 +43,7 @@
             </trans-unit>
             <trans-unit id="delete.not_in_use">
                 <source>delete.not_in_use</source>
-                <target>This item can be safely deleted.</target>
+                <target>このアイテムは安全に削除できます。</target>
             </trans-unit>
 
             <!--
@@ -139,7 +139,7 @@
             -->
             <trans-unit id="error.no_entries_found">
                 <source>error.no_entries_found</source>
-                <target>No entries were found based on your selected filters.</target>
+                <target>選択したフィルタに基づくエントリは見つかりませんでした。</target>
             </trans-unit>
 
             <!--
@@ -239,7 +239,7 @@
             -->
             <trans-unit id="label.actions">
                 <source>label.actions</source>
-                <target>Actions</target>
+                <target>行動</target>
             </trans-unit>
             <trans-unit id="action.edit">
                 <source>action.edit</source>
@@ -307,7 +307,7 @@
             </trans-unit>
             <trans-unit id="timesheet.subtitle">
                 <source>timesheet.subtitle</source>
-                <target>Administrate my time-recordings</target>
+                <target>自分のタイムレコーディングを管理する</target>
             </trans-unit>
             <trans-unit id="timesheet.edit">
                 <source>timesheet.edit</source>
@@ -327,7 +327,7 @@
             </trans-unit>
             <trans-unit id="modal.columns.title">
                 <source>modal.columns.title</source>
-                <target>Change column visibility</target>
+                <target>列の表示設定を変更する</target>
             </trans-unit>
             <trans-unit id="modal.columns.description">
                 <source>modal.columns.description</source>
@@ -383,15 +383,15 @@
             </trans-unit>
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
-                <target>Minimize the left sidebar</target>
+                <target>左側のサイドバーを最小化する</target>
             </trans-unit>
             <trans-unit id="label.calendar.initial_view">
                 <source>label.calendar.initial_view</source>
-                <target>Initial calendar view</target>
+                <target>初期カレンダービュー</target>
             </trans-unit>
             <trans-unit id="label.login.initial_view">
                 <source>label.login.initial_view</source>
-                <target>Initial view after login</target>
+                <target>ログイン後の初期画面</target>
             </trans-unit>
             <!-- Options for user-preference label.calendar.initial_view -->
             <trans-unit id="month">
@@ -408,7 +408,7 @@
             </trans-unit>
             <trans-unit id="label.timesheet.daily_stats">
                 <source>label.timesheet.daily_stats</source>
-                <target>Show daily stats in timesheet</target>
+                <target>タイムシートに毎日の統計を表示する</target>
             </trans-unit>
             <trans-unit id="label.now">
                 <source>label.now</source>
@@ -424,7 +424,7 @@
             </trans-unit>
             <trans-unit id="calendar.subtitle">
                 <source>calendar.subtitle</source>
-                <target>View and manage your timesheet data within a calendar</target>
+                <target>カレンダー内のタイムシートデータを表示および管理する</target>
             </trans-unit>
 
             <!--
@@ -448,7 +448,7 @@
             </trans-unit>
             <trans-unit id="admin_project.subtitle">
                 <source>admin_project.subtitle</source>
-                <target>A project combines activities for a customer in a group</target>
+                <target>プロジェクトは、グループ内の顧客の活動を結合します。</target>
             </trans-unit>
             <trans-unit id="admin_project.delete_confirm">
                 <source>admin_project.delete_confirm</source>
@@ -469,7 +469,7 @@
             </trans-unit>
             <trans-unit id="admin_activity.subtitle">
                 <source>admin_activity.subtitle</source>
-                <target>Tasks that can be chosen for time-records</target>
+                <target>タイムレコードに選択できるタスク</target>
             </trans-unit>
             <trans-unit id="admin_activity.delete_confirm">
                 <source>admin_activity.delete_confirm</source>
@@ -490,7 +490,7 @@
             </trans-unit>
             <trans-unit id="admin_customer.subtitle">
                 <source>admin_customer.subtitle</source>
-                <target>Your customer are the base for creating projects and activities</target>
+                <target>あなたの顧客はプロジェクトや活動を創造するための基盤です</target>
             </trans-unit>
             <trans-unit id="label.number">
                 <source>label.number</source>
@@ -594,15 +594,15 @@
             -->
             <trans-unit id="ROLE_SUPER_ADMIN">
                 <source>ROLE_SUPER_ADMIN</source>
-                <target>System-Admin</target>
+                <target>システムのアドミニストレータ</target>
             </trans-unit>
             <trans-unit id="ROLE_ADMIN">
                 <source>ROLE_ADMIN</source>
-                <target>Administrator</target>
+                <target>アドミニストレータ</target>
             </trans-unit>
             <trans-unit id="ROLE_TEAMLEAD">
                 <source>ROLE_TEAMLEAD</source>
-                <target>Teamlead</target>
+                <target>チームリーダー</target>
             </trans-unit>
             <trans-unit id="ROLE_USER">
                 <source>ROLE_USER</source>
@@ -618,83 +618,83 @@
             -->
             <trans-unit id="stats.durationToday">
                 <source>stats.durationToday</source>
-                <target>Working hours today</target>
+                <target>今日の勤務時間</target>
             </trans-unit>
             <trans-unit id="stats.durationWeek">
                 <source>stats.durationWeek</source>
-                <target>Working hours this week</target>
+                <target>今週の労働時間</target>
             </trans-unit>
             <trans-unit id="stats.durationMonth">
                 <source>stats.durationMonth</source>
-                <target>Working hours this month</target>
+                <target>今月の労働時間</target>
             </trans-unit>
             <trans-unit id="stats.durationYear">
                 <source>stats.durationYear</source>
-                <target>Working hours this year</target>
+                <target>今年の労働時間</target>
             </trans-unit>
             <trans-unit id="stats.durationTotal">
                 <source>stats.durationTotal</source>
-                <target>Working hours total</target>
+                <target>労働時間合計</target>
             </trans-unit>
             <trans-unit id="stats.amountToday">
                 <source>stats.amountToday</source>
-                <target>Revenue today</target>
+                <target>今日の収入</target>
             </trans-unit>
             <trans-unit id="stats.amountWeek">
                 <source>stats.amountWeek</source>
-                <target>Revenue this week</target>
+                <target>今週の収入</target>
             </trans-unit>
             <trans-unit id="stats.amountMonth">
                 <source>stats.amountMonth</source>
-                <target>Revenue this month</target>
+                <target>今月の収入</target>
             </trans-unit>
             <trans-unit id="stats.amountYear">
                 <source>stats.amountYear</source>
-                <target>Revenue this year</target>
+                <target>今年の収入</target>
             </trans-unit>
             <trans-unit id="stats.amountTotal">
                 <source>stats.amountTotal</source>
-                <target>Revenue total</target>
+                <target>総収入</target>
             </trans-unit>
             <trans-unit id="stats.userActiveToday">
                 <source>stats.userActiveToday</source>
-                <target>Active users today</target>
+                <target>今日のアクティブユーザー</target>
             </trans-unit>
             <trans-unit id="stats.userActiveWeek">
                 <source>stats.userActiveWeek</source>
-                <target>Active users this week</target>
+                <target>今週のアクティブユーザー</target>
             </trans-unit>
             <trans-unit id="stats.userActiveMonth">
                 <source>stats.userActiveMonth</source>
-                <target>Active users this month</target>
+                <target>今月のアクティブユーザー</target>
             </trans-unit>
             <trans-unit id="stats.userActiveYear">
                 <source>stats.userActiveYear</source>
-                <target>Active users this year</target>
+                <target>今年のアクティブユーザー</target>
             </trans-unit>
             <trans-unit id="stats.userActiveTotal">
                 <source>stats.userActiveTotal</source>
-                <target>Active users ever</target>
+                <target>これまでにアクティブなユーザー</target>
             </trans-unit>
             <trans-unit id="stats.activeRecordings">
                 <source>stats.activeRecordings</source>
-                <target>Active records</target>
+                <target>アクティブレコード</target>
             </trans-unit>
             <trans-unit id="stats.userTotal">
                 <source>stats.userTotal</source>
-                <target>Amount users</target>
+                <target>ユーザー数</target>
             </trans-unit>
             <trans-unit id="stats.activityTotal">
                 <source>stats.activityTotal</source>
-                <target>Amount activities</target>
+                <target>金額アクティビティ</target>
             </trans-unit>
             <trans-unit id="stats.projectTotal">
                 <source>stats.projectTotal</source>
-                <target>Amount projects</target>
+                <target>額プロジェクト</target>
             </trans-unit>
             <trans-unit id="stats.customerTotal">
                 <source>stats.customerTotal</source>
-                <target>Amount customers</target>
+                <target>顧客数</target>
             </trans-unit>
 
             <!--
@@ -702,7 +702,7 @@
             -->
             <trans-unit id="admin_invoice_template.title">
                 <source>admin_invoice_template.title</source>
-                <target>Invoice template</target>
+                <target>請求書テンプレート</target>
             </trans-unit>
             <trans-unit id="admin_invoice_template.subtitle">
                 <source>admin_invoice_template.subtitle</source>
@@ -714,11 +714,11 @@
             </trans-unit>
             <trans-unit id="invoice.subtitle">
                 <source>invoice.subtitle</source>
-                <target>Create invoices from your recorded timesheet entries.</target>
+                <target>記録されたタイムシートのエントリから請求書を作成します。</target>
             </trans-unit>
             <trans-unit id="invoice.preview">
                 <source>invoice.preview</source>
-                <target>This is a preview of the data that will show up in your invoice document.</target>
+                <target>これは請求書に表示されるデータのプレビューです。</target>
             </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
@@ -750,11 +750,11 @@
             </trans-unit>
             <trans-unit id="label.due_days">
                 <source>label.due_days</source>
-                <target>Payment term in days</target>
+                <target>支払期間（日数）</target>
             </trans-unit>
             <trans-unit id="invoice.due_days">
                 <source>invoice.due_days</source>
-                <target>Payment target</target>
+                <target>支払い対象</target>
             </trans-unit>
             <trans-unit id="invoice.from">
                 <source>invoice.from</source>
@@ -770,15 +770,15 @@
             </trans-unit>
             <trans-unit id="invoice.subtotal">
                 <source>invoice.subtotal</source>
-                <target>Subtotal</target>
+                <target>小計</target>
             </trans-unit>
             <trans-unit id="invoice.tax">
                 <source>invoice.tax</source>
-                <target>Tax</target>
+                <target>税金</target>
             </trans-unit>
             <trans-unit id="invoice.total">
                 <source>invoice.total</source>
-                <target>Total</target>
+                <target>合計</target>
             </trans-unit>
             <trans-unit id="invoice.service_date">
                 <source>invoice.service_date</source>
@@ -786,19 +786,19 @@
             </trans-unit>
             <trans-unit id="label.amount">
                 <source>label.amount</source>
-                <target>Quantity</target>
+                <target>量</target>
             </trans-unit>
             <trans-unit id="label.total_rate">
                 <source>label.total_rate</source>
-                <target>Total price</target>
+                <target>合計金額</target>
             </trans-unit>
             <trans-unit id="label.unit_price">
                 <source>label.unit_price</source>
-                <target>Unit price</target>
+                <target>単価</target>
             </trans-unit>
             <trans-unit id="label.payment_terms">
                 <source>label.payment_terms</source>
-                <target>Terms of payment</target>
+                <target>支払条件</target>
             </trans-unit>
             <trans-unit id="invoice.signature_user">
                 <source>invoice.signature_user</source>
@@ -810,11 +810,11 @@
             </trans-unit>
             <trans-unit id="invoice.total_working_time">
                 <source>invoice.total_working_time</source>
-                <target>Total duration</target>
+                <target>合計期間</target>
             </trans-unit>
             <trans-unit id="label.orderNumber">
                 <source>label.orderNumber</source>
-                <target>Order number</target>
+                <target>注文番号</target>
             </trans-unit>
             <trans-unit id="label.invoice_tax_number">
                 <source>label.invoice_tax_number</source>
@@ -822,7 +822,7 @@
             </trans-unit>
             <trans-unit id="label.invoice_bank_account">
                 <source>label.invoice_bank_account</source>
-                <target>Bank account</target>
+                <target>銀行口座</target>
             </trans-unit>
             <trans-unit id="label.invoice_salutation">
                 <source>label.invoice_salutation</source>
@@ -842,7 +842,7 @@
             </trans-unit>
             <trans-unit id="export.subtitle">
                 <source>export.subtitle</source>
-                <target>Export timesheet data to various formats</target>
+                <target>タイムシートデータをさまざまな形式にエクスポートする</target>
             </trans-unit>
             <trans-unit id="export.period">
                 <source>export.period</source>
@@ -858,7 +858,7 @@
             </trans-unit>
             <trans-unit id="export.summary">
                 <source>export.summary</source>
-                <target>Summary</target>
+                <target>概要</target>
             </trans-unit>
             <trans-unit id="export.page_of">
                 <source>export.page_of</source>
@@ -930,7 +930,7 @@
             </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
-                <target>Show all records</target>
+                <target>全レコードを表示</target>
             </trans-unit>
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
@@ -944,7 +944,7 @@
             </trans-unit>
             <trans-unit id="timesheet.start">
                 <source>timesheet.start</source>
-                <target>Create new time-record</target>
+                <target>新しいタイムレコードを作成する</target>
             </trans-unit>
 
             <!--
@@ -984,15 +984,15 @@
             </trans-unit>
             <trans-unit id="export.clear_all">
                 <source>export.clear_all</source>
-                <target>Mark all shown records as open?</target>
+                <target>表示されたすべてのレコードをオープンとしてマークしますか？</target>
             </trans-unit>
             <trans-unit id="export.mark_all">
                 <source>export.mark_all</source>
-                <target>Mark all shown records as cleared?</target>
+                <target>表示されたすべてのレコードを消去済みとしてマークしますか？</target>
             </trans-unit>
             <trans-unit id="label.globalsOnly">
                 <source>label.globalsOnly</source>
-                <target>Only global</target>
+                <target>グローバルのみを表示</target>
             </trans-unit>
         </body>
     </file>
