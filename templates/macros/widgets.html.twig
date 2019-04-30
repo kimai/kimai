@@ -83,7 +83,7 @@
 
 {% macro label(title, type, tooltip) %}
     {# success, warning, danger, primary #}
-    <span {%  if tooltip %}data-tooltip="{{ tooltip }}" {% endif %}class="label label-{{ type|default('success') }}">{{ title|trans }}</span>
+    <span {%  if tooltip %}data-toggle="tooltip" data-placement="left" title="{{ tooltip }}"{% endif %}class="label label-{{ type|default('success') }}">{{ title|trans }}</span>
 {% endmacro %}
 
 {% macro badge(title, color) %}
