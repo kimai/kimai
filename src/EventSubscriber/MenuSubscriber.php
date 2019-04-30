@@ -69,13 +69,13 @@ class MenuSubscriber implements EventSubscriberInterface
 
         if ($auth->isGranted('view_own_timesheet')) {
             $menu->addItem(
-                new MenuItemModel('timesheet', 'menu.timesheet', 'timesheet', [], 'far fa-clock')
+                new MenuItemModel('timesheet', 'menu.timesheet', 'timesheet', [], 'fas fa-clock')
             );
         }
 
         if ($auth->isGranted('view_invoice')) {
             $menu->addItem(
-                new MenuItemModel('invoice', 'menu.invoice', 'invoice', [], 'far fa-file-alt')
+                new MenuItemModel('invoice', 'menu.invoice', 'invoice', [], 'fas fa-file-invoice')
             );
         }
 
