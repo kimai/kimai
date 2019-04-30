@@ -93,6 +93,7 @@ class ExportController extends AbstractController
         $entries = $this->getEntries($query);
 
         return $this->render('export/index.html.twig', [
+            'query' => $query,
             'entries' => $entries,
             'form' => $form->createView(),
             'renderer' => $this->export->getRenderer(),
