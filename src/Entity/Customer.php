@@ -147,21 +147,8 @@ class Customer
      */
     private $timezone;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="fixed_rate", type="float", precision=10, scale=2, nullable=true)
-     * @Assert\GreaterThanOrEqual(0)
-     */
-    private $fixedRate = null;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="hourly_rate", type="float", precision=10, scale=2, nullable=true)
-     * @Assert\GreaterThanOrEqual(0)
-     */
-    private $hourlyRate = null;
+    // keep the trait include exactly here, for placing the column at the correct position
+    use RatesTrait;
 
     /**
      * @return int
@@ -521,44 +508,6 @@ class Customer
     public function getProjects()
     {
         return $this->projects;
-    }
-
-    /**
-     * @return float
-     */
-    public function getFixedRate(): ?float
-    {
-        return $this->fixedRate;
-    }
-
-    /**
-     * @param float $fixedRate
-     * @return Customer
-     */
-    public function setFixedRate(?float $fixedRate)
-    {
-        $this->fixedRate = $fixedRate;
-
-        return $this;
-    }
-
-    /**
-     * @return float
-     */
-    public function getHourlyRate(): ?float
-    {
-        return $this->hourlyRate;
-    }
-
-    /**
-     * @param float $hourlyRate
-     * @return Customer
-     */
-    public function setHourlyRate(?float $hourlyRate)
-    {
-        $this->hourlyRate = $hourlyRate;
-
-        return $this;
     }
 
     /**
