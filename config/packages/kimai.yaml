@@ -177,11 +177,11 @@ kimai:
             date_time: 'm-d H:i'
             duration: '%%h:%%m tim'
         ja:
-            date_time_type: 'yyyy年MM月dd日HH時mm分'
+            date_time_type: 'yyyy年MM月dd日 HH時mm分'
             date_type: 'yyyy年MM月dd日'
             date: 'Y年m月d日'
             date_time: 'm月d日 H:i'
-            duration: '%%h:%%m h'
+            duration: '%%h:%%m時間'
 
     # --------------------------------------------------------------------------------
     # timesheet calendar configuration
