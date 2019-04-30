@@ -12,7 +12,7 @@
                     {% for title, class in entries %}
                         {% if 'alwaysVisible' not in class %}
                             <div class="form-group">
-                                <input type="checkbox" id="column_{{ title }}" name="{{ title }}"{% if is_visible_column(name, title, '') %} checked="checked"{% endif %}>
+                                <input type="checkbox" id="column_{{ title }}" name="{{ title }}"{% if is_visible_column(name, title) %} checked="checked"{% endif %}>
                                 <label class="control-label required" for="column_{{ title }}">{{ ('label.' ~ title)|trans }}</label>
                             </div>
                         {% endif %}
@@ -45,9 +45,9 @@
                 {% endif %}
             {% endfor %}
         {% else %}
-            {% if not is_visible_column(name, column, '') %}
+            {% if not is_visible_column(name, column) %}
                 {% set classes = classes ~ ' hidden' %}
-            {% elseif not is_datatable_configured(name, '') %}
+            {% elseif not is_datatable_configured(name) %}
                 {% for tmp in classes|split(' ') %}
                     {% if 'hidden' == tmp %}
                         {% set classes = classes|replace({(tmp): ''}) %}
