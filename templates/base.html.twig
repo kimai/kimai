@@ -49,7 +49,7 @@
     <!-- Page rendered on {{ 'now'|localizeddate('long', 'long', null, 'UTC') }} -->
 {% endblock %}
 
-{% block navbar_messages %}
+{% block navbar_start %}
     {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         {% if is_granted('view_own_timesheet') %}
             <li class="visible-xs-inline-block">
@@ -77,18 +77,23 @@
     {% endif %}
 {% endblock %}
 
-{% block navbar_notifications %}
-    {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-        {{ render(controller('App\\Controller\\NavbarController::recentActivitiesAction')) }}
-    {% endif %}
-{% endblock %}
 
-{# deactivated blocks #}
+{# these blocks and the hook-in logic by the AdminTheme could be re-used by Kimai or an extension at some point #}
+{#
+{% block navbar_messages %}{% endblock %}
+{% block navbar_notifications %}{% endblock %}
 {% block navbar_tasks %}{% endblock %}
+{% block navbar_end %}{% endblock %}
+#}
+
+{# deactivated blocks, as Kimai does not ship the sidebar for UX reasons #}
 {% block sidebar_user %}{% endblock %}
 {% block sidebar_search %}{% endblock %}
 
 {% block navbar_user %}
+    {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        {{ render(controller('App\\Controller\\NavbarController::recentActivitiesAction')) }}
+    {% endif %}
     {% import "macros/widgets.html.twig" as widgets %}
     <li class="dropdown user-menu">
         <a href="#" class="dropdown-toggle ddt-large" data-toggle="dropdown">
