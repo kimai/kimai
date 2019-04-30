@@ -41,7 +41,7 @@ Encore
 
     // add hash after file name
     .configureFilenames({
-        js: '[name].js?[contenthash]',
+        js: '[name].js?[chunkhash]',
         css: '[name].css?[contenthash]',
         images: 'images/[name].[ext]?[hash:8]',
         fonts: 'fonts/[name].[ext]?[hash:8]'
