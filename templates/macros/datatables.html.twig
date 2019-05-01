@@ -82,7 +82,7 @@
                         <thead>
                         <tr>
                             {%- for title, class in entries -%}
-                                <th class="{{ macro.data_table_column_class(name, entries, title) }}">{{ ('label.' ~ title)|trans }}</th>
+                                <th class="{{ macro.data_table_column_class(name, entries, title) }}">{% if title is not empty and title != 'actions' %}{{ ('label.' ~ title)|trans }}{% endif %}</th>
                             {%- endfor -%}
                         </tr>
                         </thead>

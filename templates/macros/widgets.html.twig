@@ -140,60 +140,112 @@
     </div>
 {% endmacro %}
 
-{% macro button_group(actions) %}
-    {% import _self as macro %}
+{% macro table_actions(actions) %}
+    {%- import _self as macro -%}
+    {% if actions|length >= 1 %}
     <div class="btn-group">
-        {%- for icon,values in actions  %}
-            {% spaceless %}
-                {% set id = null %}
-                {% set onclick = null %}
-                {% set modal = null %}
-                {% set toggle = null %}
-                {% set url = null %}
-                {% set target = null %}
-                {% set class = "btn btn-default btn-" ~ icon ~ " " %}
+        {{ macro.action_button(actions|keys|first, actions|first, 'default btn-sm') }}
+        {% set actions = actions|slice(1) %}
+        {% if actions is not empty %}
+        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">{{ 'label.toggle_dropdown'|trans }}</span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            {%- filter spaceless -%}
+                {%- for icon,values in actions  %}
+                    {% if values is iterable %}
+                        <li>{{ macro.action_button(icon, values|merge({'title': icon|trans({}, 'actions')}), false) }}</li>
+                    {% else %}
+                        <li>{{ macro.action_button(icon, {'url': values, 'title': icon|trans({}, 'actions')}, false) }}</li>
+                    {% endif %}
+                {% endfor -%}
+            {% endfilter %}
+        </ul>
+        {% endif %}
+    </div>
+    {% endif %}
+{% endmacro %}
 
-                {% if not values is iterable %}
-                    {% set url = values %}
-                    {% if 'onclick:' in url %}
-                        {% set onclick = url|replace({'onclick:': ''}) %}
-                        {% set url = '#' %}
-                    {% endif %}
-                    {% if '#collapse' in url %}
-                        {% set toggle = 'collapse' %}
-                    {% endif %}
-                    {% if '#modal' in url %}
-                        {% set modal = url %}
-                        {% set url = '#' %}
-                    {% endif %}
-                {% else %}
-                    {% set url = values.url ?? '#' %}
-                    {% set onclick = values.onclick ?? null %}
-                    {% set modal = values.modal ?? null %}
-                    {% set toggle = values.toggle ?? null %}
-                    {% set target = values.target ?? null %}
-                    {% set id = values.id ?? null %}
-                    {% set class = class ~ ( values.class | default("")) %}
-                {% endif %}
-            {% endspaceless %}
-            <a class="{{ class | trim }}" href="{{ url }}"
-                    {%- if id is not empty -%}
-                        id="{{ id }}"
-                    {%- endif -%}
-                    {%- if toggle is not empty -%}
-                        data-toggle="{{ toggle }}"
-                    {%- endif -%}
-                    {%- if modal is not empty -%}
-                        data-toggle="modal" data-target="{{ modal }}"
-                    {%- endif -%}
-                    {%- if onclick is not empty -%}
-                        onclick="{{ onclick }}"
-                    {%- endif -%}
-                    {%- if target is not empty -%}
-                        target="{{ target }}"
-                    {%- endif -%}
-            >{{ macro.icon(icon) }}</a>
+{% macro action_button(icon, values, type) %}
+    {%- import _self as macro -%}
+    {%- filter spaceless -%}
+        {% set id = null %}
+        {% set onclick = null %}
+        {% set modal = null %}
+        {% set toggle = null %}
+        {% set url = null %}
+        {% set target = null %}
+        {% set title = null %}
+        {% set disabled = false %}
+        {% if type is same as (false) %}
+            {% set class = "" %}
+        {% elseif type is null %}
+            {% set class = "btn btn-default btn-" ~ icon ~ " " %}
+        {% else %}
+            {% set class = "btn btn-" ~ type ~ " btn-" ~ icon ~ " " %}
+        {% endif %}
+
+        {% if not values is iterable %}
+            {% set url = values %}
+            {% if 'onclick:' in url %}
+                {% set onclick = url|replace({'onclick:': ''}) %}
+                {% set url = '#' %}
+            {% endif %}
+            {% if '#collapse' in url %}
+                {% set toggle = 'collapse' %}
+            {% endif %}
+            {% if '#modal' in url %}
+                {% set modal = url %}
+                {% set url = '#' %}
+            {% endif %}
+        {% else %}
+            {% set disabled = values.disabled ?? false %}
+            {% set url = values.url ?? '#' %}
+            {% set onclick = values.onclick ?? null %}
+            {% set modal = values.modal ?? null %}
+            {% set toggle = values.toggle ?? null %}
+            {% set target = values.target ?? null %}
+            {% set id = values.id ?? null %}
+            {% set title = values.title ?? null %}
+            {% set class = class ~ ( values.class | default("")) %}
+        {% endif %}
+
+        {% if disabled is same as (true) %}
+            {% set class = class ~ " disabled"  %}
+        {% endif %}
+
+        <a class="{{ class | trim }}" href="{{ url }}"
+                {%- if disabled is same as (true) -%}
+                    disabled="disabled"
+                {%- endif -%}
+                {%- if id is not empty -%}
+                    id="{{ id }}"
+                {%- endif -%}
+                {%- if toggle is not empty -%}
+                    data-toggle="{{ toggle }}"
+                {%- endif -%}
+                {%- if modal is not empty -%}
+                    data-toggle="modal" data-target="{{ modal }}"
+                {%- endif -%}
+                {%- if onclick is not empty -%}
+                    onclick="{{ onclick }}"
+                {%- endif -%}
+                {%- if target is not empty -%}
+                    target="{{ target }}"
+                {%- endif -%}
+        >{% if title is not null %}{{ title }}{% else %}{{ macro.icon(icon) }}{% endif %}</a>
+    {% endfilter %}
+{% endmacro %}
+
+{% macro button_group(actions, type) %}
+    {%- import _self as macro -%}
+    <div class="btn-group">
+        {%- filter spaceless -%}
+        {%- for icon,values in actions  %}
+            {{ macro.action_button(icon, values, type) }}
         {% endfor -%}
+        {% endfilter %}
     </div>
 {% endmacro %}
 

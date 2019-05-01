@@ -30,7 +30,49 @@
 
     {% set event = trigger('actions.activity', {'actions': actions, 'view': view, 'activity': activity}) %}
     {% if view == 'index' %}
-        {{ widgets.button_group(event.payload.actions) }}
+        {{ widgets.table_actions(event.payload.actions) }}
+    {% else %}
+        {{ widgets.page_actions(event.payload.actions) }}
+    {% endif %}
+{% endmacro %}
+
+{% macro users(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set actions = {'filter': '#collapseUserAdmin', 'visibility': '#modal_user_admin'} %}
+
+    {% if is_granted('create_user') %}
+        {% set actions = actions|merge({'create': path('admin_user_create')}) %}
+    {% endif %}
+
+    {% set event = trigger('actions.users', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}
+
+{% macro user(user, view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set actions = {} %}
+
+    {% if user.id is not empty %}
+        {% if is_granted('view', user) %}
+            {% set actions = {'profile-stats': {'url': path('user_profile', {'username' : user.username})}} %}
+        {% endif %}
+        {% if is_granted('edit', user) %}
+            {% set actions = actions|merge({'edit': path('user_profile_edit', {'username' : user.username})}) %}
+        {% endif %}
+        {% if is_granted('preferences', user) %}
+            {% set actions = actions|merge({'settings': {'url': path('user_profile_preferences', {'username' : user.username})}}) %}
+        {% endif %}
+        {% if is_granted('view_other_timesheet') %}
+            {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'user' : user.id})}) %}
+        {% endif %}
+        {% if view == 'index' and is_granted('delete', user) %}
+            {% set actions = actions|merge({'trash': {'url': path('admin_user_delete', {'id': user.id}), 'class': 'modal-ajax-form'}}) %}
+        {% endif %}
+    {% endif %}
+
+    {% set event = trigger('actions.user', {'actions': actions, 'view': view, 'user': user}) %}
+    {% if view == 'index' %}
+        {{ widgets.table_actions(event.payload.actions) }}
     {% else %}
         {{ widgets.page_actions(event.payload.actions) }}
     {% endif %}
@@ -70,7 +112,7 @@
 
     {% set event = trigger('actions.project', {'actions': actions, 'view': view, 'project': project}) %}
     {% if view == 'index' %}
-        {{ widgets.button_group(event.payload.actions) }}
+        {{ widgets.table_actions(event.payload.actions) }}
     {% else %}
         {{ widgets.page_actions(event.payload.actions) }}
     {% endif %}
@@ -110,7 +152,7 @@
 
     {% set event = trigger('actions.customer', {'actions': actions, 'view': view, 'customer': customer}) %}
     {% if view == 'index' %}
-        {{ widgets.button_group(event.payload.actions) }}
+        {{ widgets.table_actions(event.payload.actions) }}
     {% else %}
         {{ widgets.page_actions(event.payload.actions) }}
     {% endif %}
@@ -134,6 +176,7 @@
 {% endmacro %}
 
 {% macro timesheet(timesheet, view) %}
+    {%- filter spaceless -%}
     {% import "macros/widgets.html.twig" as widgets %}
     {% set actions = {} %}
 
@@ -167,10 +210,11 @@
 
     {% set event = trigger('actions.timesheet', {'actions': actions, 'view': view, 'timesheet': timesheet}) %}
     {% if view == 'index' %}
-        {{ widgets.button_group(event.payload.actions) }}
+        {{ widgets.table_actions(event.payload.actions) }}
     {% else %}
         {{ widgets.page_actions(event.payload.actions) }}
     {% endif %}
+    {%- endfilter -%}
 {% endmacro %}
 
 {% macro timesheets_team(view) %}
@@ -194,16 +238,16 @@
     {% set actions = {} %}
 
     {% if timesheet.id is not empty %}
-        {% if not timesheet.end and is_granted('stop', timesheet) %}
-            {% set actions = actions|merge({'stop': path('admin_timesheet_stop', {'id' : timesheet.id})}) %}
-        {% endif %}
-
         {% if is_granted('edit', timesheet) %}
             {% set class = '' %}
             {% if view != 'edit' %}
                 {% set class = 'modal-ajax-form' %}
             {% endif %}
             {% set actions = actions|merge({'edit': {'url': path('admin_timesheet_edit', {'id': timesheet.id}), 'class': class}}) %}
+        {% endif %}
+
+        {% if not timesheet.end and is_granted('stop', timesheet) %}
+            {% set actions = actions|merge({'stop': path('admin_timesheet_stop', {'id' : timesheet.id})}) %}
         {% endif %}
 
         {% if view == 'index' and is_granted('delete', timesheet) %}
@@ -217,7 +261,7 @@
 
     {% set event = trigger('actions.timesheet_team', {'actions': actions, 'view': view, 'timesheet': timesheet}) %}
     {% if view == 'index' %}
-        {{ widgets.button_group(event.payload.actions) }}
+        {{ widgets.table_actions(event.payload.actions) }}
     {% else %}
         {{ widgets.page_actions(event.payload.actions) }}
     {% endif %}
@@ -239,7 +283,7 @@
 
     {% set event = trigger('actions.plugin', {'actions': actions, 'view': view}) %}
     {% if view == 'index' %}
-        {{ widgets.button_group(event.payload.actions) }}
+        {{ widgets.table_actions(event.payload.actions) }}
     {% else %}
         {{ widgets.page_actions(event.payload.actions) }}
     {% endif %}
@@ -254,21 +298,5 @@
     {% endif %}
 
     {% set event = trigger('actions.about', {'actions': actions, 'view': view}) %}
-    {{ widgets.page_actions(event.payload.actions) }}
-{% endmacro %}
-
-{% macro profile(view, user) %}
-    {% import "macros/widgets.html.twig" as widgets %}
-
-    {% set actions = {'profile-stats': {'url': path('user_profile', {'username' : user.username})}} %}
-
-    {% if is_granted('edit', user) %}
-        {% set actions = actions|merge({'profile': {'url': path('user_profile_edit', {'username' : user.username})}}) %}
-    {% endif %}
-    {% if is_granted('preferences', user) %}
-        {% set actions = actions|merge({'settings': {'url': path('user_profile_preferences', {'username' : user.username})}}) %}
-    {% endif %}
-
-    {% set event = trigger('actions.profile', {'actions': actions, 'view': view}) %}
     {{ widgets.page_actions(event.payload.actions) }}
 {% endmacro %}
