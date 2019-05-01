@@ -18,12 +18,12 @@
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% else %}
         {% set columns = {
+            '': 'actions alwaysVisible',
             'name': 'alwaysVisible',
             'customer': 'hidden-xs',
             'project': 'hidden-xs',
             'comment': 'hidden-xs',
             'visible': '',
-            'actions': 'alwaysVisible',
         } %}
 
         {% set tableName = 'activity_admin' %}
@@ -32,6 +32,9 @@
 
         {% for entry in entries %}
             <tr>
+                <td>
+                    {{ actions.activity(entry, 'index') }}
+                </td>
                 <td>{{ entry.name }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">
                     {% if entry.project and entry.project.customer %}
@@ -49,9 +52,6 @@
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
-                <td>
-                    {{ actions.activity(entry, 'index') }}
-                </td>
             </tr>
         {% endfor %}
 
