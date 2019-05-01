@@ -266,6 +266,10 @@ div.dataTables_scrollHead table.table-bordered {
 }
 
 table.dataTable {
+    /* action column */
+    .actions {
+        width: 70px;
+    }
     /* summary row, like the timesheet table provides */
     tr.summary td {
         font-weight: bold;
