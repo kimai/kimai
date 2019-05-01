@@ -8,7 +8,7 @@
 {% set duration_only = is_duration_only() %}
 {% set canSeeRate = is_granted('view_rate_own_timesheet') %}
 {% set columns = {
-    '': 'actions alwaysVisible',
+    'actions': 'actions alwaysVisible',
     'date': 'alwaysVisible',
 } %}
 {% if not duration_only %}
