@@ -3,6 +3,17 @@
 {% import "macros/toolbar.html.twig" as toolbar %}
 {% import "macros/datatables.html.twig" as tables %}
 
+{% set columns = {
+    'date': 'alwaysVisible',
+    'user': 'hidden-sm',
+    'description': 'hidden-xs hidden-sm',
+    'unit_price': 'hidden-xs text-center',
+    'amount': 'text-center',
+    'total_rate': 'text-right alwaysVisible',
+} %}
+
+{% set tableName = 'invoice' %}
+
 {% block page_title %}{{ 'invoice.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'invoice.subtitle'|trans }}{% endblock %}
 {% block page_actions %}
@@ -18,6 +29,7 @@
 
 {% block main_before %}
     {{ toolbar.toolbar(form, 'collapseInvoice', true) }}
+    {{ tables.data_table_column_modal(tableName, columns) }}
 {% endblock %}
 
 {% block main_after %}
@@ -35,17 +47,6 @@
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% else %}
         {{ widgets.callout('success', 'invoice.preview') }}
-
-        {% set columns = {
-            'date': 'alwaysVisible',
-            'user': 'hidden-sm',
-            'description': 'hidden-xs hidden-sm',
-            'unit_price': 'hidden-xs text-center',
-            'amount': 'text-center',
-            'total_rate': 'text-right',
-        } %}
-
-        {% set tableName = 'invoice' %}
 
         {{ tables.data_table_header(tableName, columns) }}
         {% for entry in entries %}
@@ -70,7 +71,7 @@
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }} text-center">{{ rate|money(model.calculator.currency) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'amount') }} text-center text-nowrap">{{ duration }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'total_rate') }} text-right text-nowrap">{{ entry.rate|money(model.calculator.currency) }}</td>
+                <td class="text-right text-nowrap">{{ entry.rate|money(model.calculator.currency) }}</td>
             </tr>
         {% endfor %}
         {{ tables.data_table_footer(entries) }}

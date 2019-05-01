@@ -4,12 +4,32 @@
 {% import "macros/toolbar.html.twig" as toolbar %}
 {% import "macros/actions.html.twig" as actions %}
 
+{% set tableName = 'timesheet' %}
+{% set duration_only = is_duration_only() %}
+{% set canSeeRate = is_granted('view_rate_own_timesheet') %}
+{% set columns = {'date': 'alwaysVisible'} %}
+{% if not duration_only %}
+    {% set columns = columns|merge({'starttime': '', 'endtime': 'hidden-xs'}) %}
+{% endif %}
+{% set columns = columns|merge({'duration': ''}) %}
+{% if canSeeRate %}
+    {% set columns = columns|merge({'rate': 'hidden-xs'}) %}
+{% endif %}
+{% set columns = columns|merge({
+    'customer': 'hidden-xs hidden-sm',
+    'project': 'hidden-xs hidden-sm',
+    'activity': 'hidden-xs hidden-sm',
+    'description': 'hidden-xs hidden-sm',
+    'actions': 'alwaysVisible',
+}) %}
+
 {% block page_title %}{{ 'timesheet.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'timesheet.subtitle'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.timesheets('index') }}{% endblock %}
 
 {% block main_before %}
     {{ toolbar.toolbar(toolbarForm, 'collapseTimesheet', showFilter) }}
+    {{ tables.data_table_column_modal(tableName, columns) }}
 {% endblock %}
 
 {% block main %}
@@ -17,30 +37,6 @@
     {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% else %}
-        {% set duration_only = is_duration_only() %}
-        {% set canSeeRate = is_granted('view_rate_own_timesheet') %}
-        {% set columns = {'date': ''} %}
-
-        {% if not duration_only %}
-            {% set columns = columns|merge({'starttime': '', 'endtime': 'hidden-xs'}) %}
-        {% endif %}
-
-        {% set columns = columns|merge({'duration': ''}) %}
-
-        {% if canSeeRate %}
-            {% set columns = columns|merge({'rate': 'hidden-xs'}) %}
-        {% endif %}
-
-        {% set columns = columns|merge({
-            'customer': 'hidden-xs hidden-sm',
-            'project': 'hidden-xs hidden-sm',
-            'activity': 'hidden-xs hidden-sm',
-            'description': 'hidden-xs hidden-sm',
-            'actions': 'alwaysVisible',
-        }) %}
-
-        {% set tableName = 'timesheet' %}
-
         {{ tables.data_table_header(tableName, columns, showSummary) }}
 
         {% set day = null %}
