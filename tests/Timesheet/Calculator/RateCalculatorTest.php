@@ -163,11 +163,8 @@ class RateCalculatorTest extends TestCase
      */
     public function testCalculateWithRulesByUsersHourlyRate($duration, $rules, $expectedRate)
     {
-        $end = new \DateTime();
-        $end->setTimezone(new \DateTimeZone('UTC'));
-        $end->setTime(12, 0, 0);
+        $end = new \DateTime('12:00:00', new \DateTimeZone('UTC'));
         $start = clone $end;
-        $start->setTimezone(new \DateTimeZone('UTC'));
         $start->setTimestamp($end->getTimestamp() - $duration);
 
         $record = new Timesheet();
@@ -188,9 +185,7 @@ class RateCalculatorTest extends TestCase
 
     public function getRuleDefinitions()
     {
-        $start = new \DateTime();
-        $start->setTimezone(new \DateTimeZone('UTC'));
-        $start->setTime(12, 0, 0);
+        $start = new \DateTime('12:00:00', new \DateTimeZone('UTC'));
         $day = $start->format('l');
 
         return [

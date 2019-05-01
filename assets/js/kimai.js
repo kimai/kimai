@@ -47,29 +47,61 @@ $(function() {
 
             // activate the dropdown functionality
             $('.dropdown-toggle').dropdown();
-
-            // auto hide success message after x seconds, as they are just meant as quick feedback and
-            // not as a permanent source of information
-            setTimeout(
-                function() {
-                    $('div.alert-success').alert('close');
-                },
-                5000
-            );
-
-            // compound field in toolbar
+            // activate the tooltip functionality
+            $('[data-toggle="tooltip"]').tooltip();
+            // auto hide success messages, as they are just meant as user feedback and not as a permanent information
+            this.activateAutomaticAlertRemove('div.alert-success', 5000);
+            // activate the (daterangepicker) compound field in toolbar
             this.activateDateRangePicker('.content-wrapper');
-
             // single select boxes in toolbars
             this.activateDatePicker('.content-wrapper');
-
             // edit timesheet - date with time
             this.activateDateTimePicker('.content-wrapper');
-
             // some actions can be performed in a modal for a better UX
             this.activateAjaxFormInModal('a.modal-ajax-form');
-
-            $('body').on('change', 'select[data-related-select]', function(event) {
+            // activate select boxes that load dynamic data via API
+            this.activateApiSelects('select[data-related-select]');
+        },
+        reloadDatatableWithToolbarFilter: function() {
+            // TODO check if toolbar form is present, if not, reload current URL
+            var $form = $('.toolbar form');
+            var loading = '<div class="overlay"><i class="fas fa-sync fa-spin"></i></div>';
+            $('section.content').append(loading);
+            $.ajax({
+                url: $form.attr('action'),
+                type: $form.attr('method'),
+                data: $form.serialize(),
+                success: function(html) {
+                    $('section.content').replaceWith(
+                        $(html).find('section.content')
+                    );
+                },
+                error: function(xhr, err) {
+                    $form.submit();
+                }
+            });
+        },
+        pauseRecord: function(selector) {
+            $(selector + ' .pull-left i').hover(function () {
+                var link = $(this).parents('a');
+                link.attr('href', link.attr('href').replace('/stop', '/pause'));
+                $(this).removeClass('fa-stop-circle').addClass('fa-pause-circle').addClass('text-orange');
+            },function () {
+                var link = $(this).parents('a');
+                link.attr('href', link.attr('href').replace('/pause', '/stop'));
+                $(this).removeClass('fa-pause-circle').removeClass('text-orange').addClass('fa-stop-circle');
+            });
+        },
+        activateAutomaticAlertRemove(selector, mseconds) {
+            setTimeout(
+                function() {
+                    $(selector).alert('close');
+                },
+                mseconds
+            );
+        },
+        activateApiSelects: function(selector) {
+            $('body').on('change', selector, function(event) {
                 var apiUrl = $(this).attr('data-api-url').replace('-s-', $(this).val());
                 var targetSelect = $(this).attr('data-related-select');
 
@@ -103,36 +135,6 @@ $(function() {
                         $('.selectpicker').selectpicker('refresh');
                     }
                 });
-            });
-        },
-        reloadDatatableWithToolbarFilter: function() {
-            // TODO check if toolbar form is present, if not, reload current URL
-            var $form = $('.toolbar form');
-            var loading = '<div class="overlay"><i class="fas fa-sync fa-spin"></i></div>';
-            $('section.content').append(loading);
-            $.ajax({
-                url: $form.attr('action'),
-                type: $form.attr('method'),
-                data: $form.serialize(),
-                success: function(html) {
-                    $('section.content').replaceWith(
-                        $(html).find('section.content')
-                    );
-                },
-                error: function(xhr, err) {
-                    $form.submit();
-                }
-            });
-        },
-        pauseRecord: function(selector) {
-            $(selector + ' .pull-left i').hover(function () {
-                var link = $(this).parents('a');
-                link.attr('href', link.attr('href').replace('/stop', '/pause'));
-                $(this).removeClass('fa-stop-circle').addClass('fa-pause-circle').addClass('text-orange');
-            },function () {
-                var link = $(this).parents('a');
-                link.attr('href', link.attr('href').replace('/pause', '/stop'));
-                $(this).removeClass('fa-pause-circle').removeClass('text-orange').addClass('fa-stop-circle');
             });
         },
         activateDatePicker: function(selector) {

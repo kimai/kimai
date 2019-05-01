@@ -352,16 +352,11 @@ class TimesheetRepository extends AbstractRepository
 
         if (TimesheetQuery::STATE_RUNNING == $query->getState()) {
             $qb->andWhere($qb->expr()->isNull('t.end'));
+        } elseif (TimesheetQuery::STATE_STOPPED == $query->getState()) {
+            $qb->andWhere($qb->expr()->isNotNull('t.end'));
         }
 
-        if (TimesheetQuery::STATE_STOPPED == $query->getState()) {
-            $qb->andWhere($qb->expr()->isNotNull('t.end'));
-
-            if (null !== $query->getEnd()) {
-                $qb->andWhere('t.end <= :end')
-                    ->setParameter('end', $query->getEnd());
-            }
-        } elseif (null !== $query->getEnd()) {
+        if (null !== $query->getEnd()) {
             $qb->andWhere('t.begin <= :end')
                 ->setParameter('end', $query->getEnd());
         }

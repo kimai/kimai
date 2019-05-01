@@ -9,12 +9,18 @@
 
 namespace App\Configuration;
 
+use App\Utils\MomentFormatConverter;
+
 class LanguageFormattings
 {
     /**
      * @var array
      */
     protected $settings;
+    /**
+     * @var MomentFormatConverter
+     */
+    protected $momentFormatter;
 
     /**
      * @param array $languageSettings
@@ -22,6 +28,7 @@ class LanguageFormattings
     public function __construct(array $languageSettings)
     {
         $this->settings = $languageSettings;
+        $this->momentFormatter = new MomentFormatConverter();
     }
 
     /**
@@ -53,7 +60,7 @@ class LanguageFormattings
      */
     public function getDatePickerFormat(string $locale): string
     {
-        return $this->getConfig('date_picker', $locale);
+        return $this->momentFormatter->convert($this->getDateTypeFormat($locale));
     }
 
     /**
@@ -75,7 +82,7 @@ class LanguageFormattings
      */
     public function getDateTimePickerFormat(string $locale): string
     {
-        return $this->getConfig('date_time_picker', $locale);
+        return $this->momentFormatter->convert($this->getDateTimeTypeFormat($locale));
     }
 
     /**
