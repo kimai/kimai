@@ -9,15 +9,8 @@
 
 namespace App\Twig;
 
-use App\Constants;
-use App\Entity\Timesheet;
-use App\Utils\Duration;
-use App\Utils\LocaleSettings;
-use NumberFormatter;
-use Symfony\Component\Intl\Intl;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class TitleExtension extends AbstractExtension
