@@ -18,13 +18,13 @@
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% else %}
         {% set columns = {
+            '': 'actions alwaysVisible',
             'name': 'alwaysVisible',
             'comment': 'hidden-xs',
             'country': 'hidden-xs',
             'number': 'hidden-xs',
             'currency': 'hidden-xs',
             'visible': 'hidden-xs',
-            'actions': 'alwaysVisible',
         } %}
 
         {% set tableName = 'customer_admin' %}
@@ -33,15 +33,15 @@
 
         {% for entry in entries %}
             <tr>
+                <td>
+                    {{ actions.customer(entry, 'index') }}
+                </td>
                 <td>{{ entry.name }} {% if entry.company is not empty %}({{ entry.company }}){% endif %}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'country') }}">{{ entry.country|country }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'number') }}">{{ entry.number }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'currency') }}">{{ entry.currency }} {{ entry.currency|currency }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
-                <td>
-                    {{ actions.customer(entry, 'index') }}
-                </td>
             </tr>
         {% endfor %}
 
