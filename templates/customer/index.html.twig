@@ -32,8 +32,8 @@
         {{ tables.data_table_header(tableName, columns) }}
 
         {% for entry in entries %}
-            <tr>
-                <td>
+            <tr{% if is_granted('edit', entry) %} class="modal-ajax-form" data-href="{{ path('admin_customer_edit', {'id': entry.id}) }}"{% endif %}>
+                <td class="actions">
                     {{ actions.customer(entry, 'index') }}
                 </td>
                 <td>{{ entry.name }} {% if entry.company is not empty %}({{ entry.company }}){% endif %}</td>

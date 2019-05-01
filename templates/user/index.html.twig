@@ -32,8 +32,8 @@
         {{ tables.data_table_header(tableName, columns) }}
 
         {% for entry in entries %}
-            <tr>
-                <td>
+            <tr{% if is_granted('edit', entry) %} onclick="location.href='{{ path('user_profile_edit', {'username': entry.username}) }}'"{% endif %}>
+                <td class="actions">
                     {{ actions.user(entry, 'index') }}
                 </td>
                 <td>{{ widgets.username(entry) }}</td>

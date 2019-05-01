@@ -17,7 +17,11 @@
 
     {% if activity.id is not empty %}
         {% if is_granted('edit', activity) %}
-            {% set actions = actions|merge({'edit': path('admin_activity_edit', {'id': activity.id})}) %}
+            {% set class = '' %}
+            {% if view != 'edit' %}
+                {% set class = 'modal-ajax-form' %}
+            {% endif %}
+            {% set actions = actions|merge({'edit': {'url': path('admin_activity_edit', {'id': activity.id}), 'class': class}}) %}
         {% endif %}
         {% if view == 'index' and is_granted('delete', activity) %}
             {% set actions = actions|merge({'trash': {'url': path('admin_activity_delete', {'id': activity.id}), 'class': 'modal-ajax-form'}}) %}
@@ -96,7 +100,11 @@
 
     {% if project.id is not empty %}
         {% if is_granted('edit', project) %}
-            {% set actions = actions|merge({'edit': path('admin_project_edit', {'id': project.id})}) %}
+            {% set class = '' %}
+            {% if view != 'edit' %}
+                {% set class = 'modal-ajax-form' %}
+            {% endif %}
+            {% set actions = actions|merge({'edit': {'url': path('admin_project_edit', {'id': project.id}), 'class': class}}) %}
         {% endif %}
         {% if is_granted('view_activity') %}
             {% set actions = actions|merge({'activity': path('admin_activity', {'customer': project.customer.id, 'project': project.id})}) %}
@@ -136,7 +144,11 @@
 
     {% if customer.id is not empty %}
         {% if is_granted('edit', customer) %}
-            {% set actions = actions|merge({'edit': path('admin_customer_edit', {'id': customer.id})}) %}
+            {% set class = '' %}
+            {% if view != 'edit' %}
+                {% set class = 'modal-ajax-form' %}
+            {% endif %}
+            {% set actions = actions|merge({'edit': {'url': path('admin_customer_edit', {'id': customer.id}), 'class': class}}) %}
         {% endif %}
         {% if is_granted('view_project') %}
             {% set actions = actions|merge({'project': path('admin_project', {'customer': customer.id})}) %}

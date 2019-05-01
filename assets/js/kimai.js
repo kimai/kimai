@@ -54,7 +54,7 @@ $(function() {
             // edit timesheet - date with time
             this.activateDateTimePicker('.content-wrapper');
             // some actions can be performed in a modal for a better UX
-            this.activateAjaxFormInModal('a.modal-ajax-form');
+            this.activateAjaxFormInModal('.modal-ajax-form');
             // activate select boxes that load dynamic data via API
             this.activateApiSelects('select[data-related-select]');
         },
@@ -308,15 +308,38 @@ $(function() {
         },
         activateAjaxFormInModal: function(selector) {
             $('body').on('click', selector, function(event) {
+                // just in case an inner element is editable, than this should not be triggered
+                if (event.target.parentNode.isContentEditable || event.target.isContentEditable) {
+                    return;
+                }
+
+                // handles the "click" on table rows to open an entry for editing: when a button within a row is clicked,
+                // we don't want the table row event to be processed - so we intercept it
+                var target = event.target;
+                if (event.currentTarget.tagName === 'TR') {
+                    while (target.tagName !== 'BODY') {
+                        if (target.tagName === 'A' || target.tagName === 'BUTTON') {
+                            return;
+                        }
+                        target = target.parentNode;
+                    }
+                }
+
                 event.preventDefault();
                 event.stopPropagation();
+
+                // any element can open the modal - for none <a> elements use "data-href" instead of "href" attribute
+                var href = $(this).attr('data-href');
+                if (!href) {
+                    href = $(this).attr('href');
+                }
                 $.ajax({
-                    url: $(this).attr('href'),
+                    url: href,
                     success: function(html) {
                         $.kimai.ajaxFormInModal(html);
                     },
                     error: function(xhr, err) {
-                        window.location = $(this).attr('href');
+                        window.location = href;
                     }
                 });
             });

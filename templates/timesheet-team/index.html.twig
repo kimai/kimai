@@ -42,8 +42,8 @@
         {{ tables.data_table_header(tableName, columns) }}
 
         {% for entry in entries %}
-            <tr>
-                <td>
+            <tr{% if is_granted('edit', entry) %} class="modal-ajax-form" data-href="{{ path('admin_timesheet_edit', {'id': entry.id}) }}"{% endif %}>
+                <td class="actions">
                     {{ actions.timesheet_team(entry, 'index') }}
                 </td>
                 <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'date') }}">{{ entry.begin|date_short }}</td>

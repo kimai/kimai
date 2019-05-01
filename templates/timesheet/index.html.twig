@@ -59,8 +59,8 @@
                 {% set dayDuration = 0 %}
                 {% set dayRate = {} %}
             {%- endif -%}
-            <tr>
-                <td>
+            <tr{% if is_granted('edit', entry) %} class="modal-ajax-form" data-href="{{ path('timesheet_edit', {'id': entry.id}) }}"{% endif %}>
+                <td class="actions">
                     {{- actions.timesheet(entry, 'index') -}}
                 </td>
                 <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'date') }}">{{ entry.begin|date_short }}</td>
