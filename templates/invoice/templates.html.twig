@@ -5,6 +5,7 @@
 {% block page_title %}{{ 'admin_invoice_template.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_invoice_template.subtitle'|trans }}{% endblock %}
 {% block page_actions %}
+    {# TODO move me to actions macro #}
     {% set actions = {} %}
     {% if is_granted('create_invoice_template') %}
         {% set actions = actions|merge({'create': path('admin_invoice_template_create')}) %}
@@ -12,6 +13,7 @@
     {% if is_granted('view_invoice') %}
         {% set actions = actions|merge({'invoice': path('invoice')}) %}
     {% endif %}
+    {% set event = trigger('actions.invoice_templates', {'actions': actions, 'view': 'index'}) %}
     {{ widgets.page_actions(actions) }}
 {% endblock %}
 
@@ -21,32 +23,34 @@
     {% endif %}
 
     {{ tables.data_table_header('invoice_template', {
+        '': 'actions alwaysVisible',
         'name': 'alwaysVisible',
-        'title': '',
-        'due_days': 'hidden-xs',
-        'vat': 'hidden-xs',
-        'actions': 'alwaysVisible',
+        'title': 'hidden-xs',
+        'due_days': 'hidden-xs hidden-sm',
+        'vat': 'hidden-xs hidden-sm',
     }) }}
 
     {% for entry in entries %}
         <tr>
-            <td>{{ entry.name }}</td>
-            <td>{{ entry.title }}</td>
-            <td class="hidden-xs hidden-sm">{{ entry.dueDays }}</td>
-            <td class="hidden-xs hidden-sm">{{ entry.vat }}</td>
             <td>
-                {% set actionButtons = {} %}
+                {# TODO move me to actions macro #}
+                {% set actions = {} %}
                 {% if is_granted('edit', entry) %}
-                    {% set actionButtons = {'edit': path('admin_invoice_template_edit', {'id' : entry.id, 'page': page})} %}
+                    {% set actions = {'edit': path('admin_invoice_template_edit', {'id' : entry.id, 'page': page})} %}
                 {% endif %}
                 {% if is_granted('create_invoice_template') %}
-                    {% set actionButtons = actionButtons|merge({'copy': path('admin_invoice_template_copy', {'id' : entry.id, 'page': page})}) %}
+                    {% set actions = actions|merge({'copy': path('admin_invoice_template_copy', {'id' : entry.id, 'page': page})}) %}
                 {% endif %}
                 {% if is_granted('delete', entry) %}
-                    {% set actionButtons = actionButtons|merge({'trash': path('admin_invoice_template_delete', {'id' : entry.id, 'page': page})}) %}
+                    {% set actions = actions|merge({'trash': path('admin_invoice_template_delete', {'id' : entry.id, 'page': page})}) %}
                 {% endif %}
-                {{ widgets.button_group(actionButtons) }}
+                {% set event = trigger('actions.invoice_templates', {'actions': actions, 'view': 'index', 'template': entry}) %}
+                {{ widgets.table_actions(actions) }}
             </td>
+            <td>{{ entry.name }}</td>
+            <td class="hidden-xs">{{ entry.title }}</td>
+            <td class="hidden-xs hidden-sm">{{ entry.dueDays }}</td>
+            <td class="hidden-xs hidden-sm">{{ entry.vat }}</td>
         </tr>
     {% endfor %}
 
