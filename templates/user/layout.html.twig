@@ -3,7 +3,7 @@
 
 {% block page_title %}{{ 'profile.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'profile.subtitle'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.profile(tab, user) }}{% endblock %}
+{% block page_actions %}{{ actions.user(user, tab) }}{% endblock %}
 
 {% block main %}
     {% import _self as macro %}
