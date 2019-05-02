@@ -37,16 +37,14 @@
                 <td>{{ entry.name }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">
                     {% if entry.project and entry.project.customer %}
-                        <a href="{{ path('admin_customer_edit', {'id' : entry.project.customer.id}) }}">{{ widgets.label_customer(entry.project.customer) }}</a>
-                    {% else %}
-                        {# GLOBAL ACTIVTITY DOES NOT HAVE A CUSTOMER #}
+                        {# only none-global activities have a project and customer assigned #}
+                        {{ widgets.label_customer(entry.project.customer, path('admin_customer_edit', {'id' : entry.project.customer.id})) }}
                     {% endif %}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">
                     {% if entry.project %}
-                        <a href="{{ path('admin_project_edit', {'id' : entry.project.id}) }}">{{ widgets.label_project(entry.project) }}</a>
-                    {% else %}
-                        {# GLOBAL ACTIVTITY DOES NOT HAVE A PROJECT #}
+                        {# only none-global activities have a project and customer assigned #}
+                        {{ widgets.label_project(entry.project, path('admin_project_edit', {'id' : entry.project.id})) }}
                     {% endif %}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment }}</td>
