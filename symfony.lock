@@ -72,7 +72,11 @@
             "branch": "master",
             "version": "1.2",
             "ref": "c1431086fec31f17fbcfe6d6d7e92059458facc1"
-        }
+        },
+        "files": [
+            "config/packages/doctrine_migrations.yaml",
+            "src/Migrations/.gitignore"
+        ]
     },
     "doctrine/event-manager": {
         "version": "v1.0.0"
@@ -87,10 +91,10 @@
         "version": "v1.0.1"
     },
     "doctrine/migrations": {
-        "version": "v1.6.2"
+        "version": "v2.0.2"
     },
     "doctrine/orm": {
-        "version": "v2.6.0"
+        "version": "v2.6.3"
     },
     "doctrine/persistence": {
         "version": "v1.0.0"
@@ -495,7 +499,7 @@
         "version": "v4.0.3"
     },
     "symfony/orm-pack": {
-        "version": "v1.0.5"
+        "version": "v1.0.6"
     },
     "symfony/phpunit-bridge": {
         "version": "3.3",

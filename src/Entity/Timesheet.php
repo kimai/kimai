@@ -111,21 +111,8 @@ class Timesheet
      */
     private $rate = 0.00;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="fixed_rate", type="float", precision=10, scale=2, nullable=true)
-     * @Assert\GreaterThanOrEqual(0)
-     */
-    private $fixedRate = null;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="hourly_rate", type="float", precision=10, scale=2, nullable=true)
-     * @Assert\GreaterThanOrEqual(0)
-     */
-    private $hourlyRate = null;
+    // keep the trait include exactly here, for placing the column at the correct position
+    use RatesTrait;
 
     /**
      * @var bool
@@ -330,44 +317,6 @@ class Timesheet
     public function getRate()
     {
         return $this->rate;
-    }
-
-    /**
-     * @return float
-     */
-    public function getFixedRate(): ?float
-    {
-        return $this->fixedRate;
-    }
-
-    /**
-     * @param float $fixedRate
-     * @return Timesheet
-     */
-    public function setFixedRate(?float $fixedRate)
-    {
-        $this->fixedRate = $fixedRate;
-
-        return $this;
-    }
-
-    /**
-     * @return float
-     */
-    public function getHourlyRate(): ?float
-    {
-        return $this->hourlyRate;
-    }
-
-    /**
-     * @param float $hourlyRate
-     * @return Timesheet
-     */
-    public function setHourlyRate(?float $hourlyRate)
-    {
-        $this->hourlyRate = $hourlyRate;
-
-        return $this;
     }
 
     /**
