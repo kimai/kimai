@@ -5,12 +5,12 @@
 {% import "macros/actions.html.twig" as actions %}
 
 {% set columns = {
-    'actions': 'actions alwaysVisible',
     'name': 'alwaysVisible',
     'customer': 'hidden-xs',
     'project': 'hidden-xs',
     'comment': 'hidden-xs',
     'visible': '',
+    'actions': 'actions alwaysVisible',
 } %}
 
 {% set tableName = 'activity_admin' %}
@@ -33,10 +33,7 @@
         {{ tables.data_table_header(tableName, columns) }}
 
         {% for entry in entries %}
-            <tr{% if is_granted('edit', entry) %} class="modal-ajax-form" data-href="{{ path('admin_activity_edit', {'id': entry.id}) }}"{% endif %}>
-                <td class="actions">
-                    {{ actions.activity(entry, 'index') }}
-                </td>
+            <tr{% if is_granted('edit', entry) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_activity_edit', {'id': entry.id}) }}"{% endif %}>
                 <td>{{ entry.name }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">
                     {% if entry.project and entry.project.customer %}
@@ -54,6 +51,9 @@
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
+                <td class="actions">
+                    {{ actions.activity(entry, 'index') }}
+                </td>
             </tr>
         {% endfor %}
 

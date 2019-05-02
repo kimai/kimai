@@ -28,7 +28,7 @@
             </trans-unit>
             <trans-unit id="timesheet">
                 <source>timesheet</source>
-                <target>Times</target>
+                <target>Timesheet</target>
             </trans-unit>
             <trans-unit id="project">
                 <source>project</source>

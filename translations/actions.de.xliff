@@ -28,7 +28,7 @@
             </trans-unit>
             <trans-unit id="timesheet">
                 <source>timesheet</source>
-                <target>Zeiten</target>
+                <target>Stundenzettel</target>
             </trans-unit>
             <trans-unit id="project">
                 <source>project</source>

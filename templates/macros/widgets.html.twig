@@ -143,27 +143,28 @@
 {% macro table_actions(actions) %}
     {%- import _self as macro -%}
     {% if actions|length >= 1 %}
-    <div class="btn-group">
-        {{ macro.action_button(actions|keys|first, actions|first, 'default btn-sm') }}
-        {% set actions = actions|slice(1) %}
-        {% if actions is not empty %}
-        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-            <span class="caret"></span>
-            <span class="sr-only">{{ 'label.toggle_dropdown'|trans }}</span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-            {%- filter spaceless -%}
-                {%- for icon,values in actions  %}
-                    {% if values is iterable %}
-                        <li>{{ macro.action_button(icon, values|merge({'title': icon|trans({}, 'actions')}), false) }}</li>
-                    {% else %}
-                        <li>{{ macro.action_button(icon, {'url': values, 'title': icon|trans({}, 'actions')}, false) }}</li>
-                    {% endif %}
-                {% endfor -%}
-            {% endfilter %}
-        </ul>
-        {% endif %}
-    </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{ 'label.actions'|trans }}
+                <span class="fa fa-caret-down"></span></button>
+            <ul class="dropdown-menu">
+                {%- filter spaceless -%}
+                    {%- for icon,values in actions  %}
+                        {% set class = '' %}
+                        {% if icon == 'trash' %}
+                            {% set class = 'delete' %}
+                            <li class="divider"></li>
+                        {% endif %}
+                        <li class="{{ class }}">
+                            {% if values is iterable %}
+                                {{ macro.action_button(icon, values|merge({'title': icon|trans({}, 'actions')}), false) }}
+                            {% else %}
+                                {{ macro.action_button(icon, {'url': values, 'title': icon|trans({}, 'actions')}, false) }}
+                            {% endif %}
+                        </li>
+                    {% endfor -%}
+                {% endfilter %}
+            </ul>
+        </div>
     {% endif %}
 {% endmacro %}
 
