@@ -6,10 +6,22 @@
  */
 
 table.dataTable {
-    /* summary row, like the timesheet table provides */
-    tr.summary td {
-        font-weight: bold;
-        border-bottom: 1px solid #ccc;
+    /* action column */
+    .actions {
+        width: 90px;
+        li.delete a {
+            color: #dd4b39;
+        }
+    }
+    tr {
+        /* summary row - provided in the users own timesheet table */
+        &.summary td {
+            font-weight: bold;
+            border-bottom: 1px solid #ccc;
+        }
+        &.open-edit {
+            cursor: pointer;
+        }
     }
     td {
         /*
