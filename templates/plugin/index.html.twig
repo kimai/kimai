@@ -19,19 +19,16 @@
                         <table class="table table-striped table-hover dataTable" role="grid">
                             <thead>
                             <tr>
-                                <th class="actions"></th>
                                 <th>{{ 'label.name'|trans }}</th>
                                 <th>{{ 'label.version'|trans({}, 'plugins') }}</th>
                                 <th class="hidden-xs">{{ 'label.description'|trans }}</th>
                                 <th class="hidden-xs hidden-sm">{{ 'label.required_version'|trans({}, 'plugins') }}</th>
+                                <th class="actions"></th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for plugin in plugins %}
                                 <tr>
-                                    <td>
-                                        {{ actions.plugin(plugin, 'index') }}
-                                    </td>
                                     <td>{{ plugin.name }}</td>
                                     <td>{{ widgets.label(plugin.metadata.version, 'primary') }}</td>
                                     <td class="hidden-xs">{{ plugin.metadata.description }}</td>
@@ -43,6 +40,9 @@
                                         {% else %}
                                             {{ widgets.label(plugin.metadata.kimaiVersion, 'success') }}
                                         {% endif %}
+                                    </td>
+                                    <td>
+                                        {{ actions.plugin(plugin, 'index') }}
                                     </td>
                                 </tr>
                             {% endfor %}

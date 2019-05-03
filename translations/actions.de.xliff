@@ -42,6 +42,10 @@
                 <source>copy</source>
                 <target>Kopie erstellen</target>
             </trans-unit>
+            <trans-unit id="home">
+                <source>home</source>
+                <target>Homepage</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
