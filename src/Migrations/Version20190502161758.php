@@ -7,34 +7,39 @@ namespace DoctrineMigrations;
 use App\Doctrine\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
+/**
+ * Creates the color columns on: customer, project, activity.
+ *
+ * @version 0.9
+ */
 final class Version20190502161758 extends AbstractMigration
 {
     public function getDescription() : string
     {
-        return '';
+        return 'Creates the color columns on: customer, project, activity';
     }
 
     public function up(Schema $schema) : void
     {
-        if ($this->isPlatformSqlite()) {
-            $this->addSql('ALTER TABLE kimai2_customers ADD COLUMN color VARCHAR(7) DEFAULT NULL');
-            $this->addSql('ALTER TABLE kimai2_projects ADD COLUMN color VARCHAR(7) DEFAULT NULL');
-            $this->addSql('ALTER TABLE kimai2_activities ADD COLUMN color VARCHAR(7) DEFAULT NULL');
-        } else {
-            $this->addSql('ALTER TABLE kimai2_activities ADD color VARCHAR(7) DEFAULT NULL');
-            $this->addSql('ALTER TABLE kimai2_projects ADD color VARCHAR(7) DEFAULT NULL');
-            $this->addSql('ALTER TABLE kimai2_customers ADD color VARCHAR(7) DEFAULT NULL');
-        }
+        $customers = $schema->getTable('kimai2_customers');
+        $customers->addColumn('color', 'string', ['length' => 7, 'notnull' => false, 'default' => null]);
+
+        $projects = $schema->getTable('kimai2_projects');
+        $projects->addColumn('color', 'string', ['length' => 7, 'notnull' => false, 'default' => null]);
+
+        $activities = $schema->getTable('kimai2_activities');
+        $activities->addColumn('color', 'string', ['length' => 7, 'notnull' => false, 'default' => null]);
     }
 
     public function down(Schema $schema) : void
     {
-        if ($this->isPlatformSqlite()) {
-            // FIXME remove column in SQLite databases
-        } else {
-            $this->addSql('ALTER TABLE kimai2_activities DROP color');
-            $this->addSql('ALTER TABLE kimai2_customers DROP color');
-            $this->addSql('ALTER TABLE kimai2_projects DROP color');
-        }
+        $customers = $schema->getTable('kimai2_customers');
+        $customers->dropColumn('color');
+
+        $projects = $schema->getTable('kimai2_projects');
+        $projects->dropColumn('color');
+
+        $activities = $schema->getTable('kimai2_activities');
+        $activities->dropColumn('color');
     }
 }
