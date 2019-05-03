@@ -189,6 +189,9 @@
             });
             {# $.kimai.pauseRecord('li.messages-menu ul.menu li'); #}
         });
+        document.addEventListener('DOMContentLoaded', function() {
+            new KimaiActiveRecordsDuration('[data-since]').registerUpdates(5000);
+        });
     </script>
     {% set event = trigger(constant('App\\Event\\ThemeEvent::JAVASCRIPT')) %}
     {{ event.content|raw }}
