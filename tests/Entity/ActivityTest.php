@@ -27,6 +27,7 @@ class ActivityTest extends AbstractEntityTest
         // timesheets
         $this->assertNull($sut->getFixedRate());
         $this->assertNull($sut->getHourlyRate());
+        $this->assertNull($sut->getColor());
     }
 
     public function testSetterAndGetter()
@@ -41,6 +42,9 @@ class ActivityTest extends AbstractEntityTest
 
         $this->assertInstanceOf(Activity::class, $sut->setComment('hello world'));
         $this->assertEquals('hello world', $sut->getComment());
+
+        $this->assertInstanceOf(Activity::class, $sut->setColor('#fffccc'));
+        $this->assertEquals('#fffccc', $sut->getColor());
 
         $this->assertInstanceOf(Activity::class, $sut->setFixedRate(13.47));
         $this->assertEquals(13.47, $sut->getFixedRate());

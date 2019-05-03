@@ -42,6 +42,7 @@ class CustomerTest extends AbstractEntityTest
 
         $this->assertNull($sut->getFixedRate());
         $this->assertNull($sut->getHourlyRate());
+        $this->assertNull($sut->getColor());
     }
 
     public function testSetterAndGetter()
@@ -56,6 +57,9 @@ class CustomerTest extends AbstractEntityTest
 
         $this->assertInstanceOf(Customer::class, $sut->setComment('hello world'));
         $this->assertEquals('hello world', $sut->getComment());
+
+        $this->assertInstanceOf(Customer::class, $sut->setColor('#fffccc'));
+        $this->assertEquals('#fffccc', $sut->getColor());
 
         $projects = [(new Project())->setName('Test')];
         $this->assertInstanceOf(Customer::class, $sut->setProjects($projects));
