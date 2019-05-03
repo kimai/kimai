@@ -27,7 +27,7 @@
 }(typeof self !== 'undefined' ? self : this, function (moment) {
 
     class KimaiActiveRecordsDuration {
-        constructor(selector, timeout) {
+        constructor(selector) {
             this.selector = selector;
         }
 
@@ -35,37 +35,37 @@
             let self = this;
             window.setTimeout(
                 function() {
-                    self.updateRecords(self.selector);
-                    self.registerUpdates(timeout);
+                    self.updateRecords().registerUpdates(timeout);
                 },
                 timeout
             );
         }
 
-        updateRecords(selector) {
+        updateRecords() {
             let durations = [];
-            for(let record of document.querySelectorAll(selector)) {
+            for(let record of document.querySelectorAll(this.selector)) {
                 const since = record.getAttribute('data-since');
                 const format = record.getAttribute('data-format');
                 const duration = this.getDuration(since, format);
-                durations.push(duration);
+                if (record.getAttribute('data-title') !== null) {
+                    durations.push(duration);
+                }
                 record.textContent = duration;
             }
 
             if (durations.length === 0) {
-                return;
+                return this;
             }
 
-            let title = '';
-            let prefix = '';
-            if (durations.length > 1) {
-                title += durations.shift();
-                prefix = ' | ';
-            }
-            for (let duration of durations) {
+            let title = durations.shift();
+            let prefix = ' | ';
+
+            for (let duration of durations.slice(0, 2)) {
                 title += prefix + duration;
             }
             document.title = title;
+
+            return this;
         }
 
         getDuration(since, format) {
@@ -74,8 +74,14 @@
             let hours = parseInt(duration.asHours());
             let minutes = duration.minutes();
             let seconds = duration.seconds();
+            let formatted = '';
 
-            return format.replace('%h', hours).replace('%m', minutes).replace('%s', seconds);
+            // special case for hours, as they can overflow the 24h barrier - Kimai does not support days as duration unit
+            if (hours.length === 1) {
+                hours = '0' + hours;
+            }
+
+            return format.replace('%h', hours).replace('%m', ('0'+minutes).substr(-2)).replace('%s', ('0'+seconds).substr(-2));
         }
     }
 

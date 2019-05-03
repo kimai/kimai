@@ -21,7 +21,7 @@
                                 <span>{{ entry.activity.name }}</span>
                                 <small>
                                     <i class="{{ 'timesheet'|icon }}"></i>
-                                    <span data-since="{{ entry.begin.format(constant('DATE_ISO8601')) }}" data-format="{{ get_format_duration() }}">{{ entry|duration }}</span>
+                                    <span data-title="true" data-since="{{ entry.begin.format(constant('DATE_ISO8601')) }}" data-format="{{ get_format_duration() }}">{{ entry|duration }}</span>
                                 </small>
                             </h4>
                             <p>{{ entry.project.name }} ({{ entry.project.customer.name }})</p>
