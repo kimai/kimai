@@ -42,35 +42,48 @@
     {{ macro.label(macro.username(user), 'primary') }}
 {% endmacro %}
 
-{% macro label_activity(activity) %}
+{% macro label_activity(activity, url) %}
     {% import _self as macro %}
     {% set isVisible = activity.visible %}
+    {% set color = activity.color %}
+    {% if color is empty and activity.project is not null %}
+        {% set color = activity.project.color ?? activity.project.customer.color %}
+    {% endif %}
     {% if isVisible and not activity.project is null %}
         {% set isVisible = activity.project.visible %}
         {% if isVisible and not activity.project.customer is null %}
             {% set isVisible = activity.project.customer.visible %}
         {% endif %}
     {% endif %}
-    {% set type = (isVisible ? 'primary' : 'default') %}
-    <span class="label label-{{ type }}">{{ activity.name }}</span>
+    {{ macro.label_color_dot('activity', isVisible, activity.name, url, color) }}
 {% endmacro %}
 
-{% macro label_project(project) %}
+{% macro label_project(project, url) %}
     {% import _self as macro %}
-    {% set type = 'default' %}
+    {% set isVisible = false %}
     {% if project.visible and project.customer.visible %}
-        {% set type = 'primary' %}
+        {% set isVisible = true %}
     {% endif %}
-    <span class="label label-{{ type }}">{{ project.name }}</span>
+    {{ macro.label_color_dot('project', isVisible, project.name, url, (project.color ?? project.customer.color)) }}
 {% endmacro %}
 
-{% macro label_customer(customer) %}
+{% macro label_customer(customer, url) %}
     {% import _self as macro %}
-    {% set type = 'default' %}
-    {% if customer.visible %}
-        {% set type = 'primary' %}
-    {% endif %}
-    <span class="label label-{{ type }}">{{ customer.name }}</span>
+    {% set isVisible = customer.visible %}
+    {{ macro.label_color_dot('customer', isVisible, customer.name, url, customer.color) }}
+{% endmacro %}
+
+{% macro label_color_dot(type, isVisible, name, url, color) %}
+    <span class="label-{{ type }}{{ isVisible ? '' : ' label-invisible' }}">
+        <span class="dot"{% if color is not empty %} style="background-color:{{ color }}"{% endif %}></span>
+        <span class="name">
+            {% if url is not empty %}
+                <a href="{{ url }}">{{ name }}</a>
+            {% else %}
+                {{ name }}
+            {% endif %}
+        </span>
+    </span>
 {% endmacro %}
 
 {% macro badge_counter(count, url) %}

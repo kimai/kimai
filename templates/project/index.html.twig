@@ -33,9 +33,9 @@
 
         {% for entry in entries %}
             <tr{% if is_granted('edit', entry) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_project_edit', {'id': entry.id}) }}"{% endif %}>
-                <td>{{ entry.name }}</td>
+                <td>{{ widgets.label_color_dot('project', true, entry.name, null, entry.color) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">
-                    <a href="{{ path('admin_customer_edit', {'id' : entry.customer.id}) }}">{{ widgets.label_customer(entry.customer) }}</a>
+                    {{ widgets.label_customer(entry.customer, path('admin_customer_edit', {'id' : entry.customer.id})) }}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'budget') }}">{{ entry.budget|money(entry.customer.currency) }}</td>
