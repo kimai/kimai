@@ -266,10 +266,22 @@ div.dataTables_scrollHead table.table-bordered {
 }
 
 table.dataTable {
+    /* action column */
+    .actions {
+        width: 90px;
+        li.delete a {
+            color: #dd4b39;
+        }
+    }
     /* summary row, like the timesheet table provides */
-    tr.summary td {
-        font-weight: bold;
-        border-bottom: 1px solid #ccc;
+    tr {
+        &.summary td {
+            font-weight: bold;
+            border-bottom: 1px solid #ccc;
+        }
+        &.open-edit {
+            cursor: pointer;
+        }
     }
     td {
         /*
