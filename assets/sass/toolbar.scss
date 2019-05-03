@@ -12,19 +12,6 @@
     background: transparent;
 }
 
-/* Right sidebar with additional tabs for personal settings and "About Kimai" section */
-.control-sidebar {
-    select {
-        color: $input-color;
-        background-color: $input-bg;
-    }
-    div.image {
-        img.img-circle {
-            max-width: 34px;
-        }
-    }
-}
-
 .toolbar-pad {
     padding: 10px;
 }
