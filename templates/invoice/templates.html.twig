@@ -22,21 +22,29 @@
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% endif %}
 
-    {{ tables.data_table_header('invoice_template', {
-        '': 'actions alwaysVisible',
+    {% set columns = {
         'name': 'alwaysVisible',
         'title': 'hidden-xs',
         'due_days': 'hidden-xs hidden-sm',
         'vat': 'hidden-xs hidden-sm',
-    }) }}
+        'actions': 'actions alwaysVisible',
+    } %}
+
+    {% set tableName = 'invoice_template' %}
+
+    {{ tables.data_table_header(tableName, columns) }}
 
     {% for entry in entries %}
-        <tr>
-            <td>
+        <tr{% if is_granted('edit', entry) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_invoice_template_edit', {'id' : entry.id, 'page': page}) }}"{% endif %}>
+            <td>{{ entry.name }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'title') }}">{{ entry.title }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'due_days') }}">{{ entry.dueDays }}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'vat') }}">{{ entry.vat }}</td>
+            <td class="actions">
                 {# TODO move me to actions macro #}
                 {% set actions = {} %}
                 {% if is_granted('edit', entry) %}
-                    {% set actions = {'edit': path('admin_invoice_template_edit', {'id' : entry.id, 'page': page})} %}
+                    {% set actions = {'edit': {'url': path('admin_invoice_template_edit', {'id' : entry.id, 'page': page}), 'class': 'modal-ajax-form'}} %}
                 {% endif %}
                 {% if is_granted('create_invoice_template') %}
                     {% set actions = actions|merge({'copy': path('admin_invoice_template_copy', {'id' : entry.id, 'page': page})}) %}
@@ -47,10 +55,6 @@
                 {% set event = trigger('actions.invoice_templates', {'actions': actions, 'view': 'index', 'template': entry}) %}
                 {{ widgets.table_actions(actions) }}
             </td>
-            <td>{{ entry.name }}</td>
-            <td class="hidden-xs">{{ entry.title }}</td>
-            <td class="hidden-xs hidden-sm">{{ entry.dueDays }}</td>
-            <td class="hidden-xs hidden-sm">{{ entry.vat }}</td>
         </tr>
     {% endfor %}
 
