@@ -20,9 +20,6 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
-/**
- * Class CustomerRepository
- */
 class CustomerRepository extends AbstractRepository
 {
     /**
@@ -41,7 +38,7 @@ class CustomerRepository extends AbstractRepository
     public function countCustomer($visible = null)
     {
         if (null !== $visible) {
-            return $this->count(['visible' => (int) $visible]);
+            return $this->count(['visible' => (bool) $visible]);
         }
 
         return $this->count([]);
@@ -55,34 +52,47 @@ class CustomerRepository extends AbstractRepository
      */
     public function getCustomerStatistics(Customer $customer)
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-
-        $qb->select('COUNT(t.id) as recordAmount')
-            ->addSelect('SUM(t.duration) as recordDuration')
-            ->addSelect('COUNT(DISTINCT(a.id)) as activityAmount')
-            ->addSelect('COUNT(DISTINCT(p.id)) as projectAmount')
-            ->from(Timesheet::class, 't')
-            ->join(Activity::class, 'a')
-            ->join(Project::class, 'p')
-            ->join(Customer::class, 'c')
-            ->andWhere('t.activity = a.id')
-            ->andWhere('t.project = p.id')
-            ->andWhere('p.customer = c.id')
-            ->andWhere('c.id = :customer')
-        ;
-
-        $result = $qb->getQuery()->execute(['customer' => $customer], Query::HYDRATE_ARRAY);
-
         $stats = new CustomerStatistic();
+        $stats->setCount(1);
 
-        if (isset($result[0])) {
-            $dbStats = $result[0];
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb
+            ->addSelect('COUNT(t.id) as recordAmount')
+            ->addSelect('SUM(t.duration) as recordDuration')
+            ->from(Timesheet::class, 't')
+            ->join(Project::class, 'p', Query\Expr\Join::WITH, 't.project = p.id')
+            ->andWhere('p.customer = :customer')
+        ;
+        $timesheetResult = $qb->getQuery()->execute(['customer' => $customer], Query::HYDRATE_ARRAY);
 
-            $stats->setCount(1);
-            $stats->setRecordAmount($dbStats['recordAmount']);
-            $stats->setRecordDuration($dbStats['recordDuration']);
-            $stats->setActivityAmount($dbStats['activityAmount']);
-            $stats->setProjectAmount($dbStats['projectAmount']);
+        if (isset($timesheetResult[0])) {
+            $stats->setRecordAmount($timesheetResult[0]['recordAmount']);
+            $stats->setRecordDuration($timesheetResult[0]['recordDuration']);
+        }
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb
+            ->addSelect('COUNT(a.id) as activityAmount')
+            ->from(Activity::class, 'a')
+            ->join(Project::class, 'p', Query\Expr\Join::WITH, 'a.project = p.id')
+            ->andWhere('a.project = p.id')
+            ->andWhere('p.customer = :customer')
+        ;
+        $activityResult = $qb->getQuery()->execute(['customer' => $customer], Query::HYDRATE_ARRAY);
+
+        if (isset($activityResult[0])) {
+            $stats->setActivityAmount($activityResult[0]['activityAmount']);
+        }
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->addSelect('COUNT(p.id) as projectAmount')
+            ->from(Project::class, 'p')
+            ->andWhere('p.customer = :customer')
+        ;
+        $projectResult = $qb->getQuery()->execute(['customer' => $customer], Query::HYDRATE_ARRAY);
+
+        if (isset($projectResult[0])) {
+            $stats->setProjectAmount($projectResult[0]['projectAmount']);
         }
 
         return $stats;
@@ -117,7 +127,7 @@ class CustomerRepository extends AbstractRepository
             ->orderBy('c.' . $query->getOrderBy(), $query->getOrder());
 
         if (CustomerQuery::SHOW_VISIBLE == $query->getVisibility()) {
-            $qb->andWhere('c.visible = 1');
+            $qb->andWhere($qb->expr()->eq('c.visible', $qb->expr()->literal(true)));
 
             /** @var Customer $entity */
             $entity = $query->getHiddenEntity();
@@ -125,7 +135,7 @@ class CustomerRepository extends AbstractRepository
                 $qb->orWhere('c.id = :customer')->setParameter('customer', $entity);
             }
         } elseif (CustomerQuery::SHOW_HIDDEN == $query->getVisibility()) {
-            $qb->andWhere('c.visible = 0');
+            $qb->andWhere($qb->expr()->eq('c.visible', $qb->expr()->literal(false)));
         }
 
         if (!empty($query->getIgnoredEntities())) {

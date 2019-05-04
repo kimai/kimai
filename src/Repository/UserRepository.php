@@ -13,9 +13,6 @@ use App\Entity\User;
 use App\Repository\Query\UserQuery;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
-/**
- * Class UserRepository
- */
 class UserRepository extends AbstractRepository implements UserLoaderInterface
 {
     /**
@@ -41,10 +38,15 @@ class UserRepository extends AbstractRepository implements UserLoaderInterface
     }
 
     /**
+     * @param null|bool $enabled
      * @return int
      */
-    public function countUser()
+    public function countUser($enabled = null)
     {
+        if (null !== $enabled) {
+            return $this->count(['enabled' => (bool) $enabled]);
+        }
+
         return $this->count([]);
     }
 
@@ -61,9 +63,9 @@ class UserRepository extends AbstractRepository implements UserLoaderInterface
             ->orderBy('u.' . $query->getOrderBy(), $query->getOrder());
 
         if (UserQuery::SHOW_VISIBLE == $query->getVisibility()) {
-            $qb->andWhere('u.enabled = 1');
+            $qb->andWhere($qb->expr()->eq('u.enabled', $qb->expr()->literal(true)));
         } elseif (UserQuery::SHOW_HIDDEN == $query->getVisibility()) {
-            $qb->andWhere('u.enabled = 0');
+            $qb->andWhere($qb->expr()->eq('u.enabled', $qb->expr()->literal(false)));
         }
 
         if ($query->getRole() !== null) {
