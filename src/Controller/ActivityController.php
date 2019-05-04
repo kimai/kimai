@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Entity\Activity;
+use App\Entity\Project;
 use App\Form\ActivityEditForm;
 use App\Form\Toolbar\ActivityToolbarForm;
 use App\Form\Type\ActivityType;
@@ -82,7 +83,13 @@ class ActivityController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        return $this->renderActivityForm(new Activity(), $request);
+        $activity = new Activity();
+        if ($request->query->get('project')) {
+            $project = $this->getDoctrine()->getRepository(Project::class)->find($request->query->get('project'));
+            $activity->setProject($project);
+        }
+
+        return $this->renderActivityForm($activity, $request);
     }
 
     /**

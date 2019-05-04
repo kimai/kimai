@@ -10,6 +10,8 @@
 namespace App\Controller;
 
 use App\Configuration\TimesheetConfiguration;
+use App\Entity\Activity;
+use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
@@ -156,6 +158,16 @@ trait TimesheetControllerTrait
             if ($to !== false) {
                 $entry->setEnd($to);
             }
+        }
+
+        if ($request->query->get('project')) {
+            $project = $this->getDoctrine()->getRepository(Project::class)->find($request->query->get('project'));
+            $entry->setProject($project);
+        }
+
+        if ($request->query->get('activity')) {
+            $activity = $this->getDoctrine()->getRepository(Activity::class)->find($request->query->get('activity'));
+            $entry->setActivity($activity);
         }
 
         $createForm = $this->getCreateForm($entry, $redirectRoute);

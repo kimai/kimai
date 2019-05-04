@@ -83,7 +83,13 @@ class ProjectController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        return $this->renderProjectForm(new Project(), $request);
+        $project = new Project();
+        if ($request->query->get('customer')) {
+            $customer = $this->getDoctrine()->getRepository(Customer::class)->find($request->query->get('customer'));
+            $project->setCustomer($customer);
+        }
+
+        return $this->renderProjectForm($project, $request);
     }
 
     /**

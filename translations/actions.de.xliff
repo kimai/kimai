@@ -46,6 +46,18 @@
                 <source>home</source>
                 <target>Homepage</target>
             </trans-unit>
+            <trans-unit id="create-project">
+                <source>create-project</source>
+                <target>Projekt erstellen</target>
+            </trans-unit>
+            <trans-unit id="create-activity">
+                <source>create-activity</source>
+                <target>Tätigkeit erstellen</target>
+            </trans-unit>
+            <trans-unit id="create-timesheet">
+                <source>create-timesheet</source>
+                <target>Zeiterfassung erstellen</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
