@@ -1,6 +1,6 @@
 App\Entity\Customer:
     exclusion_policy: All
-    custom_accessor_order: [id, name, number, comment, visible, company, contact, address, country, currency, phone, fax, mobile, email, homepage, timezone, fixedRate, hourlyRate]
+    custom_accessor_order: [id, name, number, comment, visible, company, contact, address, country, currency, phone, fax, mobile, email, homepage, timezone, fixedRate, hourlyRate, color]
     properties:
         id:
             include: true
@@ -56,3 +56,6 @@ App\Entity\Customer:
         hourlyRate:
             include: true
             groups: [Default]
+        color:
+            include: true
+            groups: [Entity]

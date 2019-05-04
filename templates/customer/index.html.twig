@@ -11,7 +11,7 @@
     'number': 'hidden-xs',
     'currency': 'hidden-xs',
     'visible': 'hidden-xs',
-    'actions': 'alwaysVisible',
+    'actions': 'actions alwaysVisible',
 } %}
 
 {% set tableName = 'customer_admin' %}
@@ -33,14 +33,14 @@
         {{ tables.data_table_header(tableName, columns) }}
 
         {% for entry in entries %}
-            <tr>
-                <td>{{ entry.name }} {% if entry.company is not empty %}({{ entry.company }}){% endif %}</td>
+            <tr{% if is_granted('edit', entry) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_customer_edit', {'id': entry.id}) }}"{% endif %}>
+                <td>{{ widgets.label_color_dot('customer', true, entry.name, null, entry.color) }} {% if entry.company is not empty %}({{ entry.company }}){% endif %}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'country') }}">{{ entry.country|country }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'number') }}">{{ entry.number }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'currency') }}">{{ entry.currency }} {{ entry.currency|currency }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
-                <td>
+                <td class="actions">
                     {{ actions.customer(entry, 'index') }}
                 </td>
             </tr>

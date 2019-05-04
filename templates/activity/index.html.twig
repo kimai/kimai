@@ -10,7 +10,7 @@
     'project': 'hidden-xs',
     'comment': 'hidden-xs',
     'visible': '',
-    'actions': 'alwaysVisible',
+    'actions': 'actions alwaysVisible',
 } %}
 
 {% set tableName = 'activity_admin' %}
@@ -33,25 +33,23 @@
         {{ tables.data_table_header(tableName, columns) }}
 
         {% for entry in entries %}
-            <tr>
-                <td>{{ entry.name }}</td>
+            <tr{% if is_granted('edit', entry) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_activity_edit', {'id': entry.id}) }}"{% endif %}>
+                <td>{{ widgets.label_color_dot('activity', true, entry.name, null, entry.color) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">
                     {% if entry.project and entry.project.customer %}
-                        <a href="{{ path('admin_customer_edit', {'id' : entry.project.customer.id}) }}">{{ widgets.label_customer(entry.project.customer) }}</a>
-                    {% else %}
-                        {# GLOBAL ACTIVTITY DOES NOT HAVE A CUSTOMER #}
+                        {# only none-global activities have a project and customer assigned #}
+                        {{ widgets.label_customer(entry.project.customer, path('admin_customer_edit', {'id' : entry.project.customer.id})) }}
                     {% endif %}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">
                     {% if entry.project %}
-                        <a href="{{ path('admin_project_edit', {'id' : entry.project.id}) }}">{{ widgets.label_project(entry.project) }}</a>
-                    {% else %}
-                        {# GLOBAL ACTIVTITY DOES NOT HAVE A PROJECT #}
+                        {# only none-global activities have a project and customer assigned #}
+                        {{ widgets.label_project(entry.project, path('admin_project_edit', {'id' : entry.project.id})) }}
                     {% endif %}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
-                <td>
+                <td class="actions">
                     {{ actions.activity(entry, 'index') }}
                 </td>
             </tr>

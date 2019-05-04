@@ -337,6 +337,10 @@
                 <source>label.fixedRate</source>
                 <target>Fixed rate</target>
             </trans-unit>
+            <trans-unit id="label.color">
+                <source>label.color</source>
+                <target>Color</target>
+            </trans-unit>
 
             <!--
               User profile

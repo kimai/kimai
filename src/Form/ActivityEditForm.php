@@ -10,6 +10,7 @@
 namespace App\Form;
 
 use App\Entity\Activity;
+use App\Form\Type\ColorPickerType;
 use App\Form\Type\CustomerType;
 use App\Form\Type\FixedRateType;
 use App\Form\Type\HourlyRateType;
@@ -109,6 +110,7 @@ class ActivityEditForm extends AbstractType
         );
 
         $builder
+            ->add('color', ColorPickerType::class)
             ->add('fixedRate', FixedRateType::class, [
                 'currency' => $currency,
             ])

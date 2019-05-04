@@ -1,6 +1,6 @@
 App\Entity\Project:
     exclusion_policy: All
-    custom_accessor_order: [id, name, comment, visible, budget, orderNumber, customer, fixedRate, hourlyRate]
+    custom_accessor_order: [id, name, comment, visible, budget, orderNumber, customer, fixedRate, hourlyRate, color]
     properties:
         id:
             include: true
@@ -30,6 +30,9 @@ App\Entity\Project:
             include: false
             exclude: true
             groups: [Default]
+        color:
+            include: true
+            groups: [Entity]
     virtual_properties:
         getCustomer:
             serialized_name: customer

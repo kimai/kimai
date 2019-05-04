@@ -6,34 +6,16 @@
  */
 
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/variables";
-
-.error-page {
-    margin-bottom: 50px;
-}
-
-@media print{
-    .sf-toolbar, .control-sidebar {display: none !important;}
-}
-
+@import 'variables';
+@import 'error-page';
+@import 'print';
 @import 'content';
 @import 'toolbar';
-
-/* ================================ SIDEBAR ================================ */
-
-/* Used for the Sidebar UserPanel (which is deactivated right now) */
-.user-panel>.info {
-    left: 80px;
-}
-
-/* ================================ FOOTER ================================ */
-
-footer.main-footer {
-    padding: 5px;
-    font-size: 80%;
-}
-
+@import 'sidebar';
+@import 'footer';
 @import 'invoice';
 @import 'datatable';
+@import 'datatable-extensions';
 @import 'calendar';
 @import 'dashboard';
 @import 'navbar';

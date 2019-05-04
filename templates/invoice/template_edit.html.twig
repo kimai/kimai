@@ -1,10 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
 
 {% block page_title %}{{ 'admin_invoice_template.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_invoice_template.subtitle'|trans }}{% endblock %}
 
 {% block main %}
-    {{ include('default/_form.html.twig', {
+    {{ include(app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig', {
         'title': template.name|default('create'|trans),
         'form': form,
         'back': path('admin_invoice_template')
