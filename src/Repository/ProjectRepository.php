@@ -110,7 +110,7 @@ class ProjectRepository extends AbstractRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        // if we join activities, the maxperpage limit will limit the list
+        // if we join activities, the max-per-page limit will limit the list
         // due to the raised amount of rows by projects * activities
         $qb->select('p', 'c')
             ->from(Project::class, 'p')
@@ -119,9 +119,10 @@ class ProjectRepository extends AbstractRepository
 
         if (ProjectQuery::SHOW_VISIBLE == $query->getVisibility()) {
             if (!$query->isExclusiveVisibility()) {
-                $qb->andWhere($qb->expr()->eq('c.visible', $qb->expr()->literal(true)));
+                $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
             }
-            $qb->andWhere($qb->expr()->eq('p.visible', $qb->expr()->literal(true)));
+            $qb->andWhere($qb->expr()->eq('p.visible', ':visible'));
+            $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
 
             $entity = $query->getHiddenEntity();
             if (null !== $entity) {
@@ -130,7 +131,8 @@ class ProjectRepository extends AbstractRepository
 
             // TODO check for visibility of customer
         } elseif (ProjectQuery::SHOW_HIDDEN == $query->getVisibility()) {
-            $qb->andWhere($qb->expr()->eq('p.visible', $qb->expr()->literal(false)));
+            $qb->andWhere($qb->expr()->eq('p.visible', ':visible'));
+            $qb->setParameter('visible', false, \PDO::PARAM_BOOL);
             // TODO check for visibility of customer
         }
 

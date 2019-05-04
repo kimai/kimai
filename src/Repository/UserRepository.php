@@ -63,9 +63,11 @@ class UserRepository extends AbstractRepository implements UserLoaderInterface
             ->orderBy('u.' . $query->getOrderBy(), $query->getOrder());
 
         if (UserQuery::SHOW_VISIBLE == $query->getVisibility()) {
-            $qb->andWhere($qb->expr()->eq('u.enabled', $qb->expr()->literal(true)));
+            $qb->andWhere($qb->expr()->eq('u.enabled', ':enabled'));
+            $qb->setParameter('enabled', true, \PDO::PARAM_BOOL);
         } elseif (UserQuery::SHOW_HIDDEN == $query->getVisibility()) {
-            $qb->andWhere($qb->expr()->eq('u.enabled', $qb->expr()->literal(false)));
+            $qb->andWhere($qb->expr()->eq('u.enabled', ':enabled'));
+            $qb->setParameter('enabled', false, \PDO::PARAM_BOOL);
         }
 
         if ($query->getRole() !== null) {
