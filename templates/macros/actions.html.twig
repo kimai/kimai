@@ -24,10 +24,10 @@
             {% set actions = actions|merge({'edit': {'url': path('admin_activity_edit', {'id': activity.id}), 'class': class}}) %}
         {% endif %}
         {% if is_granted('view_other_timesheet') %}
-            {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'customer': activity.project.customer.id, 'project': activity.project.id})}) %}
+            {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'customer': activity.project ? activity.project.customer.id : null, 'project': activity.project ? activity.project.id : null, 'activity': activity.id})}) %}
         {% endif %}
         {% if is_granted('create_other_timesheet') %}
-            {% set actions = actions|merge({'create-timesheet': path('admin_timesheet_create', {'project': activity.project.id, 'activity': activity.id})}) %}
+            {% set actions = actions|merge({'create-timesheet': path('admin_timesheet_create', {'project': activity.project ? activity.project.id : null, 'activity': activity.id})}) %}
         {% endif %}
         {% if view == 'index' and is_granted('delete', activity) %}
             {% set actions = actions|merge({'trash': {'url': path('admin_activity_delete', {'id': activity.id}), 'class': 'modal-ajax-form'}}) %}
