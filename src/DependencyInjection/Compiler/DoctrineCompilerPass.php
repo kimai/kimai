@@ -23,7 +23,19 @@ class DoctrineCompilerPass implements CompilerPassInterface
      */
     protected $allowedEngines = [
         'mysql',
-        'sqlite'
+        'sqlite',
+        'pgsql',
+    ];
+
+    // mapping connection schemes to config filename
+    protected $mapping = [
+        'mysql' => 'mysql',
+        'mysql2' => 'mysql',
+        'sqlite' => 'sqlite',
+        'sqlite3' => 'sqlite',
+        'pgsql' => 'postgres',
+        'postgres' => 'postgres',
+        'postgresql' => 'postgres',
     ];
 
     /**
@@ -73,7 +85,9 @@ class DoctrineCompilerPass implements CompilerPassInterface
             $container->getParameter('kernel.project_dir') . '/vendor/beberlei/DoctrineExtensions/config/'
         );
 
-        $configFile = $configDir . '/' . $engine . '.yml';
+        $config = $this->mapping[$engine];
+
+        $configFile = $configDir . '/' . $config . '.yml';
 
         if (!file_exists($configFile)) {
             throw new \Exception('Could not find config file for database engine. Looked at ' . $configFile);
@@ -99,14 +113,20 @@ class DoctrineCompilerPass implements CompilerPassInterface
 
         $ormConfig = $container->getDefinition('doctrine.orm.default_configuration');
 
-        foreach ($sql['string_functions'] as $name => $function) {
-            $ormConfig->addMethodCall('addCustomStringFunction', [$name, $function]);
+        if (isset($sql['string_functions'])) {
+            foreach ($sql['string_functions'] as $name => $function) {
+                $ormConfig->addMethodCall('addCustomStringFunction', [$name, $function]);
+            }
         }
-        foreach ($sql['numeric_functions'] as $name => $function) {
-            $ormConfig->addMethodCall('addCustomNumericFunction', [$name, $function]);
+        if (isset($sql['numeric_functions'])) {
+            foreach ($sql['numeric_functions'] as $name => $function) {
+                $ormConfig->addMethodCall('addCustomNumericFunction', [$name, $function]);
+            }
         }
-        foreach ($sql['datetime_functions'] as $name => $function) {
-            $ormConfig->addMethodCall('addCustomDatetimeFunction', [$name, $function]);
+        if (isset($sql['datetime_functions'])) {
+            foreach ($sql['datetime_functions'] as $name => $function) {
+                $ormConfig->addMethodCall('addCustomDatetimeFunction', [$name, $function]);
+            }
         }
     }
 }
