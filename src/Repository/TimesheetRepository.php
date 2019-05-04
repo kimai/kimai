@@ -212,13 +212,13 @@ class TimesheetRepository extends AbstractRepository
 
         $qb->select('SUM(t.rate) as rate, SUM(t.duration) as duration, MONTH(t.begin) as month, YEAR(t.begin) as year')
             ->from(Timesheet::class, 't')
-            ->where($qb->expr()->gt('t.begin', ':from'))
         ;
 
         if (!empty($begin)) {
+            $qb->where($qb->expr()->gt('t.begin', ':from'));
             $qb->setParameter('from', $begin, Type::DATETIME);
         } else {
-            $qb->setParameter('from', 0);
+            $qb->where($qb->expr()->isNotNull('t.begin'));
         }
 
         if (!empty($end)) {
@@ -274,7 +274,7 @@ class TimesheetRepository extends AbstractRepository
             ->join('t.activity', 'a')
             ->join('t.project', 'p')
             ->join('p.customer', 'c')
-            ->where($qb->expr()->gt('t.begin', '0'))
+            ->where($qb->expr()->isNotNull('t.begin'))
             ->andWhere($qb->expr()->isNull('t.end'))
             ->orderBy('t.begin', 'DESC');
 
