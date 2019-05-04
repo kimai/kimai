@@ -127,7 +127,8 @@ class CustomerRepository extends AbstractRepository
             ->orderBy('c.' . $query->getOrderBy(), $query->getOrder());
 
         if (CustomerQuery::SHOW_VISIBLE == $query->getVisibility()) {
-            $qb->andWhere($qb->expr()->eq('c.visible', $qb->expr()->literal(true)));
+            $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
+            $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
 
             /** @var Customer $entity */
             $entity = $query->getHiddenEntity();
@@ -135,7 +136,8 @@ class CustomerRepository extends AbstractRepository
                 $qb->orWhere('c.id = :customer')->setParameter('customer', $entity);
             }
         } elseif (CustomerQuery::SHOW_HIDDEN == $query->getVisibility()) {
-            $qb->andWhere($qb->expr()->eq('c.visible', $qb->expr()->literal(false)));
+            $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
+            $qb->setParameter('visible', false, \PDO::PARAM_BOOL);
         }
 
         if (!empty($query->getIgnoredEntities())) {
