@@ -128,5 +128,21 @@ class DoctrineCompilerPass implements CompilerPassInterface
                 $ormConfig->addMethodCall('addCustomDatetimeFunction', [$name, $function]);
             }
         }
+
+        if ($this->isPostgres()) {
+            $ormConfig->addMethodCall('addCustomNumericFunction', ['month', 'Oro\ORM\Query\AST\Functions\SimpleFunction']);
+            $ormConfig->addMethodCall('addCustomNumericFunction', ['year', 'Oro\ORM\Query\AST\Functions\SimpleFunction']);
+        }
+    }
+
+    /**
+     * @return bool
+     * @throws \Exception
+     */
+    protected function isPostgres()
+    {
+        $engine = $this->findEngine();
+        $mapped = $this->mapping[$engine];
+        return $mapped === 'postgres';
     }
 }

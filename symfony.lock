@@ -252,6 +252,9 @@
     "ocramius/proxy-manager": {
         "version": "2.1.1"
     },
+    "oro/doctrine-extensions": {
+        "version": "1.2.2"
+    },
     "pagerfanta/pagerfanta": {
         "version": "v1.0.5"
     },
