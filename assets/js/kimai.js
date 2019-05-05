@@ -60,7 +60,7 @@ $(function() {
             // some actions can be performed in a modal for a better UX
             this.activateAjaxFormInModal('.modal-ajax-form');
             // handle clicks on table rows
-            this.activateTableRowClick('.tablerow-click');
+            this.activateAlternativeLinks('.alternative-link');
             // activate select boxes that load dynamic data via API
             this.activateApiSelects('select[data-related-select]');
         },
@@ -339,33 +339,11 @@ $(function() {
                 });
             });
         },
+
+        // allows to assign the given selector to any element, which then is used as click-handler:
+        // opening a modal with the content from the URL given in the elements 'data-href' or 'href' attribute
         activateAjaxFormInModal: function(selector) {
-            $('body').on('click', selector, function(event) {
-                // just in case an inner element is editable, than this should not be triggered
-                if (event.target.parentNode.isContentEditable || event.target.isContentEditable) {
-                    return;
-                }
-
-                // handles the "click" on table rows to open an entry for editing: when a button within a row is clicked,
-                // we don't want the table row event to be processed - so we intercept it
-                var target = event.target;
-                if (event.currentTarget.tagName === 'TR') {
-                    while (target.tagName !== 'BODY') {
-                        if (target.tagName === 'A' || target.tagName === 'BUTTON') {
-                            return;
-                        }
-                        target = target.parentNode;
-                    }
-                }
-
-                event.preventDefault();
-                event.stopPropagation();
-
-                // any element can open the modal - for none <a> elements use "data-href" instead of "href" attribute
-                var href = $(this).attr('data-href');
-                if (!href) {
-                    href = $(this).attr('href');
-                }
+            this._addClickHandlerReducedInTableRow(selector, function(href) {
                 $.ajax({
                     url: href,
                     success: function(html) {
@@ -377,7 +355,16 @@ $(function() {
                 });
             });
         },
-        activateTableRowClick: function(selector) {
+
+        // allows to assign the given selector to any element, which then is used as click-handler:
+        // redirecting to the URL given in the elements 'data-href' or 'href' attribute
+        activateAlternativeLinks: function(selector) {
+            this._addClickHandlerReducedInTableRow(selector, function(href) {
+                window.location = href;
+            });
+        },
+
+        _addClickHandlerReducedInTableRow: function(selector, callback)  {
             $('body').on('click', selector, function(event) {
                 // just in case an inner element is editable, than this should not be triggered
                 if (event.target.parentNode.isContentEditable || event.target.isContentEditable) {
@@ -387,9 +374,9 @@ $(function() {
                 // handles the "click" on table rows to open an entry for editing: when a button within a row is clicked,
                 // we don't want the table row event to be processed - so we intercept it
                 let target = event.target;
-                if (event.currentTarget.tagName === 'TR') {
-                    while (target.tagName !== 'BODY') {
-                        if (target.tagName === 'A' || target.tagName === 'BUTTON') {
+                if (event.currentTarget.matches('tr')) {
+                    while (!target.matches('body')) {
+                        if (target.matches('a') || target.matches ('button')) {
                             return;
                         }
                         target = target.parentNode;
@@ -404,7 +391,7 @@ $(function() {
                     href = $(this).attr('href');
                 }
 
-                window.location = href;
+                callback(href);
             });
         }
     };

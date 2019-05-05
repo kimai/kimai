@@ -33,7 +33,7 @@
         {{ tables.data_table_header(tableName, columns) }}
 
         {% for entry in entries %}
-            <tr{% if is_granted('edit', entry) %} class="open-edit tablerow-click" data-href="{{ path('user_profile_edit', {'username': entry.username}) }}"{% endif %}>
+            <tr{% if is_granted('edit', entry) %} class="open-edit alternative-link" data-href="{{ path('user_profile_edit', {'username': entry.username}) }}"{% endif %}>
                 <td>{{ widgets.username(entry) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'username') }}">{{ entry.username }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'email') }}">{{ entry.email }}</td>
