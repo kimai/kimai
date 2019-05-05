@@ -71,10 +71,9 @@
         getDuration(since, format) {
             let duration = moment.duration(moment(new Date()).diff(moment(since)));
 
-            let hours = parseInt(duration.asHours());
+            let hours = parseInt(duration.asHours()).toString();
             let minutes = duration.minutes();
             let seconds = duration.seconds();
-            let formatted = '';
 
             // special case for hours, as they can overflow the 24h barrier - Kimai does not support days as duration unit
             if (hours.length === 1) {
