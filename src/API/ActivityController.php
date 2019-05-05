@@ -97,7 +97,7 @@ class ActivityController extends BaseApiController
             $query->setOrderGlobalsFirst(false);
         }
 
-        if (null !== ($project = $paramFetcher->get('project'))) {
+        if (!empty($project = $paramFetcher->get('project'))) {
             $query->setProject($project);
         }
 

@@ -10,7 +10,7 @@
  */
 $(document).ready(function () {
 
-    /* Submit the pagination including the toolbar filters */
+    // This catches all clicks on the pagination and prevents the default action, as we want to relad the page via JS
     $('body').on('click', 'div.navigation ul.pagination li a', function(event) {
         var $pager = $(".toolbar form input[name='page']");
         if ($pager.length === 0) {
@@ -25,6 +25,8 @@ $(document).ready(function () {
         return false;
     });
 
+    // Reset the page if any other value is changed, otherwise we might end up with a limited set
+    // of data which does not support the given page - and it would be just wrong to stay in the same page
     $('.toolbar form input').change(function (event) {
         switch (event.target.id) {
             case 'page':
