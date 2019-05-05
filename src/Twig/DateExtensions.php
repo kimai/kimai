@@ -13,6 +13,7 @@ use App\Utils\LocaleSettings;
 use DateTime;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
  * Date specific twig extensions
@@ -65,6 +66,16 @@ class DateExtensions extends AbstractExtension
             new TwigFilter('date_format', [$this, 'dateFormat']),
             new TwigFilter('time', [$this, 'time']),
             new TwigFilter('hour24', [$this, 'hour24']),
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFunctions()
+    {
+        return [
+            new TwigFunction('get_format_duration', [$this, 'getDurationFormat']),
         ];
     }
 
@@ -164,5 +175,13 @@ class DateExtensions extends AbstractExtension
         }
 
         return $twelveHour;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDurationFormat()
+    {
+        return $this->localeSettings->getDurationFormat();
     }
 }
