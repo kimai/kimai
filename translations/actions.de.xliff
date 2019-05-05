@@ -56,7 +56,7 @@
             </trans-unit>
             <trans-unit id="create-timesheet">
                 <source>create-timesheet</source>
-                <target>Zeiterfassung erstellen</target>
+                <target>Zeit erfassen</target>
             </trans-unit>
         </body>
     </file>
