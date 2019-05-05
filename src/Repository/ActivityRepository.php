@@ -48,12 +48,13 @@ class ActivityRepository extends AbstractRepository
             ->join('t.project', 'p')
             ->join('p.customer', 'c')
             ->andWhere($qb->expr()->isNotNull('t.end'))
-            ->andWhere('a.visible = 1')
-            ->andWhere('p.visible = 1')
-            ->andWhere('c.visible = 1')
+            ->andWhere($qb->expr()->eq('a.visible', ':visible'))
+            ->andWhere($qb->expr()->eq('p.visible', ':visible'))
+            ->andWhere($qb->expr()->eq('c.visible', ':visible'))
             ->groupBy('a.id', 'p.id')
             ->orderBy('maxid', 'DESC')
             ->setMaxResults(10)
+            ->setParameter('visible', true, \PDO::PARAM_BOOL)
         ;
 
         if (null !== $user) {
@@ -88,10 +89,15 @@ class ActivityRepository extends AbstractRepository
     }
 
     /**
+     * @param null|bool $visible
      * @return int
      */
-    public function countActivity()
+    public function countActivity($visible = null)
     {
+        if (null !== $visible) {
+            return $this->count(['visible' => (bool) $visible]);
+        }
+
         return $this->count([]);
     }
 
@@ -185,10 +191,10 @@ class ActivityRepository extends AbstractRepository
                     )
                 );
             }
-            $qb->setParameter('visible', 1);
+            $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
         } elseif (ActivityQuery::SHOW_HIDDEN == $query->getVisibility()) {
             $where->add('a.visible = :visible');
-            $qb->setParameter('visible', 0);
+            $qb->setParameter('visible', false, \PDO::PARAM_BOOL);
         }
 
         if ($query->isGlobalsOnly()) {
