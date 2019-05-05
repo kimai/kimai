@@ -74,6 +74,7 @@ class ProjectType extends AbstractType
                     'select' => 'activity',
                     'route' => 'get_activities',
                     'route_params' => ['project' => '-s-', 'orderBy' => 'name', 'visible' => $options['activity_visibility']],
+                    'empty_route_params' => ['globals' => 'true', 'orderBy' => 'name', 'visible' => $options['activity_visibility']],
                 ];
             }
 

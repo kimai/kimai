@@ -111,15 +111,15 @@ class TimesheetController extends BaseApiController
             $query->setUser($user);
         }
 
-        if (null !== ($customer = $paramFetcher->get('customer'))) {
+        if (!empty($customer = $paramFetcher->get('customer'))) {
             $query->setCustomer($customer);
         }
 
-        if (null !== ($project = $paramFetcher->get('project'))) {
+        if (!empty($project = $paramFetcher->get('project'))) {
             $query->setProject($project);
         }
 
-        if (null !== ($activity = $paramFetcher->get('activity'))) {
+        if (!empty($activity = $paramFetcher->get('activity'))) {
             $query->setActivity($activity);
         }
 
