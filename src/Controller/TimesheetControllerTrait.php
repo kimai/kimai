@@ -10,10 +10,10 @@
 namespace App\Controller;
 
 use App\Configuration\TimesheetConfiguration;
-use App\Entity\Activity;
-use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Repository\ActivityRepository;
+use App\Repository\ProjectRepository;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\UserDateTimeFactory;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -118,9 +118,11 @@ trait TimesheetControllerTrait
      * @param Request $request
      * @param string $redirectRoute
      * @param string $renderTemplate
+     * @param ProjectRepository $projectRepository
+     * @param ActivityRepository $activityRepository
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    protected function create(Request $request, $redirectRoute, $renderTemplate)
+    protected function create(Request $request, $redirectRoute, $renderTemplate, ProjectRepository $projectRepository, ActivityRepository $activityRepository)
     {
         $entry = new Timesheet();
         $entry->setUser($this->getUser());
@@ -161,12 +163,12 @@ trait TimesheetControllerTrait
         }
 
         if ($request->query->get('project')) {
-            $project = $this->getDoctrine()->getRepository(Project::class)->find($request->query->get('project'));
+            $project = $projectRepository->find($request->query->get('project'));
             $entry->setProject($project);
         }
 
         if ($request->query->get('activity')) {
-            $activity = $this->getDoctrine()->getRepository(Activity::class)->find($request->query->get('activity'));
+            $activity = $activityRepository->find($request->query->get('activity'));
             $entry->setActivity($activity);
         }
 

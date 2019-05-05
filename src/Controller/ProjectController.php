@@ -14,6 +14,7 @@ use App\Entity\Project;
 use App\Form\ProjectEditForm;
 use App\Form\Toolbar\ProjectToolbarForm;
 use App\Form\Type\ProjectType;
+use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
 use Doctrine\ORM\ORMException;
@@ -79,13 +80,14 @@ class ProjectController extends AbstractController
      * @Security("is_granted('create_project')")
      *
      * @param Request $request
+     * @param CustomerRepository $customerRepository
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, CustomerRepository $customerRepository)
     {
         $project = new Project();
         if ($request->query->get('customer')) {
-            $customer = $this->getDoctrine()->getRepository(Customer::class)->find($request->query->get('customer'));
+            $customer = $customerRepository->find($request->query->get('customer'));
             $project->setCustomer($customer);
         }
 
