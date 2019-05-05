@@ -218,16 +218,16 @@
             {% set actions = actions|merge({'stop': path('timesheet_stop', {'id' : timesheet.id})}) %}
         {% endif %}
 
+        {% if timesheet.end and is_granted('start', timesheet) %}
+            {% set actions = actions|merge({'repeat': path('timesheet_start', {'id' : timesheet.id})}) %}
+        {% endif %}
+
         {% if is_granted('edit', timesheet) %}
             {% set class = '' %}
             {% if view != 'edit' %}
                 {% set class = 'modal-ajax-form' %}
             {% endif %}
             {% set actions = actions|merge({'edit': {'url': path('timesheet_edit', {'id': timesheet.id}), 'class': class}}) %}
-        {% endif %}
-
-        {% if timesheet.end and is_granted('start', timesheet) %}
-            {% set actions = actions|merge({'repeat': path('timesheet_start', {'id' : timesheet.id})}) %}
         {% endif %}
 
         {% if view == 'index' and is_granted('delete', timesheet) %}
@@ -273,16 +273,16 @@
             {% set actions = actions|merge({'stop': path('admin_timesheet_stop', {'id' : timesheet.id})}) %}
         {% endif %}
 
+        {% if timesheet.end and is_granted('start', timesheet) %}
+            {% set actions = actions|merge({'repeat': path('timesheet_start', {'id' : timesheet.id})}) %}
+        {% endif %}
+
         {% if is_granted('edit', timesheet) %}
             {% set class = '' %}
             {% if view != 'edit' %}
                 {% set class = 'modal-ajax-form' %}
             {% endif %}
             {% set actions = actions|merge({'edit': {'url': path('admin_timesheet_edit', {'id': timesheet.id}), 'class': class}}) %}
-        {% endif %}
-
-        {% if timesheet.end and is_granted('start', timesheet) %}
-            {% set actions = actions|merge({'repeat': path('timesheet_start', {'id' : timesheet.id})}) %}
         {% endif %}
 
         {% if view == 'index' and is_granted('delete', timesheet) %}
