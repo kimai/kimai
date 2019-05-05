@@ -77,7 +77,9 @@
                     {% if not duration_only %}
                         <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'endtime') }}">&dash;</td>
                     {% endif %}
-                    <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'duration') }}"><i>{{ entry|duration }}</i></td>
+                    <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'duration') }}">
+                        <i data-since="{{ entry.begin.format(constant('DATE_ISO8601')) }}" data-format="{{ get_format_duration() }}">{{ entry|duration }}</i>
+                    </td>
                     {% if canSeeRate %}
                         <td class="{{ tables.data_table_column_class(tableName, columns, 'rate') }}">&dash;</td>
                     {% endif %}
