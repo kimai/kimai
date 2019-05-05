@@ -129,6 +129,7 @@ abstract class AbstractToolbarForm extends AbstractType
             'required' => false,
             'activity_enabled' => true,
             'choices' => [],
+            'disabled' => true,
         ]);
 
         $builder->addEventListener(

@@ -67,10 +67,18 @@ $(function() {
             var $form = $('.toolbar form');
             var loading = '<div class="overlay"><i class="fas fa-sync fa-spin"></i></div>';
             $('section.content').append(loading);
+
+            // remove the empty fields to prevent errors
+            var formData = $('.toolbar form :input')
+                .filter(function(index, element) {
+                    return $(element).val() != '';
+                })
+                .serialize();
+
             $.ajax({
                 url: $form.attr('action'),
                 type: $form.attr('method'),
-                data: $form.serialize(),
+                data: formData,
                 success: function(html) {
                     $('section.content').replaceWith(
                         $(html).find('section.content')
@@ -101,9 +109,26 @@ $(function() {
             );
         },
         activateApiSelects: function(selector) {
+            const self = this;
             $('body').on('change', selector, function(event) {
-                var apiUrl = $(this).attr('data-api-url').replace('-s-', $(this).val());
-                var targetSelect = $(this).attr('data-related-select');
+                let apiUrl = $(this).attr('data-api-url').replace('-s-', $(this).val());
+                const targetSelect = '#' + $(this).attr('data-related-select');
+
+                // if the related target select does not exist, we do not need to load the related data
+                if ($(targetSelect).length === 0) {
+                    return;
+                }
+
+                if ($(this).val() === '') {
+                    if ($(this).attr('data-empty-url') === undefined) {
+                        self.updateSelect(targetSelect, {});
+                        $(targetSelect).attr('disabled', 'disabled');
+                        return;
+                    }
+                    apiUrl = $(this).attr('data-empty-url').replace('-s-', $(this).val());
+                }
+
+                $(targetSelect).removeAttr('disabled');
 
                 $.ajax({
                     url: apiUrl,
@@ -114,28 +139,30 @@ $(function() {
                     method: 'GET',
                     dataType: 'json',
                     success: function(data){
-                        var selectName = '#' + targetSelect;
-                        var $select = $(selectName);
-                        var $emptyOption = $(selectName + ' option[value=""]');
-
-                        $select.find('option').remove().end().find('optgroup').remove().end();
-
-                        if ($emptyOption.length !== 0) {
-                            $select.append('<option value="">' + $emptyOption.text() + '</option>');
-                        }
-
-                        $.each(data, function(i, obj) {
-                            $select.append('<option value="' + obj.id + '">' + obj.name + '</option>');
-                        });
-
-                        // if we don't trigger the change, the other selects won't be resetted
-                        $select.trigger('change');
-
-                        // if the beta test kimai.theme.select_type is active, this will tell the selects to refresh
-                        $('.selectpicker').selectpicker('refresh');
+                        self.updateSelect(targetSelect, data);
                     }
                 });
             });
+        },
+        updateSelect: function(selectName, data) {
+            var $select = $(selectName);
+            var $emptyOption = $(selectName + ' option[value=""]');
+
+            $select.find('option').remove().end().find('optgroup').remove().end();
+
+            if ($emptyOption.length !== 0) {
+                $select.append('<option value="">' + $emptyOption.text() + '</option>');
+            }
+
+            $.each(data, function(i, obj) {
+                $select.append('<option value="' + obj.id + '">' + obj.name + '</option>');
+            });
+
+            // if we don't trigger the change, the other selects won't be resetted
+            $select.trigger('change');
+
+            // if the beta test kimai.theme.select_type is active, this will tell the selects to refresh
+            $('.selectpicker').selectpicker('refresh');
         },
         activateDatePicker: function(selector) {
             $(selector + ' input[data-datepickerenable="on"]').each(function(index) {
