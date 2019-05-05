@@ -59,6 +59,8 @@ $(function() {
             this.activateDateTimePicker('.content-wrapper');
             // some actions can be performed in a modal for a better UX
             this.activateAjaxFormInModal('.modal-ajax-form');
+            // handle clicks on table rows
+            this.activateTableRowClick('.tablerow-click');
             // activate select boxes that load dynamic data via API
             this.activateApiSelects('select[data-related-select]');
         },
@@ -346,6 +348,36 @@ $(function() {
                         window.location = href;
                     }
                 });
+            });
+        },
+        activateTableRowClick: function(selector) {
+            $('body').on('click', selector, function(event) {
+                // just in case an inner element is editable, than this should not be triggered
+                if (event.target.parentNode.isContentEditable || event.target.isContentEditable) {
+                    return;
+                }
+
+                // handles the "click" on table rows to open an entry for editing: when a button within a row is clicked,
+                // we don't want the table row event to be processed - so we intercept it
+                let target = event.target;
+                if (event.currentTarget.tagName === 'TR') {
+                    while (target.tagName !== 'BODY') {
+                        if (target.tagName === 'A' || target.tagName === 'BUTTON') {
+                            return;
+                        }
+                        target = target.parentNode;
+                    }
+                }
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                let href = $(this).attr('data-href');
+                if (!href) {
+                    href = $(this).attr('href');
+                }
+
+                window.location = href;
             });
         }
     };
