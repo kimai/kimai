@@ -21,6 +21,10 @@ import KimaiDatatableColumnView from './plugins/KimaiDatatableColumnView.js';
 import KimaiThemeInitializer from "./plugins/KimaiThemeInitializer";
 import KimaiJqueryPluginInitializer from "./plugins/KimaiJqueryPluginInitializer";
 import KimaiDateRangePicker from "./plugins/KimaiDateRangePicker";
+import KimaiDatatable from "./plugins/KimaiDatatable";
+import KimaiToolbar from "./plugins/KimaiToolbar";
+import KimaiAPI from "./plugins/KimaiAPI";
+import KimaiSelectDataAPI from "./plugins/KimaiSelectDataAPI";
 
 /* kimai
  *
@@ -36,6 +40,7 @@ $.kimai = {};
 const KIMAI_EVENT_INITIALIZED = 'KimaiInitialized';
 const KIMAI_EVENT_PLUGIN_REGISTER = 'KimaiPluginRegister';
 const KIMAI_EVENT_PLUGIN_INITIALIZED = 'KimaiPluginInitialized';
+const KIMAI_EVENT_DATATABLE_REQUEST_RELOAD = 'KimaiDatatableRequestReload';
 
 jQuery(function() {
 "use strict";
@@ -55,11 +60,15 @@ jQuery(function() {
                 new KimaiTranslation($.kimai.settings)
             );
 
+            kimai.registerPlugin(new KimaiAPI());
             kimai.registerPlugin(new KimaiActiveRecordsDuration('[data-since]'));
-            kimai.registerPlugin(new KimaiDatatableColumnView());
+            kimai.registerPlugin(new KimaiDatatableColumnView('data-column-visibility'));
             kimai.registerPlugin(new KimaiThemeInitializer());
             kimai.registerPlugin(new KimaiJqueryPluginInitializer());
             kimai.registerPlugin(new KimaiDateRangePicker('.content-wrapper'));
+            kimai.registerPlugin(new KimaiDatatable());
+            kimai.registerPlugin(new KimaiToolbar());
+            kimai.registerPlugin(new KimaiSelectDataAPI('select[data-related-select]'));
 
             // notify all listeners that Kimai plugins can now be registered
             this.sendEvent(KIMAI_EVENT_PLUGIN_REGISTER);
@@ -76,8 +85,6 @@ jQuery(function() {
             this.activateAjaxFormInModal('.modal-ajax-form');
             // handle clicks on table rows
             this.activateAlternativeLinks('.alternative-link');
-            // activate select boxes that load dynamic data via API
-            this.activateApiSelects('select[data-related-select]');
 
             // notify all listeners that Kimai is now ready to be used
             this.sendEvent(KIMAI_EVENT_INITIALIZED);
@@ -85,8 +92,10 @@ jQuery(function() {
         sendEvent: function(name) {
             document.dispatchEvent(new Event(name));
         },
+
+
+        // ============================= FIXME delete me, as I am an plugin now =============================
         reloadDatatableWithToolbarFilter: function() {
-            // TODO check if toolbar form is present, if not, reload current URL
             let $form = jQuery('.toolbar form');
             let loading = '<div class="overlay"><i class="fas fa-sync fa-spin"></i></div>';
             jQuery('section.content').append(loading);
@@ -112,6 +121,9 @@ jQuery(function() {
                 }
             });
         },
+        // ============================= FIXME delete me, as I am an plugin now =============================
+
+
         pauseRecord: function(selector) {
             jQuery(selector + ' .pull-left i').hover(function () {
                 let link = jQuery(this).parents('a');
@@ -122,62 +134,6 @@ jQuery(function() {
                 link.attr('href', link.attr('href').replace('/pause', '/stop'));
                 jQuery(this).removeClass('fa-pause-circle').removeClass('text-orange').addClass('fa-stop-circle');
             });
-        },
-        activateApiSelects: function(selector) {
-            const self = this;
-            jQuery('body').on('change', selector, function(event) {
-                let apiUrl = jQuery(this).attr('data-api-url').replace('-s-', jQuery(this).val());
-                const targetSelect = '#' + jQuery(this).attr('data-related-select');
-
-                // if the related target select does not exist, we do not need to load the related data
-                if (jQuery(targetSelect).length === 0) {
-                    return;
-                }
-
-                if (jQuery(this).val() === '') {
-                    if (jQuery(this).attr('data-empty-url') === undefined) {
-                        self.updateSelect(targetSelect, {});
-                        jQuery(targetSelect).attr('disabled', 'disabled');
-                        return;
-                    }
-                    apiUrl = jQuery(this).attr('data-empty-url').replace('-s-', jQuery(this).val());
-                }
-
-                jQuery(targetSelect).removeAttr('disabled');
-
-                $.ajax({
-                    url: apiUrl,
-                    headers: {
-                        'X-AUTH-SESSION': true,
-                        'Content-Type':'application/json'
-                    },
-                    method: 'GET',
-                    dataType: 'json',
-                    success: function(data){
-                        self.updateSelect(targetSelect, data);
-                    }
-                });
-            });
-        },
-        updateSelect: function(selectName, data) {
-            let $select = jQuery(selectName);
-            let $emptyOption = jQuery(selectName + ' option[value=""]');
-
-            $select.find('option').remove().end().find('optgroup').remove().end();
-
-            if ($emptyOption.length !== 0) {
-                $select.append('<option value="">' + $emptyOption.text() + '</option>');
-            }
-
-            $.each(data, function(i, obj) {
-                $select.append('<option value="' + obj.id + '">' + obj.name + '</option>');
-            });
-
-            // if we don't trigger the change, the other selects won't be resetted
-            $select.trigger('change');
-
-            // if the beta test kimai.theme.select_type is active, this will tell the selects to refresh
-            jQuery('.selectpicker').selectpicker('refresh');
         },
         activateDateTimePicker: function(selector) {
             jQuery(selector + ' input[data-datetimepicker="on"]').each(function(index) {

@@ -15,12 +15,17 @@ import KimaiPlugin from "../KimaiPlugin";
 
 export default class KimaiDatatableColumnView extends KimaiPlugin {
 
+    constructor(dataAttribute) {
+        super();
+        this.dataAttribute = dataAttribute;
+    }
+
     getId() {
         return 'datatable-column-visibility';
     }
 
     init() {
-        this.id = document.querySelector('[data-column-visibility]').getAttribute('data-column-visibility');
+        this.id = document.querySelector('[' + this.dataAttribute + ']').getAttribute(this.dataAttribute);
         this.modal = document.getElementById('modal_' + this.id);
         this.bindButtons();
     }

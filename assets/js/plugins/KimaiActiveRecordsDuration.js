@@ -25,17 +25,21 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
 
     init() {
         this.updateRecords();
-        this.registerUpdates(5000);
+        this.registerUpdates(10000);
     }
 
-    registerUpdates(timeout) {
+    registerUpdates(interval) {
         let self = this;
-        window.setTimeout(
+        this._updatesHandler = setInterval(
             function() {
-                self.updateRecords().registerUpdates(timeout);
+                self.updateRecords().registerUpdates(interval);
             },
-            timeout
+            interval
         );
+    }
+
+    unregisterUpdates() {
+        clearInterval(this._updatesHandler);
     }
 
     updateRecords() {

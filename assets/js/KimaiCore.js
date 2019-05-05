@@ -41,6 +41,15 @@ export default class KimaiCore {
         return plugin;
     }
 
+    getPlugin(name) {
+        for (let plugin of this._plugins) {
+            if (plugin.getId() === name) {
+                return plugin;
+            }
+        }
+        throw new Error('Unknown plugin: ' + name);
+    }
+
     getPlugins() {
         return this._plugins;
     }

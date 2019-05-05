@@ -63,6 +63,5 @@ require('chart.js/dist/Chart.min');
 
 // ------ Kimai itself ------
 require('./js/kimai.js');
-require('./js/toolbar.js');
 require('./images/default_avatar.png');
 require('./images/signature.png');
