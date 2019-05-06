@@ -171,26 +171,26 @@
 {% block javascripts %}
     {# no call to parent(), as we use a custom built for the frontend assets and don't want the default <script> #}
     <script type="text/javascript">
-        $(document).ready(function () {
-            $.kimai.init({
-                locale: '{{ app.request.locale }}',
-                apply: '{{ 'daterangepicker.apply'|trans({}, 'daterangepicker') }}',
-                cancel: '{{ 'daterangepicker.cancel'|trans({}, 'daterangepicker') }}',
-                today: '{{ 'daterangepicker.today'|trans({}, 'daterangepicker') }}',
-                yesterday: '{{ 'daterangepicker.yesterday'|trans({}, 'daterangepicker') }}',
-                lastWeek: '{{ 'daterangepicker.lastWeek'|trans({}, 'daterangepicker') }}',
-                thisWeek: '{{ 'daterangepicker.thisWeek'|trans({}, 'daterangepicker') }}',
-                lastMonth: '{{ 'daterangepicker.lastMonth'|trans({}, 'daterangepicker') }}',
-                thisMonth: '{{ 'daterangepicker.thisMonth'|trans({}, 'daterangepicker') }}',
-                lastYear: '{{ 'daterangepicker.lastYear'|trans({}, 'daterangepicker') }}',
-                thisYear: '{{ 'daterangepicker.thisYear'|trans({}, 'daterangepicker') }}',
-                customRange: '{{ 'daterangepicker.customRange'|trans({}, 'daterangepicker') }}',
-                twentyFourHours: {{ 'true'|hour24('false') }}
-            });
-            {# $.kimai.pauseRecord('li.messages-menu ul.menu li'); #}
-        });
         document.addEventListener('DOMContentLoaded', function() {
-            new KimaiActiveRecordsDuration('[data-since]').updateRecords().registerUpdates(5000);
+            new KimaiWebLoader(
+                {
+                    locale: '{{ app.request.locale }}',
+                    twentyFourHours: {{ 'true'|hour24('false') }}
+                },
+                {
+                    apply: '{{ 'daterangepicker.apply'|trans({}, 'daterangepicker') }}',
+                    cancel: '{{ 'daterangepicker.cancel'|trans({}, 'daterangepicker') }}',
+                    today: '{{ 'daterangepicker.today'|trans({}, 'daterangepicker') }}',
+                    yesterday: '{{ 'daterangepicker.yesterday'|trans({}, 'daterangepicker') }}',
+                    lastWeek: '{{ 'daterangepicker.lastWeek'|trans({}, 'daterangepicker') }}',
+                    thisWeek: '{{ 'daterangepicker.thisWeek'|trans({}, 'daterangepicker') }}',
+                    lastMonth: '{{ 'daterangepicker.lastMonth'|trans({}, 'daterangepicker') }}',
+                    thisMonth: '{{ 'daterangepicker.thisMonth'|trans({}, 'daterangepicker') }}',
+                    lastYear: '{{ 'daterangepicker.lastYear'|trans({}, 'daterangepicker') }}',
+                    thisYear: '{{ 'daterangepicker.thisYear'|trans({}, 'daterangepicker') }}',
+                    customRange: '{{ 'daterangepicker.customRange'|trans({}, 'daterangepicker') }}'
+                }
+            );
         });
     </script>
     {% set event = trigger(constant('App\\Event\\ThemeEvent::JAVASCRIPT')) %}
