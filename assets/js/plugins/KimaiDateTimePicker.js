@@ -28,7 +28,6 @@ export default class KimaiDateTimePicker extends KimaiPlugin {
     }
 
     activateDateTimePicker(selector) {
-        let self = this;
         let translator = this.getCore().getTranslation();
         let configuration = this.getCore().getConfiguration();
 

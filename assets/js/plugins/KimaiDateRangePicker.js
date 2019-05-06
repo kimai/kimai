@@ -29,7 +29,6 @@ export default class KimaiDateRangePicker extends KimaiPlugin {
     }
 
     activateDateRangePicker(selector) {
-        let self = this;
         let translator = this.getCore().getTranslation();
         jQuery(selector + ' input[data-daterangepickerenable="on"]').each(function(index) {
             let localeFormat = jQuery(this).data('format');
