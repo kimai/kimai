@@ -32,7 +32,7 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
         let self = this;
         this._updatesHandler = setInterval(
             function() {
-                self.updateRecords().registerUpdates(interval);
+                self.updateRecords();
             },
             interval
         );
