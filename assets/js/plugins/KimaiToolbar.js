@@ -14,10 +14,6 @@ import KimaiPlugin from "../KimaiPlugin";
 
 export default class KimaiToolbar extends KimaiPlugin {
 
-    getId() {
-        return 'toolbar';
-    }
-
     init() {
         const self = this;
 
@@ -71,7 +67,7 @@ export default class KimaiToolbar extends KimaiPlugin {
     }
 
     _reloadDatatable() {
-        this.getCore().getPlugin('datatable').reload();
+        this.getContainer().getPlugin('datatable').reload();
     }
 
 }

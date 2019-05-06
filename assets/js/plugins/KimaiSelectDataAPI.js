@@ -29,7 +29,7 @@ export default class KimaiSelectDataAPI extends KimaiPlugin {
 
     activateApiSelects(selector) {
         const self = this;
-        const API = this.getCore().getPlugin('api');
+        const API = this.getContainer().getPlugin('api');
 
         jQuery('body').on('change', selector, function(event) {
             let apiUrl = jQuery(this).attr('data-api-url').replace('-s-', jQuery(this).val());

@@ -14,10 +14,6 @@ import KimaiPlugin from '../KimaiPlugin';
 
 export default class KimaiJqueryPluginInitializer extends KimaiPlugin {
 
-    getId() {
-        return 'jquery-plugin-initializer';
-    }
-
     init() {
         // activate the dropdown functionality
         jQuery('.dropdown-toggle').dropdown();

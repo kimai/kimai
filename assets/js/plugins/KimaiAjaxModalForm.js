@@ -22,10 +22,6 @@ export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableR
         this.selector = selector;
     }
 
-    getId() {
-        return 'ajax-modal-form';
-    }
-
     init() {
         const self = this;
 
@@ -73,7 +69,7 @@ export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableR
             );
 
             // activate new loaded widgets
-            self.getCore().getPlugin('date-time-picker').activateDateTimePicker(formIdentifier);
+            self.getContainer().getPlugin('date-time-picker').activateDateTimePicker(formIdentifier);
         }
 
         // show error flash messages
@@ -121,7 +117,7 @@ export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableR
                     if (hasFieldError || hasFormError || hasFlashError) {
                         self._openFormInModal(html);
                     } else {
-                        self.getCore().getPlugin('datatable').reload();
+                        self.getContainer().getPlugin('datatable').reload();
                         remoteModal.modal('hide');
                     }
                     return false;

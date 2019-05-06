@@ -19,10 +19,6 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
         this.selector = selector;
     }
 
-    getId() {
-        return 'active-records-duration';
-    }
-
     init() {
         this.updateRecords();
         this.registerUpdates(10000);

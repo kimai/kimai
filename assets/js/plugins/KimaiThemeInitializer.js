@@ -14,10 +14,6 @@ import KimaiPlugin from '../KimaiPlugin';
 
 export default class KimaiThemeInitializer extends KimaiPlugin {
 
-    getId() {
-        return 'theme-initializer';
-    }
-
     init() {
         this.registerAutomaticAlertRemove('div.alert-success', 5000);
     }
@@ -25,13 +21,14 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
     /**
      * auto hide success messages, as they are just meant as user feedback and not as a permanent information
      *
-     * @param string selector
-     * @param number interval
+     * @param {string} selector
+     * @param {integer} interval
      */
     registerAutomaticAlertRemove(selector, interval) {
+        const self = this;
         this._alertRemoveHandler = setInterval(
             function() {
-                jQuery(selector).alert('close');
+                self.hideAlert(selector);
             },
             interval
         );
@@ -39,6 +36,13 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
 
     unregisterAutomaticAlertRemove() {
         clearInterval(this._alertRemoveHandler);
+    }
+
+    /**
+     * @param {string} selector
+     */
+    hideAlert(selector) {
+        jQuery(selector).alert('close');
     }
 
 }

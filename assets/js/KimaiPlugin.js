@@ -9,27 +9,44 @@
  * [KIMAI] KimaiPlugin: base class for all plugins
  */
 
-import KimaiCore from "./KimaiCore";
+import KimaiContainer from "./KimaiContainer";
 
 export default class KimaiPlugin {
 
+    /**
+     * Overwrite this method to initialize your plugin.
+     *
+     * It is called AFTER setContainer() and AFTER DOMContentLoaded was fired.
+     * You don't have access to the container before this method!
+     */
     init() {
-        // overwrite this method to initialize your plugin
-        // it's called AFTER setCore() was called and AFTER DOMContentLoaded was fired
     }
 
+    /**
+     * If you return an ID, you indicate that your plugin can be used by other plugins.
+     *
+     * @returns {string|null}
+     */
     getId() {
-        throw new Error('Plugins must overwrite the getId() function');
+        return null;
     }
 
-    setCore(core) {
-        if (!(core instanceof KimaiCore)) {
-            throw new Error('Plugin was given an invalid KimaiCore');
+    /**
+     * @param {KimaiContainer} core
+     */
+    setContainer(core) {
+        if (!(core instanceof KimaiContainer)) {
+            throw new Error('Plugin was given an invalid KimaiContainer');
         }
         this._core = core;
     }
 
-    getCore() {
+    /**
+     * This function returns null, if xou call it BEFORE init().
+     *
+     * @returns {KimaiContainer}
+     */
+    getContainer() {
         return this._core;
     }
 

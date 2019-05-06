@@ -22,10 +22,6 @@ export default class KimaiPauseRecord extends KimaiPlugin {
         this.selector = selector;
     }
 
-    getId() {
-        return 'pause-record';
-    }
-
     init() {
         this.activate(this.selector);
     }

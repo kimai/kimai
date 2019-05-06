@@ -22,10 +22,6 @@ export default class KimaiAlternativeLinks extends KimaiClickHandlerReducedInTab
         this.selector = selector;
     }
 
-    getId() {
-        return 'alternative-links';
-    }
-
     init() {
         this._addClickHandlerReducedInTableRow(this.selector, function(href) {
             window.location = href;
