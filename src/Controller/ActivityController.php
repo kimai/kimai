@@ -10,11 +10,11 @@
 namespace App\Controller;
 
 use App\Entity\Activity;
+use App\Entity\Project;
 use App\Form\ActivityEditForm;
 use App\Form\Toolbar\ActivityToolbarForm;
 use App\Form\Type\ActivityType;
 use App\Repository\ActivityRepository;
-use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityQuery;
 use Doctrine\ORM\ORMException;
 use Pagerfanta\Pagerfanta;
@@ -76,17 +76,17 @@ class ActivityController extends AbstractController
 
     /**
      * @Route(path="/create", name="admin_activity_create", methods={"GET", "POST"})
+     * @Route(path="/create/{project}", name="admin_activity_create_with_project", methods={"GET", "POST"})
      * @Security("is_granted('create_activity')")
      *
      * @param Request $request
-     * @param ProjectRepository $projectRepository
+     * @param Project|null $project
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function createAction(Request $request, ProjectRepository $projectRepository)
+    public function createAction(Request $request, ?Project $project = null)
     {
         $activity = new Activity();
-        if ($request->query->get('project')) {
-            $project = $projectRepository->find($request->query->get('project'));
+        if (null !== $project) {
             $activity->setProject($project);
         }
 
