@@ -1,6 +1,6 @@
 {
-  "build/app.js": "./app.js?[contenthash]",
-  "build/app.css": "./app.css?361d4520765f893b9b0fb94bc9f761c1",
+  "build/app.js": "./app.js?513aa9647de2030610d0",
+  "build/app.css": "./app.css?b3b98e5f8744bf95f3f8d8352977d4f3",
   "build/fonts/fa-solid-900.woff2": "./fonts/fa-solid-900.woff2?e8a92a29",
   "build/images/fa-solid-900.svg": "./images/fa-solid-900.svg?666a82cb",
   "build/images/glyphicons-halflings-regular.svg": "./images/glyphicons-halflings-regular.svg?89889688",

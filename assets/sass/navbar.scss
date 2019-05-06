@@ -17,6 +17,9 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+    .messages-menu>.dropdown-menu>li .menu>li>a>h4>span {
+        margin-right: 55px;
+    }
     .start_record {
         text-align: center;
     }
