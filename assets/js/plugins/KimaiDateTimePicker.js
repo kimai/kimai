@@ -6,13 +6,13 @@
  */
 
 /*!
- * [KIMAI] KimaiDatePicker: single date selects (currently unused)
+ * [KIMAI] KimaiDateTimePicker: activate the (datetime picker) field in timesheet edit dialog
  */
 
 import jQuery from 'jquery';
 import KimaiPlugin from '../KimaiPlugin';
 
-export default class KimaiDatePicker extends KimaiPlugin {
+export default class KimaiDateTimePicker extends KimaiPlugin {
 
     constructor(selector) {
         super();
@@ -20,19 +20,24 @@ export default class KimaiDatePicker extends KimaiPlugin {
     }
 
     getId() {
-        return 'date-picker';
+        return 'date-time-picker';
     }
 
     init() {
-        this.activateDatePicker(this.selector);
+        this.activateDateTimePicker(this.selector);
     }
 
-    activateDatePicker(selector) {
+    activateDateTimePicker(selector) {
+        let self = this;
         let translator = this.getCore().getTranslation();
-        jQuery(selector + ' input[data-datepickerenable="on"]').each(function(index) {
+        let configuration = this.getCore().getConfiguration();
+
+        jQuery(selector + ' input[data-datetimepicker="on"]').each(function(index) {
             let localeFormat = jQuery(this).data('format');
             jQuery(this).daterangepicker({
                 singleDatePicker: true,
+                timePicker: true,
+                timePicker24Hour: configuration.get('twentyFourHours'),
                 showDropdowns: true,
                 autoUpdateInput: false,
                 locale: {

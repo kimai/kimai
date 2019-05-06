@@ -62,6 +62,6 @@ require('fullcalendar/dist/fullcalendar.min.css');
 require('chart.js/dist/Chart.min');
 
 // ------ Kimai itself ------
-require('./js/kimai.js');
+require('./js/KimaiLoader.js');
 require('./images/default_avatar.png');
 require('./images/signature.png');

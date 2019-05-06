@@ -25,7 +25,11 @@ export default class KimaiDatatableColumnView extends KimaiPlugin {
     }
 
     init() {
-        this.id = document.querySelector('[' + this.dataAttribute + ']').getAttribute(this.dataAttribute);
+        let dataTable = document.querySelector('[' + this.dataAttribute + ']');
+        if (dataTable === null) {
+            return;
+        }
+        this.id = dataTable.getAttribute(this.dataAttribute);
         this.modal = document.getElementById('modal_' + this.id);
         this.bindButtons();
     }

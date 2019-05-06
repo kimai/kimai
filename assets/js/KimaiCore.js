@@ -6,10 +6,11 @@
  */
 
 /*!
- * [KIMAI] KimaiActiveRecordsDuration: updates active records on your personal timesheet view
+ * [KIMAI] KimaiCore
+ *
+ * ServiceContainer for Kimai
  */
 
-import moment from 'moment';
 import KimaiConfiguration from './KimaiConfiguration';
 import KimaiTranslation from './KimaiTranslation';
 import KimaiPlugin from './KimaiPlugin';
