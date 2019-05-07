@@ -96,7 +96,9 @@ class TimesheetController extends BaseApiController
      *
      * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
      *
+     * @param ParamFetcherInterface $paramFetcher
      * @return Response
+     * @throws \Exception
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher)
     {
@@ -389,6 +391,55 @@ class TimesheetController extends BaseApiController
         $entityManager->flush();
 
         $view = new View(null, Response::HTTP_NO_CONTENT);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Returns the collection of recent user activities
+     *
+     * @SWG\Response(
+     *      response=200,
+     *      description="Returns the collection of recent user activities (always the latest entry of a unique working set groued by customer, project and activity)",
+     *      @SWG\Schema(
+     *          type="array",
+     *          @SWG\Items(ref="#/definitions/TimesheetSubCollection")
+     *      )
+     * )
+     *
+     * @Rest\QueryParam(name="user", requirements="\d+|all", strict=true, nullable=true, description="User ID to filter timesheets. Needs permission 'view_other_timesheet', pass 'all' to fetch data for all user (default: current user)")
+     * @Rest\QueryParam(name="begin", requirements=@Constraints\DateTime, strict=true, nullable=true, description="Only records after this date will be included. Default: today - 1 year (format: ISO 8601)")
+     * @Rest\QueryParam(name="size", requirements="\d+", strict=true, nullable=true, description="The amount of entries (default: 10)")
+     *
+     * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
+     * @return Response
+     * @throws \Doctrine\ORM\Query\QueryException
+     */
+    public function recentAction(ParamFetcherInterface $paramFetcher)
+    {
+        $user = $this->getUser();
+        $begin = $this->dateTime->createDateTime('-1 year');
+        $limit = 10;
+
+        if ($this->isGranted('view_other_timesheet') && null !== ($reqUser = $paramFetcher->get('user'))) {
+            if ('all' === $reqUser) {
+                $reqUser = null;
+            }
+            $user = $reqUser;
+        }
+
+        if (null !== ($reqLimit = $paramFetcher->get('size'))) {
+            $limit = $reqLimit;
+        }
+
+        if (null !== ($reqBegin = $paramFetcher->get('begin'))) {
+            $begin = new \DateTime($reqBegin);
+        }
+
+        $data = $this->repository->getRecentActivities($user, $begin, $limit);
+
+        $view = new View($data, 200);
+        $view->getContext()->setGroups(['Default', 'Subresource', 'Timesheet']);
 
         return $this->viewHandler->handle($view);
     }

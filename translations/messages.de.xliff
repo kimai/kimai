@@ -927,7 +927,7 @@
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
                 <target>
-                    Ihre letzte Tätigkeit wiederaufnehmen|Eine ihrer %count% letzten Tätigkeiten neustarten
+                    Eine ihrer letzten Tätigkeiten neustarten
                 </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">

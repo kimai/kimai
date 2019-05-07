@@ -22,6 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class TimesheetControllerTest extends APIControllerBaseTest
 {
+    public const DATE_FORMAT = 'Y-m-d H:i:s';
+
     public function setUp()
     {
         $this->importFixtureForUser(User::ROLE_USER);
@@ -460,6 +462,39 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertEquals('You are not allowed to delete this timesheet', $json['message']);
     }
 
+    public function testGetRecentCollectionWithSubresources()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $start = new \DateTime('-10 days');
+
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setFixedRate(true)
+            ->setHourlyRate(true)
+            ->setAmount(10)
+            ->setUser($this->getUserByRole($em, User::ROLE_ADMIN))
+            ->setStartDate($start)
+        ;
+        $this->importFixture($em, $fixture);
+
+        $query = [
+            'user' => 'all',
+            'size' => 2,
+            'begin' => $start->format(self::DATE_FORMAT),
+        ];
+
+        $this->assertAccessIsGranted($client, '/api/timesheets/recent', 'GET', $query);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(1, count($result));
+        $this->assertDefaultStructure($result[0], false);
+        $this->assertHasSubresources($result[0]);
+    }
+
     protected function assertDefaultStructure(array $result, $full = true)
     {
         $expectedKeys = [
@@ -478,4 +513,23 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $this->assertEquals($expectedKeys, $actual, 'Timesheet structure does not match');
     }
+
+    protected function assertHasSubresources(array $result)
+    {
+        $this->assertArrayHasKey('activity', $result);
+        $this->assertArrayHasKey('id', $result['activity']);
+        $this->assertArrayHasKey('name', $result['activity']);
+        $this->assertArrayHasKey('visible', $result['activity']);
+        $this->assertArrayHasKey('project', $result['activity']);
+
+        $this->assertArrayHasKey('project', $result);
+        $this->assertArrayHasKey('id', $result['project']);
+        $this->assertArrayHasKey('name', $result['project']);
+        $this->assertArrayHasKey('visible', $result['project']);
+        $this->assertArrayHasKey('customer', $result['project']);
+        $this->assertArrayHasKey('id', $result['project']['customer']);
+        $this->assertArrayHasKey('name', $result['project']['customer']);
+        $this->assertArrayHasKey('visible', $result['project']['customer']);
+    }
+
 }

@@ -829,7 +829,7 @@
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
                 <target>
-                    Reinicie a sua última atividade registrada|Reinicie uma de suas %count% últimas atividades
+                    Reinicie uma de suas últimas atividades
                 </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">

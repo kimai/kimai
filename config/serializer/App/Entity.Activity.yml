@@ -16,10 +16,10 @@ App\Entity\Activity:
             groups: [Default]
         fixedRate:
             include: true
-            groups: [Default]
+            groups: [Activity]
         hourlyRate:
             include: true
-            groups: [Default]
+            groups: [Activity]
         project:
             include: false
             exclude: true

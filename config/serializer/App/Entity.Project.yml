@@ -4,16 +4,13 @@ App\Entity\Project:
     properties:
         id:
             include: true
-            groups: [Default]
         name:
             include: true
-            groups: [Default]
         comment:
             include: true
             groups: [Entity]
         visible:
             include: true
-            groups: [Default]
         budget:
             include: true
             groups: [Entity]
@@ -22,14 +19,12 @@ App\Entity\Project:
             groups: [Entity]
         fixedRate:
             include: true
-            groups: [Default]
+            groups: [Project]
         hourlyRate:
             include: true
-            groups: [Default]
+            groups: [Project]
         customer:
-            include: false
-            exclude: true
-            groups: [Default]
+            groups: [Subresource]
         color:
             include: true
             groups: [Entity]
@@ -38,4 +33,4 @@ App\Entity\Project:
             serialized_name: customer
             exp: "object.getCustomer() === null ? null : object.getCustomer().getId()"
             type: integer
-            groups: [Default]
+            groups: [Entity, Collection]
