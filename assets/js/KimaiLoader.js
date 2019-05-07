@@ -25,6 +25,8 @@ import KimaiSelectDataAPI from "./plugins/KimaiSelectDataAPI";
 import KimaiDateTimePicker from "./plugins/KimaiDateTimePicker";
 import KimaiAlternativeLinks from "./plugins/KimaiAlternativeLinks";
 import KimaiAjaxModalForm from "./plugins/KimaiAjaxModalForm";
+import KimaiRecentActivities from "./plugins/KimaiRecentActivities";
+import KimaiEvent from "./plugins/KimaiEvent";
 
 export default class KimaiLoader {
 
@@ -60,6 +62,7 @@ export default class KimaiLoader {
             new KimaiTranslation(translations)
         );
 
+        kimai.registerPlugin(new KimaiEvent());
         kimai.registerPlugin(new KimaiAPI());
         kimai.registerPlugin(new KimaiActiveRecordsDuration('[data-since]'));
         kimai.registerPlugin(new KimaiDatatableColumnView('data-column-visibility'));
@@ -73,19 +76,16 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiAlternativeLinks('.alternative-link'));
         kimai.registerPlugin(new KimaiAjaxModalForm('.modal-ajax-form'));
         //kimai.registerPlugin(new KimaiPauseRecord('li.messages-menu ul.menu li'));
+        kimai.registerPlugin(new KimaiRecentActivities('li.notifications-menu'));
 
         // notify all listeners that Kimai plugins can now be registered
-        this._sendEvent('kimai.pluginRegister');
+        kimai.getPlugin('event').trigger('kimai.pluginRegister');
 
         // initialize all plugins
         kimai.getPlugins().map(plugin => { plugin.init(); });
 
         // notify all listeners that Kimai is now ready to be used
-        this._sendEvent('kimai.initialized');
-    }
-
-    _sendEvent(name) {
-        document.dispatchEvent(new Event(name));
+        kimai.getPlugin('event').trigger('kimai.initialized');
     }
 
 }

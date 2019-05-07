@@ -109,7 +109,9 @@ class SystemConfigurationController extends AbstractController
      */
     protected function handleConfigUpdate(Request $request, string $section)
     {
+        $configModel = null;
         $configSettings = $this->getInitializedConfigurations();
+
         foreach ($configSettings as $configModel) {
             if ($configModel->getSection() === $section) {
                 break;

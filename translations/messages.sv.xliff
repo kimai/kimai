@@ -941,8 +941,7 @@ För närvarande har %user% användare %records% tidsrekord som räknas upp till
             </trans-unit>
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
-                <target state="translated">
-Starta din senaste registrerade aktiviteten|starta en av dina %count% sista aktiviteter</target>
+                <target state="translated">starta en av dina sista aktiviteter</target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>

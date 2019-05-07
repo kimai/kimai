@@ -92,7 +92,7 @@
 
 {% block navbar_user %}
     {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-        {{ render(controller('App\\Controller\\NavbarController::recentActivitiesAction')) }}
+        {% include 'navbar/recent-activities.html.twig' %}
     {% endif %}
     {% import "macros/widgets.html.twig" as widgets %}
     <li class="dropdown user-menu">

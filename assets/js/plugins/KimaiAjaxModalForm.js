@@ -32,7 +32,6 @@ export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableR
                     self._openFormInModal(html);
                 },
                 error: function(xhr, err) {
-                    console.log('Failed opening modal', err);
                     window.location = href;
                 }
             });
@@ -102,8 +101,12 @@ export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableR
         // click handler for modal save button, to send forms via ajax
         form.on('submit', function(event){
             let btn = jQuery(formIdentifier + ' button[type=submit]').button('loading');
+            let eventName = form.attr('data-form-event');
+            let events = self.getContainer().getPlugin('event');
+
             event.preventDefault();
             event.stopPropagation();
+
             jQuery.ajax({
                 url: form.attr('action'),
                 type: form.attr('method'),
@@ -117,14 +120,13 @@ export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableR
                     if (hasFieldError || hasFormError || hasFlashError) {
                         self._openFormInModal(html);
                     } else {
+                        events.trigger(eventName);
                         self.getContainer().getPlugin('datatable').reload();
                         remoteModal.modal('hide');
                     }
                     return false;
                 },
                 error: function(xhr, err) {
-                    console.log('Failed submitting modal form', err);
-
                     // FIXME problem in google and 500 error, keeps on submitting...
                     // what else could we do? submitting again at least gives us the opportunity to see errors,
                     // which maybe would be hidden otherwise... this one is totally up for discussion!
