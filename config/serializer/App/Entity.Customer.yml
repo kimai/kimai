@@ -4,10 +4,8 @@ App\Entity\Customer:
     properties:
         id:
             include: true
-            groups: [Default]
         name:
             include: true
-            groups: [Default]
         number:
             include: true
             groups: [Entity]
@@ -16,7 +14,6 @@ App\Entity\Customer:
             groups: [Entity]
         visible:
             include: true
-            groups: [Default]
         company:
             include: true
             groups: [Entity]
@@ -52,10 +49,10 @@ App\Entity\Customer:
             groups: [Entity]
         fixedRate:
             include: true
-            groups: [Default]
+            groups: [Customer]
         hourlyRate:
             include: true
-            groups: [Default]
+            groups: [Customer]
         color:
             include: true
             groups: [Entity]

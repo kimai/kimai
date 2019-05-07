@@ -730,7 +730,7 @@
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
                 <target>
-                    Ricomincia registrazione|Ricomincia una delle %count% tue ultime attività
+                    Ricomincia una delle tue ultime attività
                 </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">

@@ -83,7 +83,6 @@ export default class KimaiDatatableColumnView extends KimaiPlugin {
         }
 
         if (!foundColumn) {
-            console.error('Could not find column: ' + columnName);
             return;
         }
 

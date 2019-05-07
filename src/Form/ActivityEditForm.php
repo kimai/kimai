@@ -144,6 +144,9 @@ class ActivityEditForm extends AbstractType
             'csrf_token_id' => 'admin_activity_edit',
             'create_more' => false,
             'customer' => false,
+            'attr' => [
+                'data-form-event' => 'kimai.activityUpdate'
+            ],
         ]);
     }
 }

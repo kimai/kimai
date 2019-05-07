@@ -785,7 +785,7 @@
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
                 <target>
-                    Redémarrez l'enregistrement de la dernière activité|Redémarrez l'enregistrement d'une de vos %count% dernières activités
+                    Redémarrez l'enregistrement d'une de vos dernières activités
                 </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">

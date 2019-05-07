@@ -915,7 +915,7 @@
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
                 <target>
-                    Legutóbb rögzített tevékenység folytatása|Tevékenység folytatása a legutóbbi %count% közül
+                    Tevékenység folytatása a legutóbbi közül
                 </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">

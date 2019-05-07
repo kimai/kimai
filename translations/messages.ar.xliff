@@ -808,7 +808,7 @@
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
                 <target>
-                    إعادة تشغيل آخر نشاط مسجل الخاص بك، إعادة تشغيل واحد من %count% الأنشطة الأخيرة
+                    إعادة تشغيل آخر نشاط مسجل الخاص بك، إعادة تشغيل واحد من الأنشطة الأخيرة
                 </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">

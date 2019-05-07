@@ -927,7 +927,7 @@
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
                 <target>
-                    Restart your last recorded activity|Restart one of your %count% last activities
+                    Restart one of your last activities
                 </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">

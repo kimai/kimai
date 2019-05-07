@@ -12,7 +12,6 @@ namespace App\Repository;
 use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\Timesheet;
-use App\Entity\User;
 use App\Model\ActivityStatistic;
 use App\Repository\Query\ActivityQuery;
 use Doctrine\ORM\ORMException;
@@ -29,63 +28,6 @@ class ActivityRepository extends AbstractRepository
     public function getById($id)
     {
         return $this->find($id);
-    }
-
-    /**
-     * @param User|null $user
-     * @param \DateTime|null $startFrom
-     * @return Timesheet[]
-     * @throws Query\QueryException
-     */
-    public function getRecentActivities(User $user = null, \DateTime $startFrom = null)
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-
-        $qb->select($qb->expr()->max('t.id') . ' AS maxid')
-            ->from(Timesheet::class, 't')
-            ->indexBy('t', 't.id')
-            ->join('t.activity', 'a')
-            ->join('t.project', 'p')
-            ->join('p.customer', 'c')
-            ->andWhere($qb->expr()->isNotNull('t.end'))
-            ->andWhere($qb->expr()->eq('a.visible', ':visible'))
-            ->andWhere($qb->expr()->eq('p.visible', ':visible'))
-            ->andWhere($qb->expr()->eq('c.visible', ':visible'))
-            ->groupBy('a.id', 'p.id')
-            ->orderBy('maxid', 'DESC')
-            ->setMaxResults(10)
-            ->setParameter('visible', true, \PDO::PARAM_BOOL)
-        ;
-
-        if (null !== $user) {
-            $qb->andWhere('t.user = :user')
-                ->setParameter('user', $user);
-        }
-
-        if (null !== $startFrom) {
-            $qb->andWhere($qb->expr()->gt('t.begin', ':begin'))
-                ->setParameter('begin', $startFrom);
-        }
-
-        $results = $qb->getQuery()->getScalarResult();
-
-        if (empty($results)) {
-            return [];
-        }
-
-        $ids = array_column($results, 'maxid');
-
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('t', 'a', 'p', 'c')
-            ->from(Timesheet::class, 't')
-            ->join('t.activity', 'a')
-            ->join('t.project', 'p')
-            ->join('p.customer', 'c')
-            ->andWhere($qb->expr()->in('t.id', $ids))
-            ->orderBy('t.end', 'DESC')
-        ;
-
-        return $qb->getQuery()->getResult();
     }
 
     /**

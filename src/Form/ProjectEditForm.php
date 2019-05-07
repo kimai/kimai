@@ -108,6 +108,9 @@ class ProjectEditForm extends AbstractType
             'csrf_token_id' => 'admin_project_edit',
             'currency' => Customer::DEFAULT_CURRENCY,
             'create_more' => false,
+            'attr' => [
+                'data-form-event' => 'kimai.projectUpdate'
+            ],
         ]);
     }
 }

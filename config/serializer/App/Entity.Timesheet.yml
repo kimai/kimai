@@ -4,20 +4,16 @@ App\Entity\Timesheet:
     properties:
         id:
             include: true
-            groups: [Default]
         begin:
             exclude: true
         end:
             exclude: true
         duration:
             include: true
-            groups: [Default]
         description:
             include: true
-            groups: [Default]
         rate:
             include: true
-            groups: [Default]
         fixedRate:
             include: true
             groups: [Entity]
@@ -28,9 +24,9 @@ App\Entity\Timesheet:
             include: true
             groups: [Entity]
         activity:
-            exclude: true
+            groups: [Subresource]
         project:
-            exclude: true
+            groups: [Subresource]
         user:
             exclude: true
     virtual_properties:
@@ -38,24 +34,21 @@ App\Entity\Timesheet:
             serialized_name: begin
             exp: "object.getBegin() === null ? null : object.getBegin()"
             type: DateTime
-            groups: [Default]
         getEnd:
             serialized_name: end
             exp: "object.getEnd() === null ? null : object.getEnd()"
             type: DateTime
-            groups: [Default]
         getActivity:
             serialized_name: activity
             exp: "object.getActivity() === null ? null : object.getActivity().getId()"
             type: integer
-            groups: [Default]
+            groups: [Entity, Collection]
         getProject:
             serialized_name: project
             exp: "object.getProject() === null ? null : object.getProject().getId()"
             type: integer
-            groups: [Default]
+            groups: [Entity, Collection]
         getUser:
             serialized_name: user
             exp: "object.getUser().getId()"
             type: integer
-            groups: [Default]

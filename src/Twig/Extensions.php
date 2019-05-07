@@ -71,7 +71,7 @@ class Extensions extends AbstractExtension
         'project' => 'fas fa-project-diagram',
         'repeat' => 'fas fa-redo-alt',
         'start' => 'fas fa-play-circle',
-        'start-small' => 'fas fa-play-circle',
+        'start-small' => 'far fa-play-circle',
         'stop' => 'fas fa-stop',
         'stop-small' => 'far fa-stop-circle',
         'timesheet' => 'fas fa-clock',

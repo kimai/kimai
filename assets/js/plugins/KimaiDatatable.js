@@ -18,13 +18,6 @@ export default class KimaiDatatable extends KimaiPlugin {
         return 'datatable';
     }
 
-    init() {
-        const self = this;
-        document.addEventListener('KimaiDatatableRequestReload', function() {
-            self.reload();
-        });
-    }
-
     reload() {
         let form = jQuery('.toolbar form');
         let loading = '<div class="overlay"><i class="fas fa-sync fa-spin"></i></div>';

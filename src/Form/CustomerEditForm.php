@@ -125,6 +125,9 @@ class CustomerEditForm extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'admin_customer_edit',
+            'attr' => [
+                'data-form-event' => 'kimai.customerUpdate'
+            ],
         ]);
     }
 }
