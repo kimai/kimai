@@ -96,7 +96,9 @@ class TimesheetController extends BaseApiController
      *
      * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
      *
+     * @param ParamFetcherInterface $paramFetcher
      * @return Response
+     * @throws \Exception
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher)
     {
