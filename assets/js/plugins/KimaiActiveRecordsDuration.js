@@ -21,16 +21,12 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
 
     init() {
         this.updateRecords();
-        this.registerUpdates(10000);
-    }
-
-    registerUpdates(interval) {
-        let self = this;
+        const self = this;
         this._updatesHandler = setInterval(
             function() {
                 self.updateRecords();
             },
-            interval
+            10000
         );
     }
 
@@ -61,8 +57,6 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
             title += prefix + duration;
         }
         document.title = title;
-
-        return this;
     }
 
     static _getDuration(since, format) {

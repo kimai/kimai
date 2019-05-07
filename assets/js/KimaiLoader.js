@@ -25,6 +25,7 @@ import KimaiSelectDataAPI from "./plugins/KimaiSelectDataAPI";
 import KimaiDateTimePicker from "./plugins/KimaiDateTimePicker";
 import KimaiAlternativeLinks from "./plugins/KimaiAlternativeLinks";
 import KimaiAjaxModalForm from "./plugins/KimaiAjaxModalForm";
+import KimaiActiveRecords from "./plugins/KimaiActiveRecords";
 
 export default class KimaiLoader {
 
@@ -73,6 +74,7 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiAlternativeLinks('.alternative-link'));
         kimai.registerPlugin(new KimaiAjaxModalForm('.modal-ajax-form'));
         //kimai.registerPlugin(new KimaiPauseRecord('li.messages-menu ul.menu li'));
+        kimai.registerPlugin(new KimaiActiveRecords('.messages-menu'));
 
         // notify all listeners that Kimai plugins can now be registered
         this._sendEvent('kimai.pluginRegister');
