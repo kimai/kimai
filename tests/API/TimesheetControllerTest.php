@@ -492,7 +492,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result);
         $this->assertEquals(1, count($result));
         $this->assertDefaultStructure($result[0], false);
-        $this->assertHasSubresources($result[0], false);
+        $this->assertHasSubresources($result[0]);
     }
 
     protected function assertDefaultStructure(array $result, $full = true)
