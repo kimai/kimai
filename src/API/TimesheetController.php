@@ -400,7 +400,7 @@ class TimesheetController extends BaseApiController
      *
      * @SWG\Response(
      *      response=200,
-     *      description="Returns the collection of recent user activities (always the latest entry of a unique working set groued by customer, project and activity)",
+     *      description="Returns the collection of recent user activities (always the latest entry of a unique working set grouped by customer, project and activity)",
      *      @SWG\Schema(
      *          type="array",
      *          @SWG\Items(ref="#/definitions/TimesheetSubCollection")
@@ -440,6 +440,77 @@ class TimesheetController extends BaseApiController
 
         $view = new View($data, 200);
         $view->getContext()->setGroups(['Default', 'Subresource', 'Timesheet']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Returns the collection of active timesheet records
+     *
+     * @SWG\Response(
+     *      response=200,
+     *      description="Returns the collection of active timesheet records for the current user",
+     *      @SWG\Schema(
+     *          type="array",
+     *          @SWG\Items(ref="#/definitions/TimesheetSubCollection")
+     *      )
+     * )
+     *
+     * @Security("is_granted('view_own_timesheet')")
+     * @return Response
+     * @throws \Doctrine\ORM\Query\QueryException
+     */
+    public function activeAction()
+    {
+        $data = $this->repository->getActiveEntries($this->getUser());
+
+        $view = new View($data, 200);
+        $view->getContext()->setGroups(['Default', 'Subresource', 'Timesheet']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Stops an active timesheet record
+     *
+     * @SWG\Response(
+     *      response=200,
+     *      description="Stops an active timesheet record and returns it afterwards.",
+     *      @SWG\Schema(ref="#/definitions/TimesheetEntity")
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="Timesheet record ID to stop",
+     *      required=true,
+     * )
+     *
+     * @Security("is_granted('stop_own_timesheet') or is_granted('stop_other_timesheet')")
+     *
+     * @param int $id
+     * @return Response
+     * @throws \App\Repository\RepositoryException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function stopAction($id)
+    {
+        /** @var Timesheet $timesheet */
+        $timesheet = $this->repository->find($id);
+
+        if (null === $timesheet) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('stop', $timesheet)) {
+            throw new AccessDeniedHttpException('You are not allowed to stop this timesheet');
+        }
+
+        $this->repository->stopRecording($timesheet);
+
+        $view = new View($timesheet, 200);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
 
         return $this->viewHandler->handle($view);
     }

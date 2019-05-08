@@ -76,7 +76,7 @@ class TimesheetRepository extends AbstractRepository
 
         $entityManager = $this->getEntityManager();
         $entityManager->persist($entry);
-        $entityManager->flush();
+        $entityManager->flush($entry);
 
         return true;
     }

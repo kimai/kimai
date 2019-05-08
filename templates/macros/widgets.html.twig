@@ -192,6 +192,7 @@
         {% set target = null %}
         {% set title = null %}
         {% set disabled = false %}
+        {% set attr = {} %}
         {% if type is same as (false) %}
             {% set class = "" %}
         {% elseif type is null %}
@@ -223,6 +224,7 @@
             {% set id = values.id ?? null %}
             {% set title = values.title ?? null %}
             {% set class = class ~ ( values.class | default("")) %}
+            {% set attr = values.attr ?? {} %}
         {% endif %}
 
         {% if disabled is same as (true) %}
@@ -247,6 +249,11 @@
                 {%- endif -%}
                 {%- if target is not empty -%}
                     target="{{ target }}"
+                {%- endif -%}
+                {%- if attr is not empty -%}
+                    {%- for name, value in attr -%}
+                        {{ name }}="{{ value }}"
+                    {%- endfor -%}
                 {%- endif -%}
         >{% if title is not null %}{{ title }}{% else %}{{ macro.icon(icon) }}{% endif %}</a>
     {% endfilter %}

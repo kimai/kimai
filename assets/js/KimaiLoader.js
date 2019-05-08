@@ -28,6 +28,7 @@ import KimaiAjaxModalForm from "./plugins/KimaiAjaxModalForm";
 import KimaiActiveRecords from "./plugins/KimaiActiveRecords";
 import KimaiRecentActivities from "./plugins/KimaiRecentActivities";
 import KimaiEvent from "./plugins/KimaiEvent";
+import KimaiAPILink from "./plugins/KimaiAPILink";
 
 export default class KimaiLoader {
 
@@ -71,13 +72,14 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiJqueryPluginInitializer());
         kimai.registerPlugin(new KimaiDateRangePicker('.content-wrapper'));
         kimai.registerPlugin(new KimaiDateTimePicker('.content-wrapper'));
-        kimai.registerPlugin(new KimaiDatatable());
+        kimai.registerPlugin(new KimaiDatatable('table.dataTable'));
         kimai.registerPlugin(new KimaiToolbar());
         kimai.registerPlugin(new KimaiSelectDataAPI('select[data-related-select]'));
         kimai.registerPlugin(new KimaiAlternativeLinks('.alternative-link'));
         kimai.registerPlugin(new KimaiAjaxModalForm('.modal-ajax-form'));
         kimai.registerPlugin(new KimaiRecentActivities('li.notifications-menu'));
-        kimai.registerPlugin(new KimaiActiveRecords('.messages-menu'));
+        kimai.registerPlugin(new KimaiActiveRecords('li.messages-menu', 'li.messages-menu-empty'));
+        kimai.registerPlugin(new KimaiAPILink('a.api-link'));
         //kimai.registerPlugin(new KimaiPauseRecord('li.messages-menu ul.menu li'));
 
         // notify all listeners that Kimai plugins can now be registered

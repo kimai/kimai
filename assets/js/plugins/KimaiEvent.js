@@ -22,7 +22,9 @@ export default class KimaiEvent extends KimaiPlugin {
             return;
         }
 
-        document.dispatchEvent(new Event(name));
+        for(let event of name.split(' ')) {
+            document.dispatchEvent(new Event(event));
+        }
     }
 
 }

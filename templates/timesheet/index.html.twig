@@ -42,7 +42,7 @@
     {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% else %}
-        {{ tables.data_table_header(tableName, columns, showSummary) }}
+        {{ tables.data_table_header(tableName, columns, showSummary, 'kimai.timesheetUpdate') }}
 
         {% set day = null %}
         {% set dayDuration = 0 %}

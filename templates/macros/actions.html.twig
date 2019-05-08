@@ -199,7 +199,7 @@
             {% endif %}
         {% else %}
             {% if is_granted('stop', timesheet) %}
-                {% set actions = actions|merge({'stop': path('timesheet_stop', {'id' : timesheet.id})}) %}
+                {% set actions = actions|merge({'stop': {'url': path('stop_timesheet', {'id' : timesheet.id}), 'class': 'api-link', 'attr': {'data-event': 'kimai.timesheetStop kimai.timesheetUpdate', 'data-method': 'PATCH'}}}) %}
             {% endif %}
         {% endif %}
 
@@ -259,7 +259,7 @@
         {% endif %}
 
         {% if not timesheet.end and is_granted('stop', timesheet) %}
-            {% set actions = actions|merge({'stop': path('admin_timesheet_stop', {'id' : timesheet.id})}) %}
+            {% set actions = actions|merge({'stop': {'url': path('stop_timesheet', {'id' : timesheet.id}), 'class': 'api-link', 'attr': {'data-event': 'kimai.timesheetStop kimai.timesheetUpdate', 'data-method': 'PATCH'}}}) %}
         {% endif %}
 
         {% if view == 'index' and is_granted('delete', timesheet) %}

@@ -121,7 +121,6 @@ export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableR
                         self._openFormInModal(html);
                     } else {
                         events.trigger(eventName);
-                        self.getContainer().getPlugin('datatable').reload();
                         remoteModal.modal('hide');
                     }
                     return false;
