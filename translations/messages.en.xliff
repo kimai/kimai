@@ -586,6 +586,18 @@
             </trans-unit>
 
             <!--
+              Admin: Plugins
+            -->
+            <trans-unit id="label.version">
+                <source>label.version</source>
+                <target>Version</target>
+            </trans-unit>
+            <trans-unit id="label.required_version">
+                <source>label.required_version</source>
+                <target>Compatible with</target>
+            </trans-unit>
+
+            <!--
               ROLES
             -->
             <trans-unit id="ROLE_SUPER_ADMIN">
@@ -918,7 +930,7 @@
             -->
             <trans-unit id="active.entries">
                 <source>active.entries</source>
-                <target>You have %count% active record|You have %count% active records</target>
+                <target>Your active time measurements</target>
             </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
@@ -926,9 +938,7 @@
             </trans-unit>
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
-                <target>
-                    Restart one of your last activities
-                </target>
+                <target>Restart one of your last activities</target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>

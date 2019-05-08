@@ -10,14 +10,6 @@
                 <source>plugins.subtitle</source>
                 <target state="translated">Du kan förbättra funktionaliteten hos Kimai med plugins</target>
             </trans-unit>
-            <trans-unit id="label.version">
-                <source>label.version</source>
-                <target>Version</target>
-            </trans-unit>
-            <trans-unit id="label.required_version">
-                <source>label.required_version</source>
-                <target state="translated">Kompatibel med</target>
-            </trans-unit>
             <trans-unit id="plugin.none_installed">
                 <source>plugin.none_installed</source>
                 <target state="translated">Du har inget plugin installerat än.</target>

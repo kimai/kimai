@@ -70,14 +70,14 @@
 {% endspaceless %}
 {% endmacro %}
 
-{% macro data_table_header(name, columns, skipStripped) %}
+{% macro data_table_header(name, columns, skipStripped, reloadEvent) %}
 {% import _self as macro %}
 <div class="box data_table" id="datatable_{{ name }}">
     <div class="box-body no-padding">
         <div class="dataTables_wrapper form-inline dt-bootstrap">
             <div class="row">
                 <div class="col-sm-12">
-                    <table class="table {% if not skipStripped %}table-striped {% endif %}table-hover dataTable" role="grid">
+                    <table class="table {% if not skipStripped %}table-striped {% endif %}table-hover dataTable" role="grid" data-reload-event="{{ reloadEvent }}">
                         <thead>
                         <tr>
                             {%- for title, class in columns -%}
@@ -96,7 +96,7 @@
         </div>
     </div>
 </div>
-{% if route is not empty %}
+{% if route is not empty and columns is not null%}
 <div class="navigation text-center no-print">
     {{ pagerfanta(columns, 'twitter_bootstrap3_translated', { proximity: 1, routeName: route }) }}
 </div>
