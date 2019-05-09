@@ -199,10 +199,10 @@ kimai:
     # --------------------------------------------------------------------------------
     # Theme related settings, will be available as twig globals at "kimai_context.*".
     # See documentation at https://www.kimai.org/documentation/theme.html
-    theme:
+    #theme:
         # BETA test: If you set this to 'selectpicker' the customer/project/activity select boxes will be transformed
         # into a searchable and javascript enhanced input type
-        select_type: ~
+        #select_type: ~
 
     # --------------------------------------------------------------------------------
     # Dashboard widget sections.

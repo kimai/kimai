@@ -26,10 +26,10 @@ class EnhancedSelectboxType extends AbstractType
         $resolver->setDefaults([
             'label' => 'label.select_type',
             'choices' => [
-                '' => 'default',
+                '' => null,
                 'Javascript' => 'selectpicker',
             ],
-            'required' => false
+            'required' => false,
         ]);
     }
 
