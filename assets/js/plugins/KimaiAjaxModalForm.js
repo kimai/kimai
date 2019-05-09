@@ -67,8 +67,13 @@ export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableR
                 jQuery(html).find('#form_modal .modal-content')
             );
 
+            // TODO these should be handled with Events, probably using Custom Events
+            // https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events
+
             // activate new loaded widgets
             self.getContainer().getPlugin('date-time-picker').activateDateTimePicker(formIdentifier);
+            // activate selectpicker if beta test is active
+            jQuery('.selectpicker').selectpicker('refresh');
         }
 
         // show error flash messages
@@ -100,9 +105,10 @@ export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableR
 
         // click handler for modal save button, to send forms via ajax
         form.on('submit', function(event){
-            let btn = jQuery(formIdentifier + ' button[type=submit]').button('loading');
-            let eventName = form.attr('data-form-event');
-            let events = self.getContainer().getPlugin('event');
+            const btn = jQuery(formIdentifier + ' button[type=submit]').button('loading');
+            const eventName = form.attr('data-form-event');
+            const events = self.getContainer().getPlugin('event');
+            const alert = self.getContainer().getPlugin('alert');
 
             event.preventDefault();
             event.stopPropagation();
@@ -121,15 +127,40 @@ export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableR
                         self._openFormInModal(html);
                     } else {
                         events.trigger(eventName);
+
+                        // try to find form defined messages first ...
+                        let msg = form.attr('data-msg-success');
+                        if (msg === null || msg === undefined) {
+                            // ... but if none was available, check the response to find server rendered flash-message
+                            let flashMessage = jQuery(html).find('section.content div.row div.alert.alert-success');
+                            if (flashMessage.length > 0) {
+                                let flashContent = flashMessage.contents();
+                                if (flashContent.length === 3) {
+                                    msg = flashContent[2].textContent;
+                                }
+                            }
+                        }
+
+                        // ... and if even that is not available, we use a generic fallback message
+                        if (msg === null || msg === undefined) {
+                            msg = 'action.update.success';
+                        }
                         remoteModal.modal('hide');
+                        alert.success(msg);
                     }
                     return false;
                 },
                 error: function(xhr, err) {
-                    // FIXME problem in google and 500 error, keeps on submitting...
-                    // what else could we do? submitting again at least gives us the opportunity to see errors,
-                    // which maybe would be hidden otherwise... this one is totally up for discussion!
-                    form.submit();
+                    let message = form.attr('data-msg-error');
+                    if (message === null || message === undefined) {
+                        message = 'action.update.error';
+                    }
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        err = xhr.responseJSON.message;
+                    } else if (xhr.status && xhr.statusText) {
+                        err = '[' + xhr.status +'] ' + xhr.statusText;
+                    }
+                    alert.error(message, err);
                 }
             });
         });

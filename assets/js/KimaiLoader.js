@@ -29,6 +29,7 @@ import KimaiActiveRecords from "./plugins/KimaiActiveRecords";
 import KimaiRecentActivities from "./plugins/KimaiRecentActivities";
 import KimaiEvent from "./plugins/KimaiEvent";
 import KimaiAPILink from "./plugins/KimaiAPILink";
+import KimaiAlert from "./plugins/KimaiAlert";
 
 export default class KimaiLoader {
 
@@ -66,6 +67,7 @@ export default class KimaiLoader {
 
         kimai.registerPlugin(new KimaiEvent());
         kimai.registerPlugin(new KimaiAPI());
+        kimai.registerPlugin(new KimaiAlert());
         kimai.registerPlugin(new KimaiActiveRecordsDuration('[data-since]'));
         kimai.registerPlugin(new KimaiDatatableColumnView('data-column-visibility'));
         kimai.registerPlugin(new KimaiThemeInitializer());

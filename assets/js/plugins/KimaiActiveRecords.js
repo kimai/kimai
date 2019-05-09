@@ -75,7 +75,7 @@ export default class KimaiActiveRecords extends KimaiPlugin {
         for (let timesheet of entries) {
             htmlToInsert +=
                     `<li>` +
-                        `<a href="${ this.attributes['href'].replace('000', timesheet.id) }" data-event="kimai.timesheetStop kimai.timesheetUpdate" class="api-link" data-method="PATCH">` +
+                        `<a href="${ this.attributes['href'].replace('000', timesheet.id) }" data-event="kimai.timesheetStop kimai.timesheetUpdate" class="api-link" data-method="PATCH" data-msg-error="timesheet.stop.error" data-msg-success="timesheet.stop.success">` +
                             `<div class="pull-left">` +
                                 `<i class="${ this.attributes['icon'] } fa-2x"></i>` +
                             `</div>` +

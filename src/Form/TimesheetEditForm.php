@@ -292,7 +292,9 @@ class TimesheetEditForm extends AbstractType
             'date_format' => null,
             'customer' => false,
             'attr' => [
-                'data-form-event' => 'kimai.timesheetUpdate'
+                'data-form-event' => 'kimai.timesheetUpdate',
+                'data-msg-success' => 'action.update.success',
+                'data-msg-error' => 'action.update.error',
             ],
         ]);
     }

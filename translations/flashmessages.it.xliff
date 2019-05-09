@@ -8,7 +8,7 @@
             </trans-unit>
             <trans-unit id="timesheet.stop.error">
                 <source>timesheet.stop.error</source>
-                <target>Time-recording non può essere fermata: %reason%</target>
+                <target>Time-recording non può essere fermata</target>
             </trans-unit>
             <trans-unit id="timesheet.start.success">
                 <source>timesheet.start.success</source>

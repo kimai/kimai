@@ -31,7 +31,7 @@ export default class KimaiAPI extends KimaiPlugin {
         });
     }
 
-    patch(url, callback) {
+    patch(url, callbackSuccess, callbackError) {
         jQuery.ajax({
             url: url,
             headers: {
@@ -40,7 +40,8 @@ export default class KimaiAPI extends KimaiPlugin {
             },
             method: 'PATCH',
             dataType: 'json',
-            success: callback
+            success: callbackSuccess,
+            error: callbackError
         });
     }
 

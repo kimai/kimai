@@ -18,7 +18,7 @@ export default class KimaiEvent extends KimaiPlugin {
     }
 
     trigger(name) {
-        if (name === null) {
+        if (name === null || name === undefined) {
             return;
         }
 

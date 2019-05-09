@@ -12,6 +12,7 @@ namespace App\Tests\API;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use Symfony\Component\HttpFoundation\Response;
@@ -493,6 +494,96 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertEquals(1, count($result));
         $this->assertDefaultStructure($result[0], false);
         $this->assertHasSubresources($result[0]);
+    }
+
+    public function testActiveAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $start = new \DateTime('-10 days');
+
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setFixedRate(true)
+            ->setHourlyRate(true)
+            ->setAmount(0)
+            ->setUser($this->getUserByRole($em, User::ROLE_USER))
+            ->setStartDate($start)
+            ->setAmountRunning(3)
+        ;
+        $this->importFixture($em, $fixture);
+
+        $this->request($client, '/api/timesheets/active');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $results = json_decode($client->getResponse()->getContent(), true);
+        $this->assertEquals(3, count($results));
+        foreach ($results as $timesheet) {
+            $this->assertDefaultStructure($timesheet, false);
+        }
+    }
+
+    public function testStopAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $start = new \DateTime('-10 days');
+
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setFixedRate(true)
+            ->setHourlyRate(true)
+            ->setAmount(0)
+            ->setUser($this->getUserByRole($em, User::ROLE_USER))
+            ->setStartDate($start)
+            ->setAmountRunning(1)
+        ;
+        $this->importFixture($em, $fixture);
+
+        $this->request($client, '/api/timesheets/11/stop', 'PATCH');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var Timesheet $timesheet */
+        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $this->assertInstanceOf(\DateTime::class, $timesheet->getEnd());
+    }
+
+    public function testStopActionFailsOnStoppedEntry()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->request($client, '/api/timesheets/1/stop', 'PATCH');
+
+        $this->assertApiException($client->getResponse(), 'Timesheet entry already stopped');
+    }
+
+    public function testStopThrowsNotFound()
+    {
+        $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/11/stop', 'PATCH');
+    }
+
+    public function testStopNotAllowedForUser()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $start = new \DateTime('-10 days');
+
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setFixedRate(true)
+            ->setHourlyRate(true)
+            ->setAmount(2)
+            ->setUser($this->getUserByRole($em, User::ROLE_ADMIN))
+            ->setStartDate($start)
+            ->setAmountRunning(3)
+        ;
+        $this->importFixture($em, $fixture);
+
+        $this->request($client, '/api/timesheets/12/stop', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse(), 'You are not allowed to stop this timesheet');
     }
 
     protected function assertDefaultStructure(array $result, $full = true)

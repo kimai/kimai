@@ -215,14 +215,17 @@ class TimesheetController extends AbstractController
      * @param Timesheet $entry
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
     public function deleteAction(Timesheet $entry, Request $request)
     {
         $deleteForm = $this->createFormBuilder(null, [
-            'attr' => [
-                'data-form-event' => 'kimai.timesheetUpdate kimai.timesheetDelete'
-            ],
-        ])
+                'attr' => [
+                    'data-form-event' => 'kimai.timesheetUpdate kimai.timesheetDelete',
+                    'data-msg-success' => 'action.delete.success',
+                    'data-msg-error' => 'action.delete.error',
+                ],
+            ])
             ->setAction($this->generateUrl('timesheet_delete', ['id' => $entry->getId()]))
             ->setMethod('POST')
             ->getForm();

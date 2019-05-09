@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Entity\Timesheet;
+use App\Form\DeleteType;
 use App\Form\TimesheetEditForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\Query\TimesheetQuery;
@@ -143,8 +144,10 @@ class TimesheetTeamController extends AbstractController
     {
         $deleteForm = $this->createFormBuilder(null, [
                 'attr' => [
-                    'data-form-event' => 'kimai.timesheetUpdate kimai.timesheetDelete'
-                ],
+                    'data-form-event' => 'kimai.timesheetUpdate kimai.timesheetDelete',
+                    'data-msg-success' => 'action.delete.success',
+                    'data-msg-error' => 'action.delete.error',
+                ]
             ])
             ->setAction($this->generateUrl('admin_timesheet_delete', ['id' => $entry->getId()]))
             ->setMethod('POST')

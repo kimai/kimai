@@ -188,7 +188,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertHasDataTable(Client $client)
     {
-        $this->assertContains('<table class="table table-striped table-hover dataTable" role="grid">', $client->getResponse()->getContent());
+        $this->assertContains('<table class="table table-striped table-hover dataTable" role="grid" data-reload-event="', $client->getResponse()->getContent());
     }
 
     /**

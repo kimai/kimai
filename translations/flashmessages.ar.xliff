@@ -8,7 +8,7 @@
             </trans-unit>
             <trans-unit id="timesheet.stop.error">
                 <source>timesheet.stop.error</source>
-                <target>تعذر إيقاف تسجيل الوقت:٪ reason٪</target>
+                <target>تعذر إيقاف تسجيل الوقت</target>
             </trans-unit>
             <trans-unit id="timesheet.start.success">
                 <source>timesheet.start.success</source>

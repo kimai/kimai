@@ -38,10 +38,23 @@ export default class KimaiAPILink extends KimaiClickHandlerReducedInTableRow {
                     const eventName = attributes['event'];
                     const api = self.getContainer().getPlugin('api');
                     const eventing = self.getContainer().getPlugin('event');
+                    const alert = self.getContainer().getPlugin('alert');
 
                     if (method === 'PATCH') {
                         api.patch(url, function(result) {
                             eventing.trigger(eventName);
+                            if (attributes.msgSuccess) {
+                                alert.success(attributes.msgSuccess);
+                            }
+                        }, function(xhr, err) {
+                            let message = 'action.update.error';
+                            if (attributes.msgError) {
+                                message = attributes.msgError;
+                            }
+                            if (xhr.responseJSON && xhr.responseJSON.message) {
+                                err = xhr.responseJSON.message;
+                            }
+                            alert.error(message, err);
                         });
                     }
 

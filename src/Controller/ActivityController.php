@@ -110,7 +110,13 @@ class ActivityController extends AbstractController
     {
         $stats = $this->getRepository()->getActivityStatistics($activity);
 
-        $deleteForm = $this->createFormBuilder()
+        $deleteForm = $this->createFormBuilder(null, [
+                'attr' => [
+                    'data-form-event' => 'kimai.activityUpdate kimai.activityDelete',
+                    'data-msg-success' => 'action.delete.success',
+                    'data-msg-error' => 'action.delete.error',
+                ]
+            ])
             ->add('activity', ActivityType::class, [
                 'label' => 'label.activity',
                 'query_builder' => function (ActivityRepository $repo) use ($activity) {

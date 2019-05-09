@@ -199,7 +199,7 @@
             {% endif %}
         {% else %}
             {% if is_granted('stop', timesheet) %}
-                {% set actions = actions|merge({'stop': {'url': path('stop_timesheet', {'id' : timesheet.id}), 'class': 'api-link', 'attr': {'data-event': 'kimai.timesheetStop kimai.timesheetUpdate', 'data-method': 'PATCH'}}}) %}
+                {% set actions = actions|merge({'stop': {'url': path('stop_timesheet', {'id' : timesheet.id}), 'class': 'api-link', 'attr': {'data-event': 'kimai.timesheetStop kimai.timesheetUpdate', 'data-method': 'PATCH', 'data-msg-error': 'timesheet.stop.error', 'data-msg-success': 'timesheet.stop.success'}}}) %}
             {% endif %}
         {% endif %}
 
@@ -259,7 +259,7 @@
         {% endif %}
 
         {% if not timesheet.end and is_granted('stop', timesheet) %}
-            {% set actions = actions|merge({'stop': {'url': path('stop_timesheet', {'id' : timesheet.id}), 'class': 'api-link', 'attr': {'data-event': 'kimai.timesheetStop kimai.timesheetUpdate', 'data-method': 'PATCH'}}}) %}
+            {% set actions = actions|merge({'stop': {'url': path('stop_timesheet', {'id' : timesheet.id}), 'class': 'api-link', 'attr': {'data-event': 'kimai.timesheetStop kimai.timesheetUpdate', 'data-method': 'PATCH', 'data-msg-error': 'timesheet.stop.error', 'data-msg-success': 'timesheet.stop.success'}}}) %}
         {% endif %}
 
         {% if view == 'index' and is_granted('delete', timesheet) %}

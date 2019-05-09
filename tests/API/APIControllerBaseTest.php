@@ -152,11 +152,12 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
     /**
      * @param string $role
      * @param string $url
+     * @param string $method
      */
-    protected function assertEntityNotFound(string $role, string $url)
+    protected function assertEntityNotFound(string $role, string $url, string $method = 'GET')
     {
         $client = $this->getClientForAuthenticatedUser($role);
-        $this->request($client, $url);
+        $this->request($client, $url, $method);
 
         $expected = [
             'code' => 404,
@@ -198,6 +199,17 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
     }
 
     /**
+     * @param Response $response
+     * @param string $message
+     */
+    protected function assertApiException(Response $response, string $message)
+    {
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals(500, $response->getStatusCode());
+        $this->assertEquals(['code' => 500, 'message' => $message], json_decode($response->getContent(), true));
+    }
+
+    /**
      * @param Client $client
      * @param string $url
      * @param string $message
@@ -205,7 +217,16 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
     protected function assertApiAccessDenied(Client $client, string $url, string $message)
     {
         $this->request($client, $url);
-        $response = $client->getResponse();
+        $this->assertApiResponseAccessDenied($client->getResponse(), $message);
+    }
+
+    /**
+     * @param Client $client
+     * @param string $url
+     * @param string $message
+     */
+    protected function assertApiResponseAccessDenied(Response $response, string $message)
+    {
         $this->assertFalse($response->isSuccessful());
         $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $expected = ['code' => Response::HTTP_FORBIDDEN, 'message' => $message];

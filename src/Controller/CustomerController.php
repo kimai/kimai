@@ -134,7 +134,13 @@ class CustomerController extends AbstractController
     {
         $stats = $this->getRepository()->getCustomerStatistics($customer);
 
-        $deleteForm = $this->createFormBuilder()
+        $deleteForm = $this->createFormBuilder(null, [
+                'attr' => [
+                    'data-form-event' => 'kimai.customerUpdate kimai.customerDelete',
+                    'data-msg-success' => 'action.delete.success',
+                    'data-msg-error' => 'action.delete.error',
+                ]
+            ])
             ->add('customer', CustomerType::class, [
                 'label' => 'label.customer',
                 'query_builder' => function (CustomerRepository $repo) use ($customer) {
