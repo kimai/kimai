@@ -103,6 +103,7 @@ class DashboardSubscriber implements EventSubscriberInterface
         $widget
             ->setRoute('admin_user')
             ->setIcon('user')
+            ->setColor('green')
             ->setType(Widget::TYPE_MORE)
         ;
         $section->addWidget($widget);

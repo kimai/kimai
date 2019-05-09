@@ -120,7 +120,7 @@
 {% endmacro %}
 
 {% macro info_box_progress(title, description, amount, percentage, icon, color) %}
-    <div class="info-box bg-{{ color|default(kimai_context.box_color) }}">
+    <div class="info-box bg-{{ color }}">
         <span class="info-box-icon"><i class="{{ icon|icon(icon) }}"></i></span>
 
         <div class="info-box-content">

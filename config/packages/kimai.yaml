@@ -203,9 +203,6 @@ kimai:
         # BETA test: If you set this to 'selectpicker' the customer/project/activity select boxes will be transformed
         # into a searchable and javascript enhanced input type
         select_type: ~
-        # fallback color for all widgets that don't have a dedicated color
-        # possible options: blue, black, purple, yellow, red, green
-        box_color: 'green'
 
     # --------------------------------------------------------------------------------
     # Dashboard widget sections.
