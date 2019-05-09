@@ -14,6 +14,7 @@ use App\Event\SystemConfigurationEvent;
 use App\Form\Model\Configuration;
 use App\Form\Model\SystemConfiguration as SystemConfigurationModel;
 use App\Form\SystemConfigurationForm;
+use App\Form\Type\EnhancedSelectboxType;
 use App\Form\Type\TimesheetModeType;
 use App\Repository\ConfigurationRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -80,6 +81,16 @@ class SystemConfigurationController extends AbstractController
         return $this->render('system-configuration/index.html.twig', [
             'sections' => $configurations,
         ]);
+    }
+
+    /**
+     * @Route(path="/theme", name="system_configuration_theme", methods={"POST"})
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function theme(Request $request)
+    {
+        return $this->handleConfigUpdate($request, SystemConfigurationModel::SECTION_THEME);
     }
 
     /**
@@ -243,6 +254,15 @@ class SystemConfigurationController extends AbstractController
                         ->setName('defaults.customer.currency')
                         ->setLabel('currency')
                         ->setType(CurrencyType::class),
+                ]),
+            (new SystemConfigurationModel())
+                ->setSection(SystemConfigurationModel::SECTION_THEME)
+                ->setConfiguration([
+                    (new Configuration())
+                        ->setName('theme.select_type')
+                        ->setLabel('theme.select_type')
+                        ->setTranslationDomain('system-configuration')
+                        ->setType(EnhancedSelectboxType::class),
                 ]),
         ];
     }
