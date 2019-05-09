@@ -11,6 +11,7 @@ namespace App\Form\Extension;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 
@@ -36,7 +37,7 @@ class EnhancedChoiceTypeExtension extends AbstractTypeExtension
 
     public static function getExtendedTypes(): iterable
     {
-        return [EntityType::class];
+        return [EntityType::class, ChoiceType::class];
     }
 
     /**

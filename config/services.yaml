@@ -104,7 +104,7 @@ services:
     App\Form\Extension\EnhancedChoiceTypeExtension:
         arguments: ["%kimai.theme.select_type%"]
         tags:
-            - { name: form.type_extension, extended_type: Symfony\Bridge\Doctrine\Form\Type\EntityType }
+            - { name: form.type_extension }
 
     App\Form\Extension\SelectWithApiDataExtension:
         tags:
