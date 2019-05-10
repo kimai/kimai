@@ -285,7 +285,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertHasFlashDeleteSuccess(Client $client)
     {
-        $this->assertHasFlashSuccess($client, 'Entry was deleted successful');
+        $this->assertHasFlashSuccess($client, 'Entry was deleted');
     }
 
     /**
@@ -294,7 +294,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertHasFlashSaveSuccess(Client $client)
     {
-        $this->assertHasFlashSuccess($client, 'Saved changes successful');
+        $this->assertHasFlashSuccess($client, 'Saved changes');
     }
 
     /**
