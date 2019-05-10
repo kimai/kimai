@@ -76,14 +76,22 @@ class ProjectController extends AbstractController
 
     /**
      * @Route(path="/create", name="admin_project_create", methods={"GET", "POST"})
+     * @Route(path="/create/{customer}", name="admin_project_create_with_customer", methods={"GET", "POST"})
      * @Security("is_granted('create_project')")
      *
      * @param Request $request
+     * @param Customer|null $customer
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, ?Customer $customer = null)
     {
-        return $this->renderProjectForm(new Project(), $request);
+        $project = new Project();
+
+        if (null !== $customer) {
+            $project->setCustomer($customer);
+        }
+
+        return $this->renderProjectForm($project, $request);
     }
 
     /**

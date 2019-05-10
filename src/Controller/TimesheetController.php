@@ -12,6 +12,8 @@ namespace App\Controller;
 use App\Entity\Timesheet;
 use App\Form\TimesheetEditForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
+use App\Repository\ActivityRepository;
+use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
 use Doctrine\ORM\ORMException;
 use Pagerfanta\Pagerfanta;
@@ -210,16 +212,18 @@ class TimesheetController extends AbstractController
      * @Security("is_granted('create_own_timesheet')")
      *
      * @param Request $request
+     * @param ProjectRepository $projectRepository
+     * @param ActivityRepository $activityRepository
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, ProjectRepository $projectRepository, ActivityRepository $activityRepository)
     {
         $route = 'timesheet';
         if ('calendar' === $request->get('origin')) {
             $route = 'calendar';
         }
 
-        return $this->create($request, $route, 'timesheet/edit.html.twig');
+        return $this->create($request, $route, 'timesheet/edit.html.twig', $projectRepository, $activityRepository);
     }
 
     /**
