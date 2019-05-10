@@ -23,6 +23,12 @@
             {% endif %}
             {% set actions = actions|merge({'edit': {'url': path('admin_activity_edit', {'id': activity.id}), 'class': class}}) %}
         {% endif %}
+        {% if is_granted('view_other_timesheet') %}
+            {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'customer': activity.project ? activity.project.customer.id : null, 'project': activity.project ? activity.project.id : null, 'activity': activity.id})}) %}
+        {% endif %}
+        {% if is_granted('create_other_timesheet') %}
+            {% set actions = actions|merge({'create-timesheet': path('admin_timesheet_create', {'project': activity.project ? activity.project.id : null, 'activity': activity.id})}) %}
+        {% endif %}
         {% if view == 'index' and is_granted('delete', activity) %}
             {% set actions = actions|merge({'trash': {'url': path('admin_activity_delete', {'id': activity.id}), 'class': 'modal-ajax-form'}}) %}
         {% endif %}
@@ -109,6 +115,12 @@
         {% if is_granted('view_activity') %}
             {% set actions = actions|merge({'activity': path('admin_activity', {'customer': project.customer.id, 'project': project.id})}) %}
         {% endif %}
+        {% if is_granted('view_other_timesheet') %}
+            {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'customer': project.customer.id, 'project': project.id})}) %}
+        {% endif %}
+        {% if is_granted('create_activity') and project.visible and project.customer.visible %}
+            {% set actions = actions|merge({'create-activity': path('admin_activity_create_with_project', {'project': project.id})}) %}
+        {% endif %}
         {% if view == 'index' and is_granted('delete', project) %}
             {% set actions = actions|merge({'trash': {'url': path('admin_project_delete', {'id': project.id}), 'class': 'modal-ajax-form'}}) %}
         {% endif %}
@@ -153,6 +165,15 @@
         {% if is_granted('view_project') %}
             {% set actions = actions|merge({'project': path('admin_project', {'customer': customer.id})}) %}
         {% endif %}
+        {% if is_granted('view_activity') %}
+            {% set actions = actions|merge({'activity': path('admin_activity', {'customer': customer.id})}) %}
+        {% endif %}
+        {% if is_granted('view_other_timesheet') %}
+            {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'customer': customer.id})}) %}
+        {% endif %}
+        {% if customer.visible and is_granted('create_project') %}
+            {% set actions = actions|merge({'create-project': path('admin_project_create_with_customer', {'customer': customer.id})}) %}
+        {% endif %}
         {% if view == 'index' and is_granted('delete', customer) %}
             {% set actions = actions|merge({'trash': {'url': path('admin_customer_delete', {'id': customer.id}), 'class': 'modal-ajax-form'}}) %}
         {% endif %}
@@ -193,14 +214,12 @@
     {% set actions = {} %}
 
     {% if timesheet.id is not empty %}
-        {% if timesheet.end %}
-            {% if is_granted('start', timesheet) %}
-                {% set actions = actions|merge({'repeat': path('timesheet_start', {'id' : timesheet.id})}) %}
-            {% endif %}
-        {% else %}
-            {% if is_granted('stop', timesheet) %}
-                {% set actions = actions|merge({'stop': {'url': path('stop_timesheet', {'id' : timesheet.id}), 'class': 'api-link', 'attr': {'data-event': 'kimai.timesheetStop kimai.timesheetUpdate', 'data-method': 'PATCH', 'data-msg-error': 'timesheet.stop.error', 'data-msg-success': 'timesheet.stop.success'}}}) %}
-            {% endif %}
+        {% if not timesheet.end and is_granted('stop', timesheet) %}
+            {% set actions = actions|merge({'stop': {'url': path('stop_timesheet', {'id' : timesheet.id}), 'class': 'api-link', 'attr': {'data-event': 'kimai.timesheetStop kimai.timesheetUpdate', 'data-method': 'PATCH', 'data-msg-error': 'timesheet.stop.error', 'data-msg-success': 'timesheet.stop.success'}}}) %}
+        {% endif %}
+
+        {% if timesheet.end and is_granted('start', timesheet) %}
+            {% set actions = actions|merge({'repeat': path('timesheet_start', {'id' : timesheet.id})}) %}
         {% endif %}
 
         {% if is_granted('edit', timesheet) %}
@@ -250,16 +269,20 @@
     {% set actions = {} %}
 
     {% if timesheet.id is not empty %}
+        {% if not timesheet.end and is_granted('stop', timesheet) %}
+            {% set actions = actions|merge({'stop': {'url': path('stop_timesheet', {'id' : timesheet.id}), 'class': 'api-link', 'attr': {'data-event': 'kimai.timesheetStop kimai.timesheetUpdate', 'data-method': 'PATCH', 'data-msg-error': 'timesheet.stop.error', 'data-msg-success': 'timesheet.stop.success'}}}) %}
+        {% endif %}
+
+        {% if timesheet.end and is_granted('start', timesheet) %}
+            {% set actions = actions|merge({'repeat': path('timesheet_start', {'id' : timesheet.id})}) %}
+        {% endif %}
+
         {% if is_granted('edit', timesheet) %}
             {% set class = '' %}
             {% if view != 'edit' %}
                 {% set class = 'modal-ajax-form' %}
             {% endif %}
             {% set actions = actions|merge({'edit': {'url': path('admin_timesheet_edit', {'id': timesheet.id}), 'class': class}}) %}
-        {% endif %}
-
-        {% if not timesheet.end and is_granted('stop', timesheet) %}
-            {% set actions = actions|merge({'stop': {'url': path('stop_timesheet', {'id' : timesheet.id}), 'class': 'api-link', 'attr': {'data-event': 'kimai.timesheetStop kimai.timesheetUpdate', 'data-method': 'PATCH', 'data-msg-error': 'timesheet.stop.error', 'data-msg-success': 'timesheet.stop.success'}}}) %}
         {% endif %}
 
         {% if view == 'index' and is_granted('delete', timesheet) %}
