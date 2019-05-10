@@ -6,7 +6,7 @@
  */
 
 /*!
- * [KIMAI] KimaiToolbar: some event listener to handle the toolbar/data-table filter, toolbar and navigation
+ * [KIMAI] KimaiAPI: easy access to API methods
  */
 
 import jQuery from 'jquery';
@@ -28,6 +28,20 @@ export default class KimaiAPI extends KimaiPlugin {
             method: 'GET',
             dataType: 'json',
             success: callback
+        });
+    }
+
+    patch(url, callbackSuccess, callbackError) {
+        jQuery.ajax({
+            url: url,
+            headers: {
+                'X-AUTH-SESSION': true,
+                'Content-Type':'application/json'
+            },
+            method: 'PATCH',
+            dataType: 'json',
+            success: callbackSuccess,
+            error: callbackError
         });
     }
 

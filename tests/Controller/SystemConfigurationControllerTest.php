@@ -51,6 +51,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         return [
             ['#system_configuration_form_timesheet', $this->createUrl('/admin/system-config/timesheet')],
             ['#system_configuration_form_form_customer', $this->createUrl('/admin/system-config/customer')],
+            ['#system_configuration_form_theme', $this->createUrl('/admin/system-config/theme')],
         ];
     }
 

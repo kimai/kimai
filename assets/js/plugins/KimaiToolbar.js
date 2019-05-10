@@ -15,7 +15,7 @@ import KimaiPlugin from "../KimaiPlugin";
 export default class KimaiToolbar extends KimaiPlugin {
 
     init() {
-        const self = this;
+        const datatable = this.getContainer().getPlugin('datatable');
 
         // This catches all clicks on the pagination and prevents the default action, as we want to relad the page via JS
         jQuery('body').on('click', 'div.navigation ul.pagination li a', function(event) {
@@ -41,7 +41,7 @@ export default class KimaiToolbar extends KimaiPlugin {
                 default:
                     jQuery('.toolbar form input#page').val(1);
             }
-            self._reloadDatatable();
+            datatable.reloadDatatable();
         });
 
         jQuery('.toolbar form select').change(function (event) {
@@ -61,13 +61,9 @@ export default class KimaiToolbar extends KimaiPlugin {
             }
             jQuery('.toolbar form input#page').val(1);
             if (reload) {
-                self._reloadDatatable();
+                datatable.reloadDatatable();
             }
         });
-    }
-
-    _reloadDatatable() {
-        this.getContainer().getPlugin('datatable').reload();
     }
 
 }

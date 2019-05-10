@@ -61,6 +61,10 @@ services:
         arguments:
             $settings: "%kimai.config%"
 
+    App\Configuration\ThemeConfiguration:
+        arguments:
+            $settings: "%kimai.theme%"
+
     App\Utils\MPdfConverter:
         arguments: ['%kernel.cache_dir%']
 
@@ -96,19 +100,6 @@ services:
 
     App\Form\Type\LanguageType:
         arguments: ["%app_locales%"]
-
-    App\Form\Extension\DocumentationLinkExtension:
-        tags:
-            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
-
-    App\Form\Extension\EnhancedChoiceTypeExtension:
-        arguments: ["%kimai.theme.select_type%"]
-        tags:
-            - { name: form.type_extension, extended_type: Symfony\Bridge\Doctrine\Form\Type\EntityType }
-
-    App\Form\Extension\SelectWithApiDataExtension:
-        tags:
-            - { name: form.type_extension, extended_type: Symfony\Bridge\Doctrine\Form\Type\EntityType }
 
     # ================================================================================
     # THEME

@@ -19,19 +19,17 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
         this.selector = selector;
     }
 
-    init() {
-        this.updateRecords();
-        this.registerUpdates(10000);
+    getId() {
+        return 'timesheet-duration';
     }
 
-    registerUpdates(interval) {
-        let self = this;
-        this._updatesHandler = setInterval(
-            function() {
-                self.updateRecords();
-            },
-            interval
-        );
+    init() {
+        this.updateRecords();
+        const self = this;
+        const handle = function() { self.updateRecords(); };
+        this._updatesHandler = setInterval(handle, 10000);
+        // this will probably not work as expected, as other event-handler might need longer to update the DOM
+        document.addEventListener('kimai.timesheetUpdate', handle);
     }
 
     unregisterUpdates() {
@@ -40,10 +38,17 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
 
     updateRecords() {
         let durations = [];
-        for(let record of document.querySelectorAll(this.selector)) {
+        const activeRecords = document.querySelectorAll(this.selector);
+
+        if (activeRecords.length === 0) {
+            document.title = document.querySelector('body').dataset['title'];
+            return;
+        }
+
+        for(let record of activeRecords) {
             const since = record.getAttribute('data-since');
             const format = record.getAttribute('data-format');
-            const duration = KimaiActiveRecordsDuration._getDuration(since, format);
+            const duration = this.formatDuration(since, format);
             if (record.getAttribute('data-title') !== null) {
                 durations.push(duration);
             }
@@ -51,7 +56,7 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
         }
 
         if (durations.length === 0) {
-            return this;
+            return;
         }
 
         let title = durations.shift();
@@ -61,11 +66,9 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
             title += prefix + duration;
         }
         document.title = title;
-
-        return this;
     }
 
-    static _getDuration(since, format) {
+    formatDuration(since, format) {
         const duration = moment.duration(moment(new Date()).diff(moment(since)));
 
         let hours = parseInt(duration.asHours()).toString();

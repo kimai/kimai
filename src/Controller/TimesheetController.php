@@ -134,20 +134,6 @@ class TimesheetController extends AbstractController
     }
 
     /**
-     * The route to stop a running entry.
-     *
-     * @Route(path="/{id}/stop", name="timesheet_stop", methods={"GET"})
-     * @Security("is_granted('stop', entry)")
-     *
-     * @param Timesheet $entry
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function stopAction(Timesheet $entry)
-    {
-        return $this->stop($entry, 'timesheet');
-    }
-
-    /**
      * @Route(path="/start/{id}", name="timesheet_start", requirements={"id" = "\d+"}, methods={"GET", "POST"})
      * @Security("is_granted('start', timesheet)")
      *
@@ -233,10 +219,17 @@ class TimesheetController extends AbstractController
      * @param Timesheet $entry
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
     public function deleteAction(Timesheet $entry, Request $request)
     {
-        $deleteForm = $this->createFormBuilder()
+        $deleteForm = $this->createFormBuilder(null, [
+                'attr' => [
+                    'data-form-event' => 'kimai.timesheetUpdate kimai.timesheetDelete',
+                    'data-msg-success' => 'action.delete.success',
+                    'data-msg-error' => 'action.delete.error',
+                ],
+            ])
             ->setAction($this->generateUrl('timesheet_delete', ['id' => $entry->getId()]))
             ->setMethod('POST')
             ->getForm();

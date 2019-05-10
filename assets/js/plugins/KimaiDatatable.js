@@ -14,12 +14,42 @@ import KimaiPlugin from "../KimaiPlugin";
 
 export default class KimaiDatatable extends KimaiPlugin {
 
+    constructor(selector) {
+        super();
+        this.selector = selector;
+    }
+
     getId() {
         return 'datatable';
     }
 
-    reload() {
-        let form = jQuery('.toolbar form');
+    init() {
+        const dataTable = document.querySelector(this.selector);
+
+        // not every page contains a dataTable
+        if (dataTable === null) {
+            return;
+        }
+
+        const attributes = dataTable.dataset;
+        const events = attributes['reloadEvent'];
+
+        if (events === undefined) {
+            return;
+        }
+
+        const self = this;
+        const handle = function() { self.reloadDatatable(); };
+
+        for (let eventName of events.split(' ')) {
+            document.addEventListener(eventName, handle);
+        }
+    }
+
+    reloadDatatable() {
+        // FIXME remove query
+        const durations = this.getContainer().getPlugin('timesheet-duration');
+        const form = jQuery('.toolbar form');
         let loading = '<div class="overlay"><i class="fas fa-sync fa-spin"></i></div>';
         jQuery('section.content').append(loading);
 
@@ -38,6 +68,7 @@ export default class KimaiDatatable extends KimaiPlugin {
                 jQuery('section.content').replaceWith(
                     jQuery(html).find('section.content')
                 );
+                durations.updateRecords();
             },
             error: function(xhr, err) {
                 form.submit();

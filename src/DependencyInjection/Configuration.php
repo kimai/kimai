@@ -295,6 +295,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->scalarNode('box_color')
                     ->defaultValue('green')
+                    ->setDeprecated('The node "%node%" at path "%path%" was removed, please delete it from your config.')
                 ->end()
                 ->scalarNode('select_type')
                     ->defaultNull()

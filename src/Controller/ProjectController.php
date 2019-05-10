@@ -119,7 +119,13 @@ class ProjectController extends AbstractController
     {
         $stats = $this->getRepository()->getProjectStatistics($project);
 
-        $deleteForm = $this->createFormBuilder()
+        $deleteForm = $this->createFormBuilder(null, [
+                'attr' => [
+                    'data-form-event' => 'kimai.projectUpdate kimai.projectDelete',
+                    'data-msg-success' => 'action.delete.success',
+                    'data-msg-error' => 'action.delete.error',
+                ]
+            ])
             ->add('project', ProjectType::class, [
                 'label' => 'label.project',
                 'query_builder' => function (ProjectRepository $repo) use ($project) {

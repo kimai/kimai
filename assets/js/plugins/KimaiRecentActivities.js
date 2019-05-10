@@ -35,11 +35,12 @@ export default class KimaiRecentActivities extends KimaiPlugin {
         this.itemList = dropdown.querySelector('li > ul.menu');
 
         const self = this;
-        const handle = function() { self.reload(); };
+        const handle = function() { self.reloadRecentActivities(); };
 
         // don't block initial browser rendering
         setTimeout(handle, 500);
 
+        document.addEventListener('kimai.timesheetStop', handle);
         document.addEventListener('kimai.activityUpdate', handle);
         document.addEventListener('kimai.projectUpdate', handle);
         document.addEventListener('kimai.customerUpdate', handle);
@@ -63,13 +64,13 @@ export default class KimaiRecentActivities extends KimaiPlugin {
                 .replace('%project%', timesheet.project.name)
                 .replace('%activity%', timesheet.activity.name);
 
-            htmlToInsert += `<li><a href="${ this.attributes['url'].replace('000', timesheet.id) }"><i class="${ this.attributes['icon'] }"></i> ${ label }</a></li>`;
+            htmlToInsert += `<li><a href="${ this.attributes['href'].replace('000', timesheet.id) }"><i class="${ this.attributes['icon'] }"></i> ${ label }</a></li>`;
         }
 
         this.itemList.innerHTML = htmlToInsert;
     }
 
-    reload() {
+    reloadRecentActivities() {
         const self = this;
         const apiService = this.getContainer().getPlugin('api');
 

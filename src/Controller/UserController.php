@@ -140,7 +140,13 @@ class UserController extends AbstractController
         // $userToDelete MUST not be called $user, as $user is always the current user!
         $stats = $this->getDoctrine()->getRepository(Timesheet::class)->getUserStatistics($userToDelete);
 
-        $deleteForm = $this->createFormBuilder()
+        $deleteForm = $this->createFormBuilder(null, [
+                'attr' => [
+                    'data-form-event' => 'kimai.userUpdate kimai.userDelete',
+                    'data-msg-success' => 'action.delete.success',
+                    'data-msg-error' => 'action.delete.error',
+                ]
+            ])
             ->setAction($this->generateUrl('admin_user_delete', ['id' => $userToDelete->getId()]))
             ->setMethod('POST')
             ->getForm();

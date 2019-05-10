@@ -13,6 +13,7 @@ class SystemConfiguration
 {
     public const SECTION_TIMESHEET = 'timesheet';
     public const SECTION_FORM_CUSTOMER = 'form_customer';
+    public const SECTION_THEME = 'theme';
 
     /**
      * @var string

@@ -1,15 +1,14 @@
 // ------------------- INLINED ADMIN-LTE DEFINITIONS -------------------
-// this was done to save around 300kb by:
+// require('../vendor/kevinpapst/adminlte-bundle/Resources/assets/admin-lte');
+// this was replaced to save around 300kb by:
 // - removing moment locales which are not used
 // - removing fullcalendar locales which are not used
 // - removing icheck which is not used
-
-//require('../vendor/kevinpapst/adminlte-bundle/Resources/assets/admin-lte');
+// - removing jquery-ui which is not used?
 
 const $ = require('jquery');
 global.$ = global.jQuery = $;
 
-require('jquery-ui');
 require('bootstrap-sass');
 require('jquery-slimscroll');
 require('bootstrap-select');

@@ -59,7 +59,7 @@ trait StringAccessibleConfigTrait
                 $temp = array_slice($temp, 1);
             }
             foreach ($temp as $key2) {
-                if (!isset($array[$key2])) {
+                if (!array_key_exists($key2, $array)) {
                     // unknown values will silently be skipped
                     continue 2;
                 }
@@ -110,7 +110,7 @@ trait StringAccessibleConfigTrait
         $keys = explode('.', $key);
         $search = array_shift($keys);
 
-        if (!isset($config[$search])) {
+        if (!array_key_exists($search, $config)) {
             throw new \InvalidArgumentException('Unknown config: ' . $key);
         }
 

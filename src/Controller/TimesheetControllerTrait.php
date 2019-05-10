@@ -71,23 +71,6 @@ trait TimesheetControllerTrait
 
     /**
      * @param Timesheet $entry
-     * @param string $route
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    protected function stop(Timesheet $entry, $route)
-    {
-        try {
-            $this->getRepository()->stopRecording($entry);
-            $this->flashSuccess('timesheet.stop.success');
-        } catch (\Exception $ex) {
-            $this->flashError('timesheet.stop.error', ['%reason%' => $ex->getMessage()]);
-        }
-
-        return $this->redirectToRoute($route);
-    }
-
-    /**
-     * @param Timesheet $entry
      * @param Request $request
      * @param string $redirectRoute
      * @param string $renderTemplate

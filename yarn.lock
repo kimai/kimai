@@ -5730,6 +5730,11 @@ svgo@^0.7.0:
     sax "~1.2.1"
     whet.extend "~0.9.9"
 
+sweetalert2@^8.10.2:
+  version "8.10.2"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-8.10.2.tgz#f2c14d361722ad3da8b3c71c9d334ff66aad1441"
+  integrity sha512-1Td1KJingzd883j5KH94VMZq2GzDNXh/A4ftyiqWILIhRIYlNaBNF+jAJ/im4De8J2mk2E3C18OIMQX8sMFwQQ==
+
 syntax-error@^1.1.1:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/syntax-error/-/syntax-error-1.4.0.tgz#2d9d4ff5c064acb711594a3e3b95054ad51d907c"

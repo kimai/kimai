@@ -1,48 +1,45 @@
-{% if entries is not empty %}
-<li class="dropdown messages-menu">
+<li class="dropdown messages-menu" style="{% if entries is empty %}display:none{% endif %}">
     <a href="#" class="dropdown-toggle ddt-large ticktac" data-toggle="dropdown">
         <i class="{{ 'start'|icon }} fa-2x"></i>
-        <span class="label label-{% if entries|length > soft_limit %}danger{% elseif entries|length == soft_limit %}warning{% else %}primary{% endif %}">{{ entries|length }}</span>
+        <span data-warning="{{ soft_limit }}" class="label label-{% if entries|length > soft_limit %}danger{% else %}warning{% endif %}">{% if entries|length > 0 %}{{ entries|length }}{% endif %}</span>
     </a>
-    <ul class="dropdown-menu">
+    <ul class="dropdown-menu"
+        data-api="{{ path('active_timesheet') }}"
+        data-href="{{ path('stop_timesheet', {'id' : '000'}) }}"
+        data-icon="{{ 'stop-small'|icon }}"
+        data-format="{{ get_format_duration() }}">
         <li class="header">
-            {{ 'active.entries'|trans({'%count%':(entries|length)})  }}
+            {{ 'active.entries'|trans }}
         </li>
         <li>
-            {% if entries is not empty %}
-                <ul class="menu">
-                    {% for entry in entries %}
-                    <li>
-                        <a href="{{ path('timesheet_stop', {'id' : entry.id}) }}">
-                            <div class="pull-left">
-                                <i class="{{ 'stop-small'|icon }} fa-2x"></i>
-                            </div>
-                            <h4>
-                                <span>{{ entry.activity.name }}</span>
-                                <small>
-                                    <span data-title="true" data-since="{{ entry.begin.format(constant('DATE_ISO8601')) }}" data-format="{{ get_format_duration() }}">{{ entry|duration }}</span>
-                                </small>
-                            </h4>
-                            <p>{{ entry.project.name }} ({{ entry.project.customer.name }})</p>
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <div class="start_record">
-                    <a href="{{ path('timesheet_create') }}"><i class="{{ 'start'|icon }} fa-5x"></i></a>
-                </div>
-            {% endif %}
+            <ul class="menu">
+                {% for entry in entries %}
+                <li>
+                    <a href="{{ path('stop_timesheet', {'id' : entry.id}) }}" class="api-link" data-event="kimai.timesheetStop kimai.timesheetUpdate" data-method="PATCH" data-msg-error="timesheet.stop.error" data-msg-success="timesheet.stop.success">
+                        <div class="pull-left">
+                            <i class="{{ 'stop-small'|icon }} fa-2x"></i>
+                        </div>
+                        <h4>
+                            <span>{{ entry.activity.name }}</span>
+                            <small>
+                                <span data-title="true" data-since="{{ entry.begin.format(constant('DATE_ISO8601')) }}" data-format="{{ get_format_duration() }}">{{ entry|duration }}</span>
+                            </small>
+                        </h4>
+                        <p>{{ entry.project.name }} ({{ entry.project.customer.name }})</p>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
         </li>
         {% if is_granted('create_own_timesheet') %}
-        <li class="footer"><a href="{{ path('timesheet_create') }}">{{ 'timesheet.start'|trans }}</a></li>
+        <li class="footer"><a href="{{ path('timesheet_create') }}" class="modal-ajax-form">{{ 'timesheet.start'|trans }}</a></li>
         {% endif %}
     </ul>
 </li>
-{% elseif is_granted('create_own_timesheet') %}
-    <li class="messages-menu">
-        <a href="{{ path('timesheet_create') }}" class="ddt-large">
-            <i class="{{ 'start'|icon }} fa-2x"></i>
-        </a>
-    </li>
+{% if is_granted('create_own_timesheet') %}
+<li class="messages-menu-empty" style="{% if entries is not empty %}display:none{% endif %}">
+    <a href="{{ path('timesheet_create') }}" class="ddt-large modal-ajax-form">
+        <i class="{{ 'start'|icon }} fa-2x"></i>
+    </a>
+</li>
 {% endif %}

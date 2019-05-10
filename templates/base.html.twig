@@ -1,5 +1,9 @@
 {% extends '@AdminLTE/layout/default-layout.html.twig' %}
 
+{% block body_start %}
+    data-title="{{- get_title() -}}"
+{% endblock %}
+
 {% block after_body_start %}
     {% embed 'embeds/modal.html.twig' %}
         {% block modal_id %}remote_form_modal{% endblock %}
@@ -188,7 +192,13 @@
                     thisMonth: '{{ 'daterangepicker.thisMonth'|trans({}, 'daterangepicker') }}',
                     lastYear: '{{ 'daterangepicker.lastYear'|trans({}, 'daterangepicker') }}',
                     thisYear: '{{ 'daterangepicker.thisYear'|trans({}, 'daterangepicker') }}',
-                    customRange: '{{ 'daterangepicker.customRange'|trans({}, 'daterangepicker') }}'
+                    customRange: '{{ 'daterangepicker.customRange'|trans({}, 'daterangepicker') }}',
+                    'timesheet.stop.success': '{{ 'timesheet.stop.success'|trans({}, 'flashmessages') }}',
+                    'timesheet.stop.error': '{{ 'timesheet.stop.error'|trans({}, 'flashmessages') }}',
+                    'action.update.success': '{{ 'action.update.success'|trans({}, 'flashmessages') }}',
+                    'action.update.error': '{{ 'action.update.error'|trans({}, 'flashmessages') }}',
+                    'action.delete.success': '{{ 'action.delete.success'|trans({}, 'flashmessages') }}',
+                    'action.delete.error': '{{ 'action.delete.error'|trans({}, 'flashmessages') }}'
                 }
             );
         });

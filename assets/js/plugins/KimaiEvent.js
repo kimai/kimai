@@ -18,11 +18,13 @@ export default class KimaiEvent extends KimaiPlugin {
     }
 
     trigger(name) {
-        if (name === null) {
+        if (name === null || name === undefined) {
             return;
         }
 
-        document.dispatchEvent(new Event(name));
+        for(let event of name.split(' ')) {
+            document.dispatchEvent(new Event(event));
+        }
     }
 
 }

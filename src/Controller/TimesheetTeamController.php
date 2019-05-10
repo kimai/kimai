@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Entity\Timesheet;
+use App\Form\DeleteType;
 use App\Form\TimesheetEditForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\ActivityRepository;
@@ -109,18 +110,6 @@ class TimesheetTeamController extends AbstractController
     }
 
     /**
-     * @Route(path="/{id}/stop", name="admin_timesheet_stop", methods={"GET"})
-     * @Security("is_granted('stop', entry)")
-     *
-     * @param Timesheet $entry
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function stopAction(Timesheet $entry)
-    {
-        return $this->stop($entry, 'admin_timesheet');
-    }
-
-    /**
      * @Route(path="/{id}/edit", name="admin_timesheet_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', entry)")
      *
@@ -157,7 +146,13 @@ class TimesheetTeamController extends AbstractController
      */
     public function deleteAction(Timesheet $entry, Request $request)
     {
-        $deleteForm = $this->createFormBuilder()
+        $deleteForm = $this->createFormBuilder(null, [
+                'attr' => [
+                    'data-form-event' => 'kimai.timesheetUpdate kimai.timesheetDelete',
+                    'data-msg-success' => 'action.delete.success',
+                    'data-msg-error' => 'action.delete.error',
+                ]
+            ])
             ->setAction($this->generateUrl('admin_timesheet_delete', ['id' => $entry->getId()]))
             ->setMethod('POST')
             ->getForm();

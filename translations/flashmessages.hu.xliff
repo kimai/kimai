@@ -8,7 +8,7 @@
             </trans-unit>
             <trans-unit id="timesheet.stop.error">
                 <source>timesheet.stop.error</source>
-                <target>Az idő rögzítését nem lehet leállítani a következő okból: %reason%</target>
+                <target>Az idő rögzítését nem lehet leállítani a következő okból</target>
             </trans-unit>
             <trans-unit id="timesheet.start.success">
                 <source>timesheet.start.success</source>
