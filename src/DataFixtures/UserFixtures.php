@@ -22,6 +22,8 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  *
  * Execute this command to load the data:
  * $ php bin/console doctrine:fixtures:load
+ *
+ * @codeCoverageIgnore
  */
 class UserFixtures extends Fixture
 {
@@ -85,7 +87,7 @@ class UserFixtures extends Fixture
                 ->setEnabled($userData[6])
                 ->setPassword($passwordEncoder->encodePassword($user, self::DEFAULT_PASSWORD))
                 ->setApiToken($passwordEncoder->encodePassword($user, self::DEFAULT_API_TOKEN))
-                ->setPreferences([$this->getUserPreference($user)])
+                ->setPreferences($this->getUserPreferences($user, $userData[7]))
             ;
 
             $manager->persist($user);
@@ -97,16 +99,28 @@ class UserFixtures extends Fixture
 
     /**
      * @param User $user
-     * @return UserPreference
+     * @param string|null $timezone
+     * @return array
      */
-    private function getUserPreference(user $user)
+    private function getUserPreferences(User $user, string $timezone = null)
     {
-        $preference = new UserPreference();
-        $preference->setName(UserPreference::HOURLY_RATE);
-        $preference->setValue(rand(self::MIN_RATE, self::MAX_RATE));
-        $preference->setUser($user);
+        $preferences = [];
 
-        return $preference;
+        $prefHourlyRate = new UserPreference();
+        $prefHourlyRate->setName(UserPreference::HOURLY_RATE);
+        $prefHourlyRate->setValue(rand(self::MIN_RATE, self::MAX_RATE));
+        $prefHourlyRate->setUser($user);
+        $preferences[] = $prefHourlyRate;
+
+        if (null !== $timezone) {
+            $prefTimezone = new UserPreference();
+            $prefTimezone->setName(UserPreference::TIMEZONE);
+            $prefTimezone->setValue($timezone);
+            $prefTimezone->setUser($user);
+            $preferences[] = $prefTimezone;
+        }
+
+        return $preferences;
     }
 
     /**
@@ -130,7 +144,7 @@ class UserFixtures extends Fixture
                 ->setAvatar(self::DEFAULT_AVATAR)
                 ->setEnabled(true)
                 ->setPassword($passwordEncoder->encodePassword($user, self::DEFAULT_PASSWORD))
-                ->setPreferences([$this->getUserPreference($user)])
+                ->setPreferences($this->getUserPreferences($user))
             ;
 
             if ($i % self::BATCH_SIZE == 0) {
@@ -150,32 +164,68 @@ class UserFixtures extends Fixture
      */
     protected function getUserDefinition()
     {
+        // alias = $userData[0]
+        // title = $userData[1]
+        // username = $userData[2]
+        // email = $userData[3]
+        // roles = [$userData[4]]
+        // avatar = $userData[5]
+        // enabled = $userData[6]
+        // timezone = $userData[7]
+
         return [
             [
-                'Clara Haynes', 'CFO', 'clara_customer', 'clara_customer@example.com', User::ROLE_CUSTOMER,
-                'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=monsterid&f=y', true
-            ],
-            [
-                'John Doe', 'Developer', self::USERNAME_USER, 'john_user@example.com', User::ROLE_USER,
-                self::DEFAULT_AVATAR, true
+                'John Doe',
+                'Developer',
+                self::USERNAME_USER,
+                'john_user@example.com',
+                User::ROLE_USER,
+                self::DEFAULT_AVATAR,
+                true,
+                'America/Vancouver',
             ],
             // inactive user to test login
             [
-                'Chris Deactive', 'Developer (left company)', 'chris_user', 'chris_user@example.com', User::ROLE_USER,
-                self::DEFAULT_AVATAR, false
+                'Chris Deactive',
+                'Developer (left company)',
+                'chris_user',
+                'chris_user@example.com',
+                User::ROLE_USER,
+                self::DEFAULT_AVATAR,
+                false,
+                'Australia/Sydney',
             ],
             [
-                'Tony Maier', 'Head of Sales', self::USERNAME_TEAMLEAD, 'tony_teamlead@example.com', User::ROLE_TEAMLEAD,
-                'https://en.gravatar.com/userimage/3533186/bf2163b1dd23f3107a028af0195624e9.jpeg', true
+                'Tony Maier',
+                'Head of Sales',
+                self::USERNAME_TEAMLEAD,
+                'tony_teamlead@example.com',
+                User::ROLE_TEAMLEAD,
+                'https://en.gravatar.com/userimage/3533186/bf2163b1dd23f3107a028af0195624e9.jpeg',
+                true,
+                'Asia/Bangkok',
             ],
             // no avatar to test default image macro
             [
-                'Anna Smith', 'Administrator', self::USERNAME_ADMIN, 'anna_admin@example.com', User::ROLE_ADMIN, null, true
+                'Anna Smith',
+                'Administrator',
+                self::USERNAME_ADMIN,
+                'anna_admin@example.com',
+                User::ROLE_ADMIN,
+                null,
+                true,
+                'Europe/London',
             ],
             // no alias to test twig username macro
             [
-                null, 'Super Administrator', self::USERNAME_SUPER_ADMIN, 'susan_super@example.com', User::ROLE_SUPER_ADMIN,
-                '/build/images/default_avatar.png', true
+                null,
+                'Super Administrator',
+                self::USERNAME_SUPER_ADMIN,
+                'susan_super@example.com',
+                User::ROLE_SUPER_ADMIN,
+                '/build/images/default_avatar.png',
+                true,
+                'Europe/Berlin',
             ]
         ];
     }

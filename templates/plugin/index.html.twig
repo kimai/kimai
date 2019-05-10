@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+{% import "macros/actions.html.twig" as actions %}
+{% import "macros/datatables.html.twig" as tables %}
+
+{% block page_title %}{{ 'plugins.title'|trans({}, 'plugins') }}{% endblock %}
+{% block page_subtitle %}{{ 'plugins.subtitle'|trans({}, 'plugins') }}{% endblock %}
+{% block page_actions %}{{ actions.plugins('index') }}{% endblock %}
+
+{% block main %}
+
+    {% if plugins|length == 0 %}
+        {{ widgets.callout('warning', 'plugin.none_installed'|trans({}, 'plugins')) }}
+    {% else %}
+
+        {% set columns = {
+            'name': '',
+            'version': '',
+            'description': 'hidden-xs',
+            'required_version': 'hidden-xs hidden-sm',
+            'actions': 'actions alwaysVisible',
+        } %}
+
+        {% set tableName = 'plugins' %}
+
+        {{ tables.data_table_header(tableName, columns) }}
+        {% for plugin in plugins %}
+            <tr>
+                <td>{{ plugin.name }}</td>
+                <td>{{ widgets.label(plugin.metadata.version, 'primary') }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">{{ plugin.metadata.description }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'required_version') }}">
+                    {% if plugin.metadata.kimaiVersion > constant('App\\Constants::VERSION') %}
+                        {{ widgets.label(plugin.metadata.kimaiVersion, 'danger') }}
+                    {% elseif plugin.metadata.kimaiVersion < constant('App\\Constants::VERSION') %}
+                        {{ widgets.label(plugin.metadata.kimaiVersion, 'warning') }}
+                    {% else %}
+                        {{ widgets.label(plugin.metadata.kimaiVersion, 'success') }}
+                    {% endif %}
+                </td>
+                <td class="actions">
+                    {{ actions.plugin(plugin, 'index') }}
+                </td>
+            </tr>
+        {% endfor %}
+        {{ tables.data_table_footer(null, 'admin_timesheet_paginated') }}
+
+    {% endif %}
+
+{% endblock %}

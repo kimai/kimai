@@ -46,18 +46,19 @@ class TimesheetControllerTest extends ControllerBaseTest
     public function testIndexActionWithQuery()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $start = new \DateTime('first day of this month');
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(5);
         $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
-        $fixture->setStartDate(new \DateTime('-10 days'));
+        $fixture->setStartDate($start);
         $this->importFixture($em, $fixture);
 
         $this->request($client, '/timesheet/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $dateRange = (new \DateTime('-10 days'))->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime())->format('Y-m-d');
+        $dateRange = ($start)->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime('last day of this month'))->format('Y-m-d');
 
         $form = $client->getCrawler()->filter('form.navbar-form')->form();
         $client->submit($form, [
@@ -157,10 +158,16 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->request($client, '/timesheet/1/delete');
-        $this->assertIsRedirect($client, $this->createUrl('/timesheet/page/1'));
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $form = $client->getCrawler()->filter('form[name=form]')->form();
+        $this->assertStringEndsWith($this->createUrl('/timesheet/1/delete'), $form->getUri());
+        $client->submit($form);
+
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertHasFlashSuccess($client);
+        $this->assertHasFlashDeleteSuccess($client);
+        $this->assertHasDataTable($client);
 
         $this->request($client, '/timesheet/1/edit');
         $this->assertFalse($client->getResponse()->isSuccessful());
@@ -181,7 +188,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertHasFlashSuccess($client);
+        $this->assertHasFlashSuccess($client, 'Time recording was started');
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         /** @var Timesheet $timesheet */
@@ -192,7 +199,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertEquals(1, $timesheet->getProject()->getId());
     }
 
-    public function testStopActionDoesNotShowRateFieldsForUser()
+    public function testCreateActionDoesNotShowRateFieldsForUser()
     {
         $client = $this->getClientForAuthenticatedUser();
         $this->request($client, '/timesheet/create');
@@ -201,43 +208,6 @@ class TimesheetControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
         $this->assertFalse($form->has('hourlyRate'));
         $this->assertFalse($form->has('fixedRate'));
-    }
-
-    public function testStopAction()
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->request($client, '/timesheet/create');
-        $this->assertTrue($client->getResponse()->isSuccessful());
-
-        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
-        $client->submit($form, [
-            'timesheet_edit_form' => [
-                'description' => 'Testing is fun!',
-                'fixedRate' => 100,
-                'project' => 1,
-                'activity' => 1,
-            ]
-        ]);
-
-        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
-        $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertHasFlashSuccess($client);
-
-        $this->request($client, '/timesheet/1/stop');
-        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
-        $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertHasFlashSuccess($client);
-
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
-        /** @var Timesheet $timesheet */
-        $timesheet = $em->getRepository(Timesheet::class)->find(1);
-        $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
-        $this->assertInstanceOf(\DateTime::class, $timesheet->getEnd());
-        $this->assertEquals(100, $timesheet->getRate());
-        $this->assertEquals(100, $timesheet->getFixedRate());
-        $this->assertNull($timesheet->getHourlyRate());
     }
 
     public function testCreateActionWithFromAndToValues()
@@ -330,6 +300,21 @@ class TimesheetControllerTest extends ControllerBaseTest
             'Could not find link to documentation'
         );
 
-        // TODO more assertions
+        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $client->submit($form, [
+            'timesheet_edit_form' => [
+                'description' => 'foo-bar'
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasFlashSaveSuccess($client);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var Timesheet $timesheet */
+        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $this->assertEquals('foo-bar', $timesheet->getDescription());
     }
 }

@@ -1,0 +1,1019 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="sv" datatype="plaintext" original="messages.en.xliff">
+        <body>
+            <!--
+              Global template keys
+            -->
+            <trans-unit id="time_tracking">
+                <source>time_tracking</source>
+                <target state="translated">Tidsredovisning</target>
+            </trans-unit>
+            <trans-unit id="yes">
+                <source>yes</source>
+                <target state="translated">Ja</target>
+            </trans-unit>
+            <trans-unit id="no">
+                <source>no</source>
+                <target state="translated">Nej</target>
+            </trans-unit>
+            <trans-unit id="both">
+                <source>both</source>
+                <target state="translated">båda</target>
+            </trans-unit>
+            <trans-unit id="subtitle.amount">
+                <source>subtitle.amount</source>
+                <target state="translated">(totalt %count%)</target>
+            </trans-unit>            
+            <trans-unit id="This is a mandatory field">
+                <source>This is a mandatory field</source>
+                <target state="translated">Detta är ett obligatoriskt fält</target>
+            </trans-unit>
+            <trans-unit id="create">
+                <source>create</source>
+                <target state="translated">Skapa</target>
+            </trans-unit>
+            <trans-unit id="confirm.delete">
+                <source>confirm.delete</source>
+                <target state="translated">Vill du verkligen ta bort detta?</target>
+            </trans-unit>
+            <trans-unit id="confirm.delete_message">
+                <source>confirm.delete_message</source>
+                <target state="translated">Du måste bekräfta borttagningen, eftersom det finns länkade objekt som också kommer att raderas.</target>
+            </trans-unit>
+            <trans-unit id="delete.not_in_use">
+                <source>delete.not_in_use</source>
+                <target state="translated">Det här objektet kan raderas säkert.</target>
+            </trans-unit>
+
+            <!--
+              Login / Security
+            -->
+            <trans-unit id="label.password">
+                <source>label.password</source>
+                <target state="translated">Lösenord</target>
+            </trans-unit>
+            <trans-unit id="label.password_repeat">
+                <source>label.password_repeat</source>
+                <target state="translated">Upprepa lösenord</target>
+            </trans-unit>
+            <trans-unit id="label.logout">
+                <source>label.logout</source>
+                <target state="translated">Logga ut</target>
+            </trans-unit>
+            <trans-unit id="label.user_profile">
+                <source>label.user_profile</source>
+                <target state="translated">Min profil</target>
+            </trans-unit>
+            <trans-unit id="label.api_token">
+                <source>label.api_token</source>
+                <target state="translated">API lösenord</target>
+            </trans-unit>
+            <trans-unit id="label.api_token_repeat">
+                <source>label.api_token_repeat</source>
+                <target state="translated">Upprepa API lösenord</target>
+            </trans-unit>
+
+            <!--
+              Menu / Navbar items
+            -->
+            <trans-unit id="menu.homepage">
+                <source>menu.homepage</source>
+                <target>Dashboard</target>
+            </trans-unit>
+            <trans-unit id="menu.admin">
+                <source>menu.admin</source>
+                <target>Administration</target>
+            </trans-unit>
+            <trans-unit id="menu.system">
+                <source>menu.system</source>
+                <target>System</target>
+            </trans-unit>
+            <trans-unit id="menu.logout">
+                <source>menu.logout</source>
+                <target state="translated">Logga ut</target>
+            </trans-unit>
+            <trans-unit id="menu.timesheet">
+                <source>menu.timesheet</source>
+                <target state="translated">Min tidsredovisning</target>
+            </trans-unit>
+            <trans-unit id="menu.invoice">
+                <source>menu.invoice</source>
+                <target state="translated">Fakturor</target>
+            </trans-unit>
+            <trans-unit id="menu.export">
+                <source>menu.export</source>
+                <target state="translated">Exportera</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_timesheet">
+                <source>menu.admin_timesheet</source>
+                <target state="translated">Tidsschema</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_customer">
+                <source>menu.admin_customer</source>
+                <target state="translated">Kund</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_project">
+                <source>menu.admin_project</source>
+                <target state="translated">Projekt</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_activity">
+                <source>menu.admin_activity</source>
+                <target state="translated">Aktiviteter</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_user">
+                <source>menu.admin_user</source>
+                <target state="translated">Användare</target>
+            </trans-unit>
+            <trans-unit id="menu.plugin">
+                <source>menu.plugin</source>
+                <target>Plugins</target>
+            </trans-unit>
+            <trans-unit id="menu.system_configuration">
+                <source>menu.system_configuration</source>
+                <target state="translated">Systeminställningar</target>
+            </trans-unit>
+
+            <!--
+              Error templates
+            -->
+            <trans-unit id="error.no_entries_found">
+                <source>error.no_entries_found</source>
+                <target state="translated">Inga poster hittades baserat på dina valda filter.</target>
+            </trans-unit>
+
+            <!--
+              General labels
+            -->
+            <trans-unit id="label.date">
+                <source>label.date</source>
+                <target state="translated">Datum</target>
+            </trans-unit>
+            <trans-unit id="label.starttime">
+                <source>label.starttime</source>
+                <target state="translated">Början</target>
+            </trans-unit>
+            <trans-unit id="label.endtime">
+                <source>label.endtime</source>
+                <target state="translated">Slutet</target>
+            </trans-unit>
+            <trans-unit id="label.duration">
+                <source>label.duration</source>
+                <target state="translated">Varaktighet</target>
+            </trans-unit>
+            <trans-unit id="label.user">
+                <source>label.user</source>
+                <target state="translated">Användare</target>
+            </trans-unit>
+            <trans-unit id="label.username">
+                <source>label.username</source>
+                <target>Username</target>
+            </trans-unit>
+            <trans-unit id="label.description">
+                <source>label.description</source>
+                <target state="translated">Beskrivning</target>
+            </trans-unit>
+            <trans-unit id="label.name">
+                <source>label.name</source>
+                <target state="translated">Namn</target>
+            </trans-unit>
+            <trans-unit id="label.comment">
+                <source>label.comment</source>
+                <target state="translated">Kommentar</target>
+            </trans-unit>
+            <trans-unit id="label.id">
+                <source>label.id</source>
+                <target>ID</target>
+            </trans-unit>
+            <trans-unit id="label.visible">
+                <source>label.visible</source>
+                <target state="translated">Synlig</target>
+            </trans-unit>
+            <trans-unit id="label.budget">
+                <source>label.budget</source>
+                <target>Budget</target>
+            </trans-unit>
+            <trans-unit id="label.activity">
+                <source>label.activity</source>
+                <target state="translated">Aktivitet</target>
+            </trans-unit>
+            <trans-unit id="label.project">
+                <source>label.project</source>
+                <target state="translated">Projekt</target>
+            </trans-unit>
+            <trans-unit id="label.hourlyRate">
+                <source>label.hourlyRate</source>
+                <target state="translated">Timpris</target>
+            </trans-unit>
+            <trans-unit id="label.skin">
+                <source>label.skin</source>
+                <target state="translated">Kimai-Tema</target>
+            </trans-unit>
+            <trans-unit id="label.hours">
+                <source>label.hours</source>
+                <target state="translated">Timmar</target>
+            </trans-unit>
+            <trans-unit id="label.rate">
+                <source>label.rate</source>
+                <target state="translated">Pris</target>
+            </trans-unit>
+            <trans-unit id="label.language">
+                <source>label.language</source>
+                <target state="translated">Språk</target>
+            </trans-unit>
+            <trans-unit id="label.customer">
+                <source>label.customer</source>
+                <target state="translated">Kund</target>
+            </trans-unit>
+            <trans-unit id="label.customer_number">
+                <source>label.customer_number</source>
+                <target state="translated">Konto</target>
+            </trans-unit>
+            
+            <trans-unit id="label.email">
+                <source>label.email</source>
+                <target state="translated">E-post</target>
+            </trans-unit>
+            <trans-unit id="label.create_more">
+                <source>label.create_more</source>
+                <target state="translated">Skapa ytterligare poster</target>
+            </trans-unit>
+
+            <!--
+              Buttons & Actions
+            -->
+            <trans-unit id="label.actions">
+                <source>label.actions</source>
+                <target state="translated">Åtgärd</target>
+            </trans-unit>
+            <trans-unit id="action.edit">
+                <source>action.edit</source>
+                <target state="translated">Ändra</target>
+            </trans-unit>
+            <trans-unit id="action.delete">
+                <source>action.delete</source>
+                <target state="translated">Ta bort</target>
+            </trans-unit>
+            <trans-unit id="action.save">
+                <source>action.save</source>
+                <target state="translated">Spara</target>
+            </trans-unit>
+            <trans-unit id="action.back">
+                <source>action.back</source>
+                <target state="translated">Tillbaka</target>
+            </trans-unit>
+            <trans-unit id="action.close">
+                <source>action.close</source>
+                <target state="translated">Stäng</target>
+            </trans-unit>
+
+            <!--
+              Dashboard
+            -->
+            <trans-unit id="dashboard.title">
+                <source>dashboard.title</source>
+                <target>Dashboard</target>
+            </trans-unit>
+            <trans-unit id="dashboard.subtitle">
+                <source>dashboard.subtitle</source>
+                <target state="translated">Välkommen!</target>
+            </trans-unit>
+            <trans-unit id="dashboard.you">
+                <source>dashboard.you</source>
+                <target state="translated">Min statistik</target>
+            </trans-unit>
+            <trans-unit id="dashboard.all">
+                <source>dashboard.all</source>
+                <target state="translated">Alla användare</target>
+            </trans-unit>
+            <trans-unit id="dashboard.admin">
+                <source>dashboard.admin</source>
+                <target state="translated">Administratör</target>
+            </trans-unit>
+
+            <!--
+              Widgets
+            -->
+            <trans-unit id="more.info.link">
+                <source>more.info.link</source>
+                <target state="translated">Mer info</target>
+            </trans-unit>
+            <trans-unit id="label.toggle_dropdown">
+                <source>label.toggle_dropdown</source>
+                <target state="translated">Visa meny</target>
+            </trans-unit>
+
+            <!--
+              Timesheet
+            -->
+            <trans-unit id="timesheet.title">
+                <source>timesheet.title</source>
+                <target state="translated">Mina tidsredovisningar</target>
+            </trans-unit>
+            <trans-unit id="timesheet.subtitle">
+                <source>timesheet.subtitle</source>
+                <target state="translated">Administrera mina tidsredovisningar</target>
+            </trans-unit>
+            <trans-unit id="timesheet.edit">
+                <source>timesheet.edit</source>
+                <target state="translated">Ändra post</target>
+            </trans-unit>
+            <trans-unit id="label.begin">
+                <source>label.begin</source>
+                <target state="translated">Från</target>
+            </trans-unit>
+            <trans-unit id="label.end">
+                <source>label.end</source>
+                <target state="translated">till</target>
+            </trans-unit>
+            <trans-unit id="label.daterange">
+                <source>label.daterange</source>
+                <target state="translated">Tidsintervall</target>
+            </trans-unit>
+            <trans-unit id="modal.columns.title">
+                <source>modal.columns.title</source>
+                <target state="translated">Ändra kolumnns synlighet</target>
+            </trans-unit>
+            <trans-unit id="modal.columns.description">
+                <source>modal.columns.description</source>
+                <target state="translated">När du sparar de kolonner som inte är markerade kommer de att döljas och den här inställningen lagras i en webbläsarkaka. Om du tar bort dina cookies kommer inställningarna att återställas.</target>
+            </trans-unit>
+            <trans-unit id="label.fixedRate">
+                <source>label.fixedRate</source>
+                <target state="translated">Fast pris</target>
+            </trans-unit>
+
+            <!--
+              User profile
+            -->
+            <trans-unit id="profile.title">
+                <source>profile.title</source>
+                <target state="translated">Användarprofil</target>
+            </trans-unit>
+            <trans-unit id="profile.subtitle">
+                <source>profile.subtitle</source>
+                <target state="translated">Ändra mina inställningar</target>
+            </trans-unit>
+            <trans-unit id="profile.about_me">
+                <source>profile.about_me</source>
+                <target state="translated">Om mig</target>
+            </trans-unit>
+            <trans-unit id="profile.first_entry">
+                <source>profile.first_entry</source>
+                <target state="translated">Arbetat sedan</target>
+            </trans-unit>
+            <trans-unit id="profile.tab_monthly">
+                <source>profile.tab_monthly</source>
+                <target state="translated">Årlig statistik</target>
+            </trans-unit>
+            <trans-unit id="profile.settings">
+                <source>profile.settings</source>
+                <target>Profile</target>
+            </trans-unit>
+            <trans-unit id="profile.password">
+                <source>profile.password</source>
+                <target state="translated">Lösenord</target>
+            </trans-unit>
+            <trans-unit id="profile.api-token">
+                <source>profile.api-token</source>
+                <target>API</target>
+            </trans-unit>
+            <trans-unit id="profile.roles">
+                <source>profile.roles</source>
+                <target state="translated">Roller</target>
+            </trans-unit>
+            <trans-unit id="profile.preferences">
+                <source>profile.preferences</source>
+                <target state="translated">Inställningar</target>
+            </trans-unit>
+            <trans-unit id="label.theme.collapsed_sidebar">
+                <source>label.theme.collapsed_sidebar</source>
+                <target state="translated">Minimera vänster sidofält</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.initial_view">
+                <source>label.calendar.initial_view</source>
+                <target state="translated">Initial kalendervy</target>
+            </trans-unit>
+            <trans-unit id="label.login.initial_view">
+                <source>label.login.initial_view</source>
+                <target state="translated">Initial vy efter inloggning</target>
+            </trans-unit>
+            <!-- Options for user-preference label.calendar.initial_view -->
+            <trans-unit id="month">
+                <source>month</source>
+                <target state="translated">Månad</target>
+            </trans-unit>
+            <trans-unit id="agendaWeek">
+                <source>agendaWeek</source>
+                <target state="translated">Vecka</target>
+            </trans-unit>
+            <trans-unit id="agendaDay">
+                <source>agendaDay</source>
+                <target state="translated">Dag</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.daily_stats">
+                <source>label.timesheet.daily_stats</source>
+                <target state="translated">Visa daglig statistik i tidtabell</target>
+            </trans-unit>
+            <trans-unit id="label.now">
+                <source>label.now</source>
+                <target state="translated">aktuell tid</target>
+            </trans-unit>
+
+            <!--
+              User timesheet calendar
+            -->
+            <trans-unit id="calendar.title">
+                <source>calendar.title</source>
+                <target state="translated">Kalender</target>
+            </trans-unit>
+            <trans-unit id="calendar.subtitle">
+                <source>calendar.subtitle</source>
+                <target state="translated">Visa och hantera tidtabellsdata i en kalender</target>
+            </trans-unit>
+
+            <!--
+              Admin: Timesheet
+            -->
+            <trans-unit id="admin_timesheet.title">
+                <source>admin_timesheet.title</source>
+                <target state="translated">Tidrapporter</target>
+            </trans-unit>
+            <trans-unit id="admin_timesheet.subtitle">
+                <source>admin_timesheet.subtitle</source>
+                <target state="translated">Poster från alla användare</target>
+            </trans-unit>
+
+            <!--
+              Admin: Projects
+            -->
+            <trans-unit id="admin_project.title">
+                <source>admin_project.title</source>
+                <target state="translated">Projekt</target>
+            </trans-unit>
+            <trans-unit id="admin_project.subtitle">
+                <source>admin_project.subtitle</source>
+                <target state="translated">Ett projekt kombinerar aktiviteter för en kund i en grupp</target>
+            </trans-unit>
+            <trans-unit id="admin_project.delete_confirm">
+                <source>admin_project.delete_confirm</source>
+                <target state="translated">Projektet %project% för kunden %customer% har %activities% för närvarande %activities% 
+                     aktiviteter och %records% time-records, som räknas upp till totalt %duration%.
+                     Dessa aktiviteter och tidsposter kommer också att raderas!
+                     Alternativt kan du välja ett projekt till vilket alla befintliga aktiviteter och poster överförs:</target>
+            </trans-unit>
+
+            <!--
+              Admin: Activity
+            -->
+            <trans-unit id="admin_activity.title">
+                <source>admin_activity.title</source>
+                <target state="translated">Aktiviteter</target>
+            </trans-unit>
+            <trans-unit id="admin_activity.subtitle">
+                <source>admin_activity.subtitle</source>
+                <target state="translated">Uppgifter som kan väljas för tidsposter</target>
+            </trans-unit>
+            <trans-unit id="admin_activity.delete_confirm">
+                <source>admin_activity.delete_confirm</source>
+                <target state="translated">
+                     För närvarande aktiviteten %activity% i projektet %project% för kunden %customer%
+                     har %records% tidsrekord, vilket räknas upp till totalt %duration%.
+                     Dessa tidsposter kommer också att raderas!
+                     Alternativt kan du välja en aktivitet som alla befintliga poster överförs:</target>
+            </trans-unit>
+
+            <!--
+              Admin: Customer
+            -->
+            <trans-unit id="admin_customer.title">
+                <source>admin_customer.title</source>
+                <target state="translated">Kunder</target>
+            </trans-unit>
+            <trans-unit id="admin_customer.subtitle">
+                <source>admin_customer.subtitle</source>
+                <target state="translated">Din kund är grunden för att skapa projekt och aktiviteter</target>
+            </trans-unit>
+            <trans-unit id="label.number">
+                <source>label.number</source>
+                <target state="translated">Konto</target>
+            </trans-unit>
+            <trans-unit id="label.company">
+                <source>label.company</source>
+                <target state="translated">Företagsnamn</target>
+            </trans-unit>
+            <trans-unit id="label.vat">
+                <source>label.vat</source>
+                <target state="translated">Moms</target>
+            </trans-unit>
+            <trans-unit id="label.contact">
+                <source>label.contact</source>
+                <target state="translated">Kontakt</target>
+            </trans-unit>
+            <trans-unit id="label.address">
+                <source>label.address</source>
+                <target state="translated">Adress</target>
+            </trans-unit>
+            <trans-unit id="label.country">
+                <source>label.country</source>
+                <target state="translated">Land</target>
+            </trans-unit>
+            <trans-unit id="label.phone">
+                <source>label.phone</source>
+                <target state="translated">Telefon</target>
+            </trans-unit>
+            <trans-unit id="label.fax">
+                <source>label.fax</source>
+                <target>Fax</target>
+            </trans-unit>
+            <trans-unit id="label.mobile">
+                <source>label.mobile</source>
+                <target state="translated">Mobil</target>
+            </trans-unit>
+            <trans-unit id="label.homepage">
+                <source>label.homepage</source>
+                <target state="translated">Hemsida</target>
+            </trans-unit>
+            <trans-unit id="label.timezone">
+                <source>label.timezone</source>
+                <target state="translated">Timezon</target>
+            </trans-unit>
+            <trans-unit id="label.currency">
+                <source>label.currency</source>
+                <target state="translated">Valuta</target>
+            </trans-unit>
+            <trans-unit id="admin_customer.delete_confirm">
+                <source>admin_customer.delete_confirm</source>
+                <target state="translated">
+För närvarande kunden %customer% har %project% projekt med% aktivitet% aktiviteter, som räknas upp
+                     i %activity% tidposter till totalt %duration%.
+                     Dessa projekt, aktiviteter och tidsposter kommer också att raderas!
+                     Alternativt kan du välja en kund till vilken alla data överförs:</target>
+            </trans-unit>
+
+            <!--
+              Admin: User
+            -->
+            <trans-unit id="admin_user.title">
+                <source>admin_user.title</source>
+                <target state="translated">Användare</target>
+            </trans-unit>
+            <trans-unit id="admin_user.subtitle">
+                <source>admin_user.subtitle</source>
+                <target state="translated">Alla registrerade användare av din Kimai-installation</target>
+            </trans-unit>
+            <trans-unit id="label.alias">
+                <source>label.alias</source>
+                <target state="translated">Namn</target>
+            </trans-unit>
+            <trans-unit id="label.title">
+                <source>label.title</source>
+                <target state="translated">Titel</target>
+            </trans-unit>
+            <trans-unit id="label.avatar">
+                <source>label.avatar</source>
+                <target state="translated">Profilbild</target>
+            </trans-unit>
+            <trans-unit id="label.active">
+                <source>label.active</source>
+                <target state="translated">Aktiv</target>
+            </trans-unit>
+            <trans-unit id="label.roles">
+                <source>label.roles</source>
+                <target state="translated">Roll</target>
+            </trans-unit>
+            <trans-unit id="admin_user.delete_confirm">
+                <source>admin_user.delete_confirm</source>
+                <target state="translated">
+För närvarande har %user% användare %records% tidsrekord som räknas upp till totalt %duration%.
+                     Dessa tidsposter kommer också att raderas!</target>
+            </trans-unit>
+
+            <!--
+              Admin: Plugins
+            -->
+            <trans-unit id="label.version">
+                <source>label.version</source>
+                <target>Version</target>
+            </trans-unit>
+            <trans-unit id="label.required_version">
+                <source>label.required_version</source>
+                <target state="translated">Kompatibel med</target>
+            </trans-unit>
+
+            <!--
+              ROLES
+            -->
+            <trans-unit id="ROLE_SUPER_ADMIN">
+                <source>ROLE_SUPER_ADMIN</source>
+                <target>System-Admin</target>
+            </trans-unit>
+            <trans-unit id="ROLE_ADMIN">
+                <source>ROLE_ADMIN</source>
+                <target state="translated">Administratör</target>
+            </trans-unit>
+            <trans-unit id="ROLE_TEAMLEAD">
+                <source>ROLE_TEAMLEAD</source>
+                <target state="translated">Teamledare</target>
+            </trans-unit>
+            <trans-unit id="ROLE_USER">
+                <source>ROLE_USER</source>
+                <target state="translated">Användare</target>
+            </trans-unit>
+            <trans-unit id="ROLE_CUSTOMER">
+                <source>ROLE_CUSTOMER</source>
+                <target state="translated">Kund</target>
+            </trans-unit>
+
+            <!--
+              Statistics data for Dashboard & Users profile
+            -->
+            <trans-unit id="stats.durationToday">
+                <source>stats.durationToday</source>
+                <target state="translated">Arbetstider idag</target>
+            </trans-unit>
+            <trans-unit id="stats.durationWeek">
+                <source>stats.durationWeek</source>
+                <target state="translated">Arbetstid i veckan</target>
+            </trans-unit>
+            <trans-unit id="stats.durationMonth">
+                <source>stats.durationMonth</source>
+                <target state="translated">Arbetstid i den här månaden</target>
+            </trans-unit>
+            <trans-unit id="stats.durationYear">
+                <source>stats.durationYear</source>
+                <target state="translated">Arbetstid i det här året</target>
+            </trans-unit>
+            <trans-unit id="stats.durationTotal">
+                <source>stats.durationTotal</source>
+                <target state="translated">Arbetstid totalt</target>
+            </trans-unit>
+            <trans-unit id="stats.amountToday">
+                <source>stats.amountToday</source>
+                <target state="translated">Intäkter idag</target>
+            </trans-unit>
+            <trans-unit id="stats.amountWeek">
+                <source>stats.amountWeek</source>
+                <target state="translated">Intäkter denna vecka</target>
+            </trans-unit>
+            <trans-unit id="stats.amountMonth">
+                <source>stats.amountMonth</source>
+                <target state="translated">Intäkter denna månad</target>
+            </trans-unit>
+            <trans-unit id="stats.amountYear">
+                <source>stats.amountYear</source>
+                <target state="translated">Intäkter i år</target>
+            </trans-unit>
+            <trans-unit id="stats.amountTotal">
+                <source>stats.amountTotal</source>
+                <target state="translated">Inkomster totalt</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveToday">
+                <source>stats.userActiveToday</source>
+                <target state="translated">Aktiva användare idag</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveWeek">
+                <source>stats.userActiveWeek</source>
+                <target state="translated">Aktiva användare den här veckan</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveMonth">
+                <source>stats.userActiveMonth</source>
+                <target state="translated">Aktiva användare den här månaden</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveYear">
+                <source>stats.userActiveYear</source>
+                <target state="translated">Aktiva användare i år</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveTotal">
+                <source>stats.userActiveTotal</source>
+                <target state="translated">Aktiva användare någonsin</target>
+            </trans-unit>
+            <trans-unit id="stats.activeRecordings">
+                <source>stats.activeRecordings</source>
+                <target state="translated">Aktiva poster</target>
+            </trans-unit>
+            <trans-unit id="stats.userTotal">
+                <source>stats.userTotal</source>
+                <target state="translated">Antal användare</target>
+            </trans-unit>
+            <trans-unit id="stats.activityTotal">
+                <source>stats.activityTotal</source>
+                <target state="translated">Antal aktiviter</target>
+            </trans-unit>
+            <trans-unit id="stats.projectTotal">
+                <source>stats.projectTotal</source>
+                <target state="translated">Antal projekt</target>
+            </trans-unit>
+            <trans-unit id="stats.customerTotal">
+                <source>stats.customerTotal</source>
+                <target state="translated">Antal kunder</target>
+            </trans-unit>
+
+            <!--
+              Invoice
+            -->
+            <trans-unit id="admin_invoice_template.title">
+                <source>admin_invoice_template.title</source>
+                <target state="translated">Fakturamall</target>
+            </trans-unit>
+            <trans-unit id="admin_invoice_template.subtitle">
+                <source>admin_invoice_template.subtitle</source>
+                <target state="translated">Administrera dina fakturamallar som kan användas för dataexport.</target>
+            </trans-unit>
+            <trans-unit id="invoice.title">
+                <source>invoice.title</source>
+                <target state="translated">Fakturor</target>
+            </trans-unit>
+            <trans-unit id="invoice.subtitle">
+                <source>invoice.subtitle</source>
+                <target state="translated">Skapa fakturor från dina inspelade tidskriftsuppgifter.</target>
+            </trans-unit>
+            <trans-unit id="invoice.preview">
+                <source>invoice.preview</source>
+                <target state="translated">Detta är en förhandsvisning av de data som kommer att visas i ditt fakturatokument.</target>
+            </trans-unit>
+            <trans-unit id="invoice_renderer.timesheet">
+                <source>invoice_renderer.timesheet</source>
+                <target>Foo</target>
+            </trans-unit>
+
+            <trans-unit id="button.print">
+                <source>button.print</source>
+                <target state="translated">Skriv ut</target>
+            </trans-unit>
+            <trans-unit id="button.csv">
+                <source>button.csv</source>
+                <target>CSV</target>
+            </trans-unit>
+            <trans-unit id="button.xlsx">
+                <source>button.xlsx</source>
+                <target>Excel</target>
+            </trans-unit>
+            <trans-unit id="button.pdf">
+                <source>button.pdf</source>
+                <target>PDF</target>
+            </trans-unit>
+            <trans-unit id="button.ods">
+                <source>button.ods</source>
+                <target>ODS</target>
+            </trans-unit>
+            <trans-unit id="invoice_print">
+                <source>invoice_print</source>
+                <target state="translated">Faktura</target>
+            </trans-unit>
+            <trans-unit id="label.template">
+                <source>label.template</source>
+                <target state="translated">Mail</target>
+            </trans-unit>
+            <trans-unit id="label.due_days">
+                <source>label.due_days</source>
+                <target state="translated">Betalningsperiod i dagar</target>
+            </trans-unit>
+            <trans-unit id="invoice.due_days">
+                <source>invoice.due_days</source>
+                <target state="translated">Förfallodatum</target>
+            </trans-unit>
+            <trans-unit id="invoice.from">
+                <source>invoice.from</source>
+                <target state="translated">Från</target>
+            </trans-unit>
+            <trans-unit id="invoice.to">
+                <source>invoice.to</source>
+                <target state="translated">Till</target>
+            </trans-unit>
+            <trans-unit id="invoice.number">
+                <source>invoice.number</source>
+                <target state="translated">Fakturanummer</target>
+            </trans-unit>
+            <trans-unit id="invoice.subtotal">
+                <source>invoice.subtotal</source>
+                <target>Subtotal</target>
+            </trans-unit>
+            <trans-unit id="invoice.tax">
+                <source>invoice.tax</source>
+                <target state="translated">Moms</target>
+            </trans-unit>
+            <trans-unit id="invoice.total">
+                <source>invoice.total</source>
+                <target state="translated">Totalt</target>
+            </trans-unit>
+            <trans-unit id="invoice.service_date">
+                <source>invoice.service_date</source>
+                <target state="translated">Inventaredatum</target>
+            </trans-unit>
+            <trans-unit id="label.amount">
+                <source>label.amount</source>
+                <target state="translated">Antal</target>
+            </trans-unit>
+            <trans-unit id="label.total_rate">
+                <source>label.total_rate</source>
+                <target state="translated">Totaleres</target>
+            </trans-unit>
+            <trans-unit id="label.unit_price">
+                <source>label.unit_price</source>
+                <target state="translated">Enhetspris</target>
+            </trans-unit>
+            <trans-unit id="label.payment_terms">
+                <source>label.payment_terms</source>
+                <target state="translated">Betalningsvillkor</target>
+            </trans-unit>
+            <trans-unit id="invoice.signature_user">
+                <source>invoice.signature_user</source>
+                <target state="translated">Bekräftelse: Datum / Säljarens namn / Signatur</target>
+            </trans-unit>
+            <trans-unit id="invoice.signature_customer">
+                <source>invoice.signature_customer</source>
+                <target state="translated">Bekräftelse: Datum / Kunden namn / Signatur</target>
+            </trans-unit>
+            <trans-unit id="invoice.total_working_time">
+                <source>invoice.total_working_time</source>            
+                <target state="translated">Total varaktighet</target>
+            </trans-unit>
+            <trans-unit id="label.order_number">
+                <source>label.order_number</source>
+                <target>Ordernummer</target>                
+            </trans-unit>
+            <trans-unit id="label.orderNumber">
+                <source>label.orderNumber</source>
+                <target state="translated">Ordernummer</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_tax_number">
+                <source>label.invoice_tax_number</source>
+                <target state="translated">VAT nr.:</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_bank_account">
+                <source>label.invoice_bank_account</source>
+                <target state="translated">Bankkonto</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_salutation">
+                <source>label.invoice_salutation</source>
+                <target state="translated">Damer och herrar,
+
+                     Jag tackar för din beställning och tar betalt för mina tjänster:</target>
+            </trans-unit>
+
+            <!--
+              Export
+            -->
+            <trans-unit id="export.title">
+                <source>export.title</source>
+                <target state="translated">Exportera</target>
+            </trans-unit>
+            <trans-unit id="export.subtitle">
+                <source>export.subtitle</source>
+                <target state="translated">Exportera tidsrapport till olika format</target>
+            </trans-unit>
+            <trans-unit id="export.period">
+                <source>export.period</source>
+                <target>Period</target>
+            </trans-unit>
+            <trans-unit id="export.document_title">
+                <source>export.document_title</source>
+                <target state="translated">Förteckning över utgifter</target>
+            </trans-unit>
+            <trans-unit id="export.full_list">
+                <source>export.full_list</source>
+                <target state="translated">Full lista</target>
+            </trans-unit>
+            <trans-unit id="export.summary">
+                <source>export.summary</source>
+                <target state="translated">Sammanfattning</target>
+            </trans-unit>
+            <trans-unit id="export.page_of">
+                <source>export.page_of</source>
+                <target state="translated">Sida %page% av %pages%</target>
+            </trans-unit>
+            <trans-unit id="export.date_copyright">
+                <source>export.date_copyright</source>
+                <target state="translated">Skapad %date% med %kimai%</target>
+            </trans-unit>
+
+            <!--
+              Month names
+            -->
+            <trans-unit id="month.1">
+                <source>month.1</source>
+                <target state="translated">Januari</target>
+            </trans-unit>
+            <trans-unit id="month.2">
+                <source>month.2</source>
+                <target state="translated">Februari</target>
+            </trans-unit>
+            <trans-unit id="month.3">
+                <source>month.3</source>
+                <target state="translated">Mars</target>
+            </trans-unit>
+            <trans-unit id="month.4">
+                <source>month.4</source>
+                <target state="translated">April</target>
+            </trans-unit>
+            <trans-unit id="month.5">
+                <source>month.5</source>
+                <target state="translated">Maj</target>
+            </trans-unit>
+            <trans-unit id="month.6">
+                <source>month.6</source>
+                <target state="translated">Juni</target>
+            </trans-unit>
+            <trans-unit id="month.7">
+                <source>month.7</source>
+                <target state="translated">Juli</target>
+            </trans-unit>
+            <trans-unit id="month.8">
+                <source>month.8</source>
+                <target state="translated">Augusti</target>
+            </trans-unit>
+            <trans-unit id="month.9">
+                <source>month.9</source>
+                <target>September</target>
+            </trans-unit>
+            <trans-unit id="month.10">
+                <source>month.10</source>
+                <target state="translated">Oktober</target>
+            </trans-unit>
+            <trans-unit id="month.11">
+                <source>month.11</source>
+                <target>November</target>
+            </trans-unit>
+            <trans-unit id="month.12">
+                <source>month.12</source>
+                <target>December</target>
+            </trans-unit>
+
+            <!--
+             Navbar - recent entries and activities
+            -->
+            <trans-unit id="timesheet.all">
+                <source>timesheet.all</source>
+                <target state="translated">Visa alla Poster</target>
+            </trans-unit>
+            <trans-unit id="recent.activities.format">
+                <source>recent.activities.format</source>
+                <target state="translated">%activity% i %project% för %customer%</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start">
+                <source>timesheet.start</source>
+                <target state="translated">Skapa ny tidpost</target>
+            </trans-unit>
+
+            <!--
+              TOOLBARS
+            -->
+            <trans-unit id="label.pageSize">
+                <source>label.pageSize</source>
+                <target state="translated">Pappersstorlek</target>
+            </trans-unit>
+            <trans-unit id="label.entryState">
+                <source>label.entryState</source>
+                <target state="translated">Post</target>
+            </trans-unit>
+            <trans-unit id="label.exported">
+                <source>label.exported</source>
+                <target state="translated">Exporterad</target>
+            </trans-unit>
+            <trans-unit id="entryState.exported">
+                <source>entryState.exported</source>
+                <target state="translated">Rennrad</target>
+            </trans-unit>
+            <trans-unit id="entryState.not_exported">
+                <source>entryState.not_exported</source>
+                <target state="translated">Öppen</target>
+            </trans-unit>
+            <trans-unit id="entryState.all">
+                <source>entryState.all</source>
+                <target state="translated">Alla</target>
+            </trans-unit>
+            <trans-unit id="entryState.running">
+                <source>entryState.running</source>
+                <target state="translated">Aktiv</target>
+            </trans-unit>
+            <trans-unit id="entryState.stopped">
+                <source>entryState.stopped</source>
+                <target state="translated">Stoppad</target>
+            </trans-unit>
+            <trans-unit id="export.clear_all">
+                <source>export.clear_all</source>
+                <target state="translated">Markera alla visade poster som öppna?</target>
+            </trans-unit>
+            <trans-unit id="export.mark_all">
+                <source>export.mark_all</source>
+                <target state="translated">Markera alla visade poster som rensade?</target>
+            </trans-unit>
+            <trans-unit id="label.globalsOnly">
+                <source>label.globalsOnly</source>
+                <target state="translated">Endast globalt</target>
+            </trans-unit>
+            <!--
+              HELP
+            --> 
+            <trans-unit id="help.title">
+                <source>help.title</source>
+                <target>Hjälp</target>
+            </trans-unit>
+               <trans-unit id="help.subtitle">
+                <source>help.subtitle</source>
+                <target>Foo</target>
+            </trans-unit>         
+        </body>
+    </file>
+</xliff>

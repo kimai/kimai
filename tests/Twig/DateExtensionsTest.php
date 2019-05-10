@@ -9,12 +9,14 @@
 
 namespace App\Tests\Twig;
 
+use App\Configuration\LanguageFormattings;
 use App\Twig\DateExtensions;
 use App\Utils\LocaleSettings;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
  * @covers \App\Twig\DateExtensions
@@ -33,14 +35,14 @@ class DateExtensionsTest extends TestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        $localeSettings = new LocaleSettings($requestStack, $dateSettings);
+        $localeSettings = new LocaleSettings($requestStack, new LanguageFormattings($dateSettings));
 
         return new DateExtensions($localeSettings);
     }
 
     public function testGetFilters()
     {
-        $filters = ['month_name', 'date_short', 'date_time', 'date_format', 'time', 'hour24'];
+        $filters = ['month_name', 'date_short', 'date_time', 'date_full', 'date_format', 'time', 'hour24'];
         $sut = $this->getSut('de', []);
         $twigFilters = $sut->getFilters();
         $this->assertCount(count($filters), $twigFilters);
@@ -48,6 +50,20 @@ class DateExtensionsTest extends TestCase
         foreach ($twigFilters as $filter) {
             $this->assertInstanceOf(TwigFilter::class, $filter);
             $this->assertEquals($filters[$i++], $filter->getName());
+        }
+    }
+
+    public function testGetFunctions()
+    {
+        $functions = ['get_format_duration'];
+        $sut = $this->getSut('de', []);
+        $twigFunctions = $sut->getFunctions();
+        $this->assertCount(count($functions), $twigFunctions);
+        $i = 0;
+        /** @var TwigFunction $filter */
+        foreach ($twigFunctions as $filter) {
+            $this->assertInstanceOf(TwigFunction::class, $filter);
+            $this->assertEquals($functions[$i++], $filter->getName());
         }
     }
 
@@ -147,5 +163,18 @@ class DateExtensionsTest extends TestCase
             'de' => ['24_hours' => true],
         ]);
         $this->assertEquals('foo', $sut->hour24('foo', 'bar'));
+    }
+
+    public function testDateTimeFull()
+    {
+        $sut = $this->getSut('en', [
+            'en' => ['date_time_type' => 'yyyy-MM-dd HH:mm:ss'],
+        ]);
+
+        $dateTime = new \DateTime('2019-08-17 12:29:47', new \DateTimeZone(date_default_timezone_get()));
+        $dateTime->setDate(2019, 8, 17);
+        $dateTime->setTime(12, 29, 47);
+
+        $this->assertEquals('2019-08-17 12:29:47', $sut->dateTimeFull($dateTime));
     }
 }

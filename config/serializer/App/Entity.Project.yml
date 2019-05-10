@@ -1,19 +1,16 @@
 App\Entity\Project:
     exclusion_policy: All
-    custom_accessor_order: [id, name, comment, visible, budget, orderNumber, customer, fixedRate, hourlyRate]
+    custom_accessor_order: [id, name, comment, visible, budget, orderNumber, customer, fixedRate, hourlyRate, color]
     properties:
         id:
             include: true
-            groups: [Default]
         name:
             include: true
-            groups: [Default]
         comment:
             include: true
             groups: [Entity]
         visible:
             include: true
-            groups: [Default]
         budget:
             include: true
             groups: [Entity]
@@ -22,17 +19,18 @@ App\Entity\Project:
             groups: [Entity]
         fixedRate:
             include: true
-            groups: [Entity]
+            groups: [Project]
         hourlyRate:
             include: true
-            groups: [Entity]
+            groups: [Project]
         customer:
-            include: false
-            exclude: true
-            groups: [Default]
+            groups: [Subresource]
+        color:
+            include: true
+            groups: [Entity]
     virtual_properties:
         getCustomer:
             serialized_name: customer
             exp: "object.getCustomer() === null ? null : object.getCustomer().getId()"
             type: integer
-            groups: [Default]
+            groups: [Entity, Collection]

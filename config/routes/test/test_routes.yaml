@@ -1,11 +1,3 @@
-app.test.activity_recent:
-    path: /{_locale}/activities/recent
-    controller: App\Controller\ActivityController::recentActivitiesAction
-    requirements:
-        _locale: '%app_locales%'
-    defaults:
-        _locale: '%locale%'
-
 app.test.sidebar_settings:
     path: /{_locale}/sidebar/settings
     controller: App\Controller\SidebarController::settingsAction

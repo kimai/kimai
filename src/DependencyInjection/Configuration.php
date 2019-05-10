@@ -27,11 +27,29 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('kimai');
+        $treeBuilder = new TreeBuilder('kimai');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()
+                ->scalarNode('data_dir')
+                    ->isRequired()
+                    ->validate()
+                        ->ifTrue(function ($value) {
+                            return !file_exists($value);
+                        })
+                        ->thenInvalid('Data directory does not exist')
+                    ->end()
+                ->end()
+                ->scalarNode('plugin_dir')
+                    ->isRequired()
+                    ->validate()
+                        ->ifTrue(function ($value) {
+                            return !file_exists($value);
+                        })
+                        ->thenInvalid('Plugin directory does not exist')
+                    ->end()
+                ->end()
                 ->append($this->getUserNode())
                 ->append($this->getTimesheetNode())
                 ->append($this->getInvoiceNode())
@@ -50,13 +68,22 @@ class Configuration implements ConfigurationInterface
 
     protected function getTimesheetNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('timesheet');
+        $builder = new TreeBuilder('timesheet');
+        $node = $builder->getRootNode();
 
         $node
             ->children()
                 ->booleanNode('duration_only')
-                    ->defaultValue(false)
+                    ->setDeprecated()
+                ->end()
+                ->scalarNode('mode')
+                    ->defaultValue('default')
+                    ->validate()
+                        ->ifTrue(function ($value) {
+                            return !in_array($value, ['default', 'duration_only']);
+                        })
+                        ->thenInvalid('Chosen timesheet mode is invalid, allowed values: default, duration_only')
+                    ->end()
                 ->end()
                 ->booleanNode('markdown_content')
                     ->defaultValue(false)
@@ -85,7 +112,6 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('mode')
                                 ->defaultValue('default')
                                 ->validate()
-                                    ->thenInvalid('Chosen rounding mode is invalid')
                                     ->ifTrue(function ($value) {
                                         $class = 'App\\Timesheet\\Rounding\\' . ucfirst($value) . 'Rounding';
                                         if (class_exists($class)) {
@@ -168,8 +194,8 @@ class Configuration implements ConfigurationInterface
 
     protected function getInvoiceNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('invoice');
+        $builder = new TreeBuilder('invoice');
+        $node = $builder->getRootNode();
 
         $node
             ->addDefaultsIfNotSet()
@@ -191,17 +217,15 @@ class Configuration implements ConfigurationInterface
 
     protected function getLanguagesNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('languages');
+        $builder = new TreeBuilder('languages');
+        $node = $builder->getRootNode();
 
         $node
             ->useAttributeAsKey('name', false) // see https://github.com/symfony/symfony/issues/18988
             ->arrayPrototype()
                 ->children()
                     ->scalarNode('date_time_type')->defaultValue('yyyy-MM-dd HH:mm')->end()     // for DateTimeType
-                    ->scalarNode('date_time_picker')->defaultValue('YYYY-MM-DD HH:mm')->end()   // for DateTimeType JS component
                     ->scalarNode('date_type')->defaultValue('yyyy-MM-dd')->end()                // for DateType
-                    ->scalarNode('date_picker')->defaultValue('YYYY-MM-DD')->end()              // for DateType JS component
                     ->scalarNode('date')->defaultValue('Y-m-d')->end()                          // for display via twig
                     ->scalarNode('date_time')->defaultValue('m-d H:i')->end()                   // for display via twig
                     ->scalarNode('duration')->defaultValue('%%h:%%m h')->end()                  // for display via twig
@@ -216,8 +240,8 @@ class Configuration implements ConfigurationInterface
 
     protected function getCalendarNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('calendar');
+        $builder = new TreeBuilder('calendar');
+        $node = $builder->getRootNode();
 
         $node
             ->children()
@@ -259,8 +283,8 @@ class Configuration implements ConfigurationInterface
 
     protected function getThemeNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('theme');
+        $builder = new TreeBuilder('theme');
+        $node = $builder->getRootNode();
 
         $node
             ->addDefaultsIfNotSet()
@@ -271,9 +295,13 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->scalarNode('box_color')
                     ->defaultValue('green')
+                    ->setDeprecated('The node "%node%" at path "%path%" was removed, please delete it from your config.')
                 ->end()
                 ->scalarNode('select_type')
                     ->defaultNull()
+                ->end()
+                ->booleanNode('show_about')
+                    ->defaultTrue()
                 ->end()
             ->end()
         ;
@@ -283,8 +311,8 @@ class Configuration implements ConfigurationInterface
 
     protected function getUserNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('user');
+        $builder = new TreeBuilder('user');
+        $node = $builder->getRootNode();
 
         $node
             ->addDefaultsIfNotSet()
@@ -303,8 +331,8 @@ class Configuration implements ConfigurationInterface
 
     protected function getWidgetsNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('widgets');
+        $builder = new TreeBuilder('widgets');
+        $node = $builder->getRootNode();
 
         $node
             ->requiresAtLeastOneElement()
@@ -334,8 +362,8 @@ class Configuration implements ConfigurationInterface
 
     protected function getDashboardNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('dashboard');
+        $builder = new TreeBuilder('dashboard');
+        $node = $builder->getRootNode();
 
         $node
             ->requiresAtLeastOneElement()
@@ -367,8 +395,8 @@ class Configuration implements ConfigurationInterface
 
     protected function getDefaultsNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('defaults');
+        $builder = new TreeBuilder('defaults');
+        $node = $builder->getRootNode();
 
         $node
             ->addDefaultsIfNotSet()
@@ -389,8 +417,8 @@ class Configuration implements ConfigurationInterface
 
     protected function getPermissionsNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('permissions');
+        $builder = new TreeBuilder('permissions');
+        $node = $builder->getRootNode();
 
         $node
             ->addDefaultsIfNotSet()

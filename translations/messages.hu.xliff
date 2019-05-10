@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="hu" datatype="plaintext" original="messages.en.xliff">
+    <file source-language="en" target-language="hu" datatype="plaintext" original="messages.en.xliff">
         <body>
             <!--
               Global template keys
             -->
-            <trans-unit id="browser.title">
-                <source>browser.title</source>
-                <target>Kimai - Időrögzítő</target>
+            <trans-unit id="time_tracking">
+                <source>time_tracking</source>
+                <target>Időrögzítő</target>
             </trans-unit>
             <trans-unit id="yes">
                 <source>yes</source>
@@ -21,10 +21,6 @@
                 <source>both</source>
                 <target></target>
             </trans-unit>
-            <trans-unit id="subtitle.amount">
-                <source>subtitle.amount</source>
-                <target>(total %count%)</target>
-            </trans-unit>
             <trans-unit id="This is a mandatory field">
                 <source>This is a mandatory field</source>
                 <target>Kötelező</target>
@@ -35,14 +31,15 @@
             </trans-unit>
             <trans-unit id="confirm.delete">
                 <source>confirm.delete</source>
-                <target>Buztos vagy benne, hogy törölni szerenéd?</target>
+                <target>Biztos vagy benne, hogy törölni szerenéd?</target>
             </trans-unit>
             <trans-unit id="confirm.delete_message">
                 <source>confirm.delete_message</source>
-                <target>
-                    Meg kell erősítened a törlést, mert kapcsolódó elemek is törlésre kerülnek.
-                    You have to confirm the deletion, as there are linked objects which will be deleted as well.
-                </target>
+                <target>Meg kell erősítened a törlést, mert kapcsolódó elemek is törlésre kerülnek.</target>
+            </trans-unit>
+            <trans-unit id="delete.not_in_use">
+                <source>delete.not_in_use</source>
+                <target>Ez az elem biztonságosan törölhető.</target>
             </trans-unit>
 
             <!--
@@ -96,6 +93,10 @@
                 <source>menu.invoice</source>
                 <target>Számlák</target>
             </trans-unit>
+            <trans-unit id="menu.export">
+                <source>menu.export</source>
+                <target>Exportálás</target>
+            </trans-unit>
             <trans-unit id="menu.admin_timesheet">
                 <source>menu.admin_timesheet</source>
                 <target>Rögzített órák</target>
@@ -115,6 +116,10 @@
             <trans-unit id="menu.admin_user">
                 <source>menu.admin_user</source>
                 <target>Felhasználók</target>
+            </trans-unit>
+            <trans-unit id="menu.system_configuration">
+                <source>menu.system_configuration</source>
+                <target>Rendszer beállítások</target>
             </trans-unit>
 
             <!--
@@ -184,6 +189,10 @@
                 <source>label.project</source>
                 <target>Projekt</target>
             </trans-unit>
+            <trans-unit id="label.hourlyRate">
+                <source>label.hourlyRate</source>
+                <target>Órabér</target>
+            </trans-unit>
             <trans-unit id="label.hourly_rate">
                 <source>label.hourly_rate</source>
                 <target>Órabér</target>
@@ -198,7 +207,7 @@
             </trans-unit>
             <trans-unit id="label.rate">
                 <source>label.rate</source>
-                <target>Órabér</target>
+                <target>Bér</target>
             </trans-unit>
             <trans-unit id="label.language">
                 <source>label.language</source>
@@ -298,11 +307,15 @@
             </trans-unit>
             <trans-unit id="label.begin">
                 <source>label.begin</source>
-                <target>Kesdés</target>
+                <target>Kezdés</target>
             </trans-unit>
             <trans-unit id="label.end">
                 <source>label.end</source>
                 <target>Befejezés</target>
+            </trans-unit>
+            <trans-unit id="label.daterange">
+                <source>label.daterange</source>
+                <target>Időtartam</target>
             </trans-unit>
             <trans-unit id="modal.columns.title">
                 <source>modal.columns.title</source>
@@ -312,9 +325,9 @@
                 <source>modal.columns.description</source>
                 <target>A megjelenítendő oszlopok egy böngésző sütiben lesznek tárolva. Ha törlöd az oldalhoz tartozó sütiket, akkor ez a beállítás visszaáll az alapértelmezett értékre.</target>
             </trans-unit>
-            <trans-unit id="label.fixed_rate">
-                <source>label.fixed_rate</source>
-                <target>Fix órabér</target>
+            <trans-unit id="label.fixedRate">
+                <source>label.fixedRate</source>
+                <target>Fix bér</target>
             </trans-unit>
 
             <!--
@@ -335,10 +348,6 @@
             <trans-unit id="profile.first_entry">
                 <source>profile.first_entry</source>
                 <target>Munka kezdete</target>
-            </trans-unit>
-            <trans-unit id="profile.tab_monthly">
-                <source>profile.tab_monthly</source>
-                <target>Éves statisztika</target>
             </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>
@@ -368,6 +377,10 @@
                 <source>label.calendar.initial_view</source>
                 <target>Alapértelmezett naptár nézet</target>
             </trans-unit>
+            <trans-unit id="label.login.initial_view">
+                <source>label.login.initial_view</source>
+                <target>Bejelentkezés után megjelenített nézet</target>
+            </trans-unit>
             <!-- Options for user-preference label.calendar.initial_view -->
             <trans-unit id="month">
                 <source>month</source>
@@ -381,17 +394,21 @@
                 <source>agendaDay</source>
                 <target>Nap</target>
             </trans-unit>
+            <trans-unit id="label.timesheet.daily_stats">
+                <source>label.timesheet.daily_stats</source>
+                <target>Napi statisztika megjelenítése a rögzített óráknál</target>
+            </trans-unit>
 
             <!--
-              Help - Manual
+              User timesheet calendar
             -->
-            <trans-unit id="help.title">
-                <source>help.title</source>
-                <target>Súgó</target>
+            <trans-unit id="calendar.title">
+                <source>calendar.title</source>
+                <target>Naptár</target>
             </trans-unit>
-            <trans-unit id="help.subtitle">
-                <source>help.subtitle</source>
-                <target>Segítség a Kimai használatához és beállításához</target>
+            <trans-unit id="calendar.subtitle">
+                <source>calendar.subtitle</source>
+                <target>Rögzítéseid megjelenítése és szerkesztése naptárként</target>
             </trans-unit>
 
             <!--
@@ -426,6 +443,7 @@
                 </target>
             </trans-unit>
 
+
             <!--
               Admin: Activity
             -->
@@ -446,6 +464,7 @@
                 </target>
             </trans-unit>
 
+
             <!--
               Admin: Customer
             -->
@@ -457,8 +476,8 @@
                 <source>admin_customer.subtitle</source>
                 <target>Az ügyfelekhez hozzárendelve hozhatsz létre projekteket és tevékenységeket</target>
             </trans-unit>
-            <trans-unit id="label.customer_number">
-                <source>label.customer_number</source>
+            <trans-unit id="label.number">
+                <source>label.number</source>
                 <target>Adószám</target>
             </trans-unit>
             <trans-unit id="label.company">
@@ -513,6 +532,7 @@
                     Ezek a projektek, tevékenységek és bejegyzések is törlésre kerülnek!
                 </target>
             </trans-unit>
+
 
             <!--
               Admin: User
@@ -571,10 +591,6 @@
             <trans-unit id="ROLE_USER">
                 <source>ROLE_USER</source>
                 <target>Felhasználó</target>
-            </trans-unit>
-            <trans-unit id="ROLE_CUSTOMER">
-                <source>ROLE_CUSTOMER</source>
-                <target>Ügyfél</target>
             </trans-unit>
 
             <!--
@@ -682,12 +698,27 @@
             </trans-unit>
             <trans-unit id="invoice.preview">
                 <source>invoice.preview</source>
-                
-                <target>Ez a számlán szereplő adatok az előnézete.</target>
+                <target>A számlán szereplő adatok előnézete.</target>
             </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
                 <target>Nyomtatás</target>
+            </trans-unit>
+            <trans-unit id="button.csv">
+                <source>button.csv</source>
+                <target>CSV</target>
+            </trans-unit>
+            <trans-unit id="button.xlsx">
+                <source>button.xlsx</source>
+                <target>Excel</target>
+            </trans-unit>
+            <trans-unit id="button.pdf">
+                <source>button.pdf</source>
+                <target>PDF</target>
+            </trans-unit>
+            <trans-unit id="button.ods">
+                <source>button.ods</source>
+                <target>ODS</target>
             </trans-unit>
             <trans-unit id="invoice_print">
                 <source>invoice_print</source>
@@ -707,11 +738,11 @@
             </trans-unit>
             <trans-unit id="invoice.from">
                 <source>invoice.from</source>
-                <target>Ettől:</target>
+                <target>Feladó:</target>
             </trans-unit>
             <trans-unit id="invoice.to">
                 <source>invoice.to</source>
-                <target>Eddig:</target>
+                <target>Címzett:</target>
             </trans-unit>
             <trans-unit id="invoice.number">
                 <source>invoice.number</source>
@@ -761,8 +792,8 @@
                 <source>invoice.total_working_time</source>
                 <target>Teljes munkaidő</target>
             </trans-unit>
-            <trans-unit id="label.order_number">
-                <source>label.order_number</source>
+            <trans-unit id="label.orderNumber">
+                <source>label.orderNumber</source>
                 <target>Megbízás száma</target>
             </trans-unit>
             <trans-unit id="label.invoice_tax_number">
@@ -780,6 +811,42 @@
 
                     Köszönöm megbízását, alább találja a szolgáltatásaim árát részletezve:
                 </target>
+            </trans-unit>
+
+            <!--
+              Export
+            -->
+            <trans-unit id="export.title">
+                <source>export.title</source>
+                <target>Exportálás</target>
+            </trans-unit>
+            <trans-unit id="export.subtitle">
+                <source>export.subtitle</source>
+                <target>Rögzített órák exportálása különböző formátumokba</target>
+            </trans-unit>
+            <trans-unit id="export.period">
+                <source>export.period</source>
+                <target>Exportált időszak</target>
+            </trans-unit>
+            <trans-unit id="export.document_title">
+                <source>export.document_title</source>
+                <target>Kiadások listája</target>
+            </trans-unit>
+            <trans-unit id="export.full_list">
+                <source>export.full_list</source>
+                <target>Teljes lista</target>
+            </trans-unit>
+            <trans-unit id="export.summary">
+                <source>export.summary</source>
+                <target>Összefoglaló</target>
+            </trans-unit>
+            <trans-unit id="export.page_of">
+                <source>export.page_of</source>
+                <target>%page%/%pages%</target>
+            </trans-unit>
+            <trans-unit id="export.date_copyright">
+                <source>export.date_copyright</source>
+                <target>Készült: %date% A %kimai% segítségével</target>
             </trans-unit>
 
             <!--
@@ -837,19 +904,9 @@
             <!--
              Navbar - recent entries and activities
             -->
-            <trans-unit id="active.entries">
-                <source>active.entries</source>
-                <target>%count% rögzítés van folyamatban|%count% rögzítés van folyamatban</target>
-            </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
                 <target>Összes rögzítés megjelenítése</target>
-            </trans-unit>
-            <trans-unit id="recent.activities">
-                <source>recent.activities</source>
-                <target>
-                    Legutóbb rögzített tevékenység folytatása|Tevékenység folytatása a legutóbbi %count% közül
-                </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>
@@ -871,6 +928,18 @@
                 <source>label.entryState</source>
                 <target>Rögzítések</target>
             </trans-unit>
+             <trans-unit id="label.exported">
+                <source>label.exported</source>
+                <target>Exportált</target>
+            </trans-unit>
+            <trans-unit id="entryState.exported">
+                <source>entryState.exported</source>
+                <target>Lezárva</target>
+            </trans-unit>
+            <trans-unit id="entryState.not_exported">
+                <source>entryState.not_exported</source>
+                <target>Nyitott</target>
+            </trans-unit>
             <trans-unit id="entryState.all">
                 <source>entryState.all</source>
                 <target>Összes</target>
@@ -882,6 +951,18 @@
             <trans-unit id="entryState.stopped">
                 <source>entryState.stopped</source>
                 <target>Megállítva</target>
+            </trans-unit>
+            <trans-unit id="export.clear_all">
+                <source>export.clear_all</source>
+                <target>Az összes megjelenített rögzítés megjelölése nyitottként?</target>
+            </trans-unit>
+            <trans-unit id="export.mark_all">
+                <source>export.mark_all</source>
+                <target>Az összes megjelenített rögzítés megjelölése lezártként?</target>
+            </trans-unit>
+            <trans-unit id="label.globalsOnly">
+                <source>label.globalsOnly</source>
+                <target>Csak a globálisakat</target>
             </trans-unit>
         </body>
     </file>

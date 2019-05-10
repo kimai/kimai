@@ -23,7 +23,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
  */
 class UserDateTimeFactoryTest extends TestCase
 {
-    public const TEST_TIMEZONE = 'Antarctica/DumontDUrville';
+    public const TEST_TIMEZONE = 'Europe/London';
 
     protected function createDateTimeFactory(string $timezone)
     {

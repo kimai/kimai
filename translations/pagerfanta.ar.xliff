@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file date="2018-09-28T20:00:00Z" source-language="en" target-language="ar" datatype="plaintext" original="none">
+    <file source-language="en" target-language="ar" datatype="plaintext" original="pagerfanta.en.xliff">
         <body>
             <trans-unit id="previous">
                 <source>previous</source>

@@ -80,11 +80,18 @@ class TimesheetEntity
             $this->tags = implode(', ', $arr);
         }
 
-        if (null === $entry->getEnd()) {
-            // TODO move these colors to the controller
-            $this->borderColor = '367fa9'; //'#f39c12';
-            $this->backgroundColor = '#3c8dbc'; //'#f39c12';
-        } else {
+        $color = $entry->getActivity()->getColor();
+        if (empty($color)) {
+            $color = $entry->getProject()->getColor();
+            if (empty($color)) {
+                $color = $entry->getProject()->getCustomer()->getColor();
+            }
+        }
+
+        $this->borderColor = $color;
+        $this->backgroundColor = $color;
+
+        if (null !== $entry->getEnd()) {
             $this->end = $entry->getEnd();
         }
     }

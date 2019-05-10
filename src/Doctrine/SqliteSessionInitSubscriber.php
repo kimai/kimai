@@ -16,6 +16,16 @@ use Doctrine\DBAL\Events;
 class SqliteSessionInitSubscriber implements EventSubscriber
 {
     /**
+     * {@inheritdoc}
+     */
+    public function getSubscribedEvents()
+    {
+        return [
+            Events::postConnect,
+        ];
+    }
+
+    /**
      * @param ConnectionEventArgs $args
      * @throws \Doctrine\DBAL\DBALException
      */
@@ -24,14 +34,7 @@ class SqliteSessionInitSubscriber implements EventSubscriber
         if ('sqlite' !== strtolower($args->getDatabasePlatform()->getName())) {
             return;
         }
-        $args->getConnection()->executeUpdate('PRAGMA foreign_keys = ON;');
-    }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSubscribedEvents()
-    {
-        return [Events::postConnect];
+        $args->getConnection()->executeUpdate('PRAGMA foreign_keys = ON;');
     }
 }

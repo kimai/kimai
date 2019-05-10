@@ -49,6 +49,11 @@ class ProjectType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            // documentation is for NelmioApiDocBundle
+            'documentation' => [
+                'type' => 'integer',
+                'description' => 'Project ID',
+            ],
             'label' => 'label.project',
             'class' => Project::class,
             'choice_label' => 'name',
@@ -69,6 +74,7 @@ class ProjectType extends AbstractType
                     'select' => 'activity',
                     'route' => 'get_activities',
                     'route_params' => ['project' => '-s-', 'orderBy' => 'name', 'visible' => $options['activity_visibility']],
+                    'empty_route_params' => ['globals' => 'true', 'orderBy' => 'name', 'visible' => $options['activity_visibility']],
                 ];
             }
 

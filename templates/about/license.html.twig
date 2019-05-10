@@ -1,0 +1,40 @@
+{% extends 'about/layout.html.twig' %}
+
+{% block about %}
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% block box_title %}{{ 'published_under'|trans({'%kimai%': constant('App\\Constants::SOFTWARE')}, 'about') }}{% endblock %}
+        {% block box_body %}
+            <pre>
+                {{ license }}
+            </pre>
+        {% endblock %}
+        {% block box_footer %}
+            <a class="btn btn-default" href="https://choosealicense.com/licenses/mit/" target="_blank">choosealicense.com</a>
+            <a class="btn btn-default" href="https://en.wikipedia.org/wiki/MIT_License" target="_blank">wikipedia.org</a>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% block box_title %}{{ 'special_thanks'|trans({}, 'about') }}{% endblock %}
+        {% block box_body %}
+            <p>{{ 'library_authors'|trans({}, 'about') }}</p>
+            <ul>
+                <li>AdminLTE: <a href="https://adminlte.io" target="_blank">https://adminlte.io</a></li>
+                <li>Bootstrap: <a href="https://getbootstrap.com" target="_blank">https://getbootstrap.com</a></li>
+                <li>Bootstrap-Select: <a href="https://developer.snapappointments.com/bootstrap-select" target="_blank">https://developer.snapappointments.com/bootstrap-select</a></li>
+                <li>chart.js: <a href="https://www.chartjs.org" target="_blank">https://www.chartjs.org</a></li>
+                <li>DateRangePicker: <a href="http://www.daterangepicker.com/" target="_blank">http://www.daterangepicker.com/</a></li>
+                <li>Doctrine: <a href="https://www.doctrine-project.org" target="_blank">https://www.doctrine-project.org</a></li>
+                <li>FontAwesome: <a href="https://fontawesome.com" target="_blank">https://fontawesome.com</a></li>
+                <li>FullCalendar: <a href="https://fullcalendar.io" target="_blank">https://fullcalendar.io</a></li>
+                <li>jQuery: <a href="https://jquery.com" target="_blank">https://jquery.com</a></li>
+                <li>jQuery UI: <a href="https://jqueryui.com" target="_blank">http://jqueryui.com</a></li>
+                <li>MomentJS: <a href="https://momentjs.com" target="_blank">https://momentjs.com</a></li>
+                <li>PHPOffice: <a href="https://github.com/PHPOffice" target="_blank">https://github.com/PHPOffice</a></li>
+                <li>SweetAlert 2: <a href="https://sweetalert2.github.io" target="_blank">https://sweetalert2.github.io</a></li>
+                <li>Symfony: <a href="https://symfony.com" target="_blank">https://symfony.com</a></li>
+                <li>…</li>
+            </ul>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

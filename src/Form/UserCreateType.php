@@ -28,7 +28,10 @@ class UserCreateType extends UserEditType
         $builder
             ->add('username', null, [
                 'label' => 'label.username',
-                'required' => true
+                'required' => true,
+                'attr' => [
+                    'autofocus' => 'autofocus'
+                ],
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'required' => true,

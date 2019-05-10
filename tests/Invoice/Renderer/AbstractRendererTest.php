@@ -9,6 +9,7 @@
 
 namespace App\Tests\Invoice\Renderer;
 
+use App\Configuration\LanguageFormattings;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\InvoiceDocument;
@@ -69,11 +70,11 @@ abstract class AbstractRendererTest extends KernelTestCase
         $request->setLocale('en');
         $requestStack->push($request);
 
-        $localeSettings = new LocaleSettings($requestStack, $languages);
+        $localeSettings = new LocaleSettings($requestStack, new LanguageFormattings($languages));
 
         $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $dateExtension = new DateExtensions($localeSettings);
-        $extensions = new Extensions($requestStack, $localeSettings);
+        $extensions = new Extensions($localeSettings);
 
         return new $classname($translator, $dateExtension, $extensions);
     }

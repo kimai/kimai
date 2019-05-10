@@ -27,11 +27,10 @@ class DoctrineCompilerPass implements CompilerPassInterface
     ];
 
     /**
-     * @param ContainerBuilder $container
      * @return array|false|null|string
      * @throws \Exception
      */
-    protected function findEngine(ContainerBuilder $container)
+    protected function findEngine()
     {
         $engine = null;
 
@@ -47,7 +46,7 @@ class DoctrineCompilerPass implements CompilerPassInterface
         if (null === $engine) {
             throw new \Exception(
                 'Could not detect database engine. Please set the environment config DATABASE_ENGINE ' .
-                'to one of: "' . implode(', ', $this->allowedEngines) . '" in your .env file: DATABASE_ENGINE=sqlite'
+                'to one of: "' . implode(', ', $this->allowedEngines) . '" in your .env file, e.g. DATABASE_ENGINE=sqlite'
             );
         }
 
@@ -68,7 +67,7 @@ class DoctrineCompilerPass implements CompilerPassInterface
      */
     protected function getConfigFile(ContainerBuilder $container)
     {
-        $engine = $this->findEngine($container);
+        $engine = $this->findEngine();
 
         $configDir = realpath(
             $container->getParameter('kernel.project_dir') . '/vendor/beberlei/DoctrineExtensions/config/'

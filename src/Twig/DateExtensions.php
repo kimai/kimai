@@ -11,12 +11,14 @@ namespace App\Twig;
 
 use App\Utils\LocaleSettings;
 use DateTime;
+use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
  * Date specific twig extensions
  */
-class DateExtensions extends \Twig_Extension
+class DateExtensions extends AbstractExtension
 {
     /**
      * @var LocaleSettings|null
@@ -30,6 +32,10 @@ class DateExtensions extends \Twig_Extension
      * @var string
      */
     protected $dateTimeFormat = null;
+    /**
+     * @var string
+     */
+    protected $dateTimeTypeFormat = null;
     /**
      * @var string
      */
@@ -56,9 +62,20 @@ class DateExtensions extends \Twig_Extension
             new TwigFilter('month_name', [$this, 'monthName']),
             new TwigFilter('date_short', [$this, 'dateShort']),
             new TwigFilter('date_time', [$this, 'dateTime']),
+            new TwigFilter('date_full', [$this, 'dateTimeFull']),
             new TwigFilter('date_format', [$this, 'dateFormat']),
             new TwigFilter('time', [$this, 'time']),
             new TwigFilter('hour24', [$this, 'hour24']),
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFunctions()
+    {
+        return [
+            new TwigFunction('get_format_duration', [$this, 'getDurationFormat']),
         ];
     }
 
@@ -86,6 +103,28 @@ class DateExtensions extends \Twig_Extension
         }
 
         return date_format($date, $this->dateTimeFormat);
+    }
+
+    /**
+     * @param DateTime $date
+     * @return string
+     */
+    public function dateTimeFull(DateTime $date)
+    {
+        if (null === $this->dateTimeTypeFormat) {
+            $this->dateTimeTypeFormat = $this->localeSettings->getDateTimeTypeFormat();
+        }
+
+        $formatter = new \IntlDateFormatter(
+            $this->localeSettings->getLocale(),
+            \IntlDateFormatter::MEDIUM,
+            \IntlDateFormatter::MEDIUM,
+            date_default_timezone_get(),
+            \IntlDateFormatter::GREGORIAN,
+            $this->dateTimeTypeFormat
+        );
+
+        return $formatter->format($date);
     }
 
     /**
@@ -136,5 +175,13 @@ class DateExtensions extends \Twig_Extension
         }
 
         return $twelveHour;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDurationFormat()
+    {
+        return $this->localeSettings->getDurationFormat();
     }
 }

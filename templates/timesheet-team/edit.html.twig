@@ -1,0 +1,15 @@
+{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+{% import "macros/actions.html.twig" as actions %}
+
+{% block page_title %}{{ 'admin_timesheet.title'|trans }}{% endblock %}
+{% block page_subtitle %}{{ 'admin_timesheet.subtitle'|trans }}{% endblock %}
+{% block page_actions %}{{ actions.timesheet_team(timesheet, 'edit') }}{% endblock %}
+
+{% block main %}
+    {{ include(app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig', {
+        'title': (timesheet.id ? 'timesheet.edit'|trans : 'create'|trans),
+        'form': form,
+        'back': path('admin_timesheet')
+    }) }}
+{% endblock %}

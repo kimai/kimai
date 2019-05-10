@@ -13,9 +13,11 @@ use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Form\TimesheetEditForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
+use App\Repository\ActivityRepository;
+use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
-use App\Timesheet\UserDateTimeFactory;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\ORMException;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,16 +33,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class TimesheetController extends AbstractController
 {
     use TimesheetControllerTrait;
-
-    /**
-     * @param UserDateTimeFactory $dateTime
-     * @param int $hardLimit
-     */
-    public function __construct(UserDateTimeFactory $dateTime, int $hardLimit)
-    {
-        $this->dateTime = $dateTime;
-        $this->setHardLimit($hardLimit);
-    }
 
     /**
      * @Route(path="/", defaults={"page": 1}, name="timesheet", methods={"GET"})
@@ -113,12 +105,12 @@ class TimesheetController extends AbstractController
 
         // by default the current month is exported, but it can be overwritten
         if (null === $query->getBegin()) {
-            $query->setBegin(new \DateTime('first day of this month'));
+            $query->setBegin($this->dateTime->createDateTime('first day of this month'));
         }
         $query->getBegin()->setTime(0, 0, 0);
 
         if (null === $query->getEnd()) {
-            $query->setEnd(new \DateTime('last day of this month'));
+            $query->setEnd($this->dateTime->createDateTime('last day of this month'));
         }
         $query->getEnd()->setTime(23, 59, 59);
 
@@ -144,22 +136,11 @@ class TimesheetController extends AbstractController
 
         return $this->render(
             'navbar/active-entries.html.twig',
-            ['entries' => $activeEntries]
+            [
+                'entries' => $activeEntries,
+                'soft_limit' => $this->getSoftLimit(),
+            ]
         );
-    }
-
-    /**
-     * The route to stop a running entry.
-     *
-     * @Route(path="/{id}/stop", name="timesheet_stop", methods={"GET"})
-     * @Security("is_granted('stop', entry)")
-     *
-     * @param Timesheet $entry
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function stopAction(Timesheet $entry)
-    {
-        return $this->stop($entry, 'timesheet');
     }
 
     /**
@@ -226,16 +207,18 @@ class TimesheetController extends AbstractController
      * @Security("is_granted('create_own_timesheet')")
      *
      * @param Request $request
+     * @param ProjectRepository $projectRepository
+     * @param ActivityRepository $activityRepository
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, ProjectRepository $projectRepository, ActivityRepository $activityRepository)
     {
         $route = 'timesheet';
         if ('calendar' === $request->get('origin')) {
             $route = 'calendar';
         }
 
-        return $this->create($request, $route, 'timesheet/edit.html.twig');
+        return $this->create($request, $route, 'timesheet/edit.html.twig', $projectRepository, $activityRepository);
     }
 
     /**
@@ -245,20 +228,38 @@ class TimesheetController extends AbstractController
      * @param Timesheet $entry
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
     public function deleteAction(Timesheet $entry, Request $request)
     {
-        try {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($entry);
-            $entityManager->flush();
+        $deleteForm = $this->createFormBuilder(null, [
+                'attr' => [
+                    'data-form-event' => 'kimai.timesheetUpdate kimai.timesheetDelete',
+                    'data-msg-success' => 'action.delete.success',
+                    'data-msg-error' => 'action.delete.error',
+                ],
+            ])
+            ->setAction($this->generateUrl('timesheet_delete', ['id' => $entry->getId()]))
+            ->setMethod('POST')
+            ->getForm();
 
-            $this->flashSuccess('action.delete.success');
-        } catch (\Exception $ex) {
-            $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
+        $deleteForm->handleRequest($request);
+
+        if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
+            try {
+                $this->getRepository()->delete($entry);
+                $this->flashSuccess('action.delete.success');
+            } catch (ORMException $ex) {
+                $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
+            }
+
+            return $this->redirectToRoute('timesheet');
         }
 
-        return $this->redirectToRoute('timesheet_paginated', ['page' => $request->get('page')]);
+        return $this->render('timesheet/delete.html.twig', [
+            'timesheet' => $entry,
+            'form' => $deleteForm->createView(),
+        ]);
     }
 
     /**
@@ -271,6 +272,7 @@ class TimesheetController extends AbstractController
         return $this->createForm(TimesheetEditForm::class, $entry, [
             'action' => $this->generateUrl('timesheet_create', ['origin' => $redirectRoute]),
             'include_rate' => $this->isGranted('edit_rate', $entry),
+            'customer' => true,
         ]);
     }
 
@@ -290,6 +292,7 @@ class TimesheetController extends AbstractController
             ]),
             'include_rate' => $this->isGranted('edit_rate', $entry),
             'include_exported' => $this->isGranted('edit_export', $entry),
+            'customer' => true,
         ]);
     }
 

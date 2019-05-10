@@ -2,12 +2,22 @@ nelmio_api_doc:
     models:
         use_jms: true
         names:
-            - { alias: CustomerEntity,          type: App\Entity\Customer,                      groups: [Default, Entity, Customer] }
-            - { alias: ProjectEntity,           type: App\Entity\Project,                       groups: [Default, Entity, Project] }
-            - { alias: ActivityEntity,          type: App\Entity\Activity,                      groups: [Default, Entity, Activity] }
-            - { alias: TimesheetEditForm,       type: App\Form\TimesheetEditForm,               groups: [Default, Entity, Timesheet] }
-            - { alias: TimesheetEntity,         type: App\Entity\Timesheet,                     groups: [Default, Entity, Timesheet] }
-            - { alias: UserEntity,              type: App\Entity\User,                          groups: [Default, Entity, User] }
+            - { alias: CustomerEditForm,          type: App\Form\CustomerEditForm,                groups: [Default, Entity, Customer] }
+            - { alias: CustomerEntity,            type: App\Entity\Customer,                      groups: [Default, Entity, Customer] }
+            - { alias: CustomerCollection,        type: App\Entity\Customer,                      groups: [Default, Collection, Customer] }
+            - { alias: ProjectEditForm,           type: App\Form\ProjectEditForm,                 groups: [Default, Entity, Project] }
+            - { alias: ProjectEntity,             type: App\Entity\Project,                       groups: [Default, Entity, Project] }
+            - { alias: ProjectCollection,         type: App\Entity\Project,                       groups: [Default, Collection, Project] }
+            - { alias: ActivityEditForm,          type: App\Form\ActivityEditForm,                groups: [Default, Entity, Activity] }
+            - { alias: ActivityEntity,            type: App\Entity\Activity,                      groups: [Default, Entity, Activity] }
+            - { alias: ActivityCollection,        type: App\Entity\Activity,                      groups: [Default, Collection, Activity] }
+            - { alias: TimesheetEditForm,         type: App\Form\TimesheetEditForm,               groups: [Default, Entity, Timesheet] }
+            - { alias: TimesheetEntity,           type: App\Entity\Timesheet,                     groups: [Default, Entity, Timesheet] }
+            - { alias: TimesheetCollection,       type: App\Entity\Timesheet,                     groups: [Default, Collection, Timesheet] }
+            - { alias: TimesheetSubCollection,    type: App\Entity\Timesheet,                     groups: [Default, Subresource, Timesheet] }
+            - { alias: UserEntity,                type: App\Entity\User,                          groups: [Default, Entity, User] }
+            - { alias: UserCollection,            type: App\Entity\User,                          groups: [Default, Collection, User] }
+            - { alias: I18nConfig,                type: App\API\Model\I18n,                       groups: [Default] }
     areas:
         path_patterns:
             - ^/api(?!/doc)
@@ -16,8 +26,11 @@ nelmio_api_doc:
         schemes: [http, https]
         info:
             title: Kimai 2 - API Docs
-            description: REST API description for the Kimai 2 time-tracking software. Do not rely on the example values/models, they are currently generated wrong. Please fetch the request and response structure from the API itself.
-            version: 0.2
+            description: |
+                REST API for the Kimai 2 time-tracking software. It is not yet considered stable and BC breaks might happen, even though I try to avoid them as much as possible.
+                - Collections return less data than explicit entity calls
+                - DateTime formats are explained in detail at https://www.kimai.org/documentation/rest-api.html
+            version: 0.3
 #        parameters:
 #            hostname:
 #                name: hostname

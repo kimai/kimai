@@ -21,7 +21,7 @@ build:
                             file: 'clover.xml'
                             format: 'clover'
                     -
-                        command: 'bin/console kimai:phpcs --checkstyle=checkstyle'
+                        command: 'bin/console kimai:codestyle --checkstyle=checkstyle'
                         stop_on_failure: true
                         analysis:
                             file: 'checkstyle'
@@ -42,5 +42,5 @@ filter:
 
 build_failure_conditions:
     - 'project.metric("scrutinizer.quality", < 9.30)'
-    - 'project.metric("scrutinizer.test_coverage", < 0.73)'
+    - 'project.metric("scrutinizer.test_coverage", < 0.9)'
     - 'project.metric_change("scrutinizer.test_coverage", < -0.01)'

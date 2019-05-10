@@ -1,5 +1,6 @@
 App\Entity\User:
     exclusion_policy: All
+    custom_accessor_order: [id, alias, title, avatar, language, timezone]
     properties:
         id:
             include: true
@@ -12,4 +13,15 @@ App\Entity\User:
             groups: [Entity]
         avatar:
             include: true
+            groups: [Entity]
+    virtual_properties:
+        getLanguage:
+            serialized_name: language
+            exp: "object.getPreferenceValue('language') === null ? null : object.getPreferenceValue('language')"
+            type: string
+            groups: [Entity]
+        getTimezone:
+            serialized_name: timezone
+            exp: "object.getPreferenceValue('timezone') === null ? null : object.getPreferenceValue('timezone')"
+            type: string
             groups: [Entity]

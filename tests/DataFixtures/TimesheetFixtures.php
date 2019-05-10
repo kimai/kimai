@@ -15,6 +15,7 @@ use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
+use App\Timesheet\Util;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
@@ -57,6 +58,10 @@ class TimesheetFixtures extends Fixture
      */
     protected $allowEmptyDescriptions = true;
     /**
+     * @var int
+     */
+    protected $exported = false;
+    /**
      * @var bool
      */
     protected $useTags = false;
@@ -72,6 +77,17 @@ class TimesheetFixtures extends Fixture
     public function setAllowEmptyDescriptions(bool $allowEmptyDescriptions)
     {
         $this->allowEmptyDescriptions = $allowEmptyDescriptions;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $exported
+     * @return TimesheetFixtures
+     */
+    public function setExported(bool $exported)
+    {
+        $this->exported = $exported;
 
         return $this;
     }
@@ -273,7 +289,7 @@ class TimesheetFixtures extends Fixture
     {
         $start = \DateTime::createFromFormat('Y-m-d', $this->startDate);
         $start->modify("+ $i days");
-        $start->modify('+ ' . rand(1, 172.800) . ' seconds'); // up to 2 days
+        $start->modify('+ ' . rand(1, 172800) . ' seconds'); // up to 2 days
         return $start;
     }
 
@@ -322,10 +338,11 @@ class TimesheetFixtures extends Fixture
     private function createTimesheetEntry(User $user, Activity $activity, Project $project, $description, \DateTime $start, $tagArray = [], $setEndDate = true)
     {
         $end = clone $start;
-        $end = $end->modify('+ ' . (rand(1, 172800)) . ' seconds');
+        $end = $end->modify('+ ' . (rand(1, 86400)) . ' seconds');
 
         $duration = $end->getTimestamp() - $start->getTimestamp();
-        $rate = $user->getPreferenceValue(UserPreference::HOURLY_RATE);
+        $hourlyRate = (float) $user->getPreferenceValue(UserPreference::HOURLY_RATE);
+        $rate = Util::calculateRate($hourlyRate, $duration);
 
         $entry = new Timesheet();
         $entry
@@ -333,10 +350,10 @@ class TimesheetFixtures extends Fixture
             ->setProject($project)
             ->setDescription($description)
             ->setUser($user)
-            ->setRate(round(($duration / 3600) * $rate))
+            ->setRate($rate)
             ->setBegin($start);
 
-        if (0 < count($tagArray)) {
+        if (count($tagArray) > 0) {
             foreach ($tagArray as $item) {
                 $entry->addTag($item);
             }
@@ -347,13 +364,18 @@ class TimesheetFixtures extends Fixture
         }
 
         if ($this->hourlyRate) {
-            $entry->setHourlyRate($rate);
+            $entry->setHourlyRate($hourlyRate);
+        }
+
+        if (null !== $this->exported) {
+            $entry->setExported($this->exported);
         }
 
         if ($setEndDate) {
             $entry
                 ->setEnd($end)
-                ->setDuration($duration);
+                ->setDuration($duration)
+            ;
         }
 
         return $entry;

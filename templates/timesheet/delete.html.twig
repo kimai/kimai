@@ -1,0 +1,17 @@
+{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
+{% import "macros/actions.html.twig" as actions %}
+
+{% block page_title %}{{ 'timesheet.title'|trans }}{% endblock %}
+{% block page_subtitle %}{{ 'timesheet.subtitle'|trans }}{% endblock %}
+{% block page_actions %}{{ actions.timesheet(timesheet, 'delete') }}{% endblock %}
+
+{% block main %}
+
+    {{ include(app.request.xmlHttpRequest ? 'default/_form_delete_modal.html.twig' : 'default/_form_delete.html.twig', {
+        'message': "delete.not_in_use"|trans|raw,
+        'form': form,
+        'used': false,
+        'back': path('timesheet')
+    }) }}
+
+{% endblock %}

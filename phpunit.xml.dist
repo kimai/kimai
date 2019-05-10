@@ -14,7 +14,6 @@
         <env name="APP_ENV" value="test" force="true"/>
         <env name="APP_DEBUG" value="1" force="true"/>
         <env name="APP_SECRET" value="5a79a1c866efef9ca1800f971d689f3e" force="true"/>
-        <env name="DATABASE_PREFIX" value="kimai2_" force="true"/>
         <!-- define your env variables for the test env here -->
 
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
@@ -26,6 +25,10 @@
         <!-- ###+ symfony/swiftmailer-bundle ### -->
         <env name="MAILER_URL" value="null://localhost" force="true"/>
         <!-- ###- symfony/swiftmailer-bundle ### -->
+
+        <!-- ###+ nelmio/cors-bundle ### -->
+        <env name="CORS_ALLOW_ORIGIN" value="^https?://localhost(:[0-9]+)?$"/>
+        <!-- ###- nelmio/cors-bundle ### -->
     </php>
 
     <testsuites>

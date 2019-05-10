@@ -9,6 +9,8 @@
 
 namespace App\Tests\Validator\Constraints;
 
+use App\Configuration\ConfigLoaderInterface;
+use App\Configuration\TimesheetConfiguration;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -26,14 +28,18 @@ class TimesheetValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator($isGranted = true)
     {
-        $options = [
-            'allow_future_times' => false
-        ];
-
         $authMock = $this->getMockBuilder(AuthorizationCheckerInterface::class)->getMock();
         $authMock->method('isGranted')->willReturn($isGranted);
 
-        return new TimesheetValidator($authMock, $options, false);
+        $loader = $this->getMockBuilder(ConfigLoaderInterface::class)->getMock();
+        $config = new TimesheetConfiguration($loader, [
+            'rules' => [
+                'allow_future_times' => false,
+            ],
+            'mode' => 'default',
+        ]);
+
+        return new TimesheetValidator($authMock, $config);
     }
 
     /**

@@ -23,6 +23,8 @@ use Faker\Generator;
  *
  * Execute this command to load the data:
  * bin/console doctrine:fixtures:load
+ *
+ * @codeCoverageIgnore
  */
 class CustomerFixtures extends Fixture
 {
@@ -31,8 +33,8 @@ class CustomerFixtures extends Fixture
     public const MIN_BUDGET = 0;
     public const MAX_BUDGET = 100000;
     public const MIN_GLOBAL_ACTIVITIES = 5;
-    public const MAX_GLOBAL_ACTIVITIES = 50;
-    public const MIN_PROJECTS_PER_CUSTOMER = 1;
+    public const MAX_GLOBAL_ACTIVITIES = 30;
+    public const MIN_PROJECTS_PER_CUSTOMER = 2;
     public const MAX_PROJECTS_PER_CUSTOMER = 25;
     public const MIN_ACTIVITIES_PER_PROJECT = 0;
     public const MAX_ACTIVITIES_PER_PROJECT = 25;
@@ -48,6 +50,7 @@ class CustomerFixtures extends Fixture
         for ($c = 1; $c <= $amountCustomers; $c++) {
             $visibleCustomer = 0 != $c % 5;
             $customer = $this->createCustomer($faker, $visibleCustomer);
+            $manager->persist($customer);
 
             $projectForCustomer = rand(self::MIN_PROJECTS_PER_CUSTOMER, self::MAX_PROJECTS_PER_CUSTOMER);
             for ($p = 1; $p <= $projectForCustomer; $p++) {
@@ -63,15 +66,13 @@ class CustomerFixtures extends Fixture
                 }
             }
 
-            $manager->persist($customer);
-
             $manager->flush();
             $manager->clear();
         }
 
         $amountGlobalActivities = rand(self::MIN_GLOBAL_ACTIVITIES, self::MAX_GLOBAL_ACTIVITIES);
         for ($c = 1; $c <= $amountGlobalActivities; $c++) {
-            $visibleActivity = 0 != $a % 3;
+            $visibleActivity = 0 != $c % 4;
             $activity = $this->createActivity($faker, null, $visibleActivity);
             $manager->persist($activity);
         }

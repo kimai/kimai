@@ -9,15 +9,14 @@
 
 namespace App\EventSubscriber;
 
-use App\Event\ConfigureAdminMenuEvent;
 use App\Event\ConfigureMainMenuEvent;
+use KevinPapst\AdminLTEBundle\Event\SidebarMenuEvent;
 use KevinPapst\AdminLTEBundle\Model\MenuItemModel;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
- * Menu event subscriber for timesheet, customer, projects, activities.
- * This is a sample implementation for developer who want to add new navigation entries in their bundles.
+ * Menu event subscriber is creating the Kimai default menu structure.
  */
 class MenuSubscriber implements EventSubscriberInterface
 {
@@ -42,7 +41,6 @@ class MenuSubscriber implements EventSubscriberInterface
     {
         return [
             ConfigureMainMenuEvent::CONFIGURE => ['onMainMenuConfigure', 100],
-            ConfigureAdminMenuEvent::CONFIGURE => ['onAdminMenuConfigure', 100],
         ];
     }
 
@@ -57,11 +55,21 @@ class MenuSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $menu = $event->getMenu();
+        $this->configureMainMenu($event->getMenu());
+        $this->configureAdminMenu($event->getAdminMenu());
+        $this->configureSystemMenu($event->getSystemMenu());
+    }
+
+    /**
+     * @param SidebarMenuEvent $menu
+     */
+    protected function configureMainMenu(SidebarMenuEvent $menu)
+    {
+        $auth = $this->security;
 
         if ($auth->isGranted('view_own_timesheet')) {
             $menu->addItem(
-                new MenuItemModel('timesheet', 'menu.timesheet', 'timesheet', [], 'far fa-clock')
+                new MenuItemModel('timesheet', 'menu.timesheet', 'timesheet', [], 'fas fa-clock')
             );
         }
 
@@ -79,33 +87,21 @@ class MenuSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param \App\Event\ConfigureAdminMenuEvent $event
+     * @param MenuItemModel $menu
      */
-    public function onAdminMenuConfigure(ConfigureAdminMenuEvent $event)
+    protected function configureAdminMenu(MenuItemModel $menu)
     {
         $auth = $this->security;
 
-        if (!$auth->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            return;
-        }
-
-        $menu = $event->getAdminMenu();
-
         if ($auth->isGranted('view_other_timesheet')) {
             $menu->addChild(
-                new MenuItemModel('timesheet_admin', 'menu.admin_timesheet', 'admin_timesheet', [], 'far fa-clock')
-            );
-        }
-
-        if ($auth->isGranted('view_user')) {
-            $menu->addChild(
-                new MenuItemModel('user_admin', 'menu.admin_user', 'admin_user', [], 'fas fa-user')
+                new MenuItemModel('timesheet_admin', 'menu.admin_timesheet', 'admin_timesheet', [], 'fas fa-user-clock')
             );
         }
 
         if ($auth->isGranted('view_customer')) {
             $menu->addChild(
-                new MenuItemModel('customer_admin', 'menu.admin_customer', 'admin_customer', [], 'fas fa-users')
+                new MenuItemModel('customer_admin', 'menu.admin_customer', 'admin_customer', [], 'fas fa-user-tie')
             );
         }
 
@@ -118,6 +114,32 @@ class MenuSubscriber implements EventSubscriberInterface
         if ($auth->isGranted('view_activity')) {
             $menu->addChild(
                 new MenuItemModel('activity_admin', 'menu.admin_activity', 'admin_activity', [], 'fas fa-tasks')
+            );
+        }
+    }
+
+    /**
+     * @param MenuItemModel $menu
+     */
+    protected function configureSystemMenu(MenuItemModel $menu)
+    {
+        $auth = $this->security;
+
+        if ($auth->isGranted('view_user')) {
+            $menu->addChild(
+                new MenuItemModel('user_admin', 'menu.admin_user', 'admin_user', [], 'fas fa-users')
+            );
+        }
+
+        if ($auth->isGranted('plugins')) {
+            $menu->addChild(
+                new MenuItemModel('plugins', 'menu.plugin', 'plugins', [], 'fas fa-plug')
+            );
+        }
+
+        if ($auth->isGranted('system_configuration')) {
+            $menu->addChild(
+                new MenuItemModel('system_configuration', 'menu.system_configuration', 'system_configuration', [], 'fas fa-cogs')
             );
         }
     }

@@ -10,6 +10,7 @@
 namespace App\Tests\API;
 
 use App\Entity\User;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @coversDefaultClass \App\API\CustomerController
@@ -62,15 +63,113 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertEntityNotFound(User::ROLE_USER, '/api/customers/2');
     }
 
+    public function testPostAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'visible' => true,
+            'country' => 'DE',
+            'currency' => 'EUR',
+            'timezone' => 'Europe/Berlin',
+        ];
+        $this->request($client, '/api/customers', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertStructure($result);
+        $this->assertNotEmpty($result['id']);
+    }
+
+    public function testPostActionWithInvalidUser()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $data = [
+            'name' => 'foo',
+            'visible' => true,
+            'country' => 'DE',
+            'currency' => 'EUR',
+            'timezone' => 'Europe/Berlin',
+        ];
+        $this->request($client, '/api/customers', 'POST', [], json_encode($data));
+        $response = $client->getResponse();
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        $json = json_decode($response->getContent(), true);
+        $this->assertEquals('User cannot create customers', $json['message']);
+    }
+
+    public function testPatchAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'comment' => '',
+            'visible' => true,
+            'country' => 'DE',
+            'currency' => 'EUR',
+            'timezone' => 'Europe/Berlin',
+        ];
+        $this->request($client, '/api/customers/1', 'PATCH', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertStructure($result);
+        $this->assertNotEmpty($result['id']);
+    }
+
+    public function testPatchActionWithInvalidUser()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $data = [
+            'name' => 'foo',
+            'comment' => '',
+            'visible' => true,
+            'country' => 'DE',
+            'currency' => 'EUR',
+            'timezone' => 'Europe/Berlin',
+        ];
+        $this->request($client, '/api/customers/1', 'PATCH', [], json_encode($data));
+        $response = $client->getResponse();
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        $json = json_decode($response->getContent(), true);
+        $this->assertEquals('User cannot update customer', $json['message']);
+    }
+
+    public function testPatchActionWithUnknownActivity()
+    {
+        $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/customers/255', []);
+    }
+
+    public function testInvalidPatchAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'visible' => true,
+            'country' => 'DE',
+            'currency' => 'XXX',
+            'timezone' => 'Europe/Berlin',
+        ];
+        $this->request($client, '/api/customers/1', 'PATCH', [], json_encode($data));
+
+        $response = $client->getResponse();
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['currency']);
+    }
+
     protected function assertStructure(array $result, $full = true)
     {
-        $expectedKeys = ['id', 'name', 'visible'];
+        $expectedKeys = ['id', 'name', 'visible', 'hourlyRate', 'fixedRate'];
 
         if ($full) {
-            $expectedKeys = [
-                'id', 'name', 'number', 'comment', 'visible', 'company', 'contact', 'address', 'country', 'currency',
-                'phone', 'fax', 'mobile', 'mail', 'timezone'
-            ];
+            $expectedKeys = array_merge($expectedKeys, [
+                'homepage', 'number', 'comment', 'company', 'contact', 'address', 'country', 'currency', 'phone', 'fax', 'mobile', 'email', 'timezone', 'color'
+            ]);
         }
 
         $actual = array_keys($result);

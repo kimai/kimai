@@ -35,6 +35,18 @@ class TimesheetRepository extends AbstractRepository
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
+    public function delete(Timesheet $timesheet)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->remove($timesheet);
+        $entityManager->flush();
+    }
+
+    /**
+     * @param Timesheet $timesheet
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function save(Timesheet $timesheet)
     {
         $entityManager = $this->getEntityManager();
@@ -64,7 +76,7 @@ class TimesheetRepository extends AbstractRepository
 
         $entityManager = $this->getEntityManager();
         $entityManager->persist($entry);
-        $entityManager->flush();
+        $entityManager->flush($entry);
 
         return true;
     }
@@ -82,10 +94,10 @@ class TimesheetRepository extends AbstractRepository
         switch ($type) {
             case self::STATS_QUERY_ACTIVE:
                 return count($this->getActiveEntries($user));
-                break;
+
             case self::STATS_QUERY_MONTHLY:
                 return $this->getMonthlyStats($user, $begin, $end);
-                break;
+
             case self::STATS_QUERY_DURATION:
                 $what = 'SUM(t.duration)';
                 break;
@@ -200,12 +212,13 @@ class TimesheetRepository extends AbstractRepository
 
         $qb->select('SUM(t.rate) as rate, SUM(t.duration) as duration, MONTH(t.begin) as month, YEAR(t.begin) as year')
             ->from(Timesheet::class, 't')
-            ->where($qb->expr()->gt('t.begin', ':from'));
+        ;
 
         if (!empty($begin)) {
+            $qb->where($qb->expr()->gt('t.begin', ':from'));
             $qb->setParameter('from', $begin, Type::DATETIME);
         } else {
-            $qb->setParameter('from', 0);
+            $qb->where($qb->expr()->isNotNull('t.begin'));
         }
 
         if (!empty($end)) {
@@ -261,7 +274,7 @@ class TimesheetRepository extends AbstractRepository
             ->join('t.activity', 'a')
             ->join('t.project', 'p')
             ->join('p.customer', 'c')
-            ->where($qb->expr()->gt('t.begin', '0'))
+            ->where($qb->expr()->isNotNull('t.begin'))
             ->andWhere($qb->expr()->isNull('t.end'))
             ->orderBy('t.begin', 'DESC');
 
@@ -340,16 +353,11 @@ class TimesheetRepository extends AbstractRepository
 
         if (TimesheetQuery::STATE_RUNNING == $query->getState()) {
             $qb->andWhere($qb->expr()->isNull('t.end'));
+        } elseif (TimesheetQuery::STATE_STOPPED == $query->getState()) {
+            $qb->andWhere($qb->expr()->isNotNull('t.end'));
         }
 
-        if (TimesheetQuery::STATE_STOPPED == $query->getState()) {
-            $qb->andWhere($qb->expr()->isNotNull('t.end'));
-
-            if (null !== $query->getEnd()) {
-                $qb->andWhere('t.end <= :end')
-                    ->setParameter('end', $query->getEnd());
-            }
-        } elseif (null !== $query->getEnd()) {
+        if (null !== $query->getEnd()) {
             $qb->andWhere('t.begin <= :end')
                 ->setParameter('end', $query->getEnd());
         }
@@ -381,5 +389,63 @@ class TimesheetRepository extends AbstractRepository
         }
 
         return $this->getBaseQueryResult($qb, $query);
+    }
+
+    /**
+     * @param User|null $user
+     * @param DateTime|null $startFrom
+     * @param int $limit
+     * @return array|mixed
+     * @throws \Doctrine\ORM\Query\QueryException
+     */
+    public function getRecentActivities(User $user = null, \DateTime $startFrom = null, $limit = 10)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select($qb->expr()->max('t.id') . ' AS maxid')
+            ->from(Timesheet::class, 't')
+            ->indexBy('t', 't.id')
+            ->join('t.activity', 'a')
+            ->join('t.project', 'p')
+            ->join('p.customer', 'c')
+            ->andWhere($qb->expr()->isNotNull('t.end'))
+            ->andWhere($qb->expr()->eq('a.visible', ':visible'))
+            ->andWhere($qb->expr()->eq('p.visible', ':visible'))
+            ->andWhere($qb->expr()->eq('c.visible', ':visible'))
+            ->groupBy('a.id', 'p.id')
+            ->orderBy('maxid', 'DESC')
+            ->setMaxResults($limit)
+            ->setParameter('visible', true, \PDO::PARAM_BOOL)
+        ;
+
+        if (null !== $user) {
+            $qb->andWhere('t.user = :user')
+                ->setParameter('user', $user);
+        }
+
+        if (null !== $startFrom) {
+            $qb->andWhere($qb->expr()->gt('t.begin', ':begin'))
+                ->setParameter('begin', $startFrom);
+        }
+
+        $results = $qb->getQuery()->getScalarResult();
+
+        if (empty($results)) {
+            return [];
+        }
+
+        $ids = array_column($results, 'maxid');
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('t', 'a', 'p', 'c')
+            ->from(Timesheet::class, 't')
+            ->join('t.activity', 'a')
+            ->join('t.project', 'p')
+            ->join('p.customer', 'c')
+            ->andWhere($qb->expr()->in('t.id', $ids))
+            ->orderBy('t.end', 'DESC')
+        ;
+
+        return $qb->getQuery()->getResult();
     }
 }

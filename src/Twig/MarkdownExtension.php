@@ -9,31 +9,33 @@
 
 namespace App\Twig;
 
+use App\Configuration\TimesheetConfiguration;
 use App\Utils\Markdown;
+use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
 /**
  * A twig extension to handle markdown parser.
  */
-class MarkdownExtension extends \Twig_Extension
+class MarkdownExtension extends AbstractExtension
 {
     /**
      * @var Markdown
      */
     private $markdown;
     /**
-     * @var bool
+     * @var TimesheetConfiguration
      */
-    private $timesheetIsMarkdown = false;
+    protected $configuration;
 
     /**
      * MarkdownExtension constructor.
      * @param Markdown $parser
      */
-    public function __construct(Markdown $parser, bool $timesheetAsMarkdown = false)
+    public function __construct(Markdown $parser, TimesheetConfiguration $configuration)
     {
         $this->markdown = $parser;
-        $this->timesheetIsMarkdown = $timesheetAsMarkdown;
+        $this->configuration = $configuration;
     }
 
     /**
@@ -59,7 +61,7 @@ class MarkdownExtension extends \Twig_Extension
             return '';
         }
 
-        if ($this->timesheetIsMarkdown) {
+        if ($this->configuration->isMarkdownEnabled()) {
             return $this->markdown->toHtml($content, false);
         }
 

@@ -11,13 +11,12 @@ namespace App\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
  * This class that loads and manages the Kimai configuration and container parameter.
  */
-class AppExtension extends Extension implements PrependExtensionInterface
+class AppExtension extends Extension
 {
     /**
      * @param array $configs
@@ -33,9 +32,17 @@ class AppExtension extends Extension implements PrependExtensionInterface
             $config = [];
         }
 
+        // @deprecated since 0.9, duration_only will be removed with 1.0
+        if (isset($config['timesheet']['duration_only'])) {
+            trigger_error('Configuration "kimai.timesheet.duration_only" is deprecated, please remove it', E_USER_DEPRECATED);
+            if (true === $config['timesheet']['duration_only'] && 'duration_only' !== $config['timesheet']['mode']) {
+                trigger_error('Found ambiguous configuration. Please remove "kimai.timesheet.duration_only" and set "kimai.timesheet.mode" instead.');
+            }
+        }
+
         // safe alternatives to %kernel.project_dir%
-        $container->setParameter('kimai.data_dir', $container->getParameter('kernel.project_dir') . '/var/data');
-        $container->setParameter('kimai.plugin_dir', $container->getParameter('kernel.project_dir') . '/var/plugins');
+        $container->setParameter('kimai.data_dir', $config['data_dir']);
+        $container->setParameter('kimai.plugin_dir', $config['plugin_dir']);
 
         $container->setParameter('kimai.languages', $config['languages']);
         $container->setParameter('kimai.calendar', $config['calendar']);
@@ -47,7 +54,12 @@ class AppExtension extends Extension implements PrependExtensionInterface
         $this->createPermissionParameter($config['permissions'], $container);
         $this->createThemeParameter($config['theme'], $container);
         $this->createUserParameter($config['user'], $container);
-        $this->createTimesheetParameter($config['timesheet'], $container);
+
+        $container->setParameter('kimai.config', $config);
+
+        $container->setParameter('kimai.timesheet', $config['timesheet']);
+        $container->setParameter('kimai.timesheet.rates', $config['timesheet']['rates']);
+        $container->setParameter('kimai.timesheet.rounding', $config['timesheet']['rounding']);
     }
 
     /**
@@ -89,6 +101,7 @@ class AppExtension extends Extension implements PrependExtensionInterface
     {
         $container->setParameter('kimai.theme', $config);
         $container->setParameter('kimai.theme.select_type', $config['select_type']);
+        $container->setParameter('kimai.theme.show_about', $config['show_about']);
     }
 
     /**
@@ -110,47 +123,6 @@ class AppExtension extends Extension implements PrependExtensionInterface
         }
 
         $container->setParameter('kimai.fosuser', $config);
-    }
-
-    /**
-     * @param array $config
-     * @param ContainerBuilder $container
-     */
-    protected function createTimesheetParameter(array $config, ContainerBuilder $container)
-    {
-        $container->setParameter('kimai.timesheet.rules', $config['rules']);
-        $container->setParameter('kimai.timesheet.rates', $config['rates']);
-        $container->setParameter('kimai.timesheet.rounding', $config['rounding']);
-        $container->setParameter('kimai.timesheet.duration_only', $config['duration_only']);
-        $container->setParameter('kimai.timesheet.markdown', $config['markdown_content']);
-        $container->setParameter('kimai.timesheet.active_entries.soft_limit', $config['active_entries']['soft_limit']);
-        $container->setParameter('kimai.timesheet.active_entries.hard_limit', $config['active_entries']['hard_limit']);
-    }
-
-    /**
-     * @param ContainerBuilder $container
-     */
-    public function prepend(ContainerBuilder $container)
-    {
-        /*
-        $configuration = new Configuration();
-        $configs = $container->getExtensionConfig($this->getAlias());
-        try {
-            $config = $this->processConfiguration($configuration, $configs);
-        } catch (InvalidConfigurationException $e) {
-            trigger_error('Found invalid "kimai" configuration: ' . $e->getMessage());
-            $config = [];
-        }
-
-        $container->prependExtensionConfig(
-            'twig',
-            [
-                'globals' => [
-                    'duration_only' => $config['timesheet']['duration_only'],
-                ],
-            ]
-        );
-        */
     }
 
     /**

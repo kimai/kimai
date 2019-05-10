@@ -10,12 +10,14 @@
 namespace App\Form;
 
 use App\Entity\Customer;
+use App\Form\Type\ColorPickerType;
+use App\Form\Type\FixedRateType;
+use App\Form\Type\HourlyRateType;
 use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -34,15 +36,23 @@ class CustomerEditForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var Customer $customer */
-        $customer = $options['data'];
+        $currency = false;
+
+        if (isset($options['data'])) {
+            /** @var Customer $customer */
+            $customer = $options['data'];
+            $currency = $customer->getCurrency();
+        }
 
         $builder
             ->add('name', TextType::class, [
                 'label' => 'label.name',
+                'attr' => [
+                    'autofocus' => 'autofocus'
+                ],
             ])
             ->add('number', TextType::class, [
-                'label' => 'label.customer_number',
+                'label' => 'label.number',
                 'required' => false,
             ])
             ->add('comment', TextareaType::class, [
@@ -81,7 +91,7 @@ class CustomerEditForm extends AbstractType
                 'required' => false,
                 'attr' => ['icon' => 'mobile'],
             ])
-            ->add('mail', EmailType::class, [
+            ->add('email', EmailType::class, [
                 'label' => 'label.email',
                 'required' => false,
             ])
@@ -92,15 +102,12 @@ class CustomerEditForm extends AbstractType
             ->add('timezone', TimezoneType::class, [
                 'label' => 'label.timezone',
             ])
-            ->add('fixedRate', MoneyType::class, [
-                'label' => 'label.fixed_rate',
-                'required' => false,
-                'currency' => $customer->getCurrency() ?? false,
+            ->add('color', ColorPickerType::class)
+            ->add('fixedRate', FixedRateType::class, [
+                'currency' => $currency ?? false,
             ])
-            ->add('hourlyRate', MoneyType::class, [
-                'label' => 'label.hourly_rate',
-                'required' => false,
-                'currency' => $customer->getCurrency() ?? false,
+            ->add('hourlyRate', HourlyRateType::class, [
+                'currency' => $currency ?? false,
             ])
             ->add('visible', YesNoType::class, [
                 'label' => 'label.visible',
@@ -118,6 +125,9 @@ class CustomerEditForm extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'admin_customer_edit',
+            'attr' => [
+                'data-form-event' => 'kimai.customerUpdate'
+            ],
         ]);
     }
 }

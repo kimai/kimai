@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="de" datatype="plaintext" original="flashmessages.en.xliff">
+    <file source-language="en" target-language="de" datatype="plaintext" original="flashmessages.en.xliff">
         <body>
             <trans-unit id="timesheet.stop.success">
                 <source>timesheet.stop.success</source>
@@ -8,7 +8,7 @@
             </trans-unit>
             <trans-unit id="timesheet.stop.error">
                 <source>timesheet.stop.error</source>
-                <target>Zeitmessung konnte nicht gestoppt werden: %reason%</target>
+                <target>Zeitmessung konnte nicht gestoppt werden</target>
             </trans-unit>
             <trans-unit id="timesheet.start.success">
                 <source>timesheet.start.success</source>
@@ -24,7 +24,7 @@
             </trans-unit>
             <trans-unit id="action.update.success">
                 <source>action.update.success</source>
-                <target>Änderungen erfolgreich gespeichert</target>
+                <target>Änderungen gespeichert</target>
             </trans-unit>
             <trans-unit id="action.update.error">
                 <source>action.update.error</source>
@@ -32,7 +32,7 @@
             </trans-unit>
             <trans-unit id="action.delete.success">
                 <source>action.delete.success</source>
-                <target>Eintrag wurde erfolgreich gelöscht</target>
+                <target>Eintrag wurde gelöscht</target>
             </trans-unit>
             <trans-unit id="action.delete.error">
                 <source>action.delete.error</source>

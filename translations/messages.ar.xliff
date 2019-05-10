@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file date="2018-09-28T20:00:00Z" source-language="en" target-language="ar" datatype="plaintext" original="none">
+    <file source-language="en" target-language="ar" datatype="plaintext" original="messages.en.xliff">
         <body>
             <!--
               Global template keys
             -->
-            <trans-unit id="browser.title">
-                <source>browser.title</source>
-                <target>Kimai - Time Tracking</target>
+            <trans-unit id="time_tracking">
+                <source>time_tracking</source>
+                <target>Time Tracking</target>
             </trans-unit>
             <trans-unit id="yes">
                 <source>yes</source>
@@ -20,10 +20,6 @@
             <trans-unit id="both">
                 <source>both</source>
                 <target>على حد سواء</target>
-            </trans-unit>
-            <trans-unit id="subtitle.amount">
-                <source>subtitle.amount</source>
-                <target>(total %count%)</target>
             </trans-unit>
             <trans-unit id="This is a mandatory field">
                 <source>This is a mandatory field</source>
@@ -183,6 +179,10 @@
                 <source>label.project</source>
                 <target>مشروع</target>
             </trans-unit>
+            <trans-unit id="label.hourlyRate">
+                <source>label.hourlyRate</source>
+                <target>بالساعة</target>
+            </trans-unit>
             <trans-unit id="label.hourly_rate">
                 <source>label.hourly_rate</source>
                 <target>بالساعة</target>
@@ -311,8 +311,8 @@
                 <source>modal.columns.description</source>
                 <target>عند حفظ الخانات غير المحددة سيتم إخفاؤها وسيتم تخزين هذا الإعداد في ملف تعريف ارتباط المتصفح. إذا قمت بحذف ملفات تعريف الارتباط الخاصة بك ، سيتم عكس الإعدادات.</target>
             </trans-unit>
-            <trans-unit id="label.fixed_rate">
-                <source>label.fixed_rate</source>
+            <trans-unit id="label.fixedRate">
+                <source>label.fixedRate</source>
                 <target>معدل ثابت</target>
             </trans-unit>
 
@@ -334,10 +334,6 @@
             <trans-unit id="profile.first_entry">
                 <source>profile.first_entry</source>
                 <target>العمل منذ</target>
-            </trans-unit>
-            <trans-unit id="profile.tab_monthly">
-                <source>profile.tab_monthly</source>
-                <target>إحصاء سنوي</target>
             </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>
@@ -362,18 +358,6 @@
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
                 <target>تبديل حالة صفحة الشريط الجانبي الأيسر في صفحة (فتح أو طي)</target>
-            </trans-unit>
-
-            <!--
-              Help - Manual
-            -->
-            <trans-unit id="help.title">
-                <source>help.title</source>
-                <target>مساعدة</target>
-            </trans-unit>
-            <trans-unit id="help.subtitle">
-                <source>help.subtitle</source>
-                <target>تعليمات لاستخدام وتكوين Kimai</target>
             </trans-unit>
 
             <!--
@@ -439,8 +423,8 @@
                 <source>admin_customer.subtitle</source>
                 <target>عميلك هو الأساس لإنشاء المشاريع والأنشطة</target>
             </trans-unit>
-            <trans-unit id="label.customer_number">
-                <source>label.customer_number</source>
+            <trans-unit id="label.number">
+                <source>label.number</source>
                 <target>حساب</target>
             </trans-unit>
             <trans-unit id="label.company">
@@ -552,10 +536,6 @@
             <trans-unit id="ROLE_USER">
                 <source>ROLE_USER</source>
                 <target>المستخدم</target>
-            </trans-unit>
-            <trans-unit id="ROLE_CUSTOMER">
-                <source>ROLE_CUSTOMER</source>
-                <target>زبون</target>
             </trans-unit>
 
             <!--
@@ -741,8 +721,8 @@
                 <source>invoice.total_working_time</source>
                 <target>المدة الإجمالية</target>
             </trans-unit>
-            <trans-unit id="label.order_number">
-                <source>label.order_number</source>
+            <trans-unit id="label.orderNumber">
+                <source>label.orderNumber</source>
                 <target>رقم الطلب</target>
             </trans-unit>
             <trans-unit id="label.invoice_tax_number">
@@ -817,19 +797,9 @@
             <!--
              Navbar - recent entries and activities
             -->
-            <trans-unit id="active.entries">
-                <source>active.entries</source>
-                <target>{1} عندك %count% سجل نشط|{2} عندك %count% سجلات نشطة|[3,Inf] عندك %count% سجلات نشطة</target>
-            </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
                 <target>عرض كل السجلات</target>
-            </trans-unit>
-            <trans-unit id="recent.activities">
-                <source>recent.activities</source>
-                <target>
-                    إعادة تشغيل آخر نشاط مسجل الخاص بك، إعادة تشغيل واحد من %count% الأنشطة الأخيرة
-                </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>

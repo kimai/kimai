@@ -13,9 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Project
- *
- * @ORM\Table(name="projects")
+ * @ORM\Table(name="kimai2_projects")
  * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
  */
 class Project
@@ -73,7 +71,7 @@ class Project
     /**
      * @var float
      *
-     * @ORM\Column(name="budget", type="decimal", precision=10, scale=2, nullable=false)
+     * @ORM\Column(name="budget", type="float", precision=10, scale=2, nullable=false)
      * @Assert\NotNull()
      */
     private $budget = 0.00;
@@ -85,21 +83,9 @@ class Project
      */
     private $activities;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="fixed_rate", type="decimal", precision=10, scale=2, nullable=true)
-     * @Assert\GreaterThanOrEqual(0)
-     */
-    private $fixedRate = null;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="hourly_rate", type="decimal", precision=10, scale=2, nullable=true)
-     * @Assert\GreaterThanOrEqual(0)
-     */
-    private $hourlyRate = null;
+    // keep the trait include exactly here, for placing the column at the correct position
+    use RatesTrait;
+    use ColorTrait;
 
     /**
      * @var Timesheet[]
@@ -264,44 +250,6 @@ class Project
     public function setOrderNumber($orderNumber)
     {
         $this->orderNumber = $orderNumber;
-
-        return $this;
-    }
-
-    /**
-     * @return float
-     */
-    public function getFixedRate(): ?float
-    {
-        return $this->fixedRate;
-    }
-
-    /**
-     * @param float $fixedRate
-     * @return Project
-     */
-    public function setFixedRate(?float $fixedRate)
-    {
-        $this->fixedRate = $fixedRate;
-
-        return $this;
-    }
-
-    /**
-     * @return float
-     */
-    public function getHourlyRate(): ?float
-    {
-        return $this->hourlyRate;
-    }
-
-    /**
-     * @param float $hourlyRate
-     * @return Project
-     */
-    public function setHourlyRate(?float $hourlyRate)
-    {
-        $this->hourlyRate = $hourlyRate;
 
         return $this;
     }

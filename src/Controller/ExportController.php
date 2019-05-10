@@ -14,6 +14,7 @@ use App\Export\ServiceExport;
 use App\Form\Toolbar\ExportToolbarForm;
 use App\Repository\Query\ExportQuery;
 use App\Repository\TimesheetRepository;
+use App\Timesheet\UserDateTimeFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,15 +36,20 @@ class ExportController extends AbstractController
      * @var ServiceExport
      */
     protected $export;
+    /**
+     * @var UserDateTimeFactory
+     */
+    protected $dateFactory;
 
     /**
      * @param TimesheetRepository $timesheet
      * @param ServiceExport $export
      */
-    public function __construct(TimesheetRepository $timesheet, ServiceExport $export)
+    public function __construct(TimesheetRepository $timesheet, ServiceExport $export, UserDateTimeFactory $dateTime)
     {
         $this->timesheetRepository = $timesheet;
         $this->export = $export;
+        $this->dateFactory = $dateTime;
     }
 
     /**
@@ -52,8 +58,8 @@ class ExportController extends AbstractController
      */
     protected function getDefaultQuery()
     {
-        $begin = new \DateTime('first day of this month');
-        $end = new \DateTime('last day of this month');
+        $begin = $this->dateFactory->createDateTime('first day of this month 00:00:00');
+        $end = $this->dateFactory->createDateTime('last day of this month 23:59:59');
 
         $query = new ExportQuery();
         $query->setOrder(ExportQuery::ORDER_ASC);
@@ -87,6 +93,7 @@ class ExportController extends AbstractController
         $entries = $this->getEntries($query);
 
         return $this->render('export/index.html.twig', [
+            'query' => $query,
             'entries' => $entries,
             'form' => $form->createView(),
             'renderer' => $this->export->getRenderer(),
@@ -122,7 +129,7 @@ class ExportController extends AbstractController
         // this code should not be reached, as the query already filters invalid values
         // when trying to call setType() with an unknown value
         if (null === $renderer) {
-            throw $this->createNotFoundException('Invalid export renderer');
+            throw $this->createNotFoundException('Unknown export renderer');
         }
 
         $entries = $this->getEntries($query);

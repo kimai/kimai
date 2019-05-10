@@ -9,7 +9,9 @@
 
 namespace App\Tests\Twig;
 
+use App\Configuration\LanguageFormattings;
 use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Twig\Extensions;
 use App\Utils\LocaleSettings;
 use PHPUnit\Framework\TestCase;
@@ -17,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Intl\Util\IntlTestHelper;
 use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
  * @covers \App\Twig\Extensions
@@ -40,9 +43,9 @@ class ExtensionsTest extends TestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        $localeSettings = new LocaleSettings($requestStack, $locales);
+        $localeSettings = new LocaleSettings($requestStack, new LanguageFormattings($locales));
 
-        return new Extensions($requestStack, $localeSettings);
+        return new Extensions($localeSettings);
     }
 
     public function testGetFilters()
@@ -52,6 +55,7 @@ class ExtensionsTest extends TestCase
         $twigFilters = $sut->getFilters();
         $this->assertCount(count($filters), $twigFilters);
         $i = 0;
+        /** @var TwigFilter $filter */
         foreach ($twigFilters as $filter) {
             $this->assertInstanceOf(TwigFilter::class, $filter);
             $this->assertEquals($filters[$i++], $filter->getName());
@@ -60,13 +64,14 @@ class ExtensionsTest extends TestCase
 
     public function testGetFunctions()
     {
-        $functions = ['locales', 'is_visible_column', 'is_datatable_configured'];
+        $functions = ['locales', 'class_name'];
         $sut = $this->getSut($this->localeDe);
         $twigFunctions = $sut->getFunctions();
         $this->assertCount(count($functions), $twigFunctions);
         $i = 0;
+        /** @var TwigFunction $filter */
         foreach ($twigFunctions as $filter) {
-            $this->assertInstanceOf(\Twig_SimpleFunction::class, $filter);
+            $this->assertInstanceOf(TwigFunction::class, $filter);
             $this->assertEquals($functions[$i++], $filter->getName());
         }
     }
@@ -212,7 +217,8 @@ class ExtensionsTest extends TestCase
         $icons = [
             'user', 'customer', 'project', 'activity', 'admin', 'invoice', 'timesheet', 'dashboard', 'logout', 'trash',
             'delete', 'repeat', 'edit', 'manual', 'help', 'start', 'start-small', 'stop', 'stop-small', 'filter',
-            'create', 'list', 'print', 'visibility', 'calendar', 'money', 'duration', 'download', 'copy', 'settings'
+            'create', 'list', 'print', 'visibility', 'calendar', 'money', 'duration', 'download', 'copy', 'settings',
+            'export', 'pdf', 'csv', 'ods', 'xlsx', 'on', 'off', 'audit', 'home', 'shop', 'about', 'debug', 'profile-stats'
         ];
 
         // test pre-defined icons
@@ -243,5 +249,15 @@ class ExtensionsTest extends TestCase
             $result = $sut->documentationLink($input);
             $this->assertEquals($expected, $result);
         }
+    }
+
+    public function testGetClassName()
+    {
+        $sut = $this->getSut($this->localeEn);
+        $this->assertEquals('DateTime', $sut->getClassName(new \DateTime()));
+        $this->assertEquals('stdClass', $sut->getClassName(new \stdClass()));
+        $this->assertNull($sut->getClassName(''));
+        $this->assertNull($sut->getClassName(null));
+        $this->assertEquals('App\Entity\User', $sut->getClassName(new User()));
     }
 }

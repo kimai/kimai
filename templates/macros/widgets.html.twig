@@ -42,38 +42,48 @@
     {{ macro.label(macro.username(user), 'primary') }}
 {% endmacro %}
 
-{% macro label_activity(activity) %}
+{% macro label_activity(activity, url) %}
     {% import _self as macro %}
     {% set isVisible = activity.visible %}
+    {% set color = activity.color %}
+    {% if color is empty and activity.project is not null %}
+        {% set color = activity.project.color ?? activity.project.customer.color %}
+    {% endif %}
     {% if isVisible and not activity.project is null %}
         {% set isVisible = activity.project.visible %}
         {% if isVisible and not activity.project.customer is null %}
             {% set isVisible = activity.project.customer.visible %}
         {% endif %}
     {% endif %}
-    {% set label = '' %}
-    {% if not activity.project is null %}
-        {% set label = activity.project.customer.name ~ ': ' ~ activity.project.name %}
-    {% endif %}
-    {{ macro.label(activity.name, (isVisible ? 'primary' : 'default'), label) }}
+    {{ macro.label_color_dot('activity', isVisible, activity.name, url, color) }}
 {% endmacro %}
 
-{% macro label_project(project) %}
+{% macro label_project(project, url) %}
     {% import _self as macro %}
+    {% set isVisible = false %}
     {% if project.visible and project.customer.visible %}
-        {{ macro.label(project.name, 'primary', project.customer.name) }}
-    {% else %}
-        {{ macro.label(project.name, 'default', project.customer.name) }}
+        {% set isVisible = true %}
     {% endif %}
+    {{ macro.label_color_dot('project', isVisible, project.name, url, (project.color ?? project.customer.color)) }}
 {% endmacro %}
 
-{% macro label_customer(customer) %}
+{% macro label_customer(customer, url) %}
     {% import _self as macro %}
-    {% if customer.visible %}
-        {{ macro.label(customer.name, 'primary') }}
-    {% else %}
-        {{ macro.label(customer.name, 'default') }}
-    {% endif %}
+    {% set isVisible = customer.visible %}
+    {{ macro.label_color_dot('customer', isVisible, customer.name, url, customer.color) }}
+{% endmacro %}
+
+{% macro label_color_dot(type, isVisible, name, url, color) %}
+    <span class="label-{{ type }}{{ isVisible ? '' : ' label-invisible' }}">
+        <span class="dot"{% if color is not empty %} style="background-color:{{ color }}"{% endif %}></span>
+        <span class="name">
+            {% if url is not empty %}
+                <a href="{{ url }}">{{ name }}</a>
+            {% else %}
+                {{ name }}
+            {% endif %}
+        </span>
+    </span>
 {% endmacro %}
 
 {% macro badge_counter(count, url) %}
@@ -86,7 +96,7 @@
 
 {% macro label(title, type, tooltip) %}
     {# success, warning, danger, primary #}
-    <span {%  if tooltip %}title="{{ tooltip }}" {% endif %}class="label label-{{ type|default('success') }}">{{ title|trans }}</span>
+    <span {% if tooltip %}data-toggle="tooltip" data-placement="top" title="{{ tooltip }}" {% endif %}class="label label-{{ type|default('success') }}">{{ title|trans }}</span>
 {% endmacro %}
 
 {% macro badge(title, color) %}
@@ -110,7 +120,7 @@
 {% endmacro %}
 
 {% macro info_box_progress(title, description, amount, percentage, icon, color) %}
-    <div class="info-box bg-{{ color|default(kimai_context.box_color) }}">
+    <div class="info-box bg-{{ color }}">
         <span class="info-box-icon"><i class="{{ icon|icon(icon) }}"></i></span>
 
         <div class="info-box-content">
@@ -143,55 +153,120 @@
     </div>
 {% endmacro %}
 
-{% macro button_group(actions) %}
-    {% import _self as macro %}
-    <div class="btn-group">
-        {%- for icon,values in actions  %}
-            {% spaceless %}
-                {% set id = null %}
-                {% set onclick = null %}
-                {% set modal = null %}
-                {% set toggle = null %}
-                {% set url = null %}
-                {% set class = "btn btn-default btn-" ~ icon ~ " " %}
+{% macro table_actions(actions) %}
+    {%- import _self as macro -%}
+    {% if actions|length >= 1 %}
+        <div class="btn-group">
+            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{ 'label.actions'|trans }}
+                <span class="fa fa-caret-down"></span></button>
+            <ul class="dropdown-menu dropdown-menu-right">
+                {%- filter spaceless -%}
+                    {%- for icon,values in actions  %}
+                        {% set class = '' %}
+                        {% if icon == 'trash' %}
+                            {% set class = 'delete' %}
+                            <li class="divider"></li>
+                        {% endif %}
+                        <li class="{{ class }}">
+                            {% if values is iterable %}
+                                {{ macro.action_button(icon, values|merge({'title': icon|trans({}, 'actions')}), false) }}
+                            {% else %}
+                                {{ macro.action_button(icon, {'url': values, 'title': icon|trans({}, 'actions')}, false) }}
+                            {% endif %}
+                        </li>
+                    {% endfor -%}
+                {% endfilter %}
+            </ul>
+        </div>
+    {% endif %}
+{% endmacro %}
 
-                {% if not values is iterable %}
-                    {% set url = values %}
-                    {% if 'onclick:' in url %}
-                        {% set onclick = url|replace({'onclick:': ''}) %}
-                        {% set url = '#' %}
-                    {% endif %}
-                    {% if '#collapse' in url %}
-                        {% set toggle = 'collapse' %}
-                    {% endif %}
-                    {% if '#modal' in url %}
-                        {% set modal = url %}
-                        {% set url = '#' %}
-                    {% endif %}
-                {% else %}
-                    {% set url = values.url ?? '#' %}
-                    {% set onclick = values.onclick ?? null %}
-                    {% set modal = values.modal ?? null %}
-                    {% set toggle = values.toggle ?? null %}
-                    {% set id = values.id ?? null %}
-                    {% set class = class ~ ( values.class | default("")) %}
-                {% endif %}
-            {% endspaceless %}
-            <a class="{{ class | trim }}" href="{{ url }}"
-                    {%- if id is not empty -%}
-                        id="{{ id }}"
-                    {%- endif -%}
-                    {%- if toggle is not empty -%}
-                        data-toggle="{{ toggle }}"
-                    {%- endif -%}
-                    {%- if modal is not empty -%}
-                        data-toggle="modal" data-target="{{ modal }}"
-                    {%- endif -%}
-                    {%- if onclick is not empty -%}
-                        onclick="{{ onclick }}"
-                    {%- endif -%}
-            >{{ macro.icon(icon) }}</a>
+{% macro action_button(icon, values, type) %}
+    {%- import _self as macro -%}
+    {%- filter spaceless -%}
+        {% set id = null %}
+        {% set onclick = null %}
+        {% set modal = null %}
+        {% set toggle = null %}
+        {% set url = null %}
+        {% set target = null %}
+        {% set title = null %}
+        {% set disabled = false %}
+        {% set attr = {} %}
+        {% if type is same as (false) %}
+            {% set class = "" %}
+        {% elseif type is null %}
+            {% set class = "btn btn-default btn-" ~ icon ~ " " %}
+        {% else %}
+            {% set class = "btn btn-" ~ type ~ " btn-" ~ icon ~ " " %}
+        {% endif %}
+
+        {% if not values is iterable %}
+            {% set url = values %}
+            {% if 'onclick:' in url %}
+                {% set onclick = url|replace({'onclick:': ''}) %}
+                {% set url = '#' %}
+            {% endif %}
+            {% if '#collapse' in url %}
+                {% set toggle = 'collapse' %}
+            {% endif %}
+            {% if '#modal' in url %}
+                {% set modal = url %}
+                {% set url = '#' %}
+            {% endif %}
+        {% else %}
+            {% set disabled = values.disabled ?? false %}
+            {% set url = values.url ?? '#' %}
+            {% set onclick = values.onclick ?? null %}
+            {% set modal = values.modal ?? null %}
+            {% set toggle = values.toggle ?? null %}
+            {% set target = values.target ?? null %}
+            {% set id = values.id ?? null %}
+            {% set title = values.title ?? null %}
+            {% set class = class ~ ( values.class | default("")) %}
+            {% set attr = values.attr ?? {} %}
+        {% endif %}
+
+        {% if disabled is same as (true) %}
+            {% set class = class ~ " disabled"  %}
+        {% endif %}
+
+        <a class="{{ class | trim }}" href="{{ url }}"
+                {%- if disabled is same as (true) -%}
+                    disabled="disabled"
+                {%- endif -%}
+                {%- if id is not empty -%}
+                    id="{{ id }}"
+                {%- endif -%}
+                {%- if toggle is not empty -%}
+                    data-toggle="{{ toggle }}"
+                {%- endif -%}
+                {%- if modal is not empty -%}
+                    data-toggle="modal" data-target="{{ modal }}"
+                {%- endif -%}
+                {%- if onclick is not empty -%}
+                    onclick="{{ onclick }}"
+                {%- endif -%}
+                {%- if target is not empty -%}
+                    target="{{ target }}"
+                {%- endif -%}
+                {%- if attr is not empty -%}
+                    {%- for name, value in attr -%}
+                        {{ name }}="{{ value }}"
+                    {%- endfor -%}
+                {%- endif -%}
+        >{% if title is not null %}{{ title }}{% else %}{{ macro.icon(icon) }}{% endif %}</a>
+    {% endfilter %}
+{% endmacro %}
+
+{% macro button_group(actions, type) %}
+    {%- import _self as macro -%}
+    <div class="btn-group">
+        {%- filter spaceless -%}
+        {%- for icon,values in actions  %}
+            {{ macro.action_button(icon, values, type) }}
         {% endfor -%}
+        {% endfilter %}
     </div>
 {% endmacro %}
 

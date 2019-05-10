@@ -14,30 +14,28 @@ use App\Entity\Timesheet;
 use App\Utils\Duration;
 use App\Utils\LocaleSettings;
 use NumberFormatter;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Intl\Intl;
+use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
  * Multiple Twig extensions: filters and functions
  */
-class Extensions extends \Twig_Extension
+class Extensions extends AbstractExtension
 {
     /**
      * @var LocaleSettings
      */
     protected $localeSettings;
-
     /**
      * @var string
      */
     protected $locale;
-
     /**
      * @var Duration
      */
     protected $durationFormatter;
-
     /**
      * @var NumberFormatter
      */
@@ -46,16 +44,6 @@ class Extensions extends \Twig_Extension
      * @var NumberFormatter
      */
     protected $moneyFormatter;
-
-    /**
-     * @var RequestStack
-     */
-    protected $requestStack;
-
-    /**
-     * @var array
-     */
-    protected $cookies = [];
 
     /**
      * @var string[]
@@ -83,14 +71,14 @@ class Extensions extends \Twig_Extension
         'project' => 'fas fa-project-diagram',
         'repeat' => 'fas fa-redo-alt',
         'start' => 'fas fa-play-circle',
-        'start-small' => 'fas fa-play-circle',
+        'start-small' => 'far fa-play-circle',
         'stop' => 'fas fa-stop',
         'stop-small' => 'far fa-stop-circle',
-        'timesheet' => 'far fa-clock',
+        'timesheet' => 'fas fa-clock',
         'trash' => 'far fa-trash-alt',
         'user' => 'fas fa-user',
         'visibility' => 'far fa-eye',
-        'settings' => 'fas fa-wrench',
+        'settings' => 'fas fa-cog',
         'export' => 'fas fa-file-export',
         'pdf' => 'fas fa-file-pdf',
         'csv' => 'fas fa-table',
@@ -98,15 +86,20 @@ class Extensions extends \Twig_Extension
         'xlsx' => 'fas fa-file-excel',
         'on' => 'fas fa-toggle-on',
         'off' => 'fas fa-toggle-off',
+        'audit' => 'fas fa-history',
+        'home' => 'fas fa-home',
+        'shop' => 'fas fa-shopping-cart',
+        'about' => 'fas fa-info-circle',
+        'debug' => 'far fa-file-alt',
+        'profile-stats' => 'far fa-chart-bar',
+        'profile' => 'fas fa-user-edit',
     ];
 
     /**
-     * @param RequestStack $requestStack
      * @param LocaleSettings $localeSettings
      */
-    public function __construct(RequestStack $requestStack, LocaleSettings $localeSettings)
+    public function __construct(LocaleSettings $localeSettings)
     {
-        $this->requestStack = $requestStack;
         $this->localeSettings = $localeSettings;
         $this->durationFormatter = new Duration();
     }
@@ -132,65 +125,22 @@ class Extensions extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('locales', [$this, 'getLocales']),
-            new \Twig_SimpleFunction('is_visible_column', [$this, 'isColumnVisible']),
-            new \Twig_SimpleFunction('is_datatable_configured', [$this, 'isDatatableConfigured']),
+            new TwigFunction('locales', [$this, 'getLocales']),
+            new TwigFunction('class_name', [$this, 'getClassName']),
         ];
     }
 
     /**
-     * @param string $dataTable
-     * @param string $size
-     * @return bool
+     * @param $object
+     * @return null|string
      */
-    public function isDatatableConfigured(string $dataTable, string $size)
+    public function getClassName($object)
     {
-        $cookie = $this->getVisibilityCookieName($dataTable, $size);
-
-        return $this->requestStack->getCurrentRequest()->cookies->has($cookie);
-    }
-
-    /**
-     * @param string $dataTable
-     * @param string $size
-     * @return string
-     */
-    public function getVisibilityCookieName(string $dataTable, string $size)
-    {
-        return $dataTable . '_visibility' . $size;
-    }
-
-    /**
-     * This is only for datatables, do not use it outside this context.
-     *
-     * @param string $dataTable
-     * @param string $column
-     * @param string $size
-     * @return bool
-     */
-    public function isColumnVisible(string $dataTable, string $column, string $size)
-    {
-        // name handling is spread between here and datatables.html.twig (data_table_column_modal)
-        $cookie = $this->getVisibilityCookieName($dataTable, $size);
-
-        if (!isset($this->cookies[$cookie])) {
-            $visibility = false;
-            if ($this->requestStack->getCurrentRequest()->cookies->has($cookie)) {
-                $visibility = json_decode($this->requestStack->getCurrentRequest()->cookies->get($cookie), true);
-            }
-            $this->cookies[$cookie] = $visibility;
-        }
-        $values = $this->cookies[$cookie];
-
-        if (empty($values) || !is_array($values)) {
-            return true;
+        if (!is_object($object)) {
+            return null;
         }
 
-        if (isset($values[$column]) && $values[$column] === false) {
-            return false;
-        }
-
-        return true;
+        return get_class($object);
     }
 
     /**

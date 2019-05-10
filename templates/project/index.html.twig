@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+{% import "macros/datatables.html.twig" as tables %}
+{% import "macros/toolbar.html.twig" as toolbar %}
+{% import "macros/actions.html.twig" as actions %}
+
+{% set columns = {
+    'name': 'alwaysVisible',
+    'customer': 'hidden-xs',
+    'comment': 'hidden-xs hidden-sm',
+    'budget': 'hidden-xs',
+    'visible': '',
+    'actions': 'actions alwaysVisible',
+} %}
+
+{% set tableName = 'project_admin' %}
+
+{% block page_title %}{{ 'admin_project.title'|trans }}{% endblock %}
+{% block page_subtitle %}{{ 'admin_project.subtitle'|trans }}{% endblock %}
+{% block page_actions %}{{ actions.projects('index') }}{% endblock %}
+
+{% block main_before %}
+    {{ toolbar.toolbar(toolbarForm, 'collapseProjectAdmin', showFilter) }}
+    {{ tables.data_table_column_modal(tableName, columns) }}
+{% endblock %}
+
+{% block main %}
+
+    {% if entries.count == 0 %}
+        {{ widgets.callout('warning', 'error.no_entries_found') }}
+    {% else %}
+        {{ tables.data_table_header(tableName, columns, false, 'kimai.projectUpdate') }}
+
+        {% for entry in entries %}
+            <tr{% if is_granted('edit', entry) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_project_edit', {'id': entry.id}) }}"{% endif %}>
+                <td>{{ widgets.label_color_dot('project', true, entry.name, null, entry.color) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">
+                    {{ widgets.label_customer(entry.customer, path('admin_customer_edit', {'id' : entry.customer.id})) }}
+                </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'budget') }}">{{ entry.budget|money(entry.customer.currency) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
+                <td class="actions">
+                    {{ actions.project(entry, 'index') }}
+                </td>
+            </tr>
+        {% endfor %}
+
+        {{ tables.data_table_footer(entries, 'admin_project_paginated') }}
+    {% endif %}
+
+{% endblock %}

@@ -9,11 +9,14 @@
 
 namespace App\Form;
 
+use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet;
 use App\Form\Type\ActivityType;
 use App\Form\Type\CustomerType;
 use App\Form\Type\DateTimePickerType;
 use App\Form\Type\DurationType;
+use App\Form\Type\FixedRateType;
+use App\Form\Type\HourlyRateType;
 use App\Form\Type\ProjectType;
 use App\Form\Type\TagsInputType;
 use App\Form\Type\UserType;
@@ -23,7 +26,6 @@ use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use App\Timesheet\UserDateTimeFactory;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -39,34 +41,31 @@ class TimesheetEditForm extends AbstractType
      * @var CustomerRepository
      */
     private $customers;
-
     /**
      * @var ProjectRepository
      */
     private $projects;
-
-    /**
-     * @var bool
-     */
-    private $durationOnly = false;
-
     /**
      * @var UserDateTimeFactory
      */
     protected $dateTime;
+    /**
+     * @var TimesheetConfiguration
+     */
+    private $configuration;
 
     /**
      * @param CustomerRepository $customer
      * @param ProjectRepository $project
      * @param UserDateTimeFactory $dateTime
-     * @param bool $durationOnly
+     * @param TimesheetConfiguration $config
      */
-    public function __construct(CustomerRepository $customer, ProjectRepository $project, UserDateTimeFactory $dateTime, bool $durationOnly)
+    public function __construct(CustomerRepository $customer, ProjectRepository $project, UserDateTimeFactory $dateTime, TimesheetConfiguration $config)
     {
         $this->customers = $customer;
         $this->projects = $project;
         $this->dateTime = $dateTime;
-        $this->durationOnly = $durationOnly;
+        $this->configuration = $config;
     }
 
     /**
@@ -80,6 +79,7 @@ class TimesheetEditForm extends AbstractType
         $currency = false;
         $end = null;
         $begin = null;
+        $customerCount = $this->customers->countCustomer(true);
 
         if (isset($options['data'])) {
             /** @var Timesheet $entry */
@@ -107,15 +107,23 @@ class TimesheetEditForm extends AbstractType
             $timezone = $begin->getTimezone()->getName();
         }
 
-        if (null === $end || !$options['duration_only']) {
-            $builder->add('begin', DateTimePickerType::class, [
-                'label' => 'label.begin',
-                'model_timezone' => $timezone,
-                'view_timezone' => $timezone,
-            ]);
+        $dateTimeOptions = [
+            'model_timezone' => $timezone,
+            'view_timezone' => $timezone,
+        ];
+
+        // primarily for API usage, where we cannot use a user/locale specific format
+        if (null !== $options['date_format']) {
+            $dateTimeOptions['format'] = $options['date_format'];
         }
 
-        if ($options['duration_only']) {
+        if (null === $end || !$this->configuration->isDurationOnly()) {
+            $builder->add('begin', DateTimePickerType::class, array_merge($dateTimeOptions, [
+                'label' => 'label.begin'
+            ]));
+        }
+
+        if ($this->configuration->isDurationOnly()) {
             $builder->add('duration', DurationType::class, [
                 'required' => false,
                 'docu_chapter' => 'timesheet.html#duration-format',
@@ -129,7 +137,7 @@ class TimesheetEditForm extends AbstractType
                 function (FormEvent $event) {
                     /** @var Timesheet $data */
                     $data = $event->getData();
-                    if (null === $data->getEnd()) {
+                    if (null === $data || null === $data->getEnd()) {
                         $event->getForm()->get('duration')->setData(null);
                     }
                 }
@@ -151,24 +159,19 @@ class TimesheetEditForm extends AbstractType
                 }
             );
         } else {
-            $builder->add('end', DateTimePickerType::class, [
+            $builder->add('end', DateTimePickerType::class, array_merge($dateTimeOptions, [
                 'label' => 'label.end',
-                'model_timezone' => $timezone,
-                'view_timezone' => $timezone,
                 'required' => false,
-            ]);
+            ]));
         }
 
         $projectOptions = [];
 
-        if ($this->customers->countCustomer(true) > 1) {
+        if ($customerCount < 2) {
+            $projectOptions['group_by'] = null;
+        } elseif ($options['customer']) {
             $builder
                 ->add('customer', CustomerType::class, [
-                    // documentation is for NelmioApiDocBundle
-                    'documentation' => [
-                        'type' => 'integer',
-                        'description' => 'Customer ID',
-                    ],
                     'query_builder' => function (CustomerRepository $repo) use ($customer) {
                         return $repo->builderForEntityType($customer);
                     },
@@ -178,8 +181,6 @@ class TimesheetEditForm extends AbstractType
                     'mapped' => false,
                     'project_enabled' => true,
                 ]);
-        } else {
-            $projectOptions['group_by'] = null;
         }
 
         if ($this->projects->countProject(true) <= 1) {
@@ -191,16 +192,11 @@ class TimesheetEditForm extends AbstractType
                 'project',
                 ProjectType::class,
                 array_merge($projectOptions, [
-                    'placeholder' => '',
-                    'activity_enabled' => true,
-                    // documentation is for NelmioApiDocBundle
-                    'documentation' => [
-                        'type' => 'integer',
-                        'description' => 'Project ID',
-                    ],
-                    'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
-                        return $repo->builderForEntityType($project, $customer);
-                    },
+                'placeholder' => '',
+                'activity_enabled' => true,
+                'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
+                    return $repo->builderForEntityType($project, $customer);
+                },
             ])
         );
 
@@ -226,12 +222,7 @@ class TimesheetEditForm extends AbstractType
 
         $builder
             ->add('activity', ActivityType::class, [
-                // documentation is for NelmioApiDocBundle
                 'placeholder' => '',
-                'documentation' => [
-                    'type' => 'integer',
-                    'description' => 'Activity ID',
-                ],
                 'query_builder' => function (ActivityRepository $repo) use ($activity, $project) {
                     return $repo->builderForEntityType($activity, $project);
                 },
@@ -274,14 +265,10 @@ class TimesheetEditForm extends AbstractType
 
         if ($options['include_rate']) {
             $builder
-                ->add('fixedRate', MoneyType::class, [
-                    'label' => 'label.fixed_rate',
-                    'required' => false,
+                ->add('fixedRate', FixedRateType::class, [
                     'currency' => $currency,
                 ])
-                ->add('hourlyRate', MoneyType::class, [
-                    'label' => 'label.hourly_rate',
-                    'required' => false,
+                ->add('hourlyRate', HourlyRateType::class, [
                     'currency' => $currency,
                 ]);
         }
@@ -307,12 +294,18 @@ class TimesheetEditForm extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'timesheet_edit',
-            'duration_only' => $this->durationOnly,
             'include_user' => false,
             'include_exported' => false,
             'include_rate' => true,
             'docu_chapter' => 'timesheet.html',
             'method' => 'POST',
+            'date_format' => null,
+            'customer' => false,
+            'attr' => [
+                'data-form-event' => 'kimai.timesheetUpdate',
+                'data-msg-success' => 'action.update.success',
+                'data-msg-error' => 'action.update.error',
+            ],
         ]);
     }
 }

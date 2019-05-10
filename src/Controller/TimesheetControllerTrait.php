@@ -9,8 +9,11 @@
 
 namespace App\Controller;
 
+use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Repository\ActivityRepository;
+use App\Repository\ProjectRepository;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\UserDateTimeFactory;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -24,31 +27,22 @@ use Symfony\Component\HttpFoundation\Response;
 trait TimesheetControllerTrait
 {
     /**
-     * @var int
-     */
-    private $hardLimit = 1;
-
-    /**
      * @var UserDateTimeFactory
      */
     protected $dateTime;
+    /**
+     * @var TimesheetConfiguration
+     */
+    protected $configuration;
 
     /**
      * @param UserDateTimeFactory $dateTime
-     * @param int $hardLimit
+     * @param TimesheetConfiguration $configuration
      */
-    public function __construct(UserDateTimeFactory $dateTime, int $hardLimit)
+    public function __construct(UserDateTimeFactory $dateTime, TimesheetConfiguration $configuration)
     {
         $this->dateTime = $dateTime;
-        $this->setHardLimit($hardLimit);
-    }
-
-    /**
-     * @param int $hardLimit
-     */
-    protected function setHardLimit(int $hardLimit)
-    {
-        $this->hardLimit = $hardLimit;
+        $this->configuration = $configuration;
     }
 
     /**
@@ -56,7 +50,15 @@ trait TimesheetControllerTrait
      */
     protected function getHardLimit()
     {
-        return $this->hardLimit;
+        return $this->configuration->getActiveEntriesHardLimit();
+    }
+
+    /**
+     * @return int
+     */
+    protected function getSoftLimit()
+    {
+        return $this->configuration->getActiveEntriesSoftLimit();
     }
 
     /**
@@ -65,23 +67,6 @@ trait TimesheetControllerTrait
     protected function getRepository()
     {
         return $this->getDoctrine()->getRepository(Timesheet::class);
-    }
-
-    /**
-     * @param Timesheet $entry
-     * @param string $route
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    protected function stop(Timesheet $entry, $route)
-    {
-        try {
-            $this->getRepository()->stopRecording($entry);
-            $this->flashSuccess('timesheet.stop.success');
-        } catch (\Exception $ex) {
-            $this->flashError('timesheet.stop.error', ['%reason%' => $ex->getMessage()]);
-        }
-
-        return $this->redirectToRoute($route);
     }
 
     /**
@@ -103,11 +88,11 @@ trait TimesheetControllerTrait
 
             $this->flashSuccess('action.update.success');
 
-            return $this->redirectToRoute($redirectRoute, ['page' => $request->get('page')]);
+            return $this->redirectToRoute($redirectRoute, ['page' => $request->get('page', 1)]);
         }
 
         return $this->render($renderTemplate, [
-            'entry' => $entry,
+            'timesheet' => $entry,
             'form' => $editForm->createView(),
         ]);
     }
@@ -116,9 +101,11 @@ trait TimesheetControllerTrait
      * @param Request $request
      * @param string $redirectRoute
      * @param string $renderTemplate
+     * @param ProjectRepository $projectRepository
+     * @param ActivityRepository $activityRepository
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    protected function create(Request $request, $redirectRoute, $renderTemplate)
+    protected function create(Request $request, $redirectRoute, $renderTemplate, ProjectRepository $projectRepository, ActivityRepository $activityRepository)
     {
         $entry = new Timesheet();
         $entry->setUser($this->getUser());
@@ -126,7 +113,7 @@ trait TimesheetControllerTrait
 
         $start = $request->get('begin');
         if ($start !== null) {
-            $start = \DateTime::createFromFormat('Y-m-d', $start);
+            $start = $this->dateTime->createDateTimeFromFormat('Y-m-d', $start);
             if ($start !== false) {
                 $start->setTime(10, 0, 0); // TODO make me configurable
                 $entry->setBegin($start);
@@ -135,7 +122,7 @@ trait TimesheetControllerTrait
 
         $end = $request->get('end');
         if ($end !== null) {
-            $end = \DateTime::createFromFormat('Y-m-d', $end);
+            $end = $this->dateTime->createDateTimeFromFormat('Y-m-d', $end);
             if ($end !== false) {
                 $end->setTime(18, 0, 0); // TODO make me configurable
                 $entry->setEnd($end);
@@ -144,7 +131,7 @@ trait TimesheetControllerTrait
 
         $from = $request->get('from');
         if ($from !== null) {
-            $from = new \DateTime($from);
+            $from = $this->dateTime->createDateTime($from);
             if ($from !== false) {
                 $entry->setBegin($from);
             }
@@ -152,10 +139,20 @@ trait TimesheetControllerTrait
 
         $to = $request->get('to');
         if ($to !== null) {
-            $to = new \DateTime($to);
+            $to = $this->dateTime->createDateTime($to);
             if ($to !== false) {
                 $entry->setEnd($to);
             }
+        }
+
+        if ($request->query->get('project')) {
+            $project = $projectRepository->find($request->query->get('project'));
+            $entry->setProject($project);
+        }
+
+        if ($request->query->get('activity')) {
+            $activity = $activityRepository->find($request->query->get('activity'));
+            $entry->setActivity($activity);
         }
 
         $createForm = $this->getCreateForm($entry, $redirectRoute);
@@ -180,7 +177,7 @@ trait TimesheetControllerTrait
         }
 
         return $this->render($renderTemplate, [
-            'entry' => $entry,
+            'timesheet' => $entry,
             'form' => $createForm->createView(),
         ]);
     }

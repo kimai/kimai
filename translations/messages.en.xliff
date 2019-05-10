@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="en" datatype="plaintext" original="none">
+    <file source-language="en" target-language="en" datatype="plaintext" original="messages.en.xliff">
         <body>
             <!--
               Global template keys
             -->
-            <trans-unit id="browser.title">
-                <source>browser.title</source>
-                <target>Kimai - Time Tracking</target>
+            <trans-unit id="time_tracking">
+                <source>time_tracking</source>
+                <target>Time Tracking</target>
             </trans-unit>
             <trans-unit id="yes">
                 <source>yes</source>
@@ -20,10 +20,6 @@
             <trans-unit id="both">
                 <source>both</source>
                 <target></target>
-            </trans-unit>
-            <trans-unit id="subtitle.amount">
-                <source>subtitle.amount</source>
-                <target>(total %count%)</target>
             </trans-unit>
             <trans-unit id="This is a mandatory field">
                 <source>This is a mandatory field</source>
@@ -39,9 +35,11 @@
             </trans-unit>
             <trans-unit id="confirm.delete_message">
                 <source>confirm.delete_message</source>
-                <target>
-                    You have to confirm the deletion, as there are linked objects which will be deleted as well.
-                </target>
+                <target>You have to confirm the deletion, as there are linked objects which will be deleted as well.</target>
+            </trans-unit>
+            <trans-unit id="delete.not_in_use">
+                <source>delete.not_in_use</source>
+                <target>This item can be safely deleted.</target>
             </trans-unit>
 
             <!--
@@ -83,6 +81,10 @@
                 <source>menu.admin</source>
                 <target>Administration</target>
             </trans-unit>
+            <trans-unit id="menu.system">
+                <source>menu.system</source>
+                <target>System</target>
+            </trans-unit>
             <trans-unit id="menu.logout">
                 <source>menu.logout</source>
                 <target>Logout</target>
@@ -118,6 +120,14 @@
             <trans-unit id="menu.admin_user">
                 <source>menu.admin_user</source>
                 <target>User</target>
+            </trans-unit>
+            <trans-unit id="menu.plugin">
+                <source>menu.plugin</source>
+                <target>Plugins</target>
+            </trans-unit>
+            <trans-unit id="menu.system_configuration">
+                <source>menu.system_configuration</source>
+                <target>Settings</target>
             </trans-unit>
 
             <!--
@@ -194,6 +204,10 @@
             <trans-unit id="label.tags">
                 <source>label.tags</source>
                 <target>Tags</target>
+            </trans-unit>
+            <trans-unit id="label.hourlyRate">
+                <source>label.hourlyRate</source>
+                <target>Hourly rate</target>
             </trans-unit>
             <trans-unit id="label.hourly_rate">
                 <source>label.hourly_rate</source>
@@ -327,9 +341,13 @@
                 <source>modal.columns.description</source>
                 <target>Upon saving the un-checked columns will be hidden and this setting will be stored in a browser cookie. If you delete your cookies, the settings will be reversed.</target>
             </trans-unit>
-            <trans-unit id="label.fixed_rate">
-                <source>label.fixed_rate</source>
+            <trans-unit id="label.fixedRate">
+                <source>label.fixedRate</source>
                 <target>Fixed rate</target>
+            </trans-unit>
+            <trans-unit id="label.color">
+                <source>label.color</source>
+                <target>Color</target>
             </trans-unit>
 
             <!--
@@ -350,10 +368,6 @@
             <trans-unit id="profile.first_entry">
                 <source>profile.first_entry</source>
                 <target>Working since</target>
-            </trans-unit>
-            <trans-unit id="profile.tab_monthly">
-                <source>profile.tab_monthly</source>
-                <target>Yearly statistic</target>
             </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>
@@ -404,10 +418,6 @@
                 <source>label.timesheet.daily_stats</source>
                 <target>Show daily stats in timesheet</target>
             </trans-unit>
-            <trans-unit id="label.now">
-                <source>label.now</source>
-                <target>Current time</target>
-            </trans-unit>
 
             <!--
               User timesheet calendar
@@ -419,18 +429,6 @@
             <trans-unit id="calendar.subtitle">
                 <source>calendar.subtitle</source>
                 <target>View and manage your timesheet data within a calendar</target>
-            </trans-unit>
-
-            <!--
-              Help - Manual
-            -->
-            <trans-unit id="help.title">
-                <source>help.title</source>
-                <target>Help</target>
-            </trans-unit>
-            <trans-unit id="help.subtitle">
-                <source>help.subtitle</source>
-                <target>Instructions for using and configuring Kimai</target>
             </trans-unit>
 
             <!--
@@ -498,8 +496,8 @@
                 <source>admin_customer.subtitle</source>
                 <target>Your customer are the base for creating projects and activities</target>
             </trans-unit>
-            <trans-unit id="label.customer_number">
-                <source>label.customer_number</source>
+            <trans-unit id="label.number">
+                <source>label.number</source>
                 <target>Account</target>
             </trans-unit>
             <trans-unit id="label.company">
@@ -596,6 +594,18 @@
             </trans-unit>
 
             <!--
+              Admin: Plugins
+            -->
+            <trans-unit id="label.version">
+                <source>label.version</source>
+                <target>Version</target>
+            </trans-unit>
+            <trans-unit id="label.required_version">
+                <source>label.required_version</source>
+                <target>Compatible with</target>
+            </trans-unit>
+
+            <!--
               ROLES
             -->
             <trans-unit id="ROLE_SUPER_ADMIN">
@@ -613,10 +623,6 @@
             <trans-unit id="ROLE_USER">
                 <source>ROLE_USER</source>
                 <target>User</target>
-            </trans-unit>
-            <trans-unit id="ROLE_CUSTOMER">
-                <source>ROLE_CUSTOMER</source>
-                <target>Customer</target>
             </trans-unit>
 
             <!--
@@ -818,8 +824,8 @@
                 <source>invoice.total_working_time</source>
                 <target>Total duration</target>
             </trans-unit>
-            <trans-unit id="label.order_number">
-                <source>label.order_number</source>
+            <trans-unit id="label.orderNumber">
+                <source>label.orderNumber</source>
                 <target>Order number</target>
             </trans-unit>
             <trans-unit id="label.invoice_tax_number">
@@ -932,7 +938,7 @@
             -->
             <trans-unit id="active.entries">
                 <source>active.entries</source>
-                <target>You have %count% active record|You have %count% active records</target>
+                <target>Your active time measurements</target>
             </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
@@ -940,9 +946,7 @@
             </trans-unit>
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
-                <target>
-                    Restart your last recorded activity|Restart one of your %count% last activities
-                </target>
+                <target>Restart one of your last activities</target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>

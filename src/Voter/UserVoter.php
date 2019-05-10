@@ -74,7 +74,7 @@ class UserVoter extends AbstractVoter
         switch ($attribute) {
             // special case for the UserController
             case self::DELETE:
-                if (!$this->canDelete($subject, $user, $token)) {
+                if ($subject->getId() === $user->getId()) {
                     return false;
                 }
 
@@ -83,10 +83,16 @@ class UserVoter extends AbstractVoter
             // used in templates and ProfileController
             case self::VIEW:
             case self::EDIT:
-            case self::API_TOKEN:
             case self::PASSWORD:
-            case self::ROLES:
             case self::PREFERENCES:
+                // always allow the user to edit these own settings
+                if ($subject->getId() === $user->getId()) {
+                    return true;
+                }
+                // no break on purpose
+
+            case self::API_TOKEN:
+            case self::ROLES:
             case self::HOURLY_RATE:
                 $permission .= $attribute;
                 break;
@@ -107,15 +113,5 @@ class UserVoter extends AbstractVoter
         $permission .= '_profile';
 
         return $this->hasRolePermission($user, $permission);
-    }
-
-    /**
-     * @param User $profile
-     * @param User $user
-     * @return bool
-     */
-    protected function canDelete(User $profile, User $user, TokenInterface $token)
-    {
-        return $profile->getId() !== $user->getId();
     }
 }

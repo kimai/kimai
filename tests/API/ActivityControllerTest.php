@@ -10,10 +10,11 @@
 namespace App\Tests\API;
 
 use App\Entity\Activity;
+use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\User;
-use App\Repository\Query\VisibilityQuery;
 use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @coversDefaultClass \App\API\ActivityController
@@ -31,9 +32,11 @@ class ActivityControllerTest extends APIControllerBaseTest
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
 
         $project = $em->getRepository(Project::class)->find(1);
+        $customer = $em->getRepository(Customer::class)->find(1);
 
         $project2 = new Project();
         $project2->setName('Activity Test');
+        $project2->setCustomer($customer);
         $em->persist($project2);
 
         $activity = (new Activity())->setName('first one')->setComment('1')->setProject($project2);
@@ -73,7 +76,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         for ($i = 0; $i < count($result); $i++) {
             $activity = $result[$i];
             $hasProject = $expected[$i][0];
-            $this->assertStructure($activity, $hasProject);
+            $this->assertStructure($activity, false);
             if ($hasProject) {
                 $this->assertEquals($expected[$i][0], $activity['project']);
             }
@@ -84,13 +87,13 @@ class ActivityControllerTest extends APIControllerBaseTest
     {
         yield ['/api/activities', [], [[false], [false], [true, 2], [true, 1], [true, 2]]];
         yield ['/api/activities', ['globals' => 'true'], [[false], [false]]];
-        yield ['/api/activities', ['globals' => 'true', 'visible' => VisibilityQuery::SHOW_BOTH], [[false], [false], [false]]];
-        yield ['/api/activities', ['globals' => 'true', 'visible' => VisibilityQuery::SHOW_HIDDEN], [[false]]];
-        yield ['/api/activities', ['globals' => 'true', 'visible' => VisibilityQuery::SHOW_VISIBLE], [[false], [false]]];
+        yield ['/api/activities', ['globals' => 'true', 'visible' => 3], [[false], [false], [false]]];
+        yield ['/api/activities', ['globals' => 'true', 'visible' => '2'], [[false]]];
+        yield ['/api/activities', ['globals' => 'true', 'visible' => 1], [[false], [false]]];
         yield ['/api/activities', ['project' => '1'], [[false], [false], [true, 1]]];
-        yield ['/api/activities', ['project' => '2', 'visible' => VisibilityQuery::SHOW_VISIBLE], [[false], [false], [true, 2], [true, 2]]];
-        yield ['/api/activities', ['project' => '2', 'visible' => VisibilityQuery::SHOW_BOTH], [[false], [false], [false], [true, 2], [true, 2], [true, 2]]];
-        yield ['/api/activities', ['project' => '2', 'visible' => VisibilityQuery::SHOW_HIDDEN], [[false], [true, 2]]];
+        yield ['/api/activities', ['project' => '2', 'visible' => 1], [[false], [false], [true, 2], [true, 2]]];
+        yield ['/api/activities', ['project' => '2', 'visible' => '3'], [[false], [false], [false], [true, 2], [true, 2], [true, 2]]];
+        yield ['/api/activities', ['project' => '2', 'visible' => 2], [[false], [true, 2]]];
     }
 
     public function testGetCollectionWithQuery()
@@ -119,10 +122,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
-
-        $expectedKeys = ['id', 'name', 'comment', 'visible'];
-        $actual = array_keys($result);
-        $this->assertEquals($expectedKeys, $actual);
+        $this->assertStructure($result, true);
     }
 
     public function testNotFound()
@@ -130,12 +130,101 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertEntityNotFound(User::ROLE_USER, '/api/activities/2');
     }
 
+    public function testPostAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'project' => 1,
+            'visible' => true
+        ];
+        $this->request($client, '/api/activities', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertStructure($result);
+        $this->assertNotEmpty($result['id']);
+    }
+
+    public function testPostActionWithInvalidUser()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $data = [
+            'name' => 'foo',
+            'project' => 1,
+            'visible' => true
+        ];
+        $this->request($client, '/api/activities', 'POST', [], json_encode($data));
+        $response = $client->getResponse();
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        $json = json_decode($response->getContent(), true);
+        $this->assertEquals('User cannot create activities', $json['message']);
+    }
+
+    public function testPatchAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'comment' => '',
+            'project' => 1,
+            'visible' => true
+        ];
+        $this->request($client, '/api/activities/1', 'PATCH', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertStructure($result);
+        $this->assertNotEmpty($result['id']);
+    }
+
+    public function testPatchActionWithInvalidUser()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $data = [
+            'name' => 'foo',
+            'comment' => '',
+            'project' => 1,
+            'visible' => true
+        ];
+        $this->request($client, '/api/activities/1', 'PATCH', [], json_encode($data));
+        $response = $client->getResponse();
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        $json = json_decode($response->getContent(), true);
+        $this->assertEquals('User cannot update activity', $json['message']);
+    }
+
+    public function testPatchActionWithUnknownActivity()
+    {
+        $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/activities/255', []);
+    }
+
+    public function testInvalidPatchAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'project' => 255,
+            'visible' => true
+        ];
+        $this->request($client, '/api/activities/1', 'PATCH', [], json_encode($data));
+
+        $response = $client->getResponse();
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['project']);
+    }
+
     protected function assertStructure(array $result, $full = true)
     {
-        $expectedKeys = ['id', 'name', 'visible'];
+        $expectedKeys = ['id', 'name', 'visible', 'project', 'hourlyRate', 'fixedRate'];
 
         if ($full) {
-            $expectedKeys = ['id', 'name', 'visible', 'project'];
+            $expectedKeys = array_merge($expectedKeys, ['comment', 'color']);
         }
 
         $actual = array_keys($result);

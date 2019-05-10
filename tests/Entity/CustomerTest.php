@@ -36,12 +36,13 @@ class CustomerTest extends AbstractEntityTest
         $this->assertNull($sut->getPhone());
         $this->assertNull($sut->getFax());
         $this->assertNull($sut->getMobile());
-        $this->assertNull($sut->getMail());
+        $this->assertNull($sut->getEmail());
         $this->assertNull($sut->getHomepage());
         $this->assertNull($sut->getTimezone());
 
         $this->assertNull($sut->getFixedRate());
         $this->assertNull($sut->getHourlyRate());
+        $this->assertNull($sut->getColor());
     }
 
     public function testSetterAndGetter()
@@ -56,6 +57,9 @@ class CustomerTest extends AbstractEntityTest
 
         $this->assertInstanceOf(Customer::class, $sut->setComment('hello world'));
         $this->assertEquals('hello world', $sut->getComment());
+
+        $this->assertInstanceOf(Customer::class, $sut->setColor('#fffccc'));
+        $this->assertEquals('#fffccc', $sut->getColor());
 
         $projects = [(new Project())->setName('Test')];
         $this->assertInstanceOf(Customer::class, $sut->setProjects($projects));
@@ -76,8 +80,8 @@ class CustomerTest extends AbstractEntityTest
         $this->assertInstanceOf(Customer::class, $sut->setMobile('76576534'));
         $this->assertEquals('76576534', $sut->getMobile());
 
-        $this->assertInstanceOf(Customer::class, $sut->setMail('test@example.com'));
-        $this->assertEquals('test@example.com', $sut->getMail());
+        $this->assertInstanceOf(Customer::class, $sut->setEmail('test@example.com'));
+        $this->assertEquals('test@example.com', $sut->getEmail());
 
         $this->assertInstanceOf(Customer::class, $sut->setHomepage('https://www.example.com'));
         $this->assertEquals('https://www.example.com', $sut->getHomepage());

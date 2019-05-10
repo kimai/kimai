@@ -28,7 +28,6 @@ class RoleValidatorTest extends ConstraintValidatorTestCase
     public function getValidRoles()
     {
         return [
-            [User::ROLE_CUSTOMER],
             [User::ROLE_USER],
             [User::ROLE_TEAMLEAD],
             [User::ROLE_ADMIN],

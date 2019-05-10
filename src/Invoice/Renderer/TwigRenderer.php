@@ -13,18 +13,19 @@ use App\Entity\InvoiceDocument;
 use App\Invoice\RendererInterface;
 use App\Model\InvoiceModel;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Environment;
 
 class TwigRenderer implements RendererInterface
 {
     /**
-     * @var \Twig_Environment
+     * @var Environment
      */
     protected $twig;
 
     /**
-     * @param \Twig_Environment $twig
+     * @param Environment $twig
      */
-    public function __construct(\Twig_Environment $twig)
+    public function __construct(Environment $twig)
     {
         $this->twig = $twig;
     }

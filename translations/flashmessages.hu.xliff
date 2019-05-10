@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="hu" datatype="plaintext" original="flashmessages.en.xliff">
+    <file source-language="en" target-language="hu" datatype="plaintext" original="flashmessages.en.xliff">
         <body>
             <trans-unit id="timesheet.stop.success">
                 <source>timesheet.stop.success</source>
@@ -8,7 +8,7 @@
             </trans-unit>
             <trans-unit id="timesheet.stop.error">
                 <source>timesheet.stop.error</source>
-                <target>Az idő rögzítését nem lehet leállítani a következő okból: %reason%</target>
+                <target>Az idő rögzítését nem lehet leállítani a következő okból</target>
             </trans-unit>
             <trans-unit id="timesheet.start.success">
                 <source>timesheet.start.success</source>
@@ -17,6 +17,10 @@
             <trans-unit id="timesheet.start.error">
                 <source>timesheet.start.error</source>
                 <target>Az idő rögzítését nem lehet elindítani a következő okból: %reason%</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.exceeded_limit">
+                <source>timesheet.start.exceeded_limit</source>
+                <target>A rögzítések maximális számát elérted, előbb állíts le egy jelenlegi rögzítést.</target>
             </trans-unit>
             <trans-unit id="action.update.success">
                 <source>action.update.success</source>

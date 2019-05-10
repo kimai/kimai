@@ -18,6 +18,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
  */
 class TimesheetVoter extends AbstractVoter
 {
+    public const VIEW = 'view';
     public const START = 'start';
     public const STOP = 'stop';
     public const EDIT = 'edit';
@@ -31,6 +32,7 @@ class TimesheetVoter extends AbstractVoter
      * support rules based on the given $subject (here: Timesheet)
      */
     public const ALLOWED_ATTRIBUTES = [
+        self::VIEW,
         self::START,
         self::STOP,
         self::EDIT,
@@ -77,7 +79,7 @@ class TimesheetVoter extends AbstractVoter
 
         switch ($attribute) {
             case self::START:
-                if (!$this->canStart($subject, $user, $token)) {
+                if (!$this->canStart($subject)) {
                     return false;
                 }
                 $permission .= $attribute;
@@ -87,6 +89,7 @@ class TimesheetVoter extends AbstractVoter
             case self::EDIT_RATE:
             case self::STOP:
             case self::EDIT:
+            case self::VIEW:
             case self::DELETE:
             case self::EXPORT:
             case self::EDIT_EXPORT:
@@ -113,11 +116,9 @@ class TimesheetVoter extends AbstractVoter
 
     /**
      * @param Timesheet $timesheet
-     * @param User $user
-     * @param TokenInterface $token
      * @return bool
      */
-    protected function canStart(Timesheet $timesheet, User $user, TokenInterface $token)
+    protected function canStart(Timesheet $timesheet)
     {
         // possible improvements for the future:
         // we could check the amount of active entries (maybe slow)

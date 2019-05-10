@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="de" datatype="plaintext" original="messages.en.xliff">
+    <file source-language="en" target-language="ru" datatype="plaintext" original="messages.en.xliff">
         <body>
             <!--
               Global template keys
             -->
-            <trans-unit id="browser.title">
-                <source>browser.title</source>
-                <target>Kimai - Учет времени</target>
+            <trans-unit id="time_tracking">
+                <source>time_tracking</source>
+                <target>Учет времени</target>
             </trans-unit>
             <trans-unit id="yes">
                 <source>yes</source>
@@ -20,10 +20,6 @@
             <trans-unit id="both">
                 <source>both</source>
                 <target></target>
-            </trans-unit>
-            <trans-unit id="subtitle.amount">
-                <source>subtitle.amount</source>
-                <target>(всего %count%)</target>
             </trans-unit>
             <trans-unit id="This is a mandatory field">
                 <source>This is a mandatory field</source>
@@ -183,6 +179,10 @@
                 <source>label.project</source>
                 <target>Проект</target>
             </trans-unit>
+            <trans-unit id="label.hourlyRate">
+                <source>label.hourlyRate</source>
+                <target>Почасовая заработная плата</target>
+            </trans-unit>
             <trans-unit id="label.hourly_rate">
                 <source>label.hourly_rate</source>
                 <target>Почасовая заработная плата</target>
@@ -331,10 +331,6 @@
                 <source>profile.first_entry</source>
                 <target>Первая запись</target>
             </trans-unit>
-            <trans-unit id="profile.tab_monthly">
-                <source>profile.tab_monthly</source>
-                <target>Годовая статистика</target>
-            </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>
                 <target>Профиль</target>
@@ -358,18 +354,6 @@
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
                 <target>Управление статусом левой панели навигации (скрыта или открыта)</target>
-            </trans-unit>
-
-            <!--
-              Help - Manual
-            -->
-            <trans-unit id="help.title">
-                <source>help.title</source>
-                <target>Помощь</target>
-            </trans-unit>
-            <trans-unit id="help.subtitle">
-                <source>help.subtitle</source>
-                <target>Руководство к пользованию и конфигурации Kimai (доступно только на английском)</target>
             </trans-unit>
 
             <!--
@@ -435,8 +419,8 @@
                 <source>admin_customer.subtitle</source>
                 <target>Журнал записи клиентской базы, включающий проекты и деятельность.</target>
             </trans-unit>
-            <trans-unit id="label.customer_number">
-                <source>label.customer_number</source>
+            <trans-unit id="label.number">
+                <source>label.number</source>
                 <target>Клиентский номер</target>
             </trans-unit>
             <trans-unit id="label.company">
@@ -548,10 +532,6 @@
             <trans-unit id="ROLE_USER">
                 <source>ROLE_USER</source>
                 <target>Пользователь</target>
-            </trans-unit>
-            <trans-unit id="ROLE_CUSTOMER">
-                <source>ROLE_CUSTOMER</source>
-                <target>Клиент</target>
             </trans-unit>
 
             <!--
@@ -725,8 +705,8 @@
                 <source>invoice.signature_customer</source>
                 <target>Подтверждение: Дата / Имя клиента / Подпись</target>
             </trans-unit>
-            <trans-unit id="label.order_number">
-                <source>label.order_number</source>
+            <trans-unit id="label.orderNumber">
+                <source>label.orderNumber</source>
                 <target>Номер заказа</target>
             </trans-unit>
 
@@ -785,19 +765,9 @@
             <!--
              Navbar - recent entries and activities
             -->
-            <trans-unit id="active.entries">
-                <source>active.entries</source>
-                <target>У Вас %count% одна активная запись|У Вас %count% активных записи|У Вас %count% активных записей</target>
-            </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
                 <target>Отобразить все записи</target>
-            </trans-unit>
-            <trans-unit id="recent.activities">
-                <source>recent.activities</source>
-                <target>
-                    Возобновить последнюю деятельность|Возобновить одну их %count% последних деятельностей.|Возобновить одну их %count% последних деятельностей.
-                </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>

@@ -1,9 +1,10 @@
-{% extends '@AdminLTE/layout/default-layout-avanzu.html.twig' %}
+{% extends '@AdminLTE/layout/default-layout.html.twig' %}
 
-{% block avanzu_page_content_before %}
-    <div class="toolbar-pad no-print">
-        {% block main_before %}{% endblock %}
-    </div>
+{% block body_start %}
+    data-title="{{- get_title() -}}"
+{% endblock %}
+
+{% block after_body_start %}
     {% embed 'embeds/modal.html.twig' %}
         {% block modal_id %}remote_form_modal{% endblock %}
         {% block modal_title %}{% endblock %}
@@ -12,41 +13,47 @@
     {% endembed %}
 {% endblock %}
 
-{% block avanzu_page_content_after %}
+{% block page_content_before %}
+    {% set event = trigger(constant('App\\Event\\ThemeEvent::CONTENT_BEFORE')) %}
+    {{ event.content|raw }}
+    <div class="toolbar-pad no-print">
+        {% block main_before %}{% endblock %}
+    </div>
+{% endblock %}
+
+{% block page_content_after %}
     {% block main_after %}{% endblock %}
+    {% set event = trigger(constant('App\\Event\\ThemeEvent::CONTENT_AFTER')) %}
+    {{ event.content|raw }}
 {% endblock %}
 
-{% block avanzu_page_content %}
+{% block page_content %}
+    {% set event = trigger(constant('App\\Event\\ThemeEvent::CONTENT_START')) %}
+    {{ event.content|raw }}
     {% block main %}{% endblock %}
+    {% set event = trigger(constant('App\\Event\\ThemeEvent::CONTENT_END')) %}
+    {{ event.content|raw }}
 {% endblock %}
 
-{% block avanzu_document_title %}
-    {% block title %}{{ 'browser.title'|trans }}{% endblock %}
+{% block title %}
+    {{- get_title() -}}
 {% endblock %}
 
-{% block avanzu_page_title %}
-    {% block page_title %}{% endblock %}
-{% endblock %}
+{% block page_subtitle %}{% endblock %}
 
-{% block avanzu_page_subtitle %}
-    {% block page_subtitle %}{% endblock %}
-{% endblock %}
-
-{% block avanzu_logo_mini %}
+{% block logo_mini %}
     <b>K</b>TT
 {% endblock %}
 
-{% block avanzu_logo_lg %}
+{% block logo_large %}
     <b>Kimai</b> - Time Tracking
 {% endblock %}
 
-{% block avanzu_footer %}
-    {% block footer %}
+{% block footer %}
     <!-- Page rendered on {{ 'now'|localizeddate('long', 'long', null, 'UTC') }} -->
-    {% endblock %}
 {% endblock %}
 
-{% block avanzu_navbar_messages %}
+{% block navbar_start %}
     {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         {% if is_granted('view_own_timesheet') %}
             <li class="visible-xs-inline-block">
@@ -74,59 +81,128 @@
     {% endif %}
 {% endblock %}
 
-{% block avanzu_navbar_notifications %}
+
+{# these blocks and the hook-in logic by the AdminTheme could be re-used by Kimai or an extension at some point #}
+{#
+{% block navbar_messages %}{% endblock %}
+{% block navbar_notifications %}{% endblock %}
+{% block navbar_tasks %}{% endblock %}
+{% block navbar_end %}{% endblock %}
+#}
+
+{# deactivated blocks, as Kimai does not ship the sidebar for UX reasons #}
+{% block sidebar_user %}{% endblock %}
+{% block sidebar_search %}{% endblock %}
+
+{% block navbar_user %}
     {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-        {{ render(controller('App\\Controller\\ActivityController::recentActivitiesAction')) }}
+        {% include 'navbar/recent-activities.html.twig' %}
     {% endif %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    <li class="dropdown user-menu">
+        <a href="#" class="dropdown-toggle ddt-large" data-toggle="dropdown">
+            <i class="{{ 'user'|icon }} fa-2x"></i>
+        </a>
+        <ul class="dropdown-menu">
+            {% if app.user is not null %}
+                <li>
+                    <a href="{{ path('user_profile', {'username' : app.user.username}) }}">
+                        <h4 class="control-sidebar-subheading">
+                            <i class="{{ 'profile-stats'|icon }}"></i>
+                            {{ widgets.username(app.user) }}
+                        </h4>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('user_profile_edit', {'username' : app.user.username}) }}">
+                        <h4 class="control-sidebar-subheading">
+                            <i class="{{ 'profile'|icon }}"></i>
+                            {{ 'profile.title'|trans }}
+                        </h4>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('user_profile_preferences', {'username' : app.user.username})  }}">
+                        <h4 class="control-sidebar-subheading">
+                            <i class="{{ 'settings'|icon }}"></i>
+                            {{ 'profile.preferences'|trans }}
+                        </h4>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('fos_user_security_logout') }}">
+                        <h4 class="control-sidebar-subheading">
+                            <i class="{{ 'logout'|icon }}"></i>
+                            {{ 'menu.logout'|trans }}
+                        </h4>
+                    </a>
+                </li>
+            {% endif %}
+            {% if kimai_context.show_about %}
+            <li class="divider"></li>
+            <li>
+                <a href="{{ path('about') }}">
+                    <h4 class="control-sidebar-subheading">
+                        <i class="{{ 'about'|icon }}"></i>
+                        {{ 'about.title'|trans({}, 'about') }}
+                    </h4>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </li>
 {% endblock %}
 
-{# deactivated blocks #}
-{% block avanzu_navbar_tasks %}{% endblock %}
-{% block avanzu_navbar_user %}{% endblock %}
-{% block avanzu_sidebar_user %}{% endblock %}
-{% block avanzu_sidebar_search %}{% endblock %}
-
-{% block avanzu_breadcrumb %}
-    {{ block('page_actions') }}
+{% block breadcrumb %}
+    {% block page_actions %}{% endblock %}
 {% endblock %}
-
-{% block page_actions %}{% endblock %}
 
 {% block stylesheets %}
     {# we do not call parent() as we use a custom built for the frontend assets and don't want the default <stylesheet> #}
     <link rel="stylesheet" href="{{ asset('build/app.css') }}">
-    {{ render(controller('App\\Controller\\EventController::trigger', {'request':app.request, 'event':constant('App\\Event\\ThemeEvent::STYLESHEET')})) }}
+    {% set event = trigger(constant('App\\Event\\ThemeEvent::STYLESHEET')) %}
+    {{ event.content|raw }}
 {% endblock %}
 
 {% block head %}
     {{ parent() }}
     <script src="{{ asset('build/app.js') }}"></script>
     {% include 'partials/head.html.twig' %}
-    {{ render(controller('App\\Controller\\EventController::trigger', {'request':app.request, 'event':constant('App\\Event\\ThemeEvent::HTML_HEAD')})) }}
+    {% set event = trigger(constant('App\\Event\\ThemeEvent::HTML_HEAD')) %}
+    {{ event.content|raw }}
 {% endblock %}
 
 {% block javascripts %}
     {# no call to parent(), as we use a custom built for the frontend assets and don't want the default <script> #}
     <script type="text/javascript">
-        $(document).ready(function () {
-            $.kimai.init({
-                locale: '{{ app.request.locale }}',
-                confirmDelete: '{{ 'confirm.delete'|trans }}',
-                apply: '{{ 'daterangepicker.apply'|trans({}, 'daterangepicker') }}',
-                cancel: '{{ 'daterangepicker.cancel'|trans({}, 'daterangepicker') }}',
-                today: '{{ 'daterangepicker.today'|trans({}, 'daterangepicker') }}',
-                yesterday: '{{ 'daterangepicker.yesterday'|trans({}, 'daterangepicker') }}',
-                lastWeek: '{{ 'daterangepicker.lastWeek'|trans({}, 'daterangepicker') }}',
-                thisWeek: '{{ 'daterangepicker.thisWeek'|trans({}, 'daterangepicker') }}',
-                lastMonth: '{{ 'daterangepicker.lastMonth'|trans({}, 'daterangepicker') }}',
-                thisMonth: '{{ 'daterangepicker.thisMonth'|trans({}, 'daterangepicker') }}',
-                lastYear: '{{ 'daterangepicker.lastYear'|trans({}, 'daterangepicker') }}',
-                thisYear: '{{ 'daterangepicker.thisYear'|trans({}, 'daterangepicker') }}',
-                customRange: '{{ 'daterangepicker.customRange'|trans({}, 'daterangepicker') }}',
-                twentyFourHours: {{ 'true'|hour24('false') }}
-            });
-            {# $.kimai.pauseRecord('li.messages-menu ul.menu li'); #}
+        document.addEventListener('DOMContentLoaded', function() {
+            new KimaiWebLoader(
+                {
+                    locale: '{{ app.request.locale }}',
+                    twentyFourHours: {{ 'true'|hour24('false') }}
+                },
+                {
+                    apply: '{{ 'daterangepicker.apply'|trans({}, 'daterangepicker') }}',
+                    cancel: '{{ 'daterangepicker.cancel'|trans({}, 'daterangepicker') }}',
+                    today: '{{ 'daterangepicker.today'|trans({}, 'daterangepicker') }}',
+                    yesterday: '{{ 'daterangepicker.yesterday'|trans({}, 'daterangepicker') }}',
+                    lastWeek: '{{ 'daterangepicker.lastWeek'|trans({}, 'daterangepicker') }}',
+                    thisWeek: '{{ 'daterangepicker.thisWeek'|trans({}, 'daterangepicker') }}',
+                    lastMonth: '{{ 'daterangepicker.lastMonth'|trans({}, 'daterangepicker') }}',
+                    thisMonth: '{{ 'daterangepicker.thisMonth'|trans({}, 'daterangepicker') }}',
+                    lastYear: '{{ 'daterangepicker.lastYear'|trans({}, 'daterangepicker') }}',
+                    thisYear: '{{ 'daterangepicker.thisYear'|trans({}, 'daterangepicker') }}',
+                    customRange: '{{ 'daterangepicker.customRange'|trans({}, 'daterangepicker') }}',
+                    'timesheet.stop.success': '{{ 'timesheet.stop.success'|trans({}, 'flashmessages') }}',
+                    'timesheet.stop.error': '{{ 'timesheet.stop.error'|trans({}, 'flashmessages') }}',
+                    'action.update.success': '{{ 'action.update.success'|trans({}, 'flashmessages') }}',
+                    'action.update.error': '{{ 'action.update.error'|trans({}, 'flashmessages') }}',
+                    'action.delete.success': '{{ 'action.delete.success'|trans({}, 'flashmessages') }}',
+                    'action.delete.error': '{{ 'action.delete.error'|trans({}, 'flashmessages') }}'
+                }
+            );
         });
     </script>
-    {{ render(controller('App\\Controller\\EventController::trigger', {'request':app.request, 'event':constant('App\\Event\\ThemeEvent::JAVASCRIPT')})) }}
+    {% set event = trigger(constant('App\\Event\\ThemeEvent::JAVASCRIPT')) %}
+    {{ event.content|raw }}
 {% endblock %}

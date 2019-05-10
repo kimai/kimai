@@ -9,10 +9,31 @@
     padding: 15px 0;
 }
 .content-header {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+    background-color: #fff !important;
+    padding: 15px 0 15px 10px;
+
     h1 {
         small {
             display: none;
         }
+    }
+}
+
+.content-header>.breadcrumb {
+    position: relative;
+    margin-top: 5px;
+    top: 0;
+    right: 0;
+    float: none;
+    background: #d2d6de;
+    padding-left: 10px;
+}
+
+@media (min-width: $screen-sm-min) {
+    .content-header>.breadcrumb {
+        right: 10px;
     }
 }
 
@@ -38,4 +59,14 @@ td {
             margin: 0;
         }
     }
+}
+
+/* ABOUT SCREEN */
+.box-body .menu-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 35px;
+    margin-right: 15px;
 }

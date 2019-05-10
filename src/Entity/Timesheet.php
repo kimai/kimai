@@ -14,10 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Timesheet entity.
- *
- * @ORM\Table(
- *     name="timesheet",
+ * @ORM\Table(name="kimai2_timesheet",
  *     indexes={
  *          @ORM\Index(columns={"user"}),
  *          @ORM\Index(columns={"activity_id"})
@@ -77,7 +74,7 @@ class Timesheet
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(name="user", referencedColumnName="id", onDelete="CASCADE", nullable=false)
+     * @ORM\JoinColumn(name="`user`", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
     private $user;
@@ -110,26 +107,13 @@ class Timesheet
     /**
      * @var float
      *
-     * @ORM\Column(name="rate", type="decimal", precision=10, scale=2, nullable=false)
+     * @ORM\Column(name="rate", type="float", precision=10, scale=2, nullable=false)
      * @Assert\GreaterThanOrEqual(0)
      */
     private $rate = 0.00;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="fixed_rate", type="decimal", precision=10, scale=2, nullable=true)
-     * @Assert\GreaterThanOrEqual(0)
-     */
-    private $fixedRate = null;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="hourly_rate", type="decimal", precision=10, scale=2, nullable=true)
-     * @Assert\GreaterThanOrEqual(0)
-     */
-    private $hourlyRate = null;
+    // keep the trait include exactly here, for placing the column at the correct position
+    use RatesTrait;
 
     /**
      * @var bool
@@ -236,7 +220,7 @@ class Timesheet
 
         if (null === $end) {
             $this->duration = 0;
-            $this->rate = 0;
+            $this->rate = 0.00;
         } else {
             $this->timezone = $end->getTimezone()->getName();
         }
@@ -323,8 +307,6 @@ class Timesheet
     }
 
     /**
-     * Set description
-     *
      * @param string $description
      * @return Timesheet
      */
@@ -336,8 +318,6 @@ class Timesheet
     }
 
     /**
-     * Get description
-     *
      * @return string
      */
     public function getDescription()
@@ -346,8 +326,6 @@ class Timesheet
     }
 
     /**
-     * Set rate
-     *
      * @param float $rate
      * @return Timesheet
      */
@@ -359,51 +337,11 @@ class Timesheet
     }
 
     /**
-     * Get rate
-     *
      * @return float
      */
     public function getRate()
     {
         return $this->rate;
-    }
-
-    /**
-     * @return float
-     */
-    public function getFixedRate(): ?float
-    {
-        return $this->fixedRate;
-    }
-
-    /**
-     * @param float $fixedRate
-     * @return Timesheet
-     */
-    public function setFixedRate(?float $fixedRate)
-    {
-        $this->fixedRate = $fixedRate;
-
-        return $this;
-    }
-
-    /**
-     * @return float
-     */
-    public function getHourlyRate(): ?float
-    {
-        return $this->hourlyRate;
-    }
-
-    /**
-     * @param float $hourlyRate
-     * @return Timesheet
-     */
-    public function setHourlyRate(?float $hourlyRate)
-    {
-        $this->hourlyRate = $hourlyRate;
-
-        return $this;
     }
 
     /**

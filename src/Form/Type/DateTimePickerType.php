@@ -9,6 +9,7 @@
 
 namespace App\Form\Type;
 
+use App\API\BaseApiController;
 use App\Timesheet\UserDateTimeFactory;
 use App\Utils\LocaleSettings;
 use Symfony\Component\Form\AbstractType;
@@ -50,6 +51,11 @@ class DateTimePickerType extends AbstractType
         $timezone = $this->dateTime->getTimezone()->getName();
 
         $resolver->setDefaults([
+            'documentation' => [
+                'type' => 'string',
+                'format' => 'date-time',
+                'example' => (new \DateTime())->format(BaseApiController::DATE_FORMAT_PHP),
+            ],
             'label' => 'label.begin',
             'widget' => 'single_text',
             'html5' => false,
@@ -58,15 +64,21 @@ class DateTimePickerType extends AbstractType
             'with_seconds' => false,
             'model_timezone' => $timezone,
             'view_timezone' => $timezone,
+            'autofocus' => false,
         ]);
 
         $resolver->setDefault('attr', function (Options $options) {
-            return [
+            $values = [
                 'data-datetimepicker' => 'on',
                 'autocomplete' => 'off',
                 'placeholder' => $options['format'],
                 'data-format' => $options['format_picker'],
             ];
+            if ($options['autofocus']) {
+                $values['autofocus'] = 'autofocus';
+            }
+
+            return $values;
         });
     }
 

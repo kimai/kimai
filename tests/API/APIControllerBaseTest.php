@@ -152,11 +152,12 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
     /**
      * @param string $role
      * @param string $url
+     * @param string $method
      */
-    protected function assertEntityNotFound(string $role, string $url)
+    protected function assertEntityNotFound(string $role, string $url, string $method = 'GET')
     {
         $client = $this->getClientForAuthenticatedUser($role);
-        $this->request($client, $url);
+        $this->request($client, $url, $method);
 
         $expected = [
             'code' => 404,
@@ -169,6 +170,67 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
             $expected,
             json_decode($client->getResponse()->getContent(), true)
         );
+    }
+
+    /**
+     * @param string $role
+     * @param string $url
+     * @param array $data
+     */
+    protected function assertEntityNotFoundForPatch(string $role, string $url, array $data)
+    {
+        $client = $this->getClientForAuthenticatedUser($role);
+
+        $this->request($client, $url, 'PATCH', [], json_encode($data));
+        $response = $client->getResponse();
+        $this->assertFalse($response->isSuccessful());
+
+        $expected = [
+            'code' => 404,
+            'message' => 'Not found'
+        ];
+
+        $this->assertEquals(404, $client->getResponse()->getStatusCode());
+
+        $this->assertEquals(
+            $expected,
+            json_decode($client->getResponse()->getContent(), true)
+        );
+    }
+
+    /**
+     * @param Response $response
+     * @param string $message
+     */
+    protected function assertApiException(Response $response, string $message)
+    {
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals(500, $response->getStatusCode());
+        $this->assertEquals(['code' => 500, 'message' => $message], json_decode($response->getContent(), true));
+    }
+
+    /**
+     * @param Client $client
+     * @param string $url
+     * @param string $message
+     */
+    protected function assertApiAccessDenied(Client $client, string $url, string $message)
+    {
+        $this->request($client, $url);
+        $this->assertApiResponseAccessDenied($client->getResponse(), $message);
+    }
+
+    /**
+     * @param Client $client
+     * @param string $url
+     * @param string $message
+     */
+    protected function assertApiResponseAccessDenied(Response $response, string $message)
+    {
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        $expected = ['code' => Response::HTTP_FORBIDDEN, 'message' => $message];
+        $this->assertEquals($expected, json_decode($response->getContent(), true));
     }
 
     /**

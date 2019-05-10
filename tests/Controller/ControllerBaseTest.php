@@ -137,7 +137,20 @@ abstract class ControllerBaseTest extends WebTestCase
             $client->getResponse()->isSuccessful(),
             sprintf('The secure URL %s is not protected for role %s', $url, $role)
         );
-        $this->assertContains('Symfony\Component\Security\Core\Exception\AccessDeniedException', $client->getResponse()->getContent());
+        $this->assertAccessDenied($client);
+    }
+
+    protected function assertAccessDenied(Client $client)
+    {
+        $this->assertFalse(
+            $client->getResponse()->isSuccessful(),
+            'Access is not denied for URL: ' . $client->getRequest()->getUri()
+        );
+        $this->assertContains(
+            'Symfony\Component\Security\Core\Exception\AccessDeniedException',
+            $client->getResponse()->getContent(),
+            'Could not find AccessDeniedException in response'
+        );
     }
 
     /**
@@ -175,7 +188,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertHasDataTable(Client $client)
     {
-        $this->assertContains('<table class="table table-striped table-hover dataTable" role="grid">', $client->getResponse()->getContent());
+        $this->assertContains('<table class="table table-striped table-hover dataTable" role="grid" data-reload-event="', $client->getResponse()->getContent());
     }
 
     /**
@@ -187,6 +200,23 @@ abstract class ControllerBaseTest extends WebTestCase
     {
         $node = $client->getCrawler()->filter('section.content div#' . $id . ' table.table-striped tbody tr');
         $this->assertEquals($count, $node->count());
+    }
+
+    /**
+     * @param Client $client
+     * @param array $buttons
+     */
+    protected function assertPageActions(Client $client, array $buttons)
+    {
+        $node = $client->getCrawler()->filter('section.content-header div.breadcrumb div.box-tools div.btn-group a.btn');
+        $this->assertEquals(count($buttons), $node->count());
+
+        foreach ($node->getIterator() as $element) {
+            $expectedClass = str_replace('btn btn-default btn-', '', $element->getAttribute('class'));
+            $this->assertArrayHasKey($expectedClass, $buttons);
+            $expectedUrl = $buttons[$expectedClass];
+            $this->assertEquals($expectedUrl, $element->getAttribute('href'));
+        }
     }
 
     /**
@@ -231,10 +261,22 @@ abstract class ControllerBaseTest extends WebTestCase
         }
     }
 
+    /**
+     * @param Client $client
+     */
     protected function assertHasNoEntriesWithFilter(Client $client)
     {
+        $this->assertCalloutWidgetWithMessage($client, 'No entries were found based on your selected filters.');
+    }
+
+    /**
+     * @param Client $client
+     * @param string $message
+     */
+    protected function assertCalloutWidgetWithMessage(Client $client, string $message)
+    {
         $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
-        $this->assertContains('No entries were found based on your selected filters.', $node->text());
+        $this->assertContains($message, $node->text());
     }
 
     /**
@@ -243,7 +285,16 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertHasFlashDeleteSuccess(Client $client)
     {
-        $this->assertHasFlashSuccess($client, 'Entry was deleted successful');
+        $this->assertHasFlashSuccess($client, 'Entry was deleted');
+    }
+
+    /**
+     * @param Client $client
+     * @param string|null $message
+     */
+    protected function assertHasFlashSaveSuccess(Client $client)
+    {
+        $this->assertHasFlashSuccess($client, 'Saved changes');
     }
 
     /**
@@ -253,6 +304,19 @@ abstract class ControllerBaseTest extends WebTestCase
     protected function assertHasFlashSuccess(Client $client, string $message = null)
     {
         $node = $client->getCrawler()->filter('div.alert.alert-success.alert-dismissible');
+        $this->assertNotEmpty($node->text());
+        if (null !== $message) {
+            $this->assertContains($message, $node->text());
+        }
+    }
+
+    /**
+     * @param Client $client
+     * @param string|null $message
+     */
+    protected function assertHasFlashError(Client $client, string $message = null)
+    {
+        $node = $client->getCrawler()->filter('div.alert.alert-error.alert-dismissible');
         $this->assertNotEmpty($node->text());
         if (null !== $message) {
             $this->assertContains($message, $node->text());

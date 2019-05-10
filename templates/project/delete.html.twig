@@ -1,0 +1,27 @@
+{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
+{% import "macros/actions.html.twig" as actions %}
+
+{% block page_title %}{{ 'admin_project.title'|trans }}{% endblock %}
+{% block page_subtitle %}{{ 'admin_project.subtitle'|trans }}{% endblock %}
+{% block page_actions %}{{ actions.project(project, 'delete') }}{% endblock %}
+
+{% block main %}
+
+    {% set inUse = (stats.recordAmount > 0) %}
+
+    {% set params = {
+        '%project%': '<strong>' ~ project.name ~ '</strong>',
+        '%customer%': '<strong>' ~ project.customer.name ~ '</strong>',
+        '%records%': '<strong>' ~ stats.recordAmount ~ '</strong>',
+        '%activities%': '<strong>' ~ stats.activityAmount ~ '</strong>',
+        '%duration%': '<strong>' ~ stats.recordDuration|duration ~ '</strong>'
+    } %}
+
+    {{ include(app.request.xmlHttpRequest ? 'default/_form_delete_modal.html.twig' : 'default/_form_delete.html.twig', {
+        'message': "admin_project.delete_confirm"|trans(params)|raw,
+        'form': form,
+        'used': inUse,
+        'back': path('admin_project')
+    }) }}
+
+{% endblock %}

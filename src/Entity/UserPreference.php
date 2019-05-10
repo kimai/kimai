@@ -16,11 +16,8 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * UserPreference
- *
  * @ORM\Entity()
- * @ORM\Table(
- *      name="user_preferences",
+ * @ORM\Table(name="kimai2_user_preferences",
  *      uniqueConstraints={
  *          @ORM\UniqueConstraint(columns={"user_id", "name"})
  *      }
@@ -30,6 +27,8 @@ class UserPreference
 {
     public const HOURLY_RATE = 'hourly_rate';
     public const SKIN = 'skin';
+    public const LOCALE = 'language';
+    public const TIMEZONE = 'timezone';
 
     /**
      * @var int

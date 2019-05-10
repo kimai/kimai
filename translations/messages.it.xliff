@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="it" datatype="plaintext" original="messages.en.xliff">
+    <file source-language="en" target-language="it" datatype="plaintext" original="messages.en.xliff">
         <body>
             <!--
               Global template keys
             -->
-            <trans-unit id="browser.title">
-                <source>browser.title</source>
-                <target>Kimai - Time Tracking</target>
+            <trans-unit id="time_tracking">
+                <source>time_tracking</source>
+                <target>Time Tracking</target>
             </trans-unit>
             <trans-unit id="yes">
                 <source>yes</source>
@@ -20,10 +20,6 @@
             <trans-unit id="both">
                 <source>both</source>
                 <target></target>
-            </trans-unit>
-            <trans-unit id="subtitle.amount">
-                <source>subtitle.amount</source>
-                <target>(total %count%)</target>
             </trans-unit>
             <trans-unit id="This is a mandatory field">
                 <source>This is a mandatory field</source>
@@ -183,6 +179,10 @@
                 <source>label.project</source>
                 <target>Progetto</target>
             </trans-unit>
+            <trans-unit id="label.hourlyRate">
+                <source>label.hourlyRate</source>
+                <target>Tariffa oraria</target>
+            </trans-unit>
             <trans-unit id="label.hourly_rate">
                 <source>label.hourly_rate</source>
                 <target>Tariffa oraria</target>
@@ -331,10 +331,6 @@
                 <source>profile.first_entry</source>
                 <target>Profilo registrato il</target>
             </trans-unit>
-            <trans-unit id="profile.tab_monthly">
-                <source>profile.tab_monthly</source>
-                <target>Statistiche annuali</target>
-            </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>
                 <target>Profilo</target>
@@ -354,18 +350,6 @@
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
                 <target>Auto collassa la sidebar di sinistra</target>
-            </trans-unit>
-
-            <!--
-              Help - Manual
-            -->
-            <trans-unit id="help.title">
-                <source>help.title</source>
-                <target>Aiuto</target>
-            </trans-unit>
-            <trans-unit id="help.subtitle">
-                <source>help.subtitle</source>
-                <target>Istruzioni su come usare e configurare Kimai</target>
             </trans-unit>
 
             <!--
@@ -431,8 +415,8 @@
                 <source>admin_customer.subtitle</source>
                 <target>I tuoi clienti sono la base per creare i progetti e le attività</target>
             </trans-unit>
-            <trans-unit id="label.customer_number">
-                <source>label.customer_number</source>
+            <trans-unit id="label.number">
+                <source>label.number</source>
                 <target>Account</target>
             </trans-unit>
             <trans-unit id="label.company">
@@ -538,10 +522,6 @@
             <trans-unit id="ROLE_USER">
                 <source>ROLE_USER</source>
                 <target>Utente</target>
-            </trans-unit>
-            <trans-unit id="ROLE_CUSTOMER">
-                <source>ROLE_CUSTOMER</source>
-                <target>Cliente</target>
             </trans-unit>
 
             <!--
@@ -679,8 +659,8 @@
                 <source>invoice.signature_customer</source>
                 <target>Accettazopme: Data / Nome Cliente / Firma</target>
             </trans-unit>
-            <trans-unit id="label.order_number">
-                <source>label.order_number</source>
+            <trans-unit id="label.orderNumber">
+                <source>label.orderNumber</source>
                 <target>Ordine n.</target>
             </trans-unit>
 
@@ -739,19 +719,9 @@
             <!--
              Navbar - recent entries and activities
             -->
-            <trans-unit id="active.entries">
-                <source>active.entries</source>
-                <target>C'è %count% registrazione attiva|Ci sono %count% registrazioni attive</target>
-            </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
                 <target>Mostra tutte le registrazioni</target>
-            </trans-unit>
-            <trans-unit id="recent.activities">
-                <source>recent.activities</source>
-                <target>
-                    Ricomincia registrazione|Ricomincia una delle %count% tue ultime attività
-                </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>

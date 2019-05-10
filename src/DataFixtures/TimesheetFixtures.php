@@ -14,6 +14,7 @@ use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
+use App\Timesheet\Util;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -25,6 +26,8 @@ use Faker\Factory;
  *
  * Execute this command to load the data:
  * bin/console doctrine:fixtures:load
+ *
+ * @codeCoverageIgnore
  */
 class TimesheetFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -167,6 +170,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
         $start = new \DateTime();
         $start = $start->modify('- ' . (rand(1, self::TIMERANGE_DAYS)) . ' days');
         $start = $start->modify('- ' . (rand(1, 86400)) . ' seconds');
+        $start->setTimezone(new \DateTimeZone($user->getPreferenceValue(UserPreference::TIMEZONE, date_default_timezone_get())));
 
         $entry = new Timesheet();
         $entry
@@ -181,11 +185,12 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
             $end = $end->modify('+ ' . (rand(self::MIN_MINUTES_PER_ENTRY, self::MAX_MINUTES_PER_ENTRY)) . ' minutes');
 
             $duration = $end->getTimestamp() - $start->getTimestamp();
-            $rate = $user->getPreferenceValue(UserPreference::HOURLY_RATE);
+            $hourlyRate = (float) $user->getPreferenceValue(UserPreference::HOURLY_RATE);
+            $rate = Util::calculateRate($hourlyRate, $duration);
 
             $entry
                 ->setEnd($end)
-                ->setRate(round(($duration / 3600) * $rate))
+                ->setRate($rate)
                 ->setDuration($duration);
         }
 

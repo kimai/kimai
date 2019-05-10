@@ -1,0 +1,69 @@
+{% extends 'about/layout.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+
+{% block page_subtitle %}{{ 'about.subtitle'|trans({}, 'about') }}{% endblock %}
+
+{% block about_box %}
+    {% if is_granted('system_actions') %}
+        {% embed '@AdminLTE/Widgets/box-widget.html.twig' with {'boxtype': 'warning'} %}
+            {% block box_title %}{{ 'label.actions'|trans }}{% endblock %}
+            {% block box_body %}
+                {% if content_action is defined and content_action is not empty %}
+                    <pre>
+                    {{ content_action }}
+                    </pre>
+                {% endif %}
+
+                <p>
+                    <a href="{{ path('system_flush_cache') }}" class="btn btn-primary" onclick="$(this).html('Clear cache <i class=\'fas fa-spinner fa-spin\'></i>')">Clear cache</a>
+                </p>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+{% endblock %}
+
+{% block about %}
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% block box_title %}Environment{% endblock %}
+        {% block box_body %}
+            <dl>
+                {% for name, value in dotenv %}
+                    <dt>{{ name }}</dt>
+                    <dd>{{ value }}</dd>
+                {% endfor %}
+            </dl>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% block box_title %}PHP{% endblock %}
+        {% block box_body %}
+            <dl>
+                <dt>Version</dt><dd>{{ constant('PHP_VERSION') }}</dd>
+                <dt>Modules</dt><dd>{{ modules|join(', ') }}</dd>
+                {% for name, value in settings %}
+                    <dt>{{ name }}</dt>
+                    <dd>
+                        {% if value is empty %}
+                            <i>unknown</i>
+                        {% else %}
+                            {{ value }}
+                        {% endif %}
+                    </dd>
+                {% endfor %}
+            </dl>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% block box_title %}Server{% endblock %}
+        {% block box_body %}
+            <dl>
+                {% for name, value in info %}
+                    <dt>{{ name }}</dt>
+                    <dd>{{ value|raw }}</dd>
+                {% endfor %}
+            </dl>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

@@ -14,8 +14,8 @@ services:
 matrix:
   fast_finish: true
   include:
-    - php: 7.1
     - php: 7.2
+    - php: 7.3
 
 before_install:
   - phpenv config-rm xdebug.ini
@@ -26,6 +26,7 @@ install:
   - composer install
 
 script:
+  - php -r "echo date(DATE_RFC850);"
   - vendor/bin/phpunit tests/
   - cp tests/.env.dist.sqlite .env
   - bin/console doctrine:database:create -n

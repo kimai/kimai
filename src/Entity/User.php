@@ -18,11 +18,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Application main User entity.
- *
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ORM\Table(
- *      name="users",
+ * @ORM\Table(name="kimai2_users",
  *      uniqueConstraints={
  *          @ORM\UniqueConstraint(columns={"username"}),
  *          @ORM\UniqueConstraint(columns={"email"})
@@ -33,12 +30,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User extends BaseUser implements UserInterface
 {
-    public const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_TEAMLEAD = 'ROLE_TEAMLEAD';
     public const ROLE_ADMIN = 'ROLE_ADMIN';
     public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+
     public const DEFAULT_ROLE = self::ROLE_USER;
+    public const DEFAULT_LANGUAGE = 'en';
 
     /**
      * @var int
@@ -265,6 +263,14 @@ class User extends BaseUser implements UserInterface
         }
 
         return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->getPreferenceValue(UserPreference::LOCALE, User::DEFAULT_LANGUAGE);
     }
 
     /**

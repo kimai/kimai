@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file date="2018-11-28T20:00:00Z" source-language="en" target-language="pt-BR" datatype="plaintext" original="messages.en.xliff">
+    <file source-language="en" target-language="pt-BR" datatype="plaintext" original="messages.en.xliff">
         <body>
             <!--
               Global template keys
             -->
-            <trans-unit id="browser.title">
-                <source>browser.title</source>
-                <target>Kimai - Time Tracking</target>
+            <trans-unit id="time_tracking">
+                <source>time_tracking</source>
+                <target>Time Tracking</target>
             </trans-unit>
             <trans-unit id="yes">
                 <source>yes</source>
@@ -20,10 +20,6 @@
             <trans-unit id="both">
                 <source>both</source>
                 <target>Ambos</target>
-            </trans-unit>
-            <trans-unit id="subtitle.amount">
-                <source>subtitle.amount</source>
-                <target>(total %count%)</target>
             </trans-unit>
             <trans-unit id="This is a mandatory field">
                 <source>This is a mandatory field</source>
@@ -183,6 +179,10 @@
                 <source>label.project</source>
                 <target>Projeto</target>
             </trans-unit>
+            <trans-unit id="label.hourlyRate">
+                <source>label.hourlyRate</source>
+                <target>Taxa horária</target>
+            </trans-unit>
             <trans-unit id="label.hourly_rate">
                 <source>label.hourly_rate</source>
                 <target>Taxa horária</target>
@@ -311,8 +311,8 @@
                 <source>modal.columns.description</source>
                 <target>Ao salvar, as colunas desmarcadas serão ocultadas e essa configuração será armazenada em um cookie do navegador. Se você excluir seus cookies, as configurações serão invertidas.</target>
             </trans-unit>
-            <trans-unit id="label.fixed_rate">
-                <source>label.fixed_rate</source>
+            <trans-unit id="label.fixedRate">
+                <source>label.fixedRate</source>
                 <target>Taxa fixa</target>
             </trans-unit>
 
@@ -334,10 +334,6 @@
             <trans-unit id="profile.first_entry">
                 <source>profile.first_entry</source>
                 <target>Trabalhando desde</target>
-            </trans-unit>
-            <trans-unit id="profile.tab_monthly">
-                <source>profile.tab_monthly</source>
-                <target>Estatística anual</target>
             </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>
@@ -379,18 +375,6 @@
             <trans-unit id="agendaDay">
                 <source>agendaDay</source>
                 <target>Dia</target>
-            </trans-unit>
-
-            <!--
-              Help - Manual
-            -->
-            <trans-unit id="help.title">
-                <source>help.title</source>
-                <target>Ajuda</target>
-            </trans-unit>
-            <trans-unit id="help.subtitle">
-                <source>help.subtitle</source>
-                <target>Instruções para usar e configurar o Kimai</target>
             </trans-unit>
 
             <!--
@@ -458,8 +442,8 @@
                 <source>admin_customer.subtitle</source>
                 <target>Seu cliente é a base para criar projetos e atividades</target>
             </trans-unit>
-            <trans-unit id="label.customer_number">
-                <source>label.customer_number</source>
+            <trans-unit id="label.number">
+                <source>label.number</source>
                 <target>Conta</target>
             </trans-unit>
             <trans-unit id="label.company">
@@ -573,10 +557,6 @@
             <trans-unit id="ROLE_USER">
                 <source>ROLE_USER</source>
                 <target>Usuário</target>
-            </trans-unit>
-            <trans-unit id="ROLE_CUSTOMER">
-                <source>ROLE_CUSTOMER</source>
-                <target>Cliente</target>
             </trans-unit>
 
             <!--
@@ -762,8 +742,8 @@
                 <source>invoice.total_working_time</source>
                 <target>Duração Total</target>
             </trans-unit>
-            <trans-unit id="label.order_number">
-                <source>label.order_number</source>
+            <trans-unit id="label.orderNumber">
+                <source>label.orderNumber</source>
                 <target>Número do pedido</target>
             </trans-unit>
             <trans-unit id="label.invoice_tax_number">
@@ -838,19 +818,9 @@
             <!--
              Navbar - recent entries and activities
             -->
-            <trans-unit id="active.entries">
-                <source>active.entries</source>
-                <target>Você tem %count% registros ativos|Você tem %count% registros ativos</target>
-            </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
                 <target>Mostrar todos os registros</target>
-            </trans-unit>
-            <trans-unit id="recent.activities">
-                <source>recent.activities</source>
-                <target>
-                    Reinicie a sua última atividade registrada|Reinicie uma de suas %count% últimas atividades
-                </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>

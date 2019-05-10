@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file date="2017-01-12T20:00:00Z" source-language="en" target-language="es" datatype="plaintext" original="none">
+    <file source-language="en" target-language="es" datatype="plaintext" original="messages.en.xliff">
         <body>
             <!--
               Global template keys
             -->
-            <trans-unit id="browser.title">
-                <source>browser.title</source>
-                <target>Kimai - Control de Tiempo</target>
+            <trans-unit id="time_tracking">
+                <source>time_tracking</source>
+                <target>Control de Tiempo</target>
             </trans-unit>
             <trans-unit id="yes">
                 <source>yes</source>
@@ -20,10 +20,6 @@
             <trans-unit id="both">
                 <source>both</source>
                 <target>ambos</target>
-            </trans-unit>
-            <trans-unit id="subtitle.amount">
-                <source>subtitle.amount</source>
-                <target>(total %count%)</target>
             </trans-unit>
             <trans-unit id="This is a mandatory field">
                 <source>This is a mandatory field</source>
@@ -191,6 +187,10 @@
                 <source>label.project</source>
                 <target>Proyecto</target>
             </trans-unit>
+            <trans-unit id="label.hourlyRate">
+                <source>label.hourlyRate</source>
+                <target>Tarifa por hora</target>
+            </trans-unit>
             <trans-unit id="label.hourly_rate">
                 <source>label.hourly_rate</source>
                 <target>Tarifa por hora</target>
@@ -339,10 +339,6 @@
                 <source>profile.first_entry</source>
                 <target>Activo desde</target>
             </trans-unit>
-            <trans-unit id="profile.tab_monthly">
-                <source>profile.tab_monthly</source>
-                <target>Estadística anual</target>
-            </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>
                 <target>Perfil</target>
@@ -366,18 +362,6 @@
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
                 <target>Alternar la vista de la barra lateral izquierda al cargar la página (abrierta o colapsar)</target>
-            </trans-unit>
-
-            <!--
-              Help - Manual
-            -->
-            <trans-unit id="help.title">
-                <source>help.title</source>
-                <target>Ayuda</target>
-            </trans-unit>
-            <trans-unit id="help.subtitle">
-                <source>help.subtitle</source>
-                <target>Documentación para usar y configurar Kimai</target>
             </trans-unit>
 
             <!--
@@ -443,8 +427,8 @@
                 <source>admin_customer.subtitle</source>
                 <target>Sus clientes son la base para crear proyectos y actividades</target>
             </trans-unit>
-            <trans-unit id="label.customer_number">
-                <source>label.customer_number</source>
+            <trans-unit id="label.number">
+                <source>label.number</source>
                 <target>Cuenta</target>
             </trans-unit>
             <trans-unit id="label.company">
@@ -556,10 +540,6 @@
             <trans-unit id="ROLE_USER">
                 <source>ROLE_USER</source>
                 <target>Usuario</target>
-            </trans-unit>
-            <trans-unit id="ROLE_CUSTOMER">
-                <source>ROLE_CUSTOMER</source>
-                <target>Cliente</target>
             </trans-unit>
 
             <!--
@@ -701,8 +681,8 @@
                 <source>invoice.signature_customer</source>
                 <target>Confirmación: Fecha / Nombre / Firma</target>
             </trans-unit>
-            <trans-unit id="label.order_number">
-                <source>label.order_number</source>
+            <trans-unit id="label.orderNumber">
+                <source>label.orderNumber</source>
                 <target>Número de orden</target>
             </trans-unit>
 
@@ -761,19 +741,9 @@
             <!--
              Navbar - recent entries and activities
             -->
-            <trans-unit id="active.entries">
-                <source>active.entries</source>
-                <target>Usted tiene %count% registro activo|Usted tiene %count% registros activos</target>
-            </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
                 <target>Ver todos los registros</target>
-            </trans-unit>
-            <trans-unit id="recent.activities">
-                <source>recent.activities</source>
-                <target>
-                    Reiniciar su última actividad registrada|Reiniciar una de sus %count% ultimas actividades
-                </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>

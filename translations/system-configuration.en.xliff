@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="system-configuration.en.xliff">
+        <body>
+            <trans-unit id="title">
+                <source>title</source>
+                <target>Settings</target>
+            </trans-unit>
+            <trans-unit id="subtitle">
+                <source>subtitle</source>
+                <target>Change global configurations of your time-tracker</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target>Timesheet</target>
+            </trans-unit>
+            <trans-unit id="form_customer">
+                <source>form_customer</source>
+                <target>Create customer - default values</target>
+            </trans-unit>
+            <trans-unit id="theme">
+                <source>theme</source>
+                <target>Theme</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.markdown_content">
+                <source>label.timesheet.markdown_content</source>
+                <target>Allow Markdown in the timesheet descriptions</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode">
+                <source>label.timesheet.mode</source>
+                <target>Timetracking mode</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_default">
+                <source>label.timesheet.mode_default</source>
+                <target>Default: accept start and end date</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_duration_only">
+                <source>label.timesheet.mode_duration_only</source>
+                <target>Duration only: replaces the end date field with an input for duration</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.allow_future_times">
+                <source>label.timesheet.rules.allow_future_times</source>
+                <target>Allow time entries in the future</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.active_entries.hard_limit">
+                <source>label.timesheet.active_entries.hard_limit</source>
+                <target>Permitted number of simultaneously running time entries</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.active_entries.soft_limit">
+                <source>label.timesheet.active_entries.soft_limit</source>
+                <target>Number of running time entries from which a warning is displayed</target>
+            </trans-unit>
+            <trans-unit id="label.theme.select_type">
+                <source>label.theme.select_type</source>
+                <target>Type of select-boxes in forms</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -2,7 +2,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    app_locales: en|de|it|fr|es|ru|ar|hu|pt_BR
+    app_locales: en|de|it|fr|es|ru|ar|hu|pt_BR|sv
 
 services:
     # default configuration for services in *this* file
@@ -14,13 +14,12 @@ services:
                             # The best practice is to be explicit about your dependencies anyway.
         bind:
             $projectDirectory: "%kernel.project_dir%"
-            $hardLimit: "%kimai.timesheet.active_entries.hard_limit%"
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{Entity,Migrations,Tests}'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php,Constants.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -47,36 +46,44 @@ services:
         arguments:
             $dashboard: "%kimai.dashboard%"
 
-    App\Twig\MarkdownExtension:
-        arguments:
-            $timesheetAsMarkdown: "%kimai.timesheet.markdown%"
+    App\Configuration\LanguageFormattings:
+        arguments: ["%kimai.languages%"]
 
-    App\Controller\Admin\CustomerController:
+    App\Configuration\TimesheetConfiguration:
         arguments:
-            $defaults: "%kimai.defaults%"
+            $settings: "%kimai.timesheet%"
 
-    App\Utils\LocaleSettings:
+    App\Configuration\FormConfiguration:
         arguments:
-            $languageSettings: "%kimai.languages%"
+            $settings: "%kimai.defaults%"
+
+    App\Configuration\SystemConfiguration:
+        arguments:
+            $settings: "%kimai.config%"
+
+    App\Configuration\ThemeConfiguration:
+        arguments:
+            $settings: "%kimai.theme%"
+
+    App\Utils\MPdfConverter:
+        arguments: ['%kernel.cache_dir%']
+
+    App\Plugin\PluginManager:
+        arguments: [!tagged kimai.plugin]
+
+    App\Export\ServiceExport:
+        arguments: [!tagged export.renderer]
 
     # ================================================================================
     # DATABASE
     # ================================================================================
-
-    # service that prefixes every database table
-    App\Doctrine\TablePrefixSubscriber:
-        class: App\Doctrine\TablePrefixSubscriber
-        arguments: ["%env(resolve:DATABASE_PREFIX)%"]
-        tags:
-            - { name: doctrine.event_subscriber }
 
     # updates timesheet records and apply configured rate & rounding rules
     App\Doctrine\TimesheetSubscriber:
         class: App\Doctrine\TimesheetSubscriber
         arguments: [!tagged timesheet.calculator]
         tags:
-            - { name: doctrine.event_listener, event: prePersist, lazy: true }
-            - { name: doctrine.event_listener, event: preUpdate, lazy: true }
+            - { name: doctrine.event_subscriber, priority: 50 }
 
     # make sure, that sqlite supports foreign keys and cascade deletes
     App\Doctrine\SqliteSessionInitSubscriber:
@@ -93,28 +100,6 @@ services:
 
     App\Form\Type\LanguageType:
         arguments: ["%app_locales%"]
-
-    App\Form\Extension\DocumentationLinkExtension:
-        tags:
-            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
-
-    App\Form\Extension\EnhancedChoiceTypeExtension:
-        arguments: ["%kimai.theme.select_type%"]
-        tags:
-            - { name: form.type_extension, extended_type: Symfony\Bridge\Doctrine\Form\Type\EntityType }
-
-    App\Form\TimesheetEditForm:
-        arguments:
-            $durationOnly: "%kimai.timesheet.duration_only%"
-
-    App\Form\Extension\SelectWithApiDataExtension:
-        tags:
-            - { name: form.type_extension, extended_type: Symfony\Bridge\Doctrine\Form\Type\EntityType }
-
-    App\Validator\Constraints\TimesheetValidator:
-        arguments:
-            $ruleset: "%kimai.timesheet.rules%"
-            $durationOnly: "%kimai.timesheet.duration_only%"
 
     # ================================================================================
     # THEME
@@ -179,7 +164,11 @@ services:
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\InvoiceTemplate']
 
+    App\Repository\ConfigurationRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\Configuration']
+
     App\Repository\InvoiceDocumentRepository:
         class: App\Repository\InvoiceDocumentRepository
         arguments: ['%kimai.invoice.documents%']
-
