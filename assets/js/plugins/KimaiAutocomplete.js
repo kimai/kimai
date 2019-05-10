@@ -5,13 +5,13 @@
  * file that was distributed with this source code.
  */
 
-/*!
- * [KIMAI] KimaiTagging: features for timesheet tagging
- */
-
 import jQuery from 'jquery';
 import KimaiPlugin from "../KimaiPlugin";
 
+/**
+ * Supporting auto-complete fields via API.
+ * Currently used for timesheet tagging in toolbar and edit dialogs.
+ */
 export default class KimaiAutocomplete extends KimaiPlugin {
 
     constructor(selector) {
