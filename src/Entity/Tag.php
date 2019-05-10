@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="tags")
+ * @ORM\Table(name="kimai2_tags")
  * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
  */
 class Tag

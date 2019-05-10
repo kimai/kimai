@@ -74,7 +74,7 @@ export default class KimaiRecentActivities extends KimaiPlugin {
         const self = this;
         const apiService = this.getContainer().getPlugin('api');
 
-        apiService.get(this.attributes['api'], function(result) {
+        apiService.get(this.attributes['api'], {}, function(result) {
             self.setEntries(result);
         });
     }

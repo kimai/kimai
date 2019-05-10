@@ -18,7 +18,7 @@ export default class KimaiAPI extends KimaiPlugin {
         return 'api';
     }
 
-    get(url, callback) {
+    get(url, data, callback) {
         jQuery.ajax({
             url: url,
             headers: {
@@ -26,6 +26,7 @@ export default class KimaiAPI extends KimaiPlugin {
                 'Content-Type':'application/json'
             },
             method: 'GET',
+            data: data,
             dataType: 'json',
             success: callback
         });

@@ -72,6 +72,8 @@ export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableR
 
             // activate new loaded widgets
             self.getContainer().getPlugin('date-time-picker').activateDateTimePicker(formIdentifier);
+            self.getContainer().getPlugin('autocomplete').activateAutocomplete(formIdentifier + " .js-autocomplete");
+
             // activate selectpicker if beta test is active
             jQuery('.selectpicker').selectpicker('refresh');
         }

@@ -128,7 +128,7 @@ class Timesheet
      *
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="timesheets", cascade={"persist"})
      * @ORM\JoinTable(
-     *  name="timesheet_tags",
+     *  name="kimai2_timesheet_tags",
      *  joinColumns={
      *      @ORM\JoinColumn(name="timesheet_id", referencedColumnName="id")
      *  },

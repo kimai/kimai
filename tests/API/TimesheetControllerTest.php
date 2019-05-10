@@ -667,5 +667,4 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertArrayHasKey('name', $result['project']['customer']);
         $this->assertArrayHasKey('visible', $result['project']['customer']);
     }
-
 }

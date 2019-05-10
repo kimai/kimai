@@ -30,6 +30,7 @@ import KimaiRecentActivities from "./plugins/KimaiRecentActivities";
 import KimaiEvent from "./plugins/KimaiEvent";
 import KimaiAPILink from "./plugins/KimaiAPILink";
 import KimaiAlert from "./plugins/KimaiAlert";
+import KimaiAutocomplete from "./plugins/KimaiAutocomplete";
 
 export default class KimaiLoader {
 
@@ -82,6 +83,7 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiRecentActivities('li.notifications-menu'));
         kimai.registerPlugin(new KimaiActiveRecords('li.messages-menu', 'li.messages-menu-empty'));
         kimai.registerPlugin(new KimaiAPILink('a.api-link'));
+        kimai.registerPlugin(new KimaiAutocomplete('.js-autocomplete'));
         //kimai.registerPlugin(new KimaiPauseRecord('li.messages-menu ul.menu li'));
 
         // notify all listeners that Kimai plugins can now be registered

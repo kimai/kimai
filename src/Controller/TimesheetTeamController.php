@@ -11,7 +11,6 @@ namespace App\Controller;
 
 use App\Entity\Tag;
 use App\Entity\Timesheet;
-use App\Form\DeleteType;
 use App\Form\TimesheetEditForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\ActivityRepository;
