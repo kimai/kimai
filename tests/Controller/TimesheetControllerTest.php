@@ -303,7 +303,8 @@ class TimesheetControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
         $client->submit($form, [
             'timesheet_edit_form' => [
-                'description' => 'foo-bar'
+                'description' => 'foo-bar',
+                'tags' => 'foo,bar, testing, hello world,,',
             ]
         ]);
 

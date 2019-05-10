@@ -13,6 +13,7 @@ use App\Calendar\TimesheetEntity;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\Tag;
 use App\Entity\Timesheet;
 use PHPUnit\Framework\TestCase;
 
@@ -36,12 +37,15 @@ class TimesheetEntityTest extends TestCase
         $timesheet = new Timesheet();
         $timesheet->setActivity($activity);
         $timesheet->setProject($project);
+        $timesheet->addTag((new Tag())->setName('foo'));
+        $timesheet->addTag((new Tag())->setName('bar'));
 
         $sut = new TimesheetEntity($timesheet);
 
         $this->assertEquals('customer', $sut->getCustomer());
         $this->assertEquals('project', $sut->getProject());
         $this->assertEquals('activity', $sut->getTitle());
+        $this->assertEquals('foo, bar', $sut->getTags());
 
         $sut->setId(13);
         $this->assertEquals(13, $sut->getId());
@@ -65,6 +69,9 @@ class TimesheetEntityTest extends TestCase
 
         $sut->setActivity('cccccccc');
         $this->assertEquals('cccccccc', $sut->getActivity());
+
+        $sut->setTags('hello, world');
+        $this->assertEquals('hello, world', $sut->getTags());
 
         $this->assertNull($sut->getBorderColor());
         $sut->setBorderColor('#cccccc');
