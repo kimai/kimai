@@ -345,7 +345,7 @@ class InvoiceController extends AbstractController
             'method' => 'POST',
             'attr' => [
                 'id' => 'invoice-print-form'
-            ]
+            ],
         ]);
     }
 

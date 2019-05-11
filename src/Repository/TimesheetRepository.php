@@ -332,12 +332,13 @@ class TimesheetRepository extends AbstractRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('t', 'a', 'p', 'c', 'u')
+        $qb->select('t', 'a', 'p', 'c', 'u', 'tags')
             ->from(Timesheet::class, 't')
             ->leftJoin('t.activity', 'a')
             ->leftJoin('t.user', 'u')
             ->leftJoin('t.project', 'p')
             ->leftJoin('p.customer', 'c')
+            ->leftJoin('t.tags', 'tags')
             ->orderBy('t.' . $query->getOrderBy(), $query->getOrder());
 
         if (null !== $query->getUser()) {
@@ -380,6 +381,11 @@ class TimesheetRepository extends AbstractRepository
                 $qb->andWhere('p.customer = :customer')
                     ->setParameter('customer', $query->getCustomer());
             }
+        }
+
+        if ($query->hasTags()) {
+            $qb->andWhere('tags.id IN (:tags)')
+                ->setParameter('tags', $query->getTags()->toArray());
         }
 
         return $this->getBaseQueryResult($qb, $query);

@@ -586,10 +586,55 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertApiResponseAccessDenied($client->getResponse(), 'You are not allowed to stop this timesheet');
     }
 
+    public function testGetCollectionWithTags()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setFixedRate(true)
+            ->setHourlyRate(true)
+            ->setAmount(10)
+            ->setUser($this->getUserByRole($em, User::ROLE_USER))
+            ->setStartDate(new \DateTime('-10 days'))
+            ->setAllowEmptyDescriptions(false)
+            ->setUseTags(true)
+            ->setTags(['Test', 'Administration']);
+        $this->importFixture($em, $fixture);
+
+        $query = ['tags' => 'Test'];
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(5, count($result));
+        $this->assertDefaultStructure($result[0], false);
+
+        $query = ['tags' => 'Test,Admin'];
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(10, count($result));
+        $this->assertDefaultStructure($result[0], false);
+
+        $query = ['tags' => 'Nothing'];
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(20, count($result));
+        $this->assertDefaultStructure($result[0], false);
+    }
+
     protected function assertDefaultStructure(array $result, $full = true)
     {
         $expectedKeys = [
-            'id', 'begin', 'end', 'duration', 'description', 'rate', 'activity', 'project', 'user'
+            'id', 'begin', 'end', 'duration', 'description', 'rate', 'activity', 'project', 'tags', 'user'
         ];
 
         if ($full) {
@@ -622,5 +667,4 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertArrayHasKey('name', $result['project']['customer']);
         $this->assertArrayHasKey('visible', $result['project']['customer']);
     }
-
 }

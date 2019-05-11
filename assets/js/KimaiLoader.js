@@ -30,33 +30,11 @@ import KimaiRecentActivities from "./plugins/KimaiRecentActivities";
 import KimaiEvent from "./plugins/KimaiEvent";
 import KimaiAPILink from "./plugins/KimaiAPILink";
 import KimaiAlert from "./plugins/KimaiAlert";
+import KimaiAutocomplete from "./plugins/KimaiAutocomplete";
 
 export default class KimaiLoader {
 
     constructor(configurations, translations) {
-        const defaultTranslations = {
-            today: 'Today',
-            yesterday: 'Yesterday',
-            apply: 'Apply',
-            cancel: 'Cancel',
-            thisWeek: 'This week',
-            lastWeek: 'Last week',
-            thisMonth: 'This month',
-            lastMonth: 'Last month',
-            thisYear: 'This year',
-            lastYear: 'Last year',
-            customRange: 'Custom range',
-        };
-
-        translations = Object.assign(defaultTranslations, translations);
-
-        const defaultConfigurations = {
-            locale: 'en',
-            twentyFourHours: true
-        };
-
-        configurations = Object.assign(defaultConfigurations, configurations);
-
         // set the current locale for all javascript components
         moment.locale(configurations['locale']);
 
@@ -81,7 +59,8 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiAjaxModalForm('.modal-ajax-form'));
         kimai.registerPlugin(new KimaiRecentActivities('li.notifications-menu'));
         kimai.registerPlugin(new KimaiActiveRecords('li.messages-menu', 'li.messages-menu-empty'));
-        kimai.registerPlugin(new KimaiAPILink('a.api-link'));
+        kimai.registerPlugin(new KimaiAPILink('api-link'));
+        kimai.registerPlugin(new KimaiAutocomplete('.js-autocomplete'));
         //kimai.registerPlugin(new KimaiPauseRecord('li.messages-menu ul.menu li'));
 
         // notify all listeners that Kimai plugins can now be registered

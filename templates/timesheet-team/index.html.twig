@@ -21,6 +21,7 @@
     'activity': 'hidden-xs hidden-sm',
     'username': 'hidden-xs',
     'description': 'hidden-xs hidden-sm',
+    'tags': 'hidden-xs hidden-sm',
     'actions': 'actions alwaysVisible',
 }) %}
 
@@ -83,6 +84,7 @@
                     {{ widgets.label_user(entry.user) }}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">{{ entry.description|nl2br }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'tags') }}">{{ widgets.tag_list(entry.tags) }}</td>
                 <td class="actions">
                     {{ actions.timesheet_team(entry, 'index') }}
                 </td>

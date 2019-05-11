@@ -92,6 +92,5 @@ class SelectWithApiDataExtension extends AbstractTypeExtension
     {
         $resolver->setDefined(['api_data']);
         $resolver->setAllowedTypes('api_data', 'array');
-        //$resolver->setDefault('api_data', []);
     }
 }

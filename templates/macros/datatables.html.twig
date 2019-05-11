@@ -88,7 +88,7 @@
                         <tbody>
 {% endmacro %}
 
-{% macro data_table_footer(columns, route) %}
+{% macro data_table_footer(entries, route) %}
                         </tbody>
                     </table>
                 </div>
@@ -96,9 +96,9 @@
         </div>
     </div>
 </div>
-{% if route is not empty and columns is not null%}
+{% if route is not empty and entries is not null%}
 <div class="navigation text-center no-print">
-    {{ pagerfanta(columns, 'twitter_bootstrap3_translated', { proximity: 1, routeName: route }) }}
+    {{ pagerfanta(entries, 'twitter_bootstrap3_translated', { proximity: 1, routeName: route }) }}
 </div>
 {% endif %}
 {% endmacro %}

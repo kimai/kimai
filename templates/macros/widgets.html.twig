@@ -165,7 +165,9 @@
                         {% set class = '' %}
                         {% if icon == 'trash' %}
                             {% set class = 'delete' %}
+                            {% if actions|length > 1 %}
                             <li class="divider"></li>
+                            {% endif %}
                         {% endif %}
                         <li class="{{ class }}">
                             {% if values is iterable %}
@@ -274,4 +276,11 @@
     <a href="{{ url }}" class="btn btn-default btn-{{ icon }}">
         {{ macro.icon(icon) }}
     </a>
+{% endmacro %}
+
+{% macro tag_list(taglist) %}
+    {% import _self as macro %}
+    {% for tag in taglist %}
+        {{ macro.badge(tag.name , 'green') }}
+    {% endfor %}
 {% endmacro %}

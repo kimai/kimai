@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+{% import "macros/actions.html.twig" as actions %}
+{% import "macros/datatables.html.twig" as tables %}
+{% import "macros/toolbar.html.twig" as toolbar %}
+
+{% block page_title %}{{ 'tags.title'|trans({}, 'tags') }}{% endblock %}
+{% block page_subtitle %}{{ 'tags.subtitle'|trans({}, 'tags') }}{% endblock %}
+{% block page_actions %}{{ actions.tags('index') }}{% endblock %}
+
+{% block main_before %}
+    {{ toolbar.toolbar(toolbarForm, 'collapseTags', showFilter) }}
+{% endblock %}
+
+{% block main %}
+
+    {% if tags|length == 0 %}
+        {{ widgets.callout('warning', 'error.no_entries_found') }}
+    {% else %}
+
+        {% set columns = {
+            'name': '',
+            'amount': '',
+            'actions': 'actions alwaysVisible',
+        } %}
+
+        {% set tableName = 'admin_tags' %}
+
+        {{ tables.data_table_header(tableName, columns, false, 'kimai.tagUpdate') }}
+        {% for tag in tags %}
+            {% set type = 'primary' %}
+            {% if tag.amount == 0 %}
+                {% set type = 'warning' %}
+            {% endif %}
+
+            <tr>
+                <td>{{ tag.name }}</td>
+                <td>{{ widgets.label(tag.amount, type) }}</td>
+                <td class="actions">
+                    {{ actions.tag(tag, 'index') }}
+                </td>
+            </tr>
+        {% endfor %}
+        {{ tables.data_table_footer(tags, 'tags_paginated') }}
+
+    {% endif %}
+
+{% endblock %}

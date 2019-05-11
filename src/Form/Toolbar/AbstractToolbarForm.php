@@ -14,6 +14,7 @@ use App\Form\Type\CustomerType;
 use App\Form\Type\DateRangeType;
 use App\Form\Type\PageSizeType;
 use App\Form\Type\ProjectType;
+use App\Form\Type\TagsInputType;
 use App\Form\Type\UserRoleType;
 use App\Form\Type\UserType;
 use App\Form\Type\VisibilityType;
@@ -206,6 +207,16 @@ abstract class AbstractToolbarForm extends AbstractType
     {
         $builder->add('page', HiddenType::class, [
             'empty_data' => 1
+        ]);
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     */
+    protected function addTagInputField(FormBuilderInterface $builder)
+    {
+        $builder->add('tags', TagsInputType::class, [
+            'required' => false
         ]);
     }
 }

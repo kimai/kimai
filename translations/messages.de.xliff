@@ -41,6 +41,14 @@
                 <source>delete.not_in_use</source>
                 <target>Dieses Element kann sicher gelöscht werden.</target>
             </trans-unit>
+            <trans-unit id="cancel">
+                <source>cancel</source>
+                <target>Abbrechen</target>
+            </trans-unit>
+            <trans-unit id="confirm">
+                <source>confirm</source>
+                <target>Bestätigen</target>
+            </trans-unit>
 
             <!--
               Login / Security
@@ -129,6 +137,10 @@
                 <source>menu.system_configuration</source>
                 <target>Einstellungen</target>
             </trans-unit>
+            <trans-unit id="menu.tags">
+                <source>menu.tags</source>
+                <target>Tags</target>
+            </trans-unit>
 
             <!--
               Error templates
@@ -200,6 +212,14 @@
             <trans-unit id="label.hourlyRate">
                 <source>label.hourlyRate</source>
                 <target>Stundenlohn</target>
+            </trans-unit>
+            <trans-unit id="label.tag">
+                <source>label.tag</source>
+                <target>Schlagwort(e)</target>
+            </trans-unit>
+            <trans-unit id="label.tags">
+                <source>label.tags</source>
+                <target>Schlagworte</target>
             </trans-unit>
             <trans-unit id="label.hourly_rate">
                 <source>label.hourly_rate</source>

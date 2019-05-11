@@ -41,6 +41,14 @@
                 <source>delete.not_in_use</source>
                 <target>This item can be safely deleted.</target>
             </trans-unit>
+            <trans-unit id="cancel">
+                <source>cancel</source>
+                <target>Cancel</target>
+            </trans-unit>
+            <trans-unit id="confirm">
+                <source>confirm</source>
+                <target>Confirm</target>
+            </trans-unit>
 
             <!--
               Login / Security
@@ -129,6 +137,10 @@
                 <source>menu.system_configuration</source>
                 <target>Settings</target>
             </trans-unit>
+            <trans-unit id="menu.tags">
+                <source>menu.tags</source>
+                <target>Tags</target>
+            </trans-unit>
 
             <!--
               Error templates
@@ -196,6 +208,14 @@
             <trans-unit id="label.project">
                 <source>label.project</source>
                 <target>Project</target>
+            </trans-unit>
+            <trans-unit id="label.tag">
+                <source>label.tag</source>
+                <target>Tags</target>
+            </trans-unit>
+            <trans-unit id="label.tags">
+                <source>label.tags</source>
+                <target>Tags</target>
             </trans-unit>
             <trans-unit id="label.hourlyRate">
                 <source>label.hourlyRate</source>

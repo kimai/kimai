@@ -9,13 +9,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Tag;
 use App\Entity\Timesheet;
-use App\Form\DeleteType;
 use App\Form\TimesheetEditForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\ORMException;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -57,6 +58,14 @@ class TimesheetTeamController extends AbstractController
             if (null !== $query->getEnd()) {
                 $query->getEnd()->setTime(23, 59, 59);
             }
+        }
+
+        if ($query->hasTags()) {
+            $query->setTags(
+                new ArrayCollection(
+                    $this->getDoctrine()->getRepository(Tag::class)->findIdsByTagNameList(implode(',', $query->getTags()->toArray()))
+                )
+            );
         }
 
         /* @var $entries Pagerfanta */
@@ -137,7 +146,7 @@ class TimesheetTeamController extends AbstractController
     }
 
     /**
-     * @Route(path="/{id}/delete", defaults={"page": 1}, name="admin_timesheet_delete", methods={"GET", "POST"})
+     * @Route(path="/{id}/delete", name="admin_timesheet_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', entry)")
      *
      * @param Timesheet $entry

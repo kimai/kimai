@@ -54,6 +54,10 @@ class TimesheetQuery extends ActivityQuery
      * @var DateRange
      */
     protected $dateRange;
+    /**
+     * @var iterable
+     */
+    protected $tags;
 
     public function __construct()
     {
@@ -207,5 +211,32 @@ class TimesheetQuery extends ActivityQuery
         $this->dateRange = $dateRange;
 
         return $this;
+    }
+
+    /**
+     * @return iterable
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param iterable $tags
+     * @return $this
+     */
+    public function setTags(iterable $tags)
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasTags()
+    {
+        return !empty($this->tags) && count($this->tags) > 0;
     }
 }

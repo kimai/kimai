@@ -33,6 +33,7 @@ class ExportToolbarForm extends AbstractToolbarForm
         $this->addProjectChoice($builder);
         $this->addActivityChoice($builder);
         $this->addExportType($builder);
+        $this->addTagInputField($builder);
     }
 
     /**

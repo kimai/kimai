@@ -41,6 +41,14 @@
                 <source>delete.not_in_use</source>
                 <target>このアイテムは安全に削除できます。</target>
             </trans-unit>
+            <trans-unit id="confirm">
+                <source>confirm</source>
+                <target>適用する</target>
+            </trans-unit>
+            <trans-unit id="cancel">
+                <source>cancel</source>
+                <target>キャンセル</target>
+            </trans-unit>
 
             <!--
               Login / Security

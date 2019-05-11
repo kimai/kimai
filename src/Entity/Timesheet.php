@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -121,6 +122,30 @@ class Timesheet
      * @Assert\NotNull()
      */
     private $exported = false;
+
+    /**
+     * @var \App\Entity\Tag[]
+     *
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="timesheets", cascade={"persist"})
+     * @ORM\JoinTable(
+     *  name="kimai2_timesheet_tags",
+     *  joinColumns={
+     *      @ORM\JoinColumn(name="timesheet_id", referencedColumnName="id")
+     *  },
+     *  inverseJoinColumns={
+     *      @ORM\JoinColumn(name="tag_id", referencedColumnName="id")
+     *  }
+     * )
+     */
+    protected $tags;
+
+    /**
+     * Default constructor, initializes collections
+     */
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
 
     /**
      * Get entry id
@@ -317,6 +342,54 @@ class Timesheet
     public function getRate()
     {
         return $this->rate;
+    }
+
+    /**
+     * @param Tag $tag
+     * @return Timesheet
+     */
+    public function addTag(Tag $tag)
+    {
+        if ($this->tags->contains($tag)) {
+            return $this;
+        }
+        $this->tags->add($tag);
+        $tag->addTimesheet($this);
+
+        return $this;
+    }
+
+    /**
+     * @param Tag $tag
+     */
+    public function removeTag(Tag $tag)
+    {
+        if (!$this->tags->contains($tag)) {
+            return;
+        }
+        $this->tags->removeElement($tag);
+        $tag->removeTimesheet($this);
+    }
+
+    /**
+     * @return Tag[]|ArrayCollection
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getTagsAsArray()
+    {
+        return array_map(
+            function (Tag $element) {
+                return $element->getName();
+            },
+            $this->getTags()->toArray()
+        );
     }
 
     /**

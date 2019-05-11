@@ -18,6 +18,7 @@ use App\Form\Type\DurationType;
 use App\Form\Type\FixedRateType;
 use App\Form\Type\HourlyRateType;
 use App\Form\Type\ProjectType;
+use App\Form\Type\TagsInputType;
 use App\Form\Type\UserType;
 use App\Form\Type\YesNoType;
 use App\Repository\ActivityRepository;
@@ -250,8 +251,17 @@ class TimesheetEditForm extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'label.description',
                 'required' => false,
-            ])
-        ;
+            ]);
+
+        $builder
+            ->add('tags', TagsInputType::class, [
+                // documentation is for NelmioApiDocBundle
+                'documentation' => [
+                    'type' => 'text',
+                    'description' => 'Tags for timesheet entry',
+                ],
+                'required' => false,
+            ]);
 
         if ($options['include_rate']) {
             $builder

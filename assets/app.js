@@ -66,3 +66,6 @@ require('chart.js/dist/Chart.min');
 require('./js/KimaiWebLoader.js');
 require('./images/default_avatar.png');
 require('./images/signature.png');
+
+// ------ Autocomplete ------
+require('jquery-ui/ui/widgets/autocomplete');

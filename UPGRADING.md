@@ -18,6 +18,16 @@ Read and follow each version info below, otherwise you risk data inconsistency o
 
 And make sure to **create a backup before you start**.
 
+## 1.0 (unreleased)
+
+Follow the normal update and database migration process (see above).
+
+### Apply necessary changes to your `local.yaml`:
+ 
+New permissions are available: 
+- `view_tag` - view all tags
+- `delete_tag` - delete tags
+
 ## [0.9](https://github.com/kevinpapst/kimai2/releases/tag/0.9)
 
 Follow the normal update and database migration process (see above).
