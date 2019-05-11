@@ -32,14 +32,6 @@
                 }
             };
         }
-        function userProfileChartLabels() {
-            return [
-                {% for i in 1..12 %}
-                moment.months({{ i }})
-                {% if not loop.last %},{% endif %}
-                {% endfor %}
-            ];
-        }
     </script>
 
     {% for year,yearStat in years %}
@@ -54,7 +46,7 @@
                 <script type="text/javascript">
                     document.addEventListener('kimai.initialized', function() {
                         var userProfileChartData{{ year }} = {
-                            labels: userProfileChartLabels(),
+                            labels: moment.months(),
                             datasets: [
                                 {
                                     label: '{{ year }}',

@@ -117,12 +117,7 @@
             $(function () {
                 'use strict';
                 var timeChartData = {
-                    labels  : [
-                        {% for i in 1..12 %}
-                            moment.months({{ i }})
-                            {% if not loop.last %},{% endif %}
-                        {% endfor %}
-                    ],
+                    labels: moment.months(),
                     datasets: [
                         {% for yearName, year in chartWidget.data %}
                         {% set yearColors = colors[loop.index-1]|split('|') %}
