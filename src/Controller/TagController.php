@@ -67,5 +67,4 @@ class TagController extends AbstractController
             'method' => 'GET',
         ]);
     }
-
 }

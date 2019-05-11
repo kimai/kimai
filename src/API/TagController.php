@@ -112,5 +112,4 @@ class TagController extends BaseApiController
 
         return $this->viewHandler->handle($view);
     }
-
 }

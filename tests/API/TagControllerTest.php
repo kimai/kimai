@@ -86,5 +86,4 @@ class TagControllerTest extends APIControllerBaseTest
 
         $this->assertEquals(9, count($result));
     }
-
 }

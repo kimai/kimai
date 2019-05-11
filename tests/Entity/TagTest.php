@@ -30,7 +30,7 @@ class TagTest extends AbstractEntityTest
 
         $this->assertInstanceOf(Tag::class, $sut->setName('foo'));
         $this->assertEquals('foo', $sut->getName());
-        $this->assertEquals('foo', (string)$sut);
+        $this->assertEquals('foo', (string) $sut);
     }
 
     public function testWithTimesheet()

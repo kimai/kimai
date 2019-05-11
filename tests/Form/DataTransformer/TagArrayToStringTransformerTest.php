@@ -44,7 +44,7 @@ class TagArrayToStringTransformerTest extends AbstractRendererTest
             (new Tag())->setName('bar'),
         ];
 
-        $repository = $this->getMockBuilder(TagRepository::class)->setMethods(['findBy', ])->disableOriginalConstructor()->getMock();
+        $repository = $this->getMockBuilder(TagRepository::class)->setMethods(['findBy'])->disableOriginalConstructor()->getMock();
         $repository->expects($this->once())->method('findBy')->willReturn($results);
 
         $sut = new TagArrayToStringTransformer($repository);
