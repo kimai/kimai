@@ -24,6 +24,7 @@ require('moment/locale/ar');
 require('moment/locale/hu');
 require('moment/locale/pt-br');
 require('moment/locale/sv');
+require('moment/locale/ja');
 
 require('daterangepicker');
 
@@ -55,6 +56,7 @@ require('fullcalendar/dist/locale/ar');
 require('fullcalendar/dist/locale/hu');
 require('fullcalendar/dist/locale/pt-br');
 require('fullcalendar/dist/locale/sv');
+require('fullcalendar/dist/locale/ja');
 require('fullcalendar/dist/fullcalendar.min.css');
 
 // ------ for charts ------

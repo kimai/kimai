@@ -9,9 +9,9 @@
  * [KIMAI] KimaiDateRangePicker: activate the (daterange picker) compound field in toolbar
  */
 
-import moment from 'moment';
 import jQuery from 'jquery';
 import KimaiPlugin from '../KimaiPlugin';
+import moment from 'moment';
 
 export default class KimaiDateRangePicker extends KimaiPlugin {
 
@@ -55,7 +55,9 @@ export default class KimaiDateRangePicker extends KimaiPlugin {
                     firstDay: 1,
                     applyLabel: translator.get('confirm'),
                     cancelLabel: translator.get('cancel'),
-                    customRangeLabel: translator.get('customRange')
+                    customRangeLabel: translator.get('customRange'),
+                    daysOfWeek: moment.weekdaysShort(),
+                    monthNames: moment.months(),
                 },
                 ranges: rangesList,
                 alwaysShowCalendars: true

@@ -11,6 +11,7 @@
 
 import jQuery from 'jquery';
 import KimaiPlugin from '../KimaiPlugin';
+import moment from 'moment';
 
 export default class KimaiDateTimePicker extends KimaiPlugin {
 
@@ -44,7 +45,9 @@ export default class KimaiDateTimePicker extends KimaiPlugin {
                     firstDay: 1,
                     applyLabel: translator.get('confirm'),
                     cancelLabel: translator.get('cancel'),
-                    customRangeLabel: translator.get('customRange')
+                    customRangeLabel: translator.get('customRange'),
+                    daysOfWeek: moment.weekdaysShort(),
+                    monthNames: moment.months(),
                 }
             });
 
