@@ -2,14 +2,6 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" target-language="en" datatype="plaintext" original="daterangepicker.en.xliff">
         <body>
-            <trans-unit id="daterangepicker.apply">
-                <source>daterangepicker.apply</source>
-                <target>Apply</target>
-            </trans-unit>
-            <trans-unit id="daterangepicker.cancel">
-                <source>daterangepicker.cancel</source>
-                <target>Cancel</target>
-            </trans-unit>
             <trans-unit id="daterangepicker.today">
                 <source>daterangepicker.today</source>
                 <target>Today</target>

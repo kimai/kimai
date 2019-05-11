@@ -41,6 +41,14 @@
                 <source>delete.not_in_use</source>
                 <target>Ez az elem biztonságosan törölhető.</target>
             </trans-unit>
+            <trans-unit id="cancel">
+                <source>cancel</source>
+                <target>Mégse</target>
+            </trans-unit>
+            <trans-unit id="confirm">
+                <source>confirm</source>
+                <target>Alkalmaz</target>
+            </trans-unit>
 
             <!--
               Login / Security

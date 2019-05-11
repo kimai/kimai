@@ -42,7 +42,7 @@ export default class KimaiDateTimePicker extends KimaiPlugin {
                 locale: {
                     format: localeFormat,
                     firstDay: 1,
-                    applyLabel: translator.get('apply'),
+                    applyLabel: translator.get('confirm'),
                     cancelLabel: translator.get('cancel'),
                     customRangeLabel: translator.get('customRange')
                 }
