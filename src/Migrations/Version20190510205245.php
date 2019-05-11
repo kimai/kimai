@@ -23,35 +23,27 @@ class Version20190510205245 extends AbstractMigration
 {
     public function up(Schema $schema): void
     {
-        $timesheetTags = $this->getTableName('timesheet_tags');
-        $tags = $this->getTableName('tags');
+        $timesheetTags = $schema->createTable('kimai2_timesheet_tags');
+        $timesheetTags->addColumn('timesheet_id', 'integer', ['length' => 11, 'notnull' => true]);
+        $timesheetTags->addColumn('tag_id', 'integer', ['length' => 11, 'notnull' => true]);
+        $timesheetTags->addIndex(['timesheet_id'], 'IDX_E3284EFEABDD46BE');
+        $timesheetTags->addIndex(['tag_id'], 'IDX_E3284EFEBAD26311');
+        $timesheetTags->setPrimaryKey(['timesheet_id', 'tag_id']);
 
-        if ($this->isPlatformSqlite()) {
-            $this->addSql('CREATE TABLE ' . $timesheetTags . ' (timesheet_id INTEGER NOT NULL, tag_id INTEGER (11) NOT NULL, PRIMARY KEY(timesheet_id, tag_id))');
-            $this->addSql('CREATE INDEX IDX_E3284EFEABDD46BE ON ' . $timesheetTags . ' (timesheet_id ASC)');
-            $this->addSql('CREATE INDEX IDX_E3284EFEBAD26311 ON ' . $timesheetTags . ' (tag_id ASC)');
-            $this->addSql('CREATE TABLE ' . $tags . ' (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name VARCHAR(255) NOT NULL)');
-        } else {
-            $this->addSql('CREATE TABLE ' . $timesheetTags . ' (timesheet_id INT(11) NOT NULL, tag_id INT(11) NOT NULL, PRIMARY KEY (timesheet_id, tag_id))');
-            $this->addSql('CREATE INDEX IDX_E3284EFEABDD46BE ON ' . $timesheetTags . ' (timesheet_id ASC)');
-            $this->addSql('CREATE INDEX IDX_E3284EFEBAD26311 ON ' . $timesheetTags . ' (tag_id ASC)');
-            $this->addSql('CREATE TABLE ' . $tags . ' (id INT(11) NOT NULL AUTO_INCREMENT, name VARCHAR(255) NOT NULL, PRIMARY KEY (id))');
-        }
+        $tags = $schema->createTable('kimai2_tags');
+        $tags->addColumn('id', 'integer', ['length' => 11, 'autoincrement' => true, 'notnull' => true]);
+        $tags->addColumn('name', 'string', ['length' => 255, 'notnull' => true]);
+        $tags->setPrimaryKey(['id']);
     }
 
     public function down(Schema $schema): void
     {
-        $timesheetTags = $this->getTableName('timesheet_tags');
-        $tags = $this->getTableName('tags');
+        $timesheetTags = $schema->getTable('kimai2_timesheet_tags');
 
-        if ($this->isPlatformSqlite()) {
-            $this->addSql('DROP INDEX IDX_E3284EFEABDD46BE');
-            $this->addSql('DROP INDEX IDX_E3284EFEBAD26311');
-        } else {
-            $this->addSql('DROP INDEX IDX_E3284EFEABDD46BE ON ' . $timesheetTags);
-            $this->addSql('DROP INDEX IDX_E3284EFEBAD26311 ON ' . $timesheetTags);
-        }
-        $this->addSql('DROP TABLE ' . $timesheetTags);
-        $this->addSql('DROP TABLE ' . $tags);
+        $timesheetTags->dropIndex('IDX_E3284EFEABDD46BE');
+        $timesheetTags->dropIndex('IDX_E3284EFEBAD26311');
+
+        $schema->dropTable('kimai2_timesheet_tags');
+        $schema->dropTable('kimai2_tags');
     }
 }
