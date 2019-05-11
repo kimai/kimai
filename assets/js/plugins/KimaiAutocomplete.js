@@ -82,6 +82,8 @@ export default class KimaiAutocomplete extends KimaiPlugin {
 
                     this.value = terms.join(", ");
 
+                    $(this).trigger('change');
+
                     return false;
                 }
             }

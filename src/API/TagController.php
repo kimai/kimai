@@ -56,7 +56,7 @@ class TagController extends BaseApiController
      *      )
      * )
      *
-     * @Rest\QueryParam(name="name", requirements="[a-zA-Z0-9 -]+", strict=true, nullable=true, description="Search term to filter tag list")
+     * @Rest\QueryParam(name="name", requirements="[a-zA-Z0-9 -\.]+", strict=true, nullable=true, description="Search term to filter tag list")
      *
      * @return Response
      */
