@@ -193,7 +193,7 @@
             });
         }
 
-        $(document).ready(function () {
+        document.addEventListener('kimai.initialized', function() {
             $('body').on('click', '.exportBtn', function() {
                 var button = $(this);
                 var id = button.attr('data-timesheet');
@@ -227,7 +227,6 @@
                 $('#type').val('');
                 $form.removeAttr('target').attr('action', prevAction);
             });
-
         });
     </script>
 {% endblock %}

@@ -34,7 +34,7 @@
                                     {% if loop.first or loop.last %}
                                         {% for id, month in year.months %}
                                             {% if loop.first %}
-                                            {{ ('month.'~loop.index)|trans }} {{ yearName }}
+                                            moment.months({{ loop.index }}) {{ yearName }}
                                             {% endif %}
                                         {% endfor %}
                                     {% endif %}
@@ -119,7 +119,7 @@
                 var timeChartData = {
                     labels  : [
                         {% for i in 1..12 %}
-                            '{{ ('month.' ~i)|trans }}'
+                            moment.months({{ i }})
                             {% if not loop.last %},{% endif %}
                         {% endfor %}
                     ],
