@@ -2,10 +2,15 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/actions.html.twig" as actions %}
 {% import "macros/datatables.html.twig" as tables %}
+{% import "macros/toolbar.html.twig" as toolbar %}
 
 {% block page_title %}{{ 'tags.title'|trans({}, 'tags') }}{% endblock %}
 {% block page_subtitle %}{{ 'tags.subtitle'|trans({}, 'tags') }}{% endblock %}
-{% block page_actions %}{% endblock %}
+{% block page_actions %}{{ actions.tags('index') }}{% endblock %}
+
+{% block main_before %}
+    {{ toolbar.toolbar(toolbarForm, 'collapseTags', showFilter) }}
+{% endblock %}
 
 {% block main %}
 
@@ -21,7 +26,7 @@
 
         {% set tableName = 'admin_tags' %}
 
-        {{ tables.data_table_header(tableName, columns) }}
+        {{ tables.data_table_header(tableName, columns, false, 'kimai.tagUpdate') }}
         {% for tag in tags %}
             {% set type = 'primary' %}
             {% if tag.amount == 0 %}
@@ -36,17 +41,8 @@
                 </td>
             </tr>
         {% endfor %}
-        {{ tables.data_table_footer(columns) }}
+        {{ tables.data_table_footer(tags, 'tags_paginated') }}
 
     {% endif %}
 
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript">
-        document.addEventListener('kimai.tagUpdate', function() {
-            location.reload();
-        });
-    </script>
 {% endblock %}

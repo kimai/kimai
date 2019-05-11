@@ -95,12 +95,6 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
 
                 $manager->persist($entry);
 
-                if (!empty($tags)) {
-                    foreach ($tags as $tag) {
-                        $entry->addTag($tag);
-                    }
-                }
-
                 if ($i % self::BATCH_SIZE == 0) {
                     $manager->flush();
                     $manager->clear(Timesheet::class);

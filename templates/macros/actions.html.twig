@@ -336,6 +336,14 @@
     {{ widgets.page_actions(event.payload.actions) }}
 {% endmacro %}
 
+{% macro tags(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set actions = {'filter': '#collapseTags'} %}
+
+    {% set event = trigger('actions.tags', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}
+
 {% macro tag(tag, view) %}
     {% import "macros/widgets.html.twig" as widgets %}
 

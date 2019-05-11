@@ -9,6 +9,8 @@
 
 namespace App\Repository;
 
+use App\Repository\Query\TagQuery;
+
 class TagRepository extends AbstractRepository
 {
     /**
@@ -62,9 +64,10 @@ class TagRepository extends AbstractRepository
      * - name
      * - amount
      *
-     * @return array
+     * @param TagQuery $query
+     * @return array|\Doctrine\ORM\QueryBuilder|\Pagerfanta\Pagerfanta
      */
-    public function getTagCount()
+    public function getTagCount(TagQuery $query)
     {
         $qb = $this->createQueryBuilder('tag');
 
@@ -75,6 +78,6 @@ class TagRepository extends AbstractRepository
             ->orderBy('tag.name')
         ;
 
-        return $qb->getQuery()->getArrayResult();
+        return $this->getBaseQueryResult($qb, $query);
     }
 }
