@@ -51,4 +51,30 @@ export default class KimaiAlert extends KimaiPlugin {
         });
     }
 
+    /**
+     * Callback receives a value and needs to decide what should happen with it
+     *
+     * @param message
+     * @param callback
+     */
+    question(message, callback) {
+        const translation = this.getContainer().getTranslation();
+
+        if (translation.has(message)) {
+            message = translation.get(message);
+        }
+
+        Swal.fire({
+            title: message,
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonText: translation.get('confirm'),
+            cancelButtonText: translation.get('cancel')
+        }).then((result) => {
+            if (result.value) {
+                callback(result.value);
+            }
+        });
+    }
+
 }

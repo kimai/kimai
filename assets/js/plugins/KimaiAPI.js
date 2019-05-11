@@ -46,4 +46,18 @@ export default class KimaiAPI extends KimaiPlugin {
         });
     }
 
+    delete(url, callbackSuccess, callbackError) {
+        jQuery.ajax({
+            url: url,
+            headers: {
+                'X-AUTH-SESSION': true,
+                'Content-Type':'application/json'
+            },
+            method: 'DELETE',
+            dataType: 'json',
+            success: callbackSuccess,
+            error: callbackError
+        });
+    }
+
 }
