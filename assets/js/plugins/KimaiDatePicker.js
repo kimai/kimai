@@ -42,29 +42,8 @@ export default class KimaiDatePicker extends KimaiPlugin {
                     applyLabel: translator.get('apply'),
                     cancelLabel: translator.get('cancel'),
                     customRangeLabel: translator.get('customRange'),
-                    daysOfWeek: [
-                        moment.weekdaysShort(0),
-                        moment.weekdaysShort(1),
-                        moment.weekdaysShort(2),
-                        moment.weekdaysShort(3),
-                        moment.weekdaysShort(4),
-                        moment.weekdaysShort(5),
-                        moment.weekdaysShort(6),
-                    ],
-                    monthNames: [
-                        moment.months(1),
-                        moment.months(2),
-                        moment.months(3),
-                        moment.months(4),
-                        moment.months(5),
-                        moment.months(6),
-                        moment.months(7),
-                        moment.months(8),
-                        moment.months(9),
-                        moment.months(10),
-                        moment.months(11),
-                        moment.months(12),
-                    ],
+                    daysOfWeek: moment.weekdaysShort(),
+                    monthNames: moment.months(),
                 }
             });
 
