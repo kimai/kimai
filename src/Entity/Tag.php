@@ -11,11 +11,17 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="kimai2_tags")
+ * @ORM\Table(name="kimai2_tags",
+ *      uniqueConstraints={
+ *          @ORM\UniqueConstraint(columns={"name"})
+ *      }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
+ * @UniqueEntity("name")
  */
 class Tag
 {
@@ -40,7 +46,7 @@ class Tag
     /**
      * @var Timesheet[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Timesheet", mappedBy="tags")
+     * @ORM\ManyToMany(targetEntity="Timesheet", mappedBy="tags", fetch="EXTRA_LAZY")
      */
     protected $timesheets;
 
