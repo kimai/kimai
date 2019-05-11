@@ -55,4 +55,26 @@ class TagRepository extends AbstractRepository
 
         return array_column($qb->getQuery()->getScalarResult(), 'name');
     }
+
+    /**
+     * Returns an array of arrays with each inner array having the structure:
+     * - id
+     * - name
+     * - amount
+     *
+     * @return array
+     */
+    public function getTagCount()
+    {
+        $qb = $this->createQueryBuilder('tag');
+
+        $qb
+            ->select('tag.id, tag.name, count(timesheets.id) as amount')
+            ->leftJoin('tag.timesheets', 'timesheets')
+            ->addGroupBy('tag.id')
+            ->orderBy('tag.name')
+        ;
+
+        return $qb->getQuery()->getArrayResult();
+    }
 }

@@ -11,6 +11,7 @@ namespace App\Tests\API;
 
 use App\Entity\User;
 use App\Tests\DataFixtures\TagFixtures;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @coversDefaultClass \App\API\TagController
@@ -70,4 +71,20 @@ class TagControllerTest extends APIControllerBaseTest
         $this->assertEquals('Bug Fixing', $result[1]);
         $this->assertEquals('Marketing', $result[2]);
     }
+
+    public function testDeleteAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $this->request($client, '/api/tags/1', 'DELETE');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
+        $this->assertEmpty($client->getResponse()->getContent());
+
+        $this->assertAccessIsGranted($client, '/api/tags');
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertEquals(9, count($result));
+    }
+
 }

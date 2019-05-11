@@ -146,7 +146,7 @@ class TimesheetTeamController extends AbstractController
     }
 
     /**
-     * @Route(path="/{id}/delete", defaults={"page": 1}, name="admin_timesheet_delete", methods={"GET", "POST"})
+     * @Route(path="/{id}/delete", name="admin_timesheet_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', entry)")
      *
      * @param Timesheet $entry

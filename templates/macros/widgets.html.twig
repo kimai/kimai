@@ -165,7 +165,9 @@
                         {% set class = '' %}
                         {% if icon == 'trash' %}
                             {% set class = 'delete' %}
+                            {% if actions|length > 1 %}
                             <li class="divider"></li>
+                            {% endif %}
                         {% endif %}
                         <li class="{{ class }}">
                             {% if values is iterable %}

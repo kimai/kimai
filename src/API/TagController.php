@@ -17,6 +17,7 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -72,4 +73,44 @@ class TagController extends BaseApiController
 
         return $this->viewHandler->handle($view);
     }
+
+    /**
+     * Delete an existing tag
+     *
+     * @SWG\Delete(
+     *      @SWG\Response(
+     *          response=204,
+     *          description="Delete one tag"
+     *      ),
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="Tag ID to delete",
+     *      required=true,
+     * )
+     *
+     * @Security("is_granted('delete_tag')")
+     *
+     * @param int $id
+     * @return Response
+     */
+    public function deleteAction($id)
+    {
+        $tag = $this->repository->find($id);
+
+        if (null === $tag) {
+            throw new NotFoundException();
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($tag);
+        $entityManager->flush();
+
+        $view = new View(null, Response::HTTP_NO_CONTENT);
+
+        return $this->viewHandler->handle($view);
+    }
+
 }
