@@ -231,7 +231,7 @@
         {% endif %}
 
         {% if view == 'index' and is_granted('delete', timesheet) %}
-            {% set actions = actions|merge({'trash': {'url': path('timesheet_delete', {'id' : timesheet.id}), 'class': 'modal-ajax-form'}}) %}
+            {% set actions = actions|merge({'trash': {'url': path('delete_timesheet', {'id' : timesheet.id}), 'class': 'api-link', 'attr': {'data-event': 'kimai.timesheetDelete kimai.timesheetUpdate', 'data-method': 'DELETE', 'data-question': 'confirm.delete', 'data-msg-error': 'action.delete.error', 'data-msg-success': 'action.delete.success'}}}) %}
         {% endif %}
     {% endif %}
 
@@ -286,7 +286,7 @@
         {% endif %}
 
         {% if view == 'index' and is_granted('delete', timesheet) %}
-            {% set actions = actions|merge({'trash': {'url': path('admin_timesheet_delete', {'id' : timesheet.id}), 'class': 'modal-ajax-form'}}) %}
+            {% set actions = actions|merge({'trash': {'url': path('delete_timesheet', {'id' : timesheet.id}), 'class': 'api-link', 'attr': {'data-event': 'kimai.timesheetDelete kimai.timesheetUpdate', 'data-method': 'DELETE', 'data-question': 'confirm.delete', 'data-msg-error': 'action.delete.error', 'data-msg-success': 'action.delete.success'}}}) %}
         {% endif %}
     {% endif %}
 
