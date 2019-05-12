@@ -137,6 +137,10 @@
                 <source>menu.system_configuration</source>
                 <target>設定</target>
             </trans-unit>
+	    <trans-unit id="menu.tags">
+                <source>menu.tags</source>
+                <target>タグ</target>
+            </trans-unit>
 
             <!--
               Error templates
@@ -204,6 +208,14 @@
             <trans-unit id="label.project">
                 <source>label.project</source>
                 <target>プロジェクト</target>
+            </trans-unit>
+	    <trans-unit id="label.tag">
+                <source>label.tag</source>
+                <target>タグ</target>
+            </trans-unit>
+            <trans-unit id="label.tags">
+                <source>label.tags</source>
+                <target>タグ</target>
             </trans-unit>
             <trans-unit id="label.hourlyRate">
                 <source>label.hourlyRate</source>
