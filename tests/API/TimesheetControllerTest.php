@@ -631,6 +631,69 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertDefaultStructure($result[0], false);
     }
 
+    public function testRestartAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $data = [
+            'description' => 'foo',
+            'tags' => 'another,testing,bar'
+        ];
+        $this->request($client, '/api/timesheets/1', 'PATCH', [], json_encode($data));
+
+        $this->request($client, '/api/timesheets/1/restart', 'PATCH');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertDefaultStructure($result, true);
+        $this->assertEmpty($result['description']);
+        $this->assertEmpty($result['tags']);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var Timesheet $timesheet */
+        $timesheet = $em->getRepository(Timesheet::class)->find($result['id']);
+        $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
+        $this->assertNull($timesheet->getEnd());
+        $this->assertEquals(1, $timesheet->getActivity()->getId());
+        $this->assertEquals(1, $timesheet->getProject()->getId());
+        $this->assertEmpty($timesheet->getDescription());
+        $this->assertEmpty($timesheet->getTags());
+    }
+
+    public function testRestartActionWithCopyData()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $data = [
+            'description' => 'foo',
+            'tags' => 'another,testing,bar'
+        ];
+        $this->request($client, '/api/timesheets/1', 'PATCH', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $this->assertEquals('foo', $timesheet->getDescription());
+
+        $this->request($client, '/api/timesheets/1/restart', 'PATCH', ['copy' => 'all']);
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertDefaultStructure($result, true);
+        $this->assertEquals('foo', $result['description']);
+        $this->assertEquals(['another', 'testing', 'bar'], $result['tags']);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var Timesheet $timesheet */
+        $timesheet = $em->getRepository(Timesheet::class)->find($result['id']);
+        $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
+        $this->assertNull($timesheet->getEnd());
+        $this->assertEquals(1, $timesheet->getActivity()->getId());
+        $this->assertEquals(1, $timesheet->getProject()->getId());
+        $this->assertEquals('foo', $timesheet->getDescription());
+        $this->assertEquals(['another', 'testing', 'bar'], $timesheet->getTagsAsArray());
+    }
+
     protected function assertDefaultStructure(array $result, $full = true)
     {
         $expectedKeys = [

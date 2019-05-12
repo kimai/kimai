@@ -30,7 +30,9 @@ use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @RouteResource("Timesheet")
@@ -523,6 +525,88 @@ class TimesheetController extends BaseApiController
         $this->repository->stopRecording($timesheet);
 
         $view = new View($timesheet, 200);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Restarts a previously stopped timesheet record for the current user
+     *
+     * @SWG\Response(
+     *      response=200,
+     *      description="Restarts a timesheet record for the same customer, project, activity combination. The current user will be the owner of the new record. Kimai tries to stop running records, which is expected to fail depending on the configured rules. Data will be copied from the original record if requested.",
+     *      @SWG\Schema(ref="#/definitions/TimesheetEntity")
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="Timesheet record ID to restart",
+     *      required=true,
+     * )
+     *
+     * @Rest\RequestParam(name="copy", requirements="all|tags|description", strict=true, nullable=true, description="Whether description and tags are copied to the new entry. Allowed values: all, tags, description (default: nothing is copied)")
+     *
+     * @Security("is_granted('start_own_timesheet') or is_granted('start_other_timesheet')")
+     *
+     * @param int $id
+     * @return Response
+     * @throws \App\Repository\RepositoryException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function restartAction($id, ParamFetcherInterface $paramFetcher, ValidatorInterface $validator)
+    {
+        /** @var Timesheet $timesheet */
+        $timesheet = $this->repository->find($id);
+
+        if (null === $timesheet) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('start', $timesheet)) {
+            throw new AccessDeniedHttpException('You are not allowed to re-start this timesheet');
+        }
+
+        $user = $this->getUser();
+
+        $entry = new Timesheet();
+        $entry
+            ->setBegin($this->dateTime->createDateTime())
+            ->setUser($user)
+            ->setActivity($timesheet->getActivity())
+            ->setProject($timesheet->getProject())
+        ;
+
+        if (null !== ($copy = $paramFetcher->get('copy'))) {
+            if (in_array($copy, ['description', 'all'])) {
+                $entry->setDescription($timesheet->getDescription());
+            }
+
+            if (in_array($copy, ['tags', 'all'])) {
+                foreach ($timesheet->getTags() as $tag) {
+                    $entry->addTag($tag);
+                }
+            }
+        }
+
+        $errors = $validator->validate($entry);
+
+        if (count($errors) > 0) {
+            throw new BadRequestHttpException($errors[0]->getPropertyPath() . ' = ' . $errors[0]->getMessage());
+        }
+
+        $this->repository->stopActiveEntries(
+            $user,
+            $this->configuration->getActiveEntriesHardLimit()
+        );
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($entry);
+        $entityManager->flush();
+
+        $view = new View($entry, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
 
         return $this->viewHandler->handle($view);
