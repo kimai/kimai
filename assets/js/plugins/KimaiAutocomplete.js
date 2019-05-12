@@ -39,6 +39,7 @@ export default class KimaiAutocomplete extends KimaiPlugin {
     {
         const apiUrl = jQuery(selector).attr('data-autocomplete-url');
         const self = this;
+        const API = self.getContainer().getPlugin('api');
 
         jQuery(selector)
             // don't navigate away from the field on tab when selecting an item
@@ -51,7 +52,7 @@ export default class KimaiAutocomplete extends KimaiPlugin {
             .autocomplete({
                 source: function (request, response) {
                     const lastEntry = self.extractLastTag(request.term);
-                    self.getContainer().getPlugin('api').get(apiUrl, {'name': lastEntry}, function(data){
+                    API.get(apiUrl, {'name': lastEntry}, function(data){
                         response(data);
                     });
                 },

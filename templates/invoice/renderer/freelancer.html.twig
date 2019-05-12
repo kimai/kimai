@@ -62,7 +62,7 @@
             </table>
         </article>
         <article>
-            <h2>{{ model.template.title|default('invoice_renderer.timesheet'|trans) }}</h2>
+            <h2>{{ model.template.title|default('timesheet'|trans({}, 'invoice-renderer')) }}</h2>
             <p contenteditable="true">
                 {{ 'label.invoice_salutation'|trans|nl2br }}
             </p>

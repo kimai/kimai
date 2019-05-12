@@ -59,7 +59,7 @@ export default class KimaiAPILink extends KimaiClickHandlerReducedInTableRow {
     {
         const method = attributes['method'];
         const eventName = attributes['event'];
-        const api = this.getContainer().getPlugin('api');
+        const API = this.getContainer().getPlugin('api');
         const eventing = this.getContainer().getPlugin('event');
         const alert = this.getContainer().getPlugin('alert');
         const successHandle = function(result) {
@@ -80,9 +80,9 @@ export default class KimaiAPILink extends KimaiClickHandlerReducedInTableRow {
         };
 
         if (method === 'PATCH') {
-            api.patch(url, successHandle, errorHandle);
+            API.patch(url, {}, successHandle, errorHandle);
         } else if (method === 'DELETE') {
-            api.delete(url, successHandle, errorHandle);
+            API.delete(url, successHandle, errorHandle);
         }
     }
 

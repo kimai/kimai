@@ -72,9 +72,9 @@ export default class KimaiRecentActivities extends KimaiPlugin {
 
     reloadRecentActivities() {
         const self = this;
-        const apiService = this.getContainer().getPlugin('api');
+        const API = this.getContainer().getPlugin('api');
 
-        apiService.get(this.attributes['api'], {}, function(result) {
+        API.get(this.attributes['api'], {}, function(result) {
             self.setEntries(result);
         });
     }
