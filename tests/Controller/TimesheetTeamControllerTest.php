@@ -146,33 +146,49 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertNull($timesheet->getFixedRate());
     }
 
-    public function testDeleteAction()
+    public function testEditAction()
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $client = $this->getClientForAuthenticatedUser();
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $teamlead = $this->getUserByRole($em, User::ROLE_TEAMLEAD);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
-        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setUser($user);
         $fixture->setStartDate('2017-05-01');
         $this->importFixture($em, $fixture);
 
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->request($client, '/team/timesheet/1/edit');
-        $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $this->request($client, '/team/timesheet/1/delete');
+        $response = $client->getResponse();
+        $this->assertTrue($response->isSuccessful());
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $form = $client->getCrawler()->filter('form[name=form]')->form();
-        $this->assertStringEndsWith($this->createUrl('/team/timesheet/1/delete'), $form->getUri());
-        $client->submit($form);
+        $this->assertContains(
+            'href="https://www.kimai.org/documentation/timesheet.html"',
+            $response->getContent(),
+            'Could not find link to documentation'
+        );
 
+        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $client->submit($form, [
+            'timesheet_edit_form' => [
+                'description' => 'foo-bar',
+                'tags' => 'foo,bar, testing, hello world,,',
+                'user' => $teamlead->getId()
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/team/timesheet/'));
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertHasFlashDeleteSuccess($client);
-        $this->assertHasDataTable($client);
+        $this->assertHasFlashSaveSuccess($client);
 
-        $this->request($client, '/team/timesheet/1/edit');
-        $this->assertFalse($client->getResponse()->isSuccessful());
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var Timesheet $timesheet */
+        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $this->assertEquals('foo-bar', $timesheet->getDescription());
+        $this->assertEquals($teamlead->getId(), $timesheet->getUser()->getId());
     }
 }

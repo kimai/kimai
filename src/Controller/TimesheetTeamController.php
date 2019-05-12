@@ -17,7 +17,6 @@ use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\ORMException;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -128,7 +127,7 @@ class TimesheetTeamController extends AbstractController
      */
     public function editAction(Timesheet $entry, Request $request)
     {
-        return $this->edit($entry, $request, 'admin_timesheet_paginated', 'timesheet-team/edit.html.twig');
+        return $this->edit($entry, $request, 'admin_timesheet', 'timesheet-team/edit.html.twig');
     }
 
     /**
@@ -143,46 +142,6 @@ class TimesheetTeamController extends AbstractController
     public function createAction(Request $request, ProjectRepository $projectRepository, ActivityRepository $activityRepository)
     {
         return $this->create($request, 'admin_timesheet', 'timesheet-team/edit.html.twig', $projectRepository, $activityRepository);
-    }
-
-    /**
-     * @Route(path="/{id}/delete", name="admin_timesheet_delete", methods={"GET", "POST"})
-     * @Security("is_granted('delete', entry)")
-     *
-     * @param Timesheet $entry
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function deleteAction(Timesheet $entry, Request $request)
-    {
-        $deleteForm = $this->createFormBuilder(null, [
-                'attr' => [
-                    'data-form-event' => 'kimai.timesheetUpdate kimai.timesheetDelete',
-                    'data-msg-success' => 'action.delete.success',
-                    'data-msg-error' => 'action.delete.error',
-                ]
-            ])
-            ->setAction($this->generateUrl('admin_timesheet_delete', ['id' => $entry->getId()]))
-            ->setMethod('POST')
-            ->getForm();
-
-        $deleteForm->handleRequest($request);
-
-        if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
-            try {
-                $this->getRepository()->delete($entry);
-                $this->flashSuccess('action.delete.success');
-            } catch (ORMException $ex) {
-                $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
-            }
-
-            return $this->redirectToRoute('admin_timesheet');
-        }
-
-        return $this->render('timesheet-team/delete.html.twig', [
-            'timesheet' => $entry,
-            'form' => $deleteForm->createView(),
-        ]);
     }
 
     /**
