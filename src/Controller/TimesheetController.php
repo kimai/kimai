@@ -193,9 +193,7 @@ class TimesheetController extends AbstractController
     {
         $route = 'timesheet';
 
-        if (null !== $request->get('page')) {
-            $route = 'timesheet_paginated';
-        } elseif ('calendar' === $request->get('origin')) {
+        if ('calendar' === $request->get('origin')) {
             $route = 'calendar';
         }
 
