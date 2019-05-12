@@ -126,6 +126,8 @@ class TimesheetController extends AbstractController
     }
 
     /**
+     * Used for the initial page rendering.
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function activeEntriesAction()
@@ -140,44 +142,6 @@ class TimesheetController extends AbstractController
                 'soft_limit' => $this->getSoftLimit(),
             ]
         );
-    }
-
-    /**
-     * @Route(path="/start/{id}", name="timesheet_start", requirements={"id" = "\d+"}, methods={"GET", "POST"})
-     * @Security("is_granted('start', timesheet)")
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function startAction(ValidatorInterface $validator, Timesheet $timesheet)
-    {
-        $user = $this->getUser();
-
-        try {
-            $entry = new Timesheet();
-            $entry
-                ->setBegin($this->dateTime->createDateTime())
-                ->setUser($user)
-                ->setActivity($timesheet->getActivity())
-                ->setProject($timesheet->getProject());
-
-            $errors = $validator->validate($entry);
-
-            if (count($errors) > 0) {
-                $this->flashError('timesheet.start.error', ['%reason%' => $errors[0]->getPropertyPath() . ' = ' . $errors[0]->getMessage()]);
-            } else {
-                $this->stopActiveEntries($user);
-
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($entry);
-                $entityManager->flush();
-
-                $this->flashSuccess('timesheet.start.success');
-            }
-        } catch (\Exception $ex) {
-            $this->flashError('timesheet.start.error', ['%reason%' => $ex->getMessage()]);
-        }
-
-        return $this->redirectToRoute('timesheet');
     }
 
     /**

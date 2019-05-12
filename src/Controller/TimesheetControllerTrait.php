@@ -48,14 +48,6 @@ trait TimesheetControllerTrait
     /**
      * @return int
      */
-    protected function getHardLimit()
-    {
-        return $this->configuration->getActiveEntriesHardLimit();
-    }
-
-    /**
-     * @return int
-     */
     protected function getSoftLimit()
     {
         return $this->configuration->getActiveEntriesSoftLimit();
@@ -163,14 +155,17 @@ trait TimesheetControllerTrait
 
             try {
                 if (null === $entry->getEnd()) {
-                    $this->stopActiveEntries($entry->getUser());
+                    $this->getRepository()->stopActiveEntries(
+                        $entry->getUser(),
+                        $this->configuration->getActiveEntriesHardLimit()
+                    );
                 }
                 $entityManager->persist($entry);
                 $entityManager->flush();
 
                 $this->flashSuccess('action.update.success');
             } catch (\Exception $ex) {
-                $this->flashError('timesheet.start.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
             }
 
             return $this->redirectToRoute($redirectRoute);
@@ -180,17 +175,6 @@ trait TimesheetControllerTrait
             'timesheet' => $entry,
             'form' => $createForm->createView(),
         ]);
-    }
-
-    /**
-     * @param User $user
-     * @throws \App\Repository\RepositoryException
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    protected function stopActiveEntries(User $user)
-    {
-        $this->getRepository()->stopActiveEntries($user, $this->getHardLimit());
     }
 
     /**
