@@ -150,7 +150,6 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser();
 
-
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $user = $this->getUserByRole($em, User::ROLE_USER);
         $teamlead = $this->getUserByRole($em, User::ROLE_TEAMLEAD);
@@ -192,5 +191,4 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertEquals('foo-bar', $timesheet->getDescription());
         $this->assertEquals($teamlead->getId(), $timesheet->getUser()->getId());
     }
-
 }

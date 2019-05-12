@@ -17,7 +17,6 @@ use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\ORMException;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
