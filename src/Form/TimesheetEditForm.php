@@ -257,8 +257,8 @@ class TimesheetEditForm extends AbstractType
             ->add('tags', TagsInputType::class, [
                 // documentation is for NelmioApiDocBundle
                 'documentation' => [
-                    'type' => 'text',
-                    'description' => 'Tags for timesheet entry',
+                    'type' => 'string',
+                    'description' => 'Comma separated list of tags for this timesheet record',
                 ],
                 'required' => false,
             ]);
