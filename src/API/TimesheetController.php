@@ -13,6 +13,7 @@ namespace App\API;
 
 use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Form\TimesheetEditForm;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TagRepository;
@@ -560,16 +561,21 @@ class TimesheetController extends BaseApiController
     {
         /** @var Timesheet $timesheet */
         $timesheet = $this->repository->find($id);
+        /** @var User $user */
+        $user = $this->getUser();
 
         if (null === $timesheet) {
             throw new NotFoundException();
+        }
+
+        if ($timesheet->getUser()->getId() !== $user->getId() && !$this->isGranted('start_other_timesheet')) {
+            throw new AccessDeniedHttpException('You are not allowed to re-start this timesheet');
         }
 
         if (!$this->isGranted('start', $timesheet)) {
             throw new AccessDeniedHttpException('You are not allowed to re-start this timesheet');
         }
 
-        $user = $this->getUser();
 
         $entry = new Timesheet();
         $entry
