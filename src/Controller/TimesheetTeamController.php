@@ -128,7 +128,7 @@ class TimesheetTeamController extends AbstractController
      */
     public function editAction(Timesheet $entry, Request $request)
     {
-        return $this->edit($entry, $request, 'admin_timesheet_paginated', 'timesheet-team/edit.html.twig');
+        return $this->edit($entry, $request, 'admin_timesheet', 'timesheet-team/edit.html.twig');
     }
 
     /**
