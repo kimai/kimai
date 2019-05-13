@@ -30,7 +30,7 @@ class CalendarControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $crawler = $client->getCrawler();
-        $calendar = $crawler->filter('div#calendar');
+        $calendar = $crawler->filter('div#timesheet_calendar');
         $this->assertEquals(1, $calendar->count());
     }
 
