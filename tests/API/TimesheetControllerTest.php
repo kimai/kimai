@@ -430,16 +430,15 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/' . $id);
     }
 
+    public function testDeleteActionWithUnknownTimesheet()
+    {
+        $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, '/api/timesheets/255', []);
+    }
+
     public function testDeleteActionForDifferentUser()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/api/timesheets/1');
-        $result = json_decode($client->getResponse()->getContent(), true);
-
-        $this->assertIsArray($result);
-        $this->assertDefaultStructure($result);
-        $this->assertNotEmpty($result['id']);
-        $id = $result['id'];
+        $id = 1;
 
         $this->request($client, '/api/timesheets/' . $id, 'DELETE');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -692,6 +691,28 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertEquals(1, $timesheet->getProject()->getId());
         $this->assertEquals('foo', $timesheet->getDescription());
         $this->assertEquals(['another', 'testing', 'bar'], $timesheet->getTagsAsArray());
+    }
+
+    public function testRestartNotAllowedForUser()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $start = new \DateTime('-10 days');
+
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setFixedRate(true)
+            ->setHourlyRate(true)
+            ->setAmount(2)
+            ->setUser($this->getUserByRole($em, User::ROLE_ADMIN))
+            ->setStartDate($start)
+            ->setAmountRunning(3)
+        ;
+        $this->importFixture($em, $fixture);
+
+        $this->request($client, '/api/timesheets/12/restart', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse(), 'You are not allowed to re-start this timesheet');
     }
 
     protected function assertDefaultStructure(array $result, $full = true)
