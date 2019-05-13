@@ -5,7 +5,7 @@
         </a>
         <ul class="dropdown-menu"
             data-api="{{ path('recent_timesheet', {'size' : 10}) }}"
-            data-href="{{ path('timesheet_start', {'id' : '000'}) }}"
+            data-href="{{ path('restart_timesheet', {'id' : '000'}) }}"
             data-icon="{{ 'start-small'|icon }}"
             data-template="{{ 'recent.activities.format'|trans }}">
             <li class="header">{{ 'recent.activities'|trans }}</li>

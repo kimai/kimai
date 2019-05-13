@@ -16,7 +16,7 @@
             </trans-unit>
             <trans-unit id="timesheet.start.error">
                 <source>timesheet.start.error</source>
-                <target>No se pudo iniciar el registro de tiempo: %reason%</target>
+                <target>No se pudo iniciar el registro de tiempo</target>
             </trans-unit>
             <trans-unit id="action.update.success">
                 <source>action.update.success</source>

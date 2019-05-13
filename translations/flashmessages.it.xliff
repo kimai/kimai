@@ -16,7 +16,7 @@
             </trans-unit>
             <trans-unit id="timesheet.start.error">
                 <source>timesheet.start.error</source>
-                <target>Time-recording non può essere avviata: %reason%</target>
+                <target>Time-recording non può essere avviata</target>
             </trans-unit>
             <trans-unit id="action.update.success">
                 <source>action.update.success</source>

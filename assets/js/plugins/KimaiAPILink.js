@@ -80,7 +80,11 @@ export default class KimaiAPILink extends KimaiClickHandlerReducedInTableRow {
         };
 
         if (method === 'PATCH') {
-            API.patch(url, {}, successHandle, errorHandle);
+            let data = {};
+            if (attributes.payload) {
+                data  = attributes.payload;
+            }
+            API.patch(url, data, successHandle, errorHandle);
         } else if (method === 'DELETE') {
             API.delete(url, successHandle, errorHandle);
         }

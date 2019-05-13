@@ -16,7 +16,7 @@
             </trans-unit>
             <trans-unit id="timesheet.start.error">
                 <source>timesheet.start.error</source>
-                <target>Time recording could not be started: %reason%</target>
+                <target>Time recording could not be started</target>
             </trans-unit>
             <trans-unit id="timesheet.start.exceeded_limit">
                 <source>timesheet.start.exceeded_limit</source>

@@ -64,7 +64,12 @@ export default class KimaiRecentActivities extends KimaiPlugin {
                 .replace('%project%', timesheet.project.name)
                 .replace('%activity%', timesheet.activity.name);
 
-            htmlToInsert += `<li><a href="${ this.attributes['href'].replace('000', timesheet.id) }"><i class="${ this.attributes['icon'] }"></i> ${ label }</a></li>`;
+            htmlToInsert +=
+                `<li>` +
+                    `<a href="${ this.attributes['href'].replace('000', timesheet.id) }" data-event="kimai.timesheetStart kimai.timesheetUpdate" class="api-link" data-method="PATCH" data-msg-error="timesheet.start.error" data-msg-success="timesheet.start.success">` +
+                        `<i class="${ this.attributes['icon'] }"></i> ${ label }` +
+                    `</a>` +
+                `</li>`;
         }
 
         this.itemList.innerHTML = htmlToInsert;
