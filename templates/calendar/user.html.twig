@@ -1,23 +1,17 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
+{% import "macros/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'calendar.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'calendar.subtitle'|trans }}{% endblock %}
-
-{% block page_actions %}
-    {% set actions = {'list': path('timesheet')} %}
-    {% if is_granted('create_own_timesheet') %}
-        {% set actions = actions|merge({'create': {'url': path('timesheet_create', {'origin': 'calendar'})}}) %}
-    {% endif %}
-    {{ widgets.page_actions(actions) }}
-{% endblock %}
+{% block page_actions %}{{ actions.calendar('index') }}{% endblock %}
 
 {% block main %}
     <div class="row">
         <div class="col-md-12">
             <div class="box box-success">
                 <div class="box-body no-padding">
-                    <div id="calendar"></div>
+                    <div id="timesheet_calendar"></div>
                 </div>
             </div>
         </div>
@@ -27,8 +21,12 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
-        $(function () {
-            $('#calendar').fullCalendar({
+        document.addEventListener('kimai.timesheetUpdate', function() {
+            $('#timesheet_calendar').fullCalendar('refetchEvents');
+        });
+
+        document.addEventListener('kimai.initialized', function() {
+            $('#timesheet_calendar').fullCalendar({
                 defaultView: '{{ app.user.getPreferenceValue('calendar.initial_view') }}',
                 {% if not google.apiKey is null %}
                 googleCalendarApiKey: '{{ google.apiKey }}',
@@ -99,12 +97,14 @@
                 },
                 eventClick: function(calEvent, jsEvent, view) {
                     {% if is_granted('edit_own_timesheet') %}
-                    location.href = '{{ path('timesheet_edit', {id: '-XX-'}) }}?origin=calendar'.replace('-XX-', calEvent.id);
+                    var editUrl = '{{ path('timesheet_edit', {id: '-XX-'}) }}?origin=calendar'.replace('-XX-', calEvent.id);
+                    kimai.getPlugin('modal').openUrlInModal(editUrl);
                     {% endif %}
                 },
                 dayClick: function(date, jsEvent, view) {
                     {% if is_granted('create_own_timesheet') %}
-                    location.href = '{{ path('timesheet_create') }}' + '?origin=calendar&begin=' + date.format();
+                    var createUrl = '{{ path('timesheet_create') }}' + '?origin=calendar&begin=' + date.format();
+                    kimai.getPlugin('modal').openUrlInModal(createUrl);
                     {% endif %}
                 },
                 selectable: true,
@@ -113,10 +113,11 @@
                         return;
                     }
                     {% if is_granted('create_own_timesheet') %}
-                    location.href = '{{ path('timesheet_create') }}' + '?from=' + start.format() + '&to=' + end.format();
+                    var createUrl = '{{ path('timesheet_create') }}' + '?from=' + start.format() + '&to=' + end.format();
+                    kimai.getPlugin('modal').openUrlInModal(createUrl);
                     {% endif %}
                 }
             })
-        })
+        });
     </script>
 {% endblock %}

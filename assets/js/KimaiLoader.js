@@ -71,6 +71,8 @@ export default class KimaiLoader {
 
         // notify all listeners that Kimai is now ready to be used
         kimai.getPlugin('event').trigger('kimai.initialized');
+
+        return kimai;
     }
 
 }

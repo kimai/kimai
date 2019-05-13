@@ -191,6 +191,18 @@
     {% endif %}
 {% endmacro %}
 
+{% macro calendar(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {} %}
+    {% if is_granted('create_own_timesheet') %}
+        {% set actions = actions|merge({'create': {'url': path('timesheet_create'), 'class': 'modal-ajax-form'}}) %}
+    {% endif %}
+
+    {% set event = trigger('actions.calendar', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}
+
 {% macro timesheets(view) %}
     {% import "macros/widgets.html.twig" as widgets %}
 
@@ -199,7 +211,6 @@
         {% set actions = actions|merge({'download': {'onclick': 'return exportTimesheet()'}}) %}
     {% endif %}
     {% set actions = actions|merge({'visibility': '#modal_timesheet'}) %}
-    {% set actions = actions|merge({'calendar': path('calendar')}) %}
     {% if is_granted('create_own_timesheet') %}
         {% set actions = actions|merge({'create': {'url': path('timesheet_create'), 'class': 'modal-ajax-form'}}) %}
     {% endif %}
