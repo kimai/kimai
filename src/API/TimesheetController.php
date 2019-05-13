@@ -568,14 +568,9 @@ class TimesheetController extends BaseApiController
             throw new NotFoundException();
         }
 
-        if ($timesheet->getUser()->getId() !== $user->getId() && !$this->isGranted('start_other_timesheet')) {
-            throw new AccessDeniedHttpException('You are not allowed to re-start this timesheet');
-        }
-
         if (!$this->isGranted('start', $timesheet)) {
             throw new AccessDeniedHttpException('You are not allowed to re-start this timesheet');
         }
-
 
         $entry = new Timesheet();
         $entry
