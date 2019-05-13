@@ -18,7 +18,7 @@ export default class KimaiAPI extends KimaiPlugin {
         return 'api';
     }
 
-    get(url, data, callback) {
+    get(url, data, callbackSuccess, callbackError) {
         jQuery.ajax({
             url: url,
             headers: {
@@ -28,11 +28,12 @@ export default class KimaiAPI extends KimaiPlugin {
             method: 'GET',
             data: data,
             dataType: 'json',
-            success: callback
+            success: callbackSuccess,
+            error: callbackError
         });
     }
 
-    patch(url, callbackSuccess, callbackError) {
+    patch(url, data, callbackSuccess, callbackError) {
         jQuery.ajax({
             url: url,
             headers: {
@@ -40,6 +41,7 @@ export default class KimaiAPI extends KimaiPlugin {
                 'Content-Type':'application/json'
             },
             method: 'PATCH',
+            data: data,
             dataType: 'json',
             success: callbackSuccess,
             error: callbackError

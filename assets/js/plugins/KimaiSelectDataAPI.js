@@ -51,7 +51,7 @@ export default class KimaiSelectDataAPI extends KimaiPlugin {
 
             jQuery(targetSelect).removeAttr('disabled');
 
-            API.get(apiUrl, function(data){
+            API.get(apiUrl, {}, function(data){
                 self._updateSelect(targetSelect, data);
             });
         });

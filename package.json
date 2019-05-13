@@ -1,4 +1,18 @@
 {
+  "homepage": "https://github.com/kevinpapst/kimai2",
+  "license": "MIT",
+  "maintainers": [
+    {
+      "name": "Kevin Papst",
+      "email": "kpapst@gmx.net",
+      "url": "https://www.kevinpapst.de"
+    }
+  ],
+  "name": "kimai2",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinpapst/kimai2.git"
+  },
   "scripts": {
     "dev-server": "./node_modules/.bin/encore dev-server",
     "dev": "./node_modules/.bin/encore dev",
