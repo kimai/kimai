@@ -16,7 +16,7 @@
             </trans-unit>
             <trans-unit id="timesheet.start.error">
                 <source>timesheet.start.error</source>
-                <target>時間の記録を開始できませんでした: %reason%</target>
+                <target>時間の記録を開始できませんでした</target>
             </trans-unit>
             <trans-unit id="timesheet.start.exceeded_limit">
                 <source>timesheet.start.exceeded_limit</source>

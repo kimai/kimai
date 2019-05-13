@@ -16,7 +16,7 @@
             </trans-unit>
             <trans-unit id="timesheet.start.error">
                 <source>timesheet.start.error</source>
-                <target state="translated">Tidinspelning kunde inte startas: %reason%</target>
+                <target state="translated">Tidinspelning kunde inte startas</target>
             </trans-unit>
             <trans-unit id="timesheet.start.exceeded_limit">
                 <source>timesheet.start.exceeded_limit</source>

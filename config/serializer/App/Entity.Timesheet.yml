@@ -55,5 +55,4 @@ App\Entity\Timesheet:
         getTags:
           serialized_name: tags
           exp: "object.getTagsAsArray()"
-          type: array
-          groups: [Default]
+          type: array<string>
