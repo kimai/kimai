@@ -59,7 +59,7 @@
             </trans-unit>
             <trans-unit id="label.password_repeat">
                 <source>label.password_repeat</source>
-                <target>パスワードをリセットする</target>
+                <target>パスワード（再入力）</target>
             </trans-unit>
             <trans-unit id="label.logout">
                 <source>label.logout</source>
@@ -75,7 +75,7 @@
             </trans-unit>
             <trans-unit id="label.api_token_repeat">
                 <source>label.api_token_repeat</source>
-                <target>API パスワードをリセットする</target>
+                <target>API パスワード（再入力）</target>
             </trans-unit>
 
             <!--
@@ -137,6 +137,10 @@
                 <source>menu.system_configuration</source>
                 <target>設定</target>
             </trans-unit>
+	    <trans-unit id="menu.tags">
+                <source>menu.tags</source>
+                <target>タグ</target>
+            </trans-unit>
 
             <!--
               Error templates
@@ -171,7 +175,7 @@
             </trans-unit>
             <trans-unit id="label.username">
                 <source>label.username</source>
-                <target>ユーザー ID</target>
+                <target>ユーザー名</target>
             </trans-unit>
             <trans-unit id="label.description">
                 <source>label.description</source>
@@ -204,6 +208,14 @@
             <trans-unit id="label.project">
                 <source>label.project</source>
                 <target>プロジェクト</target>
+            </trans-unit>
+	    <trans-unit id="label.tag">
+                <source>label.tag</source>
+                <target>タグ</target>
+            </trans-unit>
+            <trans-unit id="label.tags">
+                <source>label.tags</source>
+                <target>タグ</target>
             </trans-unit>
             <trans-unit id="label.hourlyRate">
                 <source>label.hourlyRate</source>
@@ -247,7 +259,7 @@
             -->
             <trans-unit id="label.actions">
                 <source>label.actions</source>
-                <target>実行する</target>
+                <target>アクション</target>
             </trans-unit>
             <trans-unit id="action.edit">
                 <source>action.edit</source>
@@ -283,15 +295,15 @@
             </trans-unit>
             <trans-unit id="dashboard.you">
                 <source>dashboard.you</source>
-                <target>統計情報</target>
+                <target>あなたの統計情報</target>
             </trans-unit>
             <trans-unit id="dashboard.all">
                 <source>dashboard.all</source>
-                <target>全ユーザー</target>
+                <target>全ユーザーの統計情報</target>
             </trans-unit>
             <trans-unit id="dashboard.admin">
                 <source>dashboard.admin</source>
-                <target>管理者</target>
+                <target>管理情報</target>
             </trans-unit>
 
             <!--
@@ -311,7 +323,7 @@
             -->
             <trans-unit id="timesheet.title">
                 <source>timesheet.title</source>
-                <target>時間記録</target>
+                <target>時間の記録</target>
             </trans-unit>
             <trans-unit id="timesheet.subtitle">
                 <source>timesheet.subtitle</source>
@@ -387,7 +399,7 @@
             </trans-unit>
             <trans-unit id="profile.preferences">
                 <source>profile.preferences</source>
-                <target>設定</target>
+                <target>個人設定</target>
             </trans-unit>
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
@@ -690,7 +702,7 @@
             </trans-unit>
             <trans-unit id="stats.activeRecordings">
                 <source>stats.activeRecordings</source>
-                <target>進行中の時間記録プロセス数</target>
+                <target>進行中の時間記録のプロセス数</target>
             </trans-unit>
             <trans-unit id="stats.userTotal">
                 <source>stats.userTotal</source>
@@ -762,11 +774,11 @@
             </trans-unit>
             <trans-unit id="label.due_days">
                 <source>label.due_days</source>
-                <target>請求対象期間</target>
+                <target>支払期日</target>
             </trans-unit>
             <trans-unit id="invoice.due_days">
                 <source>invoice.due_days</source>
-                <target>請求対象</target>
+                <target>支払期日</target>
             </trans-unit>
             <trans-unit id="invoice.from">
                 <source>invoice.from</source>
@@ -936,7 +948,7 @@
             -->
             <trans-unit id="active.entries">
                 <source>active.entries</source>
-                <target>あなたの進行中の時間記録プロセス</target>
+                <target>進行中の時間記録のプロセス</target>
             </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
@@ -952,7 +964,7 @@
             </trans-unit>
             <trans-unit id="timesheet.start">
                 <source>timesheet.start</source>
-                <target>新たに時間記録を始める</target>
+                <target>新たに時間の記録を始める</target>
             </trans-unit>
 
             <!--
@@ -960,15 +972,15 @@
             -->
             <trans-unit id="label.pageSize">
                 <source>label.pageSize</source>
-                <target>1 ページあたりのサイズ</target>
+                <target>1 ページあたりの表示件数</target>
             </trans-unit>
             <trans-unit id="label.entryState">
                 <source>label.entryState</source>
-                <target>記録状態</target>
+                <target>記録プロセスの状態</target>
             </trans-unit>
             <trans-unit id="label.exported">
                 <source>label.exported</source>
-		<target>エクスポート状態</target>
+                <target>エクスポートの有無</target>
             </trans-unit>
             <trans-unit id="entryState.exported">
                 <source>entryState.exported</source>
