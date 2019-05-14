@@ -70,7 +70,7 @@ trait TimesheetControllerTrait
      */
     protected function edit(Timesheet $entry, Request $request, $redirectRoute, $renderTemplate)
     {
-        $editForm = $this->getEditForm($entry, $request->get('page'), $request->get('origin', 'timesheet'));
+        $editForm = $this->getEditForm($entry, $request->get('page'));
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -147,7 +147,7 @@ trait TimesheetControllerTrait
             $entry->setActivity($activity);
         }
 
-        $createForm = $this->getCreateForm($entry, $redirectRoute);
+        $createForm = $this->getCreateForm($entry);
         $createForm->handleRequest($request);
 
         if ($createForm->isSubmitted() && $createForm->isValid()) {
@@ -179,18 +179,16 @@ trait TimesheetControllerTrait
 
     /**
      * @param Timesheet $entry
-     * @param string $redirectRoute
      * @return \Symfony\Component\Form\FormInterface
      */
-    abstract protected function getCreateForm(Timesheet $entry, string $redirectRoute);
+    abstract protected function getCreateForm(Timesheet $entry);
 
     /**
      * @param Timesheet $entry
      * @param int $page
-     * @param string $redirectRoute
      * @return \Symfony\Component\Form\FormInterface
      */
-    abstract protected function getEditForm(Timesheet $entry, $page, string $redirectRoute);
+    abstract protected function getEditForm(Timesheet $entry, $page);
 
     /**
      * Adds a "successful" flash message to the stack.

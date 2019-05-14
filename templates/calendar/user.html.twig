@@ -123,13 +123,20 @@
                 },
                 eventClick: function(calEvent, jsEvent, view) {
                     {% if is_granted('edit_own_timesheet') %}
-                    var editUrl = '{{ path('timesheet_edit', {id: '-XX-'}) }}?origin=calendar'.replace('-XX-', calEvent.id);
+                    var editUrl = '{{ path('timesheet_edit', {id: '-XX-'}) }}'.replace('-XX-', calEvent.id);
                     kimai.getPlugin('modal').openUrlInModal(editUrl);
                     {% endif %}
                 },
                 dayClick: function(date, jsEvent, view) {
                     {% if is_granted('create_own_timesheet') %}
-                    var createUrl = '{{ path('timesheet_create') }}' + '?origin=calendar&begin=' + date.format();
+                    var begin = date.format();
+                    //console.log(date);
+                    if(view.type === 'month') {
+                        // TODO set to start of businessHours
+                        //begin = date
+                    }
+
+                    var createUrl = '{{ path('timesheet_create') }}' + '?begin=' + begin;
                     kimai.getPlugin('modal').openUrlInModal(createUrl);
                     {% endif %}
                 },
