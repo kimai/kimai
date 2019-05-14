@@ -83,10 +83,10 @@
                 now: '{{ now|date_format('c') }}',
                 timezone: '{{ app.user.preferenceValue("timezone") }}',
                 /*
-                slotDuration: '00:30:00',                               // make me configurable
-                minTime: '{{ config.businessTimeBegin }}',              // make me configurable independently
-                maxTime: '{{ config.businessTimeEnd }}',                // make me configurable independently
+                slotDuration: '00:30:00',                               // TODO make me configurable
                 */
+                minTime: '{{ config.timeframeBegin }}',
+                maxTime: '{{ config.timeframeEnd }}',
                 businessHours: {
                     dow: [{{ config.businessDays|join(',') }}],
                     start: '{{ config.businessTimeBegin }}',

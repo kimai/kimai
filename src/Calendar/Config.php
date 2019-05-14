@@ -49,6 +49,22 @@ class Config
     }
 
     /**
+     * @return string
+     */
+    public function getTimeframeBegin()
+    {
+        return $this->config['visibleHours']['begin'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getTimeframeEnd()
+    {
+        return $this->config['visibleHours']['end'];
+    }
+
+    /**
      * @return int
      */
     public function getDayLimit()

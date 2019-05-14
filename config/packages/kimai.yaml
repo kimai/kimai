@@ -193,6 +193,9 @@ kimai:
             days: [1, 2, 3, 4, 5]
             begin: '08:00'
             end: '20:00'
+        visibleHours:
+            begin: 06:00
+            end: 22:00
 
         # You can configure unlimited google calendars to display events for your company (e.g. holidays)
         # Find out more about calendar integration at https://www.kimai.org/documentation/calendar.html
