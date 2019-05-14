@@ -20,6 +20,8 @@ admin_lte:
     theme:
         widget:
           use_footer: false
+          type: secondary
+          solid: false
 
     routes:
         adminlte_profile: user_profile
