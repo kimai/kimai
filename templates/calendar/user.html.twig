@@ -7,15 +7,11 @@
 {% block page_actions %}{{ actions.calendar('index') }}{% endblock %}
 
 {% block main %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box box-success">
-                <div class="box-body no-padding">
-                    <div id="timesheet_calendar"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% block box_body %}
+            <div id="timesheet_calendar"></div>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}
 
 {% block javascripts %}
@@ -24,6 +20,31 @@
         document.addEventListener('kimai.timesheetUpdate', function() {
             $('#timesheet_calendar').fullCalendar('refetchEvents');
         });
+
+        var changeHandler = function(event, delta, revertFunc) {
+            var updateUrl = '{{ path('patch_timesheet', {id: '-XX-'}) }}'.replace('-XX-', event.id);
+            var API = kimai.getPlugin('api');
+            var ALERT = kimai.getPlugin('alert');
+
+            var payload = {'begin': event.start.format()};
+
+            if (event.end !== null && event.end !== undefined) {
+                payload.end = event.end.format();
+            } else {
+                payload.end = null;
+
+            }
+
+            API.patch(updateUrl, JSON.stringify(payload), function(result) {
+                ALERT.success('action.update.success');
+            }, function(xhr, err) {
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    err = xhr.responseJSON.message;
+                }
+                ALERT.error('action.update.error', err);
+                revertFunc();
+            });
+        };
 
         document.addEventListener('kimai.initialized', function() {
             $('#timesheet_calendar').fullCalendar({
@@ -57,36 +78,41 @@
                 weekNumbers: {% if config.showWeekNumbers %}true{% else %}false{% endif %},
                 navLinks: true,
                 locale: '{{ app.request.locale }}',
-                editable  : false,
-                droppable : false,
                 height: 'auto',
                 nowIndicator: true,
                 now: '{{ now|date_format('c') }}',
                 timezone: '{{ app.user.preferenceValue("timezone") }}',
+                /*
+                slotDuration: '00:30:00',                               // make me configurable
+                minTime: '{{ config.businessTimeBegin }}',              // make me configurable independently
+                maxTime: '{{ config.businessTimeEnd }}',                // make me configurable independently
+                */
                 businessHours: {
                     dow: [{{ config.businessDays|join(',') }}],
                     start: '{{ config.businessTimeBegin }}',
                     end: '{{ config.businessTimeEnd }}'
                 },
                 eventRender: function(eventObj, $el) {
+                    // dont show popover for google calendar
                     if (eventObj.source.ajaxSettings.name !== 'kimaiUserTimeSource') {
                         return;
                     }
+                    // or when an event is dragged or resized
+                    if(window.hidePopover) {
+                        return;
+                    }
                     $el.popover({
-                        title: eventObj.title,
+                        title: eventObj.start.format('L') + ' | ' + eventObj.start.format('LT') + ' - ' + (eventObj.end ? eventObj.end.format('LT') : ''),
                         content:
                         '<div class="calendar-entry">' +
                             '<ul>' +
-                                '<li>' + '{{ 'label.date'|trans }}: ' + eventObj.start.format('L') + '</li>' +
-                                '<li>' + '{{ 'label.begin'|trans }}: ' + eventObj.start.format('LT') + '</li>' +
-                                '<li>' + '{{ 'label.end'|trans }}: ' + (eventObj.end ? eventObj.end.format('LT') : '<i>-</i>') + '</li>' +
-                                '<hr>' +
                                 '<li>' + '{{ 'label.customer'|trans }}: ' + eventObj.customer + '</li>' +
                                 '<li>' + '{{ 'label.project'|trans }}: ' + eventObj.project + '</li>' +
                                 '<li>' + '{{ 'label.activity'|trans }}: ' + eventObj.activity + '</li>' +
-                            (eventObj.tags !== null && eventObj.tags.length > 0 ? '<li>' + '{{ 'label.tags'|trans }}: ' + eventObj.tags + '</li>' : '') +
                             '</ul>' +
-                            (eventObj.description ? '<hr><p>' + eventObj.description + '</p>' : '') +
+                            (eventObj.description || eventObj.tags ? '<hr>' : '') +
+                            (eventObj.description ? '<p>' + eventObj.description + '</p>' : '') +
+                            (eventObj.tags !== null && eventObj.tags.length > 0 ? '<span class="badge bg-green">' + eventObj.tags.split(', ').join('</span> <span class="badge bg-green">') + '</span>' : '') +
                         '</div>'
                         ,
                         trigger: 'hover',
@@ -116,7 +142,22 @@
                     var createUrl = '{{ path('timesheet_create') }}' + '?from=' + start.format() + '&to=' + end.format();
                     kimai.getPlugin('modal').openUrlInModal(createUrl);
                     {% endif %}
-                }
+                },
+                editable: true,
+                eventDragStart: function(event, jsEvent, ui, view) {
+                    window.hidePopover = true;
+                },
+                eventDragStop: function( event, jsEvent, ui, view ) {
+                    window.hidePopover = false;
+                },
+                eventDrop: changeHandler,
+                eventResizeStart: function(event, jsEvent, ui, view) {
+                    window.hidePopover = true;
+                },
+                eventResizeStop: function( event, jsEvent, ui, view ) {
+                    window.hidePopover = false;
+                },
+                eventResize: changeHandler
             })
         });
     </script>
