@@ -65,7 +65,7 @@ class RunCodestyleCommandTest extends KernelTestCase
 
     protected function assertSuccessCommand(array $options)
     {
-        $result = new BashResult(0, 'FooBar');
+        $result = new BashResult(0);
         $this->executor->setResult($result);
 
         $command = $this->application->find('kimai:codestyle');
@@ -74,7 +74,6 @@ class RunCodestyleCommandTest extends KernelTestCase
         $commandTester->execute($inputs);
 
         $output = $commandTester->getDisplay();
-        $this->assertContains('FooBar', $output);
         $this->assertContains('[OK] All source files have proper code styles', $output);
 
         return $this->executor->getCommand();
@@ -82,7 +81,7 @@ class RunCodestyleCommandTest extends KernelTestCase
 
     public function testFailureCommand()
     {
-        $result = new BashResult(1, 'BarFoo');
+        $result = new BashResult(1);
         $this->executor->setResult($result);
 
         $command = $this->application->find('kimai:codestyle');
@@ -91,7 +90,6 @@ class RunCodestyleCommandTest extends KernelTestCase
         $commandTester->execute($inputs);
 
         $output = $commandTester->getDisplay();
-        $this->assertContains('BarFoo', $output);
         $this->assertContains('[ERROR] Found problems while checking your code styles', $output);
     }
 }

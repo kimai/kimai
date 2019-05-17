@@ -31,6 +31,6 @@ class RunIntegrationTestsCommand extends RunUnitTestsCommand
      */
     protected function createPhpunitCmdLine()
     {
-        return '/bin/phpunit --group integration ' . $this->rootDir . '/tests';
+        return '/vendor/bin/phpunit --group integration ' . $this->rootDir . '/tests';
     }
 }

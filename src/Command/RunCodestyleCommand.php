@@ -85,8 +85,6 @@ class RunCodestyleCommand extends Command
 
         $result = $this->executor->execute('/vendor/bin/php-cs-fixer fix ' . implode(' ', $args));
 
-        $io->write($result->getResult());
-
         if ($result->getExitCode() > 0) {
             $io->error(
                 'Found problems while checking your code styles' .
