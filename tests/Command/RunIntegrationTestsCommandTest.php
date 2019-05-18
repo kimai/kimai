@@ -16,6 +16,8 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @coversDefaultClass \App\Command\RunIntegrationTestsCommand
+ * @coversDefaultClass \App\Command\BashExecutor
+ * @coversDefaultClass \App\Command\BashResult
  * @group integration
  */
 class RunIntegrationTestsCommandTest extends RunUnitTestsCommandTest

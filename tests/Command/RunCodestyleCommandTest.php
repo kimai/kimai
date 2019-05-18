@@ -17,6 +17,8 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @coversDefaultClass \App\Command\RunCodestyleCommand
+ * @coversDefaultClass \App\Command\BashExecutor
+ * @coversDefaultClass \App\Command\BashResult
  * @group integration
  */
 class RunCodestyleCommandTest extends KernelTestCase
@@ -47,7 +49,7 @@ class RunCodestyleCommandTest extends KernelTestCase
     public function testSuccessCommandNoOptions()
     {
         $command = $this->assertSuccessCommand([]);
-        $this->assertStringStartsWith('/vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none --format=txt', $command);
+        $this->assertStringStartsWith('/vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none', $command);
     }
 
     public function testSuccessCommandFix()
@@ -56,11 +58,10 @@ class RunCodestyleCommandTest extends KernelTestCase
         $this->assertStringStartsWith('/vendor/bin/php-cs-fixer fix', $command);
     }
 
-    public function testSuccessCommandCheckstyle()
+    public function testSuccessCommand()
     {
-        $command = $this->assertSuccessCommand(['--checkstyle' => 'phpcs.txt']);
-        $this->assertStringStartsWith('/vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none > ', $command);
-        $this->assertStringEndsWith('phpcs.txt', $command);
+        $command = $this->assertSuccessCommand([]);
+        $this->assertStringStartsWith('/vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none', $command);
     }
 
     protected function assertSuccessCommand(array $options)
@@ -90,6 +91,6 @@ class RunCodestyleCommandTest extends KernelTestCase
         $commandTester->execute($inputs);
 
         $output = $commandTester->getDisplay();
-        $this->assertContains('[ERROR] Found problems while checking your code styles', $output);
+        $this->assertContains('[ERROR] Found violations while checking code styles', $output);
     }
 }

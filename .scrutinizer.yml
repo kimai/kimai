@@ -20,12 +20,6 @@ build:
                         coverage:
                             file: 'clover.xml'
                             format: 'clover'
-                    -
-                        command: 'bin/console kimai:codestyle --checkstyle=checkstyle'
-                        stop_on_failure: true
-                        analysis:
-                            file: 'checkstyle'
-                            format: 'php-cs-checkstyle'
 
 filter:
     excluded_paths:
