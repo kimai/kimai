@@ -107,17 +107,20 @@ trait TimesheetControllerTrait
         if ($start !== null) {
             $start = $this->dateTime->createDateTimeFromFormat('Y-m-d', $start);
             if ($start !== false) {
-                $start->setTime(10, 0, 0); // TODO make me configurable
                 $entry->setBegin($start);
-            }
-        }
 
-        $end = $request->get('end');
-        if ($end !== null) {
-            $end = $this->dateTime->createDateTimeFromFormat('Y-m-d', $end);
-            if ($end !== false) {
-                $end->setTime(18, 0, 0); // TODO make me configurable
-                $entry->setEnd($end);
+                // only check for an end date if a begin date was given
+                $end = $request->get('end');
+                if ($end !== null) {
+                    $end = $this->dateTime->createDateTimeFromFormat('Y-m-d', $end);
+                    if ($end !== false) {
+                        $start->setTime(10, 0, 0);
+                        $end->setTime(18, 0, 0);
+
+                        $entry->setEnd($end);
+                        $entry->setDuration($end->getTimestamp() - $start->getTimestamp());
+                    }
+                }
             }
         }
 
@@ -126,14 +129,16 @@ trait TimesheetControllerTrait
             $from = $this->dateTime->createDateTime($from);
             if ($from !== false) {
                 $entry->setBegin($from);
-            }
-        }
 
-        $to = $request->get('to');
-        if ($to !== null) {
-            $to = $this->dateTime->createDateTime($to);
-            if ($to !== false) {
-                $entry->setEnd($to);
+                // only check for an end datetime if a begin datetime was given
+                $to = $request->get('to');
+                if ($to !== null) {
+                    $to = $this->dateTime->createDateTime($to);
+                    if ($to !== false) {
+                        $entry->setEnd($to);
+                        $entry->setDuration($to->getTimestamp() - $from->getTimestamp());
+                    }
+                }
             }
         }
 

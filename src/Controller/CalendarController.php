@@ -9,8 +9,10 @@
 
 namespace App\Controller;
 
-use App\Calendar\Service;
+use App\Calendar\Google;
+use App\Calendar\Source;
 use App\Calendar\TimesheetEntity;
+use App\Configuration\CalendarConfiguration;
 use App\Entity\Timesheet;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TimesheetRepository;
@@ -30,11 +32,11 @@ class CalendarController extends AbstractController
     /**
      * @Route(path="/", name="calendar", methods={"GET"})
      */
-    public function userCalendar(Service $calendar, UserDateTimeFactory $dateTime)
+    public function userCalendar(CalendarConfiguration $configuration, UserDateTimeFactory $dateTime)
     {
         return $this->render('calendar/user.html.twig', [
-            'config' => $calendar->getConfig(),
-            'google' => $calendar->getGoogle(),
+            'config' => $configuration,
+            'google' => $this->getGoogleSources($configuration),
             'now' => $dateTime->createDateTime(),
         ]);
     }
@@ -78,5 +80,29 @@ class CalendarController extends AbstractController
         }
 
         return $this->json($result);
+    }
+
+    /**
+     * @return Google
+     */
+    protected function getGoogleSources(CalendarConfiguration $configuration)
+    {
+        $apiKey = $configuration->getGoogleApiKey() ?? null;
+        $sources = [];
+
+        if (!empty($configuration->getGoogleSources())) {
+            foreach ($configuration->getGoogleSources() as $name => $config) {
+                $source = new Source();
+                $source
+                    ->setColor($config['color'])
+                    ->setUri($config['id'])
+                    ->setId($name)
+                ;
+
+                $sources[] = $source;
+            }
+        }
+
+        return new Google($apiKey, $sources);
     }
 }

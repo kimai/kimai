@@ -202,7 +202,6 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('documents')
                     ->requiresAtLeastOneElement()
-                    ->isRequired()
                     ->scalarPrototype()->end()
                     ->defaultValue([
                         'var/invoices/',
@@ -262,8 +261,8 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('visibleHours')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('begin')->defaultValue('06:00')->end()
-                        ->scalarNode('end')->defaultValue('22:00')->end()
+                        ->scalarNode('begin')->defaultValue('00:00')->end()
+                        ->scalarNode('end')->defaultValue('24:00')->end()
                     ->end()
                 ->end()
                 ->arrayNode('google')
@@ -282,6 +281,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->booleanNode('weekends')->defaultTrue()->end()
             ->end()
         ;
 

@@ -8,6 +8,7 @@
 
 {% block main %}
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% block box_body_class %}no-padding{% endblock %}
         {% block box_body %}
             <div id="timesheet_calendar"></div>
         {% endblock %}
@@ -76,17 +77,20 @@
                 },
                 eventLimit: {{ config.dayLimit }},
                 weekNumbers: {% if config.showWeekNumbers %}true{% else %}false{% endif %},
+                allDaySlot: false,
                 navLinks: true,
                 locale: '{{ app.request.locale }}',
+                /*
+                height: function() {
+                    //return 'parent';
+                },
+                //aspectRatio: 2
+                */
                 height: 'auto',
                 nowIndicator: true,
                 now: '{{ now|date_format('c') }}',
                 timezone: '{{ app.user.preferenceValue("timezone") }}',
-                /*
-                slotDuration: '00:30:00',                               // TODO make me configurable
-                */
-                minTime: '{{ config.timeframeBegin }}',
-                maxTime: '{{ config.timeframeEnd }}',
+                weekends: {% if config.showWeekends %}true{% else %}false{% endif %},
                 businessHours: {
                     dow: [{{ config.businessDays|join(',') }}],
                     start: '{{ config.businessTimeBegin }}',
@@ -121,34 +125,35 @@
                         html: true
                     });
                 },
-                eventClick: function(calEvent, jsEvent, view) {
-                    {% if is_granted('edit_own_timesheet') %}
-                    var editUrl = '{{ path('timesheet_edit', {id: '-XX-'}) }}'.replace('-XX-', calEvent.id);
-                    kimai.getPlugin('modal').openUrlInModal(editUrl);
-                    {% endif %}
-                },
+                {% if is_granted('create_own_timesheet') %}
+                // day-clicks are always triggered, unless a selection was created
+                // so clicking in a day (month view) or any slot (week and day view) will trigger a dayClick
+                // BEFORE triggering a select - make sure not two create dialogs are requested
                 dayClick: function(date, jsEvent, view) {
-                    {% if is_granted('create_own_timesheet') %}
-                    var begin = date.format();
-                    //console.log(date);
-                    if(view.type === 'month') {
-                        // TODO set to start of businessHours
-                        //begin = date
-                    }
-
-                    var createUrl = '{{ path('timesheet_create') }}' + '?begin=' + begin;
-                    kimai.getPlugin('modal').openUrlInModal(createUrl);
-                    {% endif %}
-                },
-                selectable: true,
-                select: function( start, end, jsEvent, view) {
-                    if(view.type === 'month') {
+                    if(view.type !== 'month') {
                         return;
                     }
-                    {% if is_granted('create_own_timesheet') %}
+                    var param = 'begin';
+                    var begin = date.format();
+
+                    var createUrl = '{{ path('timesheet_create') }}' + '?' + param + '=' + begin;
+                    kimai.getPlugin('modal').openUrlInModal(createUrl);
+                },
+                selectable: true,
+                select: function(start, end, jsEvent, view) {
+                    if(view.type === 'month') {
+                        // multi-day clicks are NOT allowed in the month view, as simple day clicks would also trigger
+                        // a select - there is no way to distinguish a simple click and a two day selection
+                        return;
+                    }
                     var createUrl = '{{ path('timesheet_create') }}' + '?from=' + start.format() + '&to=' + end.format();
                     kimai.getPlugin('modal').openUrlInModal(createUrl);
-                    {% endif %}
+                },
+                {% endif %}
+                {% if is_granted('edit_own_timesheet') %}
+                eventClick: function(calEvent, jsEvent, view) {
+                    var editUrl = '{{ path('timesheet_edit', {id: '-XX-'}) }}'.replace('-XX-', calEvent.id);
+                    kimai.getPlugin('modal').openUrlInModal(editUrl);
                 },
                 editable: true,
                 eventDragStart: function(event, jsEvent, ui, view) {
@@ -164,7 +169,14 @@
                 eventResizeStop: function( event, jsEvent, ui, view ) {
                     window.hidePopover = false;
                 },
-                eventResize: changeHandler
+                eventResize: changeHandler,
+                {% endif %}
+                /*
+                slotDuration: '00:30:00',                               // TODO make me configurable
+                */
+                minTime: '{{ config.timeframeBegin }}',
+                maxTime: '{{ config.timeframeEnd }}',
+                defaultTimedEventDuration: '00:30'
             })
         });
     </script>
