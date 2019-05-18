@@ -56,11 +56,19 @@
 {% block navbar_start %}
     {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         {% if is_granted('view_own_timesheet') %}
-            <li class="visible-xs-inline-block">
-                <a href="{{ path('timesheet') }}" class="ddt-large">
-                    <i class="{{ 'timesheet'|icon }} fa-2x"></i>
-                </a>
-            </li>
+            {% if app.user.preferenceValue('login.initial_view') == 'calendar' %}
+                <li class="visible-xs-inline-block">
+                    <a href="{{ path('calendar') }}" class="ddt-large">
+                        <i class="{{ 'calendar'|icon }} fa-2x"></i>
+                    </a>
+                </li>
+            {% else %}
+                <li class="visible-xs-inline-block">
+                    <a href="{{ path('timesheet') }}" class="ddt-large">
+                        <i class="{{ 'timesheet'|icon }} fa-2x"></i>
+                    </a>
+                </li>
+            {% endif %}
         {% endif %}
         {% if is_granted('view_invoice') %}
             <li class="visible-xs-inline-block">
