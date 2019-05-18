@@ -31,15 +31,4 @@ class BashResult
     {
         return $this->exitCode;
     }
-
-    /**
-     * @param string $exitCode
-     * @return BashResult
-     */
-    public function setExitCode(string $exitCode)
-    {
-        $this->exitCode = $exitCode;
-
-        return $this;
-    }
 }
