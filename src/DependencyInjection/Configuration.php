@@ -243,6 +243,7 @@ class Configuration implements ConfigurationInterface
         $node = $builder->getRootNode();
 
         $node
+            ->addDefaultsIfNotSet()
             ->children()
                 ->booleanNode('week_numbers')->defaultTrue()->end()
                 ->integerNode('day_limit')->defaultValue(4)->end()

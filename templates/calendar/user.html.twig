@@ -82,10 +82,10 @@
                 locale: '{{ app.request.locale }}',
                 /*
                 height: function() {
-                    //return 'parent';
+                    return 'parent';
                 },
-                //aspectRatio: 2
                 */
+                //aspectRatio: 2,
                 height: 'auto',
                 nowIndicator: true,
                 now: '{{ now|date_format('c') }}',
@@ -152,6 +152,10 @@
                 {% endif %}
                 {% if is_granted('edit_own_timesheet') %}
                 eventClick: function(calEvent, jsEvent, view) {
+                    if (calEvent.source.ajaxSettings.name !== 'kimaiUserTimeSource') {
+                        jsEvent.preventDefault();
+                        return;
+                    }
                     var editUrl = '{{ path('timesheet_edit', {id: '-XX-'}) }}'.replace('-XX-', calEvent.id);
                     kimai.getPlugin('modal').openUrlInModal(editUrl);
                 },

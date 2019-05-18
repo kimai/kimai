@@ -90,17 +90,15 @@ class CalendarController extends AbstractController
         $apiKey = $configuration->getGoogleApiKey() ?? null;
         $sources = [];
 
-        if (!empty($configuration->getGoogleSources())) {
-            foreach ($configuration->getGoogleSources() as $name => $config) {
-                $source = new Source();
-                $source
-                    ->setColor($config['color'])
-                    ->setUri($config['id'])
-                    ->setId($name)
-                ;
+        foreach ($configuration->getGoogleSources() as $name => $config) {
+            $source = new Source();
+            $source
+                ->setColor($config['color'])
+                ->setUri($config['id'])
+                ->setId($name)
+            ;
 
-                $sources[] = $source;
-            }
+            $sources[] = $source;
         }
 
         return new Google($apiKey, $sources);
