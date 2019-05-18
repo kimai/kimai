@@ -21,6 +21,7 @@ use App\Repository\Query\InvoiceQuery;
 
 /**
  * @covers \App\Invoice\Calculator\UserInvoiceCalculator
+ * @covers \App\Invoice\Calculator\AbstractMergedCalculator
  * @covers \App\Invoice\Calculator\AbstractCalculator
  */
 class UserInvoiceCalculatorTest extends AbstractCalculatorTest
