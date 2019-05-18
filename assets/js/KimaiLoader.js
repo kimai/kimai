@@ -64,13 +64,13 @@ export default class KimaiLoader {
         //kimai.registerPlugin(new KimaiPauseRecord('li.messages-menu ul.menu li'));
 
         // notify all listeners that Kimai plugins can now be registered
-        kimai.getPlugin('event').trigger('kimai.pluginRegister');
+        kimai.getPlugin('event').trigger('kimai.pluginRegister', {'kimai': kimai});
 
         // initialize all plugins
         kimai.getPlugins().map(plugin => { plugin.init(); });
 
         // notify all listeners that Kimai is now ready to be used
-        kimai.getPlugin('event').trigger('kimai.initialized');
+        kimai.getPlugin('event').trigger('kimai.initialized', {'kimai': kimai});
 
         this.kimai = kimai;
     }

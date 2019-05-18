@@ -27,7 +27,6 @@ App\Entity\Project:
             groups: [Subresource]
         color:
             include: true
-            groups: [Entity]
     virtual_properties:
         getCustomer:
             serialized_name: customer

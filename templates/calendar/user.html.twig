@@ -47,7 +47,8 @@
             });
         };
 
-        document.addEventListener('kimai.initialized', function() {
+        document.addEventListener('kimai.initialized', function(event) {
+            var API = event.detail.kimai.getPlugin('api');
             $('#timesheet_calendar').fullCalendar({
                 defaultView: '{{ app.user.getPreferenceValue('calendar.initial_view') }}',
                 {% if not google.apiKey is null %}
@@ -55,9 +56,36 @@
                 {% endif %}
                 eventSources: [
                     {
-                        url: '{{ path('calendar_entries') }}',
-                        color: '#00a65a',
-                        borderColor: '#00a65a',
+                        events: function(start, end, timezone, callback) {
+                            var from = moment(start.format()).format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
+                            var to = moment(end.format()).format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
+                            API.get('{{ path('get_timesheets') }}?size=1000&full=true&begin='+from+'&end='+to, {}, function(result) {
+                                var apiEvents = [];
+                                for (var record of result) {
+                                    var color = record.activity.color;
+                                    if (color === null) {
+                                        color = record.project.color;
+                                        if (color === null) {
+                                            color = record.project.customer.color;
+                                        }
+                                    }
+                                    apiEvents.push({
+                                        id: record.id,
+                                        title: record.activity.name,
+                                        description: record.description,
+                                        start: record.begin,
+                                        end: record.end,
+                                        activity: record.activity.name,
+                                        project: record.project.name,
+                                        customer: record.project.customer.name,
+                                        tags: record.tags,
+                                        color: color,
+                                    });
+                                }
+                                callback(apiEvents);
+                            });
+                        },
+                        color: '#d2d6de', // see class "dot"
                         name: 'kimaiUserTimeSource'
                     }
                     {% for source in google.sources %}
@@ -66,7 +94,7 @@
                         googleCalendarId: '{{ source.uri }}',
                         name: '{{ source.id }}',
                         color: '{{ source.color }}',
-                        borderColor: '{{ source.color }}'
+                        editable: false
                     }
                     {% endfor %}
                 ],
@@ -81,11 +109,11 @@
                 navLinks: true,
                 locale: '{{ app.request.locale }}',
                 /*
+                // TODO calculate height properly instead of relying on the default aspectRatio
                 height: function() {
                     return 'parent';
                 },
                 */
-                //aspectRatio: 2,
                 height: 'auto',
                 nowIndicator: true,
                 now: '{{ now|date_format('c') }}',
@@ -97,8 +125,8 @@
                     end: '{{ config.businessTimeEnd }}'
                 },
                 eventRender: function(eventObj, $el) {
-                    // dont show popover for google calendar
-                    if (eventObj.source.ajaxSettings.name !== 'kimaiUserTimeSource') {
+                    // don't show popover for google calendar
+                    if (eventObj.source.ajaxSettings !== undefined) {
                         return;
                     }
                     // or when an event is dragged or resized
@@ -116,7 +144,7 @@
                             '</ul>' +
                             (eventObj.description || eventObj.tags ? '<hr>' : '') +
                             (eventObj.description ? '<p>' + eventObj.description + '</p>' : '') +
-                            (eventObj.tags !== null && eventObj.tags.length > 0 ? '<span class="badge bg-green">' + eventObj.tags.split(', ').join('</span> <span class="badge bg-green">') + '</span>' : '') +
+                            (eventObj.tags !== null && eventObj.tags.length > 0 ? '<span class="badge bg-green">' + eventObj.tags.join('</span> <span class="badge bg-green">') + '</span>' : '') +
                         '</div>'
                         ,
                         trigger: 'hover',
@@ -151,12 +179,12 @@
                 },
                 {% endif %}
                 {% if is_granted('edit_own_timesheet') %}
-                eventClick: function(calEvent, jsEvent, view) {
-                    if (calEvent.source.ajaxSettings.name !== 'kimaiUserTimeSource') {
+                eventClick: function(eventObj, jsEvent, view) {
+                    if (eventObj.source.ajaxSettings !== undefined) {
                         jsEvent.preventDefault();
                         return;
                     }
-                    var editUrl = '{{ path('timesheet_edit', {id: '-XX-'}) }}'.replace('-XX-', calEvent.id);
+                    var editUrl = '{{ path('timesheet_edit', {id: '-XX-'}) }}'.replace('-XX-', eventObj.id);
                     kimai.getPlugin('modal').openUrlInModal(editUrl);
                 },
                 editable: true,

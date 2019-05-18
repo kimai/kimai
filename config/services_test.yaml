@@ -4,6 +4,11 @@ services:
 
     test.PasswordEncoder: "@security.encoder_factory"
 
+    # added, so we are able to overwrite the service for the CalendarControllerTest
+    App\Configuration\CalendarConfiguration:
+        arguments: ['@App\Repository\ConfigurationRepository', "%kimai.calendar%"]
+        public: true
+
     App\Configuration\SystemConfiguration:
         arguments: ['@App\Repository\ConfigurationRepository', "%kimai.config%"]
 

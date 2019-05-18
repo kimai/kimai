@@ -17,14 +17,17 @@ export default class KimaiEvent extends KimaiPlugin {
         return 'event';
     }
 
-    trigger(name) {
+    trigger(name, details) {
         if (name === null || name === undefined) {
             return;
         }
 
         for(let event of name.split(' ')) {
-            document.dispatchEvent(new Event(event));
+            let triggerEvent = new Event(event);
+            if (details !== undefined) {
+                triggerEvent = new CustomEvent(name, {detail: details});
+            }
+            document.dispatchEvent(triggerEvent);
         }
     }
-
 }
