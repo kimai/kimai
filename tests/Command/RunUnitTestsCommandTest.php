@@ -16,9 +16,9 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
- * @coversDefaultClass \App\Command\RunUnitTestsCommand
- * @coversDefaultClass \App\Command\BashExecutor
- * @coversDefaultClass \App\Command\BashResult
+ * @covers \App\Command\RunUnitTestsCommand
+ * @covers \App\Command\BashExecutor
+ * @covers \App\Command\BashResult
  * @group integration
  */
 class RunUnitTestsCommandTest extends KernelTestCase
