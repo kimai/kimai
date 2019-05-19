@@ -10,6 +10,9 @@
 namespace App\Form;
 
 use App\Configuration\TimesheetConfiguration;
+use App\Entity\Activity;
+use App\Entity\Customer;
+use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Form\Type\ActivityType;
 use App\Form\Type\CustomerType;
@@ -80,6 +83,7 @@ class TimesheetEditForm extends AbstractType
         $end = null;
         $begin = null;
         $customerCount = $this->customers->countCustomer(true);
+        $projectCount = $this->projects->countProject(true);
 
         if (isset($options['data'])) {
             /** @var Timesheet $entry */
@@ -118,51 +122,13 @@ class TimesheetEditForm extends AbstractType
         }
 
         if (null === $end || !$this->configuration->isDurationOnly()) {
-            $builder->add('begin', DateTimePickerType::class, array_merge($dateTimeOptions, [
-                'label' => 'label.begin'
-            ]));
+            $this->addBegin($builder, $dateTimeOptions);
         }
 
         if ($this->configuration->isDurationOnly()) {
-            $builder->add('duration', DurationType::class, [
-                'required' => false,
-                'docu_chapter' => 'timesheet.html#duration-format',
-                'attr' => [
-                    'placeholder' => '00:00',
-                ]
-            ]);
-
-            $builder->addEventListener(
-                FormEvents::POST_SET_DATA,
-                function (FormEvent $event) {
-                    /** @var Timesheet $data */
-                    $data = $event->getData();
-                    if (null === $data || null === $data->getEnd()) {
-                        $event->getForm()->get('duration')->setData(null);
-                    }
-                }
-            );
-
-            // make sure that duration is mapped back to end field
-            $builder->addEventListener(
-                FormEvents::SUBMIT,
-                function (FormEvent $event) {
-                    /** @var Timesheet $data */
-                    $data = $event->getData();
-                    $duration = $data->getDuration();
-                    $end = null;
-                    if (null !== $duration) {
-                        $end = clone $data->getBegin();
-                        $end->modify('+ ' . $duration . 'seconds');
-                    }
-                    $data->setEnd($end);
-                }
-            );
+            $this->addDuration($builder);
         } else {
-            $builder->add('end', DateTimePickerType::class, array_merge($dateTimeOptions, [
-                'label' => 'label.end',
-                'required' => false,
-            ]));
+            $this->addEnd($builder, $dateTimeOptions);
         }
 
         $projectOptions = [];
@@ -170,35 +136,60 @@ class TimesheetEditForm extends AbstractType
         if ($customerCount < 2) {
             $projectOptions['group_by'] = null;
         } elseif ($options['customer']) {
-            $builder
-                ->add('customer', CustomerType::class, [
-                    'query_builder' => function (CustomerRepository $repo) use ($customer) {
-                        return $repo->builderForEntityType($customer);
-                    },
-                    'data' => $customer ? $customer : '',
-                    'required' => false,
-                    'placeholder' => null === $customer ? '' : null,
-                    'mapped' => false,
-                    'project_enabled' => true,
-                ]);
+            $this->addCustomer($builder, $customer);
         }
 
-        if ($this->projects->countProject(true) <= 1) {
+        if ($projectCount <= 1) {
             $projectOptions['group_by'] = null;
         }
 
+        $this->addProject($builder, $projectOptions, $project, $customer);
+        $this->addActivity($builder, $activity, $project);
+        $this->addDescription($builder);
+        $this->addTags($builder);
+
+        if ($options['include_rate']) {
+            $this->addRates($builder, $currency);
+        }
+
+        if ($options['include_user']) {
+            $this->addUser($builder);
+        }
+
+        if ($options['include_exported']) {
+            $this->addExported($builder);
+        }
+    }
+
+    protected function addCustomer(FormBuilderInterface $builder, ?Customer $customer = null)
+    {
+        $builder
+            ->add('customer', CustomerType::class, [
+                'query_builder' => function (CustomerRepository $repo) use ($customer) {
+                    return $repo->builderForEntityType($customer);
+                },
+                'data' => $customer ? $customer : '',
+                'required' => false,
+                'placeholder' => null === $customer ? '' : null,
+                'mapped' => false,
+                'project_enabled' => true,
+            ]);
+    }
+
+    protected function addProject(FormBuilderInterface $builder, array $projectOptions, ?Project $project = null, ?Customer $customer = null)
+    {
         $builder
             ->add(
                 'project',
                 ProjectType::class,
                 array_merge($projectOptions, [
-                'placeholder' => '',
-                'activity_enabled' => true,
-                'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
-                    return $repo->builderForEntityType($project, $customer);
-                },
-            ])
-        );
+                    'placeholder' => '',
+                    'activity_enabled' => true,
+                    'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
+                        return $repo->builderForEntityType($project, $customer);
+                    },
+                ])
+            );
 
         // replaces the project select after submission, to make sure only projects for the selected customer are displayed
         $builder->addEventListener(
@@ -219,7 +210,10 @@ class TimesheetEditForm extends AbstractType
                 ]);
             }
         );
+    }
 
+    protected function addActivity(FormBuilderInterface $builder, ?Activity $activity = null, ?Project $project = null)
+    {
         $builder
             ->add('activity', ActivityType::class, [
                 'placeholder' => '',
@@ -246,13 +240,72 @@ class TimesheetEditForm extends AbstractType
                 ]);
             }
         );
+    }
 
+    protected function addBegin(FormBuilderInterface $builder, array $dateTimeOptions)
+    {
+        $builder->add('begin', DateTimePickerType::class, array_merge($dateTimeOptions, [
+            'label' => 'label.begin'
+        ]));
+    }
+
+    protected function addEnd(FormBuilderInterface $builder, array $dateTimeOptions)
+    {
+        $builder->add('end', DateTimePickerType::class, array_merge($dateTimeOptions, [
+            'label' => 'label.end',
+            'required' => false,
+        ]));
+    }
+
+    protected function addDuration(FormBuilderInterface $builder)
+    {
+        $builder->add('duration', DurationType::class, [
+            'required' => false,
+            'docu_chapter' => 'timesheet.html#duration-format',
+            'attr' => [
+                'placeholder' => '00:00',
+            ]
+        ]);
+
+        $builder->addEventListener(
+            FormEvents::POST_SET_DATA,
+            function (FormEvent $event) {
+                /** @var Timesheet $data */
+                $data = $event->getData();
+                if (null === $data || null === $data->getEnd()) {
+                    $event->getForm()->get('duration')->setData(null);
+                }
+            }
+        );
+
+        // make sure that duration is mapped back to end field
+        $builder->addEventListener(
+            FormEvents::SUBMIT,
+            function (FormEvent $event) {
+                /** @var Timesheet $data */
+                $data = $event->getData();
+                $duration = $data->getDuration();
+                $end = null;
+                if (null !== $duration) {
+                    $end = clone $data->getBegin();
+                    $end->modify('+ ' . $duration . 'seconds');
+                }
+                $data->setEnd($end);
+            }
+        );
+    }
+
+    protected function addDescription(FormBuilderInterface $builder)
+    {
         $builder
             ->add('description', TextareaType::class, [
                 'label' => 'label.description',
                 'required' => false,
             ]);
+    }
 
+    protected function addTags(FormBuilderInterface $builder)
+    {
         $builder
             ->add('tags', TagsInputType::class, [
                 // documentation is for NelmioApiDocBundle
@@ -262,26 +315,29 @@ class TimesheetEditForm extends AbstractType
                 ],
                 'required' => false,
             ]);
+    }
 
-        if ($options['include_rate']) {
-            $builder
-                ->add('fixedRate', FixedRateType::class, [
-                    'currency' => $currency,
-                ])
-                ->add('hourlyRate', HourlyRateType::class, [
-                    'currency' => $currency,
-                ]);
-        }
-
-        if ($options['include_user']) {
-            $builder->add('user', UserType::class);
-        }
-
-        if ($options['include_exported']) {
-            $builder->add('exported', YesNoType::class, [
-                'label' => 'label.exported'
+    protected function addRates(FormBuilderInterface $builder, $currency)
+    {
+        $builder
+            ->add('fixedRate', FixedRateType::class, [
+                'currency' => $currency,
+            ])
+            ->add('hourlyRate', HourlyRateType::class, [
+                'currency' => $currency,
             ]);
-        }
+    }
+
+    protected function addUser(FormBuilderInterface $builder)
+    {
+        $builder->add('user', UserType::class);
+    }
+
+    protected function addExported(FormBuilderInterface $builder)
+    {
+        $builder->add('exported', YesNoType::class, [
+            'label' => 'label.exported'
+        ]);
     }
 
     /**
