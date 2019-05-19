@@ -34,10 +34,8 @@ class BashExecutor
 
         $command = rtrim($this->rootDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . ltrim($command, DIRECTORY_SEPARATOR);
 
-        ob_start();
         passthru($command, $exitCode);
-        $result = ob_get_clean();
 
-        return new BashResult($exitCode, $result);
+        return new BashResult($exitCode);
     }
 }

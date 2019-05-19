@@ -80,6 +80,7 @@ class TimesheetEditForm extends AbstractType
         $end = null;
         $begin = null;
         $customerCount = $this->customers->countCustomer(true);
+        $isNew = true;
 
         if (isset($options['data'])) {
             /** @var Timesheet $entry */
@@ -88,6 +89,10 @@ class TimesheetEditForm extends AbstractType
             $activity = $entry->getActivity();
             $project = $entry->getProject();
             $customer = null === $project ? null : $project->getCustomer();
+
+            if (null !== $entry->getId()) {
+                $isNew = false;
+            }
 
             if (null === $project && null !== $activity) {
                 $project = $activity->getProject();
@@ -117,7 +122,7 @@ class TimesheetEditForm extends AbstractType
             $dateTimeOptions['format'] = $options['date_format'];
         }
 
-        if (null === $end || !$this->configuration->isDurationOnly()) {
+        if ($isNew || null === $end || !$this->configuration->isDurationOnly()) {
             $builder->add('begin', DateTimePickerType::class, array_merge($dateTimeOptions, [
                 'label' => 'label.begin'
             ]));

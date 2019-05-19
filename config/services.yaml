@@ -34,10 +34,6 @@ services:
     App\EventSubscriber\RedirectToLocaleSubscriber:
         arguments: ['@router', '%app_locales%', '%locale%']
 
-    App\Calendar\Service:
-        arguments:
-            $config: "%kimai.calendar%"
-
     App\Repository\WidgetRepository:
         arguments:
             $widgets: "%kimai.widgets%"
@@ -52,6 +48,10 @@ services:
     App\Configuration\TimesheetConfiguration:
         arguments:
             $settings: "%kimai.timesheet%"
+
+    App\Configuration\CalendarConfiguration:
+        arguments:
+            $settings: "%kimai.calendar%"
 
     App\Configuration\FormConfiguration:
         arguments:

@@ -19,7 +19,7 @@
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
 
         <!-- ###+ doctrine/doctrine-bundle ### -->
-        <env name="DATABASE_URL" value="sqlite:///var/data/kimai_test.sqlite" force="true"/>
+        <env name="DATABASE_URL" value="sqlite:///%kernel.project_dir%/var/data/kimai_test.sqlite" force="true"/>
         <!-- ###- doctrine/doctrine-bundle ### -->
 
         <!-- ###+ symfony/swiftmailer-bundle ### -->

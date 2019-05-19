@@ -96,14 +96,15 @@ class TimesheetController extends BaseApiController
      * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="Project ID to filter timesheets")
      * @Rest\QueryParam(name="activity", requirements="\d+", strict=true, nullable=true, description="Activity ID to filter timesheets")
      * @Rest\QueryParam(name="page", requirements="\d+", strict=true, nullable=true, description="The page to display, renders a 404 if not found (default: 1)")
-     * @Rest\QueryParam(name="size", requirements="\d+", strict=true, nullable=true, description="The amount of entries for each page (default: 25)")
+     * @Rest\QueryParam(name="size", requirements="\d+", strict=true, nullable=true, description="The amount of entries for each page (default: 50)")
      * @Rest\QueryParam(name="tags", requirements="[a-zA-Z0-9 -,]+", strict=true, nullable=true, description="The name of tags which are in the datasets")
      * @Rest\QueryParam(name="orderBy", requirements="id|begin|end|rate", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, begin, end, rate (default: begin)")
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: DESC)")
-     * @Rest\QueryParam(name="begin", requirements=@Constraints\DateTime, strict=true, nullable=true, description="Only records after this date will be included (format: ISO 8601)")
-     * @Rest\QueryParam(name="end", requirements=@Constraints\DateTime, strict=true, nullable=true, description="Only records before this date will be included (format: ISO 8601)")
+     * @Rest\QueryParam(name="begin", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only records after this date will be included (format: HTML5)")
+     * @Rest\QueryParam(name="end", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only records before this date will be included (format: HTML5)")
      * @Rest\QueryParam(name="exported", requirements="0|1", strict=true, nullable=true, description="Use this flag if you want to filter for export state. Allowed values: 0=not exported, 1=exported (default: all)")
-     * @Rest\QueryParam(name="active", requirements="0|1", strict=true, nullable=true, description="Filter for running/active records. Allowed values: 0=stopped, 1=active. (default: all)")
+     * @Rest\QueryParam(name="active", requirements="0|1", strict=true, nullable=true, description="Filter for running/active records. Allowed values: 0=stopped, 1=active (default: all)")
+     * @Rest\QueryParam(name="full", requirements="true", strict=true, nullable=true, description="Allows to fetch fully serialized objects including subresources (TimesheetSubCollection). Allowed values: true (default: false)")
      *
      * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
      *
@@ -160,11 +161,11 @@ class TimesheetController extends BaseApiController
         }
 
         if (null !== ($begin = $paramFetcher->get('begin'))) {
-            $query->setBegin(new \DateTime($begin));
+            $query->setBegin($this->dateTime->createDateTime($begin));
         }
 
         if (null !== ($end = $paramFetcher->get('end'))) {
-            $query->setEnd(new \DateTime($end));
+            $query->setEnd($this->dateTime->createDateTime($end));
         }
 
         if (null !== ($active = $paramFetcher->get('active'))) {
@@ -190,7 +191,11 @@ class TimesheetController extends BaseApiController
         $data = (array) $data->getCurrentPageResults();
 
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Collection', 'Timesheet']);
+        if ('true' === $paramFetcher->get('full')) {
+            $view->getContext()->setGroups(['Default', 'Subresource', 'Timesheet']);
+        } else {
+            $view->getContext()->setGroups(['Default', 'Collection', 'Timesheet']);
+        }
 
         return $this->viewHandler->handle($view);
     }
@@ -424,7 +429,7 @@ class TimesheetController extends BaseApiController
      * )
      *
      * @Rest\QueryParam(name="user", requirements="\d+|all", strict=true, nullable=true, description="User ID to filter timesheets. Needs permission 'view_other_timesheet', pass 'all' to fetch data for all user (default: current user)")
-     * @Rest\QueryParam(name="begin", requirements=@Constraints\DateTime, strict=true, nullable=true, description="Only records after this date will be included. Default: today - 1 year (format: ISO 8601)")
+     * @Rest\QueryParam(name="begin", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only records after this date will be included. Default: today - 1 year (format: HTML5)")
      * @Rest\QueryParam(name="size", requirements="\d+", strict=true, nullable=true, description="The amount of entries (default: 10)")
      *
      * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
@@ -449,7 +454,7 @@ class TimesheetController extends BaseApiController
         }
 
         if (null !== ($reqBegin = $paramFetcher->get('begin'))) {
-            $begin = new \DateTime($reqBegin);
+            $begin = $this->dateTime->createDateTime($reqBegin);
         }
 
         $data = $this->repository->getRecentActivities($user, $begin, $limit);
@@ -474,7 +479,6 @@ class TimesheetController extends BaseApiController
      *
      * @Security("is_granted('view_own_timesheet')")
      * @return Response
-     * @throws \Doctrine\ORM\Query\QueryException
      */
     public function activeAction()
     {

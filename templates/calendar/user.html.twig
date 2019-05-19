@@ -1,43 +1,91 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
+{% import "macros/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'calendar.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'calendar.subtitle'|trans }}{% endblock %}
-
-{% block page_actions %}
-    {% set actions = {'list': path('timesheet')} %}
-    {% if is_granted('create_own_timesheet') %}
-        {% set actions = actions|merge({'create': {'url': path('timesheet_create', {'origin': 'calendar'})}}) %}
-    {% endif %}
-    {{ widgets.page_actions(actions) }}
-{% endblock %}
+{% block page_actions %}{{ actions.calendar('index') }}{% endblock %}
 
 {% block main %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box box-success">
-                <div class="box-body no-padding">
-                    <div id="calendar"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% block box_body_class %}no-padding{% endblock %}
+        {% block box_body %}
+            <div id="timesheet_calendar"></div>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script>
-        $(function () {
-            $('#calendar').fullCalendar({
+        document.addEventListener('kimai.timesheetUpdate', function() {
+            $('#timesheet_calendar').fullCalendar('refetchEvents');
+        });
+
+        var changeHandler = function(event, delta, revertFunc) {
+            var updateUrl = '{{ path('patch_timesheet', {id: '-XX-'}) }}'.replace('-XX-', event.id);
+            var API = kimai.getPlugin('api');
+            var ALERT = kimai.getPlugin('alert');
+
+            var payload = {'begin': event.start.format()};
+
+            if (event.end !== null && event.end !== undefined) {
+                payload.end = event.end.format();
+            } else {
+                payload.end = null;
+
+            }
+
+            API.patch(updateUrl, JSON.stringify(payload), function(result) {
+                ALERT.success('action.update.success');
+            }, function(xhr, err) {
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    err = xhr.responseJSON.message;
+                }
+                ALERT.error('action.update.error', err);
+                revertFunc();
+            });
+        };
+
+        document.addEventListener('kimai.initialized', function(event) {
+            var API = event.detail.kimai.getPlugin('api');
+            $('#timesheet_calendar').fullCalendar({
                 defaultView: '{{ app.user.getPreferenceValue('calendar.initial_view') }}',
                 {% if not google.apiKey is null %}
                 googleCalendarApiKey: '{{ google.apiKey }}',
                 {% endif %}
                 eventSources: [
                     {
-                        url: '{{ path('calendar_entries') }}',
-                        color: '#00a65a',
-                        borderColor: '#00a65a',
+                        events: function(start, end, timezone, callback) {
+                            var from = moment(start.format()).format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
+                            var to = moment(end.format()).format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
+                            API.get('{{ path('get_timesheets') }}?size=1000&full=true&begin='+from+'&end='+to, {}, function(result) {
+                                var apiEvents = [];
+                                for (var record of result) {
+                                    var color = record.activity.color;
+                                    if (color === null) {
+                                        color = record.project.color;
+                                        if (color === null) {
+                                            color = record.project.customer.color;
+                                        }
+                                    }
+                                    apiEvents.push({
+                                        id: record.id,
+                                        title: record.activity.name,
+                                        description: record.description,
+                                        start: record.begin,
+                                        end: record.end,
+                                        activity: record.activity.name,
+                                        project: record.project.name,
+                                        customer: record.project.customer.name,
+                                        tags: record.tags,
+                                        color: color,
+                                    });
+                                }
+                                callback(apiEvents);
+                            });
+                        },
+                        color: '#d2d6de', // see class "dot"
                         name: 'kimaiUserTimeSource'
                     }
                     {% for source in google.sources %}
@@ -46,7 +94,7 @@
                         googleCalendarId: '{{ source.uri }}',
                         name: '{{ source.id }}',
                         color: '{{ source.color }}',
-                        borderColor: '{{ source.color }}'
+                        editable: false
                     }
                     {% endfor %}
                 ],
@@ -57,38 +105,46 @@
                 },
                 eventLimit: {{ config.dayLimit }},
                 weekNumbers: {% if config.showWeekNumbers %}true{% else %}false{% endif %},
+                allDaySlot: false,
                 navLinks: true,
                 locale: '{{ app.request.locale }}',
-                editable  : false,
-                droppable : false,
+                /*
+                // TODO calculate height properly instead of relying on the default aspectRatio
+                height: function() {
+                    return 'parent';
+                },
+                */
                 height: 'auto',
                 nowIndicator: true,
                 now: '{{ now|date_format('c') }}',
-                //timezone: '{{ app.user.preferenceValue("timezone") }}',
+                timezone: '{{ app.user.preferenceValue("timezone") }}',
+                weekends: {% if config.showWeekends %}true{% else %}false{% endif %},
                 businessHours: {
                     dow: [{{ config.businessDays|join(',') }}],
                     start: '{{ config.businessTimeBegin }}',
                     end: '{{ config.businessTimeEnd }}'
                 },
                 eventRender: function(eventObj, $el) {
-                    if (eventObj.source.ajaxSettings.name !== 'kimaiUserTimeSource') {
+                    // don't show popover for google calendar
+                    if (eventObj.source.ajaxSettings !== undefined) {
+                        return;
+                    }
+                    // or when an event is dragged or resized
+                    if(window.hidePopover) {
                         return;
                     }
                     $el.popover({
-                        title: eventObj.title,
+                        title: eventObj.start.format('L') + ' | ' + eventObj.start.format('LT') + ' - ' + (eventObj.end ? eventObj.end.format('LT') : ''),
                         content:
                         '<div class="calendar-entry">' +
                             '<ul>' +
-                                '<li>' + '{{ 'label.date'|trans }}: ' + eventObj.start.format('L') + '</li>' +
-                                '<li>' + '{{ 'label.begin'|trans }}: ' + eventObj.start.format('LT') + '</li>' +
-                                '<li>' + '{{ 'label.end'|trans }}: ' + (eventObj.end ? eventObj.end.format('LT') : '<i>-</i>') + '</li>' +
-                                '<hr>' +
                                 '<li>' + '{{ 'label.customer'|trans }}: ' + eventObj.customer + '</li>' +
                                 '<li>' + '{{ 'label.project'|trans }}: ' + eventObj.project + '</li>' +
                                 '<li>' + '{{ 'label.activity'|trans }}: ' + eventObj.activity + '</li>' +
-                            (eventObj.tags !== null && eventObj.tags.length > 0 ? '<li>' + '{{ 'label.tags'|trans }}: ' + eventObj.tags + '</li>' : '') +
                             '</ul>' +
-                            (eventObj.description ? '<hr><p>' + eventObj.description + '</p>' : '') +
+                            (eventObj.description || eventObj.tags ? '<hr>' : '') +
+                            (eventObj.description ? '<p>' + eventObj.description + '</p>' : '') +
+                            (eventObj.tags !== null && eventObj.tags.length > 0 ? '<span class="badge bg-green">' + eventObj.tags.join('</span> <span class="badge bg-green">') + '</span>' : '') +
                         '</div>'
                         ,
                         trigger: 'hover',
@@ -97,26 +153,63 @@
                         html: true
                     });
                 },
-                eventClick: function(calEvent, jsEvent, view) {
-                    {% if is_granted('edit_own_timesheet') %}
-                    location.href = '{{ path('timesheet_edit', {id: '-XX-'}) }}?origin=calendar'.replace('-XX-', calEvent.id);
-                    {% endif %}
-                },
+                {% if is_granted('create_own_timesheet') %}
+                // day-clicks are always triggered, unless a selection was created
+                // so clicking in a day (month view) or any slot (week and day view) will trigger a dayClick
+                // BEFORE triggering a select - make sure not two create dialogs are requested
                 dayClick: function(date, jsEvent, view) {
-                    {% if is_granted('create_own_timesheet') %}
-                    location.href = '{{ path('timesheet_create') }}' + '?origin=calendar&begin=' + date.format();
-                    {% endif %}
-                },
-                selectable: true,
-                select: function( start, end, jsEvent, view) {
-                    if(view.type === 'month') {
+                    if(view.type !== 'month') {
                         return;
                     }
-                    {% if is_granted('create_own_timesheet') %}
-                    location.href = '{{ path('timesheet_create') }}' + '?from=' + start.format() + '&to=' + end.format();
-                    {% endif %}
-                }
+                    var param = 'begin';
+                    var begin = date.format();
+
+                    var createUrl = '{{ path('timesheet_create') }}' + '?' + param + '=' + begin;
+                    kimai.getPlugin('modal').openUrlInModal(createUrl);
+                },
+                selectable: true,
+                select: function(start, end, jsEvent, view) {
+                    if(view.type === 'month') {
+                        // multi-day clicks are NOT allowed in the month view, as simple day clicks would also trigger
+                        // a select - there is no way to distinguish a simple click and a two day selection
+                        return;
+                    }
+                    var createUrl = '{{ path('timesheet_create') }}' + '?from=' + start.format() + '&to=' + end.format();
+                    kimai.getPlugin('modal').openUrlInModal(createUrl);
+                },
+                {% endif %}
+                {% if is_granted('edit_own_timesheet') %}
+                eventClick: function(eventObj, jsEvent, view) {
+                    if (eventObj.source.ajaxSettings !== undefined) {
+                        jsEvent.preventDefault();
+                        return;
+                    }
+                    var editUrl = '{{ path('timesheet_edit', {id: '-XX-'}) }}'.replace('-XX-', eventObj.id);
+                    kimai.getPlugin('modal').openUrlInModal(editUrl);
+                },
+                editable: true,
+                eventDragStart: function(event, jsEvent, ui, view) {
+                    window.hidePopover = true;
+                },
+                eventDragStop: function( event, jsEvent, ui, view ) {
+                    window.hidePopover = false;
+                },
+                eventDrop: changeHandler,
+                eventResizeStart: function(event, jsEvent, ui, view) {
+                    window.hidePopover = true;
+                },
+                eventResizeStop: function( event, jsEvent, ui, view ) {
+                    window.hidePopover = false;
+                },
+                eventResize: changeHandler,
+                {% endif %}
+                /*
+                slotDuration: '00:30:00',                               // TODO make me configurable
+                */
+                minTime: '{{ config.timeframeBegin }}',
+                maxTime: '{{ config.timeframeEnd }}',
+                defaultTimedEventDuration: '00:30'
             })
-        })
+        });
     </script>
 {% endblock %}

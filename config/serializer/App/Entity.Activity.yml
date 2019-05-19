@@ -26,7 +26,6 @@ App\Entity\Activity:
             groups: [Default]
         color:
             include: true
-            groups: [Entity]
     virtual_properties:
         getProject:
             serialized_name: project

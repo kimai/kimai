@@ -9,14 +9,11 @@
 
 namespace App\Controller;
 
-use App\Calendar\Service;
-use App\Calendar\TimesheetEntity;
-use App\Entity\Timesheet;
-use App\Repository\Query\TimesheetQuery;
-use App\Repository\TimesheetRepository;
+use App\Calendar\Google;
+use App\Calendar\Source;
+use App\Configuration\CalendarConfiguration;
 use App\Timesheet\UserDateTimeFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -30,53 +27,34 @@ class CalendarController extends AbstractController
     /**
      * @Route(path="/", name="calendar", methods={"GET"})
      */
-    public function userCalendar(Service $calendar, UserDateTimeFactory $dateTime)
+    public function userCalendar(CalendarConfiguration $configuration, UserDateTimeFactory $dateTime)
     {
         return $this->render('calendar/user.html.twig', [
-            'config' => $calendar->getConfig(),
-            'google' => $calendar->getGoogle(),
+            'config' => $configuration,
+            'google' => $this->getGoogleSources($configuration),
             'now' => $dateTime->createDateTime(),
         ]);
     }
 
     /**
-     * @Route(path="/user", name="calendar_entries", methods={"GET"})
+     * @return Google
      */
-    public function calendarEntries(Request $request, UserDateTimeFactory $dateTime, TimesheetRepository $repository)
+    protected function getGoogleSources(CalendarConfiguration $configuration)
     {
-        $start = $request->get('start');
-        $end = $request->get('end');
+        $apiKey = $configuration->getGoogleApiKey() ?? null;
+        $sources = [];
 
-        $start = $dateTime->createDateTimeFromFormat('Y-m-d', $start);
-        if ($start === false) {
-            $start = $dateTime->createDateTime('first day of this month');
-        }
-        $start->setTime(0, 0, 0);
+        foreach ($configuration->getGoogleSources() as $name => $config) {
+            $source = new Source();
+            $source
+                ->setColor($config['color'])
+                ->setUri($config['id'])
+                ->setId($name)
+            ;
 
-        $end = $dateTime->createDateTimeFromFormat('Y-m-d', $end);
-        if ($end === false) {
-            $end = clone $start;
-            $end = $end->modify('last day of this month');
-        }
-        $end->setTime(23, 59, 59);
-
-        $query = new TimesheetQuery();
-        $query
-            ->setBegin($start)
-            ->setUser($this->getUser())
-            ->setState(TimesheetQuery::STATE_ALL)
-            ->setResultType(TimesheetQuery::RESULT_TYPE_QUERYBUILDER)
-            ->setEnd($end)
-        ;
-
-        /* @var $entries Timesheet[] */
-        $entries = $repository->findByQuery($query)->getQuery()->execute();
-        $result = [];
-
-        foreach ($entries as $entry) {
-            $result[] = new TimesheetEntity($entry);
+            $sources[] = $source;
         }
 
-        return $this->json($result);
+        return new Google($apiKey, $sources);
     }
 }

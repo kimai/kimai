@@ -24,6 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 class TimesheetControllerTest extends APIControllerBaseTest
 {
     public const DATE_FORMAT = 'Y-m-d H:i:s';
+    public const DATE_FORMAT_HTML5 = 'Y-m-d\TH:i:s';
 
     public function setUp()
     {
@@ -62,6 +63,19 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result);
         $this->assertEquals(10, count($result));
         $this->assertDefaultStructure($result[0], false);
+    }
+
+    public function testGetCollectionFull()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', ['full' => 'true']);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(10, count($result));
+        $this->assertDefaultStructure($result[0], false);
+        $this->assertHasSubresources($result[0]);
     }
 
     public function testGetCollectionForOtherUser()
@@ -141,10 +155,11 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'order' => 'DESC',
             'orderBy' => 'rate',
             'active' => 0,
-            'begin' => $begin->format('Y-m-d H:i:s'),
-            'end' => $end->format('Y-m-d H:i:s'),
+            'begin' => $begin->format(self::DATE_FORMAT_HTML5),
+            'end' => $end->format(self::DATE_FORMAT_HTML5),
             'exported' => 0,
         ];
+
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
         $result = json_decode($client->getResponse()->getContent(), true);
@@ -178,10 +193,11 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $query = [
             'page' => 1,
             'size' => 50,
-            'begin' => $begin->format('Y-m-d H:i:s'),
-            'end' => $end->format('Y-m-d H:i:s'),
+            'begin' => $begin->format(self::DATE_FORMAT_HTML5),
+            'end' => $end->format(self::DATE_FORMAT_HTML5),
             'exported' => 1,
         ];
+
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
         $result = json_decode($client->getResponse()->getContent(), true);
@@ -194,10 +210,11 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $query = [
             'page' => 1,
             'size' => 50,
-            'begin' => $begin->format('Y-m-d H:i:s'),
-            'end' => $end->format('Y-m-d H:i:s'),
+            'begin' => $begin->format(self::DATE_FORMAT_HTML5),
+            'end' => $end->format(self::DATE_FORMAT_HTML5),
             'exported' => 0,
         ];
+
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
         $result = json_decode($client->getResponse()->getContent(), true);
@@ -210,8 +227,8 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $query = [
             'page' => 1,
             'size' => 50,
-            'begin' => $begin->format('Y-m-d H:i:s'),
-            'end' => $end->format('Y-m-d H:i:s'),
+            'begin' => $begin->format(self::DATE_FORMAT_HTML5),
+            'end' => $end->format(self::DATE_FORMAT_HTML5),
         ];
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
@@ -482,7 +499,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $query = [
             'user' => 'all',
             'size' => 2,
-            'begin' => $start->format(self::DATE_FORMAT),
+            'begin' => $start->format(self::DATE_FORMAT_HTML5),
         ];
 
         $this->assertAccessIsGranted($client, '/api/timesheets/recent', 'GET', $query);

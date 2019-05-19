@@ -145,6 +145,7 @@
 
         function updateTimesheetExportState(button, id, exported)
         {
+            // FIXME use kimai API and ALERT
             $.ajax({
                 url: '{{ path('patch_timesheet', {id: '-s-'}) }}'.replace('-s-', id),
                 headers: {
@@ -171,7 +172,6 @@
                 }, error: function(jqXHR, textStatus, errorThrown) {
                     var message = 'An error occured';
                     if (jqXHR.responseJSON !== undefined) {
-                        console.log(jqXHR);
                         message = jqXHR.responseJSON.message;
                         if (jqXHR.responseJSON.errors !== undefined)
                         {

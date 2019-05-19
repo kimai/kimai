@@ -22,19 +22,28 @@ export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableR
         this.selector = selector;
     }
 
+    getId() {
+        return 'modal';
+    }
+
     init() {
         const self = this;
 
         this._addClickHandlerReducedInTableRow(this.selector, function(href) {
-            jQuery.ajax({
-                url: href,
-                success: function(html) {
-                    self._openFormInModal(html);
-                },
-                error: function(xhr, err) {
-                    window.location = href;
-                }
-            });
+            self.openUrlInModal(href);
+        });
+    }
+
+    openUrlInModal(url) {
+        const self = this;
+        jQuery.ajax({
+            url: url,
+            success: function(html) {
+                self._openFormInModal(html);
+            },
+            error: function(xhr, err) {
+                window.location = url;
+            }
         });
     }
 

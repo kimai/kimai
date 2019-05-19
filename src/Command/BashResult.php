@@ -15,19 +15,13 @@ class BashResult
      * @var string
      */
     protected $exitCode;
-    /**
-     * @var string
-     */
-    protected $result;
 
     /**
      * @param string $exitCode
-     * @param string $result
      */
-    public function __construct($exitCode, $result)
+    public function __construct($exitCode)
     {
         $this->exitCode = $exitCode;
-        $this->result = $result;
     }
 
     /**
@@ -36,35 +30,5 @@ class BashResult
     public function getExitCode(): string
     {
         return $this->exitCode;
-    }
-
-    /**
-     * @param string $exitCode
-     * @return BashResult
-     */
-    public function setExitCode(string $exitCode)
-    {
-        $this->exitCode = $exitCode;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getResult(): string
-    {
-        return $this->result;
-    }
-
-    /**
-     * @param string $result
-     * @return BashResult
-     */
-    public function setResult(string $result)
-    {
-        $this->result = $result;
-
-        return $this;
     }
 }

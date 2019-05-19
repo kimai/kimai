@@ -22,6 +22,10 @@
                 <source>theme</source>
                 <target>Theme</target>
             </trans-unit>
+            <trans-unit id="calendar">
+                <source>calendar</source>
+                <target>Calendar</target>
+            </trans-unit>
             <trans-unit id="label.timesheet.markdown_content">
                 <source>label.timesheet.markdown_content</source>
                 <target>Allow Markdown in the timesheet descriptions</target>
@@ -53,6 +57,30 @@
             <trans-unit id="label.theme.select_type">
                 <source>label.theme.select_type</source>
                 <target>Type of select-boxes in forms</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.week_numbers">
+                <source>label.calendar.week_numbers</source>
+                <target>Display week numbers</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.weekends">
+                <source>label.calendar.weekends</source>
+                <target>Display weekends</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.begin">
+                <source>label.calendar.businessHours.begin</source>
+                <target>Start of normal business hours (will be highlighted)</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.end">
+                <source>label.calendar.businessHours.end</source>
+                <target>End of normal business hours (will be highlighted)</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.begin">
+                <source>label.calendar.visibleHours.begin</source>
+                <target>Start of visible time range</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.end">
+                <source>label.calendar.visibleHours.end</source>
+                <target>End of visible time range</target>
             </trans-unit>
         </body>
     </file>

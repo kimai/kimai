@@ -72,7 +72,7 @@
 
 {% macro data_table_header(name, columns, skipStripped, reloadEvent) %}
 {% import _self as macro %}
-<div class="box data_table" id="datatable_{{ name }}">
+<div class="box box-{{ admin_lte_context.widget.type }} data_table" id="datatable_{{ name }}">
     <div class="box-body no-padding">
         <div class="dataTables_wrapper form-inline dt-bootstrap">
             <div class="row">

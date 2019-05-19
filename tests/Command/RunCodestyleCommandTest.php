@@ -16,7 +16,9 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
- * @coversDefaultClass \App\Command\RunCodestyleCommand
+ * @covers \App\Command\RunCodestyleCommand
+ * @covers \App\Command\BashExecutor
+ * @covers \App\Command\BashResult
  * @group integration
  */
 class RunCodestyleCommandTest extends KernelTestCase
@@ -47,7 +49,7 @@ class RunCodestyleCommandTest extends KernelTestCase
     public function testSuccessCommandNoOptions()
     {
         $command = $this->assertSuccessCommand([]);
-        $this->assertStringStartsWith('/vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none --format=txt', $command);
+        $this->assertStringStartsWith('/vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none', $command);
     }
 
     public function testSuccessCommandFix()
@@ -56,16 +58,15 @@ class RunCodestyleCommandTest extends KernelTestCase
         $this->assertStringStartsWith('/vendor/bin/php-cs-fixer fix', $command);
     }
 
-    public function testSuccessCommandCheckstyle()
+    public function testSuccessCommand()
     {
-        $command = $this->assertSuccessCommand(['--checkstyle' => 'phpcs.txt']);
-        $this->assertStringStartsWith('/vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none > ', $command);
-        $this->assertStringEndsWith('phpcs.txt', $command);
+        $command = $this->assertSuccessCommand([]);
+        $this->assertStringStartsWith('/vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none', $command);
     }
 
     protected function assertSuccessCommand(array $options)
     {
-        $result = new BashResult(0, 'FooBar');
+        $result = new BashResult(0);
         $this->executor->setResult($result);
 
         $command = $this->application->find('kimai:codestyle');
@@ -74,7 +75,6 @@ class RunCodestyleCommandTest extends KernelTestCase
         $commandTester->execute($inputs);
 
         $output = $commandTester->getDisplay();
-        $this->assertContains('FooBar', $output);
         $this->assertContains('[OK] All source files have proper code styles', $output);
 
         return $this->executor->getCommand();
@@ -82,7 +82,7 @@ class RunCodestyleCommandTest extends KernelTestCase
 
     public function testFailureCommand()
     {
-        $result = new BashResult(1, 'BarFoo');
+        $result = new BashResult(1);
         $this->executor->setResult($result);
 
         $command = $this->application->find('kimai:codestyle');
@@ -91,7 +91,6 @@ class RunCodestyleCommandTest extends KernelTestCase
         $commandTester->execute($inputs);
 
         $output = $commandTester->getDisplay();
-        $this->assertContains('BarFoo', $output);
-        $this->assertContains('[ERROR] Found problems while checking your code styles', $output);
+        $this->assertContains('[ERROR] Found violations while checking code styles', $output);
     }
 }
