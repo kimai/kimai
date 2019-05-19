@@ -49,10 +49,10 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
     public function getTestDataForms()
     {
         return [
-            ['#system_configuration_form_timesheet', $this->createUrl('/admin/system-config/update/timesheet')],
-            ['#system_configuration_form_form_customer', $this->createUrl('/admin/system-config/update/form_customer')],
-            ['#system_configuration_form_theme', $this->createUrl('/admin/system-config/update/theme')],
-            ['#system_configuration_form_calendar', $this->createUrl('/admin/system-config/update/calendar')],
+            ['form[name="system_configuration_form_timesheet"]', $this->createUrl('/admin/system-config/update/timesheet')],
+            ['form[name="system_configuration_form_form_customer"]', $this->createUrl('/admin/system-config/update/form_customer')],
+            ['form[name="system_configuration_form_theme"]', $this->createUrl('/admin/system-config/update/theme')],
+            ['form[name="system_configuration_form_calendar"]', $this->createUrl('/admin/system-config/update/calendar')],
         ];
     }
 
@@ -68,9 +68,9 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertEquals(1, $configService->find('timesheet.active_entries.hard_limit'));
         $this->assertEquals(1, $configService->find('timesheet.active_entries.soft_limit'));
 
-        $form = $client->getCrawler()->filter('#system_configuration_form_timesheet')->form();
+        $form = $client->getCrawler()->filter('form[name="system_configuration_form_timesheet"]')->form();
         $client->submit($form, [
-            'system_configuration_form' => [
+            'system_configuration_form_timesheet' => [
                 'configuration' => [
                     ['name' => 'timesheet.mode', 'value' => 'duration_only'],
                     ['name' => 'timesheet.markdown_content', 'value' => 1],
@@ -99,9 +99,9 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertFormHasValidationError(
             User::ROLE_SUPER_ADMIN,
             '/admin/system-config/',
-            '#system_configuration_form_timesheet',
+            'form[name=system_configuration_form_timesheet]',
             [
-                'system_configuration_form' => [
+                'system_configuration_form_timesheet' => [
                     'configuration' => [
                         ['name' => 'timesheet.mode', 'value' => 'foo'],
                         ['name' => 'timesheet.markdown_content', 'value' => 1],
@@ -112,9 +112,9 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                 ]
             ],
             [
-                '#system_configuration_form_configuration_0_value', // mode
-                '#system_configuration_form_configuration_3_value', // hard_limit
-                '#system_configuration_form_configuration_4_value', // soft_limit
+                '#system_configuration_form_timesheet_configuration_0_value', // mode
+                '#system_configuration_form_timesheet_configuration_3_value', // hard_limit
+                '#system_configuration_form_timesheet_configuration_4_value', // soft_limit
             ],
             true
         );
@@ -130,9 +130,9 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertEquals('DE', $configService->find('defaults.customer.country'));
         $this->assertEquals('EUR', $configService->find('defaults.customer.currency'));
 
-        $form = $client->getCrawler()->filter('#system_configuration_form_form_customer')->form();
+        $form = $client->getCrawler()->filter('form[name="system_configuration_form_form_customer"]')->form();
         $client->submit($form, [
-            'system_configuration_form' => [
+            'system_configuration_form_form_customer' => [
                 'configuration' => [
                     ['name' => 'defaults.customer.timezone', 'value' => 'Atlantic/Canary'],
                     ['name' => 'defaults.customer.country', 'value' => 'BB'],
@@ -157,9 +157,9 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertFormHasValidationError(
             User::ROLE_SUPER_ADMIN,
             '/admin/system-config/',
-            '#system_configuration_form_form_customer',
+            'form[name=system_configuration_form_form_customer]',
             [
-                'system_configuration_form' => [
+                'system_configuration_form_form_customer' => [
                     'configuration' => [
                         ['name' => 'defaults.customer.timezone', 'value' => 'XX'],
                         ['name' => 'defaults.customer.country', 'value' => 1],
@@ -168,9 +168,9 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                 ]
             ],
             [
-                '#system_configuration_form_configuration_0_value',
-                '#system_configuration_form_configuration_1_value',
-                '#system_configuration_form_configuration_2_value',
+                '#system_configuration_form_form_customer_configuration_0_value',
+                '#system_configuration_form_form_customer_configuration_1_value',
+                '#system_configuration_form_form_customer_configuration_2_value',
             ],
             true
         );

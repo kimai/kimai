@@ -148,7 +148,6 @@ class SystemConfigurationController extends AbstractController
     private function createConfigurationsForm(SystemConfigurationModel $configuration)
     {
         $options = [
-            'attr' => ['id' => 'system_configuration_form_' . $configuration->getSection()],
             'action' => $this->generateUrl('system_configuration_update', ['section' => $configuration->getSection()]),
             'method' => 'POST',
         ];
