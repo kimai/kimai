@@ -13,8 +13,6 @@ use App\Constants;
 use App\Entity\User;
 
 /**
- * @covers \App\API\StatusController
- * @covers \App\API\BaseApiController
  * @group integration
  */
 class StatusControllerTest extends APIControllerBaseTest

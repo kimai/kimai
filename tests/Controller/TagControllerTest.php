@@ -13,8 +13,6 @@ use App\Entity\User;
 use App\Tests\DataFixtures\TagFixtures;
 
 /**
- * @covers \App\Controller\TagController
- * @covers \App\Controller\AbstractController
  * @group integration
  */
 class TagControllerTest extends ControllerBaseTest

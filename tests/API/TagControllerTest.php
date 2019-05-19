@@ -14,8 +14,6 @@ use App\Tests\DataFixtures\TagFixtures;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @covers \App\API\TagController
- * @covers \App\API\BaseApiController
  * @group integration
  */
 class TagControllerTest extends APIControllerBaseTest

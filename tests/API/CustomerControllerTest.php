@@ -13,8 +13,6 @@ use App\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @covers \App\API\CustomerController
- * @covers \App\API\BaseApiController
  * @group integration
  */
 class CustomerControllerTest extends APIControllerBaseTest
