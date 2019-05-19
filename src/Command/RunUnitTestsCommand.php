@@ -60,8 +60,6 @@ class RunUnitTestsCommand extends Command
 
         $result = $this->executor->execute($this->createPhpunitCmdLine());
 
-        $io->write($result->getResult());
-
         if ($result->getExitCode() > 0) {
             $io->error('Found problems while running tests');
 
@@ -76,6 +74,6 @@ class RunUnitTestsCommand extends Command
      */
     protected function createPhpunitCmdLine()
     {
-        return '/bin/phpunit --exclude-group integration ' . $this->rootDir . '/tests';
+        return '/vendor/bin/phpunit --exclude-group integration ' . $this->rootDir . '/tests';
     }
 }

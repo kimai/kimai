@@ -71,6 +71,9 @@ class MenuSubscriber implements EventSubscriberInterface
             $menu->addItem(
                 new MenuItemModel('timesheet', 'menu.timesheet', 'timesheet', [], 'fas fa-clock')
             );
+            $menu->addItem(
+                new MenuItemModel('calendar', 'calendar.title', 'calendar', [], 'far fa-calendar-alt')
+            );
         }
 
         if ($auth->isGranted('view_invoice')) {

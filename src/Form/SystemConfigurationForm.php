@@ -44,7 +44,7 @@ class SystemConfigurationForm extends AbstractType
             'data_class' => SystemConfiguration::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
-            'csrf_token_id' => 'edit_user_preferences',
+            'csrf_token_id' => 'edit_system_configurations',
         ]);
     }
 }

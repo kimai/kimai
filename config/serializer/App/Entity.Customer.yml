@@ -55,4 +55,3 @@ App\Entity\Customer:
             groups: [Customer]
         color:
             include: true
-            groups: [Entity]

@@ -34,7 +34,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertHasNoEntriesWithFilter($client);
 
         $result = $client->getCrawler()->filter('div.breadcrumb div.box-tools div.btn-group a.btn');
-        $this->assertEquals(5, count($result));
+        $this->assertEquals(4, count($result));
 
         foreach ($result as $item) {
             $this->assertContains('btn btn-default', $item->getAttribute('class'));

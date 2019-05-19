@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
- * @coversDefaultClass \App\Command\VersionCommand
+ * @covers \App\Command\VersionCommand
  * @group integration
  */
 class VersionCommandTest extends KernelTestCase

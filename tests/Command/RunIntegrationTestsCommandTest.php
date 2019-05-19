@@ -15,7 +15,9 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
- * @coversDefaultClass \App\Command\RunIntegrationTestsCommand
+ * @covers \App\Command\RunIntegrationTestsCommand
+ * @covers \App\Command\BashExecutor
+ * @covers \App\Command\BashResult
  * @group integration
  */
 class RunIntegrationTestsCommandTest extends RunUnitTestsCommandTest
@@ -45,7 +47,7 @@ class RunIntegrationTestsCommandTest extends RunUnitTestsCommandTest
 
     public function testSuccessCommand()
     {
-        $result = new BashResult(0, 'FooBar');
+        $result = new BashResult(0);
         $this->executor->setResult($result);
 
         $command = $this->application->find('kimai:test-integration');
@@ -54,16 +56,15 @@ class RunIntegrationTestsCommandTest extends RunUnitTestsCommandTest
         $commandTester->execute($inputs);
 
         $output = $commandTester->getDisplay();
-        $this->assertContains('FooBar', $output);
         $this->assertContains('[OK] All tests were successful', $output);
 
-        $this->assertStringStartsWith('/bin/phpunit --group integration', $this->executor->getCommand());
+        $this->assertStringStartsWith('/vendor/bin/phpunit --group integration', $this->executor->getCommand());
         $this->assertContains($this->directory, $this->executor->getCommand());
     }
 
     public function testFailureCommand()
     {
-        $result = new BashResult(1, 'BarFoo');
+        $result = new BashResult(1);
         $this->executor->setResult($result);
 
         $command = $this->application->find('kimai:test-integration');
@@ -72,10 +73,9 @@ class RunIntegrationTestsCommandTest extends RunUnitTestsCommandTest
         $commandTester->execute($inputs);
 
         $output = $commandTester->getDisplay();
-        $this->assertContains('BarFoo', $output);
         $this->assertContains('[ERROR] Found problems while running tests', $output);
 
-        $this->assertStringStartsWith('/bin/phpunit --group integration', $this->executor->getCommand());
+        $this->assertStringStartsWith('/vendor/bin/phpunit --group integration', $this->executor->getCommand());
         $this->assertContains($this->directory, $this->executor->getCommand());
     }
 }

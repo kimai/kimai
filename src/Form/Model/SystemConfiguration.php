@@ -14,6 +14,7 @@ class SystemConfiguration
     public const SECTION_TIMESHEET = 'timesheet';
     public const SECTION_FORM_CUSTOMER = 'form_customer';
     public const SECTION_THEME = 'theme';
+    public const SECTION_CALENDAR = 'calendar';
 
     /**
      * @var string

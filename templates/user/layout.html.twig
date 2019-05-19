@@ -24,7 +24,7 @@
 {% endblock %}
 
 {% macro profile_infos(user, stats) %}
-    <div class="box box-primary">
+    <div class="box box-{{ admin_lte_context.widget.type }}">
         <div class="box-header with-border">
             <h3 class="box-title">{{ 'profile.about_me'|trans }}</h3>
         </div>
@@ -46,7 +46,7 @@
     {% import "@AdminLTE/Macros/default.html.twig" as macro %}
     {% import "macros/widgets.html.twig" as widgets %}
 
-    <div class="box box-primary">
+    <div class="box box-{{ admin_lte_context.widget.type }}">
         <div class="box-body box-profile">
             {{ macro.avatar(user.avatar, user.username, 'profile-user-img img-responsive img-circle') }}
             <h3 class="profile-username text-center">{{ widgets.username(user) }}</h3>

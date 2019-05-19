@@ -28,6 +28,10 @@ New permissions are available:
 - `view_tag` - view all tags
 - `delete_tag` - delete tags
 
+### BC BREAKS
+
+- API: Format for queries including a datetime object fixed, finally using the HTML5 format (previously `2019-03-02 14:23` - now `2019-03-02T14:23:00`)
+
 ## [0.9](https://github.com/kevinpapst/kimai2/releases/tag/0.9)
 
 Follow the normal update and database migration process (see above).

@@ -49,7 +49,6 @@ class RunCodestyleCommand extends Command
             ->setName('kimai:codestyle')
             ->setDescription('Check and fix the projects coding style')
             ->addOption('fix', null, InputOption::VALUE_NONE, 'Fix all found problems')
-            ->addOption('checkstyle', null, InputOption::VALUE_OPTIONAL, '')
         ;
     }
 
@@ -60,38 +59,17 @@ class RunCodestyleCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $filename = null;
-
         $args = [];
         if (!$input->getOption('fix')) {
-            $filename = $input->getOption('checkstyle');
             $args[] = '--dry-run';
             $args[] = '--verbose';
             $args[] = '--show-progress=none';
-
-            if (!empty($filename) && (file_exists($filename) && !is_writeable($filename))) {
-                $io->error('Target file is not writeable: ' . $filename);
-
-                return;
-            }
-
-            if (!empty($filename)) {
-                $filename = $this->rootDir . '/' . $filename;
-                $args[] = '> ' . $filename;
-            } else {
-                $args[] = '--format=txt';
-            }
         }
 
         $result = $this->executor->execute('/vendor/bin/php-cs-fixer fix ' . implode(' ', $args));
 
-        $io->write($result->getResult());
-
         if ($result->getExitCode() > 0) {
-            $io->error(
-                'Found problems while checking your code styles' .
-                (!empty($filename) ? '. Saved checkstyle data to: ' . $filename : '')
-            );
+            $io->error('Found violations while checking code styles');
 
             return;
         }
