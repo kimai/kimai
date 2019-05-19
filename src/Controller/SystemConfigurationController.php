@@ -29,6 +29,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 /**
  * Controller used for executing system relevant tasks.
@@ -252,22 +253,22 @@ class SystemConfigurationController extends AbstractController
                         ->setName('calendar.businessHours.begin')
                         ->setTranslationDomain('system-configuration')
                         ->setType(TextType::class)
-                        ->setConstraints([new DateTime(['format' => 'H:i'])]),
+                        ->setConstraints([new DateTime(['format' => 'H:i']), new NotNull()]),
                     (new Configuration())
                         ->setName('calendar.businessHours.end')
                         ->setTranslationDomain('system-configuration')
                         ->setType(TextType::class)
-                        ->setConstraints([new DateTime(['format' => 'H:i'])]),
+                        ->setConstraints([new DateTime(['format' => 'H:i']), new NotNull()]),
                     (new Configuration())
                         ->setName('calendar.visibleHours.begin')
                         ->setTranslationDomain('system-configuration')
                         ->setType(TextType::class)
-                        ->setConstraints([new DateTime(['format' => 'H:i'])]),
+                        ->setConstraints([new DateTime(['format' => 'H:i']), new NotNull()]),
                     (new Configuration())
                         ->setName('calendar.visibleHours.end')
                         ->setTranslationDomain('system-configuration')
                         ->setType(TextType::class)
-                        ->setConstraints([new DateTime(['format' => 'H:i'])]),
+                        ->setConstraints([new DateTime(['format' => 'H:i']), new NotNull()]),
                 ]),
         ];
     }
