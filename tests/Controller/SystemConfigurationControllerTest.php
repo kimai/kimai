@@ -49,9 +49,10 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
     public function getTestDataForms()
     {
         return [
-            ['#system_configuration_form_timesheet', $this->createUrl('/admin/system-config/timesheet')],
-            ['#system_configuration_form_form_customer', $this->createUrl('/admin/system-config/customer')],
-            ['#system_configuration_form_theme', $this->createUrl('/admin/system-config/theme')],
+            ['#system_configuration_form_timesheet', $this->createUrl('/admin/system-config/update/timesheet')],
+            ['#system_configuration_form_form_customer', $this->createUrl('/admin/system-config/update/form_customer')],
+            ['#system_configuration_form_theme', $this->createUrl('/admin/system-config/update/theme')],
+            ['#system_configuration_form_calendar', $this->createUrl('/admin/system-config/update/calendar')],
         ];
     }
 

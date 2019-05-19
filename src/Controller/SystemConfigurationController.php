@@ -23,9 +23,11 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 /**
@@ -84,41 +86,13 @@ class SystemConfigurationController extends AbstractController
     }
 
     /**
-     * @Route(path="/theme", name="system_configuration_theme", methods={"POST"})
+     * @Route(path="/update/{section}", name="system_configuration_update", methods={"POST"})
      *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function theme(Request $request)
-    {
-        return $this->handleConfigUpdate($request, SystemConfigurationModel::SECTION_THEME);
-    }
-
-    /**
-     * @Route(path="/timesheet", name="system_configuration_timesheet", methods={"POST"})
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function timesheet(Request $request)
-    {
-        return $this->handleConfigUpdate($request, SystemConfigurationModel::SECTION_TIMESHEET);
-    }
-
-    /**
-     * @Route(path="/customer", name="system_configuration_form_customer", methods={"POST"})
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function formDefaults(Request $request)
-    {
-        return $this->handleConfigUpdate($request, SystemConfigurationModel::SECTION_FORM_CUSTOMER);
-    }
-
-    /**
      * @param Request $request
      * @param string $section
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    protected function handleConfigUpdate(Request $request, string $section)
+    public function configUpdate(Request $request, string $section)
     {
         $configModel = null;
         $configSettings = $this->getInitializedConfigurations();
@@ -173,15 +147,16 @@ class SystemConfigurationController extends AbstractController
      */
     private function createConfigurationsForm(SystemConfigurationModel $configuration)
     {
-        return $this->createForm(
-            SystemConfigurationForm::class,
-            $configuration,
-            [
-                'attr' => ['id' => 'system_configuration_form_' . $configuration->getSection()],
-                'action' => $this->generateUrl('system_configuration_' . $configuration->getSection()),
-                'method' => 'POST'
-            ]
-        );
+        $options = [
+            'attr' => ['id' => 'system_configuration_form_' . $configuration->getSection()],
+            'action' => $this->generateUrl('system_configuration_update', ['section' => $configuration->getSection()]),
+            'method' => 'POST',
+        ];
+
+        return $this->container
+            ->get('form.factory')
+            ->createNamedBuilder('system_configuration_form_' . $configuration->getSection(), SystemConfigurationForm::class, $configuration, $options)
+            ->getForm();
     }
 
     /**
@@ -260,9 +235,40 @@ class SystemConfigurationController extends AbstractController
                 ->setConfiguration([
                     (new Configuration())
                         ->setName('theme.select_type')
-                        ->setLabel('theme.select_type')
                         ->setTranslationDomain('system-configuration')
                         ->setType(EnhancedSelectboxType::class),
+                ]),
+            (new SystemConfigurationModel())
+                ->setSection(SystemConfigurationModel::SECTION_CALENDAR)
+                ->setConfiguration([
+                    (new Configuration())
+                        ->setName('calendar.week_numbers')
+                        ->setTranslationDomain('system-configuration')
+                        ->setType(CheckboxType::class),
+                    (new Configuration())
+                        ->setName('calendar.weekends')
+                        ->setTranslationDomain('system-configuration')
+                        ->setType(CheckboxType::class),
+                    (new Configuration())
+                        ->setName('calendar.businessHours.begin')
+                        ->setTranslationDomain('system-configuration')
+                        ->setType(TextType::class)
+                        ->setConstraints([new DateTime(['format' => 'H:i'])]),
+                    (new Configuration())
+                        ->setName('calendar.businessHours.end')
+                        ->setTranslationDomain('system-configuration')
+                        ->setType(TextType::class)
+                        ->setConstraints([new DateTime(['format' => 'H:i'])]),
+                    (new Configuration())
+                        ->setName('calendar.visibleHours.begin')
+                        ->setTranslationDomain('system-configuration')
+                        ->setType(TextType::class)
+                        ->setConstraints([new DateTime(['format' => 'H:i'])]),
+                    (new Configuration())
+                        ->setName('calendar.visibleHours.end')
+                        ->setTranslationDomain('system-configuration')
+                        ->setType(TextType::class)
+                        ->setConstraints([new DateTime(['format' => 'H:i'])]),
                 ]),
         ];
     }
