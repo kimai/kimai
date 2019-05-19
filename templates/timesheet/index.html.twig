@@ -11,6 +11,7 @@
 {% set columns = {
     'date': 'alwaysVisible',
 } %}
+
 {% if not duration_only %}
     {% set columns = columns|merge({
         'starttime': '',
@@ -40,6 +41,7 @@
 {% endblock %}
 
 {% block main %}
+
     {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% else %}
@@ -64,26 +66,31 @@
 
                 {% if not duration_only %}
                     <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'starttime') }}">{{ entry.begin|time }}</td>
+                    <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'endtime') }}">
+                        {% if entry.end %}
+                            {{ entry.end|time }}
+                        {% else %}
+                            &dash;
+                        {% endif %}
+                    </td>
                 {% endif %}
 
                 {% if entry.end %}
-                    {% if not duration_only %}
-                        <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'endtime') }}">{{ entry.end|time }}</td>
-                    {% endif %}
                     <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'duration') }}">{{ entry.duration|duration }}</td>
-                    {% if canSeeRate %}
-                        <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'rate') }}">{{ entry.rate|money(entry.project.customer.currency) }}</td>
-                    {% endif %}
                 {% else %}
-                    {% if not duration_only %}
-                        <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'endtime') }}">&dash;</td>
-                    {% endif %}
                     <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'duration') }}">
                         <i data-since="{{ entry.begin.format(constant('DATE_ISO8601')) }}" data-format="{{ get_format_duration() }}">{{ entry|duration }}</i>
                     </td>
-                    {% if canSeeRate %}
-                        <td class="{{ tables.data_table_column_class(tableName, columns, 'rate') }}">&dash;</td>
+                {% endif %}
+
+                {% if canSeeRate %}
+                <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'rate') }}">
+                    {% if not entry.end %}
+                        &dash;
+                    {% else %}
+                        {{ entry.rate|money(entry.project.customer.currency) }}
                     {% endif %}
+                </td>
                 {% endif %}
 
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">{{ widgets.label_customer(entry.project.customer) }}</td>
@@ -111,20 +118,6 @@
         {{ tables.data_table_footer(entries, 'timesheet_paginated') }}
     {% endif %}
 
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript">
-        function exportTimesheet() {
-            var form = $("div.toolbar form.navbar-form");
-            var prevAction = form.attr('action');
-            form.attr('target', '_blank').attr('action', '{{ path('timesheet_export') }}');
-            form.submit();
-            form.removeAttr('target').attr('action', prevAction);
-            return false;
-        }
-    </script>
 {% endblock %}
 
 {% macro summary(day, duration, dayRates, columns, canSeeRate, duration_only, tableName) %}

@@ -361,7 +361,7 @@ class TimesheetEditForm extends AbstractType
             'docu_chapter' => 'timesheet.html',
             'method' => 'POST',
             'date_format' => null,
-            'customer' => false,
+            'customer' => false, // for API usage
             'attr' => [
                 'data-form-event' => 'kimai.timesheetUpdate',
                 'data-msg-success' => 'action.update.success',

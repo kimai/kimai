@@ -10,9 +10,7 @@
 namespace App\Tests\EventSubscriber;
 
 use App\Entity\User;
-use App\Event\DashboardEvent;
 use App\Event\ThemeEvent;
-use App\Model\DashboardSection;
 use PHPUnit\Framework\TestCase;
 
 /**

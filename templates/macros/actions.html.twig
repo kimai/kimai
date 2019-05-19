@@ -208,7 +208,7 @@
 
     {% set actions = {'filter': '#collapseTimesheet'} %}
     {% if is_granted('export_own_timesheet') %}
-        {% set actions = actions|merge({'download': {'onclick': 'return exportTimesheet()'}}) %}
+        {% set actions = actions|merge({'download': {'url': path('timesheet_export'), 'class': 'toolbar-action'}}) %}
     {% endif %}
     {% set actions = actions|merge({'visibility': '#modal_timesheet'}) %}
     {% if is_granted('create_own_timesheet') %}
@@ -264,7 +264,7 @@
 
     {% set actions = {'filter': '#collapseTimesheetAdmin'} %}
     {% if is_granted('export_own_timesheet') %}
-        {% set actions = actions|merge({'download': 'onclick:return exportTimesheet()'}) %}
+        {% set actions = actions|merge({'download': {'url': path('admin_timesheet_export'), 'class': 'toolbar-action'}}) %}
     {% endif %}
     {% set actions = actions|merge({'visibility': '#modal_timesheet_admin'}) %}
     {% if is_granted('create_other_timesheet') %}
