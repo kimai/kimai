@@ -11,12 +11,35 @@ namespace App\Tests\Entity;
 
 use App\Entity\User;
 use App\Entity\UserPreference;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @covers \App\Entity\User
  */
 class UserTest extends AbstractEntityTest
 {
+    public function testDefaultValues()
+    {
+        $user = new User();
+        $this->assertInstanceOf(ArrayCollection::class, $user->getPreferences());
+        $this->assertNull($user->getTitle());
+        $this->assertNull($user->getAvatar());
+        $this->assertNull($user->getAlias());
+        $this->assertNull($user->getId());
+        $this->assertNull($user->getApiToken());
+        $this->assertNull($user->getPlainApiToken());
+        $this->assertEquals(User::DEFAULT_LANGUAGE, $user->getLocale());
+
+        $user->setAvatar('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y');
+        $this->assertEquals('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y', $user->getAvatar());
+        $user->setApiToken('nbvfdswe34567ujko098765rerfghbgvfcdsert');
+        $this->assertEquals('nbvfdswe34567ujko098765rerfghbgvfcdsert', $user->getApiToken());
+        $user->setPlainApiToken('https://www.gravatar.com/avatar/nbvfdswe34567ujko098765rerfghbgvfcdsert');
+        $this->assertEquals('https://www.gravatar.com/avatar/nbvfdswe34567ujko098765rerfghbgvfcdsert', $user->getPlainApiToken());
+        $user->setTitle('Mr. Code Blaster');
+        $this->assertEquals('Mr. Code Blaster', $user->getTitle());
+    }
+
     public function getInvalidTestData()
     {
         return [
