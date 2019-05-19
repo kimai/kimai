@@ -79,28 +79,12 @@
         {% if is_granted('create_invoice') %}
             <div class="row no-print">
                 <div class="col-xs-12">
-                    <button type="button" id="print-invoice-button" class="btn btn-success pull-right">
+                    <a href="{{ path('invoice_print') }}" class="btn btn-success pull-right toolbar-action">
                         <i class="{{ 'print'|icon }}"></i> {{ 'button.print'|trans }}
-                    </button>
+                    </a>
                 </div>
             </div>
         {% endif %}
     {% endif %}
 
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {% if is_granted('create_invoice') %}
-    <script type="text/javascript">
-        document.addEventListener('kimai.initialized', function() {
-            $("body").on('click', '#print-invoice-button', function() {
-                var prevAction = $( "#invoice-print-form" ).attr('action');
-                $( "#invoice-print-form" ).attr('target', '_blank').attr('action', '{{ path('invoice_print') }}');
-                $( "#invoice-print-form" ).submit();
-                $( "#invoice-print-form" ).removeAttr('target').attr('action', prevAction);
-            });
-        });
-    </script>
-    {% endif %}
 {% endblock %}
