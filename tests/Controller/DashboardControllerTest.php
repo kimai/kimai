@@ -12,7 +12,8 @@ namespace App\Tests\Controller;
 use App\Entity\User;
 
 /**
- * @coversDefaultClass \App\Controller\DashboardController
+ * @covers \App\Controller\DashboardController
+ * @covers \App\Controller\AbstractController
  * @group integration
  */
 class DashboardControllerTest extends ControllerBaseTest

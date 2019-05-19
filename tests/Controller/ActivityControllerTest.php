@@ -16,7 +16,8 @@ use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 
 /**
- * @coversDefaultClass \App\Controller\ActivityController
+ * @covers \App\Controller\ActivityController
+ * @covers \App\Controller\AbstractController
  * @group integration
  */
 class ActivityControllerTest extends ControllerBaseTest

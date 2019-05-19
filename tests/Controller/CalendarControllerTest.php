@@ -13,7 +13,8 @@ use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
 
 /**
- * @coversDefaultClass \App\Controller\CalendarController
+ * @covers \App\Controller\CalendarController
+ * @covers \App\Controller\AbstractController
  * @group integration
  */
 class CalendarControllerTest extends ControllerBaseTest

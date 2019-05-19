@@ -14,7 +14,8 @@ use App\Plugin\PluginManager;
 use App\Tests\Plugin\Fixtures\TestPlugin;
 
 /**
- * @coversDefaultClass \App\Controller\PluginController
+ * @covers \App\Controller\PluginController
+ * @covers \App\Controller\AbstractController
  * @group integration
  */
 class PluginControllerTest extends ControllerBaseTest
