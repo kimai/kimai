@@ -13,7 +13,6 @@ use App\Configuration\CalendarConfiguration;
 use App\Tests\Configuration\TestConfigLoader;
 
 /**
- * @coversDefaultClass \App\Controller\CalendarController
  * @group integration
  */
 class CalendarControllerTest extends ControllerBaseTest

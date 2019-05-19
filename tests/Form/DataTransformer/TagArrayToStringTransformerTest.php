@@ -52,8 +52,8 @@ class TagArrayToStringTransformerTest extends AbstractRendererTest
         $this->assertEquals([], $sut->reverseTransform(''));
         $this->assertEquals([], $sut->reverseTransform(null));
 
-        $actual = $sut->reverseTransform('foo, bar');
+        $actual = $sut->reverseTransform('foo, bar, hello');
 
-        $this->assertEquals($results, $actual);
+        $this->assertEquals(array_merge($results, [(new Tag())->setName('hello')]), $actual);
     }
 }

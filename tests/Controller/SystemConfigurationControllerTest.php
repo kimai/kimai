@@ -13,7 +13,6 @@ use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 
 /**
- * @coversDefaultClass \App\Controller\SystemConfigurationController
  * @group integration
  */
 class SystemConfigurationControllerTest extends ControllerBaseTest

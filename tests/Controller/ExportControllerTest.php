@@ -13,7 +13,6 @@ use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
 
 /**
- * @coversDefaultClass \App\Controller\ExportController
  * @group integration
  */
 class ExportControllerTest extends ControllerBaseTest

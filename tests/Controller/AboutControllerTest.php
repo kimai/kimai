@@ -12,7 +12,6 @@ namespace App\Tests\Controller;
 use App\Entity\User;
 
 /**
- * @coversDefaultClass \App\Controller\AboutController
  * @group integration
  */
 class AboutControllerTest extends ControllerBaseTest

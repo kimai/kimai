@@ -11,7 +11,7 @@ namespace App\Tests\Controller;
 
 /**
  * This test makes sure the login and registration work as expected.
- * They live in the FOSUserBundle and are tested already, but we use a different layout.
+ * The logic is located in the FOSUserBundle and already tested, but we use a different layout.
  *
  * @group integration
  */

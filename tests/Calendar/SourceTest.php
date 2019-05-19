@@ -13,7 +13,7 @@ use App\Calendar\Source;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \App\Calendar\Source
+ * @covers \App\Calendar\Source
  */
 class SourceTest extends TestCase
 {

@@ -15,7 +15,6 @@ use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 
 /**
- * @coversDefaultClass \App\Controller\CustomerController
  * @group integration
  */
 class CustomerControllerTest extends ControllerBaseTest

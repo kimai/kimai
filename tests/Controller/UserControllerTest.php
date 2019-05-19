@@ -14,7 +14,6 @@ use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
 
 /**
- * @coversDefaultClass \App\Controller\UserController
  * @group integration
  */
 class UserControllerTest extends ControllerBaseTest

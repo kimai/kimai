@@ -15,7 +15,6 @@ use App\Form\Type\DateRangeType;
 use App\Tests\DataFixtures\TimesheetFixtures;
 
 /**
- * @coversDefaultClass \App\Controller\TimesheetController
  * @group integration
  */
 class TimesheetControllerTest extends ControllerBaseTest

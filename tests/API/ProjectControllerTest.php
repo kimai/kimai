@@ -17,7 +17,6 @@ use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @coversDefaultClass \App\API\ProjectController
  * @group integration
  */
 class ProjectControllerTest extends APIControllerBaseTest
