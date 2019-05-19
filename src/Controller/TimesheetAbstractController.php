@@ -325,17 +325,17 @@ abstract class TimesheetAbstractController extends AbstractController
         return false;
     }
 
-    protected function getTimesheetRoute() : string
+    protected function getTimesheetRoute(): string
     {
         return 'timesheet';
     }
 
-    protected function getEditRoute() : string
+    protected function getEditRoute(): string
     {
         return 'timesheet_edit';
     }
 
-    protected function getCreateRoute() : string
+    protected function getCreateRoute(): string
     {
         return 'timesheet_create';
     }

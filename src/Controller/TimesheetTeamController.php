@@ -9,15 +9,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Tag;
 use App\Entity\Timesheet;
-use App\Form\TimesheetEditForm;
-use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
-use App\Repository\Query\TimesheetQuery;
-use Doctrine\Common\Collections\ArrayCollection;
-use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -85,17 +79,17 @@ class TimesheetTeamController extends TimesheetAbstractController
         return true;
     }
 
-    protected function getTimesheetRoute() : string
+    protected function getTimesheetRoute(): string
     {
         return 'admin_timesheet';
     }
 
-    protected function getEditRoute() : string
+    protected function getEditRoute(): string
     {
         return 'admin_timesheet_edit';
     }
 
-    protected function getCreateRoute() : string
+    protected function getCreateRoute(): string
     {
         return 'admin_timesheet_create';
     }
