@@ -18,7 +18,8 @@ use App\Tests\DataFixtures\TimesheetFixtures;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @coversDefaultClass \App\API\TimesheetController
+ * @covers \App\API\TimesheetController
+ * @covers \App\API\BaseApiController
  * @group integration
  */
 class TimesheetControllerTest extends APIControllerBaseTest

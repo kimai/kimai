@@ -14,7 +14,7 @@ use App\Calendar\Source;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \App\Calendar\Google
+ * @covers \App\Calendar\Google
  */
 class GoogleTest extends TestCase
 {

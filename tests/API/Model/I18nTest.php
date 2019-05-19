@@ -13,7 +13,7 @@ use App\API\Model\I18n;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \App\API\Model\I18n
+ * @covers \App\API\Model\I18n
  */
 class I18nTest extends TestCase
 {

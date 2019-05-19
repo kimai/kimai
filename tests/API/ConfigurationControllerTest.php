@@ -12,7 +12,8 @@ namespace App\Tests\API;
 use App\Entity\User;
 
 /**
- * @coversDefaultClass \App\API\ConfigurationController
+ * @covers \App\API\ConfigurationController
+ * @covers \App\API\BaseApiController
  * @group integration
  */
 class ConfigurationControllerTest extends APIControllerBaseTest

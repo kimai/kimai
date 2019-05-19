@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
- * @coversDefaultClass \App\Command\CreateUserCommand
+ * @covers \App\Command\CreateUserCommand
  * @group integration
  */
 class CreateUserCommandTest extends KernelTestCase
