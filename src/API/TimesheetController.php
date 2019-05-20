@@ -616,4 +616,52 @@ class TimesheetController extends BaseApiController
 
         return $this->viewHandler->handle($view);
     }
+
+    /**
+     * Switch the export state of a timesheet record to (un-)lock it
+     *
+     * @SWG\Response(
+     *      response=200,
+     *      description="Switches the exported state on the record and therefor locks / unlocks it for further updates. Needs edit_export_*_timesheet permission.",
+     *      @SWG\Schema(ref="#/definitions/TimesheetEntity")
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="Timesheet record ID to switch export state",
+     *      required=true,
+     * )
+     *
+     * @Security("is_granted('edit_export_own_timesheet') or is_granted('edit_export_other_timesheet')")
+     *
+     * @param int $id
+     * @return Response
+     */
+    public function exportAction($id)
+    {
+        /** @var Timesheet $timesheet */
+        $timesheet = $this->repository->find($id);
+
+        if (null === $timesheet) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('edit_export', $timesheet)) {
+            throw new AccessDeniedHttpException(
+                sprintf('You are not allowed to %s this timesheet', ($timesheet->isExported() ? 'unlock' : 'lock'))
+            );
+        }
+
+        $timesheet->setExported(!$timesheet->isExported());
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($timesheet);
+        $entityManager->flush();
+
+        $view = new View($timesheet, 200);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
+
+        return $this->viewHandler->handle($view);
+    }
 }
