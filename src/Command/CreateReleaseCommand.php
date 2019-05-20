@@ -18,6 +18,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Command used to create a release package with pre-installed composer, SQLite database and user.
+ *
+ * @codeCoverageIgnore
  */
 class CreateReleaseCommand extends Command
 {
