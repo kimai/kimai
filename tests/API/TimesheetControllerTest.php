@@ -427,6 +427,8 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertApiCallValidationError($response, ['end', 'activity']);
     }
 
+    // TODO: TEST PATCH FOR EXPORTED TIMESHEET FOR USER WITHOUT PERMISSION IS REJECTED
+
     public function testDeleteAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
@@ -476,6 +478,36 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $json = json_decode($response->getContent(), true);
         $this->assertEquals('You are not allowed to delete this timesheet', $json['message']);
+    }
+
+    public function testDeleteActionForExportedRecordIsNotAllowed()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var Timesheet $timesheet */
+        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet->setExported(true);
+        $em->persist($timesheet);
+        $em->flush($timesheet);
+
+        $this->request($client, '/api/timesheets/1', 'DELETE');
+        $this->assertApiResponseAccessDenied($client->getResponse(), 'You are not allowed to delete this timesheet');
+    }
+
+    public function testDeleteActionForExportedRecordIsAllowedForAdmin()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var Timesheet $timesheet */
+        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet->setExported(true);
+        $em->persist($timesheet);
+        $em->flush($timesheet);
+
+        $this->request($client, '/api/timesheets/1', 'DELETE');
+        $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
     public function testGetRecentCollectionWithSubresources()

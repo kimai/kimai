@@ -102,8 +102,10 @@ class TimesheetVoterTest extends AbstractVoterTest
         $timesheet->setExported(true);
         // edit exported timesheet disallowed for teamleads
         $this->assertVote($user2, $timesheet, 'edit', VoterInterface::ACCESS_DENIED);
+        $this->assertVote($user2, $timesheet, 'delete', VoterInterface::ACCESS_DENIED);
         // but allowed for admins
         $this->assertVote($user4, $timesheet, 'edit', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($user4, $timesheet, 'delete', VoterInterface::ACCESS_GRANTED);
 
         // hidden activities might not be started
         $timesheet = $this->getTimesheet($user1);

@@ -92,11 +92,17 @@ class TimesheetVoter extends AbstractVoter
                 $permission .= $attribute;
                 break;
 
+            case self::DELETE:
+                if (!$this->canDelete($user, $subject)) {
+                    return false;
+                }
+                $permission .= $attribute;
+                break;
+
             case self::VIEW_RATE:
             case self::EDIT_RATE:
             case self::STOP:
             case self::VIEW:
-            case self::DELETE:
             case self::EXPORT:
             case self::EDIT_EXPORT:
                 $permission .= $attribute;
@@ -146,6 +152,15 @@ class TimesheetVoter extends AbstractVoter
     }
 
     protected function canEdit(User $user, Timesheet $timesheet): bool
+    {
+        if ($timesheet->isExported() && !$this->hasRolePermission($user, 'edit_exported_timesheet')) {
+            return false;
+        }
+
+        return true;
+    }
+
+    protected function canDelete(User $user, Timesheet $timesheet): bool
     {
         if ($timesheet->isExported() && !$this->hasRolePermission($user, 'edit_exported_timesheet')) {
             return false;
