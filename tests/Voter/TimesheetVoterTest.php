@@ -129,7 +129,6 @@ class TimesheetVoterTest extends AbstractVoterTest
         $timesheet = new Timesheet();
         $timesheet->setUser($user2)->setActivity(new Activity());
         $this->assertVote($user2, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
-
     }
 
     protected function getTimesheet($user)
