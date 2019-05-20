@@ -93,6 +93,7 @@ class Extensions extends AbstractExtension
         'debug' => 'far fa-file-alt',
         'profile-stats' => 'far fa-chart-bar',
         'profile' => 'fas fa-user-edit',
+        'warning' => 'fas fa-exclamation-triangle',
     ];
 
     /**
