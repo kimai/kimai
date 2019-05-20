@@ -7,6 +7,9 @@
 {% block page_actions %}{{ actions.timesheet(timesheet, 'edit') }}{% endblock %}
 
 {% block main %}
+    {% if timesheet.exported %}
+        {{ widgets.alert('warning', ('timesheet.locked.warning'|trans({}, 'flashmessages')), ('warning'|trans({}, 'flashmessages')), 'warning') }}
+    {% endif %}
     {{ include(app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig', {
         'title': (timesheet.id ? 'timesheet.edit'|trans : 'create'|trans),
         'form': form,
