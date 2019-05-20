@@ -101,8 +101,8 @@ kimai:
             # adding single permissions to user roles, extending the definition from "sets" ("role name" = [array of "permissions"])
             ROLE_USER: []
             ROLE_TEAMLEAD: [view_invoice_template,create_invoice_template,edit_invoice_template,view_rate_own_timesheet,view_rate_other_timesheet,hourly-rate_own_profile]
-            ROLE_ADMIN: [hourly-rate_own_profile]
-            ROLE_SUPER_ADMIN: [hourly-rate_own_profile,hourly-rate_other_profile,delete_own_profile,roles_own_profile,system_information,system_actions,system_configuration,plugins]
+            ROLE_ADMIN: [hourly-rate_own_profile,edit_exported_timesheet]
+            ROLE_SUPER_ADMIN: [hourly-rate_own_profile,hourly-rate_other_profile,delete_own_profile,roles_own_profile,system_information,system_actions,system_configuration,plugins,edit_exported_timesheet]
 # --------------------------------------------------------------------------------
 
 

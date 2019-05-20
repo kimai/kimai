@@ -22,11 +22,12 @@ And make sure to **create a backup before you start**.
 
 Follow the normal update and database migration process (see above).
 
-### Apply necessary changes to your `local.yaml`:
+### Apply necessary changes to your local.yaml:
  
-New permissions are available: 
+New permissions are available. If you configured custom permissions in `local.yaml`, you have to add those, otherwise you can't use the new features: 
 - `view_tag` - view all tags
 - `delete_tag` - delete tags
+- `edit_exported_timesheet` - allows to edit records which were exported
 
 ### BC BREAKS
 
