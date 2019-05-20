@@ -731,6 +731,50 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertApiResponseAccessDenied($client->getResponse(), 'You are not allowed to re-start this timesheet');
     }
 
+    public function testRestartThrowsNotFound()
+    {
+        $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/42/restart', 'PATCH');
+    }
+
+    public function testExportAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var Timesheet $timesheet */
+        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $this->assertEquals(false, $timesheet->isExported());
+
+        $this->request($client, '/api/timesheets/1/export', 'PATCH');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertDefaultStructure(json_decode($client->getResponse()->getContent(), true), true);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var Timesheet $timesheet */
+        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $this->assertEquals(true, $timesheet->isExported());
+
+        $this->request($client, '/api/timesheets/1/export', 'PATCH');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $this->assertEquals(false, $timesheet->isExported());
+    }
+
+    public function testExportNotAllowedForUser()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $this->request($client, '/api/timesheets/1/export', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse(), 'Access denied.');
+    }
+
+    public function testExportThrowsNotFound()
+    {
+        $this->assertEntityNotFound(User::ROLE_ADMIN, '/api/timesheets/42/export', 'PATCH');
+    }
+
     protected function assertDefaultStructure(array $result, $full = true)
     {
         $expectedKeys = [
