@@ -5,6 +5,19 @@
  * file that was distributed with this source code.
  */
 
+span.label-activity,
+span.label-project,
+span.label-customer {
+    display: inline-block;
+    .dot {
+        height: 10px;
+        width: 10px;
+        background-color: $gray-lte;
+        border-radius: 50%;
+        display: inline-block;
+    }
+}
+
 table.dataTable {
     /* action column */
     .actions {
@@ -39,14 +52,6 @@ table.dataTable {
         span.label-activity,
         span.label-project,
         span.label-customer {
-            display: inline-block;
-            .dot {
-                height: 10px;
-                width: 10px;
-                background-color: $gray-lte;
-                border-radius: 50%;
-                display: inline-block;
-            }
             a {
                 color: unset;
                 padding-bottom: 2px;

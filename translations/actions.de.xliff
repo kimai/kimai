@@ -30,6 +30,10 @@
                 <source>timesheet</source>
                 <target>Stundenzettel</target>
             </trans-unit>
+            <trans-unit id="customer">
+                <source>customer</source>
+                <target>Kunden</target>
+            </trans-unit>
             <trans-unit id="project">
                 <source>project</source>
                 <target>Projekte</target>
