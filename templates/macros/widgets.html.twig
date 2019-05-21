@@ -11,6 +11,15 @@
     </div>
 {%- endmacro -%}
 
+{%- macro entity_actions(tools) -%}
+    {% import _self as macro %}
+    <div class="breadcrumb">
+        <div class="box-tools">
+            {{ macro.table_actions(tools) }}
+        </div>
+    </div>
+{%- endmacro -%}
+
 {% macro page_header(title) %}
     <h2 class="page-header">{{ title|trans }}</h2>
 {% endmacro %}
