@@ -26,7 +26,7 @@ export default class KimaiToolbarAction extends KimaiPlugin {
         const self = this;
         document.addEventListener('click', function(event) {
             let target = event.target;
-            while (!target.matches('body')) {
+            while (target !== null && !target.matches('body')) {
                 if (target.classList.contains(self.selector)) {
                     const form = document.querySelector('div.toolbar form.navbar-form');
                     if (form === null) {
