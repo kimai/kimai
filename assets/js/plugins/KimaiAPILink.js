@@ -29,7 +29,7 @@ export default class KimaiAPILink extends KimaiClickHandlerReducedInTableRow {
         const self = this;
         document.addEventListener('click', function(event) {
             let target = event.target;
-            while (!target.matches('body')) {
+            while (target !== null && !target.matches('body')) {
                 if (target.classList.contains(self.selector)) {
                     const attributes = target.dataset;
 

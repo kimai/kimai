@@ -25,7 +25,7 @@ export default class KimaiClickHandlerReducedInTableRow extends KimaiPlugin {
             // we don't want the table row event to be processed - so we intercept it
             let target = event.target;
             if (event.currentTarget.matches('tr')) {
-                while (!target.matches('body')) {
+                while (target !== null && !target.matches('body')) {
                     if (target.matches('a') || target.matches ('button')) {
                         return;
                     }
