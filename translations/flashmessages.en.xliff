@@ -2,6 +2,10 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" target-language="en" datatype="plaintext" original="flashmessages.en.xliff">
         <body>
+            <trans-unit id="warning">
+                <source>warning</source>
+                <target>Warning</target>
+            </trans-unit>
             <trans-unit id="timesheet.stop.success">
                 <source>timesheet.stop.success</source>
                 <target>Time recording was stopped</target>
@@ -21,6 +25,10 @@
             <trans-unit id="timesheet.start.exceeded_limit">
                 <source>timesheet.start.exceeded_limit</source>
                 <target>The limit of active time records has been reached, please stop at least one running time measurement first.</target>
+            </trans-unit>
+            <trans-unit id="timesheet.locked.warning">
+                <source>timesheet.locked.warning</source>
+                <target>You are editing an exported record</target>
             </trans-unit>
             <trans-unit id="action.update.success">
                 <source>action.update.success</source>

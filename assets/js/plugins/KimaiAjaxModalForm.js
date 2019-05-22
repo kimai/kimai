@@ -52,7 +52,10 @@ export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableR
 
         // the modal that we use to render the form in
         let formIdentifier = '#remote_form_modal .modal-content form';
+        // if any of these is found in a response, the form will be re-displayed
         let flashErrorIdentifier = 'div.alert-error';
+        // messages to show above the form
+        let flashMessageIdentifier = 'div.alert';
         let form = jQuery(formIdentifier);
         let remoteModal = jQuery('#remote_form_modal');
 
@@ -88,10 +91,9 @@ export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableR
         }
 
         // show error flash messages
-        if (jQuery(html).find(flashErrorIdentifier).length > 0) {
-            jQuery('#remote_form_modal .modal-body').prepend(
-                jQuery(html).find(flashErrorIdentifier)
-            );
+        let flashMessages = jQuery(html).find(flashMessageIdentifier);
+        if (flashMessages.length > 0) {
+            jQuery('#remote_form_modal .modal-body').prepend(flashMessages);
         }
 
         // -----------------------------------------------------------------------

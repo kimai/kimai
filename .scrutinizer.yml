@@ -35,6 +35,6 @@ filter:
         - 'vendor/'
 
 build_failure_conditions:
-    - 'project.metric("scrutinizer.quality", < 9.30)'
+    - 'project.metric("scrutinizer.quality", < 9.0)'
     - 'project.metric("scrutinizer.test_coverage", < 0.9)'
     - 'project.metric_change("scrutinizer.test_coverage", < -0.01)'
