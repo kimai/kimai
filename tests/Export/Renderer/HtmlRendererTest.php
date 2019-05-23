@@ -48,12 +48,18 @@ class HtmlRendererTest extends AbstractRendererTest
 
         $this->assertContains('<h2>List of expenses</h2>', $content);
         $this->assertContains('<h3>Summary</h3>', $content);
+        $this->assertEquals(1, substr_count($content, 'id="export-summary"'));
+        $this->assertEquals(1, substr_count($content, 'id="export-records"'));
+        $this->assertEquals(1, substr_count($content, 'id="summary-project"'));
+        $this->assertEquals(1, substr_count($content, 'id="summary-activity"'));
 
         $this->assertContains('<td>Customer Name</td>', $content);
         $this->assertContains('<td>project name</td>', $content);
         $this->assertContains('<td class="duration">01:50 h</td>', $content);
         $this->assertContains('<td class="cost">€2,437.12</td>', $content);
 
-        $this->assertEquals(5, substr_count($content, '<td>activity description</td>'));
+        // 5 times in the "full list" and once in the "summary with activities"
+        $this->assertEquals(6, substr_count($content, 'activity description'));
+        $this->assertEquals(1, substr_count($content, '<td>activity description</td>'));
     }
 }

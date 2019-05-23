@@ -129,6 +129,7 @@ class ExportControllerTest extends ControllerBaseTest
         $this->assertContains('<h3>Summary</h3>', $response->getContent());
 
         $node = $client->getCrawler()->filter('section.export div#export-records table.dataTable tbody tr');
-        $this->assertEquals(20, $node->count());
+        // 20 rows + the summary footer
+        $this->assertEquals(21, $node->count());
     }
 }

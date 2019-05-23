@@ -288,6 +288,7 @@
                         </td>
                     </tr>
                 {% endfor %}
+                {# leave in tbody instead of adding it to tfoot, as tfoot will be repeated on each page when printing #}
                 <tr>
                     {% for id, visibility in columns %}
                         {% if id != 'duration' and id != 'rate' %}
