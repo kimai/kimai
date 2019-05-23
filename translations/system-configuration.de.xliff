@@ -26,9 +26,9 @@
                 <source>calendar</source>
                 <target>Kalender</target>
             </trans-unit>
-            <trans-unit id="label.timesheet.markdown_content">
-                <source>label.timesheet.markdown_content</source>
-                <target>Erlaube Markdown in den Beschreibungen der erfassten Zeiten</target>
+            <trans-unit id="label.theme.markdown_content">
+                <source>label.theme.markdown_content</source>
+                <target>Erlaube Markdown-Formatierungen in Beschreibungen und Kommentaren</target>
             </trans-unit>
             <trans-unit id="label.timesheet.mode">
                 <source>label.timesheet.mode</source>
