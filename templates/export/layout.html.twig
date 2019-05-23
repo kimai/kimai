@@ -6,6 +6,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="{{ asset('build/app.css') }}">
     <script src="{{ asset('build/app.js') }}"></script>
+    {% block styles %}{% endblock %}
 </head>
 <body class="pad export_print">
 <div class="wrapper">
@@ -13,5 +14,6 @@
         {% block export %}{% endblock %}
     </section>
 </div>
+{% block javascripts %}{% endblock %}
 </body>
 </html>

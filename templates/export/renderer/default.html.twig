@@ -1,7 +1,45 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% extends 'export/layout.html.twig' %}
 
-{% block export %}
+{% set columns = {
+    'date': true,
+    'username': false,
+    'customer': true,
+    'project': true,
+    'activity': true,
+    'description': false,
+    'exported': false,
+    'hourlyRate': false,
+    'fixedRate': false,
+    'duration': 'label.duration',
+    'rate': 'label.rate',
+} %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        document.getElementById('summary-by-activities').addEventListener('click', function(event) {
+            document.getElementById('summary-project').style.display = event.target.checked ? 'none' : 'table';
+            document.getElementById('summary-activity').style.display = event.target.checked ? 'table' : 'none';
+        });
+        document.getElementById('summary-show').addEventListener('click', function(event) {
+            document.getElementById('export-summary').style.display = event.target.checked ? 'block' : 'none';
+        });
+        document.getElementById('records-show').addEventListener('click', function(event) {
+            document.getElementById('export-records').style.display = event.target.checked ? 'block' : 'none';
+        });
+        var columnCheckboxes = document.getElementsByClassName('column-visibility-changer');
+        for (var checkbox of columnCheckboxes) {
+            checkbox.addEventListener('click', function(event) {
+                var cells = document.getElementsByClassName('column-'+event.target.name);
+                for (var columnCell of cells) {
+                    columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
+                }
+            });
+        }
+    </script>
+{% endblock %}
+
+{% block styles %}
     <style>
         .items tr.summary {
         }
@@ -15,7 +53,56 @@
         .items td.cost {
             text-align: center;
         }
+        .toolbar {
+            border-bottom: 1px solid #ccc;
+            background-color: #eee;
+            padding: 5px 0 0 5px;
+        }
     </style>
+{% endblock %}
+
+{% block export %}
+    <div class="row no-print">
+        <div class="col-xs-12">
+            <form class="navbar-form">
+                <div class="form-group">
+                    {{ 'export.summary'|trans }}:
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="summary-show">
+                        <input type="checkbox" id="summary-show" name="summary-show" checked="checked">
+                        {{ 'label.visible'|trans }}
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="summary-by-activities">
+                        <input type="checkbox" id="summary-by-activities" name="summary-by-activities">
+                        {{ 'label.activity'|trans }}
+                    </label>
+                </div>
+            </form>
+
+            <form class="navbar-form">
+                <div class="form-group">
+                    {{ 'export.full_list'|trans }}:
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="records-show">
+                        <input type="checkbox" id="records-show" name="records-show" checked="checked">
+                        {{ 'label.visible'|trans }}
+                    </label>
+                </div>
+                {% for columnId, visibility in columns %}
+                    <div class="form-group">
+                        <label class="control-label" for="records-column-{{ columnId }}">
+                            <input type="checkbox" class="column-visibility-changer" id="records-column-{{ columnId }}" name="{{ columnId }}" {% if visibility %}checked="checked"{% endif %}>
+                            {{ ('label.'~columnId)|trans }}
+                        </label>
+                    </div>
+                {% endfor %}
+            </form>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-xs-12">
@@ -27,10 +114,10 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" id="export-summary">
         <div class="col-xs-12">
             <h3>{{ 'export.summary'|trans }}</h3>
-            <table class="items table table-condensed table-bordered dataTable">
+            <table class="items table table-condensed table-bordered dataTable" id="summary-project">
                 <thead>
                 <tr>
                     <th>{{ 'label.customer'|trans }}</th>
@@ -78,24 +165,61 @@
                 {% endif %}
                 </tbody>
             </table>
+
+            <table class="items table table-condensed table-bordered dataTable" id="summary-activity" style="display:none">
+                <thead>
+                <tr>
+                    <th>{{ 'label.customer'|trans }}</th>
+                    <th>{{ 'label.project'|trans }}</th>
+                    <th>{{ 'label.activity'|trans }}</th>
+                    <th class="duration">{{ 'label.duration'|trans }}</th>
+                    <th class="cost">{{ 'label.rate'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% set customer = null %}
+                {% set customerDuration = 0 %}
+                {% set customerRate = 0 %}
+                {% set customerCurrency = null %}
+                {% for summary in summaries %}
+                {% if customer is same as(null) %}
+                    {% set customer = summary.customer %}
+                    {% set customerCurrency = summary.currency %}
+                {% endif %}
+                {% if customer is not same as(summary.customer) %}
+                    <tr class="summary">
+                        <td colspan="3"></td>
+                        <td class="totals duration">{{ customerDuration|duration }}</td>
+                        <td class="totals cost">{{ customerRate|money(customerCurrency) }}</td>
+                    </tr>
+                    {% set customerCurrency = summary.currency %}
+                    {% set customer = summary.customer %}
+                    {% set customerDuration = 0 %}
+                    {% set customerRate = 0 %}
+                {% endif %}
+                {% for activitySummary in summary.activities %}
+                <tr>
+                    <td>{{ summary.customer }}</td>
+                    <td>{{ summary.project }}</td>
+                    <td>{{ activitySummary.activity }}</td>
+                    <td class="duration">{{ activitySummary.duration|duration }}</td>
+                    <td class="cost">{{ activitySummary.rate|money(activitySummary.currency) }}</td>
+                </tr>
+                {% endfor %}
+                {% set customerDuration = customerDuration + summary.duration %}
+                {% set customerRate = customerRate + summary.rate %}
+                {% endfor %}
+                {% if customer is not same as(null) %}
+                    <tr class="summary">
+                        <td colspan="3"></td>
+                        <td class="totals duration">{{ customerDuration|duration }}</td>
+                        <td class="totals cost">{{ customerRate|money(customerCurrency) }}</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
         </div>
     </div>
-
-    {% set columns = [
-        'label.date',
-        'label.begin',
-        'label.end',
-        'label.username',
-        'label.customer',
-        'label.project',
-        'label.activity',
-        'label.description',
-        'label.exported',
-        'label.hourlyRate',
-        'label.fixedRate',
-        'label.duration',
-        'label.rate',
-    ] %}
 
     <div class="row" id="export-records">
         <div class="col-xs-12">
@@ -103,8 +227,8 @@
             <table class="table table-condensed table-bordered dataTable">
                 <thead>
                 <tr>
-                    {% for columnTitle in columns %}
-                    <th>{{ columnTitle|trans }}</th>
+                    {% for columnId, visibility in columns %}
+                    <th class="column column-{{ columnId }}" {% if not visibility %}style="display: none"{% endif %}>{{ ('label.'~columnId)|trans }}</th>
                     {% endfor %}
                 </tr>
                 </thead>
@@ -122,41 +246,58 @@
                         {% set currency = null %}
                     {% endif %}
                     <tr>
-                        <td class="text-nowrap">{{ entry.begin|date_short }}</td>
-                        <td class="text-nowrap">{{ entry.begin|time }}</td>
-                        <td class="text-nowrap">{{ entry.end|time }}</td>
-                        <td>{{ widgets.username(entry.user) }}</td>
-                        <td>{{ entry.project.customer.name }}</td>
-                        <td>{{ entry.project.name }}</td>
-                        <td>{{ entry.activity.name }}</td>
-                        <td>
+                        <td class="column-date text-nowrap" {% if not columns.date %}style="display: none"{% endif %}>
+                            {{ entry.begin|date_time }}
+                            <br>
+                            {{ entry.end|date_time }}
+                        </td>
+                        <td class="column-username" {% if not columns.username %}style="display: none"{% endif %}>
+                            {{ widgets.username(entry.user) }}
+                        </td>
+                        <td class="column-customer" {% if not columns.customer %}style="display: none"{% endif %}>
+                            {{ entry.project.customer.name }}
+                        </td>
+                        <td class="column-project" {% if not columns.project %}style="display: none"{% endif %}>{{ entry.project.name }}
+                        </td>
+                        <td class="column-activity" {% if not columns.activity %}style="display: none"{% endif %}>
+                            {{ entry.activity.name }}
+                        </td>
+                        <td class="column-description" {% if not columns.description %}style="display: none"{% endif %}>
                             {% if entry.description is not empty %}
                                 {{ entry.description|desc2html }}
                             {% endif %}
                         </td>
-                        <td>
+                        <td class="column-exported" {% if not columns.exported %}style="display: none"{% endif %}>
                             {% if entry.exported %}
                                 {{ 'entryState.exported'|trans }}
                             {% else %}
                                 {{ 'entryState.not_exported'|trans }}
                             {% endif %}
                         </td>
-                        <td class="text-nowrap">{{ entry.hourlyRate|money(entry.project.customer.currency) }}</td>
-                        <td class="text-nowrap">{{ entry.fixedRate|money(entry.project.customer.currency) }}</td>
-                        <td class="text-nowrap">{{ entry.duration|duration }}</td>
-                        <td class="text-nowrap">
+                        <td class="column-hourlyRate text-nowrap" {% if not columns.hourlyRate %}style="display: none"{% endif %}>
+                            {{ entry.hourlyRate|money(entry.project.customer.currency) }}
+                        </td>
+                        <td class="column-fixedRate text-nowrap" {% if not columns.fixedRate %}style="display: none"{% endif %}>
+                            {{ entry.fixedRate|money(entry.project.customer.currency) }}
+                        </td>
+                        <td class="column-duration text-nowrap" {% if not columns.duration %}style="display: none"{% endif %}>
+                            {{ entry.duration|duration }}
+                        </td>
+                        <td class="column-rate text-nowrap" {% if not columns.rate %}style="display: none"{% endif %}>
                             {{ entry.rate|money(entry.project.customer.currency) }}
                         </td>
                     </tr>
                 {% endfor %}
-                </tbody>
-                <tfoot>
                 <tr>
-                    <th colspan="{{ ( columns|length ) - 2 }}" class="text-right"></th>
-                    <th class="text-nowrap">
+                    {% for id, visibility in columns %}
+                        {% if id != 'duration' and id != 'rate' %}
+                            <th class="column-{{ id }}" {% if not visibility %}style="display: none"{% endif %}></th>
+                        {% endif %}
+                    {% endfor %}
+                    <th class="text-nowrap column-duration">
                         {{ timeWorked|duration }}
                     </th>
-                    <th class="text-nowrap">
+                    <th class="text-nowrap column-rate">
                         {% if currency is not null and currency is not same as(false) %}
                             {{ rateTotal|money(currency) }}
                         {% else %}
@@ -164,7 +305,7 @@
                         {% endif %}
                     </th>
                 </tr>
-                </tfoot>
+                </tbody>
             </table>
         </div>
     </div>
