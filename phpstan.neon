@@ -1,0 +1,4 @@
+parameters:
+    autoload_directories:
+        - %rootDir%/../../../src/Migrations
+

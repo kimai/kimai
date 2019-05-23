@@ -16,6 +16,7 @@
         "ext-mbstring": "*",
         "ext-pdo": "*",
         "ext-zip": "*",
+        "ext-json": "*",
         "beberlei/doctrineextensions": "^1.2",
         "doctrine/doctrine-fixtures-bundle": "^3.0",
         "erusev/parsedown": "^1.6",
@@ -63,6 +64,7 @@
     "require-dev": {
         "dama/doctrine-test-bundle": "^5.0",
         "friendsofphp/php-cs-fixer": "^2.10",
+        "phpstan/phpstan": "^0.11.7",
         "phpunit/phpunit": "^7.0",
         "symfony/browser-kit": "^4.0",
         "symfony/css-selector": "^4.0",
@@ -106,7 +108,18 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ]
+        ],
+        "code-check":  [
+            "@codestyle",
+            "@phpstan",
+            "@tests"
+        ],
+        "tests": "vendor/bin/phpunit tests/",
+        "tests-unit": "vendor/bin/phpunit --exclude-group integration tests/",
+        "tests-integration": "vendor/bin/phpunit --group integration tests/",
+        "phpstan": "vendor/bin/phpstan analyse src --level=1",
+        "codestyle": "vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none",
+        "codestyle-fix": "vendor/bin/php-cs-fixer fix"
     },
     "conflict": {
         "symfony/symfony": "*"
