@@ -434,7 +434,6 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('sets')
                     ->requiresAtLeastOneElement()
                     ->useAttributeAsKey('key')
-                    ->performNoDeepMerging()
                     ->arrayPrototype()
                         ->useAttributeAsKey('key')
                         ->isRequired()
@@ -445,7 +444,6 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('maps')
                     ->requiresAtLeastOneElement()
                     ->useAttributeAsKey('key')
-                    ->performNoDeepMerging()
                     ->arrayPrototype()
                         ->useAttributeAsKey('key')
                         ->isRequired()
@@ -456,13 +454,18 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('roles')
                     ->requiresAtLeastOneElement()
                     ->useAttributeAsKey('key')
-                    ->performNoDeepMerging()
                     ->arrayPrototype()
                         ->useAttributeAsKey('key')
                         ->isRequired()
                         ->prototype('scalar')->end()
                         ->defaultValue([])
                     ->end()
+                    ->defaultValue([
+                        'ROLE_USER' => [],
+                        'ROLE_TEAMLEAD' => [],
+                        'ROLE_ADMIN' => [],
+                        'ROLE_SUPER_ADMIN' => [],
+                    ])
                 ->end()
             ->end()
         ;

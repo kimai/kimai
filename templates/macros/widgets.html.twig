@@ -24,13 +24,18 @@
     <h2 class="page-header">{{ title|trans }}</h2>
 {% endmacro %}
 
-{% macro label_visible(visible) %}
+{% macro label_boolean(visible) %}
     {% import _self as macro %}
     {% if visible %}
         {{ macro.label('yes', 'success') }}
     {% else %}
         {{ macro.label('no', 'default') }}
     {% endif %}
+{% endmacro %}
+
+{% macro label_visible(visible) %}
+    {% import _self as macro %}
+    {{ macro.label_boolean(visible) }}
 {% endmacro %}
 
 {% macro label_role(role) %}

@@ -71,14 +71,8 @@ class AppExtension extends Extension
      */
     protected function createPermissionParameter(array $config, ContainerBuilder $container)
     {
+        $roles = [];
         foreach ($config['maps'] as $role => $sets) {
-            if (!isset($config['roles'][$role])) {
-                $exception = new InvalidConfigurationException(
-                    'Configured permission set includes unknown role "' . $role . '"'
-                );
-                $exception->setPath('kimai.permissions.maps.' . $role);
-                throw $exception;
-            }
             foreach ($sets as $set) {
                 if (!isset($config['sets'][$set])) {
                     $exception = new InvalidConfigurationException(
@@ -87,10 +81,57 @@ class AppExtension extends Extension
                     $exception->setPath('kimai.permissions.maps.' . $role);
                     throw $exception;
                 }
-                $config['roles'][$role] = array_unique(array_merge($config['roles'][$role], $config['sets'][$set]));
+                $roles[$role] = array_merge($roles[$role] ?? [], $this->getFilteredPermissions(
+                    $this->extractSinglePermissionsFromSet($config, $set)
+                ));
             }
         }
+
+        // delete forbidden permissions from roles
+        foreach (array_keys($config['maps']) as $name) {
+            $config['roles'][$name] = $this->getFilteredPermissions(
+                array_unique(array_merge($roles[$name], $config['roles'][$name] ?? []))
+            );
+        }
+
         $container->setParameter('kimai.permissions', $config['roles']);
+    }
+
+    protected function getFilteredPermissions(array $permissions): array
+    {
+        $deleteFromArray = array_filter($permissions, function ($permission) {
+            return $permission[0] == '!';
+        });
+
+        return array_filter($permissions, function ($permission) use ($deleteFromArray) {
+            if ($permission[0] == '!') {
+                return false;
+            }
+
+            return !in_array('!' . $permission, $deleteFromArray);
+        });
+    }
+
+    protected function extractSinglePermissionsFromSet(array $permissions, string $name): array
+    {
+        if (!isset($permissions['sets'][$name])) {
+            throw new InvalidConfigurationException('Unknown permission set "' . $name . '"');
+        }
+
+        $result = [];
+
+        foreach ($permissions['sets'][$name] as $permissionName) {
+            if ($permissionName[0] == '@') {
+                $result = array_merge(
+                    $result,
+                    $this->extractSinglePermissionsFromSet($permissions, substr($permissionName, 1))
+                );
+            } else {
+                $result[] = $permissionName;
+            }
+        }
+
+        return $result;
     }
 
     /**

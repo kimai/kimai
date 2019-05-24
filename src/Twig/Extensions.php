@@ -94,6 +94,8 @@ class Extensions extends AbstractExtension
         'profile-stats' => 'far fa-chart-bar',
         'profile' => 'fas fa-user-edit',
         'warning' => 'fas fa-exclamation-triangle',
+        'permissions' => 'fas fa-user-lock',
+        'back' => 'fas fa-long-arrow-alt-left',
     ];
 
     /**
