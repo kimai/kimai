@@ -18,10 +18,6 @@
                 <source>form_customer</source>
                 <target state="translated">Skapa kund - standardvärden</target>
             </trans-unit>
-            <trans-unit id="label.timesheet.markdown_content">
-                <source>label.timesheet.markdown_content</source>
-                <target state="translated">Tillåt Markdown i tidskriftsbeskrivningarna</target>
-            </trans-unit>
             <trans-unit id="label.timesheet.mode">
                 <source>label.timesheet.mode</source>
                 <target state="translated">Tidsredovisningsläge</target>

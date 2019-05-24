@@ -192,10 +192,6 @@ class SystemConfigurationController extends AbstractController
                         ->setType(TimesheetModeType::class)
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration())
-                        ->setName('timesheet.markdown_content')
-                        ->setType(CheckboxType::class)
-                        ->setTranslationDomain('system-configuration'),
-                    (new Configuration())
                         ->setName('timesheet.rules.allow_future_times')
                         ->setType(CheckboxType::class)
                         ->setTranslationDomain('system-configuration'),
@@ -237,6 +233,11 @@ class SystemConfigurationController extends AbstractController
                         ->setName('theme.select_type')
                         ->setTranslationDomain('system-configuration')
                         ->setType(EnhancedSelectboxType::class),
+                    (new Configuration())
+                        ->setName('timesheet.markdown_content')
+                        ->setLabel('theme.markdown_content')
+                        ->setType(CheckboxType::class)
+                        ->setTranslationDomain('system-configuration'),
                 ]),
             (new SystemConfigurationModel())
                 ->setSection(SystemConfigurationModel::SECTION_CALENDAR)
