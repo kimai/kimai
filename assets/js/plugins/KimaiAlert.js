@@ -41,8 +41,6 @@ export default class KimaiAlert extends KimaiPlugin {
         }
 
         Swal.fire({
-            //toast: true,
-            //timer: 3000,
             timer: 1500,
             position: 'top-end',
             showConfirmButton: false,
@@ -71,9 +69,7 @@ export default class KimaiAlert extends KimaiPlugin {
             confirmButtonText: translation.get('confirm'),
             cancelButtonText: translation.get('cancel')
         }).then((result) => {
-            if (result.value) {
-                callback(result.value);
-            }
+            callback(result.value);
         });
     }
 

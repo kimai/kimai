@@ -39,8 +39,10 @@ export default class KimaiAPILink extends KimaiClickHandlerReducedInTableRow {
                     }
 
                     if (attributes.question !== undefined) {
-                        self.getContainer().getPlugin('alert').question(attributes.question, function() {
-                            self._callApi(url, attributes);
+                        self.getContainer().getPlugin('alert').question(attributes.question, function(value) {
+                            if (value) {
+                                self._callApi(url, attributes);
+                            }
                         });
                     } else {
                         self._callApi(url, attributes);
