@@ -35,7 +35,7 @@
         {% for entry in entries %}
             <tr{% if is_granted('edit', entry) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_customer_edit', {'id': entry.id}) }}"{% endif %}>
                 <td>{{ widgets.label_color_dot('customer', true, entry.name, null, entry.color) }} {% if entry.company is not empty %}({{ entry.company }}){% endif %}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment|comment2html }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'country') }}">{{ entry.country|country }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'number') }}">{{ entry.number }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'currency') }}">{{ entry.currency }} {{ entry.currency|currency }}</td>

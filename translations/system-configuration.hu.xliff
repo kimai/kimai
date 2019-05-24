@@ -18,10 +18,6 @@
                 <source>form_customer</source>
                 <target>Új ügyfél alapértelmezett értékei</target>
             </trans-unit>
-            <trans-unit id="label.timesheet.markdown_content">
-                <source>label.timesheet.markdown_content</source>
-                <target>Markdown használatának engedélyezése a rögzítések leírásában</target>
-            </trans-unit>
             <trans-unit id="label.timesheet.mode_duration_only">
                 <source>label.timesheet.mode_duration_only</source>
                 <target>"Csak időtartam" mód - a befejezés mezőt kicseréli időtartamra</target>

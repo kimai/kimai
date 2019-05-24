@@ -61,7 +61,6 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/system-config/');
 
         $configService = $client->getContainer()->get(SystemConfiguration::class);
-        $this->assertEquals(false, $configService->find('timesheet.markdown_content'));
         $this->assertEquals('default', $configService->find('timesheet.mode'));
         $this->assertEquals(true, $configService->find('timesheet.rules.allow_future_times'));
         $this->assertEquals(1, $configService->find('timesheet.active_entries.hard_limit'));
@@ -72,7 +71,6 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
             'system_configuration_form_timesheet' => [
                 'configuration' => [
                     ['name' => 'timesheet.mode', 'value' => 'duration_only'],
-                    ['name' => 'timesheet.markdown_content', 'value' => 1],
                     ['name' => 'timesheet.rules.allow_future_times', 'value' => false],
                     ['name' => 'timesheet.active_entries.hard_limit', 'value' => 99],
                     ['name' => 'timesheet.active_entries.soft_limit', 'value' => 77],
@@ -86,7 +84,6 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertHasFlashSaveSuccess($client);
 
         $configService = $client->getContainer()->get(SystemConfiguration::class);
-        $this->assertEquals(true, $configService->find('timesheet.markdown_content'));
         $this->assertEquals('duration_only', $configService->find('timesheet.mode'));
         $this->assertEquals(false, $configService->find('timesheet.rules.allow_future_times'));
         $this->assertEquals(99, $configService->find('timesheet.active_entries.hard_limit'));
@@ -103,7 +100,6 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                 'system_configuration_form_timesheet' => [
                     'configuration' => [
                         ['name' => 'timesheet.mode', 'value' => 'foo'],
-                        ['name' => 'timesheet.markdown_content', 'value' => 1],
                         ['name' => 'timesheet.rules.allow_future_times', 'value' => 1],
                         ['name' => 'timesheet.active_entries.hard_limit', 'value' => -1],
                         ['name' => 'timesheet.active_entries.soft_limit', 'value' => -1],
@@ -112,8 +108,8 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
             ],
             [
                 '#system_configuration_form_timesheet_configuration_0_value', // mode
-                '#system_configuration_form_timesheet_configuration_3_value', // hard_limit
-                '#system_configuration_form_timesheet_configuration_4_value', // soft_limit
+                '#system_configuration_form_timesheet_configuration_2_value', // hard_limit
+                '#system_configuration_form_timesheet_configuration_3_value', // soft_limit
             ],
             true
         );
@@ -181,6 +177,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/system-config/');
 
         $configService = $client->getContainer()->get(SystemConfiguration::class);
+        $this->assertEquals(false, $configService->find('timesheet.markdown_content'));
         $this->assertNull($configService->find('theme.select_type'));
 
         $form = $client->getCrawler()->filter('form[name=system_configuration_form_theme]')->form();
@@ -188,6 +185,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
             'system_configuration_form_theme' => [
                 'configuration' => [
                     ['name' => 'theme.select_type', 'value' => '1'],
+                    ['name' => 'timesheet.markdown_content', 'value' => 1],
                 ]
             ]
         ]);
@@ -199,6 +197,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
 
         $configService = $client->getContainer()->get(SystemConfiguration::class);
         $this->assertEquals('selectpicker', $configService->find('theme.select_type'));
+        $this->assertEquals(true, $configService->find('timesheet.markdown_content'));
     }
 
     public function testUpdateThemeConfigValidation()
@@ -211,6 +210,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                 'system_configuration_form_theme' => [
                     'configuration' => [
                         ['name' => 'theme.select_type', 'value' => 'foo'],
+                        ['name' => 'timesheet.markdown_content', 'value' => 1],
                     ]
                 ]
             ],
