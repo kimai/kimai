@@ -9,6 +9,7 @@
 
 namespace App\Form;
 
+use App\Entity\User;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -55,7 +56,7 @@ class UserCreateType extends UserEditType
     public function __configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'class' => 'Kimai:User',
+            'class' => User::class,
         ]);
     }
 }
