@@ -72,6 +72,7 @@ class ProfileController extends AbstractController
         $monthlyStats = $repository->getMonthlyStats($profile);
 
         $viewVars = [
+            'tab' => 'charts',
             'user' => $profile,
             'stats' => $userStats,
             'years' => $monthlyStats,
