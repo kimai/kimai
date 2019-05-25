@@ -47,6 +47,8 @@ class TagController extends BaseApiController
     }
 
     /**
+     * Fetch all existing tags
+     *
      * @SWG\Response(
      *      response=200,
      *      description="Returns the collection of all existing tags as string array",
@@ -75,7 +77,7 @@ class TagController extends BaseApiController
     }
 
     /**
-     * Delete an existing tag
+     * Delete a tag
      *
      * @SWG\Delete(
      *      @SWG\Response(
