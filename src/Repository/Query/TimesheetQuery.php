@@ -12,6 +12,7 @@ namespace App\Repository\Query;
 use App\Entity\Activity;
 use App\Entity\User;
 use App\Form\Model\DateRange;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Can be used for advanced timesheet repository queries.
@@ -62,6 +63,7 @@ class TimesheetQuery extends ActivityQuery
     public function __construct()
     {
         $this->dateRange = new DateRange();
+        $this->tags = new ArrayCollection();
     }
 
     /**
@@ -218,6 +220,10 @@ class TimesheetQuery extends ActivityQuery
      */
     public function getTags()
     {
+        if ($this->tags instanceof ArrayCollection) {
+            return $this->tags->toArray();
+        }
+
         return $this->tags;
     }
 

@@ -125,7 +125,7 @@ class ConvertTimezoneCommand extends Command
         if ('y' !== $answer) {
             $io->text('Aborting.');
 
-            return;
+            return 1;
         }
 
         $utc = new \DateTimeZone('UTC');
@@ -145,5 +145,7 @@ class ConvertTimezoneCommand extends Command
 
         $io->writeln('. (' . $i . '/' . $amount . ')');
         $io->writeln('');
+
+        return 0;
     }
 }

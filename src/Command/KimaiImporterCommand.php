@@ -29,7 +29,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -48,7 +47,7 @@ class KimaiImporterCommand extends Command
 
     /**
      * Create the user default passwords
-     * @var UserPasswordEncoder
+     * @var UserPasswordEncoderInterface
      */
     protected $encoder;
     /**

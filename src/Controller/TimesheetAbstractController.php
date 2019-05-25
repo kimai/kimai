@@ -90,7 +90,7 @@ abstract class TimesheetAbstractController extends AbstractController
             $tagRepo = $this->getDoctrine()->getRepository(Tag::class);
             $query->setTags(
                 new ArrayCollection(
-                    $tagRepo->findIdsByTagNameList(implode(',', $query->getTags()->toArray()))
+                    $tagRepo->findIdsByTagNameList(implode(',', $query->getTags()))
                 )
             );
         }
