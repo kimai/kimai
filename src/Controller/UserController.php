@@ -9,13 +9,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Form\Toolbar\UserToolbarForm;
 use App\Form\UserCreateType;
 use App\Repository\Query\UserQuery;
-use App\Security\RolePermissionManager;
 use App\Repository\TimesheetRepository;
+use App\Security\RolePermissionManager;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
