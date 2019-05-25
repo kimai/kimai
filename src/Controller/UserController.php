@@ -9,11 +9,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Form\Toolbar\UserToolbarForm;
 use App\Form\UserCreateType;
 use App\Repository\Query\UserQuery;
+use App\Repository\TimesheetRepository;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -132,13 +132,14 @@ class UserController extends AbstractController
      *
      * @param User $userToDelete
      * @param Request $request
+     * @param TimesheetRepository $repository
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function deleteAction(User $userToDelete, Request $request)
+    public function deleteAction(User $userToDelete, Request $request, TimesheetRepository $repository)
     {
         // $userToDelete MUST not be called $user, as $user is always the current user!
-        $stats = $this->getDoctrine()->getRepository(Timesheet::class)->getUserStatistics($userToDelete);
+        $stats = $repository->getUserStatistics($userToDelete);
 
         $deleteForm = $this->createFormBuilder(null, [
                 'attr' => [

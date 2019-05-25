@@ -389,7 +389,7 @@ class KimaiImporterCommand extends Command
 
     /**
      * Thanks to "xelozz -at- gmail.com", see http://php.net/manual/en/function.memory-get-usage.php#96280
-     * @param $size
+     * @param int $size
      * @return string
      */
     protected function bytesHumanReadable($size)
@@ -402,7 +402,7 @@ class KimaiImporterCommand extends Command
     }
 
     /**
-     * @param $table
+     * @param string $table
      * @param array $where
      * @return array
      */
@@ -429,7 +429,7 @@ class KimaiImporterCommand extends Command
 
     /**
      * @param SymfonyStyle $io
-     * @param $object
+     * @param object $object
      * @return bool
      */
     protected function validateImport(SymfonyStyle $io, $object)

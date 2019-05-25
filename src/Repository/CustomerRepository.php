@@ -23,7 +23,7 @@ use Pagerfanta\Pagerfanta;
 class CustomerRepository extends AbstractRepository
 {
     /**
-     * @param $id
+     * @param int $id
      * @return null|Customer
      */
     public function getById($id)

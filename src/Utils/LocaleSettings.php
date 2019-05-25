@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class LocaleSettings
 {
     /**
-     * @var array
+     * @var LanguageFormattings
      */
     protected $formats;
 

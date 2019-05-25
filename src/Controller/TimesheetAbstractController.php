@@ -17,6 +17,7 @@ use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
+use App\Repository\TagRepository;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\UserDateTimeFactory;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -85,9 +86,11 @@ abstract class TimesheetAbstractController extends AbstractController
         }
 
         if ($query->hasTags()) {
+            /** @var TagRepository $tagRepo */
+            $tagRepo = $this->getDoctrine()->getRepository(Tag::class);
             $query->setTags(
                 new ArrayCollection(
-                    $this->getDoctrine()->getRepository(Tag::class)->findIdsByTagNameList(implode(',', $query->getTags()->toArray()))
+                    $tagRepo->findIdsByTagNameList(implode(',', $query->getTags()->toArray()))
                 )
             );
         }

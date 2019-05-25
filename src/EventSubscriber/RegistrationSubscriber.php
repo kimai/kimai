@@ -49,7 +49,7 @@ class RegistrationSubscriber implements EventSubscriberInterface
      */
     public function onRegistrationSuccess(FormEvent $event)
     {
-        /** @var $user \FOS\UserBundle\Model\UserInterface */
+        /** @var \FOS\UserBundle\Model\UserInterface $user */
         $user = $event->getForm()->getData();
         $roles = [User::ROLE_USER];
 

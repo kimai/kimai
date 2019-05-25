@@ -24,8 +24,8 @@ class ProjectType extends AbstractType
 {
     /**
      * @param Project $choiceValue
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param mixed $value
      * @return array
      */
     public function choiceAttr($choiceValue, $key, $value)

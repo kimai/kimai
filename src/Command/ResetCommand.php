@@ -10,6 +10,7 @@
 namespace App\Command;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -129,6 +130,7 @@ EOT
             return true;
         }
 
+        /** @var QuestionHelper $questionHelper */
         $questionHelper = $this->getHelperSet()->get('question');
         $question = new ConfirmationQuestion('<question>' . $question . '</question>', $default);
 

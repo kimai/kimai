@@ -17,7 +17,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class AbstractSpreadsheetRenderer
 {
@@ -58,7 +58,7 @@ abstract class AbstractSpreadsheetRenderer
     }
 
     /**
-     * @param $amount
+     * @param int $amount
      * @return mixed
      */
     protected function getFormattedMoney($amount, $currency)
@@ -80,7 +80,7 @@ abstract class AbstractSpreadsheetRenderer
     }
 
     /**
-     * @param $seconds
+     * @param int $seconds
      * @return mixed
      */
     protected function getFormattedDuration($seconds)
@@ -209,7 +209,7 @@ abstract class AbstractSpreadsheetRenderer
     /**
      * @param Spreadsheet $spreadsheet
      * @return string
-     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     * @throws \Exception
      */
     abstract protected function saveSpreadsheet(Spreadsheet $spreadsheet): string;
 }

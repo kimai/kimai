@@ -65,6 +65,7 @@
         "dama/doctrine-test-bundle": "^5.0",
         "friendsofphp/php-cs-fixer": "^2.10",
         "phpstan/phpstan": "^0.11.7",
+        "phpstan/phpstan-symfony": "^0.11.6",
         "phpunit/phpunit": "^7.0",
         "symfony/browser-kit": "^4.0",
         "symfony/css-selector": "^4.0",

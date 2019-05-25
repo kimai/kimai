@@ -78,7 +78,7 @@ class DateRangeType extends AbstractType
      * A better way would be to use the Intl NumberFormatter, but if that is not available
      * and the Symfony polyfill is used, this method would not work properly.
      *
-     * @param $string
+     * @param string $string
      * @return string
      */
     protected function convertArabicPersian($string)

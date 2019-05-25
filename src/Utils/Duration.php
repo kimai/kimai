@@ -24,7 +24,7 @@ class Duration
     /**
      * Transforms seconds into a duration string.
      *
-     * @param $seconds
+     * @param int $seconds
      * @param string $format
      * @return string
      */
@@ -88,10 +88,10 @@ class Duration
                 }
                 $seconds = 0;
                 if (3 == count($parts)) {
-                    $seconds += array_pop($parts);
+                    $seconds += (int) array_pop($parts);
                 }
-                $seconds += $parts[1] * 60;
-                $seconds += $parts[0] * 3600;
+                $seconds += (int) $parts[1] * 60;
+                $seconds += (int) $parts[0] * 3600;
                 break;
 
             case self::FORMAT_NATURAL:

@@ -42,8 +42,8 @@ class ActivityType extends AbstractType
 
     /**
      * @param Activity $choiceValue
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param mixed $value
      * @return array
      */
     public function choiceAttr($choiceValue, $key, $value)
