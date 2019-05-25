@@ -84,10 +84,11 @@ abstract class TimesheetAbstractController extends AbstractController
             $query->setUser($this->getUser());
         }
 
-        if ($query->hasTags()) {
+        $tags = $query->getTags(true);
+        if (!empty($tags)) {
             $query->setTags(
                 new ArrayCollection(
-                    $this->getDoctrine()->getRepository(Tag::class)->findIdsByTagNameList(implode(',', $query->getTags()->toArray()))
+                    $this->getDoctrine()->getRepository(Tag::class)->findIdsByTagNameList(implode(',', $tags))
                 )
             );
         }

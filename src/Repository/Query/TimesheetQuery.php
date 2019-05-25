@@ -10,6 +10,7 @@
 namespace App\Repository\Query;
 
 use App\Entity\Activity;
+use App\Entity\Tag;
 use App\Entity\User;
 use App\Form\Model\DateRange;
 
@@ -216,9 +217,22 @@ class TimesheetQuery extends ActivityQuery
     /**
      * @return iterable
      */
-    public function getTags()
+    public function getTags($allowUnknown = false)
     {
-        return $this->tags;
+        if (empty($this->tags)) {
+            return [];
+        }
+
+        $result = [];
+
+        foreach ($this->tags as $tag) {
+            if (!$allowUnknown && $tag instanceof Tag && null === $tag->getId()) {
+                continue;
+            }
+            $result[] = $tag;
+        }
+
+        return $result;
     }
 
     /**
@@ -230,13 +244,5 @@ class TimesheetQuery extends ActivityQuery
         $this->tags = $tags;
 
         return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasTags()
-    {
-        return !empty($this->tags) && count($this->tags) > 0;
     }
 }
