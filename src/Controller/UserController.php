@@ -14,6 +14,7 @@ use App\Form\Toolbar\UserToolbarForm;
 use App\Form\UserCreateType;
 use App\Repository\Query\UserQuery;
 use App\Repository\TimesheetRepository;
+use App\Repository\UserRepository;
 use App\Security\RolePermissionManager;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -33,21 +34,23 @@ class UserController extends AbstractController
      * @var UserPasswordEncoderInterface
      */
     protected $encoder;
-
     /**
-     * @param UserPasswordEncoderInterface $encoder
+     * @var UserRepository
      */
-    public function __construct(UserPasswordEncoderInterface $encoder)
+    protected $repository;
+
+    public function __construct(UserPasswordEncoderInterface $encoder, UserRepository $repository)
     {
         $this->encoder = $encoder;
+        $this->repository = $repository;
     }
 
     /**
-     * @return \App\Repository\UserRepository
+     * @return UserRepository
      */
     protected function getRepository()
     {
-        return $this->getDoctrine()->getRepository(User::class);
+        return $this->repository;
     }
 
     /**

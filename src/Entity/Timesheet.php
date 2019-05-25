@@ -201,7 +201,7 @@ class Timesheet
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getEnd()
     {

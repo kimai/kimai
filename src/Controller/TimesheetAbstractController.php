@@ -36,15 +36,16 @@ abstract class TimesheetAbstractController extends AbstractController
      * @var TimesheetConfiguration
      */
     protected $configuration;
-
     /**
-     * @param UserDateTimeFactory $dateTime
-     * @param TimesheetConfiguration $configuration
+     * @var TimesheetRepository
      */
-    public function __construct(UserDateTimeFactory $dateTime, TimesheetConfiguration $configuration)
+    protected $repository;
+
+    public function __construct(UserDateTimeFactory $dateTime, TimesheetConfiguration $configuration, TimesheetRepository $repository)
     {
         $this->dateTime = $dateTime;
         $this->configuration = $configuration;
+        $this->repository = $repository;
     }
 
     /**
@@ -60,7 +61,7 @@ abstract class TimesheetAbstractController extends AbstractController
      */
     protected function getRepository()
     {
-        return $this->getDoctrine()->getRepository(Timesheet::class);
+        return $this->repository;
     }
 
     protected function index($page, Request $request, string $renderTemplate)

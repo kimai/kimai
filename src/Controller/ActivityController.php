@@ -31,11 +31,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class ActivityController extends AbstractController
 {
     /**
-     * @return \App\Repository\ActivityRepository
+     * @var ActivityRepository
      */
-    protected function getRepository()
+    private $repository;
+
+    public function __construct(ActivityRepository $repository)
     {
-        return $this->getDoctrine()->getRepository(Activity::class);
+        $this->repository = $repository;
+    }
+
+    protected function getRepository(): ActivityRepository
+    {
+        return $this->repository;
     }
 
     /**

@@ -47,27 +47,28 @@ class VersionCommand extends Command
         if ($input->getOption('semver')) {
             $io->writeln(Constants::VERSION . '-' . Constants::STATUS);
 
-            return;
+            return 0;
         }
 
         if ($input->getOption('short')) {
             $io->writeln(Constants::VERSION);
 
-            return;
+            return 0;
         }
 
         if ($input->getOption('name')) {
             $io->writeln(Constants::NAME);
 
-            return;
+            return 0;
         }
 
         if ($input->getOption('candidate')) {
             $io->writeln(Constants::STATUS);
 
-            return;
+            return 0;
         }
 
         $io->writeln('Kimai 2 - ' . Constants::VERSION . ' ' . Constants::STATUS . ' (' . Constants::NAME . ') by Kevin Papst and contributors.');
+        return 0;
     }
 }

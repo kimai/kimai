@@ -156,7 +156,7 @@ class Extensions extends AbstractExtension
     public function duration($duration, $format = null)
     {
         if (null === $duration) {
-            return null;
+            $duration = 0;
         }
 
         if ($duration instanceof Timesheet) {

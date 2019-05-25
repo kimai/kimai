@@ -26,7 +26,7 @@ class Duration
      *
      * @param int $seconds
      * @param string $format
-     * @return string
+     * @return string|null
      */
     public function format($seconds, $format = self::FORMAT_NO_SECONDS)
     {
@@ -51,9 +51,9 @@ class Duration
 
     /**
      * @param string $duration
-     * @return string
+     * @return int
      */
-    public function parseDurationString($duration)
+    public function parseDurationString($duration): int
     {
         if (false !== stripos($duration, ':')) {
             return $this->parseDuration($duration, self::FORMAT_COLON);
@@ -72,7 +72,7 @@ class Duration
      * @return int
      * @throws \InvalidArgumentException
      */
-    public function parseDuration(string $duration, string $mode)
+    public function parseDuration(string $duration, string $mode): int
     {
         if (empty($duration)) {
             return 0;

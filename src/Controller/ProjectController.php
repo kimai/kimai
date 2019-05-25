@@ -31,11 +31,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProjectController extends AbstractController
 {
     /**
-     * @return \App\Repository\ProjectRepository
+     * @var ProjectRepository
      */
-    protected function getRepository()
+    private $repository;
+
+    public function __construct(ProjectRepository $repository)
     {
-        return $this->getDoctrine()->getRepository(Project::class);
+        $this->repository = $repository;
+    }
+
+    protected function getRepository(): ProjectRepository
+    {
+        return $this->repository;
     }
 
     /**

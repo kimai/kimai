@@ -67,9 +67,7 @@ class TagController extends BaseApiController
         $filter = $paramFetcher->get('name');
 
         $data = $this->repository->findAllTagNames($filter);
-        if (null === $data) {
-            $data = [];
-        }
+
         $view = new View($data, 200);
         $view->getContext()->setGroups(['Default', 'Collection']);
 
