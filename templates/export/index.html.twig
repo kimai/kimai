@@ -131,6 +131,9 @@
             }
 
             ALERT.question(message, function(value) {
+                if (!value) {
+                    return;
+                }
                 var btn = $(button);
                 var exportButtons = $('.exportBtn');
                 // disabling does not yet work...

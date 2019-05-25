@@ -29,6 +29,7 @@ class UserControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/user/');
         $this->assertHasDataTable($client);
+        $this->assertDataTableRowCount($client, 'datatable_user_admin', 5);
     }
 
     public function testCreateAction()
@@ -195,5 +196,19 @@ class UserControllerTest extends ControllerBaseTest
                 ]
             ],
         ];
+    }
+
+    public function testPermissionsIsSecure()
+    {
+        $this->assertUrlIsSecured('/admin/user/permissions');
+        $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/admin/user/permissions');
+    }
+
+    public function testPermissions()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/user/permissions');
+        $this->assertHasDataTable($client);
+        $this->assertDataTableRowCount($client, 'datatable_user_admin_permissions', 66);
     }
 }

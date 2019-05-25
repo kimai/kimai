@@ -4,22 +4,6 @@
 {% block page_subtitle %}{{ 'about.subtitle'|trans({}, 'about') }}{% endblock %}
 
 {% block about_box %}
-    {% if is_granted('system_actions') %}
-        {% embed '@AdminLTE/Widgets/box-widget.html.twig' with {'boxtype': 'warning'} %}
-            {% block box_title %}{{ 'label.actions'|trans }}{% endblock %}
-            {% block box_body %}
-                {% if content_action is defined and content_action is not empty %}
-                    <pre>
-                    {{ content_action }}
-                    </pre>
-                {% endif %}
-
-                <p>
-                    <a href="{{ path('system_flush_cache') }}" class="btn btn-primary" onclick="$(this).html('Clear cache <i class=\'fas fa-spinner fa-spin\'></i>')">Clear cache</a>
-                </p>
-            {% endblock %}
-        {% endembed %}
-    {% endif %}
 {% endblock %}
 
 {% block about %}

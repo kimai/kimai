@@ -1,21 +1,11 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
+{% import "macros/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'admin_invoice_template.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_invoice_template.subtitle'|trans }}{% endblock %}
-{% block page_actions %}
-    {# TODO move me to actions macro #}
-    {% set actions = {} %}
-    {% if is_granted('create_invoice_template') %}
-        {% set actions = actions|merge({'create': path('admin_invoice_template_create')}) %}
-    {% endif %}
-    {% if is_granted('view_invoice') %}
-        {% set actions = actions|merge({'invoice': path('invoice')}) %}
-    {% endif %}
-    {% set event = trigger('actions.invoice_templates', {'actions': actions, 'view': 'index'}) %}
-    {{ widgets.page_actions(actions) }}
-{% endblock %}
+{% block page_actions %}{{ actions.invoice_templates('index') }}{% endblock %}
 
 {% block main %}
     {% if entries.count == 0 %}
