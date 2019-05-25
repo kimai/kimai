@@ -70,22 +70,36 @@
 {% endspaceless %}
 {% endmacro %}
 
+{% macro data_table_header_options(name, columns, options) %}
+    {% set skipStripped = options.skipStripped|default(false) %}
+    {% set reloadEvent = options.reloadEvent|default('') %}
+    {% set translationDomain = options.translationDomain|default('messages') %}
+    {# |default does not work here, as the prefix might be an empty string #}
+    {% set translationPrefix = 'label.' %}
+    {% if options.translationPrefix is defined %}
+        {% set translationPrefix = options.translationPrefix %}
+    {% endif %}
+
+    {% import _self as macro %}
+    <div class="box box-{{ admin_lte_context.widget.type }} data_table" id="datatable_{{ name }}">
+        <div class="box-body no-padding">
+            <div class="dataTables_wrapper form-inline dt-bootstrap">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table {% if not skipStripped %}table-striped {% endif %}table-hover dataTable" role="grid" data-reload-event="{{ reloadEvent }}">
+                            <thead>
+                            <tr>
+                                {%- for title, class in columns -%}
+                                    <th data-field="{{ title }}" class="{{ macro.data_table_column_class(name, columns, title) }}">{% if title is not empty and title != 'actions' %}{{ (translationPrefix ~ title)|trans({}, translationDomain) }}{% endif %}</th>
+                                {%- endfor -%}
+                            </tr>
+                            </thead>
+                            <tbody>
+{% endmacro %}
+
 {% macro data_table_header(name, columns, skipStripped, reloadEvent) %}
-{% import _self as macro %}
-<div class="box box-{{ admin_lte_context.widget.type }} data_table" id="datatable_{{ name }}">
-    <div class="box-body no-padding">
-        <div class="dataTables_wrapper form-inline dt-bootstrap">
-            <div class="row">
-                <div class="col-sm-12">
-                    <table class="table {% if not skipStripped %}table-striped {% endif %}table-hover dataTable" role="grid" data-reload-event="{{ reloadEvent }}">
-                        <thead>
-                        <tr>
-                            {%- for title, class in columns -%}
-                                <th data-field="{{ title }}" class="{{ macro.data_table_column_class(name, columns, title) }}">{% if title is not empty and title != 'actions' %}{{ ('label.' ~ title)|trans }}{% endif %}</th>
-                            {%- endfor -%}
-                        </tr>
-                        </thead>
-                        <tbody>
+    {% import _self as macro %}
+    {{ macro.data_table_header_options(name, columns, {'skipStripped': skipStripped, 'reloadEvent': reloadEvent}) }}
 {% endmacro %}
 
 {% macro data_table_footer(entries, route) %}

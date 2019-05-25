@@ -2,6 +2,7 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/toolbar.html.twig" as toolbar %}
 {% import "macros/datatables.html.twig" as tables %}
+{% import "macros/actions.html.twig" as actions %}
 
 {% set columns = {
     'date': 'alwaysVisible',
@@ -16,16 +17,7 @@
 
 {% block page_title %}{{ 'invoice.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'invoice.subtitle'|trans }}{% endblock %}
-{% block page_actions %}
-    {% set actions = {'filter': '#collapseInvoice', 'visibility': '#modal_invoice'} %}
-    {% if is_granted('create_invoice_template') %}
-        {% set actions = actions|merge({'create': path('admin_invoice_template_create')}) %}
-    {% endif %}
-    {% if is_granted('view_invoice_template') %}
-        {% set actions = actions|merge({'list': path('admin_invoice_template')}) %}
-    {% endif %}
-    {{ widgets.page_actions(actions) }}
-{% endblock %}
+{% block page_actions %}{{ actions.invoices('index') }}{% endblock %}
 
 {% block main_before %}
     {{ toolbar.toolbar(form, 'collapseInvoice', true) }}

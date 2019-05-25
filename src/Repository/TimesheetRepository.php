@@ -383,8 +383,9 @@ class TimesheetRepository extends AbstractRepository
             }
         }
 
-        if ($query->hasTags()) {
-            $qb->andWhere('tags.id IN (:tags)')
+        $tags = $query->getTags();
+        if (!empty($tags)) {
+            $qb->andWhere($qb->expr()->isMemberOf(':tags', 't.tags'))
                 ->setParameter('tags', $query->getTags());
         }
 

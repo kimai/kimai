@@ -9,10 +9,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Form\Toolbar\UserToolbarForm;
 use App\Form\UserCreateType;
 use App\Repository\Query\UserQuery;
+use App\Security\RolePermissionManager;
 use App\Repository\TimesheetRepository;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -172,6 +174,22 @@ class UserController extends AbstractController
                 'form' => $deleteForm->createView(),
             ]
         );
+    }
+
+    /**
+     * @Route(path="/permissions", name="admin_user_permissions", methods={"GET", "POST"})
+     * @Security("is_granted('role_permissions')")
+     *
+     * @param RolePermissionManager $manager
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function permissions(RolePermissionManager $manager)
+    {
+        return $this->render('user/permissions.html.twig', [
+            'roles' => $manager->getRoles(),
+            'permissions' => $manager->getPermissions(),
+            'manager' => $manager,
+        ]);
     }
 
     /**

@@ -48,13 +48,40 @@
 
 {% macro users(view) %}
     {% import "macros/widgets.html.twig" as widgets %}
-    {% set actions = {'filter': '#collapseUserAdmin', 'visibility': '#modal_user_admin'} %}
+    {% set actions = {} %}
+
+    {% if view == 'index' %}
+        {% set actions = actions|merge({'filter': '#collapseUserAdmin', 'visibility': '#modal_user_admin'}) %}
+    {% else %}
+        {% set actions = actions|merge({'back': path('admin_user')}) %}
+    {% endif %}
+
+    {% if view != 'permissions' and is_granted('role_permissions') %}
+        {% set actions = actions|merge({'permissions': path('admin_user_permissions')}) %}
+    {% endif %}
 
     {% if is_granted('create_user') %}
         {% set actions = actions|merge({'create': path('admin_user_create')}) %}
     {% endif %}
 
+    {% if view == 'index' %}
+        {% set actions = actions|merge({'help': {'url': 'users.html'|docu_link, 'target': '_blank'}}) %}
+    {% elseif view == 'permissions' %}
+        {% set actions = actions|merge({'help': {'url': 'permissions.html'|docu_link, 'target': '_blank'}}) %}
+    {% endif %}
+
     {% set event = trigger('actions.users', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}
+
+{% macro user_permissions(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set actions = {} %}
+
+    {% set actions = actions|merge({'back': path('admin_user')}) %}
+    {% set actions = actions|merge({'help': {'url': 'permissions.html'|docu_link, 'target': '_blank'}}) %}
+
+    {% set event = trigger('actions.user_permissions', {'actions': actions, 'view': view}) %}
     {{ widgets.page_actions(event.payload.actions) }}
 {% endmacro %}
 
@@ -371,3 +398,39 @@
     {% set event = trigger('actions.tag', {'actions': actions, 'view': view, 'tag': tag}) %}
     {{ widgets.table_actions(event.payload.actions) }}
 {% endmacro %}
+
+{% macro invoices(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {'filter': '#collapseInvoice', 'visibility': '#modal_invoice'} %}
+    {% if is_granted('create_invoice_template') %}
+        {% set actions = actions|merge({'create': path('admin_invoice_template_create')}) %}
+    {% endif %}
+    {% if is_granted('view_invoice_template') %}
+        {% set actions = actions|merge({'list': path('admin_invoice_template')}) %}
+    {% endif %}
+
+    {% set actions = actions|merge({'help': {'url': 'invoices.html'|docu_link, 'target': '_blank'}}) %}
+
+    {% set event = trigger('actions.invoices', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}
+
+{% macro invoice_templates(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {} %}
+    {% if is_granted('view_invoice') %}
+        {% set actions = actions|merge({'back': path('invoice')}) %}
+    {% endif %}
+
+    {% if is_granted('create_invoice_template') %}
+        {% set actions = actions|merge({'create': path('admin_invoice_template_create')}) %}
+    {% endif %}
+
+    {% set actions = actions|merge({'help': {'url': 'invoices.html'|docu_link, 'target': '_blank'}}) %}
+
+    {% set event = trigger('actions.invoice_templates', {'actions': actions, 'view': 'index'}) %}
+    {{ widgets.page_actions(actions) }}
+{% endmacro %}
+
