@@ -126,14 +126,16 @@ class TimesheetEditForm extends AbstractType
             $dateTimeOptions['format'] = $options['date_format'];
         }
 
-        if ($isNew || null === $end || !$this->configuration->isDurationOnly()) {
-            $this->addBegin($builder, $dateTimeOptions);
-        }
+        if (!$this->configuration->isPunchInOut()) {
+            if ($isNew || null === $end || !$this->configuration->isDurationOnly()) {
+                $this->addBegin($builder, $dateTimeOptions);
+            }
 
-        if ($this->configuration->isDurationOnly()) {
-            $this->addDuration($builder);
-        } else {
-            $this->addEnd($builder, $dateTimeOptions);
+            if ($this->configuration->isDurationOnly()) {
+                $this->addDuration($builder);
+            } else {
+                $this->addEnd($builder, $dateTimeOptions);
+            }
         }
 
         $projectOptions = [];

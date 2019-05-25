@@ -29,6 +29,7 @@ class TimesheetModeType extends AbstractType
             'choices' => [
                 'label.timesheet.mode_default' => TimesheetConfiguration::MODE_DEFAULT,
                 'label.timesheet.mode_duration_only' => TimesheetConfiguration::MODE_DURATION_ONLY,
+                'label.timesheet.mode_punch' => TimesheetConfiguration::MODE_PUNCH_IN_OUT,
             ],
         ]);
     }

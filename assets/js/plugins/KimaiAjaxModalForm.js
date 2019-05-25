@@ -34,16 +34,26 @@ export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableR
         });
     }
 
-    openUrlInModal(url) {
+    openUrlInModal(url, errorHandler) {
         const self = this;
+
+        if (errorHandler === undefined) {
+            errorHandler = function(xhr, err) {
+                if (xhr.status !== undefined && xhr.status === 403) {
+                    const alert = self.getContainer().getPlugin('alert');
+                    alert.error(xhr.statusText);
+                    return;
+                }
+                window.location = url;
+            };
+        }
+
         jQuery.ajax({
             url: url,
             success: function(html) {
                 self._openFormInModal(html);
             },
-            error: function(xhr, err) {
-                window.location = url;
-            }
+            error: errorHandler
         });
     }
 
