@@ -40,7 +40,7 @@
             </trans-unit>
             <trans-unit id="label.timesheet.mode_duration_only">
                 <source>label.timesheet.mode_duration_only</source>
-                <target>[Dauer] ersetzt die Endzeit durch ein Eingabe für Dauer und blendet die Zeiten überall aus</target>
+                <target>[Dauer] ersetzt die Endzeit durch ein Eingabefeld für Dauer</target>
             </trans-unit>
             <trans-unit id="label.timesheet.mode_punch">
                 <source>label.timesheet.mode_punch</source>

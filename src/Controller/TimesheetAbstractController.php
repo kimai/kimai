@@ -283,10 +283,13 @@ abstract class TimesheetAbstractController extends AbstractController
      */
     protected function getCreateForm(Timesheet $entry)
     {
-        return $this->createForm(TimesheetEditForm::class, $entry, [
+        return $this->createForm($this->getCreateFormClassName(), $entry, [
             'action' => $this->generateUrl($this->getCreateRoute()),
             'include_rate' => $this->isGranted('edit_rate', $entry),
+            'include_exported' => $this->isGranted('edit_export', $entry),
             'include_user' => $this->includeUserInForms(),
+            'use_duration' => $this->configuration->isDurationOnly(),
+            'include_datetime' => !$this->configuration->isPunchInOut(),
             'customer' => true,
         ]);
     }
@@ -298,7 +301,7 @@ abstract class TimesheetAbstractController extends AbstractController
      */
     protected function getEditForm(Timesheet $entry, $page)
     {
-        return $this->createForm(TimesheetEditForm::class, $entry, [
+        return $this->createForm($this->getEditFormClassName(), $entry, [
             'action' => $this->generateUrl($this->getEditRoute(), [
                 'id' => $entry->getId(),
                 'page' => $page,
@@ -306,6 +309,8 @@ abstract class TimesheetAbstractController extends AbstractController
             'include_rate' => $this->isGranted('edit_rate', $entry),
             'include_exported' => $this->isGranted('edit_export', $entry),
             'include_user' => $this->includeUserInForms(),
+            'include_datetime' => !$this->configuration->isPunchInOut(),
+            'use_duration' => $this->configuration->isDurationOnly(),
             'customer' => true,
         ]);
     }
@@ -323,6 +328,16 @@ abstract class TimesheetAbstractController extends AbstractController
             'method' => 'GET',
             'include_user' => $this->includeUserInForms(),
         ]);
+    }
+
+    protected function getCreateFormClassName()
+    {
+        return TimesheetEditForm::class;
+    }
+
+    protected function getEditFormClassName()
+    {
+        return TimesheetEditForm::class;
     }
 
     protected function includeSummary(): bool
