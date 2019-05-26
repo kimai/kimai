@@ -120,9 +120,9 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->request($client, '/team/timesheet/create');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $form = $client->getCrawler()->filter('form[name=timesheet_admin_edit_form]')->form();
         $client->submit($form, [
-            'timesheet_edit_form' => [
+            'timesheet_admin_edit_form' => [
                 'description' => 'Testing is fun!',
                 'project' => 1,
                 'activity' => 1,
@@ -170,9 +170,9 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
             'Could not find link to documentation'
         );
 
-        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $form = $client->getCrawler()->filter('form[name=timesheet_admin_edit_form]')->form();
         $client->submit($form, [
-            'timesheet_edit_form' => [
+            'timesheet_admin_edit_form' => [
                 'description' => 'foo-bar',
                 'tags' => 'foo,bar, testing, hello world,,',
                 'user' => $teamlead->getId()

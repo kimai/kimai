@@ -628,10 +628,6 @@ För närvarande har %user% användare %records% tidsrekord som räknas upp till
                 <source>ROLE_USER</source>
                 <target state="translated">Användare</target>
             </trans-unit>
-            <trans-unit id="ROLE_CUSTOMER">
-                <source>ROLE_CUSTOMER</source>
-                <target state="translated">Kund</target>
-            </trans-unit>
 
             <!--
               Statistics data for Dashboard & Users profile
