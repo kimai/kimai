@@ -36,11 +36,15 @@
             </trans-unit>
             <trans-unit id="label.timesheet.mode_default">
                 <source>label.timesheet.mode_default</source>
-                <target>Standard Modus: erfasst Start und Enddatum</target>
+                <target>[Standard] Start- und Endzeiten können bearbeitet werden</target>
             </trans-unit>
             <trans-unit id="label.timesheet.mode_duration_only">
                 <source>label.timesheet.mode_duration_only</source>
-                <target>Dauer: ersetzt das Enddatum durch ein Eingabefeld für Dauer</target>
+                <target>[Dauer] ersetzt die Endzeit durch ein Eingabe für Dauer und blendet die Zeiten überall aus</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_punch">
+                <source>label.timesheet.mode_punch</source>
+                <target>[Stechuhr] Benutzer kann Aufzeichnungen starten und stoppen, aber weder Zeiten noch Dauer bearbeiten</target>
             </trans-unit>
             <trans-unit id="label.timesheet.rules.allow_future_times">
                 <source>label.timesheet.rules.allow_future_times</source>
