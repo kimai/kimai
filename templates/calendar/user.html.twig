@@ -153,11 +153,11 @@
                         html: true
                     });
                 },
-                {% if is_granted('create_own_timesheet') %}
-                // day-clicks are always triggered, unless a selection was created
-                // so clicking in a day (month view) or any slot (week and day view) will trigger a dayClick
-                // BEFORE triggering a select - make sure not two create dialogs are requested
+            {% if not is_punch_mode() and is_granted('create_own_timesheet') %}
                 dayClick: function(date, jsEvent, view) {
+                    // day-clicks are always triggered, unless a selection was created
+                    // so clicking in a day (month view) or any slot (week and day view) will trigger a dayClick
+                    // BEFORE triggering a select - make sure not two create dialogs are requested
                     if(view.type !== 'month') {
                         return;
                     }
@@ -177,8 +177,8 @@
                     var createUrl = '{{ path('timesheet_create') }}' + '?from=' + start.format() + '&to=' + end.format();
                     kimai.getPlugin('modal').openUrlInModal(createUrl);
                 },
-                {% endif %}
-                {% if is_granted('edit_own_timesheet') %}
+            {% endif %}
+            {% if is_granted('edit_own_timesheet') %}
                 eventClick: function(eventObj, jsEvent, view) {
                     if (eventObj.source.ajaxSettings !== undefined) {
                         jsEvent.preventDefault();
@@ -187,6 +187,7 @@
                     var editUrl = '{{ path('timesheet_edit', {id: '-XX-'}) }}'.replace('-XX-', eventObj.id);
                     kimai.getPlugin('modal').openUrlInModal(editUrl);
                 },
+                {% if not is_punch_mode() %}
                 editable: true,
                 eventDragStart: function(event, jsEvent, ui, view) {
                     window.hidePopover = true;
@@ -203,6 +204,7 @@
                 },
                 eventResize: changeHandler,
                 {% endif %}
+            {% endif %}
                 /*
                 slotDuration: '00:30:00',                               // TODO make me configurable
                 */

@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Entity\Timesheet;
+use App\Form\TimesheetAdminEditForm;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -72,6 +73,16 @@ class TimesheetTeamController extends TimesheetAbstractController
     public function createAction(Request $request, ProjectRepository $projectRepository, ActivityRepository $activityRepository)
     {
         return $this->create($request, 'timesheet-team/edit.html.twig', $projectRepository, $activityRepository);
+    }
+
+    protected function getCreateFormClassName()
+    {
+        return TimesheetAdminEditForm::class;
+    }
+
+    protected function getEditFormClassName()
+    {
+        return TimesheetAdminEditForm::class;
     }
 
     protected function includeUserInForms(): bool

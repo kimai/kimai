@@ -146,44 +146,7 @@ abstract class TimesheetAbstractController extends AbstractController
         $entry->setUser($this->getUser());
         $entry->setBegin($this->dateTime->createDateTime());
 
-        $start = $request->get('begin');
-        if ($start !== null) {
-            $start = $this->dateTime->createDateTimeFromFormat('Y-m-d', $start);
-            if ($start !== false) {
-                $entry->setBegin($start);
-
-                // only check for an end date if a begin date was given
-                $end = $request->get('end');
-                if ($end !== null) {
-                    $end = $this->dateTime->createDateTimeFromFormat('Y-m-d', $end);
-                    if ($end !== false) {
-                        $start->setTime(10, 0, 0);
-                        $end->setTime(18, 0, 0);
-
-                        $entry->setEnd($end);
-                        $entry->setDuration($end->getTimestamp() - $start->getTimestamp());
-                    }
-                }
-            }
-        }
-
-        $from = $request->get('from');
-        if ($from !== null) {
-            $from = $this->dateTime->createDateTime($from);
-            if ($from !== false) {
-                $entry->setBegin($from);
-
-                // only check for an end datetime if a begin datetime was given
-                $to = $request->get('to');
-                if ($to !== null) {
-                    $to = $this->dateTime->createDateTime($to);
-                    if ($to !== false) {
-                        $entry->setEnd($to);
-                        $entry->setDuration($to->getTimestamp() - $from->getTimestamp());
-                    }
-                }
-            }
-        }
+        $this->setBeginEndFromRequest($request, $entry);
 
         if ($request->query->get('project')) {
             $project = $projectRepository->find($request->query->get('project'));
@@ -223,6 +186,52 @@ abstract class TimesheetAbstractController extends AbstractController
             'timesheet' => $entry,
             'form' => $createForm->createView(),
         ]);
+    }
+
+    protected function setBeginEndFromRequest(Request $request, Timesheet $entry)
+    {
+        if ($this->configuration->isPunchInOut()) {
+            return;
+        }
+
+        $start = $request->get('begin');
+        if ($start !== null) {
+            $start = $this->dateTime->createDateTimeFromFormat('Y-m-d', $start);
+            if ($start !== false) {
+                $entry->setBegin($start);
+
+                // only check for an end date if a begin date was given
+                $end = $request->get('end');
+                if ($end !== null) {
+                    $end = $this->dateTime->createDateTimeFromFormat('Y-m-d', $end);
+                    if ($end !== false) {
+                        $start->setTime(10, 0, 0);
+                        $end->setTime(18, 0, 0);
+
+                        $entry->setEnd($end);
+                        $entry->setDuration($end->getTimestamp() - $start->getTimestamp());
+                    }
+                }
+            }
+        }
+
+        $from = $request->get('from');
+        if ($from !== null) {
+            $from = $this->dateTime->createDateTime($from);
+            if ($from !== false) {
+                $entry->setBegin($from);
+
+                // only check for an end datetime if a begin datetime was given
+                $to = $request->get('to');
+                if ($to !== null) {
+                    $to = $this->dateTime->createDateTime($to);
+                    if ($to !== false) {
+                        $entry->setEnd($to);
+                        $entry->setDuration($to->getTimestamp() - $from->getTimestamp());
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -274,10 +283,13 @@ abstract class TimesheetAbstractController extends AbstractController
      */
     protected function getCreateForm(Timesheet $entry)
     {
-        return $this->createForm(TimesheetEditForm::class, $entry, [
+        return $this->createForm($this->getCreateFormClassName(), $entry, [
             'action' => $this->generateUrl($this->getCreateRoute()),
             'include_rate' => $this->isGranted('edit_rate', $entry),
+            'include_exported' => $this->isGranted('edit_export', $entry),
             'include_user' => $this->includeUserInForms(),
+            'use_duration' => $this->configuration->isDurationOnly(),
+            'include_datetime' => !$this->configuration->isPunchInOut(),
             'customer' => true,
         ]);
     }
@@ -289,7 +301,7 @@ abstract class TimesheetAbstractController extends AbstractController
      */
     protected function getEditForm(Timesheet $entry, $page)
     {
-        return $this->createForm(TimesheetEditForm::class, $entry, [
+        return $this->createForm($this->getEditFormClassName(), $entry, [
             'action' => $this->generateUrl($this->getEditRoute(), [
                 'id' => $entry->getId(),
                 'page' => $page,
@@ -297,6 +309,8 @@ abstract class TimesheetAbstractController extends AbstractController
             'include_rate' => $this->isGranted('edit_rate', $entry),
             'include_exported' => $this->isGranted('edit_export', $entry),
             'include_user' => $this->includeUserInForms(),
+            'include_datetime' => !$this->configuration->isPunchInOut(),
+            'use_duration' => $this->configuration->isDurationOnly(),
             'customer' => true,
         ]);
     }
@@ -314,6 +328,16 @@ abstract class TimesheetAbstractController extends AbstractController
             'method' => 'GET',
             'include_user' => $this->includeUserInForms(),
         ]);
+    }
+
+    protected function getCreateFormClassName()
+    {
+        return TimesheetEditForm::class;
+    }
+
+    protected function getEditFormClassName()
+    {
+        return TimesheetEditForm::class;
     }
 
     protected function includeSummary(): bool

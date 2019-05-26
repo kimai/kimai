@@ -9,7 +9,6 @@
 
 namespace App\Form;
 
-use App\Configuration\TimesheetConfiguration;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -52,23 +51,17 @@ class TimesheetEditForm extends AbstractType
      * @var UserDateTimeFactory
      */
     protected $dateTime;
-    /**
-     * @var TimesheetConfiguration
-     */
-    private $configuration;
 
     /**
      * @param CustomerRepository $customer
      * @param ProjectRepository $project
      * @param UserDateTimeFactory $dateTime
-     * @param TimesheetConfiguration $config
      */
-    public function __construct(CustomerRepository $customer, ProjectRepository $project, UserDateTimeFactory $dateTime, TimesheetConfiguration $config)
+    public function __construct(CustomerRepository $customer, ProjectRepository $project, UserDateTimeFactory $dateTime)
     {
         $this->customers = $customer;
         $this->projects = $project;
         $this->dateTime = $dateTime;
-        $this->configuration = $config;
     }
 
     /**
@@ -80,10 +73,10 @@ class TimesheetEditForm extends AbstractType
         $project = null;
         $customer = null;
         $currency = false;
-        $end = null;
         $begin = null;
         $customerCount = $this->customers->countCustomer(true);
         $projectCount = $this->projects->countProject(true);
+        $timezone = $this->dateTime->getTimezone()->getName();
         $isNew = true;
 
         if (isset($options['data'])) {
@@ -106,14 +99,9 @@ class TimesheetEditForm extends AbstractType
                 $currency = $customer->getCurrency();
             }
 
-            $begin = $entry->getBegin();
-            $end = $entry->getEnd();
-        }
-
-        $timezone = $this->dateTime->getTimezone()->getName();
-
-        if (null !== $begin) {
-            $timezone = $begin->getTimezone()->getName();
+            if (null !== ($begin = $entry->getBegin())) {
+                $timezone = $begin->getTimezone()->getName();
+            }
         }
 
         $dateTimeOptions = [
@@ -126,44 +114,49 @@ class TimesheetEditForm extends AbstractType
             $dateTimeOptions['format'] = $options['date_format'];
         }
 
-        if ($isNew || null === $end || !$this->configuration->isDurationOnly()) {
+        if ($this->showTimeFields($options)) {
             $this->addBegin($builder, $dateTimeOptions);
+
+            if ($options['use_duration']) {
+                $this->addDuration($builder);
+            } else {
+                $this->addEnd($builder, $dateTimeOptions);
+            }
         }
 
-        if ($this->configuration->isDurationOnly()) {
-            $this->addDuration($builder);
-        } else {
-            $this->addEnd($builder, $dateTimeOptions);
-        }
-
-        $projectOptions = [];
-
-        if ($customerCount < 2) {
-            $projectOptions['group_by'] = null;
-        } elseif ($options['customer']) {
+        if ($this->showCustomer($options, $isNew, $customerCount)) {
             $this->addCustomer($builder, $customer);
         }
 
-        if ($projectCount <= 1) {
-            $projectOptions['group_by'] = null;
-        }
-
-        $this->addProject($builder, $projectOptions, $project, $customer);
+        $this->addProject($builder, $customerCount, $projectCount, $project, $customer);
         $this->addActivity($builder, $activity, $project);
         $this->addDescription($builder);
         $this->addTags($builder);
+        $this->addRates($builder, $currency, $options);
+        $this->addUser($builder, $options);
+        $this->addExported($builder, $options);
+    }
 
-        if ($options['include_rate']) {
-            $this->addRates($builder, $currency);
+    protected function showCustomer(array $options, bool $isNew, int $customerCount): bool
+    {
+        if (!$isNew && $options['customer']) {
+            return true;
         }
 
-        if ($options['include_user']) {
-            $this->addUser($builder);
+        if ($customerCount < 2) {
+            return false;
         }
 
-        if ($options['include_exported']) {
-            $this->addExported($builder);
+        if (!$options['customer']) {
+            return false;
         }
+
+        return true;
+    }
+
+    protected function showTimeFields(array $options): bool
+    {
+        return $options['include_datetime'];
     }
 
     protected function addCustomer(FormBuilderInterface $builder, ?Customer $customer = null)
@@ -181,8 +174,18 @@ class TimesheetEditForm extends AbstractType
             ]);
     }
 
-    protected function addProject(FormBuilderInterface $builder, array $projectOptions, ?Project $project = null, ?Customer $customer = null)
+    protected function addProject(FormBuilderInterface $builder, int $customerCount, int $projectCount, ?Project $project = null, ?Customer $customer = null)
     {
+        $projectOptions = [];
+
+        if ($customerCount < 2) {
+            $projectOptions['group_by'] = null;
+        }
+
+        if ($projectCount < 2) {
+            $projectOptions['group_by'] = null;
+        }
+
         $builder
             ->add(
                 'project',
@@ -322,8 +325,12 @@ class TimesheetEditForm extends AbstractType
             ]);
     }
 
-    protected function addRates(FormBuilderInterface $builder, $currency)
+    protected function addRates(FormBuilderInterface $builder, $currency, array $options)
     {
+        if (!$options['include_rate']) {
+            return;
+        }
+
         $builder
             ->add('fixedRate', FixedRateType::class, [
                 'currency' => $currency,
@@ -333,13 +340,21 @@ class TimesheetEditForm extends AbstractType
             ]);
     }
 
-    protected function addUser(FormBuilderInterface $builder)
+    protected function addUser(FormBuilderInterface $builder, array $options)
     {
+        if (!$options['include_user']) {
+            return;
+        }
+
         $builder->add('user', UserType::class);
     }
 
-    protected function addExported(FormBuilderInterface $builder)
+    protected function addExported(FormBuilderInterface $builder, array $options)
     {
+        if (!$options['include_exported']) {
+            return;
+        }
+
         $builder->add('exported', YesNoType::class, [
             'label' => 'label.exported'
         ]);
@@ -362,6 +377,8 @@ class TimesheetEditForm extends AbstractType
             'method' => 'POST',
             'date_format' => null,
             'customer' => false, // for API usage
+            'use_duration' => false, // duration instead of end (for duration_only mode)
+            'include_datetime' => true,
             'attr' => [
                 'data-form-event' => 'kimai.timesheetUpdate',
                 'data-msg-success' => 'action.update.success',

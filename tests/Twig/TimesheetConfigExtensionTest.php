@@ -25,8 +25,9 @@ class TimesheetConfigExtensionTest extends TestCase
         $config = new TimesheetConfiguration($loader, ['mode' => 'duration_only']);
         $sut = new TimesheetConfigExtension($config);
         $filters = $sut->getFunctions();
-        $this->assertCount(1, $filters);
+        $this->assertCount(2, $filters);
         $this->assertEquals('is_duration_only', $filters[0]->getName());
+        $this->assertEquals('is_punch_mode', $filters[1]->getName());
     }
 
     public function testIsDurationOnly()
@@ -35,6 +36,7 @@ class TimesheetConfigExtensionTest extends TestCase
         $config = new TimesheetConfiguration($loader, ['mode' => 'duration_only']);
         $sut = new TimesheetConfigExtension($config);
         $this->assertTrue($sut->isDurationOnly());
+        $this->assertFalse($sut->isPunchInOut());
     }
 
     public function testIsNotDurationOnly()
@@ -43,5 +45,15 @@ class TimesheetConfigExtensionTest extends TestCase
         $config = new TimesheetConfiguration($loader, ['mode' => 'default']);
         $sut = new TimesheetConfigExtension($config);
         $this->assertFalse($sut->isDurationOnly());
+        $this->assertFalse($sut->isPunchInOut());
+    }
+
+    public function testIsPunchInOut()
+    {
+        $loader = $this->getMockBuilder(ConfigLoaderInterface::class)->getMock();
+        $config = new TimesheetConfiguration($loader, ['mode' => 'punch']);
+        $sut = new TimesheetConfigExtension($config);
+        $this->assertFalse($sut->isDurationOnly());
+        $this->assertTrue($sut->isPunchInOut());
     }
 }
