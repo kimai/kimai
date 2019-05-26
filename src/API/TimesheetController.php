@@ -275,6 +275,7 @@ class TimesheetController extends BaseApiController
             'csrf_protection' => false,
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
+            'include_datetime' => !$this->configuration->isPunchInOut(),
             'date_format' => self::DATE_FORMAT,
         ]);
 
@@ -352,6 +353,7 @@ class TimesheetController extends BaseApiController
             'csrf_protection' => false,
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
+            'include_datetime' => !$this->configuration->isPunchInOut(),
             'date_format' => self::DATE_FORMAT,
         ]);
 

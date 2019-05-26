@@ -83,9 +83,9 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue('default')
                     ->validate()
                         ->ifTrue(function ($value) {
-                            return !in_array($value, ['default', 'duration_only']);
+                            return !in_array($value, ['default', 'duration_only', 'punch']);
                         })
-                        ->thenInvalid('Chosen timesheet mode is invalid, allowed values: default, duration_only')
+                        ->thenInvalid('Chosen timesheet mode is invalid, allowed values: default, duration_only, punch')
                     ->end()
                 ->end()
                 ->booleanNode('markdown_content')

@@ -13,6 +13,7 @@ class TimesheetConfiguration implements SystemBundleConfiguration
 {
     public const MODE_DURATION_ONLY = 'duration_only';
     public const MODE_DEFAULT = 'default';
+    public const MODE_PUNCH_IN_OUT = 'punch';
 
     use StringAccessibleConfigTrait;
 
@@ -29,6 +30,11 @@ class TimesheetConfiguration implements SystemBundleConfiguration
     public function isDurationOnly(): bool
     {
         return $this->find('mode') === self::MODE_DURATION_ONLY;
+    }
+
+    public function isPunchInOut(): bool
+    {
+        return $this->find('mode') === self::MODE_PUNCH_IN_OUT;
     }
 
     public function isMarkdownEnabled(): bool

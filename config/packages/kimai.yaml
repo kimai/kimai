@@ -10,7 +10,7 @@ kimai:
 # --------------------------------------------------------------------------------
 # AUTHENTICATION
 # You can disable some user management functions in the authentication screens.
-# Both settings default to "true"
+# Both settings default to "true", see https://www.kimai.org/documentation/users.html
 # --------------------------------------------------------------------------------
 #    user:
 #        registration: false
