@@ -2,7 +2,15 @@ security:
     encoders:
         App\Entity\User: bcrypt
 
+    #erase_credentials: false
+
     providers:
+        chain_provider:
+            chain:
+                #providers: [fos_userbundle]
+                providers: [fos_userbundle, fr3d_ldapbundle]
+        fr3d_ldapbundle:
+            id: fr3d_ldap.security.user.provider
         fos_userbundle:
             id: fos_user.user_provider.username_email
 
@@ -20,14 +28,18 @@ security:
             guard:
                 authenticators:
                     - App\Security\TokenAuthenticator
+                provider: fos_userbundle
 
             remember_me:
                 secret:   '%kernel.secret%'
                 lifetime: 604800
                 path:     /
 
+            fr3d_ldap: ~
+
+            provider: chain_provider
+
             form_login:
-                provider: fos_userbundle
                 check_path: fos_user_security_check
                 login_path: fos_user_security_login
                 csrf_token_generator: security.csrf.token_manager
