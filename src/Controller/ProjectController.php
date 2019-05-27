@@ -54,7 +54,7 @@ class ProjectController extends AbstractController
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction($page, Request $request, ProjectRepository $repository)
+    public function indexAction($page, Request $request)
     {
         $query = new ProjectQuery();
         $query
@@ -71,7 +71,7 @@ class ProjectController extends AbstractController
         }
 
         /* @var $entries Pagerfanta */
-        $entries = $repository->findByQuery($query);
+        $entries = $this->getRepository()->findByQuery($query);
 
         return $this->render('project/index.html.twig', [
             'entries' => $entries,
