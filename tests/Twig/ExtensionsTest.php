@@ -197,7 +197,6 @@ class ExtensionsTest extends TestCase
 
         $sut = $this->getSut($this->localeEn, 'en');
 
-        // why would we want that? anything passed to this method can become a zero duration: '00:00 h'
         $this->assertEquals('00:00 h', $sut->duration(null));
     }
 
