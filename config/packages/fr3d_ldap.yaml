@@ -24,6 +24,6 @@ fr3d_ldap:
           - { ldap_attr: cn, user_method: setAlias }
           - { ldap_attr: cn, user_method: setEmail }
   service:
-      user_hydrator: fr3d_ldap.user_hydrator.default
+      user_hydrator: App\Ldap\LdapUserHydrator
       ldap_manager: fr3d_ldap.ldap_manager.default
       ldap_driver: fr3d_ldap.ldap_driver.zend

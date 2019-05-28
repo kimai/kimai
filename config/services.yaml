@@ -125,6 +125,9 @@ services:
     App\Security\RolePermissionManager:
         arguments: ["%kimai.permissions%"]
 
+    App\Ldap\LdapUserHydrator:
+        arguments: ["%fr3d_ldap.ldap_manager.parameters%"]
+
     # ================================================================================
     # REPOSITORIES
     # ================================================================================
