@@ -30,7 +30,7 @@
     {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% else %}
-        {{ tables.data_table_header(tableName, columns) }}
+        {{ tables.data_table_header(tableName, columns, false, 'kimai.userUpdate') }}
 
         {% for entry in entries %}
             <tr{% if is_granted('edit', entry) %} class="open-edit alternative-link" data-href="{{ path('user_profile_edit', {'username': entry.username}) }}"{% endif %}>
