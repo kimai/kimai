@@ -42,7 +42,7 @@
 
         {{ tables.data_table_header(tableName, columns) }}
         {% for entry in entries %}
-            {% set duration = entry.duration|duration() %}
+            {% set duration = entry.duration|duration %}
             {% if entry.fixedRate is not null %}
                 {% set rate = entry.fixedRate %}
                 {% set duration = 1 %}

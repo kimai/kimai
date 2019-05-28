@@ -24,9 +24,9 @@ class Duration
     /**
      * Transforms seconds into a duration string.
      *
-     * @param $seconds
+     * @param int $seconds
      * @param string $format
-     * @return string
+     * @return string|null
      */
     public function format($seconds, $format = self::FORMAT_NO_SECONDS)
     {
@@ -51,9 +51,9 @@ class Duration
 
     /**
      * @param string $duration
-     * @return string
+     * @return int
      */
-    public function parseDurationString($duration)
+    public function parseDurationString($duration): int
     {
         if (false !== stripos($duration, ':')) {
             return $this->parseDuration($duration, self::FORMAT_COLON);
@@ -72,7 +72,7 @@ class Duration
      * @return int
      * @throws \InvalidArgumentException
      */
-    public function parseDuration(string $duration, string $mode)
+    public function parseDuration(string $duration, string $mode): int
     {
         if (empty($duration)) {
             return 0;
@@ -88,10 +88,10 @@ class Duration
                 }
                 $seconds = 0;
                 if (3 == count($parts)) {
-                    $seconds += array_pop($parts);
+                    $seconds += (int) array_pop($parts);
                 }
-                $seconds += $parts[1] * 60;
-                $seconds += $parts[0] * 3600;
+                $seconds += (int) $parts[1] * 60;
+                $seconds += (int) $parts[0] * 3600;
                 break;
 
             case self::FORMAT_NATURAL:

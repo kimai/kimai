@@ -134,7 +134,7 @@ class Extensions extends AbstractExtension
     }
 
     /**
-     * @param $object
+     * @param object $object
      * @return null|string
      */
     public function getClassName($object)
@@ -155,14 +155,24 @@ class Extensions extends AbstractExtension
      */
     public function duration($duration, $format = null)
     {
-        $seconds = $duration;
+        if (null === $duration) {
+            $duration = 0;
+        }
+
         if ($duration instanceof Timesheet) {
             $seconds = $duration->getDuration();
             if (null === $duration->getEnd()) {
                 $seconds = time() - $duration->getBegin()->getTimestamp();
             }
+
+            $duration = $seconds;
         }
 
+        return $this->formatDuration((int) $duration, $format);
+    }
+
+    protected function formatDuration(int $seconds, $format = null): string
+    {
         if ($seconds < 0) {
             return '?';
         }

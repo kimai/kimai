@@ -58,7 +58,7 @@ class TimesheetQuery extends ActivityQuery
     /**
      * @var iterable
      */
-    protected $tags;
+    protected $tags = [];
 
     public function __construct()
     {

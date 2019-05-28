@@ -47,6 +47,8 @@ class TagController extends BaseApiController
     }
 
     /**
+     * Fetch all existing tags
+     *
      * @SWG\Response(
      *      response=200,
      *      description="Returns the collection of all existing tags as string array",
@@ -65,9 +67,7 @@ class TagController extends BaseApiController
         $filter = $paramFetcher->get('name');
 
         $data = $this->repository->findAllTagNames($filter);
-        if (null === $data) {
-            $data = [];
-        }
+
         $view = new View($data, 200);
         $view->getContext()->setGroups(['Default', 'Collection']);
 
@@ -75,7 +75,7 @@ class TagController extends BaseApiController
     }
 
     /**
-     * Delete an existing tag
+     * Delete a tag
      *
      * @SWG\Delete(
      *      @SWG\Response(

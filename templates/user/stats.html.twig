@@ -64,7 +64,6 @@
 
                         var userProfileChartCanvas{{ year }} = $("#userProfileChart{{ year }}").get(0).getContext("2d");
 
-                        {% if tab == 'charts' %}
                         var userProfileChart{{ year }} = new Chart(
                             userProfileChartCanvas{{ year }}, {
                                 type: 'bar',
@@ -72,17 +71,6 @@
                                 options: userProfileChartOptions()
                             }
                         );
-                        {% endif %}
-
-                        $('a[href="#charts"]').on('shown.bs.tab', function(event){
-                            var userProfileChart{{ year }} = new Chart(
-                                userProfileChartCanvas{{ year }}, {
-                                    type: 'bar',
-                                    data: userProfileChartData{{ year }},
-                                    options: userProfileChartOptions()
-                                }
-                            );
-                        });
                     });
                 </script>
             {% endblock %}

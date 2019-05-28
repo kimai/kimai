@@ -9,7 +9,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Event\PrepareUserEvent;
 use App\Form\UserApiTokenType;
@@ -67,9 +66,19 @@ class ProfileController extends AbstractController
      * @Route(path="/{username}", name="user_profile", methods={"GET"})
      * @Security("is_granted('view', profile)")
      */
-    public function indexAction(User $profile)
+    public function indexAction(User $profile, TimesheetRepository $repository)
     {
-        return $this->renderProfileView($profile, 'charts', 'user/stats.html.twig', []);
+        $userStats = $repository->getUserStatistics($profile);
+        $monthlyStats = $repository->getMonthlyStats($profile);
+
+        $viewVars = [
+            'tab' => 'charts',
+            'user' => $profile,
+            'stats' => $userStats,
+            'years' => $monthlyStats,
+        ];
+
+        return $this->render('user/stats.html.twig', $viewVars);
     }
 
     /**
@@ -269,23 +278,6 @@ class ProfileController extends AbstractController
             'user' => $user,
             'forms' => $forms
         ]);
-    }
-
-    protected function renderProfileView(User $user, string $tab, string $template, array $vars)
-    {
-        /* @var $timesheetRepo TimesheetRepository */
-        $timesheetRepo = $this->getDoctrine()->getRepository(Timesheet::class);
-        $userStats = $timesheetRepo->getUserStatistics($user);
-        $monthlyStats = $timesheetRepo->getMonthlyStats($user);
-
-        $viewVars = [
-            'tab' => $tab,
-            'user' => $user,
-            'stats' => $userStats,
-            'years' => $monthlyStats,
-        ];
-
-        return $this->render($template, array_merge($viewVars, $vars));
     }
 
     /**

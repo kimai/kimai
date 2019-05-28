@@ -10,7 +10,6 @@
 namespace App\Command;
 
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
@@ -19,7 +18,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -29,11 +27,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class CreateUserCommand extends Command
 {
     /**
-     * @var UserPasswordEncoder
+     * @var UserPasswordEncoderInterface
      */
     protected $encoder;
     /**
-     * @var Registry
+     * @var RegistryInterface
      */
     protected $doctrine;
     /**
@@ -124,7 +122,7 @@ class CreateUserCommand extends Command
                 );
             }
 
-            return;
+            return 1;
         }
 
         try {
@@ -132,10 +130,14 @@ class CreateUserCommand extends Command
             $entityManager->persist($user);
             $entityManager->flush();
             $io->success('Success! Created user: ' . $user->getUsername());
+
+            return 0;
         } catch (\Exception $ex) {
             $io->error('Failed to create user: ' . $user->getUsername());
             $io->error('Reason: ' . $ex->getMessage());
         }
+
+        return 2;
     }
 
     /**

@@ -56,7 +56,8 @@ trait RendererTrait
     abstract protected function getFormattedTime(\DateTime $date);
 
     /**
-     * @param $amount
+     * @param int $amount
+     * @param string $currency
      * @return mixed
      */
     abstract protected function getFormattedMoney($amount, $currency);
@@ -68,7 +69,7 @@ trait RendererTrait
     abstract protected function getFormattedMonthName(\DateTime $date);
 
     /**
-     * @param $seconds
+     * @param int $seconds
      * @return mixed
      */
     abstract protected function getFormattedDuration($seconds);

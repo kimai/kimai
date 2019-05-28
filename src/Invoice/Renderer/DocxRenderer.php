@@ -14,6 +14,7 @@ use App\Invoice\RendererInterface;
 use App\Model\InvoiceModel;
 use PhpOffice\PhpWord\Escaper\Xml;
 use PhpOffice\PhpWord\Exception\Exception as OfficeException;
+use PhpOffice\PhpWord\Settings;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Symfony\Component\HttpFoundation\File\Stream;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +28,7 @@ class DocxRenderer extends AbstractRenderer implements RendererInterface
      */
     public function render(InvoiceDocument $document, InvoiceModel $model): Response
     {
-        \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(false);
+        Settings::setOutputEscapingEnabled(false);
 
         $filename = basename($document->getFilename());
 

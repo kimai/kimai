@@ -39,7 +39,7 @@ class ParsedownExtension extends \Parsedown
      * - changes any space to a hyphen.
      * - If that is not unique, add "-1", "-2", "-3",... to make it unique
      *
-     * @param $text
+     * @param string $text
      * @return string
      */
     private function getIDfromText($text)

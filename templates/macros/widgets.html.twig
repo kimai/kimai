@@ -180,7 +180,7 @@
             <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{ 'label.actions'|trans }}
                 <span class="fa fa-caret-down"></span></button>
             <ul class="dropdown-menu dropdown-menu-right">
-                {%- filter spaceless -%}
+                {%- apply spaceless -%}
                     {%- for icon,values in actions  %}
                         {% set class = '' %}
                         {% if icon == 'trash' %}
@@ -197,7 +197,7 @@
                             {% endif %}
                         </li>
                     {% endfor -%}
-                {% endfilter %}
+                {% endapply %}
             </ul>
         </div>
     {% endif %}
@@ -205,7 +205,7 @@
 
 {% macro action_button(icon, values, type) %}
     {%- import _self as macro -%}
-    {%- filter spaceless -%}
+    {%- apply spaceless -%}
         {% set id = null %}
         {% set onclick = null %}
         {% set modal = null %}
@@ -278,17 +278,17 @@
                     {%- endfor -%}
                 {%- endif -%}
         >{% if title is not null %}{{ title }}{% else %}{{ macro.icon(icon) }}{% endif %}</a>
-    {% endfilter %}
+    {% endapply %}
 {% endmacro %}
 
 {% macro button_group(actions, type) %}
     {%- import _self as macro -%}
     <div class="btn-group">
-        {%- filter spaceless -%}
+        {%- apply spaceless -%}
         {%- for icon,values in actions  %}
             {{ macro.action_button(icon, values, type) }}
         {% endfor -%}
-        {% endfilter %}
+        {% endapply %}
     </div>
 {% endmacro %}
 

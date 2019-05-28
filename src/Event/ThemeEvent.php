@@ -35,9 +35,6 @@ class ThemeEvent extends Event
      */
     protected $payload = null;
 
-    /**
-     * @param string $name
-     */
     public function __construct(User $user, $payload = null)
     {
         $this->user = $user;

@@ -28,9 +28,6 @@ class EnhancedChoiceTypeExtension extends AbstractTypeExtension
      */
     protected $type = null;
 
-    /**
-     * @param null|string $type
-     */
     public function __construct(ThemeConfiguration $configuration)
     {
         $this->type = $configuration->getSelectPicker();

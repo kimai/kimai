@@ -79,7 +79,7 @@ abstract class AbstractToolbarForm extends AbstractType
 
     /**
      * @param FormBuilderInterface $builder
-     * @param null|string $label
+     * @param string $label
      */
     protected function addVisibilityChoice(FormBuilderInterface $builder, string $label = 'label.visible')
     {

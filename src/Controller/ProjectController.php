@@ -31,11 +31,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProjectController extends AbstractController
 {
     /**
-     * @return \App\Repository\ProjectRepository
+     * @var ProjectRepository
      */
-    protected function getRepository()
+    private $repository;
+
+    public function __construct(ProjectRepository $repository)
     {
-        return $this->getDoctrine()->getRepository(Project::class);
+        $this->repository = $repository;
+    }
+
+    protected function getRepository(): ProjectRepository
+    {
+        return $this->repository;
     }
 
     /**
@@ -64,7 +71,7 @@ class ProjectController extends AbstractController
         }
 
         /* @var $entries Pagerfanta */
-        $entries = $this->getDoctrine()->getRepository(Project::class)->findByQuery($query);
+        $entries = $this->getRepository()->findByQuery($query);
 
         return $this->render('project/index.html.twig', [
             'entries' => $entries,

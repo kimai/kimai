@@ -26,7 +26,7 @@ use Pagerfanta\Pagerfanta;
 class ProjectRepository extends AbstractRepository
 {
     /**
-     * @param $id
+     * @param int $id
      * @return null|Project
      */
     public function getById($id)

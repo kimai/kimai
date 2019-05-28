@@ -31,7 +31,7 @@
 {% endmacro %}
 
 {% macro data_table_column_class(name, columns, column) %}
-{% spaceless %}
+{% apply spaceless %}
     {% set class = '' %}
     {% set always = false %}
 
@@ -67,7 +67,7 @@
     {% if not class is empty %}
         {{ class }}
     {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endmacro %}
 
 {% macro data_table_header_options(name, columns, options) %}
