@@ -196,7 +196,8 @@ class ExtensionsTest extends TestCase
         $this->assertEquals('00:00 h', $sut->duration('0'));
 
         $sut = $this->getSut($this->localeEn, 'en');
-        $this->assertNull($sut->duration(null));
+
+        $this->assertEquals('00:00 h', $sut->duration(null));
     }
 
     protected function getTimesheet($seconds)

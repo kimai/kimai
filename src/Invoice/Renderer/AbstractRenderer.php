@@ -11,7 +11,7 @@ namespace App\Invoice\Renderer;
 
 use App\Twig\DateExtensions;
 use App\Twig\Extensions;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class AbstractRenderer
 {
@@ -63,8 +63,8 @@ abstract class AbstractRenderer
     }
 
     /**
-     * @param $amount
-     * @param $currency
+     * @param int $amount
+     * @param string $currency
      * @return string
      */
     protected function getFormattedMoney($amount, $currency)
@@ -82,7 +82,7 @@ abstract class AbstractRenderer
     }
 
     /**
-     * @param $seconds
+     * @param int $seconds
      * @return mixed
      */
     protected function getFormattedDuration($seconds)

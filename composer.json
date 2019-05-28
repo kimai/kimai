@@ -66,6 +66,8 @@
         "dama/doctrine-test-bundle": "^5.0",
         "friendsofphp/php-cs-fixer": "^2.10",
         "phpstan/phpstan": "^0.11.7",
+        "phpstan/phpstan-doctrine": "^0.11.4",
+        "phpstan/phpstan-symfony": "^0.11.6",
         "phpunit/phpunit": "^7.0",
         "symfony/browser-kit": "^4.0",
         "symfony/css-selector": "^4.0",
@@ -118,7 +120,7 @@
         "tests": "vendor/bin/phpunit tests/",
         "tests-unit": "vendor/bin/phpunit --exclude-group integration tests/",
         "tests-integration": "vendor/bin/phpunit --group integration tests/",
-        "phpstan": "vendor/bin/phpstan analyse src --level=1",
+        "phpstan": "vendor/bin/phpstan analyse src --level=3",
         "codestyle": "vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none",
         "codestyle-fix": "vendor/bin/php-cs-fixer fix"
     },

@@ -28,7 +28,7 @@ class TimesheetTeamController extends TimesheetAbstractController
      * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_timesheet_paginated", methods={"GET"})
      * @Security("is_granted('view_other_timesheet')")
      *
-     * @param $page
+     * @param int $page
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */

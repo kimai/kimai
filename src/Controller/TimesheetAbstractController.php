@@ -17,6 +17,7 @@ use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
+use App\Repository\TagRepository;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\UserDateTimeFactory;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -35,15 +36,16 @@ abstract class TimesheetAbstractController extends AbstractController
      * @var TimesheetConfiguration
      */
     protected $configuration;
-
     /**
-     * @param UserDateTimeFactory $dateTime
-     * @param TimesheetConfiguration $configuration
+     * @var TimesheetRepository
      */
-    public function __construct(UserDateTimeFactory $dateTime, TimesheetConfiguration $configuration)
+    protected $repository;
+
+    public function __construct(UserDateTimeFactory $dateTime, TimesheetConfiguration $configuration, TimesheetRepository $repository)
     {
         $this->dateTime = $dateTime;
         $this->configuration = $configuration;
+        $this->repository = $repository;
     }
 
     /**
@@ -59,7 +61,7 @@ abstract class TimesheetAbstractController extends AbstractController
      */
     protected function getRepository()
     {
-        return $this->getDoctrine()->getRepository(Timesheet::class);
+        return $this->repository;
     }
 
     protected function index($page, Request $request, string $renderTemplate)
@@ -86,9 +88,11 @@ abstract class TimesheetAbstractController extends AbstractController
 
         $tags = $query->getTags(true);
         if (!empty($tags)) {
+            /** @var TagRepository $tagRepo */
+            $tagRepo = $this->getDoctrine()->getRepository(Tag::class);
             $query->setTags(
                 new ArrayCollection(
-                    $this->getDoctrine()->getRepository(Tag::class)->findIdsByTagNameList(implode(',', $tags))
+                    $tagRepo->findIdsByTagNameList(implode(',', $tags))
                 )
             );
         }

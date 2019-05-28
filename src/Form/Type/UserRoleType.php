@@ -24,7 +24,6 @@ class UserRoleType extends AbstractType
     protected $roles = [];
 
     /**
-     * UserRolesType constructor.
      * @param string[] $roles
      */
     public function __construct(array $roles = [])
@@ -38,11 +37,12 @@ class UserRoleType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $roles = [];
-        /* @var string[] $value */
         foreach ($this->roles as $key => $value) {
             $roles[$key] = $key;
-            foreach ($value as $value2) {
-                $roles[$value2] = $value2;
+            if (is_array($value)) {
+                foreach ($value as $value2) {
+                    $roles[$value2] = $value2;
+                }
             }
         }
 

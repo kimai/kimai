@@ -118,7 +118,7 @@ class TimesheetRepository extends AbstractRepository
     }
 
     /**
-     * @param $select
+     * @param string $select
      * @param User $user
      * @return int
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -290,7 +290,7 @@ class TimesheetRepository extends AbstractRepository
 
     /**
      * @param User $user
-     * @param int $limit
+     * @param int $hardLimit
      * @return int
      * @throws RepositoryException
      * @throws \Doctrine\ORM\ORMException

@@ -247,7 +247,7 @@
 {% endmacro %}
 
 {% macro timesheet(timesheet, view) %}
-    {%- filter spaceless -%}
+    {%- apply spaceless -%}
     {% import "macros/widgets.html.twig" as widgets %}
     {% set actions = {} %}
 
@@ -283,7 +283,7 @@
     {% else %}
         {{ widgets.entity_actions(event.payload.actions) }}
     {% endif %}
-    {%- endfilter -%}
+    {%- endapply -%}
 {% endmacro %}
 
 {% macro timesheets_team(view) %}

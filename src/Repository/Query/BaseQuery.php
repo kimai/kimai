@@ -140,7 +140,7 @@ class BaseQuery
     }
 
     /**
-     * @param $resultType
+     * @param string $resultType
      * @return $this
      * @throws \InvalidArgumentException
      */

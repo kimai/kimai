@@ -16,7 +16,7 @@ use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 class UserRepository extends AbstractRepository implements UserLoaderInterface
 {
     /**
-     * @param $id
+     * @param int $id
      * @return null|User
      */
     public function getById($id)

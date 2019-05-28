@@ -29,7 +29,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -48,7 +47,7 @@ class KimaiImporterCommand extends Command
 
     /**
      * Create the user default passwords
-     * @var UserPasswordEncoder
+     * @var UserPasswordEncoderInterface
      */
     protected $encoder;
     /**
@@ -389,7 +388,7 @@ class KimaiImporterCommand extends Command
 
     /**
      * Thanks to "xelozz -at- gmail.com", see http://php.net/manual/en/function.memory-get-usage.php#96280
-     * @param $size
+     * @param int $size
      * @return string
      */
     protected function bytesHumanReadable($size)
@@ -402,7 +401,7 @@ class KimaiImporterCommand extends Command
     }
 
     /**
-     * @param $table
+     * @param string $table
      * @param array $where
      * @return array
      */
@@ -429,7 +428,7 @@ class KimaiImporterCommand extends Command
 
     /**
      * @param SymfonyStyle $io
-     * @param $object
+     * @param object $object
      * @return bool
      */
     protected function validateImport(SymfonyStyle $io, $object)

@@ -10,7 +10,6 @@
 namespace App\EventSubscriber;
 
 use App\Entity\User;
-use KevinPapst\AdminLTEBundle\Event\ShowUserEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -23,17 +22,11 @@ class TimezoneSubscriber implements EventSubscriberInterface
      */
     protected $storage;
 
-    /**
-     * @param TokenStorageInterface $tokenStorage
-     */
     public function __construct(TokenStorageInterface $tokenStorage)
     {
         $this->storage = $tokenStorage;
     }
 
-    /**
-     * @return array
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -41,24 +34,18 @@ class TimezoneSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param ShowUserEvent $event
-     */
     public function setTimezone(GetResponseEvent $event)
     {
         if (!$this->canHandleEvent()) {
             return;
         }
 
-        /* @var $user User */
+        /** @var User $user */
         $user = $this->storage->getToken()->getUser();
         $timezone = $user->getPreferenceValue('timezone', date_default_timezone_get());
         date_default_timezone_set($timezone);
     }
 
-    /**
-     * @return bool
-     */
     protected function canHandleEvent(): bool
     {
         if (null === $this->storage->getToken()) {

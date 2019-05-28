@@ -124,7 +124,7 @@ class Timesheet
     private $exported = false;
 
     /**
-     * @var \App\Entity\Tag[]
+     * @var Tag[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="timesheets", cascade={"persist"})
      * @ORM\JoinTable(
@@ -201,7 +201,7 @@ class Timesheet
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getEnd()
     {

@@ -22,7 +22,7 @@ use Pagerfanta\Pagerfanta;
 class ActivityRepository extends AbstractRepository
 {
     /**
-     * @param $id
+     * @param int $id
      * @return null|Activity
      */
     public function getById($id)
