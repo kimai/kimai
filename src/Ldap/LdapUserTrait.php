@@ -13,9 +13,13 @@ trait LdapUserTrait
      */
     public function setDn(string $dn)
     {
-        $pref = (new UserPreference())
-            ->setName('ldap.dn')
-            ->setValue($dn);
+        $pref = $this->getPreference('ldap.dn');
+
+        if (null === $pref) {
+            $pref = (new UserPreference())
+                ->setName('ldap.dn');
+        }
+        $pref->setValue($dn);
 
         $this->addPreference($pref);
     }
