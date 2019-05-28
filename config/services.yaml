@@ -125,8 +125,17 @@ services:
     App\Security\RolePermissionManager:
         arguments: ["%kimai.permissions%"]
 
+    App\Ldap\LdapManager:
+        arguments: ["@fr3d_ldap.ldap_manager.default", "%kimai.ldap.active%"]
+
+    App\Ldap\LdapUserProvider:
+        arguments: ["@fr3d_ldap.security.user.provider", "%kimai.ldap.active%"]
+
     App\Ldap\LdapUserHydrator:
         arguments: ["%fr3d_ldap.ldap_manager.parameters%"]
+
+    App\Ldap\ZendLdap:
+        arguments: ["%fr3d_ldap.ldap_driver.parameters%", "%kimai.ldap.active%"]
 
     # ================================================================================
     # REPOSITORIES
@@ -175,3 +184,4 @@ services:
     App\Repository\InvoiceDocumentRepository:
         class: App\Repository\InvoiceDocumentRepository
         arguments: ['%kimai.invoice.documents%']
+

@@ -7,10 +7,9 @@ security:
     providers:
         chain_provider:
             chain:
-                #providers: [fos_userbundle]
-                providers: [fos_userbundle, fr3d_ldapbundle]
-        fr3d_ldapbundle:
-            id: fr3d_ldap.security.user.provider
+                providers: [fos_userbundle, kimai_ldap]
+        kimai_ldap:
+            id: App\Ldap\LdapUserProvider
         fos_userbundle:
             id: fos_user.user_provider.username_email
 
@@ -28,7 +27,6 @@ security:
             guard:
                 authenticators:
                     - App\Security\TokenAuthenticator
-                provider: fos_userbundle
 
             remember_me:
                 secret:   '%kernel.secret%'

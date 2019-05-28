@@ -60,6 +60,8 @@ class AppExtension extends Extension
         $container->setParameter('kimai.timesheet', $config['timesheet']);
         $container->setParameter('kimai.timesheet.rates', $config['timesheet']['rates']);
         $container->setParameter('kimai.timesheet.rounding', $config['timesheet']['rounding']);
+
+        $container->setParameter('kimai.ldap.active', $config['ldap']['active']);
     }
 
     /**

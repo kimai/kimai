@@ -7,6 +7,11 @@ use App\Entity\UserPreference;
 trait LdapUserTrait
 {
     /**
+     * @var string[]
+     */
+    protected $ldapGroups;
+
+    /**
      * Set Ldap Distinguished Name.
      *
      * @param string $dn Distinguished Name
@@ -32,5 +37,18 @@ trait LdapUserTrait
     public function getDn(): ?string
     {
         return $this->getPreferenceValue('ldap.dn');
+    }
+
+    /**
+     * Sets the group from the LDAP.
+     * As this is NOT the Kimai group, an EventListener will be used to convert them later on.
+     *
+     * FIXME create EventListener
+     *
+     * @param string $group
+     */
+    public function addLdapGroup(string $group)
+    {
+        $this->ldapGroups[] = $group;
     }
 }

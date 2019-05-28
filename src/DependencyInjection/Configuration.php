@@ -62,6 +62,7 @@ class Configuration implements ConfigurationInterface
                 ->append($this->getWidgetsNode())
                 ->append($this->getDefaultsNode())
                 ->append($this->getPermissionsNode())
+                ->append($this->getLdapNode())
             ->end()
         ->end();
 
@@ -100,7 +101,7 @@ class Configuration implements ConfigurationInterface
                                 ->requiresAtLeastOneElement()
                                 ->useAttributeAsKey('key')
                                 ->isRequired()
-                                ->prototype('scalar')->end()
+                                ->scalarPrototype()->end()
                                 ->defaultValue([])
                             ->end()
                             ->integerNode('begin')
@@ -141,7 +142,7 @@ class Configuration implements ConfigurationInterface
                                 ->requiresAtLeastOneElement()
                                 ->useAttributeAsKey('key')
                                 ->isRequired()
-                                ->prototype('scalar')->end()
+                                ->scalarPrototype()->end()
                                 ->defaultValue([])
                             ->end()
                             ->floatNode('factor')
@@ -258,7 +259,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->arrayNode('days')
                             ->requiresAtLeastOneElement()
-                            ->prototype('integer')->end()
+                            ->integerPrototype()->end()
                             ->defaultValue([1, 2, 3, 4, 5])
                         ->end()
                         ->scalarNode('begin')->defaultValue('08:00')->end()
@@ -449,7 +450,7 @@ class Configuration implements ConfigurationInterface
                     ->arrayPrototype()
                         ->useAttributeAsKey('key')
                         ->isRequired()
-                        ->prototype('scalar')->end()
+                        ->scalarPrototype()->end()
                         ->defaultValue([])
                     ->end()
                 ->end()
@@ -459,7 +460,7 @@ class Configuration implements ConfigurationInterface
                     ->arrayPrototype()
                         ->useAttributeAsKey('key')
                         ->isRequired()
-                        ->prototype('scalar')->end()
+                        ->scalarPrototype()->end()
                         ->defaultValue([])
                     ->end()
                 ->end()
@@ -469,7 +470,7 @@ class Configuration implements ConfigurationInterface
                     ->arrayPrototype()
                         ->useAttributeAsKey('key')
                         ->isRequired()
-                        ->prototype('scalar')->end()
+                        ->scalarPrototype()->end()
                         ->defaultValue([])
                     ->end()
                     ->defaultValue([
@@ -479,6 +480,21 @@ class Configuration implements ConfigurationInterface
                         'ROLE_SUPER_ADMIN' => [],
                     ])
                 ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    protected function getLdapNode()
+    {
+        $treeBuilder = new TreeBuilder('ldap');
+        $node = $treeBuilder->getRootNode();
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->booleanNode('active')->defaultFalse()->end()
             ->end()
         ;
 
