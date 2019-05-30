@@ -315,9 +315,10 @@ kimai:
     plugin_dir: '%kernel.project_dir%/var/plugins'
 # --------------------------------------------------------------------------------
 
+
 # --------------------------------------------------------------------------------
 # LDAP
-# Connect Kimai with your companies directory server
+# Connect to your companies directory server, see https://www.kimai.org/documentation/ldap.html
 # --------------------------------------------------------------------------------
 #    ldap:
 #        active: true

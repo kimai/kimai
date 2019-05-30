@@ -1,29 +1,8 @@
 fr3d_ldap:
     driver:
-        host: 127.0.0.1
-        #port: 389
-        #username: foo
-        #password: bar
-        #allowEmptyPassword: false
-        bindRequiresDn: true
-        baseDn: ou=users, dc=kimai, dc=org
-        #accountFilterFormat: (&(uid=%s)) # sprintf() format where %s will be the username
-        #optReferrals: false
-        #useSsl: true
-        #useStartTls: true
-        #accountCanonicalForm: 3 # ACCTNAME_FORM_BACKSLASH this is only needed if your users have to login with something like HOST\User
-        #accountDomainName: HOST
-        #accountDomainNameShort: HOST # if you use the Backslash form set both to Hostname than the Username will be converted to HOST\User
+        host: x.x.x.x
     user:
-        baseDn: ou=users, dc=kimai, dc=org
-        #filter: (&(ObjectClass=Person))
-        usernameAttribute: uid
-        # Mapping LDAP attributes to Kimai user object
-        attributes:
-            - { ldap_attr: uid, user_method: setUsername }
-            - { ldap_attr: cn, user_method: setAlias }
-            - { ldap_attr: cn, user_method: setEmail }
-            #- { ldap_attr: gidnumber, user_method: addLdapGroup }
+        baseDn: xxx
     service:
         user_hydrator: App\Ldap\LdapUserHydrator
         ldap_manager: App\Ldap\LdapManager

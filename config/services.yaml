@@ -3,6 +3,8 @@
 parameters:
     locale: en
     app_locales: en|de|it|fr|es|ru|ar|hu|pt_BR|sv|ja
+    fr3d_ldap.security.authentication.provider.class: 'App\Ldap\LdapAuthenticationProvider'
+    fr3d_ldap.ldap_manager.class: 'App\Ldap\LdapManager'
 
 services:
     # default configuration for services in *this* file
@@ -125,17 +127,25 @@ services:
     App\Security\RolePermissionManager:
         arguments: ["%kimai.permissions%"]
 
-    App\Ldap\LdapManager:
-        arguments: ["@fr3d_ldap.ldap_manager.default", "%kimai.ldap.active%"]
+    # ================================================================================
+    # LDAP
+    # ================================================================================
 
     App\Ldap\LdapUserProvider:
         arguments: ["@fr3d_ldap.security.user.provider", "%kimai.ldap.active%"]
 
     App\Ldap\LdapUserHydrator:
-        arguments: ["%fr3d_ldap.ldap_manager.parameters%"]
+        arguments: ["%kimai.ldap.parameters%"]
 
     App\Ldap\ZendLdap:
-        arguments: ["%fr3d_ldap.ldap_driver.parameters%", "%kimai.ldap.active%"]
+        arguments: ["%kimai.ldap.connection%", "%kimai.ldap.active%"]
+
+    App\Ldap\LdapManager:
+        alias: fr3d_ldap.ldap_manager.default
+
+    fr3d_ldap.ldap_manager.default:
+        class: App\Ldap\LdapManager
+        arguments: ['@fr3d_ldap.ldap_driver', '@fr3d_ldap.user_hydrator', '%kimai.ldap.parameters%', '%kimai.ldap.active%']
 
     # ================================================================================
     # REPOSITORIES

@@ -61,7 +61,22 @@ class AppExtension extends Extension
         $container->setParameter('kimai.timesheet.rates', $config['timesheet']['rates']);
         $container->setParameter('kimai.timesheet.rounding', $config['timesheet']['rounding']);
 
-        $container->setParameter('kimai.ldap.active', $config['ldap']['active']);
+        $this->setLdapParameter($config['ldap'], $container);
+    }
+
+    protected function setLdapParameter(array $config, ContainerBuilder $container)
+    {
+        $container->setParameter('kimai.ldap.active', $config['active']);
+
+        if (!isset($config['connection']['baseDn'])) {
+            $config['connection']['baseDn'] = $config['user']['baseDn'];
+        }
+        if (!isset($config['connection']['accountFilterFormat'])) {
+            $config['connection']['accountFilterFormat'] = $config['user']['filter'];
+        }
+
+        $container->setParameter('kimai.ldap.connection', $config['connection']);
+        $container->setParameter('kimai.ldap.parameters', $config['user']);
     }
 
     /**
