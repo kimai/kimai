@@ -3,8 +3,6 @@
 parameters:
     locale: en
     app_locales: en|de|it|fr|es|ru|ar|hu|pt_BR|sv|ja
-    fr3d_ldap.security.authentication.provider.class: 'App\Ldap\LdapAuthenticationProvider'
-    fr3d_ldap.ldap_manager.class: 'App\Ldap\LdapManager'
 
 services:
     # default configuration for services in *this* file
@@ -15,7 +13,7 @@ services:
                             # fetching services directly from the container via $container->get() won't work.
                             # The best practice is to be explicit about your dependencies anyway.
         bind:
-            $projectDirectory: "%kernel.project_dir%"
+            $projectDirectory: '%kernel.project_dir%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -38,34 +36,37 @@ services:
 
     App\Repository\WidgetRepository:
         arguments:
-            $widgets: "%kimai.widgets%"
+            $widgets: '%kimai.widgets%'
 
     App\Controller\DashboardController:
         arguments:
-            $dashboard: "%kimai.dashboard%"
+            $dashboard: '%kimai.dashboard%'
 
     App\Configuration\LanguageFormattings:
-        arguments: ["%kimai.languages%"]
+        arguments: ['%kimai.languages%']
 
     App\Configuration\TimesheetConfiguration:
         arguments:
-            $settings: "%kimai.timesheet%"
+            $settings: '%kimai.timesheet%'
 
     App\Configuration\CalendarConfiguration:
         arguments:
-            $settings: "%kimai.calendar%"
+            $settings: '%kimai.calendar%'
 
     App\Configuration\FormConfiguration:
         arguments:
-            $settings: "%kimai.defaults%"
+            $settings: '%kimai.defaults%'
 
     App\Configuration\SystemConfiguration:
         arguments:
-            $settings: "%kimai.config%"
+            $settings: '%kimai.config%'
 
     App\Configuration\ThemeConfiguration:
         arguments:
-            $settings: "%kimai.theme%"
+            $settings: '%kimai.theme%'
+
+    App\Configuration\LdapConfiguration:
+        arguments: ['%kimai.ldap%']
 
     App\Utils\MPdfConverter:
         arguments: ['%kernel.cache_dir%']
@@ -98,10 +99,10 @@ services:
     # ================================================================================
 
     App\Form\Type\UserRoleType:
-        arguments: ["%security.role_hierarchy.roles%"]
+        arguments: ['%security.role_hierarchy.roles%']
 
     App\Form\Type\LanguageType:
-        arguments: ["%app_locales%"]
+        arguments: ['%app_locales%']
 
     # ================================================================================
     # THEME
@@ -115,41 +116,38 @@ services:
     # ================================================================================
 
     App\Timesheet\Calculator\DurationCalculator:
-        arguments: ["%kimai.timesheet.rounding%"]
+        arguments: ['%kimai.timesheet.rounding%']
 
     App\Timesheet\Calculator\RateCalculator:
-        arguments: ["%kimai.timesheet.rates%"]
+        arguments: ['%kimai.timesheet.rates%']
 
     # ================================================================================
     # SECURITY & VOTER
     # ================================================================================
 
     App\Security\RolePermissionManager:
-        arguments: ["%kimai.permissions%"]
+        arguments: ['%kimai.permissions%']
 
     # ================================================================================
     # LDAP
     # ================================================================================
 
     App\Ldap\LdapUserProvider:
-        arguments: ["@fr3d_ldap.security.user.provider", "%kimai.ldap.active%"]
-
-    App\Ldap\LdapUserHydrator:
-        arguments: ["%kimai.ldap.parameters%"]
+        arguments: ['@fr3d_ldap.security.user.provider']
 
     Zend\Ldap\Ldap:
-        alias: fr3d_ldap.ldap_driver.zend.driver
-
-    fr3d_ldap.ldap_driver.zend.driver:
         class: App\Ldap\ZendLdap
-        arguments: ["%kimai.ldap.connection%", "%kimai.ldap.active%"]
 
     App\Ldap\LdapManager:
         alias: fr3d_ldap.ldap_manager.default
 
     fr3d_ldap.ldap_manager.default:
         class: App\Ldap\LdapManager
-        arguments: ['@fr3d_ldap.ldap_driver', '@fr3d_ldap.user_hydrator', '%kimai.ldap.parameters%', '%kimai.ldap.active%']
+        arguments: ['@fr3d_ldap.ldap_driver', '@fr3d_ldap.user_hydrator', '%security.role_hierarchy.roles%']
+
+    fr3d_ldap.security.authentication.provider:
+        class: App\Ldap\LdapAuthenticationProvider
+        arguments: ['@security.user_checker', '', '', '@fr3d_ldap.ldap_manager', '@App\Configuration\LdapConfiguration', '%security.authentication.hide_user_not_found%']
 
     # ================================================================================
     # REPOSITORIES
