@@ -2,8 +2,6 @@ security:
     encoders:
         App\Entity\User: bcrypt
 
-    #erase_credentials: false
-
     providers:
         chain_provider:
             chain:
@@ -33,8 +31,10 @@ security:
                 lifetime: 604800
                 path:     /
 
+            # activate the LdapAuthenticationProvider
             fr3d_ldap: ~
 
+            # activate all configured user provider
             provider: chain_provider
 
             form_login:
