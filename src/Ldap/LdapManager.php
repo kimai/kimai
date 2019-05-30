@@ -1,29 +1,59 @@
 <?php
 
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Ldap;
 
+use App\Entity\User;
+use FR3D\LdapBundle\Driver\LdapDriverInterface;
+use FR3D\LdapBundle\Hydrator\HydratorInterface;
 use FR3D\LdapBundle\Ldap\LdapManager as FR3DLdapManager;
-use FR3D\LdapBundle\Ldap\LdapManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * Own implementation, to be able to deactivate LDAP via config switch.
- */
-class LdapManager implements LdapManagerInterface
+class LdapManager extends FR3DLdapManager
 {
-    /**
-     * @var FR3DLdapManager
-     */
-    protected $manager;
     /**
      * @var bool
      */
     protected $activated = false;
 
-    public function __construct(FR3DLdapManager $manager, bool $active)
+    public function __construct(LdapDriverInterface $driver, HydratorInterface $hydrator, array $params, bool $activated)
     {
-        $this->manager = $manager;
-        $this->activated = $active;
+        parent::__construct($driver, $hydrator, $params);
+        $this->activated = $activated;
+    }
+
+    /**
+     * @param User $user
+     * @param string $username
+     * @throws \Exception
+     * @throws \FR3D\LdapBundle\Driver\LdapDriverException
+     */
+    public function updateUser(User $user, $username)
+    {
+        if (!$this->activated) {
+            return;
+        }
+
+        $filter = $this->buildFilter([$this->params['usernameAttribute'] => $username]);
+        $entries = $this->driver->search($this->params['baseDn'], $filter);
+
+        if ($entries['count'] > 1) {
+            throw new \Exception('This search can only return a single user');
+        }
+
+        if (0 === $entries['count']) {
+            return;
+        }
+
+        if ($this->hydrator instanceof LdapUserHydrator) {
+            $this->hydrator->hydrateUser($user, $entries[0]);
+        }
     }
 
     public function findUserByUsername(string $username): ?UserInterface
@@ -32,7 +62,7 @@ class LdapManager implements LdapManagerInterface
             return null;
         }
 
-        return $this->manager->findUserByUsername($username);
+        return parent::findUserByUsername($username);
     }
 
     public function findUserBy(array $criteria): ?UserInterface
@@ -41,7 +71,7 @@ class LdapManager implements LdapManagerInterface
             return null;
         }
 
-        return $this->manager->findUserBy($criteria);
+        return parent::findUserBy($criteria);
     }
 
     public function bind(UserInterface $user, string $password): bool
@@ -50,6 +80,6 @@ class LdapManager implements LdapManagerInterface
             return false;
         }
 
-        return $this->manager->bind($user, $password);
+        return parent::bind($user, $password);
     }
 }

@@ -1,54 +1,66 @@
 <?php
 
-namespace App\Ldap;
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
-use App\Entity\UserPreference;
+namespace App\Ldap;
 
 trait LdapUserTrait
 {
     /**
      * @var string[]
      */
-    protected $ldapGroups;
+    protected $ldapGroups = [];
 
     /**
      * Set Ldap Distinguished Name.
      *
-     * @param string $dn Distinguished Name
+     * @param string $dn
      */
     public function setDn(string $dn)
     {
-        $pref = $this->getPreference('ldap.dn');
-
-        if (null === $pref) {
-            $pref = (new UserPreference())
-                ->setName('ldap.dn');
-        }
-        $pref->setValue($dn);
-
-        $this->addPreference($pref);
+        $this->setPreferenceValue('ldap.dn', $dn);
     }
 
     /**
      * Get Ldap Distinguished Name.
      *
-     * @return string|null Distinguished Name
+     * @return string|null
      */
     public function getDn(): ?string
     {
         return $this->getPreferenceValue('ldap.dn');
     }
 
+    public function isLdapUser(): bool
+    {
+        return null !== $this->getDn();
+    }
+
     /**
      * Sets the group from the LDAP.
-     * As this is NOT the Kimai group, an EventListener will be used to convert them later on.
+     * Only used to sync LDAP groups during hydration.
      *
-     * FIXME create EventListener
-     *
-     * @param string $group
+     * @param string|array $group
      */
-    public function addLdapGroup(string $group)
+    public function addLdapGroup($group)
     {
-        $this->ldapGroups[] = $group;
+        if (null === $group) {
+            return;
+        }
+
+        if (!is_array($group)) {
+            $group = [$group];
+        }
+        $this->ldapGroups = array_merge($this->ldapGroups, $group);
+    }
+
+    public function getLdapGroups(): array
+    {
+        return $this->ldapGroups;
     }
 }

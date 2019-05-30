@@ -137,7 +137,11 @@ services:
     App\Ldap\LdapUserHydrator:
         arguments: ["%kimai.ldap.parameters%"]
 
-    App\Ldap\ZendLdap:
+    Zend\Ldap\Ldap:
+        alias: fr3d_ldap.ldap_driver.zend.driver
+
+    fr3d_ldap.ldap_driver.zend.driver:
+        class: App\Ldap\ZendLdap
         arguments: ["%kimai.ldap.connection%", "%kimai.ldap.active%"]
 
     App\Ldap\LdapManager:
@@ -194,4 +198,3 @@ services:
     App\Repository\InvoiceDocumentRepository:
         class: App\Repository\InvoiceDocumentRepository
         arguments: ['%kimai.invoice.documents%']
-
