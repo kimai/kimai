@@ -514,6 +514,12 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('tryUsernameSplit')->end()
                         ->scalarNode('networkTimeout')->end()
                     ->end()
+                    ->validate()
+                        ->ifTrue(static function ($v) {
+                            return $v['useSsl'] && $v['useStartTls'];
+                        })
+                        ->thenInvalid('The ldap.connection.useSsl and ldap.connection.useStartTls options are mutually exclusive.')
+                    ->end()
                 ->end()
                 ->arrayNode('user')
                     ->children()
@@ -534,6 +540,15 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                             ->end()
                         ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('role')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('baseDn')->defaultNull()->end()
+                        ->scalarNode('filter')->end()
+                        ->scalarNode('nameAttribute')->defaultValue('cn')->end()
+                        ->scalarNode('userDnAttribute')->defaultValue('member')->end()
                         ->arrayNode('groups')
                             ->defaultValue([])
                             ->arrayPrototype()
@@ -548,15 +563,15 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->validate()
                 ->ifTrue(static function ($v) {
-                    return $v['active'] && (empty($v['connection']['host']) || empty($v['user']['baseDn']));
+                    return $v['active'] && empty($v['connection']['host']);
                 })
-                ->thenInvalid('The ldap.connection.host and ldap.user.baseDn options must be set if LDAP is activated.')
+                ->thenInvalid('The "ldap.connection.host" config must be set if LDAP is activated.')
             ->end()
             ->validate()
-                ->ifTrue(static function ($v) {
-                    return $v['connection']['useSsl'] && $v['connection']['useStartTls'];
-                })
-                ->thenInvalid('The ldap.connection.useSsl and ldap.connection.useStartTls options are mutually exclusive.')
+            ->ifTrue(static function ($v) {
+                return $v['active'] && empty($v['user']['baseDn']);
+            })
+            ->thenInvalid('The "ldap.user.baseDn" config must be set if LDAP is activated.')
             ->end()
         ;
 
