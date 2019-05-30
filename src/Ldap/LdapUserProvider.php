@@ -9,13 +9,14 @@
 
 namespace App\Ldap;
 
+use App\Configuration\LdapConfiguration;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
- * Own implementation, to be able to deactivate LDAP via config switch.
+ * Overwritten to be able to deactivate LDAP via config switch.
  */
 class LdapUserProvider implements UserProviderInterface
 {
@@ -28,10 +29,10 @@ class LdapUserProvider implements UserProviderInterface
      */
     protected $activated = false;
 
-    public function __construct(UserProviderInterface $ldap, bool $activated)
+    public function __construct(UserProviderInterface $ldap, LdapConfiguration $config)
     {
         $this->ldap = $ldap;
-        $this->activated = $activated;
+        $this->activated = $config->isActivated();
     }
 
     public function isActivated(): bool
@@ -41,7 +42,7 @@ class LdapUserProvider implements UserProviderInterface
 
     public function loadUserByUsername($username)
     {
-        if (!$this->activated) {
+        if (!$this->isActivated()) {
             $ex = new UsernameNotFoundException(sprintf('User "%s" not found', $username));
             $ex->setUsername($username);
 
@@ -62,7 +63,7 @@ class LdapUserProvider implements UserProviderInterface
 
     public function supportsClass($class)
     {
-        if (!$this->activated) {
+        if (!$this->isActivated()) {
             return false;
         }
 

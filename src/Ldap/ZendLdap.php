@@ -9,6 +9,7 @@
 
 namespace App\Ldap;
 
+use App\Configuration\LdapConfiguration;
 use Zend\Ldap\Ldap;
 
 /**
@@ -17,10 +18,10 @@ use Zend\Ldap\Ldap;
  */
 class ZendLdap extends Ldap
 {
-    public function __construct($options = [], bool $activated = false)
+    public function __construct(LdapConfiguration $config)
     {
-        if ($activated) {
-            parent::__construct($options);
+        if ($config->isActivated()) {
+            parent::__construct($config->getConnectionParameters());
         }
     }
 }

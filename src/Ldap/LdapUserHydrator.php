@@ -9,6 +9,7 @@
 
 namespace App\Ldap;
 
+use App\Configuration\LdapConfiguration;
 use App\Entity\User;
 use FR3D\LdapBundle\Hydrator\HydrateWithMapTrait;
 use FR3D\LdapBundle\Hydrator\HydratorInterface;
@@ -23,15 +24,12 @@ class LdapUserHydrator implements HydratorInterface
      * @var string[]
      */
     private $attributeMap;
-    /**
-     * @var string[]
-     */
-    private $roleMap;
 
-    public function __construct(array $attributeMap)
+    public function __construct(LdapConfiguration $config)
     {
+        $attributeMap = $config->getUserParameters();
+
         $this->attributeMap = $attributeMap['attributes'];
-        $this->roleMap = $attributeMap['groups'];
     }
 
     protected function createUser(): User
@@ -62,19 +60,6 @@ class LdapUserHydrator implements HydratorInterface
         // just a fallback to prevent Exceptions in case no email is available in LDAP
         if (null === $user->getEmail()) {
             $user->setEmail($user->getUsername());
-        }
-
-        if (count($this->roleMap) > 0) {
-            $userGroups = $user->getLdapGroups();
-            $roles = [];
-
-            foreach ($this->roleMap as $attr) {
-                if (!in_array($attr['ldap_value'], $userGroups)) {
-                    continue;
-                }
-                $roles[] = $attr['role'];
-            }
-            $user->setRoles($roles);
         }
     }
 }
