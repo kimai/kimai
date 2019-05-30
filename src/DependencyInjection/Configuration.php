@@ -522,6 +522,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->arrayNode('user')
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('baseDn')->defaultNull()->end()
                         ->scalarNode('filter')->defaultValue('')->end()

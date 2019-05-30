@@ -274,7 +274,7 @@ class TimesheetRepository extends AbstractRepository
             ->join('t.activity', 'a')
             ->join('t.project', 'p')
             ->join('p.customer', 'c')
-            ->join('t.tags', 'tags')
+            ->leftJoin('t.tags', 'tags')
             ->where($qb->expr()->isNotNull('t.begin'))
             ->andWhere($qb->expr()->isNull('t.end'))
             ->orderBy('t.begin', 'DESC');
@@ -444,7 +444,7 @@ class TimesheetRepository extends AbstractRepository
             ->join('t.activity', 'a')
             ->join('t.project', 'p')
             ->join('p.customer', 'c')
-            ->join('t.tags', 'tags')
+            ->leftJoin('t.tags', 'tags')
             ->andWhere($qb->expr()->in('t.id', $ids))
             ->orderBy('t.end', 'DESC')
         ;

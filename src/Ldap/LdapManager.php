@@ -74,8 +74,8 @@ class LdapManager extends FR3DLdapManager
     }
 
     /**
-     * @param $user
-     * @param $entry
+     * @param User $user
+     * @param array $entry
      * @throws \FR3D\LdapBundle\Driver\LdapDriverException
      */
     private function addRoles(User $user, $entry)
