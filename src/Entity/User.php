@@ -256,6 +256,23 @@ class User extends BaseUser implements UserInterface, LdapUserInterface
 
     /**
      * @param string $name
+     * @param bool|int|string|null $value
+     */
+    public function setPreferenceValue(string $name, $value = null)
+    {
+        $pref = $this->getPreference($name);
+
+        if (null === $pref) {
+            $pref = new UserPreference();
+            $pref->setName($name);
+            $this->addPreference($pref);
+        }
+
+        $pref->setValue($value);
+    }
+
+    /**
+     * @param string $name
      * @return UserPreference|null
      */
     public function getPreference(string $name)
