@@ -38,4 +38,6 @@ script:
   - bin/console doctrine:database:create -n
   - bin/console doctrine:migrations:migrate -n
   - bin/console doctrine:migrations:migrate first -n
-  - if [ $TRAVIS_PHP_VERSION = '7.3' ]; then bash <(curl -s https://codecov.io/bash); fi;
+
+after_success:
+  - sh -c "if [ $TRAVIS_PHP_VERSION = '7.3' ]; then bash <(curl -s https://codecov.io/bash); fi"
