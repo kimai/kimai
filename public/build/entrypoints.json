@@ -2,33 +2,44 @@
   "entrypoints": {
     "app": {
       "js": [
-        "/build/runtime.js?26bd8744e110efece60e",
-        "/build/0.js?7c41d7971901f0915477",
-        "/build/1.js?c34bdb527b374be51d7c",
-        "/build/app.js?a4d1f4a947f197219d29"
+        "build/runtime.fe12f998.js",
+        "build/0.90bfbd96.js",
+        "build/1.4d6b1ed4.js",
+        "build/app.cd483479.js"
       ],
       "css": [
-        "/build/1.css?53527f93d89d4966f097",
-        "/build/app.css?acc8387848553e4c00a8"
+        "build/app.16fefccc.css"
       ]
     },
     "chart": {
       "js": [
-        "/build/runtime.js?26bd8744e110efece60e",
-        "/build/3.js?60a85da1e0971bc38e94",
-        "/build/chart.js?823e181cafa0d62a70d4"
+        "build/runtime.fe12f998.js",
+        "build/0.90bfbd96.js",
+        "build/2.4d135457.js",
+        "build/chart.31089263.js"
       ]
     },
     "calendar": {
       "js": [
-        "/build/runtime.js?26bd8744e110efece60e",
-        "/build/0.js?7c41d7971901f0915477",
-        "/build/2.js?96f5a09097b653850a59",
-        "/build/calendar.js?a8e01c5ac331c663126e"
+        "build/runtime.fe12f998.js",
+        "build/0.90bfbd96.js",
+        "build/1.4d6b1ed4.js",
+        "build/calendar.4e814eb0.js"
       ],
       "css": [
-        "/build/2.css?b0551848a927ea78d8c8"
+        "build/calendar.b0551848.css"
       ]
     }
+  },
+  "integrity": {
+    "build/runtime.fe12f998.js": "sha384-+AsC7zoefPga1AkczlNSCXcbGwD0TwokkldvNISHf1nMlOpafanLjtKvlZy9cVsm",
+    "build/0.90bfbd96.js": "sha384-ncT/BKhCsqH6jhxwdsSG95m1ei7ZZjeZtzH1262h+OPUU80TSFFE3dt+abcHHMok",
+    "build/1.4d6b1ed4.js": "sha384-l1U93IQYG7WSlURD/GMro9V3T+gEwomFJvzeygzNTCae9SK/oGs+1txuu8Fyy3zQ",
+    "build/app.cd483479.js": "sha384-56WvV8LEPLGEbhDHrpR5/0nlq6BW6sUJ8pMMfiSKT/ehHYcFbiK/43eInFaJtp1v",
+    "build/app.16fefccc.css": "sha384-Co+vo4i0Y8BlXX3/QkbMTVNx+/SwkKYOelmi6ZmfSkgGiEXxaIehU3e2FIqucZcv",
+    "build/2.4d135457.js": "sha384-FqSvb2qjy8jxLHmXFJAA2qAhT+bnYdUaCsa4uEGMdYoXAjiJ2k4VpCrK+tfyLGph",
+    "build/chart.31089263.js": "sha384-I57c9DtU3AOG2kzKqIZkIu0hi1aGYHRZ5QG4LKC9+9slzJnAMttPGXoL2cQG3m6y",
+    "build/calendar.4e814eb0.js": "sha384-zW70iivZ7OAlXesMsfZr6c9ARzedLWFORdlEtvQg3zURoRaUMisVKbBfY+3G4mhd",
+    "build/calendar.b0551848.css": "sha384-0vCiWHcAXzya2n3PnJK4WNznSLbl4og4xrQ6R52aEir/0PwVrY/NmZg8/0irOWpF"
   }
 }
