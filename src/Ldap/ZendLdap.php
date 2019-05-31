@@ -20,8 +20,10 @@ class ZendLdap extends Ldap
 {
     public function __construct(LdapConfiguration $config)
     {
-        if ($config->isActivated()) {
-            parent::__construct($config->getConnectionParameters());
+        if (!$config->isActivated()) {
+            return;
         }
+
+        parent::__construct($config->getConnectionParameters());
     }
 }

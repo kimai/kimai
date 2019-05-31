@@ -11,56 +11,108 @@ namespace App\Ldap;
 
 use App\Configuration\LdapConfiguration;
 use App\Entity\User;
-use FR3D\LdapBundle\Driver\LdapDriverInterface;
-use FR3D\LdapBundle\Hydrator\HydratorInterface;
-use FR3D\LdapBundle\Ldap\LdapManager as FR3DLdapManager;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * Overwritten:
- * - so it can be deactivated via config switch
- * - for attribute and role sync on every login
- */
-class LdapManager extends FR3DLdapManager
+class LdapManager
 {
     /**
      * @var LdapConfiguration
      */
     protected $config;
     /**
-     * @var bool
-     */
-    protected $activated = false;
-    /**
      * @var array
      */
     protected $roles = [];
+    /**
+     * @var LdapDriver
+     */
+    protected $driver;
+    /**
+     * @var array
+     */
+    protected $params = [];
+    /**
+     * @var LdapUserHydrator
+     */
+    protected $hydrator;
 
-    public function __construct(LdapDriverInterface $driver, HydratorInterface $hydrator, array $roles, LdapConfiguration $config)
+    public function __construct(LdapDriver $driver, LdapUserHydrator $hydrator, LdapConfiguration $config, array $roles)
     {
-        parent::__construct($driver, $hydrator, $config->getUserParameters());
-        $this->activated = $config->isActivated();
+        $this->params = $config->getUserParameters();
         $this->roles = $roles;
         $this->config = $config;
+        $this->driver = $driver;
+        $this->hydrator = $hydrator;
+    }
+
+    /**
+     * @param string $username
+     * @return UserInterface|null
+     * @throws \Exception
+     */
+    public function findUserByUsername(string $username): ?UserInterface
+    {
+        return $this->findUserBy([$this->params['usernameAttribute'] => $username]);
+    }
+
+    /**
+     * @param array $criteria
+     * @return UserInterface|null
+     * @throws LdapDriverException
+     */
+    public function findUserBy(array $criteria): ?UserInterface
+    {
+        $filter = $this->buildFilter($criteria);
+        $entries = $this->driver->search($this->params['baseDn'], $filter);
+
+        if ($entries['count'] > 1) {
+            throw new LdapDriverException('This search must only return a single user');
+        }
+
+        if (0 === $entries['count']) {
+            return null;
+        }
+        $user = $this->hydrator->hydrate($entries[0]);
+
+        return $user;
+    }
+
+    /**
+     * Build Ldap filter
+     *
+     * @param array $criteria
+     * @param string $condition
+     * @return string
+     */
+    protected function buildFilter(array $criteria, string $condition = '&'): string
+    {
+        $filters = [];
+        $filters[] = $this->params['filter'];
+        foreach ($criteria as $key => $value) {
+            $value = ldap_escape($value, '', LDAP_ESCAPE_FILTER);
+            $filters[] = sprintf('(%s=%s)', $key, $value);
+        }
+
+        return sprintf('(%s%s)', $condition, implode($filters));
+    }
+
+    public function bind(UserInterface $user, string $password): bool
+    {
+        return $this->driver->bind($user, $password);
     }
 
     /**
      * @param User $user
      * @param string $username
-     * @throws \Exception
-     * @throws \FR3D\LdapBundle\Driver\LdapDriverException
+     * @throws LdapDriverException
      */
     public function updateUser(User $user, $username)
     {
-        if (!$this->activated) {
-            return;
-        }
-
         $filter = $this->buildFilter([$this->params['usernameAttribute'] => $username]);
         $entries = $this->driver->search($this->params['baseDn'], $filter);
 
         if ($entries['count'] > 1) {
-            throw new \Exception('This search can only return a single user');
+            throw new LdapDriverException('This search must only return a single user');
         }
 
         if (0 === $entries['count']) {
@@ -76,7 +128,7 @@ class LdapManager extends FR3DLdapManager
     /**
      * @param User $user
      * @param array $entry
-     * @throws \FR3D\LdapBundle\Driver\LdapDriverException
+     * @throws LdapDriverException
      */
     private function addRoles(User $user, $entry)
     {
@@ -139,32 +191,5 @@ class LdapManager extends FR3DLdapManager
         $role = strtoupper($role);
 
         return $role;
-    }
-
-    public function findUserByUsername(string $username): ?UserInterface
-    {
-        if (!$this->activated) {
-            return null;
-        }
-
-        return parent::findUserByUsername($username);
-    }
-
-    public function findUserBy(array $criteria): ?UserInterface
-    {
-        if (!$this->activated) {
-            return null;
-        }
-
-        return parent::findUserBy($criteria);
-    }
-
-    public function bind(UserInterface $user, string $password): bool
-    {
-        if (!$this->activated) {
-            return false;
-        }
-
-        return parent::bind($user, $password);
     }
 }

@@ -32,7 +32,7 @@ security:
                 path:     /
 
             # activate the LdapAuthenticationProvider
-            fr3d_ldap: ~
+            kimai_ldap: ~
 
             # activate all configured user provider
             provider: chain_provider

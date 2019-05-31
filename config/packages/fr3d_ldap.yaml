@@ -1,9 +1,0 @@
-fr3d_ldap:
-    driver:
-        host: x.x.x.x
-    user:
-        baseDn: xxx
-    service:
-        user_hydrator: App\Ldap\LdapUserHydrator
-        ldap_manager: App\Ldap\LdapManager
-        ldap_driver: App\Ldap\LdapDriver

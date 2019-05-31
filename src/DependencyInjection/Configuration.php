@@ -564,15 +564,21 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->validate()
                 ->ifTrue(static function ($v) {
+                    return $v['active'] && !extension_loaded('ldap');
+                })
+                ->thenInvalid('LDAP is activated, but the LDAP PHP extension is not loaded.')
+            ->end()
+            ->validate()
+                ->ifTrue(static function ($v) {
                     return $v['active'] && empty($v['connection']['host']);
                 })
                 ->thenInvalid('The "ldap.connection.host" config must be set if LDAP is activated.')
             ->end()
             ->validate()
-            ->ifTrue(static function ($v) {
-                return $v['active'] && empty($v['user']['baseDn']);
-            })
-            ->thenInvalid('The "ldap.user.baseDn" config must be set if LDAP is activated.')
+                ->ifTrue(static function ($v) {
+                    return $v['active'] && empty($v['user']['baseDn']);
+                })
+                ->thenInvalid('The "ldap.user.baseDn" config must be set if LDAP is activated.')
             ->end()
         ;
 

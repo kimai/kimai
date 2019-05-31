@@ -20,7 +20,6 @@
         "beberlei/doctrineextensions": "^1.2",
         "doctrine/doctrine-fixtures-bundle": "^3.0",
         "erusev/parsedown": "^1.6",
-        "fr3d/ldap-bundle": "^4.0",
         "friendsofsymfony/rest-bundle": "^2.3",
         "friendsofsymfony/user-bundle": "~2.0",
         "fzaninotto/faker": "^1.8",
@@ -36,6 +35,7 @@
         "ocramius/proxy-manager": "2.1.1",
         "phpoffice/phpspreadsheet": "^1.4",
         "phpoffice/phpword": "^0.15.0",
+        "psr/log": "^1.1",
         "sensio/framework-extra-bundle": "^5.2",
         "symfony/asset": "^4.0",
         "symfony/console": "^4.0",
@@ -50,7 +50,7 @@
         "symfony/monolog-bundle": "^3.1",
         "symfony/orm-pack": "^1.0",
         "symfony/profiler-pack": "^1.0",
-        "symfony/security-bundle": "^4.0",
+        "symfony/security-bundle": "~4.2.0",
         "symfony/security-csrf": "^4.0",
         "symfony/serializer": "^4.0",
         "symfony/swiftmailer-bundle": "^3.1",
@@ -60,7 +60,8 @@
         "symfony/web-server-bundle": "^4.0",
         "symfony/yaml": "^4.0",
         "twig/extensions": "^1.5",
-        "white-october/pagerfanta-bundle": "^1.1"
+        "white-october/pagerfanta-bundle": "^1.1",
+        "zendframework/zend-ldap": "^2.10"
     },
     "require-dev": {
         "dama/doctrine-test-bundle": "^5.0",
@@ -112,17 +113,17 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
-        "code-check":  [
+        "kimai:code-check":  [
             "@codestyle",
             "@phpstan",
             "@tests"
         ],
-        "tests": "vendor/bin/phpunit tests/",
-        "tests-unit": "vendor/bin/phpunit --exclude-group integration tests/",
-        "tests-integration": "vendor/bin/phpunit --group integration tests/",
-        "phpstan": "vendor/bin/phpstan analyse src --level=3",
-        "codestyle": "vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none",
-        "codestyle-fix": "vendor/bin/php-cs-fixer fix"
+        "kimai:tests": "vendor/bin/phpunit tests/",
+        "kimai:tests-unit": "vendor/bin/phpunit --exclude-group integration tests/",
+        "kimai:tests-integration": "vendor/bin/phpunit --group integration tests/",
+        "kimai:phpstan": "vendor/bin/phpstan analyse src --level=3",
+        "kimai:codestyle": "vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none",
+        "kimai:codestyle-fix": "vendor/bin/php-cs-fixer fix"
     },
     "conflict": {
         "symfony/symfony": "*"

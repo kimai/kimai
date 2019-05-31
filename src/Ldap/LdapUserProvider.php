@@ -10,6 +10,7 @@
 namespace App\Ldap;
 
 use App\Configuration\LdapConfiguration;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -21,35 +22,57 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 class LdapUserProvider implements UserProviderInterface
 {
     /**
-     * @var UserProviderInterface
-     */
-    protected $ldap;
-    /**
      * @var bool
      */
     protected $activated = false;
+    /**
+     * @var LdapManager
+     */
+    protected $ldapManager;
+    /**
+     * @var LoggerInterface|null
+     */
+    protected $logger;
 
-    public function __construct(UserProviderInterface $ldap, LdapConfiguration $config)
+    public function __construct(LdapManager $ldapManager, LdapConfiguration $config, LoggerInterface $logger = null)
     {
-        $this->ldap = $ldap;
+        $this->ldapManager = $ldapManager;
+        $this->logger = $logger;
         $this->activated = $config->isActivated();
-    }
-
-    public function isActivated(): bool
-    {
-        return $this->activated;
     }
 
     public function loadUserByUsername($username)
     {
-        if (!$this->isActivated()) {
+        // this method is called at least for unknown user, no matter what supportsClass() returns,
+        // so we have to check if LDAP is activated here as well
+        if (!$this->activated) {
             $ex = new UsernameNotFoundException(sprintf('User "%s" not found', $username));
             $ex->setUsername($username);
 
             throw $ex;
         }
 
-        return $this->ldap->loadUserByUsername($username);
+        $user = $this->ldapManager->findUserByUsername($username);
+
+        if (empty($user)) {
+            $this->logInfo('User {username} {result} on LDAP', [
+                'action' => 'loadUserByUsername',
+                'username' => $username,
+                'result' => 'not found',
+            ]);
+            $ex = new UsernameNotFoundException(sprintf('User "%s" not found', $username));
+            $ex->setUsername($username);
+
+            throw $ex;
+        }
+
+        $this->logInfo('User {username} {result} on LDAP', [
+            'action' => 'loadUserByUsername',
+            'username' => $username,
+            'result' => 'found',
+        ]);
+
+        return $user;
     }
 
     public function refreshUser(UserInterface $user)
@@ -63,10 +86,22 @@ class LdapUserProvider implements UserProviderInterface
 
     public function supportsClass($class)
     {
-        if (!$this->isActivated()) {
+        if (!$this->activated) {
             return false;
         }
 
-        return $this->ldap->supportsClass($class);
+        return true;
+    }
+
+    /**
+     * Log a message into the logger if this exists.
+     */
+    private function logInfo(string $message, array $context = []): void
+    {
+        if (!$this->logger) {
+            return;
+        }
+
+        $this->logger->info($message, $context);
     }
 }

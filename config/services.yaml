@@ -132,22 +132,16 @@ services:
     # LDAP
     # ================================================================================
 
-    App\Ldap\LdapUserProvider:
-        arguments: ['@fr3d_ldap.security.user.provider']
-
     Zend\Ldap\Ldap:
         class: App\Ldap\ZendLdap
 
     App\Ldap\LdapManager:
-        alias: fr3d_ldap.ldap_manager.default
+        arguments:
+            $roles: '%security.role_hierarchy.roles%'
 
-    fr3d_ldap.ldap_manager.default:
-        class: App\Ldap\LdapManager
-        arguments: ['@fr3d_ldap.ldap_driver', '@fr3d_ldap.user_hydrator', '%security.role_hierarchy.roles%']
-
-    fr3d_ldap.security.authentication.provider:
+    kimai_ldap.security.authentication.provider:
         class: App\Ldap\LdapAuthenticationProvider
-        arguments: ['@security.user_checker', '', '', '@fr3d_ldap.ldap_manager', '@App\Configuration\LdapConfiguration', '%security.authentication.hide_user_not_found%']
+        arguments: ['@security.user_checker', '', '', '', '@App\Configuration\LdapConfiguration', '%security.authentication.hide_user_not_found%']
 
     # ================================================================================
     # REPOSITORIES

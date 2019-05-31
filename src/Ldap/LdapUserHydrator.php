@@ -11,15 +11,10 @@ namespace App\Ldap;
 
 use App\Configuration\LdapConfiguration;
 use App\Entity\User;
-use FR3D\LdapBundle\Hydrator\HydrateWithMapTrait;
-use FR3D\LdapBundle\Hydrator\HydratorInterface;
-use FR3D\LdapBundle\Model\LdapUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class LdapUserHydrator implements HydratorInterface
+class LdapUserHydrator
 {
-    use HydrateWithMapTrait;
-
     /**
      * @var string[]
      */
@@ -53,13 +48,42 @@ class LdapUserHydrator implements HydratorInterface
     {
         $this->hydrateUserWithAttributesMap($user, $ldapEntry, $this->attributeMap);
 
-        if ($user instanceof LdapUserInterface) {
-            $user->setDn($ldapEntry['dn']);
-        }
-
         // just a fallback to prevent Exceptions in case no email is available in LDAP
         if (null === $user->getEmail()) {
             $user->setEmail($user->getUsername());
+        }
+    }
+
+    /**
+     * Fill the given user with the following the attribute-method map.
+     *
+     * @param UserInterface $user               target user
+     * @param array[]       $ldapUserAttributes raw LDAP data
+     * @param string[]      $attributeMap       attribute-method map
+     */
+    protected function hydrateUserWithAttributesMap(
+        UserInterface $user,
+        array $ldapUserAttributes,
+        array $attributeMap
+    ): void {
+        foreach ($attributeMap as $attr) {
+            if (!array_key_exists($attr['ldap_attr'], $ldapUserAttributes)) {
+                continue;
+            }
+
+            $ldapValue = $ldapUserAttributes[$attr['ldap_attr']];
+
+            if (array_key_exists('count', $ldapValue)) {
+                unset($ldapValue['count']);
+            }
+
+            if (1 === count($ldapValue)) {
+                $value = array_shift($ldapValue);
+            } else {
+                $value = $ldapValue;
+            }
+
+            $user->{$attr['user_method']}($value);
         }
     }
 }
