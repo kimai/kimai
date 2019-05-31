@@ -114,9 +114,9 @@
             "@auto-scripts"
         ],
         "kimai:code-check":  [
-            "@codestyle",
-            "@phpstan",
-            "@tests"
+            "@kimai:codestyle",
+            "@kimai:phpstan",
+            "@kimai:tests"
         ],
         "kimai:tests": "vendor/bin/phpunit tests/",
         "kimai:tests-unit": "vendor/bin/phpunit --exclude-group integration tests/",

@@ -12,7 +12,6 @@ namespace App;
 use App\DependencyInjection\AppExtension;
 use App\DependencyInjection\Compiler\DoctrineCompilerPass;
 use App\DependencyInjection\Compiler\InvoiceServiceCompilerPass;
-use App\DependencyInjection\Compiler\LdapCompilerPass;
 use App\DependencyInjection\Compiler\TwigContextCompilerPass;
 use App\Export\RendererInterface as ExportRendererInterface;
 use App\Invoice\CalculatorInterface as InvoiceCalculator;

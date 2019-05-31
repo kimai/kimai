@@ -57,15 +57,16 @@ class LdapUserHydrator
     /**
      * Fill the given user with the following the attribute-method map.
      *
-     * @param UserInterface $user               target user
-     * @param array[]       $ldapUserAttributes raw LDAP data
-     * @param string[]      $attributeMap       attribute-method map
+     * @param UserInterface $user target user
+     * @param array[] $ldapUserAttributes raw LDAP data
+     * @param string[] $attributeMap attribute-method map
      */
     protected function hydrateUserWithAttributesMap(
         UserInterface $user,
         array $ldapUserAttributes,
         array $attributeMap
     ): void {
+        /** @var array $attr */
         foreach ($attributeMap as $attr) {
             if (!array_key_exists($attr['ldap_attr'], $ldapUserAttributes)) {
                 continue;

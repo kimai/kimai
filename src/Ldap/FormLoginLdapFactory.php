@@ -1,12 +1,19 @@
 <?php
 
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Ldap;
 
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\SecurityFactoryInterface;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\DependencyInjection\ChildDefinition;
 
 class FormLoginLdapFactory implements SecurityFactoryInterface
 {
@@ -39,7 +46,7 @@ class FormLoginLdapFactory implements SecurityFactoryInterface
     protected function createAuthProvider(ContainerBuilder $container, $id, $userProviderId)
     {
         $provider = 'kimai_ldap.security.authentication.provider';
-        $providerId = $provider.'.'.$id;
+        $providerId = $provider . '.' . $id;
 
         $container
             ->setDefinition($providerId, new ChildDefinition($provider))
@@ -58,7 +65,7 @@ class FormLoginLdapFactory implements SecurityFactoryInterface
         $listener->replaceArgument(4, $id);
         $listener->replaceArgument(5, $config);
 
-        $listenerId .= '.'.$id;
+        $listenerId .= '.' . $id;
         $container
             ->setDefinition($listenerId, $listener)
         ;

@@ -120,9 +120,6 @@
     "exsyst/swagger": {
         "version": "v0.4.1"
     },
-    "fr3d/ldap-bundle": {
-        "version": "v4.0.0"
-    },
     "friendsofphp/php-cs-fixer": {
         "version": "2.2",
         "recipe": {

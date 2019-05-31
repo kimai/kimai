@@ -27,7 +27,7 @@ class LdapDriver
     private $logger;
 
     /**
-     * @param Ldap            $driver Initialized Zend::Ldap Object
+     * @param Ldap $driver Initialized Zend::Ldap Object
      * @param LoggerInterface $logger optional logger for write debug messages
      */
     public function __construct(Ldap $driver, LoggerInterface $logger = null)
