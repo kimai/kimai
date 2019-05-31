@@ -21,12 +21,13 @@
     "prod": "node_modules/.bin/encore production"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "~5.1.1",
+    "@fortawesome/fontawesome-free": "~5.8.2",
     "@symfony/webpack-encore": "^0.27.0",
     "admin-lte": "~2.4.8",
     "bootstrap-sass": "^3.3.7",
     "bootstrap-select": "^1.13.1",
-    "chart.js": "~2.7.2",
+    "chart.js": "~2.8.0",
+    "core-js": "^3.1.3",
     "daterangepicker": "^3.0.3",
     "fullcalendar": "^3.9.0",
     "icheck": "^1.0.2",
@@ -37,7 +38,7 @@
     "moment": "^2.24.0",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.2",
-    "sweetalert2": "^8.10.2",
+    "sweetalert2": "^8.11.7",
     "webpack-notifier": "^1.5.1"
   }
 }

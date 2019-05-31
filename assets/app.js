@@ -4,7 +4,7 @@
 // - removing moment locales which are not used
 // - removing fullcalendar locales which are not used
 // - removing icheck which is not used
-// - removing jquery-ui which is not used?
+// - removing jquery-ui which is not used
 
 const $ = require('jquery');
 global.$ = global.jQuery = $;
@@ -37,9 +37,6 @@ require('../vendor/kevinpapst/adminlte-bundle/Resources/assets/admin-lte-extensi
 global.$.AdminLTE = {};
 global.$.AdminLTE.options = {};
 require('admin-lte/dist/js/adminlte.min');
-
-require('../vendor/kevinpapst/adminlte-bundle/Resources/assets/default_avatar.png');
-
 // ------------------- INLINED ADMIN-LTE DEFINITIONS -------------------
 // ---------------------------------------------------------------------
 
@@ -47,8 +44,6 @@ require('./sass/app.scss');
 
 // ------ Kimai itself ------
 require('./js/KimaiWebLoader.js');
-require('./images/default_avatar.png');
-require('./images/signature.png');
 
-// ------ Autocomplete ------
+// ------ Autocomplete for tags only ------
 require('jquery-ui/ui/widgets/autocomplete');
