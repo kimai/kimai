@@ -3,7 +3,7 @@
   "build/1.4d6b1ed4.js": "build/1.4d6b1ed4.js",
   "build/2.4d135457.js": "build/2.4d135457.js",
   "build/app.css": "build/app.16fefccc.css",
-  "build/app.js": "build/app.cd483479.js",
+  "build/app.js": "build/app.4a8c78cc.js",
   "build/calendar.css": "build/calendar.b0551848.css",
   "build/calendar.js": "build/calendar.4e814eb0.js",
   "build/chart.js": "build/chart.31089263.js",
@@ -24,10 +24,10 @@
   "build/fonts/glyphicons-halflings-regular.ttf": "build/fonts/glyphicons-halflings-regular.e18bbf61.ttf",
   "build/fonts/glyphicons-halflings-regular.eot": "build/fonts/glyphicons-halflings-regular.f4769f9b.eot",
   "build/fonts/glyphicons-halflings-regular.woff": "build/fonts/glyphicons-halflings-regular.fa277232.woff",
-  "build/images/default_avatar.png": "build/images/default_avatar.fc197350.png",
+  "build/images/default_avatar.png": "build/images/default_avatar.png",
   "build/images/fa-brands-400.svg": "build/images/fa-brands-400.38975343.svg",
   "build/images/fa-regular-400.svg": "build/images/fa-regular-400.da8a235b.svg",
   "build/images/fa-solid-900.svg": "build/images/fa-solid-900.7726a281.svg",
   "build/images/glyphicons-halflings-regular.svg": "build/images/glyphicons-halflings-regular.89889688.svg",
-  "build/images/signature.png": "build/images/signature.5f58501e.png"
+  "build/images/signature.png": "build/images/signature.png"
 }
