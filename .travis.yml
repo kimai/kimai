@@ -27,7 +27,9 @@ install:
 
 script:
   - php -r "echo date(DATE_RFC850);"
-  - composer ci
+  - composer kimai:codestyle
+  - composer kimai:phpstan
+  - vendor/bin/phpunit tests/ --coverage-clover=coverage.xml
   - cp tests/.env.dist.sqlite .env
   - bin/console doctrine:database:create -n
   - bin/console doctrine:migrations:migrate -n

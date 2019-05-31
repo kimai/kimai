@@ -111,11 +111,6 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
-        "ci":  [
-            "@codestyle",
-            "@phpstan",
-            "@tests-coverage"
-        ],
         "code-check":  [
             "@codestyle",
             "@phpstan",
@@ -124,7 +119,6 @@
         "tests": "vendor/bin/phpunit tests/",
         "tests-unit": "vendor/bin/phpunit --exclude-group integration tests/",
         "tests-integration": "vendor/bin/phpunit --group integration tests/",
-        "tests-coverage": "vendor/bin/phpunit tests/ --coverage-clover=coverage.xml",
         "phpstan": "vendor/bin/phpstan analyse src --level=3",
         "codestyle": "vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none",
         "codestyle-fix": "vendor/bin/php-cs-fixer fix"
