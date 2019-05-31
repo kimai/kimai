@@ -26,10 +26,10 @@ install:
   - composer install
 
 script:
-  - if [ $TRAVIS_PHP_VERSION = '7.3' ]; then bash <(curl -s https://codecov.io/bash); fi;
   - composer codestyle
   - composer phpstan
   - if [ $TRAVIS_PHP_VERSION = '7.3' ]; then vendor/bin/phpunit tests/ --coverage-clover=coverage.xml; else vendor/bin/phpunit tests/; fi;
+  - if [ $TRAVIS_PHP_VERSION = '7.3' ]; then bash <(curl -s https://codecov.io/bash); fi;
   - cp tests/.env.dist.sqlite .env
   - bin/console doctrine:database:create -n
   - bin/console doctrine:migrations:migrate -n
