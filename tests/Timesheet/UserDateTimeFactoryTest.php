@@ -70,7 +70,7 @@ class UserDateTimeFactoryTest extends TestCase
 
     public function testGetStartOfMonth()
     {
-        $expected = new \DateTime();
+        $expected = new \DateTime('now', new \DateTimeZone(self::TEST_TIMEZONE));
 
         $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
         $dateTime = $sut->getStartOfMonth();
@@ -85,7 +85,7 @@ class UserDateTimeFactoryTest extends TestCase
 
     public function testGetEndOfMonth()
     {
-        $expected = new \DateTime('last day of this month');
+        $expected = new \DateTime('last day of this month', new \DateTimeZone(self::TEST_TIMEZONE));
 
         $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
         $dateTime = $sut->getEndOfMonth();
