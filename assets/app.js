@@ -45,23 +45,6 @@ require('../vendor/kevinpapst/adminlte-bundle/Resources/assets/default_avatar.pn
 
 require('./sass/app.scss');
 
-require('fullcalendar');
-require('fullcalendar/dist/gcal.min');
-require('fullcalendar/dist/locale/de');
-require('fullcalendar/dist/locale/it');
-require('fullcalendar/dist/locale/fr');
-require('fullcalendar/dist/locale/es');
-require('fullcalendar/dist/locale/ru');
-require('fullcalendar/dist/locale/ar');
-require('fullcalendar/dist/locale/hu');
-require('fullcalendar/dist/locale/pt-br');
-require('fullcalendar/dist/locale/sv');
-require('fullcalendar/dist/locale/ja');
-require('fullcalendar/dist/fullcalendar.min.css');
-
-// ------ for charts ------
-require('chart.js/dist/Chart.min');
-
 // ------ Kimai itself ------
 require('./js/KimaiWebLoader.js');
 require('./images/default_avatar.png');
