@@ -18,9 +18,17 @@
                 <source>form_customer</source>
                 <target>Create customer - default values</target>
             </trans-unit>
-            <trans-unit id="label.timesheet.markdown_content">
-                <source>label.timesheet.markdown_content</source>
-                <target>Allow Markdown in the timesheet descriptions</target>
+            <trans-unit id="theme">
+                <source>theme</source>
+                <target>Theme</target>
+            </trans-unit>
+            <trans-unit id="calendar">
+                <source>calendar</source>
+                <target>Calendar</target>
+            </trans-unit>
+            <trans-unit id="label.theme.markdown_content">
+                <source>label.theme.markdown_content</source>
+                <target>Allow markdown-formattings in descriptions and comments</target>
             </trans-unit>
             <trans-unit id="label.timesheet.mode">
                 <source>label.timesheet.mode</source>
@@ -28,11 +36,15 @@
             </trans-unit>
             <trans-unit id="label.timesheet.mode_default">
                 <source>label.timesheet.mode_default</source>
-                <target>Default: accept start and end date</target>
+                <target>[Default] start and end times can be edited</target>
             </trans-unit>
             <trans-unit id="label.timesheet.mode_duration_only">
                 <source>label.timesheet.mode_duration_only</source>
-                <target>Duration only: replaces the end date field with an input for duration</target>
+                <target>[Duration] replaces the end time with a duration input-field</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_punch">
+                <source>label.timesheet.mode_punch</source>
+                <target>[Time-clock] user can start and stop records, but not edit the times or duration</target>
             </trans-unit>
             <trans-unit id="label.timesheet.rules.allow_future_times">
                 <source>label.timesheet.rules.allow_future_times</source>
@@ -45,6 +57,34 @@
             <trans-unit id="label.timesheet.active_entries.soft_limit">
                 <source>label.timesheet.active_entries.soft_limit</source>
                 <target>Number of running time entries from which a warning is displayed</target>
+            </trans-unit>
+            <trans-unit id="label.theme.select_type">
+                <source>label.theme.select_type</source>
+                <target>Type of select-boxes in forms</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.week_numbers">
+                <source>label.calendar.week_numbers</source>
+                <target>Display week numbers</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.weekends">
+                <source>label.calendar.weekends</source>
+                <target>Display weekends</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.begin">
+                <source>label.calendar.businessHours.begin</source>
+                <target>Start of normal business hours (will be highlighted)</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.end">
+                <source>label.calendar.businessHours.end</source>
+                <target>End of normal business hours (will be highlighted)</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.begin">
+                <source>label.calendar.visibleHours.begin</source>
+                <target>Start of visible time range</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.end">
+                <source>label.calendar.visibleHours.end</source>
+                <target>End of visible time range</target>
             </trans-unit>
         </body>
     </file>

@@ -45,7 +45,7 @@ class ExtensionsTest extends TestCase
 
         $localeSettings = new LocaleSettings($requestStack, new LanguageFormattings($locales));
 
-        return new Extensions($requestStack, $localeSettings);
+        return new Extensions($localeSettings);
     }
 
     public function testGetFilters()
@@ -55,6 +55,7 @@ class ExtensionsTest extends TestCase
         $twigFilters = $sut->getFilters();
         $this->assertCount(count($filters), $twigFilters);
         $i = 0;
+        /** @var TwigFilter $filter */
         foreach ($twigFilters as $filter) {
             $this->assertInstanceOf(TwigFilter::class, $filter);
             $this->assertEquals($filters[$i++], $filter->getName());
@@ -63,11 +64,12 @@ class ExtensionsTest extends TestCase
 
     public function testGetFunctions()
     {
-        $functions = ['locales', 'is_visible_column', 'is_datatable_configured', 'class_name'];
+        $functions = ['locales', 'class_name'];
         $sut = $this->getSut($this->localeDe);
         $twigFunctions = $sut->getFunctions();
         $this->assertCount(count($functions), $twigFunctions);
         $i = 0;
+        /** @var TwigFunction $filter */
         foreach ($twigFunctions as $filter) {
             $this->assertInstanceOf(TwigFunction::class, $filter);
             $this->assertEquals($functions[$i++], $filter->getName());
@@ -194,7 +196,8 @@ class ExtensionsTest extends TestCase
         $this->assertEquals('00:00 h', $sut->duration('0'));
 
         $sut = $this->getSut($this->localeEn, 'en');
-        $this->assertNull($sut->duration(null));
+
+        $this->assertEquals('00:00 h', $sut->duration(null));
     }
 
     protected function getTimesheet($seconds)

@@ -5,9 +5,9 @@
             <!--
               Global template keys
             -->
-            <trans-unit id="browser.title">
-                <source>browser.title</source>
-                <target>Kimai - Time Tracking</target>
+            <trans-unit id="time_tracking">
+                <source>time_tracking</source>
+                <target>Time Tracking</target>
             </trans-unit>
             <trans-unit id="yes">
                 <source>yes</source>
@@ -719,19 +719,9 @@
             <!--
              Navbar - recent entries and activities
             -->
-            <trans-unit id="active.entries">
-                <source>active.entries</source>
-                <target>C'è %count% registrazione attiva|Ci sono %count% registrazioni attive</target>
-            </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
                 <target>Mostra tutte le registrazioni</target>
-            </trans-unit>
-            <trans-unit id="recent.activities">
-                <source>recent.activities</source>
-                <target>
-                    Ricomincia registrazione|Ricomincia una delle %count% tue ultime attività
-                </target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>

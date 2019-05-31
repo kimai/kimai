@@ -12,7 +12,6 @@ namespace App\Tests\Controller;
 use App\Entity\User;
 
 /**
- * @coversDefaultClass \App\Controller\AboutController
  * @group integration
  */
 class AboutControllerTest extends ControllerBaseTest
@@ -29,7 +28,7 @@ class AboutControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/about');
 
         $result = $client->getCrawler()->filter('ul.nav.nav-stacked li a');
-        $this->assertEquals(3, count($result));
+        $this->assertEquals(4, count($result));
 
         $result = $client->getCrawler()->filter('div.box-body pre');
         $this->assertEquals(1, count($result));
@@ -46,9 +45,7 @@ class AboutControllerTest extends ControllerBaseTest
         $this->assertContains('<h3 class="box-title">PHP</h3>', $content);
         $this->assertContains('<h3 class="box-title">Server</h3>', $content);
 
-        $this->assertContains('Actions', $content);
         $this->assertContains('', $content);
         $this->assertContains('PHP', $content);
-        $this->assertContains('<a href="/en/about/flush-cache"', $content);
     }
 }

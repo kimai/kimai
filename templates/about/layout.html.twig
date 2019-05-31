@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-3">
 
-            <div class="box box-primary">
+            <div class="box box-{{ admin_lte_context.widget.type }}">
                 <div class="box-body">
                     <img src="{{ asset('apple-touch-icon.png') }}" class="profile-user-img img-responsive img-circle" alt="Kimai logo" style="border: 0;">
                     <h3 class="profile-username text-center">{{ constant('App\\Constants::SOFTWARE') }}</h3>
@@ -38,6 +38,12 @@
                             <a href="{{ constant('App\\Constants::HOMEPAGE') }}" target="_blank">
                                 <i class="menu-icon fa fa-home bg-green"></i>
                                 {{ 'website'|trans({}, 'about') }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ constant('App\\Constants::HOMEPAGE') }}/donate/" target="_blank">
+                                <i class="menu-icon fab fa-paypal bg-blue"></i>
+                                {{ 'donate'|trans({}, 'about') }}
                             </a>
                         </li>
                     </ul>

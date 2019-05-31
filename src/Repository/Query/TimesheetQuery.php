@@ -10,6 +10,7 @@
 namespace App\Repository\Query;
 
 use App\Entity\Activity;
+use App\Entity\Tag;
 use App\Entity\User;
 use App\Form\Model\DateRange;
 
@@ -54,6 +55,10 @@ class TimesheetQuery extends ActivityQuery
      * @var DateRange
      */
     protected $dateRange;
+    /**
+     * @var iterable
+     */
+    protected $tags = [];
 
     public function __construct()
     {
@@ -205,6 +210,38 @@ class TimesheetQuery extends ActivityQuery
     public function setDateRange(DateRange $dateRange)
     {
         $this->dateRange = $dateRange;
+
+        return $this;
+    }
+
+    /**
+     * @return iterable
+     */
+    public function getTags($allowUnknown = false)
+    {
+        if (empty($this->tags)) {
+            return [];
+        }
+
+        $result = [];
+
+        foreach ($this->tags as $tag) {
+            if (!$allowUnknown && $tag instanceof Tag && null === $tag->getId()) {
+                continue;
+            }
+            $result[] = $tag;
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param iterable $tags
+     * @return $this
+     */
+    public function setTags(iterable $tags)
+    {
+        $this->tags = $tags;
 
         return $this;
     }

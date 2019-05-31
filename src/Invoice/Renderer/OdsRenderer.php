@@ -33,12 +33,16 @@ class OdsRenderer extends AbstractSpreadsheetRenderer implements RendererInterfa
 
     /**
      * @param Spreadsheet $spreadsheet
-     * @return bool|string
-     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     * @return string
+     * @throws \Exception
      */
     protected function saveSpreadsheet(Spreadsheet $spreadsheet)
     {
         $filename = tempnam(sys_get_temp_dir(), 'kimai-invoice-ods');
+        if (false === $filename) {
+            throw new \Exception('Could not open temporary file');
+        }
+
         $writer = IOFactory::createWriter($spreadsheet, 'Ods');
         $writer->save($filename);
 

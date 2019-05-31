@@ -72,7 +72,11 @@
             "branch": "master",
             "version": "1.2",
             "ref": "c1431086fec31f17fbcfe6d6d7e92059458facc1"
-        }
+        },
+        "files": [
+            "config/packages/doctrine_migrations.yaml",
+            "src/Migrations/.gitignore"
+        ]
     },
     "doctrine/event-manager": {
         "version": "v1.0.0"
@@ -87,10 +91,10 @@
         "version": "v1.0.1"
     },
     "doctrine/migrations": {
-        "version": "v1.6.2"
+        "version": "v2.0.2"
     },
     "doctrine/orm": {
-        "version": "v2.6.0"
+        "version": "v2.6.3"
     },
     "doctrine/persistence": {
         "version": "v1.0.0"
@@ -185,6 +189,9 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
+    "jean85/pretty-package-versions": {
+        "version": "1.2"
+    },
     "jms/metadata": {
         "version": "1.6.0"
     },
@@ -239,6 +246,30 @@
             "ref": "f0436fc35fca88eada758311f8de43bfb61f1980"
         }
     },
+    "nette/bootstrap": {
+        "version": "v3.0.0"
+    },
+    "nette/di": {
+        "version": "v3.0.0"
+    },
+    "nette/finder": {
+        "version": "v2.5.0"
+    },
+    "nette/neon": {
+        "version": "v3.0.0"
+    },
+    "nette/php-generator": {
+        "version": "v3.2.2"
+    },
+    "nette/robot-loader": {
+        "version": "v3.2.0"
+    },
+    "nette/schema": {
+        "version": "v1.0.0"
+    },
+    "nette/utils": {
+        "version": "v3.0.1"
+    },
     "nikic/php-parser": {
         "version": "v4.0.2"
     },
@@ -286,6 +317,18 @@
     },
     "phpspec/prophecy": {
         "version": "1.7.3"
+    },
+    "phpstan/phpdoc-parser": {
+        "version": "0.3.3"
+    },
+    "phpstan/phpstan": {
+        "version": "0.11.7"
+    },
+    "phpstan/phpstan-doctrine": {
+        "version": "0.11.4"
+    },
+    "phpstan/phpstan-symfony": {
+        "version": "0.11.6"
     },
     "phpunit/php-code-coverage": {
         "version": "5.3.0"
@@ -495,7 +538,7 @@
         "version": "v4.0.3"
     },
     "symfony/orm-pack": {
-        "version": "v1.0.5"
+        "version": "v1.0.6"
     },
     "symfony/phpunit-bridge": {
         "version": "3.3",

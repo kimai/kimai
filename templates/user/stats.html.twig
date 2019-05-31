@@ -19,33 +19,29 @@
     {% endif %}
 
     <script type="text/javascript">
-        var userProfileChartOptions = {
-            maintainAspectRatio     : true,
-            responsive              : true,
-            legend                  : false,
-            barPercentage           : 0.5,
-            categoryPercentage      : 0.9,
-            scales: {
-                xAxes: [{
-                    gridLines: {
-                        display: false
-                    }
-                }],
-                yAxes: [{
-                    gridLines: {
-                        display: true,
-                        color: 'rgba(0,0,0,.05)',
-                        lineWidth: 1
-                    }
-                }]
-            }
-        };
-        var userProfileChartLabels = [
-            {% for i in 1..12 %}
-            '{{ ('month.' ~i)|trans }}'
-            {% if not loop.last %},{% endif %}
-            {% endfor %}
-        ];
+        function userProfileChartOptions() {
+            return {
+                maintainAspectRatio: true,
+                responsive: true,
+                legend: false,
+                barPercentage: 0.5,
+                categoryPercentage: 0.9,
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            display: false
+                        }
+                    }],
+                    yAxes: [{
+                        gridLines: {
+                            display: true,
+                            color: 'rgba(0,0,0,.05)',
+                            lineWidth: 1
+                        }
+                    }]
+                }
+            };
+        }
     </script>
 
     {% for year,yearStat in years %}
@@ -58,9 +54,9 @@
                     <canvas id="userProfileChart{{ year }}" style="height: 200px;"></canvas>
                 </div>
                 <script type="text/javascript">
-                    $(document).ready(function () {
+                    document.addEventListener('kimai.initialized', function() {
                         var userProfileChartData{{ year }} = {
-                            labels: userProfileChartLabels,
+                            labels: moment.months(),
                             datasets: [
                                 {
                                     label: '{{ year }}',
@@ -78,25 +74,13 @@
 
                         var userProfileChartCanvas{{ year }} = $("#userProfileChart{{ year }}").get(0).getContext("2d");
 
-                        {% if tab == 'charts' %}
                         var userProfileChart{{ year }} = new Chart(
                             userProfileChartCanvas{{ year }}, {
                                 type: 'bar',
                                 data: userProfileChartData{{ year }},
-                                options: userProfileChartOptions
+                                options: userProfileChartOptions()
                             }
                         );
-                        {% endif %}
-
-                        $('a[href="#charts"]').on('shown.bs.tab', function(event){
-                            var userProfileChart{{ year }} = new Chart(
-                                userProfileChartCanvas{{ year }}, {
-                                    type: 'bar',
-                                    data: userProfileChartData{{ year }},
-                                    options: userProfileChartOptions
-                                }
-                            );
-                        });
                     });
                 </script>
             {% endblock %}

@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Entity\Activity;
+use App\Entity\Project;
 use App\Form\ActivityEditForm;
 use App\Form\Toolbar\ActivityToolbarForm;
 use App\Form\Type\ActivityType;
@@ -30,11 +31,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class ActivityController extends AbstractController
 {
     /**
-     * @return \App\Repository\ActivityRepository
+     * @var ActivityRepository
      */
-    protected function getRepository()
+    private $repository;
+
+    public function __construct(ActivityRepository $repository)
     {
-        return $this->getDoctrine()->getRepository(Activity::class);
+        $this->repository = $repository;
+    }
+
+    protected function getRepository(): ActivityRepository
+    {
+        return $this->repository;
     }
 
     /**
@@ -75,14 +83,21 @@ class ActivityController extends AbstractController
 
     /**
      * @Route(path="/create", name="admin_activity_create", methods={"GET", "POST"})
+     * @Route(path="/create/{project}", name="admin_activity_create_with_project", methods={"GET", "POST"})
      * @Security("is_granted('create_activity')")
      *
      * @param Request $request
+     * @param Project|null $project
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, ?Project $project = null)
     {
-        return $this->renderActivityForm(new Activity(), $request);
+        $activity = new Activity();
+        if (null !== $project) {
+            $activity->setProject($project);
+        }
+
+        return $this->renderActivityForm($activity, $request);
     }
 
     /**
@@ -110,7 +125,13 @@ class ActivityController extends AbstractController
     {
         $stats = $this->getRepository()->getActivityStatistics($activity);
 
-        $deleteForm = $this->createFormBuilder()
+        $deleteForm = $this->createFormBuilder(null, [
+                'attr' => [
+                    'data-form-event' => 'kimai.activityUpdate kimai.activityDelete',
+                    'data-msg-success' => 'action.delete.success',
+                    'data-msg-error' => 'action.delete.error',
+                ]
+            ])
             ->add('activity', ActivityType::class, [
                 'label' => 'label.activity',
                 'query_builder' => function (ActivityRepository $repo) use ($activity) {

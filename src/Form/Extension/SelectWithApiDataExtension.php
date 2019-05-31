@@ -77,6 +77,12 @@ class SelectWithApiDataExtension extends AbstractTypeExtension
             'data-related-select' => $formPrefix . $apiData['select'],
             'data-api-url' => $this->router->generate($apiData['route'], $apiData['route_params']),
         ]);
+
+        if (isset($apiData['empty_route_params'])) {
+            $view->vars['attr'] = array_merge($view->vars['attr'], [
+                'data-empty-url' => $this->router->generate($apiData['route'], $apiData['empty_route_params']),
+            ]);
+        }
     }
 
     /**
@@ -86,6 +92,5 @@ class SelectWithApiDataExtension extends AbstractTypeExtension
     {
         $resolver->setDefined(['api_data']);
         $resolver->setAllowedTypes('api_data', 'array');
-        //$resolver->setDefault('api_data', []);
     }
 }

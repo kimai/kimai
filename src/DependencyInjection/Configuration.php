@@ -12,6 +12,7 @@ namespace App\DependencyInjection;
 use App\Model\DashboardSection;
 use App\Model\Widget;
 use App\Timesheet\Rounding\RoundingInterface;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -28,6 +29,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('kimai');
+        /** @var ArrayNodeDefinition $rootNode */
         $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
@@ -69,21 +71,21 @@ class Configuration implements ConfigurationInterface
     protected function getTimesheetNode()
     {
         $builder = new TreeBuilder('timesheet');
+        /** @var ArrayNodeDefinition $rootNode */
         $node = $builder->getRootNode();
 
         $node
             ->children()
                 ->booleanNode('duration_only')
-                    ->defaultValue(false)
                     ->setDeprecated()
                 ->end()
                 ->scalarNode('mode')
                     ->defaultValue('default')
                     ->validate()
                         ->ifTrue(function ($value) {
-                            return !in_array($value, ['default', 'duration_only']);
+                            return !in_array($value, ['default', 'duration_only', 'punch']);
                         })
-                        ->thenInvalid('Chosen timesheet mode is invalid, allowed values: default, duration_only')
+                        ->thenInvalid('Chosen timesheet mode is invalid, allowed values: default, duration_only, punch')
                     ->end()
                 ->end()
                 ->booleanNode('markdown_content')
@@ -196,6 +198,7 @@ class Configuration implements ConfigurationInterface
     protected function getInvoiceNode()
     {
         $builder = new TreeBuilder('invoice');
+        /** @var ArrayNodeDefinition $rootNode */
         $node = $builder->getRootNode();
 
         $node
@@ -203,7 +206,6 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('documents')
                     ->requiresAtLeastOneElement()
-                    ->isRequired()
                     ->scalarPrototype()->end()
                     ->defaultValue([
                         'var/invoices/',
@@ -219,6 +221,7 @@ class Configuration implements ConfigurationInterface
     protected function getLanguagesNode()
     {
         $builder = new TreeBuilder('languages');
+        /** @var ArrayNodeDefinition $rootNode */
         $node = $builder->getRootNode();
 
         $node
@@ -226,9 +229,7 @@ class Configuration implements ConfigurationInterface
             ->arrayPrototype()
                 ->children()
                     ->scalarNode('date_time_type')->defaultValue('yyyy-MM-dd HH:mm')->end()     // for DateTimeType
-                    ->scalarNode('date_time_picker')->defaultValue('YYYY-MM-DD HH:mm')->end()   // for DateTimeType JS component
                     ->scalarNode('date_type')->defaultValue('yyyy-MM-dd')->end()                // for DateType
-                    ->scalarNode('date_picker')->defaultValue('YYYY-MM-DD')->end()              // for DateType JS component
                     ->scalarNode('date')->defaultValue('Y-m-d')->end()                          // for display via twig
                     ->scalarNode('date_time')->defaultValue('m-d H:i')->end()                   // for display via twig
                     ->scalarNode('duration')->defaultValue('%%h:%%m h')->end()                  // for display via twig
@@ -244,9 +245,11 @@ class Configuration implements ConfigurationInterface
     protected function getCalendarNode()
     {
         $builder = new TreeBuilder('calendar');
+        /** @var ArrayNodeDefinition $rootNode */
         $node = $builder->getRootNode();
 
         $node
+            ->addDefaultsIfNotSet()
             ->children()
                 ->booleanNode('week_numbers')->defaultTrue()->end()
                 ->integerNode('day_limit')->defaultValue(4)->end()
@@ -260,6 +263,13 @@ class Configuration implements ConfigurationInterface
                         ->end()
                         ->scalarNode('begin')->defaultValue('08:00')->end()
                         ->scalarNode('end')->defaultValue('20:00')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('visibleHours')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('begin')->defaultValue('00:00')->end()
+                        ->scalarNode('end')->defaultValue('24:00')->end()
                     ->end()
                 ->end()
                 ->arrayNode('google')
@@ -278,6 +288,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->booleanNode('weekends')->defaultTrue()->end()
             ->end()
         ;
 
@@ -287,6 +298,7 @@ class Configuration implements ConfigurationInterface
     protected function getThemeNode()
     {
         $builder = new TreeBuilder('theme');
+        /** @var ArrayNodeDefinition $rootNode */
         $node = $builder->getRootNode();
 
         $node
@@ -298,6 +310,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->scalarNode('box_color')
                     ->defaultValue('green')
+                    ->setDeprecated('The node "%node%" at path "%path%" was removed, please delete it from your config.')
                 ->end()
                 ->scalarNode('select_type')
                     ->defaultNull()
@@ -314,6 +327,7 @@ class Configuration implements ConfigurationInterface
     protected function getUserNode()
     {
         $builder = new TreeBuilder('user');
+        /** @var ArrayNodeDefinition $rootNode */
         $node = $builder->getRootNode();
 
         $node
@@ -334,6 +348,7 @@ class Configuration implements ConfigurationInterface
     protected function getWidgetsNode()
     {
         $builder = new TreeBuilder('widgets');
+        /** @var ArrayNodeDefinition $rootNode */
         $node = $builder->getRootNode();
 
         $node
@@ -365,6 +380,7 @@ class Configuration implements ConfigurationInterface
     protected function getDashboardNode()
     {
         $builder = new TreeBuilder('dashboard');
+        /** @var ArrayNodeDefinition $rootNode */
         $node = $builder->getRootNode();
 
         $node
@@ -398,6 +414,7 @@ class Configuration implements ConfigurationInterface
     protected function getDefaultsNode()
     {
         $builder = new TreeBuilder('defaults');
+        /** @var ArrayNodeDefinition $rootNode */
         $node = $builder->getRootNode();
 
         $node
@@ -420,6 +437,7 @@ class Configuration implements ConfigurationInterface
     protected function getPermissionsNode()
     {
         $builder = new TreeBuilder('permissions');
+        /** @var ArrayNodeDefinition $rootNode */
         $node = $builder->getRootNode();
 
         $node
@@ -428,7 +446,6 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('sets')
                     ->requiresAtLeastOneElement()
                     ->useAttributeAsKey('key')
-                    ->performNoDeepMerging()
                     ->arrayPrototype()
                         ->useAttributeAsKey('key')
                         ->isRequired()
@@ -439,7 +456,6 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('maps')
                     ->requiresAtLeastOneElement()
                     ->useAttributeAsKey('key')
-                    ->performNoDeepMerging()
                     ->arrayPrototype()
                         ->useAttributeAsKey('key')
                         ->isRequired()
@@ -450,13 +466,18 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('roles')
                     ->requiresAtLeastOneElement()
                     ->useAttributeAsKey('key')
-                    ->performNoDeepMerging()
                     ->arrayPrototype()
                         ->useAttributeAsKey('key')
                         ->isRequired()
                         ->prototype('scalar')->end()
                         ->defaultValue([])
                     ->end()
+                    ->defaultValue([
+                        'ROLE_USER' => [],
+                        'ROLE_TEAMLEAD' => [],
+                        'ROLE_ADMIN' => [],
+                        'ROLE_SUPER_ADMIN' => [],
+                    ])
                 ->end()
             ->end()
         ;

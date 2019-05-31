@@ -13,7 +13,6 @@ use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 
 /**
- * @coversDefaultClass \App\Controller\SystemConfigurationController
  * @group integration
  */
 class SystemConfigurationControllerTest extends ControllerBaseTest
@@ -49,8 +48,10 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
     public function getTestDataForms()
     {
         return [
-            ['#system_configuration_form_timesheet', $this->createUrl('/admin/system-config/timesheet')],
-            ['#system_configuration_form_form_customer', $this->createUrl('/admin/system-config/customer')],
+            ['form[name=system_configuration_form_timesheet]', $this->createUrl('/admin/system-config/update/timesheet')],
+            ['form[name=system_configuration_form_form_customer]', $this->createUrl('/admin/system-config/update/form_customer')],
+            ['form[name=system_configuration_form_theme]', $this->createUrl('/admin/system-config/update/theme')],
+            ['form[name=system_configuration_form_calendar]', $this->createUrl('/admin/system-config/update/calendar')],
         ];
     }
 
@@ -60,18 +61,16 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/system-config/');
 
         $configService = $client->getContainer()->get(SystemConfiguration::class);
-        $this->assertEquals(false, $configService->find('timesheet.markdown_content'));
         $this->assertEquals('default', $configService->find('timesheet.mode'));
         $this->assertEquals(true, $configService->find('timesheet.rules.allow_future_times'));
-        $this->assertEquals(3, $configService->find('timesheet.active_entries.hard_limit'));
+        $this->assertEquals(1, $configService->find('timesheet.active_entries.hard_limit'));
         $this->assertEquals(1, $configService->find('timesheet.active_entries.soft_limit'));
 
-        $form = $client->getCrawler()->filter('#system_configuration_form_timesheet')->form();
+        $form = $client->getCrawler()->filter('form[name=system_configuration_form_timesheet]')->form();
         $client->submit($form, [
-            'system_configuration_form' => [
+            'system_configuration_form_timesheet' => [
                 'configuration' => [
                     ['name' => 'timesheet.mode', 'value' => 'duration_only'],
-                    ['name' => 'timesheet.markdown_content', 'value' => 1],
                     ['name' => 'timesheet.rules.allow_future_times', 'value' => false],
                     ['name' => 'timesheet.active_entries.hard_limit', 'value' => 99],
                     ['name' => 'timesheet.active_entries.soft_limit', 'value' => 77],
@@ -85,7 +84,6 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertHasFlashSaveSuccess($client);
 
         $configService = $client->getContainer()->get(SystemConfiguration::class);
-        $this->assertEquals(true, $configService->find('timesheet.markdown_content'));
         $this->assertEquals('duration_only', $configService->find('timesheet.mode'));
         $this->assertEquals(false, $configService->find('timesheet.rules.allow_future_times'));
         $this->assertEquals(99, $configService->find('timesheet.active_entries.hard_limit'));
@@ -97,12 +95,11 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertFormHasValidationError(
             User::ROLE_SUPER_ADMIN,
             '/admin/system-config/',
-            '#system_configuration_form_timesheet',
+            'form[name=system_configuration_form_timesheet]',
             [
-                'system_configuration_form' => [
+                'system_configuration_form_timesheet' => [
                     'configuration' => [
                         ['name' => 'timesheet.mode', 'value' => 'foo'],
-                        ['name' => 'timesheet.markdown_content', 'value' => 1],
                         ['name' => 'timesheet.rules.allow_future_times', 'value' => 1],
                         ['name' => 'timesheet.active_entries.hard_limit', 'value' => -1],
                         ['name' => 'timesheet.active_entries.soft_limit', 'value' => -1],
@@ -110,9 +107,9 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                 ]
             ],
             [
-                '#system_configuration_form_configuration_0_value', // mode
-                '#system_configuration_form_configuration_3_value', // hard_limit
-                '#system_configuration_form_configuration_4_value', // soft_limit
+                '#system_configuration_form_timesheet_configuration_0_value', // mode
+                '#system_configuration_form_timesheet_configuration_2_value', // hard_limit
+                '#system_configuration_form_timesheet_configuration_3_value', // soft_limit
             ],
             true
         );
@@ -128,9 +125,9 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertEquals('DE', $configService->find('defaults.customer.country'));
         $this->assertEquals('EUR', $configService->find('defaults.customer.currency'));
 
-        $form = $client->getCrawler()->filter('#system_configuration_form_form_customer')->form();
+        $form = $client->getCrawler()->filter('form[name=system_configuration_form_form_customer]')->form();
         $client->submit($form, [
-            'system_configuration_form' => [
+            'system_configuration_form_form_customer' => [
                 'configuration' => [
                     ['name' => 'defaults.customer.timezone', 'value' => 'Atlantic/Canary'],
                     ['name' => 'defaults.customer.country', 'value' => 'BB'],
@@ -155,9 +152,9 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertFormHasValidationError(
             User::ROLE_SUPER_ADMIN,
             '/admin/system-config/',
-            '#system_configuration_form_form_customer',
+            'form[name=system_configuration_form_form_customer]',
             [
-                'system_configuration_form' => [
+                'system_configuration_form_form_customer' => [
                     'configuration' => [
                         ['name' => 'defaults.customer.timezone', 'value' => 'XX'],
                         ['name' => 'defaults.customer.country', 'value' => 1],
@@ -166,9 +163,128 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                 ]
             ],
             [
-                '#system_configuration_form_configuration_0_value',
-                '#system_configuration_form_configuration_1_value',
-                '#system_configuration_form_configuration_2_value',
+                '#system_configuration_form_form_customer_configuration_0_value',
+                '#system_configuration_form_form_customer_configuration_1_value',
+                '#system_configuration_form_form_customer_configuration_2_value',
+            ],
+            true
+        );
+    }
+
+    public function testUpdateThemeConfig()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/system-config/');
+
+        $configService = $client->getContainer()->get(SystemConfiguration::class);
+        $this->assertEquals(false, $configService->find('timesheet.markdown_content'));
+        $this->assertNull($configService->find('theme.select_type'));
+
+        $form = $client->getCrawler()->filter('form[name=system_configuration_form_theme]')->form();
+        $client->submit($form, [
+            'system_configuration_form_theme' => [
+                'configuration' => [
+                    ['name' => 'theme.select_type', 'value' => '1'],
+                    ['name' => 'timesheet.markdown_content', 'value' => 1],
+                ]
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/admin/system-config/'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasFlashSaveSuccess($client);
+
+        $configService = $client->getContainer()->get(SystemConfiguration::class);
+        $this->assertEquals('selectpicker', $configService->find('theme.select_type'));
+        $this->assertEquals(true, $configService->find('timesheet.markdown_content'));
+    }
+
+    public function testUpdateThemeConfigValidation()
+    {
+        $this->assertFormHasValidationError(
+            User::ROLE_SUPER_ADMIN,
+            '/admin/system-config/',
+            'form[name=system_configuration_form_theme]',
+            [
+                'system_configuration_form_theme' => [
+                    'configuration' => [
+                        ['name' => 'theme.select_type', 'value' => 'foo'],
+                        ['name' => 'timesheet.markdown_content', 'value' => 1],
+                    ]
+                ]
+            ],
+            [
+                '#system_configuration_form_theme_configuration_0_value',
+            ],
+            true
+        );
+    }
+
+    public function testUpdateCalendarConfig()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/system-config/');
+
+        $configService = $client->getContainer()->get(SystemConfiguration::class);
+        $this->assertTrue($configService->find('calendar.week_numbers'));
+        $this->assertTrue($configService->find('calendar.weekends'));
+        $this->assertEquals('08:00', $configService->find('calendar.businessHours.begin'));
+        $this->assertEquals('20:00', $configService->find('calendar.businessHours.end'));
+        $this->assertEquals('00:00', $configService->find('calendar.visibleHours.begin'));
+        $this->assertEquals('24:00', $configService->find('calendar.visibleHours.end'));
+
+        $form = $client->getCrawler()->filter('form[name=system_configuration_form_calendar]')->form();
+        $client->submit($form, [
+            'system_configuration_form_calendar' => [
+                'configuration' => [
+                    ['name' => 'calendar.week_numbers', 'value' => false],
+                    ['name' => 'calendar.weekends', 'value' => false],
+                    ['name' => 'calendar.businessHours.begin', 'value' => '10:00'],
+                    ['name' => 'calendar.businessHours.end', 'value' => '16:00'],
+                    ['name' => 'calendar.visibleHours.begin', 'value' => '05:17'],
+                    ['name' => 'calendar.visibleHours.end', 'value' => '21:43'],
+                ]
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/admin/system-config/'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasFlashSaveSuccess($client);
+
+        $configService = $client->getContainer()->get(SystemConfiguration::class);
+        $this->assertFalse($configService->find('calendar.week_numbers'));
+        $this->assertFalse($configService->find('calendar.weekends'));
+        $this->assertEquals('10:00', $configService->find('calendar.businessHours.begin'));
+        $this->assertEquals('16:00', $configService->find('calendar.businessHours.end'));
+        $this->assertEquals('05:17', $configService->find('calendar.visibleHours.begin'));
+        $this->assertEquals('21:43', $configService->find('calendar.visibleHours.end'));
+    }
+
+    public function testUpdateCalendarConfigValidation()
+    {
+        $this->assertFormHasValidationError(
+            User::ROLE_SUPER_ADMIN,
+            '/admin/system-config/',
+            'form[name=system_configuration_form_calendar]',
+            [
+                'system_configuration_form_calendar' => [
+                    'configuration' => [
+                        ['name' => 'calendar.week_numbers', 'value' => 'foo'],
+                        ['name' => 'calendar.weekends', 'value' => 'bar'],
+                        ['name' => 'calendar.businessHours.begin', 'value' => '25:13'],
+                        ['name' => 'calendar.businessHours.end', 'value' => null],
+                        ['name' => 'calendar.visibleHours.begin', 'value' => 'aa:bb'],
+                        ['name' => 'calendar.visibleHours.end', 'value' => ''],
+                    ]
+                ]
+            ],
+            [
+                '#system_configuration_form_calendar_configuration_2_value',
+                '#system_configuration_form_calendar_configuration_3_value',
+                '#system_configuration_form_calendar_configuration_4_value',
+                '#system_configuration_form_calendar_configuration_5_value',
             ],
             true
         );

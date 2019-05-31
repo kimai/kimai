@@ -26,9 +26,10 @@ class MarkdownExtensionTest extends TestCase
         $config = new TimesheetConfiguration($loader, ['markdown_content' => true]);
         $sut = new MarkdownExtension(new Markdown(), $config);
         $filters = $sut->getFilters();
-        $this->assertCount(2, $filters);
+        $this->assertCount(3, $filters);
         $this->assertEquals('md2html', $filters[0]->getName());
         $this->assertEquals('desc2html', $filters[1]->getName());
+        $this->assertEquals('comment2html', $filters[2]->getName());
     }
 
     public function testMarkdownToHtml()

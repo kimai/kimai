@@ -10,6 +10,7 @@
 namespace App\Command;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -19,6 +20,11 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Command used to execute all the basic application bootstrapping AFTER "composer install" was executed.
+ *
+ * This command is NOT used during runtime and only meant for developers on their local machines.
+ * I am too lazy to think about how this could be tested ... and this is one of the rare edge cases where I don't
+ * feel like it is necessary, so I "cheat" with:
+ * @codeCoverageIgnore
  */
 class ResetCommand extends Command
 {
@@ -124,6 +130,7 @@ EOT
             return true;
         }
 
+        /** @var QuestionHelper $questionHelper */
         $questionHelper = $this->getHelperSet()->get('question');
         $question = new ConfirmationQuestion('<question>' . $question . '</question>', $default);
 

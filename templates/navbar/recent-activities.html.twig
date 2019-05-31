@@ -1,20 +1,16 @@
-{% if entries is defined and entries is not empty and is_granted('start_own_timesheet') %}
+{% if is_granted('start_own_timesheet') %}
     <li class="dropdown notifications-menu">
         <a href="#" class="dropdown-toggle ddt-large" data-toggle="dropdown">
             <i class="{{ 'activity'|icon }} fa-2x"></i>
-            <span class="label label-success">{{ entries|length }}</span>
         </a>
-        <ul class="dropdown-menu">
-            <li class="header">{{ 'recent.activities'|trans({'%count%':(entries|length)}) }}</li>
+        <ul class="dropdown-menu"
+            data-api="{{ path('recent_timesheet', {'size' : 10}) }}"
+            data-href="{{ path('restart_timesheet', {'id' : '000'}) }}"
+            data-icon="{{ 'start-small'|icon }}"
+            data-template="{{ 'recent.activities.format'|trans }}">
+            <li class="header">{{ 'recent.activities'|trans }}</li>
             <li>
                 <ul class="menu">
-                    {% for timesheet in entries %}
-                        <li>
-                            <a href="{{ path('timesheet_start', {'id' : timesheet.id}) }}">
-                                <i class="{{ 'start-small'|icon }} text-green"></i> {{ 'recent.activities.format'|trans({'%activity%': timesheet.activity.name, '%project%': timesheet.project.name, '%customer%': timesheet.project.customer.name}) }}
-                            </a>
-                        </li>
-                    {% endfor %}
                 </ul>
             </li>
             <li class="footer"><a href="{{ url('timesheet') }}">{{ 'timesheet.all'|trans }}</a></li>

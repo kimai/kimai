@@ -11,6 +11,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Activity;
 use App\Entity\Project;
+use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
@@ -50,6 +51,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
         return [
             UserFixtures::class,
             CustomerFixtures::class,
+            TagFixtures::class,
         ];
     }
 
@@ -61,6 +63,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
         $allUser = $this->getAllUsers($manager);
         $activities = $this->getAllActivities($manager);
         $projects = $this->getAllProjects($manager);
+        $allTags = $this->getAllTags($manager);
 
         $faker = Factory::create();
 
@@ -86,13 +89,13 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
                     $user,
                     $activities[array_rand($activities)],
                     $projects[array_rand($projects)],
-                    $description
+                    $description,
+                    true
                 );
 
                 $manager->persist($entry);
 
                 if ($i % self::BATCH_SIZE == 0) {
-                    //echo '['.$i.'] Timesheets for User ' . $user->getId() . PHP_EOL;
                     $manager->flush();
                     $manager->clear(Timesheet::class);
                 }
@@ -115,6 +118,37 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
             $manager->clear(Timesheet::class);
         }
         $manager->flush();
+
+        $entries = $manager->getRepository(Timesheet::class)->findAll();
+        foreach ($entries as $temp) {
+            $tagAmount = rand(0, 4);
+            for ($iTag = 0; $iTag < $tagAmount; $iTag++) {
+                $tagId = rand(1, TagFixtures::MAX_TAGS);
+                if (isset($allTags[$tagId])) {
+                    $temp->addTag($allTags[$tagId]);
+                }
+            }
+        }
+
+        $manager->flush();
+        $manager->clear(Timesheet::class);
+        $manager->clear(Tag::class);
+    }
+
+    /**
+     * @param ObjectManager $manager
+     * @return Tag[]
+     */
+    protected function getAllTags(ObjectManager $manager)
+    {
+        $all = [];
+        /* @var Tag[] $entries */
+        $entries = $manager->getRepository(Tag::class)->findAll();
+        foreach ($entries as $temp) {
+            $all[$temp->getId()] = $temp;
+        }
+
+        return $all;
     }
 
     /**

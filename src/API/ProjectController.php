@@ -88,7 +88,7 @@ class ProjectController extends BaseApiController
             $query->setOrderBy($orderBy);
         }
 
-        if (null !== ($customer = $paramFetcher->get('customer'))) {
+        if (!empty($customer = $paramFetcher->get('customer'))) {
             $query->setCustomer($customer);
         }
 

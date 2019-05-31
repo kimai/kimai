@@ -16,6 +16,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
  * @covers \App\Twig\DateExtensions
@@ -49,6 +50,20 @@ class DateExtensionsTest extends TestCase
         foreach ($twigFilters as $filter) {
             $this->assertInstanceOf(TwigFilter::class, $filter);
             $this->assertEquals($filters[$i++], $filter->getName());
+        }
+    }
+
+    public function testGetFunctions()
+    {
+        $functions = ['get_format_duration'];
+        $sut = $this->getSut('de', []);
+        $twigFunctions = $sut->getFunctions();
+        $this->assertCount(count($functions), $twigFunctions);
+        $i = 0;
+        /** @var TwigFunction $filter */
+        foreach ($twigFunctions as $filter) {
+            $this->assertInstanceOf(TwigFunction::class, $filter);
+            $this->assertEquals($functions[$i++], $filter->getName());
         }
     }
 

@@ -26,7 +26,7 @@ use Pagerfanta\Pagerfanta;
 class ProjectRepository extends AbstractRepository
 {
     /**
-     * @param $id
+     * @param int $id
      * @return null|Project
      */
     public function getById($id)
@@ -41,42 +41,44 @@ class ProjectRepository extends AbstractRepository
     public function countProject($visible = null)
     {
         if (null !== $visible) {
-            return $this->count(['visible' => (int) $visible]);
+            return $this->count(['visible' => (bool) $visible]);
         }
 
         return $this->count([]);
     }
 
-    /**
-     * Retrieves statistics for one project.
-     *
-     * @param Project $project
-     * @return ProjectStatistic
-     */
-    public function getProjectStatistics(Project $project)
+    public function getProjectStatistics(Project $project): ProjectStatistic
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb->select('COUNT(t.id) as recordAmount')
             ->addSelect('SUM(t.duration) as recordDuration')
-            ->addSelect('COUNT(DISTINCT(a.id)) as activityAmount')
-            ->from(Activity::class, 'a')
-            ->join(Timesheet::class, 't')
-            ->where('t.project = :project')
-            ->andWhere('t.activity = a.id')
+            ->from(Timesheet::class, 't')
+            ->andWhere('t.project = :project')
         ;
+        $resultTimesheets = $qb->getQuery()->execute(['project' => $project], Query::HYDRATE_ARRAY);
 
-        $result = $qb->getQuery()->execute(['project' => $project], Query::HYDRATE_ARRAY);
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('COUNT(a.id) as activityAmount')
+            ->from(Activity::class, 'a')
+            ->andWhere('a.project = :project')
+        ;
+        $resultActivities = $qb->getQuery()->execute(['project' => $project], Query::HYDRATE_ARRAY);
 
         $stats = new ProjectStatistic();
+        $stats->setCount(1);
 
-        if (isset($result[0])) {
-            $dbStats = $result[0];
+        if (isset($resultTimesheets[0])) {
+            $resultTimesheets = $resultTimesheets[0];
 
-            $stats->setCount(1);
-            $stats->setRecordAmount($dbStats['recordAmount']);
-            $stats->setRecordDuration($dbStats['recordDuration']);
-            $stats->setActivityAmount($dbStats['activityAmount']);
+            $stats->setRecordAmount($resultTimesheets['recordAmount']);
+            $stats->setRecordDuration($resultTimesheets['recordDuration']);
+        }
+
+        if (isset($resultActivities[0])) {
+            $resultActivities = $resultActivities[0];
+
+            $stats->setActivityAmount($resultActivities['activityAmount']);
         }
 
         return $stats;
@@ -108,7 +110,7 @@ class ProjectRepository extends AbstractRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        // if we join activities, the maxperpage limit will limit the list
+        // if we join activities, the max-per-page limit will limit the list
         // due to the raised amount of rows by projects * activities
         $qb->select('p', 'c')
             ->from(Project::class, 'p')
@@ -117,9 +119,10 @@ class ProjectRepository extends AbstractRepository
 
         if (ProjectQuery::SHOW_VISIBLE == $query->getVisibility()) {
             if (!$query->isExclusiveVisibility()) {
-                $qb->andWhere('c.visible = 1');
+                $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
             }
-            $qb->andWhere('p.visible = 1');
+            $qb->andWhere($qb->expr()->eq('p.visible', ':visible'));
+            $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
 
             $entity = $query->getHiddenEntity();
             if (null !== $entity) {
@@ -128,7 +131,8 @@ class ProjectRepository extends AbstractRepository
 
             // TODO check for visibility of customer
         } elseif (ProjectQuery::SHOW_HIDDEN == $query->getVisibility()) {
-            $qb->andWhere('p.visible = 0');
+            $qb->andWhere($qb->expr()->eq('p.visible', ':visible'));
+            $qb->setParameter('visible', false, \PDO::PARAM_BOOL);
             // TODO check for visibility of customer
         }
 

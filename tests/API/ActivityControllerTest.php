@@ -17,7 +17,6 @@ use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @coversDefaultClass \App\API\ActivityController
  * @group integration
  */
 class ActivityControllerTest extends APIControllerBaseTest
@@ -221,7 +220,7 @@ class ActivityControllerTest extends APIControllerBaseTest
 
     protected function assertStructure(array $result, $full = true)
     {
-        $expectedKeys = ['id', 'name', 'visible', 'project', 'hourlyRate', 'fixedRate'];
+        $expectedKeys = ['id', 'name', 'visible', 'project', 'hourlyRate', 'fixedRate', 'color'];
 
         if ($full) {
             $expectedKeys = array_merge($expectedKeys, ['comment']);

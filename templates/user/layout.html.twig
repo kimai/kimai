@@ -3,7 +3,7 @@
 
 {% block page_title %}{{ 'profile.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'profile.subtitle'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.profile(tab, user) }}{% endblock %}
+{% block page_actions %}{{ actions.user(user, tab) }}{% endblock %}
 
 {% block main %}
     {% import _self as macro %}
@@ -24,7 +24,7 @@
 {% endblock %}
 
 {% macro profile_infos(user, stats) %}
-    <div class="box box-primary">
+    <div class="box box-{{ admin_lte_context.widget.type }}">
         <div class="box-header with-border">
             <h3 class="box-title">{{ 'profile.about_me'|trans }}</h3>
         </div>
@@ -46,7 +46,7 @@
     {% import "@AdminLTE/Macros/default.html.twig" as macro %}
     {% import "macros/widgets.html.twig" as widgets %}
 
-    <div class="box box-primary">
+    <div class="box box-{{ admin_lte_context.widget.type }}">
         <div class="box-body box-profile">
             {{ macro.avatar(user.avatar, user.username, 'profile-user-img img-responsive img-circle') }}
             <h3 class="profile-username text-center">{{ widgets.username(user) }}</h3>
@@ -82,13 +82,13 @@
 {% endmacro %}
 
 {# -------------------------------- UNUSED FOR NOW -------------------------------- #}
-{% macro profile_list_unused(user, items, color) %}
+{% macro profile_list_unused(user, items) %}
     {% import "@AdminLTE/Macros/default.html.twig" as macro %}
     {% import "macros/widgets.html.twig" as widgets %}
 
     <div class="box box-widget widget-user-2">
         <!-- Add the bg color to the header using any of the bg-* classes -->
-        <div class="widget-user-header bg-{{ color|default(kimai_context.box_color) }}">
+        <div class="widget-user-header bg-green">
             <div class="widget-user-image">
                 {{ macro.avatar(user.avatar, user.username) }}
             </div>
@@ -107,12 +107,12 @@
 {% endmacro %}
 
 {# -------------------------------- UNUSED FOR NOW -------------------------------- #}
-{% macro profile_box_unused(user, stats, color) %}
+{% macro profile_box_unused(user, stats) %}
     {% import "@AdminLTE/Macros/default.html.twig" as macro %}
     {% import "macros/widgets.html.twig" as widgets %}
 
     <div class="box box-widget widget-user">
-        <div class="widget-user-header bg-{{ color|default(kimai_context.box_color) }}">
+        <div class="widget-user-header bg-green">
             <h3 class="widget-user-username">{{ widgets.username(user) }}</h3>
             <h5 class="widget-user-desc">{{ user.title }}</h5>
         </div>

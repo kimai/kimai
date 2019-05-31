@@ -10,6 +10,7 @@
 namespace App\Form;
 
 use App\Entity\Customer;
+use App\Form\Type\ColorPickerType;
 use App\Form\Type\FixedRateType;
 use App\Form\Type\HourlyRateType;
 use App\Form\Type\YesNoType;
@@ -101,6 +102,7 @@ class CustomerEditForm extends AbstractType
             ->add('timezone', TimezoneType::class, [
                 'label' => 'label.timezone',
             ])
+            ->add('color', ColorPickerType::class)
             ->add('fixedRate', FixedRateType::class, [
                 'currency' => $currency ?? false,
             ])
@@ -123,6 +125,9 @@ class CustomerEditForm extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'admin_customer_edit',
+            'attr' => [
+                'data-form-event' => 'kimai.customerUpdate'
+            ],
         ]);
     }
 }

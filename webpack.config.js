@@ -7,6 +7,9 @@ Encore
 
     // the public path is ONLY used to reference fonts from within CSS
     // you can ignore the warning message triggered by webpack encore
+
+    // FIXME
+
     //.setPublicPath('./')
     .setPublicPath('/build/')
 
@@ -42,10 +45,10 @@ Encore
         resolveUrlLoader: false
     })
 
+    // prevent that all moment locales will be included
     .addPlugin(new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/))
 
-
-// add hash after file name
+    // add hash after file name
     .configureFilenames({
         js: '[name].js?[contenthash]',
         css: '[name].css?[contenthash]',

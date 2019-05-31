@@ -1,0 +1,41 @@
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/* UserPanel is deactivated right now */
+/*
+.user-panel>.info {
+    left: 80px;
+}
+*/
+
+/* Right sidebar with additional tabs for personal settings and "About Kimai" section */
+/*
+.control-sidebar {
+    select {
+        color: $input-color;
+        background-color: $input-bg;
+    }
+    div.image {
+        img.img-circle {
+            max-width: 34px;
+        }
+    }
+}
+*/
+
+@media (min-width: $screen-sm-min) {
+    .sidebar-mini.sidebar-collapse .sidebar-menu li.header {
+        border-top-width: 1px;
+        border-top-style: solid;
+        display: block !important;
+        margin-top: 16px;
+        opacity: 0.4;
+        span {
+            display: none !important;
+        }
+    }
+}

@@ -5,7 +5,6 @@ Kimai - the open source time-tracker application with a mobile-first approach (r
 [![Latest Stable Version](https://poser.pugx.org/kevinpapst/kimai2/v/stable)](https://packagist.org/packages/kevinpapst/kimai2)
 [![License](https://poser.pugx.org/kevinpapst/kimai2/license)](https://packagist.org/packages/kevinpapst/kimai2)
 [![Travis Status](https://travis-ci.org/kevinpapst/kimai2.svg?branch=master)](https://travis-ci.org/kevinpapst/kimai2)
-[![Code Quality](https://scrutinizer-ci.com/g/kevinpapst/kimai2/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/kevinpapst/kimai2/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/kevinpapst/kimai2/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/kevinpapst/kimai2/?branch=master)
 [![Scrutinizer Status](https://scrutinizer-ci.com/g/kevinpapst/kimai2/badges/build.png?b=master)](https://scrutinizer-ci.com/g/kevinpapst/kimai2/build-status/master)
 
@@ -18,7 +17,7 @@ But it adapts the same ideas and a clean & simple UI for your time-tracking expe
 By now it is in an almost-stable development phase, usable and with most advanced features from Kimai 1.
 You can even [import your data](https://www.kimai.org/documentation/migration-v1.html) and start testing and using it today.
 
-Kimai is a [multi-language application](https://www.kimai.org/documentation/translations.html) and already translated to english, german, italian, french, spanish, russian, arabic, hungarian and portuguese.
+Kimai is a [multi-language application](https://www.kimai.org/documentation/translations.html) and already translated to english, german, italian, french, spanish, russian, arabic, hungarian, portuguese (brazilian), swedish and japanese.
 
 ### Requirements
 

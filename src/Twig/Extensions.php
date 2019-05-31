@@ -14,7 +14,6 @@ use App\Entity\Timesheet;
 use App\Utils\Duration;
 use App\Utils\LocaleSettings;
 use NumberFormatter;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Intl\Intl;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -29,17 +28,14 @@ class Extensions extends AbstractExtension
      * @var LocaleSettings
      */
     protected $localeSettings;
-
     /**
      * @var string
      */
     protected $locale;
-
     /**
      * @var Duration
      */
     protected $durationFormatter;
-
     /**
      * @var NumberFormatter
      */
@@ -48,16 +44,6 @@ class Extensions extends AbstractExtension
      * @var NumberFormatter
      */
     protected $moneyFormatter;
-
-    /**
-     * @var RequestStack
-     */
-    protected $requestStack;
-
-    /**
-     * @var array
-     */
-    protected $cookies = [];
 
     /**
      * @var string[]
@@ -85,10 +71,10 @@ class Extensions extends AbstractExtension
         'project' => 'fas fa-project-diagram',
         'repeat' => 'fas fa-redo-alt',
         'start' => 'fas fa-play-circle',
-        'start-small' => 'fas fa-play-circle',
+        'start-small' => 'far fa-play-circle',
         'stop' => 'fas fa-stop',
         'stop-small' => 'far fa-stop-circle',
-        'timesheet' => 'far fa-clock',
+        'timesheet' => 'fas fa-clock',
         'trash' => 'far fa-trash-alt',
         'user' => 'fas fa-user',
         'visibility' => 'far fa-eye',
@@ -107,15 +93,16 @@ class Extensions extends AbstractExtension
         'debug' => 'far fa-file-alt',
         'profile-stats' => 'far fa-chart-bar',
         'profile' => 'fas fa-user-edit',
+        'warning' => 'fas fa-exclamation-triangle',
+        'permissions' => 'fas fa-user-lock',
+        'back' => 'fas fa-long-arrow-alt-left',
     ];
 
     /**
-     * @param RequestStack $requestStack
      * @param LocaleSettings $localeSettings
      */
-    public function __construct(RequestStack $requestStack, LocaleSettings $localeSettings)
+    public function __construct(LocaleSettings $localeSettings)
     {
-        $this->requestStack = $requestStack;
         $this->localeSettings = $localeSettings;
         $this->durationFormatter = new Duration();
     }
@@ -142,14 +129,12 @@ class Extensions extends AbstractExtension
     {
         return [
             new TwigFunction('locales', [$this, 'getLocales']),
-            new TwigFunction('is_visible_column', [$this, 'isColumnVisible']),
-            new TwigFunction('is_datatable_configured', [$this, 'isDatatableConfigured']),
             new TwigFunction('class_name', [$this, 'getClassName']),
         ];
     }
 
     /**
-     * @param $object
+     * @param object $object
      * @return null|string
      */
     public function getClassName($object)
@@ -162,61 +147,6 @@ class Extensions extends AbstractExtension
     }
 
     /**
-     * @param string $dataTable
-     * @param string $size
-     * @return bool
-     */
-    public function isDatatableConfigured(string $dataTable, string $size)
-    {
-        $cookie = $this->getVisibilityCookieName($dataTable, $size);
-
-        return $this->requestStack->getCurrentRequest()->cookies->has($cookie);
-    }
-
-    /**
-     * @param string $dataTable
-     * @param string $size
-     * @return string
-     */
-    public function getVisibilityCookieName(string $dataTable, string $size)
-    {
-        return $dataTable . '_visibility' . $size;
-    }
-
-    /**
-     * This is only for datatables, do not use it outside this context.
-     *
-     * @param string $dataTable
-     * @param string $column
-     * @param string $size
-     * @return bool
-     */
-    public function isColumnVisible(string $dataTable, string $column, string $size)
-    {
-        // name handling is spread between here and datatables.html.twig (data_table_column_modal)
-        $cookie = $this->getVisibilityCookieName($dataTable, $size);
-
-        if (!isset($this->cookies[$cookie])) {
-            $visibility = false;
-            if ($this->requestStack->getCurrentRequest()->cookies->has($cookie)) {
-                $visibility = json_decode($this->requestStack->getCurrentRequest()->cookies->get($cookie), true);
-            }
-            $this->cookies[$cookie] = $visibility;
-        }
-        $values = $this->cookies[$cookie];
-
-        if (empty($values) || !is_array($values)) {
-            return true;
-        }
-
-        if (isset($values[$column]) && $values[$column] === false) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * Transforms seconds into a duration string.
      *
      * @param int|Timesheet $duration
@@ -225,14 +155,24 @@ class Extensions extends AbstractExtension
      */
     public function duration($duration, $format = null)
     {
-        $seconds = $duration;
+        if (null === $duration) {
+            $duration = 0;
+        }
+
         if ($duration instanceof Timesheet) {
             $seconds = $duration->getDuration();
             if (null === $duration->getEnd()) {
                 $seconds = time() - $duration->getBegin()->getTimestamp();
             }
+
+            $duration = $seconds;
         }
 
+        return $this->formatDuration((int) $duration, $format);
+    }
+
+    protected function formatDuration(int $seconds, $format = null): string
+    {
         if ($seconds < 0) {
             return '?';
         }

@@ -16,7 +16,6 @@ use App\Tests\DataFixtures\InvoiceFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 
 /**
- * @coversDefaultClass \App\Controller\InvoiceController
  * @group integration
  */
 class InvoiceControllerTest extends ControllerBaseTest

@@ -10,62 +10,31 @@
 namespace App\Controller;
 
 use App\Entity\Timesheet;
-use App\Form\TimesheetEditForm;
-use App\Form\Toolbar\TimesheetToolbarForm;
-use App\Repository\Query\TimesheetQuery;
-use Doctrine\ORM\ORMException;
-use Pagerfanta\Pagerfanta;
+use App\Form\TimesheetAdminEditForm;
+use App\Repository\ActivityRepository;
+use App\Repository\ProjectRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Controller used for manage timesheet entries in the admin part of the site.
- *
  * @Route(path="/team/timesheet")
  * @Security("is_granted('view_other_timesheet')")
  */
-class TimesheetTeamController extends AbstractController
+class TimesheetTeamController extends TimesheetAbstractController
 {
-    use TimesheetControllerTrait;
-
     /**
      * @Route(path="/", defaults={"page": 1}, name="admin_timesheet", methods={"GET"})
      * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_timesheet_paginated", methods={"GET"})
      * @Security("is_granted('view_other_timesheet')")
      *
-     * @param $page
+     * @param int $page
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction($page, Request $request)
     {
-        $query = new TimesheetQuery();
-        $query->setPage($page);
-
-        $form = $this->getToolbarForm($query);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var TimesheetQuery $query */
-            $query = $form->getData();
-            if (null !== $query->getBegin()) {
-                $query->getBegin()->setTime(0, 0, 0);
-            }
-            if (null !== $query->getEnd()) {
-                $query->getEnd()->setTime(23, 59, 59);
-            }
-        }
-
-        /* @var $entries Pagerfanta */
-        $entries = $this->getRepository()->findByQuery($query);
-
-        return $this->render('timesheet-team/index.html.twig', [
-            'entries' => $entries,
-            'page' => $query->getPage(),
-            'query' => $query,
-            'showFilter' => $form->isSubmitted(),
-            'toolbarForm' => $form->createView(),
-        ]);
+        return $this->index($page, $request, 'timesheet-team/index.html.twig');
     }
 
     /**
@@ -76,46 +45,7 @@ class TimesheetTeamController extends AbstractController
      */
     public function exportAction(Request $request)
     {
-        $query = new TimesheetQuery();
-        $query->setResultType(TimesheetQuery::RESULT_TYPE_OBJECTS);
-
-        $form = $this->getToolbarForm($query);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var TimesheetQuery $query */
-            $query = $form->getData();
-        }
-
-        // by default the current month is exported, but it can be overwritten
-        if (null === $query->getBegin()) {
-            $query->setBegin($this->dateTime->createDateTime('first day of this month'));
-        }
-        $query->getBegin()->setTime(0, 0, 0);
-
-        if (null === $query->getEnd()) {
-            $query->setEnd($this->dateTime->createDateTime('last day of this month'));
-        }
-        $query->getEnd()->setTime(23, 59, 59);
-
-        /* @var $entries Pagerfanta */
-        $entries = $this->getRepository()->findByQuery($query);
-
-        return $this->render('timesheet-team/export.html.twig', [
-            'entries' => $entries,
-            'query' => $query,
-        ]);
-    }
-
-    /**
-     * @Route(path="/{id}/stop", name="admin_timesheet_stop", methods={"GET"})
-     * @Security("is_granted('stop', entry)")
-     *
-     * @param Timesheet $entry
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function stopAction(Timesheet $entry)
-    {
-        return $this->stop($entry, 'admin_timesheet');
+        return $this->export($request, 'timesheet-team/export.html.twig');
     }
 
     /**
@@ -128,7 +58,7 @@ class TimesheetTeamController extends AbstractController
      */
     public function editAction(Timesheet $entry, Request $request)
     {
-        return $this->edit($entry, $request, 'admin_timesheet_paginated', 'timesheet-team/edit.html.twig');
+        return $this->edit($entry, $request, 'timesheet-team/edit.html.twig');
     }
 
     /**
@@ -136,94 +66,42 @@ class TimesheetTeamController extends AbstractController
      * @Security("is_granted('create_other_timesheet')")
      *
      * @param Request $request
+     * @param ProjectRepository $projectRepository
+     * @param ActivityRepository $activityRepository
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, ProjectRepository $projectRepository, ActivityRepository $activityRepository)
     {
-        return $this->create($request, 'admin_timesheet', 'timesheet-team/edit.html.twig');
+        return $this->create($request, 'timesheet-team/edit.html.twig', $projectRepository, $activityRepository);
     }
 
-    /**
-     * @Route(path="/{id}/delete", defaults={"page": 1}, name="admin_timesheet_delete", methods={"GET", "POST"})
-     * @Security("is_granted('delete', entry)")
-     *
-     * @param Timesheet $entry
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function deleteAction(Timesheet $entry, Request $request)
+    protected function getCreateFormClassName()
     {
-        $deleteForm = $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_timesheet_delete', ['id' => $entry->getId()]))
-            ->setMethod('POST')
-            ->getForm();
-
-        $deleteForm->handleRequest($request);
-
-        if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
-            try {
-                $this->getRepository()->delete($entry);
-                $this->flashSuccess('action.delete.success');
-            } catch (ORMException $ex) {
-                $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
-            }
-
-            return $this->redirectToRoute('admin_timesheet');
-        }
-
-        return $this->render('timesheet-team/delete.html.twig', [
-            'timesheet' => $entry,
-            'form' => $deleteForm->createView(),
-        ]);
+        return TimesheetAdminEditForm::class;
     }
 
-    /**
-     * @param Timesheet $entry
-     * @param string $redirectRoute
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    protected function getCreateForm(Timesheet $entry, string $redirectRoute)
+    protected function getEditFormClassName()
     {
-        return $this->createForm(TimesheetEditForm::class, $entry, [
-            'action' => $this->generateUrl('admin_timesheet_create'),
-            'include_rate' => $this->isGranted('edit_rate', $entry),
-            'include_user' => true,
-            'customer' => true,
-        ]);
+        return TimesheetAdminEditForm::class;
     }
 
-    /**
-     * @param Timesheet $entry
-     * @param int $page
-     * @param string $redirectRoute
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    protected function getEditForm(Timesheet $entry, $page, string $redirectRoute)
+    protected function includeUserInForms(): bool
     {
-        return $this->createForm(TimesheetEditForm::class, $entry, [
-            'action' => $this->generateUrl('admin_timesheet_edit', [
-                'id' => $entry->getId(),
-                'page' => $page,
-            ]),
-            'include_rate' => $this->isGranted('edit_rate', $entry),
-            'include_exported' => $this->isGranted('edit_export', $entry),
-            'include_user' => true,
-            'customer' => true,
-        ]);
+        return true;
     }
 
-    /**
-     * @param TimesheetQuery $query
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    protected function getToolbarForm(TimesheetQuery $query)
+    protected function getTimesheetRoute(): string
     {
-        return $this->createForm(TimesheetToolbarForm::class, $query, [
-            'action' => $this->generateUrl('admin_timesheet', [
-                'page' => $query->getPage(),
-            ]),
-            'method' => 'GET',
-            'include_user' => true,
-        ]);
+        return 'admin_timesheet';
+    }
+
+    protected function getEditRoute(): string
+    {
+        return 'admin_timesheet_edit';
+    }
+
+    protected function getCreateRoute(): string
+    {
+        return 'admin_timesheet_create';
     }
 }

@@ -24,8 +24,8 @@ class ProjectType extends AbstractType
 {
     /**
      * @param Project $choiceValue
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param mixed $value
      * @return array
      */
     public function choiceAttr($choiceValue, $key, $value)
@@ -74,6 +74,7 @@ class ProjectType extends AbstractType
                     'select' => 'activity',
                     'route' => 'get_activities',
                     'route_params' => ['project' => '-s-', 'orderBy' => 'name', 'visible' => $options['activity_visibility']],
+                    'empty_route_params' => ['globals' => 'true', 'orderBy' => 'name', 'visible' => $options['activity_visibility']],
                 ];
             }
 

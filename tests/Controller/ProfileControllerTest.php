@@ -17,7 +17,6 @@ use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 /**
- * @coversDefaultClass \App\Controller\ProfileController
  * @group integration
  */
 class ProfileControllerTest extends ControllerBaseTest

@@ -2,22 +2,26 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/toolbar.html.twig" as toolbar %}
 {% import "macros/datatables.html.twig" as tables %}
+{% import "macros/actions.html.twig" as actions %}
+
+{% set columns = {
+    'date': 'alwaysVisible',
+    'user': 'hidden-sm',
+    'description': 'hidden-xs hidden-sm',
+    'unit_price': 'hidden-xs text-center',
+    'amount': 'text-center',
+    'total_rate': 'text-right alwaysVisible',
+} %}
+
+{% set tableName = 'invoice' %}
 
 {% block page_title %}{{ 'invoice.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'invoice.subtitle'|trans }}{% endblock %}
-{% block page_actions %}
-    {% set actions = {'filter': '#collapseInvoice', 'visibility': '#modal_invoice'} %}
-    {% if is_granted('create_invoice_template') %}
-        {% set actions = actions|merge({'create': path('admin_invoice_template_create')}) %}
-    {% endif %}
-    {% if is_granted('view_invoice_template') %}
-        {% set actions = actions|merge({'list': path('admin_invoice_template')}) %}
-    {% endif %}
-    {{ widgets.page_actions(actions) }}
-{% endblock %}
+{% block page_actions %}{{ actions.invoices('index') }}{% endblock %}
 
 {% block main_before %}
     {{ toolbar.toolbar(form, 'collapseInvoice', true) }}
+    {{ tables.data_table_column_modal(tableName, columns) }}
 {% endblock %}
 
 {% block main_after %}
@@ -36,20 +40,9 @@
     {% else %}
         {{ widgets.callout('success', 'invoice.preview') }}
 
-        {% set columns = {
-            'date': 'alwaysVisible',
-            'user': 'hidden-sm',
-            'description': 'hidden-xs hidden-sm',
-            'unit_price': 'hidden-xs text-center',
-            'amount': 'text-center',
-            'total_rate': 'text-right',
-        } %}
-
-        {% set tableName = 'invoice' %}
-
         {{ tables.data_table_header(tableName, columns) }}
         {% for entry in entries %}
-            {% set duration = entry.duration|duration() %}
+            {% set duration = entry.duration|duration %}
             {% if entry.fixedRate is not null %}
                 {% set rate = entry.fixedRate %}
                 {% set duration = 1 %}
@@ -70,7 +63,7 @@
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }} text-center">{{ rate|money(model.calculator.currency) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'amount') }} text-center text-nowrap">{{ duration }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'total_rate') }} text-right text-nowrap">{{ entry.rate|money(model.calculator.currency) }}</td>
+                <td class="text-right text-nowrap">{{ entry.rate|money(model.calculator.currency) }}</td>
             </tr>
         {% endfor %}
         {{ tables.data_table_footer(entries) }}
@@ -78,28 +71,12 @@
         {% if is_granted('create_invoice') %}
             <div class="row no-print">
                 <div class="col-xs-12">
-                    <button type="button" id="print-invoice-button" class="btn btn-success pull-right">
+                    <a href="{{ path('invoice_print') }}" class="btn btn-success pull-right toolbar-action">
                         <i class="{{ 'print'|icon }}"></i> {{ 'button.print'|trans }}
-                    </button>
+                    </a>
                 </div>
             </div>
         {% endif %}
     {% endif %}
 
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {% if is_granted('create_invoice') %}
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("body").on('click', '#print-invoice-button', function() {
-                var prevAction = $( "#invoice-print-form" ).attr('action');
-                $( "#invoice-print-form" ).attr('target', '_blank').attr('action', '{{ path('invoice_print') }}');
-                $( "#invoice-print-form" ).submit();
-                $( "#invoice-print-form" ).removeAttr('target').attr('action', prevAction);
-            });
-        });
-    </script>
-    {% endif %}
 {% endblock %}

@@ -5,9 +5,9 @@
             <!--
               Global template keys
             -->
-            <trans-unit id="browser.title">
-                <source>browser.title</source>
-                <target>Kimai - Time Tracking</target>
+            <trans-unit id="time_tracking">
+                <source>time_tracking</source>
+                <target>Time Tracking</target>
             </trans-unit>
             <trans-unit id="yes">
                 <source>yes</source>
@@ -40,6 +40,14 @@
             <trans-unit id="delete.not_in_use">
                 <source>delete.not_in_use</source>
                 <target>This item can be safely deleted.</target>
+            </trans-unit>
+            <trans-unit id="cancel">
+                <source>cancel</source>
+                <target>Cancel</target>
+            </trans-unit>
+            <trans-unit id="confirm">
+                <source>confirm</source>
+                <target>Confirm</target>
             </trans-unit>
 
             <!--
@@ -127,7 +135,11 @@
             </trans-unit>
             <trans-unit id="menu.system_configuration">
                 <source>menu.system_configuration</source>
-                <target>System configuration</target>
+                <target>Settings</target>
+            </trans-unit>
+            <trans-unit id="menu.tags">
+                <source>menu.tags</source>
+                <target>Tags</target>
             </trans-unit>
 
             <!--
@@ -196,6 +208,14 @@
             <trans-unit id="label.project">
                 <source>label.project</source>
                 <target>Project</target>
+            </trans-unit>
+            <trans-unit id="label.tag">
+                <source>label.tag</source>
+                <target>Tags</target>
+            </trans-unit>
+            <trans-unit id="label.tags">
+                <source>label.tags</source>
+                <target>Tags</target>
             </trans-unit>
             <trans-unit id="label.hourlyRate">
                 <source>label.hourlyRate</source>
@@ -336,6 +356,10 @@
             <trans-unit id="label.fixedRate">
                 <source>label.fixedRate</source>
                 <target>Fixed rate</target>
+            </trans-unit>
+            <trans-unit id="label.color">
+                <source>label.color</source>
+                <target>Color</target>
             </trans-unit>
 
             <!--
@@ -579,6 +603,18 @@
                     Currently the user %user% has %records% time-records which count up to a total of %duration%.
                     These time-records will be deleted as well!
                 </target>
+            </trans-unit>
+
+            <!--
+              Admin: Plugins
+            -->
+            <trans-unit id="label.version">
+                <source>label.version</source>
+                <target>Version</target>
+            </trans-unit>
+            <trans-unit id="label.required_version">
+                <source>label.required_version</source>
+                <target>Compatible with</target>
             </trans-unit>
 
             <!--
@@ -914,7 +950,7 @@
             -->
             <trans-unit id="active.entries">
                 <source>active.entries</source>
-                <target>You have %count% active record|You have %count% active records</target>
+                <target>Your active time measurements</target>
             </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
@@ -922,9 +958,7 @@
             </trans-unit>
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
-                <target>
-                    Restart your last recorded activity|Restart one of your %count% last activities
-                </target>
+                <target>Restart one of your last activities</target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>

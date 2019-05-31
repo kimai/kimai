@@ -19,9 +19,11 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
 {
     /**
+     * Saves the Spreadhseet and returns the filename.
+     *
      * @param Spreadsheet $spreadsheet
-     * @return bool|string
-     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     * @return string
+     * @throws \Exception
      */
     abstract protected function saveSpreadsheet(Spreadsheet $spreadsheet);
 
@@ -31,6 +33,7 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
      * @param InvoiceDocument $document
      * @param InvoiceModel $model
      * @return Response
+     * @throws \Exception
      */
     public function render(InvoiceDocument $document, InvoiceModel $model): Response
     {

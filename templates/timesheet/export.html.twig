@@ -37,7 +37,7 @@
                 {% for entry in entries %}
                     {% set timeWorked = timeWorked + entry.duration %}
                     <tr>
-                        <td>{{ entry.begin|date_short }}</td>
+                        <td class="text-nowrap">{{ entry.begin|date_short }}</td>
                         <td>
                             {% if entry.description is not empty %}
                             <div>
@@ -50,7 +50,7 @@
                                 {{ 'label.customer'|trans }}: {{ entry.project.customer.name }}
                             </span>
                         </td>
-                        <td>{{ entry.duration|duration }}</td>
+                        <td class="text-nowrap">{{ entry.duration|duration }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

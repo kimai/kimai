@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col-xs-12">
         <h2 class="page-header">
-           <span contenteditable="true">{{ model.template.title|default('invoice_renderer.timesheet'|trans) }}</span>
+           <span contenteditable="true">{{ model.template.title|default('timesheet'|trans({}, 'invoice-renderer')) }}</span>
         </h2>
     </div>
 </div>

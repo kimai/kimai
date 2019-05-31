@@ -2,20 +2,27 @@
 {% import "macros/datatables.html.twig" as tables %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/toolbar.html.twig" as toolbar %}
+{% import "macros/actions.html.twig" as actions %}
+
+{% set columns = {
+    'alias': 'alwaysVisible',
+    'username': 'hidden-xs',
+    'email': 'hidden-xs hidden-sm',
+    'title': 'hidden-xs',
+    'roles': 'hidden-xs',
+    'active': '',
+    'actions': 'actions alwaysVisible',
+} %}
+
+{% set tableName = 'user_admin' %}
 
 {% block page_title %}{{ 'admin_user.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_user.subtitle'|trans }}{% endblock %}
-{% block page_actions %}
-    {% set actions = {'filter': '#collapseUserAdmin', 'visibility': '#modal_user_admin'} %}
-    {% if is_granted('create_user') %}
-        {% set actions = actions|merge({'create': path('admin_user_create')}) %}
-    {% endif %}
-    {{ widgets.page_actions(actions) }}
-{% endblock %}
-
+{% block page_actions %}{{ actions.users('index') }}{% endblock %}
 
 {% block main_before %}
     {{ toolbar.toolbar(toolbarForm, 'collapseUserAdmin', showFilter) }}
+    {{ tables.data_table_column_modal(tableName, columns) }}
 {% endblock %}
 
 {% block main %}
@@ -23,22 +30,10 @@
     {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% else %}
-        {% set columns = {
-            'alias': 'alwaysVisible',
-            'username': 'hidden-xs',
-            'email': 'hidden-xs hidden-sm',
-            'title': 'hidden-xs',
-            'roles': 'hidden-xs',
-            'active': '',
-            'actions': 'alwaysVisible',
-        } %}
-
-        {% set tableName = 'user_admin' %}
-
-        {{ tables.data_table_header(tableName, columns) }}
+        {{ tables.data_table_header(tableName, columns, false, 'kimai.userUpdate') }}
 
         {% for entry in entries %}
-            <tr>
+            <tr{% if is_granted('edit', entry) %} class="open-edit alternative-link" data-href="{{ path('user_profile_edit', {'username': entry.username}) }}"{% endif %}>
                 <td>{{ widgets.username(entry) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'username') }}">{{ entry.username }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'email') }}">{{ entry.email }}</td>
@@ -49,18 +44,8 @@
                     {% endfor %}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'active') }}">{{ widgets.label_visible(entry.enabled) }}</td>
-                <td>
-                    {% set actionButtons = {} %}
-                    {% if is_granted('edit', entry) %}
-                        {% set actionButtons = actionButtons|merge({'edit': path('user_profile', {'username' : entry.username})}) %}
-                    {% endif %}
-                    {% if is_granted('view_other_timesheet') %}
-                        {% set actionButtons = actionButtons|merge({'timesheet': path('admin_timesheet', {'user' : entry.id})}) %}
-                    {% endif %}
-                    {% if is_granted('delete', entry) %}
-                        {% set actionButtons = actionButtons|merge({'trash': {'url': path('admin_user_delete', {'id': entry.id}), 'class': 'modal-ajax-form'}}) %}
-                    {% endif %}
-                    {{ widgets.button_group(actionButtons) }}
+                <td class="actions">
+                    {{ actions.user(entry, 'index') }}
                 </td>
             </tr>
         {% endfor %}

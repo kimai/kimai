@@ -23,17 +23,32 @@ trait RendererTrait
 
         foreach ($timesheets as $timesheet) {
             $id = $timesheet->getProject()->getCustomer()->getId() . '_' . $timesheet->getProject()->getId();
+            $activityId = $timesheet->getActivity()->getId();
+
             if (!isset($summary[$id])) {
                 $summary[$id] = [
                     'customer' => $timesheet->getProject()->getCustomer()->getName(),
                     'project' => $timesheet->getProject()->getName(),
+                    'activities' => [],
                     'currency' => $timesheet->getProject()->getCustomer()->getCurrency(),
                     'rate' => 0,
                     'duration' => 0,
                 ];
             }
+
+            if (!isset($summary[$id]['activities'][$activityId])) {
+                $summary[$id]['activities'][$activityId] = [
+                    'activity' => $timesheet->getActivity()->getName(),
+                    'currency' => $timesheet->getProject()->getCustomer()->getCurrency(),
+                    'rate' => 0,
+                    'duration' => 0,
+                ];
+            }
+
             $summary[$id]['rate'] += $timesheet->getRate();
             $summary[$id]['duration'] += $timesheet->getDuration();
+            $summary[$id]['activities'][$activityId]['rate'] += $timesheet->getRate();
+            $summary[$id]['activities'][$activityId]['duration'] += $timesheet->getDuration();
         }
 
         asort($summary);

@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -73,7 +74,7 @@ class Timesheet
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(name="user", referencedColumnName="id", onDelete="CASCADE", nullable=false)
+     * @ORM\JoinColumn(name="`user`", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
     private $user;
@@ -111,21 +112,8 @@ class Timesheet
      */
     private $rate = 0.00;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="fixed_rate", type="float", precision=10, scale=2, nullable=true)
-     * @Assert\GreaterThanOrEqual(0)
-     */
-    private $fixedRate = null;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="hourly_rate", type="float", precision=10, scale=2, nullable=true)
-     * @Assert\GreaterThanOrEqual(0)
-     */
-    private $hourlyRate = null;
+    // keep the trait include exactly here, for placing the column at the correct position
+    use RatesTrait;
 
     /**
      * @var bool
@@ -134,6 +122,30 @@ class Timesheet
      * @Assert\NotNull()
      */
     private $exported = false;
+
+    /**
+     * @var Tag[]|ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="timesheets", cascade={"persist"})
+     * @ORM\JoinTable(
+     *  name="kimai2_timesheet_tags",
+     *  joinColumns={
+     *      @ORM\JoinColumn(name="timesheet_id", referencedColumnName="id")
+     *  },
+     *  inverseJoinColumns={
+     *      @ORM\JoinColumn(name="tag_id", referencedColumnName="id")
+     *  }
+     * )
+     */
+    protected $tags;
+
+    /**
+     * Default constructor, initializes collections
+     */
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
 
     /**
      * Get entry id
@@ -189,7 +201,7 @@ class Timesheet
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getEnd()
     {
@@ -333,41 +345,51 @@ class Timesheet
     }
 
     /**
-     * @return float
-     */
-    public function getFixedRate(): ?float
-    {
-        return $this->fixedRate;
-    }
-
-    /**
-     * @param float $fixedRate
+     * @param Tag $tag
      * @return Timesheet
      */
-    public function setFixedRate(?float $fixedRate)
+    public function addTag(Tag $tag)
     {
-        $this->fixedRate = $fixedRate;
+        if ($this->tags->contains($tag)) {
+            return $this;
+        }
+        $this->tags->add($tag);
+        $tag->addTimesheet($this);
 
         return $this;
     }
 
     /**
-     * @return float
+     * @param Tag $tag
      */
-    public function getHourlyRate(): ?float
+    public function removeTag(Tag $tag)
     {
-        return $this->hourlyRate;
+        if (!$this->tags->contains($tag)) {
+            return;
+        }
+        $this->tags->removeElement($tag);
+        $tag->removeTimesheet($this);
     }
 
     /**
-     * @param float $hourlyRate
-     * @return Timesheet
+     * @return Tag[]|ArrayCollection
      */
-    public function setHourlyRate(?float $hourlyRate)
+    public function getTags()
     {
-        $this->hourlyRate = $hourlyRate;
+        return $this->tags;
+    }
 
-        return $this;
+    /**
+     * @return string[]
+     */
+    public function getTagsAsArray()
+    {
+        return array_map(
+            function (Tag $element) {
+                return $element->getName();
+            },
+            $this->getTags()->toArray()
+        );
     }
 
     /**

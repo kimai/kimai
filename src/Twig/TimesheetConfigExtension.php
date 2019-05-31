@@ -32,11 +32,17 @@ class TimesheetConfigExtension extends AbstractExtension
     {
         return [
             new TwigFunction('is_duration_only', [$this, 'isDurationOnly']),
+            new TwigFunction('is_punch_mode', [$this, 'isPunchInOut']),
         ];
     }
 
     public function isDurationOnly(): bool
     {
         return $this->configuration->isDurationOnly();
+    }
+
+    public function isPunchInOut(): bool
+    {
+        return $this->configuration->isPunchInOut();
     }
 }

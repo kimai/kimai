@@ -23,7 +23,7 @@ use App\Utils\LocaleSettings;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class AbstractRendererTest extends KernelTestCase
 {
@@ -50,7 +50,7 @@ abstract class AbstractRendererTest extends KernelTestCase
 
         $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $dateExtension = new DateExtensions($localeSettings);
-        $extensions = new Extensions($requestStack, $localeSettings);
+        $extensions = new Extensions($localeSettings);
 
         return new $classname($translator, $dateExtension, $extensions);
     }

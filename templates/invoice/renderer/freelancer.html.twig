@@ -62,7 +62,7 @@
             </table>
         </article>
         <article>
-            <h2>{{ model.template.title|default('invoice_renderer.timesheet'|trans) }}</h2>
+            <h2>{{ model.template.title|default('timesheet'|trans({}, 'invoice-renderer')) }}</h2>
             <p contenteditable="true">
                 {{ 'label.invoice_salutation'|trans|nl2br }}
             </p>
@@ -77,7 +77,7 @@
                 </thead>
                 <tbody>
                 {% for entry in model.calculator.entries %}
-                    {% set duration = entry.duration|duration() %}
+                    {% set duration = entry.duration|duration %}
                     {% if entry.fixedRate is not null %}
                         {% set rate = entry.fixedRate %}
                         {% set duration = 1 %}

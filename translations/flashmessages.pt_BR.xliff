@@ -8,7 +8,7 @@
             </trans-unit>
             <trans-unit id="timesheet.stop.error">
                 <source>timesheet.stop.error</source>
-                <target>A gravação de tempo não pôde ser interrompida: %reason%</target>
+                <target>A gravação de tempo não pôde ser interrompida</target>
             </trans-unit>
             <trans-unit id="timesheet.start.success">
                 <source>timesheet.start.success</source>
@@ -16,7 +16,7 @@
             </trans-unit>
             <trans-unit id="timesheet.start.error">
                 <source>timesheet.start.error</source>
-                <target>A gravação de tempo não pôde ser iniciada: %reason%</target>
+                <target>A gravação de tempo não pôde ser iniciada</target>
             </trans-unit>
             <trans-unit id="action.update.success">
                 <source>action.update.success</source>

@@ -2,7 +2,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    app_locales: en|de|it|fr|es|ru|ar|hu|pt_BR
+    app_locales: en|de|it|fr|es|ru|ar|hu|pt_BR|sv|ja
 
 services:
     # default configuration for services in *this* file
@@ -34,10 +34,6 @@ services:
     App\EventSubscriber\RedirectToLocaleSubscriber:
         arguments: ['@router', '%app_locales%', '%locale%']
 
-    App\Calendar\Service:
-        arguments:
-            $config: "%kimai.calendar%"
-
     App\Repository\WidgetRepository:
         arguments:
             $widgets: "%kimai.widgets%"
@@ -53,6 +49,10 @@ services:
         arguments:
             $settings: "%kimai.timesheet%"
 
+    App\Configuration\CalendarConfiguration:
+        arguments:
+            $settings: "%kimai.calendar%"
+
     App\Configuration\FormConfiguration:
         arguments:
             $settings: "%kimai.defaults%"
@@ -60,6 +60,10 @@ services:
     App\Configuration\SystemConfiguration:
         arguments:
             $settings: "%kimai.config%"
+
+    App\Configuration\ThemeConfiguration:
+        arguments:
+            $settings: "%kimai.theme%"
 
     App\Utils\MPdfConverter:
         arguments: ['%kernel.cache_dir%']
@@ -96,19 +100,6 @@ services:
 
     App\Form\Type\LanguageType:
         arguments: ["%app_locales%"]
-
-    App\Form\Extension\DocumentationLinkExtension:
-        tags:
-            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
-
-    App\Form\Extension\EnhancedChoiceTypeExtension:
-        arguments: ["%kimai.theme.select_type%"]
-        tags:
-            - { name: form.type_extension, extended_type: Symfony\Bridge\Doctrine\Form\Type\EntityType }
-
-    App\Form\Extension\SelectWithApiDataExtension:
-        tags:
-            - { name: form.type_extension, extended_type: Symfony\Bridge\Doctrine\Form\Type\EntityType }
 
     # ================================================================================
     # THEME
@@ -157,6 +148,11 @@ services:
         class:     Doctrine\ORM\EntityRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Project']
+
+    App\Repository\TagRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\Tag']
 
     App\Repository\CustomerRepository:
         class:     Doctrine\ORM\EntityRepository

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="none">
+        <body>
+            <trans-unit id="stop">
+                <source>stop</source>
+                <target>Stop</target>
+            </trans-unit>
+            <trans-unit id="edit">
+                <source>edit</source>
+                <target>Edit</target>
+            </trans-unit>
+            <trans-unit id="trash">
+                <source>trash</source>
+                <target>Delete</target>
+            </trans-unit>
+            <trans-unit id="repeat">
+                <source>repeat</source>
+                <target>Start again</target>
+            </trans-unit>
+            <trans-unit id="profile-stats">
+                <source>profile-stats</source>
+                <target>Statistics</target>
+            </trans-unit>
+            <trans-unit id="settings">
+                <source>settings</source>
+                <target>Settings</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target>Timesheets</target>
+            </trans-unit>
+            <trans-unit id="customer">
+                <source>customer</source>
+                <target>Customers</target>
+            </trans-unit>
+            <trans-unit id="project">
+                <source>project</source>
+                <target>Projects</target>
+            </trans-unit>
+            <trans-unit id="activity">
+                <source>activity</source>
+                <target>Activities</target>
+            </trans-unit>
+            <trans-unit id="copy">
+                <source>copy</source>
+                <target>Create copy</target>
+            </trans-unit>
+            <trans-unit id="home">
+                <source>home</source>
+                <target>Homepage</target>
+            </trans-unit>
+            <trans-unit id="create-project">
+                <source>create-project</source>
+                <target>Create project</target>
+            </trans-unit>
+            <trans-unit id="create-activity">
+                <source>create-activity</source>
+                <target>Create activity</target>
+            </trans-unit>
+            <trans-unit id="create-timesheet">
+                <source>create-timesheet</source>
+                <target>Create timesheet</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

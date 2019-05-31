@@ -11,7 +11,7 @@ namespace App\Tests\Controller;
 
 /**
  * This test makes sure the login and registration work as expected.
- * They live in the FOSUserBundle and are tested already, but we use a different layout.
+ * The logic is located in the FOSUserBundle and already tested, but we use a different layout.
  *
  * @group integration
  */
@@ -36,7 +36,7 @@ class SecurityControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $content = $response->getContent();
-        $this->assertContains('<title>Kimai - Time Tracking</title>', $content);
+        $this->assertContains('<title>Kimai – Time Tracking</title>', $content);
         $this->assertContains('<form action="/en/login_check" method="post">', $content);
         $this->assertContains('<input type="text" name="_username"', $content);
         $this->assertContains('<input name="_password" type="password"', $content);
@@ -56,7 +56,7 @@ class SecurityControllerTest extends ControllerBaseTest
         $this->assertTrue($response->isSuccessful());
 
         $content = $response->getContent();
-        $this->assertContains('<title>Kimai - Time Tracking</title>', $content);
+        $this->assertContains('<title>Kimai – Time Tracking</title>', $content);
         $this->assertContains('Register a new account', $content);
         $this->assertContains('<form name="fos_user_registration_form" method="post" action="/en/register/" class="fos_user_registration_register">', $content);
         $this->assertContains('<input type="email"', $content);
@@ -96,7 +96,7 @@ class SecurityControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertContains('<title>Kimai - Time Tracking</title>', $content);
+        $this->assertContains('<title>Kimai – Time Tracking</title>', $content);
         $this->assertContains('<p>Congrats example, your account is now activated.</p>', $content);
         $this->assertContains('<a href="/en/homepage">', $content);
     }

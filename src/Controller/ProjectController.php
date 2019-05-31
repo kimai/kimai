@@ -31,11 +31,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProjectController extends AbstractController
 {
     /**
-     * @return \App\Repository\ProjectRepository
+     * @var ProjectRepository
      */
-    protected function getRepository()
+    private $repository;
+
+    public function __construct(ProjectRepository $repository)
     {
-        return $this->getDoctrine()->getRepository(Project::class);
+        $this->repository = $repository;
+    }
+
+    protected function getRepository(): ProjectRepository
+    {
+        return $this->repository;
     }
 
     /**
@@ -64,7 +71,7 @@ class ProjectController extends AbstractController
         }
 
         /* @var $entries Pagerfanta */
-        $entries = $this->getDoctrine()->getRepository(Project::class)->findByQuery($query);
+        $entries = $this->getRepository()->findByQuery($query);
 
         return $this->render('project/index.html.twig', [
             'entries' => $entries,
@@ -76,14 +83,22 @@ class ProjectController extends AbstractController
 
     /**
      * @Route(path="/create", name="admin_project_create", methods={"GET", "POST"})
+     * @Route(path="/create/{customer}", name="admin_project_create_with_customer", methods={"GET", "POST"})
      * @Security("is_granted('create_project')")
      *
      * @param Request $request
+     * @param Customer|null $customer
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, ?Customer $customer = null)
     {
-        return $this->renderProjectForm(new Project(), $request);
+        $project = new Project();
+
+        if (null !== $customer) {
+            $project->setCustomer($customer);
+        }
+
+        return $this->renderProjectForm($project, $request);
     }
 
     /**
@@ -111,7 +126,13 @@ class ProjectController extends AbstractController
     {
         $stats = $this->getRepository()->getProjectStatistics($project);
 
-        $deleteForm = $this->createFormBuilder()
+        $deleteForm = $this->createFormBuilder(null, [
+                'attr' => [
+                    'data-form-event' => 'kimai.projectUpdate kimai.projectDelete',
+                    'data-msg-success' => 'action.delete.success',
+                    'data-msg-error' => 'action.delete.error',
+                ]
+            ])
             ->add('project', ProjectType::class, [
                 'label' => 'label.project',
                 'query_builder' => function (ProjectRepository $repo) use ($project) {

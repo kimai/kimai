@@ -33,6 +33,7 @@ class ProjectTest extends AbstractEntityTest
         $this->assertNull($sut->getFixedRate());
         $this->assertNull($sut->getHourlyRate());
         $this->assertNull($sut->getTimesheets());
+        $this->assertNull($sut->getColor());
     }
 
     public function testSetterAndGetter()
@@ -51,6 +52,9 @@ class ProjectTest extends AbstractEntityTest
 
         $this->assertInstanceOf(Project::class, $sut->setComment('a comment'));
         $this->assertEquals('a comment', $sut->getComment());
+
+        $this->assertInstanceOf(Project::class, $sut->setColor('#fffccc'));
+        $this->assertEquals('#fffccc', $sut->getColor());
 
         $this->assertInstanceOf(Project::class, $sut->setVisible(false));
         $this->assertFalse($sut->getVisible());

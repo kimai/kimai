@@ -16,13 +16,10 @@ class RolePermissionManager
      */
     protected $permissions = [];
     /**
-     * @var array
+     * @var string[]
      */
     protected $knownPermissions = [];
 
-    /**
-     * @param array $permissions
-     */
     public function __construct(array $permissions)
     {
         $this->permissions = $permissions;
@@ -33,35 +30,32 @@ class RolePermissionManager
         $this->knownPermissions = array_unique($this->knownPermissions);
     }
 
-    /**
-     * @param string $permission
-     * @return bool
-     */
-    public function isRegisteredPermission($permission)
+    public function isRegisteredPermission(string $permission): bool
     {
         return in_array($permission, $this->knownPermissions);
     }
 
-    /**
-     * @param string $role
-     * @return bool
-     */
-    public function roleHasPermission($role)
-    {
-        return isset($this->permissions[$role]);
-    }
-
-    /**
-     * @param string $role
-     * @param string $permission
-     * @return bool
-     */
-    public function hasPermission($role, $permission)
+    public function hasPermission(string $role, string $permission): bool
     {
         if (!isset($this->permissions[$role])) {
             return false;
         }
 
         return in_array($permission, $this->permissions[$role]);
+    }
+
+    public function getRoles(): array
+    {
+        return array_keys($this->permissions);
+    }
+
+    public function roleHasPermission(string $role): bool
+    {
+        return isset($this->permissions[$role]);
+    }
+
+    public function getPermissions(): array
+    {
+        return $this->knownPermissions;
     }
 }

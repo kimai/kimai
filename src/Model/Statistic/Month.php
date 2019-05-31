@@ -56,7 +56,7 @@ class Month
     }
 
     /**
-     * @param $totalDuration
+     * @param int $totalDuration
      * @return $this
      */
     public function setTotalDuration($totalDuration)
@@ -75,7 +75,7 @@ class Month
     }
 
     /**
-     * @param $totalRate
+     * @param int $totalRate
      * @return $this
      */
     public function setTotalRate($totalRate)

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="sv" datatype="plaintext" original="system-configuration.en.xliff">
+        <body>
+            <trans-unit id="title">
+                <source>title</source>
+                <target state="translated">Inställningar</target>
+            </trans-unit>
+            <trans-unit id="subtitle">
+                <source>subtitle</source>
+                <target state="translated">Ändra globala konfigurationer av din tidsredovisning</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target state="translated">Tidrapport</target>
+            </trans-unit>
+            <trans-unit id="form_customer">
+                <source>form_customer</source>
+                <target state="translated">Skapa kund - standardvärden</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode">
+                <source>label.timesheet.mode</source>
+                <target state="translated">Tidsredovisningsläge</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_default">
+                <source>label.timesheet.mode_default</source>
+                <target state="translated">Standard: acceptera start- och slutdatum</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_duration_only">
+                <source>label.timesheet.mode_duration_only</source>
+                <target state="translated">Endast varaktighet: ersätter slutdatumsfältet med en ingång för varaktighet</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.allow_future_times">
+                <source>label.timesheet.rules.allow_future_times</source>
+                <target state="translated">Tillåt tidsposter i framtiden</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.active_entries.hard_limit">
+                <source>label.timesheet.active_entries.hard_limit</source>
+                <target state="translated">Tillåtet antal samtidiga körtidsposter</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.active_entries.soft_limit">
+                <source>label.timesheet.active_entries.soft_limit</source>
+                <target state="translated">Antal körtidsposter från vilka en varning visas</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -27,9 +27,7 @@ class LanguageFormattingsTest extends TestCase
         return [
             'de' => [
                 'date_time_type' => 'dd.MM.yyyy HH:mm',
-                'date_time_picker' => 'DD.MM.YYYY HH:mm',
                 'date_type' => 'dd.MM.yyyy',
-                'date_picker' => 'DD.MM.YYYY',
                 'date' => 'd.m.Y',
                 'date_time' => 'd.m. H:i',
                 'duration' => '%h:%m h',
@@ -38,9 +36,7 @@ class LanguageFormattingsTest extends TestCase
             ],
             'en' => [
                 'date_time_type' => 'yyyy-MM-dd HH:mm',
-                'date_time_picker' => 'YYYY-MM-DD HH:mm',
                 'date_type' => 'yyyy-MM-dd',
-                'date_picker' => 'YYYY-MM-DD',
                 'date' => 'Y-m-d',
                 'date_time' => 'm-d H:i',
                 'duration' => '%h:%m h',
@@ -49,57 +45,43 @@ class LanguageFormattingsTest extends TestCase
             ],
             'pt_BR' => [
                 'date_time_type' => 'dd-MM-yyyy HH:mm',
-                'date_time_picker' => 'DD-MM-YYYY HH:mm',
                 'date_type' => 'dd-MM-yyyy',
-                'date_picker' => 'DD-MM-YYYY',
                 'date' => 'd-m-Y',
                 'duration' => '%h:%m h',
             ],
             'it' => [
                 'date_time_type' => 'dd.MM.yyyy HH:mm',
-                'date_time_picker' => 'DD.MM.YYYY HH:mm',
                 'date_type' => 'dd.MM.yyyy',
-                'date_picker' => 'DD.MM.YYYY',
                 'date' => 'd.m.Y',
                 'duration' => '%h:%m h',
             ],
             'fr' => [
                 'date_time_type' => 'dd/MM/yyyy HH:mm',
-                'date_time_picker' => 'DD/MM/YYYY HH:mm',
                 'date_type' => 'dd/MM/yyyy',
-                'date_picker' => 'DD/MM/YYYY',
                 'date' => 'd/m/Y',
                 'duration' => '%h h %m',
             ],
             'es' => [
                 'date_time_type' => 'dd.MM.yyyy HH:mm',
-                'date_time_picker' => 'DD.MM.YYYY HH:mm',
                 'date_type' => 'dd.MM.yyyy',
-                'date_picker' => 'DD.MM.YYYY',
                 'date' => 'd.m.Y',
                 'duration' => '%h:%m h',
             ],
             'ru' => [
                 'date_time_type' => 'dd.MM.yyyy HH:mm',
-                'date_time_picker' => 'DD.MM.YYYY HH:mm',
                 'date_type' => 'dd.MM.yyyy',
-                'date_picker' => 'DD.MM.YYYY',
                 'date' => 'd.m.Y',
                 'duration' => '%h:%m h',
             ],
             'ar' => [
                 'date_time_type' => 'yyyy-MM-dd HH:mm',
-                'date_time_picker' => 'YYYY-MM-DD HH:mm',
                 'date_type' => 'yyyy-MM-dd',
-                'date_picker' => 'YYYY-MM-DD',
                 'date' => 'Y-m-d',
                 'duration' => '%h:%m h',
             ],
             'hu' => [
                 'date_time_type' => 'yyyy.MM.dd HH:mm',
-                'date_time_picker' => 'YYYY.MM.DD HH:mm',
                 'date_type' => 'yyyy.MM.dd',
-                'date_picker' => 'YYYY.MM.DD',
                 'date' => 'Y.m.d.',
                 'duration' => '%h:%m h',
             ],
@@ -183,7 +165,7 @@ class LanguageFormattingsTest extends TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Unknown setting for locale en: date_time_picker
+     * @expectedExceptionMessage Unknown setting for locale en: date_time_type
      */
     public function testUnknownSetting()
     {

@@ -41,4 +41,14 @@ class ServiceExportTest extends TestCase
 
         $this->assertEquals(1, count($sut->getRenderer()));
     }
+
+    public function testAddViaConstruct()
+    {
+        $renderer = [new HtmlRenderer(
+            $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock()
+        )];
+        $sut = new ServiceExport($renderer);
+
+        $this->assertEquals(1, count($sut->getRenderer()));
+    }
 }

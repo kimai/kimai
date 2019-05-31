@@ -10,14 +10,6 @@
                 <source>plugins.subtitle</source>
                 <target>You can enhance the functionality of Kimai with plugins</target>
             </trans-unit>
-            <trans-unit id="label.version">
-                <source>label.version</source>
-                <target>Version</target>
-            </trans-unit>
-            <trans-unit id="label.required_version">
-                <source>label.required_version</source>
-                <target>Compatible with</target>
-            </trans-unit>
             <trans-unit id="plugin.none_installed">
                 <source>plugin.none_installed</source>
                 <target>You have no plugin installed yet.</target>

@@ -15,7 +15,6 @@ use App\Form\Type\InitialViewType;
 use App\Form\Type\LanguageType;
 
 /**
- * @coversDefaultClass \App\Controller\HomepageController
  * @group integration
  */
 class HomepageControllerTest extends ControllerBaseTest

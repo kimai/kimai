@@ -1,0 +1,20 @@
+includes:
+    - vendor/phpstan/phpstan-symfony/extension.neon
+    - vendor/phpstan/phpstan-doctrine/extension.neon
+
+parameters:
+    autoload_directories:
+        - %rootDir%/../../../src/Migrations
+#    symfony:
+#        container_xml_path: '%rootDir%/../../../var/cache/dev/srcApp_KernelDevDebugContainer.xml'
+    ignoreErrors:
+        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::scalarNode\(\).#'
+        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\).#'
+        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::useAttributeAsKey\(\).#'
+        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::addDefaultsIfNotSet\(\).#'
+        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::requiresAtLeastOneElement\(\).#'
+        - '#Access to an undefined property Faker\\Generator::\$stateAbbr.#'
+        - '#Access to an undefined property Faker\\Generator::\$catchPhrase.#'
+        - '#Access to an undefined property Faker\\Generator::\$bs.#'
+    excludes_analyse:
+        - %rootDir%/../../../src/Command/KimaiImporterCommand.php

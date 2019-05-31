@@ -1,5 +1,9 @@
 {% extends '@AdminLTE/layout/default-layout.html.twig' %}
 
+{% block body_start %}
+    data-title="{{- get_title() -}}"
+{% endblock %}
+
 {% block after_body_start %}
     {% embed 'embeds/modal.html.twig' %}
         {% block modal_id %}remote_form_modal{% endblock %}
@@ -32,7 +36,7 @@
 {% endblock %}
 
 {% block title %}
-    {{ 'browser.title'|trans }}
+    {{- get_title() -}}
 {% endblock %}
 
 {% block page_subtitle %}{% endblock %}
@@ -49,14 +53,22 @@
     <!-- Page rendered on {{ 'now'|localizeddate('long', 'long', null, 'UTC') }} -->
 {% endblock %}
 
-{% block navbar_messages %}
+{% block navbar_start %}
     {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         {% if is_granted('view_own_timesheet') %}
-            <li class="visible-xs-inline-block">
-                <a href="{{ path('timesheet') }}" class="ddt-large">
-                    <i class="{{ 'timesheet'|icon }} fa-2x"></i>
-                </a>
-            </li>
+            {% if app.user.preferenceValue('login.initial_view') == 'calendar' %}
+                <li class="visible-xs-inline-block">
+                    <a href="{{ path('calendar') }}" class="ddt-large">
+                        <i class="{{ 'calendar'|icon }} fa-2x"></i>
+                    </a>
+                </li>
+            {% else %}
+                <li class="visible-xs-inline-block">
+                    <a href="{{ path('timesheet') }}" class="ddt-large">
+                        <i class="{{ 'timesheet'|icon }} fa-2x"></i>
+                    </a>
+                </li>
+            {% endif %}
         {% endif %}
         {% if is_granted('view_invoice') %}
             <li class="visible-xs-inline-block">
@@ -77,18 +89,23 @@
     {% endif %}
 {% endblock %}
 
-{% block navbar_notifications %}
-    {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-        {{ render(controller('App\\Controller\\NavbarController::recentActivitiesAction')) }}
-    {% endif %}
-{% endblock %}
 
-{# deactivated blocks #}
+{# these blocks and the hook-in logic by the AdminTheme could be re-used by Kimai or an extension at some point #}
+{#
+{% block navbar_messages %}{% endblock %}
+{% block navbar_notifications %}{% endblock %}
 {% block navbar_tasks %}{% endblock %}
+{% block navbar_end %}{% endblock %}
+#}
+
+{# deactivated blocks, as Kimai does not ship the sidebar for UX reasons #}
 {% block sidebar_user %}{% endblock %}
 {% block sidebar_search %}{% endblock %}
 
 {% block navbar_user %}
+    {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        {% include 'navbar/recent-activities.html.twig' %}
+    {% endif %}
     {% import "macros/widgets.html.twig" as widgets %}
     <li class="dropdown user-menu">
         <a href="#" class="dropdown-toggle ddt-large" data-toggle="dropdown">
@@ -166,23 +183,38 @@
 {% block javascripts %}
     {# no call to parent(), as we use a custom built for the frontend assets and don't want the default <script> #}
     <script type="text/javascript">
-        $(document).ready(function () {
-            $.kimai.init({
-                locale: '{{ app.request.locale }}',
-                apply: '{{ 'daterangepicker.apply'|trans({}, 'daterangepicker') }}',
-                cancel: '{{ 'daterangepicker.cancel'|trans({}, 'daterangepicker') }}',
-                today: '{{ 'daterangepicker.today'|trans({}, 'daterangepicker') }}',
-                yesterday: '{{ 'daterangepicker.yesterday'|trans({}, 'daterangepicker') }}',
-                lastWeek: '{{ 'daterangepicker.lastWeek'|trans({}, 'daterangepicker') }}',
-                thisWeek: '{{ 'daterangepicker.thisWeek'|trans({}, 'daterangepicker') }}',
-                lastMonth: '{{ 'daterangepicker.lastMonth'|trans({}, 'daterangepicker') }}',
-                thisMonth: '{{ 'daterangepicker.thisMonth'|trans({}, 'daterangepicker') }}',
-                lastYear: '{{ 'daterangepicker.lastYear'|trans({}, 'daterangepicker') }}',
-                thisYear: '{{ 'daterangepicker.thisYear'|trans({}, 'daterangepicker') }}',
-                customRange: '{{ 'daterangepicker.customRange'|trans({}, 'daterangepicker') }}',
-                twentyFourHours: {{ 'true'|hour24('false') }}
-            });
-            {# $.kimai.pauseRecord('li.messages-menu ul.menu li'); #}
+        document.addEventListener('DOMContentLoaded', function() {
+            var loader = new KimaiWebLoader(
+                {
+                    locale: '{{ app.request.locale }}',
+                    twentyFourHours: {{ 'true'|hour24('false') }}
+                },
+                {
+                    'confirm': '{{ 'confirm'|trans }}',
+                    'cancel': '{{ 'cancel'|trans }}',
+                    'today': '{{ 'daterangepicker.today'|trans({}, 'daterangepicker') }}',
+                    'yesterday': '{{ 'daterangepicker.yesterday'|trans({}, 'daterangepicker') }}',
+                    'lastWeek': '{{ 'daterangepicker.lastWeek'|trans({}, 'daterangepicker') }}',
+                    'thisWeek': '{{ 'daterangepicker.thisWeek'|trans({}, 'daterangepicker') }}',
+                    'lastMonth': '{{ 'daterangepicker.lastMonth'|trans({}, 'daterangepicker') }}',
+                    'thisMonth': '{{ 'daterangepicker.thisMonth'|trans({}, 'daterangepicker') }}',
+                    'lastYear': '{{ 'daterangepicker.lastYear'|trans({}, 'daterangepicker') }}',
+                    'thisYear': '{{ 'daterangepicker.thisYear'|trans({}, 'daterangepicker') }}',
+                    'customRange': '{{ 'daterangepicker.customRange'|trans({}, 'daterangepicker') }}',
+                    'timesheet.start.success': '{{ 'timesheet.start.success'|trans({}, 'flashmessages') }}',
+                    'timesheet.start.error': '{{ 'timesheet.start.error'|trans({}, 'flashmessages') }}',
+                    'timesheet.start.exceeded_limit': '{{ 'timesheet.start.exceeded_limit'|trans({}, 'flashmessages') }}',
+                    'timesheet.stop.success': '{{ 'timesheet.stop.success'|trans({}, 'flashmessages') }}',
+                    'timesheet.stop.error': '{{ 'timesheet.stop.error'|trans({}, 'flashmessages') }}',
+                    'action.update.success': '{{ 'action.update.success'|trans({}, 'flashmessages') }}',
+                    'action.update.error': '{{ 'action.update.error'|trans({}, 'flashmessages') }}',
+                    'action.delete.success': '{{ 'action.delete.success'|trans({}, 'flashmessages') }}',
+                    'action.delete.error': '{{ 'action.delete.error'|trans({}, 'flashmessages') }}',
+                    'confirm.delete': '{{ 'confirm.delete' |trans }}',
+                    'delete': '{{ 'action.delete' |trans }}'
+                }
+            );
+            window.kimai = loader.getKimai();
         });
     </script>
     {% set event = trigger(constant('App\\Event\\ThemeEvent::JAVASCRIPT')) %}

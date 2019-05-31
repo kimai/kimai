@@ -5,9 +5,9 @@
             <!--
               Global template keys
             -->
-            <trans-unit id="browser.title">
-                <source>browser.title</source>
-                <target>Kimai - Zeiterfassung</target>
+            <trans-unit id="time_tracking">
+                <source>time_tracking</source>
+                <target>Zeiterfassung</target>
             </trans-unit>
             <trans-unit id="yes">
                 <source>yes</source>
@@ -40,6 +40,14 @@
             <trans-unit id="delete.not_in_use">
                 <source>delete.not_in_use</source>
                 <target>Dieses Element kann sicher gelöscht werden.</target>
+            </trans-unit>
+            <trans-unit id="cancel">
+                <source>cancel</source>
+                <target>Abbrechen</target>
+            </trans-unit>
+            <trans-unit id="confirm">
+                <source>confirm</source>
+                <target>Bestätigen</target>
             </trans-unit>
 
             <!--
@@ -127,7 +135,11 @@
             </trans-unit>
             <trans-unit id="menu.system_configuration">
                 <source>menu.system_configuration</source>
-                <target>Settings</target>
+                <target>Einstellungen</target>
+            </trans-unit>
+            <trans-unit id="menu.tags">
+                <source>menu.tags</source>
+                <target>Tags</target>
             </trans-unit>
 
             <!--
@@ -200,6 +212,14 @@
             <trans-unit id="label.hourlyRate">
                 <source>label.hourlyRate</source>
                 <target>Stundenlohn</target>
+            </trans-unit>
+            <trans-unit id="label.tag">
+                <source>label.tag</source>
+                <target>Schlagwort(e)</target>
+            </trans-unit>
+            <trans-unit id="label.tags">
+                <source>label.tags</source>
+                <target>Schlagworte</target>
             </trans-unit>
             <trans-unit id="label.hourly_rate">
                 <source>label.hourly_rate</source>
@@ -336,6 +356,10 @@
             <trans-unit id="label.fixedRate">
                 <source>label.fixedRate</source>
                 <target>Festbetrag</target>
+            </trans-unit>
+            <trans-unit id="label.color">
+                <source>label.color</source>
+                <target>Farbe</target>
             </trans-unit>
 
             <!--
@@ -579,6 +603,18 @@
                     Momentan existieren für den Benutzer %user% insgesamt %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen.
                     Diese Zeiteinträge werden ebenfalls mit gelöscht!
                 </target>
+            </trans-unit>
+
+            <!--
+              Admin: Plugins
+            -->
+            <trans-unit id="label.version">
+                <source>label.version</source>
+                <target>Version</target>
+            </trans-unit>
+            <trans-unit id="label.required_version">
+                <source>label.required_version</source>
+                <target>Kompatibel mit</target>
             </trans-unit>
 
             <!--
@@ -914,7 +950,7 @@
             -->
             <trans-unit id="active.entries">
                 <source>active.entries</source>
-                <target>Sie haben einen aktiven Eintrag|Sie haben %count% aktive Einträge</target>
+                <target>Ihre aktiven Zeitmessungen</target>
             </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
@@ -922,9 +958,7 @@
             </trans-unit>
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
-                <target>
-                    Ihre letzte Tätigkeit wiederaufnehmen|Eine ihrer %count% letzten Tätigkeiten neustarten
-                </target>
+                <target>Eine ihrer letzten Tätigkeiten neustarten</target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>

@@ -1,6 +1,6 @@
 App\Entity\Activity:
     exclusion_policy: All
-    custom_accessor_order: [id, name, comment, visible, project, fixedRate, hourlyRate]
+    custom_accessor_order: [id, name, comment, visible, project, fixedRate, hourlyRate, color]
     properties:
         id:
             include: true
@@ -16,14 +16,16 @@ App\Entity\Activity:
             groups: [Default]
         fixedRate:
             include: true
-            groups: [Default]
+            groups: [Activity]
         hourlyRate:
             include: true
-            groups: [Default]
+            groups: [Activity]
         project:
             include: false
             exclude: true
             groups: [Default]
+        color:
+            include: true
     virtual_properties:
         getProject:
             serialized_name: project

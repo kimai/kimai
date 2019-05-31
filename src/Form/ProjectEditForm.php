@@ -11,6 +11,7 @@ namespace App\Form;
 
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Form\Type\ColorPickerType;
 use App\Form\Type\CustomerType;
 use App\Form\Type\FixedRateType;
 use App\Form\Type\HourlyRateType;
@@ -69,6 +70,7 @@ class ProjectEditForm extends AbstractType
                     return $repo->builderForEntityType($customer);
                 },
             ])
+            ->add('color', ColorPickerType::class)
             ->add('fixedRate', FixedRateType::class, [
                 'currency' => $currency,
             ])
@@ -106,6 +108,9 @@ class ProjectEditForm extends AbstractType
             'csrf_token_id' => 'admin_project_edit',
             'currency' => Customer::DEFAULT_CURRENCY,
             'create_more' => false,
+            'attr' => [
+                'data-form-event' => 'kimai.projectUpdate'
+            ],
         ]);
     }
 }

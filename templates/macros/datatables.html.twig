@@ -1,6 +1,6 @@
 
-{% macro data_table_column_modal(name, entries) %}
-<div class="modal fade" id="modal_{{ name }}" tabindex="-1" role="dialog" aria-labelledby="data_table_modal_label">
+{% macro data_table_column_modal(name, columns) %}
+<div class="modal fade" id="modal_{{ name }}" data-column-visibility="{{ name }}" tabindex="-1" role="dialog" aria-labelledby="data_table_modal_label">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -9,11 +9,11 @@
             </div>
             <div class="modal-body">
                 <form name="{{ name }}_visibility">
-                    {% for title, class in entries %}
+                    {% for title, class in columns %}
                         {% if 'alwaysVisible' not in class %}
                             <div class="form-group">
-                                <input type="checkbox" id="column_{{ title }}" name="{{ title }}"{% if is_visible_column(name, title, '') %} checked="checked"{% endif %}>
-                                <label class="control-label required" for="column_{{ title }}">{{ ('label.' ~ title)|trans }}</label>
+                                <input type="checkbox" id="column_{{ title }}" name="{{ title }}"{% if is_visible_column(name, title) %} checked="checked"{% endif %}>
+                                <label class="control-label" for="column_{{ title }}">{{ ('label.' ~ title)|trans }}</label>
                             </div>
                         {% endif %}
                     {% endfor %}
@@ -21,8 +21,8 @@
                 <p>{{ 'modal.columns.description'|trans }}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary pull-left" onclick="$.datatable.saveVisibility('#modal_{{ name }}')">{{ 'action.save'|trans }}</button>
-                <button type="button" class="btn btn-warning pull-left" onclick="$.datatable.resetVisibility('#modal_{{ name }}')">{{ 'action.delete'|trans }}</button>
+                <button type="button" class="btn btn-primary pull-left" data-type="save">{{ 'action.save'|trans }}</button>
+                <button type="button" class="btn btn-warning pull-left" data-type="reset">{{ 'action.delete'|trans }}</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'action.close'|trans }}</button>
             </div>
         </div>
@@ -30,13 +30,13 @@
 </div>
 {% endmacro %}
 
-{% macro data_table_column_class(name, entries, column) %}
-{% spaceless %}
+{% macro data_table_column_class(name, columns, column) %}
+{% apply spaceless %}
     {% set class = '' %}
     {% set always = false %}
 
-    {% if entries[column] is defined %}
-        {% set classes = entries[column] %}
+    {% if columns[column] is defined %}
+        {% set classes = columns[column] %}
         {% if 'alwaysVisible' in classes %}
             {# as this column should always be visible, we remove every class that includes hidden #}
             {% for tmp in classes|split(' ') %}
@@ -45,9 +45,9 @@
                 {% endif %}
             {% endfor %}
         {% else %}
-            {% if not is_visible_column(name, column, '') %}
+            {% if not is_visible_column(name, column) %}
                 {% set classes = classes ~ ' hidden' %}
-            {% elseif not is_datatable_configured(name, '') %}
+            {% elseif not is_datatable_configured(name) %}
                 {% for tmp in classes|split(' ') %}
                     {% if 'hidden' == tmp %}
                         {% set classes = classes|replace({(tmp): ''}) %}
@@ -67,26 +67,39 @@
     {% if not class is empty %}
         {{ class }}
     {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endmacro %}
 
-{% macro data_table_header(name, entries, skipStripped) %}
-{% import _self as macro %}
-{{ macro.data_table_column_modal(name, entries) }}
-<div class="box data_table" id="datatable_{{ name }}">
-    <div class="box-body no-padding">
-        <div class="dataTables_wrapper form-inline dt-bootstrap">
-            <div class="row">
-                <div class="col-sm-12">
-                    <table class="table {% if not skipStripped %}table-striped {% endif %}table-hover dataTable" role="grid">
-                        <thead>
-                        <tr>
-                            {%- for title, class in entries -%}
-                                <th class="{{ macro.data_table_column_class(name, entries, title) }}">{{ ('label.' ~ title)|trans }}</th>
-                            {%- endfor -%}
-                        </tr>
-                        </thead>
-                        <tbody>
+{% macro data_table_header_options(name, columns, options) %}
+    {% set skipStripped = options.skipStripped|default(false) %}
+    {% set reloadEvent = options.reloadEvent|default('') %}
+    {% set translationDomain = options.translationDomain|default('messages') %}
+    {# |default does not work here, as the prefix might be an empty string #}
+    {% set translationPrefix = 'label.' %}
+    {% if options.translationPrefix is defined %}
+        {% set translationPrefix = options.translationPrefix %}
+    {% endif %}
+
+    {% import _self as macro %}
+    <div class="box box-{{ admin_lte_context.widget.type }} data_table" id="datatable_{{ name }}">
+        <div class="box-body no-padding">
+            <div class="dataTables_wrapper form-inline dt-bootstrap">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table {% if not skipStripped %}table-striped {% endif %}table-hover dataTable" role="grid" data-reload-event="{{ reloadEvent }}">
+                            <thead>
+                            <tr>
+                                {%- for title, class in columns -%}
+                                    <th data-field="{{ title }}" class="{{ macro.data_table_column_class(name, columns, title) }}">{% if title is not empty and title != 'actions' %}{{ (translationPrefix ~ title)|trans({}, translationDomain) }}{% endif %}</th>
+                                {%- endfor -%}
+                            </tr>
+                            </thead>
+                            <tbody>
+{% endmacro %}
+
+{% macro data_table_header(name, columns, skipStripped, reloadEvent) %}
+    {% import _self as macro %}
+    {{ macro.data_table_header_options(name, columns, {'skipStripped': skipStripped, 'reloadEvent': reloadEvent}) }}
 {% endmacro %}
 
 {% macro data_table_footer(entries, route) %}
@@ -97,7 +110,7 @@
         </div>
     </div>
 </div>
-{% if route is not empty %}
+{% if route is not empty and entries is not null%}
 <div class="navigation text-center no-print">
     {{ pagerfanta(entries, 'twitter_bootstrap3_translated', { proximity: 1, routeName: route }) }}
 </div>

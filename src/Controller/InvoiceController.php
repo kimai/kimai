@@ -45,12 +45,11 @@ class InvoiceController extends AbstractController
      * @var TimesheetRepository
      */
     protected $timesheetRepository;
+    /**
+     * @var UserDateTimeFactory
+     */
     protected $dateTimeFactory;
 
-    /**
-     * @param ServiceInvoice $service
-     * @param InvoiceTemplateRepository $invoice
-     */
     public function __construct(ServiceInvoice $service, InvoiceTemplateRepository $invoice, UserDateTimeFactory $dateTimeFactory)
     {
         $this->service = $service;
@@ -222,7 +221,7 @@ class InvoiceController extends AbstractController
      * @Route(path="/template/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_invoice_template_paginated", methods={"GET", "POST"})
      * @Security("is_granted('view_invoice_template')")
      *
-     * @param $page
+     * @param int $page
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listTemplateAction($page)
@@ -345,7 +344,7 @@ class InvoiceController extends AbstractController
             'method' => 'POST',
             'attr' => [
                 'id' => 'invoice-print-form'
-            ]
+            ],
         ]);
     }
 

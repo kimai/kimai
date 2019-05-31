@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="actions.en.xliff">
+        <body>
+            <trans-unit id="stop">
+                <source>stop</source>
+                <target>Beenden</target>
+            </trans-unit>
+            <trans-unit id="edit">
+                <source>edit</source>
+                <target>Bearbeiten</target>
+            </trans-unit>
+            <trans-unit id="trash">
+                <source>trash</source>
+                <target>Löschen</target>
+            </trans-unit>
+            <trans-unit id="repeat">
+                <source>repeat</source>
+                <target>Neu starten</target>
+            </trans-unit>
+            <trans-unit id="profile-stats">
+                <source>profile-stats</source>
+                <target>Statistiken</target>
+            </trans-unit>
+            <trans-unit id="settings">
+                <source>settings</source>
+                <target>Einstellungen</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target>Stundenzettel</target>
+            </trans-unit>
+            <trans-unit id="customer">
+                <source>customer</source>
+                <target>Kunden</target>
+            </trans-unit>
+            <trans-unit id="project">
+                <source>project</source>
+                <target>Projekte</target>
+            </trans-unit>
+            <trans-unit id="activity">
+                <source>activity</source>
+                <target>Tätigkeiten</target>
+            </trans-unit>
+            <trans-unit id="copy">
+                <source>copy</source>
+                <target>Kopie erstellen</target>
+            </trans-unit>
+            <trans-unit id="home">
+                <source>home</source>
+                <target>Homepage</target>
+            </trans-unit>
+            <trans-unit id="create-project">
+                <source>create-project</source>
+                <target>Projekt erstellen</target>
+            </trans-unit>
+            <trans-unit id="create-activity">
+                <source>create-activity</source>
+                <target>Tätigkeit erstellen</target>
+            </trans-unit>
+            <trans-unit id="create-timesheet">
+                <source>create-timesheet</source>
+                <target>Zeit erfassen</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

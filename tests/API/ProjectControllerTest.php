@@ -17,7 +17,6 @@ use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @coversDefaultClass \App\API\ProjectController
  * @group integration
  */
 class ProjectControllerTest extends APIControllerBaseTest
@@ -214,7 +213,7 @@ class ProjectControllerTest extends APIControllerBaseTest
     protected function assertStructure(array $result, $full = true)
     {
         $expectedKeys = [
-            'id', 'name', 'visible', 'customer', 'hourlyRate', 'fixedRate'
+            'id', 'name', 'visible', 'customer', 'hourlyRate', 'fixedRate', 'color'
         ];
 
         if ($full) {

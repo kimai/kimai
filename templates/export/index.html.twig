@@ -3,6 +3,21 @@
 {% import "macros/toolbar.html.twig" as toolbar %}
 {% import "macros/datatables.html.twig" as tables %}
 
+{% set columns = {
+    'date': 'alwaysVisible',
+    'user': 'hidden-xs hidden-sm',
+    'customer': 'hidden-xs hidden-sm',
+    'project': 'hidden-xs hidden-sm',
+    'activity': 'hidden-xs hidden-sm',
+    'description': 'hidden-xs hidden-sm',
+    'unit_price': 'hidden-xs',
+    'duration': '',
+    'total_rate': '',
+    'exported': 'alwaysVisible',
+} %}
+
+{% set tableName = 'export' %}
+
 {% block page_title %}{{ 'export.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'export.subtitle'|trans }}{% endblock %}
 {% block page_actions %}
@@ -16,6 +31,7 @@
 
 {% block main_before %}
     {{ toolbar.toolbar(form, 'collapseExport', true) }}
+    {{ tables.data_table_column_modal(tableName, columns) }}
 {% endblock %}
 
 {% block main_after %}
@@ -27,25 +43,10 @@
     {% if entries is empty %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% else %}
-        {% set columns = {
-            'date': 'alwaysVisible',
-            'user': 'hidden-xs hidden-sm',
-            'customer': 'hidden-xs hidden-sm',
-            'project': 'hidden-xs hidden-sm',
-            'activity': 'hidden-xs hidden-sm',
-            'description': 'hidden-xs hidden-sm',
-            'unit_price': 'hidden-xs',
-            'duration': '',
-            'total_rate': '',
-            'exported': 'alwaysVisible',
-        } %}
-
-        {% set tableName = 'export' %}
-
         {{ tables.data_table_header(tableName, columns) }}
         {% for entry in entries %}
             {% set currency = entry.project.customer.currency %}
-            {% set duration = entry.duration|duration() %}
+            {% set duration = entry.duration|duration %}
             {% if entry.fixedRate is not null %}
                 {% set rate = entry.fixedRate %}
                 {% set duration = 1 %}
@@ -118,41 +119,59 @@
     {{ parent() }}
     <script type="text/javascript">
 
-        function confirmToggleState()
+        function confirmToggleState(button)
         {
-            if ($('#export-toggle-button').hasClass('export-off')) {
-                if (confirm('{{ 'export.clear_all'|trans }}')) {
-                    $('.exportBtn').each(function () {
-                        if ($(this).hasClass('active')) {
-                            $(this).click();
-                        }
-                    });
-                    return true;
-                }
-            } else {
-                if (confirm('{{ 'export.mark_all'|trans }}')) {
-                    $('.exportBtn').each(function () {
-                        if (!$(this).hasClass('active')) {
-                            $(this).click();
-                        }
-                    });
-                    return true;
-                }
+            var ALERT = kimai.getPlugin('alert');
+            var message = '{{ 'export.clear_all'|trans }}';
+            var hasActive = true;
+
+            if (!$('#export-toggle-button').hasClass('export-off')) {
+                message = '{{ 'export.mark_all'|trans }}';
+                hasActive = false;
             }
-            return false;
+
+            ALERT.question(message, function(value) {
+                if (!value) {
+                    return;
+                }
+                var btn = $(button);
+                var exportButtons = $('.exportBtn');
+                // disabling does not yet work...
+                if (exportButtons.length > 0) {
+                    btn.addClass('disabled');
+                }
+
+                // ... as the clicks are asynchronous and the each comes back too early ...
+                exportButtons.each(function () {
+                    if (hasActive === $(this).hasClass('active')) {
+                        $(this).click();
+                    }
+                });
+
+                // ... so the button is re-enabled immediately - that should be fixed in a future update
+                btn.removeClass('disabled');
+                if (btn.hasClass('export-off')) {
+                    btn.removeClass('export-off');
+                    btn.html('<i class="fas fa-toggle-off"></i>');
+                } else {
+                    btn.addClass('export-off');
+                    btn.html('<i class="fas fa-toggle-on"></i>');
+                }
+            });
         }
 
         function updateTimesheetExportState(button, id, exported)
         {
+            var ALERT = kimai.getPlugin('alert');
+
+            // FIXME use Kimai API plugin
             $.ajax({
-                url: '{{ path('patch_timesheet', {id: '-s-'}) }}'.replace('-s-', id),
+                url: '{{ path('export_timesheet', {id: '-s-'}) }}'.replace('-s-', id),
                 headers: {
                     'X-AUTH-SESSION': true,
                     'Content-Type':'application/json'
                 },
                 method: 'PATCH',
-                dataType: 'json',
-                data: JSON.stringify({'exported': exported}),
                 success: function(data) {
                     if (exported) {
                         button.button('exported');
@@ -170,7 +189,6 @@
                 }, error: function(jqXHR, textStatus, errorThrown) {
                     var message = 'An error occured';
                     if (jqXHR.responseJSON !== undefined) {
-                        console.log(jqXHR);
                         message = jqXHR.responseJSON.message;
                         if (jqXHR.responseJSON.errors !== undefined)
                         {
@@ -180,41 +198,26 @@
                             }
                         }
                     }
-                    alert('{{ 'action.update.error'|trans({}, 'flashmessages') }}'.replace('%reason%', message));
+                    ALERT.error('{{ 'action.update.error'|trans({}, 'flashmessages') }}', message);
                     button.button('reset');
                     if (exported) {
                         button.removeClass('active');
                     } else {
                         button.addClass('active');
-
                     }
                 }
             });
         }
 
-        $(document).ready(function () {
+        document.addEventListener('kimai.initialized', function() {
             $('body').on('click', '.exportBtn', function() {
                 var button = $(this);
                 var id = button.attr('data-timesheet');
-
-                if (button.hasClass('active')) {
-                    updateTimesheetExportState(button, id, false);
-                } else {
-                    updateTimesheetExportState(button, id, true);
-                }
+                updateTimesheetExportState(button, id, !button.hasClass('active'));
             });
 
             $('#export-toggle-button').on('click', function () {
-                if (!confirmToggleState()) {
-                    return;
-                }
-                if ($(this).hasClass('export-off')) {
-                    $(this).removeClass('export-off');
-                    $(this).html('<i class="fas fa-toggle-off"></i>');
-                } else {
-                    $(this).addClass('export-off');
-                    $(this).html('<i class="fas fa-toggle-on"></i>');
-                }
+                confirmToggleState(this);
             });
 
             $('body').on('click', '#export-buttons .startExportBtn', function() {
@@ -226,7 +229,6 @@
                 $('#type').val('');
                 $form.removeAttr('target').attr('action', prevAction);
             });
-
         });
     </script>
 {% endblock %}

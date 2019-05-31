@@ -13,7 +13,6 @@ use App\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @coversDefaultClass \App\API\CustomerController
  * @group integration
  */
 class CustomerControllerTest extends APIControllerBaseTest
@@ -164,7 +163,7 @@ class CustomerControllerTest extends APIControllerBaseTest
 
     protected function assertStructure(array $result, $full = true)
     {
-        $expectedKeys = ['id', 'name', 'visible', 'hourlyRate', 'fixedRate'];
+        $expectedKeys = ['id', 'name', 'visible', 'hourlyRate', 'fixedRate', 'color'];
 
         if ($full) {
             $expectedKeys = array_merge($expectedKeys, [

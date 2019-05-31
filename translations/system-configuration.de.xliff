@@ -18,9 +18,17 @@
                 <source>form_customer</source>
                 <target>Kunden anlegen - Standard Werte</target>
             </trans-unit>
-            <trans-unit id="label.timesheet.markdown_content">
-                <source>label.timesheet.markdown_content</source>
-                <target>Erlaube Markdown in den Beschreibungen der erfassten Zeiten</target>
+            <trans-unit id="theme">
+                <source>theme</source>
+                <target>Darstellung</target>
+            </trans-unit>
+            <trans-unit id="calendar">
+                <source>calendar</source>
+                <target>Kalender</target>
+            </trans-unit>
+            <trans-unit id="label.theme.markdown_content">
+                <source>label.theme.markdown_content</source>
+                <target>Erlaube Markdown-Formatierungen in Beschreibungen und Kommentaren</target>
             </trans-unit>
             <trans-unit id="label.timesheet.mode">
                 <source>label.timesheet.mode</source>
@@ -28,11 +36,15 @@
             </trans-unit>
             <trans-unit id="label.timesheet.mode_default">
                 <source>label.timesheet.mode_default</source>
-                <target>Standard Modus: erfasst Start und Enddatum</target>
+                <target>[Standard] Start- und Endzeiten können bearbeitet werden</target>
             </trans-unit>
             <trans-unit id="label.timesheet.mode_duration_only">
                 <source>label.timesheet.mode_duration_only</source>
-                <target>Dauer: ersetzt das Enddatum durch ein Eingabefeld für Dauer</target>
+                <target>[Dauer] ersetzt die Endzeit durch ein Eingabefeld für Dauer</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_punch">
+                <source>label.timesheet.mode_punch</source>
+                <target>[Stechuhr] Benutzer kann Aufzeichnungen starten und stoppen, aber weder Zeiten noch Dauer bearbeiten</target>
             </trans-unit>
             <trans-unit id="label.timesheet.rules.allow_future_times">
                 <source>label.timesheet.rules.allow_future_times</source>
@@ -45,6 +57,34 @@
             <trans-unit id="label.timesheet.active_entries.soft_limit">
                 <source>label.timesheet.active_entries.soft_limit</source>
                 <target>Anzahl an laufenden Zeiteinträgen ab denen einen Warnung angezeigt wird</target>
+            </trans-unit>
+            <trans-unit id="label.theme.select_type">
+                <source>label.theme.select_type</source>
+                <target>Art der Auswahl-Boxen in Formularen</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.week_numbers">
+                <source>label.calendar.week_numbers</source>
+                <target>Kalenderwochen anzeigen</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.weekends">
+                <source>label.calendar.weekends</source>
+                <target>Wochenenden anzeigen</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.begin">
+                <source>label.calendar.businessHours.begin</source>
+                <target>Start der üblichen Arbeitszeit (wird optisch hervorgehoben)</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.end">
+                <source>label.calendar.businessHours.end</source>
+                <target>Ende der üblichen Arbeitszeit (wird optisch hervorgehoben)</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.begin">
+                <source>label.calendar.visibleHours.begin</source>
+                <target>Start des sichtbaren Zeitbereichs</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.end">
+                <source>label.calendar.visibleHours.end</source>
+                <target>Ende des sichtbaren Zeitbereichs</target>
             </trans-unit>
         </body>
     </file>
