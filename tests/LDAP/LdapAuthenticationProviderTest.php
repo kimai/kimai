@@ -113,6 +113,50 @@ class LdapAuthenticationProviderTest extends TestCase
         self::assertSame($actual);
     }
 
+    /**
+     * @expectedException \Symfony\Component\Security\Core\Exception\BadCredentialsException
+     * @expectedExceptionMessage The presented password is invalid.
+     */
+    public function testAuthenticateWithUsernameThrowsExceptionOnFailedBind()
+    {
+        $user = (new User())->setUsername('foo')->setEnabled(true);
+        $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->setMethods(['bind'])->getMock();
+        $manager->expects($this->once())->method('bind')->willReturn(false);
+        $config = new LdapConfiguration(['active' => true]);
+        $userProvider = $this->getMockBuilder(LdapUserProvider::class)->disableOriginalConstructor()->setMethods(['loadUserByUsername'])->getMock();
+        $userProvider->expects($this->once())->method('loadUserByUsername')->willReturn($user);
+        $providerKey = 'secured_area';
+        $userChecker = new UserChecker();
+
+        $token = new UsernamePasswordToken('foo', 'sdfsdf', $providerKey);
+
+        $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
+        $actual = $sut->authenticate($token);
+        self::assertSame($actual);
+    }
+
+    /**
+     * @expectedException \Symfony\Component\Security\Core\Exception\BadCredentialsException
+     * @expectedExceptionMessage The credentials were changed from another session.
+     */
+    public function testAuthenticateWithUserThrowsExceptionOnFailedBind()
+    {
+        $user = (new User())->setUsername('foo')->setEnabled(true);
+        $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->setMethods(['bind'])->getMock();
+        $manager->expects($this->once())->method('bind')->willReturn(false);
+        $config = new LdapConfiguration(['active' => true]);
+        $userProvider = $this->getMockBuilder(LdapUserProvider::class)->disableOriginalConstructor()->setMethods(['loadUserByUsername'])->getMock();
+        $userProvider->expects($this->never())->method('loadUserByUsername');
+        $providerKey = 'secured_area';
+        $userChecker = new UserChecker();
+
+        $token = new UsernamePasswordToken($user, 'sdfsdf', $providerKey);
+
+        $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
+        $actual = $sut->authenticate($token);
+        self::assertSame($actual);
+    }
+
     public function testAuthenticateWithUsernameReturnsUserAndBinds()
     {
         $user = (new User())->setUsername('foo')->setEnabled(true);
