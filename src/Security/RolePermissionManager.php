@@ -49,11 +49,6 @@ class RolePermissionManager
         return array_keys($this->permissions);
     }
 
-    public function roleHasPermission(string $role): bool
-    {
-        return isset($this->permissions[$role]);
-    }
-
     public function getPermissions(): array
     {
         return $this->knownPermissions;

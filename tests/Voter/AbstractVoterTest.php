@@ -28,9 +28,6 @@ abstract class AbstractVoterTest extends TestCase
         $isAuthenticated = empty($user->getRoles());
         $accessManager = $this->getMockBuilder(AclDecisionManager::class)->disableOriginalConstructor()->getMock();
         $accessManager->method('isFullyAuthenticated')->willReturn($isAuthenticated);
-        $accessManager->method('hasRole')->willReturnCallback(function ($role) use ($user) {
-            return in_array($role, $user->getRoles());
-        });
 
         $class = new \ReflectionClass($voterClass);
 
