@@ -15,6 +15,8 @@ use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
+use App\Timesheet\UserDateTimeFactory;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -24,10 +26,17 @@ class TimesheetControllerTest extends APIControllerBaseTest
 {
     public const DATE_FORMAT = 'Y-m-d H:i:s';
     public const DATE_FORMAT_HTML5 = 'Y-m-d\TH:i:s';
+    public const TEST_TIMEZONE = 'Europe/London';
+
+    /**
+     * @var UserDateTimeFactory
+     */
+    protected $dateTime;
 
     public function setUp()
     {
         $this->importFixtureForUser(User::ROLE_USER);
+        $this->dateTime = (new UserDateTimeFactoryFactory($this))->create(self::TEST_TIMEZONE);
     }
 
     protected function importFixtureForUser(string $role)
@@ -278,8 +287,8 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $data = [
             'activity' => 1,
             'project' => 1,
-            'begin' => (new \DateTime('- 8 hours'))->format('Y-m-d H:m'),
-            'end' => (new \DateTime())->format('Y-m-d H:m'),
+            'begin' => ($this->dateTime->createDateTime('- 16 hours'))->format('Y-m-d H:m:0'),
+            'end' => ($this->dateTime->createDateTime())->format('Y-m-d H:m:0'),
             'description' => 'foo',
             'fixedRate' => 2016,
             'hourlyRate' => 127
@@ -291,7 +300,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertDefaultStructure($result);
         $this->assertNotEmpty($result['id']);
-        $this->assertEquals(28800, $result['duration']);
+        $this->assertTrue($result['duration'] == 57600 || $result['duration'] == 57660); // 1 minute rounding might be applied
         $this->assertEquals(2016, $result['rate']);
     }
 
@@ -357,8 +366,8 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $data = [
             'activity' => 1,
             'project' => 1,
-            'begin' => (new \DateTime('- 7 hours'))->format('Y-m-d\TH:m'),
-            'end' => (new \DateTime())->format('Y-m-d\TH:m'),
+            'begin' => ($this->dateTime->createDateTime('- 7 hours'))->format('Y-m-d\TH:m:0'),
+            'end' => ($this->dateTime->createDateTime())->format('Y-m-d\TH:m:0'),
             'description' => 'foo',
             'exported' => true,
         ];

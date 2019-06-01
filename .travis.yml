@@ -11,14 +11,19 @@ addons:
 services:
   - mysql
 
+env:
+  global:
+    - CODECOVERAGE=0
+
 matrix:
   fast_finish: true
   include:
     - php: 7.2
     - php: 7.3
+      env: CODECOVERAGE=1
 
 before_install:
-  - phpenv config-rm xdebug.ini
+#  - phpenv config-rm xdebug.ini
   - composer self-update
   - php -i
 
@@ -26,8 +31,9 @@ install:
   - composer install
 
 script:
-  - php -r "echo date(DATE_RFC850);"
-  - composer kimai:code-check
+  - composer kimai:codestyle
+  - composer kimai:phpstan
+  - if [[ $CODECOVERAGE == 1 ]]; then vendor/bin/phpunit tests/ --coverage-clover=coverage.xml; else vendor/bin/phpunit tests/; fi;
   - cp tests/.env.dist.sqlite .env
   - bin/console doctrine:database:create -n
   - bin/console doctrine:migrations:migrate -n
@@ -36,3 +42,6 @@ script:
   - bin/console doctrine:database:create -n
   - bin/console doctrine:migrations:migrate -n
   - bin/console doctrine:migrations:migrate first -n
+
+after_success:
+  - if [[ $CODECOVERAGE == 1 ]]; then bash <(curl -s https://codecov.io/bash); fi
