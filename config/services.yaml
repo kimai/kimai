@@ -98,9 +98,6 @@ services:
     # FORMS
     # ================================================================================
 
-    App\Form\Type\UserRoleType:
-        arguments: ['%security.role_hierarchy.roles%']
-
     App\Form\Type\LanguageType:
         arguments: ['%app_locales%']
 
@@ -125,6 +122,9 @@ services:
     # SECURITY & VOTER
     # ================================================================================
 
+    App\Security\RoleService:
+        arguments: ['%security.role_hierarchy.roles%']
+
     App\Security\RolePermissionManager:
         arguments: ['%kimai.permissions%']
 
@@ -134,10 +134,6 @@ services:
 
     Zend\Ldap\Ldap:
         class: App\Ldap\ZendLdap
-
-    App\Ldap\LdapManager:
-        arguments:
-            $roles: '%security.role_hierarchy.roles%'
 
     kimai_ldap.security.authentication.provider:
         class: App\Ldap\LdapAuthenticationProvider
