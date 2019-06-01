@@ -51,6 +51,7 @@ class LdapUserHydratorTest extends TestCase
                     ['ldap_attr' => 'foo', 'user_method' => 'setAlias'],
                     ['ldap_attr' => 'bar', 'user_method' => 'setTitle'],
                     ['ldap_attr' => 'xxxxxxxx', 'user_method' => 'setAvatar'],
+                    ['ldap_attr' => 'blubXX', 'user_method' => 'setAvatar'],
                 ]
             ]
         ]);
@@ -58,8 +59,8 @@ class LdapUserHydratorTest extends TestCase
         $ldapEntry = [
             'uid' => ['Karl-Heinz'],
             'blub' => ['dfsdfsdf'],
-            'foo' => ['bar'],
-            'bar' => ['foo'],
+            'foo' => ['count' => 1, 'bar'],
+            'bar' => ['count' => 1, 'foo', 'xxx'],
             'xxxxxxxx' => ['https://www.example.com'],
             'blub1' => ['dfsdfsdf'],
         ];
@@ -69,7 +70,7 @@ class LdapUserHydratorTest extends TestCase
         self::assertInstanceOf(User::class, $user);
         self::assertEquals('Karl-Heinz', $user->getUsername());
         self::assertEquals('bar', $user->getAlias());
-        self::assertEquals('foo', $user->getTitle());
+        self::assertEquals(['foo', 'xxx'], $user->getTitle());
         self::assertEquals('https://www.example.com', $user->getAvatar());
         self::assertEquals('Karl-Heinz', $user->getEmail());
     }
