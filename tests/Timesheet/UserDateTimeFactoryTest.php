@@ -9,10 +9,9 @@
 
 namespace App\Tests\Timesheet;
 
-use App\Entity\User;
-use App\Entity\UserPreference;
 use App\Repository\UserRepository;
 use App\Security\CurrentUser;
+use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Timesheet\UserDateTimeFactory;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
@@ -25,28 +24,9 @@ class UserDateTimeFactoryTest extends TestCase
 {
     public const TEST_TIMEZONE = 'Europe/London';
 
-    protected function createDateTimeFactory(string $timezone)
+    protected function createDateTimeFactory(?string $timezone = null): UserDateTimeFactory
     {
-        return new UserDateTimeFactory($this->getCurrentUserMock($timezone));
-    }
-
-    protected function getCurrentUserMock($timezone = null)
-    {
-        $user = new User();
-        if (null !== $timezone) {
-            $pref = new UserPreference();
-            $pref->setName('timezone');
-            $pref->setValue($timezone);
-            $user->addPreference($pref);
-        }
-        $repository = $this->getMockBuilder(UserRepository::class)->setMethods(['getById'])->disableOriginalConstructor()->getMock();
-        $repository->expects($this->once())->method('getById')->willReturn($user);
-        $token = $this->getMockBuilder(UsernamePasswordToken::class)->setMethods(['getUser'])->disableOriginalConstructor()->getMock();
-        $token->expects($this->once())->method('getUser')->willReturn($user);
-        $tokenStorage = new TokenStorage();
-        $tokenStorage->setToken($token);
-
-        return new CurrentUser($tokenStorage, $repository);
+        return (new UserDateTimeFactoryFactory($this))->create($timezone);
     }
 
     public function testGetTimezone()
@@ -57,14 +37,7 @@ class UserDateTimeFactoryTest extends TestCase
 
     public function testGetTimezoneWithFallbackTimezone()
     {
-        $repository = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
-        $token = $this->getMockBuilder(UsernamePasswordToken::class)->setMethods(['getUser'])->disableOriginalConstructor()->getMock();
-        $token->expects($this->once())->method('getUser')->willReturn('anonymous');
-        $tokenStorage = new TokenStorage();
-        $tokenStorage->setToken($token);
-
-        $current = new CurrentUser($tokenStorage, $repository);
-        $sut = new UserDateTimeFactory($current);
+        $sut = $this->createDateTimeFactory();
         $this->assertEquals(date_default_timezone_get(), $sut->getTimezone()->getName());
     }
 
