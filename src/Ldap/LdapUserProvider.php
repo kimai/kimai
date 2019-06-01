@@ -48,7 +48,7 @@ class LdapUserProvider implements UserProviderInterface
         // this method is called at least for unknown user, no matter what supportsClass() returns,
         // so we have to check if LDAP is activated here as well
         if (!$this->activated) {
-            $ex = new UsernameNotFoundException(sprintf('User "%s" not found', $username));
+            $ex = new UsernameNotFoundException(sprintf('LDAP is deactivated, user "%s" not searched', $username));
             $ex->setUsername($username);
 
             throw $ex;

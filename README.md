@@ -6,17 +6,20 @@ Kimai - the open source time-tracker application with a mobile-first approach (r
 [![License](https://poser.pugx.org/kevinpapst/kimai2/license)](https://packagist.org/packages/kevinpapst/kimai2)
 [![Travis Status](https://travis-ci.org/kevinpapst/kimai2.svg?branch=master)](https://travis-ci.org/kevinpapst/kimai2)
 [![Code Coverage](https://codecov.io/gh/kevinpapst/kimai2/branch/master/graph/badge.svg)](https://codecov.io/gh/kevinpapst/kimai2)
+[![Gitter](https://badges.gitter.im/kimai2/support.svg)](https://gitter.im/kimai2/support)
 
 ## Introduction
 
-This is the _reloaded_ version of the open source timetracker Kimai.
-It is built from scratch and doesn't share any source code with its [predecessor](http://www.kimai.org). 
-But it adapts the same ideas and a clean & simple UI for your time-tracking experience.
+This is the new version of your favorite open source timetracker Kimai, which was built from scratch and doesn't share any source code with its [predecessor](http://www.kimai.org). 
 
-By now it is in an almost-stable development phase, usable and with most advanced features from Kimai 1.
-You can even [import your data](https://www.kimai.org/documentation/migration-v1.html) and start testing and using it today.
+It adapts the same ideas about time-tracking and comes with a lot of interesting features like:
+JSON API, invoicing, exports, multi-timer, punch-in punch-out modes, tagging, multi-user and multi-timezones, LDAP and built-in authentication,  
+customizable role permissions, mobile-ready / responsive, hourly and fixed rates, advanced filtering, plugins and many more.
 
 Kimai is a [multi-language application](https://www.kimai.org/documentation/translations.html) and already translated to english, german, italian, french, spanish, russian, arabic, hungarian, portuguese (brazilian), swedish and japanese.
+
+It is in a stable development phase, usable in production and with most advanced features from Kimai 1. 
+You can even [import your data](https://www.kimai.org/documentation/migration-v1.html) and start testing and using it today.
 
 ### Requirements
 

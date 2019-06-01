@@ -120,8 +120,9 @@ class LdapDriver
      */
     private function logDebug(string $message, array $context = []): void
     {
-        if ($this->logger) {
-            $this->logger->debug($message, $context);
+        if (null === $this->logger) {
+            return;
         }
+        $this->logger->debug($message, $context);
     }
 }
