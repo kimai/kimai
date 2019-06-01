@@ -34,7 +34,7 @@ class ConfigurationTest extends TestCase
         $normalizedConfig = $node->normalize($inputConfig);
         $finalizedConfig = $node->finalize($normalizedConfig);
 
-        $this->assertEquals($expectedConfig, $finalizedConfig);
+        self::assertEquals($expectedConfig, $finalizedConfig);
     }
 
     /**

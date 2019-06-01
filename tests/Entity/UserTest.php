@@ -116,6 +116,13 @@ class UserTest extends AbstractEntityTest
         $user->addPreference($preference);
         $this->assertEquals('foobar', $user->getPreferenceValue('test', 'foo'));
         $this->assertEquals($preference, $user->getPreference('test'));
+
+        $user->setPreferenceValue('test', 'Hello World');
+        $this->assertEquals('Hello World', $user->getPreferenceValue('test', 'foo'));
+
+        $this->assertNull($user->getPreferenceValue('test2'));
+        $user->setPreferenceValue('test2', 'I like rain');
+        $this->assertEquals('I like rain', $user->getPreferenceValue('test2'));
     }
 
     public function testToString()

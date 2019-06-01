@@ -39,7 +39,7 @@ class LdapUserHydrator
         return $user;
     }
 
-    public function hydrate(array $ldapEntry): UserInterface
+    public function hydrate(array $ldapEntry): User
     {
         $user = $this->createUser();
         $this->hydrateUser($user, $ldapEntry);
