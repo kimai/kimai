@@ -9,6 +9,9 @@
 
 namespace App\Ldap;
 
+/**
+ * Inspired by https://github.com/Maks3w/FR3DLdapBundle @ MIT License
+ */
 class SanitizingException extends \Exception
 {
     protected $actualException;

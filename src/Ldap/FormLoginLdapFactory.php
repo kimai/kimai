@@ -15,14 +15,14 @@ use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
+/**
+ * Inspired by https://github.com/Maks3w/FR3DLdapBundle @ MIT License
+ */
 class FormLoginLdapFactory implements SecurityFactoryInterface
 {
     public function create(ContainerBuilder $container, $id, $config, $userProviderId, $defaultEntryPointId)
     {
-        // authentication provider
         $authProviderId = $this->createAuthProvider($container, $id, $userProviderId);
-
-        // authentication listener
         $listenerId = $this->createListener($container, $id, $config);
 
         return [$authProviderId, $listenerId, $defaultEntryPointId];
@@ -40,7 +40,6 @@ class FormLoginLdapFactory implements SecurityFactoryInterface
 
     public function addConfiguration(NodeDefinition $node)
     {
-        // Without Configuration
     }
 
     protected function createAuthProvider(ContainerBuilder $container, $id, $userProviderId)
@@ -50,8 +49,8 @@ class FormLoginLdapFactory implements SecurityFactoryInterface
 
         $container
             ->setDefinition($providerId, new ChildDefinition($provider))
-            ->replaceArgument(1, $id) // Provider Key
-            ->replaceArgument(2, new Reference($userProviderId)) // User Provider
+            ->replaceArgument(1, $id)
+            ->replaceArgument(2, new Reference($userProviderId))
         ;
 
         return $providerId;
@@ -66,9 +65,7 @@ class FormLoginLdapFactory implements SecurityFactoryInterface
         $listener->replaceArgument(5, $config);
 
         $listenerId .= '.' . $id;
-        $container
-            ->setDefinition($listenerId, $listener)
-        ;
+        $container->setDefinition($listenerId, $listener);
 
         return $listenerId;
     }

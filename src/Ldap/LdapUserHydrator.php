@@ -13,6 +13,9 @@ use App\Configuration\LdapConfiguration;
 use App\Entity\User;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Inspired by https://github.com/Maks3w/FR3DLdapBundle @ MIT License
+ */
 class LdapUserHydrator
 {
     /**
@@ -54,18 +57,8 @@ class LdapUserHydrator
         }
     }
 
-    /**
-     * Fill the given user with the following the attribute-method map.
-     *
-     * @param UserInterface $user target user
-     * @param array[] $ldapUserAttributes raw LDAP data
-     * @param string[] $attributeMap attribute-method map
-     */
-    protected function hydrateUserWithAttributesMap(
-        UserInterface $user,
-        array $ldapUserAttributes,
-        array $attributeMap
-    ): void {
+    protected function hydrateUserWithAttributesMap(UserInterface $user, array $ldapUserAttributes, array $attributeMap)
+    {
         /** @var array $attr */
         foreach ($attributeMap as $attr) {
             if (!array_key_exists($attr['ldap_attr'], $ldapUserAttributes)) {

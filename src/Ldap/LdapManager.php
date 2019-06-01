@@ -13,6 +13,9 @@ use App\Configuration\LdapConfiguration;
 use App\Entity\User;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Inspired by https://github.com/Maks3w/FR3DLdapBundle @ MIT License
+ */
 class LdapManager
 {
     /**

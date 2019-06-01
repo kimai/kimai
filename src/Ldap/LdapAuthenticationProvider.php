@@ -21,6 +21,9 @@ use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
+/**
+ * Inspired by https://github.com/Maks3w/FR3DLdapBundle @ MIT License
+ */
 class LdapAuthenticationProvider extends UserAuthenticationProvider
 {
     /**

@@ -14,6 +14,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Zend\Ldap\Exception\LdapException;
 use Zend\Ldap\Ldap;
 
+/**
+ * Inspired by https://github.com/Maks3w/FR3DLdapBundle @ MIT License
+ */
 class LdapDriver
 {
     /**
@@ -56,8 +59,8 @@ class LdapDriver
 
         try {
             $entries = $this->driver->searchEntries($filter, $baseDn, Ldap::SEARCH_SCOPE_SUB, $attributes);
-            // searchEntries don't return 'count' key as specified by php native
-            // function ldap_get_entries()
+
+            // searchEntries don't return 'count' key as specified by php native function ldap_get_entries()
             $entries['count'] = count($entries);
         } catch (LdapException $exception) {
             $this->zendExceptionHandler($exception);
