@@ -103,7 +103,7 @@ class LdapAuthenticationProvider extends UserAuthenticationProvider
         if ($currentUser instanceof UserInterface) {
             if ('' === $presentedPassword) {
                 throw new BadCredentialsException(
-                    'The password in the token is empty. You may forgive turn off `erase_credentials` in your `security.yml`'
+                    'The password in the token is empty. Check `erase_credentials` in your `security.yaml`'
                 );
             }
 

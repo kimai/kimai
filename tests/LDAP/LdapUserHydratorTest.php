@@ -29,7 +29,8 @@ class LdapUserHydratorTest extends TestCase
             ],
             'user' => [
                 'attributes' => []
-            ]
+            ],
+            'role' => [],
         ]);
 
         $sut = new LdapUserHydrator($config, new RoleService([]));
@@ -54,7 +55,8 @@ class LdapUserHydratorTest extends TestCase
                     ['ldap_attr' => 'xxxxxxxx', 'user_method' => 'setAvatar'],
                     ['ldap_attr' => 'blubXX', 'user_method' => 'setAvatar'],
                 ]
-            ]
+            ],
+            'role' => [],
         ]);
 
         $ldapEntry = [
@@ -90,7 +92,8 @@ class LdapUserHydratorTest extends TestCase
                     ['ldap_attr' => 'bar', 'user_method' => 'setTitle'],
                     ['ldap_attr' => 'xxxxxxxx', 'user_method' => 'setAvatar'],
                 ]
-            ]
+            ],
+            'role' => [],
         ]);
 
         $ldapEntry = [
