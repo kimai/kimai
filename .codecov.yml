@@ -20,4 +20,10 @@ parsers:
       method: no
       macro: no
 
-comment: off
+comment:
+  layout: "diff, flags, files"
+  behavior: default
+  require_changes: yes
+  require_base: no
+  require_head: yes
+  branches: null
