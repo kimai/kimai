@@ -23,10 +23,6 @@ class LdapManager
      */
     protected $config;
     /**
-     * @var array
-     */
-    protected $roles = [];
-    /**
      * @var LdapDriver
      */
     protected $driver;
@@ -39,10 +35,9 @@ class LdapManager
      */
     protected $hydrator;
 
-    public function __construct(LdapDriver $driver, LdapUserHydrator $hydrator, LdapConfiguration $config, array $roles)
+    public function __construct(LdapDriver $driver, LdapUserHydrator $hydrator, LdapConfiguration $config)
     {
         $this->params = $config->getUserParameters();
-        $this->roles = $roles;
         $this->config = $config;
         $this->driver = $driver;
         $this->hydrator = $hydrator;
@@ -75,9 +70,8 @@ class LdapManager
         if (0 === $entries['count']) {
             return null;
         }
-        $user = $this->hydrator->hydrate($entries[0]);
 
-        return $user;
+        return $this->hydrator->hydrate($entries[0]);
     }
 
     /**
@@ -106,12 +100,11 @@ class LdapManager
 
     /**
      * @param User $user
-     * @param string $username
      * @throws LdapDriverException
      */
-    public function updateUser(User $user, $username)
+    public function updateUser(User $user)
     {
-        $filter = $this->buildFilter([$this->params['usernameAttribute'] => $username]);
+        $filter = $this->buildFilter([$this->params['usernameAttribute'] => $user->getUsername()]);
         $entries = $this->driver->search($this->params['baseDn'], $filter);
 
         if ($entries['count'] > 1) {
@@ -122,77 +115,28 @@ class LdapManager
             return;
         }
 
-        if ($this->hydrator instanceof LdapUserHydrator) {
-            $this->hydrator->hydrateUser($user, $entries[0]);
-            $this->addRoles($user, $entries[0]);
-        }
-    }
+        $this->hydrator->hydrateUser($user, $entries[0]);
 
-    /**
-     * @param User $user
-     * @param array $entry
-     * @throws LdapDriverException
-     */
-    private function addRoles(User $user, $entry)
-    {
         $roleParameter = $this->config->getRoleParameters();
-
         if (null === $roleParameter['baseDn']) {
             return;
         }
 
-        $groupNameMapping = $roleParameter['groups'];
+        $roles = $this->getRoles($entries[0]['dn'], $roleParameter);
 
-        $roleNameAttr = $roleParameter['nameAttribute'];
-        $filter = $roleParameter['filter'] ?? '';
-
-        $entries = $this->driver->search(
-            $roleParameter['baseDn'],
-            sprintf('(&%s(%s=%s))', $filter, $roleParameter['userDnAttribute'], $entry['dn']),
-            [$roleParameter['nameAttribute']]
-        );
-
-        $allowedRoles = [];
-        foreach ($this->roles as $key => $value) {
-            $allowedRoles[] = $key;
-            foreach ($value as $name) {
-                $allowedRoles[] = $name;
-            }
+        if (!empty($roles)) {
+            $this->hydrator->hydrateRoles($user, $roles);
         }
-        $allowedRoles = array_unique($allowedRoles);
-
-        $roles = [];
-        for ($i = 0; $i < $entries['count']; $i++) {
-            $roleName = $entries[$i][$roleNameAttr][0];
-
-            $mapped = false;
-            foreach ($groupNameMapping as $attr) {
-                if ($roleName === $attr['ldap_value']) {
-                    $roleName = $attr['role'];
-                    $mapped = true;
-                }
-            }
-
-            if (!$mapped) {
-                $roleName = sprintf('ROLE_%s', self::slugify($roleName));
-            }
-
-            if (!in_array($roleName, $allowedRoles)) {
-                continue;
-            }
-
-            $roles[] = $roleName;
-        }
-
-        $user->setRoles($roles);
     }
 
-    private static function slugify($role)
+    protected function getRoles(string $dn, array $roleParameter): array
     {
-        $role = preg_replace('/\W+/', '_', $role);
-        $role = trim($role, '_');
-        $role = strtoupper($role);
+        $filter = $roleParameter['filter'] ?? '';
 
-        return $role;
+        return $this->driver->search(
+            $roleParameter['baseDn'],
+            sprintf('(&%s(%s=%s))', $filter, $roleParameter['userDnAttribute'], $dn),
+            [$roleParameter['nameAttribute']]
+        );
     }
 }

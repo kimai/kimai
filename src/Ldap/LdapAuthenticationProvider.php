@@ -122,7 +122,7 @@ class LdapAuthenticationProvider extends UserAuthenticationProvider
 
         // this statement will only be reached by LDAP users whose bind() succeeded
         if ($user instanceof User) {
-            $this->ldapManager->updateUser($user, $user->getUsername());
+            $this->ldapManager->updateUser($user);
         }
     }
 }

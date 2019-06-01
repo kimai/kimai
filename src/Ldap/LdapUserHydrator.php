@@ -11,6 +11,7 @@ namespace App\Ldap;
 
 use App\Configuration\LdapConfiguration;
 use App\Entity\User;
+use App\Security\RoleService;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -22,12 +23,22 @@ class LdapUserHydrator
      * @var string[]
      */
     private $attributeMap;
+    /**
+     * @var array
+     */
+    private $roleParams;
+    /**
+     * @var RoleService
+     */
+    private $roles;
 
-    public function __construct(LdapConfiguration $config)
+    public function __construct(LdapConfiguration $config, RoleService $roles)
     {
         $attributeMap = $config->getUserParameters();
 
         $this->attributeMap = $attributeMap['attributes'];
+        $this->roleParams = $config->getRoleParameters();
+        $this->roles = $roles;
     }
 
     protected function createUser(): User
@@ -55,6 +66,50 @@ class LdapUserHydrator
         if (null === $user->getEmail()) {
             $user->setEmail($user->getUsername());
         }
+    }
+
+    /**
+     * @param User $user
+     * @param array $entries
+     */
+    public function hydrateRoles(User $user, array $entries)
+    {
+        $allowedRoles = $this->roles->getAvailableNames();
+        $groupNameMapping = $this->roleParams['groups'];
+        $roleNameAttr = $this->roleParams['nameAttribute'];
+
+        $roles = [];
+        for ($i = 0; $i < $entries['count']; $i++) {
+            $roleName = $entries[$i][$roleNameAttr][0];
+            $mapped = false;
+            foreach ($groupNameMapping as $attr) {
+                if ($roleName === $attr['ldap_value']) {
+                    $roleName = $attr['role'];
+                    $mapped = true;
+                }
+            }
+
+            if (!$mapped) {
+                $roleName = sprintf('ROLE_%s', self::slugify($roleName));
+            }
+
+            if (!in_array($roleName, $allowedRoles)) {
+                continue;
+            }
+
+            $roles[] = $roleName;
+        }
+
+        $user->setRoles($roles);
+    }
+
+    private static function slugify(string $role): string
+    {
+        $role = preg_replace('/\W+/', '_', $role);
+        $role = trim($role, '_');
+        $role = strtoupper($role);
+
+        return $role;
     }
 
     protected function hydrateUserWithAttributesMap(UserInterface $user, array $ldapUserAttributes, array $attributeMap)
