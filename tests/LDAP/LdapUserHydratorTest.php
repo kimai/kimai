@@ -56,12 +56,12 @@ class LdapUserHydratorTest extends TestCase
         ]);
 
         $ldapEntry = [
-            'uid'       => ['Karl-Heinz'],
-            'blub'      => ['dfsdfsdf'],
-            'foo'       => ['bar'],
-            'bar'       => ['foo'],
-            'xxxxxxxx'  => ['https://www.example.com'],
-            'blub1'     => ['dfsdfsdf'],
+            'uid' => ['Karl-Heinz'],
+            'blub' => ['dfsdfsdf'],
+            'foo' => ['bar'],
+            'bar' => ['foo'],
+            'xxxxxxxx' => ['https://www.example.com'],
+            'blub1' => ['dfsdfsdf'],
         ];
 
         $sut = new LdapUserHydrator($config);
@@ -92,12 +92,12 @@ class LdapUserHydratorTest extends TestCase
         ]);
 
         $ldapEntry = [
-            'uid'       => ['Karl-Heinz'],
-            'blub'      => ['dfsdfsdf'],
-            'foo'       => ['bar'],
-            'bar'       => ['foo'],
-            'xxxxxxxx'  => ['https://www.example.com'],
-            'blub1'     => ['dfsdfsdf'],
+            'uid' => ['Karl-Heinz'],
+            'blub' => ['dfsdfsdf'],
+            'foo' => ['bar'],
+            'bar' => ['foo'],
+            'xxxxxxxx' => ['https://www.example.com'],
+            'blub1' => ['dfsdfsdf'],
         ];
 
         $sut = new LdapUserHydrator($config);
