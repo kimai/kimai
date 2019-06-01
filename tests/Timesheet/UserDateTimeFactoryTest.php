@@ -9,13 +9,9 @@
 
 namespace App\Tests\Timesheet;
 
-use App\Repository\UserRepository;
-use App\Security\CurrentUser;
 use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Timesheet\UserDateTimeFactory;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 /**
  * @covers \App\Timesheet\UserDateTimeFactory

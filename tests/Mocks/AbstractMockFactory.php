@@ -9,13 +9,11 @@
 
 namespace App\Tests\Mocks;
 
-use PHPUnit\Framework\MockObject\Matcher\InvokedCount as InvokedCountMatcher;
 use PHPUnit\Framework\MockObject\MockBuilder;
 use PHPUnit\Framework\TestCase;
 
 abstract class AbstractMockFactory
 {
-
     /**
      * @var TestCase
      */
