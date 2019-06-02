@@ -103,6 +103,17 @@ EOT
             return 4;
         }
 
+        try {
+            $command = $this->getApplication()->find('doctrine:migrations:version');
+            $cmdInput = new ArrayInput(['--add' => true, '--all' => true]);
+            $cmdInput->setInteractive(false);
+            $command->run($cmdInput, $output);
+        } catch (\Exception $ex) {
+            $io->error('Failed to set migration status: ' . $ex->getMessage());
+
+            return 5;
+        }
+
         if (!$input->getOption('no-cache')) {
             $command = $this->getApplication()->find('cache:clear');
             try {
@@ -110,7 +121,7 @@ EOT
             } catch (\Exception $ex) {
                 $io->error('Failed to clear cache: ' . $ex->getMessage());
 
-                return 5;
+                return 6;
             }
         }
 
