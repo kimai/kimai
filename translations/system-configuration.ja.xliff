@@ -40,11 +40,11 @@
             </trans-unit>
             <trans-unit id="label.timesheet.active_entries.hard_limit">
                 <source>label.timesheet.active_entries.hard_limit</source>
-                <target>同じ期間内に同時進行のものとして入力可能とするエントリの上限数</target>
+                <target>同じ期間内に同時進行のものとして記録可能とする明細の上限数</target>
             </trans-unit>
             <trans-unit id="label.timesheet.active_entries.soft_limit">
                 <source>label.timesheet.active_entries.soft_limit</source>
-                <target>同時進行のエントリがこちらの数を超える場合に警告を表示する</target>
+                <target>同時進行の明細記録がこちらの数を超える場合に警告を表示する</target>
             </trans-unit>
             <trans-unit id="label.theme.select_type">
                 <source>label.theme.select_type</source>
