@@ -25,7 +25,6 @@
         "fzaninotto/faker": "^1.8",
         "gedmo/doctrine-extensions": "^2.4",
         "jms/metadata": "^2.0",
-        "jms/serializer": "^2.3",
         "jms/serializer-bundle": "^3.2",
         "kevinpapst/adminlte-bundle": "~2.6",
         "kimai/kimai2-composer": "^0.1",
