@@ -26,6 +26,10 @@
                 <source>calendar</source>
                 <target>カレンダー</target>
             </trans-unit>
+            <trans-unit id="label.theme.markdown_content">
+                <source>label.theme.markdown_content</source>
+                <target>Markdown 形式で説明とコメントを書けるようにする</target>
+            </trans-unit>
             <trans-unit id="label.timesheet.mode">
                 <source>label.timesheet.mode</source>
                 <target>タイムトラッキング モード</target>
