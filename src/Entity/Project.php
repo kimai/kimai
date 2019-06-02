@@ -9,6 +9,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -77,7 +79,7 @@ class Project
     private $budget = 0.00;
 
     /**
-     * @var Activity[]
+     * @var Activity[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Activity", mappedBy="project")
      */
@@ -88,54 +90,43 @@ class Project
     use ColorTrait;
 
     /**
-     * @var Timesheet[]
+     * @var Timesheet[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Timesheet", mappedBy="project")
      */
     private $timesheets;
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function __construct()
+    {
+        $this->activities = new ArrayCollection();
+        $this->timesheets = new ArrayCollection();
+    }
+
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return Customer
-     */
-    public function getCustomer()
+    public function getCustomer(): ?Customer
     {
         return $this->customer;
     }
 
-    /**
-     * @param Customer $customer
-     * @return Project
-     */
-    public function setCustomer($customer)
+    public function setCustomer(Customer $customer): Project
     {
         $this->customer = $customer;
 
         return $this;
     }
 
-    /**
-     * @param string $name
-     * @return Project
-     */
-    public function setName($name)
+    public function setName(string $name): Project
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -144,26 +135,19 @@ class Project
      * @param string $comment
      * @return Project
      */
-    public function setComment($comment)
+    public function setComment($comment): Project
     {
         $this->comment = $comment;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getComment()
+    public function getComment(): ?string
     {
         return $this->comment;
     }
 
-    /**
-     * @param bool $visible
-     * @return Project
-     */
-    public function setVisible($visible)
+    public function setVisible(bool $visible): Project
     {
         $this->visible = $visible;
 
@@ -173,7 +157,7 @@ class Project
     /**
      * @return bool
      */
-    public function getVisible()
+    public function getVisible(): bool
     {
         return $this->visible;
     }
@@ -182,7 +166,7 @@ class Project
      * @param float $budget
      * @return Project
      */
-    public function setBudget($budget)
+    public function setBudget($budget): Project
     {
         $this->budget = $budget;
 
@@ -198,39 +182,17 @@ class Project
     }
 
     /**
-     * @param Timesheet[] $timesheets
-     * @return Project
+     * @return Collection<Timesheet>
      */
-    public function setTimesheets($timesheets)
-    {
-        $this->timesheets = $timesheets;
-
-        return $this;
-    }
-
-    /**
-     * @return Timesheet[]
-     */
-    public function getTimesheets()
+    public function getTimesheets(): Collection
     {
         return $this->timesheets;
     }
 
     /**
-     * @param Activity[] $activities
-     * @return Project
+     * @return Collection<Activity>
      */
-    public function setActivities($activities)
-    {
-        $this->activities = $activities;
-
-        return $this;
-    }
-
-    /**
-     * @return Activity[]
-     */
-    public function getActivities()
+    public function getActivities(): Collection
     {
         return $this->activities;
     }
@@ -247,7 +209,7 @@ class Project
      * @param string $orderNumber
      * @return Project
      */
-    public function setOrderNumber($orderNumber)
+    public function setOrderNumber($orderNumber): Project
     {
         $this->orderNumber = $orderNumber;
 

@@ -23,7 +23,7 @@ use App\Repository\Query\InvoiceQuery;
 class InvoiceModel
 {
     /**
-     * @var Customer
+     * @var Customer|null
      */
     protected $customer;
 
@@ -95,36 +95,26 @@ class InvoiceModel
      * @param Timesheet[] $entries
      * @return InvoiceModel
      */
-    public function setEntries(array $entries)
+    public function setEntries(array $entries): InvoiceModel
     {
         $this->entries = $entries;
 
         return $this;
     }
 
-    /**
-     * @return InvoiceTemplate
-     */
     public function getTemplate(): ?InvoiceTemplate
     {
         return $this->template;
     }
 
-    /**
-     * @param InvoiceTemplate $template
-     * @return InvoiceModel
-     */
-    public function setTemplate(InvoiceTemplate $template)
+    public function setTemplate(InvoiceTemplate $template): InvoiceModel
     {
         $this->template = $template;
 
         return $this;
     }
 
-    /**
-     * @return Customer
-     */
-    public function getCustomer()
+    public function getCustomer(): ?Customer
     {
         return $this->customer;
     }
@@ -133,16 +123,13 @@ class InvoiceModel
      * @param Customer $customer
      * @return InvoiceModel
      */
-    public function setCustomer($customer)
+    public function setCustomer($customer): InvoiceModel
     {
         $this->customer = $customer;
 
         return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
     public function getDueDate(): ?\DateTime
     {
         if (null === $this->getTemplate()) {
@@ -160,11 +147,7 @@ class InvoiceModel
         return $this->invoiceDate;
     }
 
-    /**
-     * @param NumberGeneratorInterface $generator
-     * @return InvoiceModel
-     */
-    public function setNumberGenerator(NumberGeneratorInterface $generator)
+    public function setNumberGenerator(NumberGeneratorInterface $generator): InvoiceModel
     {
         $this->generator = $generator;
         $this->generator->setModel($this);
@@ -172,19 +155,12 @@ class InvoiceModel
         return $this;
     }
 
-    /**
-     * @return NumberGeneratorInterface
-     */
     public function getNumberGenerator(): ?NumberGeneratorInterface
     {
         return $this->generator;
     }
 
-    /**
-     * @param CalculatorInterface $calculator
-     * @return InvoiceModel
-     */
-    public function setCalculator(CalculatorInterface $calculator)
+    public function setCalculator(CalculatorInterface $calculator): InvoiceModel
     {
         $this->calculator = $calculator;
         $this->calculator->setModel($this);
@@ -192,9 +168,6 @@ class InvoiceModel
         return $this;
     }
 
-    /**
-     * @return CalculatorInterface
-     */
     public function getCalculator(): ?CalculatorInterface
     {
         return $this->calculator;

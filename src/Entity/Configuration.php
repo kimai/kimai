@@ -48,10 +48,7 @@ class Configuration
      */
     private $value;
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -76,14 +73,17 @@ class Configuration
     }
 
     /**
-     * Given $value will not be serialized before its stored, so it should be a scalar type.
+     * Given $value will not be serialized before its stored, so it should be a scalar type
+     * that can be casted to string.
      *
-     * @param mixed $value
+     * @param string|null|int|bool $value
      * @return Configuration
      */
     public function setValue($value): Configuration
     {
-        $this->value = $value;
+        if (null !== $value) {
+            $this->value = (string) $value;
+        }
 
         return $this;
     }

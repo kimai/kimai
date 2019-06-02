@@ -9,6 +9,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -53,7 +55,7 @@ class Customer
     private $comment;
 
     /**
-     * @var Project[]
+     * @var Project[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="customer")
      */
@@ -151,10 +153,12 @@ class Customer
     use RatesTrait;
     use ColorTrait;
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function __construct()
+    {
+        $this->projects = new ArrayCollection();
+    }
+
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -165,7 +169,7 @@ class Customer
      * @param string $name
      * @return Customer
      */
-    public function setName($name)
+    public function setName($name): Customer
     {
         $this->name = $name;
 
@@ -182,113 +186,74 @@ class Customer
         return $this->name;
     }
 
-    /**
-     * @param string $number
-     * @return Customer
-     */
-    public function setNumber(string $number)
+    public function setNumber(string $number): Customer
     {
         $this->number = $number;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getNumber(): ?string
     {
         return $this->number;
     }
 
     /**
-     * Set comment
-     *
      * @param string $comment
      * @return Customer
      */
-    public function setComment($comment)
+    public function setComment($comment): Customer
     {
         $this->comment = $comment;
 
         return $this;
     }
 
-    /**
-     * Get comment
-     *
-     * @return string
-     */
-    public function getComment()
+    public function getComment(): ?string
     {
         return $this->comment;
     }
 
-    /**
-     * Set visible
-     *
-     * @param bool $visible
-     * @return Customer
-     */
-    public function setVisible($visible)
+    public function setVisible(bool $visible): Customer
     {
         $this->visible = $visible;
 
         return $this;
     }
 
-    /**
-     * Get visible
-     *
-     * @return bool
-     */
-    public function getVisible()
+    public function getVisible(): bool
     {
         return $this->visible;
     }
 
     /**
-     * Set company
-     *
      * @param string $company
      * @return Customer
      */
-    public function setCompany($company)
+    public function setCompany($company): Customer
     {
         $this->company = $company;
 
         return $this;
     }
 
-    /**
-     * Get company
-     *
-     * @return string
-     */
-    public function getCompany()
+    public function getCompany(): ?string
     {
         return $this->company;
     }
 
     /**
-     * Set contact
-     *
      * @param string $contact
      * @return Customer
      */
-    public function setContact($contact)
+    public function setContact($contact): Customer
     {
         $this->contact = $contact;
 
         return $this;
     }
 
-    /**
-     * Get contact
-     *
-     * @return string
-     */
-    public function getContact()
+    public function getContact(): ?string
     {
         return $this->contact;
     }
@@ -297,49 +262,35 @@ class Customer
      * @param string $address
      * @return Customer
      */
-    public function setAddress($address)
+    public function setAddress($address): Customer
     {
         $this->address = $address;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAddress()
+    public function getAddress(): ?string
     {
         return $this->address;
     }
 
     /**
-     * Set country
-     *
      * @param string $country
      * @return Customer
      */
-    public function setCountry($country)
+    public function setCountry($country): Customer
     {
         $this->country = $country;
 
         return $this;
     }
 
-    /**
-     * Get country
-     *
-     * @return string
-     */
-    public function getCountry()
+    public function getCountry(): ?string
     {
         return $this->country;
     }
 
-    /**
-     * @param string $currency
-     * @return Customer
-     */
-    public function setCurrency($currency)
+    public function setCurrency(string $currency): Customer
     {
         $this->currency = $currency;
 
@@ -349,164 +300,111 @@ class Customer
     /**
      * @return string
      */
-    public function getCurrency()
+    public function getCurrency(): string
     {
         return $this->currency;
     }
 
     /**
-     * Set phone
-     *
      * @param string $phone
      * @return Customer
      */
-    public function setPhone($phone)
+    public function setPhone($phone): Customer
     {
         $this->phone = $phone;
 
         return $this;
     }
 
-    /**
-     * Get phone
-     *
-     * @return string
-     */
-    public function getPhone()
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
 
     /**
-     * Set fax
-     *
      * @param string $fax
      * @return Customer
      */
-    public function setFax($fax)
+    public function setFax($fax): Customer
     {
         $this->fax = $fax;
 
         return $this;
     }
 
-    /**
-     * Get fax
-     *
-     * @return string
-     */
-    public function getFax()
+    public function getFax(): ?string
     {
         return $this->fax;
     }
 
     /**
-     * Set mobile
-     *
      * @param string $mobile
      * @return Customer
      */
-    public function setMobile($mobile)
+    public function setMobile($mobile): Customer
     {
         $this->mobile = $mobile;
 
         return $this;
     }
 
-    /**
-     * Get mobile
-     *
-     * @return string
-     */
-    public function getMobile()
+    public function getMobile(): ?string
     {
         return $this->mobile;
     }
 
     /**
-     * Set mail
-     *
      * @param string $mail
      * @return Customer
      */
-    public function setEmail($mail)
+    public function setEmail($mail): Customer
     {
         $this->email = $mail;
 
         return $this;
     }
 
-    /**
-     * Get mail
-     *
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
     /**
-     * Set homepage
-     *
      * @param string $homepage
      * @return Customer
      */
-    public function setHomepage($homepage)
+    public function setHomepage($homepage): Customer
     {
         $this->homepage = $homepage;
 
         return $this;
     }
 
-    /**
-     * Get homepage
-     *
-     * @return string
-     */
-    public function getHomepage()
+    public function getHomepage(): ?string
     {
         return $this->homepage;
     }
 
     /**
-     * Set timezone
-     *
      * @param string $timezone
      * @return Customer
      */
-    public function setTimezone($timezone)
+    public function setTimezone($timezone): Customer
     {
         $this->timezone = $timezone;
 
         return $this;
     }
 
-    /**
-     * Get timezone
-     *
-     * @return string
-     */
-    public function getTimezone()
+    public function getTimezone(): ?string
     {
         return $this->timezone;
     }
 
     /**
-     * @param Project[] $projects
-     * @return Customer
+     * @return Collection<Project>
      */
-    public function setProjects($projects)
-    {
-        $this->projects = $projects;
-
-        return $this;
-    }
-
-    /**
-     * @return Project[]
-     */
-    public function getProjects()
+    public function getProjects(): Collection
     {
         return $this->projects;
     }

@@ -10,7 +10,6 @@
 namespace App\Tests\Entity;
 
 use App\Entity\Customer;
-use App\Entity\Project;
 
 /**
  * @covers \App\Entity\Customer
@@ -24,7 +23,8 @@ class CustomerTest extends AbstractEntityTest
         $this->assertNull($sut->getName());
         $this->assertNull($sut->getNumber());
         $this->assertNull($sut->getComment());
-        // projects
+        self::assertIsIterable($sut->getProjects());
+        self::assertEmpty($sut->getProjects());
         $this->assertTrue($sut->getVisible());
 
         $this->assertNull($sut->getCompany());
@@ -60,10 +60,6 @@ class CustomerTest extends AbstractEntityTest
 
         $this->assertInstanceOf(Customer::class, $sut->setColor('#fffccc'));
         $this->assertEquals('#fffccc', $sut->getColor());
-
-        $projects = [(new Project())->setName('Test')];
-        $this->assertInstanceOf(Customer::class, $sut->setProjects($projects));
-        $this->assertSame($projects, $sut->getProjects());
 
         $this->assertInstanceOf(Customer::class, $sut->setCompany('test company'));
         $this->assertEquals('test company', $sut->getCompany());

@@ -25,7 +25,7 @@ class BaseQuery
     public const RESULT_TYPE_QUERYBUILDER = 'QueryBuilder';
 
     /**
-     * @var object
+     * @var object|null
      */
     protected $hiddenEntity;
     /**
@@ -158,7 +158,7 @@ class BaseQuery
     }
 
     /**
-     * @return object
+     * @return object|null
      */
     public function getHiddenEntity()
     {
@@ -166,7 +166,7 @@ class BaseQuery
     }
 
     /**
-     * @param object|string $hiddenEntity
+     * @param object|string|null $hiddenEntity
      * @return BaseQuery
      */
     public function setHiddenEntity($hiddenEntity)

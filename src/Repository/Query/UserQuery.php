@@ -15,12 +15,12 @@ namespace App\Repository\Query;
 class UserQuery extends VisibilityQuery
 {
     /**
-     * @var string
+     * @var string|null
      */
     protected $role;
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getRole()
     {

@@ -55,36 +55,23 @@ class Tag
         $this->timesheets = new ArrayCollection();
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param string $tagName
-     * @return Tag
-     */
-    public function setName($tagName)
+    public function setName(string $tagName): Tag
     {
         $this->name = $tagName;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param Timesheet $timesheet
-     */
     public function addTimesheet(Timesheet $timesheet)
     {
         if ($this->timesheets->contains($timesheet)) {
@@ -95,9 +82,6 @@ class Tag
         $timesheet->addTag($this);
     }
 
-    /**
-     * @param Timesheet $timesheet
-     */
     public function removeTimesheet(Timesheet $timesheet)
     {
         if (!$this->timesheets->contains($timesheet)) {
