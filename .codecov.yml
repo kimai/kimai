@@ -8,12 +8,12 @@ coverage:
   range: "80...100"
 
   status:
-    project: yes
+    project:
       default:
-        threshold: 1.0%
-    patch: yes
+        threshold: 0.5%
+    patch:
       default:
-        threshold: 1.0%
+        threshold: 0.5%
     changes: no
 
 parsers:
