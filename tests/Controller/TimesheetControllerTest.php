@@ -38,7 +38,9 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         foreach ($result as $item) {
             $this->assertContains('btn btn-default', $item->getAttribute('class'));
-            $this->assertEquals('i', $item->firstChild->tagName);
+            /** @var \DOMElement $domElement */
+            $domElement = $item->firstChild;
+            $this->assertEquals('i', $domElement->tagName);
         }
     }
 

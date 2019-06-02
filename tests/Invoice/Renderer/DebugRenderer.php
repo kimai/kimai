@@ -54,7 +54,7 @@ class DebugRenderer implements RendererInterface
     }
 
     /**
-     * @param $amount
+     * @param mixed $amount
      * @return mixed
      */
     protected function getFormattedMoney($amount)
@@ -72,7 +72,7 @@ class DebugRenderer implements RendererInterface
     }
 
     /**
-     * @param $seconds
+     * @param mixed $seconds
      * @return mixed
      */
     protected function getFormattedDuration($seconds)

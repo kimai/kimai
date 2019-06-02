@@ -95,12 +95,13 @@ abstract class ControllerBaseTest extends WebTestCase
      * @param string $url
      * @param string $method
      */
-    protected function assertRequestIsSecured(Client $client, string $url, $method = 'GET')
+    protected function assertRequestIsSecured(Client $client, string $url, ?string $method = 'GET')
     {
         $this->request($client, $url, $method);
 
-        /* @var RedirectResponse $response */
+        /** @var RedirectResponse $response */
         $response = $client->getResponse();
+        self::assertInstanceOf(RedirectResponse::class, $response);
 
         $this->assertTrue(
             $response->isRedirect(),
@@ -153,32 +154,19 @@ abstract class ControllerBaseTest extends WebTestCase
         );
     }
 
-    /**
-     * @param Client $client
-     * @param $url
-     * @param string $method
-     * @param array $parameters
-     */
-    protected function assertAccessIsGranted(Client $client, $url, $method = 'GET', array $parameters = [])
+    protected function assertAccessIsGranted(Client $client, string $url, string $method = 'GET', array $parameters = [])
     {
         $this->request($client, $url, $method, $parameters);
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    /**
-     * @param Client $client
-     */
     protected function assertRouteNotFound(Client $client)
     {
         $this->assertFalse($client->getResponse()->isSuccessful());
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
     }
 
-    /**
-     * @param Client $client
-     * @param string $classname
-     */
-    protected function assertMainContentClass(Client $client, $classname)
+    protected function assertMainContentClass(Client $client, string $classname)
     {
         $this->assertContains('<section class="content ' . $classname . '">', $client->getResponse()->getContent());
     }
@@ -279,19 +267,11 @@ abstract class ControllerBaseTest extends WebTestCase
         $this->assertContains($message, $node->text());
     }
 
-    /**
-     * @param Client $client
-     * @param string|null $message
-     */
     protected function assertHasFlashDeleteSuccess(Client $client)
     {
         $this->assertHasFlashSuccess($client, 'Entry was deleted');
     }
 
-    /**
-     * @param Client $client
-     * @param string|null $message
-     */
     protected function assertHasFlashSaveSuccess(Client $client)
     {
         $this->assertHasFlashSuccess($client, 'Saved changes');

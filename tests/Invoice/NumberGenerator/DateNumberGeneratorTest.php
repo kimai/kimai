@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Invoice\Calculator;
+namespace App\Tests\Invoice\NumberGenerator;
 
 use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Model\InvoiceModel;

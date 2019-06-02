@@ -18,10 +18,10 @@ use Symfony\Component\Validator\ConstraintViolationInterface;
 abstract class AbstractEntityTest extends KernelTestCase
 {
     /**
-     * @param $entity
+     * @param object $entity
      * @param array|string $fieldNames
      */
-    protected function assertHasViolationForField($entity, $fieldNames)
+    protected function assertHasViolationForField(object $entity, $fieldNames)
     {
         self::bootKernel();
         $validator = static::$kernel->getContainer()->get('validator');

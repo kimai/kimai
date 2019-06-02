@@ -30,13 +30,16 @@ abstract class AbstractVoterTest extends TestCase
         $accessManager->method('isFullyAuthenticated')->willReturn($isAuthenticated);
 
         $class = new \ReflectionClass($voterClass);
+        /** @var AbstractVoter $voter */
+        $voter = $class->newInstance($accessManager, $this->getRolePermissionManager());
+        self::assertInstanceOf(AbstractVoter::class, $voter);
 
-        return $class->newInstance($accessManager, $this->getRolePermissionManager());
+        return $voter;
     }
 
     /**
-     * @param $id
-     * @param $role
+     * @param int $id
+     * @param string $role
      * @return User
      */
     protected function getUser($id, $role)

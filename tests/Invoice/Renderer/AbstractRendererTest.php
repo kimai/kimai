@@ -190,11 +190,7 @@ abstract class AbstractRendererTest extends KernelTestCase
         return $model;
     }
 
-    /**
-     * @param Timesheet[] $timesheets
-     * @return InvoiceModel
-     */
-    protected function getInvoiceModelOneEntry()
+    protected function getInvoiceModelOneEntry(): InvoiceModel
     {
         $customer = new Customer();
         $customer->setCurrency('USD');

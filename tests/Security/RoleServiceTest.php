@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Model;
+namespace App\Tests\Security;
 
 use App\Security\RoleService;
 use PHPUnit\Framework\TestCase;

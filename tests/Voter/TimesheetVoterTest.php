@@ -148,8 +148,8 @@ class TimesheetVoterTest extends AbstractVoterTest
     }
 
     /**
-     * @param $id
-     * @param $role
+     * @param int $id
+     * @param string $role
      * @return User
      */
     protected function getUser($id, $role)
