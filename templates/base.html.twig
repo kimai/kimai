@@ -167,14 +167,14 @@
 
 {% block stylesheets %}
     {# we do not call parent() as we use a custom built for the frontend assets and don't want the default <stylesheet> #}
-    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+    {{ encore_entry_link_tags('app') }}
     {% set event = trigger(constant('App\\Event\\ThemeEvent::STYLESHEET')) %}
     {{ event.content|raw }}
 {% endblock %}
 
 {% block head %}
     {{ parent() }}
-    <script src="{{ asset('build/app.js') }}"></script>
+    {{ encore_entry_script_tags('app') }}
     {% include 'partials/head.html.twig' %}
     {% set event = trigger(constant('App\\Event\\ThemeEvent::HTML_HEAD')) %}
     {{ event.content|raw }}
