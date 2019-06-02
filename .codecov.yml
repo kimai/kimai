@@ -9,9 +9,9 @@ coverage:
 
   status:
     project: yes
-    patch: yes
       default:
-        threshold: 0.1%
+        threshold: 1.0%
+    patch: no
     changes: no
 
 parsers:
