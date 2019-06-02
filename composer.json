@@ -25,7 +25,6 @@
         "fzaninotto/faker": "^1.8",
         "gedmo/doctrine-extensions": "^2.4",
         "jms/metadata": "^2.0",
-        "jms/serializer": "^2.3",
         "jms/serializer-bundle": "^3.2",
         "kevinpapst/adminlte-bundle": "~2.6",
         "kimai/kimai2-composer": "^0.1",
@@ -58,6 +57,7 @@
         "symfony/twig-bundle": "^4.0",
         "symfony/validator": "^4.0",
         "symfony/web-server-bundle": "^4.0",
+        "symfony/webpack-encore-bundle": "^1.5",
         "symfony/yaml": "^4.0",
         "twig/extensions": "^1.5",
         "white-october/pagerfanta-bundle": "^1.1",
@@ -74,8 +74,7 @@
         "symfony/browser-kit": "^4.0",
         "symfony/css-selector": "^4.0",
         "symfony/phpunit-bridge": "^4.0",
-        "symfony/thanks": "^1.0",
-        "symfony/webpack-encore-pack": "^1.0"
+        "symfony/thanks": "^1.0"
     },
     "config": {
         "preferred-install": {

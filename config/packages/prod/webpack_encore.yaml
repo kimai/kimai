@@ -1,0 +1,4 @@
+webpack_encore:
+    # Cache the entrypoints.json (rebuild Symfony's cache when entrypoints.json changes)
+    # Available in version 1.2
+    cache: true
