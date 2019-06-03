@@ -105,7 +105,7 @@ class LdapManagerTest extends TestCase
         $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->setMethods(['search'])->getMock();
 
         $expected = [
-            0 => [],
+            0 => ['dn' => 'foo'],
             'count' => 1,
         ];
 
@@ -169,7 +169,7 @@ class LdapManagerTest extends TestCase
         $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->setMethods(['search'])->getMock();
 
         $expected = [
-            0 => [],
+            0 => ['dn' => 'foo'],
             'count' => 1,
         ];
 
@@ -209,8 +209,8 @@ class LdapManagerTest extends TestCase
         $expected = ['count' => 0];
 
         $driver->expects($this->once())->method('search')->willReturnCallback(function ($baseDn, $filter) use ($expected) {
-            self::assertEquals('ou=users, dc=kimai, dc=org', $baseDn);
-            self::assertEquals('(&(&(objectClass=inetOrgPerson))(uid=foobar))', $filter);
+            self::assertEquals('blub', $baseDn);
+            self::assertEquals('(objectClass=*)', $filter);
 
             return $expected;
         });
@@ -218,6 +218,7 @@ class LdapManagerTest extends TestCase
         $sut = $this->getLdapManager($driver);
 
         $user = (new User())->setUsername('foobar');
+        $user->setPreferenceValue('ldap.dn', 'blub');
         $userOrig = clone $user;
         $sut->updateUser($user);
         self::assertEquals($userOrig, $user);
@@ -234,13 +235,14 @@ class LdapManagerTest extends TestCase
         $expected = ['count' => 3];
 
         $driver->expects($this->once())->method('search')->willReturnCallback(function ($baseDn, $filter) use ($expected) {
-            self::assertEquals('ou=users, dc=kimai, dc=org', $baseDn);
-            self::assertEquals('(&(&(objectClass=inetOrgPerson))(uid=foobar))', $filter);
+            self::assertEquals('blub', $baseDn);
+            self::assertEquals('(objectClass=*)', $filter);
 
             return $expected;
         });
 
         $user = (new User())->setUsername('foobar');
+        $user->setPreferenceValue('ldap.dn', 'blub');
         $sut = $this->getLdapManager($driver);
         $sut->updateUser($user);
     }
@@ -250,13 +252,13 @@ class LdapManagerTest extends TestCase
         $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->setMethods(['search'])->getMock();
 
         $expected = [
-            0 => [],
+            0 => ['dn' => 'blub-updated'],
             'count' => 1,
         ];
 
         $driver->expects($this->once())->method('search')->willReturnCallback(function ($baseDn, $filter) use ($expected) {
-            self::assertEquals('ou=users, dc=kimai, dc=org', $baseDn);
-            self::assertEquals('(&(&(objectClass=inetOrgPerson))(uid=foobar))', $filter);
+            self::assertEquals('blub', $baseDn);
+            self::assertEquals('(objectClass=*)', $filter);
 
             return $expected;
         });
@@ -274,9 +276,11 @@ class LdapManagerTest extends TestCase
         ]);
 
         $user = (new User())->setUsername('foobar');
+        $user->setPreferenceValue('ldap.dn', 'blub');
         $userOrig = clone $user;
         $sut->updateUser($user);
         self::assertEquals($userOrig->setEmail('foobar'), $user);
+        self::assertEquals($user->getPreferenceValue('ldap.dn'), 'blub-updated');
     }
 
     public function testUpdateUserOnValidResultWithRolesResult()
@@ -329,8 +333,8 @@ class LdapManagerTest extends TestCase
         $driver->expects($this->exactly(2))->method('search')->willReturnCallback(function ($baseDn, $filter, $attributes) use ($expectedUsers, $expectedGroups) {
             // user search
             if (empty($attributes)) {
-                self::assertEquals('ou=users, dc=kimai, dc=org', $baseDn);
-                self::assertEquals('(&(&(objectClass=inetOrgPerson))(uid=foobar))', $filter);
+                self::assertEquals('blub', $baseDn);
+                self::assertEquals('(objectClass=*)', $filter);
 
                 return $expectedUsers;
             }
@@ -355,6 +359,7 @@ class LdapManagerTest extends TestCase
         ]);
 
         $user = (new User())->setUsername('foobar');
+        $user->setPreferenceValue('ldap.dn', 'blub');
         $userOrig = clone $user;
         $userOrig->setEmail('foobar')->setRoles(['ROLE_TEAMLEAD', 'ROLE_ADMIN']);
 

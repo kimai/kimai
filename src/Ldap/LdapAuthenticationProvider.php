@@ -66,9 +66,13 @@ class LdapAuthenticationProvider extends UserAuthenticationProvider
         }
 
         try {
+            // this will always query the FOSUserBundle first...
+            // only first-time logins from LDAP user (not yet existing in local user database)
+            // will actually hit the LdapUserProvider
             $user = $this->userProvider->loadUserByUsername($username);
 
-            return $user;
+            // do not update the user here from LDAP, as we don't know if the user can be authenticated
+
         } catch (UsernameNotFoundException $notFound) {
             throw $notFound;
         } catch (\Exception $repositoryProblem) {
@@ -77,17 +81,17 @@ class LdapAuthenticationProvider extends UserAuthenticationProvider
 
             throw $e;
         }
+
+        return $user;
     }
 
     /**
-     * The update should theoretically happen in retrieveUser() but that would require an additional
+     * The updateUser() call should theoretically happen in retrieveUser() but that would require an additional
      * $this->ldapManager->bind($user, $token->getCredentials())
-     * in the if clause to check if the user is still valid.
+     * to check if the user is still valid.
      *
      * Symfony calls retrieveUser() before checkAuthentication()
      * and we should not used ldap->search() before ldap->bind()
-     *
-     * All changes in here are also reflected into the Doctrine workingSet and the user is properly updated.
      *
      * @param UserInterface $user
      * @param UsernamePasswordToken $token
@@ -95,9 +99,6 @@ class LdapAuthenticationProvider extends UserAuthenticationProvider
      */
     protected function checkAuthentication(UserInterface $user, UsernamePasswordToken $token)
     {
-        // do not return early if $user->isLdapUser() returns false,
-        // as this would never update a user whose DN was deleted from the database
-
         $currentUser = $token->getUser();
         $presentedPassword = $token->getCredentials();
         if ($currentUser instanceof UserInterface) {
@@ -120,8 +121,7 @@ class LdapAuthenticationProvider extends UserAuthenticationProvider
             }
         }
 
-        // this statement will only be reached by LDAP users whose bind() succeeded
-        if ($user instanceof User) {
+        if ($user instanceof User && null !== $user->getPreferenceValue('ldap.dn')) {
             $this->ldapManager->updateUser($user);
         }
     }

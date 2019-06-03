@@ -44,6 +44,8 @@ class LdapManager
     }
 
     /**
+     * Only executed for unknown local users.
+     *
      * @param string $username
      * @return UserInterface|null
      * @throws \Exception
@@ -70,17 +72,15 @@ class LdapManager
         if (0 === $entries['count']) {
             return null;
         }
+dump($entries);exit;
+        $user = $this->hydrator->hydrate($entries[0]);
 
-        return $this->hydrator->hydrate($entries[0]);
+        // do not updateUser() here, as zthis would happen before bind()
+        //$this->updateUser($user);
+
+        return $user;
     }
 
-    /**
-     * Build Ldap filter
-     *
-     * @param array $criteria
-     * @param string $condition
-     * @return string
-     */
     protected function buildFilter(array $criteria, string $condition = '&'): string
     {
         $filters = [];
@@ -104,8 +104,14 @@ class LdapManager
      */
     public function updateUser(User $user)
     {
-        $filter = $this->buildFilter([$this->params['usernameAttribute'] => $user->getUsername()]);
-        $entries = $this->driver->search($this->params['baseDn'], $filter);
+        $baseDn = $user->getPreferenceValue('ldap.dn');
+        $filter = '(objectClass=*)';
+
+        if (null === $baseDn) {
+            throw new LdapDriverException('This account is not a registered LDAP user');
+        }
+
+        $entries = $this->driver->search($baseDn, $filter);
 
         if ($entries['count'] > 1) {
             throw new LdapDriverException('This search must only return a single user');

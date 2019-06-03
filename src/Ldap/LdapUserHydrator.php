@@ -66,6 +66,8 @@ class LdapUserHydrator
         if (null === $user->getEmail()) {
             $user->setEmail($user->getUsername());
         }
+
+        $user->setPreferenceValue('ldap.dn', $ldapEntry['dn']);
     }
 
     /**

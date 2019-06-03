@@ -156,6 +156,7 @@ class LdapAuthenticationProviderTest extends TestCase
     public function testAuthenticateWithUsernameReturnsUserAndBinds()
     {
         $user = (new User())->setUsername('foo')->setEnabled(true);
+        $user->setPreferenceValue('ldap.dn', 'blub');
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->setMethods(['bind', 'updateUser'])->getMock();
         $manager->expects($this->once())->method('bind')->willReturn(true);
         $manager->expects($this->once())->method('updateUser')->willReturnCallback(function ($updateUser) use ($user) {
@@ -177,6 +178,7 @@ class LdapAuthenticationProviderTest extends TestCase
     public function testAuthenticateWithUserReturnsUserAndBinds()
     {
         $user = (new User())->setUsername('foo')->setEnabled(true);
+        $user->setPreferenceValue('ldap.dn', 'blub');
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->setMethods(['bind', 'updateUser'])->getMock();
         $manager->expects($this->once())->method('bind')->willReturn(true);
         $manager->expects($this->once())->method('updateUser')->willReturnCallback(function ($updateUser) use ($user) {

@@ -88,13 +88,14 @@ class LdapUserProviderTest extends TestCase
     {
         $user = new User();
         $user->setUsername('foobar');
+        $user->setPreferenceValue('ldap.dn', 'sdfdsf');
 
-        $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->setMethods(['findUserByUsername'])->getMock();
-        $manager->expects($this->once())->method('findUserByUsername')->willReturn($user);
+        $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->setMethods(['updateUser'])->getMock();
         $config = new LdapConfiguration(['active' => true]);
 
         $sut = new LdapUserProvider($manager, $config);
-        $actual = $sut->refreshUser((new User())->setUsername('test'));
+        $actual = $sut->refreshUser($user);
+
         self::assertInstanceOf(User::class, $actual);
         self::assertSame($user, $actual);
     }

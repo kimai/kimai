@@ -10,6 +10,7 @@
 namespace App\Ldap;
 
 use App\Configuration\LdapConfiguration;
+use App\Entity\User;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
@@ -83,7 +84,14 @@ class LdapUserProvider implements UserProviderInterface
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
         }
 
-        return $this->loadUserByUsername($user->getUsername());
+        /** @var User $user */
+        if (null === $user->getPreferenceValue('ldap.dn')) {
+            throw new UnsupportedUserException(sprintf('Account "%s" is not a registered LDAP user.', $user->getUsername()));
+        }
+
+        $this->ldapManager->updateUser($user);
+
+        return $user;
     }
 
     public function supportsClass($class)
@@ -91,7 +99,6 @@ class LdapUserProvider implements UserProviderInterface
         if (!$this->activated) {
             return false;
         }
-
         return true;
     }
 

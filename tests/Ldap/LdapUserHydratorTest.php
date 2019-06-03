@@ -34,7 +34,7 @@ class LdapUserHydratorTest extends TestCase
         ]);
 
         $sut = new LdapUserHydrator($config, new RoleService([]));
-        $user = $sut->hydrate([]);
+        $user = $sut->hydrate(['dn' => 'blub',]);
         self::assertInstanceOf(User::class, $user);
         self::assertEmpty($user->getUsername());
         self::assertEmpty($user->getEmail());
@@ -68,6 +68,7 @@ class LdapUserHydratorTest extends TestCase
             'roles' => ['count' => 2, 0 => 'ROLE_TEAMLEAD', 1 => 'ROLE_ADMIN'],
             'xxxxxxxx' => ['https://www.example.com'],
             'blub1' => ['dfsdfsdf'],
+            'dn' => 'blub',
         ];
 
         $sut = new LdapUserHydrator($config, new RoleService([]));
@@ -107,6 +108,7 @@ class LdapUserHydratorTest extends TestCase
             'bar' => ['foo'],
             'xxxxxxxx' => ['https://www.example.com'],
             'blub1' => ['dfsdfsdf'],
+            'dn' => 'blub',
         ];
 
         $sut = new LdapUserHydrator($config, new RoleService([]));
