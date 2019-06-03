@@ -102,11 +102,7 @@ class Activity
         return $this;
     }
 
-    /**
-     * @param string $name
-     * @return Activity
-     */
-    public function setName($name): Activity
+    public function setName(string $name): Activity
     {
         $this->name = $name;
 
@@ -118,11 +114,7 @@ class Activity
         return $this->name;
     }
 
-    /**
-     * @param string $comment
-     * @return Activity
-     */
-    public function setComment($comment): Activity
+    public function setComment(?string $comment): Activity
     {
         $this->comment = $comment;
 

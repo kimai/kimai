@@ -122,7 +122,7 @@ class User extends BaseUser implements UserInterface
         return $this;
     }
 
-    public function setAlias(string $alias): User
+    public function setAlias(?string $alias): User
     {
         $this->alias = $alias;
 
@@ -139,7 +139,7 @@ class User extends BaseUser implements UserInterface
         return $this->title;
     }
 
-    public function setTitle(string $title): User
+    public function setTitle(?string $title): User
     {
         $this->title = $title;
 
@@ -151,7 +151,7 @@ class User extends BaseUser implements UserInterface
         return $this->avatar;
     }
 
-    public function setAvatar(string $avatar): User
+    public function setAvatar(?string $avatar): User
     {
         $this->avatar = $avatar;
 
@@ -163,7 +163,7 @@ class User extends BaseUser implements UserInterface
         return $this->apiToken;
     }
 
-    public function setApiToken(string $apiToken): User
+    public function setApiToken(?string $apiToken): User
     {
         $this->apiToken = $apiToken;
 
@@ -175,7 +175,7 @@ class User extends BaseUser implements UserInterface
         return $this->plainApiToken;
     }
 
-    public function setPlainApiToken(string $plainApiToken): User
+    public function setPlainApiToken(?string $plainApiToken): User
     {
         $this->plainApiToken = $plainApiToken;
 

@@ -109,202 +109,125 @@ class InvoiceTemplate
      */
     private $paymentTerms;
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return $this
-     */
-    public function setName($name)
+    public function setName(string $name): InvoiceTemplate
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     * @return InvoiceTemplate
-     */
-    public function setTitle(string $title)
+    public function setTitle(string $title): InvoiceTemplate
     {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getAddress(): ?string
     {
         return $this->address;
     }
 
-    /**
-     * @param string $address
-     * @return InvoiceTemplate
-     */
-    public function setAddress($address)
+    public function setAddress(?string $address): InvoiceTemplate
     {
         $this->address = $address;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getNumberGenerator(): ?string
+    public function getNumberGenerator(): string
     {
         return $this->numberGenerator;
     }
 
-    /**
-     * @param string $numberGenerator
-     * @return InvoiceTemplate
-     */
-    public function setNumberGenerator(string $numberGenerator)
+    public function setNumberGenerator(string $numberGenerator): InvoiceTemplate
     {
         $this->numberGenerator = $numberGenerator;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getDueDays(): ?int
+    public function getDueDays(): int
     {
         return $this->dueDays;
     }
 
-    /**
-     * @param int $dueDays
-     * @return InvoiceTemplate
-     */
-    public function setDueDays(int $dueDays)
+    public function setDueDays(int $dueDays): InvoiceTemplate
     {
         $this->dueDays = $dueDays;
 
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getVat(): ?float
+    public function getVat(): float
     {
         return $this->vat;
     }
 
-    /**
-     * @param float $vat
-     * @return InvoiceTemplate
-     */
-    public function setVat(float $vat)
+    public function setVat(float $vat): InvoiceTemplate
     {
         $this->vat = $vat;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getCompany(): ?string
     {
         return $this->company;
     }
 
-    /**
-     * @param string $company
-     * @return InvoiceTemplate
-     */
-    public function setCompany(string $company)
+    public function setCompany(string $company): InvoiceTemplate
     {
         $this->company = $company;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getRenderer(): string
     {
         return $this->renderer;
     }
 
-    /**
-     * @param string $renderer
-     * @return InvoiceTemplate
-     */
-    public function setRenderer(string $renderer)
+    public function setRenderer(string $renderer): InvoiceTemplate
     {
         $this->renderer = $renderer;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getCalculator(): string
     {
         return $this->calculator;
     }
 
-    /**
-     * @param string $calculator
-     * @return InvoiceTemplate
-     */
-    public function setCalculator(string $calculator)
+    public function setCalculator(string $calculator): InvoiceTemplate
     {
         $this->calculator = $calculator;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getPaymentTerms(): ?string
     {
         return $this->paymentTerms;
     }
 
-    /**
-     * @param string $paymentTerms
-     * @return InvoiceTemplate
-     */
-    public function setPaymentTerms(?string $paymentTerms)
+    public function setPaymentTerms(?string $paymentTerms): InvoiceTemplate
     {
         $this->paymentTerms = $paymentTerms;
 

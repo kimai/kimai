@@ -163,30 +163,19 @@ class Customer
         return $this->id;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return Customer
-     */
-    public function setName($name): Customer
+    public function setName(string $name): Customer
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setNumber(string $number): Customer
+    public function setNumber(?string $number): Customer
     {
         $this->number = $number;
 
@@ -198,11 +187,7 @@ class Customer
         return $this->number;
     }
 
-    /**
-     * @param string $comment
-     * @return Customer
-     */
-    public function setComment($comment): Customer
+    public function setComment(?string $comment): Customer
     {
         $this->comment = $comment;
 
@@ -226,11 +211,7 @@ class Customer
         return $this->visible;
     }
 
-    /**
-     * @param string $company
-     * @return Customer
-     */
-    public function setCompany($company): Customer
+    public function setCompany(?string $company): Customer
     {
         $this->company = $company;
 
@@ -242,11 +223,7 @@ class Customer
         return $this->company;
     }
 
-    /**
-     * @param string $contact
-     * @return Customer
-     */
-    public function setContact($contact): Customer
+    public function setContact(?string $contact): Customer
     {
         $this->contact = $contact;
 
@@ -258,11 +235,7 @@ class Customer
         return $this->contact;
     }
 
-    /**
-     * @param string $address
-     * @return Customer
-     */
-    public function setAddress($address): Customer
+    public function setAddress(?string $address): Customer
     {
         $this->address = $address;
 
@@ -274,11 +247,7 @@ class Customer
         return $this->address;
     }
 
-    /**
-     * @param string $country
-     * @return Customer
-     */
-    public function setCountry($country): Customer
+    public function setCountry(string $country): Customer
     {
         $this->country = $country;
 
@@ -297,19 +266,12 @@ class Customer
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getCurrency(): string
     {
         return $this->currency;
     }
 
-    /**
-     * @param string $phone
-     * @return Customer
-     */
-    public function setPhone($phone): Customer
+    public function setPhone(?string $phone): Customer
     {
         $this->phone = $phone;
 
@@ -321,11 +283,7 @@ class Customer
         return $this->phone;
     }
 
-    /**
-     * @param string $fax
-     * @return Customer
-     */
-    public function setFax($fax): Customer
+    public function setFax(?string $fax): Customer
     {
         $this->fax = $fax;
 
@@ -337,11 +295,7 @@ class Customer
         return $this->fax;
     }
 
-    /**
-     * @param string $mobile
-     * @return Customer
-     */
-    public function setMobile($mobile): Customer
+    public function setMobile(?string $mobile): Customer
     {
         $this->mobile = $mobile;
 
@@ -353,11 +307,7 @@ class Customer
         return $this->mobile;
     }
 
-    /**
-     * @param string $mail
-     * @return Customer
-     */
-    public function setEmail($mail): Customer
+    public function setEmail(?string $mail): Customer
     {
         $this->email = $mail;
 
@@ -369,11 +319,7 @@ class Customer
         return $this->email;
     }
 
-    /**
-     * @param string $homepage
-     * @return Customer
-     */
-    public function setHomepage($homepage): Customer
+    public function setHomepage(?string $homepage): Customer
     {
         $this->homepage = $homepage;
 
@@ -385,11 +331,7 @@ class Customer
         return $this->homepage;
     }
 
-    /**
-     * @param string $timezone
-     * @return Customer
-     */
-    public function setTimezone($timezone): Customer
+    public function setTimezone(string $timezone): Customer
     {
         $this->timezone = $timezone;
 
