@@ -80,11 +80,10 @@ class LdapUserProvider implements UserProviderInterface
 
     public function refreshUser(UserInterface $user)
     {
-        if (!$this->supportsClass(get_class($user))) {
+        if (!($user instanceof User) || !$this->supportsClass(get_class($user))) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
         }
 
-        /** @var User $user */
         if (null === $user->getPreferenceValue('ldap.dn')) {
             throw new UnsupportedUserException(sprintf('Account "%s" is not a registered LDAP user.', $user->getUsername()));
         }
@@ -99,7 +98,8 @@ class LdapUserProvider implements UserProviderInterface
         if (!$this->activated) {
             return false;
         }
-        return true;
+
+        return $class === User::class || $class === 'App\Entity\User';
     }
 
     /**

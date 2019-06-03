@@ -34,7 +34,7 @@ class LdapUserHydratorTest extends TestCase
         ]);
 
         $sut = new LdapUserHydrator($config, new RoleService([]));
-        $user = $sut->hydrate(['dn' => 'blub',]);
+        $user = $sut->hydrate(['dn' => 'blub']);
         self::assertInstanceOf(User::class, $user);
         self::assertEmpty($user->getUsername());
         self::assertEmpty($user->getEmail());

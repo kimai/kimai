@@ -72,7 +72,6 @@ class LdapAuthenticationProvider extends UserAuthenticationProvider
             $user = $this->userProvider->loadUserByUsername($username);
 
             // do not update the user here from LDAP, as we don't know if the user can be authenticated
-
         } catch (UsernameNotFoundException $notFound) {
             throw $notFound;
         } catch (\Exception $repositoryProblem) {

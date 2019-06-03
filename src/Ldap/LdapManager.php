@@ -72,13 +72,9 @@ class LdapManager
         if (0 === $entries['count']) {
             return null;
         }
-dump($entries);exit;
-        $user = $this->hydrator->hydrate($entries[0]);
 
-        // do not updateUser() here, as zthis would happen before bind()
-        //$this->updateUser($user);
-
-        return $user;
+        // do not updateUser() here, as this would happen before bind()
+        return $this->hydrator->hydrate($entries[0]);
     }
 
     protected function buildFilter(array $criteria, string $condition = '&'): string
