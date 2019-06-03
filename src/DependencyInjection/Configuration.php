@@ -530,7 +530,7 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('attributes')
                             ->defaultValue([
                                 [
-                                    'ldap_attr' => 'cn',
+                                    'ldap_attr' => 'uid',
                                     'user_method' => 'setUsername',
                                 ],
                             ])
