@@ -2,6 +2,16 @@
 {% import "macros/actions.html.twig" as actions %}
 {% import "macros/widgets.html.twig" as widgets %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('chart') }}
+{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('chart') }}
+{% endblock %}
+
 {% block profile_content %}
 
     {% if years is empty %}
