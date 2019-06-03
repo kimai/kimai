@@ -224,6 +224,12 @@ class User extends BaseUser implements UserInterface
 
     public function getPreference(string $name): ?UserPreference
     {
+        // this code will be triggered, if a currently logged-in user will be deleted and the refreshed from the session
+        // via one of the UserProvider - e.g. see LdapUserProvider::refreshUser() which calls $user->getPreferenceValue()
+        if (empty($this->preferences)) {
+            return null;
+        }
+
         foreach ($this->preferences as $preference) {
             if ($preference->getName() == $name) {
                 return $preference;
