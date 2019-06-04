@@ -6,7 +6,8 @@
 [![Code Coverage](https://codecov.io/gh/kevinpapst/kimai2/branch/master/graph/badge.svg)](https://codecov.io/gh/kevinpapst/kimai2)
 [![Gitter](https://badges.gitter.im/kimai2/support.svg)](https://gitter.im/kimai2/support)
 
-Kimai is a free, open source and online time-tracking software designed for small businesses and freelancers. It is built with modern technologies such as Symfony, Bootstrap, RESTful API, responsive and mobile-ready etc.
+Kimai is a free, open source and online time-tracking software designed for small businesses and freelancers. 
+It is built with modern technologies such as Symfony, Bootstrap, RESTful API, responsive and mobile-ready etc.
 
 ## Introduction
 
@@ -23,10 +24,15 @@ Kimai is a free, open source and online time-tracking software designed for smal
 - Webserver (nginx, Apache)
 - A modern browser
 - [Other libraries](https://www.kimai.org/download/)
-### About
-This new version of the open source timetracker Kimai. It is in a stable development phase, usable in production and with most advanced features from Kimai 1 and many new ones: 
 
-JSON API, invoicing, data exports, multi-timer and punch-in punch-out mode, tagging, multi-user and multi-timezones, LDAP and built-in authentication, customizable role permissions, responsive and usable on your mobile device, hourly and fixed rates, advanced filtering, support for plugins and many more.
+### About
+
+This new version of the open source timetracker Kimai. It is in a stable development phase, usable in production and 
+with most advanced features from Kimai 1 and many new ones: 
+
+JSON API, invoicing, data exports, multi-timer and punch-in punch-out mode, tagging, multi-user and multi-timezones, 
+LDAP and built-in authentication, customizable role permissions, responsive and usable on your mobile device, 
+hourly and fixed rates, advanced filtering, support for plugins and many more.
 
 ## Installation
 
@@ -52,12 +58,11 @@ You can see a rough development roadmap in the [Milestones](https://github.com/k
 It is open for changes and input from the community, your [ideas and questions](https://github.com/kevinpapst/kimai2/issues) are welcome.
 
 > Kimai 2 uses a rolling release concept for delivering updates.
-> You can upgrade Kimai at any time, you don't need to wait for the next official release. Read the [upgrade docs](UPGRADING.md) first!
+> You can upgrade Kimai at any time, you don't need to wait for the next official release.
 
-Release versions will be created on a regular base (approx. 1 per month) and you can use these tags if you are familiar with Git, but we cannot provide support for any specific version.
+Release versions will be created on a regular base (approx. every second month) and you can use these tags if you are familiar with git.
 Every code change, whether it's a new feature or a bug fix, will be done on the master branch. 
-I have to do it this way, as I develop Kimai in my free time and want to put my
-effort into the software instead of backporting changes for old versions. 
+I have to do it this way, as I develop Kimai in my free time and want to put my effort into the software instead of backporting changes for old versions. 
 
 ## Credits
 
