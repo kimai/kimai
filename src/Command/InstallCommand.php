@@ -9,12 +9,12 @@
 
 namespace App\Command;
 
+use App\Constants;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -36,12 +36,16 @@ class InstallCommand extends Command
      * @var string
      */
     protected $rootDir;
+    /**
+     * @var Connection
+     */
+    protected $connection;
 
     public function __construct(string $projectDirectory, Connection $connection)
     {
         parent::__construct(self::$defaultName);
         $this->rootDir = $projectDirectory;
-
+        $this->connection = $connection;
     }
 
     /**
@@ -65,39 +69,44 @@ class InstallCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        if (!$this->checkPermissions($io, $output)) {
+        $io->title('Welcome to the interactive Kimai installer!');
+
+        $rows = $this->checkPermissions($io, $output);
+
+        if (!empty($rows)) {
             $question = 'Kimai found file permissions which look incorrect.' .
                 ' More information is available at https://www.kimai.org/documentation/installation.html.' .
                 ' If you are sure that all directories can be written by the webserver, you can continue.' .
                 ' Otherwise it is recommended to abort the installation and check them first.';
 
-            $io->error($question);
+            $io->caution($question);
 
-            $result = $this->askConfirmation($input, $output, '', 'Abort the installation to review permissions (yes) or continue (no)?', true);
-            if ($result) {
+            $io->table(['Directory', 'Permission'], $rows);
+
+            if (!$this->askConfirmation($input, $output, 'Continue with the installation (yes) or review permissions first (no)?', false)) {
+                $io->warning('Aborting installation to review the permissions for above mentioned directories');
+
                 return self::ERROR_PERMISSIONS;
             }
+            $io->writeln('');
         }
 
-        $environment = $io->choice('Which environment should be used ("dev" is only for testing and imports demo data)?', ['dev', 'production'], 'production');
-
-        $io->success(sprintf('You have chosen the "%s" environment', $environment));
-
-        // TODO validate database connection
-        exit;
+        // we cannot change the environment here, as it needs to be configured in the .env file before this command is started
+        // $environment = $io->choice('Which environment should be used ("dev" is only for testing and imports demo data)?', ['dev', 'production'], 'production');
+        // $io->note(sprintf('You have chosen the "%s" environment', $environment));
+        $environment = getenv('APP_ENV');
 
         // create database if necessary
         try {
-            $this->createDatabase($io, $output);
+            $this->createDatabase($io, $input, $output);
         } catch (\Exception $ex) {
             $io->error('Failed to create database: ' . $ex->getMessage());
 
             return self::ERROR_DATABASE;
         }
 
-        // create database schema
         try {
-            $this->createSchema($io, $output);
+            $this->createSchema($io, $input, $output);
         } catch (\Exception $ex) {
             $io->error('Failed to create database schema: ' . $ex->getMessage());
 
@@ -112,6 +121,8 @@ class InstallCommand extends Command
 
             return self::ERROR_MIGRATIONS;
         }
+
+        $io->text('Rebuilding your cache now, please be patient ...');
 
         $command = $this->getApplication()->find('cache:clear');
         try {
@@ -131,10 +142,14 @@ class InstallCommand extends Command
             return self::ERROR_CACHE_WARMUP;
         }
 
+        $io->success(
+            'Congratulations! ' . Constants::SOFTWARE . ' (' . Constants::VERSION . ' ' . Constants::STATUS . ') was successful installed!'
+        );
+
         return 0;
     }
 
-    protected function checkPermissions(SymfonyStyle $io, OutputInterface $output)
+    protected function checkPermissions(SymfonyStyle $io, OutputInterface $output): array
     {
         $directories = [
             'var/cache/',
@@ -150,48 +165,76 @@ class InstallCommand extends Command
             $absDir = rtrim($this->rootDir) . DIRECTORY_SEPARATOR . $directory;
             $perms = fileperms($absDir);
             $reason = [];
-            if (!($perms & 0x0100)) { $reason[] = 'read owner'; }
-            if (!($perms & 0x0080)) { $reason[] = 'write owner'; }
-            if (!($perms & 0x0020)) { $reason[] = 'read group'; }
-            if (!($perms & 0x0010)) { $reason[] = 'read group'; }
+            if (!($perms & 0x0100)) {
+                $reason[] = 'read owner';
+            }
+            if (!($perms & 0x0080)) {
+                $reason[] = 'write owner';
+            }
+            if (!($perms & 0x0020)) {
+                $reason[] = 'read group';
+            }
+            if (!($perms & 0x0010)) {
+                $reason[] = 'write group';
+            }
 
             if (!empty($reason)) {
                 $rows[] = [$directory, 'missing: ' . implode(',', $reason)];
-            } elseif(!is_writable($absDir)) {
+            } elseif (!is_writable($absDir)) {
                 $rows[] = [$directory, 'Directory not writable'];
             }
         }
 
-        if (!empty($rows)) {
-            $io->title('Found possible invalid permissions, please review:');
-            $io->table(['Directory', 'Permission'], $rows);
-            return false;
-        }
-
-        return true;
+        return $rows;
     }
 
     protected function importMigrations(SymfonyStyle $io, OutputInterface $output)
     {
-        // TODO check if migrations table is existing, if so: skip
+        if ($this->connection->getSchemaManager()->tablesExist(['migration_versions'])) {
+            $amount = $this->connection->executeQuery('SELECT count(*) as counter FROM migration_versions')->fetchColumn(0);
+            if ($amount > 0) {
+                $io->note(sprintf('Found %s migrations in your database, skipping import', $amount));
+
+                return;
+            }
+        }
+
         $command = $this->getApplication()->find('doctrine:migrations:version');
         $cmdInput = new ArrayInput(['--add' => true, '--all' => true]);
         $cmdInput->setInteractive(false);
         $command->run($cmdInput, $output);
 
-        // TODO check if there is a new migration existing, if so: ask for installation
+        $io->writeln('');
     }
 
-    protected function createDatabase(SymfonyStyle $io, OutputInterface $output)
+    protected function createDatabase(SymfonyStyle $io, InputInterface $input, OutputInterface $output)
     {
-        // TODO check if database is existing, if so: skip
+        if ($this->connection->isConnected()) {
+            $io->note(sprintf('Database "%s" is already existing and connection could be established', $this->connection->getDatabase()));
+
+            return;
+        }
+
+        if (!$this->askConfirmation($input, $output, sprintf('Create the database "%s" (yes) or skip (no)?', $this->connection->getDatabase()), true)) {
+            throw new \Exception('Skipped database creation, aborting installation');
+        }
+
         $command = $this->getApplication()->find('doctrine:database:create');
         $command->run(new ArrayInput([]), $output);
     }
 
-    protected function createSchema(SymfonyStyle $io, OutputInterface $output)
+    protected function createSchema(SymfonyStyle $io, InputInterface $input, OutputInterface $output)
     {
-        // TODO check if schema is already existing, if so: skip
+        if (!$this->connection->isConnected() && !$this->connection->connect()) {
+            throw new \Exception(sprintf('Cannot create tables in database "%s", connection could not be established', $this->connection->getDatabase()));
+        }
+
+        if ($this->connection->getSchemaManager()->tablesExist(['kimai2_users', 'kimai2_timesheet'])) {
+            $io->note('It seems as if you already have the required tables in your database, skipping schema creation');
+
+            return;
+        }
+
         $command = $this->getApplication()->find('doctrine:schema:create');
         $command->run(new ArrayInput([]), $output);
     }
@@ -203,7 +246,7 @@ class InstallCommand extends Command
      * @param bool $default
      * @return bool
      */
-    private function askConfirmation(InputInterface $input, OutputInterface $output, $question, $confirm, $default = false)
+    private function askConfirmation(InputInterface $input, OutputInterface $output, $question, $default = false)
     {
         if (!$input->isInteractive()) {
             return true;
@@ -211,8 +254,8 @@ class InstallCommand extends Command
 
         /** @var QuestionHelper $questionHelper */
         $questionHelper = $this->getHelperSet()->get('question');
-        $text = sprintf('<info>%s (yes/no)</info> [<comment>%s</comment>]:', $confirm, $default ? 'yes' : 'no');
-        $question = new ConfirmationQuestion('<question>' . $question . '</question> ' . $text . ' ', $default, '/^y|yes/i');
+        $text = sprintf('<info>%s (yes/no)</info> [<comment>%s</comment>]:', $question, $default ? 'yes' : 'no');
+        $question = new ConfirmationQuestion(' ' . $text . ' ', $default, '/^y|yes/i');
 
         return $questionHelper->ask($input, $output, $question);
     }
