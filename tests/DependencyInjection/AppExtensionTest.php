@@ -136,6 +136,7 @@ class AppExtensionTest extends TestCase
                     'nameAttribute' => 'cn',
                     'userDnAttribute' => 'member',
                     'groups' => [],
+                    'usernameAttribute' => 'dn',
                 ],
                 'connection' => [
                     'baseDn' => null,
