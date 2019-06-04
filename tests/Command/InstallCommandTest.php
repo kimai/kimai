@@ -77,8 +77,7 @@ class InstallCommandTest extends KernelTestCase
         $result = $commandTester->getDisplay();
 
         // create database is skipped
-        self::assertContains('[NOTE] Database "', $result);
-        self::assertContains('is already existing and connection could be established', $result);
+        self::assertContains('[NOTE] Database is existing and connection could be established', $result);
 
         // create schema is skipped
         self::assertContains('[NOTE] It seems as if you already have the required tables in your database,', $result);

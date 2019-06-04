@@ -241,7 +241,7 @@ class InstallCommand extends Command
     protected function createDatabase(SymfonyStyle $io, InputInterface $input, OutputInterface $output)
     {
         if ($this->connection->isConnected()) {
-            $io->note(sprintf('Database "%s" is already existing and connection could be established', $this->connection->getDatabase()));
+            $io->note(sprintf('Database is existing and connection could be established'));
 
             return;
         }
