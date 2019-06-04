@@ -57,7 +57,7 @@ class LdapManager
 
     /**
      * @param array $criteria
-     * @return UserInterface|null
+     * @return User|null
      * @throws LdapDriverException
      */
     public function findUserBy(array $criteria): ?UserInterface
