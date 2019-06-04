@@ -36,22 +36,22 @@ class LdapAuthenticationProvider extends UserAuthenticationProvider
      */
     private $ldapManager;
     /**
-     * @var bool
+     * @var LdapConfiguration
      */
-    private $activated = false;
+    private $config;
 
     public function __construct(UserCheckerInterface $userChecker, $providerKey, UserProviderInterface $userProvider, LdapManager $ldapManager, LdapConfiguration $config, $hideUserNotFoundExceptions = true)
     {
         parent::__construct($userChecker, $providerKey, $hideUserNotFoundExceptions);
 
         $this->ldapManager = $ldapManager;
-        $this->activated = $config->isActivated();
+        $this->config = $config;
         $this->userProvider = $userProvider;
     }
 
     public function supports(TokenInterface $token)
     {
-        if (!$this->activated) {
+        if (!$this->config->isActivated()) {
             return false;
         }
 
@@ -121,7 +121,11 @@ class LdapAuthenticationProvider extends UserAuthenticationProvider
         }
 
         if ($user instanceof User && null !== $user->getPreferenceValue('ldap.dn')) {
-            $this->ldapManager->updateUser($user);
+            try {
+                $this->ldapManager->updateUser($user);
+            } catch (LdapDriverException $ex) {
+                throw new BadCredentialsException('Fetching user data/roles failed, probably DN is expired.');
+            }
         }
     }
 }

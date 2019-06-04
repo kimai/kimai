@@ -47,7 +47,7 @@ class LdapManager
      * Only executed for unknown local users.
      *
      * @param string $username
-     * @return UserInterface|null
+     * @return User|null
      * @throws \Exception
      */
     public function findUserByUsername(string $username): ?UserInterface
@@ -95,6 +95,11 @@ class LdapManager
     }
 
     /**
+     * This method does all the heavy lifting:
+     * - searching for latest 'dn'
+     * - syncing user attributes
+     * - syncing roles
+     *
      * @param User $user
      * @throws LdapDriverException
      */
@@ -106,6 +111,13 @@ class LdapManager
         if (null === $baseDn) {
             throw new LdapDriverException('This account is not a registered LDAP user');
         }
+
+        // always look up the users current DN first, as the cached DN might have been renamed in LDAP
+        $userFresh = $this->findUserByUsername($user->getUsername());
+        if (null === $userFresh || null === ($baseDn = $userFresh->getPreferenceValue('ldap.dn'))) {
+            throw new LdapDriverException(sprintf('Failed fetching user DN for %s', $user->getUsername()));
+        }
+        $user->setPreferenceValue('ldap.dn', $baseDn);
 
         $entries = $this->driver->search($baseDn, $filter);
 

@@ -88,7 +88,11 @@ class LdapUserProvider implements UserProviderInterface
             throw new UnsupportedUserException(sprintf('Account "%s" is not a registered LDAP user.', $user->getUsername()));
         }
 
-        $this->ldapManager->updateUser($user);
+        try {
+            $this->ldapManager->updateUser($user);
+        } catch (LdapDriverException $ex) {
+            throw new UnsupportedUserException(sprintf('Failed to refresh user "%s", probably DN is expired.', $user->getUsername()));
+        }
 
         return $user;
     }
