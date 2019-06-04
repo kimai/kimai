@@ -85,7 +85,10 @@ class InstallCommand extends Command
         }
 
         $rows = $this->checkPermissions();
-        $this->confirmAbortToReviewPermissions($io, $input, $output, $rows);
+        $result = $this->confirmAbortToReviewPermissions($io, $input, $output, $rows);
+        if (true !== $result) {
+            return $result;
+        }
 
         // we cannot change the environment here, as it needs to be configured in the .env file before this command is started
         // $environment = $io->choice('Which environment should be used ("dev" is only for testing and imports demo data)?', ['dev', 'production'], 'production');
@@ -196,7 +199,7 @@ class InstallCommand extends Command
     protected function confirmAbortToReviewPermissions(SymfonyStyle $io, InputInterface $input, OutputInterface $output, array $permissions)
     {
         if (empty($permissions)) {
-            return;
+            return true;
         }
 
         $question = 'Kimai found file permissions which look incorrect.' .
