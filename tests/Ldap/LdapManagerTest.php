@@ -283,23 +283,74 @@ class LdapManagerTest extends TestCase
         self::assertEquals($user->getPreferenceValue('ldap.dn'), 'blub-updated');
     }
 
-    public function testUpdateUserOnValidResultWithRolesResult()
+    public function getValidConfigsTestData()
+    {
+        return [
+            [
+                [
+                    0 => [
+                        'dn' => 'blub',
+                        'uid' => ['Karl-Heinz'],
+                        // just some rubbish data
+                        'blub' => ['dfsdfsdf'],
+                        'foo' => ['count' => 1, 'bar'],
+                        'bar' => ['count' => 1, 'foo', 'xxx'],
+                        'xxxxxxxx' => ['https://www.example.com'],
+                        'blub1' => ['dfsdfsdf'],
+                    ],
+                    'count' => 1,
+                ],
+                [
+                    'baseDn' => 'ou=groups, dc=kimai, dc=org',
+                    'nameAttribute' => 'cn',
+                    'usernameAttribute' => 'cn', // test that "cn" is not set and fallback to "dn" happens
+                    'userDnAttribute' => 'member',
+                    'groups' => [
+                        ['ldap_value' => 'group1', 'role' => 'ROLE_TEAMLEAD'],
+                        ['ldap_value' => 'group2', 'role' => 'ROLE_ADMIN'],
+                        ['ldap_value' => 'group3', 'role' => 'ROLE_CUSTOMER'], // not existing!
+                        ['ldap_value' => 'group4', 'role' => 'ROLE_SUPER_ADMIN'],
+                    ],
+                ],
+                '(&(member=blub))'
+            ],
+            [
+                [
+                    0 => [
+                        'dn' => 'blub',
+                        'uid' => ['Karl-Heinz'],
+                        // just some rubbish data
+                        'blub' => ['dfsdfsdf'],
+                        'foo' => ['count' => 1, 'bar'],
+                        'bar' => ['count' => 1, 'foo', 'xxx'],
+                        'xxxxxxxx' => ['https://www.example.com'],
+                        'blub1' => ['dfsdfsdf'],
+                    ],
+                    'count' => 1,
+                ],
+                [
+                    'baseDn' => 'ou=groups, dc=kimai, dc=org',
+                    'nameAttribute' => 'cn',
+                    'usernameAttribute' => 'blub1',
+                    'userDnAttribute' => 'memberuid',
+                    'groups' => [
+                        ['ldap_value' => 'group1', 'role' => 'ROLE_TEAMLEAD'],
+                        ['ldap_value' => 'group2', 'role' => 'ROLE_ADMIN'],
+                        ['ldap_value' => 'group3', 'role' => 'ROLE_CUSTOMER'], // not existing!
+                        ['ldap_value' => 'group4', 'role' => 'ROLE_SUPER_ADMIN'],
+                    ],
+                ],
+                '(&(memberuid=dfsdfsdf))'
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider getValidConfigsTestData
+     */
+    public function testUpdateUserOnValidResultWithRolesResult(array $expectedUsers, array $groupConfig, string $expectedGroupQuery)
     {
         $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->setMethods(['search'])->getMock();
-
-        $expectedUsers = [
-            0 => [
-                'dn' => 'blub',
-                'uid' => ['Karl-Heinz'],
-                // just some rubbish data
-                'blub' => ['dfsdfsdf'],
-                'foo' => ['count' => 1, 'bar'],
-                'bar' => ['count' => 1, 'foo', 'xxx'],
-                'xxxxxxxx' => ['https://www.example.com'],
-                'blub1' => ['dfsdfsdf'],
-            ],
-            'count' => 1,
-        ];
 
         $expectedGroups = [
             // ROLE_TEAMLEAD
@@ -330,7 +381,7 @@ class LdapManagerTest extends TestCase
             'count' => 4
         ];
 
-        $driver->expects($this->exactly(2))->method('search')->willReturnCallback(function ($baseDn, $filter, $attributes) use ($expectedUsers, $expectedGroups) {
+        $driver->expects($this->exactly(2))->method('search')->willReturnCallback(function ($baseDn, $filter, $attributes) use ($expectedUsers, $expectedGroups, $expectedGroupQuery) {
             // user search
             if (empty($attributes)) {
                 self::assertEquals('blub', $baseDn);
@@ -340,23 +391,13 @@ class LdapManagerTest extends TestCase
             }
             // roles search
             self::assertEquals('ou=groups, dc=kimai, dc=org', $baseDn);
-            self::assertEquals('(&(member=blub))', $filter);
+            self::assertEquals($expectedGroupQuery, $filter);
             self::assertEquals([0 => 'cn'], $attributes);
 
             return $expectedGroups;
         });
 
-        $sut = $this->getLdapManager($driver, [
-            'baseDn' => 'ou=groups, dc=kimai, dc=org',
-            'nameAttribute' => 'cn',
-            'userDnAttribute' => 'member',
-            'groups' => [
-                ['ldap_value' => 'group1', 'role' => 'ROLE_TEAMLEAD'],
-                ['ldap_value' => 'group2', 'role' => 'ROLE_ADMIN'],
-                ['ldap_value' => 'group3', 'role' => 'ROLE_CUSTOMER'], // not existing!
-                ['ldap_value' => 'group4', 'role' => 'ROLE_SUPER_ADMIN'],
-            ],
-        ]);
+        $sut = $this->getLdapManager($driver, $groupConfig);
 
         $user = (new User())->setUsername('foobar');
         $user->setPreferenceValue('ldap.dn', 'blub');

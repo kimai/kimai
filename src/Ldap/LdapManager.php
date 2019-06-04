@@ -124,7 +124,16 @@ class LdapManager
             return;
         }
 
-        $roles = $this->getRoles($entries[0]['dn'], $roleParameter);
+        $param = $roleParameter['usernameAttribute'];
+        if (!isset($entries[0][$param]) && $param !== 'dn') {
+            $param = 'dn';
+        }
+
+        $roleValue = $entries[0][$param];
+        if (is_array($roleValue)) {
+            $roleValue = $roleValue[0];
+        }
+        $roles = $this->getRoles($roleValue, $roleParameter);
 
         if (!empty($roles)) {
             $this->hydrator->hydrateRoles($user, $roles);

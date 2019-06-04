@@ -548,6 +548,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('baseDn')->defaultNull()->end()
                         ->scalarNode('filter')->end()
+                        ->scalarNode('usernameAttribute')->defaultValue('dn')->end()
                         ->scalarNode('nameAttribute')->defaultValue('cn')->end()
                         ->scalarNode('userDnAttribute')->defaultValue('member')->end()
                         ->arrayNode('groups')
