@@ -75,6 +75,6 @@ class UTCDateTimeType extends DateTimeType
 
     public function requiresSQLCommentHint(AbstractPlatform $platform)
     {
-        return false;
+        return true;
     }
 }
