@@ -11,6 +11,8 @@ namespace App\Tests\Doctrine;
 
 use App\Doctrine\UTCDateTimeType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Platforms\MySqlPlatform;
+use Doctrine\DBAL\Platforms\SqlitePlatform;
 use Doctrine\DBAL\Types\Type;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -19,24 +21,6 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  */
 class UTCDateTimeTypeTest extends KernelTestCase
 {
-    /**
-     * @var AbstractPlatform
-     */
-    private $platform;
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
-    {
-        $kernel = self::bootKernel();
-
-        $registry = $kernel->getContainer()->get('doctrine');
-        /** @var \Doctrine\DBAL\Connection $connection */
-        $connection = $registry->getConnection();
-        $this->platform = $connection->getDatabasePlatform();
-    }
-
     public function testGetUtc()
     {
         Type::overrideType(Type::DATETIME, UTCDateTimeType::class);
@@ -49,13 +33,16 @@ class UTCDateTimeTypeTest extends KernelTestCase
         $this->assertEquals('UTC', $type::getUtc()->getName());
     }
 
-    public function testConvertToDatabaseValue()
+    /**
+     * @dataProvider getPlatforms
+     */
+    public function testConvertToDatabaseValue(AbstractPlatform $platform)
     {
         Type::overrideType(Type::DATETIME, UTCDateTimeType::class);
         /** @var UTCDateTimeType $type */
         $type = Type::getType(Type::DATETIME);
 
-        $result = $type->convertToDatabaseValue(null, $this->platform);
+        $result = $type->convertToDatabaseValue(null, $platform);
         $this->assertNull($result);
 
         $berlinTz = new \DateTimeZone('Europe/Berlin');
@@ -66,40 +53,63 @@ class UTCDateTimeTypeTest extends KernelTestCase
 
         $expected = clone $date;
         $expected->setTimezone($type::getUtc());
-        $bla = $expected->format($this->platform->getDateTimeFormatString());
+        $bla = $expected->format($platform->getDateTimeFormatString());
 
         /** @var \DateTime $result */
-        $result = $type->convertToDatabaseValue($date, $this->platform);
+        $result = $type->convertToDatabaseValue($date, $platform);
 
         $this->assertEquals($bla, $result);
     }
 
-    public function testConvertToPHPValue()
+    /**
+     * @dataProvider getPlatforms
+     */
+    public function testConvertToPHPValue(AbstractPlatform $platform)
     {
         Type::overrideType(Type::DATETIME, UTCDateTimeType::class);
         /** @var UTCDateTimeType $type */
         $type = Type::getType(Type::DATETIME);
 
-        $result = $type->convertToPHPValue(null, $this->platform);
+        $result = $type->convertToPHPValue(null, $platform);
         $this->assertNull($result);
 
-        $result = $type->convertToPHPValue('2019-01-17 13:30:00', $this->platform);
+        $result = $type->convertToPHPValue('2019-01-17 13:30:00', $platform);
         $this->assertInstanceOf(\DateTime::class, $result);
         $this->assertEquals('UTC', $result->getTimezone()->getName());
 
-        $result = $result->format($this->platform->getDateTimeFormatString());
+        $result = $result->format($platform->getDateTimeFormatString());
         $this->assertEquals('2019-01-17 13:30:00', $result);
     }
 
     /**
+     * @dataProvider getPlatforms
      * @expectedException \Doctrine\DBAL\Types\ConversionException
      */
-    public function testConvertToPHPValueWithInvalidValue()
+    public function testConvertToPHPValueWithInvalidValue(AbstractPlatform $platform)
     {
         Type::overrideType(Type::DATETIME, UTCDateTimeType::class);
         /** @var UTCDateTimeType $type */
         $type = Type::getType(Type::DATETIME);
 
-        $type->convertToPHPValue('201xx01-17 13:30:00', $this->platform);
+        $type->convertToPHPValue('201xx01-17 13:30:00', $platform);
+    }
+
+    /**
+     * @dataProvider getPlatforms
+     */
+    public function testRequiresSQLCommentHint(AbstractPlatform $platform)
+    {
+        Type::overrideType(Type::DATETIME, UTCDateTimeType::class);
+        /** @var UTCDateTimeType $type */
+        $type = Type::getType(Type::DATETIME);
+        self::assertTrue($type->requiresSQLCommentHint($platform));
+    }
+
+    public function getPlatforms()
+    {
+        return [
+            [new MySqlPlatform()],
+            [new SqlitePlatform()],
+        ];
     }
 }

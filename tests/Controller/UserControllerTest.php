@@ -39,6 +39,7 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/user/create');
         $form = $client->getCrawler()->filter('form[name=user_create]')->form();
         $this->assertTrue($form->has('user_create[create_more]'));
+        $this->assertFalse($form->get('user_create[create_more]')->hasValue());
         $this->assertNull($form->get('user_create[create_more]')->getValue());
         $client->submit($form, [
             'user_create' => [
