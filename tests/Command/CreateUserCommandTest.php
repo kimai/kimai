@@ -50,7 +50,8 @@ class CreateUserCommandTest extends KernelTestCase
 
         $container = self::$kernel->getContainer();
         $user = $container->get('doctrine')->getRepository(User::class)->loadUserByUsername('MyTestUser');
-        $this->assertNotNull($user);
+        self::assertInstanceOf(User::class, $user);
+        self::assertNotNull($user);
     }
 
     protected function createUser($username, $email, $role, $password)

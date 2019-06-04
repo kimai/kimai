@@ -10,6 +10,7 @@
 namespace App\Command;
 
 use App\Constants;
+use App\Utils\File;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
@@ -25,11 +26,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class InstallCommand extends Command
 {
     public const ERROR_PERMISSIONS = 1;
-    public const ERROR_CACHE_CLEAN = 1;
-    public const ERROR_CACHE_WARMUP = 1;
-    public const ERROR_DATABASE = 1;
-    public const ERROR_SCHEMA = 1;
-    public const ERROR_MIGRATIONS = 1;
+    public const ERROR_CACHE_CLEAN = 2;
+    public const ERROR_CACHE_WARMUP = 4;
+    public const ERROR_DATABASE = 8;
+    public const ERROR_SCHEMA = 16;
+    public const ERROR_MIGRATIONS = 32;
+    public const ERROR_INTERACTIVE = 64;
 
     protected static $defaultName = 'kimai:install';
     /**
@@ -40,12 +42,17 @@ class InstallCommand extends Command
      * @var Connection
      */
     protected $connection;
+    /**
+     * @var File
+     */
+    protected $file;
 
-    public function __construct(string $projectDirectory, Connection $connection)
+    public function __construct(string $projectDirectory, Connection $connection, File $files)
     {
         parent::__construct(self::$defaultName);
         $this->rootDir = $projectDirectory;
         $this->connection = $connection;
+        $this->file = $files;
     }
 
     /**
@@ -71,25 +78,14 @@ class InstallCommand extends Command
 
         $io->title('Welcome to the interactive Kimai installer!');
 
-        $rows = $this->checkPermissions($io, $output);
+        if (!$input->isInteractive()) {
+            $io->error('Installation only works in interactive mode');
 
-        if (!empty($rows)) {
-            $question = 'Kimai found file permissions which look incorrect.' .
-                ' More information is available at https://www.kimai.org/documentation/installation.html.' .
-                ' If you are sure that all directories can be written by the webserver, you can continue.' .
-                ' Otherwise it is recommended to abort the installation and check them first.';
-
-            $io->caution($question);
-
-            $io->table(['Directory', 'Permission'], $rows);
-
-            if (!$this->askConfirmation($input, $output, 'Continue with the installation (yes) or review permissions first (no)?', false)) {
-                $io->warning('Aborting installation to review the permissions for above mentioned directories');
-
-                return self::ERROR_PERMISSIONS;
-            }
-            $io->writeln('');
+            return self::ERROR_INTERACTIVE;
         }
+
+        $rows = $this->checkPermissions();
+        $this->confirmAbortToReviewPermissions($io, $input, $output, $rows);
 
         // we cannot change the environment here, as it needs to be configured in the .env file before this command is started
         // $environment = $io->choice('Which environment should be used ("dev" is only for testing and imports demo data)?', ['dev', 'production'], 'production');
@@ -122,6 +118,21 @@ class InstallCommand extends Command
             return self::ERROR_MIGRATIONS;
         }
 
+        $this->rebuildCaches($environment, $io, $input, $output);
+
+        $io->success(
+            'Congratulations! ' . Constants::SOFTWARE . ' (' . Constants::VERSION . ' ' . Constants::STATUS . ') was successful installed!'
+        );
+
+        return 0;
+    }
+
+    protected function rebuildCaches(string $environment, SymfonyStyle $io, InputInterface $input, OutputInterface $output)
+    {
+        if (!$this->askConfirmation($input, $output, 'Do you want me to rebuild the caches (yes) or skip this step (no)?', true)) {
+            return;
+        }
+
         $io->text('Rebuilding your cache now, please be patient ...');
 
         $command = $this->getApplication()->find('cache:clear');
@@ -141,15 +152,9 @@ class InstallCommand extends Command
 
             return self::ERROR_CACHE_WARMUP;
         }
-
-        $io->success(
-            'Congratulations! ' . Constants::SOFTWARE . ' (' . Constants::VERSION . ' ' . Constants::STATUS . ') was successful installed!'
-        );
-
-        return 0;
     }
 
-    protected function checkPermissions(SymfonyStyle $io, OutputInterface $output): array
+    protected function checkPermissions(): array
     {
         $directories = [
             'var/cache/',
@@ -163,7 +168,7 @@ class InstallCommand extends Command
 
         foreach ($directories as $directory) {
             $absDir = rtrim($this->rootDir) . DIRECTORY_SEPARATOR . $directory;
-            $perms = fileperms($absDir);
+            $perms = $this->file->getPermissions($absDir);
             $reason = [];
             if (!($perms & 0x0100)) {
                 $reason[] = 'read owner';
@@ -186,6 +191,29 @@ class InstallCommand extends Command
         }
 
         return $rows;
+    }
+
+    protected function confirmAbortToReviewPermissions(SymfonyStyle $io, InputInterface $input, OutputInterface $output, array $permissions)
+    {
+        if (empty($permissions)) {
+            return;
+        }
+
+        $question = 'Kimai found file permissions which look incorrect.' .
+            ' More information is available at https://www.kimai.org/documentation/installation.html.' .
+            ' If you are sure that all directories can be written by the webserver, you can continue.' .
+            ' Otherwise it is recommended to abort the installation and check them first.';
+
+        $io->caution($question);
+
+        $io->table(['Directory', 'Permission'], $permissions);
+
+        if (!$this->askConfirmation($input, $output, 'Continue with the installation (yes) or review permissions first (no)?', false)) {
+            $io->warning('Aborting installation to review the permissions for above mentioned directories');
+
+            return self::ERROR_PERMISSIONS;
+        }
+        $io->writeln('');
     }
 
     protected function importMigrations(SymfonyStyle $io, OutputInterface $output)
@@ -248,10 +276,6 @@ class InstallCommand extends Command
      */
     private function askConfirmation(InputInterface $input, OutputInterface $output, $question, $default = false)
     {
-        if (!$input->isInteractive()) {
-            return true;
-        }
-
         /** @var QuestionHelper $questionHelper */
         $questionHelper = $this->getHelperSet()->get('question');
         $text = sprintf('<info>%s (yes/no)</info> [<comment>%s</comment>]:', $question, $default ? 'yes' : 'no');
