@@ -58,6 +58,7 @@ class LdapDriver
         ]);
 
         try {
+            $this->driver->bind();
             $entries = $this->driver->searchEntries($filter, $baseDn, Ldap::SEARCH_SCOPE_SUB, $attributes);
 
             // searchEntries don't return 'count' key as specified by php native function ldap_get_entries()

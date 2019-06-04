@@ -44,7 +44,8 @@ class LdapDriverTest extends TestCase
 
     public function testSearchSuccess()
     {
-        $zendLdap = $this->getMockBuilder(Ldap::class)->disableOriginalConstructor()->setMethods(['searchEntries'])->getMock();
+        $zendLdap = $this->getMockBuilder(Ldap::class)->disableOriginalConstructor()->setMethods(['bind', 'searchEntries'])->getMock();
+        $zendLdap->expects($this->once())->method('bind');
         $zendLdap->expects($this->once())->method('searchEntries')->willReturn([1, 2, 3]);
 
         $sut = new LdapDriver($zendLdap);
@@ -58,7 +59,8 @@ class LdapDriverTest extends TestCase
      */
     public function testSearchException()
     {
-        $zendLdap = $this->getMockBuilder(Ldap::class)->disableOriginalConstructor()->setMethods(['searchEntries'])->getMock();
+        $zendLdap = $this->getMockBuilder(Ldap::class)->disableOriginalConstructor()->setMethods(['bind', 'searchEntries'])->getMock();
+        $zendLdap->expects($this->once())->method('bind');
         $zendLdap->expects($this->once())->method('searchEntries')->willThrowException(
             new LdapException($zendLdap, '', LdapException::LDAP_SERVER_DOWN)
         );
