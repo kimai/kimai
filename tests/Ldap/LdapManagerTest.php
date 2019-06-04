@@ -214,9 +214,11 @@ class LdapManagerTest extends TestCase
         $driver->expects($this->exactly(2))->method('search')->willReturnCallback(function ($baseDn, $filter) use ($expected) {
             if ($baseDn === 'ou=users, dc=kimai, dc=org') {
                 self::assertEquals('(&(&(objectClass=inetOrgPerson))(uid=foobar))', $filter);
+
                 return $expected[0];
             } elseif ($baseDn === 'blub') {
                 self::assertEquals('(objectClass=*)', $filter);
+
                 return $expected[1];
             }
             $this->fail(sprintf('Unexpected search with baseDn %s', $baseDn));
@@ -252,9 +254,11 @@ class LdapManagerTest extends TestCase
         $driver->expects($this->exactly(2))->method('search')->willReturnCallback(function ($baseDn, $filter) use ($expected) {
             if ($baseDn === 'ou=users, dc=kimai, dc=org') {
                 self::assertEquals('(&(&(objectClass=inetOrgPerson))(uid=foobar))', $filter);
+
                 return $expected[0];
             } elseif ($baseDn === 'blub') {
                 self::assertEquals('(objectClass=*)', $filter);
+
                 return $expected[1];
             }
 
@@ -285,9 +289,11 @@ class LdapManagerTest extends TestCase
         $driver->expects($this->exactly(2))->method('search')->willReturnCallback(function ($baseDn, $filter) use ($expected) {
             if ($baseDn === 'ou=users, dc=kimai, dc=org') {
                 self::assertEquals('(&(&(objectClass=inetOrgPerson))(uid=foobar))', $filter);
+
                 return $expected[0];
             } elseif ($baseDn === 'blub') {
                 self::assertEquals('(objectClass=*)', $filter);
+
                 return $expected[1];
             }
 
@@ -417,15 +423,18 @@ class LdapManagerTest extends TestCase
         $driver->expects($this->exactly(3))->method('search')->willReturnCallback(function ($baseDn, $filter, $attributes) use ($expectedUsers, $expectedGroups, $expectedGroupQuery, $expected) {
             if ($baseDn === 'ou=users, dc=kimai, dc=org') {
                 self::assertEquals('(&(&(objectClass=inetOrgPerson))(uid=foobar))', $filter);
+
                 return $expected;
             } elseif ($baseDn === 'blub') {
                 // user attributes search
                 self::assertEquals('(objectClass=*)', $filter);
+
                 return $expectedUsers;
             } elseif ($baseDn === 'ou=groups, dc=kimai, dc=org') {
                 // roles search
                 self::assertEquals($expectedGroupQuery, $filter);
                 self::assertEquals([0 => 'cn'], $attributes);
+
                 return $expectedGroups;
             }
             $this->fail(sprintf('Unexpected search with baseDn %s', $baseDn));
