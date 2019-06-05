@@ -201,6 +201,10 @@
                 <source>label.budget</source>
                 <target>Budget</target>
             </trans-unit>
+            <trans-unit id="label.timeBudget">
+                <source>label.timeBudget</source>
+                <target>Time budget</target>
+            </trans-unit>
             <trans-unit id="label.activity">
                 <source>label.activity</source>
                 <target>Activity</target>

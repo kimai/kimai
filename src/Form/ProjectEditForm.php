@@ -11,25 +11,18 @@ namespace App\Form;
 
 use App\Entity\Customer;
 use App\Entity\Project;
-use App\Form\Type\ColorPickerType;
 use App\Form\Type\CustomerType;
-use App\Form\Type\FixedRateType;
-use App\Form\Type\HourlyRateType;
-use App\Form\Type\YesNoType;
 use App\Repository\CustomerRepository;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * Defines the form used to edit Projects.
- */
 class ProjectEditForm extends AbstractType
 {
+    use EntityFormTrait;
+
     /**
      * {@inheritdoc}
      */
@@ -69,30 +62,12 @@ class ProjectEditForm extends AbstractType
                 'query_builder' => function (CustomerRepository $repo) use ($customer) {
                     return $repo->builderForEntityType($customer);
                 },
-            ])
-            ->add('color', ColorPickerType::class)
-            ->add('fixedRate', FixedRateType::class, [
-                'currency' => $currency,
-            ])
-            ->add('hourlyRate', HourlyRateType::class, [
-                'currency' => $currency,
-            ])
-            ->add('budget', MoneyType::class, [
-                'label' => 'label.budget',
-                'required' => false,
-                'currency' => $currency,
-            ])
-            ->add('visible', YesNoType::class, [
-                'label' => 'label.visible',
-            ])
-        ;
+            ]);
+
+        $this->addCommonFields($builder, $currency);
 
         if (null === $id && $options['create_more']) {
-            $builder->add('create_more', CheckboxType::class, [
-                'label' => 'label.create_more',
-                'required' => false,
-                'mapped' => false,
-            ]);
+            $this->addCreateMore($builder);
         }
     }
 

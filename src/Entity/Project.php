@@ -69,14 +69,6 @@ class Project
     private $visible = true;
 
     /**
-     * @var float
-     *
-     * @ORM\Column(name="budget", type="float", precision=10, scale=2, nullable=false)
-     * @Assert\NotNull()
-     */
-    private $budget = 0.00;
-
-    /**
      * @var Activity[]
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Activity", mappedBy="project")
@@ -86,6 +78,7 @@ class Project
     // keep the trait include exactly here, for placing the column at the correct position
     use RatesTrait;
     use ColorTrait;
+    use BudgetTrait;
 
     /**
      * @var Timesheet[]
@@ -176,25 +169,6 @@ class Project
     public function getVisible()
     {
         return $this->visible;
-    }
-
-    /**
-     * @param float $budget
-     * @return Project
-     */
-    public function setBudget($budget)
-    {
-        $this->budget = $budget;
-
-        return $this;
-    }
-
-    /**
-     * @return float
-     */
-    public function getBudget()
-    {
-        return $this->budget;
     }
 
     /**

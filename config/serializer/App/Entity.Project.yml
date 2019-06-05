@@ -1,6 +1,6 @@
 App\Entity\Project:
     exclusion_policy: All
-    custom_accessor_order: [id, name, comment, visible, budget, orderNumber, customer, fixedRate, hourlyRate, color]
+    custom_accessor_order: [id, name, comment, visible, orderNumber, customer, fixedRate, hourlyRate, color, budget, timeBudget]
     properties:
         id:
             include: true
@@ -12,6 +12,9 @@ App\Entity\Project:
         visible:
             include: true
         budget:
+            include: true
+            groups: [Entity]
+        timeBudget:
             include: true
             groups: [Entity]
         orderNumber:

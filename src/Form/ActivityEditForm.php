@@ -10,16 +10,11 @@
 namespace App\Form;
 
 use App\Entity\Activity;
-use App\Form\Type\ColorPickerType;
 use App\Form\Type\CustomerType;
-use App\Form\Type\FixedRateType;
-use App\Form\Type\HourlyRateType;
 use App\Form\Type\ProjectType;
-use App\Form\Type\YesNoType;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,11 +22,10 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * Defines the form used to manipulate Activities.
- */
 class ActivityEditForm extends AbstractType
 {
+    use EntityFormTrait;
+
     /**
      * {@inheritdoc}
      */
@@ -109,26 +103,10 @@ class ActivityEditForm extends AbstractType
             }
         );
 
-        $builder
-            ->add('color', ColorPickerType::class)
-            ->add('fixedRate', FixedRateType::class, [
-                'currency' => $currency,
-            ])
-            ->add('hourlyRate', HourlyRateType::class, [
-                'currency' => $currency,
-            ])
-            // boolean
-            ->add('visible', YesNoType::class, [
-                'label' => 'label.visible',
-            ])
-        ;
+        $this->addCommonFields($builder, $currency);
 
         if (null === $id && $options['create_more']) {
-            $builder->add('create_more', CheckboxType::class, [
-                'label' => 'label.create_more',
-                'required' => false,
-                'mapped' => false,
-            ]);
+            $this->addCreateMore($builder);
         }
     }
 
