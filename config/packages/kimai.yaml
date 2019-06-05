@@ -173,7 +173,7 @@ kimai:
         user_rates:
             title: ~
             order: 20
-            permission: ROLE_USER
+            permission: view_rate_own_timesheet
             widgets: [userAmountToday, userAmountWeek, userAmountMonth, userAmountYear]
         duration:
             title: dashboard.all
@@ -188,7 +188,7 @@ kimai:
         rates:
             title: ~
             order: 50
-            permission: ROLE_ADMIN
+            permission: view_rate_other_timesheet
             widgets: [amountToday, amountWeek, amountMonth, amountYear]
 
     widgets:
