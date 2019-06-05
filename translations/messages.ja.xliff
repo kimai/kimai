@@ -99,7 +99,7 @@
             </trans-unit>
             <trans-unit id="menu.timesheet">
                 <source>menu.timesheet</source>
-                <target>時間の記録</target>
+                <target>タイムシート</target>
             </trans-unit>
             <trans-unit id="menu.invoice">
                 <source>menu.invoice</source>
@@ -147,7 +147,7 @@
             -->
             <trans-unit id="error.no_entries_found">
                 <source>error.no_entries_found</source>
-                <target>指定されたフィルタ条件に該当するエントリは見付かりませんでした。</target>
+                <target>指定されたフィルタ条件に該当する明細は見付かりませんでした。</target>
             </trans-unit>
 
             <!--
@@ -251,7 +251,7 @@
             </trans-unit>
             <trans-unit id="label.create_more">
                 <source>label.create_more</source>
-                <target>未来のエントリを作成する</target>
+                <target>未来時間の明細を作成する</target>
             </trans-unit>
 
             <!--
@@ -323,11 +323,11 @@
             -->
             <trans-unit id="timesheet.title">
                 <source>timesheet.title</source>
-                <target>時間の記録</target>
+                <target>タイムシート</target>
             </trans-unit>
             <trans-unit id="timesheet.subtitle">
                 <source>timesheet.subtitle</source>
-                <target>時間記録の管理</target>
+                <target>タイムシートの管理</target>
             </trans-unit>
             <trans-unit id="timesheet.edit">
                 <source>timesheet.edit</source>

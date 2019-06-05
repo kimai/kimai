@@ -22,17 +22,29 @@
                 <source>theme</source>
                 <target>テーマ</target>
             </trans-unit>
+            <trans-unit id="calendar">
+                <source>calendar</source>
+                <target>カレンダー</target>
+            </trans-unit>
+            <trans-unit id="label.theme.markdown_content">
+                <source>label.theme.markdown_content</source>
+                <target>Markdown 形式で説明とコメントを書けるようにする</target>
+            </trans-unit>
             <trans-unit id="label.timesheet.mode">
                 <source>label.timesheet.mode</source>
                 <target>タイムトラッキング モード</target>
             </trans-unit>
             <trans-unit id="label.timesheet.mode_default">
                 <source>label.timesheet.mode_default</source>
-                <target>デフォルト: 開始日時と終了日時を入力する</target>
+                <target>[デフォルト] 開始日時と終了日時を入力する</target>
             </trans-unit>
             <trans-unit id="label.timesheet.mode_duration_only">
                 <source>label.timesheet.mode_duration_only</source>
-                <target>継続時間のみ: 終了日時の代わりに継続時間を入力する</target>
+                <target>[経過時間] 終了日時の代わりに経過時間を入力する</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_punch">
+                <source>label.timesheet.mode_punch</source>
+                <target>[タイムレコーダー] ユーザーは開始日時と終了日時を打刻できるが、それぞれの日時や経過時間を編集することはできない</target>
             </trans-unit>
             <trans-unit id="label.timesheet.rules.allow_future_times">
                 <source>label.timesheet.rules.allow_future_times</source>
@@ -40,15 +52,39 @@
             </trans-unit>
             <trans-unit id="label.timesheet.active_entries.hard_limit">
                 <source>label.timesheet.active_entries.hard_limit</source>
-                <target>同じ期間内に同時進行のものとして入力可能とするエントリの上限数</target>
+                <target>同じ期間内に同時進行のものとして記録可能とする明細の上限数</target>
             </trans-unit>
             <trans-unit id="label.timesheet.active_entries.soft_limit">
                 <source>label.timesheet.active_entries.soft_limit</source>
-                <target>同時進行のエントリがこちらの数を超える場合に警告を表示する</target>
+                <target>同時進行の明細記録がこちらの数を超える場合に警告を表示する</target>
             </trans-unit>
             <trans-unit id="label.theme.select_type">
                 <source>label.theme.select_type</source>
                 <target>入力フォームにおける選択ボックスの種類</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.week_numbers">
+                <source>label.calendar.week_numbers</source>
+                <target>週番号を表示する</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.weekends">
+                <source>label.calendar.weekends</source>
+                <target>週末を表示する</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.begin">
+                <source>label.calendar.businessHours.begin</source>
+                <target>業務時間の開始時刻（ハイライト表示）</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.end">
+                <source>label.calendar.businessHours.end</source>
+                <target>業務時間の終了時刻（ハイライト表示）</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.begin">
+                <source>label.calendar.visibleHours.begin</source>
+                <target>表示可能な時間帯の開始時刻</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.end">
+                <source>label.calendar.visibleHours.end</source>
+                <target>表示可能な時間帯の終了時刻</target>
             </trans-unit>
         </body>
     </file>
