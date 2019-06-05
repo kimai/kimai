@@ -50,6 +50,8 @@ class Duration
     }
 
     /**
+     * Returns the seconds, which were given as $duration string.
+     *
      * @param string $duration
      * @return int
      */
@@ -67,6 +69,8 @@ class Duration
     }
 
     /**
+     * Returns the seconds, which were given as $mode formatted $duration string.
+     *
      * @param string $duration
      * @param string $mode
      * @return int
