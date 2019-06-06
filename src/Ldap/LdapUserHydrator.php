@@ -20,13 +20,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class LdapUserHydrator
 {
     /**
-     * @var string[]
+     * @var LdapConfiguration
      */
-    private $attributeMap;
-    /**
-     * @var array
-     */
-    private $roleParams;
+    private $config;
     /**
      * @var RoleService
      */
@@ -34,10 +30,7 @@ class LdapUserHydrator
 
     public function __construct(LdapConfiguration $config, RoleService $roles)
     {
-        $attributeMap = $config->getUserParameters();
-
-        $this->attributeMap = $attributeMap['attributes'];
-        $this->roleParams = $config->getRoleParameters();
+        $this->config = $config;
         $this->roles = $roles;
     }
 
@@ -60,9 +53,17 @@ class LdapUserHydrator
 
     public function hydrateUser(User $user, array $ldapEntry)
     {
-        $this->hydrateUserWithAttributesMap($user, $ldapEntry, $this->attributeMap);
+        $userParams = $this->config->getUserParameters();
+        $attributeMap = $userParams['attributes'];
+        $attributeMap = array_merge(
+            [
+                ['ldap_attr' => $userParams['usernameAttribute'], 'user_method' => 'setUsername'],
+            ],
+            $attributeMap
+        );
 
-        // just a fallback to prevent Exceptions in case no email is available in LDAP
+        $this->hydrateUserWithAttributesMap($user, $ldapEntry, $attributeMap);
+
         if (null === $user->getEmail()) {
             $user->setEmail($user->getUsername());
         }
@@ -76,9 +77,10 @@ class LdapUserHydrator
      */
     public function hydrateRoles(User $user, array $entries)
     {
+        $roleParams = $this->config->getRoleParameters();
         $allowedRoles = $this->roles->getAvailableNames();
-        $groupNameMapping = $this->roleParams['groups'];
-        $roleNameAttr = $this->roleParams['nameAttribute'];
+        $groupNameMapping = $roleParams['groups'];
+        $roleNameAttr = $roleParams['nameAttribute'];
 
         $roles = [];
         for ($i = 0; $i < $entries['count']; $i++) {
