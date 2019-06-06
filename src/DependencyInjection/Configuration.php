@@ -525,15 +525,24 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('baseDn')->defaultNull()->end()
-                        ->scalarNode('filter')->defaultValue('')->end()
+                        ->scalarNode('filter')
+                            ->defaultValue('')
+                            ->validate()
+                                ->ifTrue(static function ($v) {
+                                    if (empty($v)) {
+                                        return false;
+                                    }
+                                    if ($v[0] !== '(') {
+                                        return true;
+                                    }
+                                    return ($v[strlen($v)-1] !== ')');
+                                })
+                                ->thenInvalid('The ldap.user.filter must be enclosed by parentheses "()"')
+                            ->end()
+                        ->end()
                         ->scalarNode('usernameAttribute')->defaultValue('uid')->end()
                         ->arrayNode('attributes')
-                            ->defaultValue([
-                                [
-                                    'ldap_attr' => 'uid',
-                                    'user_method' => 'setUsername',
-                                ],
-                            ])
+                            ->defaultValue([])
                             ->arrayPrototype()
                                 ->children()
                                     ->scalarNode('ldap_attr')->isRequired()->cannotBeEmpty()->end()
