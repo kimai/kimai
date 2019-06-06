@@ -326,7 +326,7 @@ class AppExtensionTest extends TestCase
         $this->assertEquals('123123123', $ldapConfig['user']['baseDn']);
         $this->assertEquals('zzzz', $ldapConfig['user']['usernameAttribute']);
         $this->assertEquals('7658765', $ldapConfig['connection']['baseDn']);
-        $this->assertEquals('(&(asdasdasd)(zzzz=%s))', $ldapConfig['connection']['accountFilterFormat']);
+        $this->assertEquals('(asdasdasd)', $ldapConfig['connection']['accountFilterFormat']);
     }
 
     /**

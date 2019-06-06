@@ -71,9 +71,10 @@ class AppExtension extends Extension
         }
 
         if (!isset($config['connection']['accountFilterFormat']) || empty($config['connection']['accountFilterFormat'])) {
-            $config['connection']['accountFilterFormat'] = '(&(' . $config['user']['usernameAttribute'] . '=%s))';
             if (!empty($config['user']['filter'])) {
-                $config['connection']['accountFilterFormat'] = '(&' . $config['user']['filter'] . '(' . $config['user']['usernameAttribute'] . '=%s))';
+                $config['connection']['accountFilterFormat'] = $config['user']['filter'];
+            } else {
+                $config['connection']['accountFilterFormat'] = '(&(' . $config['user']['usernameAttribute'] . '=%s))';
             }
         }
 
