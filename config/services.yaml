@@ -137,7 +137,7 @@ services:
 
     kimai_ldap.security.authentication.provider:
         class: App\Ldap\LdapAuthenticationProvider
-        arguments: ['@security.user_checker', '', '', '', '@App\Configuration\LdapConfiguration', '%security.authentication.hide_user_not_found%']
+        arguments: ['@App\Security\UserChecker', '', '', '', '@App\Configuration\LdapConfiguration', '%security.authentication.hide_user_not_found%']
 
     # ================================================================================
     # REPOSITORIES
