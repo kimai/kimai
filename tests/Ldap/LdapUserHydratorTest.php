@@ -116,12 +116,18 @@ class LdapUserHydratorTest extends TestCase
 
         $sut = new LdapUserHydrator($config, new RoleService([]));
         $user = new User();
+        $user->setPassword('foobar');
         $sut->hydrateUser($user, $ldapEntry);
         self::assertEquals('Karl-Heinz', $user->getUsername());
         self::assertEquals('bar', $user->getAlias());
         self::assertEquals('foo', $user->getTitle());
         self::assertEquals('https://www.example.com', $user->getAvatar());
         self::assertEquals('Karl-Heinz', $user->getEmail());
+
+        // make sure that the password was resetted in hydrate
+        $pwdCheck = clone $user;
+        $pwdCheck->setPassword('');
+        self::assertEquals($pwdCheck, $user);
     }
 
     public function testHydrateRoles()

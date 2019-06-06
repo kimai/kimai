@@ -37,7 +37,6 @@ class LdapUserHydrator
     protected function createUser(): User
     {
         $user = new User();
-        $user->setPassword('');
         $user->setEnabled(true);
 
         return $user;
@@ -67,6 +66,9 @@ class LdapUserHydrator
         if (null === $user->getEmail()) {
             $user->setEmail($user->getUsername());
         }
+
+        // prevent that users will define a password for the internal account
+        $user->setPassword('');
 
         $user->setPreferenceValue('ldap.dn', $ldapEntry['dn']);
     }
