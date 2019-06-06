@@ -28,6 +28,7 @@ class LdapUserHydratorTest extends TestCase
                 'host' => '1.1.1.1'
             ],
             'user' => [
+                'usernameAttribute' => 'foo',
                 'attributes' => []
             ],
             'role' => [],
@@ -48,6 +49,7 @@ class LdapUserHydratorTest extends TestCase
                 'host' => '1.1.1.1'
             ],
             'user' => [
+                'usernameAttribute' => 'foo',
                 'attributes' => [
                     ['ldap_attr' => 'uid', 'user_method' => 'setUsername'],
                     ['ldap_attr' => 'foo', 'user_method' => 'setAlias'],
@@ -91,6 +93,7 @@ class LdapUserHydratorTest extends TestCase
                 'host' => '1.1.1.1'
             ],
             'user' => [
+                'usernameAttribute' => 'foo',
                 'attributes' => [
                     ['ldap_attr' => 'uid', 'user_method' => 'setUsername'],
                     ['ldap_attr' => 'foo', 'user_method' => 'setAlias'],

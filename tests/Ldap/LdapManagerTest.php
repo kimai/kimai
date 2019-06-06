@@ -422,7 +422,7 @@ class LdapManagerTest extends TestCase
         $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->setMethods(['search'])->getMock();
         $driver->expects($this->exactly(3))->method('search')->willReturnCallback(function ($baseDn, $filter, $attributes) use ($expectedUsers, $expectedGroups, $expectedGroupQuery, $expected) {
             if ($baseDn === 'ou=users, dc=kimai, dc=org') {
-                self::assertEquals('(&(&(objectClass=inetOrgPerson))(uid=foobar))', $filter);
+                self::assertEquals('(&(&(objectClass=inetOrgPerson))(uid=Karl-Heinz))', $filter);
 
                 return $expected;
             } elseif ($baseDn === 'blub') {
@@ -442,10 +442,10 @@ class LdapManagerTest extends TestCase
 
         $sut = $this->getLdapManager($driver, $groupConfig);
 
-        $user = (new User())->setUsername('foobar');
+        $user = (new User())->setUsername('Karl-Heinz');
         $user->setPreferenceValue('ldap.dn', 'blub');
         $userOrig = clone $user;
-        $userOrig->setEmail('foobar')->setRoles(['ROLE_TEAMLEAD', 'ROLE_ADMIN']);
+        $userOrig->setEmail('Karl-Heinz')->setRoles(['ROLE_TEAMLEAD', 'ROLE_ADMIN']);
 
         $sut->updateUser($user);
         self::assertEquals($userOrig, $user);
