@@ -127,9 +127,7 @@ class AppExtensionTest extends TestCase
                     'baseDn' => null,
                     'filter' => '',
                     'usernameAttribute' => 'uid',
-                    'attributes' => [
-                        ['ldap_attr' => 'uid', 'user_method' => 'setUsername']
-                    ],
+                    'attributes' => [],
                 ],
                 'role' => [
                     'baseDn' => null,
@@ -236,7 +234,7 @@ class AppExtensionTest extends TestCase
             'user' => [
                 'baseDn' => '123123123',
                 'usernameAttribute' => 'xxx',
-                'filter' => '..........'
+                'filter' => '(..........)'
             ],
         ];
 
@@ -244,7 +242,7 @@ class AppExtensionTest extends TestCase
 
         $ldapConfig = $container->getParameter('kimai.ldap');
         $this->assertEquals('123123123', $ldapConfig['user']['baseDn']);
-        $this->assertEquals('..........', $ldapConfig['user']['filter']);
+        $this->assertEquals('(..........)', $ldapConfig['user']['filter']);
         $this->assertEquals('xxx', $ldapConfig['user']['usernameAttribute']);
         $this->assertEquals('lkhiuzhkj', $ldapConfig['connection']['baseDn']);
         $this->assertEquals('########', $ldapConfig['connection']['accountFilterFormat']);
@@ -273,6 +271,39 @@ class AppExtensionTest extends TestCase
         $this->assertEquals('(&(xxx=%s))', $ldapConfig['connection']['accountFilterFormat']);
     }
 
+    /**
+     * @expectedException \PHPUnit\Framework\Error\Notice
+     * @expectedExceptionMessage Found invalid "kimai" configuration: Invalid configuration for path "kimai.ldap.user.filter": The ldap.user.filter must be enclosed by parentheses "()"
+     */
+    public function testLdapFilterHasParentheses()
+    {
+        $minConfig = $this->getMinConfig();
+        $minConfig['kimai']['ldap'] = ['user' => ['filter' => 'asdasdas']];
+        $this->extension->load($minConfig, $this->getContainer());
+    }
+
+    /**
+     * @expectedException \PHPUnit\Framework\Error\Notice
+     * @expectedExceptionMessage Found invalid "kimai" configuration: Invalid configuration for path "kimai.ldap.user.filter": The ldap.user.filter must be enclosed by parentheses "()"
+     */
+    public function testLdapFilterHasOpeningParentheses()
+    {
+        $minConfig = $this->getMinConfig();
+        $minConfig['kimai']['ldap'] = ['user' => ['filter' => 'asdasdas)']];
+        $this->extension->load($minConfig, $this->getContainer());
+    }
+
+    /**
+     * @expectedException \PHPUnit\Framework\Error\Notice
+     * @expectedExceptionMessage Found invalid "kimai" configuration: Invalid configuration for path "kimai.ldap.user.filter": The ldap.user.filter must be enclosed by parentheses "()"
+     */
+    public function testLdapFilterHasClosingParentheses()
+    {
+        $minConfig = $this->getMinConfig();
+        $minConfig['kimai']['ldap'] = ['user' => ['filter' => '(asdasdas']];
+        $this->extension->load($minConfig, $this->getContainer());
+    }
+
     public function testLdapMoreFallbackValue()
     {
         $minConfig = $this->getMinConfig();
@@ -295,7 +326,7 @@ class AppExtensionTest extends TestCase
         $this->assertEquals('123123123', $ldapConfig['user']['baseDn']);
         $this->assertEquals('zzzz', $ldapConfig['user']['usernameAttribute']);
         $this->assertEquals('7658765', $ldapConfig['connection']['baseDn']);
-        $this->assertEquals('(asdasdasd)', $ldapConfig['connection']['accountFilterFormat']);
+        $this->assertEquals('(&(asdasdasd)(zzzz=%s))', $ldapConfig['connection']['accountFilterFormat']);
     }
 
     /**

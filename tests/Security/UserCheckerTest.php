@@ -12,46 +12,52 @@ namespace App\Tests\Security;
 use App\Entity\User;
 use App\Security\UserChecker;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\User as SymfonyUser;
 
 /**
  * @covers \App\Security\UserChecker
  */
 class UserCheckerTest extends TestCase
 {
-    public function testCheckPreAuth()
+    public function testCheckPreAuthReturnsOnUnknownUserClass()
     {
         $sut = new UserChecker();
-        $user = new User();
 
         try {
-            $sut->checkPreAuth($user);
+            $sut->checkPreAuth(new SymfonyUser('sdf', null));
         } catch (\Exception $ex) {
-            $this->fail('UserChecker should not throw exception in checkPreAuth()');
+            $this->fail('UserChecker should not throw exception in checkPreAuth(), ' . $ex->getMessage());
+        }
+        $this->assertTrue(true);
+    }
+
+    public function testCheckPostAuthReturnsOnUnknownUserClass()
+    {
+        $sut = new UserChecker();
+
+        try {
+            $sut->checkPostAuth(new SymfonyUser('sdf', null));
+        } catch (\Exception $ex) {
+            $this->fail('UserChecker should not throw exception in checkPostAuth(), ' . $ex->getMessage());
         }
         $this->assertTrue(true);
     }
 
     /**
-     * @expectedException \Symfony\Component\Security\Core\Exception\LockedException
+     * @expectedException \Symfony\Component\Security\Core\Exception\DisabledException
+     * @expectedExceptionMessage User account is disabled.
      */
-    public function testDisabledCannotLogin()
+    public function testDisabledCannotLoginInCheckPreAuth()
     {
-        $sut = new UserChecker();
-        $user = new User();
-        $user->setEnabled(false);
-
-        $sut->checkPostAuth($user);
+        (new UserChecker())->checkPreAuth((new User())->setEnabled(false));
     }
 
-    public function testCheckPostAuth()
+    /**
+     * @expectedException \Symfony\Component\Security\Core\Exception\DisabledException
+     * @expectedExceptionMessage User account is disabled.
+     */
+    public function testDisabledCannotLoginInCheckPostAuth()
     {
-        $sut = new UserChecker();
-
-        $mock = $this->getMockBuilder(UserInterface::class)->setMethods(['isEnabled'])->getMockForAbstractClass();
-        $mock->expects($this->never())->method('isEnabled')->willReturn(false);
-
-        $sut->checkPostAuth($mock);
-        $this->assertTrue(true);
+        (new UserChecker())->checkPostAuth((new User())->setEnabled(false));
     }
 }

@@ -535,7 +535,8 @@ class Configuration implements ConfigurationInterface
                                     if ($v[0] !== '(') {
                                         return true;
                                     }
-                                    return ($v[strlen($v)-1] !== ')');
+
+                                    return ($v[strlen($v) - 1] !== ')');
                                 })
                                 ->thenInvalid('The ldap.user.filter must be enclosed by parentheses "()"')
                             ->end()
