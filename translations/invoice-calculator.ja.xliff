@@ -8,7 +8,7 @@
             </trans-unit>
             <trans-unit id="default">
                 <source>default</source>
-                <target>エントリ基準 - 時間を記録した個々の明細を出力します (デフォルト)</target>
+                <target>明細基準 - 時間を記録した個々の明細を出力します (デフォルト)</target>
             </trans-unit>
             <trans-unit id="short">
                 <source>short</source>

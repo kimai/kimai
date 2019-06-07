@@ -32,11 +32,11 @@
             </trans-unit>
             <trans-unit id="action.delete.success">
                 <source>action.delete.success</source>
-                <target>エントリを削除しました</target>
+                <target>明細を削除しました</target>
             </trans-unit>
             <trans-unit id="action.delete.error">
                 <source>action.delete.error</source>
-                <target>エントリを削除できませんでした: %reason%</target>
+                <target>明細を削除できませんでした: %reason%</target>
             </trans-unit>
             <trans-unit id="invoice.first_template">
                 <source>invoice.first_template</source>

@@ -2,17 +2,18 @@
 #
 # For the full copyright and license information, please view the LICENSE
 # file that was distributed with this source code.
- 
-FROM php:7.2.9-apache-stretch
+FROM php:7.2.9-apache-stretch AS tmp_kimai2_base
 
 RUN apt update && \
-    apt install -y \
+    apt install -y --allow-unauthenticated \
         git \
+        haveged \
         libicu-dev \
         libjpeg-dev \
         libldap2-dev \
         libldb-dev \
         libpng-dev \
+        mysql-client \
         unzip \
         wget \
         zip \
@@ -32,15 +33,19 @@ RUN apt update && \
         zip && \
     apt remove -y wget && \
     apt -y autoremove && \
-    apt clean && \
-    git clone https://github.com/kevinpapst/kimai2.git /opt/kimai && \
+    apt clean
+
+FROM tmp_kimai2_base
+
+RUN git clone https://github.com/kevinpapst/kimai2.git /opt/kimai && \
     sed "s/prod/dev/g" /opt/kimai/.env.dist > /opt/kimai/.env && \
     composer install --working-dir=/opt/kimai --dev --optimize-autoloader && \
     /opt/kimai/bin/console doctrine:database:create && \
     /opt/kimai/bin/console doctrine:schema:create && \
     /opt/kimai/bin/console doctrine:migrations:version --add --all && \
     /opt/kimai/bin/console cache:warmup && \
-    chown -R www-data:www-data /opt/kimai/var
+    chown -R www-data:www-data /opt/kimai/var && \
+    chown www-data:www-data /opt/kimai/vendor/mpdf/mpdf/tmp
 
 WORKDIR /opt/kimai
 
