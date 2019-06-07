@@ -496,6 +496,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->booleanNode('active')->defaultFalse()->end()
                 ->arrayNode('connection')
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('host')->defaultNull()->end()
                         ->scalarNode('port')->defaultValue(389)->end()
@@ -503,12 +504,27 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('useSsl')->defaultFalse()->end()
                         ->scalarNode('username')->end()
                         ->scalarNode('password')->end()
-                        ->scalarNode('bindRequiresDn')->defaultFalse()->end()
+                        ->scalarNode('bindRequiresDn')->defaultTrue()->end()
                         ->scalarNode('baseDn')->end()
                         ->scalarNode('accountCanonicalForm')->end()
                         ->scalarNode('accountDomainName')->end()
                         ->scalarNode('accountDomainNameShort')->end()
-                        ->scalarNode('accountFilterFormat')->end()
+                        ->scalarNode('accountFilterFormat')
+                            ->defaultNull()
+                            ->validate()
+                                ->ifTrue(static function ($v) {
+                                    if (empty($v)) {
+                                        return false;
+                                    }
+                                    if ($v[0] !== '(' || (substr_count($v, '(') !== substr_count($v, ')'))) {
+                                        return true;
+                                    }
+
+                                    return (substr_count($v, '%s') !== 1);
+                                })
+                                ->thenInvalid('The accountFilterFormat must be enclosed by a matching number of parentheses "()" and contain one "%%s" replacer for the username')
+                            ->end()
+                        ->end()
                         ->scalarNode('allowEmptyPassword')->end()
                         ->scalarNode('optReferrals')->end()
                         ->scalarNode('tryUsernameSplit')->end()
@@ -532,13 +548,13 @@ class Configuration implements ConfigurationInterface
                                     if (empty($v)) {
                                         return false;
                                     }
-                                    if ($v[0] !== '(') {
+                                    if ($v[0] !== '(' || (substr_count($v, '(') !== substr_count($v, ')'))) {
                                         return true;
                                     }
 
-                                    return ($v[strlen($v) - 1] !== ')');
+                                    return (stripos($v, '%s') !== false);
                                 })
-                                ->thenInvalid('The ldap.user.filter must be enclosed by parentheses "()"')
+                                ->thenInvalid('The ldap.user.filter must be enclosed by a matching number of parentheses "()" and must NOT contain a "%%s" replacer')
                             ->end()
                         ->end()
                         ->scalarNode('usernameAttribute')->defaultValue('uid')->end()

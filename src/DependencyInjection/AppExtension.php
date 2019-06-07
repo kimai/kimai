@@ -70,12 +70,8 @@ class AppExtension extends Extension
             $config['connection']['baseDn'] = $config['user']['baseDn'];
         }
 
-        if (!isset($config['connection']['accountFilterFormat']) || empty($config['connection']['accountFilterFormat'])) {
-            if (!empty($config['user']['filter'])) {
-                $config['connection']['accountFilterFormat'] = $config['user']['filter'];
-            } else {
-                $config['connection']['accountFilterFormat'] = '(&(' . $config['user']['usernameAttribute'] . '=%s))';
-            }
+        if (empty($config['connection']['accountFilterFormat']) && $config['connection']['bindRequiresDn']) {
+            $config['connection']['accountFilterFormat'] = '(&('.$config['user']['usernameAttribute'].'=%s))';
         }
 
         $container->setParameter('kimai.ldap', $config);

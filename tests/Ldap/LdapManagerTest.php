@@ -169,13 +169,13 @@ class LdapManagerTest extends TestCase
         $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->setMethods(['search'])->getMock();
         $driver->expects($this->once())->method('search')->willReturnCallback(function ($baseDn, $filter) use ($expected) {
             self::assertEquals('ou=users, dc=kimai, dc=org', $baseDn);
-            self::assertEquals('(&(&(objectClass=inetOrgPerson))(träl=alß#%\\\aa=XY\5cZ0)(test=fu=n))', $filter);
+            self::assertEquals('(&(&(objectClass=inetOrgPerson))(träl=alß#\\\aa=XY\5cZ0)(test=fu=n))', $filter);
 
             return $expected;
         });
 
         $sut = $this->getLdapManager($driver);
-        $actual = $sut->findUserBy(['träl=alß#%\\\aa' => 'XY\Z0', 'test' => 'fu=n']);
+        $actual = $sut->findUserBy(['träl=alß#\\\aa' => 'XY\Z0', 'test' => 'fu=n']);
         self::assertInstanceOf(User::class, $actual);
     }
 
