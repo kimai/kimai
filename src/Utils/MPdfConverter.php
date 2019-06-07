@@ -32,7 +32,7 @@ class MPdfConverter implements HtmlToPdfConverter
      */
     public function convertToPdf(string $html)
     {
-        $mpdf = new Mpdf([['tempDir' => $this->cacheDirectory]]);
+        $mpdf = new Mpdf(['tempDir' => $this->cacheDirectory]);
         $mpdf->creator = Constants::SOFTWARE;
         $mpdf->WriteHTML($html);
 
