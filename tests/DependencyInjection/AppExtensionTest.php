@@ -289,6 +289,7 @@ class AppExtensionTest extends TestCase
             'user' => [
                 'baseDn' => '123123123',
                 'usernameAttribute' => 'zzzz',
+                'filter' => '(&(objectClass=inetOrgPerson))',
             ],
         ];
 
@@ -298,6 +299,8 @@ class AppExtensionTest extends TestCase
         $this->assertEquals('123123123', $ldapConfig['user']['baseDn']);
         $this->assertEquals('zzzz', $ldapConfig['user']['usernameAttribute']);
         $this->assertEquals('7658765', $ldapConfig['connection']['baseDn']);
+        $this->assertEquals('(&(&(objectClass=inetOrgPerson))(zzzz=%s))', $ldapConfig['connection']['accountFilterFormat']);
+        $this->assertEquals('(&(objectClass=inetOrgPerson))', $ldapConfig['user']['filter']);
     }
 
     /**
