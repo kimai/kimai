@@ -21,7 +21,7 @@ abstract class AbstractRepositoryTest extends KernelTestCase
     use KernelTestTrait;
 
     /**
-     * @var EntityManager
+     * @var EntityManager|null
      */
     private $entityManager;
 

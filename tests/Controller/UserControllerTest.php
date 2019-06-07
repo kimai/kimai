@@ -40,7 +40,6 @@ class UserControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=user_create]')->form();
         $this->assertTrue($form->has('user_create[create_more]'));
         $this->assertFalse($form->get('user_create[create_more]')->hasValue());
-        $this->assertNull($form->get('user_create[create_more]')->getValue());
         $client->submit($form, [
             'user_create' => [
                 'username' => $username,
@@ -86,6 +85,7 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $form = $client->getCrawler()->filter('form[name=user_create]')->form();
         $this->assertTrue($form->has('user_create[create_more]'));
+        $this->assertTrue($form->get('user_create[create_more]')->hasValue());
         $this->assertEquals(1, $form->get('user_create[create_more]')->getValue());
     }
 

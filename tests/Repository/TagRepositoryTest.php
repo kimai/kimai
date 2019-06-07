@@ -10,6 +10,7 @@
 namespace App\Tests\Repository;
 
 use App\Entity\Tag;
+use App\Repository\TagRepository;
 use App\Tests\DataFixtures\TagFixtures;
 
 /**
@@ -29,6 +30,7 @@ class TagRepositoryTest extends AbstractRepositoryTest
     public function testFindIds()
     {
         $em = $this->getEntityManager();
+        /** @var TagRepository $repository */
         $repository = $em->getRepository(Tag::class);
 
         $result = $repository->findIdsByTagNameList('2018,Test');
@@ -47,6 +49,7 @@ class TagRepositoryTest extends AbstractRepositoryTest
     public function testFindNoIds()
     {
         $em = $this->getEntityManager();
+        /** @var TagRepository $repository */
         $repository = $em->getRepository(Tag::class);
 
         $result = $repository->findIdsByTagNameList('Simply');
@@ -58,6 +61,7 @@ class TagRepositoryTest extends AbstractRepositoryTest
     public function testFindAllTagNames()
     {
         $em = $this->getEntityManager();
+        /** @var TagRepository $repository */
         $repository = $em->getRepository(Tag::class);
 
         $result = $repository->findAllTagNames('2018');
@@ -75,6 +79,7 @@ class TagRepositoryTest extends AbstractRepositoryTest
     public function testFindNoTagNames()
     {
         $em = $this->getEntityManager();
+        /** @var TagRepository $repository */
         $repository = $em->getRepository(Tag::class);
 
         $result = $repository->findAllTagNames('Nothing');

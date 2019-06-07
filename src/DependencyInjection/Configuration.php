@@ -62,6 +62,7 @@ class Configuration implements ConfigurationInterface
                 ->append($this->getWidgetsNode())
                 ->append($this->getDefaultsNode())
                 ->append($this->getPermissionsNode())
+                ->append($this->getLdapNode())
             ->end()
         ->end();
 
@@ -100,7 +101,7 @@ class Configuration implements ConfigurationInterface
                                 ->requiresAtLeastOneElement()
                                 ->useAttributeAsKey('key')
                                 ->isRequired()
-                                ->prototype('scalar')->end()
+                                ->scalarPrototype()->end()
                                 ->defaultValue([])
                             ->end()
                             ->integerNode('begin')
@@ -141,7 +142,7 @@ class Configuration implements ConfigurationInterface
                                 ->requiresAtLeastOneElement()
                                 ->useAttributeAsKey('key')
                                 ->isRequired()
-                                ->prototype('scalar')->end()
+                                ->scalarPrototype()->end()
                                 ->defaultValue([])
                             ->end()
                             ->floatNode('factor')
@@ -258,7 +259,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->arrayNode('days')
                             ->requiresAtLeastOneElement()
-                            ->prototype('integer')->end()
+                            ->integerPrototype()->end()
                             ->defaultValue([1, 2, 3, 4, 5])
                         ->end()
                         ->scalarNode('begin')->defaultValue('08:00')->end()
@@ -449,7 +450,7 @@ class Configuration implements ConfigurationInterface
                     ->arrayPrototype()
                         ->useAttributeAsKey('key')
                         ->isRequired()
-                        ->prototype('scalar')->end()
+                        ->scalarPrototype()->end()
                         ->defaultValue([])
                     ->end()
                 ->end()
@@ -459,7 +460,7 @@ class Configuration implements ConfigurationInterface
                     ->arrayPrototype()
                         ->useAttributeAsKey('key')
                         ->isRequired()
-                        ->prototype('scalar')->end()
+                        ->scalarPrototype()->end()
                         ->defaultValue([])
                     ->end()
                 ->end()
@@ -469,7 +470,7 @@ class Configuration implements ConfigurationInterface
                     ->arrayPrototype()
                         ->useAttributeAsKey('key')
                         ->isRequired()
-                        ->prototype('scalar')->end()
+                        ->scalarPrototype()->end()
                         ->defaultValue([])
                     ->end()
                     ->defaultValue([
@@ -479,6 +480,132 @@ class Configuration implements ConfigurationInterface
                         'ROLE_SUPER_ADMIN' => [],
                     ])
                 ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    protected function getLdapNode()
+    {
+        $treeBuilder = new TreeBuilder('ldap');
+        $node = $treeBuilder->getRootNode();
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->booleanNode('active')->defaultFalse()->end()
+                ->arrayNode('connection')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('host')->defaultNull()->end()
+                        ->scalarNode('port')->defaultValue(389)->end()
+                        ->scalarNode('useStartTls')->defaultFalse()->end()
+                        ->scalarNode('useSsl')->defaultFalse()->end()
+                        ->scalarNode('username')->end()
+                        ->scalarNode('password')->end()
+                        ->scalarNode('bindRequiresDn')->defaultTrue()->end()
+                        ->scalarNode('baseDn')->end()
+                        ->scalarNode('accountCanonicalForm')->end()
+                        ->scalarNode('accountDomainName')->end()
+                        ->scalarNode('accountDomainNameShort')->end()
+                        ->scalarNode('accountFilterFormat')
+                            ->defaultNull()
+                            ->validate()
+                                ->ifTrue(static function ($v) {
+                                    if (empty($v)) {
+                                        return false;
+                                    }
+                                    if ($v[0] !== '(' || (substr_count($v, '(') !== substr_count($v, ')'))) {
+                                        return true;
+                                    }
+
+                                    return (substr_count($v, '%s') !== 1);
+                                })
+                                ->thenInvalid('The accountFilterFormat must be enclosed by a matching number of parentheses "()" and contain one "%%s" replacer for the username')
+                            ->end()
+                        ->end()
+                        ->scalarNode('allowEmptyPassword')->end()
+                        ->scalarNode('optReferrals')->end()
+                        ->scalarNode('tryUsernameSplit')->end()
+                        ->scalarNode('networkTimeout')->end()
+                    ->end()
+                    ->validate()
+                        ->ifTrue(static function ($v) {
+                            return $v['useSsl'] && $v['useStartTls'];
+                        })
+                        ->thenInvalid('The ldap.connection.useSsl and ldap.connection.useStartTls options are mutually exclusive.')
+                    ->end()
+                ->end()
+                ->arrayNode('user')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('baseDn')->defaultNull()->end()
+                        ->scalarNode('filter')
+                            ->defaultValue('')
+                            ->validate()
+                                ->ifTrue(static function ($v) {
+                                    if (empty($v)) {
+                                        return false;
+                                    }
+                                    if ($v[0] !== '(' || (substr_count($v, '(') !== substr_count($v, ')'))) {
+                                        return true;
+                                    }
+
+                                    return (stripos($v, '%s') !== false);
+                                })
+                                ->thenInvalid('The ldap.user.filter must be enclosed by a matching number of parentheses "()" and must NOT contain a "%%s" replacer')
+                            ->end()
+                        ->end()
+                        ->scalarNode('usernameAttribute')->defaultValue('uid')->end()
+                        ->arrayNode('attributes')
+                            ->defaultValue([])
+                            ->arrayPrototype()
+                                ->children()
+                                    ->scalarNode('ldap_attr')->isRequired()->cannotBeEmpty()->end()
+                                    ->scalarNode('user_method')->isRequired()->cannotBeEmpty()->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('role')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('baseDn')->defaultNull()->end()
+                        ->scalarNode('filter')->end()
+                        ->scalarNode('usernameAttribute')->defaultValue('dn')->end()
+                        ->scalarNode('nameAttribute')->defaultValue('cn')->end()
+                        ->scalarNode('userDnAttribute')->defaultValue('member')->end()
+                        ->arrayNode('groups')
+                            ->defaultValue([])
+                            ->arrayPrototype()
+                                ->children()
+                                    ->scalarNode('ldap_value')->isRequired()->cannotBeEmpty()->end()
+                                    ->scalarNode('role')->isRequired()->cannotBeEmpty()->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+            ->validate()
+                ->ifTrue(static function ($v) {
+                    return $v['active'] && !extension_loaded('ldap');
+                })
+                ->thenInvalid('LDAP is activated, but the LDAP PHP extension is not loaded.')
+            ->end()
+            ->validate()
+                ->ifTrue(static function ($v) {
+                    return $v['active'] && empty($v['connection']['host']);
+                })
+                ->thenInvalid('The "ldap.connection.host" config must be set if LDAP is activated.')
+            ->end()
+            ->validate()
+                ->ifTrue(static function ($v) {
+                    return $v['active'] && empty($v['user']['baseDn']);
+                })
+                ->thenInvalid('The "ldap.user.baseDn" config must be set if LDAP is activated.')
             ->end()
         ;
 

@@ -327,6 +327,9 @@
     "phpstan/phpstan-doctrine": {
         "version": "0.11.4"
     },
+    "phpstan/phpstan-phpunit": {
+        "version": "0.11.2"
+    },
     "phpstan/phpstan-symfony": {
         "version": "0.11.6"
     },
@@ -513,6 +516,9 @@
     "symfony/intl": {
         "version": "v4.0.3"
     },
+    "symfony/ldap": {
+        "version": "v4.2.8"
+    },
     "symfony/maker-bundle": {
         "version": "1.0",
         "recipe": {
@@ -594,17 +600,8 @@
             "ref": "85834af1496735f28d831489d12ab1921a875e0d"
         }
     },
-    "symfony/security-core": {
-        "version": "v4.2.6"
-    },
     "symfony/security-csrf": {
         "version": "v4.0.4"
-    },
-    "symfony/security-guard": {
-        "version": "v4.2.6"
-    },
-    "symfony/security-http": {
-        "version": "v4.2.6"
     },
     "symfony/serializer": {
         "version": "v4.1.2"
@@ -731,6 +728,9 @@
     },
     "zendframework/zend-eventmanager": {
         "version": "3.2.0"
+    },
+    "zendframework/zend-ldap": {
+        "version": "2.10.0"
     },
     "zircote/swagger-php": {
         "version": "2.0.13"

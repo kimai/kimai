@@ -7,16 +7,17 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Export\Renderer;
+namespace App\Tests\Form\DataTransformer;
 
 use App\Entity\Tag;
 use App\Form\DataTransformer\TagArrayToStringTransformer;
 use App\Repository\TagRepository;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Form\DataTransformer\TagArrayToStringTransformer
  */
-class TagArrayToStringTransformerTest extends AbstractRendererTest
+class TagArrayToStringTransformerTest extends TestCase
 {
     public function testTransform()
     {

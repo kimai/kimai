@@ -14,9 +14,12 @@ use App\Entity\Project;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Repository\ActivityRepository;
+use App\Repository\ProjectRepository;
 use App\Repository\Query\BaseQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\RepositoryException;
+use App\Repository\TimesheetRepository;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
@@ -29,6 +32,7 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
     public function testResultTypeForQueryState()
     {
         $em = $this->getEntityManager();
+        /** @var TimesheetRepository $repository */
         $repository = $em->getRepository(Timesheet::class);
 
         $query = new TimesheetQuery();
@@ -53,6 +57,7 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
     {
         $em = $this->getEntityManager();
         $user = $this->getUserByRole($em, User::ROLE_USER);
+        /** @var TimesheetRepository $repository */
         $repository = $em->getRepository(Timesheet::class);
 
         $fixtures = new TimesheetFixtures();
@@ -66,6 +71,7 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
         $query->setUser($user);
         $query->setState(TimesheetQuery::STATE_STOPPED);
 
+        /** @var array $entities */
         $entities = $repository->findByQuery($query);
 
         $this->assertCount(1, $entities);
@@ -81,6 +87,7 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
     {
         $em = $this->getEntityManager();
         $user = $this->getUserByRole($em, User::ROLE_USER);
+        /** @var TimesheetRepository $repository */
         $repository = $em->getRepository(Timesheet::class);
 
         $fixtures = new TimesheetFixtures();
@@ -100,12 +107,15 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
     public function testSave()
     {
         $em = $this->getEntityManager();
+        /** @var ActivityRepository $activityRepository */
         $activityRepository = $em->getRepository(Activity::class);
         $activity = $activityRepository->find(1);
+        /** @var ProjectRepository $projectRepository */
         $projectRepository = $em->getRepository(Project::class);
         $project = $projectRepository->find(1);
 
         $user = $this->getUserByRole($em, User::ROLE_USER);
+        /** @var TimesheetRepository $repository */
         $repository = $em->getRepository(Timesheet::class);
         $timesheet = new Timesheet();
         $timesheet
@@ -124,12 +134,15 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
     public function testSaveWithTags()
     {
         $em = $this->getEntityManager();
+        /** @var ActivityRepository $activityRepository */
         $activityRepository = $em->getRepository(Activity::class);
         $activity = $activityRepository->find(1);
+        /** @var ProjectRepository $projectRepository */
         $projectRepository = $em->getRepository(Project::class);
         $project = $projectRepository->find(1);
 
         $user = $this->getUserByRole($em, User::ROLE_USER);
+        /** @var TimesheetRepository $repository */
         $repository = $em->getRepository(Timesheet::class);
         $tagOne = new Tag();
         $tagOne->setName('Travel');

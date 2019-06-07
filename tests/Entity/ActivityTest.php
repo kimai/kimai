@@ -24,7 +24,7 @@ class ActivityTest extends AbstractEntityTest
         $this->assertNull($sut->getName());
         $this->assertNull($sut->getComment());
         $this->assertTrue($sut->getVisible());
-        // timesheets
+        self::assertIsIterable($sut->getTimesheets());
         $this->assertNull($sut->getFixedRate());
         $this->assertNull($sut->getHourlyRate());
         $this->assertNull($sut->getColor());

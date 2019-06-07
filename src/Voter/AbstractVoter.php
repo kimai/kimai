@@ -50,16 +50,6 @@ abstract class AbstractVoter extends Voter
 
     /**
      * @param string $role
-     * @param TokenInterface $token
-     * @return bool
-     */
-    protected function hasRole($role, TokenInterface $token)
-    {
-        return $this->decisionManager->hasRole($token, [$role]);
-    }
-
-    /**
-     * @param string $role
      * @param string $permission
      * @return bool
      */

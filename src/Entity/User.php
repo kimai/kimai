@@ -105,122 +105,77 @@ class User extends BaseUser implements UserInterface
         $this->preferences = new ArrayCollection();
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getRegisteredAt()
+    public function getRegisteredAt(): ?\DateTime
     {
         return $this->registeredAt;
     }
 
-    /**
-     * @param \DateTime $registeredAt
-     * @return $this
-     */
-    public function setRegisteredAt(\DateTime $registeredAt)
+    public function setRegisteredAt(\DateTime $registeredAt): User
     {
         $this->registeredAt = $registeredAt;
 
         return $this;
     }
 
-    /**
-     * @param string $alias
-     * @return $this
-     */
-    public function setAlias($alias)
+    public function setAlias(?string $alias): User
     {
         $this->alias = $alias;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAlias()
+    public function getAlias(): ?string
     {
         return $this->alias;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     * @return $this
-     */
-    public function setTitle($title)
+    public function setTitle(?string $title): User
     {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAvatar()
+    public function getAvatar(): ?string
     {
         return $this->avatar;
     }
 
-    /**
-     * @param string $avatar
-     * @return $this
-     */
-    public function setAvatar($avatar)
+    public function setAvatar(?string $avatar): User
     {
         $this->avatar = $avatar;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getApiToken()
+    public function getApiToken(): ?string
     {
         return $this->apiToken;
     }
 
-    /**
-     * @param string $apiToken
-     * @return User
-     */
-    public function setApiToken($apiToken)
+    public function setApiToken(?string $apiToken): User
     {
         $this->apiToken = $apiToken;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getPlainApiToken(): ?string
     {
         return $this->plainApiToken;
     }
 
-    /**
-     * @param string $plainApiToken
-     * @return User
-     */
-    public function setPlainApiToken(string $plainApiToken)
+    public function setPlainApiToken(?string $plainApiToken): User
     {
         $this->plainApiToken = $plainApiToken;
 
@@ -228,7 +183,7 @@ class User extends BaseUser implements UserInterface
     }
 
     /**
-     * @return UserPreference[]|Collection
+     * @return Collection<UserPreference>
      */
     public function getPreferences(): Collection
     {
@@ -236,10 +191,10 @@ class User extends BaseUser implements UserInterface
     }
 
     /**
-     * @param UserPreference[]|Collection<UserPreference> $preferences
+     * @param iterable<UserPreference> $preferences
      * @return User
      */
-    public function setPreferences($preferences)
+    public function setPreferences(iterable $preferences): User
     {
         $this->preferences = new ArrayCollection();
 
@@ -252,10 +207,29 @@ class User extends BaseUser implements UserInterface
 
     /**
      * @param string $name
-     * @return UserPreference|null
+     * @param bool|int|string|null $value
      */
-    public function getPreference(string $name)
+    public function setPreferenceValue(string $name, $value = null)
     {
+        $pref = $this->getPreference($name);
+
+        if (null === $pref) {
+            $pref = new UserPreference();
+            $pref->setName($name);
+            $this->addPreference($pref);
+        }
+
+        $pref->setValue($value);
+    }
+
+    public function getPreference(string $name): ?UserPreference
+    {
+        // this code will be triggered, if a currently logged-in user will be deleted and the refreshed from the session
+        // via one of the UserProvider - e.g. see LdapUserProvider::refreshUser() which calls $user->getPreferenceValue()
+        if (empty($this->preferences)) {
+            return null;
+        }
+
         foreach ($this->preferences as $preference) {
             if ($preference->getName() == $name) {
                 return $preference;
@@ -268,7 +242,7 @@ class User extends BaseUser implements UserInterface
     /**
      * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->getPreferenceValue(UserPreference::LOCALE, User::DEFAULT_LANGUAGE);
     }
@@ -292,7 +266,7 @@ class User extends BaseUser implements UserInterface
      * @param UserPreference $preference
      * @return User
      */
-    public function addPreference(UserPreference $preference)
+    public function addPreference(UserPreference $preference): User
     {
         $this->preferences->add($preference);
         $preference->setUser($this);

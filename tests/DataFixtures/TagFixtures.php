@@ -54,11 +54,7 @@ class TagFixtures extends Fixture
         $manager->flush();
     }
 
-    /**
-     * @param $tagName
-     * @return Tag
-     */
-    protected function createTagEntry($tagName)
+    protected function createTagEntry(string $tagName): Tag
     {
         $tagObject = new Tag();
         $tagObject->setName($tagName);

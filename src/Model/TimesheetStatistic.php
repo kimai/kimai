@@ -33,7 +33,7 @@ class TimesheetStatistic
      */
     protected $amountTotal = 0;
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      */
     protected $firstEntry;
     /**
@@ -41,10 +41,7 @@ class TimesheetStatistic
      */
     protected $recordsTotal = 0;
 
-    /**
-     * @return int
-     */
-    public function getDurationThisMonth()
+    public function getDurationThisMonth(): int
     {
         return $this->durationThisMonth;
     }
@@ -57,10 +54,7 @@ class TimesheetStatistic
         $this->durationThisMonth = (int) $durationThisMonth;
     }
 
-    /**
-     * @return int
-     */
-    public function getAmountTotal()
+    public function getAmountTotal(): int
     {
         return $this->amountTotal;
     }
@@ -73,10 +67,7 @@ class TimesheetStatistic
         $this->amountTotal = (int) $amountTotal;
     }
 
-    /**
-     * @return int
-     */
-    public function getDurationTotal()
+    public function getDurationTotal(): int
     {
         return $this->durationTotal;
     }
@@ -89,10 +80,7 @@ class TimesheetStatistic
         $this->durationTotal = (int) $durationTotal;
     }
 
-    /**
-     * @return int
-     */
-    public function getAmountThisMonth()
+    public function getAmountThisMonth(): int
     {
         return $this->amountThisMonth;
     }
@@ -105,10 +93,7 @@ class TimesheetStatistic
         $this->amountThisMonth = (int) $amountThisMonth;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getFirstEntry()
+    public function getFirstEntry(): ?\DateTime
     {
         return $this->firstEntry;
     }

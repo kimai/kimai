@@ -10,6 +10,7 @@ build:
             tests:
                 override:
                     - js-scrutinizer-run
+                    - php-scrutinizer-run
         tests:
             tests:
                 override:

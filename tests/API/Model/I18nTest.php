@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\API;
+namespace App\Tests\API\Model;
 
 use App\API\Model\I18n;
 use PHPUnit\Framework\TestCase;

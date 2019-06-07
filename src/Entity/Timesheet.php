@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -148,11 +149,11 @@ class Timesheet
     }
 
     /**
-     * Get entry id
+     * Get entry id, returns null for new entities which were not persisted.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -178,10 +179,7 @@ class Timesheet
         $this->localized = true;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getBegin()
+    public function getBegin(): ?\DateTime
     {
         $this->localizeDates();
 
@@ -192,7 +190,7 @@ class Timesheet
      * @param \DateTime $begin
      * @return Timesheet
      */
-    public function setBegin(\DateTime $begin)
+    public function setBegin(\DateTime $begin): Timesheet
     {
         $this->begin = $begin;
         $this->timezone = $begin->getTimezone()->getName();
@@ -200,10 +198,7 @@ class Timesheet
         return $this;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getEnd()
+    public function getEnd(): ?\DateTime
     {
         $this->localizeDates();
 
@@ -214,7 +209,7 @@ class Timesheet
      * @param \DateTime $end
      * @return Timesheet
      */
-    public function setEnd(?\DateTime $end)
+    public function setEnd(?\DateTime $end): Timesheet
     {
         $this->end = $end;
 
@@ -232,7 +227,7 @@ class Timesheet
      * @param int $duration
      * @return Timesheet
      */
-    public function setDuration($duration)
+    public function setDuration($duration): Timesheet
     {
         $this->duration = $duration;
 
@@ -253,17 +248,14 @@ class Timesheet
      * @param User $user
      * @return Timesheet
      */
-    public function setUser(User $user)
+    public function setUser(User $user): Timesheet
     {
         $this->user = $user;
 
         return $this;
     }
 
-    /**
-     * @return User
-     */
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user;
     }
@@ -272,25 +264,19 @@ class Timesheet
      * @param Activity $activity
      * @return Timesheet
      */
-    public function setActivity($activity)
+    public function setActivity($activity): Timesheet
     {
         $this->activity = $activity;
 
         return $this;
     }
 
-    /**
-     * @return Activity
-     */
-    public function getActivity()
+    public function getActivity(): ?Activity
     {
         return $this->activity;
     }
 
-    /**
-     * @return Project
-     */
-    public function getProject()
+    public function getProject(): ?Project
     {
         return $this->project;
     }
@@ -299,7 +285,7 @@ class Timesheet
      * @param Project $project
      * @return Timesheet
      */
-    public function setProject(Project $project)
+    public function setProject(Project $project): Timesheet
     {
         $this->project = $project;
 
@@ -310,17 +296,14 @@ class Timesheet
      * @param string $description
      * @return Timesheet
      */
-    public function setDescription($description)
+    public function setDescription($description): Timesheet
     {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -329,7 +312,7 @@ class Timesheet
      * @param float $rate
      * @return Timesheet
      */
-    public function setRate($rate)
+    public function setRate($rate): Timesheet
     {
         $this->rate = $rate;
 
@@ -348,7 +331,7 @@ class Timesheet
      * @param Tag $tag
      * @return Timesheet
      */
-    public function addTag(Tag $tag)
+    public function addTag(Tag $tag): Timesheet
     {
         if ($this->tags->contains($tag)) {
             return $this;
@@ -372,9 +355,9 @@ class Timesheet
     }
 
     /**
-     * @return Tag[]|ArrayCollection
+     * @return Collection<Tag>
      */
-    public function getTags()
+    public function getTags(): Collection
     {
         return $this->tags;
     }
@@ -404,7 +387,7 @@ class Timesheet
      * @param bool $exported
      * @return Timesheet
      */
-    public function setExported(bool $exported)
+    public function setExported(bool $exported): Timesheet
     {
         $this->exported = $exported;
 
@@ -426,7 +409,7 @@ class Timesheet
      * @param string $timezone
      * @return Timesheet
      */
-    public function setTimezone(string $timezone)
+    public function setTimezone(string $timezone): Timesheet
     {
         $this->timezone = $timezone;
 

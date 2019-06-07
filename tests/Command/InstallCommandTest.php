@@ -13,6 +13,7 @@ use App\Command\InstallCommand;
 use App\Utils\File;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
@@ -26,7 +27,7 @@ class InstallCommandTest extends KernelTestCase
      */
     protected $application;
 
-    protected function getCommand($permission = 0777): InstallCommand
+    protected function getCommand($permission = 0777): Command
     {
         $fileMock = $this->getMockBuilder(File::class)->setMethods(['getPermissions'])->getMock();
         $fileMock->expects($this->exactly(5))->method('getPermissions')->willReturn($permission);

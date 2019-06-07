@@ -274,6 +274,7 @@ class TimesheetRepository extends AbstractRepository
             ->join('t.activity', 'a')
             ->join('t.project', 'p')
             ->join('p.customer', 'c')
+            ->leftJoin('t.tags', 'tags')
             ->where($qb->expr()->isNotNull('t.begin'))
             ->andWhere($qb->expr()->isNull('t.end'))
             ->orderBy('t.begin', 'DESC');
@@ -438,11 +439,12 @@ class TimesheetRepository extends AbstractRepository
         $ids = array_column($results, 'maxid');
 
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('t', 'a', 'p', 'c')
+        $qb->select('t', 'a', 'p', 'c', 'tags')
             ->from(Timesheet::class, 't')
             ->join('t.activity', 'a')
             ->join('t.project', 'p')
             ->join('p.customer', 'c')
+            ->leftJoin('t.tags', 'tags')
             ->andWhere($qb->expr()->in('t.id', $ids))
             ->orderBy('t.end', 'DESC')
         ;

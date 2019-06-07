@@ -17,9 +17,11 @@ use App\Export\RendererInterface as ExportRendererInterface;
 use App\Invoice\CalculatorInterface as InvoiceCalculator;
 use App\Invoice\NumberGeneratorInterface;
 use App\Invoice\RendererInterface as InvoiceRendererInterface;
+use App\Ldap\FormLoginLdapFactory;
 use App\Plugin\PluginInterface;
 use App\Timesheet\CalculatorInterface as TimesheetCalculator;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+use Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -58,6 +60,10 @@ class Kernel extends BaseKernel
         $container->registerForAutoconfiguration(NumberGeneratorInterface::class)->addTag(self::TAG_INVOICE_NUMBER_GENERATOR);
         $container->registerForAutoconfiguration(InvoiceCalculator::class)->addTag(self::TAG_INVOICE_CALCULATOR);
         $container->registerForAutoconfiguration(PluginInterface::class)->addTag(self::TAG_PLUGIN);
+
+        /** @var SecurityExtension $extension */
+        $extension = $container->getExtension('security');
+        $extension->addSecurityListenerFactory(new FormLoginLdapFactory());
     }
 
     public function registerBundles()
