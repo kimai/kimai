@@ -39,6 +39,7 @@ class ConfigurationTest extends TestCase
 
         $node = $configuration->getConfigTreeBuilder()->buildTree();
         $normalizedConfig = $node->normalize($inputConfig);
+
         return $node->finalize($normalizedConfig);
     }
 
@@ -242,5 +243,4 @@ class ConfigurationTest extends TestCase
         ];
         self::assertEquals($expected, $finalizedConfig['ldap']);
     }
-
 }
