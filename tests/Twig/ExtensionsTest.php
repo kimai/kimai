@@ -242,7 +242,6 @@ class ExtensionsTest extends TestCase
             'timesheet.html#duration-format' => 'https://www.kimai.org/documentation/timesheet.html#duration-format',
             'invoice.html' => 'https://www.kimai.org/documentation/invoice.html',
             '' => 'https://www.kimai.org/documentation/',
-            null => 'https://www.kimai.org/documentation/',
         ];
 
         $sut = $this->getSut($this->localeEn);

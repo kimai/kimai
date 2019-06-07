@@ -13,10 +13,10 @@
         "php": "^7.2",
         "ext-gd": "*",
         "ext-intl": "*",
+        "ext-json": "*",
         "ext-mbstring": "*",
         "ext-pdo": "*",
         "ext-zip": "*",
-        "ext-json": "*",
         "beberlei/doctrineextensions": "^1.2",
         "doctrine/doctrine-fixtures-bundle": "^3.0",
         "erusev/parsedown": "^1.6",
@@ -34,6 +34,7 @@
         "ocramius/proxy-manager": "2.1.1",
         "phpoffice/phpspreadsheet": "^1.4",
         "phpoffice/phpword": "^0.15.0",
+        "psr/log": "^1.1",
         "sensio/framework-extra-bundle": "^5.2",
         "symfony/asset": "^4.0",
         "symfony/console": "^4.0",
@@ -48,7 +49,7 @@
         "symfony/monolog-bundle": "^3.1",
         "symfony/orm-pack": "^1.0",
         "symfony/profiler-pack": "^1.0",
-        "symfony/security-bundle": "^4.0",
+        "symfony/security-bundle": "~4.2.0",
         "symfony/security-csrf": "^4.0",
         "symfony/serializer": "^4.0",
         "symfony/swiftmailer-bundle": "^3.1",
@@ -59,13 +60,15 @@
         "symfony/webpack-encore-bundle": "^1.5",
         "symfony/yaml": "^4.0",
         "twig/extensions": "^1.5",
-        "white-october/pagerfanta-bundle": "^1.1"
+        "white-october/pagerfanta-bundle": "^1.1",
+        "zendframework/zend-ldap": "^2.10"
     },
     "require-dev": {
         "dama/doctrine-test-bundle": "^5.0",
         "friendsofphp/php-cs-fixer": "^2.10",
         "phpstan/phpstan": "^0.11.7",
         "phpstan/phpstan-doctrine": "^0.11.4",
+        "phpstan/phpstan-phpunit": "^0.11.2",
         "phpstan/phpstan-symfony": "^0.11.6",
         "phpunit/phpunit": "^7.0",
         "symfony/browser-kit": "^4.0",
@@ -110,17 +113,20 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
-        "code-check":  [
-            "@codestyle",
-            "@phpstan",
-            "@tests"
+        "kimai:code-check":  [
+            "@kimai:codestyle",
+            "@kimai:phpstan",
+            "@kimai:tests"
         ],
-        "tests": "vendor/bin/phpunit tests/",
-        "tests-unit": "vendor/bin/phpunit --exclude-group integration tests/",
-        "tests-integration": "vendor/bin/phpunit --group integration tests/",
-        "phpstan": "vendor/bin/phpstan analyse src --level=3",
-        "codestyle": "vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none",
-        "codestyle-fix": "vendor/bin/php-cs-fixer fix"
+        "kimai:tests": "vendor/bin/phpunit tests/",
+        "kimai:tests-unit": "vendor/bin/phpunit --exclude-group integration tests/",
+        "kimai:tests-integration": "vendor/bin/phpunit --group integration tests/",
+        "kimai:phpstan": [
+            "vendor/bin/phpstan analyse src -c phpstan.neon --level=3",
+            "vendor/bin/phpstan analyse tests -c tests/phpstan.neon --level=4"
+        ],
+        "kimai:codestyle": "vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none",
+        "kimai:codestyle-fix": "vendor/bin/php-cs-fixer fix"
     },
     "conflict": {
         "symfony/symfony": "*"

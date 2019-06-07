@@ -83,7 +83,6 @@ class UserVoter extends AbstractVoter
             // used in templates and ProfileController
             case self::VIEW:
             case self::EDIT:
-            case self::PASSWORD:
             case self::PREFERENCES:
                 // always allow the user to edit these own settings
                 if ($subject->getId() === $user->getId()) {
@@ -91,6 +90,7 @@ class UserVoter extends AbstractVoter
                 }
                 // no break on purpose
 
+            case self::PASSWORD:
             case self::API_TOKEN:
             case self::ROLES:
             case self::HOURLY_RATE:

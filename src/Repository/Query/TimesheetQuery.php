@@ -36,11 +36,11 @@ class TimesheetQuery extends ActivityQuery
      */
     protected $orderBy = 'begin';
     /**
-     * @var User
+     * @var User|null
      */
     protected $user;
     /**
-     * @var Activity
+     * @var Activity|null
      */
     protected $activity;
     /**
@@ -66,7 +66,7 @@ class TimesheetQuery extends ActivityQuery
     }
 
     /**
-     * @return User
+     * @return User|null
      */
     public function getUser()
     {
@@ -74,7 +74,7 @@ class TimesheetQuery extends ActivityQuery
     }
 
     /**
-     * @param User|int $user
+     * @param User|int|null $user
      * @return TimesheetQuery
      */
     public function setUser($user = null)
@@ -87,7 +87,7 @@ class TimesheetQuery extends ActivityQuery
     /**
      * Activity overwrites: setProject() and setCustomer()
      *
-     * @return Activity
+     * @return Activity|null
      */
     public function getActivity()
     {
@@ -95,7 +95,7 @@ class TimesheetQuery extends ActivityQuery
     }
 
     /**
-     * @param Activity|int $activity
+     * @param Activity|int|null $activity
      * @return TimesheetQuery
      */
     public function setActivity($activity = null)

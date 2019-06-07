@@ -13,7 +13,7 @@ services:
                             # fetching services directly from the container via $container->get() won't work.
                             # The best practice is to be explicit about your dependencies anyway.
         bind:
-            $projectDirectory: "%kernel.project_dir%"
+            $projectDirectory: '%kernel.project_dir%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -36,34 +36,37 @@ services:
 
     App\Repository\WidgetRepository:
         arguments:
-            $widgets: "%kimai.widgets%"
+            $widgets: '%kimai.widgets%'
 
     App\Controller\DashboardController:
         arguments:
-            $dashboard: "%kimai.dashboard%"
+            $dashboard: '%kimai.dashboard%'
 
     App\Configuration\LanguageFormattings:
-        arguments: ["%kimai.languages%"]
+        arguments: ['%kimai.languages%']
 
     App\Configuration\TimesheetConfiguration:
         arguments:
-            $settings: "%kimai.timesheet%"
+            $settings: '%kimai.timesheet%'
 
     App\Configuration\CalendarConfiguration:
         arguments:
-            $settings: "%kimai.calendar%"
+            $settings: '%kimai.calendar%'
 
     App\Configuration\FormConfiguration:
         arguments:
-            $settings: "%kimai.defaults%"
+            $settings: '%kimai.defaults%'
 
     App\Configuration\SystemConfiguration:
         arguments:
-            $settings: "%kimai.config%"
+            $settings: '%kimai.config%'
 
     App\Configuration\ThemeConfiguration:
         arguments:
-            $settings: "%kimai.theme%"
+            $settings: '%kimai.theme%'
+
+    App\Configuration\LdapConfiguration:
+        arguments: ['%kimai.ldap%']
 
     App\Utils\MPdfConverter:
         arguments: ['%kernel.cache_dir%']
@@ -95,11 +98,8 @@ services:
     # FORMS
     # ================================================================================
 
-    App\Form\Type\UserRoleType:
-        arguments: ["%security.role_hierarchy.roles%"]
-
     App\Form\Type\LanguageType:
-        arguments: ["%app_locales%"]
+        arguments: ['%app_locales%']
 
     # ================================================================================
     # THEME
@@ -113,17 +113,31 @@ services:
     # ================================================================================
 
     App\Timesheet\Calculator\DurationCalculator:
-        arguments: ["%kimai.timesheet.rounding%"]
+        arguments: ['%kimai.timesheet.rounding%']
 
     App\Timesheet\Calculator\RateCalculator:
-        arguments: ["%kimai.timesheet.rates%"]
+        arguments: ['%kimai.timesheet.rates%']
 
     # ================================================================================
     # SECURITY & VOTER
     # ================================================================================
 
+    App\Security\RoleService:
+        arguments: ['%security.role_hierarchy.roles%']
+
     App\Security\RolePermissionManager:
-        arguments: ["%kimai.permissions%"]
+        arguments: ['%kimai.permissions%']
+
+    # ================================================================================
+    # LDAP
+    # ================================================================================
+
+    Zend\Ldap\Ldap:
+        class: App\Ldap\ZendLdap
+
+    kimai_ldap.security.authentication.provider:
+        class: App\Ldap\LdapAuthenticationProvider
+        arguments: ['@App\Security\UserChecker', '', '', '', '@App\Configuration\LdapConfiguration', '%security.authentication.hide_user_not_found%']
 
     # ================================================================================
     # REPOSITORIES

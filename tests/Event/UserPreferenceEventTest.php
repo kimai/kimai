@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\EventSubscriber;
+namespace App\Tests\Event;
 
 use App\Entity\User;
 use App\Entity\UserPreference;

@@ -31,8 +31,8 @@ install:
   - composer install
 
 script:
-  - composer codestyle
-  - composer phpstan
+  - composer kimai:codestyle
+  - composer kimai:phpstan
   - if [[ $CODECOVERAGE == 1 ]]; then vendor/bin/phpunit tests/ --coverage-clover=coverage.xml; else vendor/bin/phpunit tests/; fi;
   - cp tests/.env.dist.sqlite .env
   - bin/console doctrine:database:create -n

@@ -21,11 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 abstract class APIControllerBaseTest extends ControllerBaseTest
 {
-    /**
-     * @param string $role
-     * @return Client
-     */
-    protected function getClientForAuthenticatedUser(string $role = User::ROLE_USER)
+    protected function getClientForAuthenticatedUser(string $role = User::ROLE_USER): Client
     {
         switch ($role) {
             case User::ROLE_SUPER_ADMIN:
@@ -57,7 +53,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                 break;
 
             default:
-                $client = null;
+                throw new \Exception(sprintf('Unknown role "%s"', $role));
                 break;
         }
 
@@ -74,11 +70,6 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         return '/' . ltrim($url, '/') . ($json ? '.json' : '');
     }
 
-    /**
-     * @param Client $client
-     * @param string $url
-     * @param string $method
-     */
     protected function assertRequestIsSecured(Client $client, string $url, $method = 'GET')
     {
         $this->request($client, $url, $method);
@@ -134,26 +125,13 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         );
     }
 
-    /**
-     * @param Client $client
-     * @param string $url
-     * @param string $method
-     * @param array $parameters
-     * @param string $content
-     * @return Crawler
-     */
-    protected function request(Client $client, string $url, $method = 'GET', array $parameters = [], string $content = null)
+    protected function request(Client $client, string $url, $method = 'GET', array $parameters = [], string $content = null): Crawler
     {
         $server = ['HTTP_CONTENT_TYPE' => 'application/json', 'CONTENT_TYPE' => 'application/json'];
 
         return $client->request($method, $this->createUrl($url), $parameters, [], $server, $content);
     }
 
-    /**
-     * @param string $role
-     * @param string $url
-     * @param string $method
-     */
     protected function assertEntityNotFound(string $role, string $url, string $method = 'GET')
     {
         $client = $this->getClientForAuthenticatedUser($role);
@@ -172,11 +150,6 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         );
     }
 
-    /**
-     * @param string $role
-     * @param string $url
-     * @param array $data
-     */
     protected function assertEntityNotFoundForPatch(string $role, string $url, array $data)
     {
         $client = $this->getClientForAuthenticatedUser($role);
@@ -198,11 +171,6 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         );
     }
 
-    /**
-     * @param string $role
-     * @param string $url
-     * @param array $data
-     */
     protected function assertEntityNotFoundForDelete(string $role, string $url, array $data)
     {
         $client = $this->getClientForAuthenticatedUser($role);
@@ -224,10 +192,6 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         );
     }
 
-    /**
-     * @param Response $response
-     * @param string $message
-     */
     protected function assertApiException(Response $response, string $message)
     {
         $this->assertFalse($response->isSuccessful());
@@ -235,22 +199,12 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         $this->assertEquals(['code' => 500, 'message' => $message], json_decode($response->getContent(), true));
     }
 
-    /**
-     * @param Client $client
-     * @param string $url
-     * @param string $message
-     */
     protected function assertApiAccessDenied(Client $client, string $url, string $message)
     {
         $this->request($client, $url);
         $this->assertApiResponseAccessDenied($client->getResponse(), $message);
     }
 
-    /**
-     * @param Client $client
-     * @param string $url
-     * @param string $message
-     */
     protected function assertApiResponseAccessDenied(Response $response, string $message)
     {
         $this->assertFalse($response->isSuccessful());

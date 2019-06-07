@@ -39,7 +39,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/activity/create');
         $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
         $this->assertTrue($form->has('activity_edit_form[create_more]'));
-        $this->assertNull($form->get('activity_edit_form[create_more]')->getValue());
+        $this->assertFalse($form->get('activity_edit_form[create_more]')->hasValue());
         $client->submit($form, [
             'activity_edit_form' => [
                 'name' => 'An AcTiVitY Name',
@@ -87,6 +87,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
         $this->assertTrue($form->has('activity_edit_form[create_more]'));
+        $this->assertTrue($form->get('activity_edit_form[create_more]')->hasValue());
         $this->assertEquals(1, $form->get('activity_edit_form[create_more]')->getValue());
         $this->assertEquals($selectedProject, $form->get('activity_edit_form[project]')->getValue());
     }

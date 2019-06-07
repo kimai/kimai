@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\EventSubscriber;
+namespace App\Tests\Doctrine;
 
 use App\Doctrine\SqliteSessionInitSubscriber;
 use Doctrine\DBAL\Connection;

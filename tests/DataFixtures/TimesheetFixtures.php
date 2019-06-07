@@ -58,7 +58,7 @@ class TimesheetFixtures extends Fixture
      */
     protected $allowEmptyDescriptions = true;
     /**
-     * @var int
+     * @var bool
      */
     protected $exported = false;
     /**
@@ -265,11 +265,7 @@ class TimesheetFixtures extends Fixture
         $manager->flush();
     }
 
-    /**
-     * @param $cnt
-     * @return array
-     */
-    protected function getTagObjectList($cnt)
+    protected function getTagObjectList(int $cnt): array
     {
         if (true === $this->useTags) {
             $tagObject = new Tag();
@@ -281,11 +277,7 @@ class TimesheetFixtures extends Fixture
         return [];
     }
 
-    /**
-     * @param $i
-     * @return bool|\DateTime
-     */
-    protected function getDateTime($i)
+    protected function getDateTime(int $i): \DateTime
     {
         $start = \DateTime::createFromFormat('Y-m-d', $this->startDate);
         $start->modify("+ $i days");

@@ -9,10 +9,8 @@
 
 namespace App\Tests\Entity;
 
-use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
-use App\Entity\Timesheet;
 
 /**
  * @covers \App\Entity\Project
@@ -29,10 +27,12 @@ class ProjectTest extends AbstractEntityTest
         $this->assertNull($sut->getComment());
         $this->assertTrue($sut->getVisible());
         $this->assertEquals(0.0, $sut->getBudget());
-        // activities
         $this->assertNull($sut->getFixedRate());
         $this->assertNull($sut->getHourlyRate());
-        $this->assertNull($sut->getTimesheets());
+        self::assertIsIterable($sut->getTimesheets());
+        self::assertEmpty($sut->getTimesheets());
+        self::assertIsIterable($sut->getActivities());
+        self::assertEmpty($sut->getActivities());
         $this->assertNull($sut->getColor());
     }
 
@@ -62,17 +62,9 @@ class ProjectTest extends AbstractEntityTest
         $this->assertInstanceOf(Project::class, $sut->setBudget(12345.67));
         $this->assertEquals(12345.67, $sut->getBudget());
 
-        $activities = [(new Activity())->setName('foo')];
-        $this->assertInstanceOf(Project::class, $sut->setActivities($activities));
-        $this->assertSame($activities, $sut->getActivities());
-
         $this->assertInstanceOf(Project::class, $sut->setFixedRate(13.47));
         $this->assertEquals(13.47, $sut->getFixedRate());
         $this->assertInstanceOf(Project::class, $sut->setHourlyRate(99));
         $this->assertEquals(99, $sut->getHourlyRate());
-
-        $timesheets = [(new Timesheet())->setDescription('foo'), (new Timesheet())->setDescription('bar')];
-        $this->assertInstanceOf(Project::class, $sut->setTimesheets($timesheets));
-        $this->assertSame($timesheets, $sut->getTimesheets());
     }
 }

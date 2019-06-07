@@ -39,7 +39,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/project/create');
         $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
         $this->assertTrue($form->has('project_edit_form[create_more]'));
-        $this->assertNull($form->get('project_edit_form[create_more]')->getValue());
+        $this->assertFalse($form->get('project_edit_form[create_more]')->hasValue());
         $client->submit($form, [
             'project_edit_form' => [
                 'name' => 'Test 2',
@@ -80,6 +80,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
         $this->assertTrue($form->has('project_edit_form[create_more]'));
+        $this->assertTrue($form->get('project_edit_form[create_more]')->hasValue());
         $this->assertEquals(1, $form->get('project_edit_form[create_more]')->getValue());
         $this->assertEquals($selectedCustomer, $form->get('project_edit_form[customer]')->getValue());
     }

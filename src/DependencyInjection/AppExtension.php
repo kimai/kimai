@@ -29,12 +29,12 @@ class AppExtension extends Extension
             $config = $this->processConfiguration($configuration, $configs);
         } catch (InvalidConfigurationException $e) {
             trigger_error('Found invalid "kimai" configuration: ' . $e->getMessage());
-            $config = [];
+            throw $e;
         }
 
         // @deprecated since 0.9, duration_only will be removed with 1.0
         if (isset($config['timesheet']['duration_only'])) {
-            trigger_error('Configuration "kimai.timesheet.duration_only" is deprecated, please remove it', E_USER_DEPRECATED);
+            @trigger_error('Configuration "kimai.timesheet.duration_only" is deprecated, please remove it', E_USER_DEPRECATED);
             if (true === $config['timesheet']['duration_only'] && 'duration_only' !== $config['timesheet']['mode']) {
                 trigger_error('Found ambiguous configuration. Please remove "kimai.timesheet.duration_only" and set "kimai.timesheet.mode" instead.');
             }
@@ -60,6 +60,25 @@ class AppExtension extends Extension
         $container->setParameter('kimai.timesheet', $config['timesheet']);
         $container->setParameter('kimai.timesheet.rates', $config['timesheet']['rates']);
         $container->setParameter('kimai.timesheet.rounding', $config['timesheet']['rounding']);
+
+        $this->setLdapParameter($config['ldap'], $container);
+    }
+
+    protected function setLdapParameter(array $config, ContainerBuilder $container)
+    {
+        if (!isset($config['connection']['baseDn'])) {
+            $config['connection']['baseDn'] = $config['user']['baseDn'];
+        }
+
+        if (empty($config['connection']['accountFilterFormat']) && $config['connection']['bindRequiresDn']) {
+            $filter = '';
+            if (!empty($config['user']['filter'])) {
+                $filter = $config['user']['filter'];
+            }
+            $config['connection']['accountFilterFormat'] = '(&' . $filter . '(' . $config['user']['usernameAttribute'] . '=%s))';
+        }
+
+        $container->setParameter('kimai.ldap', $config);
     }
 
     /**

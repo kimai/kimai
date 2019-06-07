@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Timesheet\Calculator;
+namespace App\Tests\Timesheet\Rounding;
 
 use App\Entity\Timesheet;
 use App\Timesheet\Rounding\CeilRounding;

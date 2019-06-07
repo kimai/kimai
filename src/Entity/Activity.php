@@ -9,6 +9,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -28,7 +30,7 @@ class Activity
     private $id;
 
     /**
-     * @var Project
+     * @var Project|null
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="activities")
      * @ORM\JoinColumn(onDelete="CASCADE")
@@ -60,7 +62,7 @@ class Activity
     private $visible = true;
 
     /**
-     * @var Timesheet[]
+     * @var Timesheet[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Timesheet", mappedBy="activity")
      */
@@ -70,94 +72,68 @@ class Activity
     use RatesTrait;
     use ColorTrait;
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function __construct()
+    {
+        $this->timesheets = new ArrayCollection();
+    }
+
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * @return Timesheet[]
+     * @return Collection<Timesheet>
      */
-    public function getTimesheets(): array
+    public function getTimesheets(): Collection
     {
         return $this->timesheets;
     }
 
-    /**
-     * @return Project
-     */
-    public function getProject()
+    public function getProject(): ?Project
     {
         return $this->project;
     }
 
-    /**
-     * @param Project $project
-     * @return Activity
-     */
-    public function setProject($project)
+    public function setProject(?Project $project): Activity
     {
         $this->project = $project;
 
         return $this;
     }
 
-    /**
-     * @param string $name
-     * @return Activity
-     */
-    public function setName($name)
+    public function setName(string $name): Activity
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $comment
-     * @return Activity
-     */
-    public function setComment($comment)
+    public function setComment(?string $comment): Activity
     {
         $this->comment = $comment;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getComment()
+    public function getComment(): ?string
     {
         return $this->comment;
     }
 
-    /**
-     * @param bool $visible
-     * @return Activity
-     */
-    public function setVisible($visible)
+    public function setVisible(bool $visible): Activity
     {
         $this->visible = $visible;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getVisible()
+    public function getVisible(): bool
     {
         return $this->visible;
     }

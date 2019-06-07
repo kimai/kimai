@@ -17,7 +17,7 @@ use App\Entity\Customer;
 class ProjectQuery extends VisibilityQuery
 {
     /**
-     * @var Customer|int
+     * @var Customer|int|null
      */
     protected $customer;
 
@@ -46,7 +46,7 @@ class ProjectQuery extends VisibilityQuery
     }
 
     /**
-     * @return Customer|int
+     * @return Customer|int|null
      */
     public function getCustomer()
     {
@@ -54,7 +54,7 @@ class ProjectQuery extends VisibilityQuery
     }
 
     /**
-     * @param Customer|int $customer
+     * @param Customer|int|null $customer
      * @return $this
      */
     public function setCustomer($customer = null)
