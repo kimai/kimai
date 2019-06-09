@@ -72,15 +72,13 @@ class TagFixtures extends Fixture
 
             $manager->persist($tag);
 
-            if ($i % self::BATCH_SIZE == 0) {
+            if ($i % self::BATCH_SIZE === 0) {
                 $manager->flush();
                 $manager->clear(Tag::class);
             }
 
-            $manager->flush();
-            $manager->clear(Tag::class);
         }
-
         $manager->flush();
+        $manager->clear(Tag::class);
     }
 }

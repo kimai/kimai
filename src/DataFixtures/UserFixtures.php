@@ -41,6 +41,7 @@ class UserFixtures extends Fixture
     public const MIN_RATE = 30;
     public const MAX_RATE = 120;
 
+    // lower batch size, as user preferences are added in the same run
     public const BATCH_SIZE = 50;
 
     /**
@@ -147,12 +148,12 @@ class UserFixtures extends Fixture
                 ->setPreferences($this->getUserPreferences($user))
             ;
 
-            if ($i % self::BATCH_SIZE == 0) {
+            $manager->persist($user);
+
+            if ($i % self::BATCH_SIZE === 0) {
                 $manager->flush();
                 $manager->clear();
             }
-
-            $manager->persist($user);
         }
 
         $manager->flush();

@@ -32,6 +32,8 @@ class CustomerFixtures extends Fixture
     public const MAX_CUSTOMERS = 15;
     public const MIN_BUDGET = 0;
     public const MAX_BUDGET = 100000;
+    public const MIN_TIME_BUDGET = 0;
+    public const MAX_TIME_BUDGET = 10000000;
     public const MIN_GLOBAL_ACTIVITIES = 5;
     public const MAX_GLOBAL_ACTIVITIES = 30;
     public const MIN_PROJECTS_PER_CUSTOMER = 2;
@@ -100,6 +102,14 @@ class CustomerFixtures extends Fixture
             ->setVisible($visible)
         ;
 
+        if (rand(0, 3) % 3) {
+            $entry->setBudget(rand(self::MIN_BUDGET, self::MAX_BUDGET));
+        }
+
+        if (rand(0, 3) % 3) {
+            $entry->setTimeBudget(rand(self::MIN_TIME_BUDGET, self::MAX_TIME_BUDGET));
+        }
+
         return $entry;
     }
 
@@ -115,11 +125,18 @@ class CustomerFixtures extends Fixture
 
         $entry
             ->setName($faker->catchPhrase . ($visible ? '' : ' (x)'))
-            ->setBudget(rand(self::MIN_BUDGET, self::MAX_BUDGET))
             ->setComment($faker->text)
             ->setCustomer($customer)
             ->setVisible($visible)
         ;
+
+        if (rand(0, 3) % 3) {
+            $entry->setBudget(rand(self::MIN_BUDGET, self::MAX_BUDGET));
+        }
+
+        if (rand(0, 3) % 3) {
+            $entry->setTimeBudget(rand(self::MIN_TIME_BUDGET, self::MAX_TIME_BUDGET));
+        }
 
         return $entry;
     }
@@ -139,6 +156,14 @@ class CustomerFixtures extends Fixture
             ->setComment($faker->text)
             ->setVisible($visible)
         ;
+
+        if (rand(0, 3) % 3) {
+            $entry->setBudget(rand(self::MIN_BUDGET, self::MAX_BUDGET));
+        }
+
+        if (rand(0, 3) % 3) {
+            $entry->setTimeBudget(rand(self::MIN_TIME_BUDGET, self::MAX_TIME_BUDGET));
+        }
 
         return $entry;
     }
