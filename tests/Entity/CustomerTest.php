@@ -10,11 +10,12 @@
 namespace App\Tests\Entity;
 
 use App\Entity\Customer;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Entity\Customer
  */
-class CustomerTest extends AbstractEntityTest
+class CustomerTest extends TestCase
 {
     public function testDefaultValues()
     {

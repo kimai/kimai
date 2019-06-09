@@ -10,15 +10,19 @@
 namespace App\Tests\Invoice\Renderer;
 
 use App\Invoice\Renderer\TwigRenderer;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 /**
  * @covers \App\Invoice\Renderer\TwigRenderer
+ * @group integration
  */
-class TwigRendererTest extends AbstractRendererTest
+class TwigRendererTest extends KernelTestCase
 {
+    use RendererTestTrait;
+
     public function testSupports()
     {
         $loader = new FilesystemLoader();

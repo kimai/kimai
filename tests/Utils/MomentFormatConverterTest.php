@@ -10,12 +10,12 @@
 namespace App\Tests\Utils;
 
 use App\Utils\MomentFormatConverter;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Utils\MomentFormatConverter
  */
-class MomentFormatConverterTest extends KernelTestCase
+class MomentFormatConverterTest extends TestCase
 {
     public function test()
     {

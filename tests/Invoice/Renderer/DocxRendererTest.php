@@ -10,14 +10,18 @@
 namespace App\Tests\Invoice\Renderer;
 
 use App\Invoice\Renderer\DocxRenderer;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * @covers \App\Invoice\Renderer\DocxRenderer
  * @covers \App\Invoice\Renderer\AbstractRenderer
+ * @group integration
  */
-class DocxRendererTest extends AbstractRendererTest
+class DocxRendererTest extends TestCase
 {
+    use RendererTestTrait;
+
     public function testSupports()
     {
         $sut = $this->getAbstractRenderer(DocxRenderer::class);

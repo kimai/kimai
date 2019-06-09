@@ -11,15 +11,19 @@ namespace App\Tests\Invoice\Renderer;
 
 use App\Invoice\Renderer\OdsRenderer;
 use App\Model\InvoiceModel;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * @covers \App\Invoice\Renderer\OdsRenderer
  * @covers \App\Invoice\Renderer\AbstractRenderer
  * @covers \App\Invoice\Renderer\AbstractSpreadsheetRenderer
+ * @group integration
  */
-class OdsRendererTest extends AbstractRendererTest
+class OdsRendererTest extends TestCase
 {
+    use RendererTestTrait;
+
     public function testSupports()
     {
         $sut = $this->getAbstractRenderer(OdsRenderer::class);
