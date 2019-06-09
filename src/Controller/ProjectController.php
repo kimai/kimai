@@ -102,6 +102,21 @@ class ProjectController extends AbstractController
     }
 
     /**
+     * @Route(path="/{id}/budget", name="admin_project_budget", methods={"GET"})
+     * @Security("is_granted('budget', project)")
+     *
+     * @param Project $project
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function budgetAction(Project $project)
+    {
+        return $this->render('project/budget.html.twig', [
+            'project' => $project,
+            'stats' => $this->getRepository()->getProjectStatistics($project)
+        ]);
+    }
+
+    /**
      * @Route(path="/{id}/edit", name="admin_project_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', project)")
      *
@@ -238,6 +253,7 @@ class ProjectController extends AbstractController
             'method' => 'POST',
             'currency' => $currency,
             'create_more' => true,
+            'include_budget' => $this->isGranted('budget', $project)
         ]);
     }
 }
