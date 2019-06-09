@@ -75,6 +75,7 @@ class TagRepository extends AbstractRepository
             ->select('tag.id, tag.name, count(timesheets.id) as amount')
             ->leftJoin('tag.timesheets', 'timesheets')
             ->addGroupBy('tag.id')
+            ->addGroupBy('tag.name')
             ->orderBy('tag.name')
         ;
 
