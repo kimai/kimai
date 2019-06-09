@@ -1,0 +1,28 @@
+{% macro progressbar(max, current, title, subTitle) %}
+    {% set percentReached = (current / (max / 100))|number_format(2) %}
+    {% set class = "progress-bar-info" %}
+    {% set width = percentReached %}
+
+    {% if percentReached > 90 %}
+        {% set class = "progress-bar-danger" %}
+    {% elseif percentReached > 70 %}
+        {% set class = "progress-bar-warning" %}
+    {% elseif percentReached > 50 %}
+        {% set class = "progress-bar-success" %}
+    {% elseif percentReached > 30 %}
+        {% set class = "progress-bar-primary" %}
+    {% endif %}
+
+    {% if width > 100 %}
+        {% set width = 100 %}
+    {% endif %}
+
+    <div class="progress-group">
+        <span class="progress-text">{{ title }} &ndash; {{ percentReached }}%</span>
+        <span class="progress-number">{{ subTitle }}</span>
+
+        <div class="progress">
+            <div class="progress-bar {{ class }}" role="progressbar" aria-valuenow="{{ width }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ width }}%"></div>
+        </div>
+    </div>
+{% endmacro %}
