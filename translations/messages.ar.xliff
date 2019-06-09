@@ -33,12 +33,6 @@
                 <source>confirm.delete</source>
                 <target>هل تريد حقًا حذفها؟</target>
             </trans-unit>
-            <trans-unit id="confirm.delete_message">
-                <source>confirm.delete_message</source>
-                <target>
-                    يجب عليك تأكيد الحذف ، حيث أن هناك عناصر مرتبطة سيتم حذفها أيضًا.
-                </target>
-            </trans-unit>
 
             <!--
               Login / Security
@@ -383,14 +377,6 @@
                 <source>admin_project.subtitle</source>
                 <target>يجمع المشروع بين أنشطة العميل في المجموعة</target>
             </trans-unit>
-            <trans-unit id="admin_project.delete_confirm">
-                <source>admin_project.delete_confirm</source>
-                <target>
-                    حاليا المشروع %project% للعميل %customer% لديه %activities%
-                    الأنشطة و %records% ، سجلات الوقت, والتي تصل إلى ما مجموعه %duration%.
-                    سيتم حذف هذه الأنشطة وسجلات الوقت كذلك!
-                </target>
-            </trans-unit>
 
             <!--
               Admin: Activity
@@ -402,14 +388,6 @@
             <trans-unit id="admin_activity.subtitle">
                 <source>admin_activity.subtitle</source>
                 <target>المهام التي يمكن اختيارها لسجلات الوقت</target>
-            </trans-unit>
-            <trans-unit id="admin_activity.delete_confirm">
-                <source>admin_activity.delete_confirm</source>
-                <target>
-                    حاليا النشاط %activity% في المشروع %project% للعميل %customer%
-                    لديه %records% ، سجلات الوقت والتي تصل إلى ما مجموعه %duration%.
-                    سيتم حذف هذه السجلات الزمنية كذلك!
-                </target>
             </trans-unit>
 
             <!--
@@ -471,13 +449,6 @@
                 <source>label.currency</source>
                 <target>العملة</target>
             </trans-unit>
-            <trans-unit id="admin_customer.delete_confirm">
-                <source>admin_customer.delete_confirm</source>
-                <target>
-                    حاليا العميل %customer% لديه %project% مشاريع مع %activity% الأنشطة التي تعد في %records% سجلات الوقت إلى ما مجموعه %duration%.
-                    سيتم حذف هذه المشاريع والأنشطة والسجلات الزمنية كذلك!
-                </target>
-            </trans-unit>
 
             <!--
               Admin: User
@@ -509,13 +480,6 @@
             <trans-unit id="label.roles">
                 <source>label.roles</source>
                 <target>وظيفة</target>
-            </trans-unit>
-            <trans-unit id="admin_user.delete_confirm">
-                <source>admin_user.delete_confirm</source>
-                <target>
-                    حاليا المستخدم %user% لديه %records% سجلات الوقت التي تصل إلى ما مجموعه %duration%.
-                    سيتم حذف هذه السجلات الزمنية كذلك!
-                </target>
             </trans-unit>
 
             <!--

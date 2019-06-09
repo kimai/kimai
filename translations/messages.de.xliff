@@ -33,9 +33,12 @@
                 <source>confirm.delete</source>
                 <target>Wollen Sie das wirklich löschen?</target>
             </trans-unit>
-            <trans-unit id="confirm.delete_message">
-                <source>confirm.delete_message</source>
-                <target>Sie müssen das Löschen erneut bestätigen, da verknüpfte Objekte existieren welche ebenfalls mit gelöscht werden.</target>
+            <trans-unit id="admin_entity.delete_confirm">
+                <source>admin_entity.delete_confirm</source>
+                <target>
+                    Diese Daten werden ebenfalls mit gelöscht!
+                    Alternativ können Sie einen Eintrag auswählen, auf den alle existierenden Daten umgebucht werden:
+                </target>
             </trans-unit>
             <trans-unit id="delete.not_in_use">
                 <source>delete.not_in_use</source>
@@ -470,13 +473,11 @@
                 <source>admin_project.subtitle</source>
                 <target>Ein Projekt fasst Tätigkeiten für jeweils einen Kunden in einer Gruppe zusammen</target>
             </trans-unit>
-            <trans-unit id="admin_project.delete_confirm">
-                <source>admin_project.delete_confirm</source>
+            <trans-unit id="admin_project.short_stats">
+                <source>admin_project.short_stats</source>
                 <target>
                     Momentan existieren für das Projekt %project% des Kunden %customer% insgesamt %activities%
                     Tätigkeiten und %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen.
-                    Diese Tätigkeiten und Zeiteinträge werden ebenfalls mit gelöscht!
-                    Alternativ können Sie ein Projekt auswählen, auf das alle existierenden Aktivitäten und Einträge umgebucht werden:
                 </target>
             </trans-unit>
 
@@ -491,13 +492,11 @@
                 <source>admin_activity.subtitle</source>
                 <target>Aufgaben die zur Zeiterfassung genutzt werden können</target>
             </trans-unit>
-            <trans-unit id="admin_activity.delete_confirm">
-                <source>admin_activity.delete_confirm</source>
+            <trans-unit id="admin_activity.short_stats">
+                <source>admin_activity.short_stats</source>
                 <target>
                     Momentan existieren für die Tätigkeit %activity% im Projekt %project% für den Kunden %customer%
-                    insgesamt %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen. Diese
-                    Zeiteinträge werden ebenfalls mit gelöscht!
-                    Alternativ können Sie eine Tätigkeit auswählen, auf die alle existierenden Einträge umgebucht werden:
+                    insgesamt %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen.
                 </target>
             </trans-unit>
 
@@ -560,13 +559,11 @@
                 <source>label.currency</source>
                 <target>Währung</target>
             </trans-unit>
-            <trans-unit id="admin_customer.delete_confirm">
-                <source>admin_customer.delete_confirm</source>
+            <trans-unit id="admin_customer.short_stats">
+                <source>admin_customer.short_stats</source>
                 <target>
                     Momentan existieren für den Kunden %customer% insgesamt %project% Projekte mit %activity%
-                    Tätigkeiten, die sich in %records% Zeiteinträgen auf eine Gesamtdauer von %duration% belaufen. Diese
-                    Projekte, Tätigkeiten und Zeiteinträge werden ebenfalls mit gelöscht!
-                    Alternativ können Sie einen Kunden auswählen, auf den alle Daten umgebucht werden:
+                    Tätigkeiten, die sich in %records% Zeiteinträgen auf eine Gesamtdauer von %duration% belaufen.
                 </target>
             </trans-unit>
 
@@ -601,11 +598,10 @@
                 <source>label.roles</source>
                 <target>Rolle</target>
             </trans-unit>
-            <trans-unit id="admin_user.delete_confirm">
-                <source>admin_user.delete_confirm</source>
+            <trans-unit id="admin_user.short_stats">
+                <source>admin_user.short_stats</source>
                 <target>
                     Momentan existieren für den Benutzer %user% insgesamt %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen.
-                    Diese Zeiteinträge werden ebenfalls mit gelöscht!
                 </target>
             </trans-unit>
 
@@ -663,6 +659,10 @@
             <trans-unit id="stats.durationTotal">
                 <source>stats.durationTotal</source>
                 <target>Arbeitszeit total</target>
+            </trans-unit>
+            <trans-unit id="stats.yourWorkingHours">
+                <source>stats.yourWorkingHours</source>
+                <target>Deine Arbeitszeiten</target>
             </trans-unit>
             <trans-unit id="stats.amountToday">
                 <source>stats.amountToday</source>

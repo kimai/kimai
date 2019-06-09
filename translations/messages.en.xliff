@@ -33,9 +33,12 @@
                 <source>confirm.delete</source>
                 <target>Do you really want to delete it?</target>
             </trans-unit>
-            <trans-unit id="confirm.delete_message">
-                <source>confirm.delete_message</source>
-                <target>You have to confirm the deletion, as there are linked objects which will be deleted as well.</target>
+            <trans-unit id="admin_entity.delete_confirm">
+                <source>admin_entity.delete_confirm</source>
+                <target>
+                    This data will be deleted as well!
+                    Alternatively, you can select an entry to which all data will be transferred:
+                </target>
             </trans-unit>
             <trans-unit id="delete.not_in_use">
                 <source>delete.not_in_use</source>
@@ -470,13 +473,11 @@
                 <source>admin_project.subtitle</source>
                 <target>A project combines activities for a customer in a group</target>
             </trans-unit>
-            <trans-unit id="admin_project.delete_confirm">
-                <source>admin_project.delete_confirm</source>
+            <trans-unit id="admin_project.short_stats">
+                <source>admin_project.short_stats</source>
                 <target>
                     Currently the project %project% for the customer %customer% has %activities%
                     activities and %records% time-records, which count up to a total of %duration%.
-                    These activities and time-records will be deleted as well!
-                    Alternatively, you can select a project to which all existing activities and entries are transferred:
                 </target>
             </trans-unit>
 
@@ -491,13 +492,11 @@
                 <source>admin_activity.subtitle</source>
                 <target>Tasks that can be chosen for time-records</target>
             </trans-unit>
-            <trans-unit id="admin_activity.delete_confirm">
-                <source>admin_activity.delete_confirm</source>
+            <trans-unit id="admin_activity.short_stats">
+                <source>admin_activity.short_stats</source>
                 <target>
                     Currently the activity %activity% in the project %project% for the customer %customer%
                     has %records% time-records, which count up to a total of %duration%.
-                    These time-records will be deleted as well!
-                    Alternatively, you can select an activity to which all existing entries are transferred:
                 </target>
             </trans-unit>
 
@@ -560,13 +559,11 @@
                 <source>label.currency</source>
                 <target>Currency</target>
             </trans-unit>
-            <trans-unit id="admin_customer.delete_confirm">
-                <source>admin_customer.delete_confirm</source>
+            <trans-unit id="admin_customer.short_stats">
+                <source>admin_customer.short_stats</source>
                 <target>
                     Currently the customer %customer% has %project% projects with %activity% activities, which count up
                     in %records% time-records to a total of %duration%.
-                    These projects, activities and time-records will be deleted as well!
-                    Alternatively, you can select a customer to whom all data is transferred:
                 </target>
             </trans-unit>
 
@@ -601,11 +598,10 @@
                 <source>label.roles</source>
                 <target>Role</target>
             </trans-unit>
-            <trans-unit id="admin_user.delete_confirm">
-                <source>admin_user.delete_confirm</source>
+            <trans-unit id="admin_user.short_stats">
+                <source>admin_user.short_stats</source>
                 <target>
                     Currently the user %user% has %records% time-records which count up to a total of %duration%.
-                    These time-records will be deleted as well!
                 </target>
             </trans-unit>
 
@@ -663,6 +659,10 @@
             <trans-unit id="stats.durationTotal">
                 <source>stats.durationTotal</source>
                 <target>Working hours total</target>
+            </trans-unit>
+            <trans-unit id="stats.yourWorkingHours">
+                <source>stats.yourWorkingHours</source>
+                <target>Your working hours</target>
             </trans-unit>
             <trans-unit id="stats.amountToday">
                 <source>stats.amountToday</source>
