@@ -26,11 +26,7 @@ class ServiceExport
         }
     }
 
-    /**
-     * @param RendererInterface $renderer
-     * @return $this
-     */
-    public function addRenderer(RendererInterface $renderer)
+    public function addRenderer(RendererInterface $renderer): ServiceExport
     {
         $this->renderer[] = $renderer;
 
@@ -38,20 +34,14 @@ class ServiceExport
     }
 
     /**
-     * Returns an array of export renderer.
-     *
      * @return RendererInterface[]
      */
-    public function getRenderer()
+    public function getRenderer(): array
     {
         return $this->renderer;
     }
 
-    /**
-     * @param string $id
-     * @return RendererInterface|null
-     */
-    public function getRendererById(string $id)
+    public function getRendererById(string $id): ?RendererInterface
     {
         foreach ($this->renderer as $renderer) {
             if ($renderer->getId() === $id) {
