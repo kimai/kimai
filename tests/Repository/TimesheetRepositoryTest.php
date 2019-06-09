@@ -26,6 +26,7 @@ use Pagerfanta\Pagerfanta;
 
 /**
  * @covers \App\Repository\TimesheetRepository
+ * @group integration
  */
 class TimesheetRepositoryTest extends AbstractRepositoryTest
 {
