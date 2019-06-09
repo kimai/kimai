@@ -59,6 +59,7 @@ class CustomerRepository extends AbstractRepository
         $qb
             ->addSelect('COUNT(t.id) as recordAmount')
             ->addSelect('SUM(t.duration) as recordDuration')
+            ->addSelect('SUM(t.rate) as recordRate')
             ->from(Timesheet::class, 't')
             ->join(Project::class, 'p', Query\Expr\Join::WITH, 't.project = p.id')
             ->andWhere('p.customer = :customer')
@@ -68,6 +69,7 @@ class CustomerRepository extends AbstractRepository
         if (isset($timesheetResult[0])) {
             $stats->setRecordAmount($timesheetResult[0]['recordAmount']);
             $stats->setRecordDuration($timesheetResult[0]['recordDuration']);
+            $stats->setRecordRate($timesheetResult[0]['recordRate']);
         }
 
         $qb = $this->getEntityManager()->createQueryBuilder();

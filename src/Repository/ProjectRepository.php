@@ -49,14 +49,25 @@ class ProjectRepository extends AbstractRepository
 
     public function getProjectStatistics(Project $project): ProjectStatistic
     {
+        $stats = new ProjectStatistic();
+        $stats->setCount(1);
+
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('COUNT(t.id) as recordAmount')
+        $qb
+            ->addSelect('COUNT(t.id) as recordAmount')
             ->addSelect('SUM(t.duration) as recordDuration')
+            ->addSelect('SUM(t.rate) as recordRate')
             ->from(Timesheet::class, 't')
             ->andWhere('t.project = :project')
         ;
-        $resultTimesheets = $qb->getQuery()->execute(['project' => $project], Query::HYDRATE_ARRAY);
+        $timesheetResult = $qb->getQuery()->execute(['project' => $project], Query::HYDRATE_ARRAY);
+
+        if (isset($timesheetResult[0])) {
+            $stats->setRecordAmount($timesheetResult[0]['recordAmount']);
+            $stats->setRecordDuration($timesheetResult[0]['recordDuration']);
+            $stats->setRecordRate($timesheetResult[0]['recordRate']);
+        }
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('COUNT(a.id) as activityAmount')
@@ -64,16 +75,6 @@ class ProjectRepository extends AbstractRepository
             ->andWhere('a.project = :project')
         ;
         $resultActivities = $qb->getQuery()->execute(['project' => $project], Query::HYDRATE_ARRAY);
-
-        $stats = new ProjectStatistic();
-        $stats->setCount(1);
-
-        if (isset($resultTimesheets[0])) {
-            $resultTimesheets = $resultTimesheets[0];
-
-            $stats->setRecordAmount($resultTimesheets['recordAmount']);
-            $stats->setRecordDuration($resultTimesheets['recordDuration']);
-        }
 
         if (isset($resultActivities[0])) {
             $resultActivities = $resultActivities[0];
