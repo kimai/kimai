@@ -20,6 +20,7 @@ class ActivityVoter extends AbstractVoter
 {
     public const VIEW = 'view';
     public const EDIT = 'edit';
+    public const BUDGET = 'budget';
     public const DELETE = 'delete';
 
     /**
@@ -28,7 +29,8 @@ class ActivityVoter extends AbstractVoter
     public const ALLOWED_ATTRIBUTES = [
         self::VIEW,
         self::EDIT,
-        self::DELETE
+        self::BUDGET,
+        self::DELETE,
     ];
 
     /**
