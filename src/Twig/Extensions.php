@@ -97,6 +97,7 @@ class Extensions extends AbstractExtension
         'permissions' => 'fas fa-user-lock',
         'back' => 'fas fa-long-arrow-alt-left',
         'tag' => 'fas fa-tags',
+        'avatar' => 'fas fa-user'
     ];
 
     /**
