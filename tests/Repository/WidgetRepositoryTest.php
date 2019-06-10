@@ -9,9 +9,9 @@
 
 namespace App\Tests\Repository;
 
-use App\Model\Widget;
 use App\Repository\TimesheetRepository;
 use App\Repository\WidgetRepository;
+use App\Widget\Type\SimpleStatistic;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -64,19 +64,19 @@ class WidgetRepositoryTest extends TestCase
 
         $this->assertEquals('Test widget', $widget->getTitle());
         $this->assertEquals($data, $widget->getData());
-        $this->assertEquals('sunny', $widget->getColor());
-        $this->assertEquals('far fa-test', $widget->getIcon());
-        $this->assertEquals($dataType, $widget->getDataType());
+        $this->assertEquals('sunny', $widget->getOption('color'));
+        $this->assertEquals('far fa-test', $widget->getOption('icon'));
+        $this->assertEquals($dataType, $widget->getOption('dataType'));
     }
 
     public function getWidgetData()
     {
         return [
-            [12, TimesheetRepository::STATS_QUERY_DURATION, Widget::DATA_TYPE_DURATION],
-            [112233, TimesheetRepository::STATS_QUERY_AMOUNT, Widget::DATA_TYPE_INT],
-            [37, TimesheetRepository::STATS_QUERY_ACTIVE, Widget::DATA_TYPE_INT],
-            [375, TimesheetRepository::STATS_QUERY_RATE, Widget::DATA_TYPE_MONEY],
-            [['test' => 'foo'], TimesheetRepository::STATS_QUERY_USER, Widget::DATA_TYPE_INT],
+            [12, TimesheetRepository::STATS_QUERY_DURATION, SimpleStatistic::DATA_TYPE_DURATION],
+            [112233, TimesheetRepository::STATS_QUERY_AMOUNT, 'int'],
+            [37, TimesheetRepository::STATS_QUERY_ACTIVE, 'int'],
+            [375, TimesheetRepository::STATS_QUERY_RATE, SimpleStatistic::DATA_TYPE_MONEY],
+            [['test' => 'foo'], TimesheetRepository::STATS_QUERY_USER, 'int'],
         ];
     }
 }

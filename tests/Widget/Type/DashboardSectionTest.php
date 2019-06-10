@@ -7,35 +7,32 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Model;
+namespace App\Tests\Widget\Type;
 
-use App\Model\DashboardSection;
-use App\Model\Widget;
+use App\Widget\Type\CompoundRow;
+use App\Widget\Type\More;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Model\DashboardSection
+ * @covers \App\Widget\Type\CompoundRow
  */
 class DashboardSectionTest extends TestCase
 {
     public function testDefaultValues()
     {
-        $sut = new DashboardSection('test');
+        $sut = new CompoundRow('test');
         $this->assertEquals('test', $sut->getTitle());
         $this->assertEquals(0, $sut->getOrder());
         $this->assertEquals([], $sut->getWidgets());
-        $this->assertEquals(DashboardSection::TYPE_SIMPLE, $sut->getType());
     }
 
     public function testSetter()
     {
-        $sut = new DashboardSection('hello-world');
-        $sut->setType(DashboardSection::TYPE_CHART);
+        $sut = new CompoundRow('hello-world');
         $sut->setOrder(13);
-        $sut->addWidget(new Widget('bar', []));
+        $sut->addWidget((new More())->setTitle('bar')->setId('foo'));
 
         $this->assertCount(1, $sut->getWidgets());
-        $this->assertEquals(DashboardSection::TYPE_CHART, $sut->getType());
         $this->assertEquals(13, $sut->getOrder());
         $this->assertEquals('bar', $sut->getWidgets()[0]->getTitle());
     }

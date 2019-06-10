@@ -1,0 +1,34 @@
+{% set url = null %}
+{% if widget.option('route') %}
+    {% set url = path(widget.option('route'), widget.option('routeOptions', [])) %}
+{% endif %}
+
+<div class="small-box bg-{{ widget.option('color', 'green') }}">
+    <div class="inner">
+        <h3>
+            {% if widget.data is iterable %}
+                {{ 'Invalid data' }}
+            {% else %}
+                {% block widget_data %}
+                    {% set data = widget.data %}
+                    {% if widget.option('dataType') == 'duration' %}
+                        {% set data = widget.data|duration %}
+                    {% elseif widget.option('dataType') == 'money' %}
+                        {% set data = widget.data|money %}
+                    {% endif %}
+                    {{ data }}
+                {% endblock %}
+            {% endif %}
+            <sup style="font-size: 20px">{{ unit|default('') }}</sup>
+        </h3>
+        <p>{{ widget.title|trans }}</p>
+    </div>
+    <div class="icon">
+        <i class="{{ widget.option('icon')|icon(widget.option('icon')) }}"></i>
+    </div>
+    {% if not url is empty %}
+    <a href="{{ url }}" class="small-box-footer">
+        {{ 'more.info.link'|trans }}
+    </a>
+    {% endif %}
+</div>

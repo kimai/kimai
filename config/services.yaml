@@ -77,6 +77,9 @@ services:
     App\Export\ServiceExport:
         arguments: [!tagged export.renderer]
 
+    App\Widget\WidgetService:
+        arguments: [!tagged widget.renderer]
+
     # ================================================================================
     # DATABASE
     # ================================================================================

@@ -10,8 +10,10 @@
 namespace App\Controller;
 
 use App\Event\DashboardEvent;
-use App\Model\DashboardSection;
 use App\Repository\WidgetRepository;
+use App\Widget\Type\CompoundChart;
+use App\Widget\Type\CompoundRow;
+use App\Widget\WidgetContainerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -65,15 +67,18 @@ class DashboardController extends AbstractController
                 continue;
             }
 
-            $row = new DashboardSection($widgetRow['title'] ?? null);
-            $row
-                ->setOrder($widgetRow['order'])
-                ->setType($widgetRow['type'])
-            ;
+            // TODO this should be dynamic
+            if ($widgetRow['type'] === 'compoundChart') {
+                $row = new CompoundChart($widgetRow['title'] ?? '');
+            } else {
+                $row = new CompoundRow($widgetRow['title'] ?? '');
+            }
+
+            $row->setOrder($widgetRow['order']);
 
             foreach ($widgetRow['widgets'] as $widgetName) {
                 if (!$this->repository->has($widgetName)) {
-                    throw new \Exception('Unknwon widget: ' . $widgetName);
+                    throw new \Exception(sprintf('Unknown widget "%s"', $widgetName));
                 }
 
                 $row->addWidget($this->repository->get($widgetName, $event->getUser()));
@@ -91,7 +96,7 @@ class DashboardController extends AbstractController
 
         uasort(
             $sections,
-            function (DashboardSection $a, DashboardSection $b) {
+            function (WidgetContainerInterface $a, WidgetContainerInterface $b) {
                 if ($a->getOrder() == $b->getOrder()) {
                     return 0;
                 }
@@ -101,7 +106,7 @@ class DashboardController extends AbstractController
         );
 
         return $this->render('dashboard/index.html.twig', [
-            'widget_rows' => $sections
+            'widgets' => $sections
         ]);
     }
 }

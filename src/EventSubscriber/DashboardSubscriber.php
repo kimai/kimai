@@ -11,12 +11,12 @@ namespace App\EventSubscriber;
 
 use App\Entity\User;
 use App\Event\DashboardEvent;
-use App\Model\DashboardSection;
-use App\Model\Widget;
 use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\UserRepository;
+use App\Widget\Type\CompoundRow;
+use App\Widget\Type\More;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -79,7 +79,6 @@ class DashboardSubscriber implements EventSubscriberInterface
 
     /**
      * @param DashboardEvent $event
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function onDashboardEvent(DashboardEvent $event)
     {
@@ -87,54 +86,67 @@ class DashboardSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $this->addAdminWidgets($event);
-    }
-
-    /**
-     * @param DashboardEvent $event
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    protected function addAdminWidgets(DashboardEvent $event)
-    {
-        $section = new DashboardSection('dashboard.admin');
+        $section = new CompoundRow('dashboard.admin');
         $section->setOrder(100);
 
-        $widget = new Widget('stats.userTotal', $this->user->countUser());
-        $widget
-            ->setRoute('admin_user')
-            ->setIcon('user')
-            ->setColor('green')
-            ->setType(Widget::TYPE_MORE)
-        ;
-        $section->addWidget($widget);
+        if ($this->security->isGranted('view_user')) {
+            $section->addWidget(
+                (new More())
+                    ->setId('userTotal')
+                    ->setTitle('stats.userTotal')
+                    ->setData($this->user->countUser())
+                    ->setOptions([
+                        'route' => 'admin_user',
+                        'icon' => 'user',
+                        'color' => 'primary',
+                    ])
+            );
+        }
 
-        $widget = new Widget('stats.customerTotal', $this->customer->countCustomer());
-        $widget
-            ->setRoute('admin_customer')
-            ->setIcon('customer')
-            ->setColor('blue')
-            ->setType(Widget::TYPE_MORE)
-        ;
-        $section->addWidget($widget);
+        if ($this->security->isGranted('view_customer')) {
+            $section->addWidget(
+                (new More())
+                    ->setId('customerTotal')
+                    ->setTitle('stats.customerTotal')
+                    ->setData($this->customer->countCustomer())
+                    ->setOptions([
+                        'route' => 'admin_customer',
+                        'icon' => 'customer',
+                        'color' => 'primary',
+                    ])
+            );
+        }
 
-        $widget = new Widget('stats.projectTotal', $this->project->countProject());
-        $widget
-            ->setRoute('admin_project')
-            ->setIcon('project')
-            ->setColor('yellow')
-            ->setType(Widget::TYPE_MORE)
-        ;
-        $section->addWidget($widget);
+        if ($this->security->isGranted('view_project')) {
+            $section->addWidget(
+                (new More())
+                    ->setId('projectTotal')
+                    ->setTitle('stats.projectTotal')
+                    ->setData($this->project->countProject())
+                    ->setOptions([
+                        'route' => 'admin_project',
+                        'icon' => 'project',
+                        'color' => 'primary',
+                    ])
+            );
+        }
 
-        $widget = new Widget('stats.activityTotal', $this->activity->countActivity());
-        $widget
-            ->setRoute('admin_activity')
-            ->setIcon('activity')
-            ->setColor('purple')
-            ->setType(Widget::TYPE_MORE)
-        ;
-        $section->addWidget($widget);
+        if ($this->security->isGranted('view_activity')) {
+            $section->addWidget(
+                (new More())
+                    ->setId('activityTotal')
+                    ->setTitle('stats.activityTotal')
+                    ->setData($this->activity->countActivity())
+                    ->setOptions([
+                        'route' => 'admin_activity',
+                        'icon' => 'activity',
+                        'color' => 'primary',
+                    ])
+            );
+        }
 
-        $event->addSection($section);
+        if (count($section->getWidgets()) > 0) {
+            $event->addSection($section);
+        }
     }
 }

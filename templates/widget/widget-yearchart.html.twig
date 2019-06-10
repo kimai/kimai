@@ -1,0 +1,85 @@
+{% set colors = widget.option('color')|default('')|split(';') %}
+
+<p class="text-center">
+    <strong>
+{#
+        {% for yearName, year in widget.data|sort %}
+            {% if loop.first or loop.last %}
+                {% for id, month in year.months %}
+                    {% if loop.first %}
+                    moment.months({{ loop.index }}) {{ yearName }}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            {% if loop.first %} - {% endif %}
+        {% endfor %}
+#}
+        {{ widget.title|trans }}
+    </strong>
+</p>
+<div class="chart">
+    <canvas id="timeChart" style="height: 180px;"></canvas>
+</div>
+
+<script type="text/javascript">
+    document.addEventListener('kimai.initialized', function() {
+
+    var timeChartData = {
+        labels: moment.months(),
+        datasets: [
+            {% for yearName, year in widget.data %}
+            {% if colors[loop.index-1] is defined %}
+            {% set yearColors = colors[loop.index-1]|split('|') %}
+            {% else %}
+            {% set yearColors = '#3b8bba|rgba(0,115,183,0.6)'|split('|') %}
+            {% endif %}
+            {
+                label               : '{{ yearName }}',
+                backgroundColor     : '{% if yearColors.1 is defined %}{{ yearColors.1 }}{% endif %}',
+                borderColor         : '{% if yearColors.0 is defined %}{{ yearColors.0 }}{% endif %}',
+                pointRadius         : 2,
+                borderWidth         : 1,
+                pointHitRadius      : 10,
+                lineTension         : 0.3,
+                data                : [
+                {% for month in year.months %}
+                    {{ (month.totalDuration / 3600)|round }}
+                    {% if not loop.last %},{% endif %}
+                {% endfor %}
+                ]
+            }
+            {% if not loop.last %},{% endif %}
+            {% endfor %}
+        ]
+    };
+
+    var timeChartOptions = {
+        maintainAspectRatio     : true,
+        responsive              : true,
+        scales: {
+            xAxes: [{
+                gridLines: {
+                    display: false
+                }
+            }],
+            yAxes: [{
+                gridLines: {
+                    display: true,
+                    color: 'rgba(0,0,0,.05)',
+                    lineWidth: 1
+                }
+            }]
+        }
+    };
+
+        var timeChartCanvas = $('#timeChart').get(0).getContext('2d');
+
+        new Chart(
+            timeChartCanvas, {
+                type: 'line',
+                data: timeChartData,
+                options: timeChartOptions
+            }
+        );
+    });
+</script>
