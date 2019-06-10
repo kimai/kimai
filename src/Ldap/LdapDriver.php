@@ -9,6 +9,7 @@
 
 namespace App\Ldap;
 
+use App\Configuration\LdapConfiguration;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Zend\Ldap\Exception\LdapException;
@@ -29,14 +30,23 @@ class LdapDriver
      */
     private $logger;
 
-    /**
-     * @param Ldap $driver Initialized Zend::Ldap Object
-     * @param LoggerInterface $logger optional logger for write debug messages
-     */
-    public function __construct(Ldap $driver, LoggerInterface $logger = null)
+    public function __construct(LdapConfiguration $config, LoggerInterface $logger = null)
     {
-        $this->driver = $driver;
+        if ($config->isActivated()) {
+            if (!class_exists('Zend\Ldap\Ldap')) {
+                throw new \Exception('Zend\Ldap\Ldap is missing, install it with "composer require zendframework/zend-ldap"');
+            }
+            $this->setLdapConnection(new Ldap($config->getConnectionParameters()));
+        }
         $this->logger = $logger;
+    }
+
+    /**
+     * @param Ldap $ldap
+     */
+    public function setLdapConnection(Ldap $ldap)
+    {
+        $this->driver = $ldap;
     }
 
     /**
@@ -64,7 +74,7 @@ class LdapDriver
             // searchEntries don't return 'count' key as specified by php native function ldap_get_entries()
             $entries['count'] = count($entries);
         } catch (LdapException $exception) {
-            $this->zendExceptionHandler($exception);
+            $this->ldapExceptionHandler($exception);
 
             throw new LdapDriverException('An error occurred with the search operation.');
         }
@@ -85,16 +95,13 @@ class LdapDriver
 
             return $bind instanceof Ldap;
         } catch (LdapException $exception) {
-            $this->zendExceptionHandler($exception, $password);
+            $this->ldapExceptionHandler($exception, $password);
         }
 
         return false;
     }
 
-    /**
-     * Treat a Zend Ldap Exception.
-     */
-    protected function zendExceptionHandler(LdapException $exception, string $password = null): void
+    protected function ldapExceptionHandler(LdapException $exception, string $password = null): void
     {
         $sanitizedException = null !== $password ? new SanitizingException($exception, $password) : $exception;
 
