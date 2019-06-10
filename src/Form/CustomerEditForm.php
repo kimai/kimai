@@ -31,12 +31,10 @@ class CustomerEditForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $currency = false;
-
         if (isset($options['data'])) {
             /** @var Customer $customer */
             $customer = $options['data'];
-            $currency = $customer->getCurrency();
+            $options['currency'] = $customer->getCurrency();
         }
 
         $builder
@@ -98,7 +96,7 @@ class CustomerEditForm extends AbstractType
                 'label' => 'label.timezone',
             ]);
 
-        $this->addCommonFields($builder, $currency);
+        $this->addCommonFields($builder, $options);
     }
 
     /**
@@ -111,6 +109,8 @@ class CustomerEditForm extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'admin_customer_edit',
+            'currency' => Customer::DEFAULT_CURRENCY,
+            'include_budget' => false,
             'attr' => [
                 'data-form-event' => 'kimai.customerUpdate'
             ],

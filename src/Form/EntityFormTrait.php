@@ -20,8 +20,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 trait EntityFormTrait
 {
-    public function addCommonFields(FormBuilderInterface $builder, string $currency): void
+    public function addCommonFields(FormBuilderInterface $builder, array $options): void
     {
+        $currency = $options['currency'];
         $builder
             ->add('color', ColorPickerType::class)
             ->add('fixedRate', FixedRateType::class, [
@@ -30,19 +31,26 @@ trait EntityFormTrait
             ->add('hourlyRate', HourlyRateType::class, [
                 'currency' => $currency,
             ])
-            ->add('budget', MoneyType::class, [
-                'label' => 'label.budget',
-                'required' => false,
-                'currency' => $currency,
-            ])
-            ->add('timeBudget', DurationType::class, [
-                'label' => 'label.timeBudget',
-                'required' => false,
-            ])
+        ;
+
+        if ($options['include_budget']) {
+            $builder
+                ->add('budget', MoneyType::class, [
+                    'label' => 'label.budget',
+                    'required' => false,
+                    'currency' => $currency,
+                ])
+                ->add('timeBudget', DurationType::class, [
+                    'label' => 'label.timeBudget',
+                    'required' => false,
+                ])
+            ;
+        }
+
+        $builder
             ->add('visible', YesNoType::class, [
                 'label' => 'label.visible',
-            ])
-        ;
+            ]);
     }
 
     public function addCreateMore(FormBuilderInterface $builder): void

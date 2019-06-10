@@ -29,7 +29,6 @@ class ProjectEditForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $customer = null;
-        $currency = false;
         $id = null;
 
         if (isset($options['data'])) {
@@ -39,7 +38,7 @@ class ProjectEditForm extends AbstractType
 
             if ($id !== null) {
                 $customer = $entry->getCustomer();
-                $currency = $customer->getCurrency();
+                $options['currency'] = $customer->getCurrency();
             }
         }
 
@@ -64,7 +63,7 @@ class ProjectEditForm extends AbstractType
                 },
             ]);
 
-        $this->addCommonFields($builder, $currency);
+        $this->addCommonFields($builder, $options);
 
         if (null === $id && $options['create_more']) {
             $this->addCreateMore($builder);
@@ -82,6 +81,7 @@ class ProjectEditForm extends AbstractType
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'admin_project_edit',
             'currency' => Customer::DEFAULT_CURRENCY,
+            'include_budget' => false,
             'create_more' => false,
             'attr' => [
                 'data-form-event' => 'kimai.projectUpdate'

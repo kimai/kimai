@@ -10,6 +10,7 @@
 namespace App\Form;
 
 use App\Entity\Activity;
+use App\Entity\Customer;
 use App\Form\Type\CustomerType;
 use App\Form\Type\ProjectType;
 use App\Repository\CustomerRepository;
@@ -33,7 +34,6 @@ class ActivityEditForm extends AbstractType
     {
         $project = null;
         $customer = null;
-        $currency = false;
         $id = null;
 
         if (isset($options['data'])) {
@@ -43,21 +43,19 @@ class ActivityEditForm extends AbstractType
             if (null !== $entry->getProject()) {
                 $project = $entry->getProject();
                 $customer = $project->getCustomer();
-                $currency = $customer->getCurrency();
+                $options['currency'] = $customer->getCurrency();
             }
 
             $id = $entry->getId();
         }
 
         $builder
-            // string - length 255
             ->add('name', TextType::class, [
                 'label' => 'label.name',
                 'attr' => [
                     'autofocus' => 'autofocus'
                 ],
             ])
-            // text
             ->add('comment', TextareaType::class, [
                 'label' => 'label.comment',
                 'required' => false,
@@ -103,7 +101,7 @@ class ActivityEditForm extends AbstractType
             }
         );
 
-        $this->addCommonFields($builder, $currency);
+        $this->addCommonFields($builder, $options);
 
         if (null === $id && $options['create_more']) {
             $this->addCreateMore($builder);
@@ -122,6 +120,8 @@ class ActivityEditForm extends AbstractType
             'csrf_token_id' => 'admin_activity_edit',
             'create_more' => false,
             'customer' => false,
+            'currency' => Customer::DEFAULT_CURRENCY,
+            'include_budget' => false,
             'attr' => [
                 'data-form-event' => 'kimai.activityUpdate'
             ],
