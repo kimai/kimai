@@ -12,7 +12,6 @@ namespace App\Ldap;
 use App\Configuration\LdapConfiguration;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Provider\UserAuthenticationProvider;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Exception\AuthenticationServiceException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
@@ -47,15 +46,6 @@ class LdapAuthenticationProvider extends UserAuthenticationProvider
         $this->ldapManager = $ldapManager;
         $this->config = $config;
         $this->userProvider = $userProvider;
-    }
-
-    public function supports(TokenInterface $token)
-    {
-        if (!$this->config->isActivated()) {
-            return false;
-        }
-
-        return parent::supports($token);
     }
 
     protected function retrieveUser($username, UsernamePasswordToken $token)

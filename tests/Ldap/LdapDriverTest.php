@@ -9,7 +9,6 @@
 
 namespace App\Tests\Ldap;
 
-use App\Configuration\LdapConfiguration;
 use App\Entity\User;
 use App\Ldap\LdapDriver;
 use PHPUnit\Framework\TestCase;
@@ -31,57 +30,33 @@ class LdapDriverTest extends TestCase
 
     public function testBindSuccess()
     {
-        $config = new LdapConfiguration([
-            'active' => true,
-            'connection' => [
-                'host' => '127.0.0.1'
-            ],
-        ]);
-
         $zendLdap = $this->getMockBuilder(Ldap::class)->disableOriginalConstructor()->setMethods(['bind'])->getMock();
         $zendLdap->expects($this->once())->method('bind')->willReturnSelf();
 
         $user = new User();
-        $sut = new LdapDriver($config);
-        $sut->setLdapConnection($zendLdap);
+        $sut = new TestLdapDriver($zendLdap);
         $result = $sut->bind($user, 'test123');
         self::assertTrue($result);
     }
 
     public function testBindException()
     {
-        $config = new LdapConfiguration([
-            'active' => true,
-            'connection' => [
-                'host' => '127.0.0.1'
-            ],
-        ]);
-
         $zendLdap = $this->getMockBuilder(Ldap::class)->disableOriginalConstructor()->setMethods(['bind'])->getMock();
         $zendLdap->expects($this->once())->method('bind')->willThrowException(new LdapException());
 
         $user = new User();
-        $sut = new LdapDriver($config);
-        $sut->setLdapConnection($zendLdap);
+        $sut = new TestLdapDriver($zendLdap);
         $result = $sut->bind($user, 'test123');
         self::assertFalse($result);
     }
 
     public function testSearchSuccess()
     {
-        $config = new LdapConfiguration([
-            'active' => true,
-            'connection' => [
-                'host' => '127.0.0.1'
-            ],
-        ]);
-
         $zendLdap = $this->getMockBuilder(Ldap::class)->disableOriginalConstructor()->setMethods(['bind', 'searchEntries'])->getMock();
         $zendLdap->expects($this->once())->method('bind');
         $zendLdap->expects($this->once())->method('searchEntries')->willReturn([1, 2, 3]);
 
-        $sut = new LdapDriver($config);
-        $sut->setLdapConnection($zendLdap);
+        $sut = new TestLdapDriver($zendLdap);
         $result = $sut->search('', '', []);
         self::assertEquals(['count' => 3, 1, 2, 3], $result);
     }
@@ -92,21 +67,21 @@ class LdapDriverTest extends TestCase
      */
     public function testSearchException()
     {
-        $config = new LdapConfiguration([
-            'active' => true,
-            'connection' => [
-                'host' => '127.0.0.1'
-            ],
-        ]);
-
         $zendLdap = $this->getMockBuilder(Ldap::class)->disableOriginalConstructor()->setMethods(['bind', 'searchEntries'])->getMock();
         $zendLdap->expects($this->once())->method('bind');
         $zendLdap->expects($this->once())->method('searchEntries')->willThrowException(
             new LdapException($zendLdap, '', LdapException::LDAP_SERVER_DOWN)
         );
 
-        $sut = new LdapDriver($config);
-        $sut->setLdapConnection($zendLdap);
+        $sut = new TestLdapDriver($zendLdap);
         $sut->search('', '', []);
+    }
+}
+
+class TestLdapDriver extends LdapDriver
+{
+    public function __construct(Ldap $ldap)
+    {
+        $this->driver = $ldap;
     }
 }

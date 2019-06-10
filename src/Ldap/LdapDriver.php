@@ -23,7 +23,7 @@ class LdapDriver
     /**
      * @var Ldap
      */
-    private $driver;
+    protected $driver;
 
     /**
      * @var LoggerInterface
@@ -32,21 +32,14 @@ class LdapDriver
 
     public function __construct(LdapConfiguration $config, LoggerInterface $logger = null)
     {
-        if ($config->isActivated()) {
-            if (!class_exists('Zend\Ldap\Ldap')) {
-                throw new \Exception('Zend\Ldap\Ldap is missing, install it with "composer require zendframework/zend-ldap"');
-            }
-            $this->setLdapConnection(new Ldap($config->getConnectionParameters()));
+        if (!class_exists('Zend\Ldap\Ldap')) {
+            throw new \Exception(
+                'Zend\Ldap\Ldap is missing, install it with "composer require zendframework/zend-ldap" ' .
+                'or deactivate LDAP, see https://www.kimai.org/documentation/ldap.html'
+            );
         }
+        $this->driver = new Ldap($config->getConnectionParameters());
         $this->logger = $logger;
-    }
-
-    /**
-     * @param Ldap $ldap
-     */
-    public function setLdapConnection(Ldap $ldap)
-    {
-        $this->driver = $ldap;
     }
 
     /**
