@@ -132,15 +132,31 @@ class UserFixtures extends Fixture
     private function loadTestUsers(ObjectManager $manager)
     {
         $passwordEncoder = $this->encoder;
-
         $faker = Factory::create();
+        $existingName = [];
+        $existingEmail = [];
+
         for ($i = 1; $i <= self::AMOUNT_EXTRA_USER; $i++) {
+            $username = $faker->userName;
+            $email = $faker->email;
+
+            if (in_array($username, $existingName)) {
+                continue;
+            }
+
+            if (in_array($email, $existingEmail)) {
+                continue;
+            }
+
+            $existingName[] = $username;
+            $existingEmail[] = $email;
+
             $user = new User();
             $user
                 ->setAlias($faker->name)
                 ->setTitle(substr($faker->jobTitle, 0, 49))
-                ->setUsername($faker->userName)
-                ->setEmail($faker->email)
+                ->setUsername($username)
+                ->setEmail($email)
                 ->setRoles([User::ROLE_USER])
                 ->setAvatar(self::DEFAULT_AVATAR)
                 ->setEnabled(true)
