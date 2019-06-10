@@ -23,7 +23,6 @@ class LdapUserHydratorTest extends TestCase
     public function testEmptyHydrate()
     {
         $config = new LdapConfiguration([
-            'active' => false,
             'connection' => [
                 'host' => '1.1.1.1'
             ],
@@ -44,7 +43,6 @@ class LdapUserHydratorTest extends TestCase
     public function testHydrate()
     {
         $config = new LdapConfiguration([
-            'active' => false,
             'connection' => [
                 'host' => '1.1.1.1'
             ],
@@ -88,7 +86,6 @@ class LdapUserHydratorTest extends TestCase
     public function testHydrateUser()
     {
         $config = new LdapConfiguration([
-            'active' => false,
             'connection' => [
                 'host' => '1.1.1.1'
             ],

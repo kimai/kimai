@@ -122,7 +122,6 @@ class AppExtensionTest extends TestCase
             'kimai.timesheet.rates' => [],
             'kimai.timesheet.rounding' => [],
             'kimai.ldap' => [
-                'active' => false,
                 'user' => [
                     'baseDn' => null,
                     'filter' => '',
@@ -230,7 +229,6 @@ class AppExtensionTest extends TestCase
     {
         $minConfig = $this->getMinConfig();
         $minConfig['kimai']['ldap'] = [
-            'active' => true,
             'connection' => [
                 'host' => '9.9.9.9',
                 'baseDn' => 'lkhiuzhkj',
@@ -257,7 +255,6 @@ class AppExtensionTest extends TestCase
     {
         $minConfig = $this->getMinConfig();
         $minConfig['kimai']['ldap'] = [
-            'active' => true,
             'connection' => [
                 'host' => '9.9.9.9',
             ],
@@ -281,7 +278,6 @@ class AppExtensionTest extends TestCase
     {
         $minConfig = $this->getMinConfig();
         $minConfig['kimai']['ldap'] = [
-            'active' => true,
             'connection' => [
                 'host' => '9.9.9.9',
                 'baseDn' => '7658765',
