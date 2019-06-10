@@ -53,7 +53,6 @@ class CustomerRepository extends AbstractRepository
     public function getCustomerStatistics(Customer $customer)
     {
         $stats = new CustomerStatistic();
-        $stats->setCount(1);
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb

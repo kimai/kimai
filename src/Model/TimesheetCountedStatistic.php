@@ -14,19 +14,15 @@ class TimesheetCountedStatistic
     /**
      * @var int
      */
-    protected $count = 0;
-    /**
-     * @var int
-     */
     protected $recordAmount = 0;
     /**
      * @var int
      */
     protected $recordDuration = 0;
     /**
-     * @var int
+     * @var float
      */
-    protected $recordRate = 0;
+    protected $recordRate = 0.0;
 
     /**
      * Returns the total amount of included timesheet records.
@@ -73,7 +69,7 @@ class TimesheetCountedStatistic
     /**
      * Returns the total rate of all included timesheet records.
      *
-     * @return int
+     * @return float
      */
     public function getRecordRate()
     {
@@ -81,33 +77,12 @@ class TimesheetCountedStatistic
     }
 
     /**
-     * @param int $recordRate
+     * @param float $recordRate
      * @return $this
      */
     public function setRecordRate($recordRate)
     {
-        $this->recordRate = (int) $recordRate;
-
-        return $this;
-    }
-
-    /**
-     * Returns the amount of activities that are included in the statistic result.
-     *
-     * @return int
-     */
-    public function getCount()
-    {
-        return $this->count;
-    }
-
-    /**
-     * @param int $count
-     * @return $this
-     */
-    public function setCount($count)
-    {
-        $this->count = (int) $count;
+        $this->recordRate = (float) $recordRate;
 
         return $this;
     }

@@ -50,7 +50,6 @@ class ProjectRepository extends AbstractRepository
     public function getProjectStatistics(Project $project): ProjectStatistic
     {
         $stats = new ProjectStatistic();
-        $stats->setCount(1);
 
         $qb = $this->getEntityManager()->createQueryBuilder();
 

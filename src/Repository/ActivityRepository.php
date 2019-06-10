@@ -52,7 +52,6 @@ class ActivityRepository extends AbstractRepository
     public function getActivityStatistics(Activity $activity)
     {
         $stats = new ActivityStatistic();
-        $stats->setCount(1);
 
         $qb = $this->getEntityManager()->createQueryBuilder();
 
