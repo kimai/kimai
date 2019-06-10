@@ -18,3 +18,4 @@ parameters:
         - '#Access to an undefined property Faker\\Generator::\$bs.#'
     excludes_analyse:
         - %rootDir%/../../../src/Command/KimaiImporterCommand.php
+        - %rootDir%/../../../src/Ldap/LdapDriver.php

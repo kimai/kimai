@@ -132,9 +132,6 @@ services:
     # LDAP
     # ================================================================================
 
-    Zend\Ldap\Ldap:
-        class: App\Ldap\ZendLdap
-
     kimai_ldap.security.authentication.provider:
         class: App\Ldap\LdapAuthenticationProvider
         arguments: ['@App\Security\UserChecker', '', '', '', '@App\Configuration\LdapConfiguration', '%security.authentication.hide_user_not_found%']

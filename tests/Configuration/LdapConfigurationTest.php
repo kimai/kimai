@@ -25,7 +25,6 @@ class LdapConfigurationTest extends TestCase
     protected function getDefaultSettings()
     {
         return [
-            'active' => true,
             'connection' => [
                 'host' => '1.2.3.4',
             ],
@@ -41,12 +40,8 @@ class LdapConfigurationTest extends TestCase
     public function testMapping()
     {
         $sut = $this->getSut($this->getDefaultSettings());
-        $this->assertTrue($sut->isActivated());
         $this->assertEquals(['foo' => 'bar'], $sut->getUserParameters());
         $this->assertEquals(['bar' => 'foo'], $sut->getRoleParameters());
         $this->assertEquals(['host' => '1.2.3.4'], $sut->getConnectionParameters());
-
-        $sut = $this->getSut(['active' => false]);
-        $this->assertFalse($sut->isActivated());
     }
 }
