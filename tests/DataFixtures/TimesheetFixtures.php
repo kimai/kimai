@@ -220,7 +220,7 @@ class TimesheetFixtures extends Fixture
         }
 
         $projects = $this->projects;
-        if (empty($activities)) {
+        if (empty($projects)) {
             $projects = $this->getAllProjects($manager);
         }
 
