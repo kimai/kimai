@@ -167,7 +167,8 @@ class CustomerControllerTest extends APIControllerBaseTest
 
         if ($full) {
             $expectedKeys = array_merge($expectedKeys, [
-                'homepage', 'number', 'comment', 'company', 'contact', 'address', 'country', 'currency', 'phone', 'fax', 'mobile', 'email', 'timezone'
+                'homepage', 'number', 'comment', 'company', 'contact', 'address', 'country', 'currency',
+                'phone', 'fax', 'mobile', 'email', 'timezone', 'budget', 'timeBudget'
             ]);
         }
 

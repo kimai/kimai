@@ -223,7 +223,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         $expectedKeys = ['id', 'name', 'visible', 'project', 'hourlyRate', 'fixedRate', 'color'];
 
         if ($full) {
-            $expectedKeys = array_merge($expectedKeys, ['comment']);
+            $expectedKeys = array_merge($expectedKeys, ['comment', 'budget', 'timeBudget']);
         }
 
         $actual = array_keys($result);
