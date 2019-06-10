@@ -28,7 +28,7 @@ class LdapAuthenticationProviderTest extends TestCase
     {
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->getMock();
         $config = new LdapConfiguration([]);
-        $userProvider = new LdapUserProvider($manager, $config);
+        $userProvider = new LdapUserProvider($manager);
         $providerKey = 'secured_area';
         $userChecker = new UserChecker();
 
@@ -47,7 +47,7 @@ class LdapAuthenticationProviderTest extends TestCase
     {
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->getMock();
         $config = new LdapConfiguration([]);
-        $userProvider = new LdapUserProvider($manager, $config);
+        $userProvider = new LdapUserProvider($manager);
         $providerKey = 'secured_area';
         $userChecker = new UserChecker();
 
