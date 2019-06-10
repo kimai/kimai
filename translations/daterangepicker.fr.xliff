@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" target-language="en" datatype="plaintext" original="daterangepicker.en.xliff">
+    <file source-language="en" target-language="fr" datatype="plaintext" original="daterangepicker.en.xliff">
         <body>
             <trans-unit id="daterangepicker.today">
                 <source>daterangepicker.today</source>
-                <target>Today</target>
+                <target>Aujourd'hui</target>
             </trans-unit>
             <trans-unit id="daterangepicker.yesterday">
                 <source>daterangepicker.yesterday</source>
-                <target>Yesterday</target>
+                <target>Hier</target>
             </trans-unit>
             <trans-unit id="daterangepicker.lastWeek">
                 <source>daterangepicker.lastWeek</source>
-                <target>Last week</target>
+                <target>Semaine dernière</target>
             </trans-unit>
             <trans-unit id="daterangepicker.thisWeek">
                 <source>daterangepicker.thisWeek</source>
-                <target>This week</target>
+                <target>Cette semaine</target>
             </trans-unit>
             <trans-unit id="daterangepicker.lastMonth">
                 <source>daterangepicker.lastMonth</source>
-                <target>Last month</target>
+                <target>Mois dernier</target>
             </trans-unit>
             <trans-unit id="daterangepicker.thisMonth">
                 <source>daterangepicker.thisMonth</source>
-                <target>This month</target>
+                <target>Ce mois</target>
             </trans-unit>
             <trans-unit id="daterangepicker.lastYear">
                 <source>daterangepicker.lastYear</source>
-                <target>Last year</target>
+                <target>L'an dernier</target>
             </trans-unit>
             <trans-unit id="daterangepicker.thisYear">
                 <source>daterangepicker.thisYear</source>
-                <target>This year</target>
+                <target>Cette année</target>
             </trans-unit>
             <trans-unit id="daterangepicker.customRange">
                 <source>daterangepicker.customRange</source>
-                <target>Période sur-mesure</target>
+                <target></target>
             </trans-unit>
         </body>
     </file>

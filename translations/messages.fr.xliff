@@ -39,6 +39,18 @@
                     Vous devez confirmer la suppression, car il y a des éléments liés qui seront également supprimés.
                 </target>
             </trans-unit>
+            <trans-unit id="delete.not_in_use">
+                <source>delete.not_in_use</source>
+                <target>Cette entrée peut être supprimée en toute sécurité.</target>
+            </trans-unit>
+            <trans-unit id="cancel">
+                <source>cancel</source>
+                <target>Annuler</target>
+            </trans-unit>
+            <trans-unit id="confirm">
+                <source>confirm</source>
+                <target>Confirmer</target>
+            </trans-unit>
 
             <!--
               Login / Security
@@ -362,6 +374,18 @@
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
                 <target>Faire basculer l'état de la barre latérale gauche lors du chargement de la page (ouverture ou fermeture).</target>
+            </trans-unit>
+
+            <!--
+              User timesheet calendar
+            -->
+            <trans-unit id="calendar.title">
+                <source>calendar.title</source>
+                <target>Calendrier</target>
+            </trans-unit>
+            <trans-unit id="calendar.subtitle">
+                <source>calendar.subtitle</source>
+                <target>Visualisez et gérez vos données de fiches de temps dans un calendrier</target>
             </trans-unit>
 
             <!--
@@ -702,6 +726,10 @@
                 <source>label.total_rate</source>
                 <target>Total price</target>
             </trans-unit>
+            <trans-unit id="label.unit_price">
+                <source>label.unit_price</source>
+                <target>Tarif unitaire</target>
+            </trans-unit>
             <trans-unit id="label.payment_terms">
                 <source>label.payment_terms</source>
                 <target>Modalités de paiement</target>
@@ -714,9 +742,66 @@
                 <source>invoice.signature_customer</source>
                 <target>Pour certification : date / nom du client / signature</target>
             </trans-unit>
+            <trans-unit id="invoice.total_working_time">
+                <source>invoice.total_working_time</source>
+                <target>Durée totale</target>
+            </trans-unit>
             <trans-unit id="label.orderNumber">
                 <source>label.orderNumber</source>
                 <target>Numéro d'ordre</target>
+            </trans-unit>
+                        <trans-unit id="label.invoice_tax_number">
+                <source>label.invoice_tax_number</source>
+                <target>N° de TVA :</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_bank_account">
+                <source>label.invoice_bank_account</source>
+                <target>N° de compte bancaire</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_salutation">
+                <source>label.invoice_salutation</source>
+                <target>
+                    Madame, Monsieur,
+
+                    Je vous remercie pour votre commande. 
+                    Vous trouverez ci-après la facture pour mes services :
+                </target>
+            </trans-unit>
+            
+            <!--
+              Export
+            -->
+            <trans-unit id="export.title">
+                <source>export.title</source>
+                <target>Export</target>
+            </trans-unit>
+            <trans-unit id="export.subtitle">
+                <source>export.subtitle</source>
+                <target>Exporter les fiches de temps en différents formats</target>
+            </trans-unit>
+            <trans-unit id="export.period">
+                <source>export.period</source>
+                <target>Periode</target>
+            </trans-unit>
+            <trans-unit id="export.document_title">
+                <source>export.document_title</source>
+                <target>Liste des charges</target>
+            </trans-unit>
+            <trans-unit id="export.full_list">
+                <source>export.full_list</source>
+                <target>Liste complète</target>
+            </trans-unit>
+            <trans-unit id="export.summary">
+                <source>export.summary</source>
+                <target>Résumé</target>
+            </trans-unit>
+            <trans-unit id="export.page_of">
+                <source>export.page_of</source>
+                <target>Page %page% sur %pages%</target>
+          </trans-unit>
+            <trans-unit id="export.date_copyright">
+                <source>export.date_copyright</source>
+                <target>Généré le %date% avec %kimai%</target>
             </trans-unit>
 
             <!--
@@ -774,9 +859,17 @@
             <!--
              Navbar - recent entries and activities
             -->
+            <trans-unit id="active.entries">
+                <source>active.entries</source>
+                <target>Vos releves de périodes d'activités</target>
+            </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
                 <target>Voir tous les enregistrements</target>
+            </trans-unit>
+            <trans-unit id="recent.activities">
+                <source>recent.activities</source>
+                <target>Reprendre une de vos récentes activités</target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>
@@ -798,6 +891,18 @@
                 <source>label.entryState</source>
                 <target>Enregistrements</target>
             </trans-unit>
+            <trans-unit id="label.exported">
+                <source>label.exported</source>
+                <target>Exporté</target>
+            </trans-unit>
+            <trans-unit id="entryState.exported">
+                <source>entryState.exported</source>
+                <target>Fermé</target>
+            </trans-unit>
+            <trans-unit id="entryState.not_exported">
+                <source>entryState.not_exported</source>
+                <target>Ouvert</target>
+            </trans-unit>
             <trans-unit id="entryState.all">
                 <source>entryState.all</source>
                 <target>Tous</target>
@@ -809,6 +914,18 @@
             <trans-unit id="entryState.stopped">
                 <source>entryState.stopped</source>
                 <target>Arrêté</target>
+            </trans-unit>
+            <trans-unit id="export.clear_all">
+                <source>export.clear_all</source>
+                <target>Marquer tous les enregistrements affichés comme ouverts ?</target>
+            </trans-unit>
+            <trans-unit id="export.mark_all">
+                <source>export.mark_all</source>
+                <target>Marquer tous les enregistrements affichés comme mermés ?</target>
+            </trans-unit>
+            <trans-unit id="label.globalsOnly">
+                <source>label.globalsOnly</source>
+                <target>Uniquement global</target>
             </trans-unit>
         </body>
     </file>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file date="2019-05-11T10:00:00Z" source-language="en" target-language="fr" datatype="plaintext" original="none">
+        <body>
+            <trans-unit id="tags.title">
+                <source>tags.title</source>
+                <target>Mots-clés</target>
+            </trans-unit>
+            <trans-unit id="tags.subtitle">
+                <source>tags.subtitle</source>
+                <target>Les mots-clés permettent de combiner librement des fiches de temps et de les retrouver</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
