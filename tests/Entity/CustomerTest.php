@@ -44,6 +44,8 @@ class CustomerTest extends TestCase
         $this->assertNull($sut->getFixedRate());
         $this->assertNull($sut->getHourlyRate());
         $this->assertNull($sut->getColor());
+        $this->assertEquals(0.0, $sut->getBudget());
+        $this->assertEquals(0, $sut->getTimeBudget());
     }
 
     public function testSetterAndGetter()
@@ -85,7 +87,14 @@ class CustomerTest extends TestCase
 
         $this->assertInstanceOf(Customer::class, $sut->setFixedRate(13.47));
         $this->assertEquals(13.47, $sut->getFixedRate());
+
         $this->assertInstanceOf(Customer::class, $sut->setHourlyRate(99));
         $this->assertEquals(99, $sut->getHourlyRate());
+
+        $this->assertInstanceOf(Customer::class, $sut->setBudget(12345.67));
+        $this->assertEquals(12345.67, $sut->getBudget());
+
+        $this->assertInstanceOf(Customer::class, $sut->setTimeBudget(937321));
+        $this->assertEquals(937321, $sut->getTimeBudget());
     }
 }
