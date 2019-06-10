@@ -26,6 +26,7 @@ before_install:
 #  - phpenv config-rm xdebug.ini
   - composer self-update
   - php -i
+  - php -m
 
 install:
   - composer install
