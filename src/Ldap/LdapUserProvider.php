@@ -9,7 +9,6 @@
 
 namespace App\Ldap;
 
-use App\Configuration\LdapConfiguration;
 use App\Entity\User;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
