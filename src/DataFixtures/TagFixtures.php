@@ -76,7 +76,6 @@ class TagFixtures extends Fixture
                 $manager->flush();
                 $manager->clear(Tag::class);
             }
-
         }
         $manager->flush();
         $manager->clear(Tag::class);

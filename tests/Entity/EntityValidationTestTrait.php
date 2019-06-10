@@ -16,7 +16,6 @@ use Symfony\Component\Validator\ConstraintViolationInterface;
  */
 trait EntityValidationTestTrait
 {
-
     /**
      * @param object $entity
      * @param array|string $fieldNames
