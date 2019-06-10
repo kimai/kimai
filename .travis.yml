@@ -30,6 +30,7 @@ before_install:
 
 install:
   - composer install
+  - composer require zendframework/zend-ldap
 
 script:
   - composer kimai:codestyle

@@ -8,3 +8,6 @@ parameters:
         - '#Access to an undefined property Faker\\Generator::\$stateAbbr.#'
         - '#Access to an undefined property Faker\\Generator::\$catchPhrase.#'
         - '#Access to an undefined property Faker\\Generator::\$bs.#'
+    excludes_analyse:
+        - %rootDir%/../../../src/Command/KimaiImporterCommand.php
+        - %rootDir%/../../../tests/Ldap/LdapDriverTest.php
