@@ -40,6 +40,7 @@ class CustomerFixtures extends Fixture
     public const MAX_PROJECTS_PER_CUSTOMER = 25;
     public const MIN_ACTIVITIES_PER_PROJECT = 0;
     public const MAX_ACTIVITIES_PER_PROJECT = 25;
+    public const INDICATE_HIDDEN = false;
 
     /**
      * @param ObjectManager $manager
@@ -93,7 +94,7 @@ class CustomerFixtures extends Fixture
         $entry = new Customer();
         $entry
             ->setCurrency($faker->currencyCode)
-            ->setName($faker->company . ($visible ? '' : ' (x)'))
+            ->setName($faker->company . (self::INDICATE_HIDDEN && !$visible ? ' (x)' : ''))
             ->setAddress($faker->address)
             ->setComment($faker->text)
             ->setNumber('C-' . $faker->ean8)
@@ -124,7 +125,7 @@ class CustomerFixtures extends Fixture
         $entry = new Project();
 
         $entry
-            ->setName($faker->catchPhrase . ($visible ? '' : ' (x)'))
+            ->setName($faker->catchPhrase . (self::INDICATE_HIDDEN && !$visible ? ' (x)' : ''))
             ->setComment($faker->text)
             ->setCustomer($customer)
             ->setVisible($visible)
@@ -151,7 +152,7 @@ class CustomerFixtures extends Fixture
     {
         $entry = new Activity();
         $entry
-            ->setName($faker->bs . ($visible ? '' : ' (x)'))
+            ->setName($faker->bs . (self::INDICATE_HIDDEN && !$visible ? ' (x)' : ''))
             ->setProject($project)
             ->setComment($faker->text)
             ->setVisible($visible)
