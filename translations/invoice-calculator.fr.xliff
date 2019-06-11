@@ -14,6 +14,14 @@
                 <source>short</source>
                 <target>Tarifs horaires particuliers (seulement pour un enregistrement)</target>
             </trans-unit>
+            <trans-unit id="user">
+                <source>user</source>
+                <target>Groupe d'utilisateurs - une entrée par utilisateur</target>
+            </trans-unit>
+            <trans-unit id="activity">
+                <source>activity</source>
+                <target>Groupe d'activités - une entrée par activité</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
