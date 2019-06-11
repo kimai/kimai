@@ -141,7 +141,7 @@
             </trans-unit>
             <trans-unit id="menu.tags">
                 <source>menu.tags</source>
-                <target>Mot-clés</target>
+                <target>Mots-clés</target>
             </trans-unit>
 
             <!--
@@ -506,7 +506,7 @@
             </trans-unit>
             <trans-unit id="admin_customer.subtitle">
                 <source>admin_customer.subtitle</source>
-                <target>Les clients sont à la base de la création des projets et des activités.</target>
+                <target>Les clients sont les bénéficiaires des projets et des activités.</target>
             </trans-unit>
             <trans-unit id="label.number">
                 <source>label.number</source>
@@ -1010,7 +1010,7 @@
             </trans-unit>
             <trans-unit id="export.mark_all">
                 <source>export.mark_all</source>
-                <target>Marquer tous les enregistrements affichés comme mermés ?</target>
+                <target>Marquer tous les enregistrements affichés comme fermés ?</target>
             </trans-unit>
             <trans-unit id="label.globalsOnly">
                 <source>label.globalsOnly</source>

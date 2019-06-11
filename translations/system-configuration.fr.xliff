@@ -60,7 +60,7 @@
             </trans-unit>
             <trans-unit id="label.theme.select_type">
                 <source>label.theme.select_type</source>
-                <target>Type of select-boxes in forms</target>
+                <target>Type de sélecteurs dans les formulaires</target>
             </trans-unit>
             <trans-unit id="label.calendar.week_numbers">
                 <source>label.calendar.week_numbers</source>
