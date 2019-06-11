@@ -645,7 +645,7 @@ class KimaiImporterCommand extends Command
      * ["visible"]=> string(1) "1"
      * --- ["filter"]=> string(1) "0"
      * ["trash"]=> string(1) "1"
-     * --- ["budget"]=> string(4) "0.00"
+     * ["budget"]=> string(4) "0.00"
      * --- ["effort"]=> NULL
      * --- ["approved"]=> NULL
      * --- ["internal"]=> string(1) "0"
@@ -677,6 +677,7 @@ class KimaiImporterCommand extends Command
                 ->setName($name)
                 ->setComment($oldProject['comment'] ?: null)
                 ->setVisible($isActive)
+                ->setBudget($oldProject['budget'] ?: 0)
             ;
 
             foreach ($fixedRates as $fixedRow) {
@@ -733,7 +734,7 @@ class KimaiImporterCommand extends Command
      * $activityToProject
      * ["projectID"]=> string(1) "1"
      * ["activityID"]=> string(1) "1"
-     * -- ["budget"]=> string(4) "0.00"
+     * ["budget"]=> string(4) "0.00"
      * -- ["effort"]=> string(4) "0.00"
      * -- ["approved"]=> string(4) "0.00"
      *
@@ -831,6 +832,7 @@ class KimaiImporterCommand extends Command
             ->setName($name)
             ->setComment($oldActivity['comment'] ?: null)
             ->setVisible($isActive)
+            ->setBudget($oldActivity['budget'] ?: 0)
         ;
 
         if (null !== $projectId) {

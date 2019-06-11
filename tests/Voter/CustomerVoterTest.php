@@ -43,6 +43,7 @@ class CustomerVoterTest extends AbstractVoterTest
         foreach ([$user3, $user4] as $user) {
             yield [$user, new Customer(), 'view', $result];
             yield [$user, new Customer(), 'edit', $result];
+            yield [$user, new Customer(), 'budget', $result];
             yield [$user, new Customer(), 'delete', $result];
         }
 
@@ -50,6 +51,7 @@ class CustomerVoterTest extends AbstractVoterTest
         foreach ([$user0, $user1, $user2] as $user) {
             yield [$user, new Customer(), 'view', $result];
             yield [$user, new Customer(), 'edit', $result];
+            yield [$user, new Customer(), 'budget', $result];
             yield [$user, new Customer(), 'delete', $result];
         }
 
@@ -57,6 +59,7 @@ class CustomerVoterTest extends AbstractVoterTest
         foreach ([$user0, $user1, $user2] as $user) {
             yield [$user, new Customer(), 'view_customer', $result];
             yield [$user, new Customer(), 'edit_customer', $result];
+            yield [$user, new Customer(), 'budget_customer', $result];
             yield [$user, new Customer(), 'delete_customer', $result];
             yield [$user, new \stdClass(), 'view', $result];
             yield [$user, null, 'edit', $result];

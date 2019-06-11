@@ -60,7 +60,7 @@ class TagFixtures extends Fixture
             } elseif ($i % 2 == 0) {
                 $tagName = $faker->colorName;
             } elseif ($i % 1 == 0) {
-                $tagName = $faker->text(rand(10, 20));
+                $tagName = $faker->text(rand(5, 15));
             }
 
             if (in_array($tagName, $existing)) {
@@ -72,15 +72,12 @@ class TagFixtures extends Fixture
 
             $manager->persist($tag);
 
-            if ($i % self::BATCH_SIZE == 0) {
+            if ($i % self::BATCH_SIZE === 0) {
                 $manager->flush();
                 $manager->clear(Tag::class);
             }
-
-            $manager->flush();
-            $manager->clear(Tag::class);
         }
-
         $manager->flush();
+        $manager->clear(Tag::class);
     }
 }

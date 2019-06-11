@@ -10,11 +10,12 @@
 namespace App\Tests\Entity;
 
 use App\Entity\InvoiceTemplate;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Entity\InvoiceTemplate
  */
-class InvoiceTemplateTest extends AbstractEntityTest
+class InvoiceTemplateTest extends TestCase
 {
     protected function assertIsFluent($actual)
     {

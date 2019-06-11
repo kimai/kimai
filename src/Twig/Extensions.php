@@ -52,7 +52,7 @@ class Extensions extends AbstractExtension
         'activity' => 'fas fa-tasks',
         'admin' => 'fas fa-wrench',
         'calendar' => 'far fa-calendar-alt',
-        'customer' => 'fas fa-users',
+        'customer' => 'fas fa-user-tie',
         'copy' => 'far fa-copy',
         'create' => 'far fa-plus-square',
         'dashboard' => 'fas fa-tachometer-alt',
@@ -76,7 +76,7 @@ class Extensions extends AbstractExtension
         'stop-small' => 'far fa-stop-circle',
         'timesheet' => 'fas fa-clock',
         'trash' => 'far fa-trash-alt',
-        'user' => 'fas fa-user',
+        'user' => 'fas fa-users',
         'visibility' => 'far fa-eye',
         'settings' => 'fas fa-cog',
         'export' => 'fas fa-file-export',
@@ -96,6 +96,8 @@ class Extensions extends AbstractExtension
         'warning' => 'fas fa-exclamation-triangle',
         'permissions' => 'fas fa-user-lock',
         'back' => 'fas fa-long-arrow-alt-left',
+        'tag' => 'fas fa-tags',
+        'avatar' => 'fas fa-user'
     ];
 
     /**

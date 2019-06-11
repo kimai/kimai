@@ -33,6 +33,7 @@ install:
   - composer require zendframework/zend-ldap
 
 script:
+  - composer validate --no-check-all --strict
   - composer kimai:codestyle
   - composer kimai:phpstan
   - if [[ $CODECOVERAGE == 1 ]]; then vendor/bin/phpunit tests/ --coverage-clover=coverage.xml; else vendor/bin/phpunit tests/; fi;

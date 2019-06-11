@@ -9,11 +9,13 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\Activity;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use Doctrine\ORM\EntityManager;
 
 /**
  * @group integration
@@ -31,6 +33,23 @@ class ActivityControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/activity/');
         $this->assertHasDataTable($client);
+    }
+
+    public function testBudgetAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EntityManager $em */
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $fixture = new TimesheetFixtures();
+        $fixture->setAmount(10);
+        $fixture->setActivities($em->getRepository(Activity::class)->findAll());
+        $fixture->setUser($this->getUserByRole($em, User::ROLE_ADMIN));
+        $this->importFixture($em, $fixture);
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/activity/1/budget');
+        self::assertHasProgressbar($client);
     }
 
     public function testCreateAction()
@@ -62,6 +81,7 @@ class ActivityControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
+        /** @var EntityManager $em */
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new ProjectFixtures();
         $fixture->setAmount(10);
@@ -158,6 +178,7 @@ class ActivityControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
+        /** @var EntityManager $em */
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new TimesheetFixtures();
         $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
@@ -197,6 +218,7 @@ class ActivityControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
+        /** @var EntityManager $em */
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new TimesheetFixtures();
         $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));

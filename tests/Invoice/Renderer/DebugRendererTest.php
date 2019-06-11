@@ -11,10 +11,13 @@ namespace App\Tests\Invoice\Renderer;
 
 use App\Entity\InvoiceDocument;
 use App\Model\InvoiceModel;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class DebugRendererTest extends AbstractRendererTest
+class DebugRendererTest extends TestCase
 {
+    use RendererTestTrait;
+
     public function getTestModel()
     {
         yield [$this->getInvoiceModel(), '1,947.99', 5, 5, 1, 2, 2, true];

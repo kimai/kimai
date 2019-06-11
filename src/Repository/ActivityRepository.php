@@ -51,23 +51,24 @@ class ActivityRepository extends AbstractRepository
      */
     public function getActivityStatistics(Activity $activity)
     {
+        $stats = new ActivityStatistic();
+
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('COUNT(t.id) as totalRecords', 'SUM(t.duration) as totalDuration')
+        $qb
+            ->addSelect('COUNT(t.id) as recordAmount')
+            ->addSelect('SUM(t.duration) as recordDuration')
+            ->addSelect('SUM(t.rate) as recordRate')
             ->from(Timesheet::class, 't')
             ->where('t.activity = :activity')
         ;
 
-        $result = $qb->getQuery()->execute(['activity' => $activity], Query::HYDRATE_ARRAY);
+        $timesheetResult = $qb->getQuery()->execute(['activity' => $activity], Query::HYDRATE_ARRAY);
 
-        $stats = new ActivityStatistic();
-
-        if (isset($result[0])) {
-            $dbStats = $result[0];
-
-            $stats->setCount(1);
-            $stats->setRecordAmount($dbStats['totalRecords']);
-            $stats->setRecordDuration($dbStats['totalDuration']);
+        if (isset($timesheetResult[0])) {
+            $stats->setRecordAmount($timesheetResult[0]['recordAmount']);
+            $stats->setRecordDuration($timesheetResult[0]['recordDuration']);
+            $stats->setRecordRate($timesheetResult[0]['recordRate']);
         }
 
         return $stats;

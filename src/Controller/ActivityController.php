@@ -101,6 +101,21 @@ class ActivityController extends AbstractController
     }
 
     /**
+     * @Route(path="/{id}/budget", name="admin_activity_budget", methods={"GET"})
+     * @Security("is_granted('budget', activity)")
+     *
+     * @param Activity $activity
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function budgetAction(Activity $activity)
+    {
+        return $this->render('activity/budget.html.twig', [
+            'activity' => $activity,
+            'stats' => $this->getRepository()->getActivityStatistics($activity)
+        ]);
+    }
+
+    /**
      * @Route(path="/{id}/edit", name="admin_activity_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', activity)")
      *
@@ -244,6 +259,7 @@ class ActivityController extends AbstractController
             'method' => 'POST',
             'create_more' => true,
             'customer' => true,
+            'include_budget' => $this->isGranted('budget', $activity)
         ]);
     }
 }

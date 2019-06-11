@@ -64,9 +64,9 @@ abstract class AbstractVoterTest extends TestCase
     protected function getRolePermissionManager(array $permissions = [], bool $overwrite = false)
     {
         if (!$overwrite) {
-            $activities = ['view_activity', 'edit_activity', 'delete_activity', 'create_activity'];
-            $projects = ['view_project', 'edit_project', 'delete_project', 'create_project'];
-            $customers = ['view_customer', 'edit_customer', 'delete_customer', 'create_customer'];
+            $activities = ['view_activity', 'edit_activity', 'budget_activity', 'delete_activity', 'create_activity'];
+            $projects = ['view_project', 'edit_project', 'budget_project', 'delete_project', 'create_project'];
+            $customers = ['view_customer', 'edit_customer', 'budget_customer', 'delete_customer', 'create_customer'];
             $invoice = ['view_invoice', 'create_invoice'];
             $invoiceTemplate = ['view_invoice_template', 'create_invoice_template', 'edit_invoice_template', 'delete_invoice_template'];
             $timesheet = ['view_own_timesheet', 'start_own_timesheet', 'stop_own_timesheet', 'create_own_timesheet', 'edit_own_timesheet', 'export_own_timesheet', 'delete_own_timesheet'];

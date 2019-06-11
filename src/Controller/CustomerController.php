@@ -110,6 +110,21 @@ class CustomerController extends AbstractController
     }
 
     /**
+     * @Route(path="/{id}/budget", name="admin_customer_budget", methods={"GET"})
+     * @Security("is_granted('budget', customer)")
+     *
+     * @param Customer $customer
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function budgetAction(Customer $customer)
+    {
+        return $this->render('customer/budget.html.twig', [
+            'customer' => $customer,
+            'stats' => $this->getRepository()->getCustomerStatistics($customer)
+        ]);
+    }
+
+    /**
      * @Route(path="/{id}/edit", name="admin_customer_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', customer)")
      *
@@ -232,7 +247,8 @@ class CustomerController extends AbstractController
 
         return $this->createForm(CustomerEditForm::class, $customer, [
             'action' => $url,
-            'method' => 'POST'
+            'method' => 'POST',
+            'include_budget' => $this->isGranted('budget', $customer)
         ]);
     }
 }

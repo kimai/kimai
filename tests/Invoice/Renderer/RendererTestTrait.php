@@ -25,12 +25,11 @@ use App\Repository\Query\InvoiceQuery;
 use App\Twig\DateExtensions;
 use App\Twig\Extensions;
 use App\Utils\LocaleSettings;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-abstract class AbstractRendererTest extends KernelTestCase
+trait RendererTestTrait
 {
     /**
      * @return string

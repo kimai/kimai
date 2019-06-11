@@ -11,15 +11,19 @@ namespace App\Tests\Invoice\Renderer;
 
 use App\Invoice\Renderer\XlsxRenderer;
 use App\Model\InvoiceModel;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * @covers \App\Invoice\Renderer\XlsxRenderer
  * @covers \App\Invoice\Renderer\AbstractRenderer
  * @covers \App\Invoice\Renderer\AbstractSpreadsheetRenderer
+ * @group integration
  */
-class XlsxRendererTest extends AbstractRendererTest
+class XlsxRendererTest extends TestCase
 {
+    use RendererTestTrait;
+
     public function testSupports()
     {
         $sut = $this->getAbstractRenderer(XlsxRenderer::class);

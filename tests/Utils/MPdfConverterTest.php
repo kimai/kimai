@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
  * @covers \App\Utils\MPdfConverter
+ * @group integration
  */
 class MPdfConverterTest extends KernelTestCase
 {

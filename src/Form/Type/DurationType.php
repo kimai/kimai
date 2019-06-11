@@ -9,42 +9,18 @@
 
 namespace App\Form\Type;
 
-use App\Utils\Duration;
+use App\Form\DataTransformer\DurationStringToSecondsTransformer;
+use App\Validator\Constraints\Duration as DurationConstraint;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Regex;
 
 /**
- * Custom form field type to handle a timesheet duration.
+ * Custom form field type to handle duration strings.
  */
 class DurationType extends AbstractType
 {
-    /**
-     * @var string
-     */
-    protected $pattern;
-
-    /**
-     * DurationType constructor.
-     */
-    public function __construct()
-    {
-        $patterns = [
-            '[0-9]{1,}',
-            '[0-9]{1,}:[0-9]{1,2}:[0-9]{1,2}',
-            '[0-9]{1,2}:[0-9]{1,2}',
-            '[0-9]{1,}[hmsHMS]{1}',
-            '[0-9]{1,}[hmsHMS]{1}[0-9]{1,}[hmsHMS]{1}',
-            '[0-9]{1,}[hmsHMS]{1}[0-9]{1,}[hmsHMS]{1}[0-9]{1,}[hmsHMS]{1}',
-        ];
-
-        $this->pattern = '/^' . implode('$|^', $patterns) . '$/';
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -52,7 +28,7 @@ class DurationType extends AbstractType
     {
         $resolver->setDefaults([
             'label' => 'label.duration',
-            'constraints' => [new Regex(['pattern' => $this->pattern])],
+            'constraints' => [new DurationConstraint()],
         ]);
     }
 
@@ -61,37 +37,7 @@ class DurationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $formatter = new Duration();
-        $pattern = $this->pattern;
-
-        $builder->addModelTransformer(new CallbackTransformer(
-            function ($intToFormat) use ($formatter) {
-                try {
-                    return $formatter->format($intToFormat);
-                } catch (\Exception $e) {
-                    throw new TransformationFailedException($e->getMessage());
-                }
-            },
-            function ($formatToInt) use ($formatter, $pattern) {
-                if (null === $formatToInt) {
-                    return null;
-                }
-
-                if (empty($formatToInt)) {
-                    return 0;
-                }
-
-                if (!preg_match($pattern, $formatToInt)) {
-                    throw new TransformationFailedException('Invalid duration format given');
-                }
-
-                try {
-                    return $formatter->parseDurationString($formatToInt);
-                } catch (\Exception $e) {
-                    throw new TransformationFailedException($e->getMessage());
-                }
-            }
-        ));
+        $builder->addModelTransformer(new DurationStringToSecondsTransformer());
     }
 
     /**

@@ -11,15 +11,19 @@ namespace App\Tests\Invoice\Renderer;
 
 use App\Invoice\Renderer\CsvRenderer;
 use App\Model\InvoiceModel;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * @covers \App\Invoice\Renderer\CsvRenderer
  * @covers \App\Invoice\Renderer\AbstractRenderer
  * @covers \App\Invoice\Renderer\AbstractSpreadsheetRenderer
+ * @group integration
  */
-class CsvRendererTest extends AbstractRendererTest
+class CsvRendererTest extends TestCase
 {
+    use RendererTestTrait;
+
     public function testSupports()
     {
         $sut = $this->getAbstractRenderer(CsvRenderer::class);

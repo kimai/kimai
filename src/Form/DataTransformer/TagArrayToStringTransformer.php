@@ -36,7 +36,7 @@ class TagArrayToStringTransformer implements DataTransformerInterface
      *
      * @return string
      */
-    public function transform($tags): string
+    public function transform($tags)
     {
         if (empty($tags)) {
             return '';
@@ -53,7 +53,7 @@ class TagArrayToStringTransformer implements DataTransformerInterface
      * @return Tag[]
      * @throws TransformationFailedException if object (issue) is not found
      */
-    public function reverseTransform($stringOfTags): array
+    public function reverseTransform($stringOfTags)
     {
         // check for empty tag list
         if (empty($stringOfTags)) {

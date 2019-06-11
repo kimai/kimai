@@ -22,7 +22,6 @@ class CustomerStatisticTest extends TestCase
         $sut = new CustomerStatistic();
         $this->assertEquals(0, $sut->getActivityAmount());
         $this->assertEquals(0, $sut->getProjectAmount());
-        $this->assertEquals(0, $sut->getCount());
         $this->assertEquals(0, $sut->getRecordAmount());
         $this->assertEquals(0, $sut->getRecordDuration());
     }
@@ -30,7 +29,6 @@ class CustomerStatisticTest extends TestCase
     public function testSetter()
     {
         $sut = new CustomerStatistic();
-        $sut->setCount(123);
         $sut->setRecordAmount(7654.298);
         $sut->setRecordDuration(826.10);
         $sut->setActivityAmount(13);
@@ -38,7 +36,6 @@ class CustomerStatisticTest extends TestCase
 
         $this->assertEquals(13, $sut->getActivityAmount());
         $this->assertEquals(2, $sut->getProjectAmount());
-        $this->assertEquals(123, $sut->getCount());
         $this->assertEquals(7654, $sut->getRecordAmount());
         $this->assertEquals(826, $sut->getRecordDuration());
     }

@@ -33,10 +33,6 @@
                 <source>confirm.delete</source>
                 <target>本当に削除してもよろしいですか？</target>
             </trans-unit>
-            <trans-unit id="confirm.delete_message">
-                <source>confirm.delete_message</source>
-                <target>本当に削除しても問題無いかどうかを確認してください。紐付けられたオブジェクトが存在しますが、こちらも同時に削除されます。</target>
-            </trans-unit>
             <trans-unit id="delete.not_in_use">
                 <source>delete.not_in_use</source>
                 <target>このアイテムは安全に削除できます。</target>
@@ -466,13 +462,11 @@
                 <source>admin_project.subtitle</source>
                 <target>プロジェクトは得意先に対するアクティビティをグループ化します。</target>
             </trans-unit>
-            <trans-unit id="admin_project.delete_confirm">
-                <source>admin_project.delete_confirm</source>
+            <trans-unit id="admin_project.short_stats">
+                <source>admin_project.short_stats</source>
                 <target>
                     これは %project% プロジェクトです。得意先は %customer% です。%activities% 個の
                     アクティビティが登録されており、%records% 件の時間が記録されています。合計すると %duration% になります。
-                    これらのアクティビティと時間記録が一緒に削除されます！
-                    削除する代わりに、既存のアクティビティとエントリをすべて、他のプロジェクトに移行することもできます:
                 </target>
             </trans-unit>
 
@@ -487,13 +481,11 @@
                 <source>admin_activity.subtitle</source>
                 <target>時間記録時に指定するタスクのことです。</target>
             </trans-unit>
-            <trans-unit id="admin_activity.delete_confirm">
-                <source>admin_activity.delete_confirm</source>
+            <trans-unit id="admin_activity.short_stats">
+                <source>admin_activity.short_stats</source>
                 <target>
                     これは %activity% アクティビティです。得意先が %customer% である %project% プロジェクトに所属しています。
                     %records% 件の時間が記録されています。合計すると %duration% になります。
-                    これらの時間記録が一緒に削除されます！
-                    削除する代わりに、既存のエントリをすべて、他のアクティビティに移行することもできます:
                 </target>
             </trans-unit>
 
@@ -556,13 +548,11 @@
                 <source>label.currency</source>
                 <target>通過</target>
             </trans-unit>
-            <trans-unit id="admin_customer.delete_confirm">
-                <source>admin_customer.delete_confirm</source>
+            <trans-unit id="admin_customer.short_stats">
+                <source>admin_customer.short_stats</source>
                 <target>
                     これは得意先 %customer% です。%project% 個のプロジェクトと、その配下に %activity% 個のアクティビティが登録されており、
                     すべて合わせて %records% 件の時間が記録されています。合計すると %duration% になります。
-                    これらのプロジェクト、アクティビティ、時間記録が一緒に削除されます！
-                    削除する代わりに、すべてのデータを、他のプロジェクトに移行することもできます:
                 </target>
             </trans-unit>
 
@@ -597,11 +587,10 @@
                 <source>label.roles</source>
                 <target>ロール</target>
             </trans-unit>
-            <trans-unit id="admin_user.delete_confirm">
-                <source>admin_user.delete_confirm</source>
+            <trans-unit id="admin_user.short_stats">
+                <source>admin_user.short_stats</source>
                 <target>
                     この %user% ユーザーには %records% 件の時間が記録されています。合計すると %duration% になります。
-                    これらの時間記録が一緒に削除されます！
                 </target>
             </trans-unit>
 

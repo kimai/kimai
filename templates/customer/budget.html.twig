@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% import "macros/actions.html.twig" as actions %}
+
+{% block page_title %}{{ 'admin_customer.title'|trans }}{% endblock %}
+{% block page_subtitle %}{{ 'admin_customer.subtitle'|trans }}{% endblock %}
+{% block page_actions %}{{ actions.customer(customer, 'delete') }}{% endblock %}
+
+{% block main %}
+
+    {% set params = {
+        '%activity%': '<strong>' ~ stats.activityAmount ~ '</strong>',
+        '%project%': '<strong>' ~ stats.projectAmount ~ '</strong>',
+        '%customer%': '<strong>' ~ customer.name ~ '</strong>',
+        '%records%': '<strong>' ~ stats.recordAmount ~ '</strong>',
+        '%duration%': '<strong>' ~ stats.recordDuration|duration ~ '</strong>',
+        '%rate%': '<strong>' ~ stats.recordRate|money ~ '</strong>'
+    } %}
+
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% import "macros/progressbar.html.twig" as progress %}
+        {% block box_title %}{{ customer.name }}{% endblock %}
+        {% block box_body %}
+            <p>
+                {{ 'admin_customer.short_stats'|trans(params)|raw }}
+            </p>
+
+            {% if customer.budget > 0 %}
+                {{ progress.progressbar(customer.budget, stats.recordRate, 'label.budget'|trans, stats.recordRate|money(customer.currency) ~ ' / ' ~ customer.budget|money(customer.currency) ) }}
+            {% endif %}
+
+            {% if customer.timeBudget > 0 %}
+                {{ progress.progressbar(customer.timeBudget, stats.recordDuration, 'label.timeBudget'|trans, stats.recordDuration|duration ~ ' / ' ~ customer.timeBudget|duration ) }}
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}

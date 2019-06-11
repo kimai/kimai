@@ -43,6 +43,7 @@ class ProjectVoterTest extends AbstractVoterTest
         foreach ([$user3, $user4] as $user) {
             yield [$user, new Project(), 'view', $result];
             yield [$user, new Project(), 'edit', $result];
+            yield [$user, new Project(), 'budget', $result];
             yield [$user, new Project(), 'delete', $result];
         }
 
@@ -50,6 +51,7 @@ class ProjectVoterTest extends AbstractVoterTest
         foreach ([$user0, $user1, $user2] as $user) {
             yield [$user, new Project(), 'view', $result];
             yield [$user, new Project(), 'edit', $result];
+            yield [$user, new Project(), 'budget', $result];
             yield [$user, new Project(), 'delete', $result];
         }
 
@@ -58,6 +60,7 @@ class ProjectVoterTest extends AbstractVoterTest
             yield [$user, new Project(), 'create_project', $result];
             yield [$user, new Project(), 'view_project', $result];
             yield [$user, new Project(), 'edit_project', $result];
+            yield [$user, new Project(), 'budget_project', $result];
             yield [$user, new Project(), 'delete_project', $result];
             yield [$user, new \stdClass(), 'view', $result];
             yield [$user, null, 'edit', $result];
