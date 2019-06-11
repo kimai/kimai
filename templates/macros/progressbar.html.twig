@@ -1,7 +1,7 @@
 {% macro progressbar(max, current, title, subTitle) %}
-    {% set percentReached = (current / (max / 100))|number_format(2) %}
+    {% set percentReached = (current / (max / 100)) %}
     {% set class = "progress-bar-info" %}
-    {% set width = percentReached %}
+    {% set width = percentReached|number_format(1, '.', '') %}
 
     {% if percentReached > 90 %}
         {% set class = "progress-bar-danger" %}
@@ -18,7 +18,7 @@
     {% endif %}
 
     <div class="progress-group">
-        <span class="progress-text">{{ title }} &ndash; {{ percentReached }}%</span>
+        <span class="progress-text">{{ title }} &ndash; {{ percentReached|number_format(2) }}%</span>
         <span class="progress-number">{{ subTitle }}</span>
 
         <div class="progress">
