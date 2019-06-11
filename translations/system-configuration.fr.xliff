@@ -4,11 +4,11 @@
         <body>
             <trans-unit id="title">
                 <source>title</source>
-                <target>Réglagess</target>
+                <target>Réglages</target>
             </trans-unit>
             <trans-unit id="subtitle">
                 <source>subtitle</source>
-                <target>Modifier les paramètress globaux de votre service de suivi des temps.</target>
+                <target>Modifier les paramètres globaux de votre service de suivi des temps.</target>
             </trans-unit>
             <trans-unit id="timesheet">
                 <source>timesheet</source>
@@ -16,7 +16,7 @@
             </trans-unit>
             <trans-unit id="form_customer">
                 <source>form_customer</source>
-                <target>Créer un client - valeurs par défaut</target>
+                <target>Ajouter un client - valeurs par défaut</target>
             </trans-unit>
             <trans-unit id="theme">
                 <source>theme</source>
@@ -56,7 +56,7 @@
             </trans-unit>
             <trans-unit id="label.timesheet.active_entries.soft_limit">
                 <source>label.timesheet.active_entries.soft_limit</source>
-                <target>Nombre de relevés de temps d'activité à partir desquelles un message d'avertissement est affiché</target>
+                <target>Nombre de relevés de temps d'activité à partir duquel un message d'avertissement est affiché</target>
             </trans-unit>
             <trans-unit id="label.theme.select_type">
                 <source>label.theme.select_type</source>

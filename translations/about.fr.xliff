@@ -40,7 +40,7 @@
             </trans-unit>
             <trans-unit id="library_authors">
                 <source>library_authors</source>
-                <target>… l'ensemble des auteurs des logiciels & bibliothèques suivants, Kimai n'existerait pas sans vous 👍</target>
+                <target>… l'ensemble des auteurs des logiciels et bibliothèques suivants, Kimai n'existerait pas sans vous 👍</target>
             </trans-unit>
         </body>
     </file>
