@@ -36,7 +36,7 @@
             </trans-unit>
             <trans-unit id="daterangepicker.customRange">
                 <source>daterangepicker.customRange</source>
-                <target>Période sur-mesure</target>
+                <target>Custom range</target>
             </trans-unit>
         </body>
     </file>
