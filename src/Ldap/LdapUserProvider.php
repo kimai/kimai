@@ -9,7 +9,6 @@
 
 namespace App\Ldap;
 
-use App\Configuration\LdapConfiguration;
 use App\Entity\User;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -37,24 +36,14 @@ class LdapUserProvider implements UserProviderInterface
      */
     protected $logger;
 
-    public function __construct(LdapManager $ldapManager, LdapConfiguration $config, LoggerInterface $logger = null)
+    public function __construct(LdapManager $ldapManager, LoggerInterface $logger = null)
     {
         $this->ldapManager = $ldapManager;
         $this->logger = $logger;
-        $this->activated = $config->isActivated();
     }
 
     public function loadUserByUsername($username)
     {
-        // this method is called at least for unknown user, no matter what supportsClass() returns,
-        // so we have to check if LDAP is activated here as well
-        if (!$this->activated) {
-            $ex = new UsernameNotFoundException(sprintf('LDAP is deactivated, user "%s" not searched', $username));
-            $ex->setUsername($username);
-
-            throw $ex;
-        }
-
         $user = $this->ldapManager->findUserByUsername($username);
 
         if (empty($user)) {
@@ -99,10 +88,6 @@ class LdapUserProvider implements UserProviderInterface
 
     public function supportsClass($class)
     {
-        if (!$this->activated) {
-            return false;
-        }
-
         return $class === User::class || $class === 'App\Entity\User';
     }
 
