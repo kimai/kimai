@@ -85,8 +85,9 @@ class WidgetRepository
         $begin = !empty($widget['begin']) ? new \DateTime($widget['begin']) : null;
         $end = !empty($widget['end']) ? new \DateTime($widget['end']) : null;
         $theUser = $widget['user'] ? $user : null;
+
         if (!isset($widget['type'])) {
-            @trigger_error('Using a widget definition without a "type" (counter, more) is deprecated', E_USER_DEPRECATED);
+            @trigger_error('Using a widget definition without a "type" is deprecated', E_USER_DEPRECATED);
             $widget['type'] = 'counter';
         }
 
