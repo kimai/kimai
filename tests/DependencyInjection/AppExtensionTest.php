@@ -10,7 +10,7 @@
 namespace App\Tests\DependencyInjection;
 
 use App\DependencyInjection\AppExtension;
-use Notice;
+use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
