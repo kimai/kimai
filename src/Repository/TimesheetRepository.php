@@ -19,15 +19,8 @@ use App\Model\TimesheetStatistic;
 use App\Repository\Query\TimesheetQuery;
 use DateTime;
 use Doctrine\DBAL\Types\Type;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
-use Doctrine\ORM\Query\QueryException;
 use Doctrine\ORM\QueryBuilder;
-use Exception;
-use InvalidArgumentException;
 use Pagerfanta\Pagerfanta;
-use PDO;
 
 class TimesheetRepository extends AbstractRepository
 {
@@ -40,8 +33,8 @@ class TimesheetRepository extends AbstractRepository
 
     /**
      * @param Timesheet $timesheet
-     * @throws ORMException
-     * @throws OptimisticLockException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function delete(Timesheet $timesheet)
     {
@@ -52,8 +45,8 @@ class TimesheetRepository extends AbstractRepository
 
     /**
      * @param Timesheet $timesheet
-     * @throws ORMException
-     * @throws OptimisticLockException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function save(Timesheet $timesheet)
     {
@@ -66,8 +59,8 @@ class TimesheetRepository extends AbstractRepository
      * @param Timesheet $entry
      * @return bool
      * @throws RepositoryException
-     * @throws ORMException
-     * @throws OptimisticLockException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function stopRecording(Timesheet $entry)
     {
@@ -77,7 +70,7 @@ class TimesheetRepository extends AbstractRepository
 
         // seems to be necessary so Doctrine will recognize a changed timestamp
         $begin = clone $entry->getBegin();
-        $end = new DateTime('now', $begin->getTimezone());
+        $end = new \DateTime('now', $begin->getTimezone());
 
         $entry->setBegin($begin);
         $entry->setEnd($end);
@@ -95,7 +88,7 @@ class TimesheetRepository extends AbstractRepository
      * @param DateTime|null $end
      * @param User|null $user
      * @return int|mixed
-     * @throws NonUniqueResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getStatistic(string $type, ?DateTime $begin, ?DateTime $end, ?User $user)
     {
@@ -122,7 +115,7 @@ class TimesheetRepository extends AbstractRepository
                 $what = 'COUNT(t.id)';
                 break;
             default:
-                throw new InvalidArgumentException('Invalid query type: ' . $type);
+                throw new \InvalidArgumentException('Invalid query type: ' . $type);
         }
 
         return $this->queryTimeRange($what, $begin, $end, $user);
@@ -132,7 +125,7 @@ class TimesheetRepository extends AbstractRepository
      * @param string $select
      * @param User $user
      * @return int
-     * @throws NonUniqueResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     protected function queryThisMonth($select, User $user)
     {
@@ -148,7 +141,7 @@ class TimesheetRepository extends AbstractRepository
      * @param DateTime|null $end
      * @param User|null $user
      * @return int|mixed
-     * @throws NonUniqueResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     protected function queryTimeRange(string $select, ?DateTime $begin, ?DateTime $end, ?User $user)
     {
@@ -184,7 +177,7 @@ class TimesheetRepository extends AbstractRepository
      *
      * @param User $user
      * @return TimesheetStatistic
-     * @throws NonUniqueResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getUserStatistics(User $user)
     {
@@ -324,10 +317,10 @@ class TimesheetRepository extends AbstractRepository
      * @param User $user
      * @param DateTime $begin
      * @param DateTime $end
-     * @return Day|array
-     * @throws Exception
+     * @return Day[]
+     * @throws \Exception
      */
-    public function getDailyStats(User $user, DateTime $begin, DateTime $end)
+    public function getDailyStats(User $user, DateTime $begin, DateTime $end): array
     {
         $results = $this->getDailyData($user, $begin, $end);
 
@@ -387,8 +380,8 @@ class TimesheetRepository extends AbstractRepository
      * @param int $hardLimit
      * @return int
      * @throws RepositoryException
-     * @throws ORMException
-     * @throws OptimisticLockException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function stopActiveEntries(User $user, int $hardLimit)
     {
@@ -405,7 +398,7 @@ class TimesheetRepository extends AbstractRepository
             foreach ($activeEntries as $activeEntry) {
                 if ($i > $limit) {
                     if ($hardLimit > 1) {
-                        throw new Exception('timesheet.start.exceeded_limit');
+                        throw new \Exception('timesheet.start.exceeded_limit');
                     }
 
                     $this->stopRecording($activeEntry);
@@ -491,9 +484,9 @@ class TimesheetRepository extends AbstractRepository
      * @param DateTime|null $startFrom
      * @param int $limit
      * @return array|mixed
-     * @throws QueryException
+     * @throws \Doctrine\ORM\Query\QueryException
      */
-    public function getRecentActivities(User $user = null, DateTime $startFrom = null, $limit = 10)
+    public function getRecentActivities(User $user = null, \DateTime $startFrom = null, $limit = 10)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -510,7 +503,7 @@ class TimesheetRepository extends AbstractRepository
             ->groupBy('a.id', 'p.id')
             ->orderBy('maxid', 'DESC')
             ->setMaxResults($limit)
-            ->setParameter('visible', true, PDO::PARAM_BOOL)
+            ->setParameter('visible', true, \PDO::PARAM_BOOL)
         ;
 
         if (null !== $user) {

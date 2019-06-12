@@ -14,9 +14,6 @@ use App\Security\CurrentUser;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
-use DateTime;
-use InvalidArgumentException;
-use ReflectionClass;
 
 /**
  * @internal
@@ -69,7 +66,7 @@ class WidgetRepository
     public function get(string $id): WidgetInterface
     {
         if (!$this->has($id)) {
-            throw new InvalidArgumentException('Cannot find widget: ' . $id);
+            throw new \InvalidArgumentException('Cannot find widget: ' . $id);
         }
 
         if (isset($this->widgets[$id])) {
@@ -85,8 +82,8 @@ class WidgetRepository
     protected function create(string $name, array $widget): WidgetInterface
     {
         $user = $this->user;
-        $begin = !empty($widget['begin']) ? new DateTime($widget['begin']) : null;
-        $end = !empty($widget['end']) ? new DateTime($widget['end']) : null;
+        $begin = !empty($widget['begin']) ? new \DateTime($widget['begin']) : null;
+        $end = !empty($widget['end']) ? new \DateTime($widget['end']) : null;
         $theUser = $widget['user'] ? $user : null;
         if (!isset($widget['type'])) {
             @trigger_error('Using a widget definition without a "type" (counter, more) is deprecated', E_USER_DEPRECATED);
@@ -98,7 +95,7 @@ class WidgetRepository
             throw new WidgetException(sprintf('Unknown widget type "%s"', $widgetClassName));
         }
 
-        $model = new ReflectionClass($widgetClassName);
+        $model = new \ReflectionClass($widgetClassName);
         if (!$model->isSubclassOf(AbstractWidgetType::class)) {
             throw new WidgetException(sprintf('Invalid widget type "%s" does not extend AbstractWidgetType', $widgetClassName));
         }

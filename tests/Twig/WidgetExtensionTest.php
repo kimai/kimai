@@ -91,12 +91,10 @@ class WidgetExtensionTest extends TestCase
         $data = json_decode($result, true);
         $this->assertEquals($options, $data);
     }
-
 }
 
 class TestRenderer implements WidgetRendererInterface
 {
-
     public function supports(WidgetInterface $widget): bool
     {
         return true;
@@ -104,6 +102,6 @@ class TestRenderer implements WidgetRendererInterface
 
     public function render(WidgetInterface $widget): string
     {
-       return json_encode($widget->getOptions());
+        return json_encode($widget->getOptions());
     }
 }
