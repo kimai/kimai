@@ -66,7 +66,7 @@ class WidgetRepository
     public function get(string $id): WidgetInterface
     {
         if (!$this->has($id)) {
-            throw new \InvalidArgumentException('Cannot find widget: ' . $id);
+            throw new \InvalidArgumentException(sprintf('Cannot find widget "%s".', $id));
         }
 
         if (isset($this->widgets[$id])) {
