@@ -10,27 +10,20 @@
 namespace App\Tests\Widget\Type;
 
 use App\Widget\Type\AbstractWidgetType;
-use App\Widget\Type\More;
-use App\Widget\Type\SimpleWidget;
+use App\Widget\Type\YearChart;
 
 /**
- * @covers \App\Widget\Type\More
+ * @covers \App\Widget\Type\YearChart
  */
-class MoreTest extends AbstractWidgetTypeTest
+class YearChartTest extends AbstractWidgetTypeTest
 {
     public function createSut(): AbstractWidgetType
     {
-        return new More();
+        return new YearChart();
     }
 
     public function getDefaultOptions(): array
     {
-        return ['dataType' => 'int'];
-    }
-
-    public function testExtendsSimpleWidget()
-    {
-        $sut = $this->createSut();
-        $this->assertInstanceOf(SimpleWidget::class, $sut);
+        return [];
     }
 }

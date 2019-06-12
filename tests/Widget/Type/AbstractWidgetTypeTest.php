@@ -18,6 +18,7 @@ use PHPUnit\Framework\TestCase;
 abstract class AbstractWidgetTypeTest extends TestCase
 {
     abstract public function createSut(): AbstractWidgetType;
+    abstract public function getDefaultOptions(): array;
 
     public function testDefaultValues()
     {
@@ -25,7 +26,7 @@ abstract class AbstractWidgetTypeTest extends TestCase
         $this->assertInstanceOf(AbstractWidgetType::class, $sut);
         $this->assertEquals('', $sut->getId());
         $this->assertEquals('', $sut->getTitle());
-        $this->assertEquals(['dataType' => 'int'], $sut->getOptions());
+        $this->assertEquals($this->getDefaultOptions(), $sut->getOptions());
         $this->assertNull($sut->getData());
         $this->assertEquals('bar', $sut->getOption('foo', 'bar'));
     }
@@ -58,7 +59,7 @@ abstract class AbstractWidgetTypeTest extends TestCase
         $sut->setOption('föööö', 'trääääää');
         $this->assertEquals('trääääää', $sut->getOption('föööö', 'tröööö'));
         $this->assertEquals('trääääää', $sut->getOption('föööö', 'tröööö'));
-        $this->assertEquals(['dataType' => 'int', 'föööö' => 'trääääää'], $sut->getOptions());
+        $this->assertEquals(array_merge($this->getDefaultOptions(), ['föööö' => 'trääääää']), $sut->getOptions());
 
         $sut->setOptions(['blub' => 'blab', 'dataType' => 'money']);
         $this->assertEquals(['blub' => 'blab', 'dataType' => 'money', 'föööö' => 'trääääää'], $sut->getOptions());

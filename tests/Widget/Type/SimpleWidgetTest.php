@@ -10,27 +10,20 @@
 namespace App\Tests\Widget\Type;
 
 use App\Widget\Type\AbstractWidgetType;
-use App\Widget\Type\More;
 use App\Widget\Type\SimpleWidget;
 
 /**
- * @covers \App\Widget\Type\More
+ * @covers \App\Widget\Type\SimpleWidget
  */
-class MoreTest extends AbstractWidgetTypeTest
+class SimpleWidgetTest extends AbstractWidgetTypeTest
 {
     public function createSut(): AbstractWidgetType
     {
-        return new More();
+        return new SimpleWidget();
     }
 
     public function getDefaultOptions(): array
     {
-        return ['dataType' => 'int'];
-    }
-
-    public function testExtendsSimpleWidget()
-    {
-        $sut = $this->createSut();
-        $this->assertInstanceOf(SimpleWidget::class, $sut);
+        return [];
     }
 }

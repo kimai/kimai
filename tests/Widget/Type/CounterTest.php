@@ -23,6 +23,11 @@ class CounterTest extends AbstractWidgetTypeTest
         return new Counter();
     }
 
+    public function getDefaultOptions(): array
+    {
+        return ['dataType' => 'int'];
+    }
+
     public function testExtendsSimpleWidget()
     {
         $sut = $this->createSut();

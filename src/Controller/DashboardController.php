@@ -14,7 +14,6 @@ use App\Widget\Type\CompoundChart;
 use App\Widget\Type\CompoundRow;
 use App\Widget\WidgetContainerInterface;
 use App\Widget\WidgetService;
-use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -80,7 +79,7 @@ class DashboardController extends AbstractController
 
             foreach ($widgetRow['widgets'] as $widgetName) {
                 if (!$this->widgets->hasWidget($widgetName)) {
-                    throw new Exception(sprintf('Unknown widget "%s"', $widgetName));
+                    throw new \Exception(sprintf('Unknown widget "%s"', $widgetName));
                 }
 
                 $row->addWidget($this->widgets->getWidget($widgetName));
