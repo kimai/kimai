@@ -10,7 +10,6 @@
 namespace App\Controller;
 
 use App\Event\DashboardEvent;
-use App\Repository\WidgetRepository;
 use App\Widget\Type\CompoundChart;
 use App\Widget\Type\CompoundRow;
 use App\Widget\WidgetContainerInterface;
