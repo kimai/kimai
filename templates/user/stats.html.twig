@@ -33,12 +33,22 @@
                         }
                     }],
                     yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        },
                         gridLines: {
                             display: true,
-                            color: 'rgba(0,0,0,.05)',
+                            color: '{{ kimai_context.chart.grid_color }}',
                             lineWidth: 1
                         }
                     }]
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            return data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
+                        }
+                    }
                 }
             };
         }
@@ -51,7 +61,7 @@
             {% block box_body %}
 
                 <div class="chart">
-                    <canvas id="userProfileChart{{ year }}" style="height: 200px;"></canvas>
+                    <canvas id="userProfileChart{{ year }}" style="height: {{ kimai_context.chart.height }}px;"></canvas>
                 </div>
                 <script type="text/javascript">
                     document.addEventListener('kimai.initialized', function() {
@@ -60,11 +70,17 @@
                             datasets: [
                                 {
                                     label: '{{ year }}',
-                                    backgroundColor     : '#00a65a',
-                                    borderColor         : '#00a65a',
+                                    backgroundColor: '{{ kimai_context.chart.background_color }}',
+                                    borderColor: '{{ kimai_context.chart.border_color }}',
                                     data: [
                                         {% for month in yearStat.months %}
-                                        {{ (month.totalDuration / 3600)|round }}
+                                        {{ (month.totalDuration / 3600)|number_format(2, '.', '') }}
+                                        {% if not loop.last %},{% endif %}
+                                        {% endfor %}
+                                    ],
+                                    realData        : [
+                                        {% for month in yearStat.months %}
+                                        '{{ month.totalDuration|duration }}'
                                         {% if not loop.last %},{% endif %}
                                         {% endfor %}
                                     ]
