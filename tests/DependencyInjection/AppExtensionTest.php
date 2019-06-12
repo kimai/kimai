@@ -10,6 +10,7 @@
 namespace App\Tests\DependencyInjection;
 
 use App\DependencyInjection\AppExtension;
+use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -97,6 +98,12 @@ class AppExtensionTest extends TestCase
                 'box_color' => 'green',
                 'select_type' => null,
                 'show_about' => true,
+                'chart' => [
+                    'background_color' => 'rgba(0,115,183,0.7)',
+                    'border_color' => '#3b8bba',
+                    'grid_color' => 'rgba(0,0,0,.05)',
+                    'height' => '200'
+                ]
             ],
             'kimai.theme.select_type' => null,
             'kimai.theme.show_about' => true,
@@ -211,7 +218,7 @@ class AppExtensionTest extends TestCase
     }
 
     /**
-     * @expectedException \PHPUnit\Framework\Error\Notice
+     * @expectedException Notice
      * @expectedExceptionMessage Found ambiguous configuration. Please remove "kimai.timesheet.duration_only" and set "kimai.timesheet.mode" instead.
      * @expectedDeprecation Configuration "kimai.timesheet.duration_only" is deprecated, please remove it
      * @group legacy
@@ -300,7 +307,7 @@ class AppExtensionTest extends TestCase
     }
 
     /**
-     * @expectedException \PHPUnit\Framework\Error\Notice
+     * @expectedException Notice
      * @expectedExceptionMessage Found invalid "kimai" configuration: The child node "data_dir" at path "kimai" must be configured.
      */
     public function testInvalidConfiguration()
