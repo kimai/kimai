@@ -78,7 +78,8 @@ services:
         arguments: [!tagged export.renderer]
 
     App\Widget\WidgetService:
-        arguments: [!tagged widget.renderer]
+        arguments:
+            $renderer: !tagged widget.renderer
 
     # ================================================================================
     # DATABASE

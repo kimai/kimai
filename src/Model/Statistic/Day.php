@@ -9,17 +9,10 @@
 
 namespace App\Model\Statistic;
 
-use InvalidArgumentException;
+use DateTime;
 
-/**
- * Monthly statistics
- */
-class Month
+class Day
 {
-    /**
-     * @var string
-     */
-    protected $month;
     /**
      * @var int
      */
@@ -28,27 +21,21 @@ class Month
      * @var float
      */
     protected $totalRate = 0.00;
-
     /**
-     * @param string $month
+     * @var DateTime
      */
-    public function __construct(string $month)
+    protected $day;
+
+    public function __construct(DateTime $day, int $duration, float $rate)
     {
-        $monthNumber = (int) $month;
-        if ($monthNumber < 1 || $monthNumber > 12) {
-            throw new InvalidArgumentException(
-                sprintf('Invalid month given. Expected 1-12, received "%s".', $monthNumber)
-            );
-        }
-        $this->month = $month;
+        $this->day = $day;
+        $this->totalDuration = $duration;
+        $this->totalRate = $rate;
     }
 
-    /**
-     * @return string
-     */
-    public function getMonth()
+    public function getDay(): DateTime
     {
-        return $this->month;
+        return $this->day;
     }
 
     public function getTotalDuration(): int
@@ -56,7 +43,7 @@ class Month
         return $this->totalDuration;
     }
 
-    public function setTotalDuration(int $seconds): Month
+    public function setTotalDuration(int $seconds): Day
     {
         $this->totalDuration = $seconds;
 
@@ -68,7 +55,7 @@ class Month
         return $this->totalRate;
     }
 
-    public function setTotalRate(float $totalRate): Month
+    public function setTotalRate(float $totalRate): Day
     {
         $this->totalRate = $totalRate;
 

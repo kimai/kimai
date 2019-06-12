@@ -10,6 +10,8 @@
 namespace App\Tests\Model\Statistic;
 
 use App\Model\Statistic\Month;
+use Exception;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -42,12 +44,12 @@ class MonthTest extends TestCase
             $ex = null;
             try {
                 new Month($month);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $ex = $e;
             }
-            $this->assertInstanceOf(\InvalidArgumentException::class, $ex);
+            $this->assertInstanceOf(InvalidArgumentException::class, $ex);
             $this->assertEquals(
-                'Invalid month given, expected 01-12 but given: ' . ((int) $month),
+                'Invalid month given. Expected 1-12, received "' . ((int) $month) . '".',
                 $ex->getMessage()
             );
         }
@@ -59,7 +61,7 @@ class MonthTest extends TestCase
         $sut->setTotalDuration(999.27);
         $sut->setTotalRate(0.123456789);
 
-        $this->assertEquals(999.27, $sut->getTotalDuration());
+        $this->assertEquals(999, $sut->getTotalDuration());
         $this->assertEquals(0.123456789, $sut->getTotalRate());
     }
 }
