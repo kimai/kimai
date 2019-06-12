@@ -257,10 +257,6 @@
                 <source>dashboard.all</source>
                 <target>Все пользователи</target>
             </trans-unit>
-            <trans-unit id="dashboard.admin">
-                <source>dashboard.admin</source>
-                <target>Администратор</target>
-            </trans-unit>
 
             <!--
               Widgets

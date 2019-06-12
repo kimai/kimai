@@ -265,10 +265,6 @@
                 <source>dashboard.all</source>
                 <target>Resumen</target>
             </trans-unit>
-            <trans-unit id="dashboard.admin">
-                <source>dashboard.admin</source>
-                <target>Administrador</target>
-            </trans-unit>
 
             <!--
               Widgets
