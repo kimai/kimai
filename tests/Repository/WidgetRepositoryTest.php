@@ -44,6 +44,32 @@ class WidgetRepositoryTest extends TestCase
     }
 
     /**
+     * @expectedException \App\Widget\WidgetException
+     * @expectedExceptionMessage Unknown widget type "\App\Widget\Type\FooBar"
+     */
+    public function testGetWidgetThrowsExceptionOnInvalidType()
+    {
+        $repoMock = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->getMock();
+        $userMock = $this->getMockBuilder(CurrentUser::class)->disableOriginalConstructor()->getMock();
+
+        $sut = new WidgetRepository($repoMock, $userMock, ['test' => ['type' => 'FooBar', 'user' => false]]);
+        $sut->get('test');
+    }
+
+    /**
+     * @expectedException \App\Widget\WidgetException
+     * @expectedExceptionMessage Invalid widget type "\App\Widget\Type\CompoundChart" does not extend AbstractWidgetType
+     */
+    public function testGetWidgetTriggersExceptionOnWrongClass()
+    {
+        $repoMock = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->getMock();
+        $userMock = $this->getMockBuilder(CurrentUser::class)->disableOriginalConstructor()->getMock();
+
+        $sut = new WidgetRepository($repoMock, $userMock, ['test' => ['type' => 'CompoundChart', 'user' => false]]);
+        $sut->get('test');
+    }
+
+    /**
      * @dataProvider getWidgetData
      */
     public function testGetWidget($data, $query, $dataType)

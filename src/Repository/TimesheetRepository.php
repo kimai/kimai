@@ -266,12 +266,12 @@ class TimesheetRepository extends AbstractRepository
     }
 
     /**
+     * @param DateTime $begin
+     * @param DateTime $end
      * @param User|null $user
-     * @param DateTime|null $begin
-     * @param DateTime|null $end
      * @return mixed
      */
-    public function getDailyData(User $user = null, ?DateTime $begin = null, ?DateTime $end = null)
+    public function getDailyData(DateTime $begin, DateTime $end, ?User $user = null)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -282,19 +282,10 @@ class TimesheetRepository extends AbstractRepository
             ->addSelect('YEAR(t.begin) as year')
             ->addSelect('DAY(t.begin) as day')
             ->from(Timesheet::class, 't')
-        ;
-
-        if (!empty($begin)) {
-            $qb->andWhere($qb->expr()->gte('t.begin', ':from'));
-            $qb->setParameter('from', $begin, Type::DATETIME);
-        }
-
-        if (!empty($end)) {
-            $qb->andWhere($qb->expr()->lte('t.end', ':to'))
-                ->setParameter('to', $end, Type::DATETIME);
-        } else {
-            $qb->andWhere($qb->expr()->isNotNull('t.end'));
-        }
+            ->andWhere($qb->expr()->gte('t.begin', ':from'))
+            ->setParameter('from', $begin, Type::DATETIME)
+            ->andWhere($qb->expr()->lte('t.end', ':to'))
+            ->setParameter('to', $end, Type::DATETIME);
 
         if (null !== $user) {
             $qb->andWhere('t.user = :user')
@@ -322,7 +313,7 @@ class TimesheetRepository extends AbstractRepository
      */
     public function getDailyStats(User $user, DateTime $begin, DateTime $end): array
     {
-        $results = $this->getDailyData($user, $begin, $end);
+        $results = $this->getDailyData($begin, $end, $user);
 
         /** @var Day[] $days */
         $days = [];

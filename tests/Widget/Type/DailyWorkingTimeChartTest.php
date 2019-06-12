@@ -10,12 +10,12 @@
 namespace App\Tests\Widget\Type;
 
 use App\Entity\User;
+use App\Model\Statistic\Day;
 use App\Repository\TimesheetRepository;
 use App\Security\CurrentUser;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\DailyWorkingTimeChart;
 use App\Widget\Type\SimpleWidget;
-use DateTime;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -98,11 +98,11 @@ class DailyWorkingTimeChartTest extends TestCase
 
     public function testGetData()
     {
-        $repository = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->setMethods(['getDailyStats'])->getMock();
-        $repository->expects($this->once())->method('getDailyStats')->willReturnCallback(function (User $user, DateTime $begin, DateTime $end) {
-            self::assertEquals('tralalala', $user->getUsername());
-
-            return [1, 2, 3];
+        $repository = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->setMethods(['getDailyData'])->getMock();
+        $repository->expects($this->once())->method('getDailyData')->willReturnCallback(function ($user, $begin, $end) {
+            return [
+                ['year' => '2019', 'month' => '1', 'day' => 1, 'rate' => 13.75, 'duration' => 1234]
+            ];
         });
         $user = $this->getMockBuilder(CurrentUser::class)->disableOriginalConstructor()->setMethods(['getUser'])->getMock();
         $user->expects($this->once())->method('getUser')->willReturn((new User())->setUsername('tralalala'));
@@ -110,7 +110,10 @@ class DailyWorkingTimeChartTest extends TestCase
         $sut = new DailyWorkingTimeChart($repository, $user);
         $sut->setOption('type', 'xxx');
         $data = $sut->getData();
-        self::assertEquals([1, 2, 3], $data);
+        self::assertCount(7, $data);
+        foreach ($data as $statObj) {
+            self::assertInstanceOf(Day::class, $statObj);
+        }
         self::assertEquals('bar', $sut->getOption('type', 'yyy'));
     }
 }
