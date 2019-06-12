@@ -14,6 +14,7 @@ use App\Widget\Type\CompoundChart;
 
 /**
  * @covers \App\Widget\Type\CompoundChart
+ * @covers \App\Widget\Type\AbstractContainer
  */
 class CompoundChartTest extends AbstractContainerTest
 {

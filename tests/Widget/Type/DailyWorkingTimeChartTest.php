@@ -20,6 +20,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Widget\Type\DailyWorkingTimeChart
+ * @covers \App\Repository\TimesheetRepository
  */
 class DailyWorkingTimeChartTest extends TestCase
 {

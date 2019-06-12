@@ -14,6 +14,7 @@ use App\Widget\Type\CompoundRow;
 
 /**
  * @covers \App\Widget\Type\CompoundRow
+ * @covers \App\Widget\Type\AbstractContainer
  */
 class CompoundRowTest extends AbstractContainerTest
 {
