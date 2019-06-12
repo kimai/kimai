@@ -170,7 +170,7 @@ kimai:
             order: 10
             permission: ROLE_USER
             type: 'compoundChart'
-            widgets: [userRecapThisYear, userDurationToday, userDurationWeek, userDurationMonth, userDurationYear]
+            widgets: [DailyWorkingTimeChart, userDurationToday, userDurationWeek, userDurationMonth, userDurationYear]
         user_rates:
             title: ~
             order: 20
