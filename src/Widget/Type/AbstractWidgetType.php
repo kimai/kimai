@@ -11,11 +11,8 @@ namespace App\Widget\Type;
 
 use App\Widget\WidgetInterface;
 
-abstract class SimpleStatistic implements WidgetInterface
+abstract class AbstractWidgetType implements WidgetInterface
 {
-    public const DATA_TYPE_MONEY = 'money';
-    public const DATA_TYPE_DURATION = 'duration';
-
     /**
      * @var string
      */
@@ -33,7 +30,7 @@ abstract class SimpleStatistic implements WidgetInterface
      */
     protected $data;
 
-    public function setId(string $id): SimpleStatistic
+    public function setId(string $id): AbstractWidgetType
     {
         $this->id = $id;
 
@@ -45,7 +42,7 @@ abstract class SimpleStatistic implements WidgetInterface
         return $this->id;
     }
 
-    public function setData($data): SimpleStatistic
+    public function setData($data): AbstractWidgetType
     {
         $this->data = $data;
 
@@ -60,7 +57,7 @@ abstract class SimpleStatistic implements WidgetInterface
         return $this->data;
     }
 
-    public function setTitle(string $title): SimpleStatistic
+    public function setTitle(string $title): AbstractWidgetType
     {
         $this->title = $title;
 
@@ -69,14 +66,25 @@ abstract class SimpleStatistic implements WidgetInterface
 
     public function getTitle(): string
     {
-        return $this->title;
+        return $this->getOption('title', $this->title);
     }
 
-    public function setOptions(array $options): SimpleStatistic
+    public function setOptions(array $options): AbstractWidgetType
     {
-        $this->options = $options;
+        foreach ($options as $key => $value) {
+            $this->options[$key] = $value;
+        }
 
         return $this;
+    }
+
+    /**
+     * @param string $name
+     * @param mixed $value
+     */
+    public function setOption(string $name, $value): void
+    {
+        $this->options[$name] = $value;
     }
 
     /**
@@ -91,5 +99,10 @@ abstract class SimpleStatistic implements WidgetInterface
         }
 
         return $default;
+    }
+
+    public function getOptions(): array
+    {
+        return $this->options;
     }
 }

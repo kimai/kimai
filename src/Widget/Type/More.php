@@ -9,6 +9,10 @@
 
 namespace App\Widget\Type;
 
-class More extends SimpleStatistic
+class More extends SimpleWidget
 {
+    public function __construct()
+    {
+        $this->setOption('dataType', 'int');
+    }
 }

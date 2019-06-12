@@ -28,18 +28,22 @@ interface WidgetInterface
     public function getTitle(): string;
 
     /**
-     * Returns the widgets datat, to be used in the frontend rendering.
+     * Returns the widgets data, to be used in the frontend rendering.
      *
      * @return mixed|null
      */
     public function getData();
 
     /**
-     * Returns a widget option or the $default value if not set.
+     * Returns all widget options to be used in the frontend.
+     */
+    public function getOptions(): array;
+
+    /**
+     * Sets one widget option, both for internal use and for frontend rendering.
      *
      * @param string $name
-     * @param mixed|null $default
-     * @return mixed|null
+     * @param mixed $value
      */
-    public function getOption(string $name, $default = null);
+    public function setOption(string $name, $value): void;
 }

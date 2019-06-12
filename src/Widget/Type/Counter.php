@@ -9,6 +9,10 @@
 
 namespace App\Widget\Type;
 
-class Counter extends SimpleStatistic
+class Counter extends SimpleWidget
 {
+    public function __construct()
+    {
+        $this->setOption('dataType', 'int');
+    }
 }

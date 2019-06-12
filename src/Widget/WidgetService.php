@@ -9,21 +9,43 @@
 
 namespace App\Widget;
 
+use App\Repository\WidgetRepository;
+
 class WidgetService
 {
     /**
      * @var WidgetRendererInterface[]
      */
     protected $renderer = [];
+    /**
+     * @var WidgetRepository
+     */
+    protected $repository;
 
     /**
+     * @param WidgetRepository $repository
      * @param WidgetRendererInterface[] $renderer
      */
-    public function __construct(iterable $renderer)
+    public function __construct(WidgetRepository $repository, iterable $renderer)
     {
         foreach ($renderer as $render) {
             $this->addRenderer($render);
         }
+        $this->repository = $repository;
+    }
+
+    /**
+     * @param string $widget
+     * @return bool
+     */
+    public function hasWidget(string $widget): bool
+    {
+        return $this->repository->has($widget);
+    }
+
+    public function getWidget(string $widget): WidgetInterface
+    {
+        return $this->repository->get($widget);
     }
 
     public function addRenderer(WidgetRendererInterface $renderer): WidgetService

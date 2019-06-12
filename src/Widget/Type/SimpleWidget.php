@@ -9,6 +9,6 @@
 
 namespace App\Widget\Type;
 
-class YearChart extends SimpleWidget
+class SimpleWidget extends AbstractWidgetType
 {
 }

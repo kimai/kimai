@@ -11,6 +11,7 @@ namespace App\Widget\Type;
 
 use App\Widget\WidgetContainerInterface;
 use App\Widget\WidgetInterface;
+use BadMethodCallException;
 
 abstract class AbstractContainer implements WidgetContainerInterface
 {
@@ -27,7 +28,7 @@ abstract class AbstractContainer implements WidgetContainerInterface
      */
     protected $order = 0;
 
-    public function __construct(string $title)
+    public function setTitle(string $title)
     {
         $this->title = $title;
     }
@@ -40,14 +41,18 @@ abstract class AbstractContainer implements WidgetContainerInterface
         return $this->getWidgets();
     }
 
+    public function getOptions(): array
+    {
+        return [];
+    }
+
     /**
      * @param string $name
-     * @param mixed|null $default
-     * @return mixed|null
+     * @param mixed $value
      */
-    public function getOption(string $name, $default = null)
+    public function setOption(string $name, $value): void
     {
-        return null;
+        throw new BadMethodCallException('setOption() is not supported on AbstractContainer');
     }
 
     public function getId(): string
