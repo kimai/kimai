@@ -12,7 +12,6 @@ namespace App\Tests\Repository;
 use App\Repository\TimesheetRepository;
 use App\Repository\WidgetRepository;
 use App\Security\CurrentUser;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -32,7 +31,7 @@ class WidgetRepositoryTest extends TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Cannot find widget: foo
      */
     public function testGetWidgetThrowsExceptionOnNonExistingWidget()
