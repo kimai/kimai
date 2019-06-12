@@ -13,6 +13,7 @@ use App\DependencyInjection\AppExtension;
 use App\DependencyInjection\Compiler\DoctrineCompilerPass;
 use App\DependencyInjection\Compiler\InvoiceServiceCompilerPass;
 use App\DependencyInjection\Compiler\TwigContextCompilerPass;
+use App\DependencyInjection\Compiler\WidgetCompilerPass;
 use App\Export\RendererInterface as ExportRendererInterface;
 use App\Invoice\CalculatorInterface as InvoiceCalculator;
 use App\Invoice\NumberGeneratorInterface;
@@ -151,6 +152,7 @@ class Kernel extends BaseKernel
         $container->addCompilerPass(new DoctrineCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new TwigContextCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new InvoiceServiceCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
+        $container->addCompilerPass(new WidgetCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
     }
 
     protected function configureRoutes(RouteCollectionBuilder $routes)

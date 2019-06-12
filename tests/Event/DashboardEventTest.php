@@ -29,7 +29,7 @@ class DashboardEventTest extends TestCase
         $this->assertEquals($user, $sut->getUser());
         $this->assertEquals([], $sut->getSections());
 
-        $section = new CompoundRow('foo');
+        $section = new CompoundRow();
         $sut->addSection($section);
 
         $this->assertEquals([$section], $sut->getSections());

@@ -11,7 +11,8 @@ namespace App\Tests\Repository;
 
 use App\Repository\TimesheetRepository;
 use App\Repository\WidgetRepository;
-use App\Widget\Type\SimpleStatistic;
+use App\Security\CurrentUser;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,23 +23,25 @@ class WidgetRepositoryTest extends TestCase
     public function testHasWidget()
     {
         $repoMock = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->getMock();
+        $userMock = $this->getMockBuilder(CurrentUser::class)->disableOriginalConstructor()->getMock();
 
-        $sut = new WidgetRepository($repoMock, ['test' => []]);
+        $sut = new WidgetRepository($repoMock, $userMock, ['test' => []]);
 
         $this->assertFalse($sut->has('foo'));
         $this->assertTrue($sut->has('test'));
     }
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException InvalidArgumentException
      * @expectedExceptionMessage Cannot find widget: foo
      */
     public function testGetWidgetThrowsExceptionOnNonExistingWidget()
     {
         $repoMock = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->getMock();
+        $userMock = $this->getMockBuilder(CurrentUser::class)->disableOriginalConstructor()->getMock();
 
-        $sut = new WidgetRepository($repoMock, ['test' => []]);
-        $sut->get('foo', null);
+        $sut = new WidgetRepository($repoMock, $userMock, ['test' => []]);
+        $sut->get('foo');
     }
 
     /**
@@ -48,6 +51,8 @@ class WidgetRepositoryTest extends TestCase
     {
         $repoMock = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->getMock();
         $repoMock->method('getStatistic')->willReturn($data);
+
+        $userMock = $this->getMockBuilder(CurrentUser::class)->disableOriginalConstructor()->getMock();
 
         $widget = [
             'color' => 'sunny',
@@ -59,23 +64,24 @@ class WidgetRepositoryTest extends TestCase
             'title' => 'Test widget',
         ];
 
-        $sut = new WidgetRepository($repoMock, ['test' => $widget]);
-        $widget = $sut->get('test', null);
+        $sut = new WidgetRepository($repoMock, $userMock, ['test' => $widget]);
+        $widget = $sut->get('test');
 
+        $options = $widget->getOptions();
         $this->assertEquals('Test widget', $widget->getTitle());
         $this->assertEquals($data, $widget->getData());
-        $this->assertEquals('sunny', $widget->getOption('color'));
-        $this->assertEquals('far fa-test', $widget->getOption('icon'));
-        $this->assertEquals($dataType, $widget->getOption('dataType'));
+        $this->assertEquals('sunny', $options['color']);
+        $this->assertEquals('far fa-test', $options['icon']);
+        $this->assertEquals($dataType, $options['dataType']);
     }
 
     public function getWidgetData()
     {
         return [
-            [12, TimesheetRepository::STATS_QUERY_DURATION, SimpleStatistic::DATA_TYPE_DURATION],
+            [12, TimesheetRepository::STATS_QUERY_DURATION, 'duration'],
             [112233, TimesheetRepository::STATS_QUERY_AMOUNT, 'int'],
             [37, TimesheetRepository::STATS_QUERY_ACTIVE, 'int'],
-            [375, TimesheetRepository::STATS_QUERY_RATE, SimpleStatistic::DATA_TYPE_MONEY],
+            [375, TimesheetRepository::STATS_QUERY_RATE, 'money'],
             [['test' => 'foo'], TimesheetRepository::STATS_QUERY_USER, 'int'],
         ];
     }

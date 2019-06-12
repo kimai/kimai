@@ -86,7 +86,8 @@ class DashboardSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $section = new CompoundRow('dashboard.admin');
+        $section = new CompoundRow();
+        $section->setTitle('ROLE_ADMIN');
         $section->setOrder(100);
 
         if ($this->security->isGranted('view_user')) {

@@ -14,6 +14,8 @@ use App\Repository\WidgetRepository;
 use App\Widget\Type\CompoundChart;
 use App\Widget\Type\CompoundRow;
 use App\Widget\WidgetContainerInterface;
+use App\Widget\WidgetService;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,9 +33,9 @@ class DashboardController extends AbstractController
      */
     protected $eventDispatcher;
     /**
-     * @var WidgetRepository
+     * @var WidgetService
      */
-    protected $repository;
+    protected $widgets;
     /**
      * @var array
      */
@@ -41,13 +43,13 @@ class DashboardController extends AbstractController
 
     /**
      * @param EventDispatcherInterface $dispatcher
-     * @param WidgetRepository $repository
+     * @param WidgetService $service
      * @param array $dashboard
      */
-    public function __construct(EventDispatcherInterface $dispatcher, WidgetRepository $repository, array $dashboard)
+    public function __construct(EventDispatcherInterface $dispatcher, WidgetService $service, array $dashboard)
     {
         $this->eventDispatcher = $dispatcher;
-        $this->repository = $repository;
+        $this->widgets = $service;
         $this->dashboard = $dashboard;
     }
 
@@ -63,25 +65,26 @@ class DashboardController extends AbstractController
                 continue;
             }
 
-            if (!$this->isGranted($widgetRow['permission'])) {
+            if (null !== $widgetRow['permission'] && !$this->isGranted($widgetRow['permission'])) {
                 continue;
             }
 
             // TODO this should be dynamic
             if ($widgetRow['type'] === 'compoundChart') {
-                $row = new CompoundChart($widgetRow['title'] ?? '');
+                $row = new CompoundChart();
             } else {
-                $row = new CompoundRow($widgetRow['title'] ?? '');
+                $row = new CompoundRow();
             }
 
+            $row->setTitle($widgetRow['title'] ?? '');
             $row->setOrder($widgetRow['order']);
 
             foreach ($widgetRow['widgets'] as $widgetName) {
-                if (!$this->repository->has($widgetName)) {
-                    throw new \Exception(sprintf('Unknown widget "%s"', $widgetName));
+                if (!$this->widgets->hasWidget($widgetName)) {
+                    throw new Exception(sprintf('Unknown widget "%s"', $widgetName));
                 }
 
-                $row->addWidget($this->repository->get($widgetName, $event->getUser()));
+                $row->addWidget($this->widgets->getWidget($widgetName));
             }
 
             $event->addSection($row);

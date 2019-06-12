@@ -20,7 +20,8 @@ class DashboardSectionTest extends TestCase
 {
     public function testDefaultValues()
     {
-        $sut = new CompoundRow('test');
+        $sut = new CompoundRow();
+        $sut->setTitle('test');
         $this->assertEquals('test', $sut->getTitle());
         $this->assertEquals(0, $sut->getOrder());
         $this->assertEquals([], $sut->getWidgets());
@@ -28,7 +29,8 @@ class DashboardSectionTest extends TestCase
 
     public function testSetter()
     {
-        $sut = new CompoundRow('hello-world');
+        $sut = new CompoundRow();
+        $sut->setTitle('hello-world');
         $sut->setOrder(13);
         $sut->addWidget((new More())->setTitle('bar')->setId('foo'));
 

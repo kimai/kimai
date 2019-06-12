@@ -10,9 +10,13 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use App\Widget\Type\SimpleStatistic;
+use App\Security\CurrentUser;
+use App\Widget\Type\AbstractWidgetType;
 use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
+use DateTime;
+use InvalidArgumentException;
+use ReflectionClass;
 
 /**
  * @internal
@@ -31,23 +35,24 @@ class WidgetRepository
      * @var array
      */
     protected $definitions = [];
+    /**
+     * @var User|null
+     */
+    protected $user;
 
     /**
      * @param TimesheetRepository $repository
+     * @param CurrentUser $user
      * @param array $widgets
      */
-    public function __construct(TimesheetRepository $repository, array $widgets)
+    public function __construct(TimesheetRepository $repository, CurrentUser $user, array $widgets)
     {
         $this->repository = $repository;
-        $defaults = $this->getDefaultWidgets();
-        $this->definitions = array_merge($defaults, $widgets);
+        $this->user = $user->getUser();
+        $this->definitions = array_merge($this->getDefaultWidgets(), $widgets);
     }
 
-    /**
-     * @param string $id
-     * @return bool
-     */
-    public function has(string $id)
+    public function has(string $id): bool
     {
         return isset($this->definitions[$id]) || isset($this->widgets[$id]);
     }
@@ -61,10 +66,10 @@ class WidgetRepository
         return $this;
     }
 
-    public function get(string $id, ?User $user): WidgetInterface
+    public function get(string $id): WidgetInterface
     {
         if (!$this->has($id)) {
-            throw new \InvalidArgumentException('Cannot find widget: ' . $id);
+            throw new InvalidArgumentException('Cannot find widget: ' . $id);
         }
 
         if (isset($this->widgets[$id])) {
@@ -72,15 +77,16 @@ class WidgetRepository
         }
 
         // this code should ONLY be reached for internal (pre-registered) widgets
-        $this->registerWidget($this->create($id, $this->definitions[$id], $user));
+        $this->registerWidget($this->create($id, $this->definitions[$id]));
 
         return $this->widgets[$id];
     }
 
-    protected function create(string $name, array $widget, ?User $user): WidgetInterface
+    protected function create(string $name, array $widget): WidgetInterface
     {
-        $begin = !empty($widget['begin']) ? new \DateTime($widget['begin']) : null;
-        $end = !empty($widget['end']) ? new \DateTime($widget['end']) : null;
+        $user = $this->user;
+        $begin = !empty($widget['begin']) ? new DateTime($widget['begin']) : null;
+        $end = !empty($widget['end']) ? new DateTime($widget['end']) : null;
         $theUser = $widget['user'] ? $user : null;
         if (!isset($widget['type'])) {
             @trigger_error('Using a widget definition without a "type" (counter, more) is deprecated', E_USER_DEPRECATED);
@@ -92,38 +98,34 @@ class WidgetRepository
             throw new WidgetException(sprintf('Unknown widget type "%s"', $widgetClassName));
         }
 
-        $model = new \ReflectionClass($widgetClassName);
-        if (!$model->isSubclassOf(SimpleStatistic::class)) {
-            throw new WidgetException(sprintf('Invalid widget type "%s" does not extend SimpleStatistic', $widgetClassName));
+        $model = new ReflectionClass($widgetClassName);
+        if (!$model->isSubclassOf(AbstractWidgetType::class)) {
+            throw new WidgetException(sprintf('Invalid widget type "%s" does not extend AbstractWidgetType', $widgetClassName));
         }
 
         $data = $this->repository->getStatistic($widget['query'], $begin, $end, $theUser);
 
-        /** @var SimpleStatistic $model */
+        /** @var AbstractWidgetType $model */
         $model = new $widgetClassName();
         $model
             ->setId($name)
             ->setTitle($widget['title'])
             ->setData($data);
 
-        $options = [];
         if ($widget['query'] == TimesheetRepository::STATS_QUERY_DURATION) {
-            $options['dataType'] = SimpleStatistic::DATA_TYPE_DURATION;
+            $model->setOption('dataType', 'duration');
         } elseif ($widget['query'] == TimesheetRepository::STATS_QUERY_RATE) {
-            $options['dataType'] = SimpleStatistic::DATA_TYPE_MONEY;
+            $model->setOption('dataType', 'money');
         } else {
-            $options['dataType'] = 'int';
+            $model->setOption('dataType', 'int');
         }
-        unset($widget['query']);
 
         if (isset($widget['color'])) {
-            $options['color'] = $widget['color'];
+            $model->setOption('color', $widget['color']);
         }
         if (isset($widget['icon'])) {
-            $options['icon'] = $widget['icon'];
+            $model->setOption('icon', $widget['icon']);
         }
-
-        $model->setOptions($options);
 
         return $model;
     }
@@ -386,7 +388,7 @@ class WidgetRepository
                 'user' => true,
                 'begin' => '01 january this year 00:00:00',
                 'end' => '31 december this year 23:59:59',
-                'color' => '#3b8bba|rgba(0,115,183,0.6)',
+                'color' => '',
                 'icon' => '',
                 'type' => 'yearChart'
             ],
@@ -396,7 +398,7 @@ class WidgetRepository
                 'user' => true,
                 'begin' => '01 january last year 00:00:00',
                 'end' => '31 december last year 23:59:59',
-                'color' => '#3b8bba|rgba(0,115,183,0.6)',
+                'color' => 'rgba(0,115,183,0.7)|#3b8bba',
                 'icon' => '',
                 'type' => 'yearChart'
             ],
@@ -406,7 +408,7 @@ class WidgetRepository
                 'user' => true,
                 'begin' => '01 january last year 00:00:00',
                 'end' => '31 december this year 23:59:59',
-                'color' => '#3b8bba|rgba(0,115,183,0.6);#c1c7d1|rgb(210,214,222,0.9)',
+                'color' => 'rgba(0,115,183,0.6)|#3b8bba;rgba(233,233,233,0.8)|#ccc',
                 'icon' => '',
                 'type' => 'yearChart'
             ],
@@ -416,7 +418,7 @@ class WidgetRepository
                 'user' => true,
                 'begin' => '2 years ago first day of january 00:00:00',
                 'end' => 'this year last day of december 23:59:59',
-                'color' => '#3b8bba|rgba(0,115,183,0.6);#c1c7d1|rgb(210,214,222,0.9);#ccc|rgb(233,233,233)',
+                'color' => 'rgba(0,115,183,0.4)|#3b8bba;rgba(233,233,233,0.7)|#ccc;rgba(210,214,222,0.9)|#c1c7d1',
                 'icon' => '',
                 'type' => 'yearChart'
             ],

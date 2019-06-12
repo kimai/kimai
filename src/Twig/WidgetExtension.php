@@ -9,8 +9,10 @@
 
 namespace App\Twig;
 
+use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 use App\Widget\WidgetService;
+use InvalidArgumentException;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -36,8 +38,30 @@ class WidgetExtension extends AbstractExtension
         ];
     }
 
-    public function renderWidget(WidgetInterface $widget)
+    /**
+     * @param WidgetInterface|string $widget
+     * @param array $options
+     * @return string
+     * @throws WidgetException
+     */
+    public function renderWidget($widget, array $options = [])
     {
+        if (!($widget instanceof WidgetInterface) && !is_string($widget)) {
+            throw new InvalidArgumentException('Widget must either implement WidgetInterface or be a string');
+        }
+
+        if (is_string($widget)) {
+            if (!$this->service->hasWidget($widget)) {
+                throw new InvalidArgumentException('Invalid widget "%s" given');
+            }
+
+            $widget = $this->service->getWidget($widget);
+        }
+
+        foreach ($options as $key => $value) {
+            $widget->setOption($key, $value);
+        }
+
         $renderer = $this->service->findRenderer($widget);
 
         return $renderer->render($widget);

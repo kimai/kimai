@@ -1,30 +1,29 @@
 {% set url = null %}
-{% if widget.option('route') %}
-    {% set url = path(widget.option('route'), widget.option('routeOptions', [])) %}
+{% if options.route is defined %}
+    {% set url = path(options.route, options.routeOptions|default([])) %}
 {% endif %}
 
-<div class="small-box bg-{{ widget.option('color', 'green') }}">
+<div class="small-box bg-{{ options.color|default('green') }}">
     <div class="inner">
         <h3>
-            {% if widget.data is iterable %}
+            {% if data is iterable %}
                 {{ 'Invalid data' }}
             {% else %}
                 {% block widget_data %}
-                    {% set data = widget.data %}
-                    {% if widget.option('dataType') == 'duration' %}
-                        {% set data = widget.data|duration %}
-                    {% elseif widget.option('dataType') == 'money' %}
-                        {% set data = widget.data|money %}
+                    {% if options.dataType == 'duration' %}
+                        {% set data = data|duration %}
+                    {% elseif options.dataType == 'money' %}
+                        {% set data = data|money %}
                     {% endif %}
                     {{ data }}
                 {% endblock %}
             {% endif %}
             <sup style="font-size: 20px">{{ unit|default('') }}</sup>
         </h3>
-        <p>{{ widget.title|trans }}</p>
+        <p>{{ title|trans }}</p>
     </div>
     <div class="icon">
-        <i class="{{ widget.option('icon')|icon(widget.option('icon')) }}"></i>
+        <i class="{{ options.icon|icon(options.icon) }}"></i>
     </div>
     {% if not url is empty %}
     <a href="{{ url }}" class="small-box-footer">
