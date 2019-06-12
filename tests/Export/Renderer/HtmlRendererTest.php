@@ -16,6 +16,7 @@ use Twig\Environment;
 /**
  * @covers \App\Export\Renderer\HtmlRenderer
  * @covers \App\Export\Renderer\RendererTrait
+ * @group integration
  */
 class HtmlRendererTest extends AbstractRendererTest
 {

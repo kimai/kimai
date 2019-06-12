@@ -19,6 +19,7 @@ use Twig\Environment;
 /**
  * @covers \App\Export\Renderer\PDFRenderer
  * @covers \App\Export\Renderer\RendererTrait
+ * @group integration
  */
 class PdfRendererTest extends AbstractRendererTest
 {
