@@ -32,7 +32,7 @@ class WidgetRepositoryTest extends TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Cannot find widget: foo
+     * @expectedExceptionMessage Cannot find widget "foo".
      */
     public function testGetWidgetThrowsExceptionOnNonExistingWidget()
     {

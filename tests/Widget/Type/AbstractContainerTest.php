@@ -24,15 +24,15 @@ abstract class AbstractContainerTest extends TestCase
     {
         $sut = $this->createSut();
 
-        $this->assertInstanceOf(AbstractContainer::class, $sut);
+        self::assertInstanceOf(AbstractContainer::class, $sut);
 
-        $this->assertEquals('', $sut->getId());
-        $this->assertEquals('', $sut->getTitle());
+        self::assertEquals('', $sut->getId());
+        self::assertEquals('', $sut->getTitle());
 
-        $this->assertEquals(0, $sut->getOrder());
-        $this->assertEquals([], $sut->getOptions());
-        $this->assertEquals([], $sut->getWidgets());
-        $this->assertEquals([], $sut->getData());
+        self::assertEquals(0, $sut->getOrder());
+        self::assertEquals([], $sut->getOptions());
+        self::assertEquals([], $sut->getWidgets());
+        self::assertEquals([], $sut->getData());
     }
 
     public function testSetter()
@@ -44,16 +44,16 @@ abstract class AbstractContainerTest extends TestCase
         $sut->setOrder(13);
         $sut->addWidget($widget);
 
-        $this->assertEquals('hello-world', $sut->getTitle());
-        $this->assertEquals('hello-world', $sut->getId());
+        self::assertEquals('hello-world', $sut->getTitle());
+        self::assertEquals('hello-world', $sut->getId());
 
-        $this->assertCount(1, $sut->getWidgets());
-        $this->assertCount(1, $sut->getData());
-        $this->assertEquals([$widget], $sut->getWidgets());
-        $this->assertEquals([$widget], $sut->getData());
+        self::assertCount(1, $sut->getWidgets());
+        self::assertCount(1, $sut->getData());
+        self::assertEquals([$widget], $sut->getWidgets());
+        self::assertEquals([$widget], $sut->getData());
 
-        $this->assertEquals(13, $sut->getOrder());
-        $this->assertEquals('bar', $sut->getWidgets()[0]->getTitle());
+        self::assertEquals(13, $sut->getOrder());
+        self::assertEquals('bar', $sut->getWidgets()[0]->getTitle());
     }
 
     /**
@@ -62,6 +62,6 @@ abstract class AbstractContainerTest extends TestCase
     public function testSetOptionNotImplemented()
     {
         $sut = $this->createSut();
-        $this->assertInstanceOf(AbstractContainer::class, $sut->setOption('dfsdf', []));
+        $sut->setOption('dfsdf', []);
     }
 }

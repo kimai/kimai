@@ -11,7 +11,6 @@ namespace App\Tests\Widget;
 
 use App\Repository\WidgetRepository;
 use App\Widget\Renderer\SimpleWidgetRenderer;
-use App\Widget\Type\Counter;
 use App\Widget\Type\More;
 use App\Widget\WidgetService;
 use PHPUnit\Framework\TestCase;
@@ -72,7 +71,7 @@ class WidgetServiceTest extends TestCase
         $repository->expects($this->once())->method('get')->willReturn($widget);
 
         $sut = new WidgetService($repository, []);
-        $this->assertTrue($sut->hasWidget('sdfsdf'));
-        $this->assertSame($widget, $sut->getWidget('sdfsdf'));
+        self::assertTrue($sut->hasWidget('sdfsdf'));
+        self::assertSame($widget, $sut->getWidget('sdfsdf'));
     }
 }

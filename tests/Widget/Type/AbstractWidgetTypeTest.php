@@ -18,37 +18,38 @@ use PHPUnit\Framework\TestCase;
 abstract class AbstractWidgetTypeTest extends TestCase
 {
     abstract public function createSut(): AbstractWidgetType;
+
     abstract public function getDefaultOptions(): array;
 
     public function testDefaultValues()
     {
         $sut = $this->createSut();
-        $this->assertInstanceOf(AbstractWidgetType::class, $sut);
-        $this->assertEquals('', $sut->getId());
-        $this->assertEquals('', $sut->getTitle());
-        $this->assertEquals($this->getDefaultOptions(), $sut->getOptions());
-        $this->assertNull($sut->getData());
-        $this->assertEquals('bar', $sut->getOption('foo', 'bar'));
+        self::assertInstanceOf(AbstractWidgetType::class, $sut);
+        self::assertEquals('', $sut->getId());
+        self::assertEquals('', $sut->getTitle());
+        self::assertEquals($this->getDefaultOptions(), $sut->getOptions());
+        self::assertNull($sut->getData());
+        self::assertEquals('bar', $sut->getOption('foo', 'bar'));
     }
 
     public function testFluentInterface()
     {
         $sut = $this->createSut();
-        $this->assertInstanceOf(AbstractWidgetType::class, $sut->setOptions([]));
-        $this->assertInstanceOf(AbstractWidgetType::class, $sut->setId(''));
-        $this->assertInstanceOf(AbstractWidgetType::class, $sut->setTitle(''));
-        $this->assertInstanceOf(AbstractWidgetType::class, $sut->setData(''));
+        self::assertInstanceOf(AbstractWidgetType::class, $sut->setOptions([]));
+        self::assertInstanceOf(AbstractWidgetType::class, $sut->setId(''));
+        self::assertInstanceOf(AbstractWidgetType::class, $sut->setTitle(''));
+        self::assertInstanceOf(AbstractWidgetType::class, $sut->setData(''));
     }
 
     public function testTitleViaOptionsFallback()
     {
         $sut = $this->createSut();
         $sut->setTitle('bar');
-        $this->assertEquals('bar', $sut->getTitle());
+        self::assertEquals('bar', $sut->getTitle());
         $sut->setTitle('');
-        $this->assertEquals('', $sut->getTitle());
+        self::assertEquals('', $sut->getTitle());
         $sut->setOption('title', 'fooooo');
-        $this->assertEquals('fooooo', $sut->getTitle());
+        self::assertEquals('fooooo', $sut->getTitle());
     }
 
     public function testSetter()
@@ -57,23 +58,23 @@ abstract class AbstractWidgetTypeTest extends TestCase
 
         // options
         $sut->setOption('föööö', 'trääääää');
-        $this->assertEquals('trääääää', $sut->getOption('föööö', 'tröööö'));
-        $this->assertEquals('trääääää', $sut->getOption('föööö', 'tröööö'));
-        $this->assertEquals(array_merge($this->getDefaultOptions(), ['föööö' => 'trääääää']), $sut->getOptions());
+        self::assertEquals('trääääää', $sut->getOption('föööö', 'tröööö'));
+        self::assertEquals('trääääää', $sut->getOption('föööö', 'tröööö'));
+        self::assertEquals(array_merge($this->getDefaultOptions(), ['föööö' => 'trääääää']), $sut->getOptions());
 
         $sut->setOptions(['blub' => 'blab', 'dataType' => 'money']);
-        $this->assertEquals(['blub' => 'blab', 'dataType' => 'money', 'föööö' => 'trääääää'], $sut->getOptions());
+        self::assertEquals(['blub' => 'blab', 'dataType' => 'money', 'föööö' => 'trääääää'], $sut->getOptions());
 
         // id
         $sut->setId('cvbnmyx');
-        $this->assertEquals('cvbnmyx', $sut->getId());
+        self::assertEquals('cvbnmyx', $sut->getId());
 
         // data
         $sut->setData('slkudfhalksjdhfkljsahdf');
-        $this->assertEquals('slkudfhalksjdhfkljsahdf', $sut->getData());
+        self::assertEquals('slkudfhalksjdhfkljsahdf', $sut->getData());
 
         $data = new \stdClass();
         $sut->setData($data);
-        $this->assertSame($data, $sut->getData());
+        self::assertSame($data, $sut->getData());
     }
 }

@@ -31,6 +31,6 @@ class CounterTest extends AbstractWidgetTypeTest
     public function testExtendsSimpleWidget()
     {
         $sut = $this->createSut();
-        $this->assertInstanceOf(SimpleWidget::class, $sut);
+        self::assertInstanceOf(SimpleWidget::class, $sut);
     }
 }

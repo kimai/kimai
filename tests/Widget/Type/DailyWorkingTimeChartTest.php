@@ -99,9 +99,10 @@ class DailyWorkingTimeChartTest extends TestCase
     public function testGetData()
     {
         $repository = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->setMethods(['getDailyStats'])->getMock();
-        $repository->expects($this->once())->method('getDailyStats')->willReturnCallback(function(User $user, DateTime $begin, DateTime $end) {
+        $repository->expects($this->once())->method('getDailyStats')->willReturnCallback(function (User $user, DateTime $begin, DateTime $end) {
             self::assertEquals('tralalala', $user->getUsername());
-            return [1,2,3];
+
+            return [1, 2, 3];
         });
         $user = $this->getMockBuilder(CurrentUser::class)->disableOriginalConstructor()->setMethods(['getUser'])->getMock();
         $user->expects($this->once())->method('getUser')->willReturn((new User())->setUsername('tralalala'));
@@ -109,7 +110,7 @@ class DailyWorkingTimeChartTest extends TestCase
         $sut = new DailyWorkingTimeChart($repository, $user);
         $sut->setOption('type', 'xxx');
         $data = $sut->getData();
-        self::assertEquals([1,2,3], $data);
+        self::assertEquals([1, 2, 3], $data);
         self::assertEquals('bar', $sut->getOption('type', 'yyy'));
     }
 }
