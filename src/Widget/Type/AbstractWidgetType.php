@@ -20,7 +20,7 @@ abstract class AbstractWidgetType implements WidgetInterface
     /**
      * @var string
      */
-    protected $title;
+    protected $title = '';
     /**
      * @var array
      */
