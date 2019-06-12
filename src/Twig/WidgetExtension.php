@@ -52,7 +52,7 @@ class WidgetExtension extends AbstractExtension
 
         if (is_string($widget)) {
             if (!$this->service->hasWidget($widget)) {
-                throw new InvalidArgumentException('Invalid widget "%s" given');
+                throw new InvalidArgumentException(sprintf('Unknown widget "%s" requested', $widget));
             }
 
             $widget = $this->service->getWidget($widget);
