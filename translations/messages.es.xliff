@@ -32,7 +32,8 @@
             <trans-unit id="confirm.delete">
                 <source>confirm.delete</source>
                 <target>Esta seguro que desea proceder con la eliminación?</target>
-            </trans-unit><trans-unit id="admin_entity.delete_confirm">
+            </trans-unit>
+            <trans-unit id="admin_entity.delete_confirm">
                 <source>admin_entity.delete_confirm</source>
                 <target>
                     ¡Estos datos también serán borrados!
