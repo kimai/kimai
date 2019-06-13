@@ -14,6 +14,26 @@
                 <source>timesheet</source>
                 <target>Fiche de temps</target>
             </trans-unit>
+                        <trans-unit id="freelancer">
+                <source>freelancer</source>
+                <target>Freelancer</target>
+            </trans-unit>
+            <trans-unit id="open-spreadsheet">
+                <source>open-spreadsheet</source>
+                <target>Libre Office</target>
+            </trans-unit>
+            <trans-unit id="spreadsheet">
+                <source>spreadsheet</source>
+                <target>Excel</target>
+            </trans-unit>
+            <trans-unit id="export">
+                <source>export</source>
+                <target>Export des données</target>
+            </trans-unit>
+            <trans-unit id="company">
+                <source>company</source>
+                <target>Facture de la société</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

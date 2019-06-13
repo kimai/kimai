@@ -2,6 +2,10 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" target-language="fr" datatype="plaintext" original="flashmessages.en.xliff">
         <body>
+            <trans-unit id="warning">
+                <source>warning</source>
+                <target>Avertissement</target>
+            </trans-unit>
             <trans-unit id="timesheet.stop.success">
                 <source>timesheet.stop.success</source>
                 <target>Le chronomètre a été arrêté</target>
@@ -17,6 +21,14 @@
             <trans-unit id="timesheet.start.error">
                 <source>timesheet.start.error</source>
                 <target>Le chronométrage ne peut pas être lancé</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.exceeded_limit">
+                <source>timesheet.start.exceeded_limit</source>
+                <target>La limite des enregistrements des temps d'activité a été atteinte, veuillez arrêter au moins un enregistrement.</target>
+            </trans-unit>
+            <trans-unit id="timesheet.locked.warning">
+                <source>timesheet.locked.warning</source>
+                <target>Vous modifiez un enregistrement que vous avez exporté</target>
             </trans-unit>
             <trans-unit id="action.update.success">
                 <source>action.update.success</source>
