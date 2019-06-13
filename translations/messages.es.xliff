@@ -958,7 +958,6 @@
                 <source>entryState.not_exported</source>
                 <target>Abierto</target>
             </trans-unit>
-            </trans-unit>
             <trans-unit id="entryState.all">
                 <source>entryState.all</source>
                 <target>Todos</target>
