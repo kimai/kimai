@@ -31,7 +31,7 @@
             </trans-unit>
             <trans-unit id="confirm.delete">
                 <source>confirm.delete</source>
-                <target>Esta seguro que desea proceder con la eliminación?</target>
+                <target>Está seguro que desea proceder con la eliminación?</target>
             </trans-unit>
             <trans-unit id="admin_entity.delete_confirm">
                 <source>admin_entity.delete_confirm</source>
@@ -142,7 +142,7 @@
             </trans-unit>
             <trans-unit id="menu.tags">
                 <source>menu.tags</source>
-                <target>Tags</target>
+                <target>Etiquetas</target>
             </trans-unit>
 
 
@@ -255,7 +255,7 @@
             </trans-unit>
             <trans-unit id="label.create_more">
                 <source>label.create_more</source>
-                <target>Crear mas registros</target>
+                <target>Crear más registros</target>
             </trans-unit>
 
             <!--
@@ -295,7 +295,7 @@
             </trans-unit>
             <trans-unit id="dashboard.subtitle">
                 <source>dashboard.subtitle</source>
-                <target>Bienvenido!</target>
+                <target>¡Bienvenido!</target>
             </trans-unit>
             <trans-unit id="dashboard.you">
                 <source>dashboard.you</source>
@@ -403,7 +403,7 @@
             </trans-unit>
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
-                <target>Alternar la vista de la barra lateral izquierda al cargar la página (abrierta o colapsar)</target>
+                <target>Alternar la vista de la barra lateral izquierda al cargar la página (abierta o colapsar)</target>
             </trans-unit>
             <trans-unit id="label.calendar.initial_view">
                 <source>label.calendar.initial_view</source>
@@ -440,7 +440,7 @@
             </trans-unit>
             <trans-unit id="calendar.subtitle">
                 <source>calendar.subtitle</source>
-                <target>Ver y administrar los datos de su parte de horas dentro de un calendario</target>
+                <target>Ver y administrar los datos de mi parte de horas dentro de un calendario</target>
             </trans-unit>
 
 
@@ -837,7 +837,7 @@
             </trans-unit>
             <trans-unit id="export.subtitle">
                 <source>export.subtitle</source>
-                <target>Exportrar la informacion de los partes de horas en varios formatos</target>
+                <target>Exportar la información de los partes de horas en varios formatos</target>
             </trans-unit>
             <trans-unit id="export.period">
                 <source>export.period</source>
@@ -857,7 +857,7 @@
             </trans-unit>
             <trans-unit id="export.page_of">
                 <source>export.page_of</source>
-                <target>Pagina %page% de %pages%</target>
+                <target>Página %page% de %pages%</target>
             </trans-unit>
             <trans-unit id="export.date_copyright">
                 <source>export.date_copyright</source>
@@ -921,7 +921,7 @@
             -->
             <trans-unit id="active.entries">
                 <source>active.entries</source>
-                <target>Los cálculos de su tiempo activo</target>
+                <target>Los cálculos de tu tiempo activo</target>
             </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>

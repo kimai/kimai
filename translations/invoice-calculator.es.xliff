@@ -14,6 +14,14 @@
                 <source>short</source>
                 <target>Tarifa por horas - version mínima (sólo un registro)</target>
             </trans-unit>
+            <trans-unit id="user">
+                <source>user</source>
+                <target>Usuario agrupado - un registro por usuario</target>
+            </trans-unit>
+            <trans-unit id="activity">
+                <source>activity</source>
+                <target>Actividad agrupada - un registro por actividad</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
