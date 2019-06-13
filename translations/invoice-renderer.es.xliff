@@ -14,6 +14,26 @@
                 <source>timesheet</source>
                 <target>Hoja de tiempo</target>
             </trans-unit>
+            <trans-unit id="freelancer">
+                <source>freelancer</source>
+                <target>Autónomo</target>
+            </trans-unit>
+            <trans-unit id="open-spreadsheet">
+                <source>open-spreadsheet</source>
+                <target>Calc hoja de cálculo</target>
+            </trans-unit>
+            <trans-unit id="spreadsheet">
+                <source>spreadsheet</source>
+                <target>Excel</target>
+            </trans-unit>
+            <trans-unit id="export">
+                <source>export</source>
+                <target>Exportar datos</target>
+            </trans-unit>
+            <trans-unit id="company">
+                <source>company</source>
+                <target>Factura de empresa</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -33,6 +33,25 @@
                 <source>confirm.delete</source>
                 <target>Voulez-vous vraiment supprimer ?</target>
             </trans-unit>
+            <trans-unit id="admin_entity.delete_confirm">
+                <source>admin_entity.delete_confirm</source>
+                <target>
+                    Ces données seront également effacées !
+                    Vous pouvez toutefois sélectionner une entrée à laquelle toutes les données seront transférées :
+                </target>
+            </trans-unit>
+            <trans-unit id="delete.not_in_use">
+                <source>delete.not_in_use</source>
+                <target>Cette entrée peut être supprimée en toute sécurité.</target>
+            </trans-unit>
+            <trans-unit id="cancel">
+                <source>cancel</source>
+                <target>Annuler</target>
+            </trans-unit>
+            <trans-unit id="confirm">
+                <source>confirm</source>
+                <target>Confirmer</target>
+            </trans-unit>
 
             <!--
               Login / Security
@@ -73,6 +92,10 @@
                 <source>menu.admin</source>
                 <target>Administration</target>
             </trans-unit>
+            <trans-unit id="menu.system">
+                <source>menu.system</source>
+                <target>Systèmes</target>
+            </trans-unit>
             <trans-unit id="menu.logout">
                 <source>menu.logout</source>
                 <target>Déconnexion</target>
@@ -84,6 +107,10 @@
             <trans-unit id="menu.invoice">
                 <source>menu.invoice</source>
                 <target>Factures</target>
+            </trans-unit>
+            <trans-unit id="menu.export">
+                <source>menu.export</source>
+                <target>Export</target>
             </trans-unit>
             <trans-unit id="menu.admin_timesheet">
                 <source>menu.admin_timesheet</source>
@@ -105,13 +132,17 @@
                 <source>menu.admin_user</source>
                 <target>Usagers</target>
             </trans-unit>
-
-            <!--
-              Footer
-            -->
-            <trans-unit id="footer.license">
-                <source>footer.license</source>
-                <target>Tous droits réservés.</target>
+            <trans-unit id="menu.plugin">
+                <source>menu.plugin</source>
+                <target>Extensions</target>
+            </trans-unit>
+            <trans-unit id="menu.system_configuration">
+                <source>menu.system_configuration</source>
+                <target>Paramètres</target>
+            </trans-unit>
+            <trans-unit id="menu.tags">
+                <source>menu.tags</source>
+                <target>Mots-clés</target>
             </trans-unit>
 
             <!--
@@ -173,6 +204,10 @@
                 <source>label.budget</source>
                 <target>Budget</target>
             </trans-unit>
+            <trans-unit id="label.timeBudget">
+                <source>label.timeBudget</source>
+                <target>Budget temps</target>
+            </trans-unit>
             <trans-unit id="label.activity">
                 <source>label.activity</source>
                 <target>Activité</target>
@@ -180,6 +215,14 @@
             <trans-unit id="label.project">
                 <source>label.project</source>
                 <target>Projet</target>
+            </trans-unit>
+            <trans-unit id="label.tag">
+                <source>label.tag</source>
+                <target>Mot-clé</target>
+            </trans-unit>
+            <trans-unit id="label.tags">
+                <source>label.tags</source>
+                <target>Mots-clés</target>
             </trans-unit>
             <trans-unit id="label.hourlyRate">
                 <source>label.hourlyRate</source>
@@ -301,6 +344,10 @@
                 <source>label.end</source>
                 <target>À</target>
             </trans-unit>
+            <trans-unit id="label.daterange">
+                <source>label.daterange</source>
+                <target>Plage horaire</target>
+            </trans-unit>
             <trans-unit id="modal.columns.title">
                 <source>modal.columns.title</source>
                 <target>Modifier la visibilité des colonnes</target>
@@ -308,6 +355,14 @@
             <trans-unit id="modal.columns.description">
                 <source>modal.columns.description</source>
                 <target>Lors de l'enregistrement, les colonnes non cochées seront masquées. Ces paramètres seront stockés dans un cookie du navigateur. Si vous supprimez vos cookies, ils seront réinitialisés.</target>
+            </trans-unit>
+            <trans-unit id="label.fixedRate">
+                <source>label.fixedRate</source>
+                <target>Taux fixe</target>
+            </trans-unit>
+            <trans-unit id="label.color">
+                <source>label.color</source>
+                <target>Couleur</target>
             </trans-unit>
 
             <!--
@@ -352,6 +407,43 @@
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
                 <target>Faire basculer l'état de la barre latérale gauche lors du chargement de la page (ouverture ou fermeture).</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.initial_view">
+                <source>label.calendar.initial_view</source>
+                <target>Vue par défaut du calendrier</target>
+            </trans-unit>
+            <trans-unit id="label.login.initial_view">
+                <source>label.login.initial_view</source>
+                <target>Vue par défaut après connexion</target>
+            </trans-unit>
+            <!-- Options for user-preference label.calendar.initial_view -->
+            <trans-unit id="month">
+                <source>month</source>
+                <target>Mois</target>
+            </trans-unit>
+            <trans-unit id="agendaWeek">
+                <source>agendaWeek</source>
+                <target>Semaine</target>
+            </trans-unit>
+            <trans-unit id="agendaDay">
+                <source>agendaDay</source>
+                <target>Jour</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.daily_stats">
+                <source>label.timesheet.daily_stats</source>
+                <target>Voir les statistiques journalières dans la fiche des temps</target>
+            </trans-unit>
+
+            <!--
+              User timesheet calendar
+            -->
+            <trans-unit id="calendar.title">
+                <source>calendar.title</source>
+                <target>Calendrier</target>
+            </trans-unit>
+            <trans-unit id="calendar.subtitle">
+                <source>calendar.subtitle</source>
+                <target>Visualisez et gérez vos données de fiches de temps dans un calendrier</target>
             </trans-unit>
 
             <!--
@@ -413,7 +505,7 @@
             </trans-unit>
             <trans-unit id="admin_customer.subtitle">
                 <source>admin_customer.subtitle</source>
-                <target>Les clients sont à la base de la création des projets et des activités.</target>
+                <target>Les clients sont les bénéficiaires des projets et des activités.</target>
             </trans-unit>
             <trans-unit id="label.number">
                 <source>label.number</source>
@@ -510,6 +602,18 @@
             </trans-unit>
 
             <!--
+              Admin: Plugins
+            -->
+            <trans-unit id="label.version">
+                <source>label.version</source>
+                <target>Version</target>
+            </trans-unit>
+            <trans-unit id="label.required_version">
+                <source>label.required_version</source>
+                <target>Compatible avec</target>
+            </trans-unit>
+
+            <!--
               ROLES
             -->
             <trans-unit id="ROLE_SUPER_ADMIN">
@@ -551,6 +655,10 @@
             <trans-unit id="stats.durationTotal">
                 <source>stats.durationTotal</source>
                 <target>Total des heures travaillées</target>
+            </trans-unit>
+            <trans-unit id="stats.yourWorkingHours">
+                <source>stats.yourWorkingHours</source>
+                <target>Votre nombre d'heures travaillées</target>
             </trans-unit>
             <trans-unit id="stats.amountToday">
                 <source>stats.amountToday</source>
@@ -632,9 +740,29 @@
                 <source>invoice.subtitle</source>
                 <target>Générer des factures à partir des fiches de temps.</target>
             </trans-unit>
+            <trans-unit id="invoice.preview">
+                <source>invoice.preview</source>
+                <target>Il s'agit d'un aperçu des données qui apparaîtront dans la facture.</target>
+            </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
                 <target>Imprimer</target>
+            </trans-unit>
+            <trans-unit id="button.csv">
+                <source>button.csv</source>
+                <target>CSV</target>
+            </trans-unit>
+            <trans-unit id="button.xlsx">
+                <source>button.xlsx</source>
+                <target>Excel</target>
+            </trans-unit>
+            <trans-unit id="button.pdf">
+                <source>button.pdf</source>
+                <target>PDF</target>
+            </trans-unit>
+            <trans-unit id="button.ods">
+                <source>button.ods</source>
+                <target>ODS</target>
             </trans-unit>
             <trans-unit id="invoice_print">
                 <source>invoice_print</source>
@@ -688,6 +816,10 @@
                 <source>label.total_rate</source>
                 <target>Total price</target>
             </trans-unit>
+            <trans-unit id="label.unit_price">
+                <source>label.unit_price</source>
+                <target>Tarif unitaire</target>
+            </trans-unit>
             <trans-unit id="label.payment_terms">
                 <source>label.payment_terms</source>
                 <target>Modalités de paiement</target>
@@ -700,9 +832,66 @@
                 <source>invoice.signature_customer</source>
                 <target>Pour certification : date / nom du client / signature</target>
             </trans-unit>
+            <trans-unit id="invoice.total_working_time">
+                <source>invoice.total_working_time</source>
+                <target>Durée totale</target>
+            </trans-unit>
             <trans-unit id="label.orderNumber">
                 <source>label.orderNumber</source>
                 <target>Numéro d'ordre</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_tax_number">
+                <source>label.invoice_tax_number</source>
+                <target>N° de TVA :</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_bank_account">
+                <source>label.invoice_bank_account</source>
+                <target>N° de compte bancaire</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_salutation">
+                <source>label.invoice_salutation</source>
+                <target>
+                    Madame, Monsieur,
+
+                    Je vous remercie pour votre commande. 
+                    Vous trouverez ci-après la facture pour mes services :
+                </target>
+            </trans-unit>
+            
+            <!--
+              Export
+            -->
+            <trans-unit id="export.title">
+                <source>export.title</source>
+                <target>Export</target>
+            </trans-unit>
+            <trans-unit id="export.subtitle">
+                <source>export.subtitle</source>
+                <target>Exporter les fiches de temps en différents formats</target>
+            </trans-unit>
+            <trans-unit id="export.period">
+                <source>export.period</source>
+                <target>Periode</target>
+            </trans-unit>
+            <trans-unit id="export.document_title">
+                <source>export.document_title</source>
+                <target>Liste des charges</target>
+            </trans-unit>
+            <trans-unit id="export.full_list">
+                <source>export.full_list</source>
+                <target>Liste complète</target>
+            </trans-unit>
+            <trans-unit id="export.summary">
+                <source>export.summary</source>
+                <target>Résumé</target>
+            </trans-unit>
+            <trans-unit id="export.page_of">
+                <source>export.page_of</source>
+                <target>Page %page% sur %pages%</target>
+          </trans-unit>
+            <trans-unit id="export.date_copyright">
+                <source>export.date_copyright</source>
+                <target>Généré le %date% avec %kimai%</target>
             </trans-unit>
 
             <!--
@@ -760,9 +949,17 @@
             <!--
              Navbar - recent entries and activities
             -->
+            <trans-unit id="active.entries">
+                <source>active.entries</source>
+                <target>Vos releves de périodes d'activités</target>
+            </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
                 <target>Voir tous les enregistrements</target>
+            </trans-unit>
+            <trans-unit id="recent.activities">
+                <source>recent.activities</source>
+                <target>Reprendre une de vos récentes activités</target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>
@@ -784,6 +981,18 @@
                 <source>label.entryState</source>
                 <target>Enregistrements</target>
             </trans-unit>
+            <trans-unit id="label.exported">
+                <source>label.exported</source>
+                <target>Exporté</target>
+            </trans-unit>
+            <trans-unit id="entryState.exported">
+                <source>entryState.exported</source>
+                <target>Fermé</target>
+            </trans-unit>
+            <trans-unit id="entryState.not_exported">
+                <source>entryState.not_exported</source>
+                <target>Ouvert</target>
+            </trans-unit>
             <trans-unit id="entryState.all">
                 <source>entryState.all</source>
                 <target>Tous</target>
@@ -795,6 +1004,18 @@
             <trans-unit id="entryState.stopped">
                 <source>entryState.stopped</source>
                 <target>Arrêté</target>
+            </trans-unit>
+            <trans-unit id="export.clear_all">
+                <source>export.clear_all</source>
+                <target>Marquer tous les enregistrements affichés comme ouverts ?</target>
+            </trans-unit>
+            <trans-unit id="export.mark_all">
+                <source>export.mark_all</source>
+                <target>Marquer tous les enregistrements affichés comme fermés ?</target>
+            </trans-unit>
+            <trans-unit id="label.globalsOnly">
+                <source>label.globalsOnly</source>
+                <target>Uniquement global</target>
             </trans-unit>
         </body>
     </file>
