@@ -97,6 +97,11 @@ class AppExtensionTest extends TestCase
                 'box_color' => 'green',
                 'select_type' => null,
                 'show_about' => true,
+                'branding' => [
+                    'logo' => null,
+                    'mini' => null,
+                    'company' => null,
+                ]
             ],
             'kimai.theme.select_type' => null,
             'kimai.theme.show_about' => true,

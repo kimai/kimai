@@ -42,11 +42,19 @@
 {% block page_subtitle %}{% endblock %}
 
 {% block logo_mini %}
-    <b>K</b>TT
+    {% if not kimai_context.branding.mini is empty %}
+        {{ kimai_context.branding.mini|raw }}
+    {% else %}
+        <b>K</b>TT
+    {% endif %}
 {% endblock %}
 
 {% block logo_large %}
-    <b>Kimai</b> - Time Tracking
+    {% if not kimai_context.branding.company is empty %}
+        {{ kimai_context.branding.company|raw }}
+    {% else %}
+        <b>Kimai</b> - Time Tracking
+    {% endif %}
 {% endblock %}
 
 {% block footer %}
