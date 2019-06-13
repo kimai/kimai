@@ -277,10 +277,6 @@
                 <source>dashboard.all</source>
                 <target>Minden felhasználó</target>
             </trans-unit>
-            <trans-unit id="dashboard.admin">
-                <source>dashboard.admin</source>
-                <target>Adminisztrátor</target>
-            </trans-unit>
 
             <!--
               Widgets

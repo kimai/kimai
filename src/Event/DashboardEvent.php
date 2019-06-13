@@ -10,7 +10,7 @@
 namespace App\Event;
 
 use App\Entity\User;
-use App\Model\DashboardSection;
+use App\Widget\WidgetContainerInterface;
 use Symfony\Component\EventDispatcher\Event;
 
 class DashboardEvent extends Event
@@ -22,41 +22,31 @@ class DashboardEvent extends Event
      */
     protected $user;
     /**
-     * @var DashboardSection[]
+     * @var WidgetContainerInterface[]
      */
     protected $widgetRows = [];
 
-    /**
-     * @param User $user
-     */
     public function __construct(User $user)
     {
         $this->user = $user;
     }
 
-    /**
-     * @return User
-     */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @param DashboardSection $row
-     * @return DashboardEvent
-     */
-    public function addSection(DashboardSection $row)
+    public function addSection(WidgetContainerInterface $container): DashboardEvent
     {
-        $this->widgetRows[] = $row;
+        $this->widgetRows[] = $container;
 
         return $this;
     }
 
     /**
-     * @return DashboardSection[]
+     * @return WidgetContainerInterface[]
      */
-    public function getSections()
+    public function getSections(): array
     {
         return $this->widgetRows;
     }

@@ -1,0 +1,28 @@
+{% set url = null %}
+{% if options.route is defined %}
+    {% set url = path(options.route, options.routeOptions|default([])) %}
+{% endif %}
+
+<div class="info-box">
+    <span class="info-box-icon bg-{{ options.color|default('green') }}"><i class="{{ options.icon|icon(options.icon) }}"></i></span>
+
+    <div class="info-box-content">
+        {% if not url is empty %}<a href="{{ url }}" class="small-box-footer">{% endif %}
+        <span class="info-box-text">{{ title|trans }}</span>
+        <span class="info-box-number">
+            {% if data is iterable %}
+                {{ 'Invalid data' }}
+            {% else %}
+                {% block widget_data %}
+                    {% if options.dataType == 'duration' %}
+                        {% set data = data|duration %}
+                    {% elseif options.dataType == 'money' %}
+                        {% set data = data|money %}
+                    {% endif %}
+                    {{ data }}
+                {% endblock %}
+            {% endif %}
+        </span>
+        {% if not url is empty %}</a>{% endif %}
+    </div>
+</div>

@@ -13,5 +13,12 @@ jms_serializer:
             App:
                 namespace_prefix: "App"
                 path: "%kernel.root_dir%/../config/serializer/App"
+        warmup:
+            paths:
+                included:
+                    - "%kernel.root_dir%/Entity/"
+                    - "%kernel.root_dir%/API/Model/"
+                    - "%kernel.root_dir%/../vendor/friendsofsymfony/user-bundle/Model"
+                excluded: []
     property_naming:
         id: 'jms_serializer.identical_property_naming_strategy'

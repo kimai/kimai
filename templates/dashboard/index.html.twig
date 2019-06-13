@@ -18,12 +18,8 @@
 
 {% block main %}
 
-    {% for row in widget_rows %}
-        {% if row.type == constant('App\\Model\\DashboardSection::TYPE_CHART') %}
-            {% embed 'dashboard/section-chart.html.twig' with { section: row } %}{% endembed %}
-        {% else %}
-            {% embed 'dashboard/section-simple.html.twig' with { section: row } %}{% endembed %}
-        {% endif %}
+    {% for row in widgets %}
+        {{ render_widget(row) }}
     {% endfor %}
 
 {% endblock %}

@@ -308,10 +308,6 @@
                 <source>dashboard.all</source>
                 <target>Alle Benutzer</target>
             </trans-unit>
-            <trans-unit id="dashboard.admin">
-                <source>dashboard.admin</source>
-                <target>Administrator</target>
-            </trans-unit>
 
             <!--
               Widgets

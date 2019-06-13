@@ -297,10 +297,6 @@
                 <source>dashboard.all</source>
                 <target>全ユーザーの統計情報</target>
             </trans-unit>
-            <trans-unit id="dashboard.admin">
-                <source>dashboard.admin</source>
-                <target>管理情報</target>
-            </trans-unit>
 
             <!--
               Widgets

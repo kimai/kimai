@@ -12,6 +12,7 @@ namespace App\Repository;
 use App\Entity\Activity;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Model\Statistic\Day;
 use App\Model\Statistic\Month;
 use App\Model\Statistic\Year;
 use App\Model\TimesheetStatistic;
@@ -97,6 +98,9 @@ class TimesheetRepository extends AbstractRepository
 
             case self::STATS_QUERY_MONTHLY:
                 return $this->getMonthlyStats($user, $begin, $end);
+
+            case 'daily':
+                return $this->getDailyStats($user, $begin, $end);
 
             case self::STATS_QUERY_DURATION:
                 $what = 'SUM(t.duration)';
@@ -253,12 +257,85 @@ class TimesheetRepository extends AbstractRepository
             }
 
             $month = new Month($statRow['month']);
-            $month->setTotalDuration($statRow['duration'])
-                ->setTotalRate($statRow['rate']);
+            $month->setTotalDuration((int) $statRow['duration'])
+                ->setTotalRate((float) $statRow['rate']);
             $years[$curYear]->setMonth($month);
         }
 
         return $years;
+    }
+
+    /**
+     * @param DateTime $begin
+     * @param DateTime $end
+     * @param User|null $user
+     * @return mixed
+     */
+    public function getDailyData(DateTime $begin, DateTime $end, ?User $user = null)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb
+            ->addSelect('SUM(t.rate) as rate')
+            ->addSelect('SUM(t.duration) as duration')
+            ->addSelect('MONTH(t.begin) as month')
+            ->addSelect('YEAR(t.begin) as year')
+            ->addSelect('DAY(t.begin) as day')
+            ->from(Timesheet::class, 't')
+            ->andWhere($qb->expr()->gte('t.begin', ':from'))
+            ->setParameter('from', $begin, Type::DATETIME)
+            ->andWhere($qb->expr()->lte('t.end', ':to'))
+            ->setParameter('to', $end, Type::DATETIME);
+
+        if (null !== $user) {
+            $qb->andWhere('t.user = :user')
+                ->setParameter('user', $user);
+        }
+
+        $qb
+            ->addGroupBy('year')
+            ->addGroupBy('month')
+            ->addGroupBy('day')
+            ->addOrderBy('year', 'DESC')
+            ->addOrderBy('month', 'ASC')
+            ->addOrderBy('day', 'ASC')
+        ;
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param User $user
+     * @param DateTime $begin
+     * @param DateTime $end
+     * @return Day[]
+     * @throws \Exception
+     */
+    public function getDailyStats(User $user, DateTime $begin, DateTime $end): array
+    {
+        $results = $this->getDailyData($begin, $end, $user);
+
+        /** @var Day[] $days */
+        $days = [];
+
+        // prefill the array
+        $tmp = clone $end;
+        $until = (int) $begin->format('Ymd');
+        while ((int) $tmp->format('Ymd') > $until) {
+            $tmp->modify('-1 day');
+            $last = clone $tmp;
+            $days[$last->format('Ymd')] = new Day($last, 0, 0.00);
+        }
+
+        foreach ($results as $statRow) {
+            $dateTime = new DateTime();
+            $dateTime->setDate($statRow['year'], $statRow['month'], $statRow['day']);
+            $days[$dateTime->format('Ymd')] = new Day($dateTime, (int) $statRow['duration'], (float) $statRow['rate']);
+        }
+
+        ksort($days);
+
+        return array_values($days);
     }
 
     /**

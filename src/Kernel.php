@@ -13,6 +13,7 @@ use App\DependencyInjection\AppExtension;
 use App\DependencyInjection\Compiler\DoctrineCompilerPass;
 use App\DependencyInjection\Compiler\InvoiceServiceCompilerPass;
 use App\DependencyInjection\Compiler\TwigContextCompilerPass;
+use App\DependencyInjection\Compiler\WidgetCompilerPass;
 use App\Export\RendererInterface as ExportRendererInterface;
 use App\Invoice\CalculatorInterface as InvoiceCalculator;
 use App\Invoice\NumberGeneratorInterface;
@@ -20,6 +21,8 @@ use App\Invoice\RendererInterface as InvoiceRendererInterface;
 use App\Ldap\FormLoginLdapFactory;
 use App\Plugin\PluginInterface;
 use App\Timesheet\CalculatorInterface as TimesheetCalculator;
+use App\Widget\WidgetInterface;
+use App\Widget\WidgetRendererInterface;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -37,10 +40,13 @@ class Kernel extends BaseKernel
     public const CONFIG_EXTS = '.{php,xml,yaml,yml}';
 
     public const TAG_PLUGIN = 'kimai.plugin';
+    public const TAG_WIDGET = 'widget';
+    public const TAG_WIDGET_RENDERER = 'widget.renderer';
     public const TAG_EXPORT_RENDERER = 'export.renderer';
     public const TAG_INVOICE_RENDERER = 'invoice.renderer';
     public const TAG_INVOICE_NUMBER_GENERATOR = 'invoice.number_generator';
     public const TAG_INVOICE_CALCULATOR = 'invoice.calculator';
+    public const TAG_TIMESHEET_CALCULATOR = 'timesheet.calculator';
 
     public function getCacheDir()
     {
@@ -54,12 +60,14 @@ class Kernel extends BaseKernel
 
     protected function build(ContainerBuilder $container)
     {
-        $container->registerForAutoconfiguration(TimesheetCalculator::class)->addTag('timesheet.calculator');
+        $container->registerForAutoconfiguration(TimesheetCalculator::class)->addTag(self::TAG_TIMESHEET_CALCULATOR);
         $container->registerForAutoconfiguration(ExportRendererInterface::class)->addTag(self::TAG_EXPORT_RENDERER);
         $container->registerForAutoconfiguration(InvoiceRendererInterface::class)->addTag(self::TAG_INVOICE_RENDERER);
         $container->registerForAutoconfiguration(NumberGeneratorInterface::class)->addTag(self::TAG_INVOICE_NUMBER_GENERATOR);
         $container->registerForAutoconfiguration(InvoiceCalculator::class)->addTag(self::TAG_INVOICE_CALCULATOR);
         $container->registerForAutoconfiguration(PluginInterface::class)->addTag(self::TAG_PLUGIN);
+        $container->registerForAutoconfiguration(WidgetRendererInterface::class)->addTag(self::TAG_WIDGET_RENDERER);
+        $container->registerForAutoconfiguration(WidgetInterface::class)->addTag(self::TAG_WIDGET);
 
         /** @var SecurityExtension $extension */
         $extension = $container->getExtension('security');
@@ -144,6 +152,7 @@ class Kernel extends BaseKernel
         $container->addCompilerPass(new DoctrineCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new TwigContextCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new InvoiceServiceCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
+        $container->addCompilerPass(new WidgetCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
     }
 
     protected function configureRoutes(RouteCollectionBuilder $routes)

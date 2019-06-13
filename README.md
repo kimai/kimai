@@ -27,12 +27,12 @@ It is built with modern technologies such as Symfony, Bootstrap, RESTful API, re
 
 ### About
 
-This new version of the open source timetracker Kimai. It is in a stable development phase, usable in production and 
-with most advanced features from Kimai 1 and many new ones: 
+This is new version of the open source timetracker Kimai. It is in a stable development phase, usable in production and 
+with most advanced features from Kimai 1 and many new ones, including but not limited to: 
 
 JSON API, invoicing, data exports, multi-timer and punch-in punch-out mode, tagging, multi-user and multi-timezones, 
-LDAP and built-in authentication, customizable role permissions, responsive and usable on your mobile device, 
-hourly and fixed rates, advanced filtering, support for plugins and many more.
+LDAP and built-in authentication, customizable role permissions, responsive and ready for your mobile device, 
+hourly and fixed rates, advanced filtering, money and time budgets and report, support for plugins and many more.
 
 ## Installation
 
@@ -40,7 +40,7 @@ hourly and fixed rates, advanced filtering, support for plugins and many more.
 - [Docker](https://www.kimai.org/documentation/docker.html) - containerized
 - [Development](https://www.kimai.org/documentation/installation.html#development-installation) - on your local machine 
 - [1-click installer](https://www.kimai.org/documentation/installation.html#hosting-and-1-click-installations) - hosted environments 
-- [FTP](https://www.kimai.org/documentation/installation.html#ftp-installation) - unfortunately still widely used
+- [FTP](https://www.kimai.org/documentation/installation.html#ftp-installation) - unfortunately still widely used ;-)
 
 ### Updating Kimai
 
@@ -49,7 +49,7 @@ hourly and fixed rates, advanced filtering, support for plugins and many more.
 
 ### Plugins
 
-- [Plugin marketplace](https://www.kimai.org/store/) - users find existing plugins here
+- [Plugin marketplace](https://www.kimai.org/store/) - find existing plugins here
 - [Developer documentation](https://www.kimai.org/documentation/developers.html) - how to create a plugin
 
 ## Roadmap and releases
