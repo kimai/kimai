@@ -954,6 +954,7 @@
             <trans-unit id="entryState.exported">
                 <source>entryState.exported</source>
                 <target>Tratado</target>
+            </trans-unit>
             <trans-unit id="entryState.not_exported">
                 <source>entryState.not_exported</source>
                 <target>Abierto</target>
