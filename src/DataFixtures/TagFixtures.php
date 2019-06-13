@@ -49,8 +49,6 @@ class TagFixtures extends Fixture
                 $tagName = $faker->firstName;
             } elseif ($i % 2 == 7) {
                 $tagName = $faker->lastName;
-            } elseif ($i % 6 == 0) {
-                $tagName = $faker->iban();
             } elseif ($i % 5 == 0) {
                 $tagName = $faker->city;
             } elseif ($i % 4 == 0) {
@@ -59,8 +57,8 @@ class TagFixtures extends Fixture
                 $tagName = $faker->streetName;
             } elseif ($i % 2 == 0) {
                 $tagName = $faker->colorName;
-            } elseif ($i % 1 == 0) {
-                $tagName = $faker->text(rand(10, 20));
+            } else {
+                $tagName = $faker->text(rand(5, 10));
             }
 
             if (in_array($tagName, $existing)) {
@@ -72,15 +70,12 @@ class TagFixtures extends Fixture
 
             $manager->persist($tag);
 
-            if ($i % self::BATCH_SIZE == 0) {
+            if ($i % self::BATCH_SIZE === 0) {
                 $manager->flush();
                 $manager->clear(Tag::class);
             }
-
-            $manager->flush();
-            $manager->clear(Tag::class);
         }
-
         $manager->flush();
+        $manager->clear(Tag::class);
     }
 }

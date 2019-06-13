@@ -23,15 +23,18 @@ otherwise you can't use the new features:
 - `delete_tag` - delete tags
 - `edit_exported_timesheet` - allows to edit records which were exported
 - `role_permissions` - view calculated permissions for user roles
+- `budget_activity` - view and edit budgets for activities
+- `budget_project` - view and edit budgets for projects
+- `budget_customer` - view and edit budgets for customers
 
 Removed permission:
 - `system_actions` - removed experimental feature to flush app cache from the about screen
 
 ### BC BREAKS
 
-- API: Format for queries including a datetime object fixed, finally using the HTML5 format (previously `2019-03-02 14:23` - now `2019-03-02T14:23:00`)
+- API: Format for queries including a datetime object fixed to use HTML5 format (previously `2019-03-02 14:23` - now `2019-03-02T14:23:00`)
 - **Permission config**: the `permissions` definition in your `local.yaml` needs to be verified/changed, as the internal structure was highly optimized to simplify the definition. 
-Thanks to the new structure, you should be able to remove almost everything from your `local.yaml`: please read [the updated permission docu](https://www.kimai.org/documentation/permissions.html). 
+Thanks to the new structure, you should be able to remove almost everything from your `local.yaml` (tip: start over from scratch!). Please read [the updated permission docu](https://www.kimai.org/documentation/permissions.html). 
 
 ## [0.9](https://github.com/kevinpapst/kimai2/releases/tag/0.9)
 

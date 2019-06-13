@@ -5,7 +5,7 @@ security:
     providers:
         chain_provider:
             chain:
-                providers: [fos_userbundle, kimai_ldap]
+                providers: [fos_userbundle]
         kimai_ldap:
             id: App\Ldap\LdapUserProvider
         fos_userbundle:
@@ -30,9 +30,6 @@ security:
                 secret:   '%kernel.secret%'
                 lifetime: 604800
                 path:     /
-
-            # activate the LdapAuthenticationProvider
-            kimai_ldap: ~
 
             # activate all configured user provider
             provider: chain_provider

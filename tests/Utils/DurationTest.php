@@ -54,6 +54,7 @@ class DurationTest extends TestCase
 
             [0, '', Duration::FORMAT_NATURAL],
             [0, 0, Duration::FORMAT_NATURAL],
+            [99, '99s', Duration::FORMAT_NATURAL],
             [7200, '2h', Duration::FORMAT_NATURAL],
             [2280, '38m', Duration::FORMAT_NATURAL],
             [9480, '2h38m', Duration::FORMAT_NATURAL],
@@ -65,6 +66,8 @@ class DurationTest extends TestCase
             [48420, '13:27', Duration::FORMAT_COLON],
             [48474, '13:27:54', Duration::FORMAT_COLON],
             [48474, '12:87:54', Duration::FORMAT_COLON],
+            [11257200, '3127:00:00', Duration::FORMAT_COLON],
+            [11257200, '3127:00', Duration::FORMAT_COLON],
         ];
     }
 
@@ -80,6 +83,14 @@ class DurationTest extends TestCase
             // invalid modes
             [17, 'foo'],
             [12, ''],
+
+            ['3127::00', Duration::FORMAT_COLON],
+            ['00::', Duration::FORMAT_COLON],
+            ['3127:00:', Duration::FORMAT_COLON],
+            [':3127:00', Duration::FORMAT_COLON],
+            ['::3127', Duration::FORMAT_COLON],
+            ['3127:-01', Duration::FORMAT_COLON],
+            ['-3127:01:17', Duration::FORMAT_COLON],
         ];
     }
 

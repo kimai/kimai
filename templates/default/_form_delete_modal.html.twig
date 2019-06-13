@@ -12,7 +12,7 @@
                 {{ form_widget(form) }}
             </div>
         {% else %}
-            <p>{{ message|default('confirm.delete_message'|trans)|raw }}</p>
+            <p>{{ message|raw }}</p>
             {{ form_widget(form) }}
         {% endif %}
     {% endblock %}

@@ -6,6 +6,10 @@
                 <source>stop</source>
                 <target>Stop</target>
             </trans-unit>
+            <trans-unit id="back">
+                <source>back</source>
+                <target>Back</target>
+            </trans-unit>
             <trans-unit id="edit">
                 <source>edit</source>
                 <target>Edit</target>
@@ -13,6 +17,10 @@
             <trans-unit id="trash">
                 <source>trash</source>
                 <target>Delete</target>
+            </trans-unit>
+            <trans-unit id="report">
+                <source>report</source>
+                <target>Report</target>
             </trans-unit>
             <trans-unit id="repeat">
                 <source>repeat</source>
@@ -32,15 +40,15 @@
             </trans-unit>
             <trans-unit id="customer">
                 <source>customer</source>
-                <target>Customers</target>
+                <target>Filter customers</target>
             </trans-unit>
             <trans-unit id="project">
                 <source>project</source>
-                <target>Projects</target>
+                <target>Filter projects</target>
             </trans-unit>
             <trans-unit id="activity">
                 <source>activity</source>
-                <target>Activities</target>
+                <target>Filter activities</target>
             </trans-unit>
             <trans-unit id="copy">
                 <source>copy</source>

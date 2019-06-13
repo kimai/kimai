@@ -40,7 +40,9 @@
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'title') }}">{{ entry.title }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'roles') }}">
                     {% for role in entry.roles %}
-                        {{ widgets.label_role(role) }}
+                        {% if role != 'ROLE_USER' %}
+                            {{ widgets.label_role(role) }}
+                        {% endif %}
                     {% endfor %}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'active') }}">{{ widgets.label_visible(entry.enabled) }}</td>

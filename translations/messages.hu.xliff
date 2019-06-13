@@ -33,10 +33,6 @@
                 <source>confirm.delete</source>
                 <target>Biztos vagy benne, hogy törölni szerenéd?</target>
             </trans-unit>
-            <trans-unit id="confirm.delete_message">
-                <source>confirm.delete_message</source>
-                <target>Meg kell erősítened a törlést, mert kapcsolódó elemek is törlésre kerülnek.</target>
-            </trans-unit>
             <trans-unit id="delete.not_in_use">
                 <source>delete.not_in_use</source>
                 <target>Ez az elem biztonságosan törölhető.</target>
@@ -442,12 +438,11 @@
                 <source>admin_project.subtitle</source>
                 <target>A projektek egyesítik több felhasználó azonos ügyfélhez tartozó tevékenységeit </target>
             </trans-unit>
-            <trans-unit id="admin_project.delete_confirm">
-                <source>admin_project.delete_confirm</source>
+            <trans-unit id="admin_project.short_stats">
+                <source>admin_project.short_stats</source>
                 <target>
                     A %customer% ügyfélhez tartozó %project% projekthez kapcsolódik %activities% tevékenység 
                     és %records% időbejegyzés, ami összesen %duration%.
-                    Ezek a tevékenységek és bejegyzések is törlésre kerülnek!
                 </target>
             </trans-unit>
 
@@ -463,12 +458,11 @@
                 <source>admin_activity.subtitle</source>
                 <target>Idő rögzítéskor kiválasztható lehetőségek</target>
             </trans-unit>
-            <trans-unit id="admin_activity.delete_confirm">
-                <source>admin_activity.delete_confirm</source>
+            <trans-unit id="admin_activity.short_stats">
+                <source>admin_activity.short_stats</source>
                 <target>
                     A %customer% ügyfélhez és %project% projekthez tartozó %activities% tevékenységhez
                     kapcsolódik %records% időbejegyzés, ami összesen %duration%.
-                    Ezek a bejegyzések is törlésre kerülnek!
                 </target>
             </trans-unit>
 
@@ -532,12 +526,11 @@
                 <source>label.currency</source>
                 <target>Pénznem</target>
             </trans-unit>
-            <trans-unit id="admin_customer.delete_confirm">
-                <source>admin_customer.delete_confirm</source>
+            <trans-unit id="admin_customer.short_stats">
+                <source>admin_customer.short_stats</source>
                 <target>
                     A %customer% ügyfélhez kapcsolódik %project% projekt, %activities% tevékenység 
                     és %records% időbejegyzés, ami összesen %duration%.
-                    Ezek a projektek, tevékenységek és bejegyzések is törlésre kerülnek!
                 </target>
             </trans-unit>
 
@@ -573,11 +566,10 @@
                 <source>label.roles</source>
                 <target>Szerepkör</target>
             </trans-unit>
-            <trans-unit id="admin_user.delete_confirm">
-                <source>admin_user.delete_confirm</source>
+            <trans-unit id="admin_user.short_stats">
+                <source>admin_user.short_stats</source>
                 <target>
                     A %user% felhasnálóhoz kapcsolódik %records% időbejegyzés, ami összesen %duration%.
-                    Ezek a bejegyzések is törlésre kerülnek!
                 </target>
             </trans-unit>
 

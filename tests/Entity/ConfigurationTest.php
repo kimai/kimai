@@ -10,11 +10,12 @@
 namespace App\Tests\Entity;
 
 use App\Entity\Configuration;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Entity\Configuration
  */
-class ConfigurationTest extends AbstractEntityTest
+class ConfigurationTest extends TestCase
 {
     public function testDefaultValues()
     {

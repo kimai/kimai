@@ -69,25 +69,8 @@ class ConfigurationTest extends TestCase
     {
         $config = $this->getMinConfig();
         $config['ldap'] = [
-            'active' => true,
             'connection' => [
                 'host' => 'foo'
-            ],
-        ];
-
-        $this->assertConfig($config, []);
-    }
-
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     * @expectedExceptionMessage Invalid configuration for path "kimai.ldap": The "ldap.connection.host" config must be set if LDAP is activated.
-     */
-    public function testValidateLdapConfigConnectionHost()
-    {
-        $config = $this->getMinConfig();
-        $config['ldap'] = [
-            'active' => true,
-            'connection' => [
             ],
         ];
 
@@ -102,7 +85,6 @@ class ConfigurationTest extends TestCase
     {
         $config = $this->getMinConfig();
         $config['ldap'] = [
-            'active' => false,
             'connection' => [
                 'useSsl' => true,
                 'useStartTls' => true,
@@ -120,7 +102,6 @@ class ConfigurationTest extends TestCase
     {
         $config = $this->getMinConfig();
         $config['ldap'] = [
-            'active' => true,
             'user' => [
                 'filter' => '(sdfsdfsdf)(uid=%s)',
             ],
@@ -137,7 +118,6 @@ class ConfigurationTest extends TestCase
     {
         $config = $this->getMinConfig();
         $config['ldap'] = [
-            'active' => true,
             'user' => [
                 'filter' => 's(dfsdfsdf)',
             ],
@@ -154,7 +134,6 @@ class ConfigurationTest extends TestCase
     {
         $config = $this->getMinConfig();
         $config['ldap'] = [
-            'active' => true,
             'user' => [
                 'filter' => '(dfsdfsdf))',
             ],
@@ -171,7 +150,6 @@ class ConfigurationTest extends TestCase
     {
         $config = $this->getMinConfig();
         $config['ldap'] = [
-            'active' => false,
             'connection' => [
                 'accountFilterFormat' => '(sdfsdfsdf)(uid=xx)',
             ],
@@ -188,7 +166,6 @@ class ConfigurationTest extends TestCase
     {
         $config = $this->getMinConfig();
         $config['ldap'] = [
-            'active' => true,
             'connection' => [
                 'accountFilterFormat' => 's(dfsdfsdf)',
             ],
@@ -205,7 +182,6 @@ class ConfigurationTest extends TestCase
     {
         $config = $this->getMinConfig();
         $config['ldap'] = [
-            'active' => true,
             'connection' => [
                 'accountFilterFormat' => '(dfsdfsdf))',
             ],
@@ -218,7 +194,6 @@ class ConfigurationTest extends TestCase
     {
         $finalizedConfig = $this->getCompiledConfig($this->getMinConfig());
         $expected = [
-            'active' => false,
             'user' => [
                 'baseDn' => '',
                 'filter' => '',

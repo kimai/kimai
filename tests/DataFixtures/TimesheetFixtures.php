@@ -42,6 +42,10 @@ class TimesheetFixtures extends Fixture
      */
     protected $activities = [];
     /**
+     * @var Project[]
+     */
+    protected $projects = [];
+    /**
      * @var string
      */
     protected $startDate = '2018-04-01';
@@ -173,6 +177,17 @@ class TimesheetFixtures extends Fixture
     }
 
     /**
+     * @param Project[] $projects
+     * @return $this
+     */
+    public function setProjects(array $projects)
+    {
+        $this->projects = $projects;
+
+        return $this;
+    }
+
+    /**
      * @param bool $useTags
      * @return TimesheetFixtures
      */
@@ -204,7 +219,10 @@ class TimesheetFixtures extends Fixture
             $activities = $this->getAllActivities($manager);
         }
 
-        $projects = $this->getAllProjects($manager);
+        $projects = $this->projects;
+        if (empty($projects)) {
+            $projects = $this->getAllProjects($manager);
+        }
 
         $faker = Factory::create();
         $user = $this->user;

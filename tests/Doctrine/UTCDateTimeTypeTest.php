@@ -14,12 +14,12 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\DBAL\Platforms\SqlitePlatform;
 use Doctrine\DBAL\Types\Type;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Doctrine\UTCDateTimeType
  */
-class UTCDateTimeTypeTest extends KernelTestCase
+class UTCDateTimeTypeTest extends TestCase
 {
     public function testGetUtc()
     {

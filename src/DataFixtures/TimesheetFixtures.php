@@ -38,8 +38,11 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
     public const MIN_RUNNING_TIMESHEETS_PER_USER = 0;
     public const MAX_RUNNING_TIMESHEETS_PER_USER = 3;
     public const TIMERANGE_DAYS = 1095; // 3 years
+    public const TIMERANGE_RUNNING = 1047; // in minutes = 17:45 hours
     public const MIN_MINUTES_PER_ENTRY = 15;
     public const MAX_MINUTES_PER_ENTRY = 840; // 14h
+    public const MAX_TAG_PER_ENTRY = 3;
+    public const MAX_DESCRIPTION_LENGTH = 50;
 
     public const BATCH_SIZE = 100;
 
@@ -79,10 +82,10 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
                 }
 
                 $description = null;
-                if ($i % 3 == 0) {
-                    $description = $faker->text;
-                } elseif ($i % 7 == 0) {
-                    $description = '';
+                if ($i % 3 === 0) {
+                    $description = $faker->realText($faker->numberBetween(10, self::MAX_DESCRIPTION_LENGTH));
+                } elseif ($i % 7 === 0) {
+                    $description = substr($faker->text, 0, self::MAX_DESCRIPTION_LENGTH);
                 }
 
                 $entry = $this->createTimesheetEntry(
@@ -121,7 +124,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
 
         $entries = $manager->getRepository(Timesheet::class)->findAll();
         foreach ($entries as $temp) {
-            $tagAmount = rand(0, 4);
+            $tagAmount = rand(0, self::MAX_TAG_PER_ENTRY);
             for ($iTag = 0; $iTag < $tagAmount; $iTag++) {
                 $tagId = rand(1, TagFixtures::MAX_TAGS);
                 if (isset($allTags[$tagId])) {
@@ -226,6 +229,9 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
                 ->setEnd($end)
                 ->setRate($rate)
                 ->setDuration($duration);
+        } else {
+            // running entries should be short
+            $entry->getBegin()->setTimestamp(time())->modify('- ' . rand(10, self::TIMERANGE_RUNNING) . ' minutes');
         }
 
         return $entry;

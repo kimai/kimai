@@ -17,8 +17,10 @@
         '%duration%': '<strong>' ~ stats.recordDuration|duration ~ '</strong>'
     } %}
 
+    {% set message = '<p>' ~ ("admin_customer.short_stats"|trans(params)|raw) ~ '</p><p>' ~ ("admin_entity.delete_confirm"|trans|raw) ~ '</p>' %}
+
     {{ include(app.request.xmlHttpRequest ? 'default/_form_delete_modal.html.twig' : 'default/_form_delete.html.twig', {
-        'message': "admin_customer.delete_confirm"|trans(params)|raw,
+        'message': message|raw,
         'form': form,
         'used': inUse,
         'back': path('admin_customer')

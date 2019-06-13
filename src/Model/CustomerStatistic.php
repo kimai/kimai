@@ -9,23 +9,8 @@
 
 namespace App\Model;
 
-/**
- * Customer statistics
- */
-class CustomerStatistic
+class CustomerStatistic extends TimesheetCountedStatistic
 {
-    /**
-     * @var int
-     */
-    protected $count = 0;
-    /**
-     * @var int
-     */
-    protected $recordAmount = 0;
-    /**
-     * @var int
-     */
-    protected $recordDuration = 0;
     /**
      * @var int
      */
@@ -34,69 +19,6 @@ class CustomerStatistic
      * @var int
      */
     protected $projectAmount = 0;
-
-    /**
-     * Returns the total amount of included timesheet records.
-     *
-     * @return int
-     */
-    public function getRecordAmount()
-    {
-        return $this->recordAmount;
-    }
-
-    /**
-     * @param int $recordAmount
-     * @return $this
-     */
-    public function setRecordAmount($recordAmount)
-    {
-        $this->recordAmount = (int) $recordAmount;
-
-        return $this;
-    }
-
-    /**
-     * Returns the total duration of all included timesheet records.
-     *
-     * @return int
-     */
-    public function getRecordDuration()
-    {
-        return $this->recordDuration;
-    }
-
-    /**
-     * @param int $recordDuration
-     * @return $this
-     */
-    public function setRecordDuration($recordDuration)
-    {
-        $this->recordDuration = (int) $recordDuration;
-
-        return $this;
-    }
-
-    /**
-     * Returns the amount of activities that are included in the statistic result.
-     *
-     * @return int
-     */
-    public function getCount()
-    {
-        return $this->count;
-    }
-
-    /**
-     * @param int $count
-     * @return $this
-     */
-    public function setCount($count)
-    {
-        $this->count = (int) $count;
-
-        return $this;
-    }
 
     /**
      * @return int

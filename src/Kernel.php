@@ -113,7 +113,27 @@ class Kernel extends BaseKernel
         $container->setParameter('container.autowiring.strict_mode', true);
         $container->setParameter('container.dumper.inline_class_loader', true);
         $confDir = $this->getProjectDir() . '/config';
-        $loader->load($confDir . '/packages/*' . self::CONFIG_EXTS, 'glob');
+
+        // if you want to prepend any config, you can do it here
+        $loader->load($confDir . '/packages/local_before' . self::CONFIG_EXTS, 'glob');
+
+        // using this one instead of $loader->load($confDir . '/packages/*' . self::CONFIG_EXTS, 'glob');
+        // to get rid of the local.yaml from the list, we load it afterwards explicit
+        $finder = (new Finder())
+            ->files()
+            ->in([$confDir . '/packages/'])
+            ->name('*' . self::CONFIG_EXTS)
+            ->notName('local*' . self::CONFIG_EXTS)
+            ->depth('== 0')
+            ->sortByName()
+            ->followLinks()
+        ;
+
+        /** @var SplFileInfo $file */
+        foreach ($finder as $file) {
+            $loader->load($file->getPathname());
+        }
+
         if (is_dir($confDir . '/packages/' . $this->environment)) {
             $loader->load($confDir . '/packages/' . $this->environment . '/**/*' . self::CONFIG_EXTS, 'glob');
         }

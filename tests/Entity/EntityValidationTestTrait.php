@@ -9,13 +9,12 @@
 
 namespace App\Tests\Entity;
 
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 
 /**
- * @covers \App\Entity\Timesheet
+ * Classes using this MUST extend \Symfony\Bundle\FrameworkBundle\Test\KernelTestCase
  */
-abstract class AbstractEntityTest extends KernelTestCase
+trait EntityValidationTestTrait
 {
     /**
      * @param object $entity

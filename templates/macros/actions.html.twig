@@ -23,6 +23,9 @@
             {% endif %}
             {% set actions = actions|merge({'edit': {'url': path('admin_activity_edit', {'id': activity.id}), 'class': class}}) %}
         {% endif %}
+        {% if is_granted('budget', activity) %}
+            {% set actions = actions|merge({'report': {'url': path('admin_activity_budget', {'id': activity.id})}}) %}
+        {% endif %}
         {% if is_granted('view_other_timesheet') %}
             {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'customer': activity.project ? activity.project.customer.id : null, 'project': activity.project ? activity.project.id : null, 'activity': activity.id})}) %}
         {% endif %}
@@ -35,7 +38,7 @@
     {% endif %}
 
     {% if view != 'index' %}
-        {% set actions = actions|merge({'activity': path('admin_activity')}) %}
+        {% set actions = actions|merge({'back': path('admin_activity')}) %}
     {% endif %}
 
     {% set event = trigger('actions.activity', {'actions': actions, 'view': view, 'activity': activity}) %}
@@ -139,6 +142,9 @@
             {% endif %}
             {% set actions = actions|merge({'edit': {'url': path('admin_project_edit', {'id': project.id}), 'class': class}}) %}
         {% endif %}
+        {% if is_granted('budget', project) %}
+            {% set actions = actions|merge({'report': {'url': path('admin_project_budget', {'id': project.id})}}) %}
+        {% endif %}
         {% if is_granted('view_activity') %}
             {% set actions = actions|merge({'activity': path('admin_activity', {'customer': project.customer.id, 'project': project.id})}) %}
         {% endif %}
@@ -154,7 +160,7 @@
     {% endif %}
 
     {% if view != 'index' %}
-        {% set actions = actions|merge({'project': path('admin_project')}) %}
+        {% set actions = actions|merge({'back': path('admin_project')}) %}
     {% endif %}
 
     {% set event = trigger('actions.project', {'actions': actions, 'view': view, 'project': project}) %}
@@ -189,6 +195,9 @@
             {% endif %}
             {% set actions = actions|merge({'edit': {'url': path('admin_customer_edit', {'id': customer.id}), 'class': class}}) %}
         {% endif %}
+        {% if is_granted('budget', customer) %}
+            {% set actions = actions|merge({'report': {'url': path('admin_customer_budget', {'id': customer.id})}}) %}
+        {% endif %}
         {% if is_granted('view_project') %}
             {% set actions = actions|merge({'project': path('admin_project', {'customer': customer.id})}) %}
         {% endif %}
@@ -207,7 +216,7 @@
     {% endif %}
 
     {% if view != 'index' %}
-        {% set actions = actions|merge({'customer': path('admin_customer')}) %}
+        {% set actions = actions|merge({'back': path('admin_customer')}) %}
     {% endif %}
 
     {% set event = trigger('actions.customer', {'actions': actions, 'view': view, 'customer': customer}) %}
@@ -274,7 +283,7 @@
     {% endif %}
 
     {% if view != 'index' %}
-        {% set actions = actions|merge({'timesheet': path('timesheet')}) %}
+        {% set actions = actions|merge({'back': path('timesheet')}) %}
     {% endif %}
 
     {% set event = trigger('actions.timesheet', {'actions': actions, 'view': view, 'timesheet': timesheet}) %}
@@ -329,7 +338,7 @@
     {% endif %}
 
     {% if view != 'index' %}
-        {% set actions = actions|merge({'timesheet': path('admin_timesheet')}) %}
+        {% set actions = actions|merge({'back': path('admin_timesheet')}) %}
     {% endif %}
 
     {% set event = trigger('actions.timesheet_team', {'actions': actions, 'view': view, 'timesheet': timesheet}) %}

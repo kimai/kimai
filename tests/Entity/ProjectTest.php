@@ -11,11 +11,12 @@ namespace App\Tests\Entity;
 
 use App\Entity\Customer;
 use App\Entity\Project;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Entity\Project
  */
-class ProjectTest extends AbstractEntityTest
+class ProjectTest extends TestCase
 {
     public function testDefaultValues()
     {
@@ -26,7 +27,6 @@ class ProjectTest extends AbstractEntityTest
         $this->assertNull($sut->getOrderNumber());
         $this->assertNull($sut->getComment());
         $this->assertTrue($sut->getVisible());
-        $this->assertEquals(0.0, $sut->getBudget());
         $this->assertNull($sut->getFixedRate());
         $this->assertNull($sut->getHourlyRate());
         self::assertIsIterable($sut->getTimesheets());
@@ -34,6 +34,8 @@ class ProjectTest extends AbstractEntityTest
         self::assertIsIterable($sut->getActivities());
         self::assertEmpty($sut->getActivities());
         $this->assertNull($sut->getColor());
+        $this->assertEquals(0.0, $sut->getBudget());
+        $this->assertEquals(0, $sut->getTimeBudget());
     }
 
     public function testSetterAndGetter()
@@ -59,12 +61,16 @@ class ProjectTest extends AbstractEntityTest
         $this->assertInstanceOf(Project::class, $sut->setVisible(false));
         $this->assertFalse($sut->getVisible());
 
+        $this->assertInstanceOf(Project::class, $sut->setFixedRate(13.47));
+        $this->assertEquals(13.47, $sut->getFixedRate());
+
+        $this->assertInstanceOf(Project::class, $sut->setHourlyRate(99));
+        $this->assertEquals(99, $sut->getHourlyRate());
+
         $this->assertInstanceOf(Project::class, $sut->setBudget(12345.67));
         $this->assertEquals(12345.67, $sut->getBudget());
 
-        $this->assertInstanceOf(Project::class, $sut->setFixedRate(13.47));
-        $this->assertEquals(13.47, $sut->getFixedRate());
-        $this->assertInstanceOf(Project::class, $sut->setHourlyRate(99));
-        $this->assertEquals(99, $sut->getHourlyRate());
+        $this->assertInstanceOf(Project::class, $sut->setTimeBudget(937321));
+        $this->assertEquals(937321, $sut->getTimeBudget());
     }
 }

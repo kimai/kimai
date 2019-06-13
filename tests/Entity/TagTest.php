@@ -11,11 +11,12 @@ namespace App\Tests\Entity;
 
 use App\Entity\Tag;
 use App\Entity\Timesheet;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Entity\Tag
  */
-class TagTest extends AbstractEntityTest
+class TagTest extends TestCase
 {
     public function testDefaultValues()
     {

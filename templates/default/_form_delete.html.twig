@@ -3,7 +3,7 @@
         <h3 class="box-title">{{ title|default('confirm.delete'|trans) }}</h3>
     </div>
     <div class="box-body">
-        {{ message|default('confirm.delete_message'|trans)|raw }}
+        {{ message|raw }}
     </div>
     {{ form_start(form) }}
     <div class="box-body">

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% import "macros/actions.html.twig" as actions %}
+
+{% block page_title %}{{ 'admin_project.title'|trans }}{% endblock %}
+{% block page_subtitle %}{{ 'admin_project.subtitle'|trans }}{% endblock %}
+{% block page_actions %}{{ actions.project(project, 'delete') }}{% endblock %}
+
+{% block main %}
+
+    {% set params = {
+        '%project%': '<strong>' ~ project.name ~ '</strong>',
+        '%customer%': '<strong>' ~ project.customer.name ~ '</strong>',
+        '%records%': '<strong>' ~ stats.recordAmount ~ '</strong>',
+        '%activities%': '<strong>' ~ stats.activityAmount ~ '</strong>',
+        '%duration%': '<strong>' ~ stats.recordDuration|duration ~ '</strong>'
+    } %}
+
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% import "macros/progressbar.html.twig" as progress %}
+        {% block box_title %}{{ project.name }}{% endblock %}
+        {% block box_body %}
+            <p>
+                {{ 'admin_project.short_stats'|trans(params)|raw }}
+            </p>
+
+            {% if project.budget > 0 %}
+                {{ progress.progressbar(project.budget, stats.recordRate, 'label.budget'|trans, stats.recordRate|money(project.customer.currency) ~ ' / ' ~ project.budget|money(project.customer.currency) ) }}
+            {% endif %}
+
+            {% if project.timeBudget > 0 %}
+                {{ progress.progressbar(project.timeBudget, stats.recordDuration, 'label.timeBudget'|trans, stats.recordDuration|duration ~ ' / ' ~ project.timeBudget|duration ) }}
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}

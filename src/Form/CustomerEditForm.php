@@ -10,10 +10,6 @@
 namespace App\Form;
 
 use App\Entity\Customer;
-use App\Form\Type\ColorPickerType;
-use App\Form\Type\FixedRateType;
-use App\Form\Type\HourlyRateType;
-use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
@@ -26,22 +22,19 @@ use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * Defines the form used to edit Customer entities.
- */
 class CustomerEditForm extends AbstractType
 {
+    use EntityFormTrait;
+
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $currency = false;
-
         if (isset($options['data'])) {
             /** @var Customer $customer */
             $customer = $options['data'];
-            $currency = $customer->getCurrency();
+            $options['currency'] = $customer->getCurrency();
         }
 
         $builder
@@ -101,18 +94,9 @@ class CustomerEditForm extends AbstractType
             ])
             ->add('timezone', TimezoneType::class, [
                 'label' => 'label.timezone',
-            ])
-            ->add('color', ColorPickerType::class)
-            ->add('fixedRate', FixedRateType::class, [
-                'currency' => $currency ?? false,
-            ])
-            ->add('hourlyRate', HourlyRateType::class, [
-                'currency' => $currency ?? false,
-            ])
-            ->add('visible', YesNoType::class, [
-                'label' => 'label.visible',
-            ])
-        ;
+            ]);
+
+        $this->addCommonFields($builder, $options);
     }
 
     /**
@@ -125,6 +109,8 @@ class CustomerEditForm extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'admin_customer_edit',
+            'currency' => Customer::DEFAULT_CURRENCY,
+            'include_budget' => false,
             'attr' => [
                 'data-form-event' => 'kimai.customerUpdate'
             ],

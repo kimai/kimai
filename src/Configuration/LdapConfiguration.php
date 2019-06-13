@@ -21,11 +21,6 @@ class LdapConfiguration
         $this->settings = $settings;
     }
 
-    public function isActivated(): bool
-    {
-        return (bool) $this->settings['active'];
-    }
-
     public function getRoleParameters(): array
     {
         return (array) $this->settings['role'];

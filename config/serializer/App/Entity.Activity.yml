@@ -1,6 +1,6 @@
 App\Entity\Activity:
     exclusion_policy: All
-    custom_accessor_order: [id, name, comment, visible, project, fixedRate, hourlyRate, color]
+    custom_accessor_order: [id, name, comment, visible, project, fixedRate, hourlyRate, color, budget, timeBudget]
     properties:
         id:
             include: true
@@ -14,6 +14,12 @@ App\Entity\Activity:
         visible:
             include: true
             groups: [Default]
+        budget:
+            include: true
+            groups: [Entity]
+        timeBudget:
+            include: true
+            groups: [Entity]
         fixedRate:
             include: true
             groups: [Activity]

@@ -22,29 +22,23 @@ nelmio_api_doc:
         path_patterns:
             - ^/api(?!/doc)
     documentation:
-#        host: '{{hostname}}'
-        schemes: [http, https]
+        #host: '{{hostname}}'
+        host: '%router.request_context.host%'
+        basePath: '%router.request_context.base_url%'
+        schemes: ['%router.request_context.scheme%']
         info:
             title: Kimai 2 - API Docs
             description: |
-                REST API for the Kimai 2 time-tracking software. It is not yet considered stable and BC breaks might happen, even though I try to avoid them as much as possible.
-                - Collections return less data than explicit entity calls
-                - DateTime formats are explained in detail at https://www.kimai.org/documentation/rest-api.html
+                REST API for the Kimai 2 time-tracking software. Read more about its usage in the [API documentation](https://www.kimai.org/documentation/rest-api.html) and then download a [Swagger file](doc.json) for import e.g. in Postman.
+                Be aware: it is not yet considered stable and BC breaks might happen, but we try to avoid them.
             version: 0.3
-#        parameters:
-#            hostname:
-#                name: hostname
-#                in: url
-#                description: the hostname where your api runs
-#                required: true
-#                type: string
         securityDefinitions:
-            X-AUTH-USER:
+            apiUser:
                 type: apiKey
                 description: 'Value: {Username}'
                 name: X-AUTH-USER
                 in: header
-            X-AUTH-TOKEN:
+            apiToken:
                 type: apiKey
                 description: 'Value: {API Token}'
                 name: X-AUTH-TOKEN

@@ -32,12 +32,15 @@ class CustomerFixtures extends Fixture
     public const MAX_CUSTOMERS = 15;
     public const MIN_BUDGET = 0;
     public const MAX_BUDGET = 100000;
+    public const MIN_TIME_BUDGET = 0;
+    public const MAX_TIME_BUDGET = 10000000;
     public const MIN_GLOBAL_ACTIVITIES = 5;
     public const MAX_GLOBAL_ACTIVITIES = 30;
     public const MIN_PROJECTS_PER_CUSTOMER = 2;
     public const MAX_PROJECTS_PER_CUSTOMER = 25;
     public const MIN_ACTIVITIES_PER_PROJECT = 0;
     public const MAX_ACTIVITIES_PER_PROJECT = 25;
+    public const INDICATE_HIDDEN = false;
 
     /**
      * @param ObjectManager $manager
@@ -91,7 +94,7 @@ class CustomerFixtures extends Fixture
         $entry = new Customer();
         $entry
             ->setCurrency($faker->currencyCode)
-            ->setName($faker->company . ($visible ? '' : ' (x)'))
+            ->setName($faker->company . (self::INDICATE_HIDDEN && !$visible ? ' (x)' : ''))
             ->setAddress($faker->address)
             ->setComment($faker->text)
             ->setNumber('C-' . $faker->ean8)
@@ -99,6 +102,14 @@ class CustomerFixtures extends Fixture
             ->setTimezone($faker->timezone)
             ->setVisible($visible)
         ;
+
+        if (rand(0, 3) % 3) {
+            $entry->setBudget(rand(self::MIN_BUDGET, self::MAX_BUDGET));
+        }
+
+        if (rand(0, 3) % 3) {
+            $entry->setTimeBudget(rand(self::MIN_TIME_BUDGET, self::MAX_TIME_BUDGET));
+        }
 
         return $entry;
     }
@@ -114,12 +125,19 @@ class CustomerFixtures extends Fixture
         $entry = new Project();
 
         $entry
-            ->setName($faker->catchPhrase . ($visible ? '' : ' (x)'))
-            ->setBudget(rand(self::MIN_BUDGET, self::MAX_BUDGET))
+            ->setName($faker->catchPhrase . (self::INDICATE_HIDDEN && !$visible ? ' (x)' : ''))
             ->setComment($faker->text)
             ->setCustomer($customer)
             ->setVisible($visible)
         ;
+
+        if (rand(0, 3) % 3) {
+            $entry->setBudget(rand(self::MIN_BUDGET, self::MAX_BUDGET));
+        }
+
+        if (rand(0, 3) % 3) {
+            $entry->setTimeBudget(rand(self::MIN_TIME_BUDGET, self::MAX_TIME_BUDGET));
+        }
 
         return $entry;
     }
@@ -134,11 +152,19 @@ class CustomerFixtures extends Fixture
     {
         $entry = new Activity();
         $entry
-            ->setName($faker->bs . ($visible ? '' : ' (x)'))
+            ->setName($faker->bs . (self::INDICATE_HIDDEN && !$visible ? ' (x)' : ''))
             ->setProject($project)
             ->setComment($faker->text)
             ->setVisible($visible)
         ;
+
+        if (rand(0, 3) % 3) {
+            $entry->setBudget(rand(self::MIN_BUDGET, self::MAX_BUDGET));
+        }
+
+        if (rand(0, 3) % 3) {
+            $entry->setTimeBudget(rand(self::MIN_TIME_BUDGET, self::MAX_TIME_BUDGET));
+        }
 
         return $entry;
     }
