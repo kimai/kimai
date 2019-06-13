@@ -35,13 +35,8 @@
                 {% set currency = activity.project.customer.currency %}
             {% endif %}
 
-            {% if activity.budget > 0 %}
-                {{ progress.progressbar(activity.budget, stats.recordRate, 'label.budget'|trans, stats.recordRate|money(currency) ~ ' / ' ~ activity.budget|money(currency) ) }}
-            {% endif %}
-
-            {% if activity.timeBudget > 0 %}
-                {{ progress.progressbar(activity.timeBudget, stats.recordDuration, 'label.timeBudget'|trans, stats.recordDuration|duration ~ ' / ' ~ activity.timeBudget|duration ) }}
-            {% endif %}
+            {{ progress.progressbar(activity.budget, stats.recordRate, 'label.budget'|trans, stats.recordRate|money(currency) ~ ' / ' ~ activity.budget|money(currency) ) }}
+            {{ progress.progressbar(activity.timeBudget, stats.recordDuration, 'label.timeBudget'|trans, stats.recordDuration|duration ~ ' / ' ~ activity.timeBudget|duration ) }}
         {% endblock %}
     {% endembed %}
 

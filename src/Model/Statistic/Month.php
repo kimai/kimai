@@ -9,6 +9,8 @@
 
 namespace App\Model\Statistic;
 
+use InvalidArgumentException;
+
 /**
  * Monthly statistics
  */
@@ -23,9 +25,9 @@ class Month
      */
     protected $totalDuration = 0;
     /**
-     * @var int
+     * @var float
      */
-    protected $totalRate = 0;
+    protected $totalRate = 0.00;
 
     /**
      * @param string $month
@@ -34,7 +36,9 @@ class Month
     {
         $monthNumber = (int) $month;
         if ($monthNumber < 1 || $monthNumber > 12) {
-            throw new \InvalidArgumentException('Invalid month given, expected 01-12 but given: ' . $monthNumber);
+            throw new InvalidArgumentException(
+                sprintf('Invalid month given. Expected 1-12, received "%s".', $monthNumber)
+            );
         }
         $this->month = $month;
     }
@@ -47,38 +51,24 @@ class Month
         return $this->month;
     }
 
-    /**
-     * @return int
-     */
-    public function getTotalDuration()
+    public function getTotalDuration(): int
     {
         return $this->totalDuration;
     }
 
-    /**
-     * @param int $totalDuration
-     * @return $this
-     */
-    public function setTotalDuration($totalDuration)
+    public function setTotalDuration(int $seconds): Month
     {
-        $this->totalDuration = $totalDuration;
+        $this->totalDuration = $seconds;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getTotalRate()
+    public function getTotalRate(): float
     {
         return $this->totalRate;
     }
 
-    /**
-     * @param int $totalRate
-     * @return $this
-     */
-    public function setTotalRate($totalRate)
+    public function setTotalRate(float $totalRate): Month
     {
         $this->totalRate = $totalRate;
 

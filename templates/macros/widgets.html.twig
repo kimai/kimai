@@ -254,29 +254,17 @@
         {% endif %}
 
         <a class="{{ class | trim }}" href="{{ url }}"
-                {%- if disabled is same as (true) -%}
-                    disabled="disabled"
-                {%- endif -%}
-                {%- if id is not empty -%}
-                    id="{{ id }}"
-                {%- endif -%}
-                {%- if toggle is not empty -%}
-                    data-toggle="{{ toggle }}"
-                {%- endif -%}
-                {%- if modal is not empty -%}
-                    data-toggle="modal" data-target="{{ modal }}"
-                {%- endif -%}
-                {%- if onclick is not empty -%}
-                    onclick="{{ onclick }}"
-                {%- endif -%}
-                {%- if target is not empty -%}
-                    target="{{ target }}"
-                {%- endif -%}
-                {%- if attr is not empty -%}
-                    {%- for name, value in attr %}
-                    {{- ' ' ~ name }}={% if '"' in value %}'{{ value|raw }}'{% else %}"{{ value|raw }}"{% endif %}
-                    {%- endfor -%}
-                {%- endif -%}
+                {%- if disabled is same as (true) %} disabled="disabled"{% endif %}
+                {%- if id is not empty %} id="{{ id }}"{% endif %}
+                {%- if toggle is not empty %} data-toggle="{{ toggle }}"{% endif %}
+                {%- if modal is not empty %} data-toggle="modal" data-target="{{ modal }}"{% endif %}
+                {%- if onclick is not empty %} onclick="{{ onclick }}"{% endif %}
+                {%- if target is not empty %} target="{{ target }}"{% endif %}
+                {%- if attr is not empty %}
+                    {% for name, value in attr %}
+                    {{ ' ' ~ name }}={% if '"' in value %}'{{ value|raw }}'{% else %}"{{ value|raw }}"{% endif %}
+                    {% endfor %}
+                {% endif %}
         >{% if title is not null %}{{ title }}{% else %}{{ macro.icon(icon) }}{% endif %}</a>
     {% endapply %}
 {% endmacro %}

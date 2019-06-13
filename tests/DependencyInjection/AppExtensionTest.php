@@ -97,6 +97,12 @@ class AppExtensionTest extends TestCase
                 'box_color' => 'green',
                 'select_type' => null,
                 'show_about' => true,
+                'chart' => [
+                    'background_color' => 'rgba(0,115,183,0.7)',
+                    'border_color' => '#3b8bba',
+                    'grid_color' => 'rgba(0,0,0,.05)',
+                    'height' => '200'
+                ]
             ],
             'kimai.theme.select_type' => null,
             'kimai.theme.show_about' => true,

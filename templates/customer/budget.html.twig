@@ -24,13 +24,8 @@
                 {{ 'admin_customer.short_stats'|trans(params)|raw }}
             </p>
 
-            {% if customer.budget > 0 %}
-                {{ progress.progressbar(customer.budget, stats.recordRate, 'label.budget'|trans, stats.recordRate|money(customer.currency) ~ ' / ' ~ customer.budget|money(customer.currency) ) }}
-            {% endif %}
-
-            {% if customer.timeBudget > 0 %}
-                {{ progress.progressbar(customer.timeBudget, stats.recordDuration, 'label.timeBudget'|trans, stats.recordDuration|duration ~ ' / ' ~ customer.timeBudget|duration ) }}
-            {% endif %}
+            {{ progress.progressbar(customer.budget, stats.recordRate, 'label.budget'|trans, stats.recordRate|money(customer.currency) ~ ' / ' ~ customer.budget|money(customer.currency) ) }}
+            {{ progress.progressbar(customer.timeBudget, stats.recordDuration, 'label.timeBudget'|trans, stats.recordDuration|duration ~ ' / ' ~ customer.timeBudget|duration ) }}
         {% endblock %}
     {% endembed %}
 

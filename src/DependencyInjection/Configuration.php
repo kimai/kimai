@@ -9,8 +9,6 @@
 
 namespace App\DependencyInjection;
 
-use App\Model\DashboardSection;
-use App\Model\Widget;
 use App\Timesheet\Rounding\RoundingInterface;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -319,6 +317,15 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('show_about')
                     ->defaultTrue()
                 ->end()
+                ->arrayNode('chart')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('background_color')->defaultValue('rgba(0,115,183,0.7)')->end()
+                        ->scalarNode('border_color')->defaultValue('#3b8bba')->end()
+                        ->scalarNode('grid_color')->defaultValue('rgba(0,0,0,.05)')->end()
+                        ->scalarNode('height')->defaultValue('200')->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 
@@ -365,12 +372,7 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('end')->end()
                     ->scalarNode('icon')->defaultValue('')->end()
                     ->scalarNode('color')->defaultValue('')->end()
-                    ->scalarNode('type')
-                        ->validate()
-                            ->ifNotInArray([Widget::TYPE_COUNTER, Widget::TYPE_MORE])->thenInvalid('Unknown widget type')
-                        ->end()
-                        ->defaultValue(Widget::TYPE_COUNTER)
-                    ->end()
+                    ->scalarNode('type')->defaultValue('counter')->end()
                 ->end()
             ->end()
         ;
@@ -390,15 +392,10 @@ class Configuration implements ConfigurationInterface
                 ->arrayPrototype()
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('type')
-                            ->validate()
-                                ->ifNotInArray([DashboardSection::TYPE_SIMPLE, DashboardSection::TYPE_CHART])->thenInvalid('Unknown section type')
-                            ->end()
-                            ->defaultValue(DashboardSection::TYPE_SIMPLE)
-                        ->end()
+                        ->scalarNode('type')->defaultValue('simple')->end()
                         ->integerNode('order')->defaultValue(0)->end()
                         ->scalarNode('title')->end()
-                        ->scalarNode('permission')->isRequired()->end()
+                        ->scalarNode('permission')->defaultNull()->end()
                         ->arrayNode('widgets')
                             ->isRequired()
                             ->performNoDeepMerging()

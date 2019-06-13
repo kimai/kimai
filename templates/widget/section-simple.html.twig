@@ -1,0 +1,20 @@
+{% import "macros/widgets.html.twig" as widgets %}
+
+{% if not title is empty %}
+    {{ widgets.page_header(title) }}
+{% endif %}
+
+{% set width = widgets|length %}
+{% set rawWidth = 12 / width %}
+{% set columnWidth = rawWidth|round(0, 'floor') %}
+<div class="row">
+    {% for widget in widgets %}
+        {% set columnSize = columnWidth %}
+        {% if width == 5 and (loop.first or loop.last) %}
+            {% set columnSize = columnWidth + 1 %}
+        {% endif %}
+        <div class="col-md-{{ columnSize }} col-sm-{{ columnSize * 2 }} col-xs-{{ columnSize * 4 }}">
+            {{ render_widget(widget) }}
+        </div>
+    {% endfor %}
+</div>

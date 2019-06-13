@@ -1,0 +1,33 @@
+{% set url = null %}
+{% if options.route is defined %}
+    {% set url = path(options.route, options.routeOptions|default([])) %}
+{% endif %}
+
+<div class="small-box bg-{{ options.color|default('green') }}">
+    <div class="inner">
+        <h3>
+            {% if data is iterable %}
+                {{ 'Invalid data' }}
+            {% else %}
+                {% block widget_data %}
+                    {% if options.dataType == 'duration' %}
+                        {% set data = data|duration %}
+                    {% elseif options.dataType == 'money' %}
+                        {% set data = data|money %}
+                    {% endif %}
+                    {{ data }}
+                {% endblock %}
+            {% endif %}
+            <sup style="font-size: 20px">{{ unit|default('') }}</sup>
+        </h3>
+        <p>{{ title|trans }}</p>
+    </div>
+    <div class="icon">
+        <i class="{{ options.icon|icon(options.icon) }}"></i>
+    </div>
+    {% if not url is empty %}
+    <a href="{{ url }}" class="small-box-footer">
+        {{ 'more.info.link'|trans }}
+    </a>
+    {% endif %}
+</div>

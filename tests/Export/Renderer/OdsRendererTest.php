@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  * @covers \App\Export\Renderer\OdsRenderer
  * @covers \App\Export\Renderer\AbstractSpreadsheetRenderer
  * @covers \App\Export\Renderer\RendererTrait
+ * @group integration
  */
 class OdsRendererTest extends AbstractRendererTest
 {
