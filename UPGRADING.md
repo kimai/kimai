@@ -35,6 +35,7 @@ Removed permission:
 - API: Format for queries including a datetime object fixed to use HTML5 format (previously `2019-03-02 14:23` - now `2019-03-02T14:23:00`)
 - **Permission config**: the `permissions` definition in your `local.yaml` needs to be verified/changed, as the internal structure was highly optimized to simplify the definition. 
 Thanks to the new structure, you should be able to remove almost everything from your `local.yaml` (tip: start over from scratch!). Please read [the updated permission docu](https://www.kimai.org/documentation/permissions.html). 
+- default widgets were removed from `kimai.yaml`, that shouldn't cause any issues ... but if something is odd, now you know [where to look for help](https://www.kimai.org/documentation/dashboard.html)
 
 ## [0.9](https://github.com/kevinpapst/kimai2/releases/tag/0.9)
 
