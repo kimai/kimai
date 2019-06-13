@@ -20,6 +20,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Widget\Type\DailyWorkingTimeChart
+ * @covers \App\Widget\Type\SimpleWidget
+ * @covers \App\Widget\Type\AbstractWidgetType
  * @covers \App\Repository\TimesheetRepository
  */
 class DailyWorkingTimeChartTest extends TestCase
@@ -50,7 +52,6 @@ class DailyWorkingTimeChartTest extends TestCase
         self::assertEquals('', $sut->getOption('color', 'xxx'));
         self::assertInstanceOf(User::class, $sut->getOption('user', 'xxx'));
         self::assertEquals('bar', $sut->getOption('type', 'xxx'));
-        self::assertStringStartsWith('DailyWorkingTimeChart_', $sut->getOption('id', 'xxx'));
     }
 
     public function testFluentInterface()
@@ -60,17 +61,6 @@ class DailyWorkingTimeChartTest extends TestCase
         self::assertInstanceOf(AbstractWidgetType::class, $sut->setId(''));
         self::assertInstanceOf(AbstractWidgetType::class, $sut->setTitle(''));
         self::assertInstanceOf(AbstractWidgetType::class, $sut->setData(''));
-    }
-
-    public function testTitleViaOptionsFallback()
-    {
-        $sut = $this->createSut();
-        $sut->setTitle('bar');
-        self::assertEquals('bar', $sut->getTitle());
-        $sut->setTitle('');
-        self::assertEquals('', $sut->getTitle());
-        $sut->setOption('title', 'fooooo');
-        self::assertEquals('fooooo', $sut->getTitle());
     }
 
     public function testSetter()
@@ -97,6 +87,15 @@ class DailyWorkingTimeChartTest extends TestCase
         self::assertEquals('cvbnmyx', $sut->getId());
     }
 
+    public function testGetOptions()
+    {
+        $sut = $this->createSut();
+
+        $options = $sut->getOptions(['type' => 'xxx']);
+        self::assertStringStartsWith('DailyWorkingTimeChart_', $options['id']);
+        self::assertEquals('bar', $options['type']);
+    }
+
     public function testGetData()
     {
         $repository = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->setMethods(['getDailyData'])->getMock();
@@ -109,12 +108,10 @@ class DailyWorkingTimeChartTest extends TestCase
         $user->expects($this->once())->method('getUser')->willReturn((new User())->setUsername('tralalala'));
 
         $sut = new DailyWorkingTimeChart($repository, $user);
-        $sut->setOption('type', 'xxx');
-        $data = $sut->getData();
+        $data = $sut->getData([]);
         self::assertCount(7, $data);
         foreach ($data as $statObj) {
             self::assertInstanceOf(Day::class, $statObj);
         }
-        self::assertEquals('bar', $sut->getOption('type', 'yyy'));
     }
 }

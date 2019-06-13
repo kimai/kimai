@@ -19,11 +19,11 @@ class CompoundChartRenderer extends AbstractTwigRenderer
         return ($widget instanceof CompoundChart);
     }
 
-    public function render(WidgetInterface $widget): string
+    public function render(WidgetInterface $widget, array $options = []): string
     {
-        /* @var CompoundChart $widget */
         return $this->renderTemplate('widget/section-chart.html.twig', [
-            'section' => $widget
+            'title' => $widget->getTitle(),
+            'widgets' => $widget->getData(),
         ]);
     }
 }

@@ -20,13 +20,13 @@ class SimpleWidgetRenderer extends AbstractTwigRenderer
         return $widget instanceof SimpleWidget;
     }
 
-    public function render(WidgetInterface $widget): string
+    public function render(WidgetInterface $widget, array $options = []): string
     {
         $name = (new ReflectionClass($widget))->getShortName();
 
         return $this->renderTemplate(sprintf('widget/widget-%s.html.twig', strtolower($name)), [
-            'data' => $widget->getData(),
-            'options' => $widget->getOptions(),
+            'data' => $widget->getData($options),
+            'options' => $widget->getOptions($options),
             'title' => $widget->getTitle(),
         ]);
     }

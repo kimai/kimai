@@ -41,17 +41,6 @@ abstract class AbstractWidgetTypeTest extends TestCase
         self::assertInstanceOf(AbstractWidgetType::class, $sut->setData(''));
     }
 
-    public function testTitleViaOptionsFallback()
-    {
-        $sut = $this->createSut();
-        $sut->setTitle('bar');
-        self::assertEquals('bar', $sut->getTitle());
-        $sut->setTitle('');
-        self::assertEquals('', $sut->getTitle());
-        $sut->setOption('title', 'fooooo');
-        self::assertEquals('fooooo', $sut->getTitle());
-    }
-
     public function testSetter()
     {
         $sut = $this->createSut();

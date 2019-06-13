@@ -15,6 +15,8 @@ use DateTime;
 
 class DailyWorkingTimeChart extends SimpleWidget
 {
+    public const DEFAULT_CHART = 'bar';
+
     /**
      * @var TimesheetRepository
      */
@@ -30,19 +32,33 @@ class DailyWorkingTimeChart extends SimpleWidget
             'end' => 'sunday this week 23:59:59',
             'color' => '',
             'user' => $user->getUser(),
-            'type' => 'bar',
-            'id' => uniqid('DailyWorkingTimeChart_'),
+            'type' => self::DEFAULT_CHART,
+            'id' => '',
         ]);
     }
 
-    public function getData()
+    public function getOptions(array $options = []): array
     {
-        if (!in_array($this->getOption('type'), ['bar', 'line'])) {
-            $this->setOption('type', 'bar');
+        $options = parent::getOptions($options);
+
+        if (!in_array($options['type'], ['bar', 'line'])) {
+            $options['type'] = self::DEFAULT_CHART;
         }
-        $user = $this->getOption('user');
-        $begin = new DateTime($this->getOption('begin'));
-        $end = new DateTime($this->getOption('end'));
+
+        if (empty($options['id'])) {
+            $options['id'] = uniqid('DailyWorkingTimeChart_');
+        }
+
+        return $options;
+    }
+
+    public function getData(array $options = [])
+    {
+        $options = $this->getOptions($options);
+
+        $user = $options['user'];
+        $begin = new DateTime($options['begin']);
+        $end = new DateTime($options['end']);
 
         return $this->repository->getDailyStats($user, $begin, $end);
     }

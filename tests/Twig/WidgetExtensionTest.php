@@ -100,8 +100,8 @@ class TestRenderer implements WidgetRendererInterface
         return true;
     }
 
-    public function render(WidgetInterface $widget): string
+    public function render(WidgetInterface $widget, array $options = []): string
     {
-        return json_encode($widget->getOptions());
+        return json_encode($widget->getOptions($options));
     }
 }

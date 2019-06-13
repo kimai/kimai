@@ -58,12 +58,8 @@ class WidgetExtension extends AbstractExtension
             $widget = $this->service->getWidget($widget);
         }
 
-        foreach ($options as $key => $value) {
-            $widget->setOption($key, $value);
-        }
-
         $renderer = $this->service->findRenderer($widget);
 
-        return $renderer->render($widget);
+        return $renderer->render($widget, $options);
     }
 }

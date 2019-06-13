@@ -50,9 +50,10 @@ abstract class AbstractWidgetType implements WidgetInterface
     }
 
     /**
-     * @return mixed
+     * @param array $options
+     * @return mixed|null
      */
-    public function getData()
+    public function getData(array $options = [])
     {
         return $this->data;
     }
@@ -66,7 +67,7 @@ abstract class AbstractWidgetType implements WidgetInterface
 
     public function getTitle(): string
     {
-        return $this->getOption('title', $this->title);
+        return $this->title;
     }
 
     public function setOptions(array $options): AbstractWidgetType
@@ -101,8 +102,8 @@ abstract class AbstractWidgetType implements WidgetInterface
         return $default;
     }
 
-    public function getOptions(): array
+    public function getOptions(array $options = []): array
     {
-        return $this->options;
+        return array_merge($this->options, $options);
     }
 }

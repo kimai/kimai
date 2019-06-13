@@ -34,16 +34,17 @@ abstract class AbstractContainer implements WidgetContainerInterface
     }
 
     /**
-     * @return mixed|null
+     * @param array $options
+     * @return WidgetInterface[]|array|mixed|null
      */
-    public function getData()
+    public function getData(array $options = [])
     {
         return $this->getWidgets();
     }
 
-    public function getOptions(): array
+    public function getOptions(array $options = []): array
     {
-        return [];
+        return $options;
     }
 
     /**

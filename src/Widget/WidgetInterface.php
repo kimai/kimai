@@ -30,17 +30,33 @@ interface WidgetInterface
     /**
      * Returns the widgets data, to be used in the frontend rendering.
      *
+     * If your widget relies on options to dynamically change the result data,
+     * make sure that the given $options will overwrite the internal option for
+     * this one call.
+     *
+     * @param array $options
      * @return mixed|null
      */
-    public function getData();
+    public function getData(array $options = []);
 
     /**
      * Returns all widget options to be used in the frontend.
+     *
+     * The given $options are not meant to be persisted, but only to
+     * overwrite the default values one time.
+     *
+     * You can validate the options or simply return:
+     * return array_merge($this->options, $options);
+     *
+     * @param array $options
+     * @return array
      */
-    public function getOptions(): array;
+    public function getOptions(array $options = []): array;
 
     /**
      * Sets one widget option, both for internal use and for frontend rendering.
+     *
+     * The given option should be persisted and permanently overwrite the internal option.
      *
      * @param string $name
      * @param mixed $value

@@ -19,11 +19,11 @@ class CompoundRowRenderer extends AbstractTwigRenderer
         return ($widget instanceof CompoundRow);
     }
 
-    public function render(WidgetInterface $widget): string
+    public function render(WidgetInterface $widget, array $options = []): string
     {
-        /* @var CompoundRow $widget */
         return $this->renderTemplate('widget/section-simple.html.twig', [
-            'section' => $widget
+            'title' => $widget->getTitle(),
+            'widgets' => $widget->getData(),
         ]);
     }
 }
