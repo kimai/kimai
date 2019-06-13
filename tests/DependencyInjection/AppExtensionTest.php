@@ -102,7 +102,12 @@ class AppExtensionTest extends TestCase
                     'border_color' => '#3b8bba',
                     'grid_color' => 'rgba(0,0,0,.05)',
                     'height' => '200'
-                ]
+                ],
+                'branding' => [
+                    'logo' => null,
+                    'mini' => null,
+                    'company' => null,
+                ],
             ],
             'kimai.theme.select_type' => null,
             'kimai.theme.show_about' => true,

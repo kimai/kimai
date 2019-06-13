@@ -1,1 +1,7 @@
-{{- get_title('<b>', '</b><br>')|raw -}}
+{% if not kimai_context.branding.logo is empty %}
+    <img src="{{ kimai_context.branding.logo }}" style="max-width: 300px;">
+{% elseif not kimai_context.branding.company is empty %}
+    <b>{{ kimai_context.branding.company|raw }}</b>
+{% else %}
+    {{- get_title('<b>', '</b><br>')|raw -}}
+{% endif %}
