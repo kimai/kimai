@@ -42,6 +42,10 @@
                 <source>label.timesheet.mode_duration_only</source>
                 <target>[Duration] replaces the end time with a duration input-field</target>
             </trans-unit>
+            <trans-unit id="label.timesheet.mode_duration_fixed_start">
+                <source>label.timesheet.mode_duration_fixed_start</source>
+                <target>[Duration] Configurable fixed start-time, only duration can be changed</target>
+            </trans-unit>
             <trans-unit id="label.timesheet.mode_punch">
                 <source>label.timesheet.mode_punch</source>
                 <target>[Time-clock] user can start and stop records, but not edit the times or duration</target>
