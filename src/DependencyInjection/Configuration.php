@@ -75,6 +75,9 @@ class Configuration implements ConfigurationInterface
 
         $node
             ->children()
+                ->scalarNode('default_begin')
+                    ->defaultValue('now')
+                ->end()
                 ->booleanNode('duration_only')
                     ->setDeprecated()
                 ->end()

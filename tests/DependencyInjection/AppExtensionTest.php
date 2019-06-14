@@ -129,6 +129,7 @@ class AppExtensionTest extends TestCase
                 'rules' => [
                     'allow_future_times' => true,
                 ],
+                'default_begin' => 'now',
             ],
             'kimai.timesheet.rates' => [],
             'kimai.timesheet.rounding' => [],
