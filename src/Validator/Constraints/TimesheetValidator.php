@@ -11,6 +11,8 @@ namespace App\Validator\Constraints;
 
 use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet as TimesheetEntity;
+use App\Timesheet\TrackingMode\TrackingModeInterface;
+use App\Timesheet\TrackingModeService;
 use App\Validator\Constraints\Timesheet as TimesheetConstraint;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraint;
@@ -28,15 +30,20 @@ class TimesheetValidator extends ConstraintValidator
      * @var TimesheetConfiguration
      */
     protected $configuration;
+    /**
+     * @var TrackingModeInterface
+     */
+    protected $mode;
 
     /**
      * @param AuthorizationCheckerInterface $auth
      * @param TimesheetConfiguration $configuration
      */
-    public function __construct(AuthorizationCheckerInterface $auth, TimesheetConfiguration $configuration)
+    public function __construct(AuthorizationCheckerInterface $auth, TimesheetConfiguration $configuration, TrackingModeService $service)
     {
         $this->auth = $auth;
         $this->configuration = $configuration;
+        $this->mode = $service->getActiveMode();
     }
 
     /**
@@ -68,9 +75,15 @@ class TimesheetValidator extends ConstraintValidator
         // an entry is edited and the end date is removed (or duration deleted) would restart the record,
         // which might be disallowed for the current user
         if ($context->getViolations()->count() == 0 && null === $timesheet->getEnd()) {
+            $path = 'start';
+            if ($this->mode->canEditEnd()) {
+                $path = 'end';
+            } elseif ($this->mode->canEditDuration()) {
+                $path = 'duration';
+            }
             if (!$this->auth->isGranted('start', $timesheet)) {
                 $context->buildViolation('You are not allowed to start this timesheet record.')
-                    ->atPath($this->configuration->isDurationOnly() ? 'duration' : 'end')
+                    ->atPath($path)
                     ->setTranslationDomain('validators')
                     ->setCode(TimesheetConstraint::START_DISALLOWED)
                     ->addViolation();
