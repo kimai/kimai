@@ -65,9 +65,9 @@ class TimesheetController extends BaseApiController
      */
     protected $tagRepository;
     /**
-     * @var TrackingModeInterface
+     * @var TrackingModeService
      */
-    protected $trackingMode;
+    protected $trackingModeService;
 
     public function __construct(
         ViewHandlerInterface $viewHandler,
@@ -82,7 +82,12 @@ class TimesheetController extends BaseApiController
         $this->configuration = $configuration;
         $this->dateTime = $dateTime;
         $this->tagRepository = $tagRepository;
-        $this->trackingMode = $trackingModeService->getActiveMode();
+        $this->trackingModeService = $trackingModeService;
+    }
+
+    protected function getTrackingMode(): TrackingModeInterface
+    {
+        return $this->trackingModeService->getActiveMode();
     }
 
     /**
@@ -277,12 +282,14 @@ class TimesheetController extends BaseApiController
         $timesheet->setUser($this->getUser());
         $timesheet->setBegin($this->dateTime->createDateTime());
 
+        $mode = $this->getTrackingMode();
+
         $form = $this->createForm(TimesheetEditForm::class, $timesheet, [
             'csrf_protection' => false,
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
-            'allow_begin_datetime' => $this->trackingMode->canUpdateTimesWithAPI(),
-            'allow_end_datetime' => $this->trackingMode->canUpdateTimesWithAPI(),
+            'allow_begin_datetime' => $mode->canUpdateTimesWithAPI(),
+            'allow_end_datetime' => $mode->canUpdateTimesWithAPI(),
             'allow_duration' => false,
             'date_format' => self::DATE_FORMAT,
         ]);
