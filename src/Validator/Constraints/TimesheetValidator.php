@@ -33,7 +33,7 @@ class TimesheetValidator extends ConstraintValidator
     /**
      * @var TrackingModeInterface
      */
-    protected $mode;
+    protected $trackingModeService;
 
     /**
      * @param AuthorizationCheckerInterface $auth
@@ -43,7 +43,7 @@ class TimesheetValidator extends ConstraintValidator
     {
         $this->auth = $auth;
         $this->configuration = $configuration;
-        $this->mode = $service->getActiveMode();
+        $this->trackingModeService = $service;
     }
 
     /**
@@ -75,10 +75,11 @@ class TimesheetValidator extends ConstraintValidator
         // an entry is edited and the end date is removed (or duration deleted) would restart the record,
         // which might be disallowed for the current user
         if ($context->getViolations()->count() == 0 && null === $timesheet->getEnd()) {
+            $mode = $this->trackingModeService->getActiveMode();
             $path = 'start';
-            if ($this->mode->canEditEnd()) {
+            if ($mode->canEditEnd()) {
                 $path = 'end';
-            } elseif ($this->mode->canEditDuration()) {
+            } elseif ($mode->canEditDuration()) {
                 $path = 'duration';
             }
             if (!$this->auth->isGranted('start', $timesheet)) {

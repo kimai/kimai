@@ -45,7 +45,7 @@ abstract class TimesheetAbstractController extends AbstractController
     /**
      * @var TrackingModeInterface
      */
-    protected $mode;
+    protected $trackingModeService;
 
     public function __construct(
         UserDateTimeFactory $dateTime,
@@ -56,12 +56,12 @@ abstract class TimesheetAbstractController extends AbstractController
         $this->dateTime = $dateTime;
         $this->configuration = $configuration;
         $this->repository = $repository;
-        $this->mode = $service->getActiveMode();
+        $this->trackingModeService = $service;
     }
 
     protected function getTrackingMode(): TrackingModeInterface
     {
-        return $this->mode;
+        return $this->trackingModeService->getActiveMode();
     }
 
     protected function getSoftLimit(): int
