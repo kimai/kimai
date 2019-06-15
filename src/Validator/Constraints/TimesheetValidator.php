@@ -11,7 +11,6 @@ namespace App\Validator\Constraints;
 
 use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet as TimesheetEntity;
-use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Timesheet\TrackingModeService;
 use App\Validator\Constraints\Timesheet as TimesheetConstraint;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
