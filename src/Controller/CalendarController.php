@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Calendar\Google;
 use App\Calendar\Source;
 use App\Configuration\CalendarConfiguration;
+use App\Timesheet\TrackingModeService;
 use App\Timesheet\UserDateTimeFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,12 +28,15 @@ class CalendarController extends AbstractController
     /**
      * @Route(path="/", name="calendar", methods={"GET"})
      */
-    public function userCalendar(CalendarConfiguration $configuration, UserDateTimeFactory $dateTime)
+    public function userCalendar(CalendarConfiguration $configuration, UserDateTimeFactory $dateTime, TrackingModeService $service)
     {
+        $mode = $service->getActiveMode();
+
         return $this->render('calendar/user.html.twig', [
             'config' => $configuration,
             'google' => $this->getGoogleSources($configuration),
             'now' => $dateTime->createDateTime(),
+            'is_punch_mode' => !$mode->canEditDuration() && !$mode->canEditBegin() && !$mode->canEditEnd()
         ]);
     }
 
