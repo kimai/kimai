@@ -31,7 +31,7 @@ class TimesheetValidator extends ConstraintValidator
      */
     protected $configuration;
     /**
-     * @var TrackingModeInterface
+     * @var TrackingModeService
      */
     protected $trackingModeService;
 

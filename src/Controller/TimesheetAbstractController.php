@@ -43,7 +43,7 @@ abstract class TimesheetAbstractController extends AbstractController
      */
     protected $repository;
     /**
-     * @var TrackingModeInterface
+     * @var TrackingModeService
      */
     protected $trackingModeService;
 
