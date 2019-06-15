@@ -34,34 +34,29 @@ class TrackingModeService
         $this->configuration = $configuration;
     }
 
-    public function getAvailableIds(): array
+    /**
+     * @return TrackingModeInterface[]
+     */
+    public function getModes(): iterable
     {
         return [
-            TimesheetConfiguration::MODE_DEFAULT,
-            TimesheetConfiguration::MODE_PUNCH_IN_OUT,
-            TimesheetConfiguration::MODE_DURATION_ONLY,
-            TimesheetConfiguration::MODE_DURATION_FIXED_START,
+            new DefaultMode($this->dateTime, $this->configuration),
+            new PunchInOutMode(),
+            new DurationOnlyMode($this->dateTime, $this->configuration),
+            new DurationFixedStartMode($this->dateTime, $this->configuration),
         ];
     }
 
     public function getActiveMode(): TrackingModeInterface
     {
-        $mode = $this->configuration->getTrackingMode();
+        $trackingMode = $this->configuration->getTrackingMode();
 
-        switch ($mode) {
-            case TimesheetConfiguration::MODE_DURATION_ONLY:
-                return new DurationOnlyMode($this->dateTime, $this->configuration);
-
-            case TimesheetConfiguration::MODE_PUNCH_IN_OUT:
-                return new PunchInOutMode();
-
-            case TimesheetConfiguration::MODE_DURATION_FIXED_START:
-                return new DurationFixedStartMode($this->dateTime, $this->configuration);
-
-            case TimesheetConfiguration::MODE_DEFAULT:
-                return new DefaultMode($this->dateTime, $this->configuration);
+        foreach ($this->getModes() as $mode) {
+            if ($mode->getId() === $trackingMode) {
+                return $mode;
+            }
         }
 
-        throw new ServiceNotFoundException(sprintf('Unknown tracking mode "%s"', $mode));
+        throw new ServiceNotFoundException($trackingMode);
     }
 }

@@ -9,7 +9,7 @@
 
 namespace App\Form\Type;
 
-use App\Configuration\TimesheetConfiguration;
+use App\Timesheet\TrackingModeService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,20 +17,30 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select the timesheet mode.
  */
-class TimesheetModeType extends AbstractType
+class TrackingModeType extends AbstractType
 {
+    protected $service;
+
+    public function __construct(TrackingModeService $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $choices = [];
+
+        foreach ($this->service->getModes() as $mode) {
+            $id = $mode->getId();
+            $choices['label.timesheet.mode_' . $id] = $id;
+        }
+
         $resolver->setDefaults([
             'label' => 'label.timesheet.mode',
-            'choices' => [
-                'label.timesheet.mode_default' => TimesheetConfiguration::MODE_DEFAULT,
-                'label.timesheet.mode_punch' => TimesheetConfiguration::MODE_PUNCH_IN_OUT,
-                'label.timesheet.mode_duration_only' => TimesheetConfiguration::MODE_DURATION_ONLY,
-            ],
+            'choices' => $choices,
         ]);
     }
 

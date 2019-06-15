@@ -9,11 +9,28 @@
 
 namespace App\Timesheet\TrackingMode;
 
+use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet;
+use App\Timesheet\UserDateTimeFactory;
 use Symfony\Component\HttpFoundation\Request;
 
-class DurationFixedStartMode extends AbstractTrackingMode
+class DurationFixedStartMode implements TrackingModeInterface
 {
+    /**
+     * @var UserDateTimeFactory
+     */
+    protected $dateTime;
+    /**
+     * @var TimesheetConfiguration
+     */
+    protected $configuration;
+
+    public function __construct(UserDateTimeFactory $dateTime, TimesheetConfiguration $configuration)
+    {
+        $this->dateTime = $dateTime;
+        $this->configuration = $configuration;
+    }
+
     public function canEditBegin(): bool
     {
         return false;
@@ -36,6 +53,20 @@ class DurationFixedStartMode extends AbstractTrackingMode
 
     public function create(Timesheet $timesheet, Request $request): void
     {
+        if (null === $timesheet->getBegin()) {
+            $timesheet->setBegin($this->dateTime->createDateTime());
+        }
+
         $timesheet->getBegin()->modify($this->configuration->getDefaultBeginTime());
+    }
+
+    public function getId(): string
+    {
+        return 'duration_fixed_start';
+    }
+
+    public function canSeeBeginAndEndTimes(): bool
+    {
+        return false;
     }
 }

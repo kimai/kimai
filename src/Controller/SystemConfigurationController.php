@@ -15,7 +15,7 @@ use App\Form\Model\Configuration;
 use App\Form\Model\SystemConfiguration as SystemConfigurationModel;
 use App\Form\SystemConfigurationForm;
 use App\Form\Type\EnhancedSelectboxType;
-use App\Form\Type\TimesheetModeType;
+use App\Form\Type\TrackingModeType;
 use App\Repository\ConfigurationRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -189,7 +189,7 @@ class SystemConfigurationController extends AbstractController
                 ->setConfiguration([
                     (new Configuration())
                         ->setName('timesheet.mode')
-                        ->setType(TimesheetModeType::class)
+                        ->setType(TrackingModeType::class)
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration())
                         ->setName('timesheet.rules.allow_future_times')

@@ -30,4 +30,14 @@ class DefaultMode extends AbstractTrackingMode
     {
         return true;
     }
+
+    public function getId(): string
+    {
+        return 'default';
+    }
+
+    public function canSeeBeginAndEndTimes(): bool
+    {
+        return true;
+    }
 }

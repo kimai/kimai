@@ -34,47 +34,68 @@ abstract class AbstractTrackingMode implements TrackingModeInterface
     public function create(Timesheet $timesheet, Request $request): void
     {
         $this->setBeginEndFromRequest($timesheet, $request);
+        $this->setFromToFromRequest($timesheet, $request);
     }
 
     protected function setBeginEndFromRequest(Timesheet $entry, Request $request)
     {
         $start = $request->get('begin');
-        if ($start !== null) {
-            $start = $this->dateTime->createDateTimeFromFormat('Y-m-d', $start);
-            if ($start !== false) {
-                $entry->setBegin($start);
-
-                // only check for an end date if a begin date was given
-                $end = $request->get('end');
-                if ($end !== null) {
-                    $end = $this->dateTime->createDateTimeFromFormat('Y-m-d', $end);
-                    if ($end !== false) {
-                        $start->setTime(10, 0, 0);
-                        $end->setTime(18, 0, 0);
-
-                        $entry->setEnd($end);
-                        $entry->setDuration($end->getTimestamp() - $start->getTimestamp());
-                    }
-                }
-            }
+        if (null === $start) {
+            return;
         }
 
+        $start = $this->dateTime->createDateTimeFromFormat('Y-m-d', $start);
+        if (false === $start) {
+            return;
+        }
+
+        $entry->setBegin($start);
+
+        // only check for an end date if a begin date was given
+        $end = $request->get('end');
+        if (null === $end) {
+            return;
+        }
+
+        $end = $this->dateTime->createDateTimeFromFormat('Y-m-d', $end);
+        if (false === $end) {
+            return;
+        }
+
+        $start->setTime(10, 0, 0);
+        $end->setTime(18, 0, 0);
+
+        $entry->setEnd($end);
+        $entry->setDuration($end->getTimestamp() - $start->getTimestamp());
+    }
+
+    protected function setFromToFromRequest(Timesheet $entry, Request $request)
+    {
         $from = $request->get('from');
-        if ($from !== null) {
-            $from = $this->dateTime->createDateTime($from);
-            if ($from !== false) {
-                $entry->setBegin($from);
-
-                // only check for an end datetime if a begin datetime was given
-                $to = $request->get('to');
-                if ($to !== null) {
-                    $to = $this->dateTime->createDateTime($to);
-                    if ($to !== false) {
-                        $entry->setEnd($to);
-                        $entry->setDuration($to->getTimestamp() - $from->getTimestamp());
-                    }
-                }
-            }
+        if (null === $from) {
+            return;
         }
+
+        try {
+            $from = $this->dateTime->createDateTime($from);
+        } catch (\Exception $ex) {
+            return;
+        }
+
+        $entry->setBegin($from);
+
+        $to = $request->get('to');
+        if (null === $to) {
+            return;
+        }
+
+        try {
+            $to = $this->dateTime->createDateTime($to);
+        } catch (\Exception $ex) {
+            return;
+        }
+
+        $entry->setEnd($to);
+        $entry->setDuration($to->getTimestamp() - $from->getTimestamp());
     }
 }

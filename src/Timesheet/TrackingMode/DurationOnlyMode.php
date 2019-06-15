@@ -30,4 +30,14 @@ class DurationOnlyMode extends AbstractTrackingMode
     {
         return true;
     }
+
+    public function getId(): string
+    {
+        return 'duration_only';
+    }
+
+    public function canSeeBeginAndEndTimes(): bool
+    {
+        return false;
+    }
 }

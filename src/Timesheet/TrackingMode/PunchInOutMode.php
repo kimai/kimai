@@ -37,4 +37,14 @@ class PunchInOutMode implements TrackingModeInterface
     public function create(Timesheet $timesheet, Request $request): void
     {
     }
+
+    public function getId(): string
+    {
+        return 'punch';
+    }
+
+    public function canSeeBeginAndEndTimes(): bool
+    {
+        return true;
+    }
 }

@@ -39,6 +39,7 @@ class DefaultModeTest extends AbstractTrackingModeTest
         self::assertTrue($sut->canEditEnd());
         self::assertFalse($sut->canEditDuration());
         self::assertTrue($sut->canUpdateTimesWithAPI());
+        self::assertTrue($sut->canSeeBeginAndEndTimes());
         self::assertEquals('default', $sut->getId());
     }
 }

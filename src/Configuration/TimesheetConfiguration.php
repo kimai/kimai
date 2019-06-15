@@ -11,23 +11,6 @@ namespace App\Configuration;
 
 class TimesheetConfiguration implements SystemBundleConfiguration
 {
-    /**
-     * @deprecated
-     */
-    public const MODE_DURATION_FIXED_START = 'duration_fixed_start';
-    /**
-     * @deprecated
-     */
-    public const MODE_DURATION_ONLY = 'duration_only';
-    /**
-     * @deprecated
-     */
-    public const MODE_DEFAULT = 'default';
-    /**
-     * @deprecated
-     */
-    public const MODE_PUNCH_IN_OUT = 'punch';
-
     use StringAccessibleConfigTrait;
 
     public function getPrefix(): string

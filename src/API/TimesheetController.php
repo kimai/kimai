@@ -18,6 +18,8 @@ use App\Form\TimesheetEditForm;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TagRepository;
 use App\Repository\TimesheetRepository;
+use App\Timesheet\TrackingMode\TrackingModeInterface;
+use App\Timesheet\TrackingModeService;
 use App\Timesheet\UserDateTimeFactory;
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -62,21 +64,25 @@ class TimesheetController extends BaseApiController
      * @var TagRepository
      */
     protected $tagRepository;
-
     /**
-     * @param ViewHandlerInterface $viewHandler
-     * @param TimesheetRepository $repository
-     * @param UserDateTimeFactory $dateTime
-     * @param TimesheetConfiguration $configuration
-     * @param TagRepository $tagRepository
+     * @var TrackingModeInterface
      */
-    public function __construct(ViewHandlerInterface $viewHandler, TimesheetRepository $repository, UserDateTimeFactory $dateTime, TimesheetConfiguration $configuration, TagRepository $tagRepository)
-    {
+    protected $trackingMode;
+
+    public function __construct(
+        ViewHandlerInterface $viewHandler,
+        TimesheetRepository $repository,
+        UserDateTimeFactory $dateTime,
+        TimesheetConfiguration $configuration,
+        TagRepository $tagRepository,
+        TrackingModeService $trackingModeService
+    ) {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
         $this->configuration = $configuration;
         $this->dateTime = $dateTime;
         $this->tagRepository = $tagRepository;
+        $this->trackingMode = $trackingModeService->getActiveMode();
     }
 
     /**
@@ -275,7 +281,9 @@ class TimesheetController extends BaseApiController
             'csrf_protection' => false,
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
-            'include_datetime' => !$this->configuration->isPunchInOut(),
+            'allow_begin_datetime' => $this->trackingMode->canUpdateTimesWithAPI(),
+            'allow_end_datetime' => $this->trackingMode->canUpdateTimesWithAPI(),
+            'allow_duration' => false,
             'date_format' => self::DATE_FORMAT,
         ]);
 
@@ -353,7 +361,9 @@ class TimesheetController extends BaseApiController
             'csrf_protection' => false,
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
-            'include_datetime' => !$this->configuration->isPunchInOut(),
+            'allow_begin_datetime' => $this->trackingMode->canUpdateTimesWithAPI(),
+            'allow_end_datetime' => $this->trackingMode->canUpdateTimesWithAPI(),
+            'allow_duration' => false,
             'date_format' => self::DATE_FORMAT,
         ]);
 
