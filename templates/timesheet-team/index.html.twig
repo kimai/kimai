@@ -5,12 +5,11 @@
 {% import "macros/actions.html.twig" as actions %}
 
 {% set tableName = 'timesheet_admin' %}
-{% set duration_only = is_duration_only() %}
 {% set columns = {
     'date': 'alwaysVisible',
 } %}
 
-{% if not duration_only %}
+{% if showStartEndTime %}
     {% set columns = columns|merge({
         'starttime': 'hidden-xs',
         'endtime': 'hidden-xs'
@@ -49,7 +48,7 @@
             <tr{% if is_granted('edit', entry) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_timesheet_edit', {'id': entry.id}) }}"{% endif %}>
                 <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'date') }}">{{ entry.begin|date_short }}</td>
 
-                {% if not duration_only %}
+                {% if showStartEndTime %}
                     <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'starttime') }}">{{ entry.begin|time }}</td>
                     <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'endtime') }}">
                         {% if entry.end %}

@@ -11,10 +11,6 @@ namespace App\Configuration;
 
 class TimesheetConfiguration implements SystemBundleConfiguration
 {
-    public const MODE_DURATION_ONLY = 'duration_only';
-    public const MODE_DEFAULT = 'default';
-    public const MODE_PUNCH_IN_OUT = 'punch';
-
     use StringAccessibleConfigTrait;
 
     public function getPrefix(): string
@@ -27,14 +23,14 @@ class TimesheetConfiguration implements SystemBundleConfiguration
         return (bool) $this->find('rules.allow_future_times');
     }
 
-    public function isDurationOnly(): bool
+    public function getTrackingMode(): string
     {
-        return $this->find('mode') === self::MODE_DURATION_ONLY;
+        return (string) $this->find('mode');
     }
 
-    public function isPunchInOut(): bool
+    public function getDefaultBeginTime(): string
     {
-        return $this->find('mode') === self::MODE_PUNCH_IN_OUT;
+        return (string) $this->find('default_begin');
     }
 
     public function isMarkdownEnabled(): bool

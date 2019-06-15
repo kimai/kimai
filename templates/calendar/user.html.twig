@@ -163,7 +163,7 @@
                         html: true
                     });
                 },
-            {% if not is_punch_mode() and is_granted('create_own_timesheet') %}
+            {% if not is_punch_mode and is_granted('create_own_timesheet') %}
                 dayClick: function(date, jsEvent, view) {
                     // day-clicks are always triggered, unless a selection was created
                     // so clicking in a day (month view) or any slot (week and day view) will trigger a dayClick
@@ -197,7 +197,7 @@
                     var editUrl = '{{ path('timesheet_edit', {id: '-XX-'}) }}'.replace('-XX-', eventObj.id);
                     kimai.getPlugin('modal').openUrlInModal(editUrl);
                 },
-                {% if not is_punch_mode() %}
+                {% if not is_punch_mode %}
                 editable: true,
                 eventDragStart: function(event, jsEvent, ui, view) {
                     window.hidePopover = true;

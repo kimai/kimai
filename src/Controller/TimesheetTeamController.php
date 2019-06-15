@@ -75,12 +75,12 @@ class TimesheetTeamController extends TimesheetAbstractController
         return $this->create($request, 'timesheet-team/edit.html.twig', $projectRepository, $activityRepository);
     }
 
-    protected function getCreateFormClassName()
+    protected function getCreateFormClassName(): string
     {
         return TimesheetAdminEditForm::class;
     }
 
-    protected function getEditFormClassName()
+    protected function getEditFormClassName(): string
     {
         return TimesheetAdminEditForm::class;
     }
@@ -103,5 +103,10 @@ class TimesheetTeamController extends TimesheetAbstractController
     protected function getCreateRoute(): string
     {
         return 'admin_timesheet_create';
+    }
+
+    protected function canSeeStartEndTime(): bool
+    {
+        return true;
     }
 }

@@ -6,13 +6,12 @@
 {% import _self as timesheet %}
 
 {% set tableName = 'timesheet' %}
-{% set duration_only = is_duration_only() %}
 {% set canSeeRate = is_granted('view_rate_own_timesheet') %}
 {% set columns = {
     'date': 'alwaysVisible',
 } %}
 
-{% if not duration_only %}
+{% if showStartEndTime %}
     {% set columns = columns|merge({
         'starttime': '',
         'endtime': 'hidden-xs'
@@ -56,7 +55,7 @@
                 {% set day = entry.begin|date_short %}
             {% endif %}
             {%- if showSummary and day is not same as(entry.begin|date_short) -%}
-                {{ timesheet.summary(day, dayDuration, dayRate, columns, canSeeRate, duration_only, tableName) }}
+                {{ timesheet.summary(day, dayDuration, dayRate, columns, canSeeRate, showStartEndTime, tableName) }}
                 {% set day = entry.begin|date_short %}
                 {% set dayDuration = 0 %}
                 {% set dayRate = {} %}
@@ -64,7 +63,7 @@
             <tr{% if is_granted('edit', entry) %} class="modal-ajax-form open-edit" data-href="{{ path('timesheet_edit', {'id': entry.id}) }}"{% endif %}>
                 <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'date') }}">{{ entry.begin|date_short }}</td>
 
-                {% if not duration_only %}
+                {% if showStartEndTime %}
                     <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'starttime') }}">{{ entry.begin|time }}</td>
                     <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'endtime') }}">
                         {% if entry.end %}
@@ -112,7 +111,7 @@
         {% endfor %}
 
         {% if showSummary %}
-            {{ timesheet.summary(day, dayDuration, dayRate, columns, canSeeRate, duration_only, tableName) }}
+            {{ timesheet.summary(day, dayDuration, dayRate, columns, canSeeRate, showStartEndTime, tableName) }}
         {% endif %}
 
         {{ tables.data_table_footer(entries, 'timesheet_paginated') }}
@@ -120,11 +119,11 @@
 
 {% endblock %}
 
-{% macro summary(day, duration, dayRates, columns, canSeeRate, duration_only, tableName) %}
+{% macro summary(day, duration, dayRates, columns, canSeeRate, showStartEndTime, tableName) %}
     {% import "macros/datatables.html.twig" as tables %}
     <tr class="summary info">
         <td class="text-nowrap">{{ day }}</td>
-        {% if not duration_only %}
+        {% if showStartEndTime %}
             <td class="{{ tables.data_table_column_class(tableName, columns, 'starttime') }}"></td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'endtime') }}"></td>
         {% endif %}

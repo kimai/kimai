@@ -9,11 +9,17 @@
 
 namespace App\Form;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 class TimesheetAdminEditForm extends TimesheetEditForm
 {
-    protected function showTimeFields(array $options): bool
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        return true;
+        $options['allow_begin_datetime'] = true;
+        $options['allow_end_datetime'] = true;
+        $options['allow_duration'] = false;
+
+        parent::buildForm($builder, $options);
     }
 
     protected function showCustomer(array $options, bool $isNew, int $customerCount): bool

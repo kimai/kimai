@@ -19,6 +19,8 @@ use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TagRepository;
 use App\Repository\TimesheetRepository;
+use App\Timesheet\TrackingMode\TrackingModeInterface;
+use App\Timesheet\TrackingModeService;
 use App\Timesheet\UserDateTimeFactory;
 use Doctrine\Common\Collections\ArrayCollection;
 use Pagerfanta\Pagerfanta;
@@ -40,26 +42,34 @@ abstract class TimesheetAbstractController extends AbstractController
      * @var TimesheetRepository
      */
     protected $repository;
+    /**
+     * @var TrackingModeService
+     */
+    protected $trackingModeService;
 
-    public function __construct(UserDateTimeFactory $dateTime, TimesheetConfiguration $configuration, TimesheetRepository $repository)
-    {
+    public function __construct(
+        UserDateTimeFactory $dateTime,
+        TimesheetConfiguration $configuration,
+        TimesheetRepository $repository,
+        TrackingModeService $service
+    ) {
         $this->dateTime = $dateTime;
         $this->configuration = $configuration;
         $this->repository = $repository;
+        $this->trackingModeService = $service;
     }
 
-    /**
-     * @return int
-     */
-    protected function getSoftLimit()
+    protected function getTrackingMode(): TrackingModeInterface
+    {
+        return $this->trackingModeService->getActiveMode();
+    }
+
+    protected function getSoftLimit(): int
     {
         return $this->configuration->getActiveEntriesSoftLimit();
     }
 
-    /**
-     * @return TimesheetRepository
-     */
-    protected function getRepository()
+    protected function getRepository(): TimesheetRepository
     {
         return $this->repository;
     }
@@ -107,6 +117,7 @@ abstract class TimesheetAbstractController extends AbstractController
             'showFilter' => $form->isSubmitted(),
             'toolbarForm' => $form->createView(),
             'showSummary' => $this->includeSummary(),
+            'showStartEndTime' => $this->canSeeStartEndTime()
         ]);
     }
 
@@ -150,8 +161,6 @@ abstract class TimesheetAbstractController extends AbstractController
         $entry->setUser($this->getUser());
         $entry->setBegin($this->dateTime->createDateTime());
 
-        $this->setBeginEndFromRequest($request, $entry);
-
         if ($request->query->get('project')) {
             $project = $projectRepository->find($request->query->get('project'));
             $entry->setProject($project);
@@ -162,7 +171,10 @@ abstract class TimesheetAbstractController extends AbstractController
             $entry->setActivity($activity);
         }
 
-        $createForm = $this->getCreateForm($entry);
+        $mode = $this->getTrackingMode();
+        $mode->create($entry, $request);
+
+        $createForm = $this->getCreateForm($entry, $mode);
         $createForm->handleRequest($request);
 
         if ($createForm->isSubmitted() && $createForm->isValid()) {
@@ -190,52 +202,6 @@ abstract class TimesheetAbstractController extends AbstractController
             'timesheet' => $entry,
             'form' => $createForm->createView(),
         ]);
-    }
-
-    protected function setBeginEndFromRequest(Request $request, Timesheet $entry)
-    {
-        if ($this->configuration->isPunchInOut()) {
-            return;
-        }
-
-        $start = $request->get('begin');
-        if ($start !== null) {
-            $start = $this->dateTime->createDateTimeFromFormat('Y-m-d', $start);
-            if ($start !== false) {
-                $entry->setBegin($start);
-
-                // only check for an end date if a begin date was given
-                $end = $request->get('end');
-                if ($end !== null) {
-                    $end = $this->dateTime->createDateTimeFromFormat('Y-m-d', $end);
-                    if ($end !== false) {
-                        $start->setTime(10, 0, 0);
-                        $end->setTime(18, 0, 0);
-
-                        $entry->setEnd($end);
-                        $entry->setDuration($end->getTimestamp() - $start->getTimestamp());
-                    }
-                }
-            }
-        }
-
-        $from = $request->get('from');
-        if ($from !== null) {
-            $from = $this->dateTime->createDateTime($from);
-            if ($from !== false) {
-                $entry->setBegin($from);
-
-                // only check for an end datetime if a begin datetime was given
-                $to = $request->get('to');
-                if ($to !== null) {
-                    $to = $this->dateTime->createDateTime($to);
-                    if ($to !== false) {
-                        $entry->setEnd($to);
-                        $entry->setDuration($to->getTimestamp() - $from->getTimestamp());
-                    }
-                }
-            }
-        }
     }
 
     /**
@@ -281,19 +247,16 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
-    /**
-     * @param Timesheet $entry
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    protected function getCreateForm(Timesheet $entry)
+    protected function getCreateForm(Timesheet $entry, TrackingModeInterface $mode): FormInterface
     {
         return $this->createForm($this->getCreateFormClassName(), $entry, [
             'action' => $this->generateUrl($this->getCreateRoute()),
             'include_rate' => $this->isGranted('edit_rate', $entry),
             'include_exported' => $this->isGranted('edit_export', $entry),
             'include_user' => $this->includeUserInForms(),
-            'use_duration' => $this->configuration->isDurationOnly(),
-            'include_datetime' => !$this->configuration->isPunchInOut(),
+            'allow_begin_datetime' => $mode->canEditBegin(),
+            'allow_end_datetime' => $mode->canEditEnd(),
+            'allow_duration' => $mode->canEditDuration(),
             'customer' => true,
         ]);
     }
@@ -305,6 +268,8 @@ abstract class TimesheetAbstractController extends AbstractController
      */
     protected function getEditForm(Timesheet $entry, $page)
     {
+        $mode = $this->getTrackingMode();
+
         return $this->createForm($this->getEditFormClassName(), $entry, [
             'action' => $this->generateUrl($this->getEditRoute(), [
                 'id' => $entry->getId(),
@@ -313,8 +278,9 @@ abstract class TimesheetAbstractController extends AbstractController
             'include_rate' => $this->isGranted('edit_rate', $entry),
             'include_exported' => $this->isGranted('edit_export', $entry),
             'include_user' => $this->includeUserInForms(),
-            'include_datetime' => !$this->configuration->isPunchInOut(),
-            'use_duration' => $this->configuration->isDurationOnly(),
+            'allow_begin_datetime' => $mode->canEditBegin(),
+            'allow_end_datetime' => $mode->canEditEnd(),
+            'allow_duration' => $mode->canEditDuration(),
             'customer' => true,
         ]);
     }
@@ -334,12 +300,12 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
-    protected function getCreateFormClassName()
+    protected function getCreateFormClassName(): string
     {
         return TimesheetEditForm::class;
     }
 
-    protected function getEditFormClassName()
+    protected function getEditFormClassName(): string
     {
         return TimesheetEditForm::class;
     }
@@ -367,5 +333,10 @@ abstract class TimesheetAbstractController extends AbstractController
     protected function getCreateRoute(): string
     {
         return 'timesheet_create';
+    }
+
+    protected function canSeeStartEndTime(): bool
+    {
+        return $this->getTrackingMode()->canSeeBeginAndEndTimes();
     }
 }

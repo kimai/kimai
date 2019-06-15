@@ -27,11 +27,17 @@ kimai:
         # renders timesheet descriptions with markdown
         markdown_content: false
 
-        # The time-tracking mode that should be used (allowed values: default, duration_only)
-        #
-        # default:        display start and end time columns in timesheet view and form
-        # duration_only:  display start time and duration, https://www.kimai.org/documentation/timesheet.html#duration-only-mode
+        # The time-tracking mode that should be used.
+        # See https://www.kimai.org/documentation/timesheet.html#tracking-modes
         mode: default
+
+        # The default time to pre-fill the "create timesheet" form (in some cases).
+        # This setting is only respected by some timetracking modes and not in all situations.
+        #
+        # Accepted formats, see
+        # - https://www.php.net/manual/en/datetime.formats.php
+        # - https://www.php.net/manual/en/datetime.formats.time.php
+        # default_begin: now
 
         # Rounding rules are used to round the begin & end dates and the duration for timesheet records.
         # The "default" rule will round "begin" down and "end" up to the full minute, the "duration" will not be rounded.

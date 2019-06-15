@@ -18,6 +18,8 @@ use App\Form\TimesheetEditForm;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TagRepository;
 use App\Repository\TimesheetRepository;
+use App\Timesheet\TrackingMode\TrackingModeInterface;
+use App\Timesheet\TrackingModeService;
 use App\Timesheet\UserDateTimeFactory;
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -62,21 +64,30 @@ class TimesheetController extends BaseApiController
      * @var TagRepository
      */
     protected $tagRepository;
-
     /**
-     * @param ViewHandlerInterface $viewHandler
-     * @param TimesheetRepository $repository
-     * @param UserDateTimeFactory $dateTime
-     * @param TimesheetConfiguration $configuration
-     * @param TagRepository $tagRepository
+     * @var TrackingModeService
      */
-    public function __construct(ViewHandlerInterface $viewHandler, TimesheetRepository $repository, UserDateTimeFactory $dateTime, TimesheetConfiguration $configuration, TagRepository $tagRepository)
-    {
+    protected $trackingModeService;
+
+    public function __construct(
+        ViewHandlerInterface $viewHandler,
+        TimesheetRepository $repository,
+        UserDateTimeFactory $dateTime,
+        TimesheetConfiguration $configuration,
+        TagRepository $tagRepository,
+        TrackingModeService $trackingModeService
+    ) {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
         $this->configuration = $configuration;
         $this->dateTime = $dateTime;
         $this->tagRepository = $tagRepository;
+        $this->trackingModeService = $trackingModeService;
+    }
+
+    protected function getTrackingMode(): TrackingModeInterface
+    {
+        return $this->trackingModeService->getActiveMode();
     }
 
     /**
@@ -271,11 +282,15 @@ class TimesheetController extends BaseApiController
         $timesheet->setUser($this->getUser());
         $timesheet->setBegin($this->dateTime->createDateTime());
 
+        $mode = $this->getTrackingMode();
+
         $form = $this->createForm(TimesheetEditForm::class, $timesheet, [
             'csrf_protection' => false,
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
-            'include_datetime' => !$this->configuration->isPunchInOut(),
+            'allow_begin_datetime' => $mode->canUpdateTimesWithAPI(),
+            'allow_end_datetime' => $mode->canUpdateTimesWithAPI(),
+            'allow_duration' => false,
             'date_format' => self::DATE_FORMAT,
         ]);
 
@@ -349,11 +364,15 @@ class TimesheetController extends BaseApiController
             throw new AccessDeniedHttpException('You are not allowed to update this timesheet');
         }
 
+        $mode = $this->getTrackingMode();
+
         $form = $this->createForm(TimesheetEditForm::class, $timesheet, [
             'csrf_protection' => false,
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
-            'include_datetime' => !$this->configuration->isPunchInOut(),
+            'allow_begin_datetime' => $mode->canUpdateTimesWithAPI(),
+            'allow_end_datetime' => $mode->canUpdateTimesWithAPI(),
+            'allow_duration' => false,
             'date_format' => self::DATE_FORMAT,
         ]);
 

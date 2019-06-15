@@ -43,6 +43,7 @@ class TimesheetConfigurationTest extends TestCase
                 'hard_limit' => 99,
                 'soft_limit' => 15,
             ],
+            'default_begin' => 'now',
         ];
     }
 
@@ -52,6 +53,7 @@ class TimesheetConfigurationTest extends TestCase
             (new Configuration())->setName('timesheet.rules.allow_future_times')->setValue('1'),
             (new Configuration())->setName('timesheet.mode')->setValue('default'),
             (new Configuration())->setName('timesheet.markdown_content')->setValue('1'),
+            (new Configuration())->setName('timesheet.default_begin')->setValue('07:00'),
             (new Configuration())->setName('timesheet.active_entries.hard_limit')->setValue('7'),
             (new Configuration())->setName('timesheet.active_entries.soft_limit')->setValue('3'),
         ];
@@ -69,8 +71,9 @@ class TimesheetConfigurationTest extends TestCase
         $this->assertEquals(99, $sut->getActiveEntriesHardLimit());
         $this->assertEquals(15, $sut->getActiveEntriesSoftLimit());
         $this->assertEquals(false, $sut->isAllowFutureTimes());
-        $this->assertEquals(true, $sut->isDurationOnly());
         $this->assertEquals(false, $sut->isMarkdownEnabled());
+        $this->assertEquals('duration_only', $sut->getTrackingMode());
+        $this->assertEquals('now', $sut->getDefaultBeginTime());
     }
 
     public function testDefaultWithLoader()
@@ -79,8 +82,9 @@ class TimesheetConfigurationTest extends TestCase
         $this->assertEquals(7, $sut->getActiveEntriesHardLimit());
         $this->assertEquals(3, $sut->getActiveEntriesSoftLimit());
         $this->assertEquals(true, $sut->isAllowFutureTimes());
-        $this->assertEquals(false, $sut->isDurationOnly());
         $this->assertEquals(true, $sut->isMarkdownEnabled());
+        $this->assertEquals('default', $sut->getTrackingMode());
+        $this->assertEquals('07:00', $sut->getDefaultBeginTime());
     }
 
     public function testDefaultWithMixedConfigs()
@@ -88,7 +92,7 @@ class TimesheetConfigurationTest extends TestCase
         $sut = $this->getSut($this->getDefaultSettings(), [
             (new Configuration())->setName('timesheet.mode')->setValue('sdf'),
         ]);
-        $this->assertEquals(false, $sut->isDurationOnly());
+        $this->assertEquals('sdf', $sut->getTrackingMode());
     }
 
     public function testFindByKey()

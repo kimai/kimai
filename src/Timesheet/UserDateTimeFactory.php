@@ -19,9 +19,6 @@ class UserDateTimeFactory
      */
     protected $timezone;
 
-    /**
-     * @param CurrentUser $user
-     */
     public function __construct(CurrentUser $user)
     {
         $timezone = date_default_timezone_get();
@@ -34,18 +31,12 @@ class UserDateTimeFactory
         $this->timezone = new \DateTimeZone($timezone);
     }
 
-    /**
-     * @return \DateTimeZone
-     */
-    public function getTimezone()
+    public function getTimezone(): \DateTimeZone
     {
         return $this->timezone;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getStartOfMonth()
+    public function getStartOfMonth(): \DateTime
     {
         $date = $this->createDateTime('first day of this month');
         $date->setTime(0, 0, 0);
@@ -53,10 +44,7 @@ class UserDateTimeFactory
         return $date;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getEndOfMonth()
+    public function getEndOfMonth(): \DateTime
     {
         $date = $this->createDateTime('last day of this month');
         $date->setTime(23, 59, 59);
@@ -64,11 +52,7 @@ class UserDateTimeFactory
         return $date;
     }
 
-    /**
-     * @param string $datetime
-     * @return \DateTime
-     */
-    public function createDateTime(string $datetime = 'now')
+    public function createDateTime(string $datetime = 'now'): \DateTime
     {
         $date = new \DateTime($datetime, $this->timezone);
 

@@ -114,14 +114,14 @@ class TimesheetEditForm extends AbstractType
             $dateTimeOptions['format'] = $options['date_format'];
         }
 
-        if ($this->showTimeFields($options)) {
+        if ($options['allow_begin_datetime']) {
             $this->addBegin($builder, $dateTimeOptions);
+        }
 
-            if ($options['use_duration']) {
-                $this->addDuration($builder);
-            } else {
-                $this->addEnd($builder, $dateTimeOptions);
-            }
+        if ($options['allow_duration']) {
+            $this->addDuration($builder);
+        } elseif ($options['allow_end_datetime']) {
+            $this->addEnd($builder, $dateTimeOptions);
         }
 
         if ($this->showCustomer($options, $isNew, $customerCount)) {
@@ -152,11 +152,6 @@ class TimesheetEditForm extends AbstractType
         }
 
         return true;
-    }
-
-    protected function showTimeFields(array $options): bool
-    {
-        return $options['include_datetime'];
     }
 
     protected function addCustomer(FormBuilderInterface $builder, ?Customer $customer = null)
@@ -377,8 +372,9 @@ class TimesheetEditForm extends AbstractType
             'method' => 'POST',
             'date_format' => null,
             'customer' => false, // for API usage
-            'use_duration' => false, // duration instead of end (for duration_only mode)
-            'include_datetime' => true,
+            'allow_begin_datetime' => true,
+            'allow_end_datetime' => true,
+            'allow_duration' => false,
             'attr' => [
                 'data-form-event' => 'kimai.timesheetUpdate',
                 'data-msg-success' => 'action.update.success',
