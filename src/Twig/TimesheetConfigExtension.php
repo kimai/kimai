@@ -9,20 +9,21 @@
 
 namespace App\Twig;
 
-use App\Configuration\TimesheetConfiguration;
+use App\Timesheet\TrackingMode\TrackingModeInterface;
+use App\Timesheet\TrackingModeService;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class TimesheetConfigExtension extends AbstractExtension
 {
     /**
-     * @var TimesheetConfiguration
+     * @var TrackingModeInterface
      */
-    protected $configuration;
+    protected $mode;
 
-    public function __construct(TimesheetConfiguration $configuration)
+    public function __construct(TrackingModeService $service)
     {
-        $this->configuration = $configuration;
+        $this->mode = $service->getActiveMode();
     }
 
     /**
@@ -31,18 +32,12 @@ class TimesheetConfigExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('is_duration_only', [$this, 'isDurationOnly']),
             new TwigFunction('is_punch_mode', [$this, 'isPunchInOut']),
         ];
     }
 
-    public function isDurationOnly(): bool
-    {
-        return $this->configuration->isDurationOnly();
-    }
-
     public function isPunchInOut(): bool
     {
-        return $this->configuration->isPunchInOut();
+        return !$this->mode->canEditDuration() && !$this->mode->canEditBegin() && !$this->mode->canEditEnd();
     }
 }
