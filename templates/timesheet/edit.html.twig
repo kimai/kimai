@@ -13,6 +13,7 @@
     {{ include(app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig', {
         'title': (timesheet.id ? 'timesheet.edit'|trans : 'create'|trans),
         'form': form,
+        'form_theme': '@AdminLTE/layout/form-theme-horizontal.html.twig',
         'back': path('timesheet')
     }) }}
 {% endblock %}
