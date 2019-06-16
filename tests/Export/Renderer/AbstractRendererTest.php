@@ -13,6 +13,7 @@ use App\Configuration\LanguageFormattings;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Export\RendererInterface;
@@ -124,6 +125,7 @@ abstract class AbstractRendererTest extends KernelTestCase
             ->setProject($project)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
+            ->addTag((new Tag())->setName('foo'))
         ;
 
         $timesheet5 = new Timesheet();
@@ -133,8 +135,10 @@ abstract class AbstractRendererTest extends KernelTestCase
             ->setUser((new User())->setUsername('kevin'))
             ->setActivity($activity)
             ->setProject($project)
-            ->setBegin(new \DateTime())
-            ->setEnd(new \DateTime())
+            ->setBegin(new \DateTime('2019-06-16 12:00:00'))
+            ->setEnd(new \DateTime('2019-06-16 12:06:40'))
+            ->addTag((new Tag())->setName('foo'))
+            ->addTag((new Tag())->setName('bar'))
         ;
 
         $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5];
