@@ -14,7 +14,7 @@ use App\Entity\Timesheet;
 use App\Timesheet\UserDateTimeFactory;
 use Symfony\Component\HttpFoundation\Request;
 
-class DurationFixedStartMode implements TrackingModeInterface
+class DurationFixedBeginMode implements TrackingModeInterface
 {
     /**
      * @var UserDateTimeFactory
@@ -62,7 +62,7 @@ class DurationFixedStartMode implements TrackingModeInterface
 
     public function getId(): string
     {
-        return 'duration_fixed_start';
+        return 'duration_fixed_begin';
     }
 
     public function canSeeBeginAndEndTimes(): bool

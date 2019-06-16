@@ -11,7 +11,7 @@ namespace App\Timesheet;
 
 use App\Configuration\TimesheetConfiguration;
 use App\Timesheet\TrackingMode\DefaultMode;
-use App\Timesheet\TrackingMode\DurationFixedStartMode;
+use App\Timesheet\TrackingMode\DurationFixedBeginMode;
 use App\Timesheet\TrackingMode\DurationOnlyMode;
 use App\Timesheet\TrackingMode\PunchInOutMode;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
@@ -43,7 +43,7 @@ class TrackingModeService
             new DefaultMode($this->dateTime, $this->configuration),
             new PunchInOutMode(),
             new DurationOnlyMode($this->dateTime, $this->configuration),
-            new DurationFixedStartMode($this->dateTime, $this->configuration),
+            new DurationFixedBeginMode($this->dateTime, $this->configuration),
         ];
     }
 

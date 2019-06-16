@@ -29,7 +29,7 @@ kimai:
 
         # The time-tracking mode that should be used.
         # See https://www.kimai.org/documentation/timesheet.html#tracking-modes
-        mode: default
+        # mode: default
 
         # The default time to pre-fill the "create timesheet" form (in some cases).
         # This setting is only respected by some timetracking modes and not in all situations.
