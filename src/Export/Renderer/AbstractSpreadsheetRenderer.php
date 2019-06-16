@@ -14,6 +14,7 @@ use App\Repository\Query\TimesheetQuery;
 use App\Twig\DateExtensions;
 use App\Twig\Extensions;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Style\Border;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -110,6 +111,7 @@ abstract class AbstractSpreadsheetRenderer
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.activity'));
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.description'));
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.exported'));
+        $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.tags'));
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.hourlyRate'));
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.fixedRate'));
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.duration'));
@@ -145,6 +147,7 @@ abstract class AbstractSpreadsheetRenderer
             $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $timesheet->getActivity()->getName());
             $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $timesheet->getDescription());
             $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $this->translator->trans($exported));
+            $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, implode(',', $timesheet->getTagsAsArray()));
             $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $this->getFormattedMoney($timesheet->getHourlyRate(), $customerCurrency));
             $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $this->getFormattedMoney($timesheet->getFixedRate(), $customerCurrency));
             $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $this->getFormattedDuration($timesheet->getDuration()));
@@ -153,13 +156,13 @@ abstract class AbstractSpreadsheetRenderer
             $entryHeaderRow++;
         }
 
-        $sheet->setCellValueByColumnAndRow(11, $entryHeaderRow, $this->getFormattedDuration($durationTotal));
-        $sheet->setCellValueByColumnAndRow(12, $entryHeaderRow, $this->getFormattedMoney($rateTotal, $currency));
-        $sheet->getCellByColumnAndRow(11, $entryHeaderRow)->getStyle()->getBorders()->getTop()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-        $sheet->getCellByColumnAndRow(11, $entryHeaderRow)->getStyle()->getFont()->setBold(true);
-
-        $sheet->getCellByColumnAndRow(12, $entryHeaderRow)->getStyle()->getBorders()->getTop()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+        $sheet->setCellValueByColumnAndRow(12, $entryHeaderRow, $this->getFormattedDuration($durationTotal));
+        $sheet->setCellValueByColumnAndRow(13, $entryHeaderRow, $this->getFormattedMoney($rateTotal, $currency));
+        $sheet->getCellByColumnAndRow(12, $entryHeaderRow)->getStyle()->getBorders()->getTop()->setBorderStyle(Border::BORDER_THIN);
         $sheet->getCellByColumnAndRow(12, $entryHeaderRow)->getStyle()->getFont()->setBold(true);
+
+        $sheet->getCellByColumnAndRow(13, $entryHeaderRow)->getStyle()->getBorders()->getTop()->setBorderStyle(Border::BORDER_THIN);
+        $sheet->getCellByColumnAndRow(13, $entryHeaderRow)->getStyle()->getFont()->setBold(true);
 
         return $spreadsheet;
     }

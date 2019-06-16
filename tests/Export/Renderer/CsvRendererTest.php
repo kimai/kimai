@@ -68,5 +68,32 @@ class CsvRendererTest extends AbstractRendererTest
 
         $this->assertEquals($content, $content2);
         $this->assertFalse(file_exists($file->getRealPath()));
+
+        $all = [];
+        $rows = str_getcsv($content2, PHP_EOL);
+        foreach ($rows as $row) {
+            $all[] = str_getcsv($row);
+        }
+        self::assertEquals(7, count($all));
+        self::assertEquals(13, count($all[0]));
+        self::assertEquals('foo', $all[4][8]);
+
+        $expected = [
+            0 => '2019.06.16 12:00',
+            1 => '2019.06.16 12:06',
+            2 => 'kevin',
+            3 => 'Customer Name',
+            4 => 'project name',
+            5 => 'activity description',
+            6 => '',
+            7 => '',
+            8 => 'foo,bar',
+            9 => '€0.00',
+            10 => '€84.00',
+            11 => '00:06 h',
+            12 => '€0.00',
+        ];
+
+        self::assertEquals($expected, $all[5]);
     }
 }
