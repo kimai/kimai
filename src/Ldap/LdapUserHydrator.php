@@ -63,6 +63,10 @@ class LdapUserHydrator
 
         $this->hydrateUserWithAttributesMap($user, $ldapEntry, $attributeMap);
 
+        if (is_array($user->getEmail())) {
+            $user->setEmail($user->getUsername()[0]);
+        }
+        
         if (null === $user->getEmail()) {
             $user->setEmail($user->getUsername());
         }
