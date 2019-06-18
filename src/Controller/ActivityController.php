@@ -11,6 +11,7 @@ namespace App\Controller;
 
 use App\Entity\Activity;
 use App\Entity\Project;
+use App\Event\ActivityMetaDefinitionEvent;
 use App\Form\ActivityEditForm;
 use App\Form\Toolbar\ActivityToolbarForm;
 use App\Form\Type\ActivityType;
@@ -19,7 +20,11 @@ use App\Repository\Query\ActivityQuery;
 use Doctrine\ORM\ORMException;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -34,10 +39,15 @@ class ActivityController extends AbstractController
      * @var ActivityRepository
      */
     private $repository;
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $dispatcher;
 
-    public function __construct(ActivityRepository $repository)
+    public function __construct(ActivityRepository $repository, EventDispatcherInterface $dispatcher)
     {
         $this->repository = $repository;
+        $this->dispatcher = $dispatcher;
     }
 
     protected function getRepository(): ActivityRepository
@@ -52,7 +62,7 @@ class ActivityController extends AbstractController
      *
      * @param int $page
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function indexAction($page, Request $request)
     {
@@ -88,7 +98,7 @@ class ActivityController extends AbstractController
      *
      * @param Request $request
      * @param Project|null $project
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     public function createAction(Request $request, ?Project $project = null)
     {
@@ -105,7 +115,7 @@ class ActivityController extends AbstractController
      * @Security("is_granted('budget', activity)")
      *
      * @param Activity $activity
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function budgetAction(Activity $activity)
     {
@@ -121,7 +131,7 @@ class ActivityController extends AbstractController
      *
      * @param Activity $activity
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     public function editAction(Activity $activity, Request $request)
     {
@@ -134,7 +144,7 @@ class ActivityController extends AbstractController
      *
      * @param Activity $activity
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     public function deleteAction(Activity $activity, Request $request)
     {
@@ -193,29 +203,37 @@ class ActivityController extends AbstractController
     /**
      * @param Activity $activity
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     protected function renderActivityForm(Activity $activity, Request $request)
     {
-        $editForm = $this->createEditForm($activity);
+        $event = new ActivityMetaDefinitionEvent($activity);
+        $this->dispatcher->dispatch(ActivityMetaDefinitionEvent::class, $event);
 
+        $original = [];
+        foreach ($activity->getMetaFields() as $metaField) {
+            $original[$metaField->getName()] = $metaField;
+        }
+
+        $editForm = $this->createEditForm($activity);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($activity);
-            $entityManager->flush();
+            try {
+                $this->getRepository()->saveActivity($activity);
+                $this->flashSuccess('action.update.success');
 
-            $this->flashSuccess('action.update.success');
-
-            if ($editForm->has('create_more') && $editForm->get('create_more')->getData() === true) {
-                $newActivity = new Activity();
-                $newActivity->setProject($activity->getProject());
-                $editForm = $this->createEditForm($newActivity);
-                $editForm->get('create_more')->setData(true);
-                $activity = $newActivity;
-            } else {
-                return $this->redirectToRoute('admin_activity');
+                if ($editForm->has('create_more') && $editForm->get('create_more')->getData() === true) {
+                    $newActivity = new Activity();
+                    $newActivity->setProject($activity->getProject());
+                    $editForm = $this->createEditForm($newActivity);
+                    $editForm->get('create_more')->setData(true);
+                    $activity = $newActivity;
+                } else {
+                    return $this->redirectToRoute('admin_activity');
+                }
+            } catch (ORMException $ex) {
+                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
             }
         }
 
@@ -230,7 +248,7 @@ class ActivityController extends AbstractController
 
     /**
      * @param ActivityQuery $query
-     * @return \Symfony\Component\Form\FormInterface
+     * @return FormInterface
      */
     protected function getToolbarForm(ActivityQuery $query)
     {
@@ -244,7 +262,7 @@ class ActivityController extends AbstractController
 
     /**
      * @param Activity $activity
-     * @return \Symfony\Component\Form\FormInterface
+     * @return FormInterface
      */
     private function createEditForm(Activity $activity)
     {

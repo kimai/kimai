@@ -11,6 +11,7 @@ namespace App\Controller;
 
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Event\ProjectMetaDefinitionEvent;
 use App\Form\ProjectEditForm;
 use App\Form\Toolbar\ProjectToolbarForm;
 use App\Form\Type\ProjectType;
@@ -19,7 +20,11 @@ use App\Repository\Query\ProjectQuery;
 use Doctrine\ORM\ORMException;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -34,10 +39,15 @@ class ProjectController extends AbstractController
      * @var ProjectRepository
      */
     private $repository;
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $dispatcher;
 
-    public function __construct(ProjectRepository $repository)
+    public function __construct(ProjectRepository $repository, EventDispatcherInterface $dispatcher)
     {
         $this->repository = $repository;
+        $this->dispatcher = $dispatcher;
     }
 
     protected function getRepository(): ProjectRepository
@@ -52,7 +62,7 @@ class ProjectController extends AbstractController
      *
      * @param int $page
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function indexAction($page, Request $request)
     {
@@ -88,7 +98,7 @@ class ProjectController extends AbstractController
      *
      * @param Request $request
      * @param Customer|null $customer
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     public function createAction(Request $request, ?Customer $customer = null)
     {
@@ -106,7 +116,7 @@ class ProjectController extends AbstractController
      * @Security("is_granted('budget', project)")
      *
      * @param Project $project
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function budgetAction(Project $project)
     {
@@ -122,7 +132,7 @@ class ProjectController extends AbstractController
      *
      * @param Project $project
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     public function editAction(Project $project, Request $request)
     {
@@ -135,7 +145,7 @@ class ProjectController extends AbstractController
      *
      * @param Project $project
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     public function deleteAction(Project $project, Request $request)
     {
@@ -188,29 +198,32 @@ class ProjectController extends AbstractController
     /**
      * @param Project $project
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     protected function renderProjectForm(Project $project, Request $request)
     {
-        $editForm = $this->createEditForm($project);
+        $event = new ProjectMetaDefinitionEvent($project);
+        $this->dispatcher->dispatch(ProjectMetaDefinitionEvent::class, $event);
 
+        $editForm = $this->createEditForm($project);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($project);
-            $entityManager->flush();
+            try {
+                $this->getRepository()->saveProject($project);
+                $this->flashSuccess('action.update.success');
 
-            $this->flashSuccess('action.update.success');
-
-            if ($editForm->has('create_more') && $editForm->get('create_more')->getData() === true) {
-                $newProject = new Project();
-                $newProject->setCustomer($project->getCustomer());
-                $editForm = $this->createEditForm($newProject);
-                $editForm->get('create_more')->setData(true);
-                $project = $newProject;
-            } else {
-                return $this->redirectToRoute('admin_project');
+                if ($editForm->has('create_more') && $editForm->get('create_more')->getData() === true) {
+                    $newProject = new Project();
+                    $newProject->setCustomer($project->getCustomer());
+                    $editForm = $this->createEditForm($newProject);
+                    $editForm->get('create_more')->setData(true);
+                    $project = $newProject;
+                } else {
+                    return $this->redirectToRoute('admin_project');
+                }
+            } catch (ORMException $ex) {
+                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
             }
         }
 
@@ -222,7 +235,7 @@ class ProjectController extends AbstractController
 
     /**
      * @param ProjectQuery $query
-     * @return \Symfony\Component\Form\FormInterface
+     * @return FormInterface
      */
     protected function getToolbarForm(ProjectQuery $query)
     {
@@ -236,7 +249,7 @@ class ProjectController extends AbstractController
 
     /**
      * @param Project $project
-     * @return \Symfony\Component\Form\FormInterface
+     * @return FormInterface
      */
     private function createEditForm(Project $project)
     {
