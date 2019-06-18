@@ -22,6 +22,18 @@ use Pagerfanta\Pagerfanta;
 class ActivityRepository extends AbstractRepository
 {
     /**
+     * @param Activity $activity
+     * @throws ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function saveActivity(Activity $activity)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($activity);
+        $entityManager->flush();
+    }
+
+    /**
      * @param int $id
      * @return null|Activity
      */
