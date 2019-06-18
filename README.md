@@ -7,7 +7,7 @@
 [![Gitter](https://badges.gitter.im/kimai2/support.svg)](https://gitter.im/kimai2/support)
 
 Kimai is a free, open source and online time-tracking software designed for small businesses and freelancers. 
-It is built with modern technologies such as Symfony, Bootstrap, RESTful API, responsive and mobile-ready etc.
+It is built with modern technologies such as Symfony, Bootstrap, RESTful API, Doctrine, AdminLTE, Webpack, ES6 etc.
 
 ## Introduction
 
