@@ -66,7 +66,7 @@ class LdapUserHydrator
         if (is_array($user->getEmail())) {
             $user->setEmail($user->getEmail()[0]);
         }
-        
+
         if (null === $user->getEmail()) {
             $user->setEmail($user->getUsername());
         }
