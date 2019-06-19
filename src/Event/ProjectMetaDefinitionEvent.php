@@ -15,7 +15,7 @@ use Symfony\Component\EventDispatcher\Event;
 /**
  * This event can be used, to dynamically add meta fields to projects
  */
-class ProjectMetaDefinitionEvent extends Event
+final class ProjectMetaDefinitionEvent extends Event
 {
     /**
      * @var Project

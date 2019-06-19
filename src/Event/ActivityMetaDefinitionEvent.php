@@ -15,7 +15,7 @@ use Symfony\Component\EventDispatcher\Event;
 /**
  * This event can be used, to dynamically add meta fields to activities
  */
-class ActivityMetaDefinitionEvent extends Event
+final class ActivityMetaDefinitionEvent extends Event
 {
     /**
      * @var Activity

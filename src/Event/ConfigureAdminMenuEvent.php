@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * The ConfigureAdminMenuEvent is used for populating the administration navigation.
  */
-class ConfigureAdminMenuEvent extends Event
+final class ConfigureAdminMenuEvent extends Event
 {
     public const CONFIGURE = 'app.admin_menu_configure';
 

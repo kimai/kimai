@@ -15,7 +15,7 @@ use Symfony\Component\EventDispatcher\Event;
 /**
  * This event can be used, to dynamically add meta fields to customers
  */
-class CustomerMetaDefinitionEvent extends Event
+final class CustomerMetaDefinitionEvent extends Event
 {
     /**
      * @var Customer

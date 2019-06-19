@@ -12,7 +12,7 @@ namespace App\Event;
 use App\Entity\User;
 use Symfony\Component\EventDispatcher\Event;
 
-class ThemeEvent extends Event
+final class ThemeEvent extends Event
 {
     public const JAVASCRIPT = 'app.theme.javascript';
     public const STYLESHEET = 'app.theme.css';

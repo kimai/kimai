@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * The ConfigureMainMenuEvent is used for populating the main navigation.
  */
-class ConfigureMainMenuEvent extends Event
+final class ConfigureMainMenuEvent extends Event
 {
     public const CONFIGURE = 'app.main_menu_configure';
 

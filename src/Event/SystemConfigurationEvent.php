@@ -15,7 +15,7 @@ use Symfony\Component\EventDispatcher\Event;
 /**
  * This event should be used, if system configurations should be changed/added dynamically.
  */
-class SystemConfigurationEvent extends Event
+final class SystemConfigurationEvent extends Event
 {
     public const CONFIGURE = 'app.system_configuration';
 

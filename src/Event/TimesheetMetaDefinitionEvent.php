@@ -15,7 +15,7 @@ use Symfony\Component\EventDispatcher\Event;
 /**
  * This event can be used, to dynamically add meta fields to timesheets
  */
-class TimesheetMetaDefinitionEvent extends Event
+final class TimesheetMetaDefinitionEvent extends Event
 {
     /**
      * @var Timesheet
