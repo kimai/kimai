@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class TimesheetMeta implements MetaTableTypeInterface
 {
-    use MetaTableTrait;
+    use MetaTableTypeTrait;
 
     /**
      * @var Timesheet

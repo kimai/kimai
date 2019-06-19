@@ -15,7 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
 
-trait MetaTableTrait
+trait MetaTableTypeTrait
 {
     /**
      * @var int
@@ -177,14 +177,5 @@ trait MetaTableTrait
             ->setIsPublicVisible($meta->isPublicVisible());
 
         return $this;
-    }
-
-    public function __toString()
-    {
-        if (null !== $this->value) {
-            return (string) $this->value;
-        }
-
-        return '';
     }
 }

@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class CustomerMeta implements MetaTableTypeInterface
 {
-    use MetaTableTrait;
+    use MetaTableTypeTrait;
 
     /**
      * @var Customer

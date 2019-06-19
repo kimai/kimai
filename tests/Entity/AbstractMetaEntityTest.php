@@ -50,7 +50,6 @@ abstract class AbstractMetaEntityTest extends TestCase
 
         self::assertInstanceOf(MetaTableTypeInterface::class, $sut->setValue('hello world'));
         self::assertEquals('hello world', $sut->getValue());
-        self::assertEquals('hello world', (string) $sut);
 
         self::assertInstanceOf(MetaTableTypeInterface::class, $sut->setValue(956.32));
         self::assertEquals(956.32, $sut->getValue());
