@@ -10,6 +10,7 @@
 namespace App\Tests\Timesheet\TrackingMode;
 
 use App\Configuration\TimesheetConfiguration;
+use App\Entity\Timesheet;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Timesheet\TrackingMode\DurationOnlyMode;
@@ -19,11 +20,17 @@ use App\Timesheet\TrackingMode\DurationOnlyMode;
  */
 class DurationOnlyModeTest extends AbstractTrackingModeTest
 {
+    protected function assertDefaultBegin(Timesheet $timesheet)
+    {
+        self::assertNotNull($timesheet->getBegin());
+        self::assertEquals('13:45:37', $timesheet->getBegin()->format('H:i:s'));
+    }
+
     protected function createSut()
     {
         $loader = new TestConfigLoader([]);
         $dateTime = (new UserDateTimeFactoryFactory($this))->create();
-        $configuration = new TimesheetConfiguration($loader, []);
+        $configuration = new TimesheetConfiguration($loader, ['default_begin' => '13:45:37']);
 
         return new DurationOnlyMode($dateTime, $configuration);
     }
