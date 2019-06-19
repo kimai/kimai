@@ -13,6 +13,7 @@ use App\Entity\Activity;
 use App\Entity\ActivityMeta;
 use App\Entity\EntityWithMetaFields;
 use App\Entity\MetaTableTypeInterface;
+use App\Entity\Timesheet;
 
 /**
  * @covers \App\Entity\ActivityMeta
@@ -27,5 +28,15 @@ class ActivityMetaTest extends AbstractMetaEntityTest
     protected function getMetaEntity(): MetaTableTypeInterface
     {
         return new ActivityMeta();
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected instanceof Activity, received "App\Entity\Timesheet"
+     */
+    public function testSetEntityThrowsException()
+    {
+        $sut = new ActivityMeta();
+        $sut->setEntity(new Timesheet());
     }
 }

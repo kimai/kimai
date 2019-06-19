@@ -9,6 +9,7 @@
 
 namespace App\Tests\Entity;
 
+use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\CustomerMeta;
 use App\Entity\EntityWithMetaFields;
@@ -27,5 +28,15 @@ class CustomerMetaTest extends AbstractMetaEntityTest
     protected function getMetaEntity(): MetaTableTypeInterface
     {
         return new CustomerMeta();
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected instanceof Customer, received "App\Entity\Activity"
+     */
+    public function testSetEntityThrowsException()
+    {
+        $sut = new CustomerMeta();
+        $sut->setEntity(new Activity());
     }
 }

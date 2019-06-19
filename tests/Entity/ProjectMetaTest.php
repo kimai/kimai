@@ -9,6 +9,7 @@
 
 namespace App\Tests\Entity;
 
+use App\Entity\Customer;
 use App\Entity\EntityWithMetaFields;
 use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
@@ -27,5 +28,15 @@ class ProjectMetaTest extends AbstractMetaEntityTest
     protected function getMetaEntity(): MetaTableTypeInterface
     {
         return new ProjectMeta();
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected instanceof Project, received "App\Entity\Customer"
+     */
+    public function testSetEntityThrowsException()
+    {
+        $sut = new ProjectMeta();
+        $sut->setEntity(new Customer());
     }
 }

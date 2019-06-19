@@ -11,6 +11,7 @@ namespace App\Tests\Entity;
 
 use App\Entity\EntityWithMetaFields;
 use App\Entity\MetaTableTypeInterface;
+use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 
@@ -27,5 +28,15 @@ class TimesheetMetaTest extends AbstractMetaEntityTest
     protected function getMetaEntity(): MetaTableTypeInterface
     {
         return new TimesheetMeta();
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected instanceof Timesheet, received "App\Entity\Project"
+     */
+    public function testSetEntityThrowsException()
+    {
+        $sut = new TimesheetMeta();
+        $sut->setEntity(new Project());
     }
 }
