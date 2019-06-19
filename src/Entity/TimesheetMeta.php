@@ -47,7 +47,7 @@ class TimesheetMeta implements MetaTableTypeInterface
         return $this;
     }
 
-    public function getEntity(): EntityWithMetaFields
+    public function getEntity(): ?EntityWithMetaFields
     {
         return $this->timesheet;
     }

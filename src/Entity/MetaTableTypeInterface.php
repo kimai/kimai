@@ -44,9 +44,9 @@ interface MetaTableTypeInterface
     /**
      * Get the linked entity.
      *
-     * @return EntityWithMetaFields
+     * @return EntityWithMetaFields|null
      */
-    public function getEntity(): EntityWithMetaFields;
+    public function getEntity(): ?EntityWithMetaFields;
 
     /**
      * Set the linked entity of this entry.

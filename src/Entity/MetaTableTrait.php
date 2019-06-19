@@ -54,24 +54,12 @@ trait MetaTableTrait
     /**
      * @var bool
      */
-    private $export = true;
+    private $export = false;
 
     /**
      * @var Constraint[]
      */
     private $constraints = [];
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function setId(int $id): MetaTableTypeInterface
-    {
-        $this->id = $id;
-
-        return $this;
-    }
 
     public function getName(): ?string
     {

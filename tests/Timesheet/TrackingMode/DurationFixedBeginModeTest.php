@@ -54,4 +54,14 @@ class DurationFixedBeginModeTest extends TestCase
         $sut->create($timesheet, $request);
         self::assertEquals('13:47', $timesheet->getBegin()->format('H:i'));
     }
+
+    public function testCreateWithoutBeginInjectsBegin()
+    {
+        $timesheet = new Timesheet();
+        $request = new Request();
+
+        $sut = $this->createSut();
+        $sut->create($timesheet, $request);
+        self::assertEquals('13:47', $timesheet->getBegin()->format('H:i'));
+    }
 }
