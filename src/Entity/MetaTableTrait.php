@@ -180,6 +180,17 @@ trait MetaTableTrait
         return $this;
     }
 
+    public function merge(MetaTableTypeInterface $meta): MetaTableTypeInterface
+    {
+        $this
+            ->setType($meta->getType())
+            ->setConstraints($meta->getConstraints())
+            ->setIsRequired($meta->isRequired())
+            ->setIsPublicVisible($meta->isPublicVisible());
+
+        return $this;
+    }
+
     public function __toString()
     {
         if (null !== $this->value) {

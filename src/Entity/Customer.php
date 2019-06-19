@@ -382,8 +382,14 @@ class Customer implements EntityWithMetaFields
 
     public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields
     {
-        $meta->setEntity($this);
-        $this->meta->add($meta);
+        if (null === ($current = $this->getMetaField($meta->getName()))) {
+            $meta->setEntity($this);
+            $this->meta->add($meta);
+
+            return $this;
+        }
+
+        $current->merge($meta);
 
         return $this;
     }

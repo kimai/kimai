@@ -9,9 +9,7 @@
 
 namespace App\Tests\Event;
 
-use App\Entity\Customer;
 use App\Entity\User;
-use App\Event\CustomerMetaDefinitionEvent;
 use App\Event\PrepareUserEvent;
 use PHPUnit\Framework\TestCase;
 

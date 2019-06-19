@@ -14,8 +14,10 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
+use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -39,11 +41,13 @@ class TimesheetTest extends TestCase
         $this->assertNull($sut->getHourlyRate());
         $this->assertEquals(new ArrayCollection(), $sut->getTags());
         $this->assertEquals([], $sut->getTagsAsArray());
-
         $this->assertInstanceOf(Timesheet::class, $sut->setFixedRate(13.47));
         $this->assertEquals(13.47, $sut->getFixedRate());
         $this->assertInstanceOf(Timesheet::class, $sut->setHourlyRate(99));
         $this->assertEquals(99, $sut->getHourlyRate());
+        $this->assertInstanceOf(Collection::class, $sut->getMetaFields());
+        $this->assertEquals(0, $sut->getMetaFields()->count());
+        $this->assertNull($sut->getMetaField('foo'));
     }
 
     protected function getEntity()
@@ -88,5 +92,30 @@ class TimesheetTest extends TestCase
 
         $sut->removeTag($tag1);
         $this->assertEmpty($sut->getTags());
+    }
+
+    public function testMetaFields()
+    {
+        $sut = new Timesheet();
+        $meta = new TimesheetMeta();
+        $meta->setName('foo')->setValue('bar')->setType('test');
+        $this->assertInstanceOf(Timesheet::class, $sut->setMetaField($meta));
+        self::assertEquals(1, $sut->getMetaFields()->count());
+        $result = $sut->getMetaField('foo');
+        self::assertSame($result, $meta);
+        self::assertEquals('test', $result->getType());
+
+        $meta2 = new TimesheetMeta();
+        $meta2->setName('foo')->setValue('bar')->setType('test2');
+        $this->assertInstanceOf(Timesheet::class, $sut->setMetaField($meta2));
+        self::assertEquals(1, $sut->getMetaFields()->count());
+
+        $result = $sut->getMetaField('foo');
+        self::assertSame($result, $meta);
+        self::assertEquals('test2', $result->getType());
+
+        $sut->setMetaField((new TimesheetMeta())->setName('blub'));
+        $sut->setMetaField((new TimesheetMeta())->setName('blab'));
+        self::assertEquals(3, $sut->getMetaFields()->count());
     }
 }

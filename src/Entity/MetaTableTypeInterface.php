@@ -57,6 +57,15 @@ interface MetaTableTypeInterface
     public function setEntity(EntityWithMetaFields $entity): MetaTableTypeInterface;
 
     /**
+     * This will merge the current object with the values from the given $meta instance.
+     * It should NOT update the name or value, but only the form settings.
+     *
+     * @param MetaTableTypeInterface $meta
+     * @return MetaTableTypeInterface
+     */
+    public function merge(MetaTableTypeInterface $meta): MetaTableTypeInterface;
+
+    /**
      * Whether this field can be displayed in "public" places like API results or export.
      *
      * @param bool $include
