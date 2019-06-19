@@ -24,6 +24,11 @@ abstract class AbstractTrackingModeTest extends TestCase
      */
     abstract protected function createSut();
 
+    protected function assertDefaultBegin(Timesheet $timesheet)
+    {
+        self::assertNull($timesheet->getBegin());
+    }
+
     public function testCreateDoesNotChangeAnythingOnEmptyRequest()
     {
         $sut = $this->createSut();
@@ -35,7 +40,7 @@ abstract class AbstractTrackingModeTest extends TestCase
 
         $sut->create($timesheet, new Request());
 
-        self::assertNull($timesheet->getBegin());
+        $this->assertDefaultBegin($timesheet);
         self::assertNull($timesheet->getEnd());
     }
 
@@ -88,7 +93,7 @@ abstract class AbstractTrackingModeTest extends TestCase
 
         $sut->create($timesheet, $request);
 
-        self::assertNull($timesheet->getBegin());
+        $this->assertDefaultBegin($timesheet);
         self::assertNull($timesheet->getEnd());
         self::assertEquals(0, $timesheet->getDuration());
     }
@@ -181,7 +186,7 @@ abstract class AbstractTrackingModeTest extends TestCase
 
         $sut->create($timesheet, $request);
 
-        self::assertNull($timesheet->getBegin());
+        $this->assertDefaultBegin($timesheet);
         self::assertNull($timesheet->getEnd());
         self::assertEquals(0, $timesheet->getDuration());
     }

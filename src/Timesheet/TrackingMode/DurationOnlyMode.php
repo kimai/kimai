@@ -9,6 +9,9 @@
 
 namespace App\Timesheet\TrackingMode;
 
+use App\Entity\Timesheet;
+use Symfony\Component\HttpFoundation\Request;
+
 class DurationOnlyMode extends AbstractTrackingMode
 {
     public function canEditBegin(): bool
@@ -39,5 +42,16 @@ class DurationOnlyMode extends AbstractTrackingMode
     public function canSeeBeginAndEndTimes(): bool
     {
         return false;
+    }
+
+    public function create(Timesheet $timesheet, Request $request): void
+    {
+        if (null === $timesheet->getBegin()) {
+            $timesheet->setBegin($this->dateTime->createDateTime());
+        }
+
+        $timesheet->getBegin()->modify($this->configuration->getDefaultBeginTime());
+
+        parent::create($timesheet, $request);
     }
 }
