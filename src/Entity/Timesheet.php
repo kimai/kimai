@@ -25,7 +25,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\HasLifecycleCallbacks()
  * @App\Validator\Constraints\Timesheet
  */
-class Timesheet
+class Timesheet implements EntityWithMetaFields
 {
     /**
      * @var int
@@ -138,7 +138,14 @@ class Timesheet
      *  }
      * )
      */
-    protected $tags;
+    private $tags;
+
+    /**
+     * @var TimesheetMeta[]|Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\TimesheetMeta", mappedBy="timesheet", cascade={"persist"})
+     */
+    private $meta;
 
     /**
      * Default constructor, initializes collections
@@ -146,6 +153,7 @@ class Timesheet
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->meta = new ArrayCollection();
     }
 
     /**
@@ -405,6 +413,7 @@ class Timesheet
     /**
      * BE WARNED: this method should NOT be used programmatically, there is very likely no reason for it!
      *
+     * @internal
      * @deprecated since it was introduced, only meant for the initial migration. Will be removed with 1.0.
      * @param string $timezone
      * @return Timesheet
@@ -412,6 +421,34 @@ class Timesheet
     public function setTimezone(string $timezone): Timesheet
     {
         $this->timezone = $timezone;
+
+        return $this;
+    }
+
+    /**
+     * @internal only here for symfony forms
+     * @return Collection|MetaTableTypeInterface[]
+     */
+    public function getMetaFields(): Collection
+    {
+        return $this->meta;
+    }
+
+    public function getMetaField(string $name): ?MetaTableTypeInterface
+    {
+        foreach ($this->meta as $field) {
+            if ($field->getName() === $name) {
+                return $field;
+            }
+        }
+
+        return null;
+    }
+
+    public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields
+    {
+        $meta->setEntity($this);
+        $this->meta->add($meta);
 
         return $this;
     }

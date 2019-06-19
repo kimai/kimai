@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="kimai2_customers")
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
  */
-class Customer
+class Customer implements EntityWithMetaFields
 {
     public const DEFAULT_CURRENCY = 'EUR';
 
@@ -154,9 +154,17 @@ class Customer
     use ColorTrait;
     use BudgetTrait;
 
+    /**
+     * @var CustomerMeta[]|Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\CustomerMeta", mappedBy="customer", cascade={"persist"})
+     */
+    private $meta;
+
     public function __construct()
     {
         $this->projects = new ArrayCollection();
+        $this->meta = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -350,6 +358,34 @@ class Customer
     public function getProjects(): Collection
     {
         return $this->projects;
+    }
+
+    /**
+     * @internal only here for symfony forms
+     * @return Collection|MetaTableTypeInterface[]
+     */
+    public function getMetaFields(): Collection
+    {
+        return $this->meta;
+    }
+
+    public function getMetaField(string $name): ?MetaTableTypeInterface
+    {
+        foreach ($this->meta as $field) {
+            if ($field->getName() === $name) {
+                return $field;
+            }
+        }
+
+        return null;
+    }
+
+    public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields
+    {
+        $meta->setEntity($this);
+        $this->meta->add($meta);
+
+        return $this;
     }
 
     /**
