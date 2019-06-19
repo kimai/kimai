@@ -13,6 +13,7 @@ use App\Form\Type\ColorPickerType;
 use App\Form\Type\DurationType;
 use App\Form\Type\FixedRateType;
 use App\Form\Type\HourlyRateType;
+use App\Form\Type\MetaFieldsCollectionType;
 use App\Form\Type\YesNoType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -46,6 +47,8 @@ trait EntityFormTrait
                 ])
             ;
         }
+
+        $builder->add('metaFields', MetaFieldsCollectionType::class);
 
         $builder
             ->add('visible', YesNoType::class, [
