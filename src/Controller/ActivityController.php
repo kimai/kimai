@@ -210,11 +210,6 @@ class ActivityController extends AbstractController
         $event = new ActivityMetaDefinitionEvent($activity);
         $this->dispatcher->dispatch(ActivityMetaDefinitionEvent::class, $event);
 
-        $original = [];
-        foreach ($activity->getMetaFields() as $metaField) {
-            $original[$metaField->getName()] = $metaField;
-        }
-
         $editForm = $this->createEditForm($activity);
         $editForm->handleRequest($request);
 
