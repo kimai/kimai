@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace App\API;
 
 use App\Entity\Project;
+use App\Event\ProjectMetaDefinitionEvent;
 use App\Form\ProjectEditForm;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
@@ -22,6 +23,7 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -37,20 +39,20 @@ class ProjectController extends BaseApiController
      * @var ProjectRepository
      */
     protected $repository;
-
     /**
      * @var ViewHandlerInterface
      */
     protected $viewHandler;
-
     /**
-     * @param ViewHandlerInterface $viewHandler
-     * @param ProjectRepository $repository
+     * @var EventDispatcherInterface
      */
-    public function __construct(ViewHandlerInterface $viewHandler, ProjectRepository $repository)
+    protected $dispatcher;
+
+    public function __construct(ViewHandlerInterface $viewHandler, ProjectRepository $repository, EventDispatcherInterface $dispatcher)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -117,10 +119,18 @@ class ProjectController extends BaseApiController
      */
     public function getAction($id)
     {
+        /** @var Project $data */
         $data = $this->repository->find($id);
+
         if (null === $data) {
             throw new NotFoundException();
         }
+
+        // make sure the fields are properly setup and we know, which meta fields
+        // should be exposed and which not
+        $event = new ProjectMetaDefinitionEvent($data);
+        $this->dispatcher->dispatch(ProjectMetaDefinitionEvent::class, $event);
+
         $view = new View($data, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
 

@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace App\API;
 
 use App\Entity\Activity;
+use App\Event\ActivityMetaDefinitionEvent;
 use App\Form\ActivityEditForm;
 use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityQuery;
@@ -22,6 +23,7 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -37,20 +39,20 @@ class ActivityController extends BaseApiController
      * @var ActivityRepository
      */
     protected $repository;
-
     /**
      * @var ViewHandlerInterface
      */
     protected $viewHandler;
-
     /**
-     * @param ViewHandlerInterface $viewHandler
-     * @param ActivityRepository $repository
+     * @var EventDispatcherInterface
      */
-    public function __construct(ViewHandlerInterface $viewHandler, ActivityRepository $repository)
+    protected $dispatcher;
+
+    public function __construct(ViewHandlerInterface $viewHandler, ActivityRepository $repository, EventDispatcherInterface $dispatcher)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -133,11 +135,17 @@ class ActivityController extends BaseApiController
      */
     public function getAction($id)
     {
+        /** @var Activity $data */
         $data = $this->repository->find($id);
 
         if (null === $data) {
             throw new NotFoundException();
         }
+
+        // make sure the fields are properly setup and we know, which meta fields
+        // should be exposed and which not
+        $event = new ActivityMetaDefinitionEvent($data);
+        $this->dispatcher->dispatch(ActivityMetaDefinitionEvent::class, $event);
 
         $view = new View($data, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Activity']);
