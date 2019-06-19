@@ -32,7 +32,7 @@ App\Entity\Project:
             include: true
         meta:
             include: true
-            groups: [Project]
+            groups: [Entity]
     virtual_properties:
         getCustomer:
             serialized_name: customer
