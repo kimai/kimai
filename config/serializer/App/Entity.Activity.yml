@@ -1,6 +1,6 @@
 App\Entity\Activity:
     exclusion_policy: All
-    custom_accessor_order: [id, name, comment, visible, project, fixedRate, hourlyRate, color, budget, timeBudget]
+    custom_accessor_order: [id, name, comment, visible, project, fixedRate, hourlyRate, color, budget, timeBudget, meta]
     properties:
         id:
             include: true
@@ -32,6 +32,9 @@ App\Entity\Activity:
             groups: [Default]
         color:
             include: true
+        meta:
+            include: true
+            groups: [Activity]
     virtual_properties:
         getProject:
             serialized_name: project

@@ -1,6 +1,6 @@
 App\Entity\Project:
     exclusion_policy: All
-    custom_accessor_order: [id, name, comment, visible, orderNumber, customer, fixedRate, hourlyRate, color, budget, timeBudget]
+    custom_accessor_order: [id, name, comment, visible, orderNumber, customer, fixedRate, hourlyRate, color, budget, timeBudget, meta]
     properties:
         id:
             include: true
@@ -30,6 +30,9 @@ App\Entity\Project:
             groups: [Subresource]
         color:
             include: true
+        meta:
+            include: true
+            groups: [Project]
     virtual_properties:
         getCustomer:
             serialized_name: customer

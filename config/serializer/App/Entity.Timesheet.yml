@@ -1,6 +1,6 @@
 App\Entity\Timesheet:
     exclusion_policy: All
-    custom_accessor_order: [id, begin, end, duration, rate, activity, project, user, description, fixedRate, hourlyRate, tags, exported]
+    custom_accessor_order: [id, begin, end, duration, rate, activity, project, user, description, fixedRate, hourlyRate, tags, exported, meta]
     properties:
         id:
             include: true
@@ -29,6 +29,9 @@ App\Entity\Timesheet:
             groups: [Subresource]
         user:
             exclude: true
+        meta:
+            include: true
+            groups: [Entity]
     virtual_properties:
         getBegin:
             serialized_name: begin
