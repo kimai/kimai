@@ -83,12 +83,6 @@ class Kernel extends BaseKernel
             }
         }
 
-        // do not load Kimai plugin in test environment, they may alter the default behaviour and create
-        // false-negatives in integration/system tests
-        if ('test' === $this->environment) {
-            return;
-        }
-
         $pluginsDir = $this->getProjectDir() . '/var/plugins';
         if (!file_exists($pluginsDir)) {
             return;
