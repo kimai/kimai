@@ -206,7 +206,7 @@ class TimesheetController extends BaseApiController
         }
 
         /** @var Pagerfanta $data */
-        $data = $this->repository->findByQuery($query);
+        $data = $this->repository->getPagerfantaForQuery($query);
         $data = (array) $data->getCurrentPageResults();
 
         $view = new View($data, 200);
