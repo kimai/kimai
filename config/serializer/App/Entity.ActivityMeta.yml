@@ -9,7 +9,7 @@ App\Entity\ActivityMeta:
     virtual_properties:
         getName:
             serialized_name: name
-            exp: "object.isPublicVisible() ? object.getName() : null"
+            exp: "object.isVisible() ? object.getName() : null"
         getValue:
             serialized_name: value
-            exp: "object.isPublicVisible() ? object.getValue() : null"
+            exp: "object.isVisible() ? object.getValue() : null"

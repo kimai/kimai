@@ -294,7 +294,7 @@
                         {% for id, metaFieldName in metaFields %}
                             <td class="column-{{ metaFieldName }} text-nowrap" {% if not columns[metaFieldName] %}style="display: none"{% endif %}>
                                 {% set metaField = entry.metaField(metaFieldName) %}
-                                {% if not metaField is null and metaField.publicVisible %}
+                                {% if not metaField is null and metaField.visible %}
                                     {{ metaField.value }}
                                 {% endif %}
                             </td>

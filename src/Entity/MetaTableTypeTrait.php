@@ -42,6 +42,14 @@ trait MetaTableTypeTrait
     private $value;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="visible", type="boolean", nullable=false)
+     * @Assert\NotNull()
+     */
+    private $visible = false;
+
+    /**
      * @var string
      */
     private $type;
@@ -50,11 +58,6 @@ trait MetaTableTypeTrait
      * @var bool
      */
     private $required = false;
-
-    /**
-     * @var bool
-     */
-    private $export = false;
 
     /**
      * @var Constraint[]
@@ -151,19 +154,14 @@ trait MetaTableTypeTrait
         return $this;
     }
 
-    /**
-     * Do not expose data which returns false here (eg. in export or API).
-     *
-     * @return bool
-     */
-    public function isPublicVisible(): bool
+    public function isVisible(): bool
     {
-        return $this->export;
+        return $this->visible;
     }
 
-    public function setIsPublicVisible(bool $include): MetaTableTypeInterface
+    public function setIsVisible(bool $visible): MetaTableTypeInterface
     {
-        $this->export = $include;
+        $this->visible = $visible;
 
         return $this;
     }
@@ -174,7 +172,7 @@ trait MetaTableTypeTrait
             ->setType($meta->getType())
             ->setConstraints($meta->getConstraints())
             ->setIsRequired($meta->isRequired())
-            ->setIsPublicVisible($meta->isPublicVisible());
+            ->setIsVisible($meta->isVisible());
 
         return $this;
     }

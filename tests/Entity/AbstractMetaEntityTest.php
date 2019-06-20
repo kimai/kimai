@@ -32,7 +32,7 @@ abstract class AbstractMetaEntityTest extends TestCase
         self::assertNull($sut->getEntity());
         self::assertIsArray($sut->getConstraints());
         self::assertEmpty($sut->getConstraints());
-        self::assertFalse($sut->isPublicVisible());
+        self::assertFalse($sut->isVisible());
         self::assertFalse($sut->isRequired());
     }
 
@@ -42,8 +42,8 @@ abstract class AbstractMetaEntityTest extends TestCase
         self::assertInstanceOf(MetaTableTypeInterface::class, $sut->setName('foo-bar'));
         self::assertEquals('foo-bar', $sut->getName());
 
-        self::assertInstanceOf(MetaTableTypeInterface::class, $sut->setIsPublicVisible(true));
-        self::assertTrue($sut->isPublicVisible());
+        self::assertInstanceOf(MetaTableTypeInterface::class, $sut->setisVisible(true));
+        self::assertTrue($sut->isVisible());
 
         self::assertInstanceOf(MetaTableTypeInterface::class, $sut->setIsRequired(true));
         self::assertTrue($sut->isRequired());
@@ -86,7 +86,7 @@ abstract class AbstractMetaEntityTest extends TestCase
         self::assertEquals('bar', $meta1->getValue());
         self::assertEquals('blub', $meta1->getType());
         self::assertFalse($meta1->isRequired());
-        self::assertFalse($meta1->isPublicVisible());
+        self::assertFalse($meta1->isVisible());
         self::assertSame($entity1, $meta1->getEntity());
         self::assertCount(1, $meta1->getConstraints());
 
@@ -97,7 +97,7 @@ abstract class AbstractMetaEntityTest extends TestCase
             ->setType('blub2')
             ->setEntity($entity2)
             ->setIsRequired(true)
-            ->setIsPublicVisible(true)
+            ->setisVisible(true)
             ->setConstraints([new NotBlank(), new Length(['min' => 1])])
         ;
 
@@ -107,7 +107,7 @@ abstract class AbstractMetaEntityTest extends TestCase
         self::assertEquals('bar', $meta1->getValue());
         self::assertEquals('blub2', $meta1->getType());
         self::assertTrue($meta1->isRequired());
-        self::assertTrue($meta1->isPublicVisible());
+        self::assertTrue($meta1->isVisible());
         self::assertSame($entity1, $meta1->getEntity());
         self::assertCount(2, $meta1->getConstraints());
     }

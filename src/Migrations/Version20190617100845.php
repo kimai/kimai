@@ -33,6 +33,7 @@ final class Version20190617100845 extends AbstractMigration
         $timesheetMeta->addColumn('timesheet_id', 'integer', ['notnull' => true]);
         $timesheetMeta->addColumn('name', 'string', ['notnull' => true, 'length' => 50]);
         $timesheetMeta->addColumn('value', 'string', ['notnull' => false, 'length' => 255]);
+        $timesheetMeta->addColumn('visible', 'boolean', ['notnull' => false, 'default' => false]);
         $timesheetMeta->setPrimaryKey(['id']);
         $timesheetMeta->addIndex(['timesheet_id'], 'IDX_CB606CBAABDD46BE');
         $timesheetMeta->addUniqueIndex(['timesheet_id', 'name'], 'UNIQ_CB606CBAABDD46BE5E237E06');
@@ -43,6 +44,7 @@ final class Version20190617100845 extends AbstractMigration
         $customerMeta->addColumn('customer_id', 'integer', ['notnull' => true]);
         $customerMeta->addColumn('name', 'string', ['notnull' => true, 'length' => 50]);
         $customerMeta->addColumn('value', 'string', ['notnull' => false, 'length' => 255]);
+        $customerMeta->addColumn('visible', 'boolean', ['notnull' => false, 'default' => false]);
         $customerMeta->setPrimaryKey(['id']);
         $customerMeta->addIndex(['customer_id'], 'IDX_A48A760F9395C3F3');
         $customerMeta->addUniqueIndex(['customer_id', 'name'], 'UNIQ_A48A760F9395C3F35E237E06');
@@ -53,6 +55,7 @@ final class Version20190617100845 extends AbstractMigration
         $projectMeta->addColumn('project_id', 'integer', ['notnull' => true]);
         $projectMeta->addColumn('name', 'string', ['notnull' => true, 'length' => 50]);
         $projectMeta->addColumn('value', 'string', ['notnull' => false, 'length' => 255]);
+        $projectMeta->addColumn('visible', 'boolean', ['notnull' => false, 'default' => false]);
         $projectMeta->setPrimaryKey(['id']);
         $projectMeta->addIndex(['project_id'], 'IDX_50536EF2166D1F9C');
         $projectMeta->addUniqueIndex(['project_id', 'name'], 'UNIQ_50536EF2166D1F9C5E237E06');
@@ -63,6 +66,7 @@ final class Version20190617100845 extends AbstractMigration
         $activityMeta->addColumn('activity_id', 'integer', ['notnull' => true]);
         $activityMeta->addColumn('name', 'string', ['notnull' => true, 'length' => 50]);
         $activityMeta->addColumn('value', 'string', ['notnull' => false, 'length' => 255]);
+        $activityMeta->addColumn('visible', 'boolean', ['notnull' => false, 'default' => false]);
         $activityMeta->setPrimaryKey(['id']);
         $activityMeta->addIndex(['activity_id'], 'IDX_A7C0A43D81C06096');
         $activityMeta->addUniqueIndex(['activity_id', 'name'], 'UNIQ_A7C0A43D81C060965E237E06');

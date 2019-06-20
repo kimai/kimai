@@ -14,7 +14,6 @@ namespace App\API;
 use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet;
 use App\Entity\User;
-use App\Event\TimesheetMetaDefinitionEvent;
 use App\Form\TimesheetEditForm;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TagRepository;
@@ -31,7 +30,6 @@ use FOS\RestBundle\View\ViewHandlerInterface;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -70,10 +68,6 @@ class TimesheetController extends BaseApiController
      * @var TrackingModeService
      */
     protected $trackingModeService;
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $dispatcher;
 
     public function __construct(
         ViewHandlerInterface $viewHandler,
@@ -81,8 +75,7 @@ class TimesheetController extends BaseApiController
         UserDateTimeFactory $dateTime,
         TimesheetConfiguration $configuration,
         TagRepository $tagRepository,
-        TrackingModeService $trackingModeService,
-        EventDispatcherInterface $dispatcher
+        TrackingModeService $trackingModeService
     ) {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
@@ -90,7 +83,6 @@ class TimesheetController extends BaseApiController
         $this->dateTime = $dateTime;
         $this->tagRepository = $tagRepository;
         $this->trackingModeService = $trackingModeService;
-        $this->dispatcher = $dispatcher;
     }
 
     protected function getTrackingMode(): TrackingModeInterface
@@ -252,11 +244,6 @@ class TimesheetController extends BaseApiController
         if (!$this->isGranted('view', $data)) {
             throw new AccessDeniedHttpException('You are not allowed to view this timesheet');
         }
-
-        // make sure the fields are properly setup and we know, which meta fields
-        // should be exposed and which not
-        $event = new TimesheetMetaDefinitionEvent($data);
-        $this->dispatcher->dispatch(TimesheetMetaDefinitionEvent::class, $event);
 
         $view = new View($data, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);

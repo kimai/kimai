@@ -71,14 +71,14 @@ interface MetaTableTypeInterface
      * @param bool $include
      * @return MetaTableTypeInterface
      */
-    public function setIsPublicVisible(bool $include): MetaTableTypeInterface;
+    public function setIsVisible(bool $include): MetaTableTypeInterface;
 
     /**
      * Whether this field can be displayed in "public" places like API results or export.
      *
      * @return bool
      */
-    public function isPublicVisible(): bool;
+    public function isVisible(): bool;
 
     /**
      * Whether this field is required to be filled out in the form.

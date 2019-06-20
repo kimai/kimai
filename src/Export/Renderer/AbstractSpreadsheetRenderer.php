@@ -10,13 +10,11 @@
 namespace App\Export\Renderer;
 
 use App\Entity\Timesheet;
-use App\Event\TimesheetMetaDefinitionEvent;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\DateExtensions;
 use App\Twig\Extensions;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -36,10 +34,6 @@ abstract class AbstractSpreadsheetRenderer
      * @var TranslatorInterface
      */
     protected $translator;
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $dispatcher;
 
     /**
      * @param TranslatorInterface $translator
@@ -49,13 +43,11 @@ abstract class AbstractSpreadsheetRenderer
     public function __construct(
         TranslatorInterface $translator,
         DateExtensions $dateExtension,
-        Extensions $extensions,
-        EventDispatcherInterface $dispatcher
+        Extensions $extensions
     ) {
         $this->translator = $translator;
         $this->dateExtension = $dateExtension;
         $this->extension = $extensions;
-        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -108,11 +100,8 @@ abstract class AbstractSpreadsheetRenderer
     {
         $publicMetaFields = [];
         foreach ($timesheets as $timesheet) {
-            $event = new TimesheetMetaDefinitionEvent($timesheet);
-            $this->dispatcher->dispatch(TimesheetMetaDefinitionEvent::class, $event);
-
             foreach ($timesheet->getMetaFields() as $metaField) {
-                if ($metaField->isPublicVisible()) {
+                if ($metaField->isVisible()) {
                     $publicMetaFields[] = $metaField->getName();
                 }
             }
@@ -177,7 +166,7 @@ abstract class AbstractSpreadsheetRenderer
             foreach ($publicMetaFields as $metaFieldName) {
                 $metaField = $timesheet->getMetaField($metaFieldName);
                 $metaFieldValue = '';
-                if (null !== $metaField && $metaField->isPublicVisible()) {
+                if (null !== $metaField && $metaField->isVisible()) {
                     $metaFieldValue = $metaField->getValue();
                 }
                 $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $metaFieldValue);
