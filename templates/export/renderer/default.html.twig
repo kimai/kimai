@@ -8,6 +8,7 @@
     'project': true,
     'activity': true,
     'description': false,
+    'tags': false,
     'exported': false,
     'hourlyRate': false,
     'fixedRate': false,
@@ -265,6 +266,11 @@
                         <td class="column-description" {% if not columns.description %}style="display: none"{% endif %}>
                             {% if entry.description is not empty %}
                                 {{ entry.description|desc2html }}
+                            {% endif %}
+                        </td>
+                        <td class="column-tags" {% if not columns.tags %}style="display: none"{% endif %}>
+                            {% if entry.tags is not empty %}
+                                {{ entry.tagsAsArray|join(', ') }}
                             {% endif %}
                         </td>
                         <td class="column-exported" {% if not columns.exported %}style="display: none"{% endif %}>

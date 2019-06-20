@@ -23,7 +23,6 @@ use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Timesheet\TrackingModeService;
 use App\Timesheet\UserDateTimeFactory;
 use Doctrine\Common\Collections\ArrayCollection;
-use Pagerfanta\Pagerfanta;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -107,11 +106,10 @@ abstract class TimesheetAbstractController extends AbstractController
             );
         }
 
-        /* @var $entries Pagerfanta */
-        $entries = $this->getRepository()->findByQuery($query);
+        $pager = $this->getRepository()->getPagerfantaForQuery($query);
 
         return $this->render($renderTemplate, [
-            'entries' => $entries,
+            'entries' => $pager,
             'page' => $query->getPage(),
             'query' => $query,
             'showFilter' => $form->isSubmitted(),
@@ -212,7 +210,6 @@ abstract class TimesheetAbstractController extends AbstractController
     protected function export(Request $request, string $renderTemplate)
     {
         $query = new TimesheetQuery();
-        $query->setResultType(TimesheetQuery::RESULT_TYPE_OBJECTS);
 
         $form = $this->getToolbarForm($query);
         $form->handleRequest($request);
@@ -238,8 +235,7 @@ abstract class TimesheetAbstractController extends AbstractController
             $query->setUser($this->getUser());
         }
 
-        /* @var $entries Pagerfanta */
-        $entries = $this->getRepository()->findByQuery($query);
+        $entries = $this->getRepository()->getTimesheetsForQuery($query);
 
         return $this->render($renderTemplate, [
             'entries' => $entries,
