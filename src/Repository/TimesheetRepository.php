@@ -16,15 +16,16 @@ use App\Model\Statistic\Day;
 use App\Model\Statistic\Month;
 use App\Model\Statistic\Year;
 use App\Model\TimesheetStatistic;
+use App\Repository\Loader\TimesheetLoader;
 use App\Repository\Paginator\TimesheetPaginator;
-use App\Repository\Query\BaseQuery;
 use App\Repository\Query\TimesheetQuery;
 use DateTime;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
-class TimesheetRepository extends AbstractRepository
+class TimesheetRepository extends EntityRepository
 {
     public const STATS_QUERY_DURATION = 'duration';
     public const STATS_QUERY_RATE = 'rate';
@@ -354,7 +355,7 @@ class TimesheetRepository extends AbstractRepository
             ->join('t.project', 'p')
             ->join('p.customer', 'c')
             ->leftJoin('t.tags', 'tags')
-            ->where($qb->expr()->isNotNull('t.begin'))
+            ->andWhere($qb->expr()->isNotNull('t.begin'))
             ->andWhere($qb->expr()->isNull('t.end'))
             ->orderBy('t.begin', 'DESC');
 
@@ -404,16 +405,16 @@ class TimesheetRepository extends AbstractRepository
         return $counter;
     }
 
-    protected function getPagerFantaByQuery(TimesheetQuery $query)
+    public function getPagerfantaForQuery(TimesheetQuery $query): Pagerfanta
     {
-        $paginator = new Pagerfanta($this->getTimesheetPaginatorByQuery($query));
+        $paginator = new Pagerfanta($this->getPaginatorForQuery($query));
         $paginator->setMaxPerPage($query->getPageSize());
         $paginator->setCurrentPage($query->getPage());
 
         return $paginator;
     }
 
-    protected function getTimesheetPaginatorByQuery(TimesheetQuery $query): TimesheetPaginator
+    public function getPaginatorForQuery(TimesheetQuery $query): TimesheetPaginator
     {
         $qb = $this->getQueryBuilderForQuery($query);
         $qb->select($qb->expr()->countDistinct('t.id'))->resetDQLPart('orderBy');
@@ -427,26 +428,15 @@ class TimesheetRepository extends AbstractRepository
         return $paginator;
     }
 
-    protected function getResultSetByQuery(TimesheetQuery $query): array
-    {
-        $paginator = $this->getTimesheetPaginatorByQuery($query);
-
-        return $paginator->getAll();
-    }
-
     /**
      * @param TimesheetQuery $query
-     * @return QueryBuilder|Pagerfanta|Timesheet[]
+     * @return Timesheet[]
      */
-    public function findByQuery(TimesheetQuery $query)
+    public function getTimesheetsForQuery(TimesheetQuery $query): array
     {
-        if (BaseQuery::RESULT_TYPE_PAGER === $query->getResultType()) {
-            return $this->getPagerFantaByQuery($query);
-        } elseif (BaseQuery::RESULT_TYPE_OBJECTS === $query->getResultType()) {
-            return $this->getResultSetByQuery($query);
-        }
+        $paginator = $this->getPaginatorForQuery($query);
 
-        return $this->getQueryBuilderForQuery($query);
+        return $paginator->getAll();
     }
 
     protected function getQueryBuilderForQuery(TimesheetQuery $query): QueryBuilder
@@ -554,16 +544,17 @@ class TimesheetRepository extends AbstractRepository
         $ids = array_column($results, 'maxid');
 
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('t', 'a', 'p', 'c', 'tags')
+        $qb->select('t')
             ->from(Timesheet::class, 't')
-            ->join('t.activity', 'a')
-            ->join('t.project', 'p')
-            ->join('p.customer', 'c')
-            ->leftJoin('t.tags', 'tags')
             ->andWhere($qb->expr()->in('t.id', $ids))
             ->orderBy('t.end', 'DESC')
         ;
 
-        return $qb->getQuery()->getResult();
+        $results = $qb->getQuery()->getResult();
+
+        $loader = new TimesheetLoader($qb->getEntityManager());
+        $loader->loadResults($results);
+
+        return $results;
     }
 }

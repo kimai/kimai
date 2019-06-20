@@ -143,13 +143,10 @@ class ExportController extends AbstractController
      */
     protected function getEntries(ExportQuery $query)
     {
-        $query->setResultType(ExportQuery::RESULT_TYPE_QUERYBUILDER);
         $query->getBegin()->setTime(0, 0, 0);
         $query->getEnd()->setTime(23, 59, 59);
 
-        $queryBuilder = $this->timesheetRepository->findByQuery($query);
-
-        return $queryBuilder->getQuery()->getResult();
+        return $this->timesheetRepository->getTimesheetsForQuery($query);
     }
 
     /**
