@@ -21,7 +21,6 @@ use App\Repository\Query\TimesheetQuery;
 use App\Repository\RepositoryException;
 use App\Repository\TimesheetRepository;
 use App\Tests\DataFixtures\TimesheetFixtures;
-use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
 /**
