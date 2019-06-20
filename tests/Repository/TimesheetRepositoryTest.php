@@ -38,19 +38,10 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
 
         $query = new TimesheetQuery();
 
-        $result = $repository->findByQuery($query);
+        $result = $repository->getPagerfantaForQuery($query);
         $this->assertInstanceOf(Pagerfanta::class, $result);
 
-        $query->setResultType(BaseQuery::RESULT_TYPE_QUERYBUILDER);
-        $result = $repository->findByQuery($query);
-        $this->assertInstanceOf(QueryBuilder::class, $result);
-
-        $query->setResultType(BaseQuery::RESULT_TYPE_PAGER);
-        $result = $repository->findByQuery($query);
-        $this->assertInstanceOf(Pagerfanta::class, $result);
-
-        $query->setResultType(BaseQuery::RESULT_TYPE_OBJECTS);
-        $result = $repository->findByQuery($query);
+        $result = $repository->getTimesheetsForQuery($query);
         $this->assertIsArray($result);
     }
 
@@ -73,7 +64,7 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
         $query->setState(TimesheetQuery::STATE_STOPPED);
 
         /** @var array $entities */
-        $entities = $repository->findByQuery($query);
+        $entities = $repository->getTimesheetsForQuery($query);
 
         $this->assertCount(1, $entities);
         $this->assertInstanceOf(Timesheet::class, $entities[0]);

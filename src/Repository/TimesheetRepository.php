@@ -414,7 +414,7 @@ class TimesheetRepository extends EntityRepository
         return $paginator;
     }
 
-    public function getPaginatorForQuery(TimesheetQuery $query): TimesheetPaginator
+    protected function getPaginatorForQuery(TimesheetQuery $query): TimesheetPaginator
     {
         $qb = $this->getQueryBuilderForQuery($query);
         $qb->select($qb->expr()->countDistinct('t.id'))->resetDQLPart('orderBy');
@@ -482,6 +482,7 @@ class TimesheetRepository extends EntityRepository
                 $qb->andWhere('t.project = :project')
                     ->setParameter('project', $query->getProject());
             } elseif (null !== $query->getCustomer()) {
+                $qb->join('t.project', 'p');
                 $qb->andWhere('p.customer = :customer')
                     ->setParameter('customer', $query->getCustomer());
             }
