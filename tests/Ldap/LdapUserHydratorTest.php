@@ -93,6 +93,7 @@ class LdapUserHydratorTest extends TestCase
                 'usernameAttribute' => 'foo',
                 'attributes' => [
                     ['ldap_attr' => 'uid', 'user_method' => 'setUsername'],
+                    ['ldap_attr' => 'email', 'user_method' => 'setEmail'],
                     ['ldap_attr' => 'foo', 'user_method' => 'setAlias'],
                     ['ldap_attr' => 'bar', 'user_method' => 'setTitle'],
                     ['ldap_attr' => 'xxxxxxxx', 'user_method' => 'setAvatar'],
@@ -103,6 +104,7 @@ class LdapUserHydratorTest extends TestCase
 
         $ldapEntry = [
             'uid' => ['Karl-Heinz'],
+            'email' => [['karl-heinz@example.com', 'foo@example.com', 'bar@example.com']],
             'blub' => ['dfsdfsdf'],
             'foo' => ['bar'],
             'bar' => ['foo'],
@@ -119,7 +121,7 @@ class LdapUserHydratorTest extends TestCase
         self::assertEquals('bar', $user->getAlias());
         self::assertEquals('foo', $user->getTitle());
         self::assertEquals('https://www.example.com', $user->getAvatar());
-        self::assertEquals('Karl-Heinz', $user->getEmail());
+        self::assertEquals('karl-heinz@example.com', $user->getEmail());
 
         // make sure that the password was resetted in hydrate
         $pwdCheck = clone $user;
