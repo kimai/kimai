@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Twig\Environment;
 
-class PDFRenderer implements RendererInterface
+final class PDFRenderer implements RendererInterface
 {
     use RendererTrait;
 

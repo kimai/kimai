@@ -10,12 +10,14 @@
 namespace App\Export\Renderer;
 
 use App\Entity\Timesheet;
+use App\Event\TimesheetMetaDefinitionEvent;
 use App\Export\RendererInterface;
 use App\Repository\Query\TimesheetQuery;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
-class HtmlRenderer implements RendererInterface
+final class HtmlRenderer implements RendererInterface
 {
     use RendererTrait;
 
@@ -23,13 +25,15 @@ class HtmlRenderer implements RendererInterface
      * @var Environment
      */
     protected $twig;
-
     /**
-     * @param Environment $twig
+     * @var EventDispatcherInterface
      */
-    public function __construct(Environment $twig)
+    protected $dispatcher;
+
+    public function __construct(Environment $twig, EventDispatcherInterface $dispatcher)
     {
         $this->twig = $twig;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -42,9 +46,22 @@ class HtmlRenderer implements RendererInterface
      */
     public function render(array $timesheets, TimesheetQuery $query): Response
     {
+        $publicMetaFields = [];
+        foreach ($timesheets as $timesheet) {
+            $event = new TimesheetMetaDefinitionEvent($timesheet);
+            $this->dispatcher->dispatch(TimesheetMetaDefinitionEvent::class, $event);
+
+            foreach ($timesheet->getMetaFields() as $metaField) {
+                if ($metaField->isPublicVisible()) {
+                    $publicMetaFields[] = $metaField->getName();
+                }
+            }
+        }
+
         $content = $this->twig->render('export/renderer/default.html.twig', [
             'entries' => $timesheets,
             'query' => $query,
+            'metaFields' => array_unique($publicMetaFields),
             'summaries' => $this->calculateSummary($timesheets),
         ]);
 

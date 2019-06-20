@@ -13,7 +13,7 @@ use App\Export\RendererInterface;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
-class XlsxRenderer extends AbstractSpreadsheetRenderer implements RendererInterface
+final class XlsxRenderer extends AbstractSpreadsheetRenderer implements RendererInterface
 {
     /**
      * @return string

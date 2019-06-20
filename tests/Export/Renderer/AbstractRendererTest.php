@@ -15,6 +15,7 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
+use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Export\RendererInterface;
 use App\Repository\Query\TimesheetQuery;
@@ -22,6 +23,7 @@ use App\Twig\DateExtensions;
 use App\Twig\Extensions;
 use App\Utils\LocaleSettings;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -53,7 +55,9 @@ abstract class AbstractRendererTest extends KernelTestCase
         $dateExtension = new DateExtensions($localeSettings);
         $extensions = new Extensions($localeSettings);
 
-        return new $classname($translator, $dateExtension, $extensions);
+        $dispatcher = new EventDispatcher();
+
+        return new $classname($translator, $dateExtension, $extensions, $dispatcher);
     }
 
     /**
@@ -139,6 +143,8 @@ abstract class AbstractRendererTest extends KernelTestCase
             ->setEnd(new \DateTime('2019-06-16 12:06:40'))
             ->addTag((new Tag())->setName('foo'))
             ->addTag((new Tag())->setName('bar'))
+            ->setMetaField((new TimesheetMeta())->setName('foo')->setValue('meta-bar')->setIsPublicVisible(true))
+            ->setMetaField((new TimesheetMeta())->setName('foo2')->setValue('meta-bar2')->setIsPublicVisible(true))
         ;
 
         $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5];

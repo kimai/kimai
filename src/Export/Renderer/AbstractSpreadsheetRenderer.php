@@ -10,11 +10,13 @@
 namespace App\Export\Renderer;
 
 use App\Entity\Timesheet;
+use App\Event\TimesheetMetaDefinitionEvent;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\DateExtensions;
 use App\Twig\Extensions;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -26,27 +28,34 @@ abstract class AbstractSpreadsheetRenderer
      * @var DateExtensions
      */
     protected $dateExtension;
-
     /**
      * @var Extensions
      */
     protected $extension;
-
     /**
      * @var TranslatorInterface
      */
     protected $translator;
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $dispatcher;
 
     /**
      * @param TranslatorInterface $translator
      * @param DateExtensions $dateExtension
      * @param Extensions $extensions
      */
-    public function __construct(TranslatorInterface $translator, DateExtensions $dateExtension, Extensions $extensions)
-    {
+    public function __construct(
+        TranslatorInterface $translator,
+        DateExtensions $dateExtension,
+        Extensions $extensions,
+        EventDispatcherInterface $dispatcher
+    ) {
         $this->translator = $translator;
         $this->dateExtension = $dateExtension;
         $this->extension = $extensions;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -97,6 +106,20 @@ abstract class AbstractSpreadsheetRenderer
      */
     protected function fromArrayToSpreadsheet(array $timesheets, TimesheetQuery $query): Spreadsheet
     {
+        $publicMetaFields = [];
+        foreach ($timesheets as $timesheet) {
+            $event = new TimesheetMetaDefinitionEvent($timesheet);
+            $this->dispatcher->dispatch(TimesheetMetaDefinitionEvent::class, $event);
+
+            foreach ($timesheet->getMetaFields() as $metaField) {
+                if ($metaField->isPublicVisible()) {
+                    $publicMetaFields[] = $metaField->getName();
+                }
+            }
+        }
+
+        $publicMetaFields = array_unique($publicMetaFields);
+
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
@@ -112,10 +135,13 @@ abstract class AbstractSpreadsheetRenderer
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.description'));
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.exported'));
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.tags'));
+        foreach ($publicMetaFields as $metaFieldName) {
+            $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans($metaFieldName));
+        }
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.hourlyRate'));
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.fixedRate'));
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.duration'));
-        $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.rate'));
+        $sheet->setCellValueByColumnAndRow($recordsHeaderColumn, $recordsHeaderRow, $this->translator->trans('label.rate'));
 
         $entryHeaderRow = $recordsHeaderRow + 1;
 
@@ -148,21 +174,32 @@ abstract class AbstractSpreadsheetRenderer
             $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $timesheet->getDescription());
             $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $this->translator->trans($exported));
             $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, implode(',', $timesheet->getTagsAsArray()));
+            foreach ($publicMetaFields as $metaFieldName) {
+                $metaField = $timesheet->getMetaField($metaFieldName);
+                $metaFieldValue = '';
+                if (null !== $metaField && $metaField->isPublicVisible()) {
+                    $metaFieldValue = $metaField->getValue();
+                }
+                $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $metaFieldValue);
+            }
             $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $this->getFormattedMoney($timesheet->getHourlyRate(), $customerCurrency));
             $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $this->getFormattedMoney($timesheet->getFixedRate(), $customerCurrency));
             $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $this->getFormattedDuration($timesheet->getDuration()));
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $this->getFormattedMoney($timesheet->getRate(), $customerCurrency));
+            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $this->getFormattedMoney($timesheet->getRate(), $customerCurrency));
 
             $entryHeaderRow++;
         }
 
-        $sheet->setCellValueByColumnAndRow(12, $entryHeaderRow, $this->getFormattedDuration($durationTotal));
-        $sheet->setCellValueByColumnAndRow(13, $entryHeaderRow, $this->getFormattedMoney($rateTotal, $currency));
-        $sheet->getCellByColumnAndRow(12, $entryHeaderRow)->getStyle()->getBorders()->getTop()->setBorderStyle(Border::BORDER_THIN);
-        $sheet->getCellByColumnAndRow(12, $entryHeaderRow)->getStyle()->getFont()->setBold(true);
+        $cellDurationTotal = $recordsHeaderColumn - 1;
+        $cellRateTotal = $recordsHeaderColumn;
 
-        $sheet->getCellByColumnAndRow(13, $entryHeaderRow)->getStyle()->getBorders()->getTop()->setBorderStyle(Border::BORDER_THIN);
-        $sheet->getCellByColumnAndRow(13, $entryHeaderRow)->getStyle()->getFont()->setBold(true);
+        $sheet->setCellValueByColumnAndRow($cellDurationTotal, $entryHeaderRow, $this->getFormattedDuration($durationTotal));
+        $sheet->setCellValueByColumnAndRow($cellRateTotal, $entryHeaderRow, $this->getFormattedMoney($rateTotal, $currency));
+        $sheet->getCellByColumnAndRow($cellDurationTotal, $entryHeaderRow)->getStyle()->getBorders()->getTop()->setBorderStyle(Border::BORDER_THIN);
+        $sheet->getCellByColumnAndRow($cellDurationTotal, $entryHeaderRow)->getStyle()->getFont()->setBold(true);
+
+        $sheet->getCellByColumnAndRow($cellRateTotal, $entryHeaderRow)->getStyle()->getBorders()->getTop()->setBorderStyle(Border::BORDER_THIN);
+        $sheet->getCellByColumnAndRow($cellRateTotal, $entryHeaderRow)->getStyle()->getFont()->setBold(true);
 
         return $spreadsheet;
     }

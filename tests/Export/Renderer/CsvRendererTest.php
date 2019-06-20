@@ -74,9 +74,6 @@ class CsvRendererTest extends AbstractRendererTest
         foreach ($rows as $row) {
             $all[] = str_getcsv($row);
         }
-        self::assertEquals(7, count($all));
-        self::assertEquals(13, count($all[0]));
-        self::assertEquals('foo', $all[4][8]);
 
         $expected = [
             0 => '2019.06.16 12:00',
@@ -88,11 +85,17 @@ class CsvRendererTest extends AbstractRendererTest
             6 => '',
             7 => '',
             8 => 'foo,bar',
-            9 => '€0.00',
-            10 => '€84.00',
-            11 => '00:06 h',
-            12 => '€0.00',
+            9 => 'meta-bar',
+            10 => 'meta-bar2',
+            11 => '€0.00',
+            12 => '€84.00',
+            13 => '00:06 h',
+            14 => '€0.00',
         ];
+
+        self::assertEquals(7, count($all));
+        self::assertEquals(count($expected), count($all[0]));
+        self::assertEquals('foo', $all[4][8]);
 
         self::assertEquals($expected, $all[5]);
     }

@@ -12,6 +12,7 @@ namespace App\Tests\Export;
 use App\Export\Renderer\HtmlRenderer;
 use App\Export\ServiceExport;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Twig\Environment;
 
 /**
@@ -36,7 +37,8 @@ class ServiceExportTest extends TestCase
         $sut = new ServiceExport([]);
 
         $sut->addRenderer(new HtmlRenderer(
-            $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock()
+            $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock(),
+            new EventDispatcher()
         ));
 
         $this->assertEquals(1, count($sut->getRenderer()));
@@ -45,7 +47,8 @@ class ServiceExportTest extends TestCase
     public function testAddViaConstruct()
     {
         $renderer = [new HtmlRenderer(
-            $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock()
+            $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock(),
+            new EventDispatcher()
         )];
         $sut = new ServiceExport($renderer);
 
