@@ -16,6 +16,8 @@ use App\Model\Statistic\Day;
 use App\Model\Statistic\Month;
 use App\Model\Statistic\Year;
 use App\Model\TimesheetStatistic;
+use App\Repository\Paginator\TimesheetPaginator;
+use App\Repository\Query\BaseQuery;
 use App\Repository\Query\TimesheetQuery;
 use DateTime;
 use Doctrine\DBAL\Types\Type;
@@ -402,22 +404,56 @@ class TimesheetRepository extends AbstractRepository
         return $counter;
     }
 
+    protected function getPagerFantaByQuery(TimesheetQuery $query)
+    {
+        $paginator = new Pagerfanta($this->getTimesheetPaginatorByQuery($query));
+        $paginator->setMaxPerPage($query->getPageSize());
+        $paginator->setCurrentPage($query->getPage());
+
+        return $paginator;
+    }
+
+    protected function getTimesheetPaginatorByQuery(TimesheetQuery $query): TimesheetPaginator
+    {
+        $qb = $this->getQueryBuilderForQuery($query);
+        $qb->select($qb->expr()->countDistinct('t.id'))->resetDQLPart('orderBy');
+        $counter = (int) $qb->getQuery()->getSingleScalarResult();
+
+        $qb = $this->getQueryBuilderForQuery($query);
+        $qb->select('t');
+
+        $paginator = new TimesheetPaginator($qb, $counter);
+
+        return $paginator;
+    }
+
+    protected function getResultSetByQuery(TimesheetQuery $query): array
+    {
+        $paginator = $this->getTimesheetPaginatorByQuery($query);
+
+        return $paginator->getAll();
+    }
+
     /**
      * @param TimesheetQuery $query
-     * @return QueryBuilder|Pagerfanta|array
+     * @return QueryBuilder|Pagerfanta|Timesheet[]
      */
     public function findByQuery(TimesheetQuery $query)
     {
+        if (BaseQuery::RESULT_TYPE_PAGER === $query->getResultType()) {
+            return $this->getPagerFantaByQuery($query);
+        } elseif (BaseQuery::RESULT_TYPE_OBJECTS === $query->getResultType()) {
+            return $this->getResultSetByQuery($query);
+        }
+
+        return $this->getQueryBuilderForQuery($query);
+    }
+
+    protected function getQueryBuilderForQuery(TimesheetQuery $query): QueryBuilder
+    {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('t', 'a', 'p', 'c', 'u', 'tags')
-            ->from(Timesheet::class, 't')
-            ->leftJoin('t.activity', 'a')
-            ->leftJoin('t.user', 'u')
-            ->leftJoin('t.project', 'p')
-            ->leftJoin('p.customer', 'c')
-            ->leftJoin('t.tags', 'tags')
-            ->orderBy('t.' . $query->getOrderBy(), $query->getOrder());
+        $qb->from(Timesheet::class, 't');
 
         if (null !== $query->getUser()) {
             $qb->andWhere('t.user = :user')
@@ -467,7 +503,9 @@ class TimesheetRepository extends AbstractRepository
                 ->setParameter('tags', $query->getTags());
         }
 
-        return $this->getBaseQueryResult($qb, $query);
+        $qb->orderBy('t.' . $query->getOrderBy(), $query->getOrder());
+
+        return $qb;
     }
 
     /**
