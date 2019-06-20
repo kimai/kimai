@@ -36,27 +36,6 @@ final class TimesheetPaginator implements AdapterInterface
         $this->loader = new TimesheetLoader($query->getEntityManager());
     }
 
-    public function setPreloadMetaFields(bool $preload): TimesheetPaginator
-    {
-        $this->loader->setPreloadMetaFields($preload);
-
-        return $this;
-    }
-
-    public function setPreloadUser(bool $preload): TimesheetPaginator
-    {
-        $this->loader->setPreloadUser($preload);
-
-        return $this;
-    }
-
-    public function setPreloadTags(bool $preload): TimesheetPaginator
-    {
-        $this->loader->setPreloadTags($preload);
-
-        return $this;
-    }
-
     /**
      * {@inheritdoc}
      */

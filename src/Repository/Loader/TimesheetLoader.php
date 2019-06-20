@@ -24,27 +24,6 @@ final class TimesheetLoader implements LoaderInterface
         $this->loader = new TimesheetIdLoader($entityManager);
     }
 
-    public function setPreloadMetaFields(bool $preload): LoaderInterface
-    {
-        $this->loader->setPreloadMetaFields($preload);
-
-        return $this;
-    }
-
-    public function setPreloadUser(bool $preload): LoaderInterface
-    {
-        $this->loader->setPreloadUser($preload);
-
-        return $this;
-    }
-
-    public function setPreloadTags(bool $preload): LoaderInterface
-    {
-        $this->loader->setPreloadTags($preload);
-
-        return $this;
-    }
-
     /**
      * @param Timesheet[] $timesheets
      */
