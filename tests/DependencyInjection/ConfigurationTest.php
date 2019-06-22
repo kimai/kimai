@@ -198,6 +198,7 @@ class ConfigurationTest extends TestCase
                 'baseDn' => '',
                 'filter' => '',
                 'usernameAttribute' => 'uid',
+                'attributesFilter' => '(objectClass=*)',
                 'attributes' => [],
             ],
             'role' => [

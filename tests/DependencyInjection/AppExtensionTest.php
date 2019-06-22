@@ -138,6 +138,7 @@ class AppExtensionTest extends TestCase
                     'baseDn' => null,
                     'filter' => '',
                     'usernameAttribute' => 'uid',
+                    'attributesFilter' => '(objectClass=*)',
                     'attributes' => [],
                 ],
                 'role' => [

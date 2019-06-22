@@ -106,7 +106,6 @@ class LdapManager
     public function updateUser(User $user)
     {
         $baseDn = $user->getPreferenceValue('ldap.dn');
-        $filter = '(objectClass=*)';
 
         if (null === $baseDn) {
             throw new LdapDriverException('This account is not a registered LDAP user');
@@ -119,7 +118,7 @@ class LdapManager
         }
         $user->setPreferenceValue('ldap.dn', $baseDn);
 
-        $entries = $this->driver->search($baseDn, $filter);
+        $entries = $this->driver->search($baseDn, $this->params['attributesFilter']);
 
         if ($entries['count'] > 1) {
             throw new LdapDriverException('This search must only return a single user');
