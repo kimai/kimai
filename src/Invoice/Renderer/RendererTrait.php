@@ -82,6 +82,7 @@ trait RendererTrait
     {
         $customer = $model->getCustomer();
         $project = $model->getQuery()->getProject();
+        $activity = $model->getQuery()->getActivity();
         $currency = $model->getCalculator()->getCurrency();
 
         $values = [
@@ -108,6 +109,22 @@ trait RendererTrait
             'query.year' => $model->getQuery()->getBegin()->format('Y'),
         ];
 
+        if (null !== $activity) {
+            $values = array_merge($values, [
+                'activity.id' => $activity->getId(),
+                'activity.name' => $activity->getName(),
+                'activity.comment' => $activity->getComment(),
+            ]);
+
+            foreach ($activity->getMetaFields() as $metaField) {
+                if ($metaField->isVisible()) {
+                    $values = array_merge($values, [
+                        'activity.meta.' . $metaField->getName() => $metaField->getValue(),
+                    ]);
+                }
+            }
+        }
+
         if (null !== $project) {
             $values = array_merge($values, [
                 'project.id' => $project->getId(),
@@ -115,6 +132,14 @@ trait RendererTrait
                 'project.comment' => $project->getComment(),
                 'project.order_number' => $project->getOrderNumber(),
             ]);
+
+            foreach ($project->getMetaFields() as $metaField) {
+                if ($metaField->isVisible()) {
+                    $values = array_merge($values, [
+                        'project.meta.' . $metaField->getName() => $metaField->getValue(),
+                    ]);
+                }
+            }
         }
 
         if (null !== $customer) {
@@ -129,6 +154,14 @@ trait RendererTrait
                 'customer.homepage' => $customer->getHomepage(),
                 'customer.comment' => $customer->getComment(),
             ]);
+
+            foreach ($customer->getMetaFields() as $metaField) {
+                if ($metaField->isVisible()) {
+                    $values = array_merge($values, [
+                        'customer.meta.' . $metaField->getName() => $metaField->getValue(),
+                    ]);
+                }
+            }
         }
 
         return $values;
@@ -169,7 +202,7 @@ trait RendererTrait
         $begin = $timesheet->getBegin();
         $end = $timesheet->getEnd();
 
-        return [
+        $values = [
             'entry.row' => '',
             'entry.description' => $description,
             'entry.amount' => $amount,
@@ -196,6 +229,16 @@ trait RendererTrait
             'entry.customer' => $customer->getName(),
             'entry.customer_id' => $customer->getId(),
         ];
+
+        foreach ($timesheet->getMetaFields() as $metaField) {
+            if ($metaField->isVisible()) {
+                $values = array_merge($values, [
+                    'entry.meta.' . $metaField->getName() => $metaField->getValue(),
+                ]);
+            }
+        }
+
+        return $values;
     }
 
     /**

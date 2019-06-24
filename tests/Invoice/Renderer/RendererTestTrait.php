@@ -11,11 +11,15 @@ namespace App\Tests\Invoice\Renderer;
 
 use App\Configuration\LanguageFormattings;
 use App\Entity\Activity;
+use App\Entity\ActivityMeta;
 use App\Entity\Customer;
+use App\Entity\CustomerMeta;
 use App\Entity\InvoiceDocument;
 use App\Entity\InvoiceTemplate;
 use App\Entity\Project;
+use App\Entity\ProjectMeta;
 use App\Entity\Timesheet;
+use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Invoice\Calculator\DefaultCalculator;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
@@ -85,6 +89,8 @@ trait RendererTestTrait
     {
         $customer = new Customer();
         $customer->setCurrency('EUR');
+        $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
+
         $template = new InvoiceTemplate();
         $template->setTitle('a test invoice template title');
         $template->setVat(19);
@@ -92,10 +98,12 @@ trait RendererTestTrait
         $project = new Project();
         $project->setName('project name');
         $project->setCustomer($customer);
+        $project->setMetaField((new ProjectMeta())->setName('foo-project')->setValue('bar-project')->setIsVisible(true));
 
         $activity = new Activity();
         $activity->setName('activity description');
         $activity->setProject($project);
+        $activity->setMetaField((new ActivityMeta())->setName('foo-activity')->setValue('bar-activity')->setIsVisible(true));
 
         $userMethods = ['getId', 'getPreferenceValue', 'getUsername'];
         $user1 = $this->getMockBuilder(User::class)->setMethods($userMethods)->disableOriginalConstructor()->getMock();
@@ -116,6 +124,7 @@ trait RendererTestTrait
             ->setProject($project)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
+            ->setMetaField((new TimesheetMeta())->setName('foo-timesheet')->setValue('bar-timesheet')->setIsVisible(true));
         ;
 
         $timesheet2 = new Timesheet();
@@ -127,6 +136,8 @@ trait RendererTestTrait
             ->setProject($project)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
+            ->setMetaField((new TimesheetMeta())->setName('foo-timesheet')->setValue('bar-timesheet'))
+            ->setMetaField((new TimesheetMeta())->setName('foo-timesheet2')->setValue('bar-timesheet2')->setIsVisible(true))
         ;
 
         $timesheet3 = new Timesheet();
@@ -138,6 +149,7 @@ trait RendererTestTrait
             ->setProject($project)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
+            ->setMetaField((new TimesheetMeta())->setName('foo-timesheet')->setValue('bar-timesheet1')->setIsVisible(true))
         ;
 
         $timesheet4 = new Timesheet();
@@ -149,6 +161,7 @@ trait RendererTestTrait
             ->setProject($project)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
+            ->setMetaField((new TimesheetMeta())->setName('foo-timesheet3')->setValue('bluuuub')->setIsVisible(true))
         ;
 
         $timesheet5 = new Timesheet();
@@ -193,6 +206,8 @@ trait RendererTestTrait
     {
         $customer = new Customer();
         $customer->setCurrency('USD');
+        $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
+
         $template = new InvoiceTemplate();
         $template->setTitle('a test invoice template title');
         $template->setVat(19);
@@ -200,10 +215,12 @@ trait RendererTestTrait
         $project = new Project();
         $project->setName('project name');
         $project->setCustomer($customer);
+        $project->setMetaField((new ProjectMeta())->setName('foo-project')->setValue('bar-project')->setIsVisible(true));
 
         $activity = new Activity();
         $activity->setName('activity description');
         $activity->setProject($project);
+        $activity->setMetaField((new ActivityMeta())->setName('foo-activity')->setValue('bar-activity')->setIsVisible(true));
 
         $userMethods = ['getId', 'getPreferenceValue', 'getUsername'];
         $user1 = $this->getMockBuilder(User::class)->setMethods($userMethods)->disableOriginalConstructor()->getMock();
