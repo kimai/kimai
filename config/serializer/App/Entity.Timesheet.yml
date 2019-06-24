@@ -31,7 +31,7 @@ App\Entity\Timesheet:
             exclude: true
         meta:
             include: true
-            groups: [Entity]
+            groups: [Default]
     virtual_properties:
         getBegin:
             serialized_name: begin

@@ -63,4 +63,4 @@ App\Entity\Customer:
             include: true
         meta:
             include: true
-            groups: [Entity]
+            groups: [Default]

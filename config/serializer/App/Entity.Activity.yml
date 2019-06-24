@@ -34,7 +34,7 @@ App\Entity\Activity:
             include: true
         meta:
             include: true
-            groups: [Entity]
+            groups: [Default]
     virtual_properties:
         getProject:
             serialized_name: project
