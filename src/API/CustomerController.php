@@ -13,7 +13,7 @@ namespace App\API;
 
 use App\Entity\Customer;
 use App\Event\CustomerMetaDefinitionEvent;
-use App\Form\CustomerEditForm;
+use App\Form\API\CustomerApiEditForm;
 use App\Repository\CustomerRepository;
 use App\Repository\Query\CustomerQuery;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -163,9 +163,7 @@ class CustomerController extends BaseApiController
 
         $customer = new Customer();
 
-        $form = $this->createForm(CustomerEditForm::class, $customer, [
-            'csrf_protection' => false,
-        ]);
+        $form = $this->createForm(CustomerApiEditForm::class, $customer);
 
         $form->submit($request->request->all());
 
@@ -227,9 +225,7 @@ class CustomerController extends BaseApiController
             throw new AccessDeniedHttpException('User cannot update customer');
         }
 
-        $form = $this->createForm(CustomerEditForm::class, $customer, [
-            'csrf_protection' => false,
-        ]);
+        $form = $this->createForm(CustomerApiEditForm::class, $customer);
 
         $form->setData($customer);
         $form->submit($request->request->all(), false);

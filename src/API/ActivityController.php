@@ -13,7 +13,7 @@ namespace App\API;
 
 use App\Entity\Activity;
 use App\Event\ActivityMetaDefinitionEvent;
-use App\Form\ActivityEditForm;
+use App\Form\API\ActivityApiEditForm;
 use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityQuery;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -185,9 +185,7 @@ class ActivityController extends BaseApiController
 
         $activity = new Activity();
 
-        $form = $this->createForm(ActivityEditForm::class, $activity, [
-            'csrf_protection' => false,
-        ]);
+        $form = $this->createForm(ActivityApiEditForm::class, $activity);
 
         $form->submit($request->request->all());
 
@@ -249,9 +247,7 @@ class ActivityController extends BaseApiController
             throw new AccessDeniedHttpException('User cannot update activity');
         }
 
-        $form = $this->createForm(ActivityEditForm::class, $activity, [
-            'csrf_protection' => false,
-        ]);
+        $form = $this->createForm(ActivityApiEditForm::class, $activity);
 
         $form->setData($activity);
         $form->submit($request->request->all(), false);

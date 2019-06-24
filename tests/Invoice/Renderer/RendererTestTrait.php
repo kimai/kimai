@@ -125,7 +125,6 @@ trait RendererTestTrait
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
             ->setMetaField((new TimesheetMeta())->setName('foo-timesheet')->setValue('bar-timesheet')->setIsVisible(true));
-        ;
 
         $timesheet2 = new Timesheet();
         $timesheet2

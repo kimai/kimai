@@ -13,7 +13,7 @@ namespace App\API;
 
 use App\Entity\Project;
 use App\Event\ProjectMetaDefinitionEvent;
-use App\Form\ProjectEditForm;
+use App\Form\API\ProjectApiEditForm;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -169,9 +169,7 @@ class ProjectController extends BaseApiController
 
         $project = new Project();
 
-        $form = $this->createForm(ProjectEditForm::class, $project, [
-            'csrf_protection' => false,
-        ]);
+        $form = $this->createForm(ProjectApiEditForm::class, $project);
 
         $form->submit($request->request->all());
 
@@ -233,9 +231,7 @@ class ProjectController extends BaseApiController
             throw new AccessDeniedHttpException('User cannot update project');
         }
 
-        $form = $this->createForm(ProjectEditForm::class, $project, [
-            'csrf_protection' => false,
-        ]);
+        $form = $this->createForm(ProjectApiEditForm::class, $project);
 
         $form->setData($project);
         $form->submit($request->request->all(), false);
