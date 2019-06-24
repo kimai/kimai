@@ -819,12 +819,12 @@ class TimesheetControllerTest extends APIControllerBaseTest
     protected function assertDefaultStructure(array $result, $full = true)
     {
         $expectedKeys = [
-            'id', 'begin', 'end', 'duration', 'description', 'rate', 'activity', 'project', 'tags', 'user'
+            'id', 'begin', 'end', 'duration', 'description', 'rate', 'activity', 'project', 'tags', 'user', 'meta'
         ];
 
         if ($full) {
             $expectedKeys = array_merge($expectedKeys, [
-                'exported', 'fixedRate', 'hourlyRate', 'meta'
+                'exported', 'fixedRate', 'hourlyRate'
             ]);
         }
 
