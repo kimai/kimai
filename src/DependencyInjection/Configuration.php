@@ -564,6 +564,7 @@ class Configuration implements ConfigurationInterface
                                 ->thenInvalid('The ldap.user.filter must be enclosed by a matching number of parentheses "()" and must NOT contain a "%%s" replacer')
                             ->end()
                         ->end()
+                        ->scalarNode('attributesFilter')->defaultValue('(objectClass=*)')->end()
                         ->scalarNode('usernameAttribute')->defaultValue('uid')->end()
                         ->arrayNode('attributes')
                             ->defaultValue([])

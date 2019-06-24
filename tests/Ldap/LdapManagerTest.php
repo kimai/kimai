@@ -43,6 +43,7 @@ class LdapManagerTest extends TestCase
                 'attributes' => [],
                 'filter' => '(&(objectClass=inetOrgPerson))',
                 'usernameAttribute' => 'uid',
+                'attributesFilter' => '(objectClass=*)',
                 'baseDn' => 'ou=users, dc=kimai, dc=org',
             ],
             'role' => $roleConfig,
