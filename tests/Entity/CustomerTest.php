@@ -10,6 +10,8 @@
 namespace App\Tests\Entity;
 
 use App\Entity\Customer;
+use App\Entity\CustomerMeta;
+use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -46,6 +48,9 @@ class CustomerTest extends TestCase
         $this->assertNull($sut->getColor());
         $this->assertEquals(0.0, $sut->getBudget());
         $this->assertEquals(0, $sut->getTimeBudget());
+        $this->assertInstanceOf(Collection::class, $sut->getMetaFields());
+        $this->assertEquals(0, $sut->getMetaFields()->count());
+        $this->assertNull($sut->getMetaField('foo'));
     }
 
     public function testSetterAndGetter()
@@ -96,5 +101,32 @@ class CustomerTest extends TestCase
 
         $this->assertInstanceOf(Customer::class, $sut->setTimeBudget(937321));
         $this->assertEquals(937321, $sut->getTimeBudget());
+    }
+
+    public function testMetaFields()
+    {
+        $sut = new Customer();
+        $meta = new CustomerMeta();
+        $meta->setName('foo')->setValue('bar')->setType('test');
+        $this->assertInstanceOf(Customer::class, $sut->setMetaField($meta));
+        self::assertEquals(1, $sut->getMetaFields()->count());
+        $result = $sut->getMetaField('foo');
+        self::assertSame($result, $meta);
+        self::assertEquals('test', $result->getType());
+
+        $meta2 = new CustomerMeta();
+        $meta2->setName('foo')->setValue('bar')->setType('test2');
+        $this->assertInstanceOf(Customer::class, $sut->setMetaField($meta2));
+        self::assertEquals(1, $sut->getMetaFields()->count());
+        self::assertCount(0, $sut->getVisibleMetaFields());
+
+        $result = $sut->getMetaField('foo');
+        self::assertSame($result, $meta);
+        self::assertEquals('test2', $result->getType());
+
+        $sut->setMetaField((new CustomerMeta())->setName('blub')->setIsVisible(true));
+        $sut->setMetaField((new CustomerMeta())->setName('blab')->setIsVisible(true));
+        self::assertEquals(3, $sut->getMetaFields()->count());
+        self::assertCount(2, $sut->getVisibleMetaFields());
     }
 }

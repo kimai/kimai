@@ -14,7 +14,7 @@ namespace App\API;
 use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet;
 use App\Entity\User;
-use App\Form\TimesheetEditForm;
+use App\Form\API\TimesheetApiEditForm;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TagRepository;
 use App\Repository\TimesheetRepository;
@@ -234,17 +234,18 @@ class TimesheetController extends BaseApiController
      */
     public function getAction($id)
     {
-        $timesheet = $this->repository->find($id);
+        /** @var Timesheet $data */
+        $data = $this->repository->find($id);
 
-        if (null === $timesheet) {
+        if (null === $data) {
             throw new NotFoundException();
         }
 
-        if (!$this->isGranted('view', $timesheet)) {
+        if (!$this->isGranted('view', $data)) {
             throw new AccessDeniedHttpException('You are not allowed to view this timesheet');
         }
 
-        $view = new View($timesheet, 200);
+        $view = new View($data, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
 
         return $this->viewHandler->handle($view);
@@ -284,13 +285,11 @@ class TimesheetController extends BaseApiController
 
         $mode = $this->getTrackingMode();
 
-        $form = $this->createForm(TimesheetEditForm::class, $timesheet, [
-            'csrf_protection' => false,
+        $form = $this->createForm(TimesheetApiEditForm::class, $timesheet, [
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
             'allow_begin_datetime' => $mode->canUpdateTimesWithAPI(),
             'allow_end_datetime' => $mode->canUpdateTimesWithAPI(),
-            'allow_duration' => false,
             'date_format' => self::DATE_FORMAT,
         ]);
 
@@ -366,13 +365,11 @@ class TimesheetController extends BaseApiController
 
         $mode = $this->getTrackingMode();
 
-        $form = $this->createForm(TimesheetEditForm::class, $timesheet, [
-            'csrf_protection' => false,
+        $form = $this->createForm(TimesheetApiEditForm::class, $timesheet, [
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
             'allow_begin_datetime' => $mode->canUpdateTimesWithAPI(),
             'allow_end_datetime' => $mode->canUpdateTimesWithAPI(),
-            'allow_duration' => false,
             'date_format' => self::DATE_FORMAT,
         ]);
 

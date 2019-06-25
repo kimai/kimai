@@ -13,9 +13,9 @@ use App\Entity\User;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
- * This event should be used, if a user profile is loaded and we full data including dynamic user preferences
+ * This event should be used, if a user profile is loaded and want to fill the dynamic user preferences
  */
-class PrepareUserEvent extends Event
+final class PrepareUserEvent extends Event
 {
     public const PREPARE = 'app.prepare_user';
 

@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="kimai2_projects")
  * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
  */
-class Project
+class Project implements EntityWithMetaFields
 {
     /**
      * @var int
@@ -89,10 +89,18 @@ class Project
      */
     private $timesheets;
 
+    /**
+     * @var ProjectMeta[]|Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\ProjectMeta", mappedBy="project", cascade={"persist"})
+     */
+    private $meta;
+
     public function __construct()
     {
         $this->activities = new ArrayCollection();
         $this->timesheets = new ArrayCollection();
+        $this->meta = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -186,6 +194,55 @@ class Project
     public function setOrderNumber($orderNumber): Project
     {
         $this->orderNumber = $orderNumber;
+
+        return $this;
+    }
+
+    /**
+     * @internal only here for symfony forms
+     * @return Collection|MetaTableTypeInterface[]
+     */
+    public function getMetaFields(): Collection
+    {
+        return $this->meta;
+    }
+
+    /**
+     * @return MetaTableTypeInterface[]
+     */
+    public function getVisibleMetaFields(): array
+    {
+        $all = [];
+        foreach ($this->meta as $meta) {
+            if ($meta->isVisible()) {
+                $all[] = $meta;
+            }
+        }
+
+        return $all;
+    }
+
+    public function getMetaField(string $name): ?MetaTableTypeInterface
+    {
+        foreach ($this->meta as $field) {
+            if ($field->getName() === $name) {
+                return $field;
+            }
+        }
+
+        return null;
+    }
+
+    public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields
+    {
+        if (null === ($current = $this->getMetaField($meta->getName()))) {
+            $meta->setEntity($this);
+            $this->meta->add($meta);
+
+            return $this;
+        }
+
+        $current->merge($meta);
 
         return $this;
     }

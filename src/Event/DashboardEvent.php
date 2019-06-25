@@ -13,7 +13,7 @@ use App\Entity\User;
 use App\Widget\WidgetContainerInterface;
 use Symfony\Component\EventDispatcher\Event;
 
-class DashboardEvent extends Event
+final class DashboardEvent extends Event
 {
     public const DASHBOARD = 'app.dashboard';
 

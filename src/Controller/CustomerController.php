@@ -11,6 +11,7 @@ namespace App\Controller;
 
 use App\Configuration\FormConfiguration;
 use App\Entity\Customer;
+use App\Event\CustomerMetaDefinitionEvent;
 use App\Form\CustomerEditForm;
 use App\Form\Toolbar\CustomerToolbarForm;
 use App\Form\Type\CustomerType;
@@ -19,7 +20,11 @@ use App\Repository\Query\CustomerQuery;
 use Doctrine\ORM\ORMException;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -38,15 +43,20 @@ class CustomerController extends AbstractController
      * @var FormConfiguration
      */
     private $configuration;
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $dispatcher;
 
     /**
      * @param CustomerRepository $repository
      * @param FormConfiguration $configuration
      */
-    public function __construct(CustomerRepository $repository, FormConfiguration $configuration)
+    public function __construct(CustomerRepository $repository, FormConfiguration $configuration, EventDispatcherInterface $dispatcher)
     {
         $this->repository = $repository;
         $this->configuration = $configuration;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -64,7 +74,7 @@ class CustomerController extends AbstractController
      *
      * @param int $page
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function indexAction($page, Request $request)
     {
@@ -97,7 +107,7 @@ class CustomerController extends AbstractController
      * @Security("is_granted('create_customer')")
      *
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     public function createAction(Request $request)
     {
@@ -114,7 +124,7 @@ class CustomerController extends AbstractController
      * @Security("is_granted('budget', customer)")
      *
      * @param Customer $customer
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function budgetAction(Customer $customer)
     {
@@ -130,7 +140,7 @@ class CustomerController extends AbstractController
      *
      * @param Customer $customer
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     public function editAction(Customer $customer, Request $request)
     {
@@ -143,7 +153,7 @@ class CustomerController extends AbstractController
      *
      * @param Customer $customer
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     public function deleteAction(Customer $customer, Request $request)
     {
@@ -195,22 +205,26 @@ class CustomerController extends AbstractController
     /**
      * @param Customer $customer
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     protected function renderCustomerForm(Customer $customer, Request $request)
     {
+        $event = new CustomerMetaDefinitionEvent($customer);
+        $this->dispatcher->dispatch(CustomerMetaDefinitionEvent::class, $event);
+
         $editForm = $this->createEditForm($customer);
 
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($customer);
-            $entityManager->flush();
+            try {
+                $this->getRepository()->saveCustomer($customer);
+                $this->flashSuccess('action.update.success');
 
-            $this->flashSuccess('action.update.success');
-
-            return $this->redirectToRoute('admin_customer');
+                return $this->redirectToRoute('admin_customer');
+            } catch (ORMException $ex) {
+                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            }
         }
 
         return $this->render('customer/edit.html.twig', [
@@ -221,7 +235,7 @@ class CustomerController extends AbstractController
 
     /**
      * @param CustomerQuery $query
-     * @return \Symfony\Component\Form\FormInterface
+     * @return FormInterface
      */
     protected function getToolbarForm(CustomerQuery $query)
     {
@@ -235,7 +249,7 @@ class CustomerController extends AbstractController
 
     /**
      * @param Customer $customer
-     * @return \Symfony\Component\Form\FormInterface
+     * @return FormInterface
      */
     private function createEditForm(Customer $customer)
     {

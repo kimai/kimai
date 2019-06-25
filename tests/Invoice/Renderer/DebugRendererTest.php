@@ -20,14 +20,14 @@ class DebugRendererTest extends TestCase
 
     public function getTestModel()
     {
-        yield [$this->getInvoiceModel(), '1,947.99', 5, 5, 1, 2, 2, true];
-        yield [$this->getInvoiceModelOneEntry(), '293.27', 1, 1, 0, 1, 0, false];
+        yield [$this->getInvoiceModel(), '1,947.99', 5, 5, 1, 2, 2, true, [['entry.meta.foo-timesheet'], ['entry.meta.foo-timesheet2'], ['entry.meta.foo-timesheet'], ['entry.meta.foo-timesheet3']]];
+        yield [$this->getInvoiceModelOneEntry(), '293.27', 1, 1, 0, 1, 0, false, []];
     }
 
     /**
      * @dataProvider getTestModel
      */
-    public function testRender(InvoiceModel $model, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3, $hasProject)
+    public function testRender(InvoiceModel $model, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3, $hasProject, $metaFields = [])
     {
         $document = new InvoiceDocument(new \SplFileInfo(__DIR__ . '/DebugRenderer.php'));
         $sut = new DebugRenderer();
@@ -39,14 +39,16 @@ class DebugRendererTest extends TestCase
         $rows = $data['entries'];
         $this->assertEquals($expectedRows, count($rows));
 
+        $i = 0;
         foreach ($rows as $row) {
-            $this->assertEntryStructure($row);
+            $meta = isset($metaFields[$i]) ? $metaFields[$i++] : [];
+            $this->assertEntryStructure($row, $meta);
         }
 
         // TODO check values or formats?
     }
 
-    protected function assertModelStructure(array $model, $hasProject = true)
+    protected function assertModelStructure(array $model, $hasProject = true, $hasActivity = false)
     {
         $keys = [
             'invoice.due_date',
@@ -77,6 +79,11 @@ class DebugRendererTest extends TestCase
             'customer.number',
             'customer.homepage',
             'customer.comment',
+            'customer.meta.foo-customer',
+            'activity.id',
+            'activity.name',
+            'activity.comment',
+            'activity.meta.foo-activity',
         ];
 
         if ($hasProject) {
@@ -85,6 +92,15 @@ class DebugRendererTest extends TestCase
                 'project.name',
                 'project.comment',
                 'project.order_number',
+                'project.meta.foo-project',
+            ]);
+        }
+
+        if ($hasActivity) {
+            $keys = array_merge($keys, [
+                'activity.id',
+                'activity.name',
+                'activity.comment',
             ]);
         }
 
@@ -95,7 +111,7 @@ class DebugRendererTest extends TestCase
         $this->assertEquals($keys, $givenKeys);
     }
 
-    protected function assertEntryStructure(array $model)
+    protected function assertEntryStructure(array $model, array $metaFields)
     {
         $keys = [
             'entry.row',
@@ -125,6 +141,8 @@ class DebugRendererTest extends TestCase
             'entry.customer_id',
         ];
 
+        $keys = array_merge($keys, $metaFields);
+
         foreach ($keys as $key) {
             $this->assertArrayHasKey($key, $model);
         }
@@ -134,7 +152,7 @@ class DebugRendererTest extends TestCase
         $givenKeys = array_keys($model);
         sort($givenKeys);
 
-        $this->assertEquals(count($keys), count($givenKeys));
         $this->assertEquals($expectedKeys, $givenKeys);
+        $this->assertEquals(count($keys), count($givenKeys));
     }
 }

@@ -1,4 +1,5 @@
 {% embed 'embeds/modal.html.twig' %}
+    {% set used = used|default(false) %}
     {% block modal_id %}form_modal{% endblock %}
     {% block modal_class %}{% if used %}modal-danger{% endif %}{% endblock %}
     {% block modal_before %}{{ form_start(form) }}{% endblock %}

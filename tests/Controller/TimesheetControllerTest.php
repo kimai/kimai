@@ -13,6 +13,7 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Form\Type\DateRangeType;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use App\Tests\Mocks\TimesheetTestMetaFieldSubscriberMock;
 
 /**
  * @group integration
@@ -142,6 +143,18 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertEquals(0, $timesheet->getRate());
         $this->assertNull($timesheet->getHourlyRate());
         $this->assertNull($timesheet->getFixedRate());
+    }
+
+    public function testCreateActionShowsMetaFields()
+    {
+        $client = $this->getClientForAuthenticatedUser();
+        $client->getContainer()->get('event_dispatcher')->addSubscriber(new TimesheetTestMetaFieldSubscriberMock());
+        $this->request($client, '/timesheet/create');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $this->assertTrue($form->has('timesheet_edit_form[metaFields][0][value]'));
+        $this->assertFalse($form->has('timesheet_edit_form[metaFields][1][value]'));
     }
 
     public function testCreateActionDoesNotShowRateFieldsForUser()

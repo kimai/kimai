@@ -82,7 +82,6 @@ final class TimesheetIdLoader implements LoaderInterface
             ->getQuery()
             ->execute();
 
-        /*
         $qb = $em->createQueryBuilder();
         $qb->select('PARTIAL t.{id}', 'meta')
             ->from(Timesheet::class, 't')
@@ -90,6 +89,5 @@ final class TimesheetIdLoader implements LoaderInterface
             ->andWhere($qb->expr()->in('t.id', $ids))
             ->getQuery()
             ->execute();
-        */
     }
 }

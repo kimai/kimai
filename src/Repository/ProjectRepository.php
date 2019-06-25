@@ -26,6 +26,18 @@ use Pagerfanta\Pagerfanta;
 class ProjectRepository extends AbstractRepository
 {
     /**
+     * @param Project $project
+     * @throws ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function saveProject(Project $project)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($project);
+        $entityManager->flush();
+    }
+
+    /**
      * @param int $id
      * @return null|Project
      */

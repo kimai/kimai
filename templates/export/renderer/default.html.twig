@@ -1,6 +1,7 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% extends 'export/layout.html.twig' %}
 
+{% set columnTitles = {} %}
 {% set columns = {
     'date': true,
     'username': false,
@@ -8,13 +9,21 @@
     'project': true,
     'activity': true,
     'description': false,
-    'tags': false,
     'exported': false,
+    'tags': false,
+} %}
+
+{% for id, metaField in metaFields %}
+    {% set columns = columns|merge({ (metaField): true}) %}
+    {% set columnTitles = columnTitles|merge({ (metaField): (metaField)}) %}
+{% endfor %}
+
+{% set columns = columns|merge({
     'hourlyRate': false,
     'fixedRate': false,
     'duration': 'label.duration',
     'rate': 'label.rate',
-} %}
+}) %}
 
 {% block javascripts %}
     <script type="text/javascript">
@@ -97,7 +106,7 @@
                     <div class="form-group">
                         <label class="control-label" for="records-column-{{ columnId }}">
                             <input type="checkbox" class="column-visibility-changer" id="records-column-{{ columnId }}" name="{{ columnId }}" {% if visibility %}checked="checked"{% endif %}>
-                            {{ ('label.'~columnId)|trans }}
+                            {{ columnTitles[columnId]|default('label.'~columnId)|trans }}
                         </label>
                     </div>
                 {% endfor %}
@@ -229,7 +238,9 @@
                 <thead>
                 <tr>
                     {% for columnId, visibility in columns %}
-                    <th class="column column-{{ columnId }}" {% if not visibility %}style="display: none"{% endif %}>{{ ('label.'~columnId)|trans }}</th>
+                    <th class="column column-{{ columnId }}" {% if not visibility %}style="display: none"{% endif %}>
+                        {{ columnTitles[columnId]|default('label.'~columnId)|trans }}
+                    </th>
                     {% endfor %}
                 </tr>
                 </thead>
@@ -268,11 +279,6 @@
                                 {{ entry.description|desc2html }}
                             {% endif %}
                         </td>
-                        <td class="column-tags" {% if not columns.tags %}style="display: none"{% endif %}>
-                            {% if entry.tags is not empty %}
-                                {{ entry.tagsAsArray|join(', ') }}
-                            {% endif %}
-                        </td>
                         <td class="column-exported" {% if not columns.exported %}style="display: none"{% endif %}>
                             {% if entry.exported %}
                                 {{ 'entryState.exported'|trans }}
@@ -280,6 +286,19 @@
                                 {{ 'entryState.not_exported'|trans }}
                             {% endif %}
                         </td>
+                        <td class="column-tags" {% if not columns.tags %}style="display: none"{% endif %}>
+                            {% if entry.tags is not empty %}
+                                {{ entry.tagsAsArray|join(', ') }}
+                            {% endif %}
+                        </td>
+                        {% for id, metaFieldName in metaFields %}
+                            <td class="column-{{ metaFieldName }} text-nowrap" {% if not columns[metaFieldName] %}style="display: none"{% endif %}>
+                                {% set metaField = entry.metaField(metaFieldName) %}
+                                {% if not metaField is null and metaField.visible %}
+                                    {{ metaField.value }}
+                                {% endif %}
+                            </td>
+                        {% endfor %}
                         <td class="column-hourlyRate text-nowrap" {% if not columns.hourlyRate %}style="display: none"{% endif %}>
                             {{ entry.hourlyRate|money(entry.project.customer.currency) }}
                         </td>

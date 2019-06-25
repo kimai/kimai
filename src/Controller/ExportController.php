@@ -16,7 +16,9 @@ use App\Repository\Query\ExportQuery;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\UserDateTimeFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -76,7 +78,7 @@ class ExportController extends AbstractController
      * @Security("is_granted('view_export')")
      *
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      * @throws \Exception
      */
     public function indexAction(Request $request)
@@ -105,7 +107,7 @@ class ExportController extends AbstractController
      * @Security("is_granted('create_export')")
      *
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      * @throws \Exception
      */
     public function export(Request $request)
@@ -126,8 +128,6 @@ class ExportController extends AbstractController
 
         $renderer = $this->export->getRendererById($type);
 
-        // this code should not be reached, as the query already filters invalid values
-        // when trying to call setType() with an unknown value
         if (null === $renderer) {
             throw $this->createNotFoundException('Unknown export renderer');
         }
@@ -141,7 +141,7 @@ class ExportController extends AbstractController
      * @param ExportQuery $query
      * @return Timesheet[]
      */
-    protected function getEntries(ExportQuery $query)
+    protected function getEntries(ExportQuery $query): array
     {
         $query->getBegin()->setTime(0, 0, 0);
         $query->getEnd()->setTime(23, 59, 59);
@@ -151,9 +151,9 @@ class ExportController extends AbstractController
 
     /**
      * @param ExportQuery $query
-     * @return \Symfony\Component\Form\FormInterface
+     * @return FormInterface
      */
-    protected function getToolbarForm(ExportQuery $query)
+    protected function getToolbarForm(ExportQuery $query): FormInterface
     {
         return $this->createForm(ExportToolbarForm::class, $query, [
             'action' => $this->generateUrl('export', []),

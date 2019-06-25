@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="kimai2_activities")
  * @ORM\Entity(repositoryClass="App\Repository\ActivityRepository")
  */
-class Activity
+class Activity implements EntityWithMetaFields
 {
     /**
      * @var int
@@ -73,9 +73,17 @@ class Activity
     use ColorTrait;
     use BudgetTrait;
 
+    /**
+     * @var ActivityMeta[]|Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\ActivityMeta", mappedBy="activity", cascade={"persist"})
+     */
+    private $meta;
+
     public function __construct()
     {
         $this->timesheets = new ArrayCollection();
+        $this->meta = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -137,6 +145,55 @@ class Activity
     public function getVisible(): bool
     {
         return $this->visible;
+    }
+
+    /**
+     * @internal only here for symfony forms
+     * @return Collection|MetaTableTypeInterface[]
+     */
+    public function getMetaFields(): Collection
+    {
+        return $this->meta;
+    }
+
+    /**
+     * @return MetaTableTypeInterface[]
+     */
+    public function getVisibleMetaFields(): array
+    {
+        $all = [];
+        foreach ($this->meta as $meta) {
+            if ($meta->isVisible()) {
+                $all[] = $meta;
+            }
+        }
+
+        return $all;
+    }
+
+    public function getMetaField(string $name): ?MetaTableTypeInterface
+    {
+        foreach ($this->meta as $field) {
+            if ($field->getName() === $name) {
+                return $field;
+            }
+        }
+
+        return null;
+    }
+
+    public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields
+    {
+        if (null === ($current = $this->getMetaField($meta->getName()))) {
+            $meta->setEntity($this);
+            $this->meta->add($meta);
+
+            return $this;
+        }
+
+        $current->merge($meta);
+
+        return $this;
     }
 
     /**

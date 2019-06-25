@@ -15,7 +15,7 @@ use App\Repository\Query\TimesheetQuery;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
-class HtmlRenderer implements RendererInterface
+final class HtmlRenderer implements RendererInterface
 {
     use RendererTrait;
 
@@ -24,9 +24,6 @@ class HtmlRenderer implements RendererInterface
      */
     protected $twig;
 
-    /**
-     * @param Environment $twig
-     */
     public function __construct(Environment $twig)
     {
         $this->twig = $twig;
@@ -42,9 +39,17 @@ class HtmlRenderer implements RendererInterface
      */
     public function render(array $timesheets, TimesheetQuery $query): Response
     {
+        $publicMetaFields = [];
+        foreach ($timesheets as $timesheet) {
+            foreach ($timesheet->getVisibleMetaFields() as $metaField) {
+                $publicMetaFields[] = $metaField->getName();
+            }
+        }
+
         $content = $this->twig->render('export/renderer/default.html.twig', [
             'entries' => $timesheets,
             'query' => $query,
+            'metaFields' => array_unique($publicMetaFields),
             'summaries' => $this->calculateSummary($timesheets),
         ]);
 

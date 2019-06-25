@@ -23,6 +23,18 @@ use Pagerfanta\Pagerfanta;
 class CustomerRepository extends AbstractRepository
 {
     /**
+     * @param Customer $customer
+     * @throws ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function saveCustomer(Customer $customer)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($customer);
+        $entityManager->flush();
+    }
+
+    /**
      * @param int $id
      * @return null|Customer
      */

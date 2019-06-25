@@ -14,6 +14,7 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -75,6 +76,18 @@ class CustomerControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertHasDataTable($client);
         $this->assertHasFlashSuccess($client);
+    }
+
+    public function testCreateActionShowsMetaFields()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $client->getContainer()->get('event_dispatcher')->addSubscriber(new CustomerTestMetaFieldSubscriberMock());
+        $this->assertAccessIsGranted($client, '/admin/customer/create');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=customer_edit_form]')->form();
+        $this->assertTrue($form->has('customer_edit_form[metaFields][0][value]'));
+        $this->assertFalse($form->has('customer_edit_form[metaFields][1][value]'));
     }
 
     public function testEditAction()

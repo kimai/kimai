@@ -16,7 +16,7 @@ use Symfony\Component\EventDispatcher\Event;
 /**
  * This event should be used, if further user preferences should added dynamically
  */
-class UserPreferenceEvent extends Event
+final class UserPreferenceEvent extends Event
 {
     public const CONFIGURE = 'app.user_preferences';
 

@@ -15,6 +15,7 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
+use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Export\RendererInterface;
 use App\Repository\Query\TimesheetQuery;
@@ -139,6 +140,8 @@ abstract class AbstractRendererTest extends KernelTestCase
             ->setEnd(new \DateTime('2019-06-16 12:06:40'))
             ->addTag((new Tag())->setName('foo'))
             ->addTag((new Tag())->setName('bar'))
+            ->setMetaField((new TimesheetMeta())->setName('foo')->setValue('meta-bar')->setIsVisible(true))
+            ->setMetaField((new TimesheetMeta())->setName('foo2')->setValue('meta-bar2')->setIsVisible(true))
         ;
 
         $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5];

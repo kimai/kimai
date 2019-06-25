@@ -13,14 +13,14 @@ use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
-use App\Timesheet\TrackingMode\DurationFixedStartMode;
+use App\Timesheet\TrackingMode\DurationFixedBeginMode;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @covers \App\Timesheet\TrackingMode\DurationFixedStartMode
+ * @covers \App\Timesheet\TrackingMode\DurationFixedBeginMode
  */
-class DurationFixedStartModeTest extends TestCase
+class DurationFixedBeginModeTest extends TestCase
 {
     protected function createSut()
     {
@@ -28,7 +28,7 @@ class DurationFixedStartModeTest extends TestCase
         $dateTime = (new UserDateTimeFactoryFactory($this))->create();
         $configuration = new TimesheetConfiguration($loader, ['default_begin' => '13:47']);
 
-        return new DurationFixedStartMode($dateTime, $configuration);
+        return new DurationFixedBeginMode($dateTime, $configuration);
     }
 
     public function testDefaultValues()
@@ -40,7 +40,7 @@ class DurationFixedStartModeTest extends TestCase
         self::assertTrue($sut->canEditDuration());
         self::assertFalse($sut->canUpdateTimesWithAPI());
         self::assertFalse($sut->canSeeBeginAndEndTimes());
-        self::assertEquals('duration_fixed_start', $sut->getId());
+        self::assertEquals('duration_fixed_begin', $sut->getId());
     }
 
     public function testCreate()
@@ -51,6 +51,16 @@ class DurationFixedStartModeTest extends TestCase
 
         $sut = $this->createSut();
         self::assertEquals('22:54', $timesheet->getBegin()->format('H:i'));
+        $sut->create($timesheet, $request);
+        self::assertEquals('13:47', $timesheet->getBegin()->format('H:i'));
+    }
+
+    public function testCreateWithoutBeginInjectsBegin()
+    {
+        $timesheet = new Timesheet();
+        $request = new Request();
+
+        $sut = $this->createSut();
         $sut->create($timesheet, $request);
         self::assertEquals('13:47', $timesheet->getBegin()->format('H:i'));
     }

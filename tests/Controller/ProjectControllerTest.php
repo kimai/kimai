@@ -15,6 +15,7 @@ use App\Entity\User;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use App\Tests\Mocks\ProjectTestMetaFieldSubscriberMock;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -68,6 +69,18 @@ class ProjectControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertHasDataTable($client);
         $this->assertHasFlashSuccess($client);
+    }
+
+    public function testCreateActionShowsMetaFields()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $client->getContainer()->get('event_dispatcher')->addSubscriber(new ProjectTestMetaFieldSubscriberMock());
+        $this->assertAccessIsGranted($client, '/admin/project/create');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
+        $this->assertTrue($form->has('project_edit_form[metaFields][0][value]'));
+        $this->assertFalse($form->has('project_edit_form[metaFields][1][value]'));
     }
 
     public function testCreateActionWithCreateMore()

@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Configuration\TimesheetConfiguration;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
+use App\Event\TimesheetMetaDefinitionEvent;
 use App\Form\TimesheetEditForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\ActivityRepository;
@@ -23,6 +24,7 @@ use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Timesheet\TrackingModeService;
 use App\Timesheet\UserDateTimeFactory;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,17 +47,23 @@ abstract class TimesheetAbstractController extends AbstractController
      * @var TrackingModeService
      */
     protected $trackingModeService;
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $dispatcher;
 
     public function __construct(
         UserDateTimeFactory $dateTime,
         TimesheetConfiguration $configuration,
         TimesheetRepository $repository,
-        TrackingModeService $service
+        TrackingModeService $service,
+        EventDispatcherInterface $dispatcher
     ) {
         $this->dateTime = $dateTime;
         $this->configuration = $configuration;
         $this->repository = $repository;
         $this->trackingModeService = $service;
+        $this->dispatcher = $dispatcher;
     }
 
     protected function getTrackingMode(): TrackingModeInterface
@@ -127,17 +135,21 @@ abstract class TimesheetAbstractController extends AbstractController
      */
     protected function edit(Timesheet $entry, Request $request, string $renderTemplate)
     {
+        $event = new TimesheetMetaDefinitionEvent($entry);
+        $this->dispatcher->dispatch(TimesheetMetaDefinitionEvent::class, $event);
+
         $editForm = $this->getEditForm($entry, $request->get('page'));
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($entry);
-            $entityManager->flush();
+            try {
+                $this->getRepository()->save($entry);
+                $this->flashSuccess('action.update.success');
 
-            $this->flashSuccess('action.update.success');
-
-            return $this->redirectToRoute($this->getTimesheetRoute(), ['page' => $request->get('page', 1)]);
+                return $this->redirectToRoute($this->getTimesheetRoute(), ['page' => $request->get('page', 1)]);
+            } catch (\Exception $ex) {
+                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            }
         }
 
         return $this->render($renderTemplate, [
@@ -169,6 +181,9 @@ abstract class TimesheetAbstractController extends AbstractController
             $entry->setActivity($activity);
         }
 
+        $event = new TimesheetMetaDefinitionEvent($entry);
+        $this->dispatcher->dispatch(TimesheetMetaDefinitionEvent::class, $event);
+
         $mode = $this->getTrackingMode();
         $mode->create($entry, $request);
 
@@ -176,8 +191,6 @@ abstract class TimesheetAbstractController extends AbstractController
         $createForm->handleRequest($request);
 
         if ($createForm->isSubmitted() && $createForm->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-
             try {
                 if (null === $entry->getEnd()) {
                     $this->getRepository()->stopActiveEntries(
@@ -185,15 +198,13 @@ abstract class TimesheetAbstractController extends AbstractController
                         $this->configuration->getActiveEntriesHardLimit()
                     );
                 }
-                $entityManager->persist($entry);
-                $entityManager->flush();
-
+                $this->getRepository()->save($entry);
                 $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRoute($this->getTimesheetRoute());
             } catch (\Exception $ex) {
                 $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
             }
-
-            return $this->redirectToRoute($this->getTimesheetRoute());
         }
 
         return $this->render($renderTemplate, [

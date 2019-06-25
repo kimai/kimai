@@ -19,6 +19,7 @@ use App\Form\Type\DateTimePickerType;
 use App\Form\Type\DurationType;
 use App\Form\Type\FixedRateType;
 use App\Form\Type\HourlyRateType;
+use App\Form\Type\MetaFieldsCollectionType;
 use App\Form\Type\ProjectType;
 use App\Form\Type\TagsInputType;
 use App\Form\Type\UserType;
@@ -134,6 +135,8 @@ class TimesheetEditForm extends AbstractType
         $this->addTags($builder);
         $this->addRates($builder, $currency, $options);
         $this->addUser($builder, $options);
+        $builder->add('metaFields', MetaFieldsCollectionType::class);
+
         $this->addExported($builder, $options);
     }
 
