@@ -66,6 +66,7 @@ class UserController extends AbstractController
     {
         $query = new UserQuery();
         $query->setPage($page);
+        $query->setOrderBy('username');
 
         $form = $this->getToolbarForm($query);
         $form->handleRequest($request);
