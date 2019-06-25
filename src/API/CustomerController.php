@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace App\API;
 
 use App\Entity\Customer;
-use App\Event\CustomerMetaDefinitionEvent;
 use App\Form\API\CustomerApiEditForm;
 use App\Repository\CustomerRepository;
 use App\Repository\Query\CustomerQuery;
@@ -23,7 +22,6 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -43,16 +41,11 @@ class CustomerController extends BaseApiController
      * @var ViewHandlerInterface
      */
     protected $viewHandler;
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $dispatcher;
 
-    public function __construct(ViewHandlerInterface $viewHandler, CustomerRepository $repository, EventDispatcherInterface $dispatcher)
+    public function __construct(ViewHandlerInterface $viewHandler, CustomerRepository $repository)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
-        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -119,11 +112,6 @@ class CustomerController extends BaseApiController
         if (null === $data) {
             throw new NotFoundException();
         }
-
-        // make sure the fields are properly setup and we know, which meta fields
-        // should be exposed and which not
-        $event = new CustomerMetaDefinitionEvent($data);
-        $this->dispatcher->dispatch(CustomerMetaDefinitionEvent::class, $event);
 
         $view = new View($data, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Customer']);
