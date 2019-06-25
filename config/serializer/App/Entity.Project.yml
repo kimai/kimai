@@ -1,6 +1,6 @@
 App\Entity\Project:
     exclusion_policy: All
-    custom_accessor_order: [id, name, comment, visible, orderNumber, customer, fixedRate, hourlyRate, color, budget, timeBudget, meta]
+    custom_accessor_order: [id, name, comment, visible, orderNumber, customer, fixedRate, hourlyRate, color, budget, timeBudget, metaFields]
     properties:
         id:
             include: true
@@ -30,12 +30,16 @@ App\Entity\Project:
             groups: [Subresource]
         color:
             include: true
-        meta:
-            include: true
-            groups: [Default]
+        metaFields:
+            exclude: true
     virtual_properties:
         getCustomer:
             serialized_name: customer
             exp: "object.getCustomer() === null ? null : object.getCustomer().getId()"
             type: integer
             groups: [Entity, Collection]
+        getMetaFields:
+            serialized_name: metaFields
+            exp: "object.getVisibleMetaFields()"
+            type: array<App\Entity\ProjectMeta>
+            groups: [Default]

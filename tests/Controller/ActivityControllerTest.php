@@ -15,6 +15,7 @@ use App\Entity\User;
 use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use App\Tests\Mocks\ActivityTestMetaFieldSubscriberMock;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -75,6 +76,18 @@ class ActivityControllerTest extends ControllerBaseTest
         // make sure customer and project are pre-selected for none global activities
         $this->assertEquals('1', $editForm->get('activity_edit_form[project]')->getValue());
         $this->assertEquals('1', $editForm->get('activity_edit_form[customer]')->getValue());
+    }
+
+    public function testCreateActionShowsMetaFields()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $client->getContainer()->get('event_dispatcher')->addSubscriber(new ActivityTestMetaFieldSubscriberMock());
+        $this->assertAccessIsGranted($client, '/admin/activity/create');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
+        $this->assertTrue($form->has('activity_edit_form[metaFields][0][value]'));
+        $this->assertFalse($form->has('activity_edit_form[metaFields][1][value]'));
     }
 
     public function testCreateActionWithCreateMore()

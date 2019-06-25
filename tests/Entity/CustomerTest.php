@@ -118,13 +118,15 @@ class CustomerTest extends TestCase
         $meta2->setName('foo')->setValue('bar')->setType('test2');
         $this->assertInstanceOf(Customer::class, $sut->setMetaField($meta2));
         self::assertEquals(1, $sut->getMetaFields()->count());
+        self::assertCount(0, $sut->getVisibleMetaFields());
 
         $result = $sut->getMetaField('foo');
         self::assertSame($result, $meta);
         self::assertEquals('test2', $result->getType());
 
-        $sut->setMetaField((new CustomerMeta())->setName('blub'));
-        $sut->setMetaField((new CustomerMeta())->setName('blab'));
+        $sut->setMetaField((new CustomerMeta())->setName('blub')->setIsVisible(true));
+        $sut->setMetaField((new CustomerMeta())->setName('blab')->setIsVisible(true));
         self::assertEquals(3, $sut->getMetaFields()->count());
+        self::assertCount(2, $sut->getVisibleMetaFields());
     }
 }

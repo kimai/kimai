@@ -100,10 +100,8 @@ abstract class AbstractSpreadsheetRenderer
     {
         $publicMetaFields = [];
         foreach ($timesheets as $timesheet) {
-            foreach ($timesheet->getMetaFields() as $metaField) {
-                if ($metaField->isVisible()) {
-                    $publicMetaFields[] = $metaField->getName();
-                }
+            foreach ($timesheet->getVisibleMetaFields() as $metaField) {
+                $publicMetaFields[] = $metaField->getName();
             }
         }
 

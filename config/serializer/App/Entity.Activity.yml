@@ -1,6 +1,6 @@
 App\Entity\Activity:
     exclusion_policy: All
-    custom_accessor_order: [id, name, comment, visible, project, fixedRate, hourlyRate, color, budget, timeBudget, meta]
+    custom_accessor_order: [id, name, comment, visible, project, fixedRate, hourlyRate, color, budget, timeBudget, metaFields]
     properties:
         id:
             include: true
@@ -32,12 +32,16 @@ App\Entity\Activity:
             groups: [Default]
         color:
             include: true
-        meta:
-            include: true
-            groups: [Default]
+        metaFields:
+            exclude: true
     virtual_properties:
         getProject:
             serialized_name: project
             exp: "object.getProject() === null ? null : object.getProject().getId()"
             type: integer
+            groups: [Default]
+        getMetaFields:
+            serialized_name: metaFields
+            exp: "object.getVisibleMetaFields()"
+            type: array<App\Entity\ActivityMeta>
             groups: [Default]

@@ -41,10 +41,8 @@ final class HtmlRenderer implements RendererInterface
     {
         $publicMetaFields = [];
         foreach ($timesheets as $timesheet) {
-            foreach ($timesheet->getMetaFields() as $metaField) {
-                if ($metaField->isVisible()) {
-                    $publicMetaFields[] = $metaField->getName();
-                }
+            foreach ($timesheet->getVisibleMetaFields() as $metaField) {
+                $publicMetaFields[] = $metaField->getName();
             }
         }
 

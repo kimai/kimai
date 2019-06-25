@@ -1,6 +1,6 @@
 App\Entity\Timesheet:
     exclusion_policy: All
-    custom_accessor_order: [id, begin, end, duration, rate, activity, project, user, description, fixedRate, hourlyRate, tags, exported, meta]
+    custom_accessor_order: [id, begin, end, duration, rate, activity, project, user, description, fixedRate, hourlyRate, tags, exported, metaFields]
     properties:
         id:
             include: true
@@ -29,9 +29,8 @@ App\Entity\Timesheet:
             groups: [Subresource]
         user:
             exclude: true
-        meta:
-            include: true
-            groups: [Default]
+        metaFields:
+            exclude: true
     virtual_properties:
         getBegin:
             serialized_name: begin
@@ -56,6 +55,11 @@ App\Entity\Timesheet:
             exp: "object.getUser().getId()"
             type: integer
         getTags:
-          serialized_name: tags
-          exp: "object.getTagsAsArray()"
-          type: array<string>
+            serialized_name: tags
+            exp: "object.getTagsAsArray()"
+            type: array<string>
+        getMetaFields:
+            serialized_name: metaFields
+            exp: "object.getVisibleMetaFields()"
+            type: array<App\Entity\TimesheetMeta>
+            groups: [Default]

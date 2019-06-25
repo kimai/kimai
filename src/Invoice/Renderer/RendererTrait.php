@@ -116,12 +116,10 @@ trait RendererTrait
                 'activity.comment' => $activity->getComment(),
             ]);
 
-            foreach ($activity->getMetaFields() as $metaField) {
-                if ($metaField->isVisible()) {
-                    $values = array_merge($values, [
-                        'activity.meta.' . $metaField->getName() => $metaField->getValue(),
-                    ]);
-                }
+            foreach ($activity->getVisibleMetaFields() as $metaField) {
+                $values = array_merge($values, [
+                    'activity.meta.' . $metaField->getName() => $metaField->getValue(),
+                ]);
             }
         }
 
@@ -133,12 +131,10 @@ trait RendererTrait
                 'project.order_number' => $project->getOrderNumber(),
             ]);
 
-            foreach ($project->getMetaFields() as $metaField) {
-                if ($metaField->isVisible()) {
-                    $values = array_merge($values, [
-                        'project.meta.' . $metaField->getName() => $metaField->getValue(),
-                    ]);
-                }
+            foreach ($project->getVisibleMetaFields() as $metaField) {
+                $values = array_merge($values, [
+                    'project.meta.' . $metaField->getName() => $metaField->getValue(),
+                ]);
             }
         }
 
@@ -155,12 +151,10 @@ trait RendererTrait
                 'customer.comment' => $customer->getComment(),
             ]);
 
-            foreach ($customer->getMetaFields() as $metaField) {
-                if ($metaField->isVisible()) {
-                    $values = array_merge($values, [
-                        'customer.meta.' . $metaField->getName() => $metaField->getValue(),
-                    ]);
-                }
+            foreach ($customer->getVisibleMetaFields() as $metaField) {
+                $values = array_merge($values, [
+                    'customer.meta.' . $metaField->getName() => $metaField->getValue(),
+                ]);
             }
         }
 
@@ -230,12 +224,10 @@ trait RendererTrait
             'entry.customer_id' => $customer->getId(),
         ];
 
-        foreach ($timesheet->getMetaFields() as $metaField) {
-            if ($metaField->isVisible()) {
-                $values = array_merge($values, [
-                    'entry.meta.' . $metaField->getName() => $metaField->getValue(),
-                ]);
-            }
+        foreach ($timesheet->getVisibleMetaFields() as $metaField) {
+            $values = array_merge($values, [
+                'entry.meta.' . $metaField->getName() => $metaField->getValue(),
+            ]);
         }
 
         return $values;

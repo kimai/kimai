@@ -4,15 +4,19 @@ nelmio_api_doc:
         names:
             - { alias: CustomerEditForm,          type: App\Form\API\CustomerApiEditForm,         groups: [Default, Entity, Customer] }
             - { alias: CustomerEntity,            type: App\Entity\Customer,                      groups: [Default, Entity, Customer] }
+            - { alias: CustomerMetaField,         type: App\Entity\CustomerMeta,                  groups: [Default, Customer] }
             - { alias: CustomerCollection,        type: App\Entity\Customer,                      groups: [Default, Collection, Customer] }
             - { alias: ProjectEditForm,           type: App\Form\API\ProjectApiEditForm,          groups: [Default, Entity, Project] }
             - { alias: ProjectEntity,             type: App\Entity\Project,                       groups: [Default, Entity, Project] }
+            - { alias: ProjectMetaField,          type: App\Entity\ProjectMeta,                   groups: [Default, Project] }
             - { alias: ProjectCollection,         type: App\Entity\Project,                       groups: [Default, Collection, Project] }
             - { alias: ActivityEditForm,          type: App\Form\API\ActivityApiEditForm,         groups: [Default, Entity, Activity] }
             - { alias: ActivityEntity,            type: App\Entity\Activity,                      groups: [Default, Entity, Activity] }
+            - { alias: ActivityMetaField,         type: App\Entity\ActivityMeta,                  groups: [Default, Activity] }
             - { alias: ActivityCollection,        type: App\Entity\Activity,                      groups: [Default, Collection, Activity] }
             - { alias: TimesheetEditForm,         type: App\Form\API\TimesheetApiEditForm,        groups: [Default, Entity, Timesheet] }
             - { alias: TimesheetEntity,           type: App\Entity\Timesheet,                     groups: [Default, Entity, Timesheet] }
+            - { alias: TimesheetMeta,             type: App\Entity\TimesheetMeta,                 groups: [Default, Timesheet] }
             - { alias: TimesheetCollection,       type: App\Entity\Timesheet,                     groups: [Default, Collection, Timesheet] }
             - { alias: TimesheetSubCollection,    type: App\Entity\Timesheet,                     groups: [Default, Subresource, Timesheet] }
             - { alias: UserEntity,                type: App\Entity\User,                          groups: [Default, Entity, User] }
