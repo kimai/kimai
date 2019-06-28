@@ -59,6 +59,10 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     public function preUp(Schema $schema): void
     {
         $this->abortIfPlatformNotSupported();
+
+        if ($this->isPlatformSqlite()) {
+            $this->connection->executeUpdate('PRAGMA foreign_keys = OFF;');
+        }
     }
 
     /**
