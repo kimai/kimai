@@ -10,6 +10,7 @@
 namespace App\Tests\Command;
 
 use App\Command\InstallCommand;
+use App\Constants;
 use App\Utils\File;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -87,7 +88,10 @@ class InstallCommandTest extends KernelTestCase
         self::assertContains('[NOTE] Found ', $result);
         self::assertContains(' migrations in your database, skipping import', $result);
 
-        self::assertContains('[OK] Congratulations! Kimai 2 (0.9 stable) was successful installed!', $result);
+        self::assertContains(
+            sprintf('[OK] Congratulations! Kimai 2 (%s %s) was successful installed!', Constants::VERSION, Constants::STATUS),
+            $result
+        );
 
         self::assertEquals(0, $commandTester->getStatusCode());
     }
