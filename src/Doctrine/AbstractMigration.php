@@ -61,7 +61,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
         $this->abortIfPlatformNotSupported();
 
         if ($this->isPlatformSqlite()) {
-            $this->connection->executeUpdate('PRAGMA foreign_keys = OFF;');
+            $this->connection->exec('PRAGMA foreign_keys = OFF;');
         }
     }
 
