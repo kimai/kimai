@@ -8,19 +8,23 @@
             </trans-unit>
             <trans-unit id="default">
                 <source>default</source>
-                <target>Entry-based - one entry per time measurement (default)</target>
+                <target>Default: one entry per time record</target>
             </trans-unit>
             <trans-unit id="short">
                 <source>short</source>
-                <target>Hours added up - only one entry</target>
+                <target>Hours: records summed up, one entry total</target>
             </trans-unit>
             <trans-unit id="user">
                 <source>user</source>
-                <target>User grouped - one entry per user</target>
+                <target>User: one entry per user</target>
             </trans-unit>
             <trans-unit id="activity">
                 <source>activity</source>
-                <target>Activity grouped - one entry per activity</target>
+                <target>Activity: one entry per activity</target>
+            </trans-unit>
+            <trans-unit id="project">
+                <source>project</source>
+                <target>Project: one entry per project</target>
             </trans-unit>
         </body>
     </file>
