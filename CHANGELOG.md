@@ -1,6 +1,6 @@
 # Change Log
 
-## [1.0](https://github.com/kevinpapst/kimai2/tree/1.0) (2019-06-30)
+## [1.0](https://github.com/kevinpapst/kimai2/tree/1.0) (2019-07-01)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.9...1.0)
 
 **Implemented enhancements:**
@@ -59,11 +59,13 @@
 
 **Fixed bugs:**
 
+- Invoice calculator that differs between fixed and hourly rates [\#884](https://github.com/kevinpapst/kimai2/issues/884)
 - Ability to hide the revenue stats to users [\#853](https://github.com/kevinpapst/kimai2/issues/853)
 - Error on update database migration:  Syntax error or access violation: 1071 Specified key was too long; max key length is 767 bytes [\#788](https://github.com/kevinpapst/kimai2/issues/788)
 - adding a new timesheet entry is broken in current master [\#778](https://github.com/kevinpapst/kimai2/issues/778)
 - calendar week timesheet task with duration=true error 500 [\#704](https://github.com/kevinpapst/kimai2/issues/704)
 - Inter-month entries don't get exported in single month [\#652](https://github.com/kevinpapst/kimai2/issues/652)
+- fixed short invoice [\#891](https://github.com/kevinpapst/kimai2/pull/891) ([kevinpapst](https://github.com/kevinpapst))
 - fix sqlite migration [\#881](https://github.com/kevinpapst/kimai2/pull/881) ([kevinpapst](https://github.com/kevinpapst))
 - added LDAP config to set filter for finding user attributes [\#877](https://github.com/kevinpapst/kimai2/pull/877) ([kevinpapst](https://github.com/kevinpapst))
 - fix LDAP install for systems without ldap extension [\#846](https://github.com/kevinpapst/kimai2/pull/846) ([kevinpapst](https://github.com/kevinpapst))
