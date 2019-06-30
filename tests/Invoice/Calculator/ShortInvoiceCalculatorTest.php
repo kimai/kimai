@@ -102,7 +102,9 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         /** @var Timesheet $result */
         $result = $sut->getEntries()[0];
         $this->assertEquals('activity description', $result->getDescription());
+        $this->assertEquals(488.38, $result->getHourlyRate());
         $this->assertEquals(488.38, $result->getRate());
+        $this->assertEquals(488.38, $result->getFixedRate());
         $this->assertEquals(5800, $result->getDuration());
     }
 

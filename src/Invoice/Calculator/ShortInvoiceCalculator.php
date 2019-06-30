@@ -34,6 +34,9 @@ class ShortInvoiceCalculator extends AbstractMergedCalculator implements Calcula
             $this->mergeTimesheets($timesheet, $entry);
         }
 
+        $timesheet->setFixedRate($timesheet->getRate());
+        $timesheet->setHourlyRate($timesheet->getRate());
+
         return [$timesheet];
     }
 
