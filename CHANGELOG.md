@@ -1,6 +1,6 @@
 # Change Log
 
-## [1.0](https://github.com/kevinpapst/kimai2/tree/1.0) (2019-06-29)
+## [1.0](https://github.com/kevinpapst/kimai2/tree/1.0) (2019-06-30)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.9...1.0)
 
 **Implemented enhancements:**
@@ -64,6 +64,7 @@
 - adding a new timesheet entry is broken in current master [\#778](https://github.com/kevinpapst/kimai2/issues/778)
 - calendar week timesheet task with duration=true error 500 [\#704](https://github.com/kevinpapst/kimai2/issues/704)
 - Inter-month entries don't get exported in single month [\#652](https://github.com/kevinpapst/kimai2/issues/652)
+- fix sqlite migration [\#881](https://github.com/kevinpapst/kimai2/pull/881) ([kevinpapst](https://github.com/kevinpapst))
 - added LDAP config to set filter for finding user attributes [\#877](https://github.com/kevinpapst/kimai2/pull/877) ([kevinpapst](https://github.com/kevinpapst))
 - fix LDAP install for systems without ldap extension [\#846](https://github.com/kevinpapst/kimai2/pull/846) ([kevinpapst](https://github.com/kevinpapst))
 - fixed mpdf temp directory [\#845](https://github.com/kevinpapst/kimai2/pull/845) ([kevinpapst](https://github.com/kevinpapst))
@@ -151,6 +152,7 @@
 - Updated authorization screens [\#727](https://github.com/kevinpapst/kimai2/pull/727) ([kevinpapst](https://github.com/kevinpapst))
 - added delete timesheet API endpoint [\#726](https://github.com/kevinpapst/kimai2/pull/726) ([kevinpapst](https://github.com/kevinpapst))
 - Design updates [\#723](https://github.com/kevinpapst/kimai2/pull/723) ([kevinpapst](https://github.com/kevinpapst))
+- API: changed date-format, camelCase instead of snake\_case, null values, update and create for customer and project [\#718](https://github.com/kevinpapst/kimai2/pull/718) ([kevinpapst](https://github.com/kevinpapst))
 - added api/activities POST and PATCH [\#717](https://github.com/kevinpapst/kimai2/pull/717) ([horlabs](https://github.com/horlabs))
 - allow to overwrite config via prepend [\#715](https://github.com/kevinpapst/kimai2/pull/715) ([kevinpapst](https://github.com/kevinpapst))
 - Load export type ids dynamically [\#703](https://github.com/kevinpapst/kimai2/pull/703) ([simone-gasparini](https://github.com/simone-gasparini))
@@ -165,19 +167,20 @@
 
 **Fixed bugs:**
 
-- 500 \(Internal Server Error\) create customer [\#711](https://github.com/kevinpapst/kimai2/issues/711)
 - Export date parsing does not care about timezone [\#707](https://github.com/kevinpapst/kimai2/issues/707)
+- Error on importing v1 timeSheets [\#645](https://github.com/kevinpapst/kimai2/issues/645)
+- 500 \(Internal Server Error\) create customer [\#711](https://github.com/kevinpapst/kimai2/issues/711)
 - API docs are wrong for GET entity \(ignores serialization group\) [\#701](https://github.com/kevinpapst/kimai2/issues/701)
 - API date and datetime format [\#700](https://github.com/kevinpapst/kimai2/issues/700)
 - totals do not match [\#691](https://github.com/kevinpapst/kimai2/issues/691)
 - Validate email when creating user via cmd-line [\#663](https://github.com/kevinpapst/kimai2/issues/663)
 - Datepicker "From" not working [\#651](https://github.com/kevinpapst/kimai2/issues/651)
 - Error export PDF [\#648](https://github.com/kevinpapst/kimai2/issues/648)
-- Error on importing v1 timeSheets [\#645](https://github.com/kevinpapst/kimai2/issues/645)
 - Time selection dropdown not working in Firefox [\#618](https://github.com/kevinpapst/kimai2/issues/618)
 - Revoke of start\_own\_timesheet permission doesn't prevent start active entry [\#606](https://github.com/kevinpapst/kimai2/issues/606)
+- resize mobile navbar buttons [\#582](https://github.com/kevinpapst/kimai2/issues/582)
+- fix tests that failed around midnight [\#735](https://github.com/kevinpapst/kimai2/pull/735) ([kevinpapst](https://github.com/kevinpapst))
 - remove invalid cache header [\#722](https://github.com/kevinpapst/kimai2/pull/722) ([kevinpapst](https://github.com/kevinpapst))
-- API: changed date-format, camelCase instead of snake\_case, null values, update and create for customer and project [\#718](https://github.com/kevinpapst/kimai2/pull/718) ([kevinpapst](https://github.com/kevinpapst))
 - fix modal - autofocus problem, datepicker not shown on begin date [\#653](https://github.com/kevinpapst/kimai2/pull/653) ([kevinpapst](https://github.com/kevinpapst))
 - fix pdf export cache directory [\#650](https://github.com/kevinpapst/kimai2/pull/650) ([kevinpapst](https://github.com/kevinpapst))
 
@@ -194,13 +197,12 @@
 - Group of user [\#669](https://github.com/kevinpapst/kimai2/issues/669)
 - Demo not loading [\#665](https://github.com/kevinpapst/kimai2/issues/665)
 - Admin Panel [\#662](https://github.com/kevinpapst/kimai2/issues/662)
-- mixed date formats in the api for the timesheet [\#658](https://github.com/kevinpapst/kimai2/issues/658)
 - Some activites don't show up in last activities [\#609](https://github.com/kevinpapst/kimai2/issues/609)
 - Wrong link in the CSS [\#605](https://github.com/kevinpapst/kimai2/issues/605)
 - Failed to import users: failed to validate user [\#600](https://github.com/kevinpapst/kimai2/issues/600)
 - Edit timesheet , delete user edit own timesheet [\#498](https://github.com/kevinpapst/kimai2/issues/498)
+- mixed date formats in the api for the timesheet [\#658](https://github.com/kevinpapst/kimai2/issues/658)
 - Add demo bundle [\#442](https://github.com/kevinpapst/kimai2/issues/442)
-- Add audit logs [\#62](https://github.com/kevinpapst/kimai2/issues/62)
 
 **Merged pull requests:**
 
@@ -242,7 +244,6 @@
 
 **Fixed bugs:**
 
-- resize mobile navbar buttons [\#582](https://github.com/kevinpapst/kimai2/issues/582)
 - deletion of customers leads to internal server error 500 [\#589](https://github.com/kevinpapst/kimai2/issues/589)
 - Entry editor label wrong \(from/to\) [\#587](https://github.com/kevinpapst/kimai2/issues/587)
 
