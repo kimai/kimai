@@ -35,6 +35,6 @@ class SqliteSessionInitSubscriber implements EventSubscriber
             return;
         }
 
-        $args->getConnection()->executeUpdate('PRAGMA foreign_keys = ON;');
+        $args->getConnection()->exec('PRAGMA foreign_keys = ON;');
     }
 }
