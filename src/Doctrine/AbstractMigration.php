@@ -52,6 +52,25 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
         return 'kimai2_' . $name;
     }
 
+    protected function isSupportingForeignKeys(): bool
+    {
+        return true;
+    }
+
+    protected function deactivateForeignKeysOnSqlite()
+    {
+        if ($this->isPlatformSqlite() && !$this->isSupportingForeignKeys()) {
+            $this->addSql('PRAGMA foreign_keys = OFF;');
+        }
+    }
+
+    private function activateForeignKeysOnSqlite()
+    {
+        if ($this->isPlatformSqlite() && !$this->isSupportingForeignKeys()) {
+            $this->addSql('PRAGMA foreign_keys = ON;');
+        }
+    }
+
     /**
      * @param Schema $schema
      * @throws DBALException
@@ -59,6 +78,16 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     public function preUp(Schema $schema): void
     {
         $this->abortIfPlatformNotSupported();
+        $this->deactivateForeignKeysOnSqlite();
+    }
+
+    /**
+     * @param Schema $schema
+     * @throws DBALException
+     */
+    public function postUp(Schema $schema): void
+    {
+        $this->activateForeignKeysOnSqlite();
     }
 
     /**
@@ -68,6 +97,16 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     public function preDown(Schema $schema): void
     {
         $this->abortIfPlatformNotSupported();
+        $this->deactivateForeignKeysOnSqlite();
+    }
+
+    /**
+     * @param Schema $schema
+     * @throws DBALException
+     */
+    public function postDown(Schema $schema): void
+    {
+        $this->activateForeignKeysOnSqlite();
     }
 
     /**
