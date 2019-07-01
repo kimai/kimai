@@ -97,7 +97,6 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
 
             (new UserPreference())
                 ->setName(UserPreference::SKIN)
-                ->setValue('green')
                 ->setType(SkinType::class),
 
             (new UserPreference())

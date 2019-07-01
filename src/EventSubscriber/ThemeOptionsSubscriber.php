@@ -69,7 +69,9 @@ class ThemeOptionsSubscriber implements EventSubscriberInterface
             $name = $ref->getName();
             switch ($name) {
                 case UserPreference::SKIN:
-                    $skin = 'skin-' . $ref->getValue();
+                    if (!empty($ref->getValue())) {
+                        $this->helper->setOption('skin', 'skin-' . $ref->getValue());
+                    }
                     break;
 
                 case 'theme.collapsed_sidebar':
@@ -77,12 +79,6 @@ class ThemeOptionsSubscriber implements EventSubscriberInterface
                     break;
             }
         }
-
-        if (empty($skin)) {
-            $skin = 'skin-green';
-        }
-
-        $this->helper->setOption('skin', $skin);
     }
 
     /**
