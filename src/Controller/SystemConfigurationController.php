@@ -232,7 +232,8 @@ class SystemConfigurationController extends AbstractController
                     (new Configuration())
                         ->setName('theme.select_type')
                         ->setTranslationDomain('system-configuration')
-                        ->setType(EnhancedSelectboxType::class),
+                        ->setType(EnhancedSelectboxType::class)
+                        ->setRequired(false),
                     (new Configuration())
                         ->setName('timesheet.markdown_content')
                         ->setLabel('theme.markdown_content')
