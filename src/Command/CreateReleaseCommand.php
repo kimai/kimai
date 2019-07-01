@@ -127,7 +127,6 @@ class CreateReleaseCommand extends Command
             '.scrutinizer.yml',
             '.travis.yml',
             '*.lock',
-            'composer.json',
             'package.json',
             'phpstan.neon',
             'Dockerfile',
