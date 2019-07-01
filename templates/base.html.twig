@@ -121,6 +121,7 @@
         </a>
         <ul class="dropdown-menu">
             {% if app.user is not null %}
+                {% if is_granted('view', app.user) %}
                 <li>
                     <a href="{{ path('user_profile', {'username' : app.user.username}) }}">
                         <h4 class="control-sidebar-subheading">
@@ -129,6 +130,8 @@
                         </h4>
                     </a>
                 </li>
+                {% endif %}
+                {% if is_granted('edit', app.user) %}
                 <li>
                     <a href="{{ path('user_profile_edit', {'username' : app.user.username}) }}">
                         <h4 class="control-sidebar-subheading">
@@ -137,6 +140,8 @@
                         </h4>
                     </a>
                 </li>
+                {% endif %}
+                {% if is_granted('preferences', app.user) %}
                 <li>
                     <a href="{{ path('user_profile_preferences', {'username' : app.user.username})  }}">
                         <h4 class="control-sidebar-subheading">
@@ -145,6 +150,7 @@
                         </h4>
                     </a>
                 </li>
+                {% endif %}
                 <li>
                     <a href="{{ path('fos_user_security_logout') }}">
                         <h4 class="control-sidebar-subheading">

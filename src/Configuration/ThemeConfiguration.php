@@ -22,4 +22,14 @@ class ThemeConfiguration implements SystemBundleConfiguration
     {
         return (string) $this->find('select_type');
     }
+
+    public function getTitle(): ?string
+    {
+        $title = $this->find('branding.title');
+        if (null === $title) {
+            return null;
+        }
+
+        return (string) $title;
+    }
 }
