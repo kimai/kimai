@@ -9,6 +9,9 @@
 
 namespace App\Tests\Twig;
 
+use App\Configuration\ThemeConfiguration;
+use App\Entity\Configuration;
+use App\Tests\Configuration\TestConfigLoader;
 use App\Twig\TitleExtension;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -19,12 +22,20 @@ use Twig\TwigFunction;
  */
 class TitleExtensionTest extends TestCase
 {
-    protected function getSut(): TitleExtension
+    protected function getSut(string $title = null): TitleExtension
     {
         $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $translator->method('trans')->willReturn('foo');
 
-        return new TitleExtension($translator);
+        $configs = [
+            (new Configuration())->setName('theme.branding.title')->setValue($title)
+        ];
+
+        $loader = new TestConfigLoader($configs);
+
+        $configuration = new ThemeConfiguration($loader, ['branding' => ['title' => null]]);
+
+        return new TitleExtension($translator, $configuration);
     }
 
     public function testGetFunctions()
@@ -48,5 +59,14 @@ class TitleExtensionTest extends TestCase
         $this->assertEquals('sdfsdf | Kimai – foo', $sut->generateTitle('sdfsdf | '));
         $this->assertEquals('<b>Kimai</b> ... foo', $sut->generateTitle('<b>', '</b> ... '));
         $this->assertEquals('Kimai | foo', $sut->generateTitle(null, ' | '));
+    }
+
+    public function testGetBrandedTitle()
+    {
+        $sut = $this->getSut('MyCompany');
+        $this->assertEquals('MyCompany – foo', $sut->generateTitle());
+        $this->assertEquals('sdfsdf | MyCompany – foo', $sut->generateTitle('sdfsdf | '));
+        $this->assertEquals('<b>MyCompany</b> ... foo', $sut->generateTitle('<b>', '</b> ... '));
+        $this->assertEquals('MyCompany | foo', $sut->generateTitle(null, ' | '));
     }
 }
