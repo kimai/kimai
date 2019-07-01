@@ -64,7 +64,6 @@ class ThemeOptionsSubscriber implements EventSubscriberInterface
         /** @var User $user */
         $user = $this->storage->getToken()->getUser();
 
-        $skin = '';
         foreach ($user->getPreferences() as $ref) {
             $name = $ref->getName();
             switch ($name) {
