@@ -340,7 +340,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $user = $this->getUserByName($em, $username);
 
         $this->assertEquals($hourlyRateOriginal, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
-        $this->assertEquals('green', $user->getPreferenceValue(UserPreference::SKIN));
+        $this->assertNull($user->getPreferenceValue(UserPreference::SKIN));
         $this->assertEquals(false, $user->getPreferenceValue('theme.collapsed_sidebar'));
         $this->assertEquals('month', $user->getPreferenceValue('calendar.initial_view'));
 
