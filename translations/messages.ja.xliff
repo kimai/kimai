@@ -542,7 +542,7 @@
             </trans-unit>
             <trans-unit id="label.currency">
                 <source>label.currency</source>
-                <target>通過</target>
+                <target>通貨</target>
             </trans-unit>
             <trans-unit id="admin_customer.short_stats">
                 <source>admin_customer.short_stats</source>
