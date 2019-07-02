@@ -33,6 +33,13 @@
                 <source>confirm.delete</source>
                 <target>本当に削除してもよろしいですか？</target>
             </trans-unit>
+            <trans-unit id="admin_entity.delete_confirm">
+                <source>admin_entity.delete_confirm</source>
+                <target>
+                    こちらのデータも同時に削除されます！
+                    代替手段として、明細を指定してそちらに全データを付け替えることも可能です:
+                </target>
+            </trans-unit>
             <trans-unit id="delete.not_in_use">
                 <source>delete.not_in_use</source>
                 <target>このアイテムは安全に削除できます。</target>
@@ -133,7 +140,7 @@
                 <source>menu.system_configuration</source>
                 <target>設定</target>
             </trans-unit>
-	    <trans-unit id="menu.tags">
+            <trans-unit id="menu.tags">
                 <source>menu.tags</source>
                 <target>タグ</target>
             </trans-unit>
@@ -197,6 +204,10 @@
                 <source>label.budget</source>
                 <target>予算</target>
             </trans-unit>
+            <trans-unit id="label.timeBudget">
+                <source>label.timeBudget</source>
+                <target>タイム・バジェット（時間予算）</target>
+            </trans-unit>
             <trans-unit id="label.activity">
                 <source>label.activity</source>
                 <target>アクティビティ</target>
@@ -205,7 +216,7 @@
                 <source>label.project</source>
                 <target>プロジェクト</target>
             </trans-unit>
-	    <trans-unit id="label.tag">
+            <trans-unit id="label.tag">
                 <source>label.tag</source>
                 <target>タグ</target>
             </trans-unit>
