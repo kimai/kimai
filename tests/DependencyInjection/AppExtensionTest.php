@@ -107,6 +107,7 @@ class AppExtensionTest extends TestCase
                     'logo' => null,
                     'mini' => null,
                     'company' => null,
+                    'title' => null,
                 ],
             ],
             'kimai.theme.select_type' => null,
