@@ -251,10 +251,9 @@ class Timesheet implements EntityWithMetaFields
      */
     public function getDuration()
     {
-        if ($this->end === null)
+        if (0 == $this->duration && null !== $this->begin)
         {
-            $end = new \DateTime();
-            return $end->getTimestamp() - $this->begin->getTimestamp();
+            return time() - $this->begin->getTimestamp();
         }
         else
         {
@@ -342,7 +341,7 @@ class Timesheet implements EntityWithMetaFields
      */
     public function getRate()
     {
-        if ($this->end === null)
+        if (0 == $this->rate)
         {
             $rateCalculator = new RateCalculator([]);
             $fixedRate = $rateCalculator->findFixedRate($this);

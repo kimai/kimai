@@ -103,7 +103,7 @@ class RateCalculator implements CalculatorInterface
         }
 
         $activity = $record->getActivity();
-        if (null !== $activity->getFixedRate()) {
+        if (null !== $activity && null !== $activity->getFixedRate()) {
             return $activity->getFixedRate();
         }
 
