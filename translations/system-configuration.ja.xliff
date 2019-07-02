@@ -42,6 +42,10 @@
                 <source>label.timesheet.mode_duration_only</source>
                 <target>[経過時間] 終了日時の代わりに経過時間を入力する</target>
             </trans-unit>
+            <trans-unit id="label.timesheet.mode_duration_fixed_begin">
+                <source>label.timesheet.mode_duration_fixed_begin</source>
+                <target>[経過時間] 開始日時（固定）を事前に設定して、ユーザーは経過時間のみを入力可能とする</target>
+            </trans-unit>
             <trans-unit id="label.timesheet.mode_punch">
                 <source>label.timesheet.mode_punch</source>
                 <target>[タイムレコーダー] ユーザーは開始日時と終了日時を打刻できるが、それぞれの日時や経過時間を編集することはできない</target>

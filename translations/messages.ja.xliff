@@ -656,6 +656,10 @@
                 <source>stats.durationTotal</source>
                 <target>活動時間の合計</target>
             </trans-unit>
+            <trans-unit id="stats.yourWorkingHours">
+                <source>stats.yourWorkingHours</source>
+                <target>勤務時間</target>
+            </trans-unit>
             <trans-unit id="stats.amountToday">
                 <source>stats.amountToday</source>
                 <target>今日の収入</target>
