@@ -27,12 +27,12 @@ It is built with modern technologies such as Symfony, Bootstrap, RESTful API, Do
 
 ### About
 
-This is new version of the open source timetracker Kimai. It is in a stable development phase, usable in production and 
+This is new version of the open source timetracker Kimai. It is stable and production ready, ships
 with most advanced features from Kimai 1 and many new ones, including but not limited to: 
 
 JSON API, invoicing, data exports, multi-timer and punch-in punch-out mode, tagging, multi-user and multi-timezones, 
 LDAP and built-in authentication, customizable role permissions, responsive and ready for your mobile device, 
-hourly and fixed rates, advanced filtering, money and time budgets and report, support for plugins and many more.
+hourly and fixed rates, advanced filtering, money and time budgets with report, support for plugins and many more.
 
 ## Installation
 
