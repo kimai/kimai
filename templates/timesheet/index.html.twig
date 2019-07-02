@@ -85,7 +85,7 @@
                 {% if canSeeRate %}
                 <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'rate') }}">
                     {% if not entry.end %}
-                        &dash;
+                        <i>{{ entry.rate|money(entry.project.customer.currency) }}</i>
                     {% else %}
                         {{ entry.rate|money(entry.project.customer.currency) }}
                     {% endif %}
@@ -101,12 +101,10 @@
                     {{- actions.timesheet(entry, 'index') -}}
                 </td>
             </tr>
-            {%- if entry.end -%}
-                {% if dayRate[customerCurrency] is not defined %}
-                    {% set dayRate = dayRate|merge({(customerCurrency): 0}) %}
-                {% endif %}
-                {% set dayRate = dayRate|merge({(customerCurrency): dayRate[customerCurrency] + entry.rate}) %}
-            {%- endif -%}
+            {% if dayRate[customerCurrency] is not defined %}
+                {% set dayRate = dayRate|merge({(customerCurrency): 0}) %}
+            {% endif %}
+            {% set dayRate = dayRate|merge({(customerCurrency): dayRate[customerCurrency] + entry.rate}) %}
             {%- set dayDuration = dayDuration + entry.duration -%}
         {% endfor %}
 

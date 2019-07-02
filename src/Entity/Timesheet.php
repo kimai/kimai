@@ -13,6 +13,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Timesheet\Calculator\RateCalculator;
+use App\Timesheet\Util;
 
 /**
  * @ORM\Table(name="kimai2_timesheet",
@@ -249,7 +251,15 @@ class Timesheet implements EntityWithMetaFields
      */
     public function getDuration()
     {
-        return $this->duration;
+        if ($this->end === null)
+        {
+            $end = new \DateTime();
+            return $end->getTimestamp() - $this->begin->getTimestamp();
+        }
+        else
+        {
+            return $this->duration;
+        }
     }
 
     /**
@@ -332,7 +342,27 @@ class Timesheet implements EntityWithMetaFields
      */
     public function getRate()
     {
-        return $this->rate;
+        if ($this->end === null)
+        {
+            $rateCalculator = new RateCalculator([]);
+            $fixedRate = $rateCalculator->findFixedRate($this);
+            if (null !== $fixedRate)
+            {
+                return $fixedRate;
+            }
+
+            $hourlyRate = $rateCalculator->findHourlyRate($this);
+            $factor = $rateCalculator->getRateFactor($this);
+
+            $hourlyRate = (float) ($hourlyRate * $factor);
+            $rate = Util::calculateRate($hourlyRate, $this->getDuration());
+
+            return $rate;
+        }
+        else
+        {
+            return $this->rate;
+        }
     }
 
     /**

@@ -66,7 +66,7 @@ class RateCalculator implements CalculatorInterface
      * @param Timesheet $record
      * @return float
      */
-    protected function findHourlyRate(Timesheet $record)
+    public function findHourlyRate(Timesheet $record)
     {
         if (null !== $record->getHourlyRate()) {
             return $record->getHourlyRate();
@@ -96,7 +96,7 @@ class RateCalculator implements CalculatorInterface
      * @param Timesheet $record
      * @return float|null
      */
-    protected function findFixedRate(Timesheet $record)
+    public function findFixedRate(Timesheet $record)
     {
         if (null !== $record->getFixedRate()) {
             return $record->getFixedRate();
@@ -126,7 +126,7 @@ class RateCalculator implements CalculatorInterface
      * @param Timesheet $record
      * @return float
      */
-    protected function getRateFactor(Timesheet $record)
+    public function getRateFactor(Timesheet $record)
     {
         $factor = 0;
         foreach ($this->rates as $rateFactor) {
