@@ -33,6 +33,13 @@
                 <source>confirm.delete</source>
                 <target>Biztos vagy benne, hogy törölni szerenéd?</target>
             </trans-unit>
+            <trans-unit id="admin_entity.delete_confirm">
+                <source>admin_entity.delete_confirm</source>
+                <target>
+                    Ezek az adatok és törlésre kerülnek!
+                    Esetleg válassz egy másik elemet, ahova ezek az adatok áthelyezésre kerülnek:
+                </target>
+            </trans-unit>
             <trans-unit id="delete.not_in_use">
                 <source>delete.not_in_use</source>
                 <target>Ez az elem biztonságosan törölhető.</target>
@@ -85,6 +92,10 @@
                 <source>menu.admin</source>
                 <target>Adminisztráció</target>
             </trans-unit>
+            <trans-unit id="menu.system">
+                <source>menu.system</source>
+                <target>Rendszer</target>
+            </trans-unit>
             <trans-unit id="menu.logout">
                 <source>menu.logout</source>
                 <target>Kijelentkezés</target>
@@ -121,9 +132,17 @@
                 <source>menu.admin_user</source>
                 <target>Felhasználók</target>
             </trans-unit>
+            <trans-unit id="menu.plugin">
+                <source>menu.plugin</source>
+                <target>Bővítmények</target>
+            </trans-unit>
             <trans-unit id="menu.system_configuration">
                 <source>menu.system_configuration</source>
                 <target>Rendszer beállítások</target>
+            </trans-unit>
+            <trans-unit id="menu.tags">
+                <source>menu.tags</source>
+                <target>Címkék</target>
             </trans-unit>
 
             <!--
@@ -185,6 +204,10 @@
                 <source>label.budget</source>
                 <target>Költségvetés</target>
             </trans-unit>
+            <trans-unit id="label.timeBudget">
+                <source>label.timeBudget</source>
+                <target>Meghatározott időkeret</target>
+            </trans-unit>
             <trans-unit id="label.activity">
                 <source>label.activity</source>
                 <target>Tevékenység</target>
@@ -192,6 +215,14 @@
             <trans-unit id="label.project">
                 <source>label.project</source>
                 <target>Projekt</target>
+            </trans-unit>
+            <trans-unit id="label.tag">
+                <source>label.tag</source>
+                <target>Címkék</target>
+            </trans-unit>
+            <trans-unit id="label.tags">
+                <source>label.tags</source>
+                <target>Címkék</target>
             </trans-unit>
             <trans-unit id="label.hourlyRate">
                 <source>label.hourlyRate</source>
@@ -329,6 +360,10 @@
                 <source>label.fixedRate</source>
                 <target>Fix bér</target>
             </trans-unit>
+            <trans-unit id="label.color">
+                <source>label.color</source>
+                <target>Szín</target>
+            </trans-unit>
 
             <!--
               User profile
@@ -442,7 +477,6 @@
                 </target>
             </trans-unit>
 
-
             <!--
               Admin: Activity
             -->
@@ -461,7 +495,6 @@
                     kapcsolódik %records% időbejegyzés, ami összesen %duration%.
                 </target>
             </trans-unit>
-
 
             <!--
               Admin: Customer
@@ -530,7 +563,6 @@
                 </target>
             </trans-unit>
 
-
             <!--
               Admin: User
             -->
@@ -567,6 +599,18 @@
                 <target>
                     A %user% felhasnálóhoz kapcsolódik %records% időbejegyzés, ami összesen %duration%.
                 </target>
+            </trans-unit>
+
+            <!--
+              Admin: Plugins
+            -->
+            <trans-unit id="label.version">
+                <source>label.version</source>
+                <target>Verzió</target>
+            </trans-unit>
+            <trans-unit id="label.required_version">
+                <source>label.required_version</source>
+                <target>Támogatott verzió</target>
             </trans-unit>
 
             <!--
@@ -611,6 +655,10 @@
             <trans-unit id="stats.durationTotal">
                 <source>stats.durationTotal</source>
                 <target>Összes munkaórák</target>
+            </trans-unit>
+            <trans-unit id="stats.yourWorkingHours">
+                <source>stats.yourWorkingHours</source>
+                <target>Munkaóráid</target>
             </trans-unit>
             <trans-unit id="stats.amountToday">
                 <source>stats.amountToday</source>
@@ -900,9 +948,17 @@
             <!--
              Navbar - recent entries and activities
             -->
+            <trans-unit id="active.entries">
+                <source>active.entries</source>
+                <target>Jelenleg futó rögzítéseid</target>
+            </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
                 <target>Összes rögzítés megjelenítése</target>
+            </trans-unit>
+            <trans-unit id="recent.activities">
+                <source>recent.activities</source>
+                <target>Egyik korábbi rögzítésed újraindítása</target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>
@@ -924,7 +980,7 @@
                 <source>label.entryState</source>
                 <target>Rögzítések</target>
             </trans-unit>
-             <trans-unit id="label.exported">
+            <trans-unit id="label.exported">
                 <source>label.exported</source>
                 <target>Exportált</target>
             </trans-unit>
