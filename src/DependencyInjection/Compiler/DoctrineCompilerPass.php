@@ -70,7 +70,7 @@ class DoctrineCompilerPass implements CompilerPassInterface
         $engine = $this->findEngine();
 
         $configDir = realpath(
-            $container->getParameter('kernel.project_dir') . '/vendor/beberlei/DoctrineExtensions/config/'
+            $container->getParameter('kernel.project_dir') . '/vendor/beberlei/doctrineextensions/config/'
         );
 
         $configFile = $configDir . '/' . $engine . '.yml';
