@@ -265,7 +265,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('begin')->defaultValue('00:00')->end()
-                        ->scalarNode('end')->defaultValue('24:00')->end()
+                        ->scalarNode('end')->defaultValue('23:59')->end()
                     ->end()
                 ->end()
                 ->arrayNode('google')
