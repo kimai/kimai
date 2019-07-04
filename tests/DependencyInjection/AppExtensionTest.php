@@ -70,7 +70,7 @@ class AppExtensionTest extends TestCase
                 ],
                 'visibleHours' => [
                     'begin' => '00:00',
-                    'end' => '24:00',
+                    'end' => '23:59',
                 ],
                 'google' => [
                     'api_key' => null,
