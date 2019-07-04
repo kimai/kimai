@@ -19,7 +19,7 @@
     {% endif %}
 
     <div class="error-page">
-        <h2 class="headline text-yellow"> {{ status_code }}</h2>
+        <h2 class="headline {% block error_class %}text-yellow{% endblock %}"> {{ status_code }}</h2>
 
         {% block error_content %}
         <div class="error-content">
