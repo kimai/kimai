@@ -124,7 +124,6 @@ class CreateReleaseCommand extends Command
             '.codecov.yml',
             '.editorconfig',
             '.php_cs.dist',
-            '.scrutinizer.yml',
             '.travis.yml',
             '*.lock',
             'package.json',
