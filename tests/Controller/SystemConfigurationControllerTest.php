@@ -232,7 +232,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertEquals('08:00', $configService->find('calendar.businessHours.begin'));
         $this->assertEquals('20:00', $configService->find('calendar.businessHours.end'));
         $this->assertEquals('00:00', $configService->find('calendar.visibleHours.begin'));
-        $this->assertEquals('24:00', $configService->find('calendar.visibleHours.end'));
+        $this->assertEquals('23:59', $configService->find('calendar.visibleHours.end'));
 
         $form = $client->getCrawler()->filter('form[name=system_configuration_form_calendar]')->form();
         $client->submit($form, [
