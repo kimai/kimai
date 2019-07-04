@@ -47,6 +47,7 @@ final class ThemeEvent extends Event
     public function getUser(): ?User
     {
         @trigger_error('Using ThemeEvent::getUser() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
+
         return $this->user;
     }
 
