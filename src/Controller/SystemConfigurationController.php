@@ -15,6 +15,8 @@ use App\Form\Model\Configuration;
 use App\Form\Model\SystemConfiguration as SystemConfigurationModel;
 use App\Form\SystemConfigurationForm;
 use App\Form\Type\EnhancedSelectboxType;
+use App\Form\Type\LanguageType;
+use App\Form\Type\SkinType;
 use App\Form\Type\TrackingModeType;
 use App\Repository\ConfigurationRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -171,7 +173,10 @@ class SystemConfigurationController extends AbstractController
 
         foreach ($event->getConfigurations() as $configs) {
             foreach ($configs->getConfiguration() as $config) {
-                $config->setValue($this->configurations->find($config->getName()));
+                $configValue = $this->configurations->find($config->getName());
+                if (null !== $configValue) {
+                    $config->setValue($configValue);
+                }
             }
         }
 
@@ -216,7 +221,8 @@ class SystemConfigurationController extends AbstractController
                     (new Configuration())
                         ->setName('defaults.customer.timezone')
                         ->setLabel('timezone')
-                        ->setType(TimezoneType::class),
+                        ->setType(TimezoneType::class)
+                        ->setValue(date_default_timezone_get()),
                     (new Configuration())
                         ->setName('defaults.customer.country')
                         ->setLabel('country')
@@ -225,6 +231,23 @@ class SystemConfigurationController extends AbstractController
                         ->setName('defaults.customer.currency')
                         ->setLabel('currency')
                         ->setType(CurrencyType::class),
+                ]),
+            (new SystemConfigurationModel())
+                ->setSection(SystemConfigurationModel::SECTION_FORM_USER)
+                ->setConfiguration([
+                    (new Configuration())
+                        ->setName('defaults.user.timezone')
+                        ->setLabel('timezone')
+                        ->setType(TimezoneType::class)
+                        ->setValue(date_default_timezone_get()),
+                    (new Configuration())
+                        ->setName('defaults.user.language')
+                        ->setLabel('language')
+                        ->setType(LanguageType::class),
+                    (new Configuration())
+                        ->setName('defaults.user.theme')
+                        ->setLabel('skin')
+                        ->setType(SkinType::class),
                 ]),
             (new SystemConfigurationModel())
                 ->setSection(SystemConfigurationModel::SECTION_THEME)

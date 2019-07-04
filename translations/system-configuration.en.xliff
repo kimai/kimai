@@ -18,6 +18,10 @@
                 <source>form_customer</source>
                 <target>Create customer - default values</target>
             </trans-unit>
+            <trans-unit id="form_user">
+                <source>form_user</source>
+                <target>User - default values</target>
+            </trans-unit>
             <trans-unit id="theme">
                 <source>theme</source>
                 <target>Theme</target>

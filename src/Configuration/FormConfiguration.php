@@ -18,7 +18,7 @@ class FormConfiguration implements SystemBundleConfiguration
         return 'defaults';
     }
 
-    public function getCustomerDefaultTimezone(): string
+    public function getCustomerDefaultTimezone(): ?string
     {
         return $this->find('customer.timezone');
     }
@@ -31,5 +31,20 @@ class FormConfiguration implements SystemBundleConfiguration
     public function getCustomerDefaultCountry(): string
     {
         return $this->find('customer.country');
+    }
+
+    public function getUserDefaultTimezone(): ?string
+    {
+        return $this->find('user.timezone');
+    }
+
+    public function getUserDefaultTheme(): ?string
+    {
+        return $this->find('user.theme');
+    }
+
+    public function getUserDefaultLanguage(): string
+    {
+        return $this->find('user.language');
     }
 }

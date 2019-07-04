@@ -9,6 +9,7 @@
 
 namespace App\DependencyInjection;
 
+use App\Entity\User;
 use App\Timesheet\Rounding\RoundingInterface;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -435,11 +436,20 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('customer')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('timezone')->defaultValue('Europe/Berlin')->end()
+                        ->scalarNode('timezone')->defaultNull()->end()
                         ->scalarNode('country')->defaultValue('DE')->end()
                         ->scalarNode('currency')->defaultValue('EUR')->end()
                     ->end()
                 ->end()
+                ->arrayNode('user')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('timezone')->defaultNull()->end()
+                        ->scalarNode('language')->defaultValue(User::DEFAULT_LANGUAGE)->end()
+                        ->scalarNode('theme')->defaultNull()->end()
+                    ->end()
+                ->end()
+
             ->end()
         ;
 

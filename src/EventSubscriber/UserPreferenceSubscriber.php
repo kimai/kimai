@@ -9,6 +9,7 @@
 
 namespace App\EventSubscriber;
 
+use App\Configuration\FormConfiguration;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
@@ -32,37 +33,52 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
      * @var EventDispatcherInterface
      */
     protected $eventDispatcher;
-
     /**
      * @var AuthorizationCheckerInterface
      */
     protected $voter;
-
     /**
      * @var TokenStorageInterface
      */
     protected $storage;
-
     /**
-     * @param EventDispatcherInterface $dispatcher
-     * @param TokenStorageInterface $storage
-     * @param AuthorizationCheckerInterface $voter
+     * @var FormConfiguration
      */
-    public function __construct(EventDispatcherInterface $dispatcher, TokenStorageInterface $storage, AuthorizationCheckerInterface $voter)
+    protected $formConfig;
+
+    public function __construct(EventDispatcherInterface $dispatcher, TokenStorageInterface $storage, AuthorizationCheckerInterface $voter, FormConfiguration $formConfig)
     {
         $this->eventDispatcher = $dispatcher;
         $this->storage = $storage;
         $this->voter = $voter;
+        $this->formConfig = $formConfig;
     }
 
-    /**
-     * @return array
-     */
     public static function getSubscribedEvents(): array
     {
         return [
             PrepareUserEvent::PREPARE => ['loadUserPreferences', 200]
         ];
+    }
+
+    private function getDefaultTheme(): ?string
+    {
+        return $this->formConfig->getUserDefaultTheme();
+    }
+
+    private function getDefaultLanguage(): string
+    {
+        return $this->formConfig->getUserDefaultLanguage();
+    }
+
+    private function getDefaultTimezone(): string
+    {
+        $timezone = $this->formConfig->getUserDefaultTimezone();
+        if (null === $timezone) {
+            $timezone = date_default_timezone_get();
+        }
+
+        return $timezone;
     }
 
     /**
@@ -87,16 +103,17 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
 
             (new UserPreference())
                 ->setName(UserPreference::TIMEZONE)
-                ->setValue(date_default_timezone_get())
+                ->setValue($this->getDefaultTimezone())
                 ->setType(TimezoneType::class),
 
             (new UserPreference())
                 ->setName(UserPreference::LOCALE)
-                ->setValue(User::DEFAULT_LANGUAGE)
+                ->setValue($this->getDefaultLanguage())
                 ->setType(LanguageType::class),
 
             (new UserPreference())
                 ->setName(UserPreference::SKIN)
+                ->setValue($this->getDefaultTheme())
                 ->setType(SkinType::class),
 
             (new UserPreference())

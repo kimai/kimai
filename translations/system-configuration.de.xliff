@@ -18,6 +18,10 @@
                 <source>form_customer</source>
                 <target>Kunden anlegen - Standard Werte</target>
             </trans-unit>
+            <trans-unit id="form_user">
+                <source>form_user</source>
+                <target>Benutzer - Standard Werte</target>
+            </trans-unit>
             <trans-unit id="theme">
                 <source>theme</source>
                 <target>Darstellung</target>

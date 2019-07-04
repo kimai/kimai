@@ -111,10 +111,15 @@ class CustomerController extends AbstractController
      */
     public function createAction(Request $request)
     {
+        $timezone = date_default_timezone_get();
+        if (null !== $this->configuration->getCustomerDefaultTimezone()) {
+            $timezone = $this->configuration->getCustomerDefaultTimezone();
+        }
+
         $customer = new Customer();
         $customer->setCountry($this->configuration->getCustomerDefaultCountry());
         $customer->setCurrency($this->configuration->getCustomerDefaultCurrency());
-        $customer->setTimezone($this->configuration->getCustomerDefaultTimezone());
+        $customer->setTimezone($timezone);
 
         return $this->renderCustomerForm($customer, $request);
     }
