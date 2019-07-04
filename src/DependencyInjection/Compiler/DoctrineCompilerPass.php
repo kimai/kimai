@@ -73,6 +73,14 @@ class DoctrineCompilerPass implements CompilerPassInterface
             $container->getParameter('kernel.project_dir') . '/vendor/beberlei/doctrineextensions/config/'
         );
 
+        if (!file_exists($configDir)) {
+            @trigger_error('Using deprecated doctrine extensions config directory', E_USER_DEPRECATED);
+
+            $configDir = realpath(
+                $container->getParameter('kernel.project_dir') . '/vendor/beberlei/DoctrineExtensions/config/'
+            );
+        }
+
         $configFile = $configDir . '/' . $engine . '.yml';
 
         if (!file_exists($configFile)) {
