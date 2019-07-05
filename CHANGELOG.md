@@ -1,10 +1,32 @@
 # Change Log
 
+## [1.0.1](https://github.com/kevinpapst/kimai2/tree/1.0.1) (2019-07-05)
+[Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.0...1.0.1)
+
+**Implemented enhancements:**
+
+- allow to configure default values for users [\#919](https://github.com/kevinpapst/kimai2/pull/919) ([kevinpapst](https://github.com/kevinpapst))
+
+**Fixed bugs:**
+
+- default value for end of visible time range is not valid [\#917](https://github.com/kevinpapst/kimai2/issues/917)
+- fix default calendar config [\#918](https://github.com/kevinpapst/kimai2/pull/918) ([kevinpapst](https://github.com/kevinpapst))
+- fix 500 error happening in error pages [\#914](https://github.com/kevinpapst/kimai2/pull/914) ([kevinpapst](https://github.com/kevinpapst))
+
+**Merged pull requests:**
+
+- prod log config [\#921](https://github.com/kevinpapst/kimai2/pull/921) ([kevinpapst](https://github.com/kevinpapst))
+- updated all composer packages [\#920](https://github.com/kevinpapst/kimai2/pull/920) ([kevinpapst](https://github.com/kevinpapst))
+- remove scrutinizer [\#915](https://github.com/kevinpapst/kimai2/pull/915) ([kevinpapst](https://github.com/kevinpapst))
+- use pre-defined icons in menu as well [\#913](https://github.com/kevinpapst/kimai2/pull/913) ([kevinpapst](https://github.com/kevinpapst))
+
 ## [1.0](https://github.com/kevinpapst/kimai2/tree/1.0) (2019-07-02)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/0.9...1.0)
 
 **Implemented enhancements:**
 
+- Multiple Work Orders under Project for a Customer [\#720](https://github.com/kevinpapst/kimai2/issues/720)
+- View cut off on 4:3 monitor [\#575](https://github.com/kevinpapst/kimai2/issues/575)
 - Admin Timesheets Toolbar: order users by username [\#876](https://github.com/kevinpapst/kimai2/issues/876)
 - import project "budget" field [\#841](https://github.com/kevinpapst/kimai2/issues/841)
 - Add tag data to exports [\#825](https://github.com/kevinpapst/kimai2/issues/825)
@@ -16,7 +38,6 @@
 - Stop entries without page reload [\#753](https://github.com/kevinpapst/kimai2/issues/753)
 - More actions on data records resp. table rows [\#748](https://github.com/kevinpapst/kimai2/issues/748)
 - Action menu instead of icons [\#747](https://github.com/kevinpapst/kimai2/issues/747)
-- Multiple Work Orders under Project for a Customer [\#720](https://github.com/kevinpapst/kimai2/issues/720)
 - Add custom fields in timesheet record [\#697](https://github.com/kevinpapst/kimai2/issues/697)
 - Lock exported objects [\#686](https://github.com/kevinpapst/kimai2/issues/686)
 - Option to allow Markdown in Project/Activity-comments [\#677](https://github.com/kevinpapst/kimai2/issues/677)
@@ -26,7 +47,6 @@
 - Restarting a entry- missing description [\#626](https://github.com/kevinpapst/kimai2/issues/626)
 - Calendar: Return to last view after creating a new time entry [\#622](https://github.com/kevinpapst/kimai2/issues/622)
 - Unable to select «projects» while filtering in timesheets [\#601](https://github.com/kevinpapst/kimai2/issues/601)
-- View cut off on 4:3 monitor [\#575](https://github.com/kevinpapst/kimai2/issues/575)
 - Calendar view: more space for business hours [\#530](https://github.com/kevinpapst/kimai2/issues/530)
 - maximale Anzahl Projektstunden als Vorgabe [\#467](https://github.com/kevinpapst/kimai2/issues/467)
 - don't allow start end dates, just punch in or out [\#448](https://github.com/kevinpapst/kimai2/issues/448)
@@ -60,11 +80,11 @@
 
 **Fixed bugs:**
 
+- adding a new timesheet entry is broken in current master [\#778](https://github.com/kevinpapst/kimai2/issues/778)
 - Invoice calculator that differs between fixed and hourly rates [\#884](https://github.com/kevinpapst/kimai2/issues/884)
 - Timesheets table empty after update [\#878](https://github.com/kevinpapst/kimai2/issues/878)
 - Ability to hide the revenue stats to users [\#853](https://github.com/kevinpapst/kimai2/issues/853)
 - Error on update database migration:  Syntax error or access violation: 1071 Specified key was too long; max key length is 767 bytes [\#788](https://github.com/kevinpapst/kimai2/issues/788)
-- adding a new timesheet entry is broken in current master [\#778](https://github.com/kevinpapst/kimai2/issues/778)
 - calendar week timesheet task with duration=true error 500 [\#704](https://github.com/kevinpapst/kimai2/issues/704)
 - Inter-month entries don't get exported in single month [\#652](https://github.com/kevinpapst/kimai2/issues/652)
 - fix selectbox is not resettable [\#901](https://github.com/kevinpapst/kimai2/pull/901) ([kevinpapst](https://github.com/kevinpapst))
@@ -81,26 +101,29 @@
 
 **Closed issues:**
 
-- Update Hungarian translation [\#897](https://github.com/kevinpapst/kimai2/issues/897)
-- Authentication to Active Directory [\#875](https://github.com/kevinpapst/kimai2/issues/875)
-- LDAP Documentation Enhancement for Active Directory [\#867](https://github.com/kevinpapst/kimai2/issues/867)
 - Cannot find bundle in plugin tests [\#863](https://github.com/kevinpapst/kimai2/issues/863)
 - Allowed memory in reset-dev [\#857](https://github.com/kevinpapst/kimai2/issues/857)
 - 503 Error Service Unavailable [\#834](https://github.com/kevinpapst/kimai2/issues/834)
-- Documentation for native wrapper like nativefier [\#830](https://github.com/kevinpapst/kimai2/issues/830)
 - Create documentation for layman users to deploy the master code on their servers  [\#827](https://github.com/kevinpapst/kimai2/issues/827)
 - Allow export of data in timesheet view directly from the frontend [\#826](https://github.com/kevinpapst/kimai2/issues/826)
 - Adding a command as Plugin [\#797](https://github.com/kevinpapst/kimai2/issues/797)
-- connect kimai to ldap [\#795](https://github.com/kevinpapst/kimai2/issues/795)
 - Older Kimai2 version compatible with PHP 7.0? [\#790](https://github.com/kevinpapst/kimai2/issues/790)
 - POLL: Global vs. customer currency [\#781](https://github.com/kevinpapst/kimai2/issues/781)
-- Docker refactor [\#763](https://github.com/kevinpapst/kimai2/issues/763)
 - Finally got this installed! [\#743](https://github.com/kevinpapst/kimai2/issues/743)
-- Possible to translate login page [\#736](https://github.com/kevinpapst/kimai2/issues/736)
 - Grouping Users when Exporting [\#680](https://github.com/kevinpapst/kimai2/issues/680)
+- Update Spanish translation [\#898](https://github.com/kevinpapst/kimai2/issues/898)
+- Update Hungarian translation [\#897](https://github.com/kevinpapst/kimai2/issues/897)
+- Authentication to Active Directory [\#875](https://github.com/kevinpapst/kimai2/issues/875)
+- LDAP Documentation Enhancement for Active Directory [\#867](https://github.com/kevinpapst/kimai2/issues/867)
+- Documentation for native wrapper like nativefier [\#830](https://github.com/kevinpapst/kimai2/issues/830)
+- connect kimai to ldap [\#795](https://github.com/kevinpapst/kimai2/issues/795)
+- Docker refactor [\#763](https://github.com/kevinpapst/kimai2/issues/763)
+- Possible to translate login page [\#736](https://github.com/kevinpapst/kimai2/issues/736)
 
 **Merged pull requests:**
 
+- Added last changed strings [\#906](https://github.com/kevinpapst/kimai2/pull/906) ([yayitazale](https://github.com/yayitazale))
+- Update japanese translation 190702 [\#905](https://github.com/kevinpapst/kimai2/pull/905) ([nabbisen](https://github.com/nabbisen))
 - Update Hungarian translation [\#902](https://github.com/kevinpapst/kimai2/pull/902) ([infeeeee](https://github.com/infeeeee))
 - performance tuning on timesheets [\#874](https://github.com/kevinpapst/kimai2/pull/874) ([kevinpapst](https://github.com/kevinpapst))
 - Removed lines that skip plugins in test env [\#864](https://github.com/kevinpapst/kimai2/pull/864) ([tobybatch](https://github.com/tobybatch))
