@@ -38,6 +38,7 @@ matrix:
     - stage: Test
       php: '7.2'
       env: CODECOVERAGE=0 DB=mysql
+      sudo: required
       apt:
         sources:
           - mysql-5.7-trusty
@@ -52,6 +53,7 @@ matrix:
     - stage: Test
       php: '7.3'
       env: CODECOVERAGE=0 DB=mysql
+      sudo: required
       apt:
         sources:
           - mysql-5.7-trusty
@@ -66,6 +68,8 @@ matrix:
     - stage: Test
       php: '7.3'
       env: CODECOVERAGE=1 DB=sqlite
+      after_success:
+        - if [[ $CODECOVERAGE == 1 ]]; then bash <(curl -s https://codecov.io/bash); fi
 
 before_install:
   #  - phpenv config-rm xdebug.ini
@@ -86,5 +90,3 @@ script:
   - bin/console doctrine:migrations:migrate -n
   - bin/console doctrine:migrations:migrate first -n
 
-after_success:
-  - if [[ $CODECOVERAGE == 1 ]]; then bash <(curl -s https://codecov.io/bash); fi
