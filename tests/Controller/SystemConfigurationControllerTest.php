@@ -50,6 +50,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         return [
             ['form[name=system_configuration_form_timesheet]', $this->createUrl('/admin/system-config/update/timesheet')],
             ['form[name=system_configuration_form_form_customer]', $this->createUrl('/admin/system-config/update/form_customer')],
+            ['form[name=system_configuration_form_form_user]', $this->createUrl('/admin/system-config/update/form_user')],
             ['form[name=system_configuration_form_theme]', $this->createUrl('/admin/system-config/update/theme')],
             ['form[name=system_configuration_form_calendar]', $this->createUrl('/admin/system-config/update/calendar')],
         ];
@@ -121,7 +122,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/system-config/');
 
         $configService = $client->getContainer()->get(SystemConfiguration::class);
-        $this->assertEquals('Europe/Berlin', $configService->find('defaults.customer.timezone'));
+        $this->assertNull($configService->find('defaults.customer.timezone'));
         $this->assertEquals('DE', $configService->find('defaults.customer.country'));
         $this->assertEquals('EUR', $configService->find('defaults.customer.currency'));
 
@@ -145,6 +146,38 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertEquals('Atlantic/Canary', $configService->find('defaults.customer.timezone'));
         $this->assertEquals('BB', $configService->find('defaults.customer.country'));
         $this->assertEquals('GBP', $configService->find('defaults.customer.currency'));
+    }
+
+    public function testUpdateUserConfig()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/system-config/');
+
+        $configService = $client->getContainer()->get(SystemConfiguration::class);
+        $this->assertNull($configService->find('defaults.user.timezone'));
+        $this->assertNull($configService->find('defaults.user.theme'));
+        $this->assertEquals('en', $configService->find('defaults.user.language'));
+
+        $form = $client->getCrawler()->filter('form[name=system_configuration_form_form_user]')->form();
+        $client->submit($form, [
+            'system_configuration_form_form_user' => [
+                'configuration' => [
+                    ['name' => 'defaults.user.timezone', 'value' => 'Pacific/Tahiti'],
+                    ['name' => 'defaults.user.language', 'value' => 'ru'],
+                    ['name' => 'defaults.user.theme', 'value' => 'purple'],
+                ]
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/admin/system-config/'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasFlashSaveSuccess($client);
+
+        $configService = $client->getContainer()->get(SystemConfiguration::class);
+        $this->assertEquals('Pacific/Tahiti', $configService->find('defaults.user.timezone'));
+        $this->assertEquals('purple', $configService->find('defaults.user.theme'));
+        $this->assertEquals('ru', $configService->find('defaults.user.language'));
     }
 
     public function testUpdateCustomerConfigValidation()

@@ -86,9 +86,14 @@ class AppExtensionTest extends TestCase
             ],
             'kimai.defaults' => [
                 'customer' => [
-                    'timezone' => 'Europe/Berlin',
+                    'timezone' => null,
                     'country' => 'DE',
                     'currency' => 'EUR',
+                ],
+                'user' => [
+                    'timezone' => null,
+                    'language' => 'en',
+                    'theme' => null,
                 ]
             ],
 
