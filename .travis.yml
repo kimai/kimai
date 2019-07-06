@@ -23,9 +23,8 @@ matrix:
             - mysql-server
             - mysql-client
       before_install:
-        - mysql --version
-        - sudo mysql_upgrade
         - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+        - sudo mysql_upgrade
         - sudo service mysql restart
         - mysql --version
     - stage: Test
@@ -40,9 +39,8 @@ matrix:
             - mysql-server
             - mysql-client
       before_install:
-        - mysql --version
-        - sudo mysql_upgrade
         - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+        - sudo mysql_upgrade
         - sudo service mysql restart
         - mysql --version
     - stage: Test
@@ -62,21 +60,21 @@ matrix:
       env: CODECOVERAGE=0 DB=mariadb
       addons:
         mariadb: '10.2'
-    - stage: Test
-      php: '7.3'
-      env: CODECOVERAGE=1 DB=sqlite
-      after_success:
-        - if [[ $CODECOVERAGE == 1 ]]; then bash <(curl -s https://codecov.io/bash); fi
     - stage: Code quality
       env: CODECOVERAGE=0 DB=sqlite
       php: '7.3'
       script:
-        - composer validate --no-check-all --strict
-        - composer kimai:codestyle
-        - composer kimai:phpstan
+          - composer validate --no-check-all --strict
+          - composer kimai:codestyle
+          - composer kimai:phpstan
+    - stage: Code coverage
+      php: '7.3'
+      env: CODECOVERAGE=1 DB=sqlite
+      after_success:
+          - if [[ $CODECOVERAGE == 1 ]]; then bash <(curl -s https://codecov.io/bash); fi
 
 before_install:
-  #  - phpenv config-rm xdebug.ini
+  - if [[ $CODECOVERAGE == 0 ]]; then phpenv config-rm xdebug.ini; fi;
   - composer self-update
   - php -i
   - php -m
