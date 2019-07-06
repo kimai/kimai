@@ -11,13 +11,40 @@ services:
 
 matrix:
   include:
-    - stage: Code quality
-      env: CODECOVERAGE=0 DB=sqlite
+    - stage: Test
+      php: '7.2'
+      env: CODECOVERAGE=0 DB=mysql
+      sudo: required
+      addons:
+        apt:
+          sources:
+            - mysql-5.7-trusty
+          packages:
+            - mysql-server
+            - mysql-client
+      before_install:
+        - mysql --version
+        - sudo mysql_upgrade
+        - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+        - sudo service mysql restart
+        - mysql --version
+    - stage: Test
       php: '7.3'
-      script:
-        - composer validate --no-check-all --strict
-        - composer kimai:codestyle
-        - composer kimai:phpstan
+      env: CODECOVERAGE=0 DB=mysql
+      sudo: required
+      addons:
+        apt:
+          sources:
+            - mysql-5.7-trusty
+          packages:
+            - mysql-server
+            - mysql-client
+      before_install:
+        - mysql --version
+        - sudo mysql_upgrade
+        - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+        - sudo service mysql restart
+        - mysql --version
     - stage: Test
       php: '7.2'
       env: CODECOVERAGE=0 DB=sqlite
@@ -36,42 +63,17 @@ matrix:
       addons:
         mariadb: '10.2'
     - stage: Test
-      php: '7.2'
-      env: CODECOVERAGE=0 DB=mysql
-      sudo: required
-      apt:
-        sources:
-          - mysql-5.7-trusty
-        packages:
-          - mysql-server
-          - mysql-client
-      before_install:
-        - mysql --version
-        - sudo mysql_upgrade
-        - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
-        - sudo service mysql restart
-        - mysql --version
-    - stage: Test
-      php: '7.3'
-      env: CODECOVERAGE=0 DB=mysql
-      sudo: required
-      apt:
-        sources:
-          - mysql-5.7-trusty
-        packages:
-          - mysql-server
-          - mysql-client
-      before_install:
-        - mysql --version
-        - sudo mysql_upgrade
-        - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
-        - sudo service mysql restart
-        - mysql --version
-    - stage: Test
       php: '7.3'
       env: CODECOVERAGE=1 DB=sqlite
       after_success:
         - if [[ $CODECOVERAGE == 1 ]]; then bash <(curl -s https://codecov.io/bash); fi
+    - stage: Code quality
+      env: CODECOVERAGE=0 DB=sqlite
+      php: '7.3'
+      script:
+        - composer validate --no-check-all --strict
+        - composer kimai:codestyle
+        - composer kimai:phpstan
 
 before_install:
   #  - phpenv config-rm xdebug.ini
