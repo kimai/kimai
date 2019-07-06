@@ -47,8 +47,8 @@ matrix:
           - mysql-client
       before_install:
         - mysql --version
-        - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('migration_tests') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
-        - sudo mysql_upgrade -u root -pmigration_tests
+        - sudo mysql_upgrade
+        - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
         - sudo service mysql restart
         - mysql --version
     - stage: Test
@@ -63,8 +63,8 @@ matrix:
           - mysql-client
       before_install:
         - mysql --version
-        - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('migration_tests') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
-        - sudo mysql_upgrade -u root -pmigration_tests
+        - sudo mysql_upgrade
+        - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
         - sudo service mysql restart
         - mysql --version
     - stage: Test
