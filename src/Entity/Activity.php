@@ -15,7 +15,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="kimai2_activities")
+ * @ORM\Table(name="kimai2_activities",
+ *     indexes={
+ *          @ORM\Index(columns={"visible"}),
+ *          @ORM\Index(columns={"visible","project_id"})
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\ActivityRepository")
  */
 class Activity implements EntityWithMetaFields
@@ -32,7 +37,7 @@ class Activity implements EntityWithMetaFields
     /**
      * @var Project|null
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="activities")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Project")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $project;
@@ -61,13 +66,6 @@ class Activity implements EntityWithMetaFields
      */
     private $visible = true;
 
-    /**
-     * @var Timesheet[]|ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\Timesheet", mappedBy="activity")
-     */
-    private $timesheets;
-
     // keep the trait include exactly here, for placing the column at the correct position
     use RatesTrait;
     use ColorTrait;
@@ -82,21 +80,12 @@ class Activity implements EntityWithMetaFields
 
     public function __construct()
     {
-        $this->timesheets = new ArrayCollection();
         $this->meta = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection<Timesheet>
-     */
-    public function getTimesheets(): Collection
-    {
-        return $this->timesheets;
     }
 
     public function getProject(): ?Project

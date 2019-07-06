@@ -18,7 +18,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="kimai2_timesheet",
  *     indexes={
  *          @ORM\Index(columns={"user"}),
- *          @ORM\Index(columns={"activity_id"})
+ *          @ORM\Index(columns={"activity_id"}),
+ *          @ORM\Index(columns={"user","start_time"}),
+ *          @ORM\Index(columns={"start_time"}),
+ *          @ORM\Index(columns={"start_time","end_time"}),
+ *          @ORM\Index(columns={"start_time","end_time","user"}),
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\TimesheetRepository")
@@ -83,7 +87,7 @@ class Timesheet implements EntityWithMetaFields
     /**
      * @var Activity
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Activity", inversedBy="timesheets")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Activity")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
@@ -92,7 +96,7 @@ class Timesheet implements EntityWithMetaFields
     /**
      * @var Project
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="timesheets")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Project")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
