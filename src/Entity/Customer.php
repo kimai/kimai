@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
  *
- * columns={"visible"}  => IDX_5A9760447AB0E859 => ???
+ * columns={"visible"}  => IDX_5A9760447AB0E859 => used in customer dropdown
  */
 class Customer implements EntityWithMetaFields
 {

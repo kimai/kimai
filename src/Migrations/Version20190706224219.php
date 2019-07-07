@@ -35,13 +35,11 @@ final class Version20190706224219 extends AbstractMigration
         $timesheet->addIndex(['start_time', 'end_time', 'user'], 'IDX_4F60C6B1502DF587415614018D93D649');
 
         $activity = $schema->getTable('kimai2_activities');
-        $activity->addIndex(['visible'], 'IDX_8811FE1C7AB0E859');
         $activity->addIndex(['visible', 'project_id'], 'IDX_8811FE1C7AB0E859166D1F9C');
         $activity->addIndex(['visible', 'project_id', 'name'], 'IDX_8811FE1C7AB0E859166D1F9C5E237E06');
         $activity->addIndex(['visible', 'name'], 'IDX_8811FE1C7AB0E8595E237E06');
 
         $project = $schema->getTable('kimai2_projects');
-        $project->addIndex(['visible'], 'IDX_407F12067AB0E859');
         $project->addIndex(['customer_id', 'visible', 'name'], 'IDX_407F12069395C3F37AB0E8595E237E06');
         $project->addIndex(['customer_id', 'visible', 'id'], 'IDX_407F12069395C3F37AB0E859BF396750');
 
@@ -52,7 +50,6 @@ final class Version20190706224219 extends AbstractMigration
     public function down(Schema $schema): void
     {
         $activity = $schema->getTable('kimai2_activities');
-        $activity->dropIndex('IDX_8811FE1C7AB0E859');
         $activity->dropIndex('IDX_8811FE1C7AB0E859166D1F9C');
         $activity->dropIndex('IDX_8811FE1C7AB0E859166D1F9C5E237E06');
         $activity->dropIndex('IDX_8811FE1C7AB0E8595E237E06');
@@ -61,7 +58,6 @@ final class Version20190706224219 extends AbstractMigration
         $customer->dropIndex('IDX_5A9760447AB0E859');
 
         $project = $schema->getTable('kimai2_projects');
-        $project->dropIndex('IDX_407F12067AB0E859');
         $project->dropIndex('IDX_407F12069395C3F37AB0E8595E237E06');
         $project->dropIndex('IDX_407F12069395C3F37AB0E859BF396750');
 
