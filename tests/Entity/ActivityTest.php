@@ -27,7 +27,6 @@ class ActivityTest extends TestCase
         $this->assertNull($sut->getName());
         $this->assertNull($sut->getComment());
         $this->assertTrue($sut->getVisible());
-        self::assertIsIterable($sut->getTimesheets());
         $this->assertNull($sut->getFixedRate());
         $this->assertNull($sut->getHourlyRate());
         $this->assertNull($sut->getColor());
