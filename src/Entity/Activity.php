@@ -18,10 +18,17 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="kimai2_activities",
  *     indexes={
  *          @ORM\Index(columns={"visible"}),
- *          @ORM\Index(columns={"visible","project_id"})
+ *          @ORM\Index(columns={"visible","project_id"}),
+ *          @ORM\Index(columns={"visible","project_id","name"}),
+ *          @ORM\Index(columns={"visible","name"})
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ActivityRepository")
+ *
+ * columns={"visible"}                      => IDX_8811FE1C7AB0E859                 => ???
+ * columns={"visible","name"}               => IDX_8811FE1C7AB0E8595E237E06         => activity administration without filter
+ * columns={"visible","project_id"}         => IDX_8811FE1C7AB0E859166D1F9C         => activity administration with customer or project filter
+ * columns={"visible","project_id","name"}  => IDX_8811FE1C7AB0E859166D1F9C5E237E06 => activity drop-down for global activities in toolbar
  */
 class Activity implements EntityWithMetaFields
 {
