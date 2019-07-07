@@ -19,12 +19,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     indexes={
  *          @ORM\Index(columns={"visible"}),
  *          @ORM\Index(columns={"customer_id","visible","name"}),
+ *          @ORM\Index(columns={"customer_id","visible","id"})
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
  *
  * columns={"visible"}                      => IDX_407F12067AB0E859                 => ???
  * columns={"customer_id","visible","name"} => IDX_407F12069395C3F37AB0E8595E237E06 => project administration without filter
+ * columns={"customer_id","visible","id"}   => IDX_407F12069395C3F37AB0E859BF396750 => used in joins between project and customer, eg. dropdowns and activity administration page
  */
 class Project implements EntityWithMetaFields
 {

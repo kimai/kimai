@@ -43,6 +43,7 @@ final class Version20190706224219 extends AbstractMigration
         $project = $schema->getTable('kimai2_projects');
         $project->addIndex(['visible'], 'IDX_407F12067AB0E859');
         $project->addIndex(['customer_id', 'visible', 'name'], 'IDX_407F12069395C3F37AB0E8595E237E06');
+        $project->addIndex(['customer_id', 'visible', 'id'], 'IDX_407F12069395C3F37AB0E859BF396750');
 
         $customer = $schema->getTable('kimai2_customers');
         $customer->addIndex(['visible'], 'IDX_5A9760447AB0E859');
@@ -62,6 +63,7 @@ final class Version20190706224219 extends AbstractMigration
         $project = $schema->getTable('kimai2_projects');
         $project->dropIndex('IDX_407F12067AB0E859');
         $project->dropIndex('IDX_407F12069395C3F37AB0E8595E237E06');
+        $project->dropIndex('IDX_407F12069395C3F37AB0E859BF396750');
 
         $timesheet = $schema->getTable('kimai2_timesheet');
         $timesheet->dropIndex('IDX_4F60C6B18D93D649502DF587');
