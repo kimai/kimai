@@ -217,6 +217,8 @@ class InstallCommand extends Command
             return self::ERROR_PERMISSIONS;
         }
         $io->writeln('');
+
+        return true;
     }
 
     protected function importMigrations(SymfonyStyle $io, OutputInterface $output)
