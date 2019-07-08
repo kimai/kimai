@@ -182,7 +182,7 @@ abstract class TimesheetAbstractController extends AbstractController
         }
 
         if ($request->query->get('tags')) {
-            $tagnames = explode(",", $request->query->get('tags'));
+            $tagnames = explode(',', $request->query->get('tags'));
             foreach ($tagnames as $tagname) {
                 $tag = $tagRepository->findOneByName($tagname);
                 if (!$tag) {

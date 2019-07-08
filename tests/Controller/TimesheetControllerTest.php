@@ -243,7 +243,7 @@ class TimesheetControllerTest extends ControllerBaseTest
             $tagnames[] = $tag->getName();
         }
         asort($tagnames);
-        $this->assertEquals("one,three,two", implode(",", $tagnames));
+        $this->assertEquals('one,three,two', implode(',', $tagnames));
     }
 
     public function testEditAction()
