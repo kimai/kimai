@@ -87,20 +87,16 @@ abstract class TimesheetAbstractController extends AbstractController
         $query->setPage($page);
 
         $form = $this->getToolbarForm($query);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var TimesheetQuery $query */
-            $query = $form->getData();
+        $form->setData($query);
+        $form->submit($request->query->all(), false);
+
+        if ($form->isValid()) {
             if (null !== $query->getBegin()) {
                 $query->getBegin()->setTime(0, 0, 0);
             }
             if (null !== $query->getEnd()) {
                 $query->getEnd()->setTime(23, 59, 59);
             }
-        }
-
-        if (!$this->includeUserInForms()) {
-            $query->setUser($this->getUser());
         }
 
         $tags = $query->getTags(true);
@@ -114,13 +110,19 @@ abstract class TimesheetAbstractController extends AbstractController
             );
         }
 
+        $dirtyQuery = $query->isDirty();
+
+        if (!$this->includeUserInForms()) {
+            $query->setUser($this->getUser());
+        }
+
         $pager = $this->getRepository()->getPagerfantaForQuery($query);
 
         return $this->render($renderTemplate, [
             'entries' => $pager,
             'page' => $query->getPage(),
             'query' => $query,
-            'showFilter' => $form->isSubmitted(),
+            'showFilter' => $dirtyQuery,
             'toolbarForm' => $form->createView(),
             'showSummary' => $this->includeSummary(),
             'showStartEndTime' => $this->canSeeStartEndTime()
@@ -223,11 +225,8 @@ abstract class TimesheetAbstractController extends AbstractController
         $query = new TimesheetQuery();
 
         $form = $this->getToolbarForm($query);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var TimesheetQuery $query */
-            $query = $form->getData();
-        }
+        $form->setData($query);
+        $form->submit($request->query->all(), false);
 
         // by default the current month is exported, but it can be overwritten
         // this should not be removed, otherwise we would export EVERY available record in the admin section

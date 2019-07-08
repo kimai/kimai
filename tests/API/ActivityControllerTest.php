@@ -100,7 +100,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->loadActivityTestData($client);
 
-        $query = ['order' => 'ASC', 'orderBy' => 'project', 'globalsFirst' => 'false'];
+        $query = ['order' => 'ASC', 'orderBy' => 'project'];
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/activities', 'GET', $query);
         $result = json_decode($client->getResponse()->getContent(), true);

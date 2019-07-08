@@ -16,6 +16,7 @@ use App\Form\ProjectEditForm;
 use App\Form\Toolbar\ProjectToolbarForm;
 use App\Form\Type\ProjectType;
 use App\Repository\ProjectRepository;
+use App\Repository\Query\ProjectFormTypeQuery;
 use App\Repository\Query\ProjectQuery;
 use Doctrine\ORM\ORMException;
 use Pagerfanta\Pagerfanta;
@@ -67,26 +68,19 @@ class ProjectController extends AbstractController
     public function indexAction($page, Request $request)
     {
         $query = new ProjectQuery();
-        $query
-            ->setOrderBy('name')
-            ->setExclusiveVisibility(true)
-            ->setPage($page)
-        ;
+        $query->setPage($page);
 
         $form = $this->getToolbarForm($query);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var ProjectQuery $query */
-            $query = $form->getData();
-        }
+        $form->setData($query);
+        $form->submit($request->query->all(), false);
 
         /* @var $entries Pagerfanta */
-        $entries = $this->getRepository()->findByQuery($query);
+        $entries = $this->getRepository()->getPagerfantaForQuery($query);
 
         return $this->render('project/index.html.twig', [
             'entries' => $entries,
             'query' => $query,
-            'showFilter' => $form->isSubmitted(),
+            'showFilter' => $query->isDirty(),
             'toolbarForm' => $form->createView(),
         ]);
     }
@@ -161,13 +155,11 @@ class ProjectController extends AbstractController
             ->add('project', ProjectType::class, [
                 'label' => 'label.project',
                 'query_builder' => function (ProjectRepository $repo) use ($project) {
-                    $query = new ProjectQuery();
-                    $query
-                        ->setResultType(ProjectQuery::RESULT_TYPE_QUERYBUILDER)
-                        ->setCustomer($project->getCustomer())
-                        ->addIgnoredEntity($project);
+                    $query = new ProjectFormTypeQuery();
+                    $query->setCustomer($project->getCustomer());
+                    $query->setProjectToIgnore($project);
 
-                    return $repo->findByQuery($query);
+                    return $repo->getQueryBuilderForFormType($query);
                 },
                 'required' => false,
             ])

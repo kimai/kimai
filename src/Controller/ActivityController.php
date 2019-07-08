@@ -16,6 +16,7 @@ use App\Form\ActivityEditForm;
 use App\Form\Toolbar\ActivityToolbarForm;
 use App\Form\Type\ActivityType;
 use App\Repository\ActivityRepository;
+use App\Repository\Query\ActivityFormTypeQuery;
 use App\Repository\Query\ActivityQuery;
 use Doctrine\ORM\ORMException;
 use Pagerfanta\Pagerfanta;
@@ -67,26 +68,19 @@ class ActivityController extends AbstractController
     public function indexAction($page, Request $request)
     {
         $query = new ActivityQuery();
-        $query
-            ->setOrderBy('name')
-            ->setExclusiveVisibility(true)
-            ->setPage($page)
-        ;
+        $query->setPage($page);
 
         $form = $this->getToolbarForm($query);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var ActivityQuery $query */
-            $query = $form->getData();
-        }
+        $form->setData($query);
+        $form->submit($request->query->all(), false);
 
         /* @var $entries Pagerfanta */
-        $entries = $this->getRepository()->findByQuery($query);
+        $entries = $this->getRepository()->getPagerfantaForQuery($query);
 
         return $this->render('activity/index.html.twig', [
             'entries' => $entries,
             'query' => $query,
-            'showFilter' => $form->isSubmitted(),
+            'showFilter' => $query->isDirty(),
             'toolbarForm' => $form->createView(),
         ]);
     }
@@ -160,16 +154,11 @@ class ActivityController extends AbstractController
             ->add('activity', ActivityType::class, [
                 'label' => 'label.activity',
                 'query_builder' => function (ActivityRepository $repo) use ($activity) {
-                    $query = new ActivityQuery();
-                    $query
-                        ->setResultType(ActivityQuery::RESULT_TYPE_QUERYBUILDER)
-                        ->setProject($activity->getProject())
-                        ->setOrderGlobalsFirst(true)
-                        ->addIgnoredEntity($activity)
-                        ->setGlobalsOnly(null === $activity->getProject())
-                    ;
+                    $query = new ActivityFormTypeQuery();
+                    $query->setProject($activity->getProject());
+                    $query->setActivityToIgnore($activity);
 
-                    return $repo->findByQuery($query);
+                    return $repo->getQueryBuilderForFormType($query);
                 },
                 'required' => false,
             ])

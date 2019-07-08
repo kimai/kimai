@@ -14,7 +14,7 @@ class ExportQuery extends TimesheetQuery
     /**
      * @var string
      */
-    protected $type;
+    private $type;
 
     /**
      * @return string

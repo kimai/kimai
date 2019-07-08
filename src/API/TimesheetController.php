@@ -127,7 +127,6 @@ class TimesheetController extends BaseApiController
     {
         $query = new TimesheetQuery();
         $query->setUser($this->getUser());
-        $query->setResultType(TimesheetQuery::RESULT_TYPE_PAGER);
 
         if ($this->isGranted('view_other_timesheet') && null !== ($user = $paramFetcher->get('user'))) {
             if ('all' === $user) {

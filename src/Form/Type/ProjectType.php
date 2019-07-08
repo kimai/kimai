@@ -12,6 +12,7 @@ namespace App\Form\Type;
 use App\Entity\Project;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityQuery;
+use App\Repository\Query\ProjectFormTypeQuery;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\Options;
@@ -62,7 +63,7 @@ class ProjectType extends AbstractType
                 return $project->getCustomer()->getName();
             },
             'query_builder' => function (ProjectRepository $repo) {
-                return $repo->builderForEntityType(null);
+                return $repo->getQueryBuilderForFormType(new ProjectFormTypeQuery());
             },
             'activity_enabled' => false,
             'activity_visibility' => ActivityQuery::SHOW_VISIBLE,
@@ -73,8 +74,8 @@ class ProjectType extends AbstractType
                 return [
                     'select' => 'activity',
                     'route' => 'get_activities',
-                    'route_params' => ['project' => '-s-', 'orderBy' => 'name', 'visible' => $options['activity_visibility']],
-                    'empty_route_params' => ['globals' => 'true', 'orderBy' => 'name', 'visible' => $options['activity_visibility']],
+                    'route_params' => ['project' => '-s-', 'visible' => $options['activity_visibility']],
+                    'empty_route_params' => ['globals' => 'true', 'visible' => $options['activity_visibility']],
                 ];
             }
 

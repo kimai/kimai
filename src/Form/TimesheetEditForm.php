@@ -27,6 +27,9 @@ use App\Form\Type\YesNoType;
 use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
+use App\Repository\Query\ActivityFormTypeQuery;
+use App\Repository\Query\CustomerFormTypeQuery;
+use App\Repository\Query\ProjectFormTypeQuery;
 use App\Timesheet\UserDateTimeFactory;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -162,11 +165,11 @@ class TimesheetEditForm extends AbstractType
         $builder
             ->add('customer', CustomerType::class, [
                 'query_builder' => function (CustomerRepository $repo) use ($customer) {
-                    return $repo->builderForEntityType($customer);
+                    return $repo->getQueryBuilderForFormType(new CustomerFormTypeQuery($customer));
                 },
                 'data' => $customer ? $customer : '',
                 'required' => false,
-                'placeholder' => null === $customer ? '' : null,
+                'placeholder' => '',
                 'mapped' => false,
                 'project_enabled' => true,
             ]);
@@ -192,7 +195,7 @@ class TimesheetEditForm extends AbstractType
                     'placeholder' => '',
                     'activity_enabled' => true,
                     'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
-                        return $repo->builderForEntityType($project, $customer);
+                        return $repo->getQueryBuilderForFormType(new ProjectFormTypeQuery($project, $customer));
                     },
                 ])
             );
@@ -211,7 +214,7 @@ class TimesheetEditForm extends AbstractType
                     'activity_enabled' => true,
                     'group_by' => null,
                     'query_builder' => function (ProjectRepository $repo) use ($data, $project) {
-                        return $repo->builderForEntityType($project, $data['customer']);
+                        return $repo->getQueryBuilderForFormType(new ProjectFormTypeQuery($project, $data['customer']));
                     },
                 ]);
             }
@@ -224,7 +227,7 @@ class TimesheetEditForm extends AbstractType
             ->add('activity', ActivityType::class, [
                 'placeholder' => '',
                 'query_builder' => function (ActivityRepository $repo) use ($activity, $project) {
-                    return $repo->builderForEntityType($activity, $project);
+                    return $repo->getQueryBuilderForFormType(new ActivityFormTypeQuery($activity, $project));
                 },
             ])
         ;
@@ -241,7 +244,7 @@ class TimesheetEditForm extends AbstractType
                 $event->getForm()->add('activity', ActivityType::class, [
                     'placeholder' => '',
                     'query_builder' => function (ActivityRepository $repo) use ($data, $activity) {
-                        return $repo->builderForEntityType($activity, $data['project']);
+                        return $repo->getQueryBuilderForFormType(new ActivityFormTypeQuery($activity, $data['project']));
                     },
                 ]);
             }

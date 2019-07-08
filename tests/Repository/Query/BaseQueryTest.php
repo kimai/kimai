@@ -26,7 +26,6 @@ class BaseQueryTest extends TestCase
     protected function assertBaseQuery(BaseQuery $sut, $orderBy = 'id')
     {
         $this->assertResultType($sut);
-        $this->assertHiddenEntity($sut);
         $this->assertPage($sut);
         $this->assertPageSize($sut);
         $this->assertOrderBy($sut, $orderBy);
@@ -49,17 +48,6 @@ class BaseQueryTest extends TestCase
             $this->assertInstanceOf(\InvalidArgumentException::class, $exception);
             $this->assertEquals('Unsupported query result type', $exception->getMessage());
         }
-    }
-
-    protected function assertHiddenEntity(BaseQuery $sut)
-    {
-        $this->assertNull($sut->getHiddenEntity());
-
-        $actual = new User();
-        $actual->setUsername('foo-bar');
-
-        $sut->setHiddenEntity($actual);
-        $this->assertEquals($actual, $sut->getHiddenEntity());
     }
 
     protected function assertPage(BaseQuery $sut)
