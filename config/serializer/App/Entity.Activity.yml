@@ -35,6 +35,11 @@ App\Entity\Activity:
         metaFields:
             exclude: true
     virtual_properties:
+        parentTitle:
+            serialized_name: parentTitle
+            include: true
+            exp: "object.getProject() === null ? null : object.getProject().getName()"
+            groups: [Default]
         getProject:
             serialized_name: project
             exp: "object.getProject() === null ? null : object.getProject().getId()"

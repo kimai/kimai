@@ -23,13 +23,13 @@ class BaseQueryTest extends TestCase
         $this->assertBaseQuery(new BaseQuery());
     }
 
-    protected function assertBaseQuery(BaseQuery $sut)
+    protected function assertBaseQuery(BaseQuery $sut, $orderBy = 'id')
     {
         $this->assertResultType($sut);
         $this->assertHiddenEntity($sut);
         $this->assertPage($sut);
         $this->assertPageSize($sut);
-        $this->assertOrderBy($sut);
+        $this->assertOrderBy($sut, $orderBy);
         $this->assertOrder($sut);
     }
 
