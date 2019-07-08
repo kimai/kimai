@@ -14,6 +14,7 @@ use App\Entity\User;
 use App\Form\Type\DateRangeType;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\TimesheetTestMetaFieldSubscriberMock;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @group integration
@@ -202,10 +203,10 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getEnd()->format(\DateTime::ATOM));
     }
 
-    public function testCreateActionWithBeginAndEndValues()
+    public function testCreateActionWithBeginAndEndAnTagValues()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->request($client, '/timesheet/create?begin=2018-08-02&end=2018-08-02');
+        $this->request($client, '/timesheet/create?begin=2018-08-02&end=2018-08-02&tags=one,two,three');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
@@ -213,7 +214,7 @@ class TimesheetControllerTest extends ControllerBaseTest
             'timesheet_edit_form' => [
                 'hourlyRate' => 100,
                 'project' => 1,
-                'activity' => 1,
+                'activity' => 1
             ]
         ]);
 
@@ -234,6 +235,15 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $expected = new \DateTime('2018-08-02T18:00:00');
         $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getEnd()->format(\DateTime::ATOM));
+
+        // Is there a better way of doing this?
+        $tags = $timesheet->getTags();
+        $tagnames = [];
+        foreach ($tags as $tag) {
+            $tagnames[] = $tag->getName();
+        }
+        asort($tagnames);
+        $this->assertEquals("one,three,two", implode(",", $tagnames));
     }
 
     public function testEditAction()
