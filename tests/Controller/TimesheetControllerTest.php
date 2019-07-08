@@ -214,7 +214,7 @@ class TimesheetControllerTest extends ControllerBaseTest
             'timesheet_edit_form' => [
                 'hourlyRate' => 100,
                 'project' => 1,
-                'activity' => 1
+                'activity' => 1,
             ]
         ]);
 
