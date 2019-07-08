@@ -88,7 +88,6 @@ class InstallCommand extends Command
         // $io->note(sprintf('You have chosen the "%s" environment', $environment));
         $environment = getenv('APP_ENV');
 
-        // create database if necessary
         try {
             $this->createDatabase($io, $input, $output);
         } catch (\Exception $ex) {
@@ -126,12 +125,8 @@ class InstallCommand extends Command
     protected function rebuildCaches(string $environment, SymfonyStyle $io, InputInterface $input, OutputInterface $output)
     {
         if ($input->isInteractive()) {
-            if (!$this->askConfirmation(
-                $input,
-                $output,
-                'Do you want me to rebuild the caches (yes) or skip this step (no)?',
-                true
-            )) {
+            $question = 'Do you want me to rebuild the caches (yes) or skip this step (no)?';
+            if (!$this->askConfirmation($input, $output, $question, true)) {
                 return;
             }
         }
