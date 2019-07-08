@@ -80,8 +80,15 @@ class LdapDriverTest extends TestCase
 
 class TestLdapDriver extends LdapDriver
 {
+    private $testDriver;
+
     public function __construct(Ldap $ldap)
     {
-        $this->driver = $ldap;
+        $this->testDriver = $ldap;
+    }
+
+    protected function getDriver()
+    {
+        return $this->testDriver;
     }
 }

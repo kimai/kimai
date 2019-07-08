@@ -54,7 +54,7 @@ class LdapDriver
      * @return Ldap
      * @throws \Exception
      */
-    private function getDriver()
+    protected function getDriver()
     {
         if (null === $this->driver) {
             if (!class_exists('Zend\Ldap\Ldap')) {
