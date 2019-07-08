@@ -23,23 +23,51 @@ class LdapDriver
     /**
      * @var Ldap
      */
-    protected $driver;
-
+    private $driver;
     /**
      * @var LoggerInterface
      */
     private $logger;
+    /**
+     * @var LdapConfiguration
+     */
+    private $config;
 
     public function __construct(LdapConfiguration $config, LoggerInterface $logger = null)
     {
-        if (!class_exists('Zend\Ldap\Ldap')) {
-            throw new \Exception(
-                'Zend\Ldap\Ldap is missing, install it with "composer require zendframework/zend-ldap" ' .
-                'or deactivate LDAP, see https://www.kimai.org/documentation/ldap.html'
-            );
-        }
-        $this->driver = new Ldap($config->getConnectionParameters());
+        $this->config = $config;
         $this->logger = $logger;
+    }
+
+    /**
+     * Do not initialize in the constructor, as it is called in some situations from the Symfony DI container,
+     * even if not actively used.
+     *
+     * So users without LDAP run into the exception which is thrown below if the package is not installed.
+     *
+     * To test the problematic behaviour:
+     * - switch to "dev" env
+     * - login as any user
+     * - change the user ID in the database
+     * - reload the page and see the exception
+     *
+     * @return Ldap
+     * @throws \Exception
+     */
+    private function getDriver()
+    {
+        if (null === $this->driver) {
+            if (!class_exists('Zend\Ldap\Ldap')) {
+                throw new \Exception(
+                    'Zend\Ldap\Ldap is missing, install it with "composer require zendframework/zend-ldap" ' .
+                    'or deactivate LDAP, see https://www.kimai.org/documentation/ldap.html'
+                );
+            }
+
+            $this->driver = new Ldap($this->config->getConnectionParameters());
+        }
+
+        return $this->driver;
     }
 
     /**
@@ -51,6 +79,8 @@ class LdapDriver
      */
     public function search(string $baseDn, string $filter, array $attributes = []): array
     {
+        $driver = $this->getDriver();
+
         $attributes = array_unique(array_merge($attributes, ['+', '*']));
 
         $this->logDebug('{action}({base_dn}, {filter}, {attributes})', [
@@ -61,8 +91,8 @@ class LdapDriver
         ]);
 
         try {
-            $this->driver->bind();
-            $entries = $this->driver->searchEntries($filter, $baseDn, Ldap::SEARCH_SCOPE_SUB, $attributes);
+            $driver->bind();
+            $entries = $driver->searchEntries($filter, $baseDn, Ldap::SEARCH_SCOPE_SUB, $attributes);
 
             // searchEntries don't return 'count' key as specified by php native function ldap_get_entries()
             $entries['count'] = count($entries);
@@ -77,6 +107,8 @@ class LdapDriver
 
     public function bind(UserInterface $user, string $password): bool
     {
+        $driver = $this->getDriver();
+
         $bindDn = $user->getUsername();
 
         try {
@@ -84,7 +116,7 @@ class LdapDriver
                 'action' => 'ldap_bind',
                 'bindDn' => $bindDn,
             ]);
-            $bind = $this->driver->bind($bindDn, $password);
+            $bind = $driver->bind($bindDn, $password);
 
             return $bind instanceof Ldap;
         } catch (LdapException $exception) {
@@ -94,7 +126,7 @@ class LdapDriver
         return false;
     }
 
-    protected function ldapExceptionHandler(LdapException $exception, string $password = null): void
+    private function ldapExceptionHandler(LdapException $exception, string $password = null): void
     {
         $sanitizedException = null !== $password ? new SanitizingException($exception, $password) : $exception;
 
