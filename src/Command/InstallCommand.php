@@ -76,16 +76,9 @@ class InstallCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $io->title('Welcome to the interactive Kimai installer!');
+        $io->title('Kimai installer - v' . Constants::VERSION);
 
-        if (!$input->isInteractive()) {
-            $io->error('Installation only works in interactive mode');
-
-            return self::ERROR_INTERACTIVE;
-        }
-
-        $rows = $this->checkPermissions();
-        $result = $this->confirmAbortToReviewPermissions($io, $input, $output, $rows);
+        $result = $this->reviewPermissions($io, $input, $output);
         if (true !== $result) {
             return $result;
         }
@@ -132,8 +125,15 @@ class InstallCommand extends Command
 
     protected function rebuildCaches(string $environment, SymfonyStyle $io, InputInterface $input, OutputInterface $output)
     {
-        if (!$this->askConfirmation($input, $output, 'Do you want me to rebuild the caches (yes) or skip this step (no)?', true)) {
-            return;
+        if ($input->isInteractive()) {
+            if (!$this->askConfirmation(
+                $input,
+                $output,
+                'Do you want me to rebuild the caches (yes) or skip this step (no)?',
+                true
+            )) {
+                return;
+            }
         }
 
         $io->text('Rebuilding your cache now, please be patient ...');
@@ -196,8 +196,14 @@ class InstallCommand extends Command
         return $rows;
     }
 
-    protected function confirmAbortToReviewPermissions(SymfonyStyle $io, InputInterface $input, OutputInterface $output, array $permissions)
+    protected function reviewPermissions(SymfonyStyle $io, InputInterface $input, OutputInterface $output)
     {
+        if (!$input->isInteractive()) {
+            return true;
+        }
+
+        $permissions = $this->checkPermissions();
+
         if (empty($permissions)) {
             return true;
         }
