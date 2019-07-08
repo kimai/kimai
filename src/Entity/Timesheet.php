@@ -29,10 +29,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\HasLifecycleCallbacks()
  * @App\Validator\Constraints\Timesheet
  *
- * columns={"user"}                         => IDX_4F60C6B18D93D649                 => ???
+ * columns={"user"}                         => IDX_4F60C6B18D93D649                 => count results for user timesheets
  * columns={"activity_id"}                  => IDX_4F60C6B181C06096                 => ???
- * columns={"user","start_time"}            => IDX_4F60C6B18D93D649502DF587         => ???
- * columns={"start_time"}                   => IDX_4F60C6B1502DF587                 => ???
+ * columns={"user","start_time"}            => IDX_4F60C6B18D93D649502DF587         => recent activities, user timesheet with date filzer
+ * columns={"start_time"}                   => IDX_4F60C6B1502DF587                 => team timesheets with timerange filter only
  * columns={"start_time","end_time"}        => IDX_4F60C6B1502DF58741561401         => ???
  * columns={"start_time","end_time","user"} => IDX_4F60C6B1502DF587415614018D93D649 => ???
  */
