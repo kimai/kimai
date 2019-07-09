@@ -31,10 +31,6 @@ class ProjectTest extends TestCase
         $this->assertTrue($sut->getVisible());
         $this->assertNull($sut->getFixedRate());
         $this->assertNull($sut->getHourlyRate());
-        self::assertIsIterable($sut->getTimesheets());
-        self::assertEmpty($sut->getTimesheets());
-        self::assertIsIterable($sut->getActivities());
-        self::assertEmpty($sut->getActivities());
         $this->assertNull($sut->getColor());
         $this->assertEquals(0.0, $sut->getBudget());
         $this->assertEquals(0, $sut->getTimeBudget());

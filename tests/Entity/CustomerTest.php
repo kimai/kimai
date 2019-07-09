@@ -26,8 +26,6 @@ class CustomerTest extends TestCase
         $this->assertNull($sut->getName());
         $this->assertNull($sut->getNumber());
         $this->assertNull($sut->getComment());
-        self::assertIsIterable($sut->getProjects());
-        self::assertEmpty($sut->getProjects());
         $this->assertTrue($sut->getVisible());
 
         $this->assertNull($sut->getCompany());
