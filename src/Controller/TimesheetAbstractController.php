@@ -165,7 +165,7 @@ abstract class TimesheetAbstractController extends AbstractController
      * @param ActivityRepository $activityRepository
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    protected function create(Request $request, string $renderTemplate, ProjectRepository $projectRepository, ActivityRepository $activityRepository)
+    protected function create(Request $request, string $renderTemplate, ProjectRepository $projectRepository, ActivityRepository $activityRepository, TagRepository $tagRepository)
     {
         $entry = new Timesheet();
         $entry->setUser($this->getUser());
@@ -179,6 +179,18 @@ abstract class TimesheetAbstractController extends AbstractController
         if ($request->query->get('activity')) {
             $activity = $activityRepository->find($request->query->get('activity'));
             $entry->setActivity($activity);
+        }
+
+        if ($request->query->get('tags')) {
+            $tagNames = explode(',', $request->query->get('tags'));
+            foreach ($tagNames as $tagName) {
+                $tag = $tagRepository->findOneByName($tagName);
+                if (!$tag) {
+                    $tag = new Tag();
+                    $tag->setName($tagName);
+                }
+                $entry->addTag($tag);
+            }
         }
 
         $event = new TimesheetMetaDefinitionEvent($entry);

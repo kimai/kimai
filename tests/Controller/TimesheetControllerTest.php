@@ -202,10 +202,10 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getEnd()->format(\DateTime::ATOM));
     }
 
-    public function testCreateActionWithBeginAndEndValues()
+    public function testCreateActionWithBeginAndEndAndTagValues()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->request($client, '/timesheet/create?begin=2018-08-02&end=2018-08-02');
+        $this->request($client, '/timesheet/create?begin=2018-08-02&end=2018-08-02&tags=one,two,three');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
@@ -234,6 +234,8 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $expected = new \DateTime('2018-08-02T18:00:00');
         $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getEnd()->format(\DateTime::ATOM));
+
+        $this->assertEquals(['one', 'two', 'three'], $timesheet->getTagsAsArray());
     }
 
     public function testEditAction()
