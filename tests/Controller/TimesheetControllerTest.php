@@ -202,7 +202,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getEnd()->format(\DateTime::ATOM));
     }
 
-    public function testCreateActionWithBeginAndEndAnTagValues()
+    public function testCreateActionWithBeginAndEndAndTagValues()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/timesheet/create?begin=2018-08-02&end=2018-08-02&tags=one,two,three');
