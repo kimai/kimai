@@ -62,7 +62,7 @@ class ActivityController extends BaseApiController
      * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="Project ID to filter activities. If none is provided, all activities will be returned.")
      * @Rest\QueryParam(name="visible", requirements="1|2|3", strict=true, nullable=true, description="Visibility status to filter activities. Allowed values: 1=visible, 2=hidden, 3=all (default: 1)")
      * @Rest\QueryParam(name="globals", requirements="true", strict=true, nullable=true, description="Use if you want to fetch only global activities. Allowed values: true (default: false)")
-     * @Rest\QueryParam(name="globalsFirst", requirements="false", strict=true, nullable=true, description="Use if you don't want global activities to be listed first. Allowed values: false (default: true)")
+     * @Rest\QueryParam(name="globalsFirst", requirements="true|false", strict=true, nullable=true, description="Deprecated parameter, value is not used any more")
      * @Rest\QueryParam(name="orderBy", requirements="id|name|project", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, name, project (default: name)")
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: ASC)")
      *
@@ -71,10 +71,6 @@ class ActivityController extends BaseApiController
     public function cgetAction(ParamFetcherInterface $paramFetcher)
     {
         $query = new ActivityQuery();
-        $query->setOrderGlobalsFirst(true)
-            ->setResultType(ActivityQuery::RESULT_TYPE_OBJECTS)
-            ->setOrderBy('name')
-        ;
 
         if (null !== ($order = $paramFetcher->get('order'))) {
             $query->setOrder($order);
@@ -88,8 +84,8 @@ class ActivityController extends BaseApiController
             $query->setGlobalsOnly(true);
         }
 
-        if ('false' === $paramFetcher->get('globalsFirst')) {
-            $query->setOrderGlobalsFirst(false);
+        if (null !== $paramFetcher->get('globalsFirst')) {
+            @trigger_error('API parameter globalsFirst is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
         }
 
         if (!empty($project = $paramFetcher->get('project'))) {
@@ -100,7 +96,7 @@ class ActivityController extends BaseApiController
             $query->setVisibility($visible);
         }
 
-        $data = $this->repository->findByQuery($query);
+        $data = $this->repository->getActivitiesForQuery($query);
         $view = new View($data, 200);
         $view->getContext()->setGroups(['Default', 'Collection', 'Activity']);
 

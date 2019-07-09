@@ -69,11 +69,8 @@ class UserController extends AbstractController
         $query->setOrderBy('username');
 
         $form = $this->getToolbarForm($query);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UserQuery $query */
-            $query = $form->getData();
-        }
+        $form->setData($query);
+        $form->submit($request->query->all(), false);
 
         /* @var $entries Pagerfanta */
         $entries = $this->getRepository()->findByQuery($query);
@@ -81,7 +78,7 @@ class UserController extends AbstractController
         return $this->render('user/index.html.twig', [
             'entries' => $entries,
             'query' => $query,
-            'showFilter' => $form->isSubmitted(),
+            'showFilter' => $query->isDirty(),
             'toolbarForm' => $form->createView(),
         ]);
     }

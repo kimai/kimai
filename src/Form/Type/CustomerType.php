@@ -11,6 +11,7 @@ namespace App\Form\Type;
 
 use App\Entity\Customer;
 use App\Repository\CustomerRepository;
+use App\Repository\Query\CustomerFormTypeQuery;
 use App\Repository\Query\ProjectQuery;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -37,7 +38,7 @@ class CustomerType extends AbstractType
             'class' => Customer::class,
             'choice_label' => 'name',
             'query_builder' => function (CustomerRepository $repo) {
-                return $repo->builderForEntityType(null);
+                return $repo->getQueryBuilderForFormType(new CustomerFormTypeQuery());
             },
             'project_enabled' => false,
             'project_visibility' => ProjectQuery::SHOW_VISIBLE,
@@ -48,7 +49,8 @@ class CustomerType extends AbstractType
                 return [
                     'select' => 'project',
                     'route' => 'get_projects',
-                    'route_params' => ['customer' => '-s-', 'orderBy' => 'name', 'visible' => $options['project_visibility']],
+                    'route_params' => ['customer' => '-s-', 'visible' => $options['project_visibility']],
+                    'empty_route_params' => ['visible' => $options['project_visibility']],
                 ];
             }
 

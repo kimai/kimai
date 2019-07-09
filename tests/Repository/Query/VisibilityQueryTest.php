@@ -21,11 +21,7 @@ class VisibilityQueryTest extends TestCase
     {
         $sut = new VisibilityQuery();
 
-        $this->assertFalse($sut->isExclusiveVisibility());
         $this->assertEquals(VisibilityQuery::SHOW_VISIBLE, $sut->getVisibility());
-
-        $sut->setExclusiveVisibility(true);
-        $this->assertTrue($sut->isExclusiveVisibility());
 
         $sut->setVisibility('foo-bar');
         $this->assertEquals(VisibilityQuery::SHOW_VISIBLE, $sut->getVisibility());

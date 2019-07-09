@@ -14,35 +14,17 @@ use App\Entity\Customer;
 /**
  * Can be used for advanced queries with the: ProjectRepository
  */
-class ProjectQuery extends VisibilityQuery
+class ProjectQuery extends CustomerQuery
 {
     /**
      * @var Customer|int|null
      */
-    protected $customer;
+    private $customer;
 
-    /**
-     * @var array
-     */
-    protected $ignored = [];
-
-    /**
-     * @param mixed $entity
-     * @return $this
-     */
-    public function addIgnoredEntity($entity)
+    public function __construct()
     {
-        $this->ignored[] = $entity;
-
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getIgnoredEntities()
-    {
-        return $this->ignored;
+        parent::__construct();
+        $this->setOrderBy('name');
     }
 
     /**
@@ -62,5 +44,21 @@ class ProjectQuery extends VisibilityQuery
         $this->customer = $customer;
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isDirty(): bool
+    {
+        if (parent::isDirty()) {
+            return true;
+        }
+
+        if ($this->customer !== null) {
+            return true;
+        }
+
+        return false;
     }
 }

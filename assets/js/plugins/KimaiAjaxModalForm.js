@@ -89,9 +89,6 @@ export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableR
                 jQuery(html).find('#form_modal .modal-content')
             );
 
-            // TODO these should be handled with Events, probably using Custom Events
-            // https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events
-
             // activate new loaded widgets
             self.getContainer().getPlugin('date-time-picker').activateDateTimePicker(formIdentifier);
             self.getContainer().getPlugin('autocomplete').activateAutocomplete(formIdentifier + " .js-autocomplete");

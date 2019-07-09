@@ -163,7 +163,9 @@ class CustomerControllerTest extends APIControllerBaseTest
 
     protected function assertStructure(array $result, $full = true)
     {
-        $expectedKeys = ['id', 'name', 'visible', 'hourlyRate', 'fixedRate', 'color', 'metaFields'];
+        $expectedKeys = [
+            'id', 'name', 'visible', 'hourlyRate', 'fixedRate', 'color', 'metaFields'
+        ];
 
         if ($full) {
             $expectedKeys = array_merge($expectedKeys, [

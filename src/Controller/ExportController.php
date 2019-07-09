@@ -74,7 +74,7 @@ class ExportController extends AbstractController
     }
 
     /**
-     * @Route(path="/", name="export", methods={"GET", "POST"})
+     * @Route(path="/", name="export", methods={"GET"})
      * @Security("is_granted('view_export')")
      *
      * @param Request $request
@@ -84,13 +84,10 @@ class ExportController extends AbstractController
     public function indexAction(Request $request)
     {
         $query = $this->getDefaultQuery();
-        $form = $this->getToolbarForm($query);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var ExportQuery $query */
-            $query = $form->getData();
-        }
+        $form = $this->getToolbarForm($query, 'GET');
+        $form->setData($query);
+        $form->submit($request->query->all(), false);
 
         $entries = $this->getEntries($query);
 
@@ -103,7 +100,7 @@ class ExportController extends AbstractController
     }
 
     /**
-     * @Route(path="/data", name="export_data", methods={"GET", "POST"})
+     * @Route(path="/data", name="export_data", methods={"POST"})
      * @Security("is_granted('create_export')")
      *
      * @param Request $request
@@ -113,13 +110,9 @@ class ExportController extends AbstractController
     public function export(Request $request)
     {
         $query = $this->getDefaultQuery();
-        $form = $this->getToolbarForm($query);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var ExportQuery $query */
-            $query = $form->getData();
-        }
+        $form = $this->getToolbarForm($query, 'POST');
+        $form->handleRequest($request);
 
         $type = $query->getType();
         if (null === $type) {
@@ -149,15 +142,11 @@ class ExportController extends AbstractController
         return $this->timesheetRepository->getTimesheetsForQuery($query);
     }
 
-    /**
-     * @param ExportQuery $query
-     * @return FormInterface
-     */
-    protected function getToolbarForm(ExportQuery $query): FormInterface
+    protected function getToolbarForm(ExportQuery $query, string $method): FormInterface
     {
         return $this->createForm(ExportToolbarForm::class, $query, [
             'action' => $this->generateUrl('export', []),
-            'method' => 'POST',
+            'method' => $method,
             'attr' => [
                 'id' => 'export-form'
             ]

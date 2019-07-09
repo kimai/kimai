@@ -33,6 +33,11 @@ App\Entity\Project:
         metaFields:
             exclude: true
     virtual_properties:
+        parentTitle:
+            serialized_name: parentTitle
+            include: true
+            exp: "object.getCustomer() === null ? null : object.getCustomer().getName()"
+            groups: [Default]
         getCustomer:
             serialized_name: customer
             exp: "object.getCustomer() === null ? null : object.getCustomer().getId()"

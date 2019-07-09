@@ -15,6 +15,8 @@ use App\Form\Type\CustomerType;
 use App\Form\Type\ProjectType;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
+use App\Repository\Query\CustomerFormTypeQuery;
+use App\Repository\Query\ProjectFormTypeQuery;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -66,7 +68,7 @@ class ActivityEditForm extends AbstractType
             $builder
                 ->add('customer', CustomerType::class, [
                     'query_builder' => function (CustomerRepository $repo) use ($customer) {
-                        return $repo->builderForEntityType($customer);
+                        return $repo->getQueryBuilderForFormType(new CustomerFormTypeQuery($customer));
                     },
                     'data' => $customer ? $customer : null,
                     'required' => false,
@@ -79,7 +81,7 @@ class ActivityEditForm extends AbstractType
             ->add('project', ProjectType::class, [
                 'required' => false,
                 'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
-                    return $repo->builderForEntityType($project, $customer);
+                    return $repo->getQueryBuilderForFormType(new ProjectFormTypeQuery($project, $customer));
                 },
             ]);
 
@@ -95,7 +97,7 @@ class ActivityEditForm extends AbstractType
                 $event->getForm()->add('project', ProjectType::class, [
                     'group_by' => null,
                     'query_builder' => function (ProjectRepository $repo) use ($data, $project) {
-                        return $repo->builderForEntityType($project, $data['customer']);
+                        return $repo->getQueryBuilderForFormType(new ProjectFormTypeQuery($project, $data['customer']));
                     },
                 ]);
             }

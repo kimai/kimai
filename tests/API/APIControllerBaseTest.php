@@ -91,7 +91,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         );
 
         $this->assertEquals(
-            Response::HTTP_FORBIDDEN, // TODO that should actually be Response::HTTP_UNAUTHORIZED
+            Response::HTTP_FORBIDDEN,
             $response->getStatusCode(),
             sprintf('The secure URL %s has the wrong status code %s.', $url, $response->getStatusCode())
         );

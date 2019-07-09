@@ -67,7 +67,7 @@ class ExportControllerTest extends ControllerBaseTest
     public function testExportActionWithMissingRenderer()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-        $this->request($client, '/export/data');
+        $this->request($client, '/export/data', 'POST');
 
         $response = $client->getResponse();
         $this->assertFalse($response->isSuccessful());
@@ -79,11 +79,14 @@ class ExportControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
-        $this->request($client, '/export/');
+        $this->request($client, '/export/', 'GET');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('#export-form')->form();
-        $form->getFormNode()->setAttribute('action', $this->createUrl('/export/data'));
+        $node = $form->getFormNode();
+        $node->setAttribute('action', $this->createUrl('/export/data'));
+        $node->setAttribute('method', 'POST');
+
         $client->submit($form, [
             'type' => 'default'
         ]);
@@ -112,7 +115,10 @@ class ExportControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('#export-form')->form();
-        $form->getFormNode()->setAttribute('action', $this->createUrl('/export/data'));
+        $node = $form->getFormNode();
+        $node->setAttribute('action', $this->createUrl('/export/data'));
+        $node->setAttribute('method', 'POST');
+
         // don't add daterange to make sure the current month is the default range
         $client->submit($form, [
             'type' => 'html'

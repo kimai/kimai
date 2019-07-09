@@ -18,14 +18,16 @@ class VisibilityQuery extends BaseQuery
     public const SHOW_HIDDEN = 2;
     public const SHOW_BOTH = 3;
 
+    public const ALLOWED_VISIBILITY_STATES = [
+        self::SHOW_BOTH,
+        self::SHOW_VISIBLE,
+        self::SHOW_HIDDEN,
+    ];
+
     /**
      * @var int
      */
-    protected $visibility = self::SHOW_VISIBLE;
-    /**
-     * @var bool
-     */
-    protected $exclusiveVisibility = false;
+    private $visibility = self::SHOW_VISIBLE;
 
     /**
      * @return int
@@ -46,7 +48,7 @@ class VisibilityQuery extends BaseQuery
         }
 
         $visibility = (int) $visibility;
-        if (in_array($visibility, [self::SHOW_BOTH, self::SHOW_VISIBLE, self::SHOW_HIDDEN], true)) {
+        if (in_array($visibility, self::ALLOWED_VISIBILITY_STATES, true)) {
             $this->visibility = $visibility;
         }
 
@@ -54,23 +56,18 @@ class VisibilityQuery extends BaseQuery
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
-    public function isExclusiveVisibility()
+    public function isDirty(): bool
     {
-        return $this->exclusiveVisibility;
-    }
+        if (parent::isDirty()) {
+            return true;
+        }
 
-    /**
-     * If set to true, this will ONLY filter the visibility on the main queried object.
-     *
-     * @param bool $exclusiveVisibility
-     * @return $this
-     */
-    public function setExclusiveVisibility($exclusiveVisibility)
-    {
-        $this->exclusiveVisibility = (bool) $exclusiveVisibility;
+        if ($this->visibility !== self::SHOW_VISIBLE) {
+            return true;
+        }
 
-        return $this;
+        return false;
     }
 }

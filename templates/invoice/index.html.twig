@@ -71,7 +71,7 @@
         {% if is_granted('create_invoice') %}
             <div class="row no-print">
                 <div class="col-xs-12">
-                    <a href="{{ path('invoice_print') }}" class="btn btn-success pull-right toolbar-action">
+                    <a href="{{ path('invoice_print') }}" class="btn btn-success pull-right toolbar-action" data-method="POST">
                         <i class="{{ 'print'|icon }}"></i> {{ 'button.print'|trans }}
                     </a>
                 </div>
