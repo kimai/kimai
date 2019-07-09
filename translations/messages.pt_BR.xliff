@@ -33,6 +33,25 @@
                 <source>confirm.delete</source>
                 <target>Você realmente quer deletar?</target>
             </trans-unit>
+            <trans-unit id="admin_entity.delete_confirm">
+                <source>admin_entity.delete_confirm</source>
+                <target>
+                    Esses dados também serão excluídos!
+                    Alternativamente, você pode selecionar um registro para qual todos os dados serão transferidos:
+                </target>
+            </trans-unit>
+            <trans-unit id="delete.not_in_use">
+                <source>delete.not_in_use</source>
+                <target>Esse registro pode ser excluído com segurança.</target>
+            </trans-unit>
+            <trans-unit id="cancel">
+                <source>cancel</source>
+                <target>Cancelar</target>
+            </trans-unit>
+            <trans-unit id="confirm">
+                <source>confirm</source>
+                <target>Confirmar</target>
+            </trans-unit>
 
             <!--
               Login / Security
@@ -164,6 +183,10 @@
             <trans-unit id="label.budget">
                 <source>label.budget</source>
                 <target>Despesas</target>
+            </trans-unit>
+            <trans-unit id="label.timeBudget">
+                <source>label.timeBudget</source>
+                <target>Orçamento de tempo</target>
             </trans-unit>
             <trans-unit id="label.activity">
                 <source>label.activity</source>
@@ -365,6 +388,18 @@
             <trans-unit id="agendaDay">
                 <source>agendaDay</source>
                 <target>Dia</target>
+            </trans-unit>
+
+            <!--
+              User timesheet calendar
+            -->
+            <trans-unit id="calendar.title">
+                <source>calendar.title</source>
+                <target>Calendário</target>
+            </trans-unit>
+            <trans-unit id="calendar.subtitle">
+                <source>calendar.subtitle</source>
+                <target>Visualize e gerencie seus dados de quadro de horários em um calendário</target>
             </trans-unit>
 
             <!--
@@ -747,6 +782,42 @@
             </trans-unit>
 
             <!--
+              Export
+            -->
+            <trans-unit id="export.title">
+                <source>export.title</source>
+                <target>Exportar</target>
+            </trans-unit>
+            <trans-unit id="export.subtitle">
+                <source>export.subtitle</source>
+                <target>Exportar dados do quadro de horários para vários formatos</target>
+            </trans-unit>
+            <trans-unit id="export.period">
+                <source>export.period</source>
+                <target>Período</target>
+            </trans-unit>
+            <trans-unit id="export.document_title">
+                <source>export.document_title</source>
+                <target>Lista de despesas</target>
+            </trans-unit>
+            <trans-unit id="export.full_list">
+                <source>export.full_list</source>
+                <target>Lista completa</target>
+            </trans-unit>
+            <trans-unit id="export.summary">
+                <source>export.summary</source>
+                <target>Sumário</target>
+            </trans-unit>
+            <trans-unit id="export.page_of">
+                <source>export.page_of</source>
+                <target>Página %page% de %pages%</target>
+            </trans-unit>
+            <trans-unit id="export.date_copyright">
+                <source>export.date_copyright</source>
+                <target>Criado %date% com %kimai%</target>
+            </trans-unit>
+
+            <!--
               Month names
             -->
             <trans-unit id="month.1">
@@ -801,9 +872,17 @@
             <!--
              Navbar - recent entries and activities
             -->
+            <trans-unit id="active.entries">
+                <source>active.entries</source>
+                <target>Suas medições de tempo ativo</target>
+            </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
                 <target>Mostrar todos os registros</target>
+            </trans-unit>
+            <trans-unit id="recent.activities">
+                <source>recent.activities</source>
+                <target>Reiniciar uma das suas últimas atividades</target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>
@@ -825,6 +904,18 @@
                 <source>label.entryState</source>
                 <target>Registros</target>
             </trans-unit>
+            <trans-unit id="label.exported">
+                <source>label.exported</source>
+                <target>Exportado</target>
+            </trans-unit>
+            <trans-unit id="entryState.exported">
+                <source>entryState.exported</source>
+                <target>Desmarcado</target>
+            </trans-unit>
+            <trans-unit id="entryState.not_exported">
+                <source>entryState.not_exported</source>
+                <target>Aberto</target>
+            </trans-unit>
             <trans-unit id="entryState.all">
                 <source>entryState.all</source>
                 <target>Tudo</target>
@@ -837,6 +928,22 @@
                 <source>entryState.stopped</source>
                 <target>Parado</target>
             </trans-unit>
+
+
+            <trans-unit id="export.clear_all">
+                <source>export.clear_all</source>
+                <target>Marcar todos os registros mostrados como aberto?</target>
+            </trans-unit>
+            <trans-unit id="export.mark_all">
+                <source>export.mark_all</source>
+                <target>Mark all shown records as cleared?</target>
+                <target>Marcar todos os registros mostrados como resolvido?</target>
+            </trans-unit>
+            <trans-unit id="label.globalsOnly">
+                <source>label.globalsOnly</source>
+                <target>Somente global</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>
