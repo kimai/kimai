@@ -30,7 +30,7 @@ class TimesheetMeta implements MetaTableTypeInterface
      * @var Timesheet
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Timesheet", inversedBy="meta")
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
     private $timesheet;

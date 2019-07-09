@@ -30,7 +30,7 @@ class ProjectMeta implements MetaTableTypeInterface
      * @var Project
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="meta")
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
     private $project;
