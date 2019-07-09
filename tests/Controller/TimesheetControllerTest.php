@@ -235,14 +235,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $expected = new \DateTime('2018-08-02T18:00:00');
         $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getEnd()->format(\DateTime::ATOM));
 
-        // Is there a better way of doing this?
-        $tags = $timesheet->getTags();
-        $tagnames = [];
-        foreach ($tags as $tag) {
-            $tagnames[] = $tag->getName();
-        }
-        asort($tagnames);
-        $this->assertEquals('one,three,two', implode(',', $tagnames));
+        $this->assertEquals(['one','two','three'], $timesheet->getTagsAsArray());
     }
 
     public function testEditAction()
