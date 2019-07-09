@@ -235,7 +235,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $expected = new \DateTime('2018-08-02T18:00:00');
         $this->assertEquals($expected->format(\DateTime::ATOM), $timesheet->getEnd()->format(\DateTime::ATOM));
 
-        $this->assertEquals(['one','two','three'], $timesheet->getTagsAsArray());
+        $this->assertEquals(['one', 'two', 'three'], $timesheet->getTagsAsArray());
     }
 
     public function testEditAction()
