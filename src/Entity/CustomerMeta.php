@@ -30,7 +30,7 @@ class CustomerMeta implements MetaTableTypeInterface
      * @var Customer
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Customer", inversedBy="meta")
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
     private $customer;
