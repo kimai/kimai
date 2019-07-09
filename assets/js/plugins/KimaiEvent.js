@@ -23,7 +23,7 @@ export default class KimaiEvent extends KimaiPlugin {
         }
 
         for(let event of name.split(' ')) {
-            let triggerEvent = new Event(event);
+            let triggerEvent = new CustomEvent(event);
             if (details !== undefined) {
                 triggerEvent = new CustomEvent(name, {detail: details});
             }

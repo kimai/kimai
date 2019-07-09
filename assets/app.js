@@ -43,6 +43,8 @@ require('admin-lte/dist/js/adminlte.min');
 require('./sass/app.scss');
 
 // ------ Kimai itself ------
+require('./js/Polyfills/CustomEvent');
+require('./js/Polyfills/Element');
 require('./js/KimaiWebLoader.js');
 
 // ------ Autocomplete for tags only ------
