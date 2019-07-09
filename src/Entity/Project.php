@@ -15,8 +15,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="kimai2_projects")
+ * @ORM\Table(name="kimai2_projects",
+ *     indexes={
+ *          @ORM\Index(columns={"customer_id","visible","name"}),
+ *          @ORM\Index(columns={"customer_id","visible","id"})
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
+ *
+ * columns={"customer_id","visible","name"} => IDX_407F12069395C3F37AB0E8595E237E06 => project administration without filter
+ * columns={"customer_id","visible","id"}   => IDX_407F12069395C3F37AB0E859BF396750 => used in joins between project and customer, eg. dropdowns and activity administration page
  */
 class Project implements EntityWithMetaFields
 {
@@ -32,7 +40,7 @@ class Project implements EntityWithMetaFields
     /**
      * @var Customer
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Customer", inversedBy="projects")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Customer")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
@@ -70,24 +78,10 @@ class Project implements EntityWithMetaFields
      */
     private $visible = true;
 
-    /**
-     * @var Activity[]|ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\Activity", mappedBy="project")
-     */
-    private $activities;
-
     // keep the trait include exactly here, for placing the column at the correct position
     use RatesTrait;
     use ColorTrait;
     use BudgetTrait;
-
-    /**
-     * @var Timesheet[]|ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\Timesheet", mappedBy="project")
-     */
-    private $timesheets;
 
     /**
      * @var ProjectMeta[]|Collection
@@ -98,8 +92,6 @@ class Project implements EntityWithMetaFields
 
     public function __construct()
     {
-        $this->activities = new ArrayCollection();
-        $this->timesheets = new ArrayCollection();
         $this->meta = new ArrayCollection();
     }
 
@@ -161,22 +153,6 @@ class Project implements EntityWithMetaFields
     public function getVisible(): bool
     {
         return $this->visible;
-    }
-
-    /**
-     * @return Collection<Timesheet>
-     */
-    public function getTimesheets(): Collection
-    {
-        return $this->timesheets;
-    }
-
-    /**
-     * @return Collection<Activity>
-     */
-    public function getActivities(): Collection
-    {
-        return $this->activities;
     }
 
     /**

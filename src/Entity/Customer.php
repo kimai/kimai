@@ -15,8 +15,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="kimai2_customers")
+ * @ORM\Table(name="kimai2_customers",
+ *     indexes={
+ *          @ORM\Index(columns={"visible"})
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
+ *
+ * columns={"visible"}  => IDX_5A9760447AB0E859 => used in customer dropdown
  */
 class Customer implements EntityWithMetaFields
 {
@@ -53,13 +59,6 @@ class Customer implements EntityWithMetaFields
      * @ORM\Column(name="comment", type="text", length=65535, nullable=true)
      */
     private $comment;
-
-    /**
-     * @var Project[]|ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="customer")
-     */
-    private $projects;
 
     /**
      * @var bool
@@ -163,7 +162,6 @@ class Customer implements EntityWithMetaFields
 
     public function __construct()
     {
-        $this->projects = new ArrayCollection();
         $this->meta = new ArrayCollection();
     }
 
@@ -350,14 +348,6 @@ class Customer implements EntityWithMetaFields
     public function getTimezone(): ?string
     {
         return $this->timezone;
-    }
-
-    /**
-     * @return Collection<Project>
-     */
-    public function getProjects(): Collection
-    {
-        return $this->projects;
     }
 
     /**
