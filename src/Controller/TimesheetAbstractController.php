@@ -188,7 +188,7 @@ abstract class TimesheetAbstractController extends AbstractController
                 if (!$tag) {
                     $tag = new Tag();
                     $tag->setName($tagname);
-                    $this->getDoctrine()->getManager()->persist($tag);
+                    // $this->getDoctrine()->getManager()->persist($tag);
                 }
                 $entry->addTag($tag);
             }
