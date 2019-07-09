@@ -77,22 +77,23 @@ class ActivityControllerTest extends APIControllerBaseTest
             $hasProject = $expected[$i][0];
             $this->assertStructure($activity, false);
             if ($hasProject) {
-                $this->assertEquals($expected[$i][0], $activity['project']);
+                $this->assertEquals($expected[$i][1], $activity['project']);
             }
         }
     }
 
     public function getCollectionTestData()
     {
-        yield ['/api/activities', [], [[false], [false], [true, 2], [true, 1], [true, 2]]];
+        yield ['/api/activities', [], [[false], [true, 2], [true, 2], [null], [true, 1]]];
+        //yield ['/api/activities', [], [[false], [false], [true, 2], [true, 1], [true, 2]]];
         yield ['/api/activities', ['globals' => 'true'], [[false], [false]]];
         yield ['/api/activities', ['globals' => 'true', 'visible' => 3], [[false], [false], [false]]];
         yield ['/api/activities', ['globals' => 'true', 'visible' => '2'], [[false]]];
         yield ['/api/activities', ['globals' => 'true', 'visible' => 1], [[false], [false]]];
         yield ['/api/activities', ['project' => '1'], [[false], [false], [true, 1]]];
-        yield ['/api/activities', ['project' => '2', 'visible' => 1], [[false], [false], [true, 2], [true, 2]]];
-        yield ['/api/activities', ['project' => '2', 'visible' => '3'], [[false], [false], [false], [true, 2], [true, 2], [true, 2]]];
-        yield ['/api/activities', ['project' => '2', 'visible' => 2], [[false], [true, 2]]];
+        yield ['/api/activities', ['project' => '2', 'visible' => 1], [[false], [true, 2], [true, 2], [false]]];
+        yield ['/api/activities', ['project' => '2', 'visible' => '3'], [[false], [true, 2], [true, 2], [true, 2], [false], [false]]];
+        yield ['/api/activities', ['project' => '2', 'visible' => 2], [[true, 2], [false]]];
     }
 
     public function testGetCollectionWithQuery()
