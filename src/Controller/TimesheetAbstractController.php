@@ -182,13 +182,12 @@ abstract class TimesheetAbstractController extends AbstractController
         }
 
         if ($request->query->get('tags')) {
-            $tagnames = explode(',', $request->query->get('tags'));
-            foreach ($tagnames as $tagname) {
-                $tag = $tagRepository->findOneByName($tagname);
+            $tagNames = explode(',', $request->query->get('tags'));
+            foreach ($tagNames as $tagName) {
+                $tag = $tagRepository->findOneByName($tagName);
                 if (!$tag) {
                     $tag = new Tag();
-                    $tag->setName($tagname);
-                    // $this->getDoctrine()->getManager()->persist($tag);
+                    $tag->setName($tagName);
                 }
                 $entry->addTag($tag);
             }
