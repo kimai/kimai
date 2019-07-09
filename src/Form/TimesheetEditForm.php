@@ -214,7 +214,7 @@ class TimesheetEditForm extends AbstractType
                     'activity_enabled' => true,
                     'group_by' => null,
                     'query_builder' => function (ProjectRepository $repo) use ($data, $project) {
-                        return $repo->getQueryBuilderForFormType(new ProjectFormTypeQuery($project, $data['customer']));
+                        return $repo->getQueryBuilderForFormType(new ProjectFormTypeQuery($data['project'] ?? $project, $data['customer']));
                     },
                 ]);
             }
