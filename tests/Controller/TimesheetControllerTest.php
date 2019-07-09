@@ -14,7 +14,6 @@ use App\Entity\User;
 use App\Form\Type\DateRangeType;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\TimesheetTestMetaFieldSubscriberMock;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @group integration
