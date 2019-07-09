@@ -112,8 +112,7 @@ class ExportController extends AbstractController
         $query = $this->getDefaultQuery();
 
         $form = $this->getToolbarForm($query, 'POST');
-        $form->setData($query);
-        $form->submit($request->query->all(), false);
+        $form->handleRequest($request);
 
         $type = $query->getType();
         if (null === $type) {
