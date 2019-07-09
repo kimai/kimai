@@ -164,7 +164,7 @@ class CustomerControllerTest extends APIControllerBaseTest
     protected function assertStructure(array $result, $full = true)
     {
         $expectedKeys = [
-            'id', 'name', 'visible', 'hourlyRate', 'fixedRate', 'color', 'metaFields', 'parentTitle'
+            'id', 'name', 'visible', 'hourlyRate', 'fixedRate', 'color', 'metaFields'
         ];
 
         if ($full) {
