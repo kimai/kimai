@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="sv" datatype="plaintext" original="actions.en.xliff">
+        <body>
+            <trans-unit id="stop">
+                <source>stop</source>
+                <target state="translated">Stopp</target>
+            </trans-unit>
+            <trans-unit id="back">
+                <source>back</source>
+                <target state="translated">Tillbaka</target>
+            </trans-unit>
+            <trans-unit id="edit">
+                <source>edit</source>
+                <target state="translated">Ändra</target>
+            </trans-unit>
+            <trans-unit id="trash">
+                <source>trash</source>
+                <target state="translated">Ta bort</target>
+            </trans-unit>
+            <trans-unit id="report">
+                <source>report</source>
+                <target state="translated">Rapportera</target>
+            </trans-unit>
+            <trans-unit id="repeat">
+                <source>repeat</source>
+                <target state="translated">Starta igen</target>
+            </trans-unit>
+            <trans-unit id="profile-stats">
+                <source>profile-stats</source>
+                <target state="translated">Statistik</target>
+            </trans-unit>
+            <trans-unit id="settings">
+                <source>settings</source>
+                <target state="translated">Inställningar</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target state="translated">Tidrapport</target>
+            </trans-unit>
+            <trans-unit id="customer">
+                <source>customer</source>
+                <target state="translated">Filter kunder</target>
+            </trans-unit>
+            <trans-unit id="project">
+                <source>project</source>
+                <target state="translated">Filter projekt</target>
+            </trans-unit>
+            <trans-unit id="activity">
+                <source>activity</source>
+                <target state="translated">Filter aktiviter</target>
+            </trans-unit>
+            <trans-unit id="copy">
+                <source>copy</source>
+                <target state="translated">Skapa kopia</target>
+            </trans-unit>
+            <trans-unit id="home">
+                <source>home</source>
+                <target state="translated">Hemsida</target>
+            </trans-unit>
+            <trans-unit id="create-project">
+                <source>create-project</source>
+                <target state="translated">Skapa projekt</target>
+            </trans-unit>
+            <trans-unit id="create-activity">
+                <source>create-activity</source>
+                <target state="translated">Skapa aktivitet</target>
+            </trans-unit>
+            <trans-unit id="create-timesheet">
+                <source>create-timesheet</source>
+                <target state="translated">Skapa tidsrapport</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

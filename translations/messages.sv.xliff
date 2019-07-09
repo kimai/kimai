@@ -21,10 +21,6 @@
                 <source>both</source>
                 <target state="translated">båda</target>
             </trans-unit>
-            <trans-unit id="subtitle.amount">
-                <source>subtitle.amount</source>
-                <target state="translated">(totalt %count%)</target>
-            </trans-unit>            
             <trans-unit id="This is a mandatory field">
                 <source>This is a mandatory field</source>
                 <target state="translated">Detta är ett obligatoriskt fält</target>
@@ -36,6 +32,13 @@
             <trans-unit id="confirm.delete">
                 <source>confirm.delete</source>
                 <target state="translated">Vill du verkligen ta bort detta?</target>
+            </trans-unit>
+            <trans-unit id="admin_entity.delete_confirm">
+                <source>admin_entity.delete_confirm</source>
+                <target state="translated">
+                    Denna data kommer också att raderas!
+                    Alternativt kan du välja en post som alla data ska överföras till:
+                </target>
             </trans-unit>
             <trans-unit id="delete.not_in_use">
                 <source>delete.not_in_use</source>
@@ -197,6 +200,10 @@
                 <source>label.budget</source>
                 <target>Budget</target>
             </trans-unit>
+            <trans-unit id="label.timeBudget">
+                <source>label.timeBudget</source>
+                <target>Time budget</target>
+            </trans-unit>
             <trans-unit id="label.activity">
                 <source>label.activity</source>
                 <target state="translated">Aktivitet</target>
@@ -205,9 +212,21 @@
                 <source>label.project</source>
                 <target state="translated">Projekt</target>
             </trans-unit>
+            <trans-unit id="label.tag">
+                <source>label.tag</source>
+                <target state="translated">Taggar</target>
+            </trans-unit>
+            <trans-unit id="label.tags">
+                <source>label.tags</source>
+                <target state="translated">Taggar</target>
+            </trans-unit>
             <trans-unit id="label.hourlyRate">
                 <source>label.hourlyRate</source>
                 <target state="translated">Timpris</target>
+            </trans-unit>
+            <trans-unit id="label.hourly_rate">
+                <source>label.hourly_rate</source>
+                <target>Hourly rate</target>
             </trans-unit>
             <trans-unit id="label.skin">
                 <source>label.skin</source>
@@ -232,8 +251,7 @@
             <trans-unit id="label.customer_number">
                 <source>label.customer_number</source>
                 <target state="translated">Konto</target>
-            </trans-unit>
-            
+            </trans-unit>            
             <trans-unit id="label.email">
                 <source>label.email</source>
                 <target state="translated">E-post</target>
@@ -932,9 +950,17 @@ För närvarande har %user% användare %records% tidsrekord som räknas upp till
             <!--
              Navbar - recent entries and activities
             -->
+            <trans-unit id="active.entries">
+                <source>active.entries</source>
+                <target state="translated">Dina aktiva tidsmätningar</target>
+            </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
                 <target state="translated">Visa alla Poster</target>
+            </trans-unit>
+            <trans-unit id="recent.activities">
+                <source>recent.activities</source>
+                <target state="translated">Starta om en av dina senaste aktiviteter</target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>
@@ -992,17 +1018,6 @@ För närvarande har %user% användare %records% tidsrekord som räknas upp till
                 <source>label.globalsOnly</source>
                 <target state="translated">Endast globalt</target>
             </trans-unit>
-            <!--
-              HELP
-            --> 
-            <trans-unit id="help.title">
-                <source>help.title</source>
-                <target>Hjälp</target>
-            </trans-unit>
-               <trans-unit id="help.subtitle">
-                <source>help.subtitle</source>
-                <target>Foo</target>
-            </trans-unit>         
         </body>
     </file>
 </xliff>
