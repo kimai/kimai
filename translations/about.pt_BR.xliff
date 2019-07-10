@@ -10,6 +10,10 @@
                 <source>about.subtitle</source>
                 <target>Informação do Sistema</target>
             </trans-unit>
+            <trans-unit id="support">
+                <source>support</source>
+                <target>Suporte</target>
+            </trans-unit>
             <trans-unit id="website">
                 <source>website</source>
                 <target>Homepage</target>
@@ -17,6 +21,26 @@
             <trans-unit id="help">
                 <source>help</source>
                 <target>Ajuda</target>
+            </trans-unit>
+            <trans-unit id="tab.thanks">
+                <source>tab.thanks</source>
+                <target>Agradecimentos especiais</target>
+            </trans-unit>
+            <trans-unit id="donate">
+                <source>donate</source>
+                <target>Doe para o futuro do Kimai</target>
+            </trans-unit>
+            <trans-unit id="published_under">
+                <source>published_under</source>
+                <target>%kimai% é publicado sobre</target>
+            </trans-unit>
+            <trans-unit id="special_thanks">
+                <source>special_thanks</source>
+                <target>Agradecimentos especiais vão para …</target>
+            </trans-unit>
+            <trans-unit id="library_authors">
+                <source>library_authors</source>
+                <target>… os autores das seguintes bibliotecas de software, Kimai não seria possível sem você 👍</target>
             </trans-unit>
         </body>
     </file>
