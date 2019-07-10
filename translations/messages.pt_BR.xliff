@@ -92,6 +92,10 @@
                 <source>menu.admin</source>
                 <target>Administração</target>
             </trans-unit>
+            <trans-unit id="menu.system">
+                <source>menu.system</source>
+                <target>Sistema</target>
+            </trans-unit>
             <trans-unit id="menu.logout">
                 <source>menu.logout</source>
                 <target>Sair</target>
@@ -103,6 +107,10 @@
             <trans-unit id="menu.invoice">
                 <source>menu.invoice</source>
                 <target>Faturas</target>
+            </trans-unit>
+            <trans-unit id="menu.export">
+                <source>menu.export</source>
+                <target>Exportar</target>
             </trans-unit>
             <trans-unit id="menu.admin_timesheet">
                 <source>menu.admin_timesheet</source>
@@ -123,6 +131,18 @@
             <trans-unit id="menu.admin_user">
                 <source>menu.admin_user</source>
                 <target>Usuário</target>
+            </trans-unit>
+            <trans-unit id="menu.plugin">
+                <source>menu.plugin</source>
+                <target>Plugins</target>
+            </trans-unit>
+            <trans-unit id="menu.system_configuration">
+                <source>menu.system_configuration</source>
+                <target>Configurações</target>
+            </trans-unit>
+            <trans-unit id="menu.tags">
+                <source>menu.tags</source>
+                <target>Tags</target>
             </trans-unit>
 
             <!--
@@ -195,6 +215,14 @@
             <trans-unit id="label.project">
                 <source>label.project</source>
                 <target>Projeto</target>
+            </trans-unit>
+            <trans-unit id="label.tag">
+                <source>label.tag</source>
+                <target>Tags</target>
+            </trans-unit>
+            <trans-unit id="label.tags">
+                <source>label.tags</source>
+                <target>Tags</target>
             </trans-unit>
             <trans-unit id="label.hourlyRate">
                 <source>label.hourlyRate</source>
@@ -316,6 +344,10 @@
                 <source>label.end</source>
                 <target>Para</target>
             </trans-unit>
+            <trans-unit id="label.daterange">
+                <source>label.daterange</source>
+                <target>Intervalo de tempo</target>
+            </trans-unit>
             <trans-unit id="modal.columns.title">
                 <source>modal.columns.title</source>
                 <target>Alterar a visibilidade da coluna</target>
@@ -327,6 +359,10 @@
             <trans-unit id="label.fixedRate">
                 <source>label.fixedRate</source>
                 <target>Taxa fixa</target>
+            </trans-unit>
+            <trans-unit id="label.color">
+                <source>label.color</source>
+                <target>Cor</target>
             </trans-unit>
 
             <!--
@@ -376,6 +412,10 @@
                 <source>label.calendar.initial_view</source>
                 <target>Vista inicial do calendário</target>
             </trans-unit>
+            <trans-unit id="label.login.initial_view">
+                <source>label.login.initial_view</source>
+                <target>Visualização inicial após o login</target>
+            </trans-unit>
             <!-- Options for user-preference label.calendar.initial_view -->
             <trans-unit id="month">
                 <source>month</source>
@@ -388,6 +428,10 @@
             <trans-unit id="agendaDay">
                 <source>agendaDay</source>
                 <target>Dia</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.daily_stats">
+                <source>label.timesheet.daily_stats</source>
+                <target>Mostrar estatísticas diárias no quadro de horários</target>
             </trans-unit>
 
             <!--
@@ -558,6 +602,18 @@
             </trans-unit>
 
             <!--
+              Admin: Plugins
+            -->
+            <trans-unit id="label.version">
+                <source>label.version</source>
+                <target>Versão</target>
+            </trans-unit>
+            <trans-unit id="label.required_version">
+                <source>label.required_version</source>
+                <target>Compatível com</target>
+            </trans-unit>
+
+            <!--
               ROLES
             -->
             <trans-unit id="ROLE_SUPER_ADMIN">
@@ -599,6 +655,10 @@
             <trans-unit id="stats.durationTotal">
                 <source>stats.durationTotal</source>
                 <target>Total de horas de trabalho</target>
+            </trans-unit>
+            <trans-unit id="stats.yourWorkingHours">
+                <source>stats.yourWorkingHours</source>
+                <target>Seu horário de trabalho</target>
             </trans-unit>
             <trans-unit id="stats.amountToday">
                 <source>stats.amountToday</source>
