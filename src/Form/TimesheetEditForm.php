@@ -221,6 +221,7 @@ class TimesheetEditForm extends AbstractType
                                 }
                             }
                         }
+
                         return $repo->getQueryBuilderForFormType(new ProjectFormTypeQuery($project, $customer));
                     },
                 ]);
