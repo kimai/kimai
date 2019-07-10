@@ -203,18 +203,17 @@ class TimesheetEditForm extends AbstractType
         // replaces the project select after submission, to make sure only projects for the selected customer are displayed
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($project) {
+            function (FormEvent $event) use ($project, $customer) {
                 $data = $event->getData();
-                if (!isset($data['customer']) || empty($data['customer'])) {
-                    return;
-                }
+                $customer = isset($data['customer']) && !empty($data['customer']) ? $data['customer'] : null;
+                $project = isset($data['project']) && !empty($data['project']) ? $data['project'] : $project;
 
                 $event->getForm()->add('project', ProjectType::class, [
                     'placeholder' => '',
                     'activity_enabled' => true,
                     'group_by' => null,
-                    'query_builder' => function (ProjectRepository $repo) use ($data, $project) {
-                        return $repo->getQueryBuilderForFormType(new ProjectFormTypeQuery($data['project'] ?? $project, $data['customer']));
+                    'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
+                        return $repo->getQueryBuilderForFormType(new ProjectFormTypeQuery($project, $customer));
                     },
                 ]);
             }
