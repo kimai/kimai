@@ -79,7 +79,6 @@ class TimesheetEditForm extends AbstractType
         $currency = false;
         $begin = null;
         $customerCount = $this->customers->countCustomer(true);
-        $projectCount = $this->projects->countProject(true);
         $timezone = $this->dateTime->getTimezone()->getName();
         $isNew = true;
 
@@ -132,7 +131,7 @@ class TimesheetEditForm extends AbstractType
             $this->addCustomer($builder, $customer);
         }
 
-        $this->addProject($builder, $customerCount, $projectCount, $project, $customer);
+        $this->addProject($builder, $customerCount, $isNew, $project, $customer);
         $this->addActivity($builder, $activity, $project);
         $this->addDescription($builder);
         $this->addTags($builder);
@@ -175,15 +174,11 @@ class TimesheetEditForm extends AbstractType
             ]);
     }
 
-    protected function addProject(FormBuilderInterface $builder, int $customerCount, int $projectCount, ?Project $project = null, ?Customer $customer = null)
+    protected function addProject(FormBuilderInterface $builder, int $customerCount, bool $isNew, ?Project $project = null, ?Customer $customer = null)
     {
         $projectOptions = [];
 
         if ($customerCount < 2) {
-            $projectOptions['group_by'] = null;
-        }
-
-        if ($projectCount < 2) {
             $projectOptions['group_by'] = null;
         }
 
@@ -203,7 +198,7 @@ class TimesheetEditForm extends AbstractType
         // replaces the project select after submission, to make sure only projects for the selected customer are displayed
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($project, $customer) {
+            function (FormEvent $event) use ($project, $customer, $isNew) {
                 $data = $event->getData();
                 $customer = isset($data['customer']) && !empty($data['customer']) ? $data['customer'] : null;
                 $project = isset($data['project']) && !empty($data['project']) ? $data['project'] : $project;
@@ -212,7 +207,20 @@ class TimesheetEditForm extends AbstractType
                     'placeholder' => '',
                     'activity_enabled' => true,
                     'group_by' => null,
-                    'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
+                    'query_builder' => function (ProjectRepository $repo) use ($project, $customer, $isNew) {
+                        // is there a better wa to prevent starting a record with a hidden project ?
+                        if ($isNew && !is_object($project)) {
+                            /** @var Project $project */
+                            $project = $repo->find($project);
+                            if (null !== $project) {
+                                if (!$project->getCustomer()->getVisible()) {
+                                    $customer = null;
+                                    $project = null;
+                                } elseif (!$project->getVisible()) {
+                                    $project = null;
+                                }
+                            }
+                        }
                         return $repo->getQueryBuilderForFormType(new ProjectFormTypeQuery($project, $customer));
                     },
                 ]);
