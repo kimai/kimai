@@ -85,8 +85,9 @@ class InstallCommandTest extends KernelTestCase
         self::assertContains('[NOTE] It seems as if you already have the required tables in your database,', $result);
         self::assertContains('skipping schema creation', $result);
 
-        self::assertContains('[NOTE] Found ', $result);
-        self::assertContains(' migrations in your database, skipping import', $result);
+        // make sure migrations run always
+        self::assertContains('Application Migrations', $result);
+        self::assertContains('No migrations to execute.', $result);
 
         self::assertContains(
             sprintf('[OK] Congratulations! Kimai 2 (%s %s) was successful installed!', Constants::VERSION, Constants::STATUS),
