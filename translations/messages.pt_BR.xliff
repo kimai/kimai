@@ -936,7 +936,6 @@
             </trans-unit>
             <trans-unit id="export.mark_all">
                 <source>export.mark_all</source>
-                <target>Mark all shown records as cleared?</target>
                 <target>Marcar todos os registros mostrados como resolvido?</target>
             </trans-unit>
             <trans-unit id="label.globalsOnly">
