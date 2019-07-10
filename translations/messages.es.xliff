@@ -958,7 +958,7 @@
             </trans-unit>
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
-                <target>Reinicia una de tus últimas actividades.</target>
+                <target>Retoma una de tus últimas actividades.</target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>
