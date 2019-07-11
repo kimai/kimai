@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="sk" datatype="plaintext" original="validators.en.xliff">
+        <body>
+            <trans-unit id="This value is not a valid role.">
+                <source>This value is not a valid role.</source>
+                <target>Táto hodnota nie je platnou rolou.</target>
+            </trans-unit>
+            <trans-unit id="End date must not be earlier then start date.">
+                <source>End date must not be earlier then start date.</source>
+                <target>Dátum ukončenia nesmie byť skorší ako dátum začiatku.</target>
+            </trans-unit>
+            <trans-unit id="The begin date cannot be in the future.">
+                <source>The begin date cannot be in the future.</source>
+                <target>Dátum začiatku nemôže byť v budúcnosti.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

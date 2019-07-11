@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="sk" datatype="plaintext" original="flashmessages.en.xliff">
+        <body>
+            <trans-unit id="timesheet.stop.success">
+                <source>timesheet.stop.success</source>
+                <target>Nahrávanie času bolo zastavené</target>
+            </trans-unit>
+            <trans-unit id="timesheet.stop.error">
+                <source>timesheet.stop.error</source>
+                <target>Nahrávanie času nebolo možné zastaviť: %reason%</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.success">
+                <source>timesheet.start.success</source>
+                <target>Začalo sa nahrávanie času</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.error">
+                <source>timesheet.start.error</source>
+                <target>Nahrávanie času nebolo možné spustiť: %reason%</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.exceeded_limit">
+                <source>timesheet.start.exceeded_limit</source>
+                <target>Dosiahla sa hranica záznamov aktívneho času, najskôr zastavte aspoň jedno meranie času.</target>
+            </trans-unit>
+            <trans-unit id="action.update.success">
+                <source>action.update.success</source>
+                <target>Uloženie prebehlo úpešne</target>
+            </trans-unit>
+            <trans-unit id="action.update.error">
+                <source>action.update.error</source>
+                <target>Zmeny sa nepodarilo uložiť: %reason%</target>
+            </trans-unit>
+            <trans-unit id="action.delete.success">
+                <source>action.delete.success</source>
+                <target>Položka bola úspešne vymazaná</target>
+            </trans-unit>
+            <trans-unit id="action.delete.error">
+                <source>action.delete.error</source>
+                <target>Záznam sa nepodarilo odstrániť: %reason%</target>
+            </trans-unit>
+            <trans-unit id="invoice.first_template">
+                <source>invoice.first_template</source>
+                <target>Pred pokračovaním musíte vytvoriť svoju prvú faktúru so šablónou</target>
+            </trans-unit>
+            <trans-unit id="timesheet.locked.warning">
+                <source>timesheet.locked.warning</source>
+                <target>Upravujete exportovaný záznam</target>
+            </trans-unit>
+            <trans-unit id="warning">
+                <source>warning</source>
+                <target>Upozornenie</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
