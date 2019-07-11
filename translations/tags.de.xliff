@@ -4,11 +4,11 @@
         <body>
             <trans-unit id="tags.title">
                 <source>tags.title</source>
-                <target>Tags</target>
+                <target>Schlagworte</target>
             </trans-unit>
             <trans-unit id="tags.subtitle">
                 <source>tags.subtitle</source>
-                <target>Tags erlauben es, beliebige Zeitmessungen zusammenzufassen</target>
+                <target>Schlagworte erlauben es, beliebige Zeitmessungen zusammenzufassen</target>
             </trans-unit>
         </body>
     </file>
