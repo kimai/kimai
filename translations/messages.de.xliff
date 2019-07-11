@@ -222,7 +222,7 @@
             </trans-unit>
             <trans-unit id="label.tag">
                 <source>label.tag</source>
-                <target>Schlagwort(e)</target>
+                <target>Schlagworte</target>
             </trans-unit>
             <trans-unit id="label.tags">
                 <source>label.tags</source>
