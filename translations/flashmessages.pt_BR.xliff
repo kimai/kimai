@@ -2,6 +2,10 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" target-language="pt-BR" datatype="plaintext" original="flashmessages.en.xliff">
         <body>
+            <trans-unit id="warning">
+                <source>warning</source>
+                <target>Aviso</target>
+            </trans-unit>
             <trans-unit id="timesheet.stop.success">
                 <source>timesheet.stop.success</source>
                 <target>A gravação de tempo foi interrompida</target>
@@ -17,6 +21,14 @@
             <trans-unit id="timesheet.start.error">
                 <source>timesheet.start.error</source>
                 <target>A gravação de tempo não pôde ser iniciada</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.exceeded_limit">
+                <source>timesheet.start.exceeded_limit</source>
+                <target>O limite de registros de tempo ativos foi atingido, por favor, pare pelo menos uma medição de tempo de execução primeiro.</target>
+            </trans-unit>
+            <trans-unit id="timesheet.locked.warning">
+                <source>timesheet.locked.warning</source>
+                <target>Você está editando um registro exportado</target>
             </trans-unit>
             <trans-unit id="action.update.success">
                 <source>action.update.success</source>

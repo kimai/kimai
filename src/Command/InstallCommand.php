@@ -224,17 +224,28 @@ class InstallCommand extends Command
 
     protected function importMigrations(SymfonyStyle $io, OutputInterface $output)
     {
-        if ($this->connection->getSchemaManager()->tablesExist(['migration_versions'])) {
-            $amount = $this->connection->executeQuery('SELECT count(*) as counter FROM migration_versions')->fetchColumn(0);
-            if ($amount > 0) {
-                $io->note(sprintf('Found %s migrations in your database, skipping import', $amount));
+        if (!$this->connection->getSchemaManager()->tablesExist(['migration_versions'])) {
+            $command = $this->getApplication()->find('doctrine:migrations:version');
+            $cmdInput = new ArrayInput(['--add' => true, '--all' => true]);
+            $cmdInput->setInteractive(false);
+            $command->run($cmdInput, $output);
 
-                return;
-            }
+            return;
         }
 
-        $command = $this->getApplication()->find('doctrine:migrations:version');
-        $cmdInput = new ArrayInput(['--add' => true, '--all' => true]);
+        // this case should not happen, but you know ... everything is possible
+        $amount = $this->connection->executeQuery('SELECT count(*) as counter FROM migration_versions')->fetchColumn(0);
+        if ($amount === 0) {
+            $command = $this->getApplication()->find('doctrine:migrations:version');
+            $cmdInput = new ArrayInput(['--add' => true, '--all' => true]);
+            $cmdInput->setInteractive(false);
+            $command->run($cmdInput, $output);
+
+            return;
+        }
+
+        $command = $this->getApplication()->find('doctrine:migrations:migrate');
+        $cmdInput = new ArrayInput(['--allow-no-migration' => true]);
         $cmdInput->setInteractive(false);
         $command->run($cmdInput, $output);
 

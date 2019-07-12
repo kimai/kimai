@@ -82,6 +82,18 @@ class ActivityRepository extends EntityRepository
     }
 
     /**
+     * @deprecated since 1.1
+     */
+    public function builderForEntityType($activity, $project)
+    {
+        $query = new ActivityFormTypeQuery();
+        $query->setActivity($activity);
+        $query->setProject($project);
+
+        return $this->getQueryBuilderForFormType($query);
+    }
+
+    /**
      * Returns a query builder that is used for ActivityType and your own 'query_builder' option.
      *
      * @param ActivityFormTypeQuery $query
