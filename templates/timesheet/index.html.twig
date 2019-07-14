@@ -95,7 +95,7 @@
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">{{ widgets.label_customer(entry.project.customer) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">{{ widgets.label_project(entry.project) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}">{{ widgets.label_activity(entry.activity) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }} timesheet-description">{{ entry.description|desc2html }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }} timesheet-description">{{ entry.description|escape|desc2html }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'tags') }}">{{ widgets.tag_list(entry.tags) }}</td>
                 <td class="actions">
                     {{- actions.timesheet(entry, 'index') -}}
