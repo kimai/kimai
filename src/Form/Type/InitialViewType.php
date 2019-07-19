@@ -35,7 +35,7 @@ class InitialViewType extends AbstractType
     ];
 
     protected const ROUTE_PERMISSION = [
-        'dashboard' => 'menu.homepage',
+        'dashboard' => '',
         'timesheet' => 'view_own_timesheet',
         'calendar' => 'view_own_timesheet',
         'my_profile' => 'view_own_profile',
@@ -67,7 +67,7 @@ class InitialViewType extends AbstractType
     {
         $choices = [];
         foreach (self::ROUTE_PERMISSION as $route => $permission) {
-            if ($this->voter->isGranted($permission)) {
+            if (empty($permission) || $this->voter->isGranted($permission)) {
                 $name = self::ALLOWED_VIEWS[$route];
                 $choices[$name] = $route;
             }
