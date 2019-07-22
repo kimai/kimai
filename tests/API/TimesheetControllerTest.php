@@ -677,7 +677,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertEquals(10, count($result));
         $this->assertDefaultStructure($result[0], false);
 
-        $query = ['tags' => 'Nothing'];
+        $query = ['tags' => 'Nothing-2-see,here'];
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
         $result = json_decode($client->getResponse()->getContent(), true);
 
