@@ -69,7 +69,7 @@ abstract class AbstractCalculator
     public function getTax(): float
     {
         $vat = $this->getVat();
-        if (0 == $vat) {
+        if (0 === $vat) {
             return 0;
         }
 

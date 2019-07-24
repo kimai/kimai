@@ -50,13 +50,23 @@ abstract class AbstractCalculatorTest extends TestCase
         $template = new InvoiceTemplate();
         $template->setVat(19);
 
-        $project = new Project();
-        $project->setName('project description');
-        $project->setCustomer($customer);
+        $project = $this->getMockBuilder(Project::class)->setMethods(['getId', 'getCustomer', 'getName'])->disableOriginalConstructor()->getMock();
+        $project->method('getId')->willReturn(1);
+        $project->method('getCustomer')->willReturn($customer);
+        $project->method('getName')->willReturn('project description');
 
-        $activity = new Activity();
-        $activity->setName('activity description');
-        $activity->setProject($project);
+        $project1 = $this->getMockBuilder(Project::class)->setMethods(['getId', 'getName'])->disableOriginalConstructor()->getMock();
+        $project1->method('getId')->willReturn(1);
+        $project1->method('getName')->willReturn('bar');
+
+        $activity = $this->getMockBuilder(Activity::class)->setMethods(['getId', 'getProject', 'getName'])->disableOriginalConstructor()->getMock();
+        $activity->method('getId')->willReturn(1);
+        $activity->method('getProject')->willReturn($project);
+        $activity->method('getName')->willReturn('activity description');
+
+        $activity1 = $this->getMockBuilder(Activity::class)->setMethods(['getId', 'getName'])->disableOriginalConstructor()->getMock();
+        $activity1->method('getId')->willReturn(1);
+        $activity1->method('getName')->willReturn('foo');
 
         $query = new InvoiceQuery();
         if ($addProject === true) {
@@ -72,8 +82,8 @@ abstract class AbstractCalculatorTest extends TestCase
             ->setDuration(3600)
             ->setRate(293.27)
             ->setUser(new User())
-            ->setActivity((new Activity())->setName('foo'))
-            ->setProject((new Project())->setName('bar'));
+            ->setActivity($activity1)
+            ->setProject($project1);
 
         $model = new InvoiceModel();
         $model->setCustomer($customer);

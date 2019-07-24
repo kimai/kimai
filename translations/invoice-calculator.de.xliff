@@ -8,19 +8,23 @@
             </trans-unit>
             <trans-unit id="default">
                 <source>default</source>
-                <target>Eintragsbasiert - ein Eintrag pro Zeitmessung (Standard)</target>
+                <target>Standard: ein Eintrag pro Zeitmessung</target>
             </trans-unit>
             <trans-unit id="short">
                 <source>short</source>
-                <target>Stunden aufsummiert - nur ein Eintrag</target>
+                <target>Stunden: Einträge aufsummiert, nur ein Eintrag</target>
             </trans-unit>
             <trans-unit id="user">
                 <source>user</source>
-                <target>Benutzer gruppiert - ein Eintrag pro Benutzer</target>
+                <target>Benutzer: ein Eintrag pro Benutzer</target>
             </trans-unit>
             <trans-unit id="activity">
                 <source>activity</source>
-                <target>Aktivitäten gruppiert - ein Eintrag pro Aktivität</target>
+                <target>Aktivität: ein Eintrag pro Aktivität</target>
+            </trans-unit>
+            <trans-unit id="project">
+                <source>project</source>
+                <target>Projekt: ein Eintrag pro Projekt</target>
             </trans-unit>
         </body>
     </file>

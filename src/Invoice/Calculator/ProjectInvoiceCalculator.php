@@ -13,17 +13,17 @@ use App\Entity\Timesheet;
 use App\Invoice\CalculatorInterface;
 
 /**
- * A calculator that sums up the timesheet records by activity.
+ * A calculator that sums up the timesheet records by project.
  */
-class ActivityInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
+class ProjectInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
 {
     protected function calculateSumIdentifier(Timesheet $timesheet): string
     {
-        if (null === $timesheet->getActivity()->getId()) {
-            throw new \Exception('Cannot handle un-persisted activities');
+        if (null === $timesheet->getProject()->getId()) {
+            throw new \Exception('Cannot handle un-persisted projects');
         }
 
-        return (string) $timesheet->getActivity()->getId();
+        return (string) $timesheet->getProject()->getId();
     }
 
     /**
@@ -31,6 +31,6 @@ class ActivityInvoiceCalculator extends AbstractSumInvoiceCalculator implements 
      */
     public function getId(): string
     {
-        return 'activity';
+        return 'project';
     }
 }
