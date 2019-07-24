@@ -67,9 +67,43 @@ export default class KimaiSelectDataAPI extends KimaiPlugin {
             select.append('<option value="">' + emptyOption.text() + '</option>');
         }
 
-        jQuery.each(data, function(i, obj) {
-            select.append('<option value="' + obj.id + '">' + obj.name + '</option>');
+        const options = {};
+        for (const apiData of data) {
+            let title = apiData.parentTitle;
+            if (title === null) {
+                title = '__empty__';
+            }
+            if (!options.hasOwnProperty(title)) {
+                options[title] = [];
+            }
+            options[title].push(apiData);
+        }
+
+        const ordered = {};
+        Object.keys(options).sort().forEach(function(key) {
+            ordered[key] = options[key];
         });
+
+        let htmlOptions = '';
+        let emptyOptions = '';
+
+        for (const [key, value] of Object.entries(ordered)) {
+            if (key === '__empty__') {
+                for (const entity of value) {
+                    emptyOptions +=  '<option value="' + entity.id + '">' + entity.name + '</option>';
+                }
+                continue;
+            }
+
+            htmlOptions += '<optgroup label="' + key + '">';
+            for (const entity of value) {
+                htmlOptions +=  '<option value="' + entity.id + '">' + entity.name + '</option>';
+            }
+            htmlOptions += '</optgroup>';
+        }
+
+        select.append(htmlOptions);
+        select.append(emptyOptions);
 
         // if we don't trigger the change, the other selects won't be resetted
         select.trigger('change');

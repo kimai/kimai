@@ -158,7 +158,9 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_invoice', 20);
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
-        $form->getFormNode()->setAttribute('action', $this->createUrl('/invoice/print'));
+        $node = $form->getFormNode();
+        $node->setAttribute('action', $this->createUrl('/invoice/print'));
+        $node->setAttribute('method', 'POST');
         $client->submit($form, [
             'template' => 1,
             'user' => '',
@@ -177,7 +179,7 @@ class InvoiceControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
-        $this->request($client, '/invoice/print');
+        $this->request($client, '/invoice/print', 'POST');
         $this->assertIsRedirect($client, '/invoice/template/create');
     }
 
@@ -189,7 +191,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $fixture = new InvoiceFixtures();
         $this->importFixture($em, $fixture);
 
-        $this->request($client, '/invoice/print');
+        $this->request($client, '/invoice/print', 'POST');
         $this->assertIsRedirect($client, '/invoice/');
     }
 

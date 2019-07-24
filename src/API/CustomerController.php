@@ -68,10 +68,6 @@ class CustomerController extends BaseApiController
     public function cgetAction(ParamFetcherInterface $paramFetcher)
     {
         $query = new CustomerQuery();
-        $query
-            ->setResultType(CustomerQuery::RESULT_TYPE_OBJECTS)
-            ->setOrderBy('name')
-        ;
 
         if (null !== ($order = $paramFetcher->get('order'))) {
             $query->setOrder($order);
@@ -85,7 +81,7 @@ class CustomerController extends BaseApiController
             $query->setVisibility($visible);
         }
 
-        $data = $this->repository->findByQuery($query);
+        $data = $this->repository->getCustomersForQuery($query);
         $view = new View($data, 200);
         $view->getContext()->setGroups(['Default', 'Collection', 'Customer']);
 

@@ -22,7 +22,7 @@ class ProjectQueryTest extends BaseQueryTest
     {
         $sut = new ProjectQuery();
 
-        $this->assertBaseQuery($sut);
+        $this->assertBaseQuery($sut, 'name');
         $this->assertInstanceOf(VisibilityQuery::class, $sut);
 
         $this->assertNull($sut->getCustomer());

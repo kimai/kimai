@@ -19,29 +19,16 @@ class ActivityQuery extends ProjectQuery
     /**
      * @var Project|int|null
      */
-    protected $project;
+    private $project;
     /**
      * @var bool
      */
-    protected $orderGlobalsFirst = false;
-    /**
-     * @var bool
-     */
-    protected $globalsOnly = false;
+    private $globalsOnly = false;
 
-    /**
-     * @return bool
-     */
-    public function isOrderGlobalsFirst(): bool
+    public function __construct()
     {
-        return $this->orderGlobalsFirst;
-    }
-
-    public function setOrderGlobalsFirst(bool $orderGlobalsFirst): ActivityQuery
-    {
-        $this->orderGlobalsFirst = $orderGlobalsFirst;
-
-        return $this;
+        parent::__construct();
+        $this->setOrderBy('name');
     }
 
     /**
@@ -80,5 +67,25 @@ class ActivityQuery extends ProjectQuery
         $this->project = $project;
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isDirty(): bool
+    {
+        if (parent::isDirty()) {
+            return true;
+        }
+
+        if ($this->project !== null) {
+            return true;
+        }
+
+        if ($this->globalsOnly !== false) {
+            return true;
+        }
+
+        return false;
     }
 }

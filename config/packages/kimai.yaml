@@ -271,6 +271,13 @@ kimai:
             date: 'Y-m-d'
             date_time: 'm-d H:i'
             duration: '%%h:%%m tim'
+        sk:
+            date_time_type: 'dd. MM. yyyy HH:mm'
+            date_type: 'dd. MM. yyyy'
+            date: 'd. m. Y'
+            date_time: 'd. m.  H:i'
+            duration: '%%h:%%m h'
+
 # --------------------------------------------------------------------------------
 
 
@@ -283,6 +290,10 @@ kimai:
 #            timezone: Europe/Berlin
 #            country: DE
 #            currency: EUR
+#        user:
+#            timezone: Europe/Berlin
+#            language: de
+#            theme: blue-light
 # --------------------------------------------------------------------------------
 
 
@@ -292,13 +303,4 @@ kimai:
 # --------------------------------------------------------------------------------
     data_dir: '%kernel.project_dir%/var/data'
     plugin_dir: '%kernel.project_dir%/var/plugins'
-# --------------------------------------------------------------------------------
-
-
-# --------------------------------------------------------------------------------
-# LDAP
-# Connect to your companies directory server, see https://www.kimai.org/documentation/ldap.html
-# --------------------------------------------------------------------------------
-#    ldap:
-#        active: true
 # --------------------------------------------------------------------------------

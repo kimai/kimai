@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Entity\Timesheet;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
+use App\Repository\TagRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -70,9 +71,9 @@ class TimesheetController extends TimesheetAbstractController
      * @param ActivityRepository $activityRepository
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function createAction(Request $request, ProjectRepository $projectRepository, ActivityRepository $activityRepository)
+    public function createAction(Request $request, ProjectRepository $projectRepository, ActivityRepository $activityRepository, TagRepository $tagRepository)
     {
-        return $this->create($request, 'timesheet/edit.html.twig', $projectRepository, $activityRepository);
+        return $this->create($request, 'timesheet/edit.html.twig', $projectRepository, $activityRepository, $tagRepository);
     }
 
     /**

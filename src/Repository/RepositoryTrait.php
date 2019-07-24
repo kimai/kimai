@@ -16,11 +16,12 @@ use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 
 /**
- * Trait RepositoryTrait
+ * @deprecated since 1.0
  */
 trait RepositoryTrait
 {
     /**
+     * @deprecated since 1.0
      * @param QueryBuilder $qb
      * @param BaseQuery $query
      * @return QueryBuilder|Pagerfanta|array
@@ -42,7 +43,7 @@ trait RepositoryTrait
      * @param int $maxPerPage
      * @return Pagerfanta
      */
-    protected function getPager(Query $query, $page = 1, $maxPerPage = 25)
+    private function getPager(Query $query, $page = 1, $maxPerPage = 25)
     {
         $paginator = new Pagerfanta(new DoctrineORMAdapter($query, false));
         $paginator->setMaxPerPage($maxPerPage);

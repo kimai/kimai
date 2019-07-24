@@ -1,10 +1,7 @@
-{#
-    This template is used to render errors of type HTTP 500 (Internal Server Error)
+{% extends 'error.html.twig' %}
 
-    This is the simplest way to customize error pages in Symfony applications.
-    In case you need it, you can also hook into the internal exception handling
-    made by Symfony. This allows you to perform advanced tasks and even recover
-    your application from some errors.
-    See http://symfony.com/doc/current/cookbook/controller/error_pages.html
-#}
-{% extends '@Twig/Exception/error.html.twig' %}
+{% block error_icon %}
+    <i class="fas fa-bug text-red"></i>
+{% endblock %}
+
+{% block error_class %}text-red{% endblock %}

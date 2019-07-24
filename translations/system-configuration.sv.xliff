@@ -18,6 +18,18 @@
                 <source>form_customer</source>
                 <target state="translated">Skapa kund - standardvärden</target>
             </trans-unit>
+            <trans-unit id="theme">
+                <source>theme</source>
+                <target state="translated">Tema</target>
+            </trans-unit>
+            <trans-unit id="calendar">
+                <source>calendar</source>
+                <target state="translated">Kalender</target>
+            </trans-unit>
+            <trans-unit id="label.theme.markdown_content">
+                <source>label.theme.markdown_content</source>
+                <target state="translated">Tillåt markdown-formatting i beskrivningar och kommentarer</target>
+            </trans-unit>
             <trans-unit id="label.timesheet.mode">
                 <source>label.timesheet.mode</source>
                 <target state="translated">Tidsredovisningsläge</target>
@@ -29,6 +41,14 @@
             <trans-unit id="label.timesheet.mode_duration_only">
                 <source>label.timesheet.mode_duration_only</source>
                 <target state="translated">Endast varaktighet: ersätter slutdatumsfältet med en ingång för varaktighet</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_duration_fixed_begin">
+                <source>label.timesheet.mode_duration_fixed_begin</source>
+                <target state="translated">[Varaktighet] Konfigurerbar fast starttid, endast varaktighet kan ändras</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_punch">
+                <source>label.timesheet.mode_punch</source>
+                <target state="translated">[Tidsklocka] -användaren kan starta och stoppa poster, men inte redigera tiderna eller varaktigheten</target>
             </trans-unit>
             <trans-unit id="label.timesheet.rules.allow_future_times">
                 <source>label.timesheet.rules.allow_future_times</source>
@@ -42,6 +62,35 @@
                 <source>label.timesheet.active_entries.soft_limit</source>
                 <target state="translated">Antal körtidsposter från vilka en varning visas</target>
             </trans-unit>
+            <trans-unit id="label.theme.select_type">
+                <source>label.theme.select_type</source>
+                <target state="translated">Typ av select-rutor i former</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.week_numbers">
+                <source>label.calendar.week_numbers</source>
+                <target state="translated">Visa veckonummer</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.weekends">
+                <source>label.calendar.weekends</source>
+                <target state="translated">Visa helger</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.begin">
+                <source>label.calendar.businessHours.begin</source>
+                <target state="translated">Början av normala öppettider (kommer att markeras)</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.end">
+                <source>label.calendar.businessHours.end</source>
+                <target state="translated">Slut på normala öppettider (kommer att markeras)</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.begin">
+                <source>label.calendar.visibleHours.begin</source>
+                <target state="translated">Början av synligt tidsintervall</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.end">
+                <source>label.calendar.visibleHours.end</source>
+                <target state="translated">Slut på synligt tidsintervall</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

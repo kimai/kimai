@@ -17,7 +17,8 @@ use App\Model\Statistic\Month;
 use App\Model\Statistic\Year;
 use App\Model\TimesheetStatistic;
 use App\Repository\Loader\TimesheetLoader;
-use App\Repository\Paginator\TimesheetPaginator;
+use App\Repository\Paginator\LoaderPaginator;
+use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\TimesheetQuery;
 use DateTime;
 use Doctrine\DBAL\Types\Type;
@@ -349,24 +350,23 @@ class TimesheetRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('t', 'a', 'p', 'c')
+        $qb->select('t')
             ->from(Timesheet::class, 't')
-            ->join('t.activity', 'a')
-            ->join('t.project', 'p')
-            ->join('p.customer', 'c')
-            ->leftJoin('t.tags', 'tags')
             ->andWhere($qb->expr()->isNotNull('t.begin'))
             ->andWhere($qb->expr()->isNull('t.end'))
             ->orderBy('t.begin', 'DESC');
 
-        $params = [];
-
         if (null !== $user) {
             $qb->andWhere('t.user = :user');
-            $params['user'] = $user;
+            $qb->setParameter('user', $user);
         }
 
-        return $qb->getQuery()->execute($params);
+        $results = $qb->getQuery()->getResult();
+
+        $loader = new TimesheetLoader($qb->getEntityManager());
+        $loader->loadResults($results);
+
+        return $results;
     }
 
     /**
@@ -414,36 +414,42 @@ class TimesheetRepository extends EntityRepository
         return $paginator;
     }
 
-    protected function getPaginatorForQuery(TimesheetQuery $query): TimesheetPaginator
+    protected function getPaginatorForQuery(TimesheetQuery $query): PaginatorInterface
     {
         $qb = $this->getQueryBuilderForQuery($query);
-        $qb->select($qb->expr()->countDistinct('t.id'))->resetDQLPart('orderBy');
+        $qb
+            ->resetDQLPart('select')
+            ->resetDQLPart('orderBy')
+            ->select($qb->expr()->countDistinct('t.id'))
+        ;
         $counter = (int) $qb->getQuery()->getSingleScalarResult();
 
         $qb = $this->getQueryBuilderForQuery($query);
-        $qb->select('t');
 
-        $paginator = new TimesheetPaginator($qb, $counter);
-
-        return $paginator;
+        return new LoaderPaginator(new TimesheetLoader($qb->getEntityManager()), $qb, $counter);
     }
 
     /**
      * @param TimesheetQuery $query
      * @return Timesheet[]
      */
-    public function getTimesheetsForQuery(TimesheetQuery $query): array
+    public function getTimesheetsForQuery(TimesheetQuery $query): iterable
     {
+        // this is using the paginator internally, as it will load all joined entities into the working unit
+        // do not "optimize" to use the query directly, as it would results in hundreds of additional lazy queries
         $paginator = $this->getPaginatorForQuery($query);
 
         return $paginator->getAll();
     }
 
-    protected function getQueryBuilderForQuery(TimesheetQuery $query): QueryBuilder
+    private function getQueryBuilderForQuery(TimesheetQuery $query): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->from(Timesheet::class, 't');
+        $qb
+            ->select('t')
+            ->from(Timesheet::class, 't')
+        ;
 
         if (null !== $query->getUser()) {
             $qb->andWhere('t.user = :user')

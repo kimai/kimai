@@ -11,7 +11,7 @@ namespace App\Form\Model;
 
 use Symfony\Component\Validator\Constraint;
 
-class Configuration
+final class Configuration
 {
     /**
      * @var string
@@ -32,29 +32,26 @@ class Configuration
     /**
      * @var string
      */
-    protected $type;
+    private $type;
     /**
      * @var bool
      */
-    protected $enabled = true;
+    private $enabled = true;
+    /**
+     * @var bool
+     */
+    private $required = true;
     /**
      * @var Constraint[]
      */
-    protected $constraints = [];
+    private $constraints = [];
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     * @return Configuration
-     */
-    public function setName(string $name)
+    public function setName(string $name): Configuration
     {
         $this->name = $name;
 
@@ -73,64 +70,43 @@ class Configuration
      * @param mixed $value
      * @return Configuration
      */
-    public function setValue($value)
+    public function setValue($value): Configuration
     {
         $this->value = $value;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    /**
-     * @param string $type
-     * @return Configuration
-     */
-    public function setType(string $type)
+    public function setType(string $type): Configuration
     {
         $this->type = $type;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnabled(): bool
     {
         return $this->enabled;
     }
 
-    /**
-     * @param bool $enabled
-     * @return Configuration
-     */
-    public function setEnabled(bool $enabled)
+    public function setEnabled(bool $enabled): Configuration
     {
         $this->enabled = $enabled;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getLabel()
+    public function getLabel(): ?string
     {
         return $this->label;
     }
 
-    /**
-     * @param string $label
-     * @return Configuration
-     */
-    public function setLabel(string $label)
+    public function setLabel(string $label): Configuration
     {
         $this->label = $label;
 
@@ -149,28 +125,33 @@ class Configuration
      * @param Constraint[] $constraints
      * @return Configuration
      */
-    public function setConstraints(array $constraints)
+    public function setConstraints(array $constraints): Configuration
     {
         $this->constraints = $constraints;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getTranslationDomain()
+    public function getTranslationDomain(): string
     {
         return $this->translationDomain;
     }
 
-    /**
-     * @param string $translationDomain
-     * @return Configuration
-     */
-    public function setTranslationDomain(string $translationDomain)
+    public function setTranslationDomain(string $translationDomain): Configuration
     {
         $this->translationDomain = $translationDomain;
+
+        return $this;
+    }
+
+    public function isRequired(): bool
+    {
+        return $this->required;
+    }
+
+    public function setRequired(bool $required): Configuration
+    {
+        $this->required = $required;
 
         return $this;
     }

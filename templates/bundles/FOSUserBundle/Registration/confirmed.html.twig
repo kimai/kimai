@@ -6,12 +6,18 @@
 {% block head %}
     {{ parent() }}
     {% include 'partials/head.html.twig' %}
+    {% set event = trigger(constant('App\\Event\\ThemeEvent::HTML_HEAD')) %}
+    {{ event.content|raw }}
 {% endblock %}
 
 {% block stylesheets %}
     {{ encore_entry_link_tags('app') }}
+    {% set event = trigger(constant('App\\Event\\ThemeEvent::STYLESHEET')) %}
+    {{ event.content|raw }}
 {% endblock %}
 
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
+    {% set event = trigger(constant('App\\Event\\ThemeEvent::JAVASCRIPT')) %}
+    {{ event.content|raw }}
 {% endblock %}

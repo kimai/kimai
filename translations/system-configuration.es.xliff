@@ -36,11 +36,15 @@
             </trans-unit>
             <trans-unit id="label.timesheet.mode_default">
                 <source>label.timesheet.mode_default</source>
-                <target>[Por defecto] se pueden editar los tiempos de inicio y fin.</target>
+                <target>[Por defecto] se pueden editar los tiempos de inicio y fin</target>
             </trans-unit>
             <trans-unit id="label.timesheet.mode_duration_only">
                 <source>label.timesheet.mode_duration_only</source>
                 <target>[Duración] reemplaza el campo de hora de finalización por un campo de duración</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_duration_fixed_begin">
+                <source>label.timesheet.mode_duration_fixed_begin</source>
+                <target>[Duración] tiempo de inicio fijo configurable, solo se puede editar la duración</target>
             </trans-unit>
             <trans-unit id="label.timesheet.mode_punch">
                 <source>label.timesheet.mode_punch</source>
@@ -48,7 +52,7 @@
             </trans-unit>
             <trans-unit id="label.timesheet.rules.allow_future_times">
                 <source>label.timesheet.rules.allow_future_times</source>
-                <target>Permitir registros de tiempo en el futuro.</target>
+                <target>Permitir registros de tiempo en el futuro</target>
             </trans-unit>
             <trans-unit id="label.timesheet.active_entries.hard_limit">
                 <source>label.timesheet.active_entries.hard_limit</source>

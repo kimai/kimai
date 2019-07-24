@@ -10,7 +10,7 @@ you can upgrade your Kimai installation to the latest stable release.
 There might be more steps required which are version specific and need to be executed after [the update](https://www.kimai.org/documentation/updates.html).
 Read and perform EACH version specific task below, otherwise you risk data inconsistency or a broken installation!
 
-## 1.0 (unreleased)
+## [1.0](https://github.com/kevinpapst/kimai2/releases/tag/1.0)
 
 This release contains several changes, as I still have the goal to stabilize the code base to prevent 
 such "challenges" after 1.0 for a while.
@@ -35,7 +35,7 @@ Removed permission:
 - API: Format for queries including a datetime object fixed to use HTML5 format (previously `2019-03-02 14:23` - now `2019-03-02T14:23:00`)
 - **Permission config**: the `permissions` definition in your `local.yaml` needs to be verified/changed, as the internal structure was highly optimized to simplify the definition. 
 Thanks to the new structure, you should be able to remove almost everything from your `local.yaml` (tip: start over from scratch!). Please read [the updated permission docu](https://www.kimai.org/documentation/permissions.html). 
-- default widgets were removed from `kimai.yaml`, that shouldn't cause any issues ... but if something is odd, now you know [where to look for help](https://www.kimai.org/documentation/dashboard.html)
+- default widgets were removed from `kimai.yaml`, that shouldn't cause any issues ... but if something is odd: [look here for help](https://www.kimai.org/documentation/dashboard.html)
 
 ## [0.9](https://github.com/kevinpapst/kimai2/releases/tag/0.9)
 

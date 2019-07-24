@@ -70,10 +70,6 @@ class ProjectController extends BaseApiController
     public function cgetAction(ParamFetcherInterface $paramFetcher)
     {
         $query = new ProjectQuery();
-        $query
-            ->setResultType(ProjectQuery::RESULT_TYPE_OBJECTS)
-            ->setOrderBy('name')
-        ;
 
         if (null !== ($order = $paramFetcher->get('order'))) {
             $query->setOrder($order);
@@ -91,7 +87,7 @@ class ProjectController extends BaseApiController
             $query->setVisibility($visible);
         }
 
-        $data = $this->repository->findByQuery($query);
+        $data = $this->repository->getProjectsForQuery($query);
         $view = new View($data, 200);
         $view->getContext()->setGroups(['Default', 'Collection', 'Project']);
 

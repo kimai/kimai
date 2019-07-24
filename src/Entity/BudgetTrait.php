@@ -27,7 +27,7 @@ trait BudgetTrait
      *
      * @var int
      *
-     * @ORM\Column(name="time_budget", type="integer", precision=10, scale=2, nullable=false)
+     * @ORM\Column(name="time_budget", type="integer", nullable=false)
      * @Assert\NotNull()
      */
     private $timeBudget = 0;

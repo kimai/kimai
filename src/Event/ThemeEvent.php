@@ -23,7 +23,7 @@ final class ThemeEvent extends Event
     public const CONTENT_AFTER = 'app.theme.content_after';
 
     /**
-     * @var User
+     * @var User|null
      */
     protected $user;
     /**
@@ -35,33 +35,28 @@ final class ThemeEvent extends Event
      */
     protected $payload = null;
 
-    public function __construct(User $user, $payload = null)
+    public function __construct(?User $user = null, $payload = null)
     {
         $this->user = $user;
         $this->payload = $payload;
     }
 
     /**
-     * @return User
+     * @deprecated since 1.0
      */
-    public function getUser()
+    public function getUser(): ?User
     {
+        @trigger_error('Using ThemeEvent::getUser() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
+
         return $this->user;
     }
 
-    /**
-     * @return string
-     */
     public function getContent(): string
     {
         return $this->content;
     }
 
-    /**
-     * @param string $content
-     * @return ThemeEvent
-     */
-    public function addContent(string $content)
+    public function addContent(string $content): ThemeEvent
     {
         $this->content .= $content;
 

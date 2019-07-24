@@ -11,6 +11,7 @@ namespace App\Form\Type;
 
 use App\Entity\Activity;
 use App\Repository\ActivityRepository;
+use App\Repository\Query\ActivityFormTypeQuery;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -78,7 +79,7 @@ class ActivityType extends AbstractType
             'group_by' => [$this, 'groupBy'],
             'choice_attr' => [$this, 'choiceAttr'],
             'query_builder' => function (ActivityRepository $repo) {
-                return $repo->builderForEntityType();
+                return $repo->getQueryBuilderForFormType(new ActivityFormTypeQuery());
             },
         ]);
     }

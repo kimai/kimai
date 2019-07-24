@@ -17,7 +17,7 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Creates the color columns on: customer, project, activity.
  *
- * @version 0.9
+ * @version 1.0
  */
 final class Version20190502161758 extends AbstractMigration
 {

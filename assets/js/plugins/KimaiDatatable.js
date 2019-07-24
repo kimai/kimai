@@ -47,7 +47,6 @@ export default class KimaiDatatable extends KimaiPlugin {
     }
 
     reloadDatatable() {
-        // FIXME remove query
         const durations = this.getContainer().getPlugin('timesheet-duration');
         const form = jQuery('.toolbar form');
         let loading = '<div class="overlay"><i class="fas fa-sync fa-spin"></i></div>';
