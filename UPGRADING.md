@@ -10,6 +10,14 @@ you can upgrade your Kimai installation to the latest stable release.
 There might be more steps required which are version specific and need to be executed after [the update](https://www.kimai.org/documentation/updates.html).
 Read and perform EACH version specific task below, otherwise you risk data inconsistency or a broken installation!
 
+## [1.1](https://github.com/kevinpapst/kimai2/releases/tag/1.1)
+
+[Update as usual](https://www.kimai.org/documentation/updates.html), nothing special for this release if you upgrade from 1.0 / 1.0.1.
+
+## [1.0.1](https://github.com/kevinpapst/kimai2/releases/tag/1.0.1)
+
+[Update as usual](https://www.kimai.org/documentation/updates.html), nothing special for this release if you upgrade from 1.0.
+
 ## [1.0](https://github.com/kevinpapst/kimai2/releases/tag/1.0)
 
 This release contains several changes, as I still have the goal to stabilize the code base to prevent 
