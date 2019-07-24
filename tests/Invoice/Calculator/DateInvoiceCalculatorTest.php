@@ -15,22 +15,22 @@ use App\Entity\InvoiceTemplate;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
-use App\Invoice\Calculator\ProjectInvoiceCalculator;
+use App\Invoice\Calculator\DateInvoiceCalculator;
 use App\Model\InvoiceModel;
 use App\Repository\Query\InvoiceQuery;
 use DateTime;
 
 /**
- * @covers \App\Invoice\Calculator\ProjectInvoiceCalculator
+ * @covers \App\Invoice\Calculator\DateInvoiceCalculator
  * @covers \App\Invoice\Calculator\AbstractSumInvoiceCalculator
  * @covers \App\Invoice\Calculator\AbstractMergedCalculator
  * @covers \App\Invoice\Calculator\AbstractCalculator
  */
-class ProjectInvoiceCalculatorTest extends AbstractCalculatorTest
+class DateInvoiceCalculatorTest extends AbstractCalculatorTest
 {
     public function testEmptyModel()
     {
-        $this->assertEmptyModel(new ProjectInvoiceCalculator());
+        $this->assertEmptyModel(new DateInvoiceCalculator());
     }
 
     public function testWithMultipleEntries()
@@ -53,7 +53,7 @@ class ProjectInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet = new Timesheet();
         $timesheet
-            ->setBegin(new DateTime())
+            ->setBegin(new DateTime('2018-11-29'))
             ->setEnd(new DateTime())
             ->setDuration(3600)
             ->setRate(293.27)
@@ -63,7 +63,7 @@ class ProjectInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet2 = new Timesheet();
         $timesheet2
-            ->setBegin(new DateTime())
+            ->setBegin(new DateTime('2018-11-29'))
             ->setEnd(new DateTime())
             ->setDuration(400)
             ->setRate(84.75)
@@ -73,7 +73,7 @@ class ProjectInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet3 = new Timesheet();
         $timesheet3
-            ->setBegin(new DateTime())
+            ->setBegin(new DateTime('2018-11-28'))
             ->setEnd(new DateTime())
             ->setDuration(1800)
             ->setRate(111.11)
@@ -84,7 +84,7 @@ class ProjectInvoiceCalculatorTest extends AbstractCalculatorTest
         $timesheet4 = new Timesheet();
         $timesheet4
             ->setBegin(new DateTime())
-            ->setEnd(new DateTime())
+            ->setEnd(new DateTime('2018-11-28'))
             ->setDuration(400)
             ->setRate(1947.99)
             ->setUser($user)
@@ -93,7 +93,7 @@ class ProjectInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet5 = new Timesheet();
         $timesheet5
-            ->setBegin(new DateTime())
+            ->setBegin(new DateTime('2018-11-28'))
             ->setEnd(new DateTime())
             ->setDuration(400)
             ->setRate(84)
@@ -112,10 +112,10 @@ class ProjectInvoiceCalculatorTest extends AbstractCalculatorTest
         $model->setEntries($entries);
         $model->setQuery($query);
 
-        $sut = new ProjectInvoiceCalculator();
+        $sut = new DateInvoiceCalculator();
         $sut->setModel($model);
 
-        $this->assertEquals('project', $sut->getId());
+        $this->assertEquals('date', $sut->getId());
         $this->assertEquals(3000.13, $sut->getTotal());
         $this->assertEquals(19, $sut->getVat());
         $this->assertEquals('EUR', $sut->getCurrency());
@@ -125,24 +125,24 @@ class ProjectInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $entries = $sut->getEntries();
         self::assertCount(3, $entries);
-        $this->assertEquals(404.38, $entries[0]->getRate());
-        $this->assertEquals(2032.74, $entries[1]->getRate());
-        $this->assertEquals(84, $entries[2]->getRate());
+        $this->assertEquals(378.02, $entries[0]->getRate());
+        $this->assertEquals(195.11, $entries[1]->getRate());
+        $this->assertEquals(1947.99, $entries[2]->getRate());
         self::assertEquals(2521.12, $entries[0]->getRate() + $entries[1]->getRate() + $entries[2]->getRate());
     }
 
     public function testDescriptionByTimesheet()
     {
-        $this->assertDescription(new ProjectInvoiceCalculator(), false, false);
+        $this->assertDescription(new DateInvoiceCalculator(), false, false);
     }
 
     public function testDescriptionByActivity()
     {
-        $this->assertDescription(new ProjectInvoiceCalculator(), false, true);
+        $this->assertDescription(new DateInvoiceCalculator(), false, true);
     }
 
     public function testDescriptionByProject()
     {
-        $this->assertDescription(new ProjectInvoiceCalculator(), true, false);
+        $this->assertDescription(new DateInvoiceCalculator(), true, false);
     }
 }

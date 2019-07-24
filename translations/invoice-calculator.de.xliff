@@ -26,6 +26,10 @@
                 <source>project</source>
                 <target>Projekt: ein Eintrag pro Projekt</target>
             </trans-unit>
+            <trans-unit id="date">
+                <source>date</source>
+                <target>Datum: ein Eintrag pro Tag (verwendet Startdatum)</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
