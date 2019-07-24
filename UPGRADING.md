@@ -12,13 +12,11 @@ Read and perform EACH version specific task below, otherwise you risk data incon
 
 ## [1.1](https://github.com/kevinpapst/kimai2/releases/tag/1.1)
 
-Nothing special for this release, if you upgrade from 1.0 / 1.0.1.
-
-This release fixes an [XSS issue](https://github.com/kevinpapst/kimai2/pull/962) found and reported by @osamaalaah
+[Update as usual](https://www.kimai.org/documentation/updates.html), nothing special for this release if you upgrade from 1.0 / 1.0.1.
 
 ## [1.0.1](https://github.com/kevinpapst/kimai2/releases/tag/1.0.1)
 
-Nothing special for this release, if you upgrade from 1.0.
+[Update as usual](https://www.kimai.org/documentation/updates.html), nothing special for this release if you upgrade from 1.0.
 
 ## [1.0](https://github.com/kevinpapst/kimai2/releases/tag/1.0)
 
