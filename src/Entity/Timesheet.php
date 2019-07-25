@@ -9,6 +9,8 @@
 
 namespace App\Entity;
 
+use DateTime;
+use DateTimeZone;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -48,7 +50,7 @@ class Timesheet implements EntityWithMetaFields
     private $id;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="start_time", type="datetime", nullable=false)
      * @Assert\NotNull()
@@ -56,7 +58,7 @@ class Timesheet implements EntityWithMetaFields
     private $begin;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="end_time", type="datetime", nullable=true)
      */
@@ -188,17 +190,17 @@ class Timesheet implements EntityWithMetaFields
         }
 
         if (null !== $this->begin) {
-            $this->begin->setTimeZone(new \DateTimeZone($this->timezone));
+            $this->begin->setTimeZone(new DateTimeZone($this->timezone));
         }
 
         if (null !== $this->end) {
-            $this->end->setTimeZone(new \DateTimeZone($this->timezone));
+            $this->end->setTimeZone(new DateTimeZone($this->timezone));
         }
 
         $this->localized = true;
     }
 
-    public function getBegin(): ?\DateTime
+    public function getBegin(): ?DateTime
     {
         $this->localizeDates();
 
@@ -206,10 +208,10 @@ class Timesheet implements EntityWithMetaFields
     }
 
     /**
-     * @param \DateTime $begin
+     * @param DateTime $begin
      * @return Timesheet
      */
-    public function setBegin(\DateTime $begin): Timesheet
+    public function setBegin(DateTime $begin): Timesheet
     {
         $this->begin = $begin;
         $this->timezone = $begin->getTimezone()->getName();
@@ -217,7 +219,7 @@ class Timesheet implements EntityWithMetaFields
         return $this;
     }
 
-    public function getEnd(): ?\DateTime
+    public function getEnd(): ?DateTime
     {
         $this->localizeDates();
 
@@ -225,10 +227,10 @@ class Timesheet implements EntityWithMetaFields
     }
 
     /**
-     * @param \DateTime $end
+     * @param DateTime $end
      * @return Timesheet
      */
-    public function setEnd(?\DateTime $end): Timesheet
+    public function setEnd(?DateTime $end): Timesheet
     {
         $this->end = $end;
 
@@ -422,10 +424,11 @@ class Timesheet implements EntityWithMetaFields
     }
 
     /**
-     * BE WARNED: this method should NOT be used programmatically, there is very likely no reason for it!
+     * BE WARNED: this method should NOT be used programmatically.
+     * It was ONLY introduced for the initial timezone migration (see command "kimai:convert-timezone").
      *
      * @internal
-     * @deprecated since it was introduced, only meant for the initial migration. Will be removed with 1.0.
+     * @deprecated since 0.8 - will be removed with 2.0
      * @param string $timezone
      * @return Timesheet
      */

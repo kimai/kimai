@@ -11,6 +11,7 @@ namespace App\Command;
 
 use App\Entity\Timesheet;
 use App\Repository\TimesheetRepository;
+use DateTimeZone;
 use Doctrine\DBAL\Types\DateTimeType;
 use Doctrine\DBAL\Types\Type;
 use Symfony\Component\Console\Command\Command;
@@ -27,6 +28,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  * Please read https://github.com/kevinpapst/kimai2/pull/372 to find out more!
  *
  * @codeCoverageIgnore
+ * @deprecated since 0.9 - will be removed with 2.0
  */
 class ConvertTimezoneCommand extends Command
 {
@@ -56,6 +58,7 @@ class ConvertTimezoneCommand extends Command
             ->setHelp('This command should only be required if you imported data from Kimai v1')
             ->addOption('first-id', 'f', InputArgument::OPTIONAL, 'The database ID which should be converted first')
             ->addOption('last-id', 'l', InputArgument::OPTIONAL, 'The database ID which should be converted last')
+            ->setHidden(true) // hide command, as it is deprecated
         ;
     }
 
@@ -81,10 +84,10 @@ class ConvertTimezoneCommand extends Command
 
     /**
      * @param Timesheet $timesheet
-     * @param \DateTimeZone $timeZone
+     * @param DateTimeZone $timeZone
      * @return Timesheet
      */
-    protected function convertTimesheet(Timesheet $timesheet, \DateTimeZone $timeZone): Timesheet
+    protected function convertTimesheet(Timesheet $timesheet, DateTimeZone $timeZone): Timesheet
     {
         $oldTimezone = $timesheet->getTimezone();
 
@@ -128,7 +131,7 @@ class ConvertTimezoneCommand extends Command
             return 1;
         }
 
-        $utc = new \DateTimeZone('UTC');
+        $utc = new DateTimeZone('UTC');
         $i = 0;
 
         /** @var Timesheet $timesheet */

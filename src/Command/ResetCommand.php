@@ -9,6 +9,7 @@
 
 namespace App\Command;
 
+use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -47,6 +48,17 @@ EOT
     }
 
     /**
+     * Make sure that this command CANNOT be executed in production.
+     * It can't work, as the fixtures bundle is not available in production.
+     *
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        return getenv('APP_ENV') !== 'prod';
+    }
+
+    /**
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int|null
@@ -55,17 +67,11 @@ EOT
     {
         $io = new SymfonyStyle($input, $output);
 
-        if (getenv('APP_ENV') === 'prod') {
-            $io->error('kimai:reset-dev is not allowed in production');
-
-            return -1;
-        }
-
         if ($this->askConfirmation($input, $output, 'Do you want to create the database y/N ?')) {
             try {
                 $command = $this->getApplication()->find('doctrine:database:create');
                 $command->run(new ArrayInput([]), $output);
-            } catch (\Exception $ex) {
+            } catch (Exception $ex) {
                 $io->error('Failed to create database: ' . $ex->getMessage());
 
                 return 1;
@@ -76,7 +82,7 @@ EOT
             try {
                 $command = $this->getApplication()->find('doctrine:schema:drop');
                 $command->run(new ArrayInput(['--force' => true]), $output);
-            } catch (\Exception $ex) {
+            } catch (Exception $ex) {
                 $io->error('Failed to drop database schema: ' . $ex->getMessage());
 
                 return 2;
@@ -85,7 +91,7 @@ EOT
             try {
                 $command = $this->getApplication()->find('doctrine:schema:create');
                 $command->run(new ArrayInput([]), $output);
-            } catch (\Exception $ex) {
+            } catch (Exception $ex) {
                 $io->error('Failed to create database schema: ' . $ex->getMessage());
 
                 return 3;
@@ -97,7 +103,7 @@ EOT
             $cmdInput = new ArrayInput([]);
             $cmdInput->setInteractive(false);
             $command->run($cmdInput, $output);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $io->error('Failed to import fixtures: ' . $ex->getMessage());
 
             return 4;
@@ -108,7 +114,7 @@ EOT
             $cmdInput = new ArrayInput(['--add' => true, '--all' => true]);
             $cmdInput->setInteractive(false);
             $command->run($cmdInput, $output);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $io->error('Failed to set migration status: ' . $ex->getMessage());
 
             return 5;
@@ -118,7 +124,7 @@ EOT
             $command = $this->getApplication()->find('cache:clear');
             try {
                 $command->run(new ArrayInput([]), $output);
-            } catch (\Exception $ex) {
+            } catch (Exception $ex) {
                 $io->error('Failed to clear cache: ' . $ex->getMessage());
 
                 return 6;

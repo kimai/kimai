@@ -51,6 +51,14 @@ class CreateReleaseCommand extends Command
             ->addOption('directory', null, InputOption::VALUE_OPTIONAL, 'Directory where the release package will be stored', 'var/data/')
             ->addOption('release', null, InputOption::VALUE_OPTIONAL, 'The version that should be zipped', Constants::VERSION)
         ;
+
+        /**
+         * Hide this command in production.
+         * Maybe it should be de-activated completely?!
+         */
+        if (getenv('APP_ENV') === 'prod') {
+            $this->setHidden(true);
+        }
     }
 
     /**
