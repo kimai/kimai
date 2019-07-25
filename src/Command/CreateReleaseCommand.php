@@ -52,7 +52,7 @@ class CreateReleaseCommand extends Command
             ->addOption('release', null, InputOption::VALUE_OPTIONAL, 'The version that should be zipped', Constants::VERSION)
         ;
 
-        /**
+        /*
          * Hide this command in production.
          * Maybe it should be de-activated completely?!
          */
