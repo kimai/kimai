@@ -250,6 +250,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->booleanNode('week_numbers')->defaultTrue()->end()
                 ->integerNode('day_limit')->defaultValue(4)->end()
+                ->scalarNode('slot_duration')->defaultValue('00:30:00')->end()
                 ->arrayNode('businessHours')
                     ->addDefaultsIfNotSet()
                     ->children()
