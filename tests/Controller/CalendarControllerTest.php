@@ -68,6 +68,7 @@ class CalendarControllerTest extends ControllerBaseTest
             ],
             'day_limit' => 20,
             'week_numbers' => false,
+            'slot_duration' => '00:15:00',
             'google' => [
                 'api_key' => 'wertwertwegsdfbdf243w567fg8ihuon',
                 'sources' => [
