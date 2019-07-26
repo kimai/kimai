@@ -10,7 +10,6 @@
 namespace App\Tests\DependencyInjection;
 
 use App\DependencyInjection\AppExtension;
-use Notice;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -232,7 +231,7 @@ class AppExtensionTest extends TestCase
     }
 
     /**
-     * @expectedException Notice
+     * @expectedException \Notice
      * @expectedExceptionMessage Found ambiguous configuration. Please remove "kimai.timesheet.duration_only" and set "kimai.timesheet.mode" instead.
      * @expectedDeprecation Configuration "kimai.timesheet.duration_only" is deprecated, please remove it
      * @group legacy
@@ -321,7 +320,7 @@ class AppExtensionTest extends TestCase
     }
 
     /**
-     * @expectedException Notice
+     * @expectedException \Notice
      * @expectedExceptionMessage Found invalid "kimai" configuration: The child node "data_dir" at path "kimai" must be configured.
      */
     public function testInvalidConfiguration()
