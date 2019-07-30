@@ -13,6 +13,7 @@ use App\Configuration\FormConfiguration;
 use App\Entity\Customer;
 use App\Event\CustomerMetaDefinitionEvent;
 use App\Form\CustomerEditForm;
+use App\Form\CustomerTeamPermissionForm;
 use App\Form\Toolbar\CustomerToolbarForm;
 use App\Form\Type\CustomerType;
 use App\Repository\CustomerRepository;
@@ -115,6 +116,41 @@ class CustomerController extends AbstractController
         $customer->setTimezone($timezone);
 
         return $this->renderCustomerForm($customer, $request);
+    }
+
+    /**
+     * @Route(path="/{id}/permissions", name="admin_customer_permissions", methods={"GET", "POST"})
+     * @Security("is_granted('edit', customer)")
+     *
+     * @param Request $request
+     * @return RedirectResponse|Response
+     */
+    public function teamPermissions(Customer $customer, Request $request)
+    {
+        $form = $this->createForm(CustomerTeamPermissionForm::class, $customer, [
+            'action' => $this->generateUrl('admin_customer_permissions', ['id' => $customer->getId()]),
+            'method' => 'POST',
+        ]);
+        
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                dump($customer->getTeams());exit;
+                $this->getRepository()->saveCustomer($customer);
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRoute('admin_customer');
+            } catch (ORMException $ex) {
+                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            }
+        }
+
+        return $this->render('customer/permissions.html.twig', [
+            'customer' => $customer,
+            'form' => $form->createView()
+        ]);
+
     }
 
     /**
