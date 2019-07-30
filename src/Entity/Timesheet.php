@@ -138,14 +138,14 @@ class Timesheet implements EntityWithMetaFields
     /**
      * @var Tag[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="timesheets", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="timesheets", cascade={"remove", "persist"})
      * @ORM\JoinTable(
      *  name="kimai2_timesheet_tags",
      *  joinColumns={
-     *      @ORM\JoinColumn(name="timesheet_id", referencedColumnName="id")
+     *      @ORM\JoinColumn(name="timesheet_id", referencedColumnName="id", onDelete="CASCADE")
      *  },
      *  inverseJoinColumns={
-     *      @ORM\JoinColumn(name="tag_id", referencedColumnName="id")
+     *      @ORM\JoinColumn(name="tag_id", referencedColumnName="id", onDelete="CASCADE")
      *  }
      * )
      */
