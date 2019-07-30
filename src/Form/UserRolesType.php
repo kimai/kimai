@@ -26,10 +26,10 @@ class UserRolesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            // string[]
             ->add('roles', UserRoleType::class, [
                 'label' => 'label.roles',
                 'multiple' => true,
+                'expanded' => true,
             ])
         ;
     }
