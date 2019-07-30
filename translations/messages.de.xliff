@@ -132,6 +132,10 @@
                 <source>menu.admin_user</source>
                 <target>Benutzer</target>
             </trans-unit>
+            <trans-unit id="menu.admin_team">
+                <source>menu.admin_team</source>
+                <target>Teams</target>
+            </trans-unit>
             <trans-unit id="menu.plugin">
                 <source>menu.plugin</source>
                 <target>Erweiterungen</target>
@@ -255,6 +259,10 @@
             <trans-unit id="label.email">
                 <source>label.email</source>
                 <target>E-Mail</target>
+            </trans-unit>
+            <trans-unit id="label.team">
+                <source>label.team</source>
+                <target>Team</target>
             </trans-unit>
             <trans-unit id="label.create_more">
                 <source>label.create_more</source>
