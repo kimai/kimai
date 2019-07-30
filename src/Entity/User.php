@@ -96,6 +96,22 @@ class User extends BaseUser implements UserInterface
     private $preferences;
 
     /**
+     * @var Team[]|ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Team", inversedBy="users", cascade={"remove", "persist"})
+     * @ORM\JoinTable(
+     *  name="kimai2_users_teams",
+     *  joinColumns={
+     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     *  },
+     *  inverseJoinColumns={
+     *      @ORM\JoinColumn(name="team_id", referencedColumnName="id", onDelete="CASCADE")
+     *  }
+     * )
+     */
+    private $teams;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -103,6 +119,7 @@ class User extends BaseUser implements UserInterface
         parent::__construct();
         $this->registeredAt = new \DateTime();
         $this->preferences = new ArrayCollection();
+        $this->teams = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -272,6 +289,45 @@ class User extends BaseUser implements UserInterface
         $preference->setUser($this);
 
         return $this;
+    }
+
+    public function addTeam(Team $team): User
+    {
+        if ($this->teams->contains($team)) {
+            return $this;
+        }
+
+        $this->teams->add($team);
+        $team->addUser($this);
+
+        return $this;
+    }
+
+    public function removeTeam(Team $team)
+    {
+        if (!$this->teams->contains($team)) {
+            return;
+        }
+        $this->teams->removeElement($team);
+        $team->removeUser($this);
+    }
+
+    /**
+     * @return Collection<Team>
+     */
+    public function getTeams(): Collection
+    {
+        return $this->teams;
+    }
+
+    /**
+     * @param Collection<Team> $teams
+     */
+    public function setTeams(Collection $teams)
+    {
+        foreach ($teams as $team) {
+            $this->addTeam($team);
+        }
     }
 
     /**
