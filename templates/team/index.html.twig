@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+{% import "macros/actions.html.twig" as actions %}
+{% import "macros/datatables.html.twig" as tables %}
+{% import "macros/toolbar.html.twig" as toolbar %}
+
+{% block page_title %}{{ 'teams.title'|trans({}, 'teams') }}{% endblock %}
+{% block page_subtitle %}{{ 'teams.subtitle'|trans({}, 'teams') }}{% endblock %}
+{% block page_actions %}{{ actions.teams('index') }}{% endblock %}
+
+{% block main_before %}
+    {{ toolbar.toolbar(toolbarForm, 'collapseTeams', showFilter) }}
+{% endblock %}
+
+{% block main %}
+
+    {% if teams|length == 0 %}
+        {{ widgets.callout('warning', 'error.no_entries_found') }}
+    {% else %}
+
+        {% set columns = {
+            'name': '',
+            'user': '',
+            'actions': 'actions alwaysVisible',
+        } %}
+
+        {% set tableName = 'admin_teams' %}
+
+        {{ tables.data_table_header(tableName, columns, false, 'kimai.teamUpdate') }}
+        {% for team in teams %}
+            <tr{% if is_granted('edit', team) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_team_edit', {'id': team.id}) }}"{% endif %}>
+                <td>{{ team.name }}</td>
+                <td>
+                    {% for user in team.users %}
+                        {{ widgets.label_user(user) }}&nbsp;
+                    {% endfor %}
+                </td>
+                <td class="actions">
+                    {{ actions.team(team, 'index') }}
+                </td>
+            </tr>
+        {% endfor %}
+        {{ tables.data_table_footer(teams, 'admin_team_paginated') }}
+
+    {% endif %}
+
+{% endblock %}
