@@ -298,8 +298,8 @@ class ProfileControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=user_roles]')->form();
         $client->submit($form, [
             'user_roles[roles]' => [
-                'ROLE_TEAMLEAD',
-                'ROLE_SUPER_ADMIN',
+                0 => 'ROLE_TEAMLEAD',
+                2 => 'ROLE_SUPER_ADMIN',
             ]
         ]);
 
