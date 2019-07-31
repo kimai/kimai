@@ -6,7 +6,7 @@ cache:
     - $HOME/.composer/cache/files
 
 addons:
-  mariadb: '10.2'
+  mariadb: '10.3'
 
 services:
   - mysql
