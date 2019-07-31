@@ -10,6 +10,7 @@
 namespace App\Form\Type;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,6 +28,9 @@ class UserType extends AbstractType
         $resolver->setDefaults([
             'class' => User::class,
             'label' => 'label.user',
+            'query_builder' => function (UserRepository $repo) {
+                return $repo->createQueryBuilder('u')->orderBy('u.username', 'ASC');
+            },
             'choice_label' => function (User $user) {
                 if (!empty($user->getAlias())) {
                     return $user->getAlias() . ' (' . $user->getUsername() . ')';
