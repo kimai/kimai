@@ -26,6 +26,21 @@ final class Version20190706224219 extends AbstractMigration
         return 'Creates several indices to improve speed for default queries.';
     }
 
+    protected function isSupportingForeignKeys(): bool
+    {
+        return false;
+    }
+
+    public function isTransactional(): bool
+    {
+        if ($this->isPlatformSqlite()) {
+            // does fail if we use transactions, as tables are re-created and foreign keys would fail
+            return false;
+        }
+
+        return true;
+    }
+
     public function up(Schema $schema): void
     {
         $timesheet = $schema->getTable('kimai2_timesheet');

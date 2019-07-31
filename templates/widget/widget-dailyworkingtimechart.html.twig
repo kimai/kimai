@@ -35,7 +35,7 @@ document.addEventListener('kimai.initialized', function() {
             data: {
                 labels: [
                     {% for day in data -%}
-                    moment('{{ day.day|date_format(constant('\DateTime::ISO8601')) }}').format('ll')
+                    moment('{{ day.day|date_format('Y-m-d') }}').format('ll')
                     {% if not loop.last %},{% endif -%}
                     {%- endfor %}
                 ],

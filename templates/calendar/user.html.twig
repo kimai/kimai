@@ -215,9 +215,8 @@
                 eventResize: changeHandler,
                 {% endif %}
             {% endif %}
-                /*
-                slotDuration: '00:30:00',                               // TODO make me configurable
-                */
+                slotDuration: '{{ config.slotDuration }}',
+                slotLabelInterval: '{{ config.slotDuration }}',
                 minTime: '{{ config.timeframeBegin }}',
                 maxTime: '{{ config.timeframeEnd }}',
                 defaultTimedEventDuration: '00:30'
