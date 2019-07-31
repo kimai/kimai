@@ -42,8 +42,6 @@ script:
   - bin/console doctrine:migrations:migrate -n
   - bin/console doctrine:migrations:migrate first -n
   - cp tests/.env.dist.mysql .env
-  - mysql -e 'drop user if exists travis@localhost;'
-  - mysql -e 'create user travis@localhost;'
   - bin/console doctrine:database:create -n
   - bin/console doctrine:migrations:migrate -n
   - bin/console doctrine:migrations:migrate first -n
