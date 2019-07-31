@@ -4,6 +4,7 @@ parameters:
     # environment variables are not available yet.
     # You should not need to change this value.
     env(DATABASE_URL): ''
+    env(DATABASE_SERVER_VERSION): ~
 
 doctrine:
     dbal:
@@ -15,6 +16,7 @@ doctrine:
                 # this setting prevents automatic database detection and finds a lot of false-negatives on doctrine:migrations:diff
                 # for null columns with MariaDB. Each migration tries to convert EVERY nullable column.
                 # server_version: '5.7'
+                server_version: '%env(resolve:DATABASE_SERVER_VERSION)%'
                 charset: utf8mb4
                 default_table_options:
                     charset: utf8mb4
