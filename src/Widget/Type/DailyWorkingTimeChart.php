@@ -11,6 +11,7 @@ namespace App\Widget\Type;
 
 use App\Repository\TimesheetRepository;
 use App\Security\CurrentUser;
+use App\Timesheet\UserDateTimeFactory;
 use DateTime;
 
 class DailyWorkingTimeChart extends SimpleWidget
@@ -21,10 +22,15 @@ class DailyWorkingTimeChart extends SimpleWidget
      * @var TimesheetRepository
      */
     protected $repository;
+    /**
+     * @var UserDateTimeFactory
+     */
+    private $dateTimeFactory;
 
-    public function __construct(TimesheetRepository $repository, CurrentUser $user)
+    public function __construct(TimesheetRepository $repository, CurrentUser $user, UserDateTimeFactory $dateTime)
     {
         $this->repository = $repository;
+        $this->dateTimeFactory = $dateTime;
         $this->setId('DailyWorkingTimeChart');
         $this->setTitle('stats.yourWorkingHours');
         $this->setOptions([
@@ -57,8 +63,8 @@ class DailyWorkingTimeChart extends SimpleWidget
         $options = $this->getOptions($options);
 
         $user = $options['user'];
-        $begin = new DateTime($options['begin']);
-        $end = new DateTime($options['end']);
+        $begin = new DateTime($options['begin'], $this->dateTimeFactory->getTimezone());
+        $end = new DateTime($options['end'], $this->dateTimeFactory->getTimezone());
 
         return $this->repository->getDailyStats($user, $begin, $end);
     }

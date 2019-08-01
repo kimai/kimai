@@ -13,6 +13,7 @@ use App\Entity\User;
 use App\Model\Statistic\Day;
 use App\Repository\TimesheetRepository;
 use App\Security\CurrentUser;
+use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\DailyWorkingTimeChart;
 use App\Widget\Type\SimpleWidget;
@@ -31,8 +32,9 @@ class DailyWorkingTimeChartTest extends TestCase
         $repository = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->getMock();
         $user = $this->getMockBuilder(CurrentUser::class)->disableOriginalConstructor()->setMethods(['getUser'])->getMock();
         $user->expects($this->once())->method('getUser')->willReturn(new User());
+        $mockFactory = new UserDateTimeFactoryFactory($this);
 
-        return new DailyWorkingTimeChart($repository, $user);
+        return new DailyWorkingTimeChart($repository, $user, $mockFactory->create('Europe/Berlin'));
     }
 
     public function testExtendsSimpleWidget()
@@ -106,8 +108,9 @@ class DailyWorkingTimeChartTest extends TestCase
         });
         $user = $this->getMockBuilder(CurrentUser::class)->disableOriginalConstructor()->setMethods(['getUser'])->getMock();
         $user->expects($this->once())->method('getUser')->willReturn((new User())->setUsername('tralalala'));
+        $mockFactory = new UserDateTimeFactoryFactory($this);
 
-        $sut = new DailyWorkingTimeChart($repository, $user);
+        $sut = new DailyWorkingTimeChart($repository, $user, $mockFactory->create('Europe/Berlin'));
         $data = $sut->getData([]);
         self::assertCount(7, $data);
         foreach ($data as $statObj) {
