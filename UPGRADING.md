@@ -5,10 +5,14 @@ _Make sure to create a backup before you start!_
 Read the [updates documentation](https://www.kimai.org/documentation/updates.html) to find out how 
 you can upgrade your Kimai installation to the latest stable release.
 
-**Before you leave ...**
+Check below if there are more version specific steps required, which need to be executed after the normal update process.
+Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
-There might be more steps required which are version specific and need to be executed after [the update](https://www.kimai.org/documentation/updates.html).
-Read and perform EACH version specific task below, otherwise you risk data inconsistency or a broken installation!
+## [1.2](https://github.com/kevinpapst/kimai2/releases/tag/1.2)
+
+### BC breaks
+
+Deleted timezone conversion command. If you are still using 0.7 or below, you need to upgrade to 1.1 before upgrading to this version.
 
 ## [1.1](https://github.com/kevinpapst/kimai2/releases/tag/1.1)
 
