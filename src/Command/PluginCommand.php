@@ -9,11 +9,9 @@
 
 namespace App\Command;
 
-use App\Constants;
 use App\Plugin\PluginManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -23,10 +21,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class PluginCommand extends Command
 {
     /**
-     * @var PluginManager 
+     * @var PluginManager
      */
     private $plugins;
-    
+
     public function __construct(PluginManager $plugins)
     {
         $this->plugins = $plugins;
@@ -55,9 +53,10 @@ class PluginCommand extends Command
         $plugins = $this->plugins->getPlugins();
         if (empty($plugins)) {
             $io->warning('No plugins installed');
+
             return 0;
         }
-        
+
         $rows = [];
         foreach ($plugins as $plugin) {
             $this->plugins->loadMetadata($plugin);

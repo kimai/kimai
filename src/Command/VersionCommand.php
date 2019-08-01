@@ -23,10 +23,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class VersionCommand extends Command
 {
     /**
-     * @var PluginManager 
+     * @var PluginManager
      */
     private $plugins;
-    
+
     public function __construct(PluginManager $plugins)
     {
         $this->plugins = $plugins;
