@@ -41,15 +41,15 @@ matrix:
       env: CODECOVERAGE=0 DB=mariadb
       addons:
         mariadb: '10.2'
-        before_script:
-          - mysql -u root -e 'CREATE USER IF NOT EXISTS travis@localhost; GRANT ALL ON *.* TO travis@localhost;'
+      before_script:
+        - mysql -u root -e 'CREATE USER IF NOT EXISTS travis@localhost; GRANT ALL ON *.* TO travis@localhost;'
     - stage: Test
       php: '7.3'
       env: CODECOVERAGE=0 DB=mariadb
       addons:
         mariadb: '10.2'
-        before_script:
-            - mysql -u root -e 'CREATE USER IF NOT EXISTS travis@localhost; GRANT ALL ON *.* TO travis@localhost;'
+      before_script:
+        - mysql -u root -e 'CREATE USER IF NOT EXISTS travis@localhost; GRANT ALL ON *.* TO travis@localhost;'
     - stage: Code coverage
       php: '7.3'
       env: CODECOVERAGE=1 DB=sqlite
