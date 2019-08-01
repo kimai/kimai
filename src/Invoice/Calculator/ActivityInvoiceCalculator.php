@@ -15,30 +15,15 @@ use App\Invoice\CalculatorInterface;
 /**
  * A calculator that sums up the timesheet records by activity.
  */
-class ActivityInvoiceCalculator extends AbstractMergedCalculator implements CalculatorInterface
+class ActivityInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
 {
-    /**
-     * @return Timesheet[]
-     */
-    public function getEntries()
+    protected function calculateSumIdentifier(Timesheet $timesheet): string
     {
-        $entries = $this->model->getEntries();
-        if (empty($entries)) {
-            return [];
+        if (null === $timesheet->getActivity()->getId()) {
+            throw new \Exception('Cannot handle un-persisted activities');
         }
 
-        /** @var Timesheet[] $timesheets */
-        $timesheets = [];
-
-        foreach ($entries as $entry) {
-            if (!isset($timesheets[$entry->getActivity()->getId()])) {
-                $timesheets[$entry->getActivity()->getId()] = new Timesheet();
-            }
-            $timesheet = $timesheets[$entry->getActivity()->getId()];
-            $this->mergeTimesheets($timesheet, $entry);
-        }
-
-        return array_values($timesheets);
+        return (string) $timesheet->getActivity()->getId();
     }
 
     /**

@@ -44,7 +44,7 @@ trait MetaTableTypeTrait
     /**
      * @var bool
      *
-     * @ORM\Column(name="visible", type="boolean", nullable=false)
+     * @ORM\Column(name="visible", type="boolean", nullable=false, options={"default": false})
      * @Assert\NotNull()
      */
     private $visible = false;

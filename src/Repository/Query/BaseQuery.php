@@ -25,29 +25,25 @@ class BaseQuery
     public const RESULT_TYPE_QUERYBUILDER = 'QueryBuilder';
 
     /**
-     * @var object|null
+     * @var int
      */
-    protected $hiddenEntity;
+    private $page = self::DEFAULT_PAGE;
     /**
      * @var int
      */
-    protected $page = self::DEFAULT_PAGE;
-    /**
-     * @var int
-     */
-    protected $pageSize = self::DEFAULT_PAGESIZE;
+    private $pageSize = self::DEFAULT_PAGESIZE;
     /**
      * @var string
      */
-    protected $orderBy = 'id';
+    private $orderBy = 'id';
     /**
      * @var string
      */
-    protected $order = self::ORDER_ASC;
+    private $order = self::ORDER_ASC;
     /**
      * @var string
      */
-    protected $resultType = self::RESULT_TYPE_PAGER;
+    private $resultType = self::RESULT_TYPE_PAGER;
 
     /**
      * @return int
@@ -68,10 +64,7 @@ class BaseQuery
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getPageSize()
+    public function getPageSize(): int
     {
         return $this->pageSize;
     }
@@ -82,17 +75,14 @@ class BaseQuery
      */
     public function setPageSize($pageSize)
     {
-        if (!empty($pageSize) && (int) $pageSize > 0) {
+        if ($pageSize !== null && (int) $pageSize > 0) {
             $this->pageSize = (int) $pageSize;
         }
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getOrderBy()
+    public function getOrderBy(): string
     {
         return $this->orderBy;
     }
@@ -110,10 +100,7 @@ class BaseQuery
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getOrder()
+    public function getOrder(): string
     {
         return $this->order;
     }
@@ -132,6 +119,7 @@ class BaseQuery
     }
 
     /**
+     * @deprecated since 1.0
      * @return string
      */
     public function getResultType()
@@ -140,6 +128,7 @@ class BaseQuery
     }
 
     /**
+     * @deprecated since 1.0
      * @param string $resultType
      * @return $this
      * @throws \InvalidArgumentException
@@ -158,21 +147,20 @@ class BaseQuery
     }
 
     /**
-     * @return object|null
+     * Returns whether the query has changed fields, compared to the original state.
+     *
+     * @return bool
      */
-    public function getHiddenEntity()
+    public function isDirty(): bool
     {
-        return $this->hiddenEntity;
-    }
+        if ($this->page !== self::DEFAULT_PAGE) {
+            return true;
+        }
 
-    /**
-     * @param object|string|null $hiddenEntity
-     * @return BaseQuery
-     */
-    public function setHiddenEntity($hiddenEntity)
-    {
-        $this->hiddenEntity = $hiddenEntity;
+        if ($this->pageSize !== self::DEFAULT_PAGESIZE) {
+            return true;
+        }
 
-        return $this;
+        return false;
     }
 }

@@ -41,7 +41,7 @@
                         <td>
                             {% if entry.description is not empty %}
                             <div>
-                                {{ entry.description|desc2html }}
+                                {{ entry.description|escape|desc2html }}
                             </div>
                             {% endif %}
                             <span class="small">

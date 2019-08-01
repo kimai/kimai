@@ -77,22 +77,23 @@ class ActivityControllerTest extends APIControllerBaseTest
             $hasProject = $expected[$i][0];
             $this->assertStructure($activity, false);
             if ($hasProject) {
-                $this->assertEquals($expected[$i][0], $activity['project']);
+                $this->assertEquals($expected[$i][1], $activity['project']);
             }
         }
     }
 
     public function getCollectionTestData()
     {
-        yield ['/api/activities', [], [[false], [false], [true, 2], [true, 1], [true, 2]]];
+        yield ['/api/activities', [], [[false], [true, 2], [true, 2], [null], [true, 1]]];
+        //yield ['/api/activities', [], [[false], [false], [true, 2], [true, 1], [true, 2]]];
         yield ['/api/activities', ['globals' => 'true'], [[false], [false]]];
         yield ['/api/activities', ['globals' => 'true', 'visible' => 3], [[false], [false], [false]]];
         yield ['/api/activities', ['globals' => 'true', 'visible' => '2'], [[false]]];
         yield ['/api/activities', ['globals' => 'true', 'visible' => 1], [[false], [false]]];
         yield ['/api/activities', ['project' => '1'], [[false], [false], [true, 1]]];
-        yield ['/api/activities', ['project' => '2', 'visible' => 1], [[false], [false], [true, 2], [true, 2]]];
-        yield ['/api/activities', ['project' => '2', 'visible' => '3'], [[false], [false], [false], [true, 2], [true, 2], [true, 2]]];
-        yield ['/api/activities', ['project' => '2', 'visible' => 2], [[false], [true, 2]]];
+        yield ['/api/activities', ['project' => '2', 'visible' => 1], [[false], [true, 2], [true, 2], [false]]];
+        yield ['/api/activities', ['project' => '2', 'visible' => '3'], [[false], [true, 2], [true, 2], [true, 2], [false], [false]]];
+        yield ['/api/activities', ['project' => '2', 'visible' => 2], [[true, 2], [false]]];
     }
 
     public function testGetCollectionWithQuery()
@@ -100,7 +101,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->loadActivityTestData($client);
 
-        $query = ['order' => 'ASC', 'orderBy' => 'project', 'globalsFirst' => 'false'];
+        $query = ['order' => 'ASC', 'orderBy' => 'project'];
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/activities', 'GET', $query);
         $result = json_decode($client->getResponse()->getContent(), true);
@@ -220,7 +221,9 @@ class ActivityControllerTest extends APIControllerBaseTest
 
     protected function assertStructure(array $result, $full = true)
     {
-        $expectedKeys = ['id', 'name', 'visible', 'project', 'hourlyRate', 'fixedRate', 'color', 'metaFields'];
+        $expectedKeys = [
+            'id', 'name', 'visible', 'project', 'hourlyRate', 'fixedRate', 'color', 'metaFields', 'parentTitle'
+        ];
 
         if ($full) {
             $expectedKeys = array_merge($expectedKeys, [

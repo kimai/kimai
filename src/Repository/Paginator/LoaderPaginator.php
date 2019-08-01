@@ -9,12 +9,11 @@
 
 namespace App\Repository\Paginator;
 
-use App\Repository\Loader\TimesheetLoader;
+use App\Repository\Loader\LoaderInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Adapter\AdapterInterface;
 
-final class TimesheetPaginator implements AdapterInterface
+final class LoaderPaginator implements PaginatorInterface
 {
     /**
      * @var QueryBuilder
@@ -25,15 +24,15 @@ final class TimesheetPaginator implements AdapterInterface
      */
     private $results = 0;
     /**
-     * @var TimesheetLoader
+     * @var LoaderInterface
      */
     private $loader;
 
-    public function __construct(QueryBuilder $query, int $results)
+    public function __construct(LoaderInterface $loader, QueryBuilder $query, int $results)
     {
+        $this->loader = $loader;
         $this->query = $query;
         $this->results = $results;
-        $this->loader = new TimesheetLoader($query->getEntityManager());
     }
 
     /**
@@ -42,15 +41,6 @@ final class TimesheetPaginator implements AdapterInterface
     public function getNbResults()
     {
         return $this->results;
-    }
-
-    private function getResults(Query $query)
-    {
-        $results = $query->execute();
-
-        $this->loader->loadResults($results);
-
-        return $results;
     }
 
     /**
@@ -66,7 +56,16 @@ final class TimesheetPaginator implements AdapterInterface
         return $this->getResults($query);
     }
 
-    public function getAll()
+    private function getResults(Query $query)
+    {
+        $results = $query->execute();
+
+        $this->loader->loadResults($results);
+
+        return $results;
+    }
+
+    public function getAll(): iterable
     {
         return $this->getResults($this->query->getQuery());
     }

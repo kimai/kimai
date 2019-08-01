@@ -10,11 +10,15 @@
 namespace App\Repository;
 
 use App\Entity\Activity;
-use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Model\ProjectStatistic;
+use App\Repository\Loader\ProjectLoader;
+use App\Repository\Paginator\LoaderPaginator;
+use App\Repository\Paginator\PaginatorInterface;
+use App\Repository\Query\ProjectFormTypeQuery;
 use App\Repository\Query\ProjectQuery;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
@@ -23,7 +27,7 @@ use Pagerfanta\Pagerfanta;
 /**
  * Class ProjectRepository
  */
-class ProjectRepository extends AbstractRepository
+class ProjectRepository extends EntityRepository
 {
     /**
      * @param Project $project
@@ -35,15 +39,6 @@ class ProjectRepository extends AbstractRepository
         $entityManager = $this->getEntityManager();
         $entityManager->persist($project);
         $entityManager->flush();
-    }
-
-    /**
-     * @param int $id
-     * @return null|Project
-     */
-    public function getById($id)
-    {
-        return $this->find($id);
     }
 
     /**
@@ -97,55 +92,42 @@ class ProjectRepository extends AbstractRepository
     }
 
     /**
-     * Returns a query builder that is used for ProjectType and your own 'query_builder' option.
-     *
-     * @param Project|int|null $entity
-     * @param Customer|int|null $customer
-     * @return array|QueryBuilder|Pagerfanta
+     * @deprecated since 1.1
      */
-    public function builderForEntityType($entity = null, $customer = null)
+    public function builderForEntityType($project, $customer)
     {
-        $query = new ProjectQuery();
-        $query->setHiddenEntity($entity);
+        $query = new ProjectFormTypeQuery();
+        $query->setProject($project);
         $query->setCustomer($customer);
-        $query->setResultType(ProjectQuery::RESULT_TYPE_QUERYBUILDER);
-        $query->setOrderBy('name');
 
-        return $this->findByQuery($query);
+        return $this->getQueryBuilderForFormType($query);
     }
 
     /**
-     * @param ProjectQuery $query
-     * @return QueryBuilder|Pagerfanta|array
+     * Returns a query builder that is used for ProjectType and your own 'query_builder' option.
+     *
+     * @param ProjectFormTypeQuery $query
+     * @return QueryBuilder
      */
-    public function findByQuery(ProjectQuery $query)
+    public function getQueryBuilderForFormType(ProjectFormTypeQuery $query): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        // if we join activities, the max-per-page limit will limit the list
-        // due to the raised amount of rows by projects * activities
-        $qb->select('p', 'c')
+        $qb
+            ->select('p', 'c')
             ->from(Project::class, 'p')
-            ->join('p.customer', 'c')
-            ->orderBy('p.' . $query->getOrderBy(), $query->getOrder());
+            ->leftJoin('p.customer', 'c')
+            ->addOrderBy('c.name', 'ASC')
+            ->addOrderBy('p.name', 'ASC')
+        ;
 
-        if (ProjectQuery::SHOW_VISIBLE == $query->getVisibility()) {
-            if (!$query->isExclusiveVisibility()) {
-                $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
-            }
-            $qb->andWhere($qb->expr()->eq('p.visible', ':visible'));
-            $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
+        $qb->andWhere($qb->expr()->eq('p.visible', ':visible'));
+        $qb->andWhere($qb->expr()->eq('c.visible', ':customer_visible'));
+        $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
+        $qb->setParameter('customer_visible', true, \PDO::PARAM_BOOL);
 
-            $entity = $query->getHiddenEntity();
-            if (null !== $entity) {
-                $qb->orWhere('p.id = :project')->setParameter('project', $entity);
-            }
-
-            // TODO check for visibility of customer
-        } elseif (ProjectQuery::SHOW_HIDDEN == $query->getVisibility()) {
-            $qb->andWhere($qb->expr()->eq('p.visible', ':visible'));
-            $qb->setParameter('visible', false, \PDO::PARAM_BOOL);
-            // TODO check for visibility of customer
+        if (null !== $query->getProject()) {
+            $qb->orWhere('p.id = :project')->setParameter('project', $query->getProject());
         }
 
         if (null !== $query->getCustomer()) {
@@ -153,12 +135,85 @@ class ProjectRepository extends AbstractRepository
                 ->setParameter('customer', $query->getCustomer());
         }
 
-        if (!empty($query->getIgnoredEntities())) {
-            $qb->andWhere('p.id NOT IN(:ignored)');
-            $qb->setParameter('ignored', $query->getIgnoredEntities());
+        if (null !== $query->getProjectToIgnore()) {
+            $qb->andWhere($qb->expr()->neq('p.id', ':ignored'));
+            $qb->setParameter('ignored', $query->getProjectToIgnore());
         }
 
-        return $this->getBaseQueryResult($qb, $query);
+        return $qb;
+    }
+
+    private function getQueryBuilderForQuery(ProjectQuery $query): QueryBuilder
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb
+            ->select('p')
+            ->from(Project::class, 'p')
+        ;
+
+        if (in_array($query->getVisibility(), [ProjectQuery::SHOW_VISIBLE, ProjectQuery::SHOW_HIDDEN])) {
+            $qb
+                ->leftJoin('p.customer', 'c')
+                ->andWhere($qb->expr()->eq('p.visible', ':visible'))
+                ->andWhere($qb->expr()->eq('c.visible', ':customer_visible'))
+            ;
+
+            if (ProjectQuery::SHOW_VISIBLE === $query->getVisibility()) {
+                $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
+            } elseif (ProjectQuery::SHOW_HIDDEN === $query->getVisibility()) {
+                $qb->setParameter('visible', false, \PDO::PARAM_BOOL);
+            }
+
+            $qb->setParameter('customer_visible', true, \PDO::PARAM_BOOL);
+        }
+
+        if (null !== $query->getCustomer()) {
+            $qb->andWhere('p.customer = :customer')
+                ->setParameter('customer', $query->getCustomer());
+        }
+
+        $qb->orderBy('p.' . $query->getOrderBy(), $query->getOrder());
+
+        return $qb;
+    }
+
+    public function getPagerfantaForQuery(ProjectQuery $query): Pagerfanta
+    {
+        $paginator = new Pagerfanta($this->getPaginatorForQuery($query));
+        $paginator->setMaxPerPage($query->getPageSize());
+        $paginator->setCurrentPage($query->getPage());
+
+        return $paginator;
+    }
+
+    private function getPaginatorForQuery(ProjectQuery $query): PaginatorInterface
+    {
+        $qb = $this->getQueryBuilderForQuery($query);
+        $qb
+            ->resetDQLPart('select')
+            ->resetDQLPart('orderBy')
+            ->select($qb->expr()->countDistinct('p.id'))
+        ;
+        $counter = (int) $qb->getQuery()->getSingleScalarResult();
+
+        $qb = $this->getQueryBuilderForQuery($query);
+
+        return new LoaderPaginator(new ProjectLoader($qb->getEntityManager()), $qb, $counter);
+    }
+
+    /**
+     * @param ProjectQuery $query
+     * @return Project[]
+     */
+    public function getProjectsForQuery(ProjectQuery $query): iterable
+    {
+        $qb = $this->getQueryBuilderForQuery($query);
+        $results = $qb->getQuery()->execute();
+        $loader = new ProjectLoader($qb->getEntityManager());
+        $loader->loadResults($results);
+
+        return $results;
     }
 
     /**

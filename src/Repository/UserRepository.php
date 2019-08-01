@@ -11,15 +11,25 @@ namespace App\Repository;
 
 use App\Entity\User;
 use App\Repository\Query\UserQuery;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
-class UserRepository extends AbstractRepository implements UserLoaderInterface
+class UserRepository extends EntityRepository implements UserLoaderInterface
 {
+    use RepositoryTrait;
+
+    public function getById($id): ?User
+    {
+        @trigger_error('UserRepository::getById is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
+
+        return $this->getUserById($id);
+    }
+
     /**
      * @param int $id
      * @return null|User
      */
-    public function getById($id)
+    public function getUserById($id): ?User
     {
         return $this->find($id);
     }

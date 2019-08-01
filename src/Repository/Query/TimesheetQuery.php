@@ -26,16 +26,6 @@ class TimesheetQuery extends ActivityQuery
     public const STATE_NOT_EXPORTED = 5;
 
     /**
-     * Overwritten for different default order
-     * @var string
-     */
-    protected $order = self::ORDER_DESC;
-    /**
-     * Overwritten for different default order
-     * @var string
-     */
-    protected $orderBy = 'begin';
-    /**
      * @var User|null
      */
     protected $user;
@@ -62,6 +52,9 @@ class TimesheetQuery extends ActivityQuery
 
     public function __construct()
     {
+        parent::__construct();
+        $this->setOrder(self::ORDER_DESC);
+        $this->setOrderBy('begin');
         $this->dateRange = new DateRange();
     }
 
@@ -244,5 +237,41 @@ class TimesheetQuery extends ActivityQuery
         $this->tags = $tags;
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isDirty(): bool
+    {
+        if (parent::isDirty()) {
+            return true;
+        }
+
+        if ($this->activity !== null) {
+            return true;
+        }
+
+        if (!empty($this->tags)) {
+            return true;
+        }
+
+        if ($this->user !== null) {
+            return true;
+        }
+
+        if ($this->state !== self::STATE_ALL) {
+            return true;
+        }
+
+        if ($this->exported !== self::STATE_ALL) {
+            return true;
+        }
+
+        if ($this->dateRange->getBegin() !== null || $this->dateRange->getEnd() !== null) {
+            return true;
+        }
+
+        return false;
     }
 }

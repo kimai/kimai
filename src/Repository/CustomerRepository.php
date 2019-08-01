@@ -14,13 +14,18 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Model\CustomerStatistic;
+use App\Repository\Loader\CustomerLoader;
+use App\Repository\Paginator\LoaderPaginator;
+use App\Repository\Paginator\PaginatorInterface;
+use App\Repository\Query\CustomerFormTypeQuery;
 use App\Repository\Query\CustomerQuery;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
-class CustomerRepository extends AbstractRepository
+class CustomerRepository extends EntityRepository
 {
     /**
      * @param Customer $customer
@@ -32,15 +37,6 @@ class CustomerRepository extends AbstractRepository
         $entityManager = $this->getEntityManager();
         $entityManager->persist($customer);
         $entityManager->flush();
-    }
-
-    /**
-     * @param int $id
-     * @return null|Customer
-     */
-    public function getById($id)
-    {
-        return $this->find($id);
     }
 
     /**
@@ -112,53 +108,101 @@ class CustomerRepository extends AbstractRepository
     }
 
     /**
-     * Returns a query builder that is used for CustomerType and your own 'query_builder' option.
-     *
-     * @param Customer|null $entity
-     * @return \Doctrine\ORM\QueryBuilder
+     * @deprecated since 1.1
      */
-    public function builderForEntityType(Customer $entity = null)
+    public function builderForEntityType($customer)
     {
-        $query = new CustomerQuery();
-        $query->setHiddenEntity($entity);
-        $query->setResultType(CustomerQuery::RESULT_TYPE_QUERYBUILDER);
-        $query->setOrderBy('name');
+        $query = new CustomerFormTypeQuery();
+        $query->setCustomer($customer);
 
-        return $this->findByQuery($query);
+        return $this->getQueryBuilderForFormType($query);
     }
 
     /**
-     * @param CustomerQuery $query
-     * @return QueryBuilder|Pagerfanta|array
+     * Returns a query builder that is used for CustomerType and your own 'query_builder' option.
+     *
+     * @param CustomerFormTypeQuery $query
+     * @return QueryBuilder
      */
-    public function findByQuery(CustomerQuery $query)
+    public function getQueryBuilderForFormType(CustomerFormTypeQuery $query): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb->select('c')
             ->from(Customer::class, 'c')
+            ->orderBy('c.name', 'ASC');
+
+        $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
+        $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
+
+        $customer = $query->getCustomer();
+        if (null !== $customer) {
+            $qb->orWhere('c.id = :customer')->setParameter('customer', $customer);
+        }
+
+        if (null !== $query->getCustomerToIgnore()) {
+            $qb->andWhere($qb->expr()->neq('c.id', ':ignored'));
+            $qb->setParameter('ignored', $query->getCustomerToIgnore());
+        }
+
+        return $qb;
+    }
+
+    private function getQueryBuilderForQuery(CustomerQuery $query): QueryBuilder
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('c', 'meta')
+            ->from(Customer::class, 'c')
+            ->leftJoin('c.meta', 'meta')
             ->orderBy('c.' . $query->getOrderBy(), $query->getOrder());
 
         if (CustomerQuery::SHOW_VISIBLE == $query->getVisibility()) {
             $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
             $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
-
-            /** @var Customer $entity */
-            $entity = $query->getHiddenEntity();
-            if (null !== $entity) {
-                $qb->orWhere('c.id = :customer')->setParameter('customer', $entity);
-            }
         } elseif (CustomerQuery::SHOW_HIDDEN == $query->getVisibility()) {
             $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
             $qb->setParameter('visible', false, \PDO::PARAM_BOOL);
         }
 
-        if (!empty($query->getIgnoredEntities())) {
-            $qb->andWhere('c.id NOT IN(:ignored)');
-            $qb->setParameter('ignored', $query->getIgnoredEntities());
-        }
+        return $qb;
+    }
 
-        return $this->getBaseQueryResult($qb, $query);
+    public function getPagerfantaForQuery(CustomerQuery $query): Pagerfanta
+    {
+        $paginator = new Pagerfanta($this->getPaginatorForQuery($query));
+        $paginator->setMaxPerPage($query->getPageSize());
+        $paginator->setCurrentPage($query->getPage());
+
+        return $paginator;
+    }
+
+    protected function getPaginatorForQuery(CustomerQuery $query): PaginatorInterface
+    {
+        $qb = $this->getQueryBuilderForQuery($query);
+        $qb
+            ->resetDQLPart('select')
+            ->resetDQLPart('orderBy')
+            ->select($qb->expr()->countDistinct('c.id'))
+        ;
+        $counter = (int) $qb->getQuery()->getSingleScalarResult();
+
+        $qb = $this->getQueryBuilderForQuery($query);
+
+        return new LoaderPaginator(new CustomerLoader($qb->getEntityManager()), $qb, $counter);
+    }
+
+    /**
+     * @param CustomerQuery $query
+     * @return Customer[]
+     */
+    public function getCustomersForQuery(CustomerQuery $query): iterable
+    {
+        // this is using the paginator internally, as it will load all joined entities into the working unit
+        // do not "optimize" to use the query directly, as it would results in hundreds of additional lazy queries
+        $paginator = $this->getPaginatorForQuery($query);
+
+        return $paginator->getAll();
     }
 
     /**

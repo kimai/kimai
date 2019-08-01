@@ -25,7 +25,6 @@ class TimesheetQueryTest extends BaseQueryTest
         $sut = new TimesheetQuery();
 
         $this->assertResultType($sut);
-        $this->assertHiddenEntity($sut);
         $this->assertPage($sut);
         $this->assertPageSize($sut);
         $this->assertOrderBy($sut, 'begin');

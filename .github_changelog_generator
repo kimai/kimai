@@ -1,4 +1,5 @@
 unreleased=true
-future-release=1.0.1
+future-release=1.1
 exclude-labels=duplicate,question,invalid,wontfix,release
-enhancement_labels=>enhancement,Enhancement,feature request
+enhancement_labels=>enhancement,Enhancement,feature request,translation i18n,technical debt
+issues-wo-labels=false

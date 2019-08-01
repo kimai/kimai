@@ -16,9 +16,9 @@ use App\Form\CustomerEditForm;
 use App\Form\Toolbar\CustomerToolbarForm;
 use App\Form\Type\CustomerType;
 use App\Repository\CustomerRepository;
+use App\Repository\Query\CustomerFormTypeQuery;
 use App\Repository\Query\CustomerQuery;
 use Doctrine\ORM\ORMException;
-use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -79,25 +79,18 @@ class CustomerController extends AbstractController
     public function indexAction($page, Request $request)
     {
         $query = new CustomerQuery();
-        $query
-            ->setOrderBy('name')
-            ->setPage($page)
-        ;
+        $query->setPage($page);
 
         $form = $this->getToolbarForm($query);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var CustomerQuery $query */
-            $query = $form->getData();
-        }
+        $form->setData($query);
+        $form->submit($request->query->all(), false);
 
-        /* @var $entries Pagerfanta */
-        $entries = $this->getRepository()->findByQuery($query);
+        $entries = $this->getRepository()->getPagerfantaForQuery($query);
 
         return $this->render('customer/index.html.twig', [
             'entries' => $entries,
             'query' => $query,
-            'showFilter' => $form->isSubmitted(),
+            'showFilter' => $query->isDirty(),
             'toolbarForm' => $form->createView(),
         ]);
     }
@@ -174,12 +167,10 @@ class CustomerController extends AbstractController
             ->add('customer', CustomerType::class, [
                 'label' => 'label.customer',
                 'query_builder' => function (CustomerRepository $repo) use ($customer) {
-                    $query = new CustomerQuery();
-                    $query
-                        ->setResultType(CustomerQuery::RESULT_TYPE_QUERYBUILDER)
-                        ->addIgnoredEntity($customer);
+                    $query = new CustomerFormTypeQuery();
+                    $query->setCustomerToIgnore($customer);
 
-                    return $repo->findByQuery($query);
+                    return $repo->getQueryBuilderForFormType($query);
                 },
                 'required' => false,
             ])

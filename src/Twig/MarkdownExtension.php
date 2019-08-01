@@ -77,6 +77,6 @@ class MarkdownExtension extends AbstractExtension
      */
     public function markdownToHtml(string $content): string
     {
-        return $this->markdown->toHtml($content, true);
+        return $this->markdown->toHtml($content, false);
     }
 }

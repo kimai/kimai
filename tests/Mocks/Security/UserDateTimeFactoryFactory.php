@@ -35,8 +35,8 @@ class UserDateTimeFactoryFactory extends AbstractMockFactory
             $pref->setValue($timezone);
             $user->addPreference($pref);
         }
-        $repository = $this->getMockBuilder(UserRepository::class)->setMethods(['getById'])->disableOriginalConstructor()->getMock();
-        $repository->expects(TestCase::exactly(1))->method('getById')->willReturn($user);
+        $repository = $this->getMockBuilder(UserRepository::class)->setMethods(['getUserById'])->disableOriginalConstructor()->getMock();
+        $repository->expects(TestCase::exactly(1))->method('getUserById')->willReturn($user);
         $token = $this->getMockBuilder(UsernamePasswordToken::class)->setMethods(['getUser'])->disableOriginalConstructor()->getMock();
         $token->expects(TestCase::exactly(1))->method('getUser')->willReturn($user);
         $tokenStorage = new TokenStorage();

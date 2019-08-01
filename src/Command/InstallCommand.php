@@ -76,16 +76,9 @@ class InstallCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $io->title('Welcome to the interactive Kimai installer!');
+        $io->title('Kimai installer - v' . Constants::VERSION);
 
-        if (!$input->isInteractive()) {
-            $io->error('Installation only works in interactive mode');
-
-            return self::ERROR_INTERACTIVE;
-        }
-
-        $rows = $this->checkPermissions();
-        $result = $this->confirmAbortToReviewPermissions($io, $input, $output, $rows);
+        $result = $this->reviewPermissions($io, $input, $output);
         if (true !== $result) {
             return $result;
         }
@@ -95,7 +88,6 @@ class InstallCommand extends Command
         // $io->note(sprintf('You have chosen the "%s" environment', $environment));
         $environment = getenv('APP_ENV');
 
-        // create database if necessary
         try {
             $this->createDatabase($io, $input, $output);
         } catch (\Exception $ex) {
@@ -132,8 +124,11 @@ class InstallCommand extends Command
 
     protected function rebuildCaches(string $environment, SymfonyStyle $io, InputInterface $input, OutputInterface $output)
     {
-        if (!$this->askConfirmation($input, $output, 'Do you want me to rebuild the caches (yes) or skip this step (no)?', true)) {
-            return;
+        if ($input->isInteractive()) {
+            $question = 'Do you want me to rebuild the caches (yes) or skip this step (no)?';
+            if (!$this->askConfirmation($input, $output, $question, true)) {
+                return;
+            }
         }
 
         $io->text('Rebuilding your cache now, please be patient ...');
@@ -196,8 +191,14 @@ class InstallCommand extends Command
         return $rows;
     }
 
-    protected function confirmAbortToReviewPermissions(SymfonyStyle $io, InputInterface $input, OutputInterface $output, array $permissions)
+    protected function reviewPermissions(SymfonyStyle $io, InputInterface $input, OutputInterface $output)
     {
+        if (!$input->isInteractive()) {
+            return true;
+        }
+
+        $permissions = $this->checkPermissions();
+
         if (empty($permissions)) {
             return true;
         }
@@ -217,21 +218,34 @@ class InstallCommand extends Command
             return self::ERROR_PERMISSIONS;
         }
         $io->writeln('');
+
+        return true;
     }
 
     protected function importMigrations(SymfonyStyle $io, OutputInterface $output)
     {
-        if ($this->connection->getSchemaManager()->tablesExist(['migration_versions'])) {
-            $amount = $this->connection->executeQuery('SELECT count(*) as counter FROM migration_versions')->fetchColumn(0);
-            if ($amount > 0) {
-                $io->note(sprintf('Found %s migrations in your database, skipping import', $amount));
+        if (!$this->connection->getSchemaManager()->tablesExist(['migration_versions'])) {
+            $command = $this->getApplication()->find('doctrine:migrations:version');
+            $cmdInput = new ArrayInput(['--add' => true, '--all' => true]);
+            $cmdInput->setInteractive(false);
+            $command->run($cmdInput, $output);
 
-                return;
-            }
+            return;
         }
 
-        $command = $this->getApplication()->find('doctrine:migrations:version');
-        $cmdInput = new ArrayInput(['--add' => true, '--all' => true]);
+        // this case should not happen, but you know ... everything is possible
+        $amount = $this->connection->executeQuery('SELECT count(*) as counter FROM migration_versions')->fetchColumn(0);
+        if ($amount === 0) {
+            $command = $this->getApplication()->find('doctrine:migrations:version');
+            $cmdInput = new ArrayInput(['--add' => true, '--all' => true]);
+            $cmdInput->setInteractive(false);
+            $command->run($cmdInput, $output);
+
+            return;
+        }
+
+        $command = $this->getApplication()->find('doctrine:migrations:migrate');
+        $cmdInput = new ArrayInput(['--allow-no-migration' => true]);
         $cmdInput->setInteractive(false);
         $command->run($cmdInput, $output);
 

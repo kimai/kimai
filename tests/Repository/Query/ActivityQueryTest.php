@@ -23,7 +23,7 @@ class ActivityQueryTest extends BaseQueryTest
     {
         $sut = new ActivityQuery();
 
-        $this->assertBaseQuery($sut);
+        $this->assertBaseQuery($sut, 'name');
         $this->assertInstanceOf(VisibilityQuery::class, $sut);
 
         $this->assertNull($sut->getCustomer());

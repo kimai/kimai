@@ -10,9 +10,12 @@
 namespace App\Repository;
 
 use App\Repository\Query\TagQuery;
+use Doctrine\ORM\EntityRepository;
 
-class TagRepository extends AbstractRepository
+class TagRepository extends EntityRepository
 {
+    use RepositoryTrait;
+
     /**
      * Find ids of the given tagNames separated by comma
      * @param string $tagNames

@@ -97,4 +97,9 @@ class CalendarConfiguration implements SystemBundleConfiguration
     {
         return $this->find('google.sources');
     }
+
+    public function getSlotDuration(): string
+    {
+        return (string) $this->find('slot_duration');
+    }
 }

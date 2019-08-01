@@ -21,9 +21,9 @@ use App\Form\Type\VisibilityType;
 use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
-use App\Repository\Query\ActivityQuery;
-use App\Repository\Query\CustomerQuery;
-use App\Repository\Query\ProjectQuery;
+use App\Repository\Query\ActivityFormTypeQuery;
+use App\Repository\Query\CustomerFormTypeQuery;
+use App\Repository\Query\ProjectFormTypeQuery;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -39,7 +39,7 @@ abstract class AbstractToolbarForm extends AbstractType
 {
     /**
      * Dirty hack to enable easy handling of GET form in controller and javascript.
-     *Cleans up the name of all form elents (and unfortunately of the form itself).
+     * Cleans up the name of all form elements (and unfortunately of the form itself).
      *
      * @return null|string
      */
@@ -59,22 +59,29 @@ abstract class AbstractToolbarForm extends AbstractType
         ]);
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     */
     protected function addCustomerChoice(FormBuilderInterface $builder)
     {
-        $builder->add('customer', CustomerType::class, [
-            'required' => false,
-            'project_enabled' => true,
-            'query_builder' => function (CustomerRepository $repo) {
-                $query = new CustomerQuery();
-                $query->setResultType(CustomerQuery::RESULT_TYPE_QUERYBUILDER);
-                $query->setOrderBy('name');
+        // just a fake field for having this field at the right position in the frontend
+        $builder->add('customer', HiddenType::class);
 
-                return $repo->findByQuery($query);
-            },
-        ]);
+        $builder->addEventListener(
+            FormEvents::PRE_SUBMIT,
+            function (FormEvent $event) {
+                $data = $event->getData();
+                $event->getForm()->add('customer', CustomerType::class, [
+                    'required' => false,
+                    'project_enabled' => true,
+                    'query_builder' => function (CustomerRepository $repo) use ($data) {
+                        $query = new CustomerFormTypeQuery();
+                        if (isset($data['customer']) && !empty($data['customer'])) {
+                            $query->setCustomer($data['customer']);
+                        }
+
+                        return $repo->getQueryBuilderForFormType($query);
+                    },
+                ]);
+            }
+        );
     }
 
     /**
@@ -126,32 +133,27 @@ abstract class AbstractToolbarForm extends AbstractType
      */
     protected function addProjectChoice(FormBuilderInterface $builder)
     {
-        $builder->add('project', ProjectType::class, [
-            'required' => false,
-            'activity_enabled' => true,
-            'choices' => [],
-            'disabled' => true,
-        ]);
+        // just a fake field for having this field at the right position in the frontend
+        $builder->add('project', HiddenType::class);
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
             function (FormEvent $event) {
                 $data = $event->getData();
-                if (!isset($data['customer']) || empty($data['customer'])) {
-                    return;
-                }
-
                 $event->getForm()->add('project', ProjectType::class, [
-                    'group_by' => null,
                     'required' => false,
                     'activity_enabled' => true,
                     'query_builder' => function (ProjectRepository $repo) use ($data) {
-                        $query = new ProjectQuery();
-                        $query->setCustomer($data['customer']);
-                        $query->setResultType(ProjectQuery::RESULT_TYPE_QUERYBUILDER);
-                        $query->setOrderBy('name');
+                        $query = new ProjectFormTypeQuery();
 
-                        return $repo->findByQuery($query);
+                        if (isset($data['customer']) && !empty($data['customer'])) {
+                            $query->setCustomer($data['customer']);
+                        }
+                        if (isset($data['project']) && !empty($data['project'])) {
+                            $query->setProject($data['project']);
+                        }
+
+                        return $repo->getQueryBuilderForFormType($query);
                     },
                 ]);
             }
@@ -163,37 +165,26 @@ abstract class AbstractToolbarForm extends AbstractType
      */
     protected function addActivityChoice(FormBuilderInterface $builder)
     {
-        $builder->add('activity', ActivityType::class, [
-            'required' => false,
-            'query_builder' => function (ActivityRepository $repo) {
-                $query = new ActivityQuery();
-                $query->setResultType(ActivityQuery::RESULT_TYPE_QUERYBUILDER);
-                $query->setGlobalsOnly(true);
-                $query->setOrderGlobalsFirst(true);
-                $query->setOrderBy('name');
-
-                return $repo->findByQuery($query);
-            },
-        ]);
+        // just a fake field for having this field at the right position in the frontend
+        $builder->add('activity', HiddenType::class);
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
             function (FormEvent $event) {
                 $data = $event->getData();
-                if (!isset($data['project']) || empty($data['project'])) {
-                    return;
-                }
-
                 $event->getForm()->add('activity', ActivityType::class, [
                     'required' => false,
                     'query_builder' => function (ActivityRepository $repo) use ($data) {
-                        $query = new ActivityQuery();
-                        $query->setResultType(ActivityQuery::RESULT_TYPE_QUERYBUILDER);
-                        $query->setProject($data['project']);
-                        $query->setOrderGlobalsFirst(true);
-                        $query->setOrderBy('name');
+                        $query = new ActivityFormTypeQuery();
 
-                        return $repo->findByQuery($query);
+                        if (isset($data['activity']) && !empty($data['activity'])) {
+                            $query->setActivity($data['activity']);
+                        }
+                        if (isset($data['project']) && !empty($data['project'])) {
+                            $query->setProject($data['project']);
+                        }
+
+                        return $repo->getQueryBuilderForFormType($query);
                     },
                 ]);
             }

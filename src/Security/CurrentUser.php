@@ -50,6 +50,6 @@ class CurrentUser
             return null;
         }
 
-        return $this->repository->getById($user->getId());
+        return $this->repository->getUserById($user->getId());
     }
 }

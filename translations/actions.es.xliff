@@ -24,7 +24,7 @@
             </trans-unit>
             <trans-unit id="repeat">
                 <source>repeat</source>
-                <target>Empezar de nuevo</target>
+                <target>Retomar</target>
             </trans-unit>
             <trans-unit id="profile-stats">
                 <source>profile-stats</source>

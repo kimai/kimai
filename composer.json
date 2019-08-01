@@ -76,6 +76,9 @@
         "symfony/thanks": "^1.0"
     },
     "config": {
+        "platform": {
+            "php": "7.2"
+        },
         "preferred-install": {
             "*": "dist"
         },

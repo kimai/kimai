@@ -17,7 +17,8 @@ use App\Model\Statistic\Month;
 use App\Model\Statistic\Year;
 use App\Model\TimesheetStatistic;
 use App\Repository\Loader\TimesheetLoader;
-use App\Repository\Paginator\TimesheetPaginator;
+use App\Repository\Paginator\LoaderPaginator;
+use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\TimesheetQuery;
 use DateTime;
 use Doctrine\DBAL\Types\Type;
@@ -274,37 +275,86 @@ class TimesheetRepository extends EntityRepository
      * @param User|null $user
      * @return mixed
      */
-    public function getDailyData(DateTime $begin, DateTime $end, ?User $user = null)
+    protected function getDailyData(DateTime $begin, DateTime $end, ?User $user = null)
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
+        $query = new TimesheetQuery();
+        $query
+            ->setBegin($begin)
+            ->setEnd($end)
+            ->setUser($user)
+            ->setState(TimesheetQuery::STATE_STOPPED)
+        ;
+        $timesheets = $this->getTimesheetsForQuery($query);
 
-        $qb
-            ->addSelect('SUM(t.rate) as rate')
-            ->addSelect('SUM(t.duration) as duration')
-            ->addSelect('MONTH(t.begin) as month')
-            ->addSelect('YEAR(t.begin) as year')
-            ->addSelect('DAY(t.begin) as day')
-            ->from(Timesheet::class, 't')
-            ->andWhere($qb->expr()->gte('t.begin', ':from'))
-            ->setParameter('from', $begin, Type::DATETIME)
-            ->andWhere($qb->expr()->lte('t.end', ':to'))
-            ->setParameter('to', $end, Type::DATETIME);
+        $results = [];
+        /** @var Timesheet $result */
+        foreach ($timesheets as $result) {
+            $timezone = new \DateTimeZone($result->getTimezone());
+            /** @var \DateTime $beginTmp */
+            $beginTmp = $result->getBegin();
+            $beginTmp->setTimezone($timezone);
+            /** @var DateTime $endTmp */
+            $endTmp = $result->getEnd();
+            $endTmp->setTimezone($timezone);
+            $dateKeyEnd = $endTmp->format('Ymd');
 
-        if (null !== $user) {
-            $qb->andWhere('t.user = :user')
-                ->setParameter('user', $user);
+            do {
+                $dateKey = $beginTmp->format('Ymd');
+
+                if (!isset($results[$dateKey])) {
+                    $results[$dateKey] = [
+                        'rate' => 0,
+                        'duration' => 0,
+                        'month' => $beginTmp->format('n'),
+                        'year' => $beginTmp->format('Y'),
+                        'day' => $beginTmp->format('j'),
+                        'details' => []
+                    ];
+                }
+
+                if ($dateKey !== $dateKeyEnd) {
+                    $newDateBegin = clone $beginTmp;
+                    $newDateBegin->add(new \DateInterval('P1D'));
+                    $newDateBegin->setTime(0, 0, 0);
+                } else {
+                    $newDateBegin = clone $endTmp;
+                }
+
+                $duration = $newDateBegin->getTimestamp() - $beginTmp->getTimestamp();
+                $durationPercent = $duration / $result->getDuration();
+                $rate = $result->getRate() * $durationPercent;
+
+                $results[$dateKey]['rate'] += $rate;
+                $results[$dateKey]['duration'] += $duration;
+                $detailsId = $result->getProject()->getCustomer()->getId() . '_' . $result->getProject()->getId();
+                if (!isset($results[$dateKey]['details'][$detailsId])) {
+                    $results[$dateKey]['details'][$detailsId] = [
+                        'project' => $result->getProject(),
+                        'activity' => $result->getActivity(),
+                        'duration' => 0,
+                        'rate' => 0,
+                    ];
+
+                    $results[$dateKey]['details'][$detailsId]['duration'] += $duration;
+                    $results[$dateKey]['details'][$detailsId]['rate'] += $rate;
+                }
+
+                $beginTmp = $newDateBegin;
+
+                if ((int) $end->format('Ymd') < (int) $newDateBegin->format('Ymd')) {
+                    break 1;
+                }
+            } while ($dateKey !== $dateKeyEnd);
         }
 
-        $qb
-            ->addGroupBy('year')
-            ->addGroupBy('month')
-            ->addGroupBy('day')
-            ->addOrderBy('year', 'DESC')
-            ->addOrderBy('month', 'ASC')
-            ->addOrderBy('day', 'ASC')
-        ;
+        ksort($results);
 
-        return $qb->getQuery()->execute();
+        foreach ($results as $key => $value) {
+            $results[$key]['details'] = array_values($results[$key]['details']);
+        }
+        $results = array_values($results);
+
+        return $results;
     }
 
     /**
@@ -333,7 +383,9 @@ class TimesheetRepository extends EntityRepository
         foreach ($results as $statRow) {
             $dateTime = new DateTime();
             $dateTime->setDate($statRow['year'], $statRow['month'], $statRow['day']);
-            $days[$dateTime->format('Ymd')] = new Day($dateTime, (int) $statRow['duration'], (float) $statRow['rate']);
+            $dateTime->setTime(0, 0, 0);
+            $day = new Day($dateTime, (int) $statRow['duration'], (float) $statRow['rate']);
+            $days[$dateTime->format('Ymd')] = $day;
         }
 
         ksort($days);
@@ -349,24 +401,23 @@ class TimesheetRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('t', 'a', 'p', 'c')
+        $qb->select('t')
             ->from(Timesheet::class, 't')
-            ->join('t.activity', 'a')
-            ->join('t.project', 'p')
-            ->join('p.customer', 'c')
-            ->leftJoin('t.tags', 'tags')
             ->andWhere($qb->expr()->isNotNull('t.begin'))
             ->andWhere($qb->expr()->isNull('t.end'))
             ->orderBy('t.begin', 'DESC');
 
-        $params = [];
-
         if (null !== $user) {
             $qb->andWhere('t.user = :user');
-            $params['user'] = $user;
+            $qb->setParameter('user', $user);
         }
 
-        return $qb->getQuery()->execute($params);
+        $results = $qb->getQuery()->getResult();
+
+        $loader = new TimesheetLoader($qb->getEntityManager());
+        $loader->loadResults($results);
+
+        return $results;
     }
 
     /**
@@ -414,36 +465,42 @@ class TimesheetRepository extends EntityRepository
         return $paginator;
     }
 
-    protected function getPaginatorForQuery(TimesheetQuery $query): TimesheetPaginator
+    protected function getPaginatorForQuery(TimesheetQuery $query): PaginatorInterface
     {
         $qb = $this->getQueryBuilderForQuery($query);
-        $qb->select($qb->expr()->countDistinct('t.id'))->resetDQLPart('orderBy');
+        $qb
+            ->resetDQLPart('select')
+            ->resetDQLPart('orderBy')
+            ->select($qb->expr()->countDistinct('t.id'))
+        ;
         $counter = (int) $qb->getQuery()->getSingleScalarResult();
 
         $qb = $this->getQueryBuilderForQuery($query);
-        $qb->select('t');
 
-        $paginator = new TimesheetPaginator($qb, $counter);
-
-        return $paginator;
+        return new LoaderPaginator(new TimesheetLoader($qb->getEntityManager()), $qb, $counter);
     }
 
     /**
      * @param TimesheetQuery $query
      * @return Timesheet[]
      */
-    public function getTimesheetsForQuery(TimesheetQuery $query): array
+    public function getTimesheetsForQuery(TimesheetQuery $query): iterable
     {
+        // this is using the paginator internally, as it will load all joined entities into the working unit
+        // do not "optimize" to use the query directly, as it would results in hundreds of additional lazy queries
         $paginator = $this->getPaginatorForQuery($query);
 
         return $paginator->getAll();
     }
 
-    protected function getQueryBuilderForQuery(TimesheetQuery $query): QueryBuilder
+    private function getQueryBuilderForQuery(TimesheetQuery $query): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->from(Timesheet::class, 't');
+        $qb
+            ->select('t')
+            ->from(Timesheet::class, 't')
+        ;
 
         if (null !== $query->getUser()) {
             $qb->andWhere('t.user = :user')

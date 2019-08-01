@@ -15,8 +15,18 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="kimai2_activities")
+ * @ORM\Table(name="kimai2_activities",
+ *     indexes={
+ *          @ORM\Index(columns={"visible","project_id"}),
+ *          @ORM\Index(columns={"visible","project_id","name"}),
+ *          @ORM\Index(columns={"visible","name"})
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\ActivityRepository")
+ *
+ * columns={"visible","name"}               => IDX_8811FE1C7AB0E8595E237E06         => activity administration without filter
+ * columns={"visible","project_id"}         => IDX_8811FE1C7AB0E859166D1F9C         => activity administration with customer or project filter
+ * columns={"visible","project_id","name"}  => IDX_8811FE1C7AB0E859166D1F9C5E237E06 => activity drop-down for global activities in toolbar or globalsOnly filter in activity administration
  */
 class Activity implements EntityWithMetaFields
 {
@@ -32,7 +42,7 @@ class Activity implements EntityWithMetaFields
     /**
      * @var Project|null
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="activities")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Project")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $project;
@@ -61,13 +71,6 @@ class Activity implements EntityWithMetaFields
      */
     private $visible = true;
 
-    /**
-     * @var Timesheet[]|ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\Timesheet", mappedBy="activity")
-     */
-    private $timesheets;
-
     // keep the trait include exactly here, for placing the column at the correct position
     use RatesTrait;
     use ColorTrait;
@@ -82,21 +85,12 @@ class Activity implements EntityWithMetaFields
 
     public function __construct()
     {
-        $this->timesheets = new ArrayCollection();
         $this->meta = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection<Timesheet>
-     */
-    public function getTimesheets(): Collection
-    {
-        return $this->timesheets;
     }
 
     public function getProject(): ?Project

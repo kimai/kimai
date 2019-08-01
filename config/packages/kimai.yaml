@@ -124,6 +124,7 @@ kimai:
 #        week_numbers: true
 #        weekends: true
 #        day_limit: 4
+#        slot_duration: '00:30:00'
 #        businessHours:
 #            days: [1, 2, 3, 4, 5]
 #            begin: '08:00'
@@ -271,6 +272,13 @@ kimai:
             date: 'Y-m-d'
             date_time: 'm-d H:i'
             duration: '%%h:%%m tim'
+        sk:
+            date_time_type: 'dd. MM. yyyy HH:mm'
+            date_type: 'dd. MM. yyyy'
+            date: 'd. m. Y'
+            date_time: 'd. m.  H:i'
+            duration: '%%h:%%m h'
+
 # --------------------------------------------------------------------------------
 
 

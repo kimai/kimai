@@ -21,6 +21,7 @@ use App\Repository\Query\InvoiceQuery;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\UserDateTimeFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -75,7 +76,7 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route(path="/", name="invoice", methods={"GET", "POST"})
+     * @Route(path="/", name="invoice", methods={"GET"})
      * @Security("is_granted('view_invoice')")
      *
      * @param Request $request
@@ -91,12 +92,11 @@ class InvoiceController extends AbstractController
         $entries = [];
 
         $query = $this->getDefaultQuery();
-        $form = $this->getToolbarForm($query);
-        $form->handleRequest($request);
+        $form = $this->getToolbarForm($query, 'GET');
+        $form->setData($query);
+        $form->submit($request->query->all(), false);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var InvoiceQuery $query */
-            $query = $form->getData();
+        if ($form->isValid()) {
             $entries = $this->getEntries($query, $repository);
         }
 
@@ -109,7 +109,7 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route(path="/print", name="invoice_print", methods={"GET", "POST"})
+     * @Route(path="/print", name="invoice_print", methods={"POST"})
      * @Security("is_granted('create_invoice')")
      *
      * @param Request $request
@@ -123,7 +123,8 @@ class InvoiceController extends AbstractController
         }
 
         $query = $this->getDefaultQuery();
-        $form = $this->getToolbarForm($query);
+        $form = $this->getToolbarForm($query, 'POST');
+
         $form->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
@@ -328,15 +329,11 @@ class InvoiceController extends AbstractController
         ]);
     }
 
-    /**
-     * @param InvoiceQuery $query
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    protected function getToolbarForm(InvoiceQuery $query)
+    protected function getToolbarForm(InvoiceQuery $query, string $method): FormInterface
     {
         return $this->createForm(InvoiceToolbarForm::class, $query, [
             'action' => $this->generateUrl('invoice', []),
-            'method' => 'POST',
+            'method' => $method,
             'attr' => [
                 'id' => 'invoice-print-form'
             ],

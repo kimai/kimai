@@ -21,6 +21,7 @@ use App\Repository\Query\InvoiceQuery;
 
 /**
  * @covers \App\Invoice\Calculator\ActivityInvoiceCalculator
+ * @covers \App\Invoice\Calculator\AbstractSumInvoiceCalculator
  * @covers \App\Invoice\Calculator\AbstractMergedCalculator
  * @covers \App\Invoice\Calculator\AbstractCalculator
  */
@@ -45,6 +46,9 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $activity2 = $this->getMockBuilder(Activity::class)->setMethods(['getId'])->disableOriginalConstructor()->getMock();
         $activity2->method('getId')->willReturn(2);
+
+        $activity3 = $this->getMockBuilder(Activity::class)->setMethods(['getId'])->disableOriginalConstructor()->getMock();
+        $activity3->method('getId')->willReturn(3);
 
         $timesheet = new Timesheet();
         $timesheet
@@ -93,7 +97,7 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
             ->setDuration(400)
             ->setRate(84)
             ->setUser(new User())
-            ->setActivity(new Activity())
+            ->setActivity($activity3)
             ->setProject((new Project())->setName('bar'));
 
         $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5];

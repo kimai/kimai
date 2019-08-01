@@ -2,6 +2,10 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" target-language="sv" datatype="plaintext" original="flashmessages.en.xliff">
         <body>
+            <trans-unit id="warning">
+                <source>warning</source>
+                <target state="translated">Varning</target>
+            </trans-unit>
             <trans-unit id="timesheet.stop.success">
                 <source>timesheet.stop.success</source>
                 <target state="translated">Tidsredovisningen har stoppats</target>
@@ -21,6 +25,10 @@
             <trans-unit id="timesheet.start.exceeded_limit">
                 <source>timesheet.start.exceeded_limit</source>
                 <target state="translated">Gränsen för aktiva tidsposter har uppnåtts, var god stoppa minst en körtidsmätning först.</target>
+            </trans-unit>
+            <trans-unit id="timesheet.locked.warning">
+                <source>timesheet.locked.warning</source>
+                <target state="translated">Du håller på att ändra en exponerad post</target>
             </trans-unit>
             <trans-unit id="action.update.success">
                 <source>action.update.success</source>

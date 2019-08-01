@@ -52,6 +52,13 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
         return 'kimai2_' . $name;
     }
 
+    /**
+     * Whether we should deactivate foreign key support for SQLite.
+     * This is required, if columns are changed.
+     * SQLite will drop the table and therefor all referenced data if we don't deactivate this.
+     *
+     * @return bool
+     */
     protected function isSupportingForeignKeys(): bool
     {
         return true;

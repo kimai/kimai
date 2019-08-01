@@ -21,7 +21,7 @@ class CustomerQueryTest extends BaseQueryTest
     {
         $sut = new CustomerQuery();
 
-        $this->assertBaseQuery($sut);
+        $this->assertBaseQuery($sut, 'name');
         $this->assertInstanceOf(VisibilityQuery::class, $sut);
     }
 }

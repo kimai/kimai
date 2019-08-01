@@ -20,9 +20,15 @@ abstract class AbstractMergedCalculator extends AbstractCalculator
     protected function mergeTimesheets(Timesheet $timesheet, Timesheet $entry)
     {
         $timesheet->setUser($entry->getUser());
-        $timesheet->setFixedRate($entry->getFixedRate()); // FIXME invoice
-        $timesheet->setHourlyRate($entry->getHourlyRate()); // FIXME invoice
         $timesheet->setRate($timesheet->getRate() + $entry->getRate());
+
+        if (null !== $timesheet->getFixedRate() || null !== $entry->getFixedRate()) {
+            $timesheet->setFixedRate($timesheet->getRate());
+        }
+        if (null === $timesheet->getHourlyRate() && null !== $entry->getHourlyRate() && $timesheet->getHourlyRate() !== $entry->getHourlyRate()) {
+            $timesheet->setHourlyRate($entry->getHourlyRate());
+        }
+
         $timesheet->setDuration($timesheet->getDuration() + $entry->getDuration());
 
         if (null === $timesheet->getBegin() || $timesheet->getBegin()->getTimestamp() > $entry->getBegin()->getTimestamp()) {

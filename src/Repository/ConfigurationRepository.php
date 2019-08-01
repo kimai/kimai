@@ -12,10 +12,11 @@ namespace App\Repository;
 use App\Configuration\ConfigLoaderInterface;
 use App\Entity\Configuration;
 use App\Form\Model\SystemConfiguration;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
 
-class ConfigurationRepository extends AbstractRepository implements ConfigLoaderInterface
+class ConfigurationRepository extends EntityRepository implements ConfigLoaderInterface
 {
     /**
      * @param string $prefix

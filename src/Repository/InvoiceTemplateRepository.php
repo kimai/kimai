@@ -11,15 +11,15 @@ namespace App\Repository;
 
 use App\Entity\InvoiceTemplate;
 use App\Repository\Query\BaseQuery;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
-/**
- * Class InvoiceTemplateRepository
- */
-class InvoiceTemplateRepository extends AbstractRepository
+class InvoiceTemplateRepository extends EntityRepository
 {
+    use RepositoryTrait;
+
     /**
      * @return bool
      */
@@ -50,7 +50,7 @@ class InvoiceTemplateRepository extends AbstractRepository
 
         $qb->select('t')
             ->from(InvoiceTemplate::class, 't')
-            ->orderBy('t.id');
+            ->orderBy('t.name');
 
         return $this->getBaseQueryResult($qb, $query);
     }

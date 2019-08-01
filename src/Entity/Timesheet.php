@@ -18,12 +18,23 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="kimai2_timesheet",
  *     indexes={
  *          @ORM\Index(columns={"user"}),
- *          @ORM\Index(columns={"activity_id"})
+ *          @ORM\Index(columns={"activity_id"}),
+ *          @ORM\Index(columns={"user","start_time"}),
+ *          @ORM\Index(columns={"start_time"}),
+ *          @ORM\Index(columns={"start_time","end_time"}),
+ *          @ORM\Index(columns={"start_time","end_time","user"}),
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\TimesheetRepository")
  * @ORM\HasLifecycleCallbacks()
  * @App\Validator\Constraints\Timesheet
+ *
+ * columns={"user"}                         => IDX_4F60C6B18D93D649                 => count results for user timesheets
+ * columns={"activity_id"}                  => IDX_4F60C6B181C06096                 => ???
+ * columns={"user","start_time"}            => IDX_4F60C6B18D93D649502DF587         => recent activities, user timesheet with date filzer
+ * columns={"start_time"}                   => IDX_4F60C6B1502DF587                 => team timesheets with timerange filter only
+ * columns={"start_time","end_time"}        => IDX_4F60C6B1502DF58741561401         => ???
+ * columns={"start_time","end_time","user"} => IDX_4F60C6B1502DF587415614018D93D649 => ???
  */
 class Timesheet implements EntityWithMetaFields
 {
@@ -83,7 +94,7 @@ class Timesheet implements EntityWithMetaFields
     /**
      * @var Activity
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Activity", inversedBy="timesheets")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Activity")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
@@ -92,7 +103,7 @@ class Timesheet implements EntityWithMetaFields
     /**
      * @var Project
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="timesheets")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Project")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */

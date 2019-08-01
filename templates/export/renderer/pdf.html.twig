@@ -151,7 +151,7 @@ mpdf-->
                 {{ entry.project.customer.name }} - {{ entry.project.name }} - {{ entry.activity.name }}
                 {% if entry.description is not empty %}
                     <br>
-                    <i>{{ entry.description|desc2html }}</i>
+                    <i>{{ entry.description|escape|desc2html }}</i>
                 {% endif %}
             </td>
             <td class="duration">{{ entry.duration|duration }}</td>

@@ -63,6 +63,7 @@ class AppExtensionTest extends TestCase
             'kimai.calendar' => [
                 'week_numbers' => true,
                 'day_limit' => 4,
+                'slot_duration' => '00:30:00',
                 'businessHours' => [
                     'days' => [1, 2, 3, 4, 5],
                     'begin' => '08:00',

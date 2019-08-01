@@ -25,7 +25,6 @@ class ExportQueryTest extends BaseQueryTest
         $sut = new ExportQuery();
 
         $this->assertResultType($sut);
-        $this->assertHiddenEntity($sut);
         $this->assertPage($sut);
         $this->assertPageSize($sut);
         $this->assertOrderBy($sut, 'begin');

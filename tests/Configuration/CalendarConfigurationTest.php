@@ -42,6 +42,7 @@ class CalendarConfigurationTest extends TestCase
                 'end' => '19:27'
             ],
             'day_limit' => 20,
+            'slot_duration' => '01:11:00',
             'week_numbers' => false,
             'google' => [
                 'api_key' => 'wertwertwegsdfbdf243w567fg8ihuon',
@@ -72,6 +73,7 @@ class CalendarConfigurationTest extends TestCase
         $this->assertEquals([2, 4, 6], $sut->getBusinessDays());
         $this->assertEquals('07:49', $sut->getBusinessTimeBegin());
         $this->assertEquals('19:27', $sut->getBusinessTimeEnd());
+        $this->assertEquals('01:11:00', $sut->getSlotDuration());
         $this->assertEquals(20, $sut->getDayLimit());
         $this->assertFalse($sut->isShowWeekNumbers());
 
