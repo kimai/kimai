@@ -1,6 +1,5 @@
-dist: trusty
+dist: xenial
 language: php
-sudo: false
 
 cache:
   directories:
@@ -11,38 +10,25 @@ services:
 
 matrix:
   include:
+    - stage: Code quality
+      env: CODECOVERAGE=0 DB=sqlite
+      php: '7.2'
+      script:
+          - composer validate --no-check-all --strict
+          - composer kimai:codestyle
+          - composer kimai:phpstan
     - stage: Test
       php: '7.2'
       env: CODECOVERAGE=0 DB=mysql
       sudo: required
-      addons:
-        apt:
-          sources:
-            - mysql-5.7-trusty
-          packages:
-            - mysql-server
-            - mysql-client
-      before_install:
-        - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
-        - sudo mysql_upgrade
-        - sudo service mysql restart
-        - mysql --version
+      services: 
+        - mysql
     - stage: Test
       php: '7.3'
       env: CODECOVERAGE=0 DB=mysql
       sudo: required
-      addons:
-        apt:
-          sources:
-            - mysql-5.7-trusty
-          packages:
-            - mysql-server
-            - mysql-client
-      before_install:
-        - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
-        - sudo mysql_upgrade
-        - sudo service mysql restart
-        - mysql --version
+      services: 
+        - mysql
     - stage: Test
       php: '7.2'
       env: CODECOVERAGE=0 DB=sqlite
@@ -60,13 +46,6 @@ matrix:
       env: CODECOVERAGE=0 DB=mariadb
       addons:
         mariadb: '10.2'
-    - stage: Code quality
-      env: CODECOVERAGE=0 DB=sqlite
-      php: '7.3'
-      script:
-          - composer validate --no-check-all --strict
-          - composer kimai:codestyle
-          - composer kimai:phpstan
     - stage: Code coverage
       php: '7.3'
       env: CODECOVERAGE=1 DB=sqlite
