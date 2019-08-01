@@ -424,11 +424,10 @@ class Timesheet implements EntityWithMetaFields
     }
 
     /**
-     * BE WARNED: this method should NOT be used programmatically.
-     * It was ONLY introduced for the initial timezone migration (see command "kimai:convert-timezone").
+     * BE WARNED: this method should NOT be used.
+     * It was ONLY introduced for the command "kimai:import-v1".
      *
      * @internal
-     * @deprecated since 0.8 - will be removed with 2.0
      * @param string $timezone
      * @return Timesheet
      */
