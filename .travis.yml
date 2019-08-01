@@ -1,29 +1,63 @@
+dist: xenial
 language: php
-sudo: false
 
 cache:
   directories:
     - $HOME/.composer/cache/files
 
-addons:
-  mariadb: '10.3'
-
 services:
   - mysql
 
-env:
-  global:
-    - CODECOVERAGE=0
-
 matrix:
-  fast_finish: true
   include:
-    - php: 7.2
-    - php: 7.3
-      env: CODECOVERAGE=1
+    - stage: Code quality
+      env: CODECOVERAGE=0 DB=sqlite
+      php: '7.2'
+      script:
+          - composer validate --no-check-all --strict
+          - composer kimai:codestyle
+          - composer kimai:phpstan
+    - stage: Test
+      php: '7.2'
+      env: CODECOVERAGE=0 DB=mysql
+      sudo: required
+      services: 
+        - mysql
+    - stage: Test
+      php: '7.3'
+      env: CODECOVERAGE=0 DB=mysql
+      sudo: required
+      services: 
+        - mysql
+    - stage: Test
+      php: '7.2'
+      env: CODECOVERAGE=0 DB=sqlite
+    - stage: Test
+      #php: '7.4snapshot'
+      php: '7.3'
+      env: CODECOVERAGE=0 DB=sqlite
+    - stage: Test
+      php: '7.2'
+      env: CODECOVERAGE=0 DB=mariadb
+      addons:
+        mariadb: '10.2'
+      before_script:
+        - mysql -u root -e 'CREATE USER IF NOT EXISTS travis@localhost; GRANT ALL ON *.* TO travis@localhost;'
+    - stage: Test
+      php: '7.3'
+      env: CODECOVERAGE=0 DB=mariadb
+      addons:
+        mariadb: '10.2'
+      before_script:
+        - mysql -u root -e 'CREATE USER IF NOT EXISTS travis@localhost; GRANT ALL ON *.* TO travis@localhost;'
+    - stage: Code coverage
+      php: '7.3'
+      env: CODECOVERAGE=1 DB=sqlite
+      after_success:
+          - if [[ $CODECOVERAGE == 1 ]]; then bash <(curl -s https://codecov.io/bash); fi
 
 before_install:
-#  - phpenv config-rm xdebug.ini
+  - if [[ $CODECOVERAGE == 0 ]]; then phpenv config-rm xdebug.ini; fi;
   - composer self-update
   - php -i
   - php -m
@@ -33,18 +67,11 @@ install:
   - composer require zendframework/zend-ldap
 
 script:
-  - composer validate --no-check-all --strict
-  - composer kimai:codestyle
-  - composer kimai:phpstan
-  - if [[ $CODECOVERAGE == 1 ]]; then vendor/bin/phpunit tests/ --coverage-clover=coverage.xml; else vendor/bin/phpunit tests/; fi;
-  - cp tests/.env.dist.sqlite .env
-  - bin/console doctrine:database:create -n
-  - bin/console doctrine:migrations:migrate -n
-  - bin/console doctrine:migrations:migrate first -n
-  - cp tests/.env.dist.mysql .env
+  - if [[ $CODECOVERAGE == 1 ]]; then vendor/bin/phpunit tests/ --coverage-clover=coverage.xml; fi;
+  - if [[ $CODECOVERAGE == 0 ]]; then vendor/bin/phpunit tests/; fi;
+  - if [[ $DB == 'sqlite' ]]; then cp tests/.env.dist.sqlite .env; fi;
+  - if [[ $DB == "mysql" || $DB == "mariadb" ]]; then cp tests/.env.dist.mysql .env; fi;
   - bin/console doctrine:database:create -n
   - bin/console doctrine:migrations:migrate -n
   - bin/console doctrine:migrations:migrate first -n
 
-after_success:
-  - if [[ $CODECOVERAGE == 1 ]]; then bash <(curl -s https://codecov.io/bash); fi
