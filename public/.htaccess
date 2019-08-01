@@ -5,6 +5,15 @@
 # to each configured DirectoryIndex file (e.g. index.php, index.html, index.pl).
 DirectoryIndex index.php
 
+# Do NOT use Kimai with http, this is a huge security risk!
+# Activate these lines if you configured SSL and certificates:
+
+#<IfModule mod_rewrite.c>
+#    RewriteEngine On
+#    RewriteCond %{SERVER_PORT} 80
+#    RewriteRule ^(.*)$ https://kimai.example.com/$1 [R,L]
+#</IfModule>
+
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
