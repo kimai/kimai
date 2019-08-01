@@ -832,7 +832,7 @@ class KimaiImporterCommand extends Command
             ->setName($name)
             ->setComment($oldActivity['comment'] ?: null)
             ->setVisible($isActive)
-            ->setBudget($oldActivity['budget'] ?: 0)
+            ->setBudget(isset($oldActivity['budget']) ? $oldActivity['budget'] : 0)
         ;
 
         if (null !== $projectId) {
