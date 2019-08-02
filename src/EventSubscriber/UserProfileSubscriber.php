@@ -62,7 +62,7 @@ class UserProfileSubscriber implements EventSubscriberInterface
         $user = $this->storage->getToken()->getUser();
 
         $event = new PrepareUserEvent($user);
-        $this->eventDispatcher->dispatch(PrepareUserEvent::PREPARE, $event);
+        $this->eventDispatcher->dispatch($event, PrepareUserEvent::PREPARE);
     }
 
     /**

@@ -14,7 +14,9 @@ use App\Entity\Timesheet;
 use App\Utils\Duration;
 use App\Utils\LocaleSettings;
 use NumberFormatter;
-use Symfony\Component\Intl\Intl;
+use Symfony\Component\Intl\Countries;
+use Symfony\Component\Intl\Currencies;
+use Symfony\Component\Intl\Locales;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -136,7 +138,7 @@ class Extensions extends AbstractExtension
      */
     public function currency($currency)
     {
-        return Intl::getCurrencyBundle()->getCurrencySymbol($currency);
+        return Currencies::getSymbol($currency);
     }
 
     /**
@@ -145,7 +147,7 @@ class Extensions extends AbstractExtension
      */
     public function country($country)
     {
-        return Intl::getRegionBundle()->getCountryName($country);
+        return Countries::getName($country);
     }
 
     /**
@@ -190,7 +192,7 @@ class Extensions extends AbstractExtension
     {
         $locales = [];
         foreach ($this->localeSettings->getAvailableLanguages() as $locale) {
-            $locales[] = ['code' => $locale, 'name' => Intl::getLocaleBundle()->getLocaleName($locale, $locale)];
+            $locales[] = ['code' => $locale, 'name' => Locales::getName($locale, $locale)];
         }
 
         return $locales;

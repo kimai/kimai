@@ -16,6 +16,7 @@ parameters:
         - '#Access to an undefined property Faker\\Generator::\$stateAbbr.#'
         - '#Access to an undefined property Faker\\Generator::\$catchPhrase.#'
         - '#Access to an undefined property Faker\\Generator::\$bs.#'
+        - '#Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required.#' 
     excludes_analyse:
         - %rootDir%/../../../src/Command/KimaiImporterCommand.php
         - %rootDir%/../../../src/Ldap/LdapDriver.php

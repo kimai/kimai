@@ -220,8 +220,8 @@ class ProfileControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'user_password' => [
                 'plainPassword' => [
-                    'first' => 'test123',
-                    'second' => 'test123',
+                    'first' => 'test1234',
+                    'second' => 'test1234',
                 ]
             ]
         ]);
@@ -236,7 +236,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $user = $this->getUserByRole($em, User::ROLE_USER);
 
         $this->assertFalse($passwordEncoder->getEncoder($user)->isPasswordValid($user->getPassword(), UserFixtures::DEFAULT_PASSWORD, $user->getSalt()));
-        $this->assertTrue($passwordEncoder->getEncoder($user)->isPasswordValid($user->getPassword(), 'test123', $user->getSalt()));
+        $this->assertTrue($passwordEncoder->getEncoder($user)->isPasswordValid($user->getPassword(), 'test1234', $user->getSalt()));
     }
 
     public function testApiTokenAction()

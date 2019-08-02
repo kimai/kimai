@@ -10,7 +10,7 @@
 namespace App\Event;
 
 use App\Form\Model\SystemConfiguration;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * This event should be used, if system configurations should be changed/added dynamically.

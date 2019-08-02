@@ -11,7 +11,7 @@ namespace App\EventSubscriber;
 
 use App\Entity\User;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -34,7 +34,7 @@ class TimezoneSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function setTimezone(GetResponseEvent $event)
+    public function setTimezone(RequestEvent $event)
     {
         if (!$this->canHandleEvent()) {
             return;
