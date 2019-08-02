@@ -104,7 +104,7 @@ class Team
     }
 
     /**
-     * @return Collection<Team>
+     * @return Collection<User>
      */
     public function getUsers(): iterable
     {
