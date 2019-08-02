@@ -12,7 +12,8 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 ### BC breaks
 
-Deleted timezone conversion command. If you are still using 0.7 or below, you need to upgrade to 1.1 before upgrading to this version.
+- Deleted timezone conversion command. If you are still using 0.7 or below, you need to upgrade to 1.1 before upgrading to this version.
+- Minimum password length raised from 5 to 8 character (applies only for password changes and new users)
 
 ## [1.1](https://github.com/kevinpapst/kimai2/releases/tag/1.1)
 

@@ -41,9 +41,18 @@ class CreateUserCommandTest extends KernelTestCase
         ));
     }
 
-    public function testCreateUser()
+    public function testCreateUserFailForShortPassword()
     {
         $commandTester = $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar');
+
+        $output = $commandTester->getDisplay();
+        $this->assertContains('[ERROR] plainPassword (foobar)', $output);
+        $this->assertContains('The password is too short.', $output);
+    }
+    
+    public function testCreateUser()
+    {
+        $commandTester = $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar12');
 
         $output = $commandTester->getDisplay();
         $this->assertContains('[OK] Success! Created user: MyTestUser', $output);
@@ -69,7 +78,7 @@ class CreateUserCommandTest extends KernelTestCase
         return $commandTester;
     }
 
-    public function testUserWithValidationProblem()
+    public function testUserWithEmptyFiledsTriggersValidationProblem()
     {
         $commandTester = $this->createUser('xx', '', 'ROLE_USER', '');
         $output = $commandTester->getDisplay();
@@ -81,7 +90,7 @@ class CreateUserCommandTest extends KernelTestCase
 
     public function testUserAlreadyExisting()
     {
-        $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar');
+        $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar12');
         $commandTester = $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar');
 
         $output = $commandTester->getDisplay();
@@ -91,7 +100,7 @@ class CreateUserCommandTest extends KernelTestCase
 
     public function testUserEmail()
     {
-        $commandTester = $this->createUser('MyTestUser', 'ROLE_USER', 'ROLE_USER', 'foobar');
+        $commandTester = $this->createUser('MyTestUser', 'ROLE_USER', 'ROLE_USER', 'foobar12');
 
         $output = $commandTester->getDisplay();
         $this->assertContains('[ERROR] email (ROLE_USER)', $output);
