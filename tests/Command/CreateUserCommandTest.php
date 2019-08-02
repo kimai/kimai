@@ -49,7 +49,7 @@ class CreateUserCommandTest extends KernelTestCase
         $this->assertContains('[ERROR] plainPassword (foobar)', $output);
         $this->assertContains('The password is too short.', $output);
     }
-    
+
     public function testCreateUser()
     {
         $commandTester = $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar12');
