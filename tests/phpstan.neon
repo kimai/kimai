@@ -10,3 +10,4 @@ parameters:
         - '#Access to an undefined property Faker\\Generator::\$bs.#'
     excludes_analyse:
         - %rootDir%/../../../tests/Ldap/LdapDriverTest.php
+    inferPrivatePropertyTypeFromConstructor: true
