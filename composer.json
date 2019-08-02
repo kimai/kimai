@@ -19,8 +19,8 @@
         "ext-zip": "*",
         "beberlei/doctrineextensions": "^1.2",
         "erusev/parsedown": "^1.6",
-        "friendsofsymfony/rest-bundle": "^2.3",
-        "friendsofsymfony/user-bundle": "~2.0",
+        "friendsofsymfony/rest-bundle": "^2.5",
+        "friendsofsymfony/user-bundle": "dev-master",
         "gedmo/doctrine-extensions": "^2.4",
         "jms/metadata": "^2.0",
         "jms/serializer-bundle": "^3.2",
@@ -43,12 +43,12 @@
         "symfony/form": "^4.0",
         "symfony/framework-bundle": "^4.0",
         "symfony/intl": "^4.0",
-        "symfony/monolog-bundle": "^3.1",
+        "symfony/monolog-bundle": "^3.4",
         "symfony/orm-pack": "^1.0",
-        "symfony/security-bundle": "~4.2.0",
+        "symfony/security-bundle": "^4.0",
         "symfony/security-csrf": "^4.0",
         "symfony/serializer": "^4.0",
-        "symfony/swiftmailer-bundle": "^3.1",
+        "symfony/swiftmailer-bundle": "^3.2",
         "symfony/translation": "^4.0",
         "symfony/twig-bundle": "^4.0",
         "symfony/validator": "^4.0",
@@ -138,7 +138,7 @@
         "symfony": {
             "id": "01C3FWRDJJEX9K6Y3A4XDFXPBR",
             "allow-contrib": true,
-            "require": "~4.2.0"
+            "require": "4.3.*"
         }
     }
 }

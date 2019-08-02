@@ -85,8 +85,8 @@ class SecurityControllerTest extends ControllerBaseTest
                 'email' => 'test@example.com',
                 'username' => 'example',
                 'plainPassword' => [
-                    'first' => 'test123',
-                    'second' => 'test123',
+                    'first' => 'test1234',
+                    'second' => 'test1234',
                 ],
             ]
         ]);

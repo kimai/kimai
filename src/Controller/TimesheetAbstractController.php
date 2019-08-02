@@ -138,7 +138,7 @@ abstract class TimesheetAbstractController extends AbstractController
     protected function edit(Timesheet $entry, Request $request, string $renderTemplate)
     {
         $event = new TimesheetMetaDefinitionEvent($entry);
-        $this->dispatcher->dispatch(TimesheetMetaDefinitionEvent::class, $event);
+        $this->dispatcher->dispatch($event, TimesheetMetaDefinitionEvent::class);
 
         $editForm = $this->getEditForm($entry, $request->get('page'));
         $editForm->handleRequest($request);
@@ -196,7 +196,7 @@ abstract class TimesheetAbstractController extends AbstractController
         }
 
         $event = new TimesheetMetaDefinitionEvent($entry);
-        $this->dispatcher->dispatch(TimesheetMetaDefinitionEvent::class, $event);
+        $this->dispatcher->dispatch($event, TimesheetMetaDefinitionEvent::class);
 
         $mode = $this->getTrackingMode();
         $mode->create($entry, $request);

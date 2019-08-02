@@ -9,5 +9,5 @@ App\Entity\User:
             - NotBlank: ~
             - Email: ~
         plainPassword:
-            - NotBlank: { groups: [registration, passwordUpdate] }
-            - Length: { min: 5, max: 60, groups: [registration, passwordUpdate] }
+            - NotBlank: { groups: [Registration, PasswordUpdate] }
+            - Length: { min: 8, max: 60, groups: [Registration, PasswordUpdate] }
