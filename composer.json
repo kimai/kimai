@@ -18,11 +18,9 @@
         "ext-pdo": "*",
         "ext-zip": "*",
         "beberlei/doctrineextensions": "^1.2",
-        "doctrine/doctrine-fixtures-bundle": "^3.0",
         "erusev/parsedown": "^1.6",
         "friendsofsymfony/rest-bundle": "^2.3",
         "friendsofsymfony/user-bundle": "~2.0",
-        "fzaninotto/faker": "^1.8",
         "gedmo/doctrine-extensions": "^2.4",
         "jms/metadata": "^2.0",
         "jms/serializer-bundle": "^3.2",
@@ -45,10 +43,8 @@
         "symfony/form": "^4.0",
         "symfony/framework-bundle": "^4.0",
         "symfony/intl": "^4.0",
-        "symfony/maker-bundle": "^1.0",
         "symfony/monolog-bundle": "^3.1",
         "symfony/orm-pack": "^1.0",
-        "symfony/profiler-pack": "^1.0",
         "symfony/security-bundle": "~4.2.0",
         "symfony/security-csrf": "^4.0",
         "symfony/serializer": "^4.0",
@@ -56,7 +52,6 @@
         "symfony/translation": "^4.0",
         "symfony/twig-bundle": "^4.0",
         "symfony/validator": "^4.0",
-        "symfony/web-server-bundle": "^4.0",
         "symfony/webpack-encore-bundle": "^1.5",
         "symfony/yaml": "^4.0",
         "twig/extensions": "^1.5",
@@ -64,7 +59,9 @@
     },
     "require-dev": {
         "dama/doctrine-test-bundle": "^5.0",
+        "doctrine/doctrine-fixtures-bundle": "^3.2",
         "friendsofphp/php-cs-fixer": "^2.10",
+        "fzaninotto/faker": "^1.8",
         "phpstan/phpstan": "^0.11.7",
         "phpstan/phpstan-doctrine": "^0.11.4",
         "phpstan/phpstan-phpunit": "^0.11.2",
@@ -72,8 +69,11 @@
         "phpunit/phpunit": "^7.0",
         "symfony/browser-kit": "^4.0",
         "symfony/css-selector": "^4.0",
+        "symfony/maker-bundle": "^1.12",
         "symfony/phpunit-bridge": "^4.0",
-        "symfony/thanks": "^1.0"
+        "symfony/profiler-pack": "^1.0",
+        "symfony/thanks": "^1.0",
+        "symfony/web-server-bundle": "~4.2.0"
     },
     "config": {
         "platform": {

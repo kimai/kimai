@@ -80,7 +80,7 @@ class PluginManager
     }
 
     /**
-     * Call this method and pass a plugin, to set its metdata.
+     * Call this method and pass a plugin, to set its metadata.
      * This is not pre-filled by default, as it would mean to parse several composer.json on each request.
      *
      * @param Plugin $plugin

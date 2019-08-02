@@ -322,7 +322,7 @@
             -->
             <trans-unit id="more.info.link">
                 <source>more.info.link</source>
-                <target>More infos</target>
+                <target>More info</target>
             </trans-unit>
             <trans-unit id="label.toggle_dropdown">
                 <source>label.toggle_dropdown</source>
