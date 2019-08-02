@@ -41,7 +41,7 @@ class CreateUserCommandTest extends KernelTestCase
         ));
     }
 
-    public function testCreateUserFailForShortPassword()
+    public function testCreateUserFailsForShortPassword()
     {
         $commandTester = $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar');
 
@@ -78,7 +78,7 @@ class CreateUserCommandTest extends KernelTestCase
         return $commandTester;
     }
 
-    public function testUserWithEmptyFiledsTriggersValidationProblem()
+    public function testUserWithEmptyFieldsTriggersValidationProblem()
     {
         $commandTester = $this->createUser('xx', '', 'ROLE_USER', '');
         $output = $commandTester->getDisplay();
