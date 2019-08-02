@@ -11,7 +11,7 @@ namespace App\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Intl\Intl;
+use Symfony\Component\Intl\Locales;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -43,7 +43,7 @@ class LanguageType extends AbstractType
     {
         $choices = [];
         foreach ($this->locales as $key) {
-            $name = ucfirst(Intl::getLocaleBundle()->getLocaleName($key, $key));
+            $name = ucfirst(Locales::getName($key, $key));
             $choices[$name] = $key;
         }
 

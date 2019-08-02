@@ -197,7 +197,7 @@ class ActivityController extends AbstractController
     protected function renderActivityForm(Activity $activity, Request $request)
     {
         $event = new ActivityMetaDefinitionEvent($activity);
-        $this->dispatcher->dispatch(ActivityMetaDefinitionEvent::class, $event);
+        $this->dispatcher->dispatch($event, ActivityMetaDefinitionEvent::class);
 
         $editForm = $this->createEditForm($activity);
         $editForm->handleRequest($request);

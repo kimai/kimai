@@ -9,7 +9,6 @@
 
 namespace App\EventSubscriber;
 
-use App\Event\ConfigureAdminMenuEvent;
 use App\Event\ConfigureMainMenuEvent;
 use KevinPapst\AdminLTEBundle\Event\SidebarMenuEvent;
 use KevinPapst\AdminLTEBundle\Event\ThemeEvents;
@@ -73,16 +72,7 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
             new MenuItemModel('system', 'menu.system', '')
         );
 
-        $this->eventDispatcher->dispatch(ConfigureMainMenuEvent::CONFIGURE, $menuEvent);
-
-        // @deprecated since 0.9, will be removed with 1.0
-        $this->eventDispatcher->dispatch(
-            ConfigureAdminMenuEvent::CONFIGURE,
-            new ConfigureAdminMenuEvent(
-                $request,
-                $menuEvent->getAdminMenu()
-            )
-        );
+        $this->eventDispatcher->dispatch($menuEvent, ConfigureMainMenuEvent::CONFIGURE);
 
         if ($menuEvent->getAdminMenu()->hasChildren()) {
             $event->addItem(new MenuItemModel('admin', 'menu.admin', ''));

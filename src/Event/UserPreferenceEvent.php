@@ -11,7 +11,7 @@ namespace App\Event;
 
 use App\Entity\User;
 use App\Entity\UserPreference;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * This event should be used, if further user preferences should added dynamically

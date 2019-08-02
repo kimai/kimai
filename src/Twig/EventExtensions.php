@@ -75,7 +75,7 @@ class EventExtensions extends AbstractExtension
         $themeEvent = new ThemeEvent($this->user, $payload);
 
         if ($this->hasListener($eventName)) {
-            $this->getDispatcher()->dispatch($eventName, $themeEvent);
+            $this->getDispatcher()->dispatch($themeEvent, $eventName);
         }
 
         return $themeEvent;

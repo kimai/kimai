@@ -183,7 +183,7 @@ class ProfileController extends AbstractController
     {
         // we need to prepare the user preferences, which is done via an EventSubscriber
         $event = new PrepareUserEvent($profile);
-        $this->dispatcher->dispatch(PrepareUserEvent::PREPARE, $event);
+        $this->dispatcher->dispatch($event, PrepareUserEvent::PREPARE);
 
         $original = [];
         foreach ($profile->getPreferences() as $preference) {
@@ -288,7 +288,7 @@ class ProfileController extends AbstractController
     {
         // we need to prepare the user preferences, which is done via an EventSubscriber
         $event = new PrepareUserEvent($user);
-        $this->dispatcher->dispatch(PrepareUserEvent::PREPARE, $event);
+        $this->dispatcher->dispatch($event, PrepareUserEvent::PREPARE);
 
         return $this->createForm(
             UserPreferencesForm::class,
