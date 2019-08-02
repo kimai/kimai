@@ -62,5 +62,5 @@ final class Version20190730123324 extends AbstractMigration
         $schema->dropTable('kimai2_customers_teams');
         $schema->dropTable('kimai2_users_teams');
         $schema->dropTable('kimai2_teams');
-    }    
+    }
 }

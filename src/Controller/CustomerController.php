@@ -131,12 +131,13 @@ class CustomerController extends AbstractController
             'action' => $this->generateUrl('admin_customer_permissions', ['id' => $customer->getId()]),
             'method' => 'POST',
         ]);
-        
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                dump($customer->getTeams());exit;
+                dump($customer->getTeams());
+                exit;
                 $this->getRepository()->saveCustomer($customer);
                 $this->flashSuccess('action.update.success');
 
@@ -150,7 +151,6 @@ class CustomerController extends AbstractController
             'customer' => $customer,
             'form' => $form->createView()
         ]);
-
     }
 
     /**

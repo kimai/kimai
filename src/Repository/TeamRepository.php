@@ -33,7 +33,7 @@ class TeamRepository extends EntityRepository
         $entityManager->persist($team);
         $entityManager->flush();
     }
-    
+
     /**
      * @param Team $team
      * @throws ORMException
@@ -45,7 +45,7 @@ class TeamRepository extends EntityRepository
         $entityManager->remove($team);
         $entityManager->flush();
     }
-   
+
     public function getPagerfantaForQuery(TeamQuery $query): Pagerfanta
     {
         $paginator = new Pagerfanta($this->getPaginatorForQuery($query));

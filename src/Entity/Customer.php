@@ -159,7 +159,7 @@ class Customer implements EntityWithMetaFields
      * @ORM\OneToMany(targetEntity="App\Entity\CustomerMeta", mappedBy="customer", cascade={"persist"})
      */
     private $meta;
-    
+
     /**
      * @var Team[]|ArrayCollection
      *

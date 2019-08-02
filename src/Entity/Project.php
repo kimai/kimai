@@ -89,7 +89,7 @@ class Project implements EntityWithMetaFields
      * @ORM\OneToMany(targetEntity="App\Entity\ProjectMeta", mappedBy="project", cascade={"persist"})
      */
     private $meta;
-    
+
     /**
      * @var Team[]|ArrayCollection
      *
