@@ -106,9 +106,6 @@ class CreateUserCommand extends Command
             ->setRoles(explode(',', $role))
         ;
 
-        $pwd = $this->encoder->encodePassword($user, $user->getPlainPassword());
-        $user->setPassword($pwd);
-
         $errors = $this->validator->validate($user, null, ['Registration']);
         if ($errors->count() > 0) {
             /** @var \Symfony\Component\Validator\ConstraintViolation $error */
@@ -126,6 +123,9 @@ class CreateUserCommand extends Command
         }
 
         try {
+            $pwd = $this->encoder->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($pwd);
+
             $entityManager = $this->doctrine->getManager();
             $entityManager->persist($user);
             $entityManager->flush();

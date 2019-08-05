@@ -206,7 +206,7 @@ class CustomerController extends AbstractController
     protected function renderCustomerForm(Customer $customer, Request $request)
     {
         $event = new CustomerMetaDefinitionEvent($customer);
-        $this->dispatcher->dispatch(CustomerMetaDefinitionEvent::class, $event);
+        $this->dispatcher->dispatch($event, CustomerMetaDefinitionEvent::class);
 
         $editForm = $this->createEditForm($customer);
 

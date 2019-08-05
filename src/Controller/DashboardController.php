@@ -88,10 +88,7 @@ class DashboardController extends AbstractController
             $event->addSection($row);
         }
 
-        $this->eventDispatcher->dispatch(
-            DashboardEvent::DASHBOARD,
-            $event
-        );
+        $this->eventDispatcher->dispatch($event, DashboardEvent::DASHBOARD);
 
         $sections = $event->getSections();
 

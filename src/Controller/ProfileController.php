@@ -183,7 +183,7 @@ class ProfileController extends AbstractController
     {
         // we need to prepare the user preferences, which is done via an EventSubscriber
         $event = new PrepareUserEvent($profile);
-        $this->dispatcher->dispatch(PrepareUserEvent::PREPARE, $event);
+        $this->dispatcher->dispatch($event, PrepareUserEvent::PREPARE);
 
         $original = [];
         foreach ($profile->getPreferences() as $preference) {
@@ -288,7 +288,7 @@ class ProfileController extends AbstractController
     {
         // we need to prepare the user preferences, which is done via an EventSubscriber
         $event = new PrepareUserEvent($user);
-        $this->dispatcher->dispatch(PrepareUserEvent::PREPARE, $event);
+        $this->dispatcher->dispatch($event, PrepareUserEvent::PREPARE);
 
         return $this->createForm(
             UserPreferencesForm::class,
@@ -343,7 +343,7 @@ class ProfileController extends AbstractController
             UserPasswordType::class,
             $user,
             [
-                'validation_groups' => ['passwordUpdate'],
+                'validation_groups' => ['PasswordUpdate'],
                 'action' => $this->generateUrl('user_profile_password', ['username' => $user->getUsername()]),
                 'method' => 'POST'
             ]

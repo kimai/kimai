@@ -1,6 +1,6 @@
 security:
     encoders:
-        App\Entity\User: bcrypt
+        App\Entity\User: auto
 
     providers:
         chain_provider:

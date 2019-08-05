@@ -195,7 +195,7 @@ class ProjectController extends AbstractController
     protected function renderProjectForm(Project $project, Request $request)
     {
         $event = new ProjectMetaDefinitionEvent($project);
-        $this->dispatcher->dispatch(ProjectMetaDefinitionEvent::class, $event);
+        $this->dispatcher->dispatch($event, ProjectMetaDefinitionEvent::class);
 
         $editForm = $this->createEditForm($project);
         $editForm->handleRequest($request);

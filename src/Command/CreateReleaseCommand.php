@@ -114,17 +114,14 @@ class CreateReleaseCommand extends Command
         $tar .= '.tar.gz';
         $zip .= '.zip';
 
-        // this removes the current env settings, as they might differ from the release ones
-        // if we don't unset them, the .env file won't be read when executing bin/console commands
-        putenv('DATABASE_URL');
-        putenv('APP_ENV');
+        $prefix = 'APP_ENV=prod DATABASE_URL=sqlite:///%kernel.project_dir%/var/data/kimai.sqlite';
 
         $commands = [
             'Clone repository' => $gitCmd . ' ' . $tmpDir,
             'Install composer dependencies' => 'cd ' . $tmpDir . ' && composer install --no-dev --optimize-autoloader',
-            'Create database' => 'cd ' . $tmpDir . ' && bin/console doctrine:database:create -n',
-            'Create tables' => 'cd ' . $tmpDir . ' && bin/console doctrine:schema:create -n',
-            'Add all migrations' => 'cd ' . $tmpDir . ' && bin/console doctrine:migrations:version --add --all -n',
+            'Create database' => 'cd ' . $tmpDir . ' && ' . $prefix . ' bin/console doctrine:database:create -n',
+            'Create tables' => 'cd ' . $tmpDir . ' && ' . $prefix . ' bin/console doctrine:schema:create -n',
+            'Add all migrations' => 'cd ' . $tmpDir . ' && ' . $prefix . ' bin/console doctrine:migrations:version --add --all -n',
         ];
 
         $filesToDelete = [

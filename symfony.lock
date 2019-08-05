@@ -528,6 +528,9 @@
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
     },
+    "symfony/mime": {
+        "version": "v4.3.3"
+    },
     "symfony/monolog-bridge": {
         "version": "v4.0.3"
     },
@@ -570,6 +573,9 @@
     "symfony/polyfill-php72": {
         "version": "v1.6.0"
     },
+    "symfony/polyfill-php73": {
+        "version": "v1.11.0"
+    },
     "symfony/process": {
         "version": "v4.0.3"
     },
@@ -591,9 +597,6 @@
             "ref": "cda8b550123383d25827705d05a42acf6819fe4e"
         }
     },
-    "symfony/security": {
-        "version": "v4.2.8"
-    },
     "symfony/security-bundle": {
         "version": "3.3",
         "recipe": {
@@ -603,8 +606,17 @@
             "ref": "85834af1496735f28d831489d12ab1921a875e0d"
         }
     },
+    "symfony/security-core": {
+        "version": "v4.3.3"
+    },
     "symfony/security-csrf": {
         "version": "v4.0.4"
+    },
+    "symfony/security-guard": {
+        "version": "v4.3.3"
+    },
+    "symfony/security-http": {
+        "version": "v4.3.3"
     },
     "symfony/serializer": {
         "version": "v4.1.2"
