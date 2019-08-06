@@ -30,6 +30,9 @@ final class Version20190729162655 extends AbstractMigration
     {
         $timesheetTags = $schema->getTable('kimai2_timesheet_tags');
 
+        $timesheetTags->addForeignKeyConstraint('kimai2_timesheet', ['timesheet_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_732EECA9ABDD46BE');
+        $timesheetTags->addForeignKeyConstraint('kimai2_tags', ['tag_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_732EECA9BAD26311');
+
         if ($timesheetTags->hasIndex('IDX_E3284EFEABDD46BE')) {
             $timesheetTags->dropIndex('IDX_E3284EFEABDD46BE');
         }
@@ -48,9 +51,6 @@ final class Version20190729162655 extends AbstractMigration
         if ($timesheetTags->hasIndex('IDX_732EECA9BAD26311')) {
             $timesheetTags->dropIndex('IDX_732EECA9BAD26311');
         }
-
-        $timesheetTags->addForeignKeyConstraint('kimai2_timesheet', ['timesheet_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_732EECA9ABDD46BE');
-        $timesheetTags->addForeignKeyConstraint('kimai2_tags', ['tag_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_732EECA9BAD26311');
     }
 
     public function down(Schema $schema): void
