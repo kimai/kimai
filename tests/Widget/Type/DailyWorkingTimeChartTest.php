@@ -12,7 +12,6 @@ namespace App\Tests\Widget\Type;
 use App\Entity\User;
 use App\Model\Statistic\Day;
 use App\Repository\TimesheetRepository;
-use App\Security\CurrentUser;
 use App\Tests\Mocks\Security\CurrentUserFactory;
 use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Widget\Type\AbstractWidgetType;
@@ -110,7 +109,7 @@ class DailyWorkingTimeChartTest extends TestCase
 
         $userFactory = new CurrentUserFactory($this);
         $user = $userFactory->create(new User(), 'Europe/Berlin');
-        
+
         $mockFactory = new UserDateTimeFactoryFactory($this);
 
         $sut = new DailyWorkingTimeChart($repository, $user, $mockFactory->create('Europe/Berlin'));

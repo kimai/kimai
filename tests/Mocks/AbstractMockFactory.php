@@ -23,7 +23,7 @@ abstract class AbstractMockFactory
     {
         $this->testCase = $testCase;
     }
-    
+
     protected function getTestCase(): TestCase
     {
         return $this->testCase;

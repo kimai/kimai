@@ -14,7 +14,6 @@ use App\Entity\UserPreference;
 use App\Repository\UserRepository;
 use App\Security\CurrentUser;
 use App\Tests\Mocks\AbstractMockFactory;
-use App\Timesheet\UserDateTimeFactory;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -34,7 +33,7 @@ class CurrentUserFactory extends AbstractMockFactory
             $pref->setValue($timezone);
             $user->addPreference($pref);
         }
-        
+
         $repository = $this->getMockBuilder(UserRepository::class)->setMethods(['getUserById'])->disableOriginalConstructor()->getMock();
         $repository->expects(TestCase::atMost(1))->method('getUserById')->willReturn($user);
         $token = $this->getMockBuilder(UsernamePasswordToken::class)->setMethods(['getUser'])->disableOriginalConstructor()->getMock();

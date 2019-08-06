@@ -12,7 +12,6 @@ namespace App\Tests\Repository;
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
 use App\Repository\WidgetRepository;
-use App\Security\CurrentUser;
 use App\Tests\Mocks\Security\CurrentUserFactory;
 use PHPUnit\Framework\TestCase;
 
