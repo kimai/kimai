@@ -39,13 +39,6 @@ class Version20190510205245 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        $tags = $schema->getTable('kimai2_tags');
-        $tags->dropIndex('UNIQ_27CAF54C5E237E06');
-
-        $timesheetTags = $schema->getTable('kimai2_timesheet_tags');
-        $timesheetTags->dropIndex('IDX_E3284EFEABDD46BE');
-        $timesheetTags->dropIndex('IDX_E3284EFEBAD26311');
-
         $schema->dropTable('kimai2_timesheet_tags');
         $schema->dropTable('kimai2_tags');
     }
