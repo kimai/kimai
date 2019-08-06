@@ -13,6 +13,7 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Model\CustomerStatistic;
 use App\Repository\Loader\CustomerLoader;
 use App\Repository\Paginator\LoaderPaginator;
@@ -107,8 +108,29 @@ class CustomerRepository extends EntityRepository
         return $stats;
     }
 
+    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null)
+    {
+        // make sure that super-admins see all customers, no matter which team they assigned to
+        if (null !== $user && $user->isSuperAdmin()) {
+            return;
+        }
+
+        if (null === $user || $user->getTeams()->count() == 0) {
+            $qb->andWhere($qb->expr()->isNull('teams'));
+
+            return;
+        }
+
+        $or = $qb->expr()->orX(
+            $qb->expr()->isNull('teams'),
+            $qb->expr()->isMemberOf(':teams', 'c.teams')
+        );
+        $qb->setParameter('teams', $user->getTeams());
+        $qb->andWhere($or);
+    }
+
     /**
-     * @deprecated since 1.1
+     * @deprecated since 1.1 - don't use this method, it ignores team permission checks
      */
     public function builderForEntityType($customer)
     {
@@ -130,6 +152,7 @@ class CustomerRepository extends EntityRepository
 
         $qb->select('c')
             ->from(Customer::class, 'c')
+            ->leftJoin('c.teams', 'teams')
             ->orderBy('c.name', 'ASC');
 
         $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
@@ -145,6 +168,8 @@ class CustomerRepository extends EntityRepository
             $qb->setParameter('ignored', $query->getCustomerToIgnore());
         }
 
+        $this->addPermissionCriteria($qb, $query->getUser());
+
         return $qb;
     }
 
@@ -152,9 +177,10 @@ class CustomerRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('c', 'meta')
+        $qb->select('c')
             ->from(Customer::class, 'c')
             ->leftJoin('c.meta', 'meta')
+            ->leftJoin('c.teams', 'teams')
             ->orderBy('c.' . $query->getOrderBy(), $query->getOrder());
 
         if (CustomerQuery::SHOW_VISIBLE == $query->getVisibility()) {
@@ -164,6 +190,8 @@ class CustomerRepository extends EntityRepository
             $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
             $qb->setParameter('visible', false, \PDO::PARAM_BOOL);
         }
+
+        $this->addPermissionCriteria($qb, $query->getCurrentUser());
 
         return $qb;
     }

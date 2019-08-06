@@ -67,8 +67,11 @@ class ActivityEditForm extends AbstractType
         if ($options['customer']) {
             $builder
                 ->add('customer', CustomerType::class, [
-                    'query_builder' => function (CustomerRepository $repo) use ($customer) {
-                        return $repo->getQueryBuilderForFormType(new CustomerFormTypeQuery($customer));
+                    'query_builder' => function (CustomerRepository $repo) use ($builder, $customer) {
+                        $query = new CustomerFormTypeQuery($customer);
+                        $query->setUser($builder->getOption('user'));
+
+                        return $repo->getQueryBuilderForFormType($query);
                     },
                     'data' => $customer ? $customer : null,
                     'required' => false,
@@ -80,15 +83,18 @@ class ActivityEditForm extends AbstractType
         $builder
             ->add('project', ProjectType::class, [
                 'required' => false,
-                'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
-                    return $repo->getQueryBuilderForFormType(new ProjectFormTypeQuery($project, $customer));
+                'query_builder' => function (ProjectRepository $repo) use ($builder, $project, $customer) {
+                    $query = new ProjectFormTypeQuery($project, $customer);
+                    $query->setUser($builder->getOption('user'));
+
+                    return $repo->getQueryBuilderForFormType($query);
                 },
             ]);
 
         // replaces the project select after submission, to make sure only projects for the selected customer are displayed
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($project) {
+            function (FormEvent $event) use ($builder, $project) {
                 $data = $event->getData();
                 if (!isset($data['customer']) || empty($data['customer'])) {
                     return;
@@ -96,8 +102,11 @@ class ActivityEditForm extends AbstractType
 
                 $event->getForm()->add('project', ProjectType::class, [
                     'group_by' => null,
-                    'query_builder' => function (ProjectRepository $repo) use ($data, $project) {
-                        return $repo->getQueryBuilderForFormType(new ProjectFormTypeQuery($project, $data['customer']));
+                    'query_builder' => function (ProjectRepository $repo) use ($builder, $data, $project) {
+                        $query = new ProjectFormTypeQuery($project, $data['customer']);
+                        $query->setUser($builder->getOption('user'));
+
+                        return $repo->getQueryBuilderForFormType($query);
                     },
                 ]);
             }

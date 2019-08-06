@@ -13,6 +13,7 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Event\ProjectMetaDefinitionEvent;
 use App\Form\ProjectEditForm;
+use App\Form\ProjectTeamPermissionForm;
 use App\Form\Toolbar\ProjectToolbarForm;
 use App\Form\Type\ProjectType;
 use App\Repository\ProjectRepository;
@@ -60,14 +61,11 @@ class ProjectController extends AbstractController
      * @Route(path="/", defaults={"page": 1}, name="admin_project", methods={"GET"})
      * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_project_paginated", methods={"GET"})
      * @Security("is_granted('view_project')")
-     *
-     * @param int $page
-     * @param Request $request
-     * @return Response
      */
     public function indexAction($page, Request $request)
     {
         $query = new ProjectQuery();
+        $query->setCurrentUser($this->getUser());
         $query->setPage($page);
 
         $form = $this->getToolbarForm($query);
@@ -86,13 +84,39 @@ class ProjectController extends AbstractController
     }
 
     /**
+     * @Route(path="/{id}/permissions", name="admin_project_permissions", methods={"GET", "POST"})
+     * @Security("is_granted('permissions', project)")
+     */
+    public function teamPermissions(Project $project, Request $request)
+    {
+        $form = $this->createForm(ProjectTeamPermissionForm::class, $project, [
+            'action' => $this->generateUrl('admin_project_permissions', ['id' => $project->getId()]),
+            'method' => 'POST',
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $this->getRepository()->saveProject($project);
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRoute('admin_project');
+            } catch (ORMException $ex) {
+                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            }
+        }
+
+        return $this->render('project/permissions.html.twig', [
+            'project' => $project,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
      * @Route(path="/create", name="admin_project_create", methods={"GET", "POST"})
      * @Route(path="/create/{customer}", name="admin_project_create_with_customer", methods={"GET", "POST"})
      * @Security("is_granted('create_project')")
-     *
-     * @param Request $request
-     * @param Customer|null $customer
-     * @return RedirectResponse|Response
      */
     public function createAction(Request $request, ?Customer $customer = null)
     {
@@ -108,9 +132,6 @@ class ProjectController extends AbstractController
     /**
      * @Route(path="/{id}/budget", name="admin_project_budget", methods={"GET"})
      * @Security("is_granted('budget', project)")
-     *
-     * @param Project $project
-     * @return Response
      */
     public function budgetAction(Project $project)
     {
@@ -123,10 +144,6 @@ class ProjectController extends AbstractController
     /**
      * @Route(path="/{id}/edit", name="admin_project_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', project)")
-     *
-     * @param Project $project
-     * @param Request $request
-     * @return RedirectResponse|Response
      */
     public function editAction(Project $project, Request $request)
     {
@@ -136,10 +153,6 @@ class ProjectController extends AbstractController
     /**
      * @Route(path="/{id}/delete", name="admin_project_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', project)")
-     *
-     * @param Project $project
-     * @param Request $request
-     * @return RedirectResponse|Response
      */
     public function deleteAction(Project $project, Request $request)
     {
@@ -158,6 +171,7 @@ class ProjectController extends AbstractController
                     $query = new ProjectFormTypeQuery();
                     $query->setCustomer($project->getCustomer());
                     $query->setProjectToIgnore($project);
+                    $query->setUser($this->getUser());
 
                     return $repo->getQueryBuilderForFormType($query);
                 },
@@ -225,11 +239,7 @@ class ProjectController extends AbstractController
         ]);
     }
 
-    /**
-     * @param ProjectQuery $query
-     * @return FormInterface
-     */
-    protected function getToolbarForm(ProjectQuery $query)
+    protected function getToolbarForm(ProjectQuery $query): FormInterface
     {
         return $this->createForm(ProjectToolbarForm::class, $query, [
             'action' => $this->generateUrl('admin_project', [
@@ -239,11 +249,7 @@ class ProjectController extends AbstractController
         ]);
     }
 
-    /**
-     * @param Project $project
-     * @return FormInterface
-     */
-    private function createEditForm(Project $project)
+    private function createEditForm(Project $project): FormInterface
     {
         if ($project->getId() === null) {
             $url = $this->generateUrl('admin_project_create');

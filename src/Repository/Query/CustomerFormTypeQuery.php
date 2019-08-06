@@ -10,6 +10,7 @@
 namespace App\Repository\Query;
 
 use App\Entity\Customer;
+use App\Entity\User;
 
 /**
  * Can be used for advanced queries with the: CustomerRepository
@@ -24,6 +25,10 @@ final class CustomerFormTypeQuery
      * @var Customer|null
      */
     private $customerToIgnore;
+    /**
+     * @var User
+     */
+    private $user;
 
     /**
      * @param Customer|int|null $customer
@@ -31,6 +36,18 @@ final class CustomerFormTypeQuery
     public function __construct($customer = null)
     {
         $this->customer = $customer;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): CustomerFormTypeQuery
+    {
+        $this->user = $user;
+
+        return $this;
     }
 
     /**

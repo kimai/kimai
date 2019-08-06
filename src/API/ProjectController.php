@@ -70,6 +70,7 @@ class ProjectController extends BaseApiController
     public function cgetAction(ParamFetcherInterface $paramFetcher)
     {
         $query = new ProjectQuery();
+        $query->setCurrentUser($this->getUser());
 
         if (null !== ($order = $paramFetcher->get('order'))) {
             $query->setOrder($order);

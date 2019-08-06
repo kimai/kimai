@@ -145,6 +145,9 @@
         {% if is_granted('budget', project) %}
             {% set actions = actions|merge({'report': {'url': path('admin_project_budget', {'id': project.id})}}) %}
         {% endif %}
+        {% if is_granted('permissions', project) %}
+            {% set actions = actions|merge({'permissions': {'url': path('admin_project_permissions', {'id': project.id})}}) %}
+        {% endif %}
         {% if is_granted('view_activity') %}
             {% set actions = actions|merge({'activity': path('admin_activity', {'customer': project.customer.id, 'project': project.id})}) %}
         {% endif %}
@@ -197,6 +200,9 @@
         {% endif %}
         {% if is_granted('budget', customer) %}
             {% set actions = actions|merge({'report': {'url': path('admin_customer_budget', {'id': customer.id})}}) %}
+        {% endif %}
+        {% if is_granted('permissions', customer) %}
+            {% set actions = actions|merge({'permissions': {'url': path('admin_customer_permissions', {'id': customer.id})}}) %}
         {% endif %}
         {% if is_granted('view_project') %}
             {% set actions = actions|merge({'project': path('admin_project', {'customer': customer.id})}) %}

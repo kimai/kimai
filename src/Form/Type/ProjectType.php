@@ -62,8 +62,11 @@ class ProjectType extends AbstractType
             'group_by' => function (Project $project, $key, $index) {
                 return $project->getCustomer()->getName();
             },
-            'query_builder' => function (ProjectRepository $repo) {
-                return $repo->getQueryBuilderForFormType(new ProjectFormTypeQuery());
+            'query_builder' => function (ProjectRepository $repo) use ($resolver) {
+                $query = new ProjectFormTypeQuery();
+                $query->setUser($resolver->offsetGet('user'));
+
+                return $repo->getQueryBuilderForFormType($query);
             },
             'activity_enabled' => false,
             'activity_visibility' => ActivityQuery::SHOW_VISIBLE,

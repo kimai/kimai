@@ -9,6 +9,8 @@
 
 namespace App\Repository\Query;
 
+use App\Entity\User;
+
 /**
  * Base class for advanced Repository queries.
  */
@@ -44,6 +46,26 @@ class BaseQuery
      * @var string
      */
     private $resultType = self::RESULT_TYPE_PAGER;
+    /**
+     * @var User
+     */
+    private $user;
+
+    public function getCurrentUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     * @return $this
+     */
+    public function setCurrentUser(User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
 
     /**
      * @return int

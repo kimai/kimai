@@ -408,6 +408,10 @@
                 <source>profile.roles</source>
                 <target>Roles</target>
             </trans-unit>
+            <trans-unit id="profile.teams">
+                <source>profile.teams</source>
+                <target>Teams</target>
+            </trans-unit>
             <trans-unit id="profile.preferences">
                 <source>profile.preferences</source>
                 <target>Preferences</target>

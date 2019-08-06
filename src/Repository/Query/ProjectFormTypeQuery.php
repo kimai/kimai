@@ -11,6 +11,7 @@ namespace App\Repository\Query;
 
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\User;
 
 final class ProjectFormTypeQuery
 {
@@ -26,6 +27,10 @@ final class ProjectFormTypeQuery
      * @var Project|null
      */
     private $projectToIgnore;
+    /**
+     * @var User
+     */
+    private $user;
 
     /**
      * @param Project|int|null $project
@@ -35,6 +40,18 @@ final class ProjectFormTypeQuery
     {
         $this->project = $project;
         $this->customer = $customer;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): ProjectFormTypeQuery
+    {
+        $this->user = $user;
+
+        return $this;
     }
 
     /**

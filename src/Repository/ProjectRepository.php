@@ -12,6 +12,7 @@ namespace App\Repository;
 use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Model\ProjectStatistic;
 use App\Repository\Loader\ProjectLoader;
 use App\Repository\Paginator\LoaderPaginator;
@@ -91,8 +92,37 @@ class ProjectRepository extends EntityRepository
         return $stats;
     }
 
+    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null)
+    {
+        // make sure that super-admins see all projects, no matter which team they assigned to
+        if (null !== $user && $user->isSuperAdmin()) {
+            return;
+        }
+
+        if (null === $user || $user->getTeams()->count() == 0) {
+            $qb->andWhere($qb->expr()->isNull('c_teams'));
+            $qb->andWhere($qb->expr()->isNull('teams'));
+
+            return;
+        }
+
+        $orProject = $qb->expr()->orX(
+            $qb->expr()->isNull('teams'),
+            $qb->expr()->isMemberOf(':teams', 'p.teams')
+        );
+        $qb->andWhere($orProject);
+
+        $orCustomer = $qb->expr()->orX(
+            $qb->expr()->isNull('c_teams'),
+            $qb->expr()->isMemberOf(':teams', 'c.teams')
+        );
+        $qb->setParameter('teams', $user->getTeams());
+
+        $qb->andWhere($orCustomer);
+    }
+
     /**
-     * @deprecated since 1.1
+     * @deprecated since 1.1 - don't use this method, it ignores team permission checks
      */
     public function builderForEntityType($project, $customer)
     {
@@ -114,9 +144,11 @@ class ProjectRepository extends EntityRepository
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb
-            ->select('p', 'c')
+            ->select('p')
             ->from(Project::class, 'p')
             ->leftJoin('p.customer', 'c')
+            ->leftJoin('p.teams', 'teams')
+            ->leftJoin('c.teams', 'c_teams')
             ->addOrderBy('c.name', 'ASC')
             ->addOrderBy('p.name', 'ASC')
         ;
@@ -140,6 +172,8 @@ class ProjectRepository extends EntityRepository
             $qb->setParameter('ignored', $query->getProjectToIgnore());
         }
 
+        $this->addPermissionCriteria($qb, $query->getUser());
+
         return $qb;
     }
 
@@ -150,11 +184,13 @@ class ProjectRepository extends EntityRepository
         $qb
             ->select('p')
             ->from(Project::class, 'p')
+            ->leftJoin('p.customer', 'c')
+            ->leftJoin('p.teams', 'teams')
+            ->leftJoin('c.teams', 'c_teams')
         ;
 
         if (in_array($query->getVisibility(), [ProjectQuery::SHOW_VISIBLE, ProjectQuery::SHOW_HIDDEN])) {
             $qb
-                ->leftJoin('p.customer', 'c')
                 ->andWhere($qb->expr()->eq('p.visible', ':visible'))
                 ->andWhere($qb->expr()->eq('c.visible', ':customer_visible'))
             ;
@@ -172,6 +208,8 @@ class ProjectRepository extends EntityRepository
             $qb->andWhere('p.customer = :customer')
                 ->setParameter('customer', $query->getCustomer());
         }
+
+        $this->addPermissionCriteria($qb, $query->getCurrentUser());
 
         $qb->orderBy('p.' . $query->getOrderBy(), $query->getOrder());
 

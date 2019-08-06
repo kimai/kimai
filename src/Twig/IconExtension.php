@@ -65,6 +65,7 @@ final class IconExtension extends AbstractExtension
         'profile' => 'fas fa-user-edit',
         'warning' => 'fas fa-exclamation-triangle',
         'permissions' => 'fas fa-user-lock',
+        'unlocked' => 'fas fa-unlock-alt',
         'back' => 'fas fa-long-arrow-alt-left',
         'tag' => 'fas fa-tags',
         'avatar' => 'fas fa-user',

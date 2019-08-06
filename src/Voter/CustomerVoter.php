@@ -22,6 +22,7 @@ class CustomerVoter extends AbstractVoter
     public const EDIT = 'edit';
     public const BUDGET = 'budget';
     public const DELETE = 'delete';
+    public const PERMISSIONS = 'permissions';
 
     /**
      * support rules based on the given $subject (here: Customer)
@@ -31,6 +32,7 @@ class CustomerVoter extends AbstractVoter
         self::EDIT,
         self::BUDGET,
         self::DELETE,
+        self::PERMISSIONS,
     ];
 
     /**
