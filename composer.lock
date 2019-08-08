@@ -2808,16 +2808,16 @@
         },
         {
             "name": "kevinpapst/adminlte-bundle",
-            "version": "2.8.4",
+            "version": "2.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/AdminLTEBundle.git",
-                "reference": "0df1c4406b5597cccda5a81a03408854153f90a7"
+                "reference": "12c5deaad9276458a2536da281732d70e5255441"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/0df1c4406b5597cccda5a81a03408854153f90a7",
-                "reference": "0df1c4406b5597cccda5a81a03408854153f90a7",
+                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/12c5deaad9276458a2536da281732d70e5255441",
+                "reference": "12c5deaad9276458a2536da281732d70e5255441",
                 "shasum": ""
             },
             "require": {
@@ -2869,7 +2869,7 @@
                 }
             ],
             "description": "Admin theme bundle for Symfony 4 based on AdminLTE 2.4.8 with FOSUserBundle support",
-            "time": "2019-08-04T20:23:05+00:00"
+            "time": "2019-08-08T08:09:47+00:00"
         },
         {
             "name": "kimai/kimai2-composer",
@@ -9160,16 +9160,16 @@
         },
         {
             "name": "nette/di",
-            "version": "v3.0.0",
+            "version": "v3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/di.git",
-                "reference": "19d83539245aaacb59470828919182411061841f"
+                "reference": "4aff517a1c6bb5c36fa09733d4cea089f529de6d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/di/zipball/19d83539245aaacb59470828919182411061841f",
-                "reference": "19d83539245aaacb59470828919182411061841f",
+                "url": "https://api.github.com/repos/nette/di/zipball/4aff517a1c6bb5c36fa09733d4cea089f529de6d",
+                "reference": "4aff517a1c6bb5c36fa09733d4cea089f529de6d",
                 "shasum": ""
             },
             "require": {
@@ -9229,7 +9229,7 @@
                 "nette",
                 "static"
             ],
-            "time": "2019-04-03T19:35:46+00:00"
+            "time": "2019-08-07T12:11:33+00:00"
         },
         {
             "name": "nette/finder",
