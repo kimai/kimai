@@ -28,7 +28,7 @@ class TimesheetQuery extends ActivityQuery
     /**
      * @var User|null
      */
-    protected $user;
+    protected $timesheetUser;
     /**
      * @var Activity|null
      */
@@ -63,7 +63,7 @@ class TimesheetQuery extends ActivityQuery
      */
     public function getUser()
     {
-        return $this->user;
+        return $this->timesheetUser;
     }
 
     /**
@@ -72,7 +72,7 @@ class TimesheetQuery extends ActivityQuery
      */
     public function setUser($user = null)
     {
-        $this->user = $user;
+        $this->timesheetUser = $user;
 
         return $this;
     }
@@ -256,7 +256,7 @@ class TimesheetQuery extends ActivityQuery
             return true;
         }
 
-        if ($this->user !== null) {
+        if ($this->timesheetUser !== null) {
             return true;
         }
 
