@@ -25,10 +25,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class UserPreferenceType extends AbstractType
 {
     /**
-     * @var TranslatorInterface 
+     * @var TranslatorInterface
      */
     private $translate;
-    
+
     public function __construct(TranslatorInterface $translator)
     {
         $this->translate = $translator;
@@ -64,18 +64,23 @@ class UserPreferenceType extends AbstractType
                 if (!$preference->isEnabled()) {
                     $type = HiddenType::class;
                 }
-                
+
                 $transId = 'label.' . $preference->getName();
                 if ($this->translate->trans($transId) === $transId) {
                     $transId = $preference->getName();
                 }
+                
+                $options = array_merge(
+                    [
+                        'label' => $transId,
+                        'constraints' => $preference->getConstraints(),
+                        'required' => $required,
+                        'disabled' => !$preference->isEnabled(),
+                    ], 
+                    $preference->getOptions()
+                );
 
-                $event->getForm()->add('value', $type, [
-                    'label' => $transId,
-                    'constraints' => $preference->getConstraints(),
-                    'required' => $required,
-                    'disabled' => !$preference->isEnabled(),
-                ]);
+                $event->getForm()->add('value', $type, $options);
             }
         );
         $builder->add('name', HiddenType::class);
