@@ -11,4 +11,8 @@ namespace App\Repository\Query;
 
 class TeamQuery extends BaseQuery
 {
+    public function __construct()
+    {
+        $this->setOrderBy('name');
+    }
 }
