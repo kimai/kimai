@@ -288,6 +288,10 @@
                 <source>action.save</source>
                 <target>Speichern</target>
             </trans-unit>
+            <trans-unit id="action.reset">
+                <source>action.reset</source>
+                <target>Zurücksetzen</target>
+            </trans-unit>
             <trans-unit id="action.back">
                 <source>action.back</source>
                 <target>Zurück</target>

@@ -37,15 +37,21 @@ class CustomerType extends AbstractType
             'label' => 'label.customer',
             'class' => Customer::class,
             'choice_label' => 'name',
-            'query_builder' => function (CustomerRepository $repo) use ($resolver) {
-                $query = new CustomerFormTypeQuery();
-                $query->setUser($resolver->offsetGet('user'));
-
-                return $repo->getQueryBuilderForFormType($query);
-            },
+            'query_builder_for_user' => true,
             'project_enabled' => false,
             'project_visibility' => ProjectQuery::SHOW_VISIBLE,
         ]);
+
+        $resolver->setDefault('query_builder', function (Options $options) {
+            return function (CustomerRepository $repo) use ($options) {
+                $query = new CustomerFormTypeQuery();
+                if (true === $options['query_builder_for_user']) {
+                    $query->setUser($options['user']);
+                }
+
+                return $repo->getQueryBuilderForFormType($query);
+            };
+        });
 
         $resolver->setDefault('api_data', function (Options $options) {
             if (true === $options['project_enabled']) {

@@ -73,7 +73,7 @@ class UserPreference
     private $constraints = [];
     /**
      * An array of options for the form element
-     * @var array 
+     * @var array
      */
     private $options = [];
 
@@ -239,23 +239,23 @@ class UserPreference
 
     /**
      * Set an array of options for the FormType.
-     * 
+     *
      * @param array $options
      * @return UserPreference
      */
     public function setOptions(array $options): UserPreference
     {
         $this->options = $options;
-        
+
         return $this;
     }
 
     /**
      * Returns an array with options for the FormType.
-     * 
+     *
      * @return array
      */
-    public function getOptions(): array 
+    public function getOptions(): array
     {
         return $this->options;
     }

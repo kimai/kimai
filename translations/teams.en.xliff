@@ -10,6 +10,14 @@
                 <source>teams.subtitle</source>
                 <target>Teams allow you to control the permissions of user groups for customers and projects</target>
             </trans-unit>
+            <trans-unit id="teams.project_access">
+                <source>teams.project_access</source>
+                <target>Grant access to projects</target>
+            </trans-unit>
+            <trans-unit id="teams.customer_access">
+                <source>teams.customer_access</source>
+                <target>Grant access to customers</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

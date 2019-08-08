@@ -10,13 +10,12 @@
 namespace App\Form;
 
 use App\Entity\Team;
-use App\Form\Type\UserType;
+use App\Form\Type\CustomerType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TeamEditForm extends AbstractType
+class TeamCustomerForm extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -24,16 +23,12 @@ class TeamEditForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, [
-                'label' => 'label.name',
-                'attr' => [
-                    'autofocus' => 'autofocus'
-                ],
-            ])
-            ->add('users', UserType::class, [
+            ->add('customers', CustomerType::class, [
                 'multiple' => true,
                 'expanded' => true,
                 'by_reference' => false,
+                'query_builder_for_user' => false,
+                'required' => false,
             ])
         ;
     }
@@ -47,7 +42,7 @@ class TeamEditForm extends AbstractType
             'data_class' => Team::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
-            'csrf_token_id' => 'admin_team_edit',
+            'csrf_token_id' => 'admin_team_customer',
             'attr' => [
                 'data-form-event' => 'kimai.teamUpdate'
             ],

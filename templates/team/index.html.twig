@@ -28,7 +28,7 @@
 
         {{ tables.data_table_header(tableName, columns, false, 'kimai.teamUpdate') }}
         {% for team in teams %}
-            <tr{% if is_granted('edit', team) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_team_edit', {'id': team.id}) }}"{% endif %}>
+            <tr{% if is_granted('edit', team) %} class="open-edit alternative-link" data-href="{{ path('admin_team_edit', {'id': team.id}) }}"{% endif %}>
                 <td>{{ team.name }}</td>
                 <td>
                     {% for user in team.users %}

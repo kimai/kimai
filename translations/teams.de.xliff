@@ -10,6 +10,14 @@
                 <source>teams.subtitle</source>
                 <target>Mit Teams können Sie die Berechtigungen von Benutzergruppen für Kunden und Projekte steuern</target>
             </trans-unit>
+            <trans-unit id="teams.project_access">
+                <source>teams.project_access</source>
+                <target>Zugriff auf Projekte gewähren</target>
+            </trans-unit>
+            <trans-unit id="teams.customer_access">
+                <source>teams.customer_access</source>
+                <target>Zugriff auf Kunden gewähren</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

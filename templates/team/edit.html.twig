@@ -1,4 +1,4 @@
-{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/actions.html.twig" as actions %}
 
@@ -7,9 +7,28 @@
 {% block page_actions %}{{ actions.team(team, 'edit') }}{% endblock %}
 
 {% block main %}
-    {{ include(app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig', {
-        'title': team.name|default('create'|trans),
-        'form': form,
-        'back': path('admin_team')
-    }) }}
+<div class="row">
+    <div class="col-md-6">
+        {{ include('default/_form.html.twig', {
+            'title': team.name|default('create'|trans),
+            'form': form,
+            'back': path('admin_team')
+        }) }}
+    </div>
+    <div class="col-md-6">
+        {% if not customerForm is null %}
+        {{ include('default/_form.html.twig', {
+            'title': 'teams.customer_access'|trans({}, 'teams'),
+            'form': customerForm,
+        }) }}
+        {% endif %}
+        
+        {% if not projectForm is null %}
+        {{ include('default/_form.html.twig', {
+            'title': 'teams.project_access'|trans({}, 'teams'),
+            'form': projectForm,
+        }) }}
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

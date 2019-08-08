@@ -10,7 +10,9 @@
 namespace App\Controller;
 
 use App\Entity\Team;
+use App\Form\TeamCustomerForm;
 use App\Form\TeamEditForm;
+use App\Form\TeamProjectForm;
 use App\Form\Toolbar\TeamToolbarForm;
 use App\Repository\Query\TeamQuery;
 use App\Repository\TeamRepository;
@@ -76,41 +78,23 @@ class TeamController extends AbstractController
      */
     public function createTeam(Request $request)
     {
-        $team = new Team();
-
-        return $this->renderTeamForm($team, $request);
+        return $this->renderEditScreen(new Team(), $request);
     }
 
     /**
      * @Route(path="/{id}/edit", name="admin_team_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', team)")
-     *
-     * @param Team $team
-     * @param Request $request
-     * @return RedirectResponse|Response
      */
     public function editAction(Team $team, Request $request)
     {
-        return $this->renderTeamForm($team, $request);
+        return $this->renderEditScreen($team, $request);
     }
 
-    protected function getToolbarForm(TeamQuery $query): FormInterface
+    private function renderEditScreen(Team $team, Request $request): Response
     {
-        return $this->createForm(TeamToolbarForm::class, $query, [
-            'action' => $this->generateUrl('admin_team', [
-                'page' => $query->getPage(),
-            ]),
-            'method' => 'GET',
-        ]);
-    }
+        $customerForm = null;
+        $projectForm = null;
 
-    /**
-     * @param Team $team
-     * @param Request $request
-     * @return RedirectResponse|Response
-     */
-    protected function renderTeamForm(Team $team, Request $request)
-    {
         if ($team->getId() === null) {
             $url = $this->generateUrl('admin_team_create');
         } else {
@@ -122,22 +106,76 @@ class TeamController extends AbstractController
             'method' => 'POST',
         ]);
 
-        $editForm->handleRequest($request);
+        if ($request->isMethod('POST') && (null !== ($editFormValues = $request->get($editForm->getName())))) {
+            $editForm->submit($editFormValues, true);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            try {
-                $this->repository->saveTeam($team);
-                $this->flashSuccess('action.update.success');
+            if ($editForm->isValid()) {
+                try {
+                    $this->repository->saveTeam($team);
+                    $this->flashSuccess('action.update.success');
 
-                return $this->redirectToRoute('admin_team');
-            } catch (ORMException $ex) {
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                    return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
+                } catch (ORMException $ex) {
+                    $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                }
+            }
+        }
+
+        if (null !== $team->getId()) {
+            $customerForm = $this->createForm(TeamCustomerForm::class, $team, [
+                'method' => 'POST',
+            ]);
+
+            if ($request->isMethod('POST') && (null !== ($customerFormValues = $request->get($customerForm->getName())))) {
+                $customerForm->submit($customerFormValues, true);
+
+                if ($customerForm->isValid()) {
+                    try {
+                        $this->repository->saveTeam($team);
+                        $this->flashSuccess('action.update.success');
+
+                        return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
+                    } catch (ORMException $ex) {
+                        $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                    }
+                }
+            }
+
+            $projectForm = $this->createForm(TeamProjectForm::class, $team, [
+                'method' => 'POST',
+            ]);
+
+            if ($request->isMethod('POST') && (null !== ($projectFormValues = $request->get($projectForm->getName())))) {
+                $projectForm->submit($projectFormValues, true);
+
+                if ($projectForm->isValid()) {
+                    try {
+                        $this->repository->saveTeam($team);
+                        $this->flashSuccess('action.update.success');
+
+                        return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
+                    } catch (ORMException $ex) {
+                        $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                    }
+                }
             }
         }
 
         return $this->render('team/edit.html.twig', [
             'team' => $team,
-            'form' => $editForm->createView()
+            'form' => $editForm->createView(),
+            'customerForm' => $customerForm ? $customerForm->createView() : null,
+            'projectForm' => $projectForm ? $projectForm->createView() : null,
+        ]);
+    }
+
+    private function getToolbarForm(TeamQuery $query): FormInterface
+    {
+        return $this->createForm(TeamToolbarForm::class, $query, [
+            'action' => $this->generateUrl('admin_team', [
+                'page' => $query->getPage(),
+            ]),
+            'method' => 'GET',
         ]);
     }
 }
