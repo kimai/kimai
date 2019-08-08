@@ -99,6 +99,7 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setValue(0)
                 ->setType(MoneyType::class)
                 ->setEnabled($enableHourlyRate)
+                ->setOptions(['currency' => 'EUR']) // TODO make me configurable
                 ->addConstraint(new Range(['min' => 0])),
 
             (new UserPreference())
@@ -165,6 +166,7 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
                     ->setType($preference->getType())
                     ->setConstraints($preference->getConstraints())
                     ->setEnabled($preference->isEnabled())
+                    ->setOptions($preference->getOptions())
                 ;
             } else {
                 $prefs[$preference->getName()] = $preference;

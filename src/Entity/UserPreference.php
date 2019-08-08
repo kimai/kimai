@@ -38,7 +38,6 @@ class UserPreference
      * @ORM\Column(name="id", type="integer")
      */
     private $id;
-
     /**
      * @var User
      *
@@ -47,7 +46,6 @@ class UserPreference
      * @Assert\NotNull()
      */
     private $user;
-
     /**
      * @var string
      *
@@ -55,28 +53,29 @@ class UserPreference
      * @Assert\Length(min=2, max=50)
      */
     private $name;
-
     /**
      * @var string
      *
      * @ORM\Column(name="value", type="string", length=255, nullable=true)
      */
     private $value;
-
     /**
      * @var string
      */
-    protected $type;
-
+    private $type;
     /**
      * @var bool
      */
-    protected $enabled = true;
-
+    private $enabled = true;
     /**
      * @var Constraint[]
      */
-    protected $constraints = [];
+    private $constraints = [];
+    /**
+     * An array of options for the form element
+     * @var array 
+     */
+    private $options = [];
 
     /**
      * @return int
@@ -236,5 +235,28 @@ class UserPreference
     public function getConstraints()
     {
         return $this->constraints;
+    }
+
+    /**
+     * Set an array of options for the FormType.
+     * 
+     * @param array $options
+     * @return UserPreference
+     */
+    public function setOptions(array $options): UserPreference
+    {
+        $this->options = $options;
+        
+        return $this;
+    }
+
+    /**
+     * Returns an array with options for the FormType.
+     * 
+     * @return array
+     */
+    public function getOptions(): array 
+    {
+        return $this->options;
     }
 }
