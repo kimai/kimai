@@ -10,6 +10,7 @@
 namespace App\Repository\Query;
 
 use App\Entity\Customer;
+use App\Entity\Team;
 use App\Entity\User;
 
 /**
@@ -29,6 +30,10 @@ final class CustomerFormTypeQuery
      * @var User
      */
     private $user;
+    /**
+     * @var array<Team>
+     */
+    private $teams = [];
 
     /**
      * @param Customer|int|null $customer
@@ -36,6 +41,21 @@ final class CustomerFormTypeQuery
     public function __construct($customer = null)
     {
         $this->customer = $customer;
+    }
+
+    public function addTeam(Team $team): CustomerFormTypeQuery
+    {
+        $this->teams[$team->getId()] = $team;
+
+        return $this;
+    }
+
+    /**
+     * @return Team[]
+     */
+    public function getTeams(): array
+    {
+        return array_values($this->teams);
     }
 
     public function getUser(): ?User

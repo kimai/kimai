@@ -9,6 +9,7 @@
 
 namespace App\Repository\Query;
 
+use App\Entity\Team;
 use App\Entity\User;
 
 /**
@@ -50,6 +51,25 @@ class BaseQuery
      * @var User
      */
     private $user;
+    /**
+     * @var Team[]
+     */
+    private $teams = [];
+
+    public function addTeam(Team $team): self
+    {
+        $this->teams[$team->getId()] = $team;
+
+        return $this;
+    }
+
+    /**
+     * @return Team[]
+     */
+    public function getTeams(): array
+    {
+        return array_values($this->teams);
+    }
 
     public function getCurrentUser(): ?User
     {

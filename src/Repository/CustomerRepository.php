@@ -108,14 +108,23 @@ class CustomerRepository extends EntityRepository
         return $stats;
     }
 
-    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null)
+    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
     {
-        // make sure that super-admins see all customers, no matter which team they assigned to
-        if (null !== $user && $user->isSuperAdmin()) {
+        // make sure that all queries without a user see all customers
+        if (null === $user && empty($teams)) {
             return;
         }
 
-        if (null === $user || $user->getTeams()->count() == 0) {
+        // make sure that super-admins see all customers
+        if ($user !== null && $user->isSuperAdmin()) {
+            return;
+        }
+
+        if (null !== $user) {
+            $teams = array_merge($teams, $user->getTeams()->toArray());
+        }
+
+        if (empty($teams)) {
             $qb->andWhere($qb->expr()->isNull('teams'));
 
             return;
@@ -125,8 +134,9 @@ class CustomerRepository extends EntityRepository
             $qb->expr()->isNull('teams'),
             $qb->expr()->isMemberOf(':teams', 'c.teams')
         );
-        $qb->setParameter('teams', $user->getTeams());
         $qb->andWhere($or);
+
+        $qb->setParameter('teams', $teams);
     }
 
     /**
@@ -168,7 +178,7 @@ class CustomerRepository extends EntityRepository
             $qb->setParameter('ignored', $query->getCustomerToIgnore());
         }
 
-        $this->addPermissionCriteria($qb, $query->getUser());
+        $this->addPermissionCriteria($qb, $query->getUser(), $query->getTeams());
 
         return $qb;
     }
@@ -191,7 +201,7 @@ class CustomerRepository extends EntityRepository
             $qb->setParameter('visible', false, \PDO::PARAM_BOOL);
         }
 
-        $this->addPermissionCriteria($qb, $query->getCurrentUser());
+        $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
 
         return $qb;
     }

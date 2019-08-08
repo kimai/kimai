@@ -92,14 +92,23 @@ class ProjectRepository extends EntityRepository
         return $stats;
     }
 
-    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null)
+    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
     {
-        // make sure that super-admins see all projects, no matter which team they assigned to
+        // make sure that all queries without a user see all projects
+        if (null === $user && empty($teams)) {
+            return;
+        }
+
+        // make sure that super-admins see all projects
         if (null !== $user && $user->isSuperAdmin()) {
             return;
         }
 
-        if (null === $user || $user->getTeams()->count() == 0) {
+        if (null !== $user) {
+            $teams = array_merge($teams, $user->getTeams()->toArray());
+        }
+
+        if (empty($teams)) {
             $qb->andWhere($qb->expr()->isNull('c_teams'));
             $qb->andWhere($qb->expr()->isNull('teams'));
 
@@ -116,9 +125,9 @@ class ProjectRepository extends EntityRepository
             $qb->expr()->isNull('c_teams'),
             $qb->expr()->isMemberOf(':teams', 'c.teams')
         );
-        $qb->setParameter('teams', $user->getTeams());
-
         $qb->andWhere($orCustomer);
+
+        $qb->setParameter('teams', $teams);
     }
 
     /**
@@ -172,7 +181,7 @@ class ProjectRepository extends EntityRepository
             $qb->setParameter('ignored', $query->getProjectToIgnore());
         }
 
-        $this->addPermissionCriteria($qb, $query->getUser());
+        $this->addPermissionCriteria($qb, $query->getUser(), $query->getTeams());
 
         return $qb;
     }

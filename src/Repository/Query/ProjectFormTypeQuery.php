@@ -11,6 +11,7 @@ namespace App\Repository\Query;
 
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\Team;
 use App\Entity\User;
 
 final class ProjectFormTypeQuery
@@ -31,6 +32,10 @@ final class ProjectFormTypeQuery
      * @var User
      */
     private $user;
+    /**
+     * @var array<Team>
+     */
+    private $teams = [];
 
     /**
      * @param Project|int|null $project
@@ -40,6 +45,21 @@ final class ProjectFormTypeQuery
     {
         $this->project = $project;
         $this->customer = $customer;
+    }
+
+    public function addTeam(Team $team): ProjectFormTypeQuery
+    {
+        $this->teams[$team->getId()] = $team;
+
+        return $this;
+    }
+
+    /**
+     * @return Team[]
+     */
+    public function getTeams(): array
+    {
+        return array_values($this->teams);
     }
 
     public function getUser(): ?User
