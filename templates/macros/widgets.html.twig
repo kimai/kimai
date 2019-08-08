@@ -42,6 +42,8 @@
     {% import _self as macro %}
     {% if role == 'ROLE_SUPER_ADMIN' %}
         {{ macro.label(role, 'danger') }}
+    {% elseif role == 'ROLE_ADMIN' %}
+        {{ macro.label(role, 'warning') }}
     {% else %}
         {{ macro.label(role, 'primary') }}
     {% endif %}
