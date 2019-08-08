@@ -34,7 +34,6 @@ class Team
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
     /**
      * @var string
      *
@@ -43,17 +42,30 @@ class Team
      * @Assert\Length(min=2, max=100)
      */
     private $name;
-
     /**
      * @var User[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="User", mappedBy="teams", fetch="EXTRA_LAZY")
      */
-    protected $users;
+    private $users;
+    /**
+     * @var Customer[]|ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Customer", mappedBy="teams", fetch="EXTRA_LAZY")
+     */
+    private $customers;
+    /**
+     * @var Project[]|ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Project", mappedBy="teams", fetch="EXTRA_LAZY")
+     */
+    private $projects;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->customers = new ArrayCollection();
+        $this->projects = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,21 +106,67 @@ class Team
     }
 
     /**
-     * @param Collection<User> $users
-     */
-    public function setUsers(Collection $users)
-    {
-        foreach ($users as $user) {
-            $this->addUser($user);
-        }
-    }
-
-    /**
      * @return Collection<User>
      */
     public function getUsers(): iterable
     {
         return $this->users;
+    }
+
+    public function addCustomer(Customer $customer)
+    {
+        if ($this->customers->contains($customer)) {
+            return;
+        }
+
+        $this->customers->add($customer);
+        $customer->addTeam($this);
+    }
+
+    public function removeCustomer(Customer $customer)
+    {
+        if (!$this->customers->contains($customer)) {
+            return;
+        }
+
+        $this->customers->removeElement($customer);
+        $customer->removeTeam($this);
+    }
+
+    /**
+     * @return Collection<Customer>
+     */
+    public function getCustomers(): iterable
+    {
+        return $this->customers;
+    }
+
+    public function addProject(Project $project)
+    {
+        if ($this->projects->contains($project)) {
+            return;
+        }
+
+        $this->projects->add($project);
+        $project->addTeam($this);
+    }
+
+    public function removeProject(Project $project)
+    {
+        if (!$this->projects->contains($project)) {
+            return;
+        }
+
+        $this->projects->removeElement($project);
+        $project->removeTeam($this);
+    }
+
+    /**
+     * @return Collection<Project>
+     */
+    public function getProjects(): iterable
+    {
+        return $this->projects;
     }
 
     /**

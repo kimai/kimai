@@ -163,7 +163,7 @@ class Customer implements EntityWithMetaFields
     /**
      * @var Team[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Team", cascade={"remove", "persist"})
+     * @ORM\ManyToMany(targetEntity="Team", cascade={"remove", "persist"}, inversedBy="customers")
      * @ORM\JoinTable(
      *  name="kimai2_customers_teams",
      *  joinColumns={
