@@ -9,6 +9,7 @@
 
 namespace App\DependencyInjection;
 
+use App\Entity\Customer;
 use App\Entity\User;
 use App\Timesheet\Rounding\RoundingInterface;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
@@ -439,7 +440,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('timezone')->defaultNull()->end()
                         ->scalarNode('country')->defaultValue('DE')->end()
-                        ->scalarNode('currency')->defaultValue('EUR')->end()
+                        ->scalarNode('currency')->defaultValue(Customer::DEFAULT_CURRENCY)->end()
                     ->end()
                 ->end()
                 ->arrayNode('user')
@@ -448,9 +449,9 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('timezone')->defaultNull()->end()
                         ->scalarNode('language')->defaultValue(User::DEFAULT_LANGUAGE)->end()
                         ->scalarNode('theme')->defaultNull()->end()
+                        ->scalarNode('currency')->defaultValue(Customer::DEFAULT_CURRENCY)->end()
                     ->end()
                 ->end()
-
             ->end()
         ;
 

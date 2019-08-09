@@ -66,6 +66,11 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
         return $this->formConfig->getUserDefaultTheme();
     }
 
+    private function getDefaultCurrency(): ?string
+    {
+        return $this->formConfig->getUserDefaultCurrency();
+    }
+
     private function getDefaultLanguage(): string
     {
         return $this->formConfig->getUserDefaultLanguage();
@@ -92,7 +97,7 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
 
         if ($this->voter->isGranted('hourly-rate', $user)) {
             $enableHourlyRate = true;
-            $hourlyRateOptions = ['currency' => 'EUR']; // TODO make me configurable
+            $hourlyRateOptions = ['currency' => $this->getDefaultCurrency()];
         }
 
         return [
