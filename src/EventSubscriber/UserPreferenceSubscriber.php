@@ -88,9 +88,11 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
     public function getDefaultPreferences(User $user)
     {
         $enableHourlyRate = false;
+        $hourlyRateOptions = [];
 
         if ($this->voter->isGranted('hourly-rate', $user)) {
             $enableHourlyRate = true;
+            $hourlyRateOptions = ['currency' => 'EUR']; // TODO make me configurable
         }
 
         return [
@@ -99,7 +101,7 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setValue(0)
                 ->setType(MoneyType::class)
                 ->setEnabled($enableHourlyRate)
-                ->setOptions(['currency' => 'EUR']) // TODO make me configurable
+                ->setOptions($hourlyRateOptions)
                 ->addConstraint(new Range(['min' => 0])),
 
             (new UserPreference())
