@@ -264,6 +264,10 @@
                 <source>label.team</source>
                 <target>Team</target>
             </trans-unit>
+            <trans-unit id="label.teamlead">
+                <source>label.teamlead</source>
+                <target>Teamleiter</target>
+            </trans-unit>
             <trans-unit id="label.create_more">
                 <source>label.create_more</source>
                 <target>Weitere Einträge erstellen</target>
