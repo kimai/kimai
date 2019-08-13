@@ -52,6 +52,7 @@ abstract class AbstractVoterTest extends TestCase
         $user = $this->getMockBuilder(User::class)->getMock();
         $user->method('getId')->willReturn($id);
         $user->method('getRoles')->willReturn($roles);
+        $user->method('getTeams')->willReturn([]);
 
         return $user;
     }

@@ -68,6 +68,7 @@ class ActivityController extends AbstractController
     public function indexAction($page, Request $request)
     {
         $query = new ActivityQuery();
+        $query->setCurrentUser($this->getUser());
         $query->setPage($page);
 
         $form = $this->getToolbarForm($query);

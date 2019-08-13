@@ -111,6 +111,10 @@ class TeamController extends AbstractController
 
             if ($editForm->isValid()) {
                 try {
+                    // make sure that the teamlead is always part of the team, otherwise permission checks
+                    // and filtering might not work as expected!
+                    $team->addUser($team->getTeamLead());
+
                     $this->repository->saveTeam($team);
                     $this->flashSuccess('action.update.success');
 

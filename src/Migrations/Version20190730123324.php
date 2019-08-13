@@ -31,8 +31,10 @@ final class Version20190730123324 extends AbstractMigration
         $teams = $schema->createTable('kimai2_teams');
         $teams->addColumn('id', 'integer', ['autoincrement' => true, 'notnull' => true]);
         $teams->addColumn('name', 'string', ['notnull' => true, 'length' => 100]);
+        $teams->addColumn('teamlead_id', 'integer', ['length' => 11, 'notnull' => true]);
         $teams->setPrimaryKey(['id']);
         $teams->addUniqueIndex(['name'], 'UNIQ_3BEDDC7F5E237E06');
+        $teams->addForeignKeyConstraint('kimai2_users', ['teamlead_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_3BEDDC7F8F7DE5D7');
 
         $userTeams = $schema->createTable('kimai2_users_teams');
         $userTeams->addColumn('user_id', 'integer', ['length' => 11, 'notnull' => true]);

@@ -26,12 +26,12 @@ class ProjectControllerTest extends ControllerBaseTest
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/admin/project/');
-        $this->assertUrlIsSecuredForRole(User::ROLE_TEAMLEAD, '/admin/project/');
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/admin/project/');
     }
 
     public function testIndexAction()
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->assertAccessIsGranted($client, '/admin/project/');
         $this->assertHasDataTable($client);
     }

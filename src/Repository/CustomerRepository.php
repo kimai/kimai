@@ -115,14 +115,16 @@ class CustomerRepository extends EntityRepository
             return;
         }
 
-        // make sure that super-admins see all customers
-        if ($user !== null && $user->isSuperAdmin()) {
+        // make sure that admins see all customers
+        if (null !== $user && ($user->isSuperAdmin() || $user->isAdmin())) {
             return;
         }
 
         if (null !== $user) {
             $teams = array_merge($teams, $user->getTeams()->toArray());
         }
+
+        $qb->leftJoin('c.teams', 'teams');
 
         if (empty($teams)) {
             $qb->andWhere($qb->expr()->isNull('teams'));
@@ -162,7 +164,6 @@ class CustomerRepository extends EntityRepository
 
         $qb->select('c')
             ->from(Customer::class, 'c')
-            ->leftJoin('c.teams', 'teams')
             ->orderBy('c.name', 'ASC');
 
         $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
@@ -190,7 +191,6 @@ class CustomerRepository extends EntityRepository
         $qb->select('c')
             ->from(Customer::class, 'c')
             ->leftJoin('c.meta', 'meta')
-            ->leftJoin('c.teams', 'teams')
             ->orderBy('c.' . $query->getOrderBy(), $query->getOrder());
 
         if (CustomerQuery::SHOW_VISIBLE == $query->getVisibility()) {

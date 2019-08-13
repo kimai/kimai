@@ -99,14 +99,17 @@ class ProjectRepository extends EntityRepository
             return;
         }
 
-        // make sure that super-admins see all projects
-        if (null !== $user && $user->isSuperAdmin()) {
+        // make sure that admins see all projects
+        if (null !== $user && ($user->isSuperAdmin() || $user->isAdmin())) {
             return;
         }
 
         if (null !== $user) {
             $teams = array_merge($teams, $user->getTeams()->toArray());
         }
+
+        $qb->leftJoin('p.teams', 'teams')
+            ->leftJoin('c.teams', 'c_teams');
 
         if (empty($teams)) {
             $qb->andWhere($qb->expr()->isNull('c_teams'));
@@ -156,8 +159,6 @@ class ProjectRepository extends EntityRepository
             ->select('p')
             ->from(Project::class, 'p')
             ->leftJoin('p.customer', 'c')
-            ->leftJoin('p.teams', 'teams')
-            ->leftJoin('c.teams', 'c_teams')
             ->addOrderBy('c.name', 'ASC')
             ->addOrderBy('p.name', 'ASC')
         ;
@@ -194,8 +195,6 @@ class ProjectRepository extends EntityRepository
             ->select('p')
             ->from(Project::class, 'p')
             ->leftJoin('p.customer', 'c')
-            ->leftJoin('p.teams', 'teams')
-            ->leftJoin('c.teams', 'c_teams')
         ;
 
         if (in_array($query->getVisibility(), [ProjectQuery::SHOW_VISIBLE, ProjectQuery::SHOW_HIDDEN])) {

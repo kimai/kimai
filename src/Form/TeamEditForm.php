@@ -30,6 +30,11 @@ class TeamEditForm extends AbstractType
                     'autofocus' => 'autofocus'
                 ],
             ])
+            ->add('teamlead', UserType::class, [
+                'label' => 'label.teamlead',
+                'multiple' => false,
+                'expanded' => false,
+            ])
             ->add('users', UserType::class, [
                 'multiple' => true,
                 'expanded' => true,

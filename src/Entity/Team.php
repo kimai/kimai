@@ -43,6 +43,14 @@ class Team
      */
     private $name;
     /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
+     * @Assert\NotNull()
+     */
+    private $teamlead;
+    /**
      * @var User[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="User", mappedBy="teams", fetch="EXTRA_LAZY")
@@ -83,6 +91,29 @@ class Team
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    public function getTeamLead(): ?User
+    {
+        return $this->teamlead;
+    }
+
+    public function isTeamlead(User $user): bool
+    {
+        return $this->teamlead === $user;
+    }
+
+    public function setTeamLead(User $teamlead): Team
+    {
+        $this->teamlead = $teamlead;
+        $this->addUser($teamlead);
+
+        return $this;
+    }
+
+    public function isMember(User $user): bool
+    {
+        return $this->users->contains($user);
     }
 
     public function addUser(User $user)

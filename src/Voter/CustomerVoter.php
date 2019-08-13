@@ -10,6 +10,7 @@
 namespace App\Voter;
 
 use App\Entity\Customer;
+use App\Entity\Team;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
@@ -67,6 +68,28 @@ class CustomerVoter extends AbstractVoter
             return false;
         }
 
-        return $this->hasRolePermission($user, $attribute . '_customer');
+        if ($this->hasRolePermission($user, $attribute . '_customer')) {
+            return true;
+        }
+
+        $hasTeamleadPermission = $this->hasRolePermission($user, $attribute . '_teamlead_customer');
+        $hasTeamPermission = $this->hasRolePermission($user, $attribute . '_team_customer');
+        
+        if (!$hasTeamleadPermission && !$hasTeamPermission) {
+            return false;
+        }
+
+        /** @var Team $team */
+        foreach ($subject->getTeams() as $team) {
+            if ($hasTeamleadPermission && $team->isTeamlead($user)) {
+                return true;
+            }
+
+            if ($hasTeamPermission && $team->isMember($user)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

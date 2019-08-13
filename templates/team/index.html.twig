@@ -20,6 +20,7 @@
 
         {% set columns = {
             'name': '',
+            'teamlead': '',
             'user': '',
             'actions': 'actions alwaysVisible',
         } %}
@@ -30,6 +31,7 @@
         {% for team in teams %}
             <tr{% if is_granted('edit', team) %} class="open-edit alternative-link" data-href="{{ path('admin_team_edit', {'id': team.id}) }}"{% endif %}>
                 <td>{{ team.name }}</td>
+                <td>{{ widgets.label_user(team.teamlead) }}</td>
                 <td>
                     {% for user in team.users %}
                         {{ widgets.label_user(user) }}&nbsp;

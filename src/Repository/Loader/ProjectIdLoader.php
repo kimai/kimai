@@ -52,9 +52,20 @@ final class ProjectIdLoader implements LoaderInterface
             ->execute();
 
         $qb = $em->createQueryBuilder();
-        $qb->select('PARTIAL p.{id}', 'teams')
+        $qb->select('PARTIAL p.{id}', 'teams', 'teamlead')
             ->from(Project::class, 'p')
             ->leftJoin('p.teams', 'teams')
+            ->leftJoin('teams.teamlead', 'teamlead')
+            ->andWhere($qb->expr()->in('p.id', $ids))
+            ->getQuery()
+            ->execute();
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('PARTIAL p.{id}', 'PARTIAL customer.{id}', 'teams', 'teamlead')
+            ->from(Project::class, 'p')
+            ->leftJoin('p.customer', 'customer')
+            ->leftJoin('customer.teams', 'teams')
+            ->leftJoin('teams.teamlead', 'teamlead')
             ->andWhere($qb->expr()->in('p.id', $ids))
             ->getQuery()
             ->execute();

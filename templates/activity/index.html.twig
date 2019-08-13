@@ -38,13 +38,13 @@
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">
                     {% if entry.project and entry.project.customer %}
                         {# only none-global activities have a project and customer assigned #}
-                        {{ widgets.label_customer(entry.project.customer, path('admin_customer_edit', {'id' : entry.project.customer.id})) }}
+                        {{ widgets.label_customer(entry.project.customer) }}
                     {% endif %}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">
                     {% if entry.project %}
                         {# only none-global activities have a project and customer assigned #}
-                        {{ widgets.label_project(entry.project, path('admin_project_edit', {'id' : entry.project.id})) }}
+                        {{ widgets.label_project(entry.project) }}
                     {% endif %}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment|comment2html }}</td>

@@ -112,9 +112,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
         $dirtyQuery = $query->isDirty();
 
-        if (!$this->includeUserInForms()) {
-            $query->setUser($this->getUser());
-        }
+        $this->prepareQuery($query);
 
         $pager = $this->getRepository()->getPagerfantaForQuery($query);
 
@@ -253,9 +251,7 @@ abstract class TimesheetAbstractController extends AbstractController
         }
         $query->getEnd()->setTime(23, 59, 59);
 
-        if (!$this->includeUserInForms()) {
-            $query->setUser($this->getUser());
-        }
+        $this->prepareQuery($query);
 
         $entries = $this->getRepository()->getTimesheetsForQuery($query);
 
@@ -263,6 +259,11 @@ abstract class TimesheetAbstractController extends AbstractController
             'entries' => $entries,
             'query' => $query,
         ]);
+    }
+
+    protected function prepareQuery(TimesheetQuery $query)
+    {
+        $query->setUser($this->getUser());
     }
 
     protected function getCreateForm(Timesheet $entry, TrackingModeInterface $mode): FormInterface

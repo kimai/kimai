@@ -10,8 +10,10 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Repository\Query\UserFormTypeQuery;
 use App\Repository\Query\UserQuery;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
 class UserRepository extends EntityRepository implements UserLoaderInterface
@@ -26,12 +28,28 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
     }
 
     /**
+     * Used to fetch the currently logged-in user.
+     *
      * @param int $id
      * @return null|User
      */
     public function getUserById($id): ?User
     {
-        return $this->find($id);
+        try {
+            return $this->createQueryBuilder('u')
+                ->select('u', 'p', 't', 'tu', 'tl')
+                ->leftJoin('u.preferences', 'p')
+                ->leftJoin('u.teams', 't')
+                ->leftJoin('t.users', 'tu')
+                ->leftJoin('t.teamlead', 'tl')
+                ->where('u.id = :id')
+                ->setParameter('id', $id)
+                ->getQuery()
+                ->getSingleResult();
+        } catch (\Exception $ex) {
+        }
+
+        return null;
     }
 
     /**
@@ -103,12 +121,49 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
     public function loadUserByUsername($username)
     {
         return $this->createQueryBuilder('u')
-            ->select('u', 'p')
+            ->select('u', 'p', 't', 'tu', 'tl')
             ->leftJoin('u.preferences', 'p')
+            ->leftJoin('u.teams', 't')
+            ->leftJoin('t.users', 'tu')
+            ->leftJoin('t.teamlead', 'tl')
             ->where('u.username = :username')
             ->orWhere('u.email = :username')
             ->setParameter('username', $username)
             ->getQuery()
             ->getSingleResult();
+    }
+
+    public function getQueryBuilderForFormType(UserFormTypeQuery $query): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        $qb->andWhere($qb->expr()->eq('u.enabled', ':enabled'));
+        $qb->setParameter('enabled', true, \PDO::PARAM_BOOL);
+
+        $qb->orderBy('u.username', 'ASC');
+
+        $this->addPermissionCriteria($qb, $query->getUser(), $query->getTeams());
+
+        return $qb;
+    }
+
+    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
+    {
+        // make sure that all queries without a user see all user
+        if (null === $user && empty($teams)) {
+            return;
+        }
+
+        // make sure that admins see all user
+        if (null !== $user && ($user->isSuperAdmin() || $user->isAdmin())) {
+            return;
+        }
+
+        if (null !== $user) {
+            $qb->leftJoin('u.teams', 'teams')
+                ->leftJoin('teams.users', 'users')
+                ->andWhere('teams.teamlead = :id')
+                ->setParameter('id', $user);
+        }
     }
 }

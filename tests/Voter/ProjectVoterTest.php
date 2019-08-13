@@ -9,6 +9,7 @@
 
 namespace App\Tests\Voter;
 
+use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Voter\ProjectVoter;
@@ -27,6 +28,10 @@ class ProjectVoterTest extends AbstractVoterTest
     {
         $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
         $sut = $this->getVoter(ProjectVoter::class, $user);
+
+        if ($subject instanceof Project) {
+            $subject->setCustomer(new Customer());
+        }
 
         $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]));
     }

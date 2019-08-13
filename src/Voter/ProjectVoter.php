@@ -10,6 +10,7 @@
 namespace App\Voter;
 
 use App\Entity\Project;
+use App\Entity\Team;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
@@ -67,6 +68,39 @@ class ProjectVoter extends AbstractVoter
             return false;
         }
 
-        return $this->hasRolePermission($user, $attribute . '_project');
+        if ($this->hasRolePermission($user, $attribute . '_project')) {
+            return true;
+        }
+
+        $hasTeamleadPermission = $this->hasRolePermission($user, $attribute . '_teamlead_project');
+        $hasTeamPermission = $this->hasRolePermission($user, $attribute . '_team_project');
+
+        if (!$hasTeamleadPermission && !$hasTeamPermission) {
+            return false;
+        }
+
+        /** @var Team $team */
+        foreach ($subject->getTeams() as $team) {
+            if ($hasTeamleadPermission && $user->isTeamleadOf($team)) {
+                return true;
+            }
+
+            if ($hasTeamPermission && $user->isInTeam($team)) {
+                return true;
+            }
+        }
+
+        /** @var Team $team */
+        foreach ($subject->getCustomer()->getTeams() as $team) {
+            if ($hasTeamleadPermission && $user->isTeamleadOf($team)) {
+                return true;
+            }
+
+            if ($hasTeamPermission && $user->isInTeam($team)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

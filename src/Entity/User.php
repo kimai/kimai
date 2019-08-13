@@ -330,6 +330,26 @@ class User extends BaseUser implements UserInterface
         }
     }
 
+    public function isInTeam(Team $team): bool
+    {
+        return $this->teams->contains($team);
+    }
+
+    public function isTeamleadOf(Team $team): bool
+    {
+        return $team->getTeamLead()->getId() === $this->id;
+    }
+
+    public function isTeamlead(): bool
+    {
+        return $this->hasRole(static::ROLE_TEAMLEAD);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->hasRole(static::ROLE_ADMIN);
+    }
+
     /**
      * @return string
      */
