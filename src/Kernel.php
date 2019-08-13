@@ -88,6 +88,7 @@ class Kernel extends BaseKernel
             return;
         }
 
+        return;
         $finder = new Finder();
         $finder->ignoreUnreadableDirs()->directories()->name('*Bundle');
         /** @var SplFileInfo $bundleDir */
