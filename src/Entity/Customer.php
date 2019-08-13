@@ -41,7 +41,7 @@ class Customer implements EntityWithMetaFields
      * @var string
      *
      * Do not increase length to more than 190 chars, otherwise "Index column size too large." will be triggered.
-     * 
+     *
      * @ORM\Column(name="name", type="string", length=150, nullable=false)
      * @Assert\NotBlank()
      * @Assert\Length(min=2, max=150)
