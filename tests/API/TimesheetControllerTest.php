@@ -744,7 +744,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertDefaultStructure($result, true);
         $this->assertEquals('foo', $result['description']);
-        $this->assertEquals([['name' => 'sdfsdf', 'value' => 'nnnnn'],['name' => '1234567890', 'value' => '1234567890']], $result['metaFields']);
+        $this->assertEquals([['name' => 'sdfsdf', 'value' => 'nnnnn'], ['name' => '1234567890', 'value' => '1234567890']], $result['metaFields']);
         $this->assertEquals(['another', 'testing', 'bar'], $result['tags']);
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
