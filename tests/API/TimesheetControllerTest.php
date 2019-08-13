@@ -12,7 +12,9 @@ namespace App\Tests\API;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\Tag;
 use App\Entity\Timesheet;
+use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
@@ -720,14 +722,19 @@ class TimesheetControllerTest extends APIControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
-        $data = [
-            'description' => 'foo',
-            'tags' => 'another,testing,bar'
-        ];
-        $this->request($client, '/api/timesheets/1', 'PATCH', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
-
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var Timesheet $timesheet */
+        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $timesheet->setDescription('foo');
+        $timesheet->addTag((new Tag())->setName('another'));
+        $timesheet->addTag((new Tag())->setName('testing'));
+        $timesheet->addTag((new Tag())->setName('bar'));
+        $timesheet->setMetaField((new TimesheetMeta())->setName('sdfsdf')->setValue('nnnnn')->setIsVisible(true));
+        $timesheet->setMetaField((new TimesheetMeta())->setName('xxxxxxx')->setValue('asdasdasd'));
+        $timesheet->setMetaField((new TimesheetMeta())->setName('1234567890')->setValue('1234567890')->setIsVisible(true));
+        $em->persist($timesheet);
+        $em->flush($timesheet);
+
         $timesheet = $em->getRepository(Timesheet::class)->find(1);
         $this->assertEquals('foo', $timesheet->getDescription());
 
@@ -737,6 +744,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertDefaultStructure($result, true);
         $this->assertEquals('foo', $result['description']);
+        $this->assertEquals([['name' => 'sdfsdf', 'value' => 'nnnnn'],['name' => '1234567890', 'value' => '1234567890']], $result['metaFields']);
         $this->assertEquals(['another', 'testing', 'bar'], $result['tags']);
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
