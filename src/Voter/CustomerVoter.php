@@ -74,7 +74,7 @@ class CustomerVoter extends AbstractVoter
 
         $hasTeamleadPermission = $this->hasRolePermission($user, $attribute . '_teamlead_customer');
         $hasTeamPermission = $this->hasRolePermission($user, $attribute . '_team_customer');
-        
+
         if (!$hasTeamleadPermission && !$hasTeamPermission) {
             return false;
         }
