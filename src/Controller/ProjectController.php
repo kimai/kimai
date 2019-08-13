@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use App\Configuration\FormConfiguration;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Event\ProjectMetaDefinitionEvent;
@@ -42,13 +43,18 @@ class ProjectController extends AbstractController
      */
     private $repository;
     /**
+     * @var FormConfiguration
+     */
+    private $configuration;
+    /**
      * @var EventDispatcherInterface
      */
     protected $dispatcher;
 
-    public function __construct(ProjectRepository $repository, EventDispatcherInterface $dispatcher)
+    public function __construct(ProjectRepository $repository, FormConfiguration $configuration, EventDispatcherInterface $dispatcher)
     {
         $this->repository = $repository;
+        $this->configuration = $configuration;
         $this->dispatcher = $dispatcher;
     }
 
@@ -251,10 +257,10 @@ class ProjectController extends AbstractController
 
     private function createEditForm(Project $project): FormInterface
     {
-        if ($project->getId() === null) {
-            $url = $this->generateUrl('admin_project_create');
-            $currency = Customer::DEFAULT_CURRENCY;
-        } else {
+        $currency = $this->configuration->getCustomerDefaultCurrency();
+        $url = $this->generateUrl('admin_project_create');
+
+        if ($project->getId() !== null) {
             $url = $this->generateUrl('admin_project_edit', ['id' => $project->getId()]);
             $currency = $project->getCustomer()->getCurrency();
         }
