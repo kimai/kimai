@@ -409,8 +409,6 @@ class TimesheetController extends BaseApiController
      *      required=true,
      * )
      *
-     * @Security("is_granted('delete_own_timesheet') or is_granted('delete_other_timesheet')")
-     *
      * @param int $id
      * @return Response
      */
@@ -523,8 +521,6 @@ class TimesheetController extends BaseApiController
      *      required=true,
      * )
      *
-     * @Security("is_granted('stop_own_timesheet') or is_granted('stop_other_timesheet')")
-     *
      * @param int $id
      * @return Response
      * @throws \App\Repository\RepositoryException
@@ -568,9 +564,7 @@ class TimesheetController extends BaseApiController
      *      required=true,
      * )
      *
-     * @Rest\RequestParam(name="copy", requirements="all|tags|description", strict=true, nullable=true, description="Whether description and tags are copied to the new entry. Allowed values: all, tags, description (default: nothing is copied)")
-     *
-     * @Security("is_granted('start_own_timesheet') or is_granted('start_other_timesheet')")
+     * @Rest\RequestParam(name="copy", requirements="all|tags|description", strict=true, nullable=true, description="Whether description and tags are copied to the new entry. Allowed values: all, tags, description, meta (default: nothing is copied)")
      *
      * @param int $id
      * @return Response
@@ -582,8 +576,6 @@ class TimesheetController extends BaseApiController
     {
         /** @var Timesheet $timesheet */
         $timesheet = $this->repository->find($id);
-        /** @var User $user */
-        $user = $this->getUser();
 
         if (null === $timesheet) {
             throw new NotFoundException();
@@ -592,6 +584,9 @@ class TimesheetController extends BaseApiController
         if (!$this->isGranted('start', $timesheet)) {
             throw new AccessDeniedHttpException('You are not allowed to re-start this timesheet');
         }
+
+        /** @var User $user */
+        $user = $this->getUser();
 
         $entry = new Timesheet();
         $entry
@@ -609,6 +604,13 @@ class TimesheetController extends BaseApiController
             if (in_array($copy, ['tags', 'all'])) {
                 foreach ($timesheet->getTags() as $tag) {
                     $entry->addTag($tag);
+                }
+            }
+
+            if (in_array($copy, ['meta', 'all'])) {
+                foreach ($timesheet->getMetaFields() as $metaField) {
+                    $metaNew = clone $metaField;
+                    $entry->setMetaField($metaNew);
                 }
             }
         }
@@ -649,8 +651,6 @@ class TimesheetController extends BaseApiController
      *      description="Timesheet record ID to switch export state",
      *      required=true,
      * )
-     *
-     * @Security("is_granted('edit_export_own_timesheet') or is_granted('edit_export_other_timesheet')")
      *
      * @param int $id
      * @return Response

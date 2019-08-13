@@ -808,7 +808,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
         $this->request($client, '/api/timesheets/1/export', 'PATCH');
-        $this->assertApiResponseAccessDenied($client->getResponse(), 'Access denied.');
+        $this->assertApiResponseAccessDenied($client->getResponse(), 'You are not allowed to lock this timesheet');
     }
 
     public function testExportThrowsNotFound()
