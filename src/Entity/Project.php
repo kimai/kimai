@@ -268,16 +268,6 @@ class Project implements EntityWithMetaFields
     }
 
     /**
-     * @param Collection<Team> $teams
-     */
-    public function setTeams(Collection $teams)
-    {
-        foreach ($teams as $team) {
-            $this->addTeam($team);
-        }
-    }
-
-    /**
      * @return string
      */
     public function __toString()

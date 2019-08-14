@@ -320,16 +320,6 @@ class User extends BaseUser implements UserInterface
         return $this->teams;
     }
 
-    /**
-     * @param Collection<Team> $teams
-     */
-    public function setTeams(Collection $teams)
-    {
-        foreach ($teams as $team) {
-            $this->addTeam($team);
-        }
-    }
-
     public function isInTeam(Team $team): bool
     {
         return $this->teams->contains($team);
