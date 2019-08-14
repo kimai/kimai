@@ -11,7 +11,6 @@ namespace App\Tests\Repository\Query;
 
 use App\Entity\Team;
 use App\Entity\User;
-use App\Repository\Query\ProjectFormTypeQuery;
 use App\Repository\Query\UserFormTypeQuery;
 
 /**
