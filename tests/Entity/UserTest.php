@@ -107,8 +107,35 @@ class UserTest extends TestCase
         self::assertEmpty($team->getUsers());
 
         $sut->addTeam($team);
-        self::assertEquals(1, $sut->getTeams()->count());
+        self::assertCount(1, $sut->getTeams());
         self::assertSame($team, $sut->getTeams()[0]);
         self::assertSame($sut, $team->getUsers()[0]);
+
+        self::assertFalse($sut->isTeamleadOf($team));
+        self::assertTrue($sut->isInTeam($team));
+
+        $team2 = new Team();
+        self::assertFalse($sut->isInTeam($team2));
+        self::assertFalse($sut->isTeamleadOf($team2));
+        $team2->setTeamLead($sut);
+        self::assertTrue($sut->isTeamleadOf($team2));
+        self::assertTrue($sut->isInTeam($team2));
+
+        $sut->removeTeam(new Team());
+        self::assertCount(2, $sut->getTeams());
+        $sut->removeTeam($team);
+        self::assertCount(1, $sut->getTeams());
+        $sut->removeTeam($team2);
+        self::assertCount(0, $sut->getTeams());
+    }
+
+    public function testRoles()
+    {
+        $sut = new User();
+        self::assertFalse($sut->isTeamlead());
+        $sut->addRole(User::ROLE_ADMIN);
+        self::assertFalse($sut->isTeamlead());
+        $sut->addRole(User::ROLE_TEAMLEAD);
+        self::assertTrue($sut->isTeamlead());
     }
 }

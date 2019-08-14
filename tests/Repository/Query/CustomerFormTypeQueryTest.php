@@ -17,7 +17,7 @@ use App\Repository\Query\CustomerFormTypeQuery;
 /**
  * @covers \App\Repository\Query\CustomerFormTypeQuery
  */
-class ProjectFormTypeQueryTest extends BaseQueryTest
+class CustomerFormTypeQueryTest extends BaseQueryTest
 {
     public function testQuery()
     {

@@ -144,6 +144,7 @@ class CustomerTest extends TestCase
         self::assertSame($team, $sut->getTeams()[0]);
         self::assertSame($sut, $team->getCustomers()[0]);
 
+        $sut->removeTeam(new Team());
         $sut->removeTeam($team);
         self::assertCount(0, $sut->getTeams());
         self::assertCount(0, $team->getCustomers());

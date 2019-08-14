@@ -55,7 +55,7 @@ class BaseQueryTest extends TestCase
     {
         self::assertEmpty($sut->getTeams());
 
-        $sut->addTeam(new Team());
+        self::assertInstanceOf(BaseQuery::class, $sut->addTeam(new Team()));
         self::assertEquals(1, count($sut->getTeams()));
     }
 
