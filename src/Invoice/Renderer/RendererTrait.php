@@ -104,8 +104,10 @@ trait RendererTrait
             'template.due_days' => $model->getTemplate()->getDueDays(),
 
             'query.begin' => $this->getFormattedDateTime($model->getQuery()->getBegin()),
+            'query.day' => $model->getQuery()->getBegin()->format('d'),
             'query.end' => $this->getFormattedDateTime($model->getQuery()->getEnd()),
             'query.month' => $this->getFormattedMonthName($model->getQuery()->getBegin()),
+            'query.month_number' => $model->getQuery()->getBegin()->format('m'),
             'query.year' => $model->getQuery()->getBegin()->format('Y'),
         ];
 
