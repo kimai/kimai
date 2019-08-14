@@ -9,9 +9,12 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\Team;
 use App\Entity\User;
 use App\Tests\DataFixtures\TeamFixtures;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 
 /**
  * @group integration
@@ -82,5 +85,63 @@ class TeamControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $editForm = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
         $this->assertEquals('Test Team 2', $editForm->get('team_edit_form[name]')->getValue());
+    }
+
+    public function testEditCustomerAccessAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        /** @var EntityManager $em */
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $fixture = new TeamFixtures();
+        $fixture->setAmount(2);
+        $fixture->setAddCustomer(false);
+        $this->importFixture($em, $fixture);
+
+        $team = $em->getRepository(Team::class)->find(1);
+        self::assertEquals(0, count($team->getCustomers()));
+
+        $this->assertAccessIsGranted($client, '/admin/teams/1/edit');
+        $form = $client->getCrawler()->filter('form[name=team_customer_form]')->form();
+
+        /** @var ChoiceFormField $customer */
+        $customer = $form->get('team_customer_form[customers][0]');
+        $customer->tick();
+
+        $client->submit($form);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/teams/1/edit'));
+
+        $team = $em->getRepository(Team::class)->find(1);
+        self::assertEquals(1, count($team->getCustomers()));
+    }
+
+    public function testEditProjectAccessAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        /** @var EntityManager $em */
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $fixture = new TeamFixtures();
+        $fixture->setAmount(2);
+        $fixture->setAddCustomer(false);
+        $this->importFixture($em, $fixture);
+
+        $team = $em->getRepository(Team::class)->find(1);
+        self::assertEquals(0, count($team->getProjects()));
+
+        $this->assertAccessIsGranted($client, '/admin/teams/1/edit');
+        $form = $client->getCrawler()->filter('form[name=team_project_form]')->form();
+
+        /** @var ChoiceFormField $customer */
+        $customer = $form->get('team_project_form[projects]');
+        $customer->select([1]);
+
+        $client->submit($form);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/teams/1/edit'));
+
+        $team = $em->getRepository(Team::class)->find(1);
+        self::assertEquals(1, count($team->getProjects()));
     }
 }

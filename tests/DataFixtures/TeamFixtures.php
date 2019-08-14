@@ -29,10 +29,23 @@ class TeamFixtures extends Fixture
      * @var bool
      */
     protected $addCustomer = true;
+    /**
+     * @var User[]
+     */
+    protected $skipUser = [];
+    /**
+     * @var bool
+     */
+    protected $addUser = true;
 
     public function setAddCustomer(bool $useCustomer)
     {
         $this->addCustomer = $useCustomer;
+    }
+
+    public function setAddUser(bool $useUser)
+    {
+        $this->addUser = $useUser;
     }
 
     public function getAmount(): int
@@ -47,6 +60,11 @@ class TeamFixtures extends Fixture
         return $this;
     }
 
+    public function addUserToIgnore(User $user)
+    {
+        $this->skipUser[] = $user;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -57,14 +75,30 @@ class TeamFixtures extends Fixture
         $customer = $this->getAllCustomers($manager);
 
         for ($i = 0; $i < $this->amount; $i++) {
-            $lead = $user[array_rand($user)];
+            $lead = null;
+            while (null === $lead) {
+                $tmp = $user[array_rand($user)];
+                if (!in_array($tmp, $this->skipUser)) {
+                    $lead = $tmp;
+                }
+            }
+
             $entity = new Team();
             $entity
                 ->setName($faker->name)
                 ->setTeamLead($lead)
             ;
-            $entity->addUser($lead);
-            $entity->addUser($user[array_rand($user)]);
+
+            if ($this->addUser) {
+                $userToAdd = null;
+                while (null === $userToAdd) {
+                    $tmp = $user[array_rand($user)];
+                    if (!in_array($tmp, $this->skipUser)) {
+                        $userToAdd = $tmp;
+                    }
+                }
+                $entity->addUser($userToAdd);
+            }
 
             if ($this->addCustomer) {
                 $entity->addCustomer($customer[array_rand($customer)]);

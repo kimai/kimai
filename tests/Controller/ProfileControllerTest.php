@@ -12,8 +12,10 @@ namespace App\Tests\Controller;
 use App\DataFixtures\UserFixtures;
 use App\Entity\User;
 use App\Entity\UserPreference;
+use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 /**
@@ -313,6 +315,52 @@ class ProfileControllerTest extends ControllerBaseTest
         $user = $this->getUserByRole($em, User::ROLE_USER);
 
         $this->assertEquals(['ROLE_TEAMLEAD', 'ROLE_SUPER_ADMIN', 'ROLE_USER'], $user->getRoles());
+    }
+
+    public function testTeamsActionIsSecured()
+    {
+        $this->assertUrlIsSecured('/profile/' . UserFixtures::USERNAME_USER . '/teams');
+        $this->assertUrlIsSecuredForRole(User::ROLE_TEAMLEAD, '/profile/' . UserFixtures::USERNAME_USER . '/teams');
+    }
+
+    public function testTeamsAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        /** @var User $user */
+        $user = $this->getUserByRole($em, User::ROLE_USER);
+
+        $fixture = new TeamFixtures();
+        $fixture->setAmount(3);
+        $fixture->setAddCustomer(true);
+        $fixture->setAddUser(false);
+        $fixture->addUserToIgnore($user);
+        $this->importFixture($em, $fixture);
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/teams');
+
+        /** @var User $user */
+        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $this->assertEquals([], $user->getTeams()->toArray());
+
+        $form = $client->getCrawler()->filter('form[name=user_teams]')->form();
+        /** @var ChoiceFormField $team */
+        $team = $form->get('user_teams[teams][0]');
+        $team->tick();
+
+        $client->submit($form);
+
+        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/teams'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertHasFlashSuccess($client);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $this->getUserByRole($em, User::ROLE_USER);
+
+        $this->assertEquals(1, $user->getTeams()->count());
     }
 
     public function getPreferencesTestData()
