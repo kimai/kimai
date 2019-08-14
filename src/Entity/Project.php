@@ -243,10 +243,11 @@ class Project implements EntityWithMetaFields
     public function addTeam(Team $team)
     {
         if ($this->teams->contains($team)) {
-            return $this;
+            return;
         }
 
         $this->teams->add($team);
+        $team->addProject($this);
     }
 
     public function removeTeam(Team $team)
@@ -255,6 +256,7 @@ class Project implements EntityWithMetaFields
             return;
         }
         $this->teams->removeElement($team);
+        $team->removeProject($this);
     }
 
     /**

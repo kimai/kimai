@@ -423,6 +423,7 @@ class Customer implements EntityWithMetaFields
         }
 
         $this->teams->add($team);
+        $team->addCustomer($this);
     }
 
     public function removeTeam(Team $team)
@@ -431,6 +432,7 @@ class Customer implements EntityWithMetaFields
             return;
         }
         $this->teams->removeElement($team);
+        $team->removeCustomer($this);
     }
 
     /**

@@ -9,6 +9,8 @@
 
 namespace App\Tests\Entity;
 
+use App\Entity\Project;
+use App\Entity\Team;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -97,4 +99,18 @@ class UserTest extends TestCase
 
         $this->assertEquals('fr', $sut->getLocale());
     }
+
+    public function testTeams()
+    {
+        $sut = new User();
+        $team = new Team();
+        self::assertEmpty($sut->getTeams());
+        self::assertEmpty($team->getUsers());
+
+        $sut->addTeam($team);
+        self::assertEquals(1, $sut->getTeams()->count());
+        self::assertSame($team, $sut->getTeams()[0]);
+        self::assertSame($sut, $team->getUsers()[0]);
+    }
+    
 }
