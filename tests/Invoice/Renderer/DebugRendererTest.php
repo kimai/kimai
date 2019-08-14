@@ -45,6 +45,9 @@ class DebugRendererTest extends TestCase
             $this->assertEntryStructure($row, $meta);
         }
 
+        $begin = $model->getQuery()->getBegin();
+        self::assertEquals($begin->format('m'), $data['model']['query.month_number']);
+        self::assertEquals($begin->format('d'), $data['model']['query.day']);
         // TODO check values or formats?
     }
 
@@ -67,8 +70,10 @@ class DebugRendererTest extends TestCase
             'template.payment_terms',
             'template.due_days',
             'query.begin',
+            'query.day',
             'query.end',
             'query.month',
+            'query.month_number',
             'query.year',
             'customer.id',
             'customer.address',
