@@ -9,8 +9,6 @@
 
 namespace App\Tests\Entity;
 
-use App\Entity\Activity;
-use App\Entity\ActivityMeta;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Team;
@@ -47,7 +45,7 @@ class TeamTest extends TestCase
         $user = (new User())->setAlias('Foo!');
         self::assertInstanceOf(Team::class, $sut->setTeamLead($user));
         self::assertSame($user, $sut->getTeamLead());
-        
+
         self::assertFalse($sut->isTeamlead(new User()));
         self::assertTrue($sut->isTeamlead($user));
     }
@@ -57,7 +55,7 @@ class TeamTest extends TestCase
         $customer = new Customer();
         $customer->setName('foo');
         self::assertEmpty($customer->getTeams());
-        
+
         $sut = new Team();
         $sut->addCustomer($customer);
         self::assertEquals(1, $sut->getCustomers()->count());
@@ -75,7 +73,7 @@ class TeamTest extends TestCase
         $project = new Project();
         $project->setName('foo');
         self::assertEmpty($project->getTeams());
-        
+
         $sut = new Team();
         $sut->addProject($project);
         self::assertEquals(1, $sut->getProjects()->count());
@@ -87,13 +85,13 @@ class TeamTest extends TestCase
         $sut->removeProject($project);
         self::assertEquals(0, $sut->getProjects()->count());
     }
-    
+
     public function testUsers()
     {
         $user = new User();
         $user->setAlias('foo');
         self::assertEmpty($user->getTeams());
-        
+
         $sut = new Team();
         $sut->addUser($user);
         self::assertEquals(1, $sut->getUsers()->count());

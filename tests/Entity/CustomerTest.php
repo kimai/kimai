@@ -11,7 +11,6 @@ namespace App\Tests\Entity;
 
 use App\Entity\Customer;
 use App\Entity\CustomerMeta;
-use App\Entity\Project;
 use App\Entity\Team;
 use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\TestCase;

@@ -9,7 +9,6 @@
 
 namespace App\Tests\Entity;
 
-use App\Entity\Project;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Entity\UserPreference;
@@ -112,5 +111,4 @@ class UserTest extends TestCase
         self::assertSame($team, $sut->getTeams()[0]);
         self::assertSame($sut, $team->getUsers()[0]);
     }
-    
 }

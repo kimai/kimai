@@ -104,14 +104,14 @@ class ProjectTest extends TestCase
         self::assertEquals(3, $sut->getMetaFields()->count());
         self::assertCount(2, $sut->getVisibleMetaFields());
     }
-    
+
     public function testTeams()
     {
         $sut = new Project();
         $team = new Team();
         self::assertEmpty($sut->getTeams());
         self::assertEmpty($team->getProjects());
-        
+
         $sut->addTeam($team);
         self::assertEquals(1, $sut->getTeams()->count());
         self::assertSame($team, $sut->getTeams()[0]);
