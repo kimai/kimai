@@ -25,6 +25,15 @@ class TeamFixtures extends Fixture
      * @var int
      */
     protected $amount = 0;
+    /**
+     * @var bool
+     */
+    protected $addCustomer = true;
+
+    public function setAddCustomer(bool $useCustomer)
+    {
+        $this->addCustomer = $useCustomer;
+    }
 
     public function getAmount(): int
     {
@@ -56,7 +65,10 @@ class TeamFixtures extends Fixture
             ;
             $entity->addUser($lead);
             $entity->addUser($user[array_rand($user)]);
-            $entity->addCustomer($customer[array_rand($customer)]);
+
+            if ($this->addCustomer) {
+                $entity->addCustomer($customer[array_rand($customer)]);
+            }
 
             $manager->persist($entity);
         }
