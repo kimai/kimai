@@ -113,8 +113,13 @@ class ProjectTest extends TestCase
         self::assertEmpty($team->getProjects());
 
         $sut->addTeam($team);
-        self::assertEquals(1, $sut->getTeams()->count());
+        self::assertCount(1, $sut->getTeams());
+        self::assertCount(1, $team->getProjects());
         self::assertSame($team, $sut->getTeams()[0]);
         self::assertSame($sut, $team->getProjects()[0]);
+
+        $sut->removeTeam($team);
+        self::assertCount(0, $sut->getTeams());
+        self::assertCount(0, $team->getProjects());
     }
 }
