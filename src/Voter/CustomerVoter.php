@@ -81,11 +81,11 @@ class CustomerVoter extends AbstractVoter
 
         /** @var Team $team */
         foreach ($subject->getTeams() as $team) {
-            if ($hasTeamleadPermission && $team->isTeamlead($user)) {
+            if ($hasTeamleadPermission && $user->isTeamleadOf($team)) {
                 return true;
             }
 
-            if ($hasTeamPermission && $team->isMember($user)) {
+            if ($hasTeamPermission && $user->isInTeam($team)) {
                 return true;
             }
         }

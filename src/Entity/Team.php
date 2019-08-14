@@ -111,7 +111,7 @@ class Team
         return $this;
     }
 
-    public function isMember(User $user): bool
+    public function hasUser(User $user): bool
     {
         return $this->users->contains($user);
     }

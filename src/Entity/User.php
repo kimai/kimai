@@ -337,7 +337,7 @@ class User extends BaseUser implements UserInterface
 
     public function isTeamleadOf(Team $team): bool
     {
-        return $team->getTeamLead()->getId() === $this->id;
+        return $team->getTeamLead() === $this;
     }
 
     public function isTeamlead(): bool
