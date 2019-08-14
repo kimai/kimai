@@ -8,7 +8,7 @@
             </trans-unit>
             <trans-unit id="tags.subtitle">
                 <source>tags.subtitle</source>
-                <target>Tags allow, to freely combine timesheet records into a resultset</target>
+                <target>Tags allow for the free combination of timesheet records into a result-set</target>
             </trans-unit>
         </body>
     </file>

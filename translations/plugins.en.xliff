@@ -12,7 +12,7 @@
             </trans-unit>
             <trans-unit id="plugin.none_installed">
                 <source>plugin.none_installed</source>
-                <target>You have no plugin installed yet.</target>
+                <target>You have no plugins installed yet.</target>
             </trans-unit>
             <trans-unit id="plugin.marketplace">
                 <source>plugin.marketplace</source>

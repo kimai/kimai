@@ -16,11 +16,11 @@
             </trans-unit>
             <trans-unit id="form_customer">
                 <source>form_customer</source>
-                <target>Create customer - default values</target>
+                <target>Create customer—default values</target>
             </trans-unit>
             <trans-unit id="form_user">
                 <source>form_user</source>
-                <target>User - default values</target>
+                <target>User—default values</target>
             </trans-unit>
             <trans-unit id="theme">
                 <source>theme</source>
@@ -48,7 +48,7 @@
             </trans-unit>
             <trans-unit id="label.timesheet.mode_duration_fixed_begin">
                 <source>label.timesheet.mode_duration_fixed_begin</source>
-                <target>[Duration] Configurable fixed start-time, only duration can be changed</target>
+                <target>[Duration] configurable fixed start-time, only duration can be changed</target>
             </trans-unit>
             <trans-unit id="label.timesheet.mode_punch">
                 <source>label.timesheet.mode_punch</source>
