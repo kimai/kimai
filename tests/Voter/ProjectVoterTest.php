@@ -11,6 +11,7 @@ namespace App\Tests\Voter;
 
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\Team;
 use App\Entity\User;
 use App\Voter\ProjectVoter;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -26,10 +27,15 @@ class ProjectVoterTest extends AbstractVoterTest
      */
     public function testVote(User $user, $subject, $attribute, $result)
     {
+        $this->assertVote($user, $subject, $attribute, $result);
+    }
+
+    protected function assertVote(User $user, $subject, $attribute, $result)
+    {
         $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
         $sut = $this->getVoter(ProjectVoter::class, $user);
 
-        if ($subject instanceof Project) {
+        if ($subject instanceof Project && null === $subject->getCustomer()) {
             $subject->setCustomer(new Customer());
         }
 
@@ -52,9 +58,19 @@ class ProjectVoterTest extends AbstractVoterTest
             yield [$user, new Project(), 'delete', $result];
         }
 
-        $result = VoterInterface::ACCESS_DENIED;
-        foreach ([$user0, $user1, $user2] as $user) {
+        foreach ([$user2] as $user) {
             yield [$user, new Project(), 'view', $result];
+        }
+
+        $result = VoterInterface::ACCESS_DENIED;
+        foreach ([$user0, $user1] as $user) {
+            yield [$user, new Project(), 'view', $result];
+            yield [$user, new Project(), 'edit', $result];
+            yield [$user, new Project(), 'budget', $result];
+            yield [$user, new Project(), 'delete', $result];
+        }
+
+        foreach ([$user2] as $user) {
             yield [$user, new Project(), 'edit', $result];
             yield [$user, new Project(), 'budget', $result];
             yield [$user, new Project(), 'delete', $result];
@@ -71,5 +87,27 @@ class ProjectVoterTest extends AbstractVoterTest
             yield [$user, null, 'edit', $result];
             yield [$user, $user, 'delete', $result];
         }
+    }
+
+    public function testTeamlead()
+    {
+        $team = new Team();
+        $user = new User();
+        $user->addRole(User::ROLE_TEAMLEAD);
+        $team->setTeamLead($user);
+
+        $project = new Project();
+        $customer = new Customer();
+        $project->setCustomer($customer);
+        $customer->addTeam($team);
+
+        $this->assertVote($user, $project, 'edit', VoterInterface::ACCESS_GRANTED);
+
+        $project = new Project();
+        $customer = new Customer();
+        $project->setCustomer($customer);
+        $project->addTeam($team);
+
+        $this->assertVote($user, $project, 'edit', VoterInterface::ACCESS_GRANTED);
     }
 }
