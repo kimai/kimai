@@ -115,7 +115,6 @@ class ActivityVoterTest extends AbstractVoterTest
         $this->assertVote($user, $activity, 'edit', VoterInterface::ACCESS_DENIED);
     }
 
-
     public function testTeamMember()
     {
         $team = new Team();
@@ -145,5 +144,5 @@ class ActivityVoterTest extends AbstractVoterTest
         $activity->setProject($project);
 
         $this->assertVote($user, $activity, 'edit', VoterInterface::ACCESS_GRANTED);
-    }    
+    }
 }

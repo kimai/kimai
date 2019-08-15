@@ -95,7 +95,7 @@ class CustomerVoterTest extends AbstractVoterTest
 
         $this->assertVote($user, $customer, 'edit', VoterInterface::ACCESS_GRANTED);
     }
-    
+
     public function testTeamMember()
     {
         $team = new Team();
