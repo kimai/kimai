@@ -82,7 +82,7 @@ abstract class AbstractVoterTest extends TestCase
             $rateOther = ['view_rate_other_timesheet', 'edit_rate_other_timesheet'];
             $teams = ['view_team', 'create_team', 'edit_team', 'delete_team'];
 
-            $roleUser = [];
+            $roleUser = ['edit_team_activity', 'edit_team_project', 'edit_team_customer'];
             $roleTeamlead = ['view_rate_own_timesheet', 'view_rate_other_timesheet', 'hourly-rate_own_profile'];
             $roleAdmin = ['hourly-rate_own_profile', 'edit_exported_timesheet'];
             $roleSuperAdmin = ['hourly-rate_own_profile', 'hourly-rate_other_profile', 'delete_own_profile', 'roles_own_profile', 'system_information', 'system_configuration', 'plugins', 'edit_exported_timesheet'];

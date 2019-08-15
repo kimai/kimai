@@ -95,4 +95,27 @@ class CustomerVoterTest extends AbstractVoterTest
 
         $this->assertVote($user, $customer, 'edit', VoterInterface::ACCESS_GRANTED);
     }
+    
+    public function testTeamMember()
+    {
+        $team = new Team();
+        $user = new User();
+        $user->addRole(User::ROLE_USER);
+        $team->setTeamLead($user);
+
+        $customer = new Customer();
+        $customer->addTeam($team);
+
+        $this->assertVote($user, $customer, 'edit', VoterInterface::ACCESS_GRANTED);
+
+        $team = new Team();
+        $user = new User();
+        $user->addRole(User::ROLE_USER);
+        $team->addUser($user);
+
+        $customer = new Customer();
+        $customer->addTeam($team);
+
+        $this->assertVote($user, $customer, 'edit', VoterInterface::ACCESS_GRANTED);
+    }
 }
