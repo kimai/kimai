@@ -75,6 +75,12 @@ trait RendererTrait
     abstract protected function getFormattedDuration($seconds);
 
     /**
+     * @param int $seconds
+     * @return mixed
+     */
+    abstract protected function getFormattedDecimalDuration($seconds);
+
+    /**
      * @param InvoiceModel $model
      * @return array
      */
@@ -93,6 +99,7 @@ trait RendererTrait
             'invoice.vat' => $model->getCalculator()->getVat(),
             'invoice.tax' => $this->getFormattedMoney($model->getCalculator()->getTax(), $currency),
             'invoice.total_time' => $this->getFormattedDuration($model->getCalculator()->getTimeWorked()),
+            'invoice.duration_decimal' => $this->getFormattedDecimalDuration($model->getCalculator()->getTimeWorked()),
             'invoice.total' => $this->getFormattedMoney($model->getCalculator()->getTotal(), $currency),
             'invoice.subtotal' => $this->getFormattedMoney($model->getCalculator()->getSubtotal(), $currency),
 
@@ -177,7 +184,7 @@ trait RendererTrait
         if (null !== $timesheet->getFixedRate()) {
             $rate = $timesheet->getFixedRate();
             $hourlyRate = $timesheet->getFixedRate();
-            $amount = 1;
+            $amount = 1; // FIXME fixed rates
         }
 
         if (empty($description)) {
@@ -206,6 +213,7 @@ trait RendererTrait
             'entry.total' => $this->getFormattedMoney($rate, $currency),
             'entry.currency' => $currency,
             'entry.duration' => $timesheet->getDuration(),
+            'entry.duration_decimal' => $this->getFormattedDecimalDuration($timesheet->getDuration()),
             'entry.duration_minutes' => number_format($timesheet->getDuration() / 60),
             'entry.begin' => $this->getFormattedDateTime($begin),
             'entry.begin_time' => $this->getFormattedTime($begin),

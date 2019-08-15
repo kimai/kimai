@@ -81,6 +81,15 @@ class DebugRenderer implements RendererInterface
     }
 
     /**
+     * @param mixed $seconds
+     * @return mixed
+     */
+    protected function getFormattedDecimalDuration($seconds)
+    {
+        return $seconds;
+    }
+
+    /**
      * Render the given InvoiceDocument with the data from the InvoiceModel into a stupid array for testing only.
      *
      * @param InvoiceDocument $document
