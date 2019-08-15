@@ -9,6 +9,7 @@
 
 namespace App\Tests\Repository\Query;
 
+use App\Entity\Team;
 use App\Repository\Query\BaseQuery;
 use PHPUnit\Framework\TestCase;
 
@@ -29,6 +30,7 @@ class BaseQueryTest extends TestCase
         $this->assertPageSize($sut);
         $this->assertOrderBy($sut, $orderBy);
         $this->assertOrder($sut);
+        $this->assertTeams($sut);
     }
 
     protected function assertResultType(BaseQuery $sut)
@@ -47,6 +49,14 @@ class BaseQueryTest extends TestCase
             $this->assertInstanceOf(\InvalidArgumentException::class, $exception);
             $this->assertEquals('Unsupported query result type', $exception->getMessage());
         }
+    }
+
+    protected function assertTeams(BaseQuery $sut)
+    {
+        self::assertEmpty($sut->getTeams());
+
+        self::assertInstanceOf(BaseQuery::class, $sut->addTeam(new Team()));
+        self::assertEquals(1, count($sut->getTeams()));
     }
 
     protected function assertPage(BaseQuery $sut)

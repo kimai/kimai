@@ -1,4 +1,5 @@
 <div class="box box-primary">
+    {{ form_start(form) }}
     <div class="box-header with-border">
         <h3 class="box-title">
             {{ title }}
@@ -7,7 +8,6 @@
             {% endif %}
         </h3>
     </div>
-    {{ form_start(form) }}
     <div class="box-body">
          {{ form_widget(form) }}
     </div>
@@ -15,6 +15,9 @@
         <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
         {% if back|default(false) %}
             <a href="{{ back }}" class="btn btn-link">{{ 'action.back'|trans }}</a>
+        {% endif %}
+        {% if reset|default(true) %}
+        <input type="reset" value="{{ 'action.reset'|trans }}" class="btn btn-link pull-right" />
         {% endif %}
     </div>
     {{ form_end(form) }}

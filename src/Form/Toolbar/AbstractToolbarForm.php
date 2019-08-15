@@ -66,13 +66,14 @@ abstract class AbstractToolbarForm extends AbstractType
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) {
+            function (FormEvent $event) use ($builder) {
                 $data = $event->getData();
                 $event->getForm()->add('customer', CustomerType::class, [
                     'required' => false,
                     'project_enabled' => true,
-                    'query_builder' => function (CustomerRepository $repo) use ($data) {
+                    'query_builder' => function (CustomerRepository $repo) use ($builder, $data) {
                         $query = new CustomerFormTypeQuery();
+                        $query->setUser($builder->getOption('user'));
                         if (isset($data['customer']) && !empty($data['customer'])) {
                             $query->setCustomer($data['customer']);
                         }
@@ -138,13 +139,14 @@ abstract class AbstractToolbarForm extends AbstractType
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) {
+            function (FormEvent $event) use ($builder) {
                 $data = $event->getData();
                 $event->getForm()->add('project', ProjectType::class, [
                     'required' => false,
                     'activity_enabled' => true,
-                    'query_builder' => function (ProjectRepository $repo) use ($data) {
+                    'query_builder' => function (ProjectRepository $repo) use ($builder, $data) {
                         $query = new ProjectFormTypeQuery();
+                        $query->setUser($builder->getOption('user'));
 
                         if (isset($data['customer']) && !empty($data['customer'])) {
                             $query->setCustomer($data['customer']);

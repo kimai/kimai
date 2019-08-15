@@ -11,6 +11,7 @@ namespace App\Repository;
 
 use App\Entity\Activity;
 use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Model\ActivityStatistic;
 use App\Repository\Loader\ActivityLoader;
 use App\Repository\Paginator\LoaderPaginator;
@@ -79,6 +80,47 @@ class ActivityRepository extends EntityRepository
         }
 
         return $stats;
+    }
+
+    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
+    {
+        // make sure that all queries without a user see all projects
+        if (null === $user && empty($teams)) {
+            return;
+        }
+
+        // make sure that admins see all activities
+        if (null !== $user && ($user->isSuperAdmin() || $user->isAdmin())) {
+            return;
+        }
+
+        if (null !== $user) {
+            $teams = array_merge($teams, $user->getTeams()->toArray());
+        }
+
+        $qb->leftJoin('p.teams', 'teams')
+            ->leftJoin('c.teams', 'c_teams');
+
+        if (empty($teams)) {
+            $qb->andWhere($qb->expr()->isNull('c_teams'));
+            $qb->andWhere($qb->expr()->isNull('teams'));
+
+            return;
+        }
+
+        $orProject = $qb->expr()->orX(
+            $qb->expr()->isNull('teams'),
+            $qb->expr()->isMemberOf(':teams', 'p.teams')
+        );
+        $qb->andWhere($orProject);
+
+        $orCustomer = $qb->expr()->orX(
+            $qb->expr()->isNull('c_teams'),
+            $qb->expr()->isMemberOf(':teams', 'c.teams')
+        );
+        $qb->andWhere($orCustomer);
+
+        $qb->setParameter('teams', $teams);
     }
 
     /**
@@ -181,15 +223,10 @@ class ActivityRepository extends EntityRepository
         $qb
             ->select('a')
             ->from(Activity::class, 'a')
+            ->leftJoin('a.project', 'p')
+            ->leftJoin('p.customer', 'c')
             ->addOrderBy('a.' . $query->getOrderBy(), $query->getOrder())
         ;
-
-        if (!$query->isGlobalsOnly()) {
-            $qb
-                ->leftJoin('a.project', 'p')
-                ->leftJoin('p.customer', 'c')
-            ;
-        }
 
         $where = $qb->expr()->andX();
 
@@ -238,6 +275,8 @@ class ActivityRepository extends EntityRepository
         if ($where->count() > 0) {
             $qb->andWhere($where);
         }
+
+        $this->addPermissionCriteria($qb, $query->getCurrentUser());
 
         return $qb;
     }

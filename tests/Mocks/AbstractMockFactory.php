@@ -17,11 +17,16 @@ abstract class AbstractMockFactory
     /**
      * @var TestCase
      */
-    protected $testCase;
+    private $testCase;
 
     public function __construct(TestCase $testCase)
     {
         $this->testCase = $testCase;
+    }
+
+    protected function getTestCase(): TestCase
+    {
+        return $this->testCase;
     }
 
     protected function getMockBuilder(string $className): MockBuilder

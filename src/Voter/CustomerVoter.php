@@ -10,6 +10,7 @@
 namespace App\Voter;
 
 use App\Entity\Customer;
+use App\Entity\Team;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
@@ -22,6 +23,7 @@ class CustomerVoter extends AbstractVoter
     public const EDIT = 'edit';
     public const BUDGET = 'budget';
     public const DELETE = 'delete';
+    public const PERMISSIONS = 'permissions';
 
     /**
      * support rules based on the given $subject (here: Customer)
@@ -31,6 +33,7 @@ class CustomerVoter extends AbstractVoter
         self::EDIT,
         self::BUDGET,
         self::DELETE,
+        self::PERMISSIONS,
     ];
 
     /**
@@ -65,6 +68,28 @@ class CustomerVoter extends AbstractVoter
             return false;
         }
 
-        return $this->hasRolePermission($user, $attribute . '_customer');
+        if ($this->hasRolePermission($user, $attribute . '_customer')) {
+            return true;
+        }
+
+        $hasTeamleadPermission = $this->hasRolePermission($user, $attribute . '_teamlead_customer');
+        $hasTeamPermission = $this->hasRolePermission($user, $attribute . '_team_customer');
+
+        if (!$hasTeamleadPermission && !$hasTeamPermission) {
+            return false;
+        }
+
+        /** @var Team $team */
+        foreach ($subject->getTeams() as $team) {
+            if ($hasTeamleadPermission && $user->isTeamleadOf($team)) {
+                return true;
+            }
+
+            if ($hasTeamPermission && $user->isInTeam($team)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

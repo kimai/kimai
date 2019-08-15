@@ -95,6 +95,7 @@ class AppExtensionTest extends TestCase
                     'timezone' => null,
                     'language' => 'en',
                     'theme' => null,
+                    'currency' => 'EUR',
                 ]
             ],
 

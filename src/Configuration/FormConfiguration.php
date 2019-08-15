@@ -47,4 +47,9 @@ class FormConfiguration implements SystemBundleConfiguration
     {
         return $this->find('user.language');
     }
+
+    public function getUserDefaultCurrency(): string
+    {
+        return $this->find('user.currency');
+    }
 }

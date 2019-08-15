@@ -84,23 +84,33 @@ kimai:
         # mapping complex rule sets of single permissions to named "sets" ("set name" = [array of "permissions and sets"])
         sets:
             ACTIVITIES: ['view_activity','create_activity','edit_activity','budget_activity','delete_activity']
-            PROJECTS: ['view_project','create_project','edit_project','budget_project','delete_project']
-            CUSTOMERS: ['view_customer','create_customer','edit_customer','budget_customer','delete_customer']
+            ACTIVITIES_TEAM: ['view_activity','create_activity','edit_teamlead_activity','budget_teamlead_activity']
+            PROJECTS: ['view_project','create_project','edit_project','budget_project','delete_project','permissions_project']
+            PROJECTS_TEAM: ['view_project','edit_teamlead_project','budget_teamlead_project','permissions_teamlead_project']
+            CUSTOMERS: ['view_customer','create_customer','edit_customer','budget_customer','delete_customer','permissions_customer']
+            CUSTOMERS_TEAM: ['view_customer','edit_teamlead_customer','budget_teamlead_customer']
             INVOICE: ['view_invoice','create_invoice']
             INVOICE_TEMPLATE: ['view_invoice_template','create_invoice_template','edit_invoice_template','delete_invoice_template']
             TIMESHEET: ['view_own_timesheet','start_own_timesheet','stop_own_timesheet','create_own_timesheet','edit_own_timesheet','export_own_timesheet','delete_own_timesheet']
             TIMESHEET_OTHER: ['view_other_timesheet','start_other_timesheet','stop_other_timesheet','create_other_timesheet','edit_other_timesheet','export_other_timesheet','delete_other_timesheet']
             PROFILE: ['view_own_profile','edit_own_profile','password_own_profile','preferences_own_profile','api-token_own_profile']
-            PROFILE_OTHER: ['view_other_profile','edit_other_profile','delete_other_profile','password_other_profile','roles_other_profile','preferences_other_profile','api-token_other_profile']
+            PROFILE_OTHER: ['view_other_profile','edit_other_profile','delete_other_profile','password_other_profile','roles_other_profile','preferences_other_profile','api-token_other_profile','teams_other_profile']
             TAGS: ['view_tag','delete_tag']
             USER: ['view_user','create_user','delete_user','role_permissions']
             RATE: ['view_rate_own_timesheet','edit_rate_own_timesheet']
             RATE_OTHER: ['view_rate_other_timesheet','edit_rate_other_timesheet']
             EXPORT: ['view_export','create_export','edit_export_own_timesheet','edit_export_other_timesheet']
+            TEAMS: ['view_team','create_team','edit_team','delete_team']
+            # some single default definitions for roles 
+            SINGLE_USER: []
+            SINGLE_TEAMLEAD: ['!delete_invoice_template','view_rate_own_timesheet','view_rate_other_timesheet','hourly-rate_own_profile']
+            SINGLE_ADMIN: ['hourly-rate_own_profile','edit_exported_timesheet','teams_own_profile']
+            SINGLE_SUPER_ADMIN: ['hourly-rate_own_profile','hourly-rate_other_profile','delete_own_profile','roles_own_profile','system_information','system_configuration','plugins','edit_exported_timesheet','teams_own_profile']
+            # link above sets to one set for each user role
             ROLE_USER: ['@TIMESHEET','@PROFILE']
-            ROLE_TEAMLEAD: ['@INVOICE','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@EXPORT','@TAGS','@INVOICE_TEMPLATE','!delete_invoice_template','view_rate_own_timesheet','view_rate_other_timesheet','hourly-rate_own_profile']
-            ROLE_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_TEMPLATE','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@RATE','@RATE_OTHER','@EXPORT','@TAGS','hourly-rate_own_profile','edit_exported_timesheet']
-            ROLE_SUPER_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_TEMPLATE','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@PROFILE_OTHER','@USER','@RATE','@RATE_OTHER','@EXPORT','@TAGS','hourly-rate_own_profile','hourly-rate_other_profile','delete_own_profile','roles_own_profile','system_information','system_configuration','plugins','edit_exported_timesheet']
+            ROLE_TEAMLEAD: ['@ACTIVITIES_TEAM','@PROJECTS_TEAM','@CUSTOMERS_TEAM','@TIMESHEET_OTHER','@INVOICE','@TIMESHEET','@PROFILE','@EXPORT','@TAGS','@INVOICE_TEMPLATE','@SINGLE_TEAMLEAD']
+            ROLE_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_TEMPLATE','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@TAGS','@SINGLE_ADMIN']
+            ROLE_SUPER_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_TEMPLATE','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@PROFILE_OTHER','@USER','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@TAGS','@SINGLE_SUPER_ADMIN']
         # mapping "sets" or permissions to user roles ("role name" = [array of "set names"])
         maps:
             ROLE_USER: ['ROLE_USER']
@@ -151,18 +161,6 @@ kimai:
 #        documents:
 #            - 'var/invoices/'
 #            - 'templates/invoice/renderer/'
-# --------------------------------------------------------------------------------
-
-
-# --------------------------------------------------------------------------------
-# THEME Settings
-# will be available as twig globals at "kimai_context.*".
-# See documentation at https://www.kimai.org/documentation/theme.html
-# --------------------------------------------------------------------------------
-#    theme:
-#        # BETA test: If you set this to 'selectpicker' the customer/project/activity select boxes will be transformed
-#        # into a searchable and javascript enhanced input type
-#        select_type: ~
 # --------------------------------------------------------------------------------
 
 
@@ -278,23 +276,6 @@ kimai:
             date: 'd. m. Y'
             date_time: 'd. m.  H:i'
             duration: '%%h:%%m h'
-
-# --------------------------------------------------------------------------------
-
-
-# --------------------------------------------------------------------------------
-# FORMS
-# Default settings used to populate forms
-# --------------------------------------------------------------------------------
-#    defaults:
-#        customer:
-#            timezone: Europe/Berlin
-#            country: DE
-#            currency: EUR
-#        user:
-#            timezone: Europe/Berlin
-#            language: de
-#            theme: blue-light
 # --------------------------------------------------------------------------------
 
 

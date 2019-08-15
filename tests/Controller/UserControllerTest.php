@@ -52,7 +52,7 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode($username) . '/edit'));
         $client->followRedirect();
 
-        $expectedTabs = ['#settings', '#password', '#api-token', '#roles'];
+        $expectedTabs = ['#settings', '#password', '#api-token', '#teams', '#roles'];
 
         $tabs = $client->getCrawler()->filter('div.nav-tabs-custom ul.nav-tabs li');
         $this->assertEquals(count($expectedTabs), $tabs->count());
@@ -210,6 +210,6 @@ class UserControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/user/permissions');
         $this->assertHasDataTable($client);
-        $this->assertDataTableRowCount($client, 'datatable_user_admin_permissions', 69);
+        $this->assertDataTableRowCount($client, 'datatable_user_admin_permissions', 84);
     }
 }

@@ -8,6 +8,7 @@
     'name': 'alwaysVisible',
     'customer': 'hidden-xs',
     'comment': 'hidden-xs hidden-sm',
+    'team': '',
     'visible': '',
     'actions': 'actions alwaysVisible',
 } %}
@@ -34,9 +35,16 @@
             <tr{% if is_granted('edit', entry) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_project_edit', {'id': entry.id}) }}"{% endif %}>
                 <td>{{ widgets.label_color_dot('project', true, entry.name, null, entry.color) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">
-                    {{ widgets.label_customer(entry.customer, path('admin_customer_edit', {'id' : entry.customer.id})) }}
+                    {{ widgets.label_customer(entry.customer) }}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment|comment2html }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'team') }}">
+                    {% if entry.teams|length > 0 %}
+                        {{ widgets.badge_counter(entry.teams|length) }}
+                    {% else %}
+                        {{ widgets.icon('unlocked') }}
+                    {% endif %}
+                </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
                 <td class="actions">
                     {{ actions.project(entry, 'index') }}

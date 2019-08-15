@@ -89,4 +89,13 @@ abstract class AbstractRenderer
     {
         return $this->extension->duration($seconds);
     }
+
+    /**
+     * @param int $seconds
+     * @return mixed
+     */
+    protected function getFormattedDecimalDuration($seconds)
+    {
+        return $this->extension->durationDecimal($seconds);
+    }
 }

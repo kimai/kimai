@@ -132,6 +132,10 @@
                 <source>menu.admin_user</source>
                 <target>Benutzer</target>
             </trans-unit>
+            <trans-unit id="menu.admin_team">
+                <source>menu.admin_team</source>
+                <target>Teams</target>
+            </trans-unit>
             <trans-unit id="menu.plugin">
                 <source>menu.plugin</source>
                 <target>Erweiterungen</target>
@@ -256,6 +260,14 @@
                 <source>label.email</source>
                 <target>E-Mail</target>
             </trans-unit>
+            <trans-unit id="label.team">
+                <source>label.team</source>
+                <target>Team</target>
+            </trans-unit>
+            <trans-unit id="label.teamlead">
+                <source>label.teamlead</source>
+                <target>Teamleiter</target>
+            </trans-unit>
             <trans-unit id="label.create_more">
                 <source>label.create_more</source>
                 <target>Weitere Einträge erstellen</target>
@@ -279,6 +291,10 @@
             <trans-unit id="action.save">
                 <source>action.save</source>
                 <target>Speichern</target>
+            </trans-unit>
+            <trans-unit id="action.reset">
+                <source>action.reset</source>
+                <target>Zurücksetzen</target>
             </trans-unit>
             <trans-unit id="action.back">
                 <source>action.back</source>
@@ -399,6 +415,10 @@
             <trans-unit id="profile.roles">
                 <source>profile.roles</source>
                 <target>Rollen</target>
+            </trans-unit>
+            <trans-unit id="profile.teams">
+                <source>profile.teams</source>
+                <target>Teams</target>
             </trans-unit>
             <trans-unit id="profile.preferences">
                 <source>profile.preferences</source>

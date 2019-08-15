@@ -50,7 +50,7 @@ class ExtensionsTest extends TestCase
 
     public function testGetFilters()
     {
-        $filters = ['duration', 'money', 'currency', 'country', 'docu_link'];
+        $filters = ['duration', 'duration_decimal', 'money', 'currency', 'country', 'docu_link'];
         $sut = $this->getSut($this->localeDe);
         $twigFilters = $sut->getFilters();
         $this->assertCount(count($filters), $twigFilters);
@@ -198,6 +198,33 @@ class ExtensionsTest extends TestCase
         $sut = $this->getSut($this->localeEn, 'en');
 
         $this->assertEquals('00:00 h', $sut->duration(null));
+    }
+
+    public function testDurationDecimal()
+    {
+        $record = $this->getTimesheet(9437);
+
+        $sut = $this->getSut($this->localeEn);
+        $this->assertEquals('2.62', $sut->durationDecimal($record->getDuration()));
+
+        // test Timesheet object
+        $this->assertEquals('2.62', $sut->durationDecimal($record));
+
+        // test extended format
+        $sut = $this->getSut($this->localeDe, 'de');
+        $this->assertEquals('2,62', $sut->durationDecimal($record->getDuration()));
+
+        // test negative duration
+        $sut = $this->getSut($this->localeEn, 'en');
+        $this->assertEquals('0', $sut->durationDecimal('-1'));
+
+        // test zero duration
+        $sut = $this->getSut($this->localeEn, 'en');
+        $this->assertEquals('0', $sut->durationDecimal('0'));
+
+        $sut = $this->getSut($this->localeEn, 'en');
+
+        $this->assertEquals('0', $sut->durationDecimal(null));
     }
 
     protected function getTimesheet($seconds)

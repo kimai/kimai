@@ -248,6 +248,10 @@ class SystemConfigurationController extends AbstractController
                         ->setName('defaults.user.theme')
                         ->setLabel('skin')
                         ->setType(SkinType::class),
+                    (new Configuration())
+                        ->setName('defaults.user.currency')
+                        ->setLabel('currency')
+                        ->setType(CurrencyType::class),
                 ]),
             (new SystemConfigurationModel())
                 ->setSection(SystemConfigurationModel::SECTION_THEME)

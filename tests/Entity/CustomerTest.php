@@ -11,6 +11,7 @@ namespace App\Tests\Entity;
 
 use App\Entity\Customer;
 use App\Entity\CustomerMeta;
+use App\Entity\Team;
 use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\TestCase;
 
@@ -49,6 +50,8 @@ class CustomerTest extends TestCase
         $this->assertInstanceOf(Collection::class, $sut->getMetaFields());
         $this->assertEquals(0, $sut->getMetaFields()->count());
         $this->assertNull($sut->getMetaField('foo'));
+        $this->assertInstanceOf(Collection::class, $sut->getTeams());
+        $this->assertEquals(0, $sut->getTeams()->count());
     }
 
     public function testSetterAndGetter()
@@ -126,5 +129,24 @@ class CustomerTest extends TestCase
         $sut->setMetaField((new CustomerMeta())->setName('blab')->setIsVisible(true));
         self::assertEquals(3, $sut->getMetaFields()->count());
         self::assertCount(2, $sut->getVisibleMetaFields());
+    }
+
+    public function testTeams()
+    {
+        $sut = new Customer();
+        $team = new Team();
+        self::assertEmpty($sut->getTeams());
+        self::assertEmpty($team->getCustomers());
+
+        $sut->addTeam($team);
+        self::assertCount(1, $sut->getTeams());
+        self::assertCount(1, $team->getCustomers());
+        self::assertSame($team, $sut->getTeams()[0]);
+        self::assertSame($sut, $team->getCustomers()[0]);
+
+        $sut->removeTeam(new Team());
+        $sut->removeTeam($team);
+        self::assertCount(0, $sut->getTeams());
+        self::assertCount(0, $team->getCustomers());
     }
 }
