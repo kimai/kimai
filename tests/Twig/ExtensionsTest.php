@@ -211,7 +211,7 @@ class ExtensionsTest extends TestCase
         $this->assertEquals('2.62', $sut->durationDecimal($record));
 
         // test extended format
-        $sut = $this->getSut($this->localeFake, 'XX');
+        $sut = $this->getSut($this->localeDe, 'XX');
         $this->assertEquals('2,62', $sut->durationDecimal($record->getDuration()));
 
         // test negative duration
