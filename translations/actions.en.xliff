@@ -70,6 +70,10 @@
                 <source>create-timesheet</source>
                 <target>Create timesheet</target>
             </trans-unit>
+            <trans-unit id="permissions">
+                <source>permissions</source>
+                <target>Team permissions</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

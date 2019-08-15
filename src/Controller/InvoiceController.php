@@ -71,6 +71,7 @@ class InvoiceController extends AbstractController
         $query->setBegin($begin);
         $query->setEnd($end);
         $query->setState(InvoiceQuery::STATE_STOPPED);
+        $query->setCurrentUser($this->getUser());
 
         return $query;
     }

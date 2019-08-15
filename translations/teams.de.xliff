@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="none">
+        <body>
+            <trans-unit id="teams.title">
+                <source>teams.title</source>
+                <target>Teams</target>
+            </trans-unit>
+            <trans-unit id="teams.subtitle">
+                <source>teams.subtitle</source>
+                <target>Mit Teams können Sie die Berechtigungen von Benutzergruppen für Kunden und Projekte steuern</target>
+            </trans-unit>
+            <trans-unit id="teams.project_access">
+                <source>teams.project_access</source>
+                <target>Zugriff auf Projekte gewähren</target>
+            </trans-unit>
+            <trans-unit id="teams.customer_access">
+                <source>teams.customer_access</source>
+                <target>Zugriff auf Kunden gewähren</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -12,7 +12,7 @@ namespace App\Tests\Widget\Type;
 use App\Entity\User;
 use App\Model\Statistic\Day;
 use App\Repository\TimesheetRepository;
-use App\Security\CurrentUser;
+use App\Tests\Mocks\Security\CurrentUserFactory;
 use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\DailyWorkingTimeChart;
@@ -30,9 +30,9 @@ class DailyWorkingTimeChartTest extends TestCase
     public function createSut(): AbstractWidgetType
     {
         $repository = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->getMock();
-        $user = $this->getMockBuilder(CurrentUser::class)->disableOriginalConstructor()->setMethods(['getUser'])->getMock();
-        $user->expects($this->once())->method('getUser')->willReturn(new User());
         $mockFactory = new UserDateTimeFactoryFactory($this);
+        $userFactory = new CurrentUserFactory($this);
+        $user = $userFactory->create(new User(), 'Europe/Berlin');
 
         return new DailyWorkingTimeChart($repository, $user, $mockFactory->create('Europe/Berlin'));
     }
@@ -106,8 +106,10 @@ class DailyWorkingTimeChartTest extends TestCase
                 ['year' => '2019', 'month' => '1', 'day' => 1, 'rate' => 13.75, 'duration' => 1234]
             ];
         });
-        $user = $this->getMockBuilder(CurrentUser::class)->disableOriginalConstructor()->setMethods(['getUser'])->getMock();
-        $user->expects($this->once())->method('getUser')->willReturn((new User())->setUsername('tralalala'));
+
+        $userFactory = new CurrentUserFactory($this);
+        $user = $userFactory->create(new User(), 'Europe/Berlin');
+
         $mockFactory = new UserDateTimeFactoryFactory($this);
 
         $sut = new DailyWorkingTimeChart($repository, $user, $mockFactory->create('Europe/Berlin'));

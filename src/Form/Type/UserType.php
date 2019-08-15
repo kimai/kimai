@@ -10,8 +10,11 @@
 namespace App\Form\Type;
 
 use App\Entity\User;
+use App\Repository\Query\UserFormTypeQuery;
+use App\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -35,6 +38,15 @@ class UserType extends AbstractType
                 return $user->getUsername();
             },
         ]);
+
+        $resolver->setDefault('query_builder', function (Options $options) {
+            return function (UserRepository $repo) use ($options) {
+                $query = new UserFormTypeQuery();
+                $query->setUser($options['user']);
+
+                return $repo->getQueryBuilderForFormType($query);
+            };
+        });
     }
 
     /**

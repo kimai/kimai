@@ -66,6 +66,11 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
         return $this->formConfig->getUserDefaultTheme();
     }
 
+    private function getDefaultCurrency(): ?string
+    {
+        return $this->formConfig->getUserDefaultCurrency();
+    }
+
     private function getDefaultLanguage(): string
     {
         return $this->formConfig->getUserDefaultLanguage();
@@ -88,9 +93,11 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
     public function getDefaultPreferences(User $user)
     {
         $enableHourlyRate = false;
+        $hourlyRateOptions = [];
 
         if ($this->voter->isGranted('hourly-rate', $user)) {
             $enableHourlyRate = true;
+            $hourlyRateOptions = ['currency' => $this->getDefaultCurrency()];
         }
 
         return [
@@ -99,6 +106,7 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setValue(0)
                 ->setType(MoneyType::class)
                 ->setEnabled($enableHourlyRate)
+                ->setOptions($hourlyRateOptions)
                 ->addConstraint(new Range(['min' => 0])),
 
             (new UserPreference())
@@ -165,6 +173,7 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
                     ->setType($preference->getType())
                     ->setConstraints($preference->getConstraints())
                     ->setEnabled($preference->isEnabled())
+                    ->setOptions($preference->getOptions())
                 ;
             } else {
                 $prefs[$preference->getName()] = $preference;

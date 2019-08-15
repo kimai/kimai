@@ -9,12 +9,26 @@
 
 namespace App\Repository;
 
+use App\Entity\Tag;
 use App\Repository\Query\TagQuery;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\ORMException;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 
 class TagRepository extends EntityRepository
 {
-    use RepositoryTrait;
+    /**
+     * @param Tag $tag
+     * @throws ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function deleteTag(Tag $tag)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->remove($tag);
+        $entityManager->flush();
+    }
 
     /**
      * Find ids of the given tagNames separated by comma
@@ -68,7 +82,7 @@ class TagRepository extends EntityRepository
      * - amount
      *
      * @param TagQuery $query
-     * @return array|\Doctrine\ORM\QueryBuilder|\Pagerfanta\Pagerfanta
+     * @return Pagerfanta
      */
     public function getTagCount(TagQuery $query)
     {
@@ -79,9 +93,12 @@ class TagRepository extends EntityRepository
             ->leftJoin('tag.timesheets', 'timesheets')
             ->addGroupBy('tag.id')
             ->addGroupBy('tag.name')
-            ->orderBy('tag.name')
-        ;
+            ->orderBy('tag.' . $query->getOrderBy(), $query->getOrder());
 
-        return $this->getBaseQueryResult($qb, $query);
+        $paginator = new Pagerfanta(new DoctrineORMAdapter($qb->getQuery(), false));
+        $paginator->setMaxPerPage($query->getPageSize());
+        $paginator->setCurrentPage($query->getPage());
+
+        return $paginator;
     }
 }

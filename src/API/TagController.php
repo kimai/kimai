@@ -104,9 +104,7 @@ class TagController extends BaseApiController
             throw new NotFoundException();
         }
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($tag);
-        $entityManager->flush();
+        $this->repository->deleteTag($tag);
 
         $view = new View(null, Response::HTTP_NO_CONTENT);
 

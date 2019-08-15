@@ -13,6 +13,7 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Model\CustomerStatistic;
 use App\Repository\Loader\CustomerLoader;
 use App\Repository\Paginator\LoaderPaginator;
@@ -107,8 +108,41 @@ class CustomerRepository extends EntityRepository
         return $stats;
     }
 
+    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
+    {
+        // make sure that all queries without a user see all customers
+        if (null === $user && empty($teams)) {
+            return;
+        }
+
+        // make sure that admins see all customers
+        if (null !== $user && ($user->isSuperAdmin() || $user->isAdmin())) {
+            return;
+        }
+
+        if (null !== $user) {
+            $teams = array_merge($teams, $user->getTeams()->toArray());
+        }
+
+        $qb->leftJoin('c.teams', 'teams');
+
+        if (empty($teams)) {
+            $qb->andWhere($qb->expr()->isNull('teams'));
+
+            return;
+        }
+
+        $or = $qb->expr()->orX(
+            $qb->expr()->isNull('teams'),
+            $qb->expr()->isMemberOf(':teams', 'c.teams')
+        );
+        $qb->andWhere($or);
+
+        $qb->setParameter('teams', $teams);
+    }
+
     /**
-     * @deprecated since 1.1
+     * @deprecated since 1.1 - don't use this method, it ignores team permission checks
      */
     public function builderForEntityType($customer)
     {
@@ -145,6 +179,8 @@ class CustomerRepository extends EntityRepository
             $qb->setParameter('ignored', $query->getCustomerToIgnore());
         }
 
+        $this->addPermissionCriteria($qb, $query->getUser(), $query->getTeams());
+
         return $qb;
     }
 
@@ -152,7 +188,7 @@ class CustomerRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('c', 'meta')
+        $qb->select('c')
             ->from(Customer::class, 'c')
             ->leftJoin('c.meta', 'meta')
             ->orderBy('c.' . $query->getOrderBy(), $query->getOrder());
@@ -164,6 +200,8 @@ class CustomerRepository extends EntityRepository
             $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
             $qb->setParameter('visible', false, \PDO::PARAM_BOOL);
         }
+
+        $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
 
         return $qb;
     }

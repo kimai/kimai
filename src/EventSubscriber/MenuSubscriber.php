@@ -142,6 +142,12 @@ final class MenuSubscriber implements EventSubscriberInterface
             );
         }
 
+        if ($auth->isGranted('view_team')) {
+            $menu->addChild(
+                new MenuItemModel('user_team', 'menu.admin_team', 'admin_team', [], $this->getIcon('team'))
+            );
+        }
+
         if ($auth->isGranted('plugins')) {
             $menu->addChild(
                 new MenuItemModel('plugins', 'menu.plugin', 'plugins', [], $this->getIcon('plugin'))

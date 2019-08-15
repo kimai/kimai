@@ -17,12 +17,23 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Custom form field type to edit a user preference.
  */
 class UserPreferenceType extends AbstractType
 {
+    /**
+     * @var TranslatorInterface
+     */
+    private $translate;
+
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translate = $translator;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -54,12 +65,22 @@ class UserPreferenceType extends AbstractType
                     $type = HiddenType::class;
                 }
 
-                $event->getForm()->add('value', $type, [
-                    'label' => 'label.' . $preference->getName(),
-                    'constraints' => $preference->getConstraints(),
-                    'required' => $required,
-                    'disabled' => !$preference->isEnabled(),
-                ]);
+                $transId = 'label.' . $preference->getName();
+                if ($this->translate->trans($transId) === $transId) {
+                    $transId = $preference->getName();
+                }
+
+                $options = array_merge(
+                    [
+                        'label' => $transId,
+                        'constraints' => $preference->getConstraints(),
+                        'required' => $required,
+                        'disabled' => !$preference->isEnabled(),
+                    ],
+                    $preference->getOptions()
+                );
+
+                $event->getForm()->add('value', $type, $options);
             }
         );
         $builder->add('name', HiddenType::class);

@@ -47,7 +47,8 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
     public function testIndexActionWithQuery()
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        // Switching the user is not allowed for TEAMLEADs but ONLLY for admin and super-admins
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $start = new \DateTime('first day of this month');
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
@@ -118,7 +119,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
     public function testCreateAction()
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/team/timesheet/create');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
@@ -160,7 +161,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $fixture->setStartDate('2017-05-01');
         $this->importFixture($em, $fixture);
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/team/timesheet/1/edit');
 
         $response = $client->getResponse();

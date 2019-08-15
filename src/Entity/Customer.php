@@ -160,9 +160,26 @@ class Customer implements EntityWithMetaFields
      */
     private $meta;
 
+    /**
+     * @var Team[]|ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Team", cascade={"remove", "persist"}, inversedBy="customers")
+     * @ORM\JoinTable(
+     *  name="kimai2_customers_teams",
+     *  joinColumns={
+     *      @ORM\JoinColumn(name="customer_id", referencedColumnName="id", onDelete="CASCADE")
+     *  },
+     *  inverseJoinColumns={
+     *      @ORM\JoinColumn(name="team_id", referencedColumnName="id", onDelete="CASCADE")
+     *  }
+     * )
+     */
+    private $teams;
+
     public function __construct()
     {
         $this->meta = new ArrayCollection();
+        $this->teams = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -397,6 +414,33 @@ class Customer implements EntityWithMetaFields
         $current->merge($meta);
 
         return $this;
+    }
+
+    public function addTeam(Team $team)
+    {
+        if ($this->teams->contains($team)) {
+            return $this;
+        }
+
+        $this->teams->add($team);
+        $team->addCustomer($this);
+    }
+
+    public function removeTeam(Team $team)
+    {
+        if (!$this->teams->contains($team)) {
+            return;
+        }
+        $this->teams->removeElement($team);
+        $team->removeCustomer($this);
+    }
+
+    /**
+     * @return Collection<Team>
+     */
+    public function getTeams(): Collection
+    {
+        return $this->teams;
     }
 
     /**

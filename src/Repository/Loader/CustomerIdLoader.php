@@ -42,5 +42,14 @@ final class CustomerIdLoader implements LoaderInterface
             ->andWhere($qb->expr()->in('c.id', $ids))
             ->getQuery()
             ->execute();
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('PARTIAL c.{id}', 'teams', 'teamlead')
+            ->from(Customer::class, 'c')
+            ->leftJoin('c.teams', 'teams')
+            ->leftJoin('teams.teamlead', 'teamlead')
+            ->andWhere($qb->expr()->in('c.id', $ids))
+            ->getQuery()
+            ->execute();
     }
 }

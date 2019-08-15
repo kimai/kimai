@@ -163,8 +163,11 @@ class TimesheetEditForm extends AbstractType
     {
         $builder
             ->add('customer', CustomerType::class, [
-                'query_builder' => function (CustomerRepository $repo) use ($customer) {
-                    return $repo->getQueryBuilderForFormType(new CustomerFormTypeQuery($customer));
+                'query_builder' => function (CustomerRepository $repo) use ($builder, $customer) {
+                    $query = new CustomerFormTypeQuery($customer);
+                    $query->setUser($builder->getOption('user'));
+
+                    return $repo->getQueryBuilderForFormType($query);
                 },
                 'data' => $customer ? $customer : '',
                 'required' => false,
@@ -189,8 +192,11 @@ class TimesheetEditForm extends AbstractType
                 array_merge($projectOptions, [
                     'placeholder' => '',
                     'activity_enabled' => true,
-                    'query_builder' => function (ProjectRepository $repo) use ($project, $customer) {
-                        return $repo->getQueryBuilderForFormType(new ProjectFormTypeQuery($project, $customer));
+                    'query_builder' => function (ProjectRepository $repo) use ($builder, $project, $customer) {
+                        $query = new ProjectFormTypeQuery($project, $customer);
+                        $query->setUser($builder->getOption('user'));
+
+                        return $repo->getQueryBuilderForFormType($query);
                     },
                 ])
             );
@@ -198,7 +204,7 @@ class TimesheetEditForm extends AbstractType
         // replaces the project select after submission, to make sure only projects for the selected customer are displayed
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($project, $customer, $isNew) {
+            function (FormEvent $event) use ($builder, $project, $customer, $isNew) {
                 $data = $event->getData();
                 $customer = isset($data['customer']) && !empty($data['customer']) ? $data['customer'] : null;
                 $project = isset($data['project']) && !empty($data['project']) ? $data['project'] : $project;
@@ -207,7 +213,7 @@ class TimesheetEditForm extends AbstractType
                     'placeholder' => '',
                     'activity_enabled' => true,
                     'group_by' => null,
-                    'query_builder' => function (ProjectRepository $repo) use ($project, $customer, $isNew) {
+                    'query_builder' => function (ProjectRepository $repo) use ($builder, $project, $customer, $isNew) {
                         // is there a better wa to prevent starting a record with a hidden project ?
                         if ($isNew && !is_object($project)) {
                             /** @var Project $project */
@@ -221,8 +227,10 @@ class TimesheetEditForm extends AbstractType
                                 }
                             }
                         }
+                        $query = new ProjectFormTypeQuery($project, $customer);
+                        $query->setUser($builder->getOption('user'));
 
-                        return $repo->getQueryBuilderForFormType(new ProjectFormTypeQuery($project, $customer));
+                        return $repo->getQueryBuilderForFormType($query);
                     },
                 ]);
             }

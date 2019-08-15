@@ -68,6 +68,7 @@ class CustomerController extends BaseApiController
     public function cgetAction(ParamFetcherInterface $paramFetcher)
     {
         $query = new CustomerQuery();
+        $query->setCurrentUser($this->getUser());
 
         if (null !== ($order = $paramFetcher->get('order'))) {
             $query->setOrder($order);

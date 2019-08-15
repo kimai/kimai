@@ -145,6 +145,9 @@
         {% if is_granted('budget', project) %}
             {% set actions = actions|merge({'report': {'url': path('admin_project_budget', {'id': project.id})}}) %}
         {% endif %}
+        {% if is_granted('permissions', project) %}
+            {% set actions = actions|merge({'permissions': {'url': path('admin_project_permissions', {'id': project.id})}}) %}
+        {% endif %}
         {% if is_granted('view_activity') %}
             {% set actions = actions|merge({'activity': path('admin_activity', {'customer': project.customer.id, 'project': project.id})}) %}
         {% endif %}
@@ -197,6 +200,9 @@
         {% endif %}
         {% if is_granted('budget', customer) %}
             {% set actions = actions|merge({'report': {'url': path('admin_customer_budget', {'id': customer.id})}}) %}
+        {% endif %}
+        {% if is_granted('permissions', customer) %}
+            {% set actions = actions|merge({'permissions': {'url': path('admin_customer_permissions', {'id': customer.id})}}) %}
         {% endif %}
         {% if is_granted('view_project') %}
             {% set actions = actions|merge({'project': path('admin_project', {'customer': customer.id})}) %}
@@ -443,3 +449,40 @@
     {{ widgets.page_actions(actions) }}
 {% endmacro %}
 
+{% macro teams(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {} %}
+    {% if is_granted('create_team') %}
+        {% set actions = actions|merge({'create': {'url': path('admin_team_create')}}) %}
+    {% endif %}
+
+    {% set event = trigger('actions.teams', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}
+
+{% macro team(team, view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {} %}
+    {% if team.id is not empty %}
+        {% if is_granted('edit', team) %}
+            {% set class = '' %}
+            {% if view != 'edit' %}
+                {% set class = 'modal-ajax-form' %}
+            {% endif %}
+            {% set actions = actions|merge({'edit': {'url': path('admin_team_edit', {'id': team.id}), 'class': class}}) %}
+        {% endif %}
+    {% endif %}
+
+    {% if view == 'index' and is_granted('delete', team) %}
+        {% set actions = actions|merge({'trash': {'url': path('delete_team', {'id' : team.id}), 'class': 'api-link', 'attr': {'data-event': 'kimai.teamDelete kimai.teamUpdate', 'data-method': 'DELETE', 'data-question': 'confirm.delete', 'data-msg-error': 'action.delete.error', 'data-msg-success': 'action.delete.success'}}}) %}
+    {% endif %}
+
+    {% set event = trigger('actions.team', {'actions': actions, 'view': view, 'team': team}) %}
+    {% if view == 'index' %}
+        {{ widgets.table_actions(event.payload.actions) }}
+    {% else %}
+        {{ widgets.entity_actions(event.payload.actions) }}
+    {% endif %}
+{% endmacro %}

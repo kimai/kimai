@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use App\Configuration\FormConfiguration;
 use App\Entity\Activity;
 use App\Entity\Project;
 use App\Event\ActivityMetaDefinitionEvent;
@@ -41,13 +42,18 @@ class ActivityController extends AbstractController
      */
     private $repository;
     /**
+     * @var FormConfiguration
+     */
+    private $configuration;
+    /**
      * @var EventDispatcherInterface
      */
     protected $dispatcher;
 
-    public function __construct(ActivityRepository $repository, EventDispatcherInterface $dispatcher)
+    public function __construct(ActivityRepository $repository, FormConfiguration $configuration, EventDispatcherInterface $dispatcher)
     {
         $this->repository = $repository;
+        $this->configuration = $configuration;
         $this->dispatcher = $dispatcher;
     }
 
@@ -68,6 +74,7 @@ class ActivityController extends AbstractController
     public function indexAction($page, Request $request)
     {
         $query = new ActivityQuery();
+        $query->setCurrentUser($this->getUser());
         $query->setPage($page);
 
         $form = $this->getToolbarForm($query);
@@ -250,15 +257,20 @@ class ActivityController extends AbstractController
      */
     private function createEditForm(Activity $activity)
     {
-        if ($activity->getId() === null) {
-            $url = $this->generateUrl('admin_activity_create');
-        } else {
+        $currency = $this->configuration->getCustomerDefaultCurrency();
+        $url = $this->generateUrl('admin_activity_create');
+
+        if ($activity->getId() !== null) {
             $url = $this->generateUrl('admin_activity_edit', ['id' => $activity->getId()]);
+            if (null !== $activity->getProject()) {
+                $currency = $activity->getProject()->getCustomer()->getCurrency();
+            }
         }
 
         return $this->createForm(ActivityEditForm::class, $activity, [
             'action' => $url,
             'method' => 'POST',
+            'currency' => $currency,
             'create_more' => true,
             'customer' => true,
             'include_budget' => $this->isGranted('budget', $activity)

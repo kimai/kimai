@@ -70,6 +70,10 @@
                 <source>create-timesheet</source>
                 <target>Zeit erfassen</target>
             </trans-unit>
+            <trans-unit id="permissions">
+                <source>permissions</source>
+                <target>Team Berechtigungen</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

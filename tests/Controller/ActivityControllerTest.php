@@ -26,12 +26,12 @@ class ActivityControllerTest extends ControllerBaseTest
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/admin/activity/');
-        $this->assertUrlIsSecuredForRole(User::ROLE_TEAMLEAD, '/admin/activity/');
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/admin/activity/');
     }
 
     public function testIndexAction()
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->assertAccessIsGranted($client, '/admin/activity/');
         $this->assertHasDataTable($client);
     }

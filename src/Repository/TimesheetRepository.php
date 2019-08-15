@@ -456,6 +456,36 @@ class TimesheetRepository extends EntityRepository
         return $counter;
     }
 
+    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
+    {
+        // make sure that all queries without a user see all projects
+        if (null === $user && empty($teams)) {
+            return;
+        }
+
+        if (empty($teams)) {
+            return;
+        }
+
+        // make sure that admins see all timesheet records
+        if (null !== $user && ($user->isSuperAdmin() || $user->isAdmin())) {
+            return;
+        }
+
+        $qb
+            ->leftJoin('p.customer', 'c')
+            ->leftJoin('p.teams', 'teams')
+            ->leftJoin('c.teams', 'c_teams');
+
+        $orTeam = $qb->expr()->orX(
+            $qb->expr()->isMemberOf(':teams', 'p.teams'),
+            $qb->expr()->isMemberOf(':teams', 'c.teams')
+        );
+        $qb->andWhere($orTeam);
+
+        $qb->setParameter('teams', $teams);
+    }
+
     public function getPagerfantaForQuery(TimesheetQuery $query): Pagerfanta
     {
         $paginator = new Pagerfanta($this->getPaginatorForQuery($query));
@@ -500,11 +530,43 @@ class TimesheetRepository extends EntityRepository
         $qb
             ->select('t')
             ->from(Timesheet::class, 't')
+            ->leftJoin('t.project', 'p')
         ;
 
+        $user = [];
         if (null !== $query->getUser()) {
-            $qb->andWhere('t.user = :user')
-                ->setParameter('user', $query->getUser());
+            $user[] = $query->getUser();
+        }
+
+        if (null === $query->getUser() && null !== $query->getCurrentUser()) {
+            $currentUser = $query->getCurrentUser();
+
+            if (!$currentUser->isSuperAdmin() && !$currentUser->isAdmin()) {
+                foreach ($currentUser->getTeams() as $team) {
+                    if ($currentUser->isTeamleadOf($team)) {
+                        $query->addTeam($team);
+                    }
+                }
+            }
+        }
+
+        if (!empty($query->getTeams())) {
+            foreach ($query->getTeams() as $team) {
+                $user = array_merge($user, $team->getUsers()->toArray());
+            }
+        }
+
+        $user = array_map(function ($user) {
+            if ($user instanceof User) {
+                return $user->getId();
+            }
+
+            return $user;
+        }, $user);
+        $user = array_unique($user);
+
+        if (!empty($user)) {
+            $qb->andWhere($qb->expr()->in('t.user', $user));
         }
 
         if (null !== $query->getBegin()) {
@@ -539,7 +601,6 @@ class TimesheetRepository extends EntityRepository
                 $qb->andWhere('t.project = :project')
                     ->setParameter('project', $query->getProject());
             } elseif (null !== $query->getCustomer()) {
-                $qb->join('t.project', 'p');
                 $qb->andWhere('p.customer = :customer')
                     ->setParameter('customer', $query->getCustomer());
             }
@@ -550,6 +611,8 @@ class TimesheetRepository extends EntityRepository
             $qb->andWhere($qb->expr()->isMemberOf(':tags', 't.tags'))
                 ->setParameter('tags', $query->getTags());
         }
+
+        $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
 
         $qb->orderBy('t.' . $query->getOrderBy(), $query->getOrder());
 

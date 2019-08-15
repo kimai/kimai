@@ -5,6 +5,7 @@
 [![Travis Status](https://travis-ci.org/kevinpapst/kimai2.svg?branch=master)](https://travis-ci.org/kevinpapst/kimai2)
 [![Code Coverage](https://codecov.io/gh/kevinpapst/kimai2/branch/master/graph/badge.svg)](https://codecov.io/gh/kevinpapst/kimai2)
 [![Gitter](https://badges.gitter.im/kimai2/support.svg)](https://gitter.im/kimai2/support)
+[![Bountysource](https://img.shields.io/bountysource/team/kimai2/activity)](https://www.bountysource.com/teams/kimai2)
 
 Kimai is a free, open source and online time-tracking software designed for small businesses and freelancers. 
 It is built with modern technologies such as Symfony, Bootstrap, RESTful API, Doctrine, AdminLTE, Webpack, ES6 etc.

@@ -69,6 +69,7 @@ class ExportController extends AbstractController
         $query->setEnd($end);
         $query->setState(ExportQuery::STATE_STOPPED);
         $query->setExported(ExportQuery::STATE_NOT_EXPORTED);
+        $query->setCurrentUser($this->getUser());
 
         return $query;
     }
