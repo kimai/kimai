@@ -11,4 +11,8 @@ namespace App\Repository\Query;
 
 class TagQuery extends BaseQuery
 {
+    public function __construct()
+    {
+        $this->setOrderBy('name');
+    }
 }

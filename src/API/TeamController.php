@@ -118,15 +118,13 @@ class TeamController extends BaseApiController
      */
     public function deleteAction($id)
     {
-        $tag = $this->repository->find($id);
+        $team = $this->repository->find($id);
 
-        if (null === $tag) {
+        if (null === $team) {
             throw new NotFoundException();
         }
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($tag);
-        $entityManager->flush();
+        $this->repository->deleteTeam($team);
 
         $view = new View(null, Response::HTTP_NO_CONTENT);
 
