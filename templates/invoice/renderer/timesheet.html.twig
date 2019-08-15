@@ -86,6 +86,9 @@
             <tfoot>
             <tr>
                 <th></th>
+                {% if model.query.user is empty %}
+                <th></th>
+                {% endif %}
                 <th>{{ 'invoice.total_working_time'|trans }}</th>
                 <th>{{ model.calculator.timeWorked|duration }}</th>
             </tr>
