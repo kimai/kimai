@@ -30,8 +30,16 @@ class TeamControllerTest extends ControllerBaseTest
     public function testIndexAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $fixture = new TeamFixtures();
+        $fixture->setAmount(5);
+        $this->importFixture($em, $fixture);
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/teams/');
         $this->assertPageActions($client, ['create' => $this->createUrl('/admin/teams/create')]);
+        $this->assertHasDataTable($client);
+        $this->assertDataTableRowCount($client, 'datatable_admin_teams', 5);
     }
 
     public function testCreateAction()
