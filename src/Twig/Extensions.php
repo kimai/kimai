@@ -63,6 +63,7 @@ class Extensions extends AbstractExtension
     {
         return [
             new TwigFilter('duration', [$this, 'duration']),
+            new TwigFilter('duration_decimal', [$this, 'durationDecimal']),
             new TwigFilter('money', [$this, 'money']),
             new TwigFilter('currency', [$this, 'currency']),
             new TwigFilter('country', [$this, 'country']),
@@ -103,6 +104,30 @@ class Extensions extends AbstractExtension
      */
     public function duration($duration, $format = null)
     {
+        $duration = $this->getSecondsForDuration($duration);
+
+        if (null === $format) {
+            $format = $this->localeSettings->getDurationFormat();
+        }
+
+        return $this->formatDuration($duration, $format);
+    }
+
+    /**
+     * Transforms seconds into a decimal formatted duration string.
+     *
+     * @param int|Timesheet $duration
+     * @return string
+     */
+    public function durationDecimal($duration)
+    {
+        $duration = $this->getSecondsForDuration($duration);
+
+        return $this->getNumberFormatter()->format(number_format($duration / 3600, 2));
+    }
+
+    private function getSecondsForDuration($duration): int
+    {
         if (null === $duration) {
             $duration = 0;
         }
@@ -116,17 +141,13 @@ class Extensions extends AbstractExtension
             $duration = $seconds;
         }
 
-        return $this->formatDuration((int) $duration, $format);
+        return (int) $duration;
     }
 
-    protected function formatDuration(int $seconds, $format = null): string
+    protected function formatDuration(int $seconds, string $format): string
     {
         if ($seconds < 0) {
             return '?';
-        }
-
-        if (null === $format) {
-            $format = $this->localeSettings->getDurationFormat();
         }
 
         return $this->durationFormatter->format($seconds, $format);
@@ -159,6 +180,33 @@ class Extensions extends AbstractExtension
         return Constants::HOMEPAGE . '/documentation/' . $url;
     }
 
+    private function initLocale()
+    {
+        $locale = $this->localeSettings->getLocale();
+
+        if ($this->locale === $locale) {
+            return;
+        }
+
+        $this->locale = $locale;
+        $this->numberFormatter = new NumberFormatter($locale, NumberFormatter::DECIMAL);
+        $this->moneyFormatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
+    }
+
+    private function getNumberFormatter(): NumberFormatter
+    {
+        $this->initLocale();
+
+        return $this->numberFormatter;
+    }
+
+    private function getMoneyFormatter(): NumberFormatter
+    {
+        $this->initLocale();
+
+        return $this->moneyFormatter;
+    }
+
     /**
      * @param float $amount
      * @param string $currency
@@ -166,19 +214,11 @@ class Extensions extends AbstractExtension
      */
     public function money($amount, $currency = null)
     {
-        $locale = $this->localeSettings->getLocale();
-
-        if ($this->locale !== $locale) {
-            $this->locale = $locale;
-            $this->numberFormatter = new NumberFormatter($locale, NumberFormatter::DECIMAL);
-            $this->moneyFormatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
-        }
-
         if (null !== $currency) {
-            return $this->moneyFormatter->formatCurrency($amount, $currency);
+            return $this->getMoneyFormatter()->formatCurrency($amount, $currency);
         }
 
-        return $this->numberFormatter->format($amount);
+        return $this->getNumberFormatter()->format($amount);
     }
 
     /**
