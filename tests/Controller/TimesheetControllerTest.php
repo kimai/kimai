@@ -33,7 +33,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         // there are no records by default in the test database
         $this->assertHasNoEntriesWithFilter($client);
-        
+
         $result = $client->getCrawler()->filter('div.breadcrumb div.box-tools div.btn-group a.btn');
         $this->assertEquals(4, count($result));
 
@@ -74,7 +74,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasDataTable($client);
         $this->assertDataTableRowCount($client, 'datatable_timesheet', 7);
-        
+
         // make sure the recording css class exist on tr for targeting running record rows
         $node = $client->getCrawler()->filter('section.content div#datatable_timesheet table.table-striped tbody tr.recording');
         self::assertEquals(2, $node->count());
