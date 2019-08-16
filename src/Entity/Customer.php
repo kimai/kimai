@@ -40,9 +40,11 @@ class Customer implements EntityWithMetaFields
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * Do not increase length to more than 190 chars, otherwise "Index column size too large." will be triggered.
+     *
+     * @ORM\Column(name="name", type="string", length=150, nullable=false)
      * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=255)
+     * @Assert\Length(min=2, max=150)
      */
     private $name;
 
@@ -50,13 +52,14 @@ class Customer implements EntityWithMetaFields
      * @var string
      *
      * @ORM\Column(name="number", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
     private $number;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="comment", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="comment", type="text", nullable=true)
      */
     private $comment;
 
@@ -72,6 +75,7 @@ class Customer implements EntityWithMetaFields
      * @var string
      *
      * @ORM\Column(name="company", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
     private $company;
 
@@ -79,13 +83,14 @@ class Customer implements EntityWithMetaFields
      * @var string
      *
      * @ORM\Column(name="contact", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
     private $contact;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="address", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="address", type="text", nullable=true)
      */
     private $address;
 
@@ -94,6 +99,7 @@ class Customer implements EntityWithMetaFields
      *
      * @ORM\Column(name="country", type="string", length=2, nullable=false)
      * @Assert\NotBlank()
+     * @Assert\Length(max=2)
      */
     private $country;
 
@@ -102,6 +108,7 @@ class Customer implements EntityWithMetaFields
      *
      * @ORM\Column(name="currency", type="string", length=3, nullable=false)
      * @Assert\NotBlank()
+     * @Assert\Length(max=3)
      */
     private $currency = self::DEFAULT_CURRENCY;
 
@@ -109,6 +116,7 @@ class Customer implements EntityWithMetaFields
      * @var string
      *
      * @ORM\Column(name="phone", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
     private $phone;
 
@@ -116,6 +124,7 @@ class Customer implements EntityWithMetaFields
      * @var string
      *
      * @ORM\Column(name="fax", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
     private $fax;
 
@@ -123,13 +132,17 @@ class Customer implements EntityWithMetaFields
      * @var string
      *
      * @ORM\Column(name="mobile", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
     private $mobile;
 
     /**
      * @var string
      *
+     * Limited via RFC to 254 chars
+     *
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
+     * @Assert\Length(max=254)
      */
     private $email;
 
@@ -137,14 +150,18 @@ class Customer implements EntityWithMetaFields
      * @var string
      *
      * @ORM\Column(name="homepage", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
     private $homepage;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="timezone", type="string", length=255, nullable=false)
+     * Length was determined by a MySQL column via "use mysql;describe time_zone_name;"
+     *
+     * @ORM\Column(name="timezone", type="string", length=64, nullable=false)
      * @Assert\NotBlank()
+     * @Assert\Length(max=64)
      */
     private $timezone;
 

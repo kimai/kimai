@@ -50,15 +50,27 @@ final class Version20190706224219 extends AbstractMigration
         $timesheet->addIndex(['start_time', 'end_time', 'user'], 'IDX_4F60C6B1502DF587415614018D93D649');
 
         $activity = $schema->getTable('kimai2_activities');
+        $name = $activity->getColumn('name');
+        if ($name->getLength() !== 150) {
+            $name->setLength(150);
+        }
         $activity->addIndex(['visible', 'project_id'], 'IDX_8811FE1C7AB0E859166D1F9C');
         $activity->addIndex(['visible', 'project_id', 'name'], 'IDX_8811FE1C7AB0E859166D1F9C5E237E06');
         $activity->addIndex(['visible', 'name'], 'IDX_8811FE1C7AB0E8595E237E06');
 
         $project = $schema->getTable('kimai2_projects');
+        $name = $project->getColumn('name');
+        if ($name->getLength() !== 150) {
+            $name->setLength(150);
+        }
         $project->addIndex(['customer_id', 'visible', 'name'], 'IDX_407F12069395C3F37AB0E8595E237E06');
         $project->addIndex(['customer_id', 'visible', 'id'], 'IDX_407F12069395C3F37AB0E859BF396750');
 
         $customer = $schema->getTable('kimai2_customers');
+        $name = $customer->getColumn('name');
+        if ($name->getLength() !== 150) {
+            $name->setLength(150);
+        }
         $customer->addIndex(['visible'], 'IDX_5A9760447AB0E859');
     }
 
@@ -68,13 +80,16 @@ final class Version20190706224219 extends AbstractMigration
         $activity->dropIndex('IDX_8811FE1C7AB0E859166D1F9C');
         $activity->dropIndex('IDX_8811FE1C7AB0E859166D1F9C5E237E06');
         $activity->dropIndex('IDX_8811FE1C7AB0E8595E237E06');
+        $activity->getColumn('name')->setLength(255);
 
         $customer = $schema->getTable('kimai2_customers');
         $customer->dropIndex('IDX_5A9760447AB0E859');
+        $customer->getColumn('name')->setLength(255);
 
         $project = $schema->getTable('kimai2_projects');
         $project->dropIndex('IDX_407F12069395C3F37AB0E8595E237E06');
         $project->dropIndex('IDX_407F12069395C3F37AB0E859BF396750');
+        $project->getColumn('name')->setLength(255);
 
         $timesheet = $schema->getTable('kimai2_timesheet');
         $timesheet->dropIndex('IDX_4F60C6B18D93D649502DF587');

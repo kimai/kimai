@@ -49,9 +49,11 @@ class Project implements EntityWithMetaFields
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * Do not increase length to more than 190 chars, otherwise "Index column size too large." will be triggered.
+     *
+     * @ORM\Column(name="name", type="string", length=150, nullable=false)
      * @Assert\NotNull()
-     * @Assert\Length(min=2, max=255)
+     * @Assert\Length(min=2, max=150)
      */
     private $name;
 
@@ -66,7 +68,7 @@ class Project implements EntityWithMetaFields
     /**
      * @var string
      *
-     * @ORM\Column(name="comment", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="comment", type="text", nullable=true)
      */
     private $comment;
 
