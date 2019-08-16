@@ -59,7 +59,7 @@ class InvoiceTemplate
     /**
      * @var string
      *
-     * @ORM\Column(name="address", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="address", type="text", nullable=true)
      */
     private $address;
 
@@ -105,7 +105,7 @@ class InvoiceTemplate
     /**
      * @var string
      *
-     * @ORM\Column(name="payment_terms", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="payment_terms", type="text", nullable=true)
      */
     private $paymentTerms;
 

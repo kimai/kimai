@@ -61,7 +61,7 @@ class Activity implements EntityWithMetaFields
     /**
      * @var string
      *
-     * @ORM\Column(name="comment", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="comment", type="text", nullable=true)
      */
     private $comment;
 

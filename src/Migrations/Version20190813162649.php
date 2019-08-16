@@ -60,6 +60,7 @@ final class Version20190813162649 extends AbstractMigration
         if ($name->getLength() !== 150) {
             $name->setLength(150);
         }
+        $customer->getColumn('timezone')->setLength(64);
     }
 
     public function down(Schema $schema): void
@@ -72,5 +73,6 @@ final class Version20190813162649 extends AbstractMigration
 
         $customer = $schema->getTable('kimai2_customers');
         $customer->getColumn('name')->setLength(255);
+        $customer->getColumn('timezone')->setLength(255);
     }
 }
