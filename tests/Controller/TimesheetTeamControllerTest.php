@@ -55,6 +55,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $user = $this->getUserByRole($em, User::ROLE_USER);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
+        $fixture->setAmountRunning(3);
         $fixture->setUser($user);
         $fixture->setStartDate($start);
         $this->importFixture($em, $fixture);
@@ -75,7 +76,11 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasDataTable($client);
-        $this->assertDataTableRowCount($client, 'datatable_timesheet_admin', 10);
+        $this->assertDataTableRowCount($client, 'datatable_timesheet_admin', 13);
+
+        // make sure the recording css class exist on tr for targeting running record rows
+        $node = $client->getCrawler()->filter('section.content div#datatable_timesheet_admin table.table-striped tbody tr.recording');
+        self::assertEquals(3, $node->count());
     }
 
     public function testExportAction()
