@@ -2,6 +2,7 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/toolbar.html.twig" as toolbar %}
 {% import "macros/datatables.html.twig" as tables %}
+{% import "macros/actions.html.twig" as actions %}
 
 {% set columns = {
     'date': 'alwaysVisible',
@@ -20,14 +21,7 @@
 
 {% block page_title %}{{ 'export.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'export.subtitle'|trans }}{% endblock %}
-{% block page_actions %}
-    {% set actions = {
-        'filter': '#collapseExport',
-        'visibility': '#modal_export',
-        'off': {'id':'export-toggle-button'}
-    } %}
-    {{ widgets.page_actions(actions) }}
-{% endblock %}
+{% block page_actions %}{{ actions.export('index') }}{% endblock %}
 
 {% block main_before %}
     {{ toolbar.toolbar(form, 'collapseExport', true) }}
