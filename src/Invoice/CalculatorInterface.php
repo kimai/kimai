@@ -9,18 +9,15 @@
 
 namespace App\Invoice;
 
-use App\Entity\Timesheet;
-use App\Model\InvoiceModel;
-
 /**
  * CalculatorInterface defines all methods for any invoice price calculator.
  */
 interface CalculatorInterface
 {
     /**
-     * Return the timesheet records that will be displayed on the invoice.
+     * Return the invoice items that will be displayed on the invoice.
      *
-     * @return Timesheet[]
+     * @return InvoiceItem[]
      */
     public function getEntries();
 

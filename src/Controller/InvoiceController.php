@@ -13,8 +13,8 @@ use App\Entity\InvoiceTemplate;
 use App\Entity\Timesheet;
 use App\Form\InvoiceTemplateForm;
 use App\Form\Toolbar\InvoiceToolbarForm;
+use App\Invoice\InvoiceModel;
 use App\Invoice\ServiceInvoice;
-use App\Model\InvoiceModel;
 use App\Repository\InvoiceTemplateRepository;
 use App\Repository\Query\BaseQuery;
 use App\Repository\Query\InvoiceQuery;
@@ -341,11 +341,7 @@ class InvoiceController extends AbstractController
         ]);
     }
 
-    /**
-     * @param InvoiceTemplate $template
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    private function createEditForm(InvoiceTemplate $template)
+    private function createEditForm(InvoiceTemplate $template): FormInterface
     {
         if ($template->getId() === null) {
             $url = $this->generateUrl('admin_invoice_template_create');

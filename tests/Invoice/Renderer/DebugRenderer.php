@@ -10,9 +10,9 @@
 namespace App\Tests\Invoice\Renderer;
 
 use App\Entity\InvoiceDocument;
+use App\Invoice\InvoiceModel;
 use App\Invoice\Renderer\RendererTrait;
 use App\Invoice\RendererInterface;
-use App\Model\InvoiceModel;
 use Symfony\Component\HttpFoundation\Response;
 
 class DebugRenderer implements RendererInterface

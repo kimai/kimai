@@ -9,8 +9,8 @@
 
 namespace App\Invoice\Calculator;
 
-use App\Entity\Timesheet;
-use App\Model\InvoiceModel;
+use App\Invoice\InvoiceItem;
+use App\Invoice\InvoiceModel;
 
 abstract class AbstractCalculator
 {
@@ -25,7 +25,7 @@ abstract class AbstractCalculator
     protected $model;
 
     /**
-     * @return Timesheet[]
+     * @return InvoiceItem[]
      */
     abstract public function getEntries();
 
@@ -103,7 +103,10 @@ abstract class AbstractCalculator
     {
         $time = 0;
         foreach ($this->model->getEntries() as $entry) {
-            $time += $entry->getDuration();
+            // FIXME fixed rates - don't add fixed rate entries to the total time
+            if (null === $entry->getFixedRate()) {
+                $time += $entry->getDuration();
+            }
         }
 
         return $time;

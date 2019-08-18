@@ -23,7 +23,13 @@ class ProjectInvoiceCalculator extends AbstractSumInvoiceCalculator implements C
             throw new \Exception('Cannot handle un-persisted projects');
         }
 
-        return (string) $timesheet->getProject()->getId();
+        $projectId = (string) $timesheet->getProject()->getId();
+
+        if (null !== $timesheet->getFixedRate()) {
+            $projectId = $projectId . '_' . (string) $timesheet->getFixedRate();
+        }
+
+        return $projectId;
     }
 
     /**

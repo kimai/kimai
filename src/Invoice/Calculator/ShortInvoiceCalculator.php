@@ -11,6 +11,7 @@ namespace App\Invoice\Calculator;
 
 use App\Entity\Timesheet;
 use App\Invoice\CalculatorInterface;
+use App\Invoice\InvoiceItem;
 
 /**
  * A calculator that sums up all timesheet records from the model and returns only one
@@ -19,7 +20,7 @@ use App\Invoice\CalculatorInterface;
 class ShortInvoiceCalculator extends AbstractMergedCalculator implements CalculatorInterface
 {
     /**
-     * @return Timesheet[]
+     * @return InvoiceItem[]
      */
     public function getEntries()
     {
@@ -28,13 +29,16 @@ class ShortInvoiceCalculator extends AbstractMergedCalculator implements Calcula
             return [];
         }
 
-        $timesheet = new Timesheet();
+        $timesheet = new InvoiceItem();
 
         foreach ($entries as $entry) {
             $this->mergeTimesheets($timesheet, $entry);
         }
 
-        $timesheet->setFixedRate($timesheet->getRate());
+        if (null !== $timesheet->isFixedRate()) {
+            $timesheet->setAmount(1);
+            $timesheet->setFixedRate($timesheet->getRate());
+        }
         $timesheet->setHourlyRate($timesheet->getRate());
 
         return [$timesheet];

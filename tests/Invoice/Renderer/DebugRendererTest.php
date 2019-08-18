@@ -10,7 +10,7 @@
 namespace App\Tests\Invoice\Renderer;
 
 use App\Entity\InvoiceDocument;
-use App\Model\InvoiceModel;
+use App\Invoice\InvoiceModel;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 

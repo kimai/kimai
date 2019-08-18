@@ -9,8 +9,8 @@
 
 namespace App\Invoice\NumberGenerator;
 
+use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGeneratorInterface;
-use App\Model\InvoiceModel;
 
 /**
  * Class DateNumberGenerator generates the invoice number based on the current day.

@@ -23,7 +23,13 @@ class ActivityInvoiceCalculator extends AbstractSumInvoiceCalculator implements 
             throw new \Exception('Cannot handle un-persisted activities');
         }
 
-        return (string) $timesheet->getActivity()->getId();
+        $activityId = (string) $timesheet->getActivity()->getId();
+
+        if (null !== $timesheet->getFixedRate()) {
+            $activityId = $activityId . '_' . (string) $timesheet->getFixedRate();
+        }
+
+        return $activityId;
     }
 
     /**
