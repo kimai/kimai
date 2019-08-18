@@ -11,31 +11,37 @@ namespace App\Repository\Query;
 
 use App\Entity\InvoiceTemplate;
 
-/**
- * Can be used for invoice queries.
- */
 class InvoiceQuery extends TimesheetQuery
 {
     /**
      * @var InvoiceTemplate
      */
     private $template;
-
     /**
-     * @return InvoiceTemplate
+     * @var bool
      */
-    public function getTemplate()
+    private $markAsExported = false;
+
+    public function getTemplate(): ?InvoiceTemplate
     {
         return $this->template;
     }
 
-    /**
-     * @param InvoiceTemplate $template
-     * @return InvoiceQuery
-     */
-    public function setTemplate($template)
+    public function setTemplate(InvoiceTemplate $template): InvoiceQuery
     {
         $this->template = $template;
+
+        return $this;
+    }
+
+    public function isMarkAsExported(): bool
+    {
+        return $this->markAsExported;
+    }
+
+    public function setMarkAsExported(bool $markAsExported): InvoiceQuery
+    {
+        $this->markAsExported = $markAsExported;
 
         return $this;
     }

@@ -6,7 +6,7 @@
 
 {% set columns = {
     'date': 'alwaysVisible',
-    'user': 'hidden-sm',
+    'user': 'hidden-xs hidden-sm',
     'description': 'hidden-xs hidden-sm',
     'unit_price': 'hidden-xs text-center',
     'amount': 'text-center',
@@ -19,27 +19,35 @@
 {% block page_subtitle %}{{ 'invoice.subtitle'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.invoices('index') }}{% endblock %}
 
-{% block main_before %}
-    {{ toolbar.toolbar(form, 'collapseInvoice', true) }}
-    {{ tables.data_table_column_modal(tableName, columns) }}
-{% endblock %}
-
-{% block main_after %}
-    <div class="clearfix"></div>
-{% endblock %}
-
 {% block main %}
 
-    {% set entries = {} %}
-    {% if model.calculator is not empty and model.calculator.entries is not empty %}
-        {% set entries = model.calculator.entries %}
+    {% if is_granted('create_invoice') %}
+        {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+            {% form_theme form '@AdminLTE/layout/form-theme-horizontal.html.twig' %}
+            {% block box_title %}{{ 'invoice.filter'|trans }}{% endblock %}
+            {% block box_before %}{{ form_start(form) }}{% endblock %}
+            {% block box_body %}
+                {{ form_row(form.daterange) }}
+                {{ form_row(form.customer) }}
+                {{ form_row(form.project) }}
+                {{ form_row(form.activity) }}
+                {{ form_row(form.user) }}
+                {{ form_row(form.tags) }}
+                {{ form_row(form.exported) }}
+                <br>
+                {{ form_row(form.template) }}
+                {{ form_row(form.markAsExported) }}
+            {% endblock %}
+            {% block box_footer%}
+                {{ form_widget(form.create, {'attr': {'class': 'btn btn-success'}}) }}
+                {{ form_widget(form.preview, {'attr': {'data-toggle': 'tooltip', 'title': 'limited_entries'|trans({'%max%': preview_max})}}) }}
+            {% endblock %}
+            {% block box_after %}{{ form_end(form) }}{% endblock %}
+        {% endembed %}
     {% endif %}
 
-    {% if entries is empty %}
-        {{ widgets.callout('warning', 'error.no_entries_found') }}
-    {% else %}
-        {{ widgets.callout('success', 'invoice.preview') }}
-
+    {% if model.calculator is not empty and model.calculator.entries is not empty %}
+        {% set entries = model.calculator.entries %}
         {{ tables.data_table_header(tableName, columns) }}
         {% for entry in entries %}
             {% set duration = entry.duration|duration %}
@@ -67,16 +75,6 @@
             </tr>
         {% endfor %}
         {{ tables.data_table_footer(entries) }}
-
-        {% if is_granted('create_invoice') %}
-            <div class="row no-print">
-                <div class="col-xs-12">
-                    <a href="{{ path('invoice_print') }}" class="btn btn-success pull-right toolbar-action" data-method="POST">
-                        <i class="{{ 'print'|icon }}"></i> {{ 'button.print'|trans }}
-                    </a>
-                </div>
-            </div>
-        {% endif %}
     {% endif %}
 
 {% endblock %}

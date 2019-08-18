@@ -740,10 +740,6 @@
                 <source>invoice.subtitle</source>
                 <target>Crear facturas a partir de registros de sus partes de horas.</target>
             </trans-unit>
-            <trans-unit id="invoice.preview">
-                <source>invoice.preview</source>
-                <target>Esta es una vista previa de los datos que se mostrarán en su documento de factura.</target>
-            </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
                 <target>Imprimir</target>

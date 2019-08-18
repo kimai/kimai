@@ -417,11 +417,8 @@
 {% macro invoices(view) %}
     {% import "macros/widgets.html.twig" as widgets %}
 
-    {% set actions = {'filter': '#collapseInvoice', 'visibility': '#modal_invoice'} %}
-    {% if is_granted('create_invoice_template') %}
-        {% set actions = actions|merge({'create': path('admin_invoice_template_create')}) %}
-    {% endif %}
-    {% if is_granted('view_invoice_template') %}
+    {% set actions = {} %}
+    {% if is_granted('manage_invoice_template') %}
         {% set actions = actions|merge({'list': path('admin_invoice_template')}) %}
     {% endif %}
 
@@ -439,7 +436,7 @@
         {% set actions = actions|merge({'back': path('invoice')}) %}
     {% endif %}
 
-    {% if is_granted('create_invoice_template') %}
+    {% if is_granted('manage_invoice_template') %}
         {% set actions = actions|merge({'create': path('admin_invoice_template_create')}) %}
     {% endif %}
 

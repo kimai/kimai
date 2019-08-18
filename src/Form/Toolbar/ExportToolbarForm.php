@@ -10,8 +10,6 @@
 namespace App\Form\Toolbar;
 
 use App\Repository\Query\ExportQuery;
-use App\Repository\Query\TimesheetQuery;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -42,23 +40,6 @@ class ExportToolbarForm extends AbstractToolbarForm
     protected function addExportType(FormBuilderInterface $builder)
     {
         $builder->add('type', HiddenType::class, []);
-    }
-
-    /**
-     * @param FormBuilderInterface $builder
-     */
-    protected function addExportStateChoice(FormBuilderInterface $builder)
-    {
-        $builder->add('exported', ChoiceType::class, [
-            'label' => 'label.exported',
-            'required' => false,
-            'placeholder' => null,
-            'choices' => [
-                'entryState.all' => TimesheetQuery::STATE_ALL,
-                'entryState.exported' => TimesheetQuery::STATE_EXPORTED,
-                'entryState.not_exported' => TimesheetQuery::STATE_NOT_EXPORTED
-            ],
-        ]);
     }
 
     /**

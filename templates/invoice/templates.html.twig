@@ -36,7 +36,7 @@
                 {% if is_granted('edit', entry) %}
                     {% set actions = {'edit': {'url': path('admin_invoice_template_edit', {'id' : entry.id, 'page': page}), 'class': 'modal-ajax-form'}} %}
                 {% endif %}
-                {% if is_granted('create_invoice_template') %}
+                {% if is_granted('manage_invoice_template') %}
                     {% set actions = actions|merge({'copy': path('admin_invoice_template_copy', {'id' : entry.id, 'page': page})}) %}
                 {% endif %}
                 {% if is_granted('delete', entry) %}

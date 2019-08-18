@@ -760,9 +760,17 @@
                 <source>invoice.subtitle</source>
                 <target>Create invoices from your recorded timesheet entries.</target>
             </trans-unit>
-            <trans-unit id="invoice.preview">
-                <source>invoice.preview</source>
-                <target>This is a preview of the data that will show up in your invoice document.</target>
+            <trans-unit id="invoice.filter">
+                <source>invoice.filter</source>
+                <target>Filter invoice data</target>
+            </trans-unit>
+            <trans-unit id="limited_entries">
+                <source>limited_entries</source>
+                <target>Limited to %max% entries</target>
+            </trans-unit>
+            <trans-unit id="button.preview">
+                <source>button.preview</source>
+                <target>Preview</target>
             </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
@@ -787,6 +795,10 @@
             <trans-unit id="invoice_print">
                 <source>invoice_print</source>
                 <target>Invoice</target>
+            </trans-unit>
+            <trans-unit id="label.mark_as_exported">
+                <source>label.mark_as_exported</source>
+                <target>Mark as export</target>
             </trans-unit>
             <trans-unit id="label.template">
                 <source>label.template</source>

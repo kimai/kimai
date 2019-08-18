@@ -11,6 +11,8 @@ namespace App\Form\Toolbar;
 
 use App\Form\Type\InvoiceTemplateType;
 use App\Repository\Query\InvoiceQuery;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,16 +29,27 @@ class InvoiceToolbarForm extends AbstractToolbarForm
         $this->addTemplateChoice($builder);
         $this->addUserChoice($builder);
         $this->addDateRangeChoice($builder);
-        $this->addCustomerChoice($builder);
+        $this->addCustomerChoice($builder, true);
         $this->addProjectChoice($builder);
         $this->addActivityChoice($builder);
         $this->addTagInputField($builder);
+        $this->addExportStateChoice($builder);
+        $builder->add('markAsExported', CheckboxType::class, [
+            'label' => 'label.mark_as_exported',
+            'required' => false,
+        ]);
+        $builder->add('create', SubmitType::class, [
+            'label' => 'button.print'
+        ]);
+        $builder->add('preview', SubmitType::class, [
+            'label' => 'button.preview'
+        ]);
     }
 
     protected function addTemplateChoice(FormBuilderInterface $builder)
     {
         $builder->add('template', InvoiceTemplateType::class, [
-            'required' => false,
+            'required' => true,
             'placeholder' => null,
         ]);
     }
