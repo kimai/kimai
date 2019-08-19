@@ -21,7 +21,7 @@
 
 {% block page_title %}{{ 'export.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'export.subtitle'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.export('index') }}{% endblock %}
+{% block page_actions %}{{ actions.export((preview_show ? 'preview' : 'index')) }}{% endblock %}
 
 {% block main %}
 

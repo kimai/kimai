@@ -10,8 +10,11 @@
 namespace App\Export\Renderer;
 
 use App\Export\RendererInterface;
+use DateTime;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 final class OdsRenderer extends AbstractSpreadsheetRenderer implements RendererInterface
 {
@@ -71,5 +74,36 @@ final class OdsRenderer extends AbstractSpreadsheetRenderer implements RendererI
     public function getTitle(): string
     {
         return 'ods';
+    }
+
+    protected function setFormattedDateTime(Worksheet $sheet, $entryHeaderColumn, $entryHeaderRow, ?DateTime $date)
+    {
+        if (null === $date) {
+            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, '');
+
+            return;
+        }
+
+        $dateValue = $this->dateExtension->dateShort($date) . ' ' . $this->dateExtension->time($date);
+        $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $dateValue);
+    }
+
+    protected function setFormattedDate(Worksheet $sheet, $entryHeaderColumn, $entryHeaderRow, ?DateTime $date)
+    {
+        if (null === $date) {
+            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, '');
+
+            return;
+        }
+
+        $dateValue = $this->dateExtension->dateShort($date);
+        $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $dateValue);
+    }
+
+    protected function setDurationTotalFormula(Worksheet $sheet, $column, $row, $startCoordinate, $endCoordinate, $durationTotal)
+    {
+        $sheet->setCellValueByColumnAndRow($column, $row, $durationTotal);
+        $sheet->getCellByColumnAndRow($column, $row)->getStyle()->getBorders()->getTop()->setBorderStyle(Border::BORDER_THIN);
+        $sheet->getCellByColumnAndRow($column, $row)->getStyle()->getFont()->setBold(true);
     }
 }

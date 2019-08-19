@@ -76,26 +76,28 @@ class CsvRendererTest extends AbstractRendererTest
         }
 
         $expected = [
-            0 => '2019.06.16 12:00',
-            1 => '2019.06.16 12:06',
-            2 => 'kevin',
-            3 => 'Customer Name',
-            4 => 'project name',
-            5 => 'activity description',
-            6 => '',
-            7 => '',
-            8 => 'foo,bar',
-            9 => 'meta-bar',
-            10 => 'meta-bar2',
-            11 => '€0.00',
-            12 => '€84.00',
-            13 => '00:06 h',
-            14 => '€0.00',
+            0 => '2019-06-16',
+            1 => '2019-06-16 12:00',
+            2 => '2019-06-16 12:06',
+            3 => '400',
+            4 => 'kevin',
+            5 => 'Customer Name',
+            6 => 'project name',
+            7 => 'activity description',
+            8 => '',
+            9 => '',
+            10 => 'foo,bar',
+            11 => 'meta-bar',
+            12 => 'meta-bar2',
+            13 => '€0.00',
+            14 => '€84.00',
+            15 => '00:06 h',
+            16 => '€0.00',
         ];
 
         self::assertEquals(7, count($all));
         self::assertEquals(count($expected), count($all[0]));
-        self::assertEquals('foo', $all[4][8]);
+        self::assertEquals('foo', $all[4][10]);
 
         self::assertEquals($expected, $all[5]);
     }

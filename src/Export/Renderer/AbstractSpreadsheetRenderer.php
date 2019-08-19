@@ -14,8 +14,11 @@ use App\Repository\Query\TimesheetQuery;
 use App\Twig\DateExtensions;
 use App\Twig\Extensions;
 use DateTime;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -23,6 +26,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class AbstractSpreadsheetRenderer
 {
+    public const DATETIME_FORMAT = 'yyyy-mm-dd hh:mm';
+
     /**
      * @var DateExtensions
      */
@@ -51,13 +56,34 @@ abstract class AbstractSpreadsheetRenderer
         $this->extension = $extensions;
     }
 
-    protected function getFormattedDateTime(?DateTime $date): string
+    protected function setFormattedDateTime(Worksheet $sheet, $entryHeaderColumn, $entryHeaderRow, ?DateTime $date)
     {
         if (null === $date) {
-            return '';
+            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, '');
+
+            return;
         }
 
-        return $this->dateExtension->dateShort($date) . ' ' . $this->dateExtension->time($date);
+        $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, Date::PHPToExcel($date));
+        $sheet->getStyleByColumnAndRow($entryHeaderColumn, $entryHeaderRow)->getNumberFormat()->setFormatCode(self::DATETIME_FORMAT);
+    }
+
+    protected function setFormattedDate(Worksheet $sheet, $entryHeaderColumn, $entryHeaderRow, ?DateTime $date)
+    {
+        if (null === $date) {
+            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, '');
+
+            return;
+        }
+
+        $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, Date::PHPToExcel($date));
+        $sheet->getStyleByColumnAndRow($entryHeaderColumn, $entryHeaderRow)->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_DATE_YYYYMMDD2);
+    }
+
+    protected function setDurationTotalFormula(Worksheet $sheet, $column, $row, $startCoordinate, $endCoordinate, $durationTotal)
+    {
+        $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=SUM(%s:%s) / 86400', $startCoordinate, $endCoordinate));
+        $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode('[h]:mm');
     }
 
     /**
@@ -114,8 +140,10 @@ abstract class AbstractSpreadsheetRenderer
         $recordsHeaderColumn = 1;
         $recordsHeaderRow = 1;
 
+        $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.date'));
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.begin'));
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.end'));
+        $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.duration'));
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.user'));
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.customer'));
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.project'));
@@ -133,9 +161,11 @@ abstract class AbstractSpreadsheetRenderer
 
         $entryHeaderRow = $recordsHeaderRow + 1;
 
+        $durationSecondsColumn = null;
         $durationTotal = 0;
         $currency = false;
         $rateTotal = 0;
+        $dateTimeFormat = 'yyyy-mm-dd hh:mm';
 
         foreach ($timesheets as $timesheet) {
             $entryHeaderColumn = 1;
@@ -150,18 +180,42 @@ abstract class AbstractSpreadsheetRenderer
             }
 
             $customerCurrency = $timesheet->getProject()->getCustomer()->getCurrency();
-
             $exported = $timesheet->isExported() ? 'entryState.exported' : 'entryState.not_exported';
 
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $this->getFormattedDateTime($timesheet->getBegin()));
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $this->getFormattedDateTime($timesheet->getEnd()));
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $this->getUsername($timesheet));
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $timesheet->getProject()->getCustomer()->getName());
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $timesheet->getProject()->getName());
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $timesheet->getActivity()->getName());
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $timesheet->getDescription());
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $this->translator->trans($exported));
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, implode(',', $timesheet->getTagsAsArray()));
+            $this->setFormattedDate($sheet, $entryHeaderColumn, $entryHeaderRow, $timesheet->getBegin());
+            $entryHeaderColumn++;
+
+            $this->setFormattedDateTime($sheet, $entryHeaderColumn, $entryHeaderRow, $timesheet->getBegin());
+            $entryHeaderColumn++;
+
+            $this->setFormattedDateTime($sheet, $entryHeaderColumn, $entryHeaderRow, $timesheet->getEnd());
+            $entryHeaderColumn++;
+
+            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $timesheet->getDuration());
+            $durationSecondsColumn = $entryHeaderColumn;
+            $entryHeaderColumn++;
+
+            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $this->getUsername($timesheet));
+            $entryHeaderColumn++;
+
+            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $timesheet->getProject()->getCustomer()->getName());
+            $entryHeaderColumn++;
+
+            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $timesheet->getProject()->getName());
+            $entryHeaderColumn++;
+
+            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $timesheet->getActivity()->getName());
+            $entryHeaderColumn++;
+
+            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $timesheet->getDescription());
+            $entryHeaderColumn++;
+
+            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $this->translator->trans($exported));
+            $entryHeaderColumn++;
+
+            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, implode(',', $timesheet->getTagsAsArray()));
+            $entryHeaderColumn++;
+
             foreach ($publicMetaFields as $metaFieldName) {
                 $metaField = $timesheet->getMetaField($metaFieldName);
                 $metaFieldValue = '';
@@ -170,16 +224,28 @@ abstract class AbstractSpreadsheetRenderer
                 }
                 $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $metaFieldValue);
             }
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $this->getFormattedMoney($timesheet->getHourlyRate(), $customerCurrency));
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $this->getFormattedMoney($timesheet->getFixedRate(), $customerCurrency));
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $this->getFormattedDuration($timesheet->getDuration()));
+
+            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $this->getFormattedMoney($timesheet->getHourlyRate(), $customerCurrency));
+            $entryHeaderColumn++;
+
+            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $this->getFormattedMoney($timesheet->getFixedRate(), $customerCurrency));
+            $entryHeaderColumn++;
+
+            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $this->getFormattedDuration($timesheet->getDuration()));
+            $entryHeaderColumn++;
+
             $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $this->getFormattedMoney($timesheet->getRate(), $customerCurrency));
+            $entryHeaderColumn++;
 
             $entryHeaderRow++;
         }
 
         $cellDurationTotal = $recordsHeaderColumn - 1;
         $cellRateTotal = $recordsHeaderColumn;
+
+        $startCoordinate = $sheet->getCellByColumnAndRow($durationSecondsColumn, 2)->getCoordinate();
+        $endCoordinate = $sheet->getCellByColumnAndRow($durationSecondsColumn, $entryHeaderRow - 1)->getCoordinate();
+        $this->setDurationTotalFormula($sheet, $durationSecondsColumn, $entryHeaderRow, $startCoordinate, $endCoordinate, $durationTotal);
 
         $sheet->setCellValueByColumnAndRow($cellDurationTotal, $entryHeaderRow, $this->getFormattedDuration($durationTotal));
         $sheet->setCellValueByColumnAndRow($cellRateTotal, $entryHeaderRow, $this->getFormattedMoney($rateTotal, $currency));
