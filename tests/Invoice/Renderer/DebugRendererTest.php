@@ -51,7 +51,7 @@ class DebugRendererTest extends TestCase
         // TODO check values or formats?
     }
 
-    protected function assertModelStructure(array $model, $hasProject = true, $hasActivity = false)
+    protected function assertModelStructure(array $model, $hasProject = true)
     {
         $keys = [
             'invoice.due_date',
@@ -85,10 +85,14 @@ class DebugRendererTest extends TestCase
             'customer.number',
             'customer.homepage',
             'customer.comment',
+            'customer.fixed_rate',
+            'customer.hourly_rate',
             'customer.meta.foo-customer',
             'activity.id',
             'activity.name',
             'activity.comment',
+            'activity.fixed_rate',
+            'activity.hourly_rate',
             'activity.meta.foo-activity',
         ];
 
@@ -98,15 +102,9 @@ class DebugRendererTest extends TestCase
                 'project.name',
                 'project.comment',
                 'project.order_number',
+                'project.fixed_rate',
+                'project.hourly_rate',
                 'project.meta.foo-project',
-            ]);
-        }
-
-        if ($hasActivity) {
-            $keys = array_merge($keys, [
-                'activity.id',
-                'activity.name',
-                'activity.comment',
             ]);
         }
 
