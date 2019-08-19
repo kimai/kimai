@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
+{% import "macros/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'title'|trans({}, 'system-configuration') }}{% endblock %}
 {% block page_subtitle %}{{ 'subtitle'|trans({}, 'system-configuration') }}{% endblock %}
+{% block page_actions %}{{ actions.system_configuration('index') }}{% endblock %}
 
 {% block main %}
 
