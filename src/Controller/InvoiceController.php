@@ -28,12 +28,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Controller used to manage invoices.
- *
- * FIXME permissions create_invoice vs view_invoice
+ * Controller used to create invoices and manage invoice templates.
  *
  * @Route(path="/invoice")
- * @Security("is_granted('view_invoice') or is_granted('manage_invoice_template')")
+ * @Security("is_granted('view_invoice')")
  */
 class InvoiceController extends AbstractController
 {
@@ -78,6 +76,7 @@ class InvoiceController extends AbstractController
             $this->flashWarning('invoice.first_template');
         }
 
+        $showPreview = false;
         $maxItemsPreview = 500;
         $entries = [];
 
@@ -86,18 +85,21 @@ class InvoiceController extends AbstractController
         $form->setData($query);
         $form->submit($request->query->all(), false);
 
-        if ($form->isValid()) {
-            /** @var SubmitButton $createButton */
-            $createButton = $form->get('create');
-            if ($createButton->isClicked()) {
-                return $this->renderInvoice($query, $repository);
-            }
+        if ($this->isGranted('create_invoice')) {
+            if ($form->isValid()) {
+                /** @var SubmitButton $createButton */
+                $createButton = $form->get('create');
+                if ($createButton->isClicked()) {
+                    return $this->renderInvoice($query, $repository);
+                }
 
-            /** @var SubmitButton $previewButton */
-            $previewButton = $form->get('preview');
-            if ($previewButton->isClicked()) {
-                $query->setPageSize($maxItemsPreview);
-                $entries = $this->getEntries($query, $repository);
+                /** @var SubmitButton $previewButton */
+                $previewButton = $form->get('preview');
+                if ($previewButton->isClicked()) {
+                    $showPreview = true;
+                    $query->setPageSize($maxItemsPreview);
+                    $entries = $this->getEntries($query, $repository);
+                }
             }
         }
 
@@ -107,6 +109,7 @@ class InvoiceController extends AbstractController
             'model' => $model,
             'form' => $form->createView(),
             'preview_max' => $maxItemsPreview,
+            'preview_show' => $showPreview,
         ]);
     }
 
@@ -156,9 +159,10 @@ class InvoiceController extends AbstractController
 
     /**
      * @param InvoiceQuery $query
+     * @param TimesheetRepository $repository
      * @return Timesheet[]
      */
-    protected function getEntries(InvoiceQuery $query, TimesheetRepository $repository)
+    protected function getEntries(InvoiceQuery $query, TimesheetRepository $repository): iterable
     {
         // customer needs to be defined, as we need the currency for the invoice
         if (null === $query->getCustomer()) {
@@ -212,20 +216,15 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route(path="/template", defaults={"page": 1}, name="admin_invoice_template", methods={"GET", "POST"})
-     * @Route(path="/template/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_invoice_template_paginated", methods={"GET", "POST"})
+     * @Route(path="/template", name="admin_invoice_template", methods={"GET", "POST"})
      * @Security("is_granted('manage_invoice_template')")
-     *
-     * @param int $page
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listTemplateAction($page): Response
+    public function listTemplateAction(): Response
     {
         $templates = $this->invoiceRepository->findByQuery(new BaseQuery());
 
         return $this->render('invoice/templates.html.twig', [
             'entries' => $templates,
-            'page' => $page,
         ]);
     }
 
@@ -269,8 +268,6 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * The route to delete an existing template.
-     *
      * @Route(path="/template/{id}/delete", name="admin_invoice_template_delete", methods={"GET", "POST"})
      * @Security("is_granted('manage_invoice_template')")
      */
@@ -283,7 +280,7 @@ class InvoiceController extends AbstractController
             $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
         }
 
-        return $this->redirectToRoute('admin_invoice_template_paginated', ['page' => $request->get('page')]);
+        return $this->redirectToRoute('admin_invoice_template');
     }
 
     protected function renderTemplateForm(InvoiceTemplate $template, Request $request): Response

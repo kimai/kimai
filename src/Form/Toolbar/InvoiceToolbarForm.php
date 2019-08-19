@@ -27,7 +27,7 @@ class InvoiceToolbarForm extends AbstractToolbarForm
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addTemplateChoice($builder);
-        $this->addUserChoice($builder);
+        $this->addUsersChoice($builder);
         $this->addDateRangeChoice($builder);
         $this->addCustomerChoice($builder, true);
         $this->addProjectChoice($builder);
@@ -39,10 +39,11 @@ class InvoiceToolbarForm extends AbstractToolbarForm
             'required' => false,
         ]);
         $builder->add('create', SubmitType::class, [
-            'label' => 'button.print'
+            'label' => 'button.print',
+            'attr' => ['formtarget' => 'invoice'],
         ]);
         $builder->add('preview', SubmitType::class, [
-            'label' => 'button.preview'
+            'label' => 'button.preview',
         ]);
     }
 

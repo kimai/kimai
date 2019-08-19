@@ -28,7 +28,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
     public function testIndexActionRedirectsToCreateTemplate()
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         $this->request($client, '/invoice/');
         $this->assertIsRedirect($client, '/invoice/template/create');
@@ -42,7 +42,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $fixture = new InvoiceFixtures();
         $this->importFixture($em, $fixture);
 
-        $this->request($client, '/invoice/');
+        $this->request($client, '/invoice/?preview=');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasNoEntriesWithFilter($client);
@@ -50,7 +50,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
     public function testListTemplateAction()
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new InvoiceFixtures();
@@ -64,7 +64,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
     public function testCreateTemplateAction()
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/invoice/template/create');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
@@ -88,7 +88,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
     public function testCopyTemplateAction()
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
 
         $fixture = new InvoiceFixtures();
@@ -138,9 +138,11 @@ class InvoiceControllerTest extends ControllerBaseTest
         $dateRange = $begin->format('Y-m-d') . DateRangeType::DATE_SPACER . $end->format('Y-m-d');
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
+        $node = $form->getFormNode();
+        $node->setAttribute('action', $this->createUrl('/invoice/?preview='));
+        $node->setAttribute('method', 'GET');
         $client->submit($form, [
             'template' => 1,
-            'user' => '',
             'daterange' => $dateRange,
             'customer' => 1,
         ]);
@@ -151,19 +153,14 @@ class InvoiceControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
         $this->assertEquals(0, $node->count());
 
-        $node = $client->getCrawler()->filter('div.callout.callout-success.lead');
-        $this->assertNotEmpty($node->text());
-        $this->assertContains('This is a preview of the data that will show up in your invoice document.', $node->text());
-
         $this->assertDataTableRowCount($client, 'datatable_invoice', 20);
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
         $node = $form->getFormNode();
-        $node->setAttribute('action', $this->createUrl('/invoice/print'));
-        $node->setAttribute('method', 'POST');
+        $node->setAttribute('action', $this->createUrl('/invoice/?create='));
+        $node->setAttribute('method', 'GET');
         $client->submit($form, [
             'template' => 1,
-            'user' => '',
             'daterange' => $dateRange,
             'customer' => 1,
             'project' => 1,
@@ -175,29 +172,9 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertEquals('invoice_print', $node->getIterator()[0]->getAttribute('class'));
     }
 
-    public function testPrintActionRedirectsToCreateTemplate()
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-
-        $this->request($client, '/invoice/print', 'POST');
-        $this->assertIsRedirect($client, '/invoice/template/create');
-    }
-
-    public function testPrintActionRedirectsToIndex()
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
-
-        $fixture = new InvoiceFixtures();
-        $this->importFixture($em, $fixture);
-
-        $this->request($client, '/invoice/print', 'POST');
-        $this->assertIsRedirect($client, '/invoice/');
-    }
-
     public function testEditTemplateAction()
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $fixture = new InvoiceFixtures();
@@ -231,8 +208,8 @@ class InvoiceControllerTest extends ControllerBaseTest
         $fixture = new InvoiceFixtures();
         $this->importFixture($em, $fixture);
 
-        $this->request($client, '/invoice/template/1/delete?page=1');
-        $this->assertIsRedirect($client, '/invoice/template/page/1');
+        $this->request($client, '/invoice/template/1/delete');
+        $this->assertIsRedirect($client, '/invoice/template');
         $client->followRedirect();
 
         $this->assertTrue($client->getResponse()->isSuccessful());

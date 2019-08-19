@@ -538,7 +538,9 @@ class TimesheetRepository extends EntityRepository
             $user[] = $query->getUser();
         }
 
-        if (null === $query->getUser() && null !== $query->getCurrentUser()) {
+        $user = array_merge($user, $query->getUsers());
+
+        if (empty($user) && null !== $query->getCurrentUser()) {
             $currentUser = $query->getCurrentUser();
 
             if (!$currentUser->isSuperAdmin() && !$currentUser->isAdmin()) {

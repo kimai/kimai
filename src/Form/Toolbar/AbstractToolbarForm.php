@@ -58,6 +58,15 @@ abstract class AbstractToolbarForm extends AbstractType
         ]);
     }
 
+    protected function addUsersChoice(FormBuilderInterface $builder)
+    {
+        $builder->add('users', UserType::class, [
+            'label' => 'label.user',
+            'multiple' => true,
+            'required' => false,
+        ]);
+    }
+
     protected function addCustomerChoice(FormBuilderInterface $builder, bool $required = false)
     {
         // just a fake field for having this field at the right position in the frontend

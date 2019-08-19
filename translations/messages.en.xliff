@@ -798,7 +798,7 @@
             </trans-unit>
             <trans-unit id="label.mark_as_exported">
                 <source>label.mark_as_exported</source>
-                <target>Mark as export</target>
+                <target>Mark as exported</target>
             </trans-unit>
             <trans-unit id="label.template">
                 <source>label.template</source>

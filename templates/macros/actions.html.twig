@@ -414,38 +414,6 @@
     {{ widgets.table_actions(event.payload.actions) }}
 {% endmacro %}
 
-{% macro invoices(view) %}
-    {% import "macros/widgets.html.twig" as widgets %}
-
-    {% set actions = {} %}
-    {% if is_granted('manage_invoice_template') %}
-        {% set actions = actions|merge({'list': path('admin_invoice_template')}) %}
-    {% endif %}
-
-    {% set actions = actions|merge({'help': {'url': 'invoices.html'|docu_link, 'target': '_blank'}}) %}
-
-    {% set event = trigger('actions.invoices', {'actions': actions, 'view': view}) %}
-    {{ widgets.page_actions(event.payload.actions) }}
-{% endmacro %}
-
-{% macro invoice_templates(view) %}
-    {% import "macros/widgets.html.twig" as widgets %}
-
-    {% set actions = {} %}
-    {% if is_granted('view_invoice') %}
-        {% set actions = actions|merge({'back': path('invoice')}) %}
-    {% endif %}
-
-    {% if is_granted('manage_invoice_template') %}
-        {% set actions = actions|merge({'create': path('admin_invoice_template_create')}) %}
-    {% endif %}
-
-    {% set actions = actions|merge({'help': {'url': 'invoices.html'|docu_link, 'target': '_blank'}}) %}
-
-    {% set event = trigger('actions.invoice_templates', {'actions': actions, 'view': 'index'}) %}
-    {{ widgets.page_actions(actions) }}
-{% endmacro %}
-
 {% macro teams(view) %}
     {% import "macros/widgets.html.twig" as widgets %}
 
