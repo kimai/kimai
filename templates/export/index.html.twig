@@ -2,7 +2,7 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/toolbar.html.twig" as toolbar %}
 {% import "macros/datatables.html.twig" as tables %}
-{% import "macros/actions.html.twig" as actions %}
+{% import "export/actions.html.twig" as actions %}
 
 {% set columns = {
     'date': 'alwaysVisible',
@@ -23,87 +23,94 @@
 {% block page_subtitle %}{{ 'export.subtitle'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.export('index') }}{% endblock %}
 
-{% block main_before %}
-    {{ toolbar.toolbar(form, 'collapseExport', true) }}
-    {{ tables.data_table_column_modal(tableName, columns) }}
-{% endblock %}
-
-{% block main_after %}
-    <div class="clearfix"></div>
-{% endblock %}
-
 {% block main %}
 
-    {% if entries is empty %}
-        {{ widgets.callout('warning', 'error.no_entries_found') }}
-    {% else %}
-        {{ tables.data_table_header(tableName, columns) }}
-        {% for entry in entries %}
-            {% set currency = entry.project.customer.currency %}
-            {% set duration = entry.duration|duration %}
-            {% if entry.fixedRate is not null %}
-                {% set rate = entry.fixedRate %}
-                {% set duration = 1 %}
-            {% elseif entry.hourlyRate is not null %}
-                {% set rate = entry.hourlyRate %}
-            {% else %}
-                {% set rate = entry.user.preferenceValue('hourly_rate') %}
-            {% endif %}
-            <tr>
-                <td class="text-nowrap">{{ entry.begin|date_short }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}">{{ widgets.label_user(entry.user) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">{{ widgets.label_customer(entry.project.customer) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">{{ widgets.label_project(entry.project) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}">{{ widgets.label_activity(entry.activity) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }} timesheet-description">
-                    {{ entry.description }}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }} text-nowrap">
-                    {{ rate|money(currency) }}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }} text-nowrap">
-                    {{ duration }}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'total_rate') }} text-nowrap">
-                    {{ entry.rate|money(currency) }}
-                </td>
-                <td>
-                {% if is_granted('edit_export', entry) %}
-                    {% if entry.exported %}
-                        <button type="button" class="btn btn-default exportBtn active" data-toggle="button" aria-pressed="true" autocomplete="off"
-                                data-exported-text="{{ 'entryState.exported'|trans }}" data-clean-text="{{ 'entryState.not_exported'|trans }}" data-timesheet="{{ entry.id }}">
-                        {{ 'entryState.exported'|trans }}
-                        </button>
-                    {% else %}
-                        <button type="button" class="btn btn-default exportBtn" data-toggle="button" aria-pressed="false" autocomplete="off"
-                                data-exported-text="{{ 'entryState.exported'|trans }}" data-clean-text="{{ 'entryState.not_exported'|trans }}" data-timesheet="{{ entry.id }}">
-                        {{ 'entryState.not_exported'|trans }}
-                        </button>
-                    {% endif %}
-                {% else %}
-                    {% if entry.exported %}
-                        {{ 'entryState.exported'|trans }}
-                    {% else %}
-                        {{ 'entryState.not_exported'|trans }}
-                    {% endif %}
-                {% endif %}
-                </td>
-            </tr>
-        {% endfor %}
-        {{ tables.data_table_footer(entries) }}
-
-        {% if is_granted('create_export') %}
-        <div class="row no-print">
-            <div class="col-xs-12">
-                <div class="btn-group pull-right" id="export-buttons" role="group">
-                    {% for button in renderer %}
-                        <button type="button" id="export-{{ button.id }}-button" class="btn btn-success startExportBtn" data-type="{{ button.id }}">
-                            <i class="{{ button.icon|icon }}"></i> {{ ('button.' ~ button.title)|trans }}
-                        </button>
-                    {% endfor %}
-                </div>
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% form_theme form '@AdminLTE/layout/form-theme-horizontal.html.twig' %}
+        {% block box_title %}{{ 'export.filter'|trans }}{% endblock %}
+        {% block box_before %}{{ form_start(form) }}{% endblock %}
+        {% block box_body %}
+            {{ form_row(form.daterange) }}
+            {{ form_row(form.customer) }}
+            {{ form_row(form.project) }}
+            {{ form_row(form.activity) }}
+            {{ form_row(form.users) }}
+            {{ form_row(form.tags) }}
+            {{ form_row(form.exported) }}
+            {{ form_row(form.state) }}
+            {{ form_row(form.markAsExported) }}
+        {% endblock %}
+        {% block box_footer%}
+            <div class="btn-group" id="export-buttons" role="group">
+                {% for button in renderer %}
+                    <button type="button" id="export-{{ button.id }}-button" class="btn btn-success startExportBtn" data-type="{{ button.id }}">
+                        <i class="{{ button.icon|icon }}"></i> {{ ('button.' ~ button.title)|trans }}
+                    </button>
+                {% endfor %}
             </div>
-        </div>
+            {{ form_widget(form.preview, {'attr': {'data-toggle': 'tooltip', 'title': 'limited_entries'|trans({'%max%': preview_max})}}) }}
+        {% endblock %}
+        {% block box_after %}{{ form_end(form) }}{% endblock %}
+    {% endembed %}
+
+    {% if preview_show %}
+        {% if entries is empty %}
+            {{ widgets.callout('warning', 'error.no_entries_found') }}
+        {% else %}
+            {{ tables.data_table_header(tableName, columns) }}
+            {% for entry in entries %}
+                {% set currency = entry.project.customer.currency %}
+                {% set duration = entry.duration|duration %}
+                {% if entry.fixedRate is not null %}
+                    {% set rate = entry.fixedRate %}
+                    {% set duration = 1 %}
+                {% elseif entry.hourlyRate is not null %}
+                    {% set rate = entry.hourlyRate %}
+                {% else %}
+                    {% set rate = entry.user.preferenceValue('hourly_rate') %}
+                {% endif %}
+                <tr>
+                    <td class="text-nowrap">{{ entry.begin|date_short }}</td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}">{{ widgets.label_user(entry.user) }}</td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">{{ widgets.label_customer(entry.project.customer) }}</td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">{{ widgets.label_project(entry.project) }}</td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}">{{ widgets.label_activity(entry.activity) }}</td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }} timesheet-description">
+                        {{ entry.description }}
+                    </td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }} text-nowrap">
+                        {{ rate|money(currency) }}
+                    </td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }} text-nowrap">
+                        {{ duration }}
+                    </td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'total_rate') }} text-nowrap">
+                        {{ entry.rate|money(currency) }}
+                    </td>
+                    <td>
+                    {% if is_granted('edit_export', entry) %}
+                        {% if entry.exported %}
+                            <button type="button" class="btn btn-default exportBtn active" data-toggle="button" aria-pressed="true" autocomplete="off"
+                                    data-exported-text="{{ 'entryState.exported'|trans }}" data-clean-text="{{ 'entryState.not_exported'|trans }}" data-timesheet="{{ entry.id }}">
+                            {{ 'entryState.exported'|trans }}
+                            </button>
+                        {% else %}
+                            <button type="button" class="btn btn-default exportBtn" data-toggle="button" aria-pressed="false" autocomplete="off"
+                                    data-exported-text="{{ 'entryState.exported'|trans }}" data-clean-text="{{ 'entryState.not_exported'|trans }}" data-timesheet="{{ entry.id }}">
+                            {{ 'entryState.not_exported'|trans }}
+                            </button>
+                        {% endif %}
+                    {% else %}
+                        {% if entry.exported %}
+                            {{ 'entryState.exported'|trans }}
+                        {% else %}
+                            {{ 'entryState.not_exported'|trans }}
+                        {% endif %}
+                    {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            {{ tables.data_table_footer(entries) }}
         {% endif %}
     {% endif %}
 

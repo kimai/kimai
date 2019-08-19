@@ -99,7 +99,7 @@ kimai:
             USER: ['view_user','create_user','delete_user','role_permissions']
             RATE: ['view_rate_own_timesheet','edit_rate_own_timesheet']
             RATE_OTHER: ['view_rate_other_timesheet','edit_rate_other_timesheet']
-            EXPORT: ['view_export','create_export','edit_export_own_timesheet','edit_export_other_timesheet']
+            EXPORT: ['create_export','edit_export_own_timesheet','edit_export_other_timesheet']
             TEAMS: ['view_team','create_team','edit_team','delete_team']
             # some single default definitions for roles 
             SINGLE_USER: []

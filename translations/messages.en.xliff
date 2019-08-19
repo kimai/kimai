@@ -900,6 +900,10 @@
                 <source>export.subtitle</source>
                 <target>Export timesheet data to various formats</target>
             </trans-unit>
+            <trans-unit id="export.filter">
+                <source>export.filter</source>
+                <target>Filter data for export</target>
+            </trans-unit>
             <trans-unit id="export.period">
                 <source>export.period</source>
                 <target>Period</target>

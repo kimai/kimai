@@ -10,7 +10,6 @@
 namespace App\Form\Toolbar;
 
 use App\Repository\Query\TimesheetQuery;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -35,23 +34,6 @@ class TimesheetToolbarForm extends AbstractToolbarForm
         $this->addActivityChoice($builder);
         $this->addTagInputField($builder);
         $this->addHiddenPagination($builder);
-    }
-
-    /**
-     * @param FormBuilderInterface $builder
-     */
-    protected function addTimesheetStateChoice(FormBuilderInterface $builder)
-    {
-        $builder->add('state', ChoiceType::class, [
-            'label' => 'label.entryState',
-            'required' => false,
-            'placeholder' => null,
-            'choices' => [
-                'entryState.all' => TimesheetQuery::STATE_ALL,
-                'entryState.running' => TimesheetQuery::STATE_RUNNING,
-                'entryState.stopped' => TimesheetQuery::STATE_STOPPED
-            ],
-        ]);
     }
 
     /**

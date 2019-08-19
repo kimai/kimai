@@ -1,0 +1,10 @@
+
+{% macro export(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {'off': {'id':'export-toggle-button'}} %}
+    {% set actions = actions|merge({'help': {'url': 'export.html'|docu_link, 'target': '_blank'}}) %}
+
+    {% set event = trigger('actions.export', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}

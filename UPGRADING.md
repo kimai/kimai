@@ -10,15 +10,17 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 ## [1.2](https://github.com/kevinpapst/kimai2/releases/tag/1.2)
 
-### BC breaks
+### Possible BC breaks
 
 - Deleted timezone conversion command. If you are still using 0.7 or below, you need to upgrade to 1.1 before upgrading to this version.
 - Minimum password length raised from 5 to 8 character (applies only for password changes and new users)
 - Maximum customer name length lowered to 150 character
 - Maximum project name length lowered to 150 character
 - Maximum activity name length lowered to 150 character
-- Removed permissions: `view_invoice_template`, `create_invoice_template`, `edit_invoice_template`, `delete_invoice_template`
-- Added permission: `manage_invoice_template`
+- Added new permission: `manage_invoice_template`
+  - Removed permissions: `view_invoice_template`, `create_invoice_template`, `edit_invoice_template`, `delete_invoice_template`
+- Removed permission: `view_invoice` (using `create_export` only)
+- Export renderer need to check usage of `Timesheet::getEnd()` as running entries can now be exported as well
 
 ## [1.1](https://github.com/kevinpapst/kimai2/releases/tag/1.1)
 

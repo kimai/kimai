@@ -84,7 +84,7 @@ final class MenuSubscriber implements EventSubscriberInterface
             );
         }
 
-        if ($auth->isGranted('view_export')) {
+        if ($auth->isGranted('create_export')) {
             $menu->addItem(
                 new MenuItemModel('export', 'menu.export', 'export', [], $this->getIcon('export'))
             );

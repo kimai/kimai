@@ -34,7 +34,6 @@
                 {{ form_row(form.users) }}
                 {{ form_row(form.tags) }}
                 {{ form_row(form.exported) }}
-                <br>
                 {{ form_row(form.template) }}
                 {{ form_row(form.markAsExported) }}
             {% endblock %}
@@ -49,7 +48,6 @@
     {% endif %}
 
     {% if preview_show %}
-    
         {% if model.calculator is empty or model.calculator.entries is empty %}
             {{ widgets.callout('warning', 'error.no_entries_found') }}
         {% else %}

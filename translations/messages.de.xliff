@@ -900,6 +900,10 @@
                 <source>export.subtitle</source>
                 <target>Exportieren Sie geloggte Zeiten in veschiedene Zielformate</target>
             </trans-unit>
+            <trans-unit id="export.filter">
+                <source>export.filter</source>
+                <target>Daten für Export filtern</target>
+            </trans-unit>
             <trans-unit id="export.period">
                 <source>export.period</source>
                 <target>Zeitraum</target>

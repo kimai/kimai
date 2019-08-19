@@ -27,7 +27,7 @@ class ExportControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
-        $this->request($client, '/export/');
+        $this->request($client, '/export/?preview=');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasNoEntriesWithFilter($client);
@@ -47,7 +47,7 @@ class ExportControllerTest extends ControllerBaseTest
         ;
         $this->importFixture($em, $fixture);
 
-        $this->request($client, '/export/');
+        $this->request($client, '/export/?preview=');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         // make sure all existing records are displayed

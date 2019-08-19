@@ -13,6 +13,7 @@ use App\Entity\Timesheet;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\DateExtensions;
 use App\Twig\Extensions;
+use DateTime;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -50,12 +51,12 @@ abstract class AbstractSpreadsheetRenderer
         $this->extension = $extensions;
     }
 
-    /**
-     * @param \DateTime $date
-     * @return mixed
-     */
-    protected function getFormattedDateTime(\DateTime $date)
+    protected function getFormattedDateTime(?DateTime $date): string
     {
+        if (null === $date) {
+            return '';
+        }
+
         return $this->dateExtension->dateShort($date) . ' ' . $this->dateExtension->time($date);
     }
 

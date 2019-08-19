@@ -196,6 +196,20 @@ abstract class AbstractToolbarForm extends AbstractType
         ]);
     }
 
+    protected function addTimesheetStateChoice(FormBuilderInterface $builder)
+    {
+        $builder->add('state', ChoiceType::class, [
+            'label' => 'label.entryState',
+            'required' => false,
+            'placeholder' => null,
+            'choices' => [
+                'entryState.all' => TimesheetQuery::STATE_ALL,
+                'entryState.running' => TimesheetQuery::STATE_RUNNING,
+                'entryState.stopped' => TimesheetQuery::STATE_STOPPED
+            ],
+        ]);
+    }
+
     protected function addExportStateChoice(FormBuilderInterface $builder)
     {
         $builder->add('exported', ChoiceType::class, [

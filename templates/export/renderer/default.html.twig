@@ -260,8 +260,10 @@
                     <tr>
                         <td class="column-date text-nowrap" {% if not columns.date %}style="display: none"{% endif %}>
                             {{ entry.begin|date_time }}
-                            <br>
-                            {{ entry.end|date_time }}
+                            {% if entry.end %}
+                                <br>
+                                {{ entry.end|date_time }}
+                            {% endif %}
                         </td>
                         <td class="column-username" {% if not columns.username %}style="display: none"{% endif %}>
                             {{ widgets.username(entry.user) }}
