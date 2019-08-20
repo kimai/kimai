@@ -56,28 +56,28 @@ abstract class AbstractSpreadsheetRenderer
         $this->extension = $extensions;
     }
 
-    protected function setFormattedDateTime(Worksheet $sheet, $entryHeaderColumn, $entryHeaderRow, ?DateTime $date)
+    protected function setFormattedDateTime(Worksheet $sheet, $column, $row, ?DateTime $date)
     {
         if (null === $date) {
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, '');
+            $sheet->setCellValueByColumnAndRow($column, $row, '');
 
             return;
         }
 
-        $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, Date::PHPToExcel($date));
-        $sheet->getStyleByColumnAndRow($entryHeaderColumn, $entryHeaderRow)->getNumberFormat()->setFormatCode(self::DATETIME_FORMAT);
+        $sheet->setCellValueByColumnAndRow($column, $row, Date::PHPToExcel($date));
+        $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(self::DATETIME_FORMAT);
     }
 
-    protected function setFormattedDate(Worksheet $sheet, $entryHeaderColumn, $entryHeaderRow, ?DateTime $date)
+    protected function setFormattedDate(Worksheet $sheet, $column, $row, ?DateTime $date)
     {
         if (null === $date) {
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, '');
+            $sheet->setCellValueByColumnAndRow($column, $row, '');
 
             return;
         }
 
-        $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, Date::PHPToExcel($date));
-        $sheet->getStyleByColumnAndRow($entryHeaderColumn, $entryHeaderRow)->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_DATE_YYYYMMDD2);
+        $sheet->setCellValueByColumnAndRow($column, $row, Date::PHPToExcel($date));
+        $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_DATE_YYYYMMDD2);
     }
 
     protected function setDurationTotalFormula(Worksheet $sheet, $column, $row, $startCoordinate, $endCoordinate, $durationTotal)

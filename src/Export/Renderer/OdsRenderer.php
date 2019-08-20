@@ -76,28 +76,28 @@ final class OdsRenderer extends AbstractSpreadsheetRenderer implements RendererI
         return 'ods';
     }
 
-    protected function setFormattedDateTime(Worksheet $sheet, $entryHeaderColumn, $entryHeaderRow, ?DateTime $date)
+    protected function setFormattedDateTime(Worksheet $sheet, $column, $row, ?DateTime $date)
     {
         if (null === $date) {
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, '');
+            $sheet->setCellValueByColumnAndRow($column, $row, '');
 
             return;
         }
 
         $dateValue = $this->dateExtension->dateShort($date) . ' ' . $this->dateExtension->time($date);
-        $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $dateValue);
+        $sheet->setCellValueByColumnAndRow($column, $row, $dateValue);
     }
 
-    protected function setFormattedDate(Worksheet $sheet, $entryHeaderColumn, $entryHeaderRow, ?DateTime $date)
+    protected function setFormattedDate(Worksheet $sheet, $column, $row, ?DateTime $date)
     {
         if (null === $date) {
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, '');
+            $sheet->setCellValueByColumnAndRow($column, $row, '');
 
             return;
         }
 
         $dateValue = $this->dateExtension->dateShort($date);
-        $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $dateValue);
+        $sheet->setCellValueByColumnAndRow($column, $row, $dateValue);
     }
 
     protected function setDurationTotalFormula(Worksheet $sheet, $column, $row, $startCoordinate, $endCoordinate, $durationTotal)
