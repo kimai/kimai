@@ -12,6 +12,7 @@ namespace App\Tests\Voter;
 use App\Entity\User;
 use App\Security\AclDecisionManager;
 use App\Security\RolePermissionManager;
+use App\Tests\Mocks\Security\RoleServiceFactory;
 use App\Voter\AbstractVoter;
 use PHPUnit\Framework\TestCase;
 
@@ -95,6 +96,9 @@ abstract class AbstractVoterTest extends TestCase
             ];
         }
 
-        return new RolePermissionManager($permissions);
+        $factory = new RoleServiceFactory($this);
+        $roleService = $factory->create();
+
+        return new RolePermissionManager($roleService, $permissions);
     }
 }
