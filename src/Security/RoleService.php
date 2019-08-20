@@ -9,12 +9,16 @@
 
 namespace App\Security;
 
-class RoleService
+final class RoleService
 {
     /**
      * @var array
      */
-    protected $roles;
+    private $roles;
+    /**
+     * @var string[]
+     */
+    private $roleNames = [];
 
     public function __construct(array $roles)
     {
@@ -23,16 +27,20 @@ class RoleService
 
     public function getAvailableNames(): array
     {
-        $roles = [];
-        foreach ($this->roles as $key => $value) {
-            $roles[] = $key;
-            if (is_array($value)) {
-                foreach ($value as $name) {
-                    $roles[] = $name;
+        if (empty($this->roleNames)) {
+            $roles = [];
+            foreach ($this->roles as $key => $value) {
+                $roles[] = $key;
+                if (is_array($value)) {
+                    foreach ($value as $name) {
+                        $roles[] = $name;
+                    }
                 }
             }
+
+            $this->roleNames = array_values(array_unique($roles));
         }
 
-        return array_values(array_unique($roles));
+        return $this->roleNames;
     }
 }
