@@ -202,7 +202,7 @@
             </trans-unit>
             <trans-unit id="label.visible">
                 <source>label.visible</source>
-                <target state="translated">가시성 </target>
+                <target state="translated">보기</target>
             </trans-unit>
             <trans-unit id="label.budget">
                 <source>label.budget</source>
@@ -483,7 +483,7 @@
             </trans-unit>
             <trans-unit id="admin_project.subtitle">
                 <source>admin_project.subtitle</source>
-                <target state="translated">그룹의 고객 활동을 결합한 프로젝트</target>
+                <target state="translated">그룹내 고객 활동을 결합한 프로젝트</target>
             </trans-unit>
             <trans-unit id="admin_project.short_stats">
                 <source>admin_project.short_stats</source>
@@ -507,7 +507,7 @@
             <trans-unit id="admin_activity.short_stats">
                 <source>admin_activity.short_stats</source>
                 <target state="translated">
-                    현재의 %activity%활동 %Project%프로젝트의 %customer%고객
+                    현재의 %activity%활동 %project%프로젝트의 %customer%고객
                     %records% 시간기록에 의해 책정된 총합%duration%.
                 </target>
             </trans-unit>
@@ -521,7 +521,7 @@
             </trans-unit>
             <trans-unit id="admin_customer.subtitle">
                 <source>admin_customer.subtitle</source>
-                <target state="translated">당신의 고객은 프로젝트및 활동을 작성하기 위한 기초입니다.</target>
+                <target state="translated">고객은 프로젝트및 활동을 작성하기 위한 데이터가 됩니다.</target>
             </trans-unit>
             <trans-unit id="label.number">
                 <source>label.number</source>
@@ -588,11 +588,11 @@
             </trans-unit>
             <trans-unit id="admin_user.subtitle">
                 <source>admin_user.subtitle</source>
-                <target state="translated">모든 등록 사용자 키마이 설치하기</target>
+                <target state="translated">모든 등록 사용자 설정하기</target>
             </trans-unit>
             <trans-unit id="label.alias">
                 <source>label.alias</source>
-                <target state="translated">이ㄹ</target>
+                <target state="translated">이름</target>
             </trans-unit>
             <trans-unit id="label.title">
                 <source>label.title</source>
@@ -698,19 +698,19 @@
             </trans-unit>
             <trans-unit id="stats.userActiveToday">
                 <source>stats.userActiveToday</source>
-                <target state="translated">금일 활성화 사용자</target>
+                <target state="translated">오늘 활성화 사용자</target>
             </trans-unit>
             <trans-unit id="stats.userActiveWeek">
                 <source>stats.userActiveWeek</source>
-                <target state="translated">금주 활성화 사용자</target>
+                <target state="translated">이번 주 활성화 사용자</target>
             </trans-unit>
             <trans-unit id="stats.userActiveMonth">
                 <source>stats.userActiveMonth</source>
-                <target state="translated">금월 활성화 사용자</target>
+                <target state="translated">이번 달 활성화 사용자</target>
             </trans-unit>
             <trans-unit id="stats.userActiveYear">
                 <source>stats.userActiveYear</source>
-                <target state="translated">금년 활성화 사용자</target>
+                <target state="translated">올해 활성화 사용자</target>
             </trans-unit>
             <trans-unit id="stats.userActiveTotal">
                 <source>stats.userActiveTotal</source>
@@ -754,7 +754,7 @@
             </trans-unit>
             <trans-unit id="invoice.subtitle">
                 <source>invoice.subtitle</source>
-                <target state="translated">기록된 시간기록표를 바탕으로 인보이스 만들기 </target>
+                <target state="translated">기록된 시간기록표를 바탕으로 인보이스 생성</target>
             </trans-unit>
             <trans-unit id="invoice.preview">
                 <source>invoice.preview</source>
@@ -882,7 +882,7 @@
             </trans-unit>
             <trans-unit id="export.subtitle">
                 <source>export.subtitle</source>
-                <target state="translated">시간 기록표 다양한 포맷으로 보내기</target>
+                <target state="translated">타임시트 다양한 포맷으로 내보내기</target>
             </trans-unit>
             <trans-unit id="export.period">
                 <source>export.period</source>
@@ -970,7 +970,7 @@
             </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
-                <target state="translated">모든 기록들 보기</target>
+                <target state="translated">모든 타임시트 보기</target>
             </trans-unit>
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
@@ -978,11 +978,11 @@
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>
-                <target state="translated">%customer%를 위한 %Project%의 %activity%</target>
+                <target state="translated">%customer%를 위한 %project%의 %activity%</target>
             </trans-unit>
             <trans-unit id="timesheet.start">
                 <source>timesheet.start</source>
-                <target state="translated">새로운 시간 기록표 생성하기 </target>
+                <target state="translated">새로운 타임시트 생성하기 </target>
             </trans-unit>
 
             <!--
