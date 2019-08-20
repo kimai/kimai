@@ -10,10 +10,12 @@
 namespace App\Tests\Controller;
 
 use App\Entity\InvoiceTemplate;
+use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Form\Type\DateRangeType;
 use App\Tests\DataFixtures\InvoiceFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use Doctrine\ORM\EntityManager;
 
 /**
  * @group integration
@@ -117,6 +119,7 @@ class InvoiceControllerTest extends ControllerBaseTest
     public function testPrintAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        /** @var EntityManager $em */
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
 
         $fixture = new InvoiceFixtures();
@@ -149,10 +152,10 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        // no datatable should be displayed
+        // no warning should be displayed
         $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
         $this->assertEquals(0, $node->count());
-
+        // but the datatable with all timesheets
         $this->assertDataTableRowCount($client, 'datatable_invoice', 20);
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
@@ -164,12 +167,19 @@ class InvoiceControllerTest extends ControllerBaseTest
             'daterange' => $dateRange,
             'customer' => 1,
             'project' => 1,
+            'markAsExported' => 1,
         ]);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
         $node = $client->getCrawler()->filter('body');
         $this->assertEquals(1, $node->count());
         $this->assertEquals('invoice_print', $node->getIterator()[0]->getAttribute('class'));
+
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        /** @var Timesheet $timesheet */
+        foreach ($timesheets as $timesheet) {
+            $this->assertTrue($timesheet->isExported());
+        }
     }
 
     public function testEditTemplateAction()
