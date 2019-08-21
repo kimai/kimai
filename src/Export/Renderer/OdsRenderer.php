@@ -13,7 +13,6 @@ use App\Export\RendererInterface;
 use DateTime;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 final class OdsRenderer extends AbstractSpreadsheetRenderer implements RendererInterface
@@ -84,6 +83,7 @@ final class OdsRenderer extends AbstractSpreadsheetRenderer implements RendererI
             return;
         }
 
+        // TODO find proper format code
         $dateValue = $this->dateExtension->dateShort($date) . ' ' . $this->dateExtension->time($date);
         $sheet->setCellValueByColumnAndRow($column, $row, $dateValue);
     }
@@ -96,14 +96,25 @@ final class OdsRenderer extends AbstractSpreadsheetRenderer implements RendererI
             return;
         }
 
+        // TODO find proper format code
         $dateValue = $this->dateExtension->dateShort($date);
         $sheet->setCellValueByColumnAndRow($column, $row, $dateValue);
     }
 
-    protected function setDurationTotalFormula(Worksheet $sheet, $column, $row, $startCoordinate, $endCoordinate, $durationTotal)
+    protected function setDurationTotal(Worksheet $sheet, $column, $row, $startCoordinate, $endCoordinate)
     {
-        $sheet->setCellValueByColumnAndRow($column, $row, $durationTotal);
-        $sheet->getCellByColumnAndRow($column, $row)->getStyle()->getBorders()->getTop()->setBorderStyle(Border::BORDER_THIN);
-        $sheet->getCellByColumnAndRow($column, $row)->getStyle()->getFont()->setBold(true);
+        // TODO find proper format code
+        $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=SUM(%s:%s)', $startCoordinate, $endCoordinate));
+    }
+
+    protected function setDuration(Worksheet $sheet, $column, $row, $duration)
+    {
+        // TODO find proper format code
+        $sheet->setCellValueByColumnAndRow($column, $row, $duration);
+    }
+
+    protected function setRateTotal(Worksheet $sheet, $column, $row, $startCoordinate, $endCoordinate)
+    {
+        $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=SUM(%s:%s)', $startCoordinate, $endCoordinate));
     }
 }

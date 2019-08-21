@@ -32,7 +32,7 @@ class CsvRendererTest extends AbstractRendererTest
     public function getTestModel()
     {
         return [
-            ['01:50 h', '€2,437.12', '€1,947.99', 7, 5, 1, 2, 2]
+            ['1:50', '2437.12', '1947.99', 7, 5, 1, 2, 2]
         ];
     }
 
@@ -79,25 +79,25 @@ class CsvRendererTest extends AbstractRendererTest
             0 => '2019-06-16',
             1 => '2019-06-16 12:00',
             2 => '2019-06-16 12:06',
-            3 => '400',
-            4 => 'kevin',
-            5 => 'Customer Name',
-            6 => 'project name',
-            7 => 'activity description',
-            8 => '',
-            9 => '',
-            10 => 'foo,bar',
-            11 => 'meta-bar',
-            12 => 'meta-bar2',
-            13 => '€0.00',
-            14 => '€84.00',
-            15 => '00:06 h',
-            16 => '€0.00',
+            3 => '0:06',
+            4 => '0',
+            5 => 'EUR',
+            6 => 'kevin',
+            7 => 'Customer Name',
+            8 => 'project name',
+            9 => 'activity description',
+            10 => '',
+            11 => '',
+            12 => 'foo,bar',
+            13 => '',
+            14 => '84',
+            15 => 'meta-bar',
+            16 => 'meta-bar2',
         ];
 
         self::assertEquals(7, count($all));
         self::assertEquals(count($expected), count($all[0]));
-        self::assertEquals('foo', $all[4][10]);
+        self::assertEquals('foo', $all[4][12]);
 
         self::assertEquals($expected, $all[5]);
     }

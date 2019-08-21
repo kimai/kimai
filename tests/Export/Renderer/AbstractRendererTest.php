@@ -20,7 +20,6 @@ use App\Entity\User;
 use App\Export\RendererInterface;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\DateExtensions;
-use App\Twig\Extensions;
 use App\Utils\LocaleSettings;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,9 +51,8 @@ abstract class AbstractRendererTest extends KernelTestCase
 
         $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $dateExtension = new DateExtensions($localeSettings);
-        $extensions = new Extensions($localeSettings);
 
-        return new $classname($translator, $dateExtension, $extensions);
+        return new $classname($translator, $dateExtension);
     }
 
     /**
