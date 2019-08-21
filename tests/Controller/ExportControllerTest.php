@@ -57,7 +57,7 @@ class ExportControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_export', 20);
 
         // assert export type buttons are available
-        $expected = ['csv', 'html', 'pdf', 'ods', 'xlsx'];
+        $expected = ['csv', 'html', 'pdf', 'xlsx'];
         $node = $client->getCrawler()->filter('#export-buttons button');
         $this->assertEquals(count($expected), $node->count());
         foreach ($node->getIterator() as $button) {
