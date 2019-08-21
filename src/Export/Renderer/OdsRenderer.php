@@ -15,7 +15,11 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-final class OdsRenderer extends AbstractSpreadsheetRenderer implements RendererInterface
+/**
+ * Deactivated by removing the Interface.
+ * This is deactivated for now, as the values are not really usable in a spreadsheet.
+ */
+final class OdsRenderer extends AbstractSpreadsheetRenderer // implements RendererInterface
 {
     /**
      * @return string
@@ -96,25 +100,31 @@ final class OdsRenderer extends AbstractSpreadsheetRenderer implements RendererI
             return;
         }
 
-        // TODO find proper format code
         $dateValue = $this->dateExtension->dateShort($date);
         $sheet->setCellValueByColumnAndRow($column, $row, $dateValue);
     }
 
     protected function setDurationTotal(Worksheet $sheet, $column, $row, $startCoordinate, $endCoordinate)
     {
-        // TODO find proper format code
         $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=SUM(%s:%s)', $startCoordinate, $endCoordinate));
     }
 
     protected function setDuration(Worksheet $sheet, $column, $row, $duration)
     {
-        // TODO find proper format code
         $sheet->setCellValueByColumnAndRow($column, $row, $duration);
     }
 
     protected function setRateTotal(Worksheet $sheet, $column, $row, $startCoordinate, $endCoordinate)
     {
         $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=SUM(%s:%s)', $startCoordinate, $endCoordinate));
+    }
+
+    protected function setRate(Worksheet $sheet, $column, $row, $rate, $currency)
+    {
+        if (null === $rate) {
+            return;
+        }
+
+        $sheet->setCellValueByColumnAndRow($column, $row, $rate . ' ' . $currency);
     }
 }

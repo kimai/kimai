@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  * @covers \App\Export\Renderer\RendererTrait
  * @group integration
  */
-class OdsRendererTest extends AbstractRendererTest
+class OdsRendererTest // extends AbstractRendererTest
 {
     public function testConfiguration()
     {

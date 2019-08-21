@@ -26,6 +26,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 abstract class AbstractSpreadsheetRenderer
 {
     public const DATETIME_FORMAT = 'yyyy-mm-dd hh:mm';
+    public const TIME_FORMAT = 'hh:mm';
+    public const DURATION_FORMAT = '[hh]:mm';
+    public const RATE_FORMAT_DEFAULT = '#.##0,00 [$%1$s];-#.##0,00 [$%1$s]';
+    public const RATE_FORMAT_LEFT = '_("%1$s"* #,##0.00_);_("%1$s"* \(#,##0.00\);_("%1$s"* "-"??_);_(@_)';
+    public const RATE_FORMAT = self::RATE_FORMAT_LEFT;
 
     /**
      * @var DateExtensions
@@ -54,6 +59,18 @@ abstract class AbstractSpreadsheetRenderer
         $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(self::DATETIME_FORMAT);
     }
 
+    protected function setFormattedTime(Worksheet $sheet, $column, $row, ?DateTime $date)
+    {
+        if (null === $date) {
+            $sheet->setCellValueByColumnAndRow($column, $row, '');
+
+            return;
+        }
+
+        $sheet->setCellValueByColumnAndRow($column, $row, Date::PHPToExcel($date));
+        $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(self::TIME_FORMAT);
+    }
+
     protected function setFormattedDate(Worksheet $sheet, $column, $row, ?DateTime $date)
     {
         if (null === $date) {
@@ -70,18 +87,26 @@ abstract class AbstractSpreadsheetRenderer
     {
         $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=SUM(%s:%s)', $startCoordinate, $endCoordinate));
         $style = $sheet->getStyleByColumnAndRow($column, $row);
-        $style->getNumberFormat()->setFormatCode('[h]:mm');
+        $style->getNumberFormat()->setFormatCode(self::DURATION_FORMAT);
     }
 
     protected function setDuration(Worksheet $sheet, $column, $row, $duration)
     {
         $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=%s/86400', $duration));
-        $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode('[h]:mm');
+        $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(self::DURATION_FORMAT);
     }
 
     protected function setRateTotal(Worksheet $sheet, $column, $row, $startCoordinate, $endCoordinate)
     {
         $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=SUM(%s:%s)', $startCoordinate, $endCoordinate));
+    }
+
+    protected function setRate(Worksheet $sheet, $column, $row, $rate, $currency)
+    {
+        $sheet->setCellValueByColumnAndRow($column, $row, $rate);
+        $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(
+            sprintf(self::RATE_FORMAT_LEFT, $currency)
+        );
     }
 
     /**
@@ -112,7 +137,6 @@ abstract class AbstractSpreadsheetRenderer
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.end'));
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.duration'));
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.rate'));
-        $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.currency'));
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.user'));
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.customer'));
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.project'));
@@ -140,21 +164,18 @@ abstract class AbstractSpreadsheetRenderer
             $this->setFormattedDate($sheet, $entryHeaderColumn, $entryHeaderRow, $timesheet->getBegin());
             $entryHeaderColumn++;
 
-            $this->setFormattedDateTime($sheet, $entryHeaderColumn, $entryHeaderRow, $timesheet->getBegin());
+            $this->setFormattedTime($sheet, $entryHeaderColumn, $entryHeaderRow, $timesheet->getBegin());
             $entryHeaderColumn++;
 
-            $this->setFormattedDateTime($sheet, $entryHeaderColumn, $entryHeaderRow, $timesheet->getEnd());
+            $this->setFormattedTime($sheet, $entryHeaderColumn, $entryHeaderRow, $timesheet->getEnd());
             $entryHeaderColumn++;
 
             $this->setDuration($sheet, $entryHeaderColumn, $entryHeaderRow, $timesheet->getDuration());
             $durationColumn = $entryHeaderColumn;
             $entryHeaderColumn++;
 
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $timesheet->getRate());
+            $this->setRate($sheet, $entryHeaderColumn, $entryHeaderRow, $timesheet->getRate(), $customerCurrency);
             $rateColumn = $entryHeaderColumn;
-            $entryHeaderColumn++;
-
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $customerCurrency);
             $entryHeaderColumn++;
 
             $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $this->getUsername($timesheet));
@@ -178,10 +199,10 @@ abstract class AbstractSpreadsheetRenderer
             $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, implode(',', $timesheet->getTagsAsArray()));
             $entryHeaderColumn++;
 
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $timesheet->getHourlyRate());
+            $this->setRate($sheet, $entryHeaderColumn, $entryHeaderRow, $timesheet->getHourlyRate(), $customerCurrency);
             $entryHeaderColumn++;
 
-            $sheet->setCellValueByColumnAndRow($entryHeaderColumn, $entryHeaderRow, $timesheet->getFixedRate());
+            $this->setRate($sheet, $entryHeaderColumn, $entryHeaderRow, $timesheet->getFixedRate(), $customerCurrency);
             $entryHeaderColumn++;
 
             foreach ($publicMetaFields as $metaFieldName) {
