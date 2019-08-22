@@ -31,10 +31,11 @@ class UserInvoiceCalculator extends AbstractMergedCalculator implements Calculat
         $invoiceItems = [];
 
         foreach ($entries as $entry) {
-            if (!isset($invoiceItems[$entry->getUser()->getId()])) {
-                $invoiceItems[$entry->getUser()->getId()] = new InvoiceItem();
+            $id = $entry->getUser()->getId();
+            if (!isset($invoiceItems[$id])) {
+                $invoiceItems[$id] = new InvoiceItem();
             }
-            $invoiceItem = $invoiceItems[$entry->getUser()->getId()];
+            $invoiceItem = $invoiceItems[$id];
             $this->mergeTimesheets($invoiceItem, $entry);
         }
 

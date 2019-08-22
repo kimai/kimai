@@ -29,19 +29,27 @@ class ShortInvoiceCalculator extends AbstractMergedCalculator implements Calcula
             return [];
         }
 
-        $timesheet = new InvoiceItem();
+        $invoiceItem = new InvoiceItem();
+        $keys = [];
 
         foreach ($entries as $entry) {
-            $this->mergeTimesheets($timesheet, $entry);
+            $key = 'hourly_' . (string) $entry->getHourlyRate();
+            if (null !== $entry->getFixedRate()) {
+                $key = 'fixed_' . (string) $entry->getFixedRate();
+            }
+            if (!in_array($key, $keys)) {
+                $keys[] = $key;
+            }
+            $this->mergeTimesheets($invoiceItem, $entry);
         }
 
-        if (null !== $timesheet->isFixedRate()) {
-            $timesheet->setAmount(1);
-            $timesheet->setFixedRate($timesheet->getRate());
+        if (count($keys) > 1) {
+            $invoiceItem->setAmount(1);
+            $invoiceItem->setFixedRate($invoiceItem->getRate());
         }
-        $timesheet->setHourlyRate($timesheet->getRate());
+        $invoiceItem->setHourlyRate($invoiceItem->getRate());
 
-        return [$timesheet];
+        return [$invoiceItem];
     }
 
     /**

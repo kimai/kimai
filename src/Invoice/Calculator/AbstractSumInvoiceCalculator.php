@@ -35,6 +35,13 @@ abstract class AbstractSumInvoiceCalculator extends AbstractMergedCalculator imp
 
         foreach ($entries as $entry) {
             $id = $this->calculateSumIdentifier($entry);
+
+            if (null !== $entry->getFixedRate()) {
+                $id = $id . '_fixed_' . (string) $entry->getFixedRate();
+            } else {
+                $id = $id . '_hourly_' . (string) $entry->getHourlyRate();
+            }
+
             if (!isset($invoiceItems[$id])) {
                 $invoiceItems[$id] = new InvoiceItem();
             }
