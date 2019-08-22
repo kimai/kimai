@@ -40,7 +40,7 @@ class RolePermissionVoterTest extends AbstractVoterTest
         $user4 = $this->getUser(4, User::ROLE_SUPER_ADMIN);
 
         $invoice = [
-            'create_invoice_template' => null,
+            'manage_invoice_template' => null,
             'view_invoice' => null,
             'create_invoice' => null,
         ];

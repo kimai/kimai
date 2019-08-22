@@ -17,6 +17,7 @@ use App\Repository\TimesheetRepository;
 use App\Timesheet\UserDateTimeFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,7 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Controller used to export timesheet data.
  *
  * @Route(path="/export")
- * @Security("is_granted('view_export')")
+ * @Security("is_granted('create_export')")
  */
 class ExportController extends AbstractController
 {
@@ -55,60 +56,44 @@ class ExportController extends AbstractController
     }
 
     /**
-     * @return ExportQuery
-     * @throws \Exception
-     */
-    protected function getDefaultQuery()
-    {
-        $begin = $this->dateFactory->createDateTime('first day of this month 00:00:00');
-        $end = $this->dateFactory->createDateTime('last day of this month 23:59:59');
-
-        $query = new ExportQuery();
-        $query->setOrder(ExportQuery::ORDER_ASC);
-        $query->setBegin($begin);
-        $query->setEnd($end);
-        $query->setState(ExportQuery::STATE_STOPPED);
-        $query->setExported(ExportQuery::STATE_NOT_EXPORTED);
-        $query->setCurrentUser($this->getUser());
-
-        return $query;
-    }
-
-    /**
      * @Route(path="/", name="export", methods={"GET"})
-     * @Security("is_granted('view_export')")
-     *
-     * @param Request $request
-     * @return Response
-     * @throws \Exception
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $query = $this->getDefaultQuery();
+
+        $showPreview = false;
+        $maxItemsPreview = 500;
+        $entries = [];
 
         $form = $this->getToolbarForm($query, 'GET');
         $form->setData($query);
         $form->submit($request->query->all(), false);
 
-        $entries = $this->getEntries($query);
+        if ($form->isValid()) {
+            /** @var SubmitButton $previewButton */
+            $previewButton = $form->get('preview');
+            if ($previewButton->isClicked()) {
+                $showPreview = true;
+                $query->setPageSize($maxItemsPreview);
+                $entries = $this->getEntries($query);
+            }
+        }
 
         return $this->render('export/index.html.twig', [
             'query' => $query,
             'entries' => $entries,
             'form' => $form->createView(),
             'renderer' => $this->export->getRenderer(),
+            'preview_max' => $maxItemsPreview,
+            'preview_show' => $showPreview,
         ]);
     }
 
     /**
      * @Route(path="/data", name="export_data", methods={"POST"})
-     * @Security("is_granted('create_export')")
-     *
-     * @param Request $request
-     * @return Response
-     * @throws \Exception
      */
-    public function export(Request $request)
+    public function export(Request $request): Response
     {
         $query = $this->getDefaultQuery();
 
@@ -127,8 +112,29 @@ class ExportController extends AbstractController
         }
 
         $entries = $this->getEntries($query);
+        $response = $renderer->render($entries, $query);
 
-        return $renderer->render($entries, $query);
+        if ($query->isMarkAsExported()) {
+            $this->timesheetRepository->setExported($entries);
+        }
+
+        return $response;
+    }
+
+    protected function getDefaultQuery(): ExportQuery
+    {
+        $begin = $this->dateFactory->createDateTime('first day of this month 00:00:00');
+        $end = $this->dateFactory->createDateTime('last day of this month 23:59:59');
+
+        $query = new ExportQuery();
+        $query->setOrder(ExportQuery::ORDER_ASC);
+        $query->setBegin($begin);
+        $query->setEnd($end);
+        $query->setState(ExportQuery::STATE_STOPPED);
+        $query->setExported(ExportQuery::STATE_NOT_EXPORTED);
+        $query->setCurrentUser($this->getUser());
+
+        return $query;
     }
 
     /**

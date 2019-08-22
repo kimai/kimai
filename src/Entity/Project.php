@@ -95,7 +95,7 @@ class Project implements EntityWithMetaFields
     /**
      * @var Team[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Team", cascade={"remove", "persist"}, inversedBy="projects")
+     * @ORM\ManyToMany(targetEntity="Team", cascade={"persist"}, inversedBy="projects")
      * @ORM\JoinTable(
      *  name="kimai2_projects_teams",
      *  joinColumns={

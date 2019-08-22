@@ -19,9 +19,14 @@ class RolePermissionManager
      * @var string[]
      */
     protected $knownPermissions = [];
+    /**
+     * @var RoleService
+     */
+    private $roles;
 
-    public function __construct(array $permissions)
+    public function __construct(RoleService $roles, array $permissions)
     {
+        $this->roles = $roles;
         $this->permissions = $permissions;
 
         foreach ($permissions as $role => $perms) {
@@ -46,7 +51,7 @@ class RolePermissionManager
 
     public function getRoles(): array
     {
-        return array_keys($this->permissions);
+        return $this->roles->getAvailableNames();
     }
 
     public function getPermissions(): array

@@ -123,6 +123,8 @@ trait RendererTrait
                 'activity.id' => $activity->getId(),
                 'activity.name' => $activity->getName(),
                 'activity.comment' => $activity->getComment(),
+                'activity.fixed_rate' => $activity->getFixedRate(),
+                'activity.hourly_rate' => $activity->getHourlyRate(),
             ]);
 
             foreach ($activity->getVisibleMetaFields() as $metaField) {
@@ -138,6 +140,8 @@ trait RendererTrait
                 'project.name' => $project->getName(),
                 'project.comment' => $project->getComment(),
                 'project.order_number' => $project->getOrderNumber(),
+                'project.fixed_rate' => $project->getFixedRate(),
+                'project.hourly_rate' => $project->getHourlyRate(),
             ]);
 
             foreach ($project->getVisibleMetaFields() as $metaField) {
@@ -158,6 +162,8 @@ trait RendererTrait
                 'customer.country' => $customer->getCountry(),
                 'customer.homepage' => $customer->getHomepage(),
                 'customer.comment' => $customer->getComment(),
+                'customer.fixed_rate' => $customer->getFixedRate(),
+                'customer.hourly_rate' => $customer->getHourlyRate(),
             ]);
 
             foreach ($customer->getVisibleMetaFields() as $metaField) {
