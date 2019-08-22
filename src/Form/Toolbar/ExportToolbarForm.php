@@ -10,9 +10,9 @@
 namespace App\Form\Toolbar;
 
 use App\Repository\Query\ExportQuery;
-use App\Repository\Query\TimesheetQuery;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,13 +27,21 @@ class ExportToolbarForm extends AbstractToolbarForm
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addExportStateChoice($builder);
-        $this->addUserChoice($builder);
+        $this->addTimesheetStateChoice($builder);
+        $this->addUsersChoice($builder);
         $this->addDateRangeChoice($builder);
         $this->addCustomerChoice($builder);
         $this->addProjectChoice($builder);
         $this->addActivityChoice($builder);
         $this->addExportType($builder);
         $this->addTagInputField($builder);
+        $builder->add('markAsExported', CheckboxType::class, [
+            'label' => 'label.mark_as_exported',
+            'required' => false,
+        ]);
+        $builder->add('preview', SubmitType::class, [
+            'label' => 'button.preview',
+        ]);
     }
 
     /**
@@ -42,23 +50,6 @@ class ExportToolbarForm extends AbstractToolbarForm
     protected function addExportType(FormBuilderInterface $builder)
     {
         $builder->add('type', HiddenType::class, []);
-    }
-
-    /**
-     * @param FormBuilderInterface $builder
-     */
-    protected function addExportStateChoice(FormBuilderInterface $builder)
-    {
-        $builder->add('exported', ChoiceType::class, [
-            'label' => 'label.exported',
-            'required' => false,
-            'placeholder' => null,
-            'choices' => [
-                'entryState.all' => TimesheetQuery::STATE_ALL,
-                'entryState.exported' => TimesheetQuery::STATE_EXPORTED,
-                'entryState.not_exported' => TimesheetQuery::STATE_NOT_EXPORTED
-            ],
-        ]);
     }
 
     /**

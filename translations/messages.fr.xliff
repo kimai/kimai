@@ -740,10 +740,6 @@
                 <source>invoice.subtitle</source>
                 <target>Générer des factures à partir des fiches de temps.</target>
             </trans-unit>
-            <trans-unit id="invoice.preview">
-                <source>invoice.preview</source>
-                <target>Il s'agit d'un aperçu des données qui apparaîtront dans la facture.</target>
-            </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
                 <target>Imprimer</target>

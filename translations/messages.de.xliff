@@ -760,9 +760,17 @@
                 <source>invoice.subtitle</source>
                 <target>Hier erstellen Sie Rechnungen für ihre aufgezeichneten Zeiten.</target>
             </trans-unit>
-            <trans-unit id="invoice.preview">
-                <source>invoice.preview</source>
-                <target>Dies ist eine Vorschau der Daten, die in Ihrer Rechnung enthalten sein werden.</target>
+            <trans-unit id="invoice.filter">
+                <source>invoice.filter</source>
+                <target>Rechnungsdaten filtern</target>
+            </trans-unit>
+            <trans-unit id="limited_entries">
+                <source>limited_entries</source>
+                <target>Limitiert auf %max% Einträge</target>
+            </trans-unit>
+            <trans-unit id="button.preview">
+                <source>button.preview</source>
+                <target>Vorschau</target>
             </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
@@ -787,6 +795,10 @@
             <trans-unit id="invoice_print">
                 <source>invoice_print</source>
                 <target>Rechnung</target>
+            </trans-unit>
+            <trans-unit id="label.mark_as_exported">
+                <source>label.mark_as_exported</source>
+                <target>Als exportiert markieren</target>
             </trans-unit>
             <trans-unit id="label.template">
                 <source>label.template</source>
@@ -887,6 +899,10 @@
             <trans-unit id="export.subtitle">
                 <source>export.subtitle</source>
                 <target>Exportieren Sie geloggte Zeiten in veschiedene Zielformate</target>
+            </trans-unit>
+            <trans-unit id="export.filter">
+                <source>export.filter</source>
+                <target>Daten für Export filtern</target>
             </trans-unit>
             <trans-unit id="export.period">
                 <source>export.period</source>

@@ -754,10 +754,6 @@
                 <source>invoice.subtitle</source>
                 <target>Vytvorte faktúry z vašich zaznamenaných položiek časového rozvrhu.</target>
             </trans-unit>
-            <trans-unit id="invoice.preview">
-                <source>invoice.preview</source>
-                <target>Toto je ukážka údajov, ktoré sa zobrazia vo vašom fakturačnom dokumente.</target>
-            </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
                 <target>Tlačiť</target>

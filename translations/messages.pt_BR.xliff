@@ -740,10 +740,6 @@
                 <source>invoice.subtitle</source>
                 <target>Criar faturas a partir de suas entradas de quadro de horários registradas.</target>
             </trans-unit>
-            <trans-unit id="invoice.preview">
-                <source>invoice.preview</source>
-                <target>Esta é uma prévia dos dados que serão exibidos no documento da fatura.</target>
-            </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
                 <target>Imprimir</target>

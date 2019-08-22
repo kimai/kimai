@@ -1,3 +1,6 @@
+{% if form_theme is defined %}
+    {% form_theme form form_theme %}
+{% endif %}
 <div class="box box-primary">
     {{ form_start(form) }}
     <div class="box-header with-border">
