@@ -108,7 +108,6 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $this->assertNull($result->getFixedRate());
     }
 
-
     public function testWithMixedRateTypes()
     {
         $customer = new Customer();
@@ -186,7 +185,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $this->assertEquals(5800, $result->getDuration());
         $this->assertEquals(488.38, $result->getFixedRate());
     }
-    
+
     public function testDescriptionByTimesheet()
     {
         $this->assertDescription(new ShortInvoiceCalculator(), false, false);
