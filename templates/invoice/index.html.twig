@@ -10,6 +10,7 @@
     'description': 'hidden-xs hidden-sm',
     'unit_price': 'hidden-xs text-center',
     'amount': 'text-center',
+    'duration': 'hidden-xs text-center',
     'total_rate': 'text-right alwaysVisible',
 } %}
 
@@ -54,14 +55,13 @@
             {% set entries = model.calculator.entries %}
             {{ tables.data_table_header(tableName, columns) }}
             {% for entry in entries %}
-                {% set duration = entry.duration|duration %}
+                {% set amount = entry.amount %}
+                {% set duration = entry.duration|duration_decimal ~ ' / ' ~ entry.duration|duration %}
+                {% set rate = 0 %}
                 {% if entry.fixedRate is not null %}
                     {% set rate = entry.fixedRate %}
-                    {% set duration = entry.amount %}
                 {% elseif entry.hourlyRate is not null %}
                     {% set rate = entry.hourlyRate %}
-                {% else %}
-                    {% set rate = entry.user.preferenceValue('hourly_rate') %}
                 {% endif %}
                 <tr>
                     <td class="text-nowrap">{{ entry.begin|date_short }}</td>
@@ -74,7 +74,8 @@
                         {% endif %}
                     </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }} text-center">{{ rate|money(model.calculator.currency) }}</td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'amount') }} text-center text-nowrap">{{ duration }}</td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'amount') }} text-center text-nowrap">{{ amount }}</td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }} text-center text-nowrap">{{ duration }}</td>
                     <td class="text-right text-nowrap">{{ entry.rate|money(model.calculator.currency) }}</td>
                 </tr>
             {% endfor %}
