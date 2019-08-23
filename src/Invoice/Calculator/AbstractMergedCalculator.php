@@ -14,13 +14,6 @@ use App\Invoice\InvoiceItem;
 
 abstract class AbstractMergedCalculator extends AbstractCalculator
 {
-    private $throwExceptionOnInvalidEntry = false;
-
-    protected function setThrowExceptionOnInvalidMerge(bool $throwException)
-    {
-        $this->throwExceptionOnInvalidEntry = $throwException;
-    }
-
     protected function mergeTimesheets(InvoiceItem $invoiceItem, Timesheet $entry)
     {
         $invoiceItem->setAmount($invoiceItem->getAmount() + 1);
@@ -30,18 +23,14 @@ abstract class AbstractMergedCalculator extends AbstractCalculator
 
         if (null !== $entry->getFixedRate()) {
             if (null !== $invoiceItem->getFixedRate() && $invoiceItem->getFixedRate() !== $entry->getFixedRate()) {
-                if ($this->throwExceptionOnInvalidEntry) {
-                    throw new \InvalidArgumentException('Cannot mix different fixed-rates');
-                }
+                throw new \InvalidArgumentException('Cannot mix different fixed-rates');
             }
             $invoiceItem->setFixedRate($entry->getFixedRate());
         }
 
         if (null !== $entry->getHourlyRate()) {
             if (null !== $invoiceItem->getHourlyRate() && $invoiceItem->getHourlyRate() !== $entry->getHourlyRate()) {
-                if ($this->throwExceptionOnInvalidEntry) {
-                    throw new \InvalidArgumentException('Cannot mix different hourly-rates');
-                }
+                throw new \InvalidArgumentException('Cannot mix different hourly-rates');
             }
             $invoiceItem->setHourlyRate($entry->getHourlyRate());
         }
