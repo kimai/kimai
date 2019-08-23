@@ -22,16 +22,20 @@ abstract class AbstractMergedCalculator extends AbstractCalculator
         $invoiceItem->setDuration($invoiceItem->getDuration() + $entry->getDuration());
 
         if (null !== $entry->getFixedRate()) {
+            /*
             if (null !== $invoiceItem->getFixedRate() && $invoiceItem->getFixedRate() !== $entry->getFixedRate()) {
                 throw new \InvalidArgumentException('Cannot mix different fixed-rates');
             }
+            */
             $invoiceItem->setFixedRate($entry->getFixedRate());
         }
 
         if (null !== $entry->getHourlyRate()) {
+            /*
             if (null !== $invoiceItem->getHourlyRate() && $invoiceItem->getHourlyRate() !== $entry->getHourlyRate()) {
                 throw new \InvalidArgumentException('Cannot mix different hourly-rates');
             }
+            */
             $invoiceItem->setHourlyRate($entry->getHourlyRate());
         }
 

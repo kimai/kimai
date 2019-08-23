@@ -103,7 +103,6 @@ abstract class AbstractCalculator
     {
         $time = 0;
         foreach ($this->model->getEntries() as $entry) {
-            // FIXME fixed rates - don't add fixed rate entries to the total time
             if (null === $entry->getFixedRate()) {
                 $time += $entry->getDuration();
             }
