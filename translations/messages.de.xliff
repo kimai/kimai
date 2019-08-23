@@ -52,6 +52,10 @@
                 <source>confirm</source>
                 <target>Bestätigen</target>
             </trans-unit>
+            <trans-unit id="search">
+                <source>search</source>
+                <target>Suchen</target>
+            </trans-unit>
 
             <!--
               Login / Security

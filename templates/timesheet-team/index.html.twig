@@ -2,7 +2,7 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
 {% import "macros/toolbar.html.twig" as toolbar %}
-{% import "macros/actions.html.twig" as actions %}
+{% import "timesheet-team/actions.html.twig" as actions %}
 
 {% set tableName = 'timesheet_admin' %}
 {% set columns = {
@@ -29,7 +29,8 @@
 }) %}
 
 {% block page_title %}{{ 'admin_timesheet.title'|trans }}{% endblock %}
-{% block page_subtitle %}{{ 'admin_timesheet.subtitle'|trans }}{% endblock %}
+{% block page_search %}{{ toolbar.dropDownSearch(toolbarForm) }}{% endblock %}
+{# FIXME {% block page_subtitle %}{{ 'admin_timesheet.subtitle'|trans }}{% endblock %}#}
 {% block page_actions %}{{ actions.timesheets_team('index') }}{% endblock %}
 
 {% block main_before %}

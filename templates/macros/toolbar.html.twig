@@ -7,3 +7,37 @@
         {% if collapsible %}</div>{% endif %}
     </div>
 {% endmacro %}
+
+{% macro dropDownSearch(form) %}
+    {% form_theme form 'form/search-form.html.twig' %}
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'}}) }}
+    <div class="dropdown header-search">
+        <div class="input-group">
+            <div class="input-group-addon">
+                <i class="fas fa-search"></i>
+            </div>
+            <input type="text" autocomplete="off" class="dropdown-toggle input-sm form-control" id="dropdownSearch" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownSearch">
+                <li>
+                    <div class="container-fluid">
+                        {{ form_widget(form) }}
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="submit" value="{{ 'search'|trans }}" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {{ form_end(form) }}
+    
+    <script type="text/javascript">
+        $(document).on('click', '.header-search .dropdown-menu', function (e) {
+            e.stopPropagation();
+        });
+    </script>
+{% endmacro %}

@@ -1,0 +1,62 @@
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+.content-header {
+    height: 50px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+    background-color: #fff !important;
+    padding: 10px 0 0 10px;
+
+    h1 {
+        padding-top: 3px;
+        float: left;
+        small {
+            display: none;
+        }
+    }
+    
+    form {
+        width: 200px;
+        float: left;
+        ul {
+            padding-top: 20px;
+            width: 500px;
+            
+        }
+    }
+}
+
+/* Page based action buttons in the upper right corner of the content area */
+.content-header>.breadcrumb {
+    position: absolute;
+    float: right;
+    background: transparent;
+    top: 0;
+    right: 0;
+    padding-left: 10px;
+}
+
+@media (max-width: $screen-md-min) {
+    .content-header>.breadcrumb {
+        margin-top: 0;
+    }
+}
+
+@media (min-width: $screen-sm-min) {
+    .content-header>.breadcrumb {
+        right: 10px;
+    }
+
+    .content-header {
+        h1 {
+            small {
+                display: inline-block;
+            }
+        }
+    }
+}

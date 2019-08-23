@@ -23,9 +23,9 @@ class ProjectToolbarForm extends AbstractToolbarForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addPageSizeChoice($builder);
-        $this->addVisibilityChoice($builder);
         $this->addCustomerChoice($builder);
+        $this->addVisibilityChoice($builder);
+        $this->addPageSizeChoice($builder);
         $this->addHiddenPagination($builder);
     }
 

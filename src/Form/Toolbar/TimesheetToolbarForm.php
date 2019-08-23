@@ -23,8 +23,6 @@ class TimesheetToolbarForm extends AbstractToolbarForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addTimesheetStateChoice($builder);
-        $this->addPageSizeChoice($builder);
         if ($options['include_user']) {
             $this->addUserChoice($builder);
         }
@@ -33,6 +31,8 @@ class TimesheetToolbarForm extends AbstractToolbarForm
         $this->addProjectChoice($builder);
         $this->addActivityChoice($builder);
         $this->addTagInputField($builder);
+        $this->addTimesheetStateChoice($builder);
+        $this->addPageSizeChoice($builder);
         $this->addHiddenPagination($builder);
     }
 
