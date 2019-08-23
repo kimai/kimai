@@ -13,13 +13,13 @@ use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use App\Entity\Timesheet;
 use App\Invoice\Calculator\DefaultCalculator;
+use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
-use App\Model\InvoiceModel;
 use App\Repository\Query\InvoiceQuery;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Model\InvoiceModel
+ * @covers \App\Invoice\InvoiceModel
  */
 class InvoiceModelTest extends TestCase
 {

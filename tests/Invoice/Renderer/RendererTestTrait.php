@@ -22,9 +22,9 @@ use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Invoice\Calculator\DefaultCalculator;
+use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Invoice\Renderer\AbstractRenderer;
-use App\Model\InvoiceModel;
 use App\Repository\Query\InvoiceQuery;
 use App\Twig\DateExtensions;
 use App\Twig\Extensions;
@@ -82,10 +82,7 @@ trait RendererTestTrait
         return new $classname($translator, $dateExtension, $extensions);
     }
 
-    /**
-     * @return InvoiceModel
-     */
-    protected function getInvoiceModel()
+    protected function getInvoiceModel(): InvoiceModel
     {
         $customer = new Customer();
         $customer->setCurrency('EUR');

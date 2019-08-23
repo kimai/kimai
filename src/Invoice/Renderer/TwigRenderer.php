@@ -10,8 +10,8 @@
 namespace App\Invoice\Renderer;
 
 use App\Entity\InvoiceDocument;
+use App\Invoice\InvoiceModel;
 use App\Invoice\RendererInterface;
-use App\Model\InvoiceModel;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
