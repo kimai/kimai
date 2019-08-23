@@ -12,6 +12,7 @@ namespace App\Tests\Voter;
 use App\Entity\User;
 use App\Security\AclDecisionManager;
 use App\Security\RolePermissionManager;
+use App\Tests\Mocks\Security\RoleServiceFactory;
 use App\Voter\AbstractVoter;
 use PHPUnit\Framework\TestCase;
 
@@ -72,7 +73,7 @@ abstract class AbstractVoterTest extends TestCase
             $customers = ['view_customer', 'edit_customer', 'budget_customer', 'delete_customer', 'create_customer'];
             $customersTeam = ['view_customer', 'edit_teamlead_customer', 'budget_teamlead_customer'];
             $invoice = ['view_invoice', 'create_invoice'];
-            $invoiceTemplate = ['view_invoice_template', 'create_invoice_template', 'edit_invoice_template', 'delete_invoice_template'];
+            $invoiceTemplate = ['manage_invoice_template'];
             $timesheet = ['view_own_timesheet', 'start_own_timesheet', 'stop_own_timesheet', 'create_own_timesheet', 'edit_own_timesheet', 'export_own_timesheet', 'delete_own_timesheet'];
             $timesheetOthers = ['view_other_timesheet', 'start_other_timesheet', 'stop_other_timesheet', 'create_other_timesheet', 'edit_other_timesheet',  'export_other_timesheet', 'delete_other_timesheet'];
             $profile = ['view_own_profile', 'edit_own_profile', 'password_own_profile', 'preferences_own_profile', 'api-token_own_profile'];
@@ -95,6 +96,9 @@ abstract class AbstractVoterTest extends TestCase
             ];
         }
 
-        return new RolePermissionManager($permissions);
+        $factory = new RoleServiceFactory($this);
+        $roleService = $factory->create();
+
+        return new RolePermissionManager($roleService, $permissions);
     }
 }

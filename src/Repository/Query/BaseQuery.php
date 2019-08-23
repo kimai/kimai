@@ -50,7 +50,7 @@ class BaseQuery
     /**
      * @var User
      */
-    private $user;
+    private $currentUser;
     /**
      * @var Team[]
      */
@@ -73,7 +73,7 @@ class BaseQuery
 
     public function getCurrentUser(): ?User
     {
-        return $this->user;
+        return $this->currentUser;
     }
 
     /**
@@ -82,7 +82,7 @@ class BaseQuery
      */
     public function setCurrentUser(User $user)
     {
-        $this->user = $user;
+        $this->currentUser = $user;
 
         return $this;
     }

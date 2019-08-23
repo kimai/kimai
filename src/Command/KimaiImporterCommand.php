@@ -514,6 +514,10 @@ class KimaiImporterCommand extends Command
                     continue;
                 }
 
+                if (empty($pref['value'])) {
+                    continue;
+                }
+
                 $newPref = new UserPreference();
                 $newPref
                     ->setName($prefsToImport[$key])

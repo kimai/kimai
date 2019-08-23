@@ -9,8 +9,8 @@
 
 namespace App\Invoice\Calculator;
 
-use App\Entity\Timesheet;
 use App\Invoice\CalculatorInterface;
+use App\Invoice\InvoiceItem;
 
 /**
  * A calculator that sums up the timesheet records by user.
@@ -18,7 +18,7 @@ use App\Invoice\CalculatorInterface;
 class UserInvoiceCalculator extends AbstractMergedCalculator implements CalculatorInterface
 {
     /**
-     * @return Timesheet[]
+     * @return InvoiceItem[]
      */
     public function getEntries()
     {
@@ -27,18 +27,19 @@ class UserInvoiceCalculator extends AbstractMergedCalculator implements Calculat
             return [];
         }
 
-        /** @var Timesheet[] $timesheets */
-        $timesheets = [];
+        /** @var InvoiceItem[] $invoiceItems */
+        $invoiceItems = [];
 
         foreach ($entries as $entry) {
-            if (!isset($timesheets[$entry->getUser()->getId()])) {
-                $timesheets[$entry->getUser()->getId()] = new Timesheet();
+            $id = $entry->getUser()->getId();
+            if (!isset($invoiceItems[$id])) {
+                $invoiceItems[$id] = new InvoiceItem();
             }
-            $timesheet = $timesheets[$entry->getUser()->getId()];
-            $this->mergeTimesheets($timesheet, $entry);
+            $invoiceItem = $invoiceItems[$id];
+            $this->mergeTimesheets($invoiceItem, $entry);
         }
 
-        return array_values($timesheets);
+        return array_values($invoiceItems);
     }
 
     /**

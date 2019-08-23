@@ -49,6 +49,10 @@ class TimesheetQuery extends ActivityQuery
      * @var iterable
      */
     protected $tags = [];
+    /**
+     * @var User[]
+     */
+    private $users = [];
 
     public function __construct()
     {
@@ -56,6 +60,30 @@ class TimesheetQuery extends ActivityQuery
         $this->setOrder(self::ORDER_DESC);
         $this->setOrderBy('begin');
         $this->dateRange = new DateRange();
+    }
+
+    public function addUser(User $user): self
+    {
+        $this->users[$user->getId()] = $user;
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if (isset($this->users[$user->getId()])) {
+            unset($this->users[$user->getId()]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return User[]
+     */
+    public function getUsers(): array
+    {
+        return array_values($this->users);
     }
 
     /**

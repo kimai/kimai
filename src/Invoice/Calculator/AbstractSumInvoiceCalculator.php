@@ -11,16 +11,17 @@ namespace App\Invoice\Calculator;
 
 use App\Entity\Timesheet;
 use App\Invoice\CalculatorInterface;
+use App\Invoice\InvoiceItem;
 
 /**
- * A calculator that sums up the timesheet records by activity.
+ * An abstract calculator that sums up the timesheet records.
  */
 abstract class AbstractSumInvoiceCalculator extends AbstractMergedCalculator implements CalculatorInterface
 {
     abstract protected function calculateSumIdentifier(Timesheet $timesheet): string;
 
     /**
-     * @return Timesheet[]
+     * @return InvoiceItem[]
      */
     public function getEntries()
     {
@@ -29,18 +30,25 @@ abstract class AbstractSumInvoiceCalculator extends AbstractMergedCalculator imp
             return [];
         }
 
-        /** @var Timesheet[] $timesheets */
-        $timesheets = [];
+        /** @var InvoiceItem[] $invoiceItems */
+        $invoiceItems = [];
 
         foreach ($entries as $entry) {
             $id = $this->calculateSumIdentifier($entry);
-            if (!isset($timesheets[$id])) {
-                $timesheets[$id] = new Timesheet();
+
+            if (null !== $entry->getFixedRate()) {
+                $id = $id . '_fixed_' . (string) $entry->getFixedRate();
+            } else {
+                $id = $id . '_hourly_' . (string) $entry->getHourlyRate();
             }
-            $timesheet = $timesheets[$id];
+
+            if (!isset($invoiceItems[$id])) {
+                $invoiceItems[$id] = new InvoiceItem();
+            }
+            $timesheet = $invoiceItems[$id];
             $this->mergeTimesheets($timesheet, $entry);
         }
 
-        return array_values($timesheets);
+        return array_values($invoiceItems);
     }
 }

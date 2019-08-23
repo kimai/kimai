@@ -130,7 +130,8 @@ services:
         arguments: ['%security.role_hierarchy.roles%']
 
     App\Security\RolePermissionManager:
-        arguments: ['%kimai.permissions%']
+        arguments:
+            $permissions: '%kimai.permissions%'
 
     # ================================================================================
     # LDAP

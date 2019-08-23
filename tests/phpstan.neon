@@ -4,6 +4,7 @@ includes:
     - %rootDir%/../phpstan-phpunit/extension.neon
 
 parameters:
+    tmpDir: %rootDir%/../../../var/cache/phpstan
     ignoreErrors:
         - '#Access to an undefined property Faker\\Generator::\$stateAbbr.#'
         - '#Access to an undefined property Faker\\Generator::\$catchPhrase.#'

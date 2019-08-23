@@ -12,6 +12,7 @@ namespace App\Export\Renderer;
 use App\Export\RendererInterface;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 final class CsvRenderer extends AbstractSpreadsheetRenderer implements RendererInterface
 {
@@ -71,5 +72,10 @@ final class CsvRenderer extends AbstractSpreadsheetRenderer implements RendererI
     public function getTitle(): string
     {
         return 'csv';
+    }
+
+    protected function setDuration(Worksheet $sheet, $column, $row, $duration)
+    {
+        $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=%s', $duration));
     }
 }

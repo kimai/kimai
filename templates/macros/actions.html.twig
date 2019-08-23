@@ -7,6 +7,8 @@
         {% set actions = actions|merge({'create': path('admin_activity_create')}) %}
     {% endif %}
 
+    {% set actions = actions|merge({'help': {'url': 'activity.html'|docu_link, 'target': '_blank'}}) %}
+
     {% set event = trigger('actions.activities', {'actions': actions, 'view': view}) %}
     {{ widgets.page_actions(event.payload.actions) }}
 {% endmacro %}
@@ -73,6 +75,8 @@
         {% set actions = actions|merge({'help': {'url': 'permissions.html'|docu_link, 'target': '_blank'}}) %}
     {% endif %}
 
+    {% set actions = actions|merge({'help': {'url': 'users.html'|docu_link, 'target': '_blank'}}) %}
+
     {% set event = trigger('actions.users', {'actions': actions, 'view': view}) %}
     {{ widgets.page_actions(event.payload.actions) }}
 {% endmacro %}
@@ -125,6 +129,8 @@
     {% if is_granted('create_project') %}
         {% set actions = actions|merge({'create': path('admin_project_create')}) %}
     {% endif %}
+
+    {% set actions = actions|merge({'help': {'url': 'project.html'|docu_link, 'target': '_blank'}}) %}
 
     {% set event = trigger('actions.projects', {'actions': actions, 'view': view}) %}
     {{ widgets.page_actions(event.payload.actions) }}
@@ -181,6 +187,8 @@
     {% if is_granted('create_customer') %}
         {% set actions = actions|merge({'create': path('admin_customer_create')}) %}
     {% endif %}
+
+    {% set actions = actions|merge({'help': {'url': 'customer.html'|docu_link, 'target': '_blank'}}) %}
 
     {% set event = trigger('actions.customers', {'actions': actions, 'view': view}) %}
     {{ widgets.page_actions(event.payload.actions) }}
@@ -257,6 +265,8 @@
         {% set actions = actions|merge({'create': {'url': path('timesheet_create'), 'class': 'modal-ajax-form'}}) %}
     {% endif %}
 
+    {% set actions = actions|merge({'help': {'url': 'timesheet.html'|docu_link, 'target': '_blank'}}) %}
+
     {% set event = trigger('actions.timesheets', {'actions': actions, 'view': view}) %}
     {{ widgets.page_actions(event.payload.actions) }}
 {% endmacro %}
@@ -313,6 +323,8 @@
         {% set actions = actions|merge({'create': {'url': path('admin_timesheet_create'), 'class': 'modal-ajax-form'}}) %}
     {% endif %}
 
+    {% set actions = actions|merge({'help': {'url': 'timesheet.html'|docu_link, 'target': '_blank'}}) %}
+
     {% set event = trigger('actions.timesheets_team', {'actions': actions, 'view': view}) %}
     {{ widgets.page_actions(event.payload.actions) }}
 {% endmacro %}
@@ -359,6 +371,7 @@
     {% import "macros/widgets.html.twig" as widgets %}
 
     {% set actions = {'shop': {'url': constant('App\\Constants::HOMEPAGE') ~ '/store/', 'target': '_blank'}} %}
+    {% set actions = actions|merge({'help': {'url': 'plugins.html'|docu_link, 'target': '_blank'}}) %}
 
     {% set event = trigger('actions.plugins', {'actions': actions, 'view': view}) %}
     {{ widgets.page_actions(event.payload.actions) }}
@@ -393,6 +406,8 @@
     {% import "macros/widgets.html.twig" as widgets %}
     {% set actions = {'filter': '#collapseTags'} %}
 
+    {% set actions = actions|merge({'help': {'url': 'tags.html'|docu_link, 'target': '_blank'}}) %}
+
     {% set event = trigger('actions.tags', {'actions': actions, 'view': view}) %}
     {{ widgets.page_actions(event.payload.actions) }}
 {% endmacro %}
@@ -414,39 +429,14 @@
     {{ widgets.table_actions(event.payload.actions) }}
 {% endmacro %}
 
-{% macro invoices(view) %}
-    {% import "macros/widgets.html.twig" as widgets %}
-
-    {% set actions = {'filter': '#collapseInvoice', 'visibility': '#modal_invoice'} %}
-    {% if is_granted('create_invoice_template') %}
-        {% set actions = actions|merge({'create': path('admin_invoice_template_create')}) %}
-    {% endif %}
-    {% if is_granted('view_invoice_template') %}
-        {% set actions = actions|merge({'list': path('admin_invoice_template')}) %}
-    {% endif %}
-
-    {% set actions = actions|merge({'help': {'url': 'invoices.html'|docu_link, 'target': '_blank'}}) %}
-
-    {% set event = trigger('actions.invoices', {'actions': actions, 'view': view}) %}
-    {{ widgets.page_actions(event.payload.actions) }}
-{% endmacro %}
-
-{% macro invoice_templates(view) %}
+{% macro system_configuration(view) %}
     {% import "macros/widgets.html.twig" as widgets %}
 
     {% set actions = {} %}
-    {% if is_granted('view_invoice') %}
-        {% set actions = actions|merge({'back': path('invoice')}) %}
-    {% endif %}
+    {% set actions = actions|merge({'help': {'url': 'configurations.html'|docu_link, 'target': '_blank'}}) %}
 
-    {% if is_granted('create_invoice_template') %}
-        {% set actions = actions|merge({'create': path('admin_invoice_template_create')}) %}
-    {% endif %}
-
-    {% set actions = actions|merge({'help': {'url': 'invoices.html'|docu_link, 'target': '_blank'}}) %}
-
-    {% set event = trigger('actions.invoice_templates', {'actions': actions, 'view': 'index'}) %}
-    {{ widgets.page_actions(actions) }}
+    {% set event = trigger('actions.system_configuration', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
 {% endmacro %}
 
 {% macro teams(view) %}
@@ -456,6 +446,8 @@
     {% if is_granted('create_team') %}
         {% set actions = actions|merge({'create': {'url': path('admin_team_create')}}) %}
     {% endif %}
+
+    {% set actions = actions|merge({'help': {'url': 'teams.html'|docu_link, 'target': '_blank'}}) %}
 
     {% set event = trigger('actions.teams', {'actions': actions, 'view': view}) %}
     {{ widgets.page_actions(event.payload.actions) }}
@@ -468,9 +460,6 @@
     {% if team.id is not empty %}
         {% if is_granted('edit', team) %}
             {% set class = '' %}
-            {% if view != 'edit' %}
-                {% set class = 'modal-ajax-form' %}
-            {% endif %}
             {% set actions = actions|merge({'edit': {'url': path('admin_team_edit', {'id': team.id}), 'class': class}}) %}
         {% endif %}
     {% endif %}

@@ -538,7 +538,9 @@ class TimesheetRepository extends EntityRepository
             $user[] = $query->getUser();
         }
 
-        if (null === $query->getUser() && null !== $query->getCurrentUser()) {
+        $user = array_merge($user, $query->getUsers());
+
+        if (empty($user) && null !== $query->getCurrentUser()) {
             $currentUser = $query->getCurrentUser();
 
             if (!$currentUser->isSuperAdmin() && !$currentUser->isAdmin()) {
@@ -677,5 +679,26 @@ class TimesheetRepository extends EntityRepository
         $loader->loadResults($results);
 
         return $results;
+    }
+
+    /**
+     * @param Timesheet[] $timesheets
+     */
+    public function setExported(array $timesheets)
+    {
+        $em = $this->getEntityManager();
+        $em->beginTransaction();
+
+        $qb = $em->createQueryBuilder();
+        $qb
+            ->update(Timesheet::class, 't')
+            ->set('t.exported', ':exported')
+            ->where($qb->expr()->in('t.id', ':ids'))
+            ->setParameter('exported', true, \PDO::PARAM_BOOL)
+            ->setParameter('ids', $timesheets)
+            ->getQuery()
+            ->execute();
+
+        $em->commit();
     }
 }

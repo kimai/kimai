@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
-{% import "macros/actions.html.twig" as actions %}
+{% import "invoice/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'admin_invoice_template.title'|trans }}{% endblock %}
 {% block page_subtitle %}{{ 'admin_invoice_template.subtitle'|trans }}{% endblock %}
@@ -25,28 +25,16 @@
     {{ tables.data_table_header(tableName, columns) }}
 
     {% for entry in entries %}
-        <tr{% if is_granted('edit', entry) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_invoice_template_edit', {'id' : entry.id, 'page': page}) }}"{% endif %}>
+        <tr class="modal-ajax-form open-edit" data-href="{{ path('admin_invoice_template_edit', {'id' : entry.id}) }}">
             <td>{{ entry.name }}</td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'title') }}">{{ entry.title }}</td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'due_days') }}">{{ entry.dueDays }}</td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'vat') }}">{{ entry.vat }}</td>
             <td class="actions">
-                {# TODO move me to actions macro #}
-                {% set actions = {} %}
-                {% if is_granted('edit', entry) %}
-                    {% set actions = {'edit': {'url': path('admin_invoice_template_edit', {'id' : entry.id, 'page': page}), 'class': 'modal-ajax-form'}} %}
-                {% endif %}
-                {% if is_granted('create_invoice_template') %}
-                    {% set actions = actions|merge({'copy': path('admin_invoice_template_copy', {'id' : entry.id, 'page': page})}) %}
-                {% endif %}
-                {% if is_granted('delete', entry) %}
-                    {% set actions = actions|merge({'trash': path('admin_invoice_template_delete', {'id' : entry.id, 'page': page})}) %}
-                {% endif %}
-                {% set event = trigger('actions.invoice_templates', {'actions': actions, 'view': 'index', 'template': entry}) %}
-                {{ widgets.table_actions(actions) }}
+                {{- actions.invoice_template(entry, 'index') -}}
             </td>
         </tr>
     {% endfor %}
 
-    {{ tables.data_table_footer(entries, 'admin_invoice_template_paginated') }}
+    {{ tables.data_table_footer(entries, 'admin_invoice_template') }}
 {% endblock %}

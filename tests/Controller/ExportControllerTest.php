@@ -9,8 +9,10 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use Doctrine\ORM\EntityManager;
 
 /**
  * @group integration
@@ -27,7 +29,7 @@ class ExportControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
-        $this->request($client, '/export/');
+        $this->request($client, '/export/?preview=');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasNoEntriesWithFilter($client);
@@ -47,7 +49,7 @@ class ExportControllerTest extends ControllerBaseTest
         ;
         $this->importFixture($em, $fixture);
 
-        $this->request($client, '/export/');
+        $this->request($client, '/export/?preview=');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         // make sure all existing records are displayed
@@ -55,7 +57,7 @@ class ExportControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_export', 20);
 
         // assert export type buttons are available
-        $expected = ['csv', 'html', 'pdf', 'ods', 'xlsx'];
+        $expected = ['csv', 'html', 'pdf', 'xlsx'];
         $node = $client->getCrawler()->filter('#export-buttons button');
         $this->assertEquals(count($expected), $node->count());
         foreach ($node->getIterator() as $button) {
@@ -100,6 +102,7 @@ class ExportControllerTest extends ControllerBaseTest
     public function testExportAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        /** @var EntityManager $em */
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
 
         $begin = new \DateTime('first day of this month');
@@ -121,7 +124,8 @@ class ExportControllerTest extends ControllerBaseTest
 
         // don't add daterange to make sure the current month is the default range
         $client->submit($form, [
-            'type' => 'html'
+            'type' => 'html',
+            'markAsExported' => 1
         ]);
 
         $response = $client->getResponse();
@@ -137,5 +141,11 @@ class ExportControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('section.export div#export-records table.dataTable tbody tr');
         // 20 rows + the summary footer
         $this->assertEquals(21, $node->count());
+
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        /** @var Timesheet $timesheet */
+        foreach ($timesheets as $timesheet) {
+            $this->assertTrue($timesheet->isExported());
+        }
     }
 }

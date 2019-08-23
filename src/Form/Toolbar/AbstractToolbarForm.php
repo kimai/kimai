@@ -24,7 +24,9 @@ use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityFormTypeQuery;
 use App\Repository\Query\CustomerFormTypeQuery;
 use App\Repository\Query\ProjectFormTypeQuery;
+use App\Repository\Query\TimesheetQuery;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -48,9 +50,6 @@ abstract class AbstractToolbarForm extends AbstractType
         return '';
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     */
     protected function addUserChoice(FormBuilderInterface $builder)
     {
         $builder->add('user', UserType::class, [
@@ -59,17 +58,26 @@ abstract class AbstractToolbarForm extends AbstractType
         ]);
     }
 
-    protected function addCustomerChoice(FormBuilderInterface $builder)
+    protected function addUsersChoice(FormBuilderInterface $builder)
+    {
+        $builder->add('users', UserType::class, [
+            'label' => 'label.user',
+            'multiple' => true,
+            'required' => false,
+        ]);
+    }
+
+    protected function addCustomerChoice(FormBuilderInterface $builder, bool $required = false)
     {
         // just a fake field for having this field at the right position in the frontend
         $builder->add('customer', HiddenType::class);
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($builder) {
+            function (FormEvent $event) use ($builder, $required) {
                 $data = $event->getData();
                 $event->getForm()->add('customer', CustomerType::class, [
-                    'required' => false,
+                    'required' => $required,
                     'project_enabled' => true,
                     'query_builder' => function (CustomerRepository $repo) use ($builder, $data) {
                         $query = new CustomerFormTypeQuery();
@@ -85,10 +93,6 @@ abstract class AbstractToolbarForm extends AbstractType
         );
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param string $label
-     */
     protected function addVisibilityChoice(FormBuilderInterface $builder, string $label = 'label.visible')
     {
         $builder->add('visibility', VisibilityType::class, [
@@ -98,9 +102,6 @@ abstract class AbstractToolbarForm extends AbstractType
         ]);
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     */
     protected function addPageSizeChoice(FormBuilderInterface $builder)
     {
         $builder->add('pageSize', PageSizeType::class, [
@@ -108,9 +109,6 @@ abstract class AbstractToolbarForm extends AbstractType
         ]);
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     */
     protected function addUserRoleChoice(FormBuilderInterface $builder)
     {
         $builder->add('role', UserRoleType::class, [
@@ -118,9 +116,6 @@ abstract class AbstractToolbarForm extends AbstractType
         ]);
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     */
     protected function addDateRangeChoice(FormBuilderInterface $builder, $allowEmpty = true)
     {
         $builder->add('daterange', DateRangeType::class, [
@@ -129,9 +124,6 @@ abstract class AbstractToolbarForm extends AbstractType
         ]);
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     */
     protected function addProjectChoice(FormBuilderInterface $builder)
     {
         // just a fake field for having this field at the right position in the frontend
@@ -162,9 +154,6 @@ abstract class AbstractToolbarForm extends AbstractType
         );
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     */
     protected function addActivityChoice(FormBuilderInterface $builder)
     {
         // just a fake field for having this field at the right position in the frontend
@@ -193,9 +182,6 @@ abstract class AbstractToolbarForm extends AbstractType
         );
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     */
     protected function addHiddenPagination(FormBuilderInterface $builder)
     {
         $builder->add('page', HiddenType::class, [
@@ -203,13 +189,38 @@ abstract class AbstractToolbarForm extends AbstractType
         ]);
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     */
     protected function addTagInputField(FormBuilderInterface $builder)
     {
         $builder->add('tags', TagsInputType::class, [
             'required' => false
+        ]);
+    }
+
+    protected function addTimesheetStateChoice(FormBuilderInterface $builder)
+    {
+        $builder->add('state', ChoiceType::class, [
+            'label' => 'label.entryState',
+            'required' => false,
+            'placeholder' => null,
+            'choices' => [
+                'entryState.all' => TimesheetQuery::STATE_ALL,
+                'entryState.running' => TimesheetQuery::STATE_RUNNING,
+                'entryState.stopped' => TimesheetQuery::STATE_STOPPED
+            ],
+        ]);
+    }
+
+    protected function addExportStateChoice(FormBuilderInterface $builder)
+    {
+        $builder->add('exported', ChoiceType::class, [
+            'label' => 'label.exported',
+            'required' => false,
+            'placeholder' => null,
+            'choices' => [
+                'entryState.all' => TimesheetQuery::STATE_ALL,
+                'entryState.exported' => TimesheetQuery::STATE_EXPORTED,
+                'entryState.not_exported' => TimesheetQuery::STATE_NOT_EXPORTED
+            ],
         ]);
     }
 }

@@ -19,6 +19,10 @@ class DateInvoiceCalculator extends AbstractSumInvoiceCalculator implements Calc
 {
     protected function calculateSumIdentifier(Timesheet $timesheet): string
     {
+        if (null === $timesheet->getBegin()) {
+            throw new \Exception('Cannot handle timesheets without start date');
+        }
+
         return $timesheet->getBegin()->format('Y-m-d');
     }
 

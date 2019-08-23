@@ -144,8 +144,10 @@ mpdf-->
         <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
             <td>
                 {{ entry.begin|date_time }}
-                <br>
-                {{ entry.end|date_time }}
+                {% if entry.end %}
+                    <br>
+                    {{ entry.end|date_time }}
+                {% endif %}
             </td>
             <td>
                 {{ entry.project.customer.name }} - {{ entry.project.name }} - {{ entry.activity.name }}

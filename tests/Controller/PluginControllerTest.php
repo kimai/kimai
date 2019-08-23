@@ -29,7 +29,7 @@ class PluginControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/plugins/');
         $this->assertCalloutWidgetWithMessage($client, 'You have no plugins installed yet');
-        $this->assertPageActions($client, ['shop' => 'https://www.kimai.org/store/']);
+        $this->assertPageActions($client, ['shop' => 'https://www.kimai.org/store/', 'help' => 'https://www.kimai.org/documentation/plugins.html']);
     }
 
     public function testIndexActionWithInstalledPlugins()

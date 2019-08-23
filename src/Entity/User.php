@@ -98,7 +98,7 @@ class User extends BaseUser implements UserInterface
     /**
      * @var Team[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Team", inversedBy="users", cascade={"remove", "persist"})
+     * @ORM\ManyToMany(targetEntity="Team", inversedBy="users", cascade={"persist"})
      * @ORM\JoinTable(
      *  name="kimai2_users_teams",
      *  joinColumns={

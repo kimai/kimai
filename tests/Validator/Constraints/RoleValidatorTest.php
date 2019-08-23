@@ -10,6 +10,7 @@
 namespace App\Tests\Validator\Constraints;
 
 use App\Entity\User;
+use App\Tests\Mocks\Security\RoleServiceFactory;
 use App\Validator\Constraints\Role;
 use App\Validator\Constraints\RoleValidator;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -22,7 +23,10 @@ class RoleValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator()
     {
-        return new RoleValidator();
+        $factory = new RoleServiceFactory($this);
+        $roleService = $factory->create();
+
+        return new RoleValidator($roleService);
     }
 
     public function getValidRoles()

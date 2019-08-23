@@ -114,7 +114,7 @@ class Timesheet implements EntityWithMetaFields
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
@@ -140,7 +140,7 @@ class Timesheet implements EntityWithMetaFields
     /**
      * @var Tag[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="timesheets", cascade={"remove", "persist"})
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="timesheets", cascade={"persist"})
      * @ORM\JoinTable(
      *  name="kimai2_timesheet_tags",
      *  joinColumns={
