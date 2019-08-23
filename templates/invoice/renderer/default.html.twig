@@ -67,7 +67,7 @@
                 {% set duration = entry.duration|duration %}
                 {% if entry.fixedRate is not null %}
                     {% set rate = entry.fixedRate %}
-                    {% set duration = 1 %}{# FIXME fixed rates #}
+                    {% set duration = entry.amount %}
                 {% elseif entry.hourlyRate is not null %}
                     {% set rate = entry.hourlyRate %}
                 {% else %}

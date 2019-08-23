@@ -10,52 +10,60 @@
 namespace App\Invoice\Calculator;
 
 use App\Entity\Timesheet;
+use App\Invoice\InvoiceItem;
 
 abstract class AbstractMergedCalculator extends AbstractCalculator
 {
-    /**
-     * @param Timesheet $timesheet
-     * @param Timesheet $entry
-     */
-    protected function mergeTimesheets(Timesheet $timesheet, Timesheet $entry)
+    protected function mergeTimesheets(InvoiceItem $invoiceItem, Timesheet $entry)
     {
-        $timesheet->setUser($entry->getUser());
-        $timesheet->setRate($timesheet->getRate() + $entry->getRate());
+        $invoiceItem->setAmount($invoiceItem->getAmount() + 1);
+        $invoiceItem->setUser($entry->getUser());
+        $invoiceItem->setRate($invoiceItem->getRate() + $entry->getRate());
+        $invoiceItem->setDuration($invoiceItem->getDuration() + $entry->getDuration());
 
-        if (null !== $timesheet->getFixedRate() || null !== $entry->getFixedRate()) {
-            $timesheet->setFixedRate($timesheet->getRate());
-        }
-        if (null === $timesheet->getHourlyRate() && null !== $entry->getHourlyRate() && $timesheet->getHourlyRate() !== $entry->getHourlyRate()) {
-            $timesheet->setHourlyRate($entry->getHourlyRate());
-        }
-
-        $timesheet->setDuration($timesheet->getDuration() + $entry->getDuration());
-
-        if (null === $timesheet->getBegin() || $timesheet->getBegin()->getTimestamp() > $entry->getBegin()->getTimestamp()) {
-            $timesheet->setBegin($entry->getBegin());
+        if (null !== $entry->getFixedRate()) {
+            /*
+            if (null !== $invoiceItem->getFixedRate() && $invoiceItem->getFixedRate() !== $entry->getFixedRate()) {
+                throw new \InvalidArgumentException('Cannot mix different fixed-rates');
+            }
+            */
+            $invoiceItem->setFixedRate($entry->getFixedRate());
         }
 
-        if (null === $timesheet->getEnd() || $timesheet->getEnd()->getTimestamp() < $entry->getEnd()->getTimestamp()) {
-            $timesheet->setEnd($entry->getEnd());
+        if (null !== $entry->getHourlyRate()) {
+            /*
+            if (null !== $invoiceItem->getHourlyRate() && $invoiceItem->getHourlyRate() !== $entry->getHourlyRate()) {
+                throw new \InvalidArgumentException('Cannot mix different hourly-rates');
+            }
+            */
+            $invoiceItem->setHourlyRate($entry->getHourlyRate());
+        }
+
+        if (null === $invoiceItem->getBegin() || $invoiceItem->getBegin()->getTimestamp() > $entry->getBegin()->getTimestamp()) {
+            $invoiceItem->setBegin($entry->getBegin());
+        }
+
+        if (null === $invoiceItem->getEnd() || $invoiceItem->getEnd()->getTimestamp() < $entry->getEnd()->getTimestamp()) {
+            $invoiceItem->setEnd($entry->getEnd());
         }
 
         if (null !== $this->model->getQuery()->getActivity()) {
-            $timesheet->setActivity($this->model->getQuery()->getActivity());
-            $timesheet->setDescription($this->model->getQuery()->getActivity()->getName());
+            $invoiceItem->setActivity($this->model->getQuery()->getActivity());
+            $invoiceItem->setDescription($this->model->getQuery()->getActivity()->getName());
         } elseif (null !== $this->model->getQuery()->getProject()) {
-            $timesheet->setDescription($this->model->getQuery()->getProject()->getName());
+            $invoiceItem->setDescription($this->model->getQuery()->getProject()->getName());
         }
 
-        if (null === $timesheet->getActivity()) {
-            $timesheet->setActivity($entry->getActivity());
+        if (null === $invoiceItem->getActivity()) {
+            $invoiceItem->setActivity($entry->getActivity());
         }
 
-        if (null === $timesheet->getProject()) {
-            $timesheet->setProject($entry->getProject());
+        if (null === $invoiceItem->getProject()) {
+            $invoiceItem->setProject($entry->getProject());
         }
 
-        if (empty($timesheet->getDescription())) {
-            $timesheet->setDescription($entry->getActivity()->getName());
+        if (empty($invoiceItem->getDescription())) {
+            $invoiceItem->setDescription($entry->getActivity()->getName());
         }
     }
 }

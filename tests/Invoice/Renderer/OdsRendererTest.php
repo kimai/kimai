@@ -9,8 +9,8 @@
 
 namespace App\Tests\Invoice\Renderer;
 
+use App\Invoice\InvoiceModel;
 use App\Invoice\Renderer\OdsRenderer;
-use App\Model\InvoiceModel;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 

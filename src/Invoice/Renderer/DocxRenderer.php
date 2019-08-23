@@ -10,8 +10,8 @@
 namespace App\Invoice\Renderer;
 
 use App\Entity\InvoiceDocument;
+use App\Invoice\InvoiceModel;
 use App\Invoice\RendererInterface;
-use App\Model\InvoiceModel;
 use PhpOffice\PhpWord\Escaper\Xml;
 use PhpOffice\PhpWord\Exception\Exception as OfficeException;
 use PhpOffice\PhpWord\Settings;

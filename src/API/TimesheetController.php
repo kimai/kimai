@@ -564,7 +564,7 @@ class TimesheetController extends BaseApiController
      *      required=true,
      * )
      *
-     * @Rest\RequestParam(name="copy", requirements="all|tags|description", strict=true, nullable=true, description="Whether description and tags are copied to the new entry. Allowed values: all, tags, description, meta (default: nothing is copied)")
+     * @Rest\RequestParam(name="copy", requirements="all|tags|rates|meta|description", strict=true, nullable=true, description="Whether data should be copied to the new entry. Allowed values: all, tags, rates, description, meta (default: nothing is copied)")
      *
      * @param int $id
      * @return Response
@@ -597,6 +597,11 @@ class TimesheetController extends BaseApiController
         ;
 
         if (null !== ($copy = $paramFetcher->get('copy'))) {
+            if (in_array($copy, ['rates', 'all'])) {
+                $entry->setHourlyRate($timesheet->getHourlyRate());
+                $entry->setFixedRate($timesheet->getFixedRate());
+            }
+
             if (in_array($copy, ['description', 'all'])) {
                 $entry->setDescription($timesheet->getDescription());
             }
