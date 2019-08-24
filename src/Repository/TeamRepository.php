@@ -22,6 +22,20 @@ use Pagerfanta\Pagerfanta;
 
 class TeamRepository extends EntityRepository
 {
+    public function find($id, $lockMode = null, $lockVersion = null)
+    {
+        /** @var Team|null $team */
+        $team = parent::find($id, $lockMode, $lockVersion);
+        if (null === $team) {
+            return null;
+        }
+
+        $loader = new TeamLoader($this->getEntityManager());
+        $loader->loadResults([$team]);
+
+        return $team;
+    }
+
     /**
      * @param Team $team
      * @throws ORMException

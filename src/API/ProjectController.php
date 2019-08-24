@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace App\API;
 
 use App\Entity\Project;
+use App\Event\ProjectMetaDefinitionEvent;
 use App\Form\API\ProjectApiEditForm;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
@@ -22,6 +23,7 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -36,16 +38,21 @@ class ProjectController extends BaseApiController
     /**
      * @var ProjectRepository
      */
-    protected $repository;
+    private $repository;
     /**
      * @var ViewHandlerInterface
      */
-    protected $viewHandler;
+    private $viewHandler;
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $dispatcher;
 
-    public function __construct(ViewHandlerInterface $viewHandler, ProjectRepository $repository)
+    public function __construct(ViewHandlerInterface $viewHandler, ProjectRepository $repository, EventDispatcherInterface $dispatcher)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -154,14 +161,15 @@ class ProjectController extends BaseApiController
 
         $project = new Project();
 
+        $event = new ProjectMetaDefinitionEvent($project);
+        $this->dispatcher->dispatch($event, ProjectMetaDefinitionEvent::class);
+
         $form = $this->createForm(ProjectApiEditForm::class, $project);
 
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($project);
-            $entityManager->flush();
+            $this->repository->saveProject($project);
 
             $view = new View($project, 200);
             $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
@@ -203,6 +211,8 @@ class ProjectController extends BaseApiController
      * @param Request $request
      * @param string $id
      * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function patchAction(Request $request, string $id)
     {
@@ -216,6 +226,9 @@ class ProjectController extends BaseApiController
             throw new AccessDeniedHttpException('User cannot update project');
         }
 
+        $event = new ProjectMetaDefinitionEvent($project);
+        $this->dispatcher->dispatch($event, ProjectMetaDefinitionEvent::class);
+
         $form = $this->createForm(ProjectApiEditForm::class, $project);
 
         $form->setData($project);
@@ -228,11 +241,65 @@ class ProjectController extends BaseApiController
             return $this->viewHandler->handle($view);
         }
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($project);
-        $entityManager->flush();
+        $this->repository->saveProject($project);
 
         $view = new View($project, Response::HTTP_OK);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Sets the value of a meta-field for an existing project.
+     *
+     * @SWG\Response(
+     *      response=200,
+     *      description="Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.",
+     *      @SWG\Schema(ref="#/definitions/ProjectEntity")
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="Project record ID to set the meta-field value for",
+     *      required=true,
+     * )
+     * @Rest\RequestParam(name="name", strict=true, nullable=false, description="The meta-field name")
+     * @Rest\RequestParam(name="value", strict=true, nullable=false, description="The meta-field value")
+     *
+     * @param int $id
+     * @param ParamFetcherInterface $paramFetcher
+     * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function metaAction($id, ParamFetcherInterface $paramFetcher)
+    {
+        $project = $this->repository->find($id);
+
+        if (null === $project) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('edit', $project)) {
+            throw new AccessDeniedHttpException('You are not allowed to update this project');
+        }
+
+        $event = new ProjectMetaDefinitionEvent($project);
+        $this->dispatcher->dispatch($event, ProjectMetaDefinitionEvent::class);
+
+        $name = $paramFetcher->get('name');
+        $value = $paramFetcher->get('value');
+
+        if (null === ($meta = $project->getMetaField($name))) {
+            throw new \InvalidArgumentException('Unknown meta-field requested');
+        }
+
+        $meta->setValue($value);
+
+        $this->repository->saveProject($project);
+
+        $view = new View($project, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Project']);
 
         return $this->viewHandler->handle($view);

@@ -29,6 +29,26 @@ use Pagerfanta\Pagerfanta;
 class CustomerRepository extends EntityRepository
 {
     /**
+     * @param mixed $id
+     * @param null $lockMode
+     * @param null $lockVersion
+     * @return Customer|null
+     */
+    public function find($id, $lockMode = null, $lockVersion = null)
+    {
+        /** @var Customer|null $customer */
+        $customer = parent::find($id, $lockMode, $lockVersion);
+        if (null === $customer) {
+            return null;
+        }
+
+        $loader = new CustomerLoader($this->getEntityManager());
+        $loader->loadResults([$customer]);
+
+        return $customer;
+    }
+
+    /**
      * @param Customer $customer
      * @throws ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
