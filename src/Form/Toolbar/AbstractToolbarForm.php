@@ -28,9 +28,11 @@ use App\Repository\Query\TimesheetQuery;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Validator\Constraints\Length;
 
 /**
  * Defines the base form used for all toolbars.
@@ -193,6 +195,17 @@ abstract class AbstractToolbarForm extends AbstractType
     {
         $builder->add('tags', TagsInputType::class, [
             'required' => false
+        ]);
+    }
+
+    protected function addSearchTermInputField(FormBuilderInterface $builder)
+    {
+        $builder->add('searchTerm', TextType::class, [
+            'label' => null,
+            'required' => false,
+            'constraints' => [
+                new Length(['min' => 3])
+            ]
         ]);
     }
 

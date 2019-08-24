@@ -278,6 +278,16 @@ class ActivityRepository extends EntityRepository
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser());
 
+        if (!empty($query->getSearchTerm())) {
+            $qb->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->like('a.name', ':likeContains'),
+                    $qb->expr()->like('a.comment', ':likeContains')
+                )
+            );
+            $qb->setParameter('likeContains', '%' . $query->getSearchTerm() . '%');
+        }
+
         return $qb;
     }
 

@@ -55,6 +55,10 @@ class BaseQuery
      * @var Team[]
      */
     private $teams = [];
+    /**
+     * @var string
+     */
+    private $searchTerm;
 
     public function addTeam(Team $team): self
     {
@@ -188,6 +192,22 @@ class BaseQuery
         return $this;
     }
 
+    public function getSearchTerm(): ?string
+    {
+        return $this->searchTerm;
+    }
+
+    /**
+     * @param string $searchTerm
+     * @return BaseQuery
+     */
+    public function setSearchTerm(string $searchTerm)
+    {
+        $this->searchTerm = $searchTerm;
+
+        return $this;
+    }
+
     /**
      * Returns whether the query has changed fields, compared to the original state.
      *
@@ -200,6 +220,14 @@ class BaseQuery
         }
 
         if ($this->pageSize !== self::DEFAULT_PAGESIZE) {
+            return true;
+        }
+
+        if (!empty($this->teams)) {
+            return true;
+        }
+
+        if (null !== $this->searchTerm) {
             return true;
         }
 

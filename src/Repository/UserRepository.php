@@ -109,6 +109,18 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
             $qb->andWhere($rolesWhere);
         }
 
+        if (!empty($query->getSearchTerm())) {
+            $qb->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->like('u.alias', ':likeContains'),
+                    $qb->expr()->like('u.title', ':likeContains'),
+                    $qb->expr()->like('u.email', ':likeContains'),
+                    $qb->expr()->like('u.username', ':likeContains')
+                )
+            );
+            $qb->setParameter('likeContains', '%' . $query->getSearchTerm() . '%');
+        }
+
         return $this->getBaseQueryResult($qb, $query);
     }
 

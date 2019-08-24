@@ -23,6 +23,7 @@ class TimesheetToolbarForm extends AbstractToolbarForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->addSearchTermInputField($builder);
         if ($options['include_user']) {
             $this->addUserChoice($builder);
         }

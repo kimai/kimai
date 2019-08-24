@@ -203,6 +203,21 @@ class CustomerRepository extends EntityRepository
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
 
+        if (!empty($query->getSearchTerm())) {
+            $qb->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->like('c.name', ':likeContains'),
+                    $qb->expr()->like('c.comment', ':likeContains'),
+                    $qb->expr()->like('c.number', ':likeContains'),
+                    $qb->expr()->like('c.contact', ':likeContains'),
+                    $qb->expr()->like('c.phone', ':likeContains'),
+                    $qb->expr()->like('c.email', ':likeContains'),
+                    $qb->expr()->like('c.address', ':likeContains')
+                )
+            );
+            $qb->setParameter('likeContains', '%' . $query->getSearchTerm() . '%');
+        }
+
         return $qb;
     }
 

@@ -1,5 +1,12 @@
 {% extends "@AdminLTE/layout/form-theme-horizontal.html.twig" %}
-
+{#
+{% block widget_attributes %}
+    {% if type is not defined or type not in ['file', 'hidden'] %}
+        {%- set attr = attr|merge({class: (attr.class|default('') ~ ' input-sm')|trim}) -%}
+    {% endif %}
+    {{- parent() -}}
+{% endblock widget_attributes %}
+#}
 {% block form_label_class -%}
     col-sm-3
 {%- endblock form_label_class %}

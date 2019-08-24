@@ -39,6 +39,7 @@ final class IconExtension extends AbstractExtension
         'print' => 'fas fa-print',
         'project' => 'fas fa-briefcase',
         'repeat' => 'fas fa-redo-alt',
+        'search' => 'fas fa-search',
         'start' => 'fas fa-play-circle',
         'start-small' => 'far fa-play-circle',
         'stop' => 'fas fa-stop',

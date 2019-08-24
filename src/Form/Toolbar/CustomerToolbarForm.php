@@ -23,6 +23,7 @@ class CustomerToolbarForm extends AbstractToolbarForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->addSearchTermInputField($builder);
         $this->addVisibilityChoice($builder);
         $this->addPageSizeChoice($builder);
         $this->addHiddenPagination($builder);

@@ -93,7 +93,17 @@ class TagRepository extends EntityRepository
             ->leftJoin('tag.timesheets', 'timesheets')
             ->addGroupBy('tag.id')
             ->addGroupBy('tag.name')
-            ->orderBy('tag.' . $query->getOrderBy(), $query->getOrder());
+            ->addOrderBy('tag.' . $query->getOrderBy(), $query->getOrder())
+        ;
+
+        if (!empty($query->getSearchTerm())) {
+            $qb->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->like('tag.name', ':likeContains')
+                )
+            );
+            $qb->setParameter('likeContains', '%' . $query->getSearchTerm() . '%');
+        }
 
         $paginator = new Pagerfanta(new DoctrineORMAdapter($qb->getQuery(), false));
         $paginator->setMaxPerPage($query->getPageSize());

@@ -195,6 +195,7 @@ class ProjectRepository extends EntityRepository
             ->select('p')
             ->from(Project::class, 'p')
             ->leftJoin('p.customer', 'c')
+            ->addOrderBy('p.' . $query->getOrderBy(), $query->getOrder())
         ;
 
         if (in_array($query->getVisibility(), [ProjectQuery::SHOW_VISIBLE, ProjectQuery::SHOW_HIDDEN])) {
@@ -219,7 +220,16 @@ class ProjectRepository extends EntityRepository
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser());
 
-        $qb->orderBy('p.' . $query->getOrderBy(), $query->getOrder());
+        if (!empty($query->getSearchTerm())) {
+            $qb->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->like('p.name', ':likeContains'),
+                    $qb->expr()->like('p.comment', ':likeContains'),
+                    $qb->expr()->like('p.orderNumber', ':likeContains')
+                )
+            );
+            $qb->setParameter('likeContains', '%' . $query->getSearchTerm() . '%');
+        }
 
         return $qb;
     }

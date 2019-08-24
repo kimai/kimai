@@ -12,18 +12,22 @@
     {% form_theme form 'form/search-form.html.twig' %}
     {{ form_start(form, { 'attr': {'class': 'form-horizontal'}}) }}
     <div class="dropdown header-search">
+        <div class="form-group{% if not form.vars.valid %} has-error{% endif %}">
         <div class="input-group">
             <div class="input-group-addon">
-                <i class="fas fa-search"></i>
+                <i class="{{ 'search'|icon }}"></i>
             </div>
-            <input type="text" autocomplete="off" class="dropdown-toggle input-sm form-control" id="dropdownSearch" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownSearch">
+            {{ form_widget(form.searchTerm, {'attr': {'autocomplete': 'off', 'data-toggle': 'dropdown', 'class': 'dropdown-toggle input-sm', 'aria-haspopup': 'true', 'aria-expanded': 'true'}}) }}
+            <ul class="dropdown-menu" role="menu" aria-labelledby="searchTerm">
                 <li>
                     <div class="container-fluid">
+                        {% if not form.searchTerm.vars.valid %}
+                            {{ form_errors(form.searchTerm) }}
+                            <br>
+                        {% endif %}
                         {{ form_widget(form) }}
                         <div class="form-group">
-                            <div class="col-sm-3">
-                            </div>
+                            <div class="col-sm-3"></div>
                             <div class="col-sm-9">
                                 <input type="submit" value="{{ 'search'|trans }}" class="btn btn-primary" />
                             </div>
@@ -32,9 +36,11 @@
                 </li>
             </ul>
         </div>
+        </div>
     </div>
     {{ form_end(form) }}
     
+    {# FIXME move me to a plugin #}
     <script type="text/javascript">
         $(document).on('click', '.header-search .dropdown-menu', function (e) {
             e.stopPropagation();

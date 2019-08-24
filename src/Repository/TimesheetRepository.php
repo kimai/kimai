@@ -531,6 +531,7 @@ class TimesheetRepository extends EntityRepository
             ->select('t')
             ->from(Timesheet::class, 't')
             ->leftJoin('t.project', 'p')
+            ->addOrderBy('t.' . $query->getOrderBy(), $query->getOrder())
         ;
 
         $user = [];
@@ -616,7 +617,14 @@ class TimesheetRepository extends EntityRepository
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
 
-        $qb->orderBy('t.' . $query->getOrderBy(), $query->getOrder());
+        if (!empty($query->getSearchTerm())) {
+            $qb->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->like('t.description', ':likeContains')
+                )
+            );
+            $qb->setParameter('likeContains', '%' . $query->getSearchTerm() . '%');
+        }
 
         return $qb;
     }
