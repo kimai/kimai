@@ -1014,7 +1014,7 @@
             -->
             <trans-unit id="label.pageSize">
                 <source>label.pageSize</source>
-                <target>Anzahl Einträge</target>
+                <target>Ergebnisse</target>
             </trans-unit>
             <trans-unit id="label.entryState">
                 <source>label.entryState</source>
