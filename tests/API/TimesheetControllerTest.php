@@ -17,7 +17,6 @@ use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
-use App\Tests\Mocks\ActivityTestMetaFieldSubscriberMock;
 use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Tests\Mocks\TimesheetTestMetaFieldSubscriberMock;
 use App\Timesheet\UserDateTimeFactory;
@@ -859,13 +858,13 @@ class TimesheetControllerTest extends APIControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $client->getContainer()->get('event_dispatcher')->addSubscriber(new TimesheetTestMetaFieldSubscriberMock());
-        
+
         $data = [
             'name' => 'metatestmock',
             'value' => 'another,testing,bar'
         ];
         $this->request($client, '/api/timesheets/1/meta', 'PATCH', [], json_encode($data));
-        
+
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');

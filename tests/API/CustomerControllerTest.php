@@ -162,7 +162,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertApiCallValidationError($response, ['currency']);
     }
-    
+
     public function testMetaActionThrowsNotFound()
     {
         $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/customers/42/meta', []);

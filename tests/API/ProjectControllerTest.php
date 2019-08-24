@@ -211,7 +211,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertApiCallValidationError($response, ['customer']);
     }
-    
+
     public function testMetaActionThrowsNotFound()
     {
         $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/projects/42/meta', []);
