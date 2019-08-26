@@ -18,6 +18,7 @@ use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
+use App\Tests\Mocks\TimesheetTestMetaFieldSubscriberMock;
 use App\Timesheet\UserDateTimeFactory;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -619,7 +620,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testStopThrowsNotFound()
     {
-        $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/11/stop', 'PATCH');
+        $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/timesheets/11/stop', []);
     }
 
     public function testStopNotAllowedForUser()
@@ -782,7 +783,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testRestartThrowsNotFound()
     {
-        $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/42/restart', 'PATCH');
+        $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/timesheets/42/restart', []);
     }
 
     public function testExportAction()
@@ -821,7 +822,55 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testExportThrowsNotFound()
     {
-        $this->assertEntityNotFound(User::ROLE_ADMIN, '/api/timesheets/42/export', 'PATCH');
+        $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/timesheets/42/export', []);
+    }
+
+    public function testMetaActionThrowsNotFound()
+    {
+        $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/timesheets/42/meta', []);
+    }
+
+    public function testMetaActionThrowsExceptionOnMissingName()
+    {
+        return $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/timesheets/1/meta', ['value' => 'X'], [
+            'code' => 400,
+            'message' => 'Parameter "name" of value "NULL" violated a constraint "This value should not be null."'
+        ]);
+    }
+
+    public function testMetaActionThrowsExceptionOnMissingValue()
+    {
+        return $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/timesheets/1/meta', ['name' => 'X'], [
+            'code' => 400,
+            'message' => 'Parameter "value" of value "NULL" violated a constraint "This value should not be null."'
+        ]);
+    }
+
+    public function testMetaActionThrowsExceptionOnMissingMetafield()
+    {
+        return $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/timesheets/1/meta', ['name' => 'X', 'value' => 'Y'], [
+            'code' => 500,
+            'message' => 'Unknown meta-field requested'
+        ]);
+    }
+
+    public function testMetaAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $client->getContainer()->get('event_dispatcher')->addSubscriber(new TimesheetTestMetaFieldSubscriberMock());
+
+        $data = [
+            'name' => 'metatestmock',
+            'value' => 'another,testing,bar'
+        ];
+        $this->request($client, '/api/timesheets/1/meta', 'PATCH', [], json_encode($data));
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var Timesheet $timesheet */
+        $timesheet = $em->getRepository(Timesheet::class)->find(1);
+        $this->assertEquals('another,testing,bar', $timesheet->getMetaField('metatestmock')->getValue());
     }
 
     protected function assertDefaultStructure(array $result, $full = true)

@@ -14,6 +14,7 @@ namespace App\API;
 use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Event\TimesheetMetaDefinitionEvent;
 use App\Form\API\TimesheetApiEditForm;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TagRepository;
@@ -30,6 +31,7 @@ use FOS\RestBundle\View\ViewHandlerInterface;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -47,27 +49,31 @@ class TimesheetController extends BaseApiController
     /**
      * @var TimesheetRepository
      */
-    protected $repository;
+    private $repository;
     /**
      * @var ViewHandlerInterface
      */
-    protected $viewHandler;
+    private $viewHandler;
     /**
      * @var TimesheetConfiguration
      */
-    protected $configuration;
+    private $configuration;
     /**
      * @var UserDateTimeFactory
      */
-    protected $dateTime;
+    private $dateTime;
     /**
      * @var TagRepository
      */
-    protected $tagRepository;
+    private $tagRepository;
     /**
      * @var TrackingModeService
      */
-    protected $trackingModeService;
+    private $trackingModeService;
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $dispatcher;
 
     public function __construct(
         ViewHandlerInterface $viewHandler,
@@ -75,7 +81,8 @@ class TimesheetController extends BaseApiController
         UserDateTimeFactory $dateTime,
         TimesheetConfiguration $configuration,
         TagRepository $tagRepository,
-        TrackingModeService $trackingModeService
+        TrackingModeService $trackingModeService,
+        EventDispatcherInterface $dispatcher
     ) {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
@@ -83,6 +90,7 @@ class TimesheetController extends BaseApiController
         $this->dateTime = $dateTime;
         $this->tagRepository = $tagRepository;
         $this->trackingModeService = $trackingModeService;
+        $this->dispatcher = $dispatcher;
     }
 
     protected function getTrackingMode(): TrackingModeInterface
@@ -282,6 +290,9 @@ class TimesheetController extends BaseApiController
         $timesheet->setUser($this->getUser());
         $timesheet->setBegin($this->dateTime->createDateTime());
 
+        $event = new TimesheetMetaDefinitionEvent($timesheet);
+        $this->dispatcher->dispatch($event, TimesheetMetaDefinitionEvent::class);
+
         $mode = $this->getTrackingMode();
 
         $form = $this->createForm(TimesheetApiEditForm::class, $timesheet, [
@@ -305,9 +316,7 @@ class TimesheetController extends BaseApiController
                 );
             }
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($timesheet);
-            $entityManager->flush();
+            $this->repository->save($timesheet);
 
             $view = new View($timesheet, 200);
             $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
@@ -362,6 +371,9 @@ class TimesheetController extends BaseApiController
             throw new AccessDeniedHttpException('You are not allowed to update this timesheet');
         }
 
+        $event = new TimesheetMetaDefinitionEvent($timesheet);
+        $this->dispatcher->dispatch($event, TimesheetMetaDefinitionEvent::class);
+
         $mode = $this->getTrackingMode();
 
         $form = $this->createForm(TimesheetApiEditForm::class, $timesheet, [
@@ -382,9 +394,7 @@ class TimesheetController extends BaseApiController
             return $this->viewHandler->handle($view);
         }
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($timesheet);
-        $entityManager->flush();
+        $this->repository->save($timesheet);
 
         $view = new View($timesheet, Response::HTTP_OK);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
@@ -588,8 +598,8 @@ class TimesheetController extends BaseApiController
         /** @var User $user */
         $user = $this->getUser();
 
-        $entry = new Timesheet();
-        $entry
+        $copyTimesheet = new Timesheet();
+        $copyTimesheet
             ->setBegin($this->dateTime->createDateTime())
             ->setUser($user)
             ->setActivity($timesheet->getActivity())
@@ -598,29 +608,29 @@ class TimesheetController extends BaseApiController
 
         if (null !== ($copy = $paramFetcher->get('copy'))) {
             if (in_array($copy, ['rates', 'all'])) {
-                $entry->setHourlyRate($timesheet->getHourlyRate());
-                $entry->setFixedRate($timesheet->getFixedRate());
+                $copyTimesheet->setHourlyRate($timesheet->getHourlyRate());
+                $copyTimesheet->setFixedRate($timesheet->getFixedRate());
             }
 
             if (in_array($copy, ['description', 'all'])) {
-                $entry->setDescription($timesheet->getDescription());
+                $copyTimesheet->setDescription($timesheet->getDescription());
             }
 
             if (in_array($copy, ['tags', 'all'])) {
                 foreach ($timesheet->getTags() as $tag) {
-                    $entry->addTag($tag);
+                    $copyTimesheet->addTag($tag);
                 }
             }
 
             if (in_array($copy, ['meta', 'all'])) {
                 foreach ($timesheet->getMetaFields() as $metaField) {
                     $metaNew = clone $metaField;
-                    $entry->setMetaField($metaNew);
+                    $copyTimesheet->setMetaField($metaNew);
                 }
             }
         }
 
-        $errors = $validator->validate($entry);
+        $errors = $validator->validate($copyTimesheet);
 
         if (count($errors) > 0) {
             throw new BadRequestHttpException($errors[0]->getPropertyPath() . ' = ' . $errors[0]->getMessage());
@@ -631,11 +641,9 @@ class TimesheetController extends BaseApiController
             $this->configuration->getActiveEntriesHardLimit()
         );
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($entry);
-        $entityManager->flush();
+        $this->repository->save($copyTimesheet);
 
-        $view = new View($entry, 200);
+        $view = new View($copyTimesheet, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
 
         return $this->viewHandler->handle($view);
@@ -659,6 +667,8 @@ class TimesheetController extends BaseApiController
      *
      * @param int $id
      * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function exportAction($id)
     {
@@ -677,9 +687,63 @@ class TimesheetController extends BaseApiController
 
         $timesheet->setExported(!$timesheet->isExported());
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($timesheet);
-        $entityManager->flush();
+        $this->repository->save($timesheet);
+
+        $view = new View($timesheet, 200);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Sets the value of a meta-field for an existing timesheet.
+     *
+     * @SWG\Response(
+     *      response=200,
+     *      description="Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.",
+     *      @SWG\Schema(ref="#/definitions/TimesheetEntity")
+     * )
+     * @SWG\Parameter(
+     *      name="id",
+     *      in="path",
+     *      type="integer",
+     *      description="Timesheet record ID to set the meta-field value for",
+     *      required=true,
+     * )
+     * @Rest\RequestParam(name="name", strict=true, nullable=false, description="The meta-field name")
+     * @Rest\RequestParam(name="value", strict=true, nullable=false, description="The meta-field value")
+     *
+     * @param int $id
+     * @param ParamFetcherInterface $paramFetcher
+     * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function metaAction($id, ParamFetcherInterface $paramFetcher)
+    {
+        $timesheet = $this->repository->find($id);
+
+        if (null === $timesheet) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->isGranted('edit', $timesheet)) {
+            throw new AccessDeniedHttpException('You are not allowed to update this timesheet');
+        }
+
+        $event = new TimesheetMetaDefinitionEvent($timesheet);
+        $this->dispatcher->dispatch($event, TimesheetMetaDefinitionEvent::class);
+
+        $name = $paramFetcher->get('name');
+        $value = $paramFetcher->get('value');
+
+        if (null === ($meta = $timesheet->getMetaField($name))) {
+            throw new \InvalidArgumentException('Unknown meta-field requested');
+        }
+
+        $meta->setValue($value);
+
+        $this->repository->save($timesheet);
 
         $view = new View($timesheet, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);

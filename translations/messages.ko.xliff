@@ -1,0 +1,1037 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="ko" datatype="plaintext" original="messages.en.xliff">
+        <body>
+            <!--
+              Global template keys
+            -->
+            <trans-unit id="time_tracking">
+                <source>time_tracking</source>
+                <target state="translated">타임 트래킹</target>
+            </trans-unit>
+            <trans-unit id="yes">
+                <source>yes</source>
+                <target state="translated">예</target>
+            </trans-unit>
+            <trans-unit id="no">
+                <source>no</source>
+                <target state="translated">아니오</target>
+            </trans-unit>
+            <trans-unit id="both">
+                <source>both</source>
+                <target state="translated">둘 다</target>
+            </trans-unit>
+            <trans-unit id="This is a mandatory field">
+                <source>This is a mandatory field</source>
+                <target state="translated">필수 항목입니다.</target>
+            </trans-unit>
+            <trans-unit id="create">
+                <source>create</source>
+                <target state="translated">생성</target>
+            </trans-unit>
+            <trans-unit id="confirm.delete">
+                <source>confirm.delete</source>
+                <target state="translated">삭제 하시겠습니까?</target>
+            </trans-unit>
+            <trans-unit id="admin_entity.delete_confirm">
+                <source>admin_entity.delete_confirm</source>
+                <target state="translated">
+                    이 데이터도 삭제됩니다!
+                    또는 모든 데이터가 전송될 항목을 선택할 수 있습니다:
+                 </target>
+            </trans-unit>
+            <trans-unit id="delete.not_in_use">
+                <source>delete.not_in_use</source>
+                <target state="translated">이 항목은 안전하게 삭제될 수 있습니다.</target>
+            </trans-unit>
+            <trans-unit id="cancel">
+                <source>cancel</source>
+                <target state="translated">취소</target>
+            </trans-unit>
+            <trans-unit id="confirm">
+                <source>confirm</source>
+                <target state="translated">확인</target>
+            </trans-unit>
+
+            <!--
+              Login / Security
+            -->
+            <trans-unit id="label.password">
+                <source>label.password</source>
+                <target state="translated">암호</target>
+            </trans-unit>
+            <trans-unit id="label.password_repeat">
+                <source>label.password_repeat</source>
+                <target state="translated">암호확인</target>
+            </trans-unit>
+            <trans-unit id="label.logout">
+                <source>label.logout</source>
+                <target state="translated">나가기</target>
+            </trans-unit>
+            <trans-unit id="label.user_profile">
+                <source>label.user_profile</source>
+                <target state="translated">나의 프로필</target>
+            </trans-unit>
+            <trans-unit id="label.api_token">
+                <source>label.api_token</source>
+                <target state="translated">API 비밀번호</target>
+            </trans-unit>
+            <trans-unit id="label.api_token_repeat">
+                <source>label.api_token_repeat</source>
+                <target state="translated">API 비밀번호 재확인</target>
+            </trans-unit>
+
+            <!--
+              Menu / Navbar items
+            -->
+            <trans-unit id="menu.homepage">
+                <source>menu.homepage</source>
+                <target state="translated">대시보드</target>
+            </trans-unit>
+            <trans-unit id="menu.admin">
+                <source>menu.admin</source>
+                <target state="translated">관리</target>
+            </trans-unit>
+            <trans-unit id="menu.system">
+                <source>menu.system</source>
+                <target state="translated">시스템</target>
+            </trans-unit>
+            <trans-unit id="menu.logout">
+                <source>menu.logout</source>
+                <target state="translated">나가기</target>
+            </trans-unit>
+            <trans-unit id="menu.timesheet">
+                <source>menu.timesheet</source>
+                <target state="translated">나의 근무시간</target>
+            </trans-unit>
+            <trans-unit id="menu.invoice">
+                <source>menu.invoice</source>
+                <target state="translated">청구서</target>
+            </trans-unit>
+            <trans-unit id="menu.export">
+                <source>menu.export</source>
+                <target state="translated">내보내기</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_timesheet">
+                <source>menu.admin_timesheet</source>
+                <target state="translated">시간기록표</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_customer">
+                <source>menu.admin_customer</source>
+                <target state="translated">고객</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_project">
+                <source>menu.admin_project</source>
+                <target state="translated">프로젝트</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_activity">
+                <source>menu.admin_activity</source>
+                <target state="translated">업무</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_user">
+                <source>menu.admin_user</source>
+                <target state="translated">사용자</target>
+            </trans-unit>
+            <trans-unit id="menu.admin_team">
+                <source>menu.admin_team</source>
+                <target state="translated">팀</target>
+            </trans-unit>
+            <trans-unit id="menu.plugin">
+                <source>menu.plugin</source>
+                <target state="translated">플러그인</target>
+            </trans-unit>
+            <trans-unit id="menu.system_configuration">
+                <source>menu.system_configuration</source>
+                <target state="translated">설정</target>
+            </trans-unit>
+            <trans-unit id="menu.tags">
+                <source>menu.tags</source>
+                <target state="translated">태그</target>
+            </trans-unit>
+
+            <!--
+              Error templates
+            -->
+            <trans-unit id="error.no_entries_found">
+                <source>error.no_entries_found</source>
+                <target state="translated">선택한 필터를 기반으로 한 항목을 찾을 수 없습니다.</target>
+            </trans-unit>
+
+            <!--
+              General labels
+            -->
+            <trans-unit id="label.date">
+                <source>label.date</source>
+                <target state="translated">일자</target>
+            </trans-unit>
+            <trans-unit id="label.starttime">
+                <source>label.starttime</source>
+                <target state="translated">시작</target>
+            </trans-unit>
+            <trans-unit id="label.endtime">
+                <source>label.endtime</source>
+                <target state="translated">종료</target>
+            </trans-unit>
+            <trans-unit id="label.duration">
+                <source>label.duration</source>
+                <target state="translated">소요시간</target>
+            </trans-unit>
+            <trans-unit id="label.user">
+                <source>label.user</source>
+                <target state="translated">사용자</target>
+            </trans-unit>
+            <trans-unit id="label.username">
+                <source>label.username</source>
+                <target state="translated">사용자 이름</target>
+            </trans-unit>
+            <trans-unit id="label.description">
+                <source>label.description</source>
+                <target state="translated">업무 보고</target>
+            </trans-unit>
+            <trans-unit id="label.name">
+                <source>label.name</source>
+                <target state="translated">이름 </target>
+            </trans-unit>
+            <trans-unit id="label.comment">
+                <source>label.comment</source>
+                <target state="translated">코멘트</target>
+            </trans-unit>
+            <trans-unit id="label.id">
+                <source>label.id</source>
+                <target state="translated">아이디</target>
+            </trans-unit>
+            <trans-unit id="label.visible">
+                <source>label.visible</source>
+                <target state="translated">보기</target>
+            </trans-unit>
+            <trans-unit id="label.budget">
+                <source>label.budget</source>
+                <target state="translated">예산</target>
+            </trans-unit>
+            <trans-unit id="label.timeBudget">
+                <source>label.timeBudget</source>
+                <target state="translated">예상 시간</target>
+            </trans-unit>
+            <trans-unit id="label.activity">
+                <source>label.activity</source>
+                <target state="translated">업무</target>
+            </trans-unit>
+            <trans-unit id="label.project">
+                <source>label.project</source>
+                <target state="translated">프로젝트</target>
+            </trans-unit>
+            <trans-unit id="label.tag">
+                <source>label.tag</source>
+                <target state="translated">태그</target>
+            </trans-unit>
+            <trans-unit id="label.tags">
+                <source>label.tags</source>
+                <target state="translated">태그</target>
+            </trans-unit>
+            <trans-unit id="label.hourlyRate">
+                <source>label.hourlyRate</source>
+                <target state="translated">시간당 비용 </target>
+            </trans-unit>
+            <trans-unit id="label.hourly_rate">
+                <source>label.hourly_rate</source>
+                <target state="translated">시간당 비용</target>
+            </trans-unit>
+            <trans-unit id="label.skin">
+                <source>label.skin</source>
+                <target state="translated">키마이-테마</target>
+            </trans-unit>
+            <trans-unit id="label.hours">
+                <source>label.hours</source>
+                <target state="translated">시간</target>
+            </trans-unit>
+            <trans-unit id="label.rate">
+                <source>label.rate</source>
+                <target state="translated">비용</target>
+            </trans-unit>
+            <trans-unit id="label.language">
+                <source>label.language</source>
+                <target state="translated">언어</target>
+            </trans-unit>
+            <trans-unit id="label.customer">
+                <source>label.customer</source>
+                <target state="translated">고객</target>
+            </trans-unit>
+            <trans-unit id="label.email">
+                <source>label.email</source>
+                <target state="translated">이메일</target>
+            </trans-unit>
+            <trans-unit id="label.team">
+                <source>label.team</source>
+                <target state="translated">팀 </target>
+            </trans-unit>
+            <trans-unit id="label.create_more">
+                <source>label.create_more</source>
+                <target state="translated">추가항목 만들기</target>
+            </trans-unit>
+
+            <!--
+              Buttons & Actions
+            -->
+            <trans-unit id="label.actions">
+                <source>label.actions</source>
+                <target state="translated">적용</target>
+            </trans-unit>
+            <trans-unit id="action.edit">
+                <source>action.edit</source>
+                <target state="translated">편집</target>
+            </trans-unit>
+            <trans-unit id="action.delete">
+                <source>action.delete</source>
+                <target state="translated">삭제</target>
+            </trans-unit>
+            <trans-unit id="action.save">
+                <source>action.save</source>
+                <target state="translated">저장</target>
+            </trans-unit>
+            <trans-unit id="action.reset">
+                <source>action.reset</source>
+                <target state="translated">재설정</target>
+            </trans-unit>
+            <trans-unit id="action.back">
+                <source>action.back</source>
+                <target state="translated">뒤로 가기</target>
+            </trans-unit>
+            <trans-unit id="action.close">
+                <source>action.close</source>
+                <target state="translated">닫기</target>
+            </trans-unit>
+
+            <!--
+              Dashboard
+            -->
+            <trans-unit id="dashboard.title">
+                <source>dashboard.title</source>
+                <target state="translated">대시보드</target>
+            </trans-unit>
+            <trans-unit id="dashboard.subtitle">
+                <source>dashboard.subtitle</source>
+                <target state="translated">환영합니다!</target>
+            </trans-unit>
+            <trans-unit id="dashboard.you">
+                <source>dashboard.you</source>
+                <target state="translated">나의 통계</target>
+            </trans-unit>
+            <trans-unit id="dashboard.all">
+                <source>dashboard.all</source>
+                <target state="translated">모든 사용자</target>
+            </trans-unit>
+
+            <!--
+              Widgets
+            -->
+            <trans-unit id="more.info.link">
+                <source>more.info.link</source>
+                <target state="translated">더보기</target>
+            </trans-unit>
+            <trans-unit id="label.toggle_dropdown">
+                <source>label.toggle_dropdown</source>
+                <target state="translated">메뉴보기</target>
+            </trans-unit>
+
+            <!--
+              Timesheet
+            -->
+            <trans-unit id="timesheet.title">
+                <source>timesheet.title</source>
+                <target state="translated">나의 업무시간</target>
+            </trans-unit>
+            <trans-unit id="timesheet.subtitle">
+                <source>timesheet.subtitle</source>
+                <target state="translated">업무기록 관리하기</target>
+            </trans-unit>
+            <trans-unit id="timesheet.edit">
+                <source>timesheet.edit</source>
+                <target state="translated">기록 편집하기</target>
+            </trans-unit>
+            <trans-unit id="label.begin">
+                <source>label.begin</source>
+                <target state="translated">시작</target>
+            </trans-unit>
+            <trans-unit id="label.end">
+                <source>label.end</source>
+                <target state="translated">종료</target>
+            </trans-unit>
+            <trans-unit id="label.daterange">
+                <source>label.daterange</source>
+                <target state="translated">시간 범위</target>
+            </trans-unit>
+            <trans-unit id="modal.columns.title">
+                <source>modal.columns.title</source>
+                <target state="translated">열 표시 변경하기</target>
+            </trans-unit>
+            <trans-unit id="modal.columns.description">
+                <source>modal.columns.description</source>
+                <target state="translated">확인하지 않은 열을 저장하면 브라우저 쿠키에 저장됩니다. 쿠키를 삭제하면 설정이 취소됩니다.</target>
+            </trans-unit>
+            <trans-unit id="label.fixedRate">
+                <source>label.fixedRate</source>
+                <target state="translated">고정값</target>
+            </trans-unit>
+            <trans-unit id="label.color">
+                <source>label.color</source>
+                <target state="translated">색</target>
+            </trans-unit>
+
+            <!--
+              User profile
+            -->
+            <trans-unit id="profile.title">
+                <source>profile.title</source>
+                <target state="translated">사용자 프로필</target>
+            </trans-unit>
+            <trans-unit id="profile.subtitle">
+                <source>profile.subtitle</source>
+                <target state="translated">내 설정 편집하기</target>
+            </trans-unit>
+            <trans-unit id="profile.about_me">
+                <source>profile.about_me</source>
+                <target state="translated">나의 정보</target>
+            </trans-unit>
+            <trans-unit id="profile.first_entry">
+                <source>profile.first_entry</source>
+                <target state="translated">업무 시작일</target>
+            </trans-unit>
+            <trans-unit id="profile.settings">
+                <source>profile.settings</source>
+                <target state="translated">프로필</target>
+            </trans-unit>
+            <trans-unit id="profile.password">
+                <source>profile.password</source>
+                <target state="translated">암호</target>
+            </trans-unit>
+            <trans-unit id="profile.api-token">
+                <source>profile.api-token</source>
+                <target>API</target>
+            </trans-unit>
+            <trans-unit id="profile.roles">
+                <source>profile.roles</source>
+                <target state="translated">역할 </target>
+            </trans-unit>
+            <trans-unit id="profile.teams">
+                <source>profile.teams</source>
+                <target state="translated">팀</target>
+            </trans-unit>
+            <trans-unit id="profile.preferences">
+                <source>profile.preferences</source>
+                <target state="translated">설정</target>
+            </trans-unit>
+            <trans-unit id="label.theme.collapsed_sidebar">
+                <source>label.theme.collapsed_sidebar</source>
+                <target state="translated">왼쪽 사이드바 최소화</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.initial_view">
+                <source>label.calendar.initial_view</source>
+                <target state="translated">달력 초기화면</target>
+            </trans-unit>
+            <trans-unit id="label.login.initial_view">
+                <source>label.login.initial_view</source>
+                <target state="translated">로그인 후 초기화면</target>
+            </trans-unit>
+            <!-- Options for user-preference label.calendar.initial_view -->
+            <trans-unit id="month">
+                <source>month</source>
+                <target state="translated">월</target>
+            </trans-unit>
+            <trans-unit id="agendaWeek">
+                <source>agendaWeek</source>
+                <target state="translated">주</target>
+            </trans-unit>
+            <trans-unit id="agendaDay">
+                <source>agendaDay</source>
+                <target state="translated">일</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.daily_stats">
+                <source>label.timesheet.daily_stats</source>
+                <target state="translated">일일통계 보기</target>
+            </trans-unit>
+
+            <!--
+              User timesheet calendar
+            -->
+            <trans-unit id="calendar.title">
+                <source>calendar.title</source>
+                <target state="translated">달력</target>
+            </trans-unit>
+            <trans-unit id="calendar.subtitle">
+                <source>calendar.subtitle</source>
+                <target state="translated">달력을 사용하여 시간 기록표를 보고 관리합니다.</target>
+            </trans-unit>
+
+            <!--
+              Admin: Timesheet
+            -->
+            <trans-unit id="admin_timesheet.title">
+                <source>admin_timesheet.title</source>
+                <target state="translated">시간 기록표</target>
+            </trans-unit>
+            <trans-unit id="admin_timesheet.subtitle">
+                <source>admin_timesheet.subtitle</source>
+                <target state="translated">모든 사용자 기록</target>
+            </trans-unit>
+
+            <!--
+              Admin: Projects
+            -->
+            <trans-unit id="admin_project.title">
+                <source>admin_project.title</source>
+                <target state="translated">프로젝트</target>
+            </trans-unit>
+            <trans-unit id="admin_project.subtitle">
+                <source>admin_project.subtitle</source>
+                <target state="translated">그룹내 고객 활동을 결합한 프로젝트</target>
+            </trans-unit>
+            <trans-unit id="admin_project.short_stats">
+                <source>admin_project.short_stats</source>
+                <target state="translated">
+                    현재의 %project%프로젝트 %customer%고객을 위한 %activities%활동과 
+                    %records% 시간기록에 의해 책정된 총합 %duration%.
+                </target>
+            </trans-unit>
+
+            <!--
+              Admin: Activity
+            -->
+            <trans-unit id="admin_activity.title">
+                <source>admin_activity.title</source>
+                <target state="translated">활동</target>
+            </trans-unit>
+            <trans-unit id="admin_activity.subtitle">
+                <source>admin_activity.subtitle</source>
+                <target state="translated">시간 기록에 선택할 수 있는 작업</target>
+            </trans-unit>
+            <trans-unit id="admin_activity.short_stats">
+                <source>admin_activity.short_stats</source>
+                <target state="translated">
+                    현재의 %activity%활동 %project%프로젝트의 %customer%고객
+                    %records% 시간기록에 의해 책정된 총합%duration%.
+                </target>
+            </trans-unit>
+
+            <!--
+              Admin: Customer
+            -->
+            <trans-unit id="admin_customer.title">
+                <source>admin_customer.title</source>
+                <target state="translated">고객</target>
+            </trans-unit>
+            <trans-unit id="admin_customer.subtitle">
+                <source>admin_customer.subtitle</source>
+                <target state="translated">고객은 프로젝트및 활동을 작성하기 위한 데이터가 됩니다.</target>
+            </trans-unit>
+            <trans-unit id="label.number">
+                <source>label.number</source>
+                <target state="translated">고객번호</target>
+            </trans-unit>
+            <trans-unit id="label.company">
+                <source>label.company</source>
+                <target state="translated">회사명</target>
+            </trans-unit>
+            <trans-unit id="label.vat">
+                <source>label.vat</source>
+                <target state="translated">부가 가치세</target>
+            </trans-unit>
+            <trans-unit id="label.contact">
+                <source>label.contact</source>
+                <target state="translated">연락</target>
+            </trans-unit>
+            <trans-unit id="label.address">
+                <source>label.address</source>
+                <target state="translated">주소</target>
+            </trans-unit>
+            <trans-unit id="label.country">
+                <source>label.country</source>
+                <target state="translated">국가</target>
+            </trans-unit>
+            <trans-unit id="label.phone">
+                <source>label.phone</source>
+                <target state="translated">전화</target>
+            </trans-unit>
+            <trans-unit id="label.fax">
+                <source>label.fax</source>
+                <target state="translated">팩스</target>
+            </trans-unit>
+            <trans-unit id="label.mobile">
+                <source>label.mobile</source>
+                <target state="translated">휴대폰</target>
+            </trans-unit>
+            <trans-unit id="label.homepage">
+                <source>label.homepage</source>
+                <target state="translated">홈페이지</target>
+            </trans-unit>
+            <trans-unit id="label.timezone">
+                <source>label.timezone</source>
+                <target state="translated">표준시간대</target>
+            </trans-unit>
+            <trans-unit id="label.currency">
+                <source>label.currency</source>
+                <target state="translated">통화</target>
+            </trans-unit>
+            <trans-unit id="admin_customer.short_stats">
+                <source>admin_customer.short_stats</source>
+                <target state="translated">
+                    현재 %customer%고객은 %activity% 업무가 포함된 %project% 프로젝트를 가지고 있으며,
+                    이 프로젝트는 %records%기록에서 총%duration%시간을 계산합니다.
+                </target>
+            </trans-unit>
+
+            <!--
+              Admin: User
+            -->
+            <trans-unit id="admin_user.title">
+                <source>admin_user.title</source>
+                <target state="translated">사용자 </target>
+            </trans-unit>
+            <trans-unit id="admin_user.subtitle">
+                <source>admin_user.subtitle</source>
+                <target state="translated">모든 등록 사용자 설정하기</target>
+            </trans-unit>
+            <trans-unit id="label.alias">
+                <source>label.alias</source>
+                <target state="translated">이름</target>
+            </trans-unit>
+            <trans-unit id="label.title">
+                <source>label.title</source>
+                <target state="translated">제목</target>
+            </trans-unit>
+            <trans-unit id="label.avatar">
+                <source>label.avatar</source>
+                <target state="translated">프로필 사진</target>
+            </trans-unit>
+            <trans-unit id="label.active">
+                <source>label.active</source>
+                <target state="translated">활동</target>
+            </trans-unit>
+            <trans-unit id="label.roles">
+                <source>label.roles</source>
+                <target state="translated">역할 </target>
+            </trans-unit>
+            <trans-unit id="admin_user.short_stats">
+                <source>admin_user.short_stats</source>
+                <target state="translated">
+                    현재 %user%사용자는 %records%시간기록을 계산하여 %duration%의 총합을 가진다.
+                </target>
+            </trans-unit>
+
+            <!--
+              Admin: Plugins
+            -->
+            <trans-unit id="label.version">
+                <source>label.version</source>
+                <target state="translated">버전</target>
+            </trans-unit>
+            <trans-unit id="label.required_version">
+                <source>label.required_version</source>
+                <target state="translated">호환되는</target>
+            </trans-unit>
+
+            <!--
+              ROLES
+            -->
+            <trans-unit id="ROLE_SUPER_ADMIN">
+                <source>ROLE_SUPER_ADMIN</source>
+                <target state="translated">시스템 관리</target>
+            </trans-unit>
+            <trans-unit id="ROLE_ADMIN">
+                <source>ROLE_ADMIN</source>
+                <target state="translated">관리자</target>
+            </trans-unit>
+            <trans-unit id="ROLE_TEAMLEAD">
+                <source>ROLE_TEAMLEAD</source>
+                <target state="translated">팀장</target>
+            </trans-unit>
+            <trans-unit id="ROLE_USER">
+                <source>ROLE_USER</source>
+                <target state="translated">사용자</target>
+            </trans-unit>
+
+            <!--
+              Statistics data for Dashboard & Users profile
+            -->
+            <trans-unit id="stats.durationToday">
+                <source>stats.durationToday</source>
+                <target state="translated">오늘 근무시간</target>
+            </trans-unit>
+            <trans-unit id="stats.durationWeek">
+                <source>stats.durationWeek</source>
+                <target state="translated">이번 주 근무시간</target>
+            </trans-unit>
+            <trans-unit id="stats.durationMonth">
+                <source>stats.durationMonth</source>
+                <target state="translated">이번 달 근무시간</target>
+            </trans-unit>
+            <trans-unit id="stats.durationYear">
+                <source>stats.durationYear</source>
+                <target state="translated">올해 근무시간</target>
+            </trans-unit>
+            <trans-unit id="stats.durationTotal">
+                <source>stats.durationTotal</source>
+                <target state="translated">총 근무시간</target>
+            </trans-unit>
+            <trans-unit id="stats.yourWorkingHours">
+                <source>stats.yourWorkingHours</source>
+                <target state="translated">근무시간 </target>
+            </trans-unit>
+            <trans-unit id="stats.amountToday">
+                <source>stats.amountToday</source>
+                <target state="translated">오늘 수익</target>
+            </trans-unit>
+            <trans-unit id="stats.amountWeek">
+                <source>stats.amountWeek</source>
+                <target state="translated">이번 주 수익</target>
+            </trans-unit>
+            <trans-unit id="stats.amountMonth">
+                <source>stats.amountMonth</source>
+                <target state="translated">이번 달 수익</target>
+            </trans-unit>
+            <trans-unit id="stats.amountYear">
+                <source>stats.amountYear</source>
+                <target state="translated">올해 수익</target>
+            </trans-unit>
+            <trans-unit id="stats.amountTotal">
+                <source>stats.amountTotal</source>
+                <target state="translated">총 수익</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveToday">
+                <source>stats.userActiveToday</source>
+                <target state="translated">오늘 활성화 사용자</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveWeek">
+                <source>stats.userActiveWeek</source>
+                <target state="translated">이번 주 활성화 사용자</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveMonth">
+                <source>stats.userActiveMonth</source>
+                <target state="translated">이번 달 활성화 사용자</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveYear">
+                <source>stats.userActiveYear</source>
+                <target state="translated">올해 활성화 사용자</target>
+            </trans-unit>
+            <trans-unit id="stats.userActiveTotal">
+                <source>stats.userActiveTotal</source>
+                <target state="translated">항시 활성화 사용자</target>
+            </trans-unit>
+            <trans-unit id="stats.activeRecordings">
+                <source>stats.activeRecordings</source>
+                <target state="translated">활성화 기록</target>
+            </trans-unit>
+            <trans-unit id="stats.userTotal">
+                <source>stats.userTotal</source>
+                <target state="translated">사용자 합계</target>
+            </trans-unit>
+            <trans-unit id="stats.activityTotal">
+                <source>stats.activityTotal</source>
+                <target state="translated">활동 합계</target>
+            </trans-unit>
+            <trans-unit id="stats.projectTotal">
+                <source>stats.projectTotal</source>
+                <target state="translated">프로젝트 합계</target>
+            </trans-unit>
+            <trans-unit id="stats.customerTotal">
+                <source>stats.customerTotal</source>
+                <target state="translated">총 고객수</target>
+            </trans-unit>
+
+            <!--
+              Invoice
+            -->
+            <trans-unit id="admin_invoice_template.title">
+                <source>admin_invoice_template.title</source>
+                <target state="translated">청구서 템플릿</target>
+            </trans-unit>
+            <trans-unit id="admin_invoice_template.subtitle">
+                <source>admin_invoice_template.subtitle</source>
+                <target state="translated">데이터 내보내기로 인보이스 템플릿을 관리하기</target>
+            </trans-unit>
+            <trans-unit id="invoice.title">
+                <source>invoice.title</source>
+                <target state="translated">인보이스</target>
+            </trans-unit>
+            <trans-unit id="invoice.subtitle">
+                <source>invoice.subtitle</source>
+                <target state="translated">기록된 시간기록표를 바탕으로 인보이스 생성</target>
+            </trans-unit>
+            <trans-unit id="invoice.preview">
+                <source>invoice.preview</source>
+                <target state="translated">인보이스에 표시되는 정보의 미리보기</target>
+            </trans-unit>
+            <trans-unit id="button.print">
+                <source>button.print</source>
+                <target state="translated">인쇄</target>
+            </trans-unit>
+            <trans-unit id="button.csv">
+                <source>button.csv</source>
+                <target>CSV</target>
+            </trans-unit>
+            <trans-unit id="button.xlsx">
+                <source>button.xlsx</source>
+                <target state="translated">Excel</target>
+            </trans-unit>
+            <trans-unit id="button.pdf">
+                <source>button.pdf</source>
+                <target>PDF</target>
+            </trans-unit>
+            <trans-unit id="button.ods">
+                <source>button.ods</source>
+                <target>ODS</target>
+            </trans-unit>
+            <trans-unit id="invoice_print">
+                <source>invoice_print</source>
+                <target state="translated">인보이스</target>
+            </trans-unit>
+            <trans-unit id="label.template">
+                <source>label.template</source>
+                <target state="translated">템플릿</target>
+            </trans-unit>
+            <trans-unit id="label.due_days">
+                <source>label.due_days</source>
+                <target state="translated">지불 기간</target>
+            </trans-unit>
+            <trans-unit id="invoice.due_days">
+                <source>invoice.due_days</source>
+                <target state="translated">지불 대상</target>
+            </trans-unit>
+            <trans-unit id="invoice.from">
+                <source>invoice.from</source>
+                <target state="translated">드림 </target>
+            </trans-unit>
+            <trans-unit id="invoice.to">
+                <source>invoice.to</source>
+                <target state="translated">귀하</target>
+            </trans-unit>
+            <trans-unit id="invoice.number">
+                <source>invoice.number</source>
+                <target state="translated">청구서 번호</target>
+            </trans-unit>
+            <trans-unit id="invoice.subtotal">
+                <source>invoice.subtotal</source>
+                <target state="translated">소계</target>
+            </trans-unit>
+            <trans-unit id="invoice.tax">
+                <source>invoice.tax</source>
+                <target state="translated">세금</target>
+            </trans-unit>
+            <trans-unit id="invoice.total">
+                <source>invoice.total</source>
+                <target state="translated">총합</target>
+            </trans-unit>
+            <trans-unit id="invoice.service_date">
+                <source>invoice.service_date</source>
+                <target state="translated">서비스 일자</target>
+            </trans-unit>
+            <trans-unit id="label.amount">
+                <source>label.amount</source>
+                <target state="translated">수량</target>
+            </trans-unit>
+            <trans-unit id="label.total_rate">
+                <source>label.total_rate</source>
+                <target state="translated">총액</target>
+            </trans-unit>
+            <trans-unit id="label.unit_price">
+                <source>label.unit_price</source>
+                <target state="translated">단가</target>
+            </trans-unit>
+            <trans-unit id="label.payment_terms">
+                <source>label.payment_terms</source>
+                <target state="translated">지불 정보</target>
+            </trans-unit>
+            <trans-unit id="invoice.signature_user">
+                <source>invoice.signature_user</source>
+                <target state="translated">확정: 일자 / 상담자 성명 / 서명</target>
+            </trans-unit>
+            <trans-unit id="invoice.signature_customer">
+                <source>invoice.signature_customer</source>
+                <target state="translated">확정: 일자/ 고객 성명 / 서명</target>
+            </trans-unit>
+            <trans-unit id="invoice.total_working_time">
+                <source>invoice.total_working_time</source>
+                <target state="translated">총 기간</target>
+            </trans-unit>
+            <trans-unit id="label.orderNumber">
+                <source>label.orderNumber</source>
+                <target state="translated">주문 번호</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_tax_number">
+                <source>label.invoice_tax_number</source>
+                <target state="translated">부가가치세(VAT) 번호:</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_bank_account">
+                <source>label.invoice_bank_account</source>
+                <target state="translated">계좌 번호</target>
+            </trans-unit>
+            <trans-unit id="label.invoice_salutation">
+                <source>label.invoice_salutation</source>
+                <target state="translated">
+                    고객님께,
+
+                    저희 사무실에 업무를 맡겨 주셔서 감사드립니다:
+                 </target>
+            </trans-unit>
+
+            <!--
+              Export
+            -->
+            <trans-unit id="export.title">
+                <source>export.title</source>
+                <target state="translated">내보내기</target>
+            </trans-unit>
+            <trans-unit id="export.subtitle">
+                <source>export.subtitle</source>
+                <target state="translated">타임시트 다양한 포맷으로 내보내기</target>
+            </trans-unit>
+            <trans-unit id="export.period">
+                <source>export.period</source>
+                <target state="translated">기간</target>
+            </trans-unit>
+            <trans-unit id="export.document_title">
+                <source>export.document_title</source>
+                <target state="translated">비용 목록</target>
+            </trans-unit>
+            <trans-unit id="export.full_list">
+                <source>export.full_list</source>
+                <target state="translated">전체 목록</target>
+            </trans-unit>
+            <trans-unit id="export.summary">
+                <source>export.summary</source>
+                <target state="translated">요약</target>
+            </trans-unit>
+            <trans-unit id="export.page_of">
+                <source>export.page_of</source>
+                <target state="translated">%page% 쪽 의 %pages% 쪽</target>
+            </trans-unit>
+            <trans-unit id="export.date_copyright">
+                <source>export.date_copyright</source>
+                <target state="translated">생성 %date% 의 %kimai%</target>
+            </trans-unit>
+
+            <!--
+              Month names
+            -->
+            <trans-unit id="month.1">
+                <source>month.1</source>
+                <target state="translated">1월</target>
+            </trans-unit>
+            <trans-unit id="month.2">
+                <source>month.2</source>
+                <target state="translated">2월</target>
+            </trans-unit>
+            <trans-unit id="month.3">
+                <source>month.3</source>
+                <target state="translated">3월</target>
+            </trans-unit>
+            <trans-unit id="month.4">
+                <source>month.4</source>
+                <target state="translated">4월</target>
+            </trans-unit>
+            <trans-unit id="month.5">
+                <source>month.5</source>
+                <target state="translated">5월</target>
+            </trans-unit>
+            <trans-unit id="month.6">
+                <source>month.6</source>
+                <target state="translated">6월</target>
+            </trans-unit>
+            <trans-unit id="month.7">
+                <source>month.7</source>
+                <target state="translated">7월</target>
+            </trans-unit>
+            <trans-unit id="month.8">
+                <source>month.8</source>
+                <target state="translated">8월</target>
+            </trans-unit>
+            <trans-unit id="month.9">
+                <source>month.9</source>
+                <target state="translated">9월</target>
+            </trans-unit>
+            <trans-unit id="month.10">
+                <source>month.10</source>
+                <target state="translated">10월</target>
+            </trans-unit>
+            <trans-unit id="month.11">
+                <source>month.11</source>
+                <target state="translated">11월</target>
+            </trans-unit>
+            <trans-unit id="month.12">
+                <source>month.12</source>
+                <target state="translated">12월</target>
+            </trans-unit>
+
+            <!--
+             Navbar - recent entries and activities
+            -->
+            <trans-unit id="active.entries">
+                <source>active.entries</source>
+                <target state="translated">활동 시간 측정 </target>
+            </trans-unit>
+            <trans-unit id="timesheet.all">
+                <source>timesheet.all</source>
+                <target state="translated">모든 타임시트 보기</target>
+            </trans-unit>
+            <trans-unit id="recent.activities">
+                <source>recent.activities</source>
+                <target state="translated">지난 활동 재개</target>
+            </trans-unit>
+            <trans-unit id="recent.activities.format">
+                <source>recent.activities.format</source>
+                <target state="translated">%customer%를 위한 %project%의 %activity%</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start">
+                <source>timesheet.start</source>
+                <target state="translated">새로운 타임시트 생성하기 </target>
+            </trans-unit>
+
+            <!--
+              TOOLBARS
+            -->
+            <trans-unit id="label.pageSize">
+                <source>label.pageSize</source>
+                <target state="translated">페이지 수</target>
+            </trans-unit>
+            <trans-unit id="label.entryState">
+                <source>label.entryState</source>
+                <target state="translated">기록</target>
+            </trans-unit>
+            <trans-unit id="label.exported">
+                <source>label.exported</source>
+                <target state="translated">내보내기</target>
+            </trans-unit>
+            <trans-unit id="entryState.exported">
+                <source>entryState.exported</source>
+                <target state="translated">청구됨</target>
+            </trans-unit>
+            <trans-unit id="entryState.not_exported">
+                <source>entryState.not_exported</source>
+                <target state="translated">미결제</target>
+            </trans-unit>
+            <trans-unit id="entryState.all">
+                <source>entryState.all</source>
+                <target state="translated">모두</target>
+            </trans-unit>
+            <trans-unit id="entryState.running">
+                <source>entryState.running</source>
+                <target state="translated">활성됨 </target>
+            </trans-unit>
+            <trans-unit id="entryState.stopped">
+                <source>entryState.stopped</source>
+                <target state="translated">멈춤</target>
+            </trans-unit>
+            <trans-unit id="export.clear_all">
+                <source>export.clear_all</source>
+                <target state="translated">선택한 모든 항목을 미결제로 표시하시겠습니까?</target>
+            </trans-unit>
+            <trans-unit id="export.mark_all">
+                <source>export.mark_all</source>
+                <target state="translated">선택한 모든 항목을 청구됨으로 표시하시겠습니까?</target>
+            </trans-unit>
+            <trans-unit id="label.globalsOnly">
+                <source>label.globalsOnly</source>
+                <target state="translated">글로벌 그룹만 해당</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
