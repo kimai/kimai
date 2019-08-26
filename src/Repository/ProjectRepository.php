@@ -25,11 +25,28 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
-/**
- * Class ProjectRepository
- */
 class ProjectRepository extends EntityRepository
 {
+    /**
+     * @param mixed $id
+     * @param null $lockMode
+     * @param null $lockVersion
+     * @return Project|null
+     */
+    public function find($id, $lockMode = null, $lockVersion = null)
+    {
+        /** @var Project|null $project */
+        $project = parent::find($id, $lockMode, $lockVersion);
+        if (null === $project) {
+            return null;
+        }
+
+        $loader = new ProjectLoader($this->getEntityManager());
+        $loader->loadResults([$project]);
+
+        return $project;
+    }
+
     /**
      * @param Project $project
      * @throws ORMException
