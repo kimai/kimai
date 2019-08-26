@@ -9,10 +9,6 @@
 {# FIXME {% block page_subtitle %}{{ 'teams.subtitle'|trans({}, 'teams') }}{% endblock %}#}
 {% block page_actions %}{{ actions.teams('index') }}{% endblock %}
 
-{% block main_before %}
-    {{ toolbar.toolbar(toolbarForm, 'collapseTeams', showFilter) }}
-{% endblock %}
-
 {% block main %}
 
     {% if teams|length == 0 %}

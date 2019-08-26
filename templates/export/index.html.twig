@@ -44,7 +44,7 @@
             <div class="btn-group" id="export-buttons" role="group">
                 {% for button in renderer %}
                     <button type="button" id="export-{{ button.id }}-button" class="btn btn-success startExportBtn" data-type="{{ button.id }}">
-                        <i class="{{ button.icon|icon }}"></i> {{ ('button.' ~ button.title)|trans }}
+                        {{ ('button.' ~ button.title)|trans }}
                     </button>
                 {% endfor %}
             </div>

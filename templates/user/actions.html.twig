@@ -1,6 +1,7 @@
 {% macro users(view) %}
     {% import "macros/widgets.html.twig" as widgets %}
-    {% set actions = {} %}
+
+    {% set actions = {'search': {'class': 'search-toggle visible-xs-inline'}} %}
 
     {% if view == 'index' %}
         {% set actions = actions|merge({'visibility': '#modal_user_admin'}) %}

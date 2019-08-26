@@ -116,6 +116,7 @@ class AppExtensionTest extends TestCase
                     'company' => null,
                     'title' => null,
                 ],
+                'auto_reload_datatable' => false,
             ],
             'kimai.theme.select_type' => null,
             'kimai.theme.show_about' => true,

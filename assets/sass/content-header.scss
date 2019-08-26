@@ -19,20 +19,6 @@
             display: none;
         }
     }
-    
-    form {
-        width: 200px;
-        float: left;
-        .form-group {
-            margin: 0 0 5px 0;
-        }
-        ul.dropdown-menu {
-            padding-top: 10px;
-            width: 500px;
-            box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-            max-width: 90vw;
-        }
-    }
 }
 
 /* Page based action buttons in the upper right corner of the content area */

@@ -1,7 +1,8 @@
 {% macro teams(view) %}
     {% import "macros/widgets.html.twig" as widgets %}
 
-    {% set actions = {} %}
+    {% set actions = {'search': {'class': 'search-toggle visible-xs-inline'}} %}
+
     {% if is_granted('create_team') %}
         {% set actions = actions|merge({'create': {'url': path('admin_team_create')}}) %}
     {% endif %}

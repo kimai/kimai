@@ -24,11 +24,13 @@ export default class KimaiToolbarAction extends KimaiPlugin {
 
     init() {
         const self = this;
+        const toolbarSelector = this.getContainer().getPlugin('toolbar').getSelector();
+
         document.addEventListener('click', function(event) {
             let target = event.target;
             while (target !== null && !target.matches('body')) {
                 if (target.classList.contains(self.selector)) {
-                    const form = document.querySelector('div.toolbar form.navbar-form');
+                    const form = document.querySelector(toolbarSelector);
                     if (form === null) {
                         return;
                     }

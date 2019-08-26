@@ -9,10 +9,6 @@
 {# FIXME {% block page_subtitle %}{{ 'tags.subtitle'|trans({}, 'tags') }}{% endblock %}#}
 {% block page_actions %}{{ actions.tags('index') }}{% endblock %}
 
-{% block main_before %}
-    {{ toolbar.toolbar(toolbarForm, 'collapseTags', showFilter) }}
-{% endblock %}
-
 {% block main %}
 
     {% if tags|length == 0 %}

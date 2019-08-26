@@ -1,7 +1,7 @@
 {% macro timesheets_team(view) %}
     {% import "macros/widgets.html.twig" as widgets %}
 
-    {% set actions = {} %}
+    {% set actions = {'search': {'class': 'search-toggle visible-xs-inline'}} %}
     {% if is_granted('export_own_timesheet') %}
         {% set actions = actions|merge({'download': {'url': path('admin_timesheet_export'), 'class': 'toolbar-action'}}) %}
     {% endif %}

@@ -1,6 +1,7 @@
 {% macro tags(view) %}
     {% import "macros/widgets.html.twig" as widgets %}
-    {% set actions = {} %}
+
+    {% set actions = {'search': {'class': 'search-toggle visible-xs-inline'}} %}
 
     {% set actions = actions|merge({'help': {'url': 'tags.html'|docu_link, 'target': '_blank'}}) %}
 

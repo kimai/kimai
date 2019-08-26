@@ -1,6 +1,7 @@
 {% macro activities(view) %}
     {% import "macros/widgets.html.twig" as widgets %}
-    {% set actions = {'visibility': '#modal_activity_admin'} %}
+
+    {% set actions = {'search': {'class': 'search-toggle visible-xs-inline'}, 'visibility': '#modal_activity_admin'} %}
 
     {% if is_granted('create_activity') %}
         {% set actions = actions|merge({'create': path('admin_activity_create')}) %}

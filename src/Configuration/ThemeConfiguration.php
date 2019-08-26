@@ -18,6 +18,11 @@ class ThemeConfiguration implements SystemBundleConfiguration
         return 'theme';
     }
 
+    public function isAutoReloadDatatable(): string
+    {
+        return (bool) $this->find('auto_reload_datatable');
+    }
+
     public function getSelectPicker(): string
     {
         return (string) $this->find('select_type');

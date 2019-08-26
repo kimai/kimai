@@ -1,6 +1,7 @@
 {% macro projects(view) %}
     {% import "macros/widgets.html.twig" as widgets %}
-    {% set actions = {'visibility': '#modal_project_admin'} %}
+    
+    {% set actions = {'search': {'class': 'search-toggle visible-xs-inline'}, 'visibility': '#modal_project_admin'} %}
 
     {% if is_granted('create_project') %}
         {% set actions = actions|merge({'create': path('admin_project_create')}) %}

@@ -12,6 +12,7 @@
 /* The filter form is available on most pages above the datatable */
 @media (min-width: $screen-sm-min) {
     .toolbar {
+        // @deprecated since 1.2 - using the toolbar is deprecated and will be removed with 2.0
         form.navbar-form {
             font-size: $font-size-base;
             .form-control {
@@ -32,3 +33,58 @@
     }
 }
 
+/* Search form with filter dropdown */
+.content-header {
+    form {
+        width: 200px;
+        float: left;
+        .container-fluid {
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .form-group {
+            margin: 0 0 5px 0;
+        }
+        input.search-has-error {
+            color: $red;
+        }
+        .input-group-addon.has-error {
+            color: $red;
+            border-color: $red;
+        }
+        input.has-error {
+            border-color: $red;
+        }
+        ul.dropdown-menu {
+            max-height: 100vh;
+            overflow-y: auto;
+            padding-top: 10px;
+            width: 500px;
+            box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            max-width: 90vw;
+        }
+        a.search-cancel {
+            margin-top: 8px;
+        }
+    }
+}
+
+@media (max-width: $screen-xs-min) {
+    .content-header.search-open {
+        h1 {
+            display: none;
+        }
+        .breadcrumb {
+            display: none;
+        }
+        form.header-search {
+            padding: 0 10px 0 0;
+            float: none;
+            width: 100%;
+            ul.dropdown-menu {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+    }
+}
