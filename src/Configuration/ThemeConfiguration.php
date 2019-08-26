@@ -18,7 +18,7 @@ class ThemeConfiguration implements SystemBundleConfiguration
         return 'theme';
     }
 
-    public function isAutoReloadDatatable(): string
+    public function isAutoReloadDatatable(): bool
     {
         return (bool) $this->find('auto_reload_datatable');
     }
