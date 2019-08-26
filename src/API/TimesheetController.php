@@ -598,8 +598,8 @@ class TimesheetController extends BaseApiController
         /** @var User $user */
         $user = $this->getUser();
 
-        $timesheet = new Timesheet();
-        $timesheet
+        $copyTimesheet = new Timesheet();
+        $copyTimesheet
             ->setBegin($this->dateTime->createDateTime())
             ->setUser($user)
             ->setActivity($timesheet->getActivity())
@@ -608,29 +608,29 @@ class TimesheetController extends BaseApiController
 
         if (null !== ($copy = $paramFetcher->get('copy'))) {
             if (in_array($copy, ['rates', 'all'])) {
-                $timesheet->setHourlyRate($timesheet->getHourlyRate());
-                $timesheet->setFixedRate($timesheet->getFixedRate());
+                $copyTimesheet->setHourlyRate($timesheet->getHourlyRate());
+                $copyTimesheet->setFixedRate($timesheet->getFixedRate());
             }
 
             if (in_array($copy, ['description', 'all'])) {
-                $timesheet->setDescription($timesheet->getDescription());
+                $copyTimesheet->setDescription($timesheet->getDescription());
             }
 
             if (in_array($copy, ['tags', 'all'])) {
                 foreach ($timesheet->getTags() as $tag) {
-                    $timesheet->addTag($tag);
+                    $copyTimesheet->addTag($tag);
                 }
             }
 
             if (in_array($copy, ['meta', 'all'])) {
                 foreach ($timesheet->getMetaFields() as $metaField) {
                     $metaNew = clone $metaField;
-                    $timesheet->setMetaField($metaNew);
+                    $copyTimesheet->setMetaField($metaNew);
                 }
             }
         }
 
-        $errors = $validator->validate($timesheet);
+        $errors = $validator->validate($copyTimesheet);
 
         if (count($errors) > 0) {
             throw new BadRequestHttpException($errors[0]->getPropertyPath() . ' = ' . $errors[0]->getMessage());
@@ -641,9 +641,9 @@ class TimesheetController extends BaseApiController
             $this->configuration->getActiveEntriesHardLimit()
         );
 
-        $this->repository->save($timesheet);
+        $this->repository->save($copyTimesheet);
 
-        $view = new View($timesheet, 200);
+        $view = new View($copyTimesheet, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
 
         return $this->viewHandler->handle($view);
