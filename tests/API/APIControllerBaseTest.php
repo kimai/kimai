@@ -152,21 +152,24 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
 
     protected function assertEntityNotFoundForPatch(string $role, string $url, array $data)
     {
+        return $this->assertExceptionForPatchAction($role, $url, $data, [
+            'code' => 404,
+            'message' => 'Not found'
+        ]);
+    }
+
+    protected function assertExceptionForPatchAction(string $role, string $url, array $data, array $expectedErrors)
+    {
         $client = $this->getClientForAuthenticatedUser($role);
 
         $this->request($client, $url, 'PATCH', [], json_encode($data));
         $response = $client->getResponse();
         $this->assertFalse($response->isSuccessful());
 
-        $expected = [
-            'code' => 404,
-            'message' => 'Not found'
-        ];
-
-        $this->assertEquals(404, $client->getResponse()->getStatusCode());
+        $this->assertEquals($expectedErrors['code'], $client->getResponse()->getStatusCode());
 
         $this->assertEquals(
-            $expected,
+            $expectedErrors,
             json_decode($client->getResponse()->getContent(), true)
         );
     }

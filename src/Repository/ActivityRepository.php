@@ -27,6 +27,26 @@ use Pagerfanta\Pagerfanta;
 class ActivityRepository extends EntityRepository
 {
     /**
+     * @param mixed $id
+     * @param null $lockMode
+     * @param null $lockVersion
+     * @return Activity|null
+     */
+    public function find($id, $lockMode = null, $lockVersion = null)
+    {
+        /** @var Activity|null $activity */
+        $activity = parent::find($id, $lockMode, $lockVersion);
+        if (null === $activity) {
+            return null;
+        }
+
+        $loader = new ActivityLoader($this->getEntityManager());
+        $loader->loadResults([$activity]);
+
+        return $activity;
+    }
+
+    /**
      * @param Activity $activity
      * @throws ORMException
      * @throws \Doctrine\ORM\OptimisticLockException

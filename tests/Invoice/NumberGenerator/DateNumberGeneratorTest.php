@@ -9,8 +9,8 @@
 
 namespace App\Tests\Invoice\NumberGenerator;
 
+use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
-use App\Model\InvoiceModel;
 use PHPUnit\Framework\TestCase;
 
 /**

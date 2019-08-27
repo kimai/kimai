@@ -9,7 +9,9 @@
 
 namespace App\Tests\API;
 
+use App\Entity\Customer;
 use App\Entity\User;
+use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -159,6 +161,54 @@ class CustomerControllerTest extends APIControllerBaseTest
         $response = $client->getResponse();
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertApiCallValidationError($response, ['currency']);
+    }
+
+    public function testMetaActionThrowsNotFound()
+    {
+        $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/customers/42/meta', []);
+    }
+
+    public function testMetaActionThrowsExceptionOnMissingName()
+    {
+        return $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/customers/1/meta', ['value' => 'X'], [
+            'code' => 400,
+            'message' => 'Parameter "name" of value "NULL" violated a constraint "This value should not be null."'
+        ]);
+    }
+
+    public function testMetaActionThrowsExceptionOnMissingValue()
+    {
+        return $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/customers/1/meta', ['name' => 'X'], [
+            'code' => 400,
+            'message' => 'Parameter "value" of value "NULL" violated a constraint "This value should not be null."'
+        ]);
+    }
+
+    public function testMetaActionThrowsExceptionOnMissingMetafield()
+    {
+        return $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/customers/1/meta', ['name' => 'X', 'value' => 'Y'], [
+            'code' => 500,
+            'message' => 'Unknown meta-field requested'
+        ]);
+    }
+
+    public function testMetaAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $client->getContainer()->get('event_dispatcher')->addSubscriber(new CustomerTestMetaFieldSubscriberMock());
+
+        $data = [
+            'name' => 'metatestmock',
+            'value' => 'another,testing,bar'
+        ];
+        $this->request($client, '/api/customers/1/meta', 'PATCH', [], json_encode($data));
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var Customer $customer */
+        $customer = $em->getRepository(Customer::class)->find(1);
+        $this->assertEquals('another,testing,bar', $customer->getMetaField('metatestmock')->getValue());
     }
 
     protected function assertStructure(array $result, $full = true)

@@ -10,9 +10,9 @@
 namespace App\Invoice\Renderer;
 
 use App\Entity\InvoiceDocument;
-use App\Entity\Timesheet;
 use App\Entity\UserPreference;
-use App\Model\InvoiceModel;
+use App\Invoice\InvoiceItem;
+use App\Invoice\InvoiceModel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
@@ -176,40 +176,36 @@ trait RendererTrait
         return $values;
     }
 
-    /**
-     * @param Timesheet $timesheet
-     * @return array
-     */
-    protected function timesheetToArray(Timesheet $timesheet)
+    protected function timesheetToArray(InvoiceItem $invoiceItem): array
     {
-        $rate = $timesheet->getRate();
-        $hourlyRate = $timesheet->getHourlyRate();
-        $amount = $this->getFormattedDuration($timesheet->getDuration());
-        $description = $timesheet->getDescription();
+        $rate = $invoiceItem->getRate();
+        $hourlyRate = $invoiceItem->getHourlyRate();
+        $amount = $this->getFormattedDuration($invoiceItem->getDuration());
+        $description = $invoiceItem->getDescription();
 
-        if (null !== $timesheet->getFixedRate()) {
-            $rate = $timesheet->getFixedRate();
-            $hourlyRate = $timesheet->getFixedRate();
-            $amount = 1; // FIXME fixed rates
+        if (null !== $invoiceItem->getFixedRate()) {
+            $rate = $invoiceItem->getFixedRate();
+            $hourlyRate = $invoiceItem->getFixedRate();
+            $amount = $invoiceItem->getAmount();
         }
 
         if (empty($description)) {
-            $description = $timesheet->getActivity()->getName();
+            $description = $invoiceItem->getActivity()->getName();
         }
 
-        $user = $timesheet->getUser();
+        $user = $invoiceItem->getUser();
 
         if (empty($hourlyRate)) {
             $hourlyRate = $user->getPreferenceValue(UserPreference::HOURLY_RATE);
         }
 
-        $activity = $timesheet->getActivity();
-        $project = $timesheet->getProject();
+        $activity = $invoiceItem->getActivity();
+        $project = $invoiceItem->getProject();
         $customer = $project->getCustomer();
         $currency = $customer->getCurrency();
 
-        $begin = $timesheet->getBegin();
-        $end = $timesheet->getEnd();
+        $begin = $invoiceItem->getBegin();
+        $end = $invoiceItem->getEnd();
 
         $values = [
             'entry.row' => '',
@@ -218,9 +214,9 @@ trait RendererTrait
             'entry.rate' => $this->getFormattedMoney($hourlyRate, $currency),
             'entry.total' => $this->getFormattedMoney($rate, $currency),
             'entry.currency' => $currency,
-            'entry.duration' => $timesheet->getDuration(),
-            'entry.duration_decimal' => $this->getFormattedDecimalDuration($timesheet->getDuration()),
-            'entry.duration_minutes' => number_format($timesheet->getDuration() / 60),
+            'entry.duration' => $invoiceItem->getDuration(),
+            'entry.duration_decimal' => $this->getFormattedDecimalDuration($invoiceItem->getDuration()),
+            'entry.duration_minutes' => number_format($invoiceItem->getDuration() / 60),
             'entry.begin' => $this->getFormattedDateTime($begin),
             'entry.begin_time' => $this->getFormattedTime($begin),
             'entry.begin_timestamp' => $begin->getTimestamp(),
@@ -240,9 +236,9 @@ trait RendererTrait
             'entry.customer_id' => $customer->getId(),
         ];
 
-        foreach ($timesheet->getVisibleMetaFields() as $metaField) {
+        foreach ($invoiceItem->getAdditionalFields() as $name => $value) {
             $values = array_merge($values, [
-                'entry.meta.' . $metaField->getName() => $metaField->getValue(),
+                'entry.meta.' . $name => $value,
             ]);
         }
 

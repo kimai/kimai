@@ -9,8 +9,6 @@
 
 namespace App\Invoice;
 
-use App\Model\InvoiceModel;
-
 /**
  * Class NumberGeneratorInterface defines all methods that invoice number generator have to implement.
  */

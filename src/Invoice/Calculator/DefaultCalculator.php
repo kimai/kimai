@@ -9,8 +9,8 @@
 
 namespace App\Invoice\Calculator;
 
-use App\Entity\Timesheet;
 use App\Invoice\CalculatorInterface;
+use App\Invoice\InvoiceItem;
 
 /**
  * Class DefaultCalculator works on all given entries using:
@@ -18,14 +18,25 @@ use App\Invoice\CalculatorInterface;
  * - the invoice template vat rate
  * - the entries rate
  */
-class DefaultCalculator extends AbstractCalculator implements CalculatorInterface
+class DefaultCalculator extends AbstractMergedCalculator implements CalculatorInterface
 {
     /**
-     * @return Timesheet[]
+     * @return InvoiceItem[]
      */
     public function getEntries()
     {
-        return $this->model->getEntries();
+        $entries = [];
+
+        foreach ($this->model->getEntries() as $entry) {
+            $item = new InvoiceItem();
+            $this->mergeTimesheets($item, $entry);
+            foreach ($entry->getVisibleMetaFields() as $field) {
+                $item->addAdditionalField($field->getName(), $field->getValue());
+            }
+            $entries[] = $item;
+        }
+
+        return $entries;
     }
 
     /**

@@ -36,6 +36,26 @@ class TimesheetRepository extends EntityRepository
     public const STATS_QUERY_MONTHLY = 'monthly';
 
     /**
+     * @param mixed $id
+     * @param null $lockMode
+     * @param null $lockVersion
+     * @return Timesheet|null
+     */
+    public function find($id, $lockMode = null, $lockVersion = null)
+    {
+        /** @var Timesheet|null $timesheet */
+        $timesheet = parent::find($id, $lockMode, $lockVersion);
+        if (null === $timesheet) {
+            return null;
+        }
+
+        $loader = new TimesheetLoader($this->getEntityManager());
+        $loader->loadResults([$timesheet]);
+
+        return $timesheet;
+    }
+
+    /**
      * @param Timesheet $timesheet
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
