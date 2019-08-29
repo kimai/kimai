@@ -46,6 +46,30 @@ class TeamControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_admin_teams', 5);
     }
 
+    public function testIndexActionWithSearchTermQuery()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $fixture = new TeamFixtures();
+        $fixture->setAmount(5);
+        $fixture->setCallback(function (Team $team) {
+            $team->setName($team->getName() . '- fantastic team with foooo bar magic');
+        });
+        $this->importFixture($em, $fixture);
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/teams/');
+
+        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $client->submit($form, [
+            'searchTerm' => 'foo',
+        ]);
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasDataTable($client);
+        $this->assertDataTableRowCount($client, 'datatable_admin_teams', 5);
+    }
+
     public function testCreateAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
