@@ -107,7 +107,7 @@ class BaseQueryTest extends TestCase
 
         $term = new SearchTerm('foo bar');
         $sut->setSearchTerm($term);
-        
+
         self::assertNotNull($sut->getSearchTerm());
         self::assertEquals('foo bar', $term->getOriginalSearch());
         self::assertSame($term, $sut->getSearchTerm());
