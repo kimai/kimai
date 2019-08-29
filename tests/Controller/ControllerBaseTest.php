@@ -215,7 +215,7 @@ abstract class ControllerBaseTest extends WebTestCase
             $expectedUrl = $buttons[$expectedClass];
             self::assertEquals($expectedUrl, $element->getAttribute('href'));
         }
-        
+
         self::assertEquals(count($buttons), $node->count(), 'Invalid amount of page actions');
     }
 
