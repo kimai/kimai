@@ -34,15 +34,13 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         // there are no records by default in the test database
         $this->assertHasNoEntriesWithFilter($client);
 
-        $result = $client->getCrawler()->filter('div.breadcrumb div.box-tools div.btn-group a.btn');
-        $this->assertEquals(5, count($result));
-
-        foreach ($result as $item) {
-            $this->assertContains('btn btn-default', $item->getAttribute('class'));
-            /** @var \DOMElement $domElement */
-            $domElement = $item->firstChild;
-            $this->assertEquals('i', $domElement->tagName);
-        }
+        $this->assertPageActions($client, [
+            'search search-toggle visible-xs-inline' => '#',
+            'download toolbar-action' => $this->createUrl('/team/timesheet/export'),
+            'visibility' => '#',
+            'create modal-ajax-form' => $this->createUrl('/team/timesheet/create'),
+            'help' => 'https://www.kimai.org/documentation/timesheet.html'
+        ]);
     }
 
     public function testIndexActionWithQuery()
@@ -65,7 +63,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $dateRange = ($start)->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime('last day of this month'))->format('Y-m-d');
 
-        $form = $client->getCrawler()->filter('form.navbar-form')->form();
+        $form = $client->getCrawler()->filter('form.header-search')->form();
         $client->submit($form, [
             'state' => 1,
             'user' => $user->getId(),
@@ -104,7 +102,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $dateRange = (new \DateTime('-10 days'))->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime())->format('Y-m-d');
 
-        $form = $client->getCrawler()->filter('form.navbar-form')->form();
+        $form = $client->getCrawler()->filter('form.header-search')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/team/timesheet/export'));
         $client->submit($form, [
             'state' => 1,

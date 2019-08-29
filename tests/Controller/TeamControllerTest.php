@@ -37,7 +37,11 @@ class TeamControllerTest extends ControllerBaseTest
 
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/teams/');
-        $this->assertPageActions($client, ['create' => $this->createUrl('/admin/teams/create'), 'help' => 'https://www.kimai.org/documentation/teams.html']);
+        $this->assertPageActions($client, [
+            'search search-toggle visible-xs-inline' => '#', 
+            'create' => $this->createUrl('/admin/teams/create'), 
+            'help' => 'https://www.kimai.org/documentation/teams.html'
+        ]);
         $this->assertHasDataTable($client);
         $this->assertDataTableRowCount($client, 'datatable_admin_teams', 5);
     }

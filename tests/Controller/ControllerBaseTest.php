@@ -208,7 +208,6 @@ abstract class ControllerBaseTest extends WebTestCase
     protected function assertPageActions(Client $client, array $buttons)
     {
         $node = $client->getCrawler()->filter('section.content-header div.breadcrumb div.box-tools div.btn-group a.btn');
-        self::assertEquals(count($buttons), $node->count());
 
         foreach ($node->getIterator() as $element) {
             $expectedClass = str_replace('btn btn-default btn-', '', $element->getAttribute('class'));
@@ -216,6 +215,8 @@ abstract class ControllerBaseTest extends WebTestCase
             $expectedUrl = $buttons[$expectedClass];
             self::assertEquals($expectedUrl, $element->getAttribute('href'));
         }
+        
+        self::assertEquals(count($buttons), $node->count(), 'Invalid amount of page actions');
     }
 
     /**
