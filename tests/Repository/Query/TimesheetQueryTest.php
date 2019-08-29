@@ -37,6 +37,7 @@ class TimesheetQueryTest extends BaseQueryTest
         $this->assertActivity($sut);
         $this->assertState($sut);
         $this->assertExported($sut);
+        $this->assertSearchTerm($sut);
     }
 
     protected function assertUser(TimesheetQuery $sut)
