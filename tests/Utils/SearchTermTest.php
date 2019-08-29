@@ -26,6 +26,7 @@ class SearchTermTest extends TestCase
         self::assertTrue($sut->hasSearchTerm());
         self::assertNull($sut->getSearchField('foo'));
         self::assertEquals('foo bar test 1', $sut->getOriginalSearch());
+        self::assertEquals('foo bar test 1', (string) $sut);
     }
 
     public function testWithMetaField()

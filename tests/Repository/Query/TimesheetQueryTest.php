@@ -17,6 +17,7 @@ use App\Repository\Query\TimesheetQuery;
 
 /**
  * @covers \App\Repository\Query\TimesheetQuery
+ * @covers \App\Repository\Query\BaseQuery
  */
 class TimesheetQueryTest extends BaseQueryTest
 {

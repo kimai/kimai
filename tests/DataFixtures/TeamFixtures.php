@@ -19,33 +19,54 @@ use Faker\Factory;
 /**
  * Defines the sample data to load in during controller tests.
  */
-class TeamFixtures extends Fixture
+final class TeamFixtures extends Fixture
 {
     /**
      * @var int
      */
-    protected $amount = 0;
+    private $amount = 0;
     /**
      * @var bool
      */
-    protected $addCustomer = true;
+    private $addCustomer = true;
     /**
      * @var User[]
      */
-    protected $skipUser = [];
+    private $skipUser = [];
     /**
      * @var bool
      */
-    protected $addUser = true;
+    private $addUser = true;
+    /**
+     * @var callable
+     */
+    private $callback;
 
-    public function setAddCustomer(bool $useCustomer)
+    /**
+     * Will be called prior to persisting the object.
+     *
+     * @param callable $callback
+     * @return TeamFixtures
+     */
+    public function setCallback(callable $callback): TeamFixtures
     {
-        $this->addCustomer = $useCustomer;
+        $this->callback = $callback;
+
+        return $this;
     }
 
-    public function setAddUser(bool $useUser)
+    public function setAddCustomer(bool $useCustomer): TeamFixtures
+    {
+        $this->addCustomer = $useCustomer;
+
+        return $this;
+    }
+
+    public function setAddUser(bool $useUser): TeamFixtures
     {
         $this->addUser = $useUser;
+
+        return $this;
     }
 
     public function getAmount(): int
@@ -60,9 +81,11 @@ class TeamFixtures extends Fixture
         return $this;
     }
 
-    public function addUserToIgnore(User $user)
+    public function addUserToIgnore(User $user): TeamFixtures
     {
         $this->skipUser[] = $user;
+
+        return $this;
     }
 
     /**
@@ -83,8 +106,8 @@ class TeamFixtures extends Fixture
                 }
             }
 
-            $entity = new Team();
-            $entity
+            $team = new Team();
+            $team
                 ->setName($faker->name)
                 ->setTeamLead($lead)
             ;
@@ -97,14 +120,17 @@ class TeamFixtures extends Fixture
                         $userToAdd = $tmp;
                     }
                 }
-                $entity->addUser($userToAdd);
+                $team->addUser($userToAdd);
             }
 
             if ($this->addCustomer) {
-                $entity->addCustomer($customer[array_rand($customer)]);
+                $team->addCustomer($customer[array_rand($customer)]);
             }
 
-            $manager->persist($entity);
+            if (null !== $this->callback) {
+                call_user_func($this->callback, $team);
+            }
+            $manager->persist($team);
         }
 
         $manager->flush();
@@ -114,7 +140,7 @@ class TeamFixtures extends Fixture
      * @param ObjectManager $manager
      * @return Customer[]
      */
-    protected function getAllCustomers(ObjectManager $manager)
+    private function getAllCustomers(ObjectManager $manager)
     {
         $all = [];
         /* @var Customer[] $entries */
@@ -130,7 +156,7 @@ class TeamFixtures extends Fixture
      * @param ObjectManager $manager
      * @return User[]
      */
-    protected function getAllUsers(ObjectManager $manager)
+    private function getAllUsers(ObjectManager $manager)
     {
         $all = [];
         /* @var User[] $entries */
