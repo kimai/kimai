@@ -210,7 +210,6 @@ class CustomerRepository extends EntityRepository
 
         $qb->select('c')
             ->from(Customer::class, 'c')
-            ->leftJoin('c.meta', 'meta')
             ->orderBy('c.' . $query->getOrderBy(), $query->getOrder());
 
         if (CustomerQuery::SHOW_VISIBLE == $query->getVisibility()) {
@@ -223,19 +222,40 @@ class CustomerRepository extends EntityRepository
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
 
-        if (!empty($query->getSearchTerm())) {
-            $qb->andWhere(
-                $qb->expr()->orX(
-                    $qb->expr()->like('c.name', ':likeContains'),
-                    $qb->expr()->like('c.comment', ':likeContains'),
-                    $qb->expr()->like('c.number', ':likeContains'),
-                    $qb->expr()->like('c.contact', ':likeContains'),
-                    $qb->expr()->like('c.phone', ':likeContains'),
-                    $qb->expr()->like('c.email', ':likeContains'),
-                    $qb->expr()->like('c.address', ':likeContains')
-                )
-            );
-            $qb->setParameter('likeContains', '%' . $query->getSearchTerm() . '%');
+        if ($query->hasSearchTerm()) {
+            $searchAnd = $qb->expr()->andX();
+            $searchTerm = $query->getSearchTerm();
+
+            foreach ($searchTerm->getSearchFields() as $metaName => $metaValue) {
+                $qb->leftJoin('c.meta', 'meta');
+                $searchAnd->add(
+                    $qb->expr()->andX(
+                        $qb->expr()->eq('meta.name', ':metaName'),
+                        $qb->expr()->like('meta.value', ':metaValue')
+                    )
+                );
+                $qb->setParameter('metaName', $metaName);
+                $qb->setParameter('metaValue', '%' . $metaValue . '%');
+            }
+
+            if ($searchTerm->hasSearchTerm()) {
+                $searchAnd->add(
+                    $qb->expr()->orX(
+                        $qb->expr()->like('c.name', ':searchTerm'),
+                        $qb->expr()->like('c.comment', ':searchTerm'),
+                        $qb->expr()->like('c.number', ':searchTerm'),
+                        $qb->expr()->like('c.contact', ':searchTerm'),
+                        $qb->expr()->like('c.phone', ':searchTerm'),
+                        $qb->expr()->like('c.email', ':searchTerm'),
+                        $qb->expr()->like('c.address', ':searchTerm')
+                    )
+                );
+                $qb->setParameter('searchTerm', '%' . $searchTerm->getSearchTerm() . '%');
+            }
+
+            if ($searchAnd->count() > 0) {
+                $qb->andWhere($searchAnd);
+            }
         }
 
         return $qb;

@@ -109,16 +109,37 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
             $qb->andWhere($rolesWhere);
         }
 
-        if (!empty($query->getSearchTerm())) {
-            $qb->andWhere(
-                $qb->expr()->orX(
-                    $qb->expr()->like('u.alias', ':likeContains'),
-                    $qb->expr()->like('u.title', ':likeContains'),
-                    $qb->expr()->like('u.email', ':likeContains'),
-                    $qb->expr()->like('u.username', ':likeContains')
-                )
-            );
-            $qb->setParameter('likeContains', '%' . $query->getSearchTerm() . '%');
+        if ($query->hasSearchTerm()) {
+            $searchAnd = $qb->expr()->andX();
+            $searchTerm = $query->getSearchTerm();
+
+            foreach ($searchTerm->getSearchFields() as $metaName => $metaValue) {
+                $qb->leftJoin('u.preferences', 'meta');
+                $searchAnd->add(
+                    $qb->expr()->andX(
+                        $qb->expr()->eq('meta.name', ':metaName'),
+                        $qb->expr()->like('meta.value', ':metaValue')
+                    )
+                );
+                $qb->setParameter('metaName', $metaName);
+                $qb->setParameter('metaValue', '%' . $metaValue . '%');
+            }
+
+            if ($searchTerm->hasSearchTerm()) {
+                $searchAnd->add(
+                    $qb->expr()->orX(
+                        $qb->expr()->like('u.alias', ':searchTerm'),
+                        $qb->expr()->like('u.title', ':searchTerm'),
+                        $qb->expr()->like('u.email', ':searchTerm'),
+                        $qb->expr()->like('u.username', ':searchTerm')
+                    )
+                );
+                $qb->setParameter('searchTerm', '%' . $searchTerm->getSearchTerm() . '%');
+            }
+
+            if ($searchAnd->count() > 0) {
+                $qb->andWhere($searchAnd);
+            }
         }
 
         return $this->getBaseQueryResult($qb, $query);

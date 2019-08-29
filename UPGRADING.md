@@ -8,6 +8,12 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
+## [1.3](https://github.com/kevinpapst/kimai2/releases/tag/1.3)
+
+### Possible BC breaks
+
+- Refactored toolbars and search, plugins needs to be checked 
+
 ## [1.2](https://github.com/kevinpapst/kimai2/releases/tag/1.2)
 
 ### Possible BC breaks

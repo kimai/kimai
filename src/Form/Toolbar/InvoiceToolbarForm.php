@@ -26,6 +26,7 @@ class InvoiceToolbarForm extends AbstractToolbarForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->addSearchTermInputField($builder);
         $this->addTemplateChoice($builder);
         $this->addUsersChoice($builder);
         $this->addDateRangeChoice($builder);

@@ -26,6 +26,7 @@ class ExportToolbarForm extends AbstractToolbarForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->addSearchTermInputField($builder);
         $this->addExportStateChoice($builder);
         $this->addTimesheetStateChoice($builder);
         $this->addUsersChoice($builder);

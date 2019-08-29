@@ -96,13 +96,22 @@ class TagRepository extends EntityRepository
             ->addOrderBy('tag.' . $query->getOrderBy(), $query->getOrder())
         ;
 
-        if (!empty($query->getSearchTerm())) {
-            $qb->andWhere(
-                $qb->expr()->orX(
-                    $qb->expr()->like('tag.name', ':likeContains')
-                )
-            );
-            $qb->setParameter('likeContains', '%' . $query->getSearchTerm() . '%');
+        if ($query->hasSearchTerm()) {
+            $searchTerm = $query->getSearchTerm();
+            $searchAnd = $qb->expr()->andX();
+
+            if ($searchTerm->hasSearchTerm()) {
+                $searchAnd->add(
+                    $qb->expr()->orX(
+                        $qb->expr()->like('tag.name', ':searchTerm')
+                    )
+                );
+                $qb->setParameter('searchTerm', '%' . $searchTerm->getSearchTerm() . '%');
+            }
+
+            if ($searchAnd->count() > 0) {
+                $qb->andWhere($searchAnd);
+            }
         }
 
         $paginator = new Pagerfanta(new DoctrineORMAdapter($qb->getQuery(), false));

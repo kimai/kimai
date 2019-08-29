@@ -637,13 +637,32 @@ class TimesheetRepository extends EntityRepository
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
 
-        if (!empty($query->getSearchTerm())) {
-            $qb->andWhere(
-                $qb->expr()->orX(
-                    $qb->expr()->like('t.description', ':likeContains')
-                )
-            );
-            $qb->setParameter('likeContains', '%' . $query->getSearchTerm() . '%');
+        if ($query->hasSearchTerm()) {
+            $searchAnd = $qb->expr()->andX();
+            $searchTerm = $query->getSearchTerm();
+
+            foreach ($searchTerm->getSearchFields() as $metaName => $metaValue) {
+                $qb->leftJoin('t.meta', 'meta');
+                $searchAnd->add(
+                    $qb->expr()->andX(
+                        $qb->expr()->eq('meta.name', ':metaName'),
+                        $qb->expr()->like('meta.value', ':metaValue')
+                    )
+                );
+                $qb->setParameter('metaName', $metaName);
+                $qb->setParameter('metaValue', '%' . $metaValue . '%');
+            }
+
+            if ($searchTerm->hasSearchTerm()) {
+                $searchAnd->add(
+                    $qb->expr()->like('t.description', ':searchTerm')
+                );
+                $qb->setParameter('searchTerm', '%' . $searchTerm->getSearchTerm() . '%');
+            }
+
+            if ($searchAnd->count() > 0) {
+                $qb->andWhere($searchAnd);
+            }
         }
 
         return $qb;
