@@ -65,7 +65,7 @@
             <tbody>
             {% for entry in model.calculator.entries %}
                 {% set duration = entry.duration|duration %}
-                {% if entry.fixedRate is not null %}
+                {% if entry.fixedRate %}
                     {% set rate = entry.fixedRate %}
                     {% set duration = entry.amount %}
                 {% elseif entry.hourlyRate is not null %}
