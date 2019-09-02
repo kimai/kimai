@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="cs" datatype="plaintext" original="exceptions.en.xliff">
+        <body>
+            <trans-unit id="access.denied">
+                <source>access.denied</source>
+                <target>P��stup byl odep�en</target>
+            </trans-unit>
+            <trans-unit id="stacktrace">
+                <source>stacktrace</source>
+                <target>K probl�mu do�lo zde</target>
+            </trans-unit>
+            <trans-unit id="http_error.title">
+                <source>http_error.title</source>
+                <target>Chyba</target>
+            </trans-unit>
+            <trans-unit id="http_error.description">
+                <source>http_error.description</source>
+                <target>Oops! Vyskytla se chyba.</target>
+            </trans-unit>
+            <trans-unit id="http_error.suggestion">
+                <source>http_error.suggestion</source>
+                <target>
+                    Do�lo k neo�ek�van� chyb�, zkuste to znovu.
+                    Pokud se chyba vyskytuje opakovan�, kontaktujte sv�ho spr�vce.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_404.description">
+                <source>http_error_404.description</source>
+                <target>Oops! Str�nka neexistuje.</target>
+            </trans-unit>
+            <trans-unit id="http_error_404.suggestion">
+                <source>http_error_404.suggestion</source>
+                <target>
+                    Nena�li jsme str�nku, kterou jste hledali.
+                    M��ete se vr�tit na N�st�nku a za��t znovu.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_403.description">
+                <source>http_error_403.description</source>
+                <target>Tato str�nka m� omezen� p��stup.</target>
+            </trans-unit>
+            <trans-unit id="http_error_403.suggestion">
+                <source>http_error_403.suggestion</source>
+                <target>
+                    Litujeme, nem�te dostate�n� opr�vn�n� k zobrazen� t�to str�nky.
+                    Pokud se jedn� o chybu, kontaktujte sv�ho spr�vce.
+                </target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

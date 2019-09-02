@@ -13,5 +13,6 @@ require('fullcalendar/dist/locale/pt-br');
 require('fullcalendar/dist/locale/sv');
 require('fullcalendar/dist/locale/ja');
 require('fullcalendar/dist/locale/sk');
+require('fullcalendar/dist/locale/cs');
 
 require('fullcalendar/dist/fullcalendar.min.css');
