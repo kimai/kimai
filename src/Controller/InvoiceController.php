@@ -221,7 +221,7 @@ class InvoiceController extends AbstractController
      */
     public function listTemplateAction(): Response
     {
-        $templates = $this->invoiceRepository->findByQuery(new BaseQuery());
+        $templates = $this->invoiceRepository->getPagerfantaForQuery(new BaseQuery());
 
         return $this->render('invoice/templates.html.twig', [
             'entries' => $templates,

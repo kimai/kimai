@@ -19,7 +19,7 @@ Perform EACH version specific task between your version and the new one, otherwi
 - Maximum activity name length lowered to 150 character
 - Added new permission: `manage_invoice_template`
   - Removed permissions: `view_invoice_template`, `create_invoice_template`, `edit_invoice_template`, `delete_invoice_template`
-- Removed permission: `view_invoice` (using `create_export` only)
+- Removed permission: `create_export` (using `create_export` only)
 - Custom export renderer need to check for usage of `Timesheet::getEnd()` as running entries can now be exported as well
 
 ## [1.1](https://github.com/kevinpapst/kimai2/releases/tag/1.1)
