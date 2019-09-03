@@ -47,11 +47,12 @@ abstract class AbstractMergedCalculator extends AbstractCalculator
             $invoiceItem->setEnd($entry->getEnd());
         }
 
-        if (null !== $this->model->getQuery()->getActivity()) {
-            $invoiceItem->setActivity($this->model->getQuery()->getActivity());
-            $invoiceItem->setDescription($this->model->getQuery()->getActivity()->getName());
-        } elseif (null !== $this->model->getQuery()->getProject()) {
-            $invoiceItem->setDescription($this->model->getQuery()->getProject()->getName());
+        if (!empty($entry->getDescription())) {
+            $description = '';
+            if (!empty($invoiceItem->getDescription())) {
+                $description = $invoiceItem->getDescription() . PHP_EOL;
+            }
+            $invoiceItem->setDescription($description . $entry->getDescription());
         }
 
         if (null === $invoiceItem->getActivity()) {
