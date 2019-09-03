@@ -211,10 +211,10 @@ kimai:
             date_time: 'm-d H:i'
             duration: '%%h:%%m h'
         cs:
-            date_time_type: 'yyyy-MM-dd HH:mm'
-            date_type: 'yyyy-MM-dd'
-            date: 'Y-m-d'
-            date_time: 'm-d H:i'
+            date_time_type: 'dd.MM.yyyy HH:mm'
+            date_type: 'dd.MM.yyyy'
+            date: 'd.m.Y'
+            date_time: 'd.m H:i'
             duration: '%%h:%%m h'
         de:
             date_time_type: 'dd.MM.yyyy HH:mm'
