@@ -41,9 +41,9 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
         $worksheet = $spreadsheet->getActiveSheet();
         $entries = $model->getCalculator()->getEntries();
         $replacer = $this->modelToReplacer($model);
-        $timesheetAmount = count($entries);
-        if ($timesheetAmount > 1) {
-            $this->addTemplateRows($worksheet, $timesheetAmount);
+        $invoiceItemCount = count($entries);
+        if ($invoiceItemCount > 1) {
+            $this->addTemplateRows($worksheet, $invoiceItemCount);
         }
 
         $worksheet->setTitle($model->getTemplate()->getTitle());
@@ -51,13 +51,13 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
         $entryRow = 0;
 
         foreach ($worksheet->getRowIterator() as $row) {
-            $timesheet = $entries[$entryRow];
+            $invoiceItem = $entries[$entryRow];
             $sheetValues = false;
             foreach ($row->getCellIterator() as $cell) {
                 $value = $cell->getValue();
                 if (stripos($value, '${entry.') !== false) {
                     if ($sheetValues === false) {
-                        $sheetValues = $this->timesheetToArray($timesheet);
+                        $sheetValues = $this->invoiceItemToArray($invoiceItem);
                     }
                     $searcher = str_replace('${', '', $value);
                     $searcher = str_replace('}', '', $searcher);
@@ -73,7 +73,7 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
                 }
             }
 
-            if ($sheetValues !== false && $entryRow < $timesheetAmount - 1) {
+            if ($sheetValues !== false && $entryRow < $invoiceItemCount - 1) {
                 $entryRow++;
             }
         }
@@ -85,9 +85,10 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
 
     /**
      * @param Worksheet $worksheet
-     * @param int $timesheets
+     * @param int $invoiceItemCount
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    protected function addTemplateRows(Worksheet $worksheet, int $timesheets)
+    protected function addTemplateRows(Worksheet $worksheet, int $invoiceItemCount)
     {
         $startRow = null;
         $rowCounter = 0;
@@ -98,7 +99,7 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
                 $value = $cell->getValue();
                 if (stripos($value, '${entry.') !== false) {
                     $startRow = $row->getRowIndex();
-                    $worksheet->insertNewRowBefore($row->getRowIndex(), $timesheets - 1);
+                    $worksheet->insertNewRowBefore($row->getRowIndex(), $invoiceItemCount - 1);
                     break 2;
                 }
 
@@ -117,7 +118,7 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
         }
 
         // fill up all new rows with template values
-        $templateRow = $timesheets + $startRow;
+        $templateRow = $invoiceItemCount + $startRow;
         $iterator = $worksheet->getRowIterator($templateRow - 1, $templateRow);
         $templateColumns = [];
         foreach ($iterator->current()->getCellIterator() as $cell) {

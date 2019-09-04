@@ -9,16 +9,16 @@
 
 namespace App\Invoice\Calculator;
 
-use App\Entity\Timesheet;
 use App\Invoice\CalculatorInterface;
 use App\Invoice\InvoiceItem;
+use App\Invoice\InvoiceItemInterface;
 
 /**
- * An abstract calculator that sums up the timesheet records.
+ * An abstract calculator that sums up the invoice item records.
  */
 abstract class AbstractSumInvoiceCalculator extends AbstractMergedCalculator implements CalculatorInterface
 {
-    abstract protected function calculateSumIdentifier(Timesheet $timesheet): string;
+    abstract protected function calculateSumIdentifier(InvoiceItemInterface $invoiceItem): string;
 
     /**
      * @return InvoiceItem[]
@@ -45,15 +45,15 @@ abstract class AbstractSumInvoiceCalculator extends AbstractMergedCalculator imp
             if (!isset($invoiceItems[$id])) {
                 $invoiceItems[$id] = new InvoiceItem();
             }
-            $timesheet = $invoiceItems[$id];
-            $this->mergeTimesheets($timesheet, $entry);
-            $this->mergeSumTimesheet($timesheet, $entry);
+            $invoiceItem = $invoiceItems[$id];
+            $this->mergeInvoiceItems($invoiceItem, $entry);
+            $this->mergeSumTimesheet($invoiceItem, $entry);
         }
 
         return array_values($invoiceItems);
     }
 
-    protected function mergeSumTimesheet(InvoiceItem $invoiceItem, Timesheet $entry)
+    protected function mergeSumTimesheet(InvoiceItem $invoiceItem, InvoiceItemInterface $entry)
     {
         // allows to set values per calculator after merging the timesheet
     }

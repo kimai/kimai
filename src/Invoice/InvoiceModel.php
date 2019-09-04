@@ -11,7 +11,6 @@ namespace App\Invoice;
 
 use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
-use App\Entity\Timesheet;
 use App\Repository\Query\InvoiceQuery;
 
 /**
@@ -31,7 +30,7 @@ class InvoiceModel
     protected $query;
 
     /**
-     * @var Timesheet[]
+     * @var InvoiceItemInterface[]
      */
     protected $entries = [];
 
@@ -82,7 +81,7 @@ class InvoiceModel
     /**
      * Do not use this method for rendering the invoice, use InvoiceModel::getCalculator()->getEntries() instead.
      *
-     * @return Timesheet[]
+     * @return InvoiceItemInterface[]
      */
     public function getEntries(): array
     {
@@ -90,12 +89,26 @@ class InvoiceModel
     }
 
     /**
-     * @param Timesheet[] $entries
+     * @deprecated since 1.3 - will be removed with 2.0
+     * @param InvoiceItemInterface[] $entries
      * @return InvoiceModel
      */
     public function setEntries(array $entries): InvoiceModel
     {
+        @trigger_error('setEntries() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
+        
         $this->entries = $entries;
+
+        return $this;
+    }
+
+    /**
+     * @param InvoiceItemInterface[] $entries
+     * @return InvoiceModel
+     */
+    public function addEntries(array $entries): InvoiceModel
+    {
+        $this->entries = array_merge($this->entries, $entries);
 
         return $this;
     }

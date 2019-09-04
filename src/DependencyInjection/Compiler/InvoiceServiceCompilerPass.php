@@ -47,5 +47,10 @@ class InvoiceServiceCompilerPass implements CompilerPassInterface
         foreach ($taggedCalculator as $id => $tags) {
             $definition->addMethodCall('addCalculator', [new Reference($id)]);
         }
+
+        $taggedRepository = $container->findTaggedServiceIds(Kernel::TAG_INVOICE_REPOSITORY);
+        foreach ($taggedRepository as $id => $tags) {
+            $definition->addMethodCall('addInvoiceItemRepository', [new Reference($id)]);
+        }
     }
 }
