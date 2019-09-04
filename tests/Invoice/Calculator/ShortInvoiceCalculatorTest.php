@@ -190,14 +190,4 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
     {
         $this->assertDescription(new ShortInvoiceCalculator(), false, false);
     }
-
-    public function testDescriptionByActivity()
-    {
-        $this->assertDescription(new ShortInvoiceCalculator(), false, true);
-    }
-
-    public function testDescriptionByProject()
-    {
-        $this->assertDescription(new ShortInvoiceCalculator(), true, false);
-    }
 }

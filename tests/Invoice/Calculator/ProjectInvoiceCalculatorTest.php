@@ -131,16 +131,6 @@ class ProjectInvoiceCalculatorTest extends AbstractCalculatorTest
         self::assertEquals(2521.12, $entries[0]->getRate() + $entries[1]->getRate() + $entries[2]->getRate());
     }
 
-    public function testDescriptionByTimesheet()
-    {
-        $this->assertDescription(new ProjectInvoiceCalculator(), false, false);
-    }
-
-    public function testDescriptionByActivity()
-    {
-        $this->assertDescription(new ProjectInvoiceCalculator(), false, true);
-    }
-
     public function testDescriptionByProject()
     {
         $this->assertDescription(new ProjectInvoiceCalculator(), true, false);

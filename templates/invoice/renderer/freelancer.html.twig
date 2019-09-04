@@ -90,7 +90,7 @@
                     <tr>
                         <td contenteditable="true">
                             {% if entry.description is not empty %}
-                                {{ entry.description }}
+                                {{ entry.description|nl2br }}
                             {% else %}
                                 {{ entry.activity.name }} / {{ entry.project.name }}
                             {% endif %}
