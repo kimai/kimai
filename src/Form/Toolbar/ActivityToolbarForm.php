@@ -35,6 +35,7 @@ class ActivityToolbarForm extends AbstractToolbarForm
             'placeholder' => null,
             'required' => false,
             'label' => 'label.globalsOnly',
+            'selectpicker' => $this->getSelectpickerConfig(),
         ]);
         $this->addVisibilityChoice($builder);
         $this->addPageSizeChoice($builder);
