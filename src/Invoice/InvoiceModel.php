@@ -96,7 +96,7 @@ class InvoiceModel
     public function setEntries(array $entries): InvoiceModel
     {
         @trigger_error('setEntries() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-        
+
         $this->entries = $entries;
 
         return $this;

@@ -182,7 +182,7 @@ trait RendererTrait
     protected function timesheetToArray(InvoiceItem $invoiceItem): array
     {
         @trigger_error('timesheetToArray() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-        
+
         return $this->invoiceItemToArray($invoiceItem);
     }
 
