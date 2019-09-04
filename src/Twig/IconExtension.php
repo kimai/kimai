@@ -73,6 +73,8 @@ final class IconExtension extends AbstractExtension
         'timesheet-team' => 'fas fa-user-clock',
         'plugin' => 'fas fa-plug',
         'configuration' => 'fas fa-cogs',
+        'mail-sent' => 'fas fa-paper-plane',
+        'mail' => 'fas fa-envelope-open',
     ];
 
     /**
