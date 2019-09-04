@@ -14,6 +14,8 @@ nelmio_api_doc:
             - { alias: ActivityEntity,            type: App\Entity\Activity,                      groups: [Default, Entity, Activity] }
             - { alias: ActivityMetaField,         type: App\Entity\ActivityMeta,                  groups: [Default, Activity] }
             - { alias: ActivityCollection,        type: App\Entity\Activity,                      groups: [Default, Collection, Activity] }
+            - { alias: TagEditForm,               type: App\Form\API\TagApiEditForm,              groups: [Default, Entity, Tag] }
+            - { alias: TagEntity,                 type: App\Entity\Tag,                           groups: [Default, Entity, Tag] }
             - { alias: TimesheetEditForm,         type: App\Form\API\TimesheetApiEditForm,        groups: [Default, Entity, Timesheet] }
             - { alias: TimesheetEntity,           type: App\Entity\Timesheet,                     groups: [Default, Entity, Timesheet] }
             - { alias: TimesheetMeta,             type: App\Entity\TimesheetMeta,                 groups: [Default, Timesheet] }

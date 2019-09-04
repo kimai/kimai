@@ -23,6 +23,18 @@ class TagRepository extends EntityRepository
      * @throws ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
+    public function saveTag(Tag $tag)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($tag);
+        $entityManager->flush();
+    }
+
+    /**
+     * @param Tag $tag
+     * @throws ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function deleteTag(Tag $tag)
     {
         $entityManager = $this->getEntityManager();

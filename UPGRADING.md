@@ -9,10 +9,11 @@ Check below if there are more version specific steps required, which need to be 
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
 ## [1.3](https://github.com/kevinpapst/kimai2/releases/tag/1.3)
-
+ 
 ### Possible BC breaks
 
 - Refactored toolbars and search, plugins needs to be checked 
+- Added `manage_tag` permission for new tag features
 
 ## [1.2](https://github.com/kevinpapst/kimai2/releases/tag/1.2)
 
