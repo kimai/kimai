@@ -1,0 +1,52 @@
+{% macro activities(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {'search': {'class': 'search-toggle visible-xs-inline'}, 'visibility': '#modal_activity_admin'} %}
+
+    {% if is_granted('create_activity') %}
+        {% set actions = actions|merge({'create': path('admin_activity_create')}) %}
+    {% endif %}
+
+    {% set actions = actions|merge({'help': {'url': 'activity.html'|docu_link, 'target': '_blank'}}) %}
+
+    {% set event = trigger('actions.activities', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}
+
+{% macro activity(activity, view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set actions = {} %}
+
+    {% if activity.id is not empty %}
+        {% if is_granted('edit', activity) %}
+            {% set class = '' %}
+            {% if view != 'edit' %}
+                {% set class = 'modal-ajax-form' %}
+            {% endif %}
+            {% set actions = actions|merge({'edit': {'url': path('admin_activity_edit', {'id': activity.id}), 'class': class}}) %}
+        {% endif %}
+        {% if is_granted('budget', activity) %}
+            {% set actions = actions|merge({'report': {'url': path('admin_activity_budget', {'id': activity.id})}}) %}
+        {% endif %}
+        {% if is_granted('view_other_timesheet') %}
+            {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'customer': activity.project ? activity.project.customer.id : null, 'project': activity.project ? activity.project.id : null, 'activity': activity.id})}) %}
+        {% endif %}
+        {% if is_granted('create_other_timesheet') %}
+            {% set actions = actions|merge({'create-timesheet': {'url': path('admin_timesheet_create', {'project': activity.project ? activity.project.id : null, 'activity': activity.id}), 'class': 'modal-ajax-form'}}) %}
+        {% endif %}
+        {% if view == 'index' and is_granted('delete', activity) %}
+            {% set actions = actions|merge({'trash': {'url': path('admin_activity_delete', {'id': activity.id}), 'class': 'modal-ajax-form'}}) %}
+        {% endif %}
+    {% endif %}
+
+    {% if view != 'index' %}
+        {% set actions = actions|merge({'back': path('admin_activity')}) %}
+    {% endif %}
+
+    {% set event = trigger('actions.activity', {'actions': actions, 'view': view, 'activity': activity}) %}
+    {% if view == 'index' %}
+        {{ widgets.table_actions(event.payload.actions) }}
+    {% else %}
+        {{ widgets.entity_actions(event.payload.actions) }}
+    {% endif %}
+{% endmacro %}

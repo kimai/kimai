@@ -212,6 +212,7 @@ class ProjectRepository extends EntityRepository
             ->select('p')
             ->from(Project::class, 'p')
             ->leftJoin('p.customer', 'c')
+            ->addOrderBy('p.' . $query->getOrderBy(), $query->getOrder())
         ;
 
         if (in_array($query->getVisibility(), [ProjectQuery::SHOW_VISIBLE, ProjectQuery::SHOW_HIDDEN])) {
@@ -236,7 +237,37 @@ class ProjectRepository extends EntityRepository
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser());
 
-        $qb->orderBy('p.' . $query->getOrderBy(), $query->getOrder());
+        if ($query->hasSearchTerm()) {
+            $searchAnd = $qb->expr()->andX();
+            $searchTerm = $query->getSearchTerm();
+
+            foreach ($searchTerm->getSearchFields() as $metaName => $metaValue) {
+                $qb->leftJoin('p.meta', 'meta');
+                $searchAnd->add(
+                    $qb->expr()->andX(
+                        $qb->expr()->eq('meta.name', ':metaName'),
+                        $qb->expr()->like('meta.value', ':metaValue')
+                    )
+                );
+                $qb->setParameter('metaName', $metaName);
+                $qb->setParameter('metaValue', '%' . $metaValue . '%');
+            }
+
+            if ($searchTerm->hasSearchTerm()) {
+                $searchAnd->add(
+                    $qb->expr()->orX(
+                        $qb->expr()->like('p.name', ':searchTerm'),
+                        $qb->expr()->like('p.comment', ':searchTerm'),
+                        $qb->expr()->like('p.orderNumber', ':searchTerm')
+                    )
+                );
+                $qb->setParameter('searchTerm', '%' . $searchTerm->getSearchTerm() . '%');
+            }
+
+            if ($searchAnd->count() > 0) {
+                $qb->andWhere($searchAnd);
+            }
+        }
 
         return $qb;
     }

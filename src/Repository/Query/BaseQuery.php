@@ -11,6 +11,7 @@ namespace App\Repository\Query;
 
 use App\Entity\Team;
 use App\Entity\User;
+use App\Utils\SearchTerm;
 
 /**
  * Base class for advanced Repository queries.
@@ -55,6 +56,10 @@ class BaseQuery
      * @var Team[]
      */
     private $teams = [];
+    /**
+     * @var SearchTerm|null
+     */
+    private $searchTerm;
 
     public function addTeam(Team $team): self
     {
@@ -188,6 +193,27 @@ class BaseQuery
         return $this;
     }
 
+    public function hasSearchTerm(): bool
+    {
+        return null !== $this->searchTerm;
+    }
+
+    public function getSearchTerm(): ?SearchTerm
+    {
+        return $this->searchTerm;
+    }
+
+    /**
+     * @param SearchTerm|null $searchTerm
+     * @return BaseQuery
+     */
+    public function setSearchTerm(?SearchTerm $searchTerm)
+    {
+        $this->searchTerm = $searchTerm;
+
+        return $this;
+    }
+
     /**
      * Returns whether the query has changed fields, compared to the original state.
      *
@@ -200,6 +226,14 @@ class BaseQuery
         }
 
         if ($this->pageSize !== self::DEFAULT_PAGESIZE) {
+            return true;
+        }
+
+        if (!empty($this->teams)) {
+            return true;
+        }
+
+        if (null !== $this->searchTerm) {
             return true;
         }
 

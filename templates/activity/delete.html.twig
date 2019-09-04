@@ -1,8 +1,7 @@
 {% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
-{% import "macros/actions.html.twig" as actions %}
+{% import "activity/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'admin_activity.title'|trans }}{% endblock %}
-{% block page_subtitle %}{{ 'admin_activity.subtitle'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.activity(activity, 'delete') }}{% endblock %}
 
 {% block main %}

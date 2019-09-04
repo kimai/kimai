@@ -6,10 +6,6 @@
                 <source>tags.title</source>
                 <target>Tags</target>
             </trans-unit>
-            <trans-unit id="tags.subtitle">
-                <source>tags.subtitle</source>
-                <target>Tags erlauben es, beliebige Zeitmessungen zusammenzufassen</target>
-            </trans-unit>
         </body>
     </file>
 </xliff>

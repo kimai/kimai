@@ -1,4 +1,5 @@
 {% macro toolbar(form, collapsible, displayInitial) %}
+    {% deprecated 'The macro "toolbar" is deprecated since 1.2 and will be removed with 2.0, use dropDownSearch() instead' %}
     <div class="toolbar no-print">
         {% if collapsible %}<div class="collapse{% if displayInitial %} collapse.show in{% endif %}" id="{{ collapsible }}">{% endif %}
             {{ form_start(form, { 'attr': {'class': 'navbar-form'}}) }}
@@ -6,4 +7,48 @@
             {{ form_end(form) }}
         {% if collapsible %}</div>{% endif %}
     </div>
+{% endmacro %}
+
+{% macro dropDownSearch(form) %}
+    {% form_theme form 'form/search-form.html.twig' %}
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal header-search hidden-xs'}}) }}
+    {% set searchTermClass = 'dropdown-toggle input-sm' %}
+    {% if not form.searchTerm.vars.valid %}
+        {% set searchTermClass = searchTermClass ~ ' search-has-error' %}
+    {% endif %}
+    {% if not form.vars.valid %}
+        {% set searchTermClass = searchTermClass ~ ' has-error' %}
+    {% endif %}
+    <div class="dropdown">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon {% if not form.vars.valid %} has-error{% endif %}">
+                    <i class="{{ 'search'|icon }}"></i>
+                </div>
+                {{ form_widget(form.searchTerm, {'attr': {'placeholder': 'search'|trans, 'autocomplete': 'off', 'data-toggle': 'dropdown', 'class': searchTermClass, 'aria-haspopup': 'true', 'aria-expanded': 'true'}}) }}
+                <ul class="dropdown-menu pre-scrollable" role="menu" aria-labelledby="searchTerm">
+                    <li>
+                        <div class="container-fluid">
+                            {% if not form.searchTerm.vars.valid %}
+                                {{ form_errors(form.searchTerm) }}
+                                <br>
+                            {% endif %}
+                            {{ form_widget(form) }}
+                            <div class="form-group">
+                                <div class="col-sm-3 col-xs-4"></div>
+                                <div class="col-sm-9 col-xs-8">
+                                    {% if not theme_config('auto_reload_datatable') %}
+                                        {# FIXME this should trigger the datatable reload and not "really" submit the form #}
+                                    <input type="submit" value="{{ 'search'|trans }}" class="btn btn-primary" />
+                                    {% endif %}
+                                    <a href="#" class="search-cancel pull-right">{{ 'action.close'|trans }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
 {% endmacro %}

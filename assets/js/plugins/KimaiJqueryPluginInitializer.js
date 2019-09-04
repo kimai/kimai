@@ -19,6 +19,10 @@ export default class KimaiJqueryPluginInitializer extends KimaiPlugin {
         jQuery('.dropdown-toggle').dropdown();
         // activate the tooltip functionality
         jQuery('[data-toggle="tooltip"]').tooltip();
+        // enable all selectpicker in adhoc forms (like invoice and export)
+        $('.selectpicker').selectpicker({
+            container: 'body'
+        });
     }
 
 }
