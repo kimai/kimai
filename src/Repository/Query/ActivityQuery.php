@@ -41,9 +41,9 @@ class ActivityQuery extends ProjectQuery
 
     /**
      * @param bool $globalsOnly
-     * @return ActivityQuery
+     * @return self
      */
-    public function setGlobalsOnly($globalsOnly): ActivityQuery
+    public function setGlobalsOnly($globalsOnly): self
     {
         $this->globalsOnly = (bool) $globalsOnly;
 
@@ -60,9 +60,9 @@ class ActivityQuery extends ProjectQuery
 
     /**
      * @param Project|int|null $project
-     * @return ActivityQuery
+     * @return self
      */
-    public function setProject($project = null): ActivityQuery
+    public function setProject($project = null): self
     {
         $this->project = $project;
 

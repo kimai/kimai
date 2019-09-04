@@ -9,25 +9,25 @@
 
 namespace App\Invoice\Calculator;
 
-use App\Entity\Timesheet;
 use App\Invoice\CalculatorInterface;
 use App\Invoice\InvoiceItem;
+use App\Invoice\InvoiceItemInterface;
 
 /**
- * A calculator that sums up the timesheet records by activity.
+ * A calculator that sums up the invoice item records by activity.
  */
 class ActivityInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
 {
-    protected function calculateSumIdentifier(Timesheet $timesheet): string
+    protected function calculateSumIdentifier(InvoiceItemInterface $invoiceItem): string
     {
-        if (null === $timesheet->getActivity()->getId()) {
+        if (null === $invoiceItem->getActivity()->getId()) {
             throw new \Exception('Cannot handle un-persisted activities');
         }
 
-        return (string) $timesheet->getActivity()->getId();
+        return (string) $invoiceItem->getActivity()->getId();
     }
 
-    protected function mergeSumTimesheet(InvoiceItem $invoiceItem, Timesheet $entry)
+    protected function mergeSumTimesheet(InvoiceItem $invoiceItem, InvoiceItemInterface $entry)
     {
         $invoiceItem->setActivity($entry->getActivity());
         $invoiceItem->setDescription($entry->getActivity()->getName());

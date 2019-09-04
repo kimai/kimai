@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Invoice\InvoiceItemInterface;
 use DateTime;
 use DateTimeZone;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -38,7 +39,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * columns={"start_time","end_time"}        => IDX_4F60C6B1502DF58741561401         => ???
  * columns={"start_time","end_time","user"} => IDX_4F60C6B1502DF587415614018D93D649 => ???
  */
-class Timesheet implements EntityWithMetaFields
+class Timesheet implements EntityWithMetaFields, InvoiceItemInterface
 {
     /**
      * @var int
@@ -260,7 +261,7 @@ class Timesheet implements EntityWithMetaFields
      *
      * @return int
      */
-    public function getDuration()
+    public function getDuration(): int
     {
         return $this->duration;
     }
@@ -340,10 +341,7 @@ class Timesheet implements EntityWithMetaFields
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getRate()
+    public function getRate(): float
     {
         return $this->rate;
     }

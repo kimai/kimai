@@ -83,7 +83,7 @@ class BaseQuery
 
     /**
      * @param User $user
-     * @return $this
+     * @return self
      */
     public function setCurrentUser(User $user)
     {
@@ -102,7 +102,7 @@ class BaseQuery
 
     /**
      * @param int $page
-     * @return $this
+     * @return self
      */
     public function setPage($page)
     {
@@ -118,7 +118,7 @@ class BaseQuery
 
     /**
      * @param int $pageSize
-     * @return $this
+     * @return self
      */
     public function setPageSize($pageSize)
     {
@@ -138,7 +138,7 @@ class BaseQuery
      * You need to validate carefully if this value is used from a user-input.
      *
      * @param string $orderBy
-     * @return $this
+     * @return self
      */
     public function setOrderBy($orderBy)
     {
@@ -154,7 +154,7 @@ class BaseQuery
 
     /**
      * @param string $order
-     * @return $this
+     * @return self
      */
     public function setOrder($order)
     {
@@ -205,7 +205,7 @@ class BaseQuery
 
     /**
      * @param SearchTerm|null $searchTerm
-     * @return BaseQuery
+     * @return self
      */
     public function setSearchTerm(?SearchTerm $searchTerm)
     {
