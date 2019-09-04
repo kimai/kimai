@@ -12,39 +12,18 @@ namespace App\Repository;
 use App\Entity\InvoiceTemplate;
 use App\Repository\Query\BaseQuery;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 
 class InvoiceTemplateRepository extends EntityRepository
 {
-    use RepositoryTrait;
-
-    /**
-     * @return bool
-     */
-    public function hasTemplate()
+    public function hasTemplate(): bool
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-
-        $qb->select('COUNT(t.id) as totalRecords')
-            ->from(InvoiceTemplate::class, 't')
-        ;
-
-        $result = $qb->getQuery()->execute([], Query::HYDRATE_ARRAY);
-
-        if (!isset($result[0])) {
-            return false;
-        }
-
-        return $result[0]['totalRecords'] > 0;
+        return $this->count([]) > 0;
     }
 
-    /**
-     * @param BaseQuery $query
-     * @return QueryBuilder|Pagerfanta|array
-     */
-    public function findByQuery(BaseQuery $query)
+    public function getQueryBuilderForFormType(): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -52,7 +31,27 @@ class InvoiceTemplateRepository extends EntityRepository
             ->from(InvoiceTemplate::class, 't')
             ->orderBy('t.name');
 
-        return $this->getBaseQueryResult($qb, $query);
+        return $qb;
+    }
+
+    private function getQueryBuilderForQuery(BaseQuery $query): QueryBuilder
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('t')
+            ->from(InvoiceTemplate::class, 't')
+            ->orderBy('t.name');
+
+        return $qb;
+    }
+
+    public function getPagerfantaForQuery(BaseQuery $query): Pagerfanta
+    {
+        $paginator = new Pagerfanta(new DoctrineORMAdapter($this->getQueryBuilderForQuery($query), false));
+        $paginator->setMaxPerPage($query->getPageSize());
+        $paginator->setCurrentPage($query->getPage());
+
+        return $paginator;
     }
 
     /**

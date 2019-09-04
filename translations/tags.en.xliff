@@ -6,10 +6,6 @@
                 <source>tags.title</source>
                 <target>Tags</target>
             </trans-unit>
-            <trans-unit id="tags.subtitle">
-                <source>tags.subtitle</source>
-                <target>Tags allow for the free combination of timesheet records into a result-set</target>
-            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -20,6 +20,7 @@ class TagToolbarForm extends AbstractToolbarForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->addSearchTermInputField($builder);
         $this->addPageSizeChoice($builder);
         $this->addHiddenPagination($builder);
     }

@@ -46,6 +46,9 @@ class UserInvoiceCalculatorTest extends AbstractCalculatorTest
         $user2 = $this->getMockBuilder(User::class)->setMethods(['getId'])->disableOriginalConstructor()->getMock();
         $user2->method('getId')->willReturn(2);
 
+        $user3 = $this->getMockBuilder(User::class)->setMethods(['getId'])->disableOriginalConstructor()->getMock();
+        $user3->method('getId')->willReturn(3);
+
         $timesheet = new Timesheet();
         $timesheet
             ->setBegin(new \DateTime())
@@ -92,7 +95,7 @@ class UserInvoiceCalculatorTest extends AbstractCalculatorTest
             ->setEnd(new \DateTime())
             ->setDuration(400)
             ->setRate(84)
-            ->setUser(new User())
+            ->setUser($user3)
             ->setActivity($activity)
             ->setProject((new Project())->setName('bar'));
 
@@ -127,15 +130,5 @@ class UserInvoiceCalculatorTest extends AbstractCalculatorTest
     public function testDescriptionByTimesheet()
     {
         $this->assertDescription(new UserInvoiceCalculator(), false, false);
-    }
-
-    public function testDescriptionByActivity()
-    {
-        $this->assertDescription(new UserInvoiceCalculator(), false, true);
-    }
-
-    public function testDescriptionByProject()
-    {
-        $this->assertDescription(new UserInvoiceCalculator(), true, false);
     }
 }

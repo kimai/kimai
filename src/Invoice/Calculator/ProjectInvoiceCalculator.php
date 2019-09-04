@@ -11,6 +11,7 @@ namespace App\Invoice\Calculator;
 
 use App\Entity\Timesheet;
 use App\Invoice\CalculatorInterface;
+use App\Invoice\InvoiceItem;
 
 /**
  * A calculator that sums up the timesheet records by project.
@@ -24,6 +25,12 @@ class ProjectInvoiceCalculator extends AbstractSumInvoiceCalculator implements C
         }
 
         return (string) $timesheet->getProject()->getId();
+    }
+
+    protected function mergeSumTimesheet(InvoiceItem $invoiceItem, Timesheet $entry)
+    {
+        $invoiceItem->setProject($entry->getProject());
+        $invoiceItem->setDescription($entry->getProject()->getName());
     }
 
     /**

@@ -128,18 +128,8 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
         $this->assertEquals(84, $entries[2]->getRate());
     }
 
-    public function testDescriptionByTimesheet()
-    {
-        $this->assertDescription(new ActivityInvoiceCalculator(), false, false);
-    }
-
     public function testDescriptionByActivity()
     {
         $this->assertDescription(new ActivityInvoiceCalculator(), false, true);
-    }
-
-    public function testDescriptionByProject()
-    {
-        $this->assertDescription(new ActivityInvoiceCalculator(), true, false);
     }
 }

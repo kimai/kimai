@@ -44,16 +44,24 @@ export default class KimaiDatatable extends KimaiPlugin {
         for (let eventName of events.split(' ')) {
             document.addEventListener(eventName, handle);
         }
+
+        if (this.getContainer().getConfiguration().get('autoReloadDatatable')) {
+            document.addEventListener('toolbar-change', handle);
+        } else {
+            document.addEventListener('pagination-change', handle);
+        }
     }
 
     reloadDatatable() {
         const durations = this.getContainer().getPlugin('timesheet-duration');
-        const form = jQuery('.toolbar form');
+        const toolbarSelector = this.getContainer().getPlugin('toolbar').getSelector();
+        
+        const form = jQuery(toolbarSelector);
         let loading = '<div class="overlay"><i class="fas fa-sync fa-spin"></i></div>';
         jQuery('section.content').append(loading);
 
         // remove the empty fields to prevent errors
-        let formData = jQuery('.toolbar form :input')
+        let formData = jQuery(toolbarSelector + ' :input')
             .filter(function(index, element) {
                 return jQuery(element).val() != '';
             })

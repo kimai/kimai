@@ -14,12 +14,22 @@ import KimaiPlugin from "../KimaiPlugin";
 
 export default class KimaiToolbar extends KimaiPlugin {
 
-    init() {
-        const datatable = this.getContainer().getPlugin('datatable');
+    constructor(selector) {
+        super();
+        this.selector = selector;
+    }
 
-        // This catches all clicks on the pagination and prevents the default action, as we want to relad the page via JS
+    getId() {
+        return 'toolbar';
+    }
+
+    init() {
+        const formSelector = this.getSelector();
+        const self = this;
+
+        // This catches all clicks on the pagination and prevents the default action, as we want to reload the page via JS
         jQuery('body').on('click', 'div.navigation ul.pagination li a', function(event) {
-            let pager = jQuery(".toolbar form input[name='page']");
+            let pager = jQuery(formSelector + " input#page");
             if (pager.length === 0) {
                 return;
             }
@@ -29,41 +39,59 @@ export default class KimaiToolbar extends KimaiPlugin {
             let page = urlParts[urlParts.length-1];
             pager.val(page);
             pager.trigger('change');
+            self.getContainer().getPlugin('event').trigger('pagination-change');
             return false;
         });
 
         // Reset the page if any other value is changed, otherwise we might end up with a limited set
         // of data which does not support the given page - and it would be just wrong to stay in the same page
-        jQuery('.toolbar form input').change(function (event) {
+        jQuery(this.selector +' input').change(function (event) {
             switch (event.target.id) {
                 case 'page':
                     break;
                 default:
-                    jQuery('.toolbar form input#page').val(1);
+                    jQuery(formSelector + ' input#page').val(1);
             }
-            datatable.reloadDatatable();
+            self.triggerChange();
         });
 
-        jQuery('.toolbar form select').change(function (event) {
+        jQuery(formSelector + ' select').change(function (event) {
             let reload = true;
             switch (event.target.id) {
                 case 'customer':
-                    if (jQuery('.toolbar form select#project').length > 0) {
+                    if (jQuery(formSelector + ' select#project').length > 0) {
                         reload = false;
                     }
                     break;
 
                 case 'project':
-                    if (jQuery('.toolbar form select#activity').length > 0) {
+                    if (jQuery(formSelector + ' select#activity').length > 0) {
                         reload = false;
                     }
                     break;
             }
-            jQuery('.toolbar form input#page').val(1);
+            jQuery(formSelector + ' input#page').val(1);
+
             if (reload) {
-                datatable.reloadDatatable();
+                self.triggerChange();
             }
         });
+    }
+
+    /**
+     * Triggers an event, that everyone can listen for.
+     */
+    triggerChange() {
+        this.getContainer().getPlugin('event').trigger('toolbar-change');
+    }
+
+    /**
+     * Returns the CSS selector to target the toolbar form.
+     * 
+     * @returns {string}
+     */
+    getSelector() {
+        return this.selector;
     }
 
 }

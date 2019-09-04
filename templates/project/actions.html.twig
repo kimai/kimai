@@ -1,0 +1,58 @@
+{% macro projects(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    
+    {% set actions = {'search': {'class': 'search-toggle visible-xs-inline'}, 'visibility': '#modal_project_admin'} %}
+
+    {% if is_granted('create_project') %}
+        {% set actions = actions|merge({'create': path('admin_project_create')}) %}
+    {% endif %}
+
+    {% set actions = actions|merge({'help': {'url': 'project.html'|docu_link, 'target': '_blank'}}) %}
+
+    {% set event = trigger('actions.projects', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}
+
+{% macro project(project, view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set actions = {} %}
+
+    {% if project.id is not empty %}
+        {% if is_granted('edit', project) %}
+            {% set class = '' %}
+            {% if view != 'edit' %}
+                {% set class = 'modal-ajax-form' %}
+            {% endif %}
+            {% set actions = actions|merge({'edit': {'url': path('admin_project_edit', {'id': project.id}), 'class': class}}) %}
+        {% endif %}
+        {% if is_granted('budget', project) %}
+            {% set actions = actions|merge({'report': {'url': path('admin_project_budget', {'id': project.id})}}) %}
+        {% endif %}
+        {% if is_granted('permissions', project) %}
+            {% set actions = actions|merge({'permissions': {'url': path('admin_project_permissions', {'id': project.id})}}) %}
+        {% endif %}
+        {% if is_granted('view_activity') %}
+            {% set actions = actions|merge({'activity': path('admin_activity', {'customer': project.customer.id, 'project': project.id})}) %}
+        {% endif %}
+        {% if is_granted('view_other_timesheet') %}
+            {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'customer': project.customer.id, 'project': project.id})}) %}
+        {% endif %}
+        {% if is_granted('create_activity') and project.visible and project.customer.visible %}
+            {% set actions = actions|merge({'create-activity': path('admin_activity_create_with_project', {'project': project.id})}) %}
+        {% endif %}
+        {% if view == 'index' and is_granted('delete', project) %}
+            {% set actions = actions|merge({'trash': {'url': path('admin_project_delete', {'id': project.id}), 'class': 'modal-ajax-form'}}) %}
+        {% endif %}
+    {% endif %}
+
+    {% if view != 'index' %}
+        {% set actions = actions|merge({'back': path('admin_project')}) %}
+    {% endif %}
+
+    {% set event = trigger('actions.project', {'actions': actions, 'view': view, 'project': project}) %}
+    {% if view == 'index' %}
+        {{ widgets.table_actions(event.payload.actions) }}
+    {% else %}
+        {{ widgets.entity_actions(event.payload.actions) }}
+    {% endif %}
+{% endmacro %}

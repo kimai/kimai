@@ -11,6 +11,7 @@ namespace App\Tests\Repository\Query;
 
 use App\Entity\Team;
 use App\Repository\Query\BaseQuery;
+use App\Utils\SearchTerm;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -35,19 +36,19 @@ class BaseQueryTest extends TestCase
 
     protected function assertResultType(BaseQuery $sut)
     {
-        $this->assertEquals(BaseQuery::RESULT_TYPE_PAGER, $sut->getResultType());
+        self::assertEquals(BaseQuery::RESULT_TYPE_PAGER, $sut->getResultType());
 
         $sut->setResultType(BaseQuery::RESULT_TYPE_QUERYBUILDER);
-        $this->assertEquals(BaseQuery::RESULT_TYPE_QUERYBUILDER, $sut->getResultType());
+        self::assertEquals(BaseQuery::RESULT_TYPE_QUERYBUILDER, $sut->getResultType());
 
         $sut->setResultType(BaseQuery::RESULT_TYPE_OBJECTS);
-        $this->assertEquals(BaseQuery::RESULT_TYPE_OBJECTS, $sut->getResultType());
+        self::assertEquals(BaseQuery::RESULT_TYPE_OBJECTS, $sut->getResultType());
 
         try {
             $sut->setResultType('foo-bar');
         } catch (\Exception $exception) {
             $this->assertInstanceOf(\InvalidArgumentException::class, $exception);
-            $this->assertEquals('Unsupported query result type', $exception->getMessage());
+            self::assertEquals('Unsupported query result type', $exception->getMessage());
         }
     }
 
@@ -61,39 +62,54 @@ class BaseQueryTest extends TestCase
 
     protected function assertPage(BaseQuery $sut)
     {
-        $this->assertEquals(BaseQuery::DEFAULT_PAGE, $sut->getPage());
+        self::assertEquals(BaseQuery::DEFAULT_PAGE, $sut->getPage());
 
         $sut->setPage(42);
-        $this->assertEquals(42, $sut->getPage());
+        self::assertEquals(42, $sut->getPage());
     }
 
     protected function assertPageSize(BaseQuery $sut)
     {
-        $this->assertEquals(BaseQuery::DEFAULT_PAGESIZE, $sut->getPageSize());
+        self::assertEquals(BaseQuery::DEFAULT_PAGESIZE, $sut->getPageSize());
 
         $sut->setPageSize(100);
-        $this->assertEquals(100, $sut->getPageSize());
+        self::assertEquals(100, $sut->getPageSize());
     }
 
     protected function assertOrderBy(BaseQuery $sut, $column = 'id')
     {
-        $this->assertEquals($column, $sut->getOrderBy());
+        self::assertEquals($column, $sut->getOrderBy());
 
         $sut->setOrderBy('foo');
-        $this->assertEquals('foo', $sut->getOrderBy());
+        self::assertEquals('foo', $sut->getOrderBy());
     }
 
     protected function assertOrder(BaseQuery $sut, $order = BaseQuery::ORDER_ASC)
     {
-        $this->assertEquals($order, $sut->getOrder());
+        self::assertEquals($order, $sut->getOrder());
 
         $sut->setOrder('foo');
-        $this->assertEquals($order, $sut->getOrder());
+        self::assertEquals($order, $sut->getOrder());
 
         $sut->setOrder(BaseQuery::ORDER_ASC);
-        $this->assertEquals(BaseQuery::ORDER_ASC, $sut->getOrder());
+        self::assertEquals(BaseQuery::ORDER_ASC, $sut->getOrder());
 
         $sut->setOrder(BaseQuery::ORDER_DESC);
-        $this->assertEquals(BaseQuery::ORDER_DESC, $sut->getOrder());
+        self::assertEquals(BaseQuery::ORDER_DESC, $sut->getOrder());
+    }
+
+    protected function assertSearchTerm(BaseQuery $sut)
+    {
+        self::assertNull($sut->getSearchTerm());
+
+        $sut->setSearchTerm(null);
+        self::assertNull($sut->getSearchTerm());
+
+        $term = new SearchTerm('foo bar');
+        $sut->setSearchTerm($term);
+
+        self::assertNotNull($sut->getSearchTerm());
+        self::assertEquals('foo bar', $term->getOriginalSearch());
+        self::assertSame($term, $sut->getSearchTerm());
     }
 }

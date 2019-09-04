@@ -1,9 +1,8 @@
 {% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "macros/actions.html.twig" as actions %}
+{% import "timesheet/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'timesheet.title'|trans }}{% endblock %}
-{% block page_subtitle %}{{ 'timesheet.subtitle'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.timesheet(timesheet, 'edit') }}{% endblock %}
 
 {% block main %}

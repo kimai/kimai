@@ -50,23 +50,18 @@ abstract class AbstractCalculatorTest extends TestCase
         $template = new InvoiceTemplate();
         $template->setVat(19);
 
+        $user = $this->getMockBuilder(User::class)->setMethods(['getId'])->disableOriginalConstructor()->getMock();
+        $user->method('getId')->willReturn(1);
+
         $project = $this->getMockBuilder(Project::class)->setMethods(['getId', 'getCustomer', 'getName'])->disableOriginalConstructor()->getMock();
         $project->method('getId')->willReturn(1);
         $project->method('getCustomer')->willReturn($customer);
         $project->method('getName')->willReturn('project description');
 
-        $project1 = $this->getMockBuilder(Project::class)->setMethods(['getId', 'getName'])->disableOriginalConstructor()->getMock();
-        $project1->method('getId')->willReturn(1);
-        $project1->method('getName')->willReturn('bar');
-
         $activity = $this->getMockBuilder(Activity::class)->setMethods(['getId', 'getProject', 'getName'])->disableOriginalConstructor()->getMock();
         $activity->method('getId')->willReturn(1);
         $activity->method('getProject')->willReturn($project);
         $activity->method('getName')->willReturn('activity description');
-
-        $activity1 = $this->getMockBuilder(Activity::class)->setMethods(['getId', 'getName'])->disableOriginalConstructor()->getMock();
-        $activity1->method('getId')->willReturn(1);
-        $activity1->method('getName')->willReturn('foo');
 
         $query = new InvoiceQuery();
         if ($addProject === true) {
@@ -81,9 +76,9 @@ abstract class AbstractCalculatorTest extends TestCase
             ->setBegin(new \DateTime())
             ->setDuration(3600)
             ->setRate(293.27)
-            ->setUser(new User())
-            ->setActivity($activity1)
-            ->setProject($project1);
+            ->setUser($user)
+            ->setActivity($activity)
+            ->setProject($project);
 
         $model = new InvoiceModel();
         $model->setCustomer($customer);
@@ -101,7 +96,7 @@ abstract class AbstractCalculatorTest extends TestCase
         } elseif ($addActivity === true) {
             $this->assertEquals('activity description', $result->getDescription());
         } else {
-            $this->assertEquals('foo', $result->getDescription());
+            $this->assertEquals('timesheet description', $result->getDescription());
         }
     }
 }

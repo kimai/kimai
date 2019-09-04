@@ -25,9 +25,6 @@ class TitleExtension extends AbstractExtension
      */
     protected $configuration;
 
-    /**
-     * @param TranslatorInterface $translator
-     */
     public function __construct(TranslatorInterface $translator, ThemeConfiguration $configuration)
     {
         $this->translator = $translator;

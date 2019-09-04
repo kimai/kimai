@@ -18,41 +18,47 @@ use Faker\Factory;
 /**
  * Defines the sample data to load in during controller tests.
  */
-class CustomerFixtures extends Fixture
+final class CustomerFixtures extends Fixture
 {
     /**
      * @var int
      */
-    protected $amount = 0;
+    private $amount = 0;
     /**
      * @var bool
      */
-    protected $isVisible = null;
+    private $isVisible = null;
+    /**
+     * @var callable
+     */
+    private $callback;
 
     /**
-     * @return int
+     * Will be called prior to persisting the object.
+     *
+     * @param callable $callback
+     * @return CustomerFixtures
      */
+    public function setCallback(callable $callback): CustomerFixtures
+    {
+        $this->callback = $callback;
+
+        return $this;
+    }
+
     public function getAmount(): int
     {
         return $this->amount;
     }
 
-    /**
-     * @param int $amount
-     * @return CustomerFixtures
-     */
-    public function setAmount(int $amount)
+    public function setAmount(int $amount): CustomerFixtures
     {
         $this->amount = $amount;
 
         return $this;
     }
 
-    /**
-     * @param bool $visible
-     * @return $this
-     */
-    public function setIsVisible(bool $visible)
+    public function setIsVisible(bool $visible): CustomerFixtures
     {
         $this->isVisible = $visible;
 
@@ -71,8 +77,8 @@ class CustomerFixtures extends Fixture
             if (null !== $this->isVisible) {
                 $visible = $this->isVisible;
             }
-            $entity = new Customer();
-            $entity
+            $customer = new Customer();
+            $customer
                 ->setCurrency($faker->currencyCode)
                 ->setName($faker->company . ($visible ? '' : ' (x)'))
                 ->setAddress($faker->address)
@@ -83,7 +89,10 @@ class CustomerFixtures extends Fixture
                 ->setVisible($visible)
             ;
 
-            $manager->persist($entity);
+            if (null !== $this->callback) {
+                call_user_func($this->callback, $customer);
+            }
+            $manager->persist($customer);
         }
 
         $manager->flush();

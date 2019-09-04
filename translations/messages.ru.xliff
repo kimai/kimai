@@ -277,10 +277,6 @@
                 <source>timesheet.title</source>
                 <target>Учет времени</target>
             </trans-unit>
-            <trans-unit id="timesheet.subtitle">
-                <source>timesheet.subtitle</source>
-                <target>Управление записями временного учета</target>
-            </trans-unit>
             <trans-unit id="timesheet.edit">
                 <source>timesheet.edit</source>
                 <target>Редактировать запись</target>
@@ -308,10 +304,6 @@
             <trans-unit id="profile.title">
                 <source>profile.title</source>
                 <target>Имя пользователя</target>
-            </trans-unit>
-            <trans-unit id="profile.subtitle">
-                <source>profile.subtitle</source>
-                <target>Управление настройками</target>
             </trans-unit>
             <trans-unit id="profile.about_me">
                 <source>profile.about_me</source>
@@ -353,10 +345,6 @@
                 <source>admin_timesheet.title</source>
                 <target>Учет рабочего времени сотрудников</target>
             </trans-unit>
-            <trans-unit id="admin_timesheet.subtitle">
-                <source>admin_timesheet.subtitle</source>
-                <target>Отработанное время всех сотрудников</target>
-            </trans-unit>
 
             <!--
               Admin: Projects
@@ -364,10 +352,6 @@
             <trans-unit id="admin_project.title">
                 <source>admin_project.title</source>
                 <target>Проекты</target>
-            </trans-unit>
-            <trans-unit id="admin_project.subtitle">
-                <source>admin_project.subtitle</source>
-                <target>Проект объединяет виды деятельности для каждого отдельного клиента в одну группу</target>
             </trans-unit>
             <trans-unit id="admin_project.short_stats">
                 <source>admin_project.short_stats</source>
@@ -384,10 +368,6 @@
                 <source>admin_activity.title</source>
                 <target>Деятельность</target>
             </trans-unit>
-            <trans-unit id="admin_activity.subtitle">
-                <source>admin_activity.subtitle</source>
-                <target>Задачи, к которым применим учет времени</target>
-            </trans-unit>
             <trans-unit id="admin_activity.short_stats">
                 <source>admin_activity.short_stats</source>
                 <target>
@@ -402,10 +382,6 @@
             <trans-unit id="admin_customer.title">
                 <source>admin_customer.title</source>
                 <target>Клиенты</target>
-            </trans-unit>
-            <trans-unit id="admin_customer.subtitle">
-                <source>admin_customer.subtitle</source>
-                <target>Журнал записи клиентской базы, включающий проекты и деятельность.</target>
             </trans-unit>
             <trans-unit id="label.number">
                 <source>label.number</source>
@@ -469,10 +445,6 @@
             <trans-unit id="admin_user.title">
                 <source>admin_user.title</source>
                 <target>Пользователь</target>
-            </trans-unit>
-            <trans-unit id="admin_user.subtitle">
-                <source>admin_user.subtitle</source>
-                <target>Все зарегистрированные пользователи тайм-менеджмента</target>
             </trans-unit>
             <trans-unit id="label.alias">
                 <source>label.alias</source>
@@ -611,10 +583,6 @@
             <trans-unit id="admin_invoice_template.title">
                 <source>admin_invoice_template.title</source>
                 <target>Образцы счетов</target>
-            </trans-unit>
-            <trans-unit id="admin_invoice_template.subtitle">
-                <source>admin_invoice_template.subtitle</source>
-                <target>Управляйте образцами счетов, с помощью которых Вы сможете экспортировать данные.</target>
             </trans-unit>
             <trans-unit id="invoice.title">
                 <source>invoice.title</source>

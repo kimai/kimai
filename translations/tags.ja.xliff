@@ -6,10 +6,6 @@
                 <source>tags.title</source>
                 <target>タグ</target>
             </trans-unit>
-            <trans-unit id="tags.subtitle">
-                <source>tags.subtitle</source>
-		<target>タグを用いることで、複数の時間の記録を結果セットとして自由にまとめることができます。</target>
-            </trans-unit>
         </body>
     </file>
 </xliff>

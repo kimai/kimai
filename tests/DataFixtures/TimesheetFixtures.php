@@ -23,95 +23,83 @@ use Faker\Factory;
 /**
  * Defines the sample data to load in during controller tests.
  */
-class TimesheetFixtures extends Fixture
+final class TimesheetFixtures extends Fixture
 {
     /**
      * @var User
      */
-    protected $user;
+    private $user;
     /**
      * @var int
      */
-    protected $amount = 0;
+    private $amount = 0;
     /**
      * @var int
      */
-    protected $running = 0;
+    private $running = 0;
     /**
      * @var Activity[]
      */
-    protected $activities = [];
+    private $activities = [];
     /**
      * @var Project[]
      */
-    protected $projects = [];
+    private $projects = [];
     /**
      * @var string
      */
-    protected $startDate = '2018-04-01';
+    private $startDate = '2018-04-01';
     /**
      * @var bool
      */
-    protected $fixedRate = false;
+    private $fixedRate = false;
+    /**
+     * @var callable
+     */
+    private $callback;
     /**
      * @var bool
      */
-    protected $hourlyRate = false;
+    private $hourlyRate = false;
     /**
      * @var bool
      */
-    protected $allowEmptyDescriptions = true;
+    private $allowEmptyDescriptions = true;
     /**
      * @var bool
      */
-    protected $exported = false;
+    private $exported = false;
     /**
      * @var bool
      */
-    protected $useTags = false;
+    private $useTags = false;
     /**
      * @var array
      */
-    protected $tags = [];
+    private $tags = [];
 
-    /**
-     * @param bool $allowEmptyDescriptions
-     * @return TimesheetFixtures
-     */
-    public function setAllowEmptyDescriptions(bool $allowEmptyDescriptions)
+    public function setAllowEmptyDescriptions(bool $allowEmptyDescriptions): TimesheetFixtures
     {
         $this->allowEmptyDescriptions = $allowEmptyDescriptions;
 
         return $this;
     }
 
-    /**
-     * @param bool $exported
-     * @return TimesheetFixtures
-     */
-    public function setExported(bool $exported)
+    public function setExported(bool $exported): TimesheetFixtures
     {
         $this->exported = $exported;
 
         return $this;
     }
 
-    /**
-     * @param bool $fixedRate
-     * @return TimesheetFixtures
-     */
-    public function setFixedRate(bool $fixedRate)
+    public function setFixedRate(bool $fixedRate): TimesheetFixtures
     {
         $this->fixedRate = $fixedRate;
 
         return $this;
     }
 
-    /**
-     * @param bool $hourlyRate
-     * @return TimesheetFixtures
-     */
-    public function setHourlyRate(bool $hourlyRate)
+    public function setHourlyRate(bool $hourlyRate): TimesheetFixtures
     {
         $this->hourlyRate = $hourlyRate;
 
@@ -122,7 +110,7 @@ class TimesheetFixtures extends Fixture
      * @param string|\DateTime $date
      * @return TimesheetFixtures
      */
-    public function setStartDate($date)
+    public function setStartDate($date): TimesheetFixtures
     {
         if ($date instanceof \DateTime) {
             $date = $date->format('Y-m-d');
@@ -132,33 +120,21 @@ class TimesheetFixtures extends Fixture
         return $this;
     }
 
-    /**
-     * @param int $amount
-     * @return $this
-     */
-    public function setAmountRunning($amount)
+    public function setAmountRunning(int $amount): TimesheetFixtures
     {
         $this->running = $amount;
 
         return $this;
     }
 
-    /**
-     * @param int $amount
-     * @return $this
-     */
-    public function setAmount($amount)
+    public function setAmount(int $amount): TimesheetFixtures
     {
         $this->amount = $amount;
 
         return $this;
     }
 
-    /**
-     * @param User $user
-     * @return $this
-     */
-    public function setUser(User $user)
+    public function setUser(User $user): TimesheetFixtures
     {
         $this->user = $user;
 
@@ -167,9 +143,9 @@ class TimesheetFixtures extends Fixture
 
     /**
      * @param Activity[] $activities
-     * @return $this
+     * @return TimesheetFixtures
      */
-    public function setActivities(array $activities)
+    public function setActivities(array $activities): TimesheetFixtures
     {
         $this->activities = $activities;
 
@@ -178,20 +154,16 @@ class TimesheetFixtures extends Fixture
 
     /**
      * @param Project[] $projects
-     * @return $this
+     * @return TimesheetFixtures
      */
-    public function setProjects(array $projects)
+    public function setProjects(array $projects): TimesheetFixtures
     {
         $this->projects = $projects;
 
         return $this;
     }
 
-    /**
-     * @param bool $useTags
-     * @return TimesheetFixtures
-     */
-    public function setUseTags(bool $useTags)
+    public function setUseTags(bool $useTags): TimesheetFixtures
     {
         $this->useTags = $useTags;
 
@@ -199,12 +171,25 @@ class TimesheetFixtures extends Fixture
     }
 
     /**
-     * @param array $tags
+     * @param string[] $tags
      * @return TimesheetFixtures
      */
-    public function setTags(array $tags)
+    public function setTags(array $tags): TimesheetFixtures
     {
         $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Will be called prior to persisting the object.
+     *
+     * @param callable $callback
+     * @return TimesheetFixtures
+     */
+    public function setCallback(callable $callback): TimesheetFixtures
+    {
+        $this->callback = $callback;
 
         return $this;
     }
@@ -246,7 +231,7 @@ class TimesheetFixtures extends Fixture
 
             $tags = $this->getTagObjectList($i);
 
-            $entry = $this->createTimesheetEntry(
+            $timesheet = $this->createTimesheetEntry(
                 $user,
                 $activity,
                 $project,
@@ -255,7 +240,10 @@ class TimesheetFixtures extends Fixture
                 $tags
             );
 
-            $manager->persist($entry);
+            if (null !== $this->callback) {
+                call_user_func($this->callback, $timesheet);
+            }
+            $manager->persist($timesheet);
         }
 
         for ($i = 0; $i < $this->running; $i++) {
@@ -268,7 +256,7 @@ class TimesheetFixtures extends Fixture
 
             $tags = $this->getTagObjectList($i);
 
-            $entry = $this->createTimesheetEntry(
+            $timesheet = $this->createTimesheetEntry(
                 $user,
                 $activity,
                 $project,
@@ -277,7 +265,11 @@ class TimesheetFixtures extends Fixture
                 $tags,
                 false
             );
-            $manager->persist($entry);
+
+            if (null !== $this->callback) {
+                call_user_func($this->callback, $timesheet);
+            }
+            $manager->persist($timesheet);
         }
 
         $manager->flush();

@@ -21,11 +21,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ExportToolbarForm extends AbstractToolbarForm
 {
+    protected function getSelectpickerConfig(): bool
+    {
+        return true;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->addSearchTermInputField($builder);
         $this->addExportStateChoice($builder);
         $this->addTimesheetStateChoice($builder);
         $this->addUsersChoice($builder);

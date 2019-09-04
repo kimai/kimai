@@ -32,6 +32,7 @@ import KimaiAPILink from "./plugins/KimaiAPILink";
 import KimaiAlert from "./plugins/KimaiAlert";
 import KimaiAutocomplete from "./plugins/KimaiAutocomplete";
 import KimaiToolbarAction from "./plugins/KimaiToolbarAction";
+import KimaiSearchButtons from "./plugins/KimaiSearchButtons";
 
 export default class KimaiLoader {
 
@@ -54,7 +55,8 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiDateRangePicker('.content-wrapper'));
         kimai.registerPlugin(new KimaiDateTimePicker('.content-wrapper'));
         kimai.registerPlugin(new KimaiDatatable('table.dataTable'));
-        kimai.registerPlugin(new KimaiToolbar());
+        kimai.registerPlugin(new KimaiToolbar('form.header-search'));
+        kimai.registerPlugin(new KimaiSearchButtons('.content-header'));
         kimai.registerPlugin(new KimaiSelectDataAPI('select[data-related-select]'));
         kimai.registerPlugin(new KimaiAlternativeLinks('.alternative-link'));
         kimai.registerPlugin(new KimaiAjaxModalForm('.modal-ajax-form'));

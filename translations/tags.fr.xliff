@@ -6,10 +6,6 @@
                 <source>tags.title</source>
                 <target>Mots-clés</target>
             </trans-unit>
-            <trans-unit id="tags.subtitle">
-                <source>tags.subtitle</source>
-                <target>Les mots-clés permettent de combiner librement des fiches de temps et de les retrouver</target>
-            </trans-unit>
         </body>
     </file>
 </xliff>

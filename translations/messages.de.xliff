@@ -52,6 +52,10 @@
                 <source>confirm</source>
                 <target>Bestätigen</target>
             </trans-unit>
+            <trans-unit id="search">
+                <source>search</source>
+                <target>Suchen</target>
+            </trans-unit>
 
             <!--
               Login / Security
@@ -344,10 +348,6 @@
                 <source>timesheet.title</source>
                 <target>Meine Zeiten</target>
             </trans-unit>
-            <trans-unit id="timesheet.subtitle">
-                <source>timesheet.subtitle</source>
-                <target>Verwalte meine Zeiteinträge</target>
-            </trans-unit>
             <trans-unit id="timesheet.edit">
                 <source>timesheet.edit</source>
                 <target>Eintrag bearbeiten</target>
@@ -387,10 +387,6 @@
             <trans-unit id="profile.title">
                 <source>profile.title</source>
                 <target>Benutzerprofil</target>
-            </trans-unit>
-            <trans-unit id="profile.subtitle">
-                <source>profile.subtitle</source>
-                <target>Verwalte meine Einstellungen</target>
             </trans-unit>
             <trans-unit id="profile.about_me">
                 <source>profile.about_me</source>
@@ -461,10 +457,6 @@
                 <source>calendar.title</source>
                 <target>Kalender</target>
             </trans-unit>
-            <trans-unit id="calendar.subtitle">
-                <source>calendar.subtitle</source>
-                <target>Ansicht und Verwaltung ihrer gebuchten Zeiteinträge anhand eines Kalenders</target>
-            </trans-unit>
 
             <!--
               Admin: Timesheet
@@ -473,10 +465,6 @@
                 <source>admin_timesheet.title</source>
                 <target>Zeiterfassung</target>
             </trans-unit>
-            <trans-unit id="admin_timesheet.subtitle">
-                <source>admin_timesheet.subtitle</source>
-                <target>Zeiten aller Benutzer</target>
-            </trans-unit>
 
             <!--
               Admin: Projects
@@ -484,10 +472,6 @@
             <trans-unit id="admin_project.title">
                 <source>admin_project.title</source>
                 <target>Projekte</target>
-            </trans-unit>
-            <trans-unit id="admin_project.subtitle">
-                <source>admin_project.subtitle</source>
-                <target>Ein Projekt fasst Tätigkeiten für jeweils einen Kunden in einer Gruppe zusammen</target>
             </trans-unit>
             <trans-unit id="admin_project.short_stats">
                 <source>admin_project.short_stats</source>
@@ -504,10 +488,6 @@
                 <source>admin_activity.title</source>
                 <target>Tätigkeiten</target>
             </trans-unit>
-            <trans-unit id="admin_activity.subtitle">
-                <source>admin_activity.subtitle</source>
-                <target>Aufgaben die zur Zeiterfassung genutzt werden können</target>
-            </trans-unit>
             <trans-unit id="admin_activity.short_stats">
                 <source>admin_activity.short_stats</source>
                 <target>
@@ -522,10 +502,6 @@
             <trans-unit id="admin_customer.title">
                 <source>admin_customer.title</source>
                 <target>Kunden</target>
-            </trans-unit>
-            <trans-unit id="admin_customer.subtitle">
-                <source>admin_customer.subtitle</source>
-                <target>Ihre Kunden stellen die Basis dar, auf der Sie Projekte und Tätigkeiten anlegen können</target>
             </trans-unit>
             <trans-unit id="label.number">
                 <source>label.number</source>
@@ -589,10 +565,6 @@
             <trans-unit id="admin_user.title">
                 <source>admin_user.title</source>
                 <target>Benutzer</target>
-            </trans-unit>
-            <trans-unit id="admin_user.subtitle">
-                <source>admin_user.subtitle</source>
-                <target>Alle registrierten Benutzer der Zeitverwaltung</target>
             </trans-unit>
             <trans-unit id="label.alias">
                 <source>label.alias</source>
@@ -748,17 +720,13 @@
                 <source>admin_invoice_template.title</source>
                 <target>Rechnungsvorlagen</target>
             </trans-unit>
-            <trans-unit id="admin_invoice_template.subtitle">
-                <source>admin_invoice_template.subtitle</source>
-                <target>Verwalten Sie Ihre Rechnungsvorlagen, mit deren Hilfe Sie ihre Daten exportieren können.</target>
-            </trans-unit>
             <trans-unit id="invoice.title">
                 <source>invoice.title</source>
                 <target>Rechnungen</target>
             </trans-unit>
             <trans-unit id="invoice.subtitle">
                 <source>invoice.subtitle</source>
-                <target>Hier erstellen Sie Rechnungen für ihre aufgezeichneten Zeiten.</target>
+                <target>Erstellen Sie Rechnungen für ihre aufgezeichneten Zeiten</target>
             </trans-unit>
             <trans-unit id="invoice.filter">
                 <source>invoice.filter</source>
@@ -898,7 +866,7 @@
             </trans-unit>
             <trans-unit id="export.subtitle">
                 <source>export.subtitle</source>
-                <target>Exportieren Sie geloggte Zeiten in veschiedene Zielformate</target>
+                <target>Exportieren Sie aufgezeichnete Zeiten in verschiedene Zielformate</target>
             </trans-unit>
             <trans-unit id="export.filter">
                 <source>export.filter</source>
@@ -1010,7 +978,7 @@
             -->
             <trans-unit id="label.pageSize">
                 <source>label.pageSize</source>
-                <target>Anzahl Einträge</target>
+                <target>Ergebnisse</target>
             </trans-unit>
             <trans-unit id="label.entryState">
                 <source>label.entryState</source>
