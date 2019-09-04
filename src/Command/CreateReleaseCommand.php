@@ -118,10 +118,10 @@ class CreateReleaseCommand extends Command
 
         $commands = [
             'Clone repository' => $gitCmd . ' ' . $tmpDir,
-            'Install composer dependencies' => 'cd ' . $tmpDir . ' && composer install --no-dev --optimize-autoloader',
-            'Create database' => 'cd ' . $tmpDir . ' && ' . $prefix . ' bin/console doctrine:database:create -n',
-            'Create tables' => 'cd ' . $tmpDir . ' && ' . $prefix . ' bin/console doctrine:schema:create -n',
-            'Add all migrations' => 'cd ' . $tmpDir . ' && ' . $prefix . ' bin/console doctrine:migrations:version --add --all -n',
+            'Install composer dependencies' => sprintf('cd %s && %s composer install --no-dev --optimize-autoloader', $tmpDir, $prefix),
+            'Create database' => sprintf('cd %s && %s bin/console doctrine:database:create -n', $tmpDir, $prefix),
+            'Create tables' => sprintf('cd %s && %s bin/console doctrine:schema:create -n', $tmpDir, $prefix),
+            'Add all migrations' => sprintf('cd %s && %s bin/console doctrine:migrations:version --add --all -n', $tmpDir, $prefix),
         ];
 
         $filesToDelete = [

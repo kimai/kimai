@@ -9,37 +9,21 @@
 
 namespace App\Invoice\Calculator;
 
+use App\Entity\Timesheet;
 use App\Invoice\CalculatorInterface;
-use App\Invoice\InvoiceItem;
 
 /**
  * A calculator that sums up the timesheet records by user.
  */
-class UserInvoiceCalculator extends AbstractMergedCalculator implements CalculatorInterface
+class UserInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
 {
-    /**
-     * @return InvoiceItem[]
-     */
-    public function getEntries()
+    protected function calculateSumIdentifier(Timesheet $timesheet): string
     {
-        $entries = $this->model->getEntries();
-        if (empty($entries)) {
-            return [];
+        if (null === $timesheet->getUser()->getId()) {
+            throw new \Exception('Cannot handle un-persisted user');
         }
 
-        /** @var InvoiceItem[] $invoiceItems */
-        $invoiceItems = [];
-
-        foreach ($entries as $entry) {
-            $id = $entry->getUser()->getId();
-            if (!isset($invoiceItems[$id])) {
-                $invoiceItems[$id] = new InvoiceItem();
-            }
-            $invoiceItem = $invoiceItems[$id];
-            $this->mergeTimesheets($invoiceItem, $entry);
-        }
-
-        return array_values($invoiceItems);
+        return (string) $timesheet->getUser()->getId();
     }
 
     /**

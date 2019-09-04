@@ -11,6 +11,7 @@ namespace App\Invoice\Calculator;
 
 use App\Entity\Timesheet;
 use App\Invoice\CalculatorInterface;
+use App\Invoice\InvoiceItem;
 
 /**
  * A calculator that sums up the timesheet records by activity.
@@ -24,6 +25,12 @@ class ActivityInvoiceCalculator extends AbstractSumInvoiceCalculator implements 
         }
 
         return (string) $timesheet->getActivity()->getId();
+    }
+
+    protected function mergeSumTimesheet(InvoiceItem $invoiceItem, Timesheet $entry)
+    {
+        $invoiceItem->setActivity($entry->getActivity());
+        $invoiceItem->setDescription($entry->getActivity()->getName());
     }
 
     /**

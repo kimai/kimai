@@ -183,8 +183,7 @@ trait RendererTrait
         $amount = $this->getFormattedDuration($invoiceItem->getDuration());
         $description = $invoiceItem->getDescription();
 
-        if (null !== $invoiceItem->getFixedRate()) {
-            $rate = $invoiceItem->getFixedRate();
+        if ($invoiceItem->isFixedRate()) {
             $hourlyRate = $invoiceItem->getFixedRate();
             $amount = $invoiceItem->getAmount();
         }
