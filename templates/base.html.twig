@@ -204,7 +204,7 @@
                     locale: '{{ app.request.locale }}',
                     twentyFourHours: {{ 'true'|hour24('false') }},
                     autoReloadDatatable: {% if theme_config('auto_reload_datatable') %}true{% else %}false{% endif %},
-                    autoComplete: {{ kimai_context.autocomplete_chars }}
+                    autoComplete: {{ theme_config('autocomplete_chars') }}
                 },
                 {
                     'confirm': '{{ 'confirm'|trans }}',
