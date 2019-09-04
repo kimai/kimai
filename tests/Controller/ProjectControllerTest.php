@@ -10,6 +10,7 @@
 namespace App\Tests\Controller;
 
 use App\Entity\Project;
+use App\Entity\ProjectMeta;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\CustomerFixtures;
@@ -36,6 +37,36 @@ class ProjectControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->assertAccessIsGranted($client, '/admin/project/');
         $this->assertHasDataTable($client);
+    }
+
+    public function testIndexActionWithSearchTermQuery()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $fixture = new ProjectFixtures();
+        $fixture->setAmount(5);
+        $fixture->setCallback(function (Project $project) {
+            $project->setVisible(true);
+            $project->setComment('I am a foobar with tralalalala some more content');
+            $project->setMetaField((new ProjectMeta())->setName('location')->setValue('homeoffice'));
+            $project->setMetaField((new ProjectMeta())->setName('feature')->setValue('timetracking'));
+        });
+        $this->importFixture($em, $fixture);
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/project/');
+
+        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $client->submit($form, [
+            'searchTerm' => 'feature:timetracking foo',
+            'visibility' => 1,
+            'pageSize' => 50,
+            'page' => 1,
+        ]);
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasDataTable($client);
+        $this->assertDataTableRowCount($client, 'datatable_project_admin', 5);
     }
 
     public function testBudgetAction()

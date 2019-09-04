@@ -1,16 +1,12 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "macros/actions.html.twig" as actions %}
+{% import "tags/actions.html.twig" as actions %}
 {% import "macros/datatables.html.twig" as tables %}
 {% import "macros/toolbar.html.twig" as toolbar %}
 
 {% block page_title %}{{ 'tags.title'|trans({}, 'tags') }}{% endblock %}
-{% block page_subtitle %}{{ 'tags.subtitle'|trans({}, 'tags') }}{% endblock %}
+{% block page_search %}{{ toolbar.dropDownSearch(toolbarForm) }}{% endblock %}
 {% block page_actions %}{{ actions.tags('index') }}{% endblock %}
-
-{% block main_before %}
-    {{ toolbar.toolbar(toolbarForm, 'collapseTags', showFilter) }}
-{% endblock %}
 
 {% block main %}
 

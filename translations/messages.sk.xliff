@@ -321,10 +321,6 @@
                 <source>timesheet.title</source>
                 <target>Moje časy</target>
             </trans-unit>
-            <trans-unit id="timesheet.subtitle">
-                <source>timesheet.subtitle</source>
-                <target>Správa mojich časových nahrávok</target>
-            </trans-unit>
             <trans-unit id="timesheet.edit">
                 <source>timesheet.edit</source>
                 <target>Upraviť záznam</target>
@@ -360,10 +356,6 @@
             <trans-unit id="profile.title">
                 <source>profile.title</source>
                 <target>Užívateľský profil</target>
-            </trans-unit>
-            <trans-unit id="profile.subtitle">
-                <source>profile.subtitle</source>
-                <target>Upraviť moje nastavenia</target>
             </trans-unit>
             <trans-unit id="profile.about_me">
                 <source>profile.about_me</source>
@@ -430,10 +422,6 @@
                 <source>calendar.title</source>
                 <target>Kalendár</target>
             </trans-unit>
-            <trans-unit id="calendar.subtitle">
-                <source>calendar.subtitle</source>
-                <target>Zobrazenie a správa údajov časového rozvrhu v kalendári</target>
-            </trans-unit>
 
             <!--
               Admin: Timesheet
@@ -442,10 +430,6 @@
                 <source>admin_timesheet.title</source>
                 <target>Pracovné výkazy</target>
             </trans-unit>
-            <trans-unit id="admin_timesheet.subtitle">
-                <source>admin_timesheet.subtitle</source>
-                <target>Záznamy všetkých užívateľov</target>
-            </trans-unit>
 
             <!--
               Admin: Projects
@@ -453,10 +437,6 @@
             <trans-unit id="admin_project.title">
                 <source>admin_project.title</source>
                 <target>Projekty</target>
-            </trans-unit>
-            <trans-unit id="admin_project.subtitle">
-                <source>admin_project.subtitle</source>
-                <target>Projekt kombinuje aktivity pre zákazníka v skupine</target>
             </trans-unit>
             <trans-unit id="admin_project.delete_confirm">
                 <source>admin_project.delete_confirm</source>
@@ -484,19 +464,6 @@
                 <source>admin_activity.title</source>
                 <target>Činnosti</target>
             </trans-unit>
-            <trans-unit id="admin_activity.subtitle">
-                <source>admin_activity.subtitle</source>
-                <target>Úlohy, ktoré možno zvoliť pre záznamy času</target>
-            </trans-unit>
-            <trans-unit id="admin_activity.delete_confirm">
-                <source>admin_activity.delete_confirm</source>
-                <target>
-                    Momentálne činnosť %activity% v projekte %project% pre zákazníka %customer%
-                    má %records% časových záznamov, ktoré sa započítavajú do celkového počtu %duration%.
-                    Tieto časové záznamy budú tiež vymazané!
-                    Prípadne môžete vybrať aktivitu, do ktorej sa prenesú všetky existujúce položky:
-                </target>
-            </trans-unit>
             <trans-unit id="admin_activity.short_stats">
                 <source>admin_activity.short_stats</source>
                 <target>
@@ -513,10 +480,6 @@
             <trans-unit id="admin_customer.title">
                 <source>admin_customer.title</source>
                 <target>Zákazník</target>
-            </trans-unit>
-            <trans-unit id="admin_customer.subtitle">
-                <source>admin_customer.subtitle</source>
-                <target>Váš zákazník je základom pre vytváranie projektov a aktivít</target>
             </trans-unit>
             <trans-unit id="label.number">
                 <source>label.number</source>
@@ -591,10 +554,6 @@
             <trans-unit id="admin_user.title">
                 <source>admin_user.title</source>
                 <target>Používateľ</target>
-            </trans-unit>
-            <trans-unit id="admin_user.subtitle">
-                <source>admin_user.subtitle</source>
-                <target>Všetci registrovaní užívatelia vašej inštalácie Kimai</target>
             </trans-unit>
             <trans-unit id="label.alias">
                 <source>label.alias</source>
@@ -741,10 +700,6 @@
             <trans-unit id="admin_invoice_template.title">
                 <source>admin_invoice_template.title</source>
                 <target>Šablóna faktúry</target>
-            </trans-unit>
-            <trans-unit id="admin_invoice_template.subtitle">
-                <source>admin_invoice_template.subtitle</source>
-                <target>Spravujte svoje šablóny faktúr, ktoré možno použiť na export údajov.</target>
             </trans-unit>
             <trans-unit id="invoice.title">
                 <source>invoice.title</source>

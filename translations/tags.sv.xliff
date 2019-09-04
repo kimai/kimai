@@ -6,10 +6,6 @@
                 <source>tags.title</source>
                 <target state="translated">Taggar</target>
             </trans-unit>
-            <trans-unit id="tags.subtitle">
-                <source>tags.subtitle</source>
-                <target state="translated">Tillåter taggar att kombinera tidsrapport i ett resultatuppsättning.</target>
-            </trans-unit>
         </body>
     </file>
 </xliff>

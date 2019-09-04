@@ -2,7 +2,7 @@
 {% import "macros/datatables.html.twig" as tables %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/toolbar.html.twig" as toolbar %}
-{% import "macros/actions.html.twig" as actions %}
+{% import "user/actions.html.twig" as actions %}
 
 {% set columns = {
     'alias': 'alwaysVisible',
@@ -17,11 +17,10 @@
 {% set tableName = 'user_admin' %}
 
 {% block page_title %}{{ 'admin_user.title'|trans }}{% endblock %}
-{% block page_subtitle %}{{ 'admin_user.subtitle'|trans }}{% endblock %}
+{% block page_search %}{{ toolbar.dropDownSearch(toolbarForm) }}{% endblock %}
 {% block page_actions %}{{ actions.users('index') }}{% endblock %}
 
 {% block main_before %}
-    {{ toolbar.toolbar(toolbarForm, 'collapseUserAdmin', showFilter) }}
     {{ tables.data_table_column_modal(tableName, columns) }}
 {% endblock %}
 

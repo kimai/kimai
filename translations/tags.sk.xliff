@@ -6,10 +6,6 @@
                 <source>tags.title</source>
                 <target>Značky</target>
             </trans-unit>
-            <trans-unit id="tags.subtitle">
-                <source>tags.subtitle</source>
-                <target>Značky umožňujú voľne kombinovať záznamy pracovného výkazu</target>
-            </trans-unit>
         </body>
     </file>
 </xliff>

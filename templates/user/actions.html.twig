@@ -1,0 +1,71 @@
+{% macro users(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {'search': {'class': 'search-toggle visible-xs-inline'}} %}
+
+    {% if view == 'index' %}
+        {% set actions = actions|merge({'visibility': '#modal_user_admin'}) %}
+    {% else %}
+        {% set actions = actions|merge({'back': path('admin_user')}) %}
+    {% endif %}
+
+    {% if view != 'permissions' and is_granted('role_permissions') %}
+        {% set actions = actions|merge({'permissions': path('admin_user_permissions')}) %}
+    {% endif %}
+
+    {% if is_granted('create_user') %}
+        {% set actions = actions|merge({'create': path('admin_user_create')}) %}
+    {% endif %}
+
+    {% if view == 'index' %}
+        {% set actions = actions|merge({'help': {'url': 'users.html'|docu_link, 'target': '_blank'}}) %}
+    {% elseif view == 'permissions' %}
+        {% set actions = actions|merge({'help': {'url': 'permissions.html'|docu_link, 'target': '_blank'}}) %}
+    {% endif %}
+
+    {% set actions = actions|merge({'help': {'url': 'users.html'|docu_link, 'target': '_blank'}}) %}
+
+    {% set event = trigger('actions.users', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}
+
+{% macro user_permissions(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set actions = {} %}
+
+    {% set actions = actions|merge({'back': path('admin_user')}) %}
+    {% set actions = actions|merge({'help': {'url': 'permissions.html'|docu_link, 'target': '_blank'}}) %}
+
+    {% set event = trigger('actions.user_permissions', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}
+
+{% macro user(user, view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set actions = {} %}
+
+    {% if user.id is not empty %}
+        {% if is_granted('view', user) %}
+            {% set actions = {'profile-stats': {'url': path('user_profile', {'username' : user.username})}} %}
+        {% endif %}
+        {% if is_granted('edit', user) %}
+            {% set actions = actions|merge({'edit': path('user_profile_edit', {'username' : user.username})}) %}
+        {% endif %}
+        {% if is_granted('preferences', user) %}
+            {% set actions = actions|merge({'settings': {'url': path('user_profile_preferences', {'username' : user.username})}}) %}
+        {% endif %}
+        {% if is_granted('view_other_timesheet') %}
+            {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'user' : user.id})}) %}
+        {% endif %}
+        {% if view == 'index' and is_granted('delete', user) %}
+            {% set actions = actions|merge({'trash': {'url': path('admin_user_delete', {'id': user.id}), 'class': 'modal-ajax-form'}}) %}
+        {% endif %}
+    {% endif %}
+
+    {% set event = trigger('actions.user', {'actions': actions, 'view': view, 'user': user}) %}
+    {% if view == 'index' %}
+        {{ widgets.table_actions(event.payload.actions) }}
+    {% else %}
+        {{ widgets.entity_actions(event.payload.actions) }}
+    {% endif %}
+{% endmacro %}

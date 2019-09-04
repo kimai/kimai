@@ -6,10 +6,6 @@
                 <source>about.title</source>
                 <target>À propos de Kimai</target>
             </trans-unit>
-            <trans-unit id="about.subtitle">
-                <source>about.subtitle</source>
-                <target>Informations système</target>
-            </trans-unit>
             <trans-unit id="support">
                 <source>support</source>
                 <target>Support</target>

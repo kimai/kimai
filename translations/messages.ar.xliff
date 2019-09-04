@@ -277,10 +277,6 @@
                 <source>timesheet.title</source>
                 <target>أوقاتي</target>
             </trans-unit>
-            <trans-unit id="timesheet.subtitle">
-                <source>timesheet.subtitle</source>
-                <target>إدارة تسجيلاتي</target>
-            </trans-unit>
             <trans-unit id="timesheet.edit">
                 <source>timesheet.edit</source>
                 <target>تعديل السجل</target>
@@ -312,10 +308,6 @@
             <trans-unit id="profile.title">
                 <source>profile.title</source>
                 <target>ملف تعريفي للمستخدم</target>
-            </trans-unit>
-            <trans-unit id="profile.subtitle">
-                <source>profile.subtitle</source>
-                <target>تعديل الإعدادات الخاصة بي</target>
             </trans-unit>
             <trans-unit id="profile.about_me">
                 <source>profile.about_me</source>
@@ -357,10 +349,6 @@
                 <source>admin_timesheet.title</source>
                 <target>الجداول الزمنية</target>
             </trans-unit>
-            <trans-unit id="admin_timesheet.subtitle">
-                <source>admin_timesheet.subtitle</source>
-                <target>سجلات جميع المستخدمين</target>
-            </trans-unit>
 
             <!--
               Admin: Projects
@@ -368,10 +356,6 @@
             <trans-unit id="admin_project.title">
                 <source>admin_project.title</source>
                 <target>مشاريع</target>
-            </trans-unit>
-            <trans-unit id="admin_project.subtitle">
-                <source>admin_project.subtitle</source>
-                <target>يجمع المشروع بين أنشطة العميل في المجموعة</target>
             </trans-unit>
 
             <!--
@@ -381,10 +365,6 @@
                 <source>admin_activity.title</source>
                 <target>أنشطة</target>
             </trans-unit>
-            <trans-unit id="admin_activity.subtitle">
-                <source>admin_activity.subtitle</source>
-                <target>المهام التي يمكن اختيارها لسجلات الوقت</target>
-            </trans-unit>
 
             <!--
               Admin: Customer
@@ -392,10 +372,6 @@
             <trans-unit id="admin_customer.title">
                 <source>admin_customer.title</source>
                 <target>زبون</target>
-            </trans-unit>
-            <trans-unit id="admin_customer.subtitle">
-                <source>admin_customer.subtitle</source>
-                <target>عميلك هو الأساس لإنشاء المشاريع والأنشطة</target>
             </trans-unit>
             <trans-unit id="label.number">
                 <source>label.number</source>
@@ -452,10 +428,6 @@
             <trans-unit id="admin_user.title">
                 <source>admin_user.title</source>
                 <target>المستخدم</target>
-            </trans-unit>
-            <trans-unit id="admin_user.subtitle">
-                <source>admin_user.subtitle</source>
-                <target>جميع المستخدمين المسجلين من تثبيت Kimai الخاص بك</target>
             </trans-unit>
             <trans-unit id="label.alias">
                 <source>label.alias</source>
@@ -588,10 +560,6 @@
             <trans-unit id="admin_invoice_template.title">
                 <source>admin_invoice_template.title</source>
                 <target>قالب الفاتورة</target>
-            </trans-unit>
-            <trans-unit id="admin_invoice_template.subtitle">
-                <source>admin_invoice_template.subtitle</source>
-                <target>إدارة قوالب الفاتورة التي يمكن استخدامها لتصدير البيانات.</target>
             </trans-unit>
             <trans-unit id="invoice.title">
                 <source>invoice.title</source>

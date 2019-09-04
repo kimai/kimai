@@ -19,20 +19,37 @@ use Faker\Factory;
 /**
  * Defines the sample data to load in during controller tests.
  */
-class ActivityFixtures extends Fixture
+final class ActivityFixtures extends Fixture
 {
     /**
      * @var int
      */
-    protected $amount = 0;
+    private $amount = 0;
     /**
      * @var bool
      */
-    protected $isGlobal = false;
+    private $isGlobal = false;
     /**
      * @var bool
      */
-    protected $isVisible = null;
+    private $isVisible = null;
+    /**
+     * @var callable
+     */
+    private $callback;
+
+    /**
+     * Will be called prior to persisting the object.
+     *
+     * @param callable $callback
+     * @return ActivityFixtures
+     */
+    public function setCallback(callable $callback): ActivityFixtures
+    {
+        $this->callback = $callback;
+
+        return $this;
+    }
 
     /**
      * @return int
@@ -42,33 +59,21 @@ class ActivityFixtures extends Fixture
         return $this->amount;
     }
 
-    /**
-     * @param bool $global
-     * @return $this
-     */
-    public function setIsGlobal(bool $global)
+    public function setIsGlobal(bool $global): ActivityFixtures
     {
         $this->isGlobal = $global;
 
         return $this;
     }
 
-    /**
-     * @param bool $visible
-     * @return $this
-     */
-    public function setIsVisible(bool $visible)
+    public function setIsVisible(bool $visible): ActivityFixtures
     {
         $this->isVisible = $visible;
 
         return $this;
     }
 
-    /**
-     * @param int $amount
-     * @return ActivityFixtures
-     */
-    public function setAmount(int $amount)
+    public function setAmount(int $amount): ActivityFixtures
     {
         $this->amount = $amount;
 
@@ -93,15 +98,18 @@ class ActivityFixtures extends Fixture
             if (null !== $this->isVisible) {
                 $visible = $this->isVisible;
             }
-            $entity = new Activity();
-            $entity
+            $activity = new Activity();
+            $activity
                 ->setProject($project)
                 ->setName($faker->bs . ($visible ? '' : ' (x)'))
                 ->setComment($faker->text)
                 ->setVisible($visible)
             ;
 
-            $manager->persist($entity);
+            if (null !== $this->callback) {
+                call_user_func($this->callback, $activity);
+            }
+            $manager->persist($activity);
         }
 
         $manager->flush();

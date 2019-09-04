@@ -271,6 +271,14 @@ class SystemConfigurationController extends AbstractController
                         ->setLabel('theme.autocomplete_chars')
                         ->setType(IntegerType::class)
                         ->setTranslationDomain('system-configuration'),
+                    // FIXME should that be configurable per user?
+                    /*
+                    (new Configuration())
+                        ->setName('theme.auto_reload_datatable')
+                        ->setLabel('theme.auto_reload_datatable') // FIXME translation
+                        ->setType(CheckboxType::class)
+                        ->setTranslationDomain('system-configuration'),
+                    */
                 ]),
             (new SystemConfigurationModel())
                 ->setSection(SystemConfigurationModel::SECTION_CALENDAR)

@@ -16,17 +16,34 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * Defines the sample data to load in during controller tests.
  */
-class TagFixtures extends Fixture
+final class TagFixtures extends Fixture
 {
     /**
      * @var string[]
      */
-    protected $tagArray = [];
+    private $tagArray = [];
+    /**
+     * @var callable
+     */
+    private $callback;
+
+    /**
+     * Will be called prior to persisting the object.
+     *
+     * @param callable $callback
+     * @return TagFixtures
+     */
+    public function setCallback(callable $callback): TagFixtures
+    {
+        $this->callback = $callback;
+
+        return $this;
+    }
 
     /**
      * @return string[]
      */
-    public function getTagArray()
+    public function getTagArray(): array
     {
         return $this->tagArray;
     }
@@ -35,7 +52,7 @@ class TagFixtures extends Fixture
      * @param string[] $tagArray
      * @return TagFixtures
      */
-    public function setTagArray(array $tagArray)
+    public function setTagArray(array $tagArray): TagFixtures
     {
         $this->tagArray = $tagArray;
 
@@ -48,13 +65,17 @@ class TagFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         foreach ($this->getTagArray() as $tagName) {
-            $entry = $this->createTagEntry($tagName);
-            $manager->persist($entry);
+            $tag = $this->createTagEntry($tagName);
+
+            if (null !== $this->callback) {
+                call_user_func($this->callback, $tag);
+            }
+            $manager->persist($tag);
         }
         $manager->flush();
     }
 
-    protected function createTagEntry(string $tagName): Tag
+    private function createTagEntry(string $tagName): Tag
     {
         $tagObject = new Tag();
         $tagObject->setName($tagName);

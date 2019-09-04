@@ -2,13 +2,9 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" target-language="sv" datatype="plaintext" original="about.en.xliff">
         <body>
-  <trans-unit id="about.title">
+            <trans-unit id="about.title">
                 <source>about.title</source>
                 <target>Om Kimai</target>
-            </trans-unit>
-            <trans-unit id="about.subtitle">
-                <source>about.subtitle</source>
-                <target>Systeminformation</target>
             </trans-unit>
             <trans-unit id="support">
                 <source>support</source>
@@ -26,7 +22,7 @@
                 <source>tab.thanks</source>
                 <target state="translated">Speciellt tack</target>
             </trans-unit>
-           <trans-unit id="donate">
+            <trans-unit id="donate">
                 <source>donate</source>
                 <target state="translated">Donera för framtiden för Kimai</target>
             </trans-unit>

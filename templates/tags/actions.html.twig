@@ -1,0 +1,27 @@
+{% macro tags(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {'search': {'class': 'search-toggle visible-xs-inline'}} %}
+
+    {% set actions = actions|merge({'help': {'url': 'tags.html'|docu_link, 'target': '_blank'}}) %}
+
+    {% set event = trigger('actions.tags', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}
+
+{% macro tag(tag, view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {} %}
+
+    {% if is_granted('view_other_timesheet') %}
+        {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'tags': tag.name})}) %}
+    {% endif %}
+
+    {% if is_granted('delete_tag') %}
+        {% set actions = actions|merge({'trash': {'url': path('delete_tag', {'id' : tag.id}), 'class': 'api-link', 'attr': {'data-event': 'kimai.tagDelete kimai.tagUpdate', 'data-method': 'DELETE', 'data-question': 'confirm.delete', 'data-msg-error': 'action.delete.error', 'data-msg-success': 'action.delete.success'}}}) %}
+    {% endif %}
+
+    {% set event = trigger('actions.tag', {'actions': actions, 'view': view, 'tag': tag}) %}
+    {{ widgets.table_actions(event.payload.actions) }}
+{% endmacro %}

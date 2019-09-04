@@ -30,6 +30,7 @@
         {% block box_title %}{{ 'export.filter'|trans }}{% endblock %}
         {% block box_before %}{{ form_start(form) }}{% endblock %}
         {% block box_body %}
+            {{ form_row(form.searchTerm) }}
             {{ form_row(form.daterange) }}
             {{ form_row(form.customer) }}
             {{ form_row(form.project) }}
@@ -44,7 +45,7 @@
             <div class="btn-group" id="export-buttons" role="group">
                 {% for button in renderer %}
                     <button type="button" id="export-{{ button.id }}-button" class="btn btn-success startExportBtn" data-type="{{ button.id }}">
-                        <i class="{{ button.icon|icon }}"></i> {{ ('button.' ~ button.title)|trans }}
+                        {{ ('button.' ~ button.title)|trans }}
                     </button>
                 {% endfor %}
             </div>
