@@ -25,7 +25,7 @@ class ExportToolbarForm extends AbstractToolbarForm
     {
         return true;
     }
-    
+
     /**
      * {@inheritdoc}
      */

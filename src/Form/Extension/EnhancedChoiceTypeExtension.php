@@ -49,7 +49,7 @@ class EnhancedChoiceTypeExtension extends AbstractTypeExtension
         if ($this->type !== self::TYPE_SELECTPICKER) {
             return;
         }
-        
+
         if (isset($options['selectpicker']) && false === $options['selectpicker']) {
             return;
         }
@@ -73,5 +73,4 @@ class EnhancedChoiceTypeExtension extends AbstractTypeExtension
         $resolver->setAllowedTypes('selectpicker', 'boolean');
         $resolver->setDefault('selectpicker', true);
     }
-    
 }

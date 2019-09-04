@@ -50,7 +50,7 @@ abstract class AbstractToolbarForm extends AbstractType
     {
         return '';
     }
-    
+
     protected function getSelectpickerConfig(): bool
     {
         return false;

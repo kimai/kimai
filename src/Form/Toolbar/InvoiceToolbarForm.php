@@ -25,7 +25,7 @@ class InvoiceToolbarForm extends AbstractToolbarForm
     {
         return true;
     }
-    
+
     /**
      * {@inheritdoc}
      */
