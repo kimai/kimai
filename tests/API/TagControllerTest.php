@@ -55,6 +55,35 @@ class TagControllerTest extends APIControllerBaseTest
         $this->assertEquals(0, count($result));
     }
 
+    public function testPostAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+        ];
+        $this->request($client, '/api/tags', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertStructure($result);
+        $this->assertNotEmpty($result['id']);
+    }
+
+    public function testPostActionWithInvalidUser()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $data = [
+            'name' => 'foo',
+        ];
+        $this->request($client, '/api/tags', 'POST', [], json_encode($data));
+        $response = $client->getResponse();
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        $json = json_decode($response->getContent(), true);
+        $this->assertEquals('User cannot create tags', $json['message']);
+    }
+
     public function testPartOfEntries()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
@@ -89,5 +118,22 @@ class TagControllerTest extends APIControllerBaseTest
     public function testDeleteActionWithUnknownTimesheet()
     {
         $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, '/api/tags/255', []);
+    }
+
+    protected function assertStructure(array $result, $full = true)
+    {
+        $expectedKeys = [
+            'id', 'name', 'timesheets'
+        ];
+
+        if ($full) {
+            $expectedKeys = array_merge($expectedKeys, []);
+        }
+
+        $actual = array_keys($result);
+        sort($actual);
+        sort($expectedKeys);
+
+        $this->assertEquals($expectedKeys, $actual, 'Tag structure does not match');
     }
 }

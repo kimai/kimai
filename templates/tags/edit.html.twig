@@ -1,0 +1,14 @@
+{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+{% import "tags/actions.html.twig" as actions %}
+
+{% block page_title %}{{ 'tags.title'|trans({}, 'tags') }}{% endblock %}
+{% block page_actions %}{{ actions.tag(tag, 'edit') }}{% endblock %}
+
+{% block main %}
+    {{ include(app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig', {
+        'title': tag.name|default('create'|trans),
+        'form': form,
+        'back': path('tags')
+    }) }}
+{% endblock %}

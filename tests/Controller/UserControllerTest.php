@@ -231,6 +231,6 @@ class UserControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/user/permissions');
         $this->assertHasDataTable($client);
-        $this->assertDataTableRowCount($client, 'datatable_user_admin_permissions', 80);
+        $this->assertDataTableRowCount($client, 'datatable_user_admin_permissions', 81);
     }
 }

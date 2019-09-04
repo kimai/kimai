@@ -13,6 +13,7 @@ Perform EACH version specific task between your version and the new one, otherwi
 ### Possible BC breaks
 
 - Refactored toolbars and search, plugins needs to be checked 
+- Added `manage_tag` permission for new tag features
 - Invoices now supports multiple repositories, some method signatures had to be changed (eg. `calculateSumIdentifier()`)  
 
 ## [1.2](https://github.com/kevinpapst/kimai2/releases/tag/1.2)

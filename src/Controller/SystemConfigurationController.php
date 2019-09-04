@@ -266,6 +266,11 @@ class SystemConfigurationController extends AbstractController
                         ->setLabel('theme.markdown_content')
                         ->setType(CheckboxType::class)
                         ->setTranslationDomain('system-configuration'),
+                    (new Configuration())
+                        ->setName('theme.autocomplete_chars')
+                        ->setLabel('theme.autocomplete_chars')
+                        ->setType(IntegerType::class)
+                        ->setTranslationDomain('system-configuration'),
                     // FIXME should that be configurable per user?
                     /*
                     (new Configuration())

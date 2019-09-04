@@ -21,6 +21,7 @@
         } %}
 
         {% set tableName = 'admin_tags' %}
+        {% set manageAllowed = is_granted('manage_tag') %}
 
         {{ tables.data_table_header(tableName, columns, false, 'kimai.tagUpdate') }}
         {% for tag in tags %}
@@ -29,7 +30,7 @@
                 {% set type = 'warning' %}
             {% endif %}
 
-            <tr>
+            <tr{% if manageAllowed %} class="modal-ajax-form open-edit" data-href="{{ path('tags_edit', {'id': tag.id}) }}"{% endif %}>
                 <td>{{ tag.name }}</td>
                 <td>{{ widgets.label(tag.amount, type) }}</td>
                 <td class="actions">

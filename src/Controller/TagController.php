@@ -9,9 +9,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Tag;
+use App\Form\TagEditForm;
 use App\Form\Toolbar\TagToolbarForm;
 use App\Repository\Query\TagQuery;
 use App\Repository\TagRepository;
+use Doctrine\ORM\ORMException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,6 +51,68 @@ class TagController extends AbstractController
             'query' => $query,
             'showFilter' => $query->isDirty(),
             'toolbarForm' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route(path="/{id}/edit", name="tags_edit", methods={"GET", "POST"})
+     * @Security("is_granted('manage_tag')")
+     */
+    public function editAction(Tag $tag, TagRepository $repository, Request $request)
+    {
+        $editForm = $this->createForm(TagEditForm::class, $tag, [
+            'action' => $this->generateUrl('tags_edit', ['id' => $tag->getId()]),
+            'method' => 'POST',
+        ]);
+
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            try {
+                $repository->saveTag($tag);
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRoute('tags');
+            } catch (ORMException $ex) {
+                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            }
+        }
+
+        return $this->render('tags/edit.html.twig', [
+            'tag' => $tag,
+            'form' => $editForm->createView()
+        ]);
+    }
+
+    /**
+     * @Route(path="/create", name="tags_create", methods={"GET", "POST"})
+     * @Security("is_granted('manage_tag')")
+     */
+    public function createAction(TagRepository $repository, Request $request)
+    {
+        $tag = new Tag();
+
+        $editForm = $this->createForm(TagEditForm::class, $tag, [
+            'action' => $this->generateUrl('tags_create'),
+            'method' => 'POST',
+        ]);
+
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            try {
+                $repository->saveTag($tag);
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRoute('tags');
+            } catch (ORMException $ex) {
+                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            }
+        }
+
+        return $this->render('tags/edit.html.twig', [
+            'tag' => $tag,
+            'form' => $editForm->createView()
         ]);
     }
 

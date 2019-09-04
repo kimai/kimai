@@ -11,6 +11,9 @@ declare(strict_types=1);
 
 namespace App\API;
 
+use App\Entity\Tag;
+use App\Form\API\TagApiEditForm;
+use App\Form\TagEditForm;
 use App\Repository\TagRepository;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
@@ -19,7 +22,9 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * @RouteResource("Tag")
@@ -58,7 +63,7 @@ class TagController extends BaseApiController
      *      )
      * )
      *
-     * @Rest\QueryParam(name="name", requirements="[a-zA-Z0-9 -\.]+", strict=true, nullable=true, description="Search term to filter tag list")
+     * @Rest\QueryParam(name="name", strict=true, nullable=true, description="Search term to filter tag list")
      *
      * @return Response
      */
@@ -69,7 +74,58 @@ class TagController extends BaseApiController
         $data = $this->repository->findAllTagNames($filter);
 
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Collection']);
+        $view->getContext()->setGroups(['Default', 'Collection', 'Tag']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Creates a new tag
+     *
+     * @SWG\Post(
+     *      description="Creates a new tag and returns it afterwards",
+     *      @SWG\Response(
+     *          response=200,
+     *          description="Returns the new created tag",
+     *          @SWG\Schema(ref="#/definitions/TagEntity"),
+     *      )
+     * )
+     * @SWG\Parameter(
+     *      name="body",
+     *      in="body",
+     *      required=true,
+     *      @SWG\Schema(ref="#/definitions/TagEditForm")
+     * )
+     *
+     * @param Request $request
+     * @return Response
+     * @throws \App\Repository\RepositoryException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function postAction(Request $request)
+    {
+        if (!$this->isGranted('manage_tag')) {
+            throw new AccessDeniedHttpException('User cannot create tags');
+        }
+
+        $tag = new Tag();
+
+        $form = $this->createForm(TagApiEditForm::class, $tag);
+
+        $form->submit($request->request->all());
+
+        if ($form->isValid()) {
+            $this->repository->saveTag($tag);
+
+            $view = new View($tag, 200);
+            $view->getContext()->setGroups(['Default', 'Entity', 'Tag']);
+
+            return $this->viewHandler->handle($view);
+        }
+
+        $view = new View($form);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Tag']);
 
         return $this->viewHandler->handle($view);
     }
