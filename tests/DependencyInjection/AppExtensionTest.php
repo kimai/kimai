@@ -116,6 +116,7 @@ class AppExtensionTest extends TestCase
                     'company' => null,
                     'title' => null,
                 ],
+                'autocomplete_chars' => 3,
             ],
             'kimai.theme.select_type' => null,
             'kimai.theme.show_about' => true,

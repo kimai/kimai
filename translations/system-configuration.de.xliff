@@ -70,6 +70,10 @@
                 <source>label.theme.select_type</source>
                 <target>Art der Auswahl-Boxen in Formularen</target>
             </trans-unit>
+            <trans-unit id="label.theme.autocomplete_chars">
+                <source>label.theme.autocomplete_chars</source>
+                <target>Minimale Anzahl Buchstaben für den Start der Autovervollständigung</target>
+            </trans-unit>
             <trans-unit id="label.calendar.week_numbers">
                 <source>label.calendar.week_numbers</source>
                 <target>Kalenderwochen anzeigen</target>

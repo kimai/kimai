@@ -20,6 +20,7 @@ export default class KimaiAutocomplete extends KimaiPlugin {
     }
 
     init() {
+        this.minChars = this.getContainer().getConfiguration().get('autoComplete');
         this.activateAutocomplete(this.selector);
     }
 
@@ -59,7 +60,7 @@ export default class KimaiAutocomplete extends KimaiPlugin {
                 search: function () {
                     // custom minLength
                     var term = self.extractLastTag(this.value);
-                    if (term.length < 2) {
+                    if (term.length < self.minChars) {
                         return false;
                     }
                 },

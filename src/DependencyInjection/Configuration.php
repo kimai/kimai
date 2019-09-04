@@ -343,6 +343,9 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->integerNode('autocomplete_chars')
+                    ->defaultValue(3)
+                ->end()
             ->end()
         ;
 

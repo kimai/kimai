@@ -201,7 +201,8 @@
             var loader = new KimaiWebLoader(
                 {
                     locale: '{{ app.request.locale }}',
-                    twentyFourHours: {{ 'true'|hour24('false') }}
+                    twentyFourHours: {{ 'true'|hour24('false') }},
+                    autoComplete: {{ kimai_context.autocomplete_chars }}
                 },
                 {
                     'confirm': '{{ 'confirm'|trans }}',
