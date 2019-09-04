@@ -609,9 +609,9 @@ class TimesheetRepository extends EntityRepository
         }
 
         if ($query->getExported() === TimesheetQuery::STATE_EXPORTED) {
-            $qb->andWhere('t.exported = :exported')->setParameter('exported', true);
+            $qb->andWhere('t.exported = :exported')->setParameter('exported', true, \PDO::PARAM_BOOL);
         } elseif ($query->getExported() === TimesheetQuery::STATE_NOT_EXPORTED) {
-            $qb->andWhere('t.exported = :exported')->setParameter('exported', false);
+            $qb->andWhere('t.exported = :exported')->setParameter('exported', false, \PDO::PARAM_BOOL);
         }
 
         if (null !== $query->getActivity()) {

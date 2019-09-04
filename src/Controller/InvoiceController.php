@@ -10,15 +10,14 @@
 namespace App\Controller;
 
 use App\Entity\InvoiceTemplate;
-use App\Entity\Timesheet;
 use App\Form\InvoiceTemplateForm;
 use App\Form\Toolbar\InvoiceToolbarForm;
+use App\Invoice\InvoiceItemInterface;
 use App\Invoice\InvoiceModel;
 use App\Invoice\ServiceInvoice;
 use App\Repository\InvoiceTemplateRepository;
 use App\Repository\Query\BaseQuery;
 use App\Repository\Query\InvoiceQuery;
-use App\Repository\TimesheetRepository;
 use App\Timesheet\UserDateTimeFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
@@ -44,10 +43,6 @@ class InvoiceController extends AbstractController
      */
     protected $invoiceRepository;
     /**
-     * @var TimesheetRepository
-     */
-    protected $timesheetRepository;
-    /**
      * @var UserDateTimeFactory
      */
     protected $dateTimeFactory;
@@ -62,12 +57,8 @@ class InvoiceController extends AbstractController
     /**
      * @Route(path="/", name="invoice", methods={"GET", "POST"})
      * @Security("is_granted('view_invoice')")
-     *
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Exception
      */
-    public function indexAction(Request $request, TimesheetRepository $repository)
+    public function indexAction(Request $request): Response
     {
         if (!$this->invoiceRepository->hasTemplate()) {
             if ($this->isGranted('manage_invoice_template')) {
@@ -90,7 +81,7 @@ class InvoiceController extends AbstractController
                 /** @var SubmitButton $createButton */
                 $createButton = $form->get('create');
                 if ($createButton->isClicked()) {
-                    return $this->renderInvoice($query, $repository);
+                    return $this->renderInvoice($query);
                 }
 
                 /** @var SubmitButton $previewButton */
@@ -98,12 +89,15 @@ class InvoiceController extends AbstractController
                 if ($previewButton->isClicked()) {
                     $showPreview = true;
                     $query->setPageSize($maxItemsPreview);
-                    $entries = $this->getEntries($query, $repository);
+                    $entries = $this->getPreviewEntries($query);
                 }
             }
         }
 
-        $model = $this->prepareModel($query, $entries);
+        $model = $this->prepareModel($query);
+        if (!empty($entries)) {
+            $model->addEntries($entries);
+        }
 
         return $this->render('invoice/index.html.twig', [
             'model' => $model,
@@ -129,10 +123,13 @@ class InvoiceController extends AbstractController
         return $query;
     }
 
-    protected function renderInvoice(InvoiceQuery $query, TimesheetRepository $repository)
+    protected function renderInvoice(InvoiceQuery $query)
     {
-        $entries = $this->getEntries($query, $repository);
-        $model = $this->prepareModel($query, $entries);
+        $entries = $this->getEntries($query);
+        $model = $this->prepareModel($query);
+        foreach ($entries as $repo => $items) {
+            $model->addEntries($items);
+        }
 
         $document = $this->service->getDocumentByName($model->getTemplate()->getRenderer());
         if (null === $document) {
@@ -143,7 +140,7 @@ class InvoiceController extends AbstractController
             if ($renderer->supports($document)) {
                 $response = $renderer->render($document, $model);
                 if ($query->isMarkAsExported()) {
-                    $repository->setExported($entries);
+                    $this->markEntriesAsExported($entries);
                 }
 
                 return $response;
@@ -158,11 +155,26 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @param InvoiceQuery $query
-     * @param TimesheetRepository $repository
-     * @return Timesheet[]
+     * @param InvoiceItemInterface[] $entries
      */
-    protected function getEntries(InvoiceQuery $query, TimesheetRepository $repository): iterable
+    private function markEntriesAsExported(iterable $entries)
+    {
+        $repositories = $this->service->getInvoiceItemRepositories();
+
+        foreach ($entries as $repo => $items) {
+            foreach ($repositories as $repository) {
+                if (get_class($repository) === $repo) {
+                    $repository->setExported($items);
+                }
+            }
+        }
+    }
+
+    /**
+     * @param InvoiceQuery $query
+     * @return InvoiceItemInterface[]
+     */
+    protected function getEntries(InvoiceQuery $query): array
     {
         // customer needs to be defined, as we need the currency for the invoice
         if (null === $query->getCustomer()) {
@@ -178,21 +190,38 @@ class InvoiceController extends AbstractController
         $query->getBegin()->setTime(0, 0, 0);
         $query->getEnd()->setTime(23, 59, 59);
 
-        return $repository->getTimesheetsForQuery($query);
+        $repositories = $this->service->getInvoiceItemRepositories();
+        $items = [];
+
+        foreach ($repositories as $repository) {
+            $items[get_class($repository)] = $repository->getInvoiceItemsForQuery($query);
+        }
+
+        return $items;
+    }
+
+    protected function getPreviewEntries(InvoiceQuery $query): array
+    {
+        $entries = [];
+        $temp = $this->getEntries($query);
+
+        foreach ($temp as $repo => $items) {
+            $entries = array_merge($entries, $items);
+        }
+
+        return array_slice($entries, 0, $query->getPageSize());
     }
 
     /**
      * @param InvoiceQuery $query
-     * @param Timesheet[] $entries
      * @return InvoiceModel
      * @throws \Exception
      */
-    protected function prepareModel(InvoiceQuery $query, array $entries): InvoiceModel
+    protected function prepareModel(InvoiceQuery $query): InvoiceModel
     {
         $model = new InvoiceModel();
         $model
             ->setQuery($query)
-            ->setEntries($entries)
             ->setCustomer($query->getCustomer())
         ;
 

@@ -9,25 +9,25 @@
 
 namespace App\Invoice\Calculator;
 
-use App\Entity\Timesheet;
 use App\Invoice\CalculatorInterface;
 use App\Invoice\InvoiceItem;
+use App\Invoice\InvoiceItemInterface;
 
 /**
- * A calculator that sums up the timesheet records by project.
+ * A calculator that sums up the invoice item records by project.
  */
 class ProjectInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
 {
-    protected function calculateSumIdentifier(Timesheet $timesheet): string
+    protected function calculateSumIdentifier(InvoiceItemInterface $invoiceItem): string
     {
-        if (null === $timesheet->getProject()->getId()) {
+        if (null === $invoiceItem->getProject()->getId()) {
             throw new \Exception('Cannot handle un-persisted projects');
         }
 
-        return (string) $timesheet->getProject()->getId();
+        return (string) $invoiceItem->getProject()->getId();
     }
 
-    protected function mergeSumTimesheet(InvoiceItem $invoiceItem, Timesheet $entry)
+    protected function mergeSumTimesheet(InvoiceItem $invoiceItem, InvoiceItemInterface $entry)
     {
         $invoiceItem->setProject($entry->getProject());
         $invoiceItem->setDescription($entry->getProject()->getName());
