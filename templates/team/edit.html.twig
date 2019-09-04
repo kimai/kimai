@@ -3,7 +3,6 @@
 {% import "team/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'teams.title'|trans({}, 'teams') }}{% endblock %}
-{% block page_subtitle %}{{ 'teams.subtitle'|trans({}, 'teams') }}{% endblock %}
 {% block page_actions %}{{ actions.team(team, 'edit') }}{% endblock %}
 
 {% block main %}

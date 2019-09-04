@@ -328,10 +328,6 @@
                 <source>timesheet.title</source>
                 <target>Mis horas</target>
             </trans-unit>
-            <trans-unit id="timesheet.subtitle">
-                <source>timesheet.subtitle</source>
-                <target>Administrar mis partes de horas</target>
-            </trans-unit>
             <trans-unit id="timesheet.edit">
                 <source>timesheet.edit</source>
                 <target>Editar registro</target>
@@ -371,10 +367,6 @@
             <trans-unit id="profile.title">
                 <source>profile.title</source>
                 <target>Perfil</target>
-            </trans-unit>
-            <trans-unit id="profile.subtitle">
-                <source>profile.subtitle</source>
-                <target>Editar configuración</target>
             </trans-unit>
             <trans-unit id="profile.about_me">
                 <source>profile.about_me</source>
@@ -441,10 +433,6 @@
                 <source>calendar.title</source>
                 <target>Calendario</target>
             </trans-unit>
-            <trans-unit id="calendar.subtitle">
-                <source>calendar.subtitle</source>
-                <target>Ver y administrar los datos de mi parte de horas dentro de un calendario</target>
-            </trans-unit>
 
             <!--
               Admin: Timesheet
@@ -453,10 +441,6 @@
                 <source>admin_timesheet.title</source>
                 <target>Partes de horas</target>
             </trans-unit>
-            <trans-unit id="admin_timesheet.subtitle">
-                <source>admin_timesheet.subtitle</source>
-                <target>Todos los usuarios</target>
-            </trans-unit>
 
             <!--
               Admin: Projects
@@ -464,10 +448,6 @@
             <trans-unit id="admin_project.title">
                 <source>admin_project.title</source>
                 <target>Proyectos</target>
-            </trans-unit>
-            <trans-unit id="admin_project.subtitle">
-                <source>admin_project.subtitle</source>
-                <target>Un proyecto combina las actividades de un cliente en un grupo.</target>
             </trans-unit>
             <trans-unit id="admin_project.short_stats">
                 <source>admin_project.short_stats</source>
@@ -484,10 +464,6 @@
                 <source>admin_activity.title</source>
                 <target>Actividades</target>
             </trans-unit>
-            <trans-unit id="admin_activity.subtitle">
-                <source>admin_activity.subtitle</source>
-                <target>Tareas elegibles para parte de horas</target>
-            </trans-unit>
             <trans-unit id="admin_activity.short_stats">
                 <source>admin_activity.short_stats</source>
                 <target>
@@ -502,10 +478,6 @@
             <trans-unit id="admin_customer.title">
                 <source>admin_customer.title</source>
                 <target>Clientes</target>
-            </trans-unit>
-            <trans-unit id="admin_customer.subtitle">
-                <source>admin_customer.subtitle</source>
-                <target>Sus clientes son la base para crear proyectos y actividades</target>
             </trans-unit>
             <trans-unit id="label.number">
                 <source>label.number</source>
@@ -569,10 +541,6 @@
             <trans-unit id="admin_user.title">
                 <source>admin_user.title</source>
                 <target>Usuario</target>
-            </trans-unit>
-            <trans-unit id="admin_user.subtitle">
-                <source>admin_user.subtitle</source>
-                <target>Todos los usuario registrados en su sistema Kimai</target>
             </trans-unit>
             <trans-unit id="label.alias">
                 <source>label.alias</source>
@@ -727,10 +695,6 @@
             <trans-unit id="admin_invoice_template.title">
                 <source>admin_invoice_template.title</source>
                 <target>Plantilla de factura</target>
-            </trans-unit>
-            <trans-unit id="admin_invoice_template.subtitle">
-                <source>admin_invoice_template.subtitle</source>
-                <target>Administrar las plantillas de factura que se pueden usar para exportar datos.</target>
             </trans-unit>
             <trans-unit id="invoice.title">
                 <source>invoice.title</source>

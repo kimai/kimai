@@ -3,7 +3,6 @@
 {% import "timesheet-team/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'admin_timesheet.title'|trans }}{% endblock %}
-{% block page_subtitle %}{{ 'admin_timesheet.subtitle'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.timesheet_team(timesheet, 'edit') }}{% endblock %}
 
 {% block main %}

@@ -6,10 +6,6 @@
                 <source>tags.title</source>
                 <target>Marcadores</target>
             </trans-unit>
-            <trans-unit id="tags.subtitle">
-                <source>tags.subtitle</source>
-                <target>Permitir marcadores, para combinar livremente registros de quadro de horários em um conjunto de resultados</target>
-            </trans-unit>
         </body>
     </file>
 </xliff>

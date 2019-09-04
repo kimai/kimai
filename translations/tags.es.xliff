@@ -6,10 +6,6 @@
                 <source>tags.title</source>
                 <target>Etiquetas</target>
             </trans-unit>
-            <trans-unit id="tags.subtitle">
-                <source>tags.subtitle</source>
-                <target>Las etiquetas permiten combinar libremente los registros del parte de horas en un conjunto de resultados</target>
-            </trans-unit>
         </body>
     </file>
 </xliff>
