@@ -27,6 +27,22 @@ export default class KimaiToolbar extends KimaiPlugin {
         const formSelector = this.getSelector();
         const self = this;
 
+        // sortable datatables use hidden fields in the toolbar filter/search form 
+        jQuery('body').on('click', 'th.sortable', function(event){
+            var $header = $(event.target);
+            var order = 'DESC';
+            var orderBy = $header.data('order');
+            if ($header.hasClass('sorting_desc')) {
+                order = 'ASC';
+            }
+            jQuery(formSelector + ' input#orderBy').val(orderBy);
+            jQuery(formSelector + ' input#order').val(order);
+            // triggers the page reset - see below
+            jQuery(formSelector + ' input#order').trigger('change');
+            // triggers the datatable reload - search for the event name
+            self.getContainer().getPlugin('event').trigger('filter-change');
+        });
+
         // This catches all clicks on the pagination and prevents the default action, as we want to reload the page via JS
         jQuery('body').on('click', 'div.navigation ul.pagination li a', function(event) {
             let pager = jQuery(formSelector + " input#page");

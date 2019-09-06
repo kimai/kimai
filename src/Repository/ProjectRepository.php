@@ -212,8 +212,19 @@ class ProjectRepository extends EntityRepository
             ->select('p')
             ->from(Project::class, 'p')
             ->leftJoin('p.customer', 'c')
-            ->addOrderBy('p.' . $query->getOrderBy(), $query->getOrder())
         ;
+
+        $orderBy = $query->getOrderBy();
+        switch ($orderBy) {
+            case 'customer':
+                $orderBy = 'c.name';
+                break;
+            default:
+                $orderBy = 'p.' . $orderBy;
+                break;
+        }
+
+        $qb->addOrderBy($orderBy, $query->getOrder());
 
         if (in_array($query->getVisibility(), [ProjectQuery::SHOW_VISIBLE, ProjectQuery::SHOW_HIDDEN])) {
             $qb

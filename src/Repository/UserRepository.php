@@ -86,9 +86,11 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('u')
+        $qb
+            ->select('u')
             ->from(User::class, 'u')
-            ->orderBy('u.' . $query->getOrderBy(), $query->getOrder());
+            ->orderBy('u.' . $query->getOrderBy(), $query->getOrder())
+        ;
 
         if (UserQuery::SHOW_VISIBLE == $query->getVisibility()) {
             $qb->andWhere($qb->expr()->eq('u.enabled', ':enabled'));

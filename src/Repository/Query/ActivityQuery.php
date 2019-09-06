@@ -16,6 +16,8 @@ use App\Entity\Project;
  */
 class ActivityQuery extends ProjectQuery
 {
+    public const ACTIVITY_ORDER_ALLOWED = ['id', 'name', 'comment', 'customer', 'project'];
+
     /**
      * @var Project|int|null
      */
@@ -28,7 +30,9 @@ class ActivityQuery extends ProjectQuery
     public function __construct()
     {
         parent::__construct();
-        $this->setOrderBy('name');
+        $this->setDefaults([
+            'orderBy' => 'name',
+        ]);
     }
 
     /**
@@ -67,25 +71,5 @@ class ActivityQuery extends ProjectQuery
         $this->project = $project;
 
         return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isDirty(): bool
-    {
-        if (parent::isDirty()) {
-            return true;
-        }
-
-        if ($this->project !== null) {
-            return true;
-        }
-
-        if ($this->globalsOnly !== false) {
-            return true;
-        }
-
-        return false;
     }
 }

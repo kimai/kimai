@@ -27,6 +27,8 @@ class CustomerToolbarForm extends AbstractToolbarForm
         $this->addVisibilityChoice($builder);
         $this->addPageSizeChoice($builder);
         $this->addHiddenPagination($builder);
+        $this->addHiddenOrder($builder);
+        $this->addHiddenOrderBy($builder, CustomerQuery::CUSTOMER_ORDER_ALLOWED);
     }
 
     /**

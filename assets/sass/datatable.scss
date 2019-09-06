@@ -264,3 +264,8 @@ div.dataTables_scrollHead table.table-bordered {
 .table-striped.dataTable tbody tr.active:nth-child(odd) th {
     background-color: #017ebc;
 }
+
+/* custom extension to make the column wide enough to show the sortable icons */
+table.dataTable th.sortable {
+    padding-right: 20px;
+}

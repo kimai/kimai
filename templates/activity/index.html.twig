@@ -9,7 +9,7 @@
     'customer': 'hidden-xs',
     'project': 'hidden-xs',
     'comment': 'hidden-xs',
-    'visible': '',
+    'visible': {'class': '', 'orderBy': false},
     'actions': 'actions alwaysVisible',
 } %}
 
@@ -28,8 +28,7 @@
     {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% else %}
-
-        {{ tables.data_table_header(tableName, columns, false, 'kimai.activityUpdate') }}
+        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.activityUpdate'}) }}
 
         {% for entry in entries %}
             <tr{% if is_granted('edit', entry) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_activity_edit', {'id': entry.id}) }}"{% endif %}>

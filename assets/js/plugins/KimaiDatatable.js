@@ -49,6 +49,7 @@ export default class KimaiDatatable extends KimaiPlugin {
             document.addEventListener('toolbar-change', handle);
         } else {
             document.addEventListener('pagination-change', handle);
+            document.addEventListener('filter-change', handle);
         }
     }
 

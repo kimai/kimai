@@ -90,13 +90,15 @@ abstract class TimesheetAbstractController extends AbstractController
         $form->setData($query);
         $form->submit($request->query->all(), false);
 
-        if ($form->isValid()) {
-            if (null !== $query->getBegin()) {
-                $query->getBegin()->setTime(0, 0, 0);
-            }
-            if (null !== $query->getEnd()) {
-                $query->getEnd()->setTime(23, 59, 59);
-            }
+        if (!$form->isValid()) {
+            $query->resetByFormError($form->getErrors());
+        }
+
+        if (null !== $query->getBegin()) {
+            $query->getBegin()->setTime(0, 0, 0);
+        }
+        if (null !== $query->getEnd()) {
+            $query->getEnd()->setTime(23, 59, 59);
         }
 
         $tags = $query->getTags(true);
@@ -110,8 +112,6 @@ abstract class TimesheetAbstractController extends AbstractController
             );
         }
 
-        $dirtyQuery = $query->isDirty();
-
         $this->prepareQuery($query);
 
         $pager = $this->getRepository()->getPagerfantaForQuery($query);
@@ -120,7 +120,6 @@ abstract class TimesheetAbstractController extends AbstractController
             'entries' => $pager,
             'page' => $query->getPage(),
             'query' => $query,
-            'showFilter' => $dirtyQuery,
             'toolbarForm' => $form->createView(),
             'showSummary' => $this->includeSummary(),
             'showStartEndTime' => $this->canSeeStartEndTime()

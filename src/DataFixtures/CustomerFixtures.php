@@ -128,6 +128,7 @@ class CustomerFixtures extends Fixture
             ->setName($faker->catchPhrase . (self::INDICATE_HIDDEN && !$visible ? ' (x)' : ''))
             ->setComment($faker->text)
             ->setCustomer($customer)
+            ->setOrderNumber('P-' . $faker->ean8)
             ->setVisible($visible)
         ;
 

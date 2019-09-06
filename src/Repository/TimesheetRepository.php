@@ -493,7 +493,6 @@ class TimesheetRepository extends EntityRepository
         }
 
         $qb
-            ->leftJoin('p.customer', 'c')
             ->leftJoin('p.teams', 'teams')
             ->leftJoin('c.teams', 'c_teams');
 
@@ -551,8 +550,27 @@ class TimesheetRepository extends EntityRepository
             ->select('t')
             ->from(Timesheet::class, 't')
             ->leftJoin('t.project', 'p')
-            ->addOrderBy('t.' . $query->getOrderBy(), $query->getOrder())
+            ->leftJoin('p.customer', 'c')
         ;
+
+        $orderBy = $query->getOrderBy();
+        switch ($orderBy) {
+            case 'project':
+                $orderBy = 'p.name';
+                break;
+            case 'customer':
+                $orderBy = 'c.name';
+                break;
+            case 'activity':
+                $qb->leftJoin('t.activity', 'a');
+                $orderBy = 'a.name';
+                break;
+            default:
+                $orderBy = 't.' . $orderBy;
+                break;
+        }
+
+        $qb->addOrderBy($orderBy, $query->getOrder());
 
         $user = [];
         if (null !== $query->getUser()) {

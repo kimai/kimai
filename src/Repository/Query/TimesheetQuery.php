@@ -25,6 +25,8 @@ class TimesheetQuery extends ActivityQuery
     public const STATE_EXPORTED = 4;
     public const STATE_NOT_EXPORTED = 5;
 
+    public const TIMESHEET_ORDER_ALLOWED = ['begin', 'end', 'duration', 'rate', 'customer', 'project', 'activity', 'description'];
+
     /**
      * @var User|null
      */
@@ -57,9 +59,11 @@ class TimesheetQuery extends ActivityQuery
     public function __construct()
     {
         parent::__construct();
-        $this->setOrder(self::ORDER_DESC);
-        $this->setOrderBy('begin');
-        $this->dateRange = new DateRange();
+        $this->setDefaults([
+            'order' => self::ORDER_DESC,
+            'orderBy' => 'begin',
+            'dateRange' => new DateRange()
+        ]);
     }
 
     public function addUser(User $user): self
@@ -265,41 +269,5 @@ class TimesheetQuery extends ActivityQuery
         $this->tags = $tags;
 
         return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isDirty(): bool
-    {
-        if (parent::isDirty()) {
-            return true;
-        }
-
-        if ($this->activity !== null) {
-            return true;
-        }
-
-        if (!empty($this->tags)) {
-            return true;
-        }
-
-        if ($this->timesheetUser !== null) {
-            return true;
-        }
-
-        if ($this->state !== self::STATE_ALL) {
-            return true;
-        }
-
-        if ($this->exported !== self::STATE_ALL) {
-            return true;
-        }
-
-        if ($this->dateRange->getBegin() !== null || $this->dateRange->getEnd() !== null) {
-            return true;
-        }
-
-        return false;
     }
 }

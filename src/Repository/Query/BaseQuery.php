@@ -12,6 +12,7 @@ namespace App\Repository\Query;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Utils\SearchTerm;
+use Symfony\Component\Form\FormErrorIterator;
 
 /**
  * Base class for advanced Repository queries.
@@ -28,6 +29,13 @@ class BaseQuery
     public const RESULT_TYPE_PAGER = 'PagerFanta';
     public const RESULT_TYPE_QUERYBUILDER = 'QueryBuilder';
 
+    private $defaults = [
+        'page' => self::DEFAULT_PAGE,
+        'pageSize' => self::DEFAULT_PAGESIZE,
+        'orderBy' => 'id',
+        'order' => self::ORDER_ASC,
+        'searchTerm' => null,
+    ];
     /**
      * @var int
      */
@@ -214,29 +222,43 @@ class BaseQuery
         return $this;
     }
 
-    /**
-     * Returns whether the query has changed fields, compared to the original state.
-     *
-     * @return bool
-     */
-    public function isDirty(): bool
+    public function __set($name, $value)
     {
-        if ($this->page !== self::DEFAULT_PAGE) {
-            return true;
+        $method = 'set' . ucfirst($name);
+        if (method_exists($this, $method)) {
+            $this->{$method}($value);
+        } elseif (property_exists($this, $name)) {
+            $this->$name = $value;
+        }
+    }
+
+    /**
+     * @param array $defaults
+     * @return self
+     */
+    protected function setDefaults(array $defaults)
+    {
+        $this->defaults = array_merge($this->defaults, $defaults);
+        foreach ($this->defaults as $key => $value) {
+            $this->$key = $value;
         }
 
-        if ($this->pageSize !== self::DEFAULT_PAGESIZE) {
-            return true;
+        return $this;
+    }
+
+    /**
+     * @param FormErrorIterator $errors
+     * @return self
+     */
+    public function resetByFormError(FormErrorIterator $errors)
+    {
+        foreach ($errors as $error) {
+            $key = $error->getOrigin()->getName();
+            if (isset($this->defaults[$key])) {
+                $this->$key = $this->defaults[$key];
+            }
         }
 
-        if (!empty($this->teams)) {
-            return true;
-        }
-
-        if (null !== $this->searchTerm) {
-            return true;
-        }
-
-        return false;
+        return $this;
     }
 }
