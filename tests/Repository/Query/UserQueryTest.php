@@ -23,6 +23,8 @@ class UserQueryTest extends BaseQueryTest
         $this->assertBaseQuery($sut, 'username');
         $this->assertInstanceOf(VisibilityQuery::class, $sut);
         $this->assertRole($sut);
+
+        $this->assertResetByFormError(new UserQuery(), 'username');
     }
 
     protected function assertRole(UserQuery $sut)

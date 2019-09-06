@@ -254,7 +254,7 @@ class BaseQuery
     {
         foreach ($errors as $error) {
             $key = $error->getOrigin()->getName();
-            if (isset($this->defaults[$key])) {
+            if (array_key_exists($key, $this->defaults)) {
                 $this->$key = $this->defaults[$key];
             }
         }

@@ -9,21 +9,20 @@
 
 namespace App\Tests\Repository\Query;
 
-use App\Repository\Query\CustomerQuery;
-use App\Repository\Query\VisibilityQuery;
+use App\Repository\Query\TagQuery;
 
 /**
- * @covers \App\Repository\Query\CustomerQuery
+ * @covers \App\Repository\Query\TagQuery
  */
-class CustomerQueryTest extends BaseQueryTest
+class TagQueryTest extends BaseQueryTest
 {
     public function testQuery()
     {
-        $sut = new CustomerQuery();
+        $sut = new TagQuery();
 
         $this->assertBaseQuery($sut, 'name');
-        $this->assertInstanceOf(VisibilityQuery::class, $sut);
+        $this->assertInstanceOf(TagQuery::class, $sut);
 
-        $this->assertResetByFormError(new CustomerQuery(), 'name');
+        $this->assertResetByFormError(new TagQuery(), 'name');
     }
 }
