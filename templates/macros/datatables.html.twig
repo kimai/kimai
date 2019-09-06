@@ -47,7 +47,7 @@
             <div class="dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
                     <div class="col-sm-12">
-                        <table id="dt_{{ tableName }}" class="table {% if striped %}table-striped {% endif %}table-hover dataTable" role="grid" data-reload-event="{{ reloadEvent }}">
+                        <table class="table {% if striped %}table-striped {% endif %}table-hover dataTable" role="grid" data-reload-event="{{ reloadEvent }}" id="dt_{{ tableName }}">
                             <thead>
                                 <tr>
                                 {%- for title, headerOptions in columns -%}
