@@ -222,7 +222,7 @@ class BaseQuery
         return $this;
     }
 
-    public function __set($name, $value)
+    protected function set($name, $value)
     {
         $method = 'set' . ucfirst($name);
         if (method_exists($this, $method)) {
@@ -240,7 +240,7 @@ class BaseQuery
     {
         $this->defaults = array_merge($this->defaults, $defaults);
         foreach ($this->defaults as $key => $value) {
-            $this->$key = $value;
+            $this->set($key, $value);
         }
 
         return $this;
@@ -255,7 +255,7 @@ class BaseQuery
         foreach ($errors as $error) {
             $key = $error->getOrigin()->getName();
             if (array_key_exists($key, $this->defaults)) {
-                $this->$key = $this->defaults[$key];
+                $this->set($key, $this->defaults[$key]);
             }
         }
 
