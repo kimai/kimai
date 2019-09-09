@@ -16,6 +16,13 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
 
     init() {
         this.registerAutomaticAlertRemove('div.alert-success', 5000);
+
+        // activate the dropdown functionality
+        jQuery('.dropdown-toggle').dropdown();
+        // activate the tooltip functionality
+        jQuery('[data-toggle="tooltip"]').tooltip();
+        // activate all form plugins
+        this.getContainer().getPlugin('form').activateForm('.content-wrapper form', 'body');
     }
 
     /**

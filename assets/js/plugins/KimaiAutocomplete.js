@@ -21,7 +21,6 @@ export default class KimaiAutocomplete extends KimaiPlugin {
 
     init() {
         this.minChars = this.getContainer().getConfiguration().get('autoComplete');
-        this.activateAutocomplete(this.selector);
     }
 
     getId() {
@@ -36,60 +35,72 @@ export default class KimaiAutocomplete extends KimaiPlugin {
         return this.splitTagList(term).pop();
     }
 
-    activateAutocomplete(selector)
-    {
-        const apiUrl = jQuery(selector).attr('data-autocomplete-url');
+    activateAutocomplete(selector) {
         const self = this;
-        const API = self.getContainer().getPlugin('api');
+        
+        jQuery(selector + ' ' + this.selector).each(function(index) {
+            const currentField = jQuery(this);
+            const apiUrl = currentField.attr('data-autocomplete-url');
+            const API = self.getContainer().getPlugin('api');
 
-        jQuery(selector)
-            // don't navigate away from the field on tab when selecting an item
-            .on("keydown", function (event) {
-                if (event.keyCode === jQuery.ui.keyCode.TAB &&
-                    jQuery(this).autocomplete("instance").menu.active) {
-                    event.preventDefault();
-                }
-            })
-            .autocomplete({
-                source: function (request, response) {
-                    const lastEntry = self.extractLastTag(request.term);
-                    API.get(apiUrl, {'name': lastEntry}, function(data){
-                        response(data);
-                    });
-                },
-                search: function () {
-                    // custom minLength
-                    var term = self.extractLastTag(this.value);
-                    if (term.length < self.minChars) {
-                        return false;
+            currentField
+                // don't navigate away from the field on tab when selecting an item
+                .on("keydown", function (event) {
+                    if (event.keyCode === jQuery.ui.keyCode.TAB &&
+                        jQuery(this).autocomplete("instance").menu.active) {
+                        event.preventDefault();
                     }
-                },
-                focus: function () {
-                    // prevent value inserted on focus
-                    return false;
-                },
-                select: function (event, ui) {
-                    var terms = self.splitTagList(this.value);
+                })
+                .autocomplete({
+                        source: function (request, response) {
+                            const lastEntry = self.extractLastTag(request.term);
+                            API.get(apiUrl, {'name': lastEntry}, function(data){
+                                response(data);
+                            });
+                        },
+                        search: function () {
+                            // custom minLength
+                            var term = self.extractLastTag(this.value);
+                            if (term.length < self.minChars) {
+                                return false;
+                            }
+                        },
+                        focus: function () {
+                            // prevent value inserted on focus
+                            return false;
+                        },
+                        select: function (event, ui) {
+                            var terms = self.splitTagList(this.value);
 
-                    // remove the current input
-                    terms.pop();
+                            // remove the current input
+                            terms.pop();
 
-                    // check if selected tag is already in list
-                    if (!terms.includes(ui.item.value)) {
-                        // add the selected item
-                        terms.push(ui.item.value);
+                            // check if selected tag is already in list
+                            if (!terms.includes(ui.item.value)) {
+                                // add the selected item
+                                terms.push(ui.item.value);
+                            }
+                            // add placeholder to get the comma-and-space at the end
+                            terms.push("");
+
+                            this.value = terms.join(", ");
+
+                            $(this).trigger('change');
+
+                            return false;
+                        }
                     }
-                    // add placeholder to get the comma-and-space at the end
-                    terms.push("");
+                )
+            ;
+        });
+    }
 
-                    this.value = terms.join(", ");
-
-                    $(this).trigger('change');
-
-                    return false;
-                }
-            }
-        );
+    destroyAutocomplete(selector) {
+        jQuery(selector + ' ' + this.selector).each(function(index) {
+            const currentField = jQuery(this);
+            currentField.autocomplete("destroy");
+            currentField.removeData('autocomplete');
+        });
     }
 
 }

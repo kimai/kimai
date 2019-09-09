@@ -24,13 +24,9 @@ export default class KimaiDatePicker extends KimaiPlugin {
         return 'date-picker';
     }
 
-    init() {
-        this.activateDatePicker(this.selector);
-    }
-
     activateDatePicker(selector) {
-        let translator = this.getContainer().getTranslation();
-        jQuery(selector + ' input[data-datepickerenable="on"]').each(function(index) {
+        const TRANSLATE = this.getContainer().getTranslation();
+        jQuery(selector + ' ' + this.selector).each(function(index) {
             let localeFormat = jQuery(this).data('format');
             jQuery(this).daterangepicker({
                 singleDatePicker: true,
@@ -39,9 +35,9 @@ export default class KimaiDatePicker extends KimaiPlugin {
                 locale: {
                     format: localeFormat,
                     firstDay: 1,
-                    applyLabel: translator.get('confirm'),
-                    cancelLabel: translator.get('cancel'),
-                    customRangeLabel: translator.get('customRange'),
+                    applyLabel: TRANSLATE.get('confirm'),
+                    cancelLabel: TRANSLATE.get('cancel'),
+                    customRangeLabel: TRANSLATE.get('customRange'),
                     daysOfWeek: moment.weekdaysShort(),
                     monthNames: moment.months(),
                 }
@@ -51,6 +47,15 @@ export default class KimaiDatePicker extends KimaiPlugin {
                 jQuery(this).val(picker.startDate.format(localeFormat));
                 jQuery(this).trigger("change");
             });
+        });
+    }
+
+    destroyDatePicker(selector) {
+        jQuery(selector + ' ' + this.selector).each(function(index) {
+            if (jQuery(this).data('daterangepicker') !== undefined) {
+                jQuery(this).daterangepicker('destroy');
+                jQuery(this).data('daterangepicker').remove();
+            }
         });
     }
 

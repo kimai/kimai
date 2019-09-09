@@ -24,15 +24,11 @@ export default class KimaiDateTimePicker extends KimaiPlugin {
         return 'date-time-picker';
     }
 
-    init() {
-        this.activateDateTimePicker(this.selector);
-    }
-
     activateDateTimePicker(selector) {
         let translator = this.getContainer().getTranslation();
         let configuration = this.getContainer().getConfiguration();
 
-        jQuery(selector + ' input[data-datetimepicker="on"]').each(function(index) {
+        jQuery(selector + ' ' + this.selector).each(function(index) {
             let localeFormat = jQuery(this).data('format');
             jQuery(this).daterangepicker({
                 singleDatePicker: true,
@@ -55,6 +51,15 @@ export default class KimaiDateTimePicker extends KimaiPlugin {
                 jQuery(this).val(picker.startDate.format(localeFormat));
                 jQuery(this).trigger("change");
             });
+        });
+    }
+
+    destroyDateTimePicker(selector) {
+        jQuery(selector + ' ' + this.selector).each(function(index) {
+            if (jQuery(this).data('daterangepicker') !== undefined) {
+                jQuery(this).daterangepicker('destroy');
+                jQuery(this).data('daterangepicker').remove();
+            }
         });
     }
 

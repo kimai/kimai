@@ -14,9 +14,10 @@ import KimaiPlugin from "../KimaiPlugin";
 
 export default class KimaiDatatable extends KimaiPlugin {
 
-    constructor(selector) {
+    constructor(contentAreaSelector, tableSelector) {
         super();
-        this.selector = selector;
+        this.contentArea = contentAreaSelector;
+        this.selector = tableSelector;
     }
 
     getId() {
@@ -54,12 +55,13 @@ export default class KimaiDatatable extends KimaiPlugin {
     }
 
     reloadDatatable() {
+        const contentArea = this.contentArea;
         const durations = this.getContainer().getPlugin('timesheet-duration');
         const toolbarSelector = this.getContainer().getPlugin('toolbar').getSelector();
         
         const form = jQuery(toolbarSelector);
         let loading = '<div class="overlay"><i class="fas fa-sync fa-spin"></i></div>';
-        jQuery('section.content').append(loading);
+        jQuery(contentArea).append(loading);
 
         // remove the empty fields to prevent errors
         let formData = jQuery(toolbarSelector + ' :input')
@@ -73,8 +75,8 @@ export default class KimaiDatatable extends KimaiPlugin {
             type: form.attr('method'),
             data: formData,
             success: function(html) {
-                jQuery('section.content').replaceWith(
-                    jQuery(html).find('section.content')
+                jQuery(contentArea).replaceWith(
+                    jQuery(html).find(contentArea)
                 );
                 durations.updateRecords();
             },
