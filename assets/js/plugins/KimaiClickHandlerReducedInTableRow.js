@@ -21,12 +21,13 @@ export default class KimaiClickHandlerReducedInTableRow extends KimaiPlugin {
                 return;
             }
 
-            // handles the "click" on table rows to open an entry for editing: when a button within a row is clicked,
-            // we don't want the table row event to be processed - so we intercept it
+            // handles the "click" on table rows to open an entry for editing 
             let target = event.target;
             if (event.currentTarget.matches('tr')) {
                 while (target !== null && !target.matches('body')) {
-                    if (target.matches('a') || target.matches ('button')) {
+                    // when an element within the row is clicked, that can trigger stuff itself, we don't want the event to be processed
+                    // don't act if a link, button or form element was clicked
+                    if (target.matches('a') || target.matches ('button') || target.matches ('input')) {
                         return;
                     }
                     target = target.parentNode;

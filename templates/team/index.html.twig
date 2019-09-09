@@ -17,13 +17,13 @@
         {% set columns = {
             'name': '',
             'teamlead': '',
-            'user': '',
+            'user': {'class': '', 'orderBy': false},
             'actions': 'actions alwaysVisible',
         } %}
 
         {% set tableName = 'admin_teams' %}
 
-        {{ tables.data_table_header(tableName, columns, false, 'kimai.teamUpdate') }}
+        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.teamUpdate'}) }}
         {% for team in teams %}
             <tr{% if is_granted('edit', team) %} class="open-edit alternative-link" data-href="{{ path('admin_team_edit', {'id': team.id}) }}"{% endif %}>
                 <td>{{ team.name }}</td>

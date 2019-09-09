@@ -6,13 +6,13 @@
 
 {% set tableName = 'timesheet_admin' %}
 {% set columns = {
-    'date': 'alwaysVisible',
+    'date': {'class': 'alwaysVisible', 'orderBy': 'begin'},
 } %}
 
 {% if showStartEndTime %}
     {% set columns = columns|merge({
-        'starttime': 'hidden-xs',
-        'endtime': 'hidden-xs'
+        'starttime': {'class': 'hidden-xs', 'orderBy': 'begin'},
+        'endtime': {'class': 'hidden-xs', 'orderBy': 'end'}
     }) %}
 {% endif %}
 
@@ -22,9 +22,9 @@
     'customer': 'hidden-xs hidden-sm hidden-md',
     'project': 'hidden-xs hidden-sm hidden-md',
     'activity': 'hidden-xs hidden-sm',
-    'username': 'hidden-xs',
     'description': 'hidden-xs hidden-sm',
-    'tags': 'hidden-xs hidden-sm',
+    'username': {'class': 'hidden-xs', 'orderBy': false},
+    'tags': {'class': 'hidden-xs hidden-sm', 'orderBy': false},
     'actions': 'actions alwaysVisible',
 }) %}
 
@@ -41,7 +41,7 @@
     {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% else %}
-        {{ tables.data_table_header(tableName, columns, false, 'kimai.timesheetUpdate') }}
+        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.timesheetUpdate'}) }}
 
         {% for entry in entries %}
             <tr{% if is_granted('edit', entry) %} class="modal-ajax-form open-edit{% if not entry.end %} recording{% endif %}" data-href="{{ path('admin_timesheet_edit', {'id': entry.id}) }}"{% endif %}>
@@ -82,10 +82,10 @@
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}">
                     {{ widgets.label_activity(entry.activity) }}
                 </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">{{ entry.description|nl2br }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'username') }}">
                     {{ widgets.label_user(entry.user) }}
                 </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">{{ entry.description|nl2br }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'tags') }}">{{ widgets.tag_list(entry.tags) }}</td>
                 <td class="actions">
                     {{- actions.timesheet_team(entry, 'index') -}}

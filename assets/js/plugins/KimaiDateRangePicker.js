@@ -24,13 +24,9 @@ export default class KimaiDateRangePicker extends KimaiPlugin {
         return 'date-range-picker';
     }
 
-    init() {
-        this.activateDateRangePicker(this.selector);
-    }
-
     activateDateRangePicker(selector) {
         let translator = this.getContainer().getTranslation();
-        jQuery(selector + ' input[data-daterangepickerenable="on"]').each(function(index) {
+        jQuery(selector + ' ' + this.selector).each(function(index) {
             let localeFormat = jQuery(this).data('format');
             let separator = jQuery(this).data('separator');
             let rangesList = {};
@@ -67,6 +63,15 @@ export default class KimaiDateRangePicker extends KimaiPlugin {
                 jQuery(this).val(picker.startDate.format(localeFormat) + ' - ' + picker.endDate.format(localeFormat));
                 jQuery(this).trigger("change");
             });
+        });
+    }
+
+    destroyDateRangePicker(selector) {
+        jQuery(selector + ' ' + this.selector).each(function(index) {
+            if (jQuery(this).data('daterangepicker') !== undefined) {
+                jQuery(this).daterangepicker('destroy');
+                jQuery(this).data('daterangepicker').remove();
+            }
         });
     }
 

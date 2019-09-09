@@ -104,8 +104,20 @@ class TeamRepository extends EntityRepository
         $qb
             ->select('t')
             ->from(Team::class, 't')
-            ->addOrderBy('t.' . $query->getOrderBy(), $query->getOrder())
         ;
+
+        $orderBy = $query->getOrderBy();
+        switch ($orderBy) {
+            case 'teamlead':
+                $qb->leftJoin('t.teamlead', 'lead');
+                $orderBy = 'lead.username';
+                break;
+            default:
+                $orderBy = 't.' . $orderBy;
+                break;
+        }
+
+        $qb->addOrderBy($orderBy, $query->getOrder());
 
         if (!empty($query->getSearchTerm())) {
             $qb->andWhere(

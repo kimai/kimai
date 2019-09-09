@@ -83,12 +83,15 @@ class CustomerController extends AbstractController
         $form->setData($query);
         $form->submit($request->query->all(), false);
 
+        if (!$form->isValid()) {
+            $query->resetByFormError($form->getErrors());
+        }
+
         $entries = $this->getRepository()->getPagerfantaForQuery($query);
 
         return $this->render('customer/index.html.twig', [
             'entries' => $entries,
             'query' => $query,
-            'showFilter' => $query->isDirty(),
             'toolbarForm' => $form->createView(),
         ]);
     }

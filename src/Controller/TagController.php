@@ -44,12 +44,15 @@ class TagController extends AbstractController
         $form->setData($query);
         $form->submit($request->query->all(), false);
 
+        if (!$form->isValid()) {
+            $query->resetByFormError($form->getErrors());
+        }
+
         $tags = $repository->getTagCount($query);
 
         return $this->render('tags/index.html.twig', [
             'tags' => $tags,
             'query' => $query,
-            'showFilter' => $query->isDirty(),
             'toolbarForm' => $form->createView(),
         ]);
     }

@@ -23,6 +23,7 @@ use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityFormTypeQuery;
+use App\Repository\Query\BaseQuery;
 use App\Repository\Query\CustomerFormTypeQuery;
 use App\Repository\Query\ProjectFormTypeQuery;
 use App\Repository\Query\TimesheetQuery;
@@ -32,6 +33,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Validator\Constraints\Choice;
 
 /**
  * Defines the base form used for all toolbars.
@@ -51,9 +53,15 @@ abstract class AbstractToolbarForm extends AbstractType
         return '';
     }
 
+    /**
+     * Returns whether the Javascript select-picker is allowed.
+     * TODO can be removed... once all bugs are fixed.
+     *
+     * @return bool
+     */
     protected function getSelectpickerConfig(): bool
     {
-        return false;
+        return true;
     }
 
     protected function addUserChoice(FormBuilderInterface $builder)
@@ -200,6 +208,24 @@ abstract class AbstractToolbarForm extends AbstractType
     {
         $builder->add('page', HiddenType::class, [
             'empty_data' => 1
+        ]);
+    }
+
+    protected function addHiddenOrder(FormBuilderInterface $builder)
+    {
+        $builder->add('order', HiddenType::class, [
+            'constraints' => [
+                new Choice(['choices' => [BaseQuery::ORDER_ASC, BaseQuery::ORDER_DESC]])
+            ]
+        ]);
+    }
+
+    protected function addHiddenOrderBy(FormBuilderInterface $builder, array $allowedColumns)
+    {
+        $builder->add('orderBy', HiddenType::class, [
+            'constraints' => [
+                new Choice(['choices' => $allowedColumns])
+            ]
         ]);
     }
 

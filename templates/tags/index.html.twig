@@ -23,7 +23,7 @@
         {% set tableName = 'admin_tags' %}
         {% set manageAllowed = is_granted('manage_tag') %}
 
-        {{ tables.data_table_header(tableName, columns, false, 'kimai.tagUpdate') }}
+        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.tagUpdate'}) }}
         {% for tag in tags %}
             {% set type = 'primary' %}
             {% if tag.amount == 0 %}

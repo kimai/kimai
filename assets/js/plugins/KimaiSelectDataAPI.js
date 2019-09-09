@@ -58,15 +58,6 @@ export default class KimaiSelectDataAPI extends KimaiPlugin {
     }
 
     _updateSelect(selectName, data) {
-        let select = jQuery(selectName);
-        let emptyOption = jQuery(selectName + ' option[value=""]');
-
-        select.find('option').remove().end().find('optgroup').remove().end();
-
-        if (emptyOption.length !== 0) {
-            select.append('<option value="">' + emptyOption.text() + '</option>');
-        }
-
         const options = {};
         for (const apiData of data) {
             let title = apiData.parentTitle;
@@ -84,32 +75,7 @@ export default class KimaiSelectDataAPI extends KimaiPlugin {
             ordered[key] = options[key];
         });
 
-        let htmlOptions = '';
-        let emptyOptions = '';
-
-        for (const [key, value] of Object.entries(ordered)) {
-            if (key === '__empty__') {
-                for (const entity of value) {
-                    emptyOptions +=  '<option value="' + entity.id + '">' + entity.name + '</option>';
-                }
-                continue;
-            }
-
-            htmlOptions += '<optgroup label="' + key + '">';
-            for (const entity of value) {
-                htmlOptions +=  '<option value="' + entity.id + '">' + entity.name + '</option>';
-            }
-            htmlOptions += '</optgroup>';
-        }
-
-        select.append(htmlOptions);
-        select.append(emptyOptions);
-
-        // if we don't trigger the change, the other selects won't be resetted
-        select.trigger('change');
-
-        // if the beta test kimai.theme.select_type is active, this will tell the selects to refresh
-        jQuery('.selectpicker').selectpicker('refresh');
+        this.getContainer().getPlugin('form-select').updateOptions(selectName, ordered);
     }
 
 }

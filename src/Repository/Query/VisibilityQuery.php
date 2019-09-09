@@ -54,20 +54,4 @@ class VisibilityQuery extends BaseQuery
 
         return $this;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isDirty(): bool
-    {
-        if (parent::isDirty()) {
-            return true;
-        }
-
-        if ($this->visibility !== self::SHOW_VISIBLE) {
-            return true;
-        }
-
-        return false;
-    }
 }

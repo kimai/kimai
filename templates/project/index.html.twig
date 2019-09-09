@@ -8,8 +8,9 @@
     'name': 'alwaysVisible',
     'customer': 'hidden-xs',
     'comment': 'hidden-xs hidden-sm',
-    'team': '',
-    'visible': '',
+    'orderNumber': 'hidden-xs hidden-sm',
+    'team': {'class': '', 'orderBy': false},
+    'visible': {'class': '', 'orderBy': false},
     'actions': 'actions alwaysVisible',
 } %}
 
@@ -28,7 +29,7 @@
     {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% else %}
-        {{ tables.data_table_header(tableName, columns, false, 'kimai.projectUpdate') }}
+        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.projectUpdate'}) }}
 
         {% for entry in entries %}
             <tr{% if is_granted('edit', entry) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_project_edit', {'id': entry.id}) }}"{% endif %}>
@@ -37,6 +38,7 @@
                     {{ widgets.label_customer(entry.customer) }}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment|comment2html }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'orderNumber') }}">{{ entry.orderNumber }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'team') }}">
                     {% if entry.teams|length > 0 %}
                         {{ widgets.badge_counter(entry.teams|length) }}

@@ -16,6 +16,8 @@ use App\Entity\Customer;
  */
 class ProjectQuery extends CustomerQuery
 {
+    public const PROJECT_ORDER_ALLOWED = ['id', 'name', 'comment', 'customer', 'orderNumber'];
+
     /**
      * @var Customer|int|null
      */
@@ -24,7 +26,9 @@ class ProjectQuery extends CustomerQuery
     public function __construct()
     {
         parent::__construct();
-        $this->setOrderBy('name');
+        $this->setDefaults([
+            'orderBy' => 'name',
+        ]);
     }
 
     /**
@@ -44,21 +48,5 @@ class ProjectQuery extends CustomerQuery
         $this->customer = $customer;
 
         return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isDirty(): bool
-    {
-        if (parent::isDirty()) {
-            return true;
-        }
-
-        if ($this->customer !== null) {
-            return true;
-        }
-
-        return false;
     }
 }

@@ -105,8 +105,19 @@ class TagRepository extends EntityRepository
             ->leftJoin('tag.timesheets', 'timesheets')
             ->addGroupBy('tag.id')
             ->addGroupBy('tag.name')
-            ->addOrderBy('tag.' . $query->getOrderBy(), $query->getOrder())
         ;
+
+        $orderBy = $query->getOrderBy();
+        switch ($orderBy) {
+            case 'amount':
+                $orderBy = 'amount';
+                break;
+            default:
+                $orderBy = 'tag.' . $orderBy;
+                break;
+        }
+
+        $qb->addOrderBy($orderBy, $query->getOrder());
 
         if ($query->hasSearchTerm()) {
             $searchTerm = $query->getSearchTerm();

@@ -11,8 +11,12 @@ namespace App\Repository\Query;
 
 class TeamQuery extends BaseQuery
 {
+    public const TEAM_ORDER_ALLOWED = ['id', 'name', 'teamlead'];
+
     public function __construct()
     {
-        $this->setOrderBy('name');
+        $this->setDefaults([
+            'orderBy' => 'name',
+        ]);
     }
 }

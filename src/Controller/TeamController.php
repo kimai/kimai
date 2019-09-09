@@ -53,18 +53,20 @@ class TeamController extends AbstractController
     {
         $query = new TeamQuery();
         $query->setPage($page);
-        $query->setOrderBy('name');
 
         $form = $this->getToolbarForm($query);
         $form->setData($query);
         $form->submit($request->query->all(), false);
+
+        if (!$form->isValid()) {
+            $query->resetByFormError($form->getErrors());
+        }
 
         $teams = $repository->getPagerfantaForQuery($query);
 
         return $this->render('team/index.html.twig', [
             'teams' => $teams,
             'query' => $query,
-            'showFilter' => $query->isDirty(),
             'toolbarForm' => $form->createView(),
         ]);
     }

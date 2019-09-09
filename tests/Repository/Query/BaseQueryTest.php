@@ -13,6 +13,11 @@ use App\Entity\Team;
 use App\Repository\Query\BaseQuery;
 use App\Utils\SearchTerm;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Form\DataMapperInterface;
+use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormFactoryInterface;
 
 /**
  * @covers \App\Repository\Query\BaseQuery
@@ -22,6 +27,24 @@ class BaseQueryTest extends TestCase
     public function testQuery()
     {
         $this->assertBaseQuery(new BaseQuery());
+        $this->assertResetByFormError(new BaseQuery());
+    }
+
+    protected function assertResetByFormError(BaseQuery $sut, $orderBy = 'id', $order = 'ASC')
+    {
+        $sut->setOrder('ASK');
+        $sut->setOrderBy('foo');
+        $sut->setPage(99);
+        $sut->setPageSize(99);
+        $sut->setSearchTerm(new SearchTerm('sdf'));
+
+        $this->resetByFormError($sut, ['order', 'orderBy', 'page', 'pageSize', 'searchTerm']);
+
+        self::assertEquals(1, $sut->getPage());
+        self::assertEquals(50, $sut->getPageSize());
+        self::assertEquals($order, $sut->getOrder());
+        self::assertEquals($orderBy, $sut->getOrderBy());
+        self::assertNull($sut->getSearchTerm());
     }
 
     protected function assertBaseQuery(BaseQuery $sut, $orderBy = 'id')
@@ -32,6 +55,34 @@ class BaseQueryTest extends TestCase
         $this->assertOrderBy($sut, $orderBy);
         $this->assertOrder($sut);
         $this->assertTeams($sut);
+    }
+
+    private function getFormBuilder(string $name)
+    {
+        return new FormBuilder($name, null, new EventDispatcher(), $this->getMockBuilder(FormFactoryInterface::class)->getMock(), []);
+    }
+
+    protected function resetByFormError(BaseQuery $sut, array $invalidFields)
+    {
+        $formBuilder = $this->getFormBuilder('form');
+        $formBuilder->setCompound(true);
+        $formBuilder->setDataMapper($this->getMockBuilder(DataMapperInterface::class)->getMock());
+
+        $form = $formBuilder->getForm();
+
+        foreach ($invalidFields as $fieldName) {
+            $form->add($this->getFormBuilder($fieldName)->getForm());
+        }
+
+        $form->submit([]);
+
+        foreach ($invalidFields as $fieldName) {
+            $form->get($fieldName)->addError(new FormError('Failed'));
+        }
+
+        $formErrors = $form->getErrors(true);
+
+        $sut->resetByFormError($formErrors);
     }
 
     protected function assertResultType(BaseQuery $sut)

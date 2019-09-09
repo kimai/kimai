@@ -29,6 +29,24 @@ export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableR
     init() {
         const self = this;
 
+        this.modal = jQuery('#remote_form_modal');
+        this.modal.on('hide.bs.modal', function () {
+            self.getContainer().getPlugin('event').trigger('modal-hide');
+        });
+        this.modal.on('hidden.bs.modal', function () {
+            // kill all references, so GC can kick in
+            self.getContainer().getPlugin('form').destroyForm(self._getFormIdentifier());
+            jQuery('#remote_form_modal .modal-body').replaceWith('');
+        });
+
+        this.modal.on('show.bs.modal', function () {
+            self.getContainer().getPlugin('event').trigger('modal-show');
+        });
+        this.modal.on('shown.bs.modal', function () {
+            // workaround for autofocus attribute, as the modal "steals" it
+            jQuery(self._getFormIdentifier()).find('input[type=text],textarea,select').filter(':not("[data-datetimepicker=on]")').filter(':visible:first').focus().delay(1000).focus();
+        });
+
         this._addClickHandlerReducedInTableRow(this.selector, function(href) {
             self.openUrlInModal(href);
         });
@@ -57,17 +75,26 @@ export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableR
         });
     }
 
+    /**
+     * Returns the CSS selector for the modal form.
+     * 
+     * @returns {string}
+     * @private
+     */
+    _getFormIdentifier() {
+        return '#remote_form_modal .modal-content form';
+    }
+
     _openFormInModal(html) {
         const self = this;
 
-        // the modal that we use to render the form in
-        let formIdentifier = '#remote_form_modal .modal-content form';
+        let formIdentifier = this._getFormIdentifier();
         // if any of these is found in a response, the form will be re-displayed
         let flashErrorIdentifier = 'div.alert-error';
         // messages to show above the form
         let flashMessageIdentifier = 'div.alert';
         let form = jQuery(formIdentifier);
-        let remoteModal = jQuery('#remote_form_modal');
+        let remoteModal = this.modal;
 
         // will be (re-)activated later
         form.off('submit');
@@ -90,11 +117,7 @@ export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableR
             );
 
             // activate new loaded widgets
-            self.getContainer().getPlugin('date-time-picker').activateDateTimePicker(formIdentifier);
-            self.getContainer().getPlugin('autocomplete').activateAutocomplete(formIdentifier + " .js-autocomplete");
-
-            // activate selectpicker if beta test is active
-            jQuery('.selectpicker').selectpicker('refresh');
+            self.getContainer().getPlugin('form').activateForm(formIdentifier);
         }
 
         // show error flash messages
@@ -113,11 +136,7 @@ export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableR
         });
         // -----------------------------------------------------------------------
 
-        // workaround for autofocus attribute, as the modal "steals" it
-        remoteModal.on('shown.bs.modal', function () {
-            jQuery(this).find('input[type=text],textarea,select').filter(':not("[data-datetimepicker=on]")').filter(':visible:first').focus().delay(1000).focus();
-        });
-
+        this.getContainer().getPlugin('toolbar').hide();
         remoteModal.modal('show');
 
         // the new form that was loaded via ajax

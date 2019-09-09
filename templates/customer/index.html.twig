@@ -9,8 +9,8 @@
     'comment': 'hidden-xs',
     'country': 'hidden-xs hidden-sm',
     'number': 'hidden-xs',
-    'team': '',
-    'visible': 'hidden-xs',
+    'team': {'class': '', 'orderBy': false},
+    'visible': {'class': 'hidden-xs', 'orderBy': false},
     'actions': 'actions alwaysVisible',
 } %}
 
@@ -29,7 +29,7 @@
     {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% else %}
-        {{ tables.data_table_header(tableName, columns, false, 'kimai.customerUpdate') }}
+        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.customerUpdate'}) }}
 
         {% for entry in entries %}
             <tr{% if is_granted('edit', entry) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_customer_edit', {'id': entry.id}) }}"{% endif %}>
