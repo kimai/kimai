@@ -56,7 +56,7 @@ abstract class AbstractToolbarForm extends AbstractType
     /**
      * Returns whether the Javascript select-picker is allowed.
      * TODO can be removed... once all bugs are fixed.
-     * 
+     *
      * @return bool
      */
     protected function getSelectpickerConfig(): bool
