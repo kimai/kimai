@@ -67,7 +67,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form.header-search')->form();
         $client->submit($form, [
             'state' => 1,
-            'user' => $user->getId(),
+            'users' => [$user->getId()],
             'pageSize' => 25,
             'daterange' => $dateRange,
             'customer' => null,

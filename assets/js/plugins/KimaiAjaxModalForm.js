@@ -57,12 +57,9 @@ export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableR
 
         if (errorHandler === undefined) {
             errorHandler = function(xhr, err) {
-                if (xhr.status !== undefined && xhr.status === 403) {
-                    const alert = self.getContainer().getPlugin('alert');
-                    alert.error(xhr.statusText);
-                    return;
+                if (xhr.status === undefined || xhr.status !== 403) {
+                    window.location = url;
                 }
-                window.location = url;
             };
         }
 

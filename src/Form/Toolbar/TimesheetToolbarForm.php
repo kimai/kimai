@@ -25,7 +25,7 @@ class TimesheetToolbarForm extends AbstractToolbarForm
     {
         $this->addSearchTermInputField($builder);
         if ($options['include_user']) {
-            $this->addUserChoice($builder);
+            $this->addUsersChoice($builder);
         }
         $this->addDateRangeChoice($builder);
         $this->addCustomerChoice($builder);
