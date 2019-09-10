@@ -84,6 +84,10 @@
                 <source>label.api_token_repeat</source>
                 <target>Repeat API password</target>
             </trans-unit>
+            <trans-unit id="login_required">
+                <source>login_required</source>
+                <target>Missing permission. Redirect to login?</target>
+            </trans-unit>
 
             <!--
               Menu / Navbar items

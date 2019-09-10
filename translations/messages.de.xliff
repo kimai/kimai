@@ -84,6 +84,10 @@
                 <source>label.api_token_repeat</source>
                 <target>API Passwort wiederholen</target>
             </trans-unit>
+            <trans-unit id="login_required">
+                <source>login_required</source>
+                <target>Fehlende Berechtigung. Zur Anmeldung wechseln?</target>
+            </trans-unit>
 
             <!--
               Menu / Navbar items
