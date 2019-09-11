@@ -81,6 +81,11 @@ services:
         arguments:
             $renderer: !tagged widget.renderer
 
+    App\Utils\Translator:
+        decorates: translator
+        arguments:
+            $localDomains: '%kimai.i18n_domains%'
+
     # ================================================================================
     # DATABASE
     # ================================================================================
