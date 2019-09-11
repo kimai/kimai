@@ -39,7 +39,7 @@ nelmio_api_doc:
             description: |
                 JSON API for the Kimai 2 time-tracking software. Read more about its usage in the [API documentation](https://www.kimai.org/documentation/rest-api.html) and then download a [Swagger file](doc.json) for import e.g. in Postman.
                 Be aware: it is not yet considered stable and BC breaks might happen, but we try to avoid them.
-            version: 0.3
+            version: '0.3'
         securityDefinitions:
             apiUser:
                 type: apiKey
