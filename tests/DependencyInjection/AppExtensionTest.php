@@ -98,7 +98,6 @@ class AppExtensionTest extends TestCase
                     'currency' => 'EUR',
                 ]
             ],
-
             'kimai.theme' => [
                 'active_warning' => 3,
                 'box_color' => 'green',
@@ -115,18 +114,17 @@ class AppExtensionTest extends TestCase
                     'mini' => null,
                     'company' => null,
                     'title' => null,
+                    'translation' => null,
                 ],
                 'auto_reload_datatable' => false,
                 'autocomplete_chars' => 3,
             ],
             'kimai.theme.select_type' => null,
             'kimai.theme.show_about' => true,
-
             'kimai.fosuser' => [
                 'registration' => true,
                 'password_reset' => true,
             ],
-
             'kimai.timesheet' => [
                 'mode' => 'default',
                 'markdown_content' => false,
@@ -174,6 +172,7 @@ class AppExtensionTest extends TestCase
                 'ROLE_ADMIN' => [],
                 'ROLE_SUPER_ADMIN' => [],
             ],
+            'kimai.i18n_domains' => []
         ];
 
         // nasty parameter, should be removed!!!

@@ -219,4 +219,138 @@ class ConfigurationTest extends TestCase
         ];
         self::assertEquals($expected, $finalizedConfig['ldap']);
     }
+
+    public function testFullDefaultConfig()
+    {
+        $fullDefaultConfig = [
+            'data_dir' => '/tmp/',
+            'plugin_dir' => '/tmp/',
+            'timesheet' => [
+                'default_begin' => 'now',
+                'mode' => 'default',
+                'markdown_content' => false,
+                'rounding' => [],
+                'rates' => [],
+                'active_entries' => [
+                    'soft_limit' => 1,
+                    'hard_limit' => 1,
+                ],
+                'rules' => [
+                    'allow_future_times' => true,
+                ],
+            ],
+            'user' => [
+                'registration' => true,
+                'password_reset' => true,
+            ],
+            'invoice' => [
+                'documents' => [
+                    0 => 'var/invoices/',
+                    1 => 'templates/invoice/renderer/',
+                ],
+            ],
+            'languages' => [],
+            'calendar' => [
+                'week_numbers' => true,
+                'day_limit' => 4,
+                'slot_duration' => '00:30:00',
+                'businessHours' => [
+                    'days' => [
+                        0 => 1,
+                        1 => 2,
+                        2 => 3,
+                        3 => 4,
+                        4 => 5,
+                    ],
+                    'begin' => '08:00',
+                    'end' => '20:00',
+                ],
+                'visibleHours' => [
+                    'begin' => '00:00',
+                    'end' => '23:59',
+                ],
+                'google' => [
+                    'api_key' => null,
+                    'sources' => [
+                    ],
+                ],
+                'weekends' => true,
+            ],
+            'theme' => [
+                'active_warning' => 3,
+                'box_color' => 'green',
+                'select_type' => null,
+                'auto_reload_datatable' => false,
+                'show_about' => true,
+                'chart' => [
+                    'background_color' => 'rgba(0,115,183,0.7)',
+                    'border_color' => '#3b8bba',
+                    'grid_color' => 'rgba(0,0,0,.05)',
+                    'height' => '200',
+                ],
+                'branding' => [
+                    'logo' => null,
+                    'mini' => null,
+                    'company' => null,
+                    'title' => null,
+                    'translation' => null,
+                ],
+                'autocomplete_chars' => 3,
+            ],
+            'industry' => [
+                'translation' => null,
+            ],
+            'dashboard' => [],
+            'widgets' => [],
+            'defaults' => [
+                'customer' => [
+                    'timezone' => null,
+                    'country' => 'DE',
+                    'currency' => 'EUR',
+                ],
+                'user' => [
+                    'timezone' => null,
+                    'language' => 'en',
+                    'theme' => null,
+                    'currency' => 'EUR',
+                ],
+            ],
+            'permissions' => [
+                'sets' => [],
+                'maps' => [],
+                'roles' => [
+                    'ROLE_USER' => [],
+                    'ROLE_TEAMLEAD' => [],
+                    'ROLE_ADMIN' => [],
+                    'ROLE_SUPER_ADMIN' => [],
+                ],
+            ],
+            'ldap' => [
+                'connection' => [
+                    'host' => null,
+                    'port' => 389,
+                    'useStartTls' => false,
+                    'useSsl' => false,
+                    'bindRequiresDn' => true,
+                    'accountFilterFormat' => null,
+                ],
+                'user' => [
+                    'baseDn' => null,
+                    'filter' => '',
+                    'attributesFilter' => '(objectClass=*)',
+                    'usernameAttribute' => 'uid',
+                    'attributes' => [],
+                ],
+                'role' => [
+                    'baseDn' => null,
+                    'usernameAttribute' => 'dn',
+                    'nameAttribute' => 'cn',
+                    'userDnAttribute' => 'member',
+                    'groups' => [],
+                ],
+            ]
+        ];
+
+        $this->assertConfig($this->getMinConfig(), $fullDefaultConfig);
+    }
 }
