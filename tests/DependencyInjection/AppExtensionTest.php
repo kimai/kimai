@@ -321,6 +321,34 @@ class AppExtensionTest extends TestCase
         $this->assertEquals('(&(objectClass=inetOrgPerson))', $ldapConfig['user']['filter']);
     }
 
+    public function testTranslationOverwritesEmpty()
+    {
+        $minConfig = $this->getMinConfig();
+        $this->extension->load($minConfig, $container = $this->getContainer());
+
+        $config = $container->getParameter('kimai.i18n_domains');
+        $this->assertEquals([], $config);
+    }
+
+    public function testTranslationOverwrites()
+    {
+        $minConfig = $this->getMinConfig();
+        $minConfig['kimai']['industry'] = [
+            'translation' => 'xxxx',
+        ];
+        $minConfig['kimai']['theme'] = [
+            'branding' => [
+                'translation' => 'yyyy',
+            ]
+        ];
+
+        $this->extension->load($minConfig, $container = $this->getContainer());
+
+        $config = $container->getParameter('kimai.i18n_domains');
+        // oder is important, theme/installation specific translations win
+        $this->assertEquals(['yyyy', 'xxxx'], $config);
+    }
+
     /**
      * @expectedException \PHPUnit\Framework\Error\Notice
      * @expectedExceptionMessage Found invalid "kimai" configuration: The child node "data_dir" at path "kimai" must be configured.
