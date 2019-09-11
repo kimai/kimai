@@ -340,11 +340,20 @@ class User extends BaseUser implements UserInterface
         return $this->hasRole(static::ROLE_ADMIN);
     }
 
+    public function getDisplayName(): ?string
+    {
+        if (!empty($this->getAlias())) {
+            return $this->getAlias();
+        }
+
+        return $this->getUsername();
+    }
+
     /**
      * @return string
      */
     public function __toString()
     {
-        return $this->getAlias() ?: $this->getUsername();
+        return $this->getDisplayName();
     }
 }
