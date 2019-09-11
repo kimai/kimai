@@ -190,7 +190,7 @@
             </trans-unit>
             <trans-unit id="label.username">
                 <source>label.username</source>
-                <target>Username</target>
+                <target>User</target>
             </trans-unit>
             <trans-unit id="label.description">
                 <source>label.description</source>
