@@ -25,6 +25,7 @@ class UserTest extends TestCase
         $user = new User();
         $this->assertInstanceOf(ArrayCollection::class, $user->getPreferences());
         $this->assertNull($user->getTitle());
+        $this->assertNull($user->getDisplayName());
         $this->assertNull($user->getAvatar());
         $this->assertNull($user->getAlias());
         $this->assertNull($user->getId());
@@ -73,17 +74,20 @@ class UserTest extends TestCase
         $this->assertEquals('I like rain', $user->getPreferenceValue('test2'));
     }
 
-    public function testToString()
+    public function testDisplayName()
     {
         $user = new User();
 
         $user->setUsername('bar');
-        $this->assertEquals('bar', (string) $user);
+        $this->assertEquals('bar', $user->getDisplayName());
         $this->assertEquals('bar', $user->getUsername());
+        $this->assertEquals('bar', (string) $user);
 
         $user->setAlias('foo');
-        $this->assertEquals('foo', (string) $user);
         $this->assertEquals('foo', $user->getAlias());
+        $this->assertEquals('bar', $user->getUsername());
+        $this->assertEquals('foo', $user->getDisplayName());
+        $this->assertEquals('foo', (string) $user);
     }
 
     public function testGetLocale()

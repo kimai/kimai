@@ -21,7 +21,7 @@ class Constants
     /**
      * The current release version
      */
-    public const VERSION = '1.2';
+    public const VERSION = '1.3';
     /**
      * The release name, will only change for new major version
      */

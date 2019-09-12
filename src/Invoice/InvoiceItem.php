@@ -64,7 +64,7 @@ class InvoiceItem
      */
     private $additionalFields = [];
 
-    public function addAdditionalField(string $name, string $value): InvoiceItem
+    public function addAdditionalField(string $name, ?string $value): InvoiceItem
     {
         $this->additionalFields[$name] = $value;
 

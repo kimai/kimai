@@ -17,6 +17,7 @@ use App\Repository\Query\TimesheetQuery;
 
 /**
  * @covers \App\Repository\Query\TimesheetQuery
+ * @covers \App\Repository\Query\BaseQuery
  */
 class TimesheetQueryTest extends BaseQueryTest
 {
@@ -37,6 +38,9 @@ class TimesheetQueryTest extends BaseQueryTest
         $this->assertActivity($sut);
         $this->assertState($sut);
         $this->assertExported($sut);
+        $this->assertSearchTerm($sut);
+
+        $this->assertResetByFormError(new TimesheetQuery(), 'begin', 'DESC');
     }
 
     protected function assertUser(TimesheetQuery $sut)

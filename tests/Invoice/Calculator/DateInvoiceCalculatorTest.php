@@ -135,14 +135,4 @@ class DateInvoiceCalculatorTest extends AbstractCalculatorTest
     {
         $this->assertDescription(new DateInvoiceCalculator(), false, false);
     }
-
-    public function testDescriptionByActivity()
-    {
-        $this->assertDescription(new DateInvoiceCalculator(), false, true);
-    }
-
-    public function testDescriptionByProject()
-    {
-        $this->assertDescription(new DateInvoiceCalculator(), true, false);
-    }
 }

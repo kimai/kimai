@@ -176,15 +176,24 @@ trait RendererTrait
         return $values;
     }
 
+    /**
+     * @deprecated since 1.3 - will be removed with 2.0
+     */
     protected function timesheetToArray(InvoiceItem $invoiceItem): array
+    {
+        @trigger_error('timesheetToArray() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
+
+        return $this->invoiceItemToArray($invoiceItem);
+    }
+
+    protected function invoiceItemToArray(InvoiceItem $invoiceItem): array
     {
         $rate = $invoiceItem->getRate();
         $hourlyRate = $invoiceItem->getHourlyRate();
         $amount = $this->getFormattedDuration($invoiceItem->getDuration());
         $description = $invoiceItem->getDescription();
 
-        if (null !== $invoiceItem->getFixedRate()) {
-            $rate = $invoiceItem->getFixedRate();
+        if ($invoiceItem->isFixedRate()) {
             $hourlyRate = $invoiceItem->getFixedRate();
             $amount = $invoiceItem->getAmount();
         }

@@ -493,7 +493,6 @@ class TimesheetRepository extends EntityRepository
         }
 
         $qb
-            ->leftJoin('p.customer', 'c')
             ->leftJoin('p.teams', 'teams')
             ->leftJoin('c.teams', 'c_teams');
 
@@ -551,7 +550,27 @@ class TimesheetRepository extends EntityRepository
             ->select('t')
             ->from(Timesheet::class, 't')
             ->leftJoin('t.project', 'p')
+            ->leftJoin('p.customer', 'c')
         ;
+
+        $orderBy = $query->getOrderBy();
+        switch ($orderBy) {
+            case 'project':
+                $orderBy = 'p.name';
+                break;
+            case 'customer':
+                $orderBy = 'c.name';
+                break;
+            case 'activity':
+                $qb->leftJoin('t.activity', 'a');
+                $orderBy = 'a.name';
+                break;
+            default:
+                $orderBy = 't.' . $orderBy;
+                break;
+        }
+
+        $qb->addOrderBy($orderBy, $query->getOrder());
 
         $user = [];
         if (null !== $query->getUser()) {
@@ -608,9 +627,9 @@ class TimesheetRepository extends EntityRepository
         }
 
         if ($query->getExported() === TimesheetQuery::STATE_EXPORTED) {
-            $qb->andWhere('t.exported = :exported')->setParameter('exported', true);
+            $qb->andWhere('t.exported = :exported')->setParameter('exported', true, \PDO::PARAM_BOOL);
         } elseif ($query->getExported() === TimesheetQuery::STATE_NOT_EXPORTED) {
-            $qb->andWhere('t.exported = :exported')->setParameter('exported', false);
+            $qb->andWhere('t.exported = :exported')->setParameter('exported', false, \PDO::PARAM_BOOL);
         }
 
         if (null !== $query->getActivity()) {
@@ -636,7 +655,33 @@ class TimesheetRepository extends EntityRepository
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
 
-        $qb->orderBy('t.' . $query->getOrderBy(), $query->getOrder());
+        if ($query->hasSearchTerm()) {
+            $searchAnd = $qb->expr()->andX();
+            $searchTerm = $query->getSearchTerm();
+
+            foreach ($searchTerm->getSearchFields() as $metaName => $metaValue) {
+                $qb->leftJoin('t.meta', 'meta');
+                $searchAnd->add(
+                    $qb->expr()->andX(
+                        $qb->expr()->eq('meta.name', ':metaName'),
+                        $qb->expr()->like('meta.value', ':metaValue')
+                    )
+                );
+                $qb->setParameter('metaName', $metaName);
+                $qb->setParameter('metaValue', '%' . $metaValue . '%');
+            }
+
+            if ($searchTerm->hasSearchTerm()) {
+                $searchAnd->add(
+                    $qb->expr()->like('t.description', ':searchTerm')
+                );
+                $qb->setParameter('searchTerm', '%' . $searchTerm->getSearchTerm() . '%');
+            }
+
+            if ($searchAnd->count() > 0) {
+                $qb->andWhere($searchAnd);
+            }
+        }
 
         return $qb;
     }

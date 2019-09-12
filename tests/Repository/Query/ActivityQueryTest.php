@@ -47,5 +47,7 @@ class ActivityQueryTest extends BaseQueryTest
 
         $sut->setCustomer(99);
         $this->assertEquals(99, $sut->getCustomer());
+
+        $this->assertResetByFormError(new ActivityQuery(), 'name');
     }
 }

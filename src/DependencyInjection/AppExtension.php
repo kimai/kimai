@@ -62,6 +62,16 @@ class AppExtension extends Extension
         $container->setParameter('kimai.timesheet.rounding', $config['timesheet']['rounding']);
 
         $this->setLdapParameter($config['ldap'], $container);
+
+        // translation files, which can overwrite the default kimai translations
+        $localTranslations = [];
+        if (null !== $config['theme']['branding']['translation']) {
+            $localTranslations[] = $config['theme']['branding']['translation'];
+        }
+        if (null !== $config['industry']['translation']) {
+            $localTranslations[] = $config['industry']['translation'];
+        }
+        $container->setParameter('kimai.i18n_domains', $localTranslations);
     }
 
     protected function setLdapParameter(array $config, ContainerBuilder $container)

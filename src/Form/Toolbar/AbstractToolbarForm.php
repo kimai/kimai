@@ -14,6 +14,7 @@ use App\Form\Type\CustomerType;
 use App\Form\Type\DateRangeType;
 use App\Form\Type\PageSizeType;
 use App\Form\Type\ProjectType;
+use App\Form\Type\SearchTermType;
 use App\Form\Type\TagsInputType;
 use App\Form\Type\UserRoleType;
 use App\Form\Type\UserType;
@@ -22,6 +23,7 @@ use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityFormTypeQuery;
+use App\Repository\Query\BaseQuery;
 use App\Repository\Query\CustomerFormTypeQuery;
 use App\Repository\Query\ProjectFormTypeQuery;
 use App\Repository\Query\TimesheetQuery;
@@ -31,6 +33,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Validator\Constraints\Choice;
 
 /**
  * Defines the base form used for all toolbars.
@@ -50,11 +53,23 @@ abstract class AbstractToolbarForm extends AbstractType
         return '';
     }
 
+    /**
+     * Returns whether the Javascript select-picker is allowed.
+     * TODO can be removed... once all bugs are fixed.
+     *
+     * @return bool
+     */
+    protected function getSelectpickerConfig(): bool
+    {
+        return true;
+    }
+
     protected function addUserChoice(FormBuilderInterface $builder)
     {
         $builder->add('user', UserType::class, [
             'label' => 'label.user',
             'required' => false,
+            'selectpicker' => $this->getSelectpickerConfig(),
         ]);
     }
 
@@ -64,6 +79,7 @@ abstract class AbstractToolbarForm extends AbstractType
             'label' => 'label.user',
             'multiple' => true,
             'required' => false,
+            'selectpicker' => $this->getSelectpickerConfig(),
         ]);
     }
 
@@ -88,6 +104,7 @@ abstract class AbstractToolbarForm extends AbstractType
 
                         return $repo->getQueryBuilderForFormType($query);
                     },
+                    'selectpicker' => $this->getSelectpickerConfig(),
                 ]);
             }
         );
@@ -98,7 +115,8 @@ abstract class AbstractToolbarForm extends AbstractType
         $builder->add('visibility', VisibilityType::class, [
             'required' => false,
             'placeholder' => null,
-            'label' => $label
+            'label' => $label,
+            'selectpicker' => $this->getSelectpickerConfig(),
         ]);
     }
 
@@ -106,6 +124,7 @@ abstract class AbstractToolbarForm extends AbstractType
     {
         $builder->add('pageSize', PageSizeType::class, [
             'required' => false,
+            'selectpicker' => $this->getSelectpickerConfig(),
         ]);
     }
 
@@ -113,6 +132,7 @@ abstract class AbstractToolbarForm extends AbstractType
     {
         $builder->add('role', UserRoleType::class, [
             'required' => false,
+            'selectpicker' => $this->getSelectpickerConfig(),
         ]);
     }
 
@@ -149,6 +169,7 @@ abstract class AbstractToolbarForm extends AbstractType
 
                         return $repo->getQueryBuilderForFormType($query);
                     },
+                    'selectpicker' => $this->getSelectpickerConfig(),
                 ]);
             }
         );
@@ -177,6 +198,7 @@ abstract class AbstractToolbarForm extends AbstractType
 
                         return $repo->getQueryBuilderForFormType($query);
                     },
+                    'selectpicker' => $this->getSelectpickerConfig(),
                 ]);
             }
         );
@@ -189,11 +211,34 @@ abstract class AbstractToolbarForm extends AbstractType
         ]);
     }
 
+    protected function addHiddenOrder(FormBuilderInterface $builder)
+    {
+        $builder->add('order', HiddenType::class, [
+            'constraints' => [
+                new Choice(['choices' => [BaseQuery::ORDER_ASC, BaseQuery::ORDER_DESC]])
+            ]
+        ]);
+    }
+
+    protected function addHiddenOrderBy(FormBuilderInterface $builder, array $allowedColumns)
+    {
+        $builder->add('orderBy', HiddenType::class, [
+            'constraints' => [
+                new Choice(['choices' => $allowedColumns])
+            ]
+        ]);
+    }
+
     protected function addTagInputField(FormBuilderInterface $builder)
     {
         $builder->add('tags', TagsInputType::class, [
             'required' => false
         ]);
+    }
+
+    protected function addSearchTermInputField(FormBuilderInterface $builder)
+    {
+        $builder->add('searchTerm', SearchTermType::class);
     }
 
     protected function addTimesheetStateChoice(FormBuilderInterface $builder)
@@ -207,6 +252,7 @@ abstract class AbstractToolbarForm extends AbstractType
                 'entryState.running' => TimesheetQuery::STATE_RUNNING,
                 'entryState.stopped' => TimesheetQuery::STATE_STOPPED
             ],
+            'selectpicker' => $this->getSelectpickerConfig(),
         ]);
     }
 
@@ -221,6 +267,7 @@ abstract class AbstractToolbarForm extends AbstractType
                 'entryState.exported' => TimesheetQuery::STATE_EXPORTED,
                 'entryState.not_exported' => TimesheetQuery::STATE_NOT_EXPORTED
             ],
+            'selectpicker' => $this->getSelectpickerConfig(),
         ]);
     }
 }

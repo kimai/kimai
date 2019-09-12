@@ -32,6 +32,27 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_user_admin', 5);
     }
 
+    public function testIndexActionWithSearchTermQuery()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $this->request($client, '/admin/user/');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $client->submit($form, [
+            'searchTerm' => 'hourly_rate:35 tony',
+            'role' => 'ROLE_TEAMLEAD',
+            'visibility' => 1,
+            'pageSize' => 50,
+            'page' => 1,
+        ]);
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasDataTable($client);
+        $this->assertDataTableRowCount($client, 'datatable_user_admin', 1);
+    }
+
     public function testCreateAction()
     {
         $username = '亚历山德拉';
@@ -210,6 +231,6 @@ class UserControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/user/permissions');
         $this->assertHasDataTable($client);
-        $this->assertDataTableRowCount($client, 'datatable_user_admin_permissions', 80);
+        $this->assertDataTableRowCount($client, 'datatable_user_admin_permissions', 81);
     }
 }

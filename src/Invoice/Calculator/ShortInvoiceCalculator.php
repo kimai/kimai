@@ -9,12 +9,11 @@
 
 namespace App\Invoice\Calculator;
 
-use App\Entity\Timesheet;
 use App\Invoice\CalculatorInterface;
 use App\Invoice\InvoiceItem;
 
 /**
- * A calculator that sums up all timesheet records from the model and returns only one
+ * A calculator that sums up all invoice item records from the model and returns only one
  * entry for a compact invoice version.
  */
 class ShortInvoiceCalculator extends AbstractMergedCalculator implements CalculatorInterface
@@ -40,7 +39,7 @@ class ShortInvoiceCalculator extends AbstractMergedCalculator implements Calcula
             if (!in_array($key, $keys)) {
                 $keys[] = $key;
             }
-            $this->mergeTimesheets($invoiceItem, $entry);
+            $this->mergeInvoiceItems($invoiceItem, $entry);
         }
 
         if (count($keys) > 1) {

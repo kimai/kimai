@@ -14,10 +14,19 @@ namespace App\Repository\Query;
  */
 class UserQuery extends VisibilityQuery
 {
+    public const USER_ORDER_ALLOWED = ['id', 'alias', 'username', 'title', 'email'];
+
     /**
      * @var string|null
      */
     protected $role;
+
+    public function __construct()
+    {
+        $this->setDefaults([
+            'orderBy' => 'username',
+        ]);
+    }
 
     /**
      * @return string|null

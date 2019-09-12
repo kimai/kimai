@@ -1,0 +1,49 @@
+{% macro tags(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {'search': {'class': 'search-toggle visible-xs-inline'}} %}
+
+    {% if is_granted('manage_tag') %}
+        {% set actions = actions|merge({'create': {'url': path('tags_create'), 'class': 'modal-ajax-form'}}) %}
+    {% endif %}
+
+    {% set actions = actions|merge({'help': {'url': 'tags.html'|docu_link, 'target': '_blank'}}) %}
+
+    {% set event = trigger('actions.tags', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}
+
+{% macro tag(tag, view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {} %}
+
+    {% if tag.id is not empty %}
+        {% if is_granted('manage_tag') %}
+            {% set class = '' %}
+            {% if view != 'edit' %}
+                {% set class = 'modal-ajax-form' %}
+            {% endif %}
+            {% set actions = actions|merge({'edit': {'url': path('tags_edit', {'id': tag.id}), 'class': class}}) %}
+        {% endif %}
+
+        {% if is_granted('view_other_timesheet') %}
+            {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'tags': tag.name})}) %}
+        {% endif %}
+    
+        {% if is_granted('delete_tag') %}
+            {% set actions = actions|merge({'trash': {'url': path('delete_tag', {'id' : tag.id}), 'class': 'api-link', 'attr': {'data-event': 'kimai.tagDelete kimai.tagUpdate', 'data-method': 'DELETE', 'data-question': 'confirm.delete', 'data-msg-error': 'action.delete.error', 'data-msg-success': 'action.delete.success'}}}) %}
+        {% endif %}
+    {% endif %}
+
+    {% if view != 'index' %}
+        {% set actions = actions|merge({'back': path('tags')}) %}
+    {% endif %}
+    
+    {% set event = trigger('actions.tag', {'actions': actions, 'view': view, 'tag': tag}) %}
+    {% if view == 'index' %}
+        {{ widgets.table_actions(event.payload.actions) }}
+    {% else %}
+        {{ widgets.entity_actions(event.payload.actions) }}
+    {% endif %}
+{% endmacro %}

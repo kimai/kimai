@@ -14,9 +14,10 @@ import KimaiPlugin from "../KimaiPlugin";
 
 export default class KimaiDatatable extends KimaiPlugin {
 
-    constructor(selector) {
+    constructor(contentAreaSelector, tableSelector) {
         super();
-        this.selector = selector;
+        this.contentArea = contentAreaSelector;
+        this.selector = tableSelector;
     }
 
     getId() {
@@ -44,16 +45,26 @@ export default class KimaiDatatable extends KimaiPlugin {
         for (let eventName of events.split(' ')) {
             document.addEventListener(eventName, handle);
         }
+
+        if (this.getContainer().getConfiguration().get('autoReloadDatatable')) {
+            document.addEventListener('toolbar-change', handle);
+        } else {
+            document.addEventListener('pagination-change', handle);
+            document.addEventListener('filter-change', handle);
+        }
     }
 
     reloadDatatable() {
+        const contentArea = this.contentArea;
         const durations = this.getContainer().getPlugin('timesheet-duration');
-        const form = jQuery('.toolbar form');
+        const toolbarSelector = this.getContainer().getPlugin('toolbar').getSelector();
+        
+        const form = jQuery(toolbarSelector);
         let loading = '<div class="overlay"><i class="fas fa-sync fa-spin"></i></div>';
-        jQuery('section.content').append(loading);
+        jQuery(contentArea).append(loading);
 
         // remove the empty fields to prevent errors
-        let formData = jQuery('.toolbar form :input')
+        let formData = jQuery(toolbarSelector + ' :input')
             .filter(function(index, element) {
                 return jQuery(element).val() != '';
             })
@@ -64,8 +75,8 @@ export default class KimaiDatatable extends KimaiPlugin {
             type: form.attr('method'),
             data: formData,
             success: function(html) {
-                jQuery('section.content').replaceWith(
-                    jQuery(html).find('section.content')
+                jQuery(contentArea).replaceWith(
+                    jQuery(html).find(contentArea)
                 );
                 durations.updateRecords();
             },

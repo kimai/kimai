@@ -39,6 +39,7 @@ final class IconExtension extends AbstractExtension
         'print' => 'fas fa-print',
         'project' => 'fas fa-briefcase',
         'repeat' => 'fas fa-redo-alt',
+        'search' => 'fas fa-search',
         'start' => 'fas fa-play-circle',
         'start-small' => 'far fa-play-circle',
         'stop' => 'fas fa-stop',
@@ -72,6 +73,8 @@ final class IconExtension extends AbstractExtension
         'timesheet-team' => 'fas fa-user-clock',
         'plugin' => 'fas fa-plug',
         'configuration' => 'fas fa-cogs',
+        'mail-sent' => 'fas fa-paper-plane',
+        'mail' => 'fas fa-envelope-open',
     ];
 
     /**

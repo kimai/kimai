@@ -106,7 +106,27 @@ class TeamRepository extends EntityRepository
             ->from(Team::class, 't')
         ;
 
-        $qb->orderBy('t.' . $query->getOrderBy(), $query->getOrder());
+        $orderBy = $query->getOrderBy();
+        switch ($orderBy) {
+            case 'teamlead':
+                $qb->leftJoin('t.teamlead', 'lead');
+                $orderBy = 'lead.username';
+                break;
+            default:
+                $orderBy = 't.' . $orderBy;
+                break;
+        }
+
+        $qb->addOrderBy($orderBy, $query->getOrder());
+
+        if (!empty($query->getSearchTerm())) {
+            $qb->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->like('t.name', ':likeContains')
+                )
+            );
+            $qb->setParameter('likeContains', '%' . $query->getSearchTerm() . '%');
+        }
 
         return $qb;
     }

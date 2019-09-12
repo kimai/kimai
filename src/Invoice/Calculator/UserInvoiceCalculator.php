@@ -10,36 +10,20 @@
 namespace App\Invoice\Calculator;
 
 use App\Invoice\CalculatorInterface;
-use App\Invoice\InvoiceItem;
+use App\Invoice\InvoiceItemInterface;
 
 /**
- * A calculator that sums up the timesheet records by user.
+ * A calculator that sums up the invoice item records by user.
  */
-class UserInvoiceCalculator extends AbstractMergedCalculator implements CalculatorInterface
+class UserInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
 {
-    /**
-     * @return InvoiceItem[]
-     */
-    public function getEntries()
+    protected function calculateSumIdentifier(InvoiceItemInterface $invoiceItem): string
     {
-        $entries = $this->model->getEntries();
-        if (empty($entries)) {
-            return [];
+        if (null === $invoiceItem->getUser()->getId()) {
+            throw new \Exception('Cannot handle un-persisted user');
         }
 
-        /** @var InvoiceItem[] $invoiceItems */
-        $invoiceItems = [];
-
-        foreach ($entries as $entry) {
-            $id = $entry->getUser()->getId();
-            if (!isset($invoiceItems[$id])) {
-                $invoiceItems[$id] = new InvoiceItem();
-            }
-            $invoiceItem = $invoiceItems[$id];
-            $this->mergeTimesheets($invoiceItem, $entry);
-        }
-
-        return array_values($invoiceItems);
+        return (string) $invoiceItem->getUser()->getId();
     }
 
     /**

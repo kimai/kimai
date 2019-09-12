@@ -13,43 +13,37 @@ use App\Entity\InvoiceDocument;
 use App\Repository\InvoiceDocumentRepository;
 
 /**
- * A service to manage invoice dependencies.
+ * Service to manage invoice dependencies.
  */
-class ServiceInvoice
+final class ServiceInvoice
 {
     /**
      * @var CalculatorInterface[]
      */
-    protected $calculator = [];
-
+    private $calculator = [];
     /**
      * @var RendererInterface[]
      */
-    protected $renderer = [];
-
+    private $renderer = [];
     /**
      * @var NumberGeneratorInterface[]
      */
-    protected $numberGenerator = [];
-
+    private $numberGenerator = [];
+    /**
+     * @var array InvoiceItemRepositoryInterface[]
+     */
+    private $invoiceItemRepositories = [];
     /**
      * @var InvoiceDocumentRepository
      */
-    protected $documents;
+    private $documents;
 
-    /**
-     * @param InvoiceDocumentRepository $repository
-     */
     public function __construct(InvoiceDocumentRepository $repository)
     {
         $this->documents = $repository;
     }
 
-    /**
-     * @param NumberGeneratorInterface $generator
-     * @return $this
-     */
-    public function addNumberGenerator(NumberGeneratorInterface $generator)
+    public function addNumberGenerator(NumberGeneratorInterface $generator): ServiceInvoice
     {
         $this->numberGenerator[] = $generator;
 
@@ -59,16 +53,12 @@ class ServiceInvoice
     /**
      * @return NumberGeneratorInterface[]
      */
-    public function getNumberGenerator()
+    public function getNumberGenerator(): array
     {
         return $this->numberGenerator;
     }
 
-    /**
-     * @param string $name
-     * @return NumberGeneratorInterface|null
-     */
-    public function getNumberGeneratorByName(string $name)
+    public function getNumberGeneratorByName(string $name): ?NumberGeneratorInterface
     {
         foreach ($this->getNumberGenerator() as $generator) {
             if ($generator->getId() === $name) {
@@ -79,11 +69,7 @@ class ServiceInvoice
         return null;
     }
 
-    /**
-     * @param CalculatorInterface $calculator
-     * @return $this
-     */
-    public function addCalculator(CalculatorInterface $calculator)
+    public function addCalculator(CalculatorInterface $calculator): ServiceInvoice
     {
         $this->calculator[] = $calculator;
 
@@ -93,16 +79,12 @@ class ServiceInvoice
     /**
      * @return CalculatorInterface[]
      */
-    public function getCalculator()
+    public function getCalculator(): array
     {
         return $this->calculator;
     }
 
-    /**
-     * @param string $name
-     * @return CalculatorInterface|null
-     */
-    public function getCalculatorByName(string $name)
+    public function getCalculatorByName(string $name): ?CalculatorInterface
     {
         foreach ($this->getCalculator() as $calculator) {
             if ($calculator->getId() === $name) {
@@ -113,11 +95,7 @@ class ServiceInvoice
         return null;
     }
 
-    /**
-     * @param string $name
-     * @return InvoiceDocument|null
-     */
-    public function getDocumentByName(string $name)
+    public function getDocumentByName(string $name): ?InvoiceDocument
     {
         return $this->documents->findByName($name);
     }
@@ -127,16 +105,12 @@ class ServiceInvoice
      *
      * @return InvoiceDocument[]
      */
-    public function getDocuments()
+    public function getDocuments(): array
     {
         return $this->documents->findAll();
     }
 
-    /**
-     * @param RendererInterface $renderer
-     * @return $this
-     */
-    public function addRenderer(RendererInterface $renderer)
+    public function addRenderer(RendererInterface $renderer): ServiceInvoice
     {
         $this->renderer[] = $renderer;
 
@@ -148,8 +122,23 @@ class ServiceInvoice
      *
      * @return RendererInterface[]
      */
-    public function getRenderer()
+    public function getRenderer(): array
     {
         return $this->renderer;
+    }
+
+    /**
+     * @return InvoiceItemRepositoryInterface[]
+     */
+    public function getInvoiceItemRepositories(): array
+    {
+        return $this->invoiceItemRepositories;
+    }
+
+    public function addInvoiceItemRepository(InvoiceItemRepositoryInterface $invoiceItemRepository): ServiceInvoice
+    {
+        $this->invoiceItemRepositories[] = $invoiceItemRepository;
+
+        return $this;
     }
 }

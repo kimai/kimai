@@ -1,16 +1,12 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "macros/actions.html.twig" as actions %}
+{% import "team/actions.html.twig" as actions %}
 {% import "macros/datatables.html.twig" as tables %}
 {% import "macros/toolbar.html.twig" as toolbar %}
 
 {% block page_title %}{{ 'teams.title'|trans({}, 'teams') }}{% endblock %}
-{% block page_subtitle %}{{ 'teams.subtitle'|trans({}, 'teams') }}{% endblock %}
+{% block page_search %}{{ toolbar.dropDownSearch(toolbarForm) }}{% endblock %}
 {% block page_actions %}{{ actions.teams('index') }}{% endblock %}
-
-{% block main_before %}
-    {{ toolbar.toolbar(toolbarForm, 'collapseTeams', showFilter) }}
-{% endblock %}
 
 {% block main %}
 
@@ -21,13 +17,13 @@
         {% set columns = {
             'name': '',
             'teamlead': '',
-            'user': '',
+            'user': {'class': '', 'orderBy': false},
             'actions': 'actions alwaysVisible',
         } %}
 
         {% set tableName = 'admin_teams' %}
 
-        {{ tables.data_table_header(tableName, columns, false, 'kimai.teamUpdate') }}
+        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.teamUpdate'}) }}
         {% for team in teams %}
             <tr{% if is_granted('edit', team) %} class="open-edit alternative-link" data-href="{{ path('admin_team_edit', {'id': team.id}) }}"{% endif %}>
                 <td>{{ team.name }}</td>

@@ -6,10 +6,6 @@
                 <source>about.title</source>
                 <target state="translated">키마이에 대하여</target>
             </trans-unit>
-            <trans-unit id="about.subtitle">
-                <source>about.subtitle</source>
-                <target state="translated">시스템 정보 </target>
-            </trans-unit>
             <trans-unit id="support">
                 <source>support</source>
                 <target state="translated">도움 </target>

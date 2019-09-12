@@ -14,6 +14,8 @@ nelmio_api_doc:
             - { alias: ActivityEntity,            type: App\Entity\Activity,                      groups: [Default, Entity, Activity] }
             - { alias: ActivityMetaField,         type: App\Entity\ActivityMeta,                  groups: [Default, Activity] }
             - { alias: ActivityCollection,        type: App\Entity\Activity,                      groups: [Default, Collection, Activity] }
+            - { alias: TagEditForm,               type: App\Form\API\TagApiEditForm,              groups: [Default, Entity, Tag] }
+            - { alias: TagEntity,                 type: App\Entity\Tag,                           groups: [Default, Entity, Tag] }
             - { alias: TimesheetEditForm,         type: App\Form\API\TimesheetApiEditForm,        groups: [Default, Entity, Timesheet] }
             - { alias: TimesheetEntity,           type: App\Entity\Timesheet,                     groups: [Default, Entity, Timesheet] }
             - { alias: TimesheetMeta,             type: App\Entity\TimesheetMeta,                 groups: [Default, Timesheet] }
@@ -35,9 +37,9 @@ nelmio_api_doc:
         info:
             title: Kimai 2 - API Docs
             description: |
-                REST API for the Kimai 2 time-tracking software. Read more about its usage in the [API documentation](https://www.kimai.org/documentation/rest-api.html) and then download a [Swagger file](doc.json) for import e.g. in Postman.
+                JSON API for the Kimai 2 time-tracking software. Read more about its usage in the [API documentation](https://www.kimai.org/documentation/rest-api.html) and then download a [Swagger file](doc.json) for import e.g. in Postman.
                 Be aware: it is not yet considered stable and BC breaks might happen, but we try to avoid them.
-            version: 0.3
+            version: '0.3'
         securityDefinitions:
             apiUser:
                 type: apiKey

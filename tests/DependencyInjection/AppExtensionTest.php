@@ -98,7 +98,6 @@ class AppExtensionTest extends TestCase
                     'currency' => 'EUR',
                 ]
             ],
-
             'kimai.theme' => [
                 'active_warning' => 3,
                 'box_color' => 'green',
@@ -115,16 +114,17 @@ class AppExtensionTest extends TestCase
                     'mini' => null,
                     'company' => null,
                     'title' => null,
+                    'translation' => null,
                 ],
+                'auto_reload_datatable' => false,
+                'autocomplete_chars' => 3,
             ],
             'kimai.theme.select_type' => null,
             'kimai.theme.show_about' => true,
-
             'kimai.fosuser' => [
                 'registration' => true,
                 'password_reset' => true,
             ],
-
             'kimai.timesheet' => [
                 'mode' => 'default',
                 'markdown_content' => false,
@@ -172,6 +172,7 @@ class AppExtensionTest extends TestCase
                 'ROLE_ADMIN' => [],
                 'ROLE_SUPER_ADMIN' => [],
             ],
+            'kimai.i18n_domains' => []
         ];
 
         // nasty parameter, should be removed!!!
@@ -318,6 +319,34 @@ class AppExtensionTest extends TestCase
         $this->assertEquals('7658765', $ldapConfig['connection']['baseDn']);
         $this->assertEquals('(&(&(objectClass=inetOrgPerson))(zzzz=%s))', $ldapConfig['connection']['accountFilterFormat']);
         $this->assertEquals('(&(objectClass=inetOrgPerson))', $ldapConfig['user']['filter']);
+    }
+
+    public function testTranslationOverwritesEmpty()
+    {
+        $minConfig = $this->getMinConfig();
+        $this->extension->load($minConfig, $container = $this->getContainer());
+
+        $config = $container->getParameter('kimai.i18n_domains');
+        $this->assertEquals([], $config);
+    }
+
+    public function testTranslationOverwrites()
+    {
+        $minConfig = $this->getMinConfig();
+        $minConfig['kimai']['industry'] = [
+            'translation' => 'xxxx',
+        ];
+        $minConfig['kimai']['theme'] = [
+            'branding' => [
+                'translation' => 'yyyy',
+            ]
+        ];
+
+        $this->extension->load($minConfig, $container = $this->getContainer());
+
+        $config = $container->getParameter('kimai.i18n_domains');
+        // oder is important, theme/installation specific translations win
+        $this->assertEquals(['yyyy', 'xxxx'], $config);
     }
 
     /**

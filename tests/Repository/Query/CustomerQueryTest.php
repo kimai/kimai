@@ -23,5 +23,7 @@ class CustomerQueryTest extends BaseQueryTest
 
         $this->assertBaseQuery($sut, 'name');
         $this->assertInstanceOf(VisibilityQuery::class, $sut);
+
+        $this->assertResetByFormError(new CustomerQuery(), 'name');
     }
 }

@@ -10,6 +10,7 @@
 namespace App\Tests\Controller;
 
 use App\Entity\Timesheet;
+use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Form\Type\DateRangeType;
 use App\Tests\DataFixtures\TimesheetFixtures;
@@ -34,15 +35,13 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         // there are no records by default in the test database
         $this->assertHasNoEntriesWithFilter($client);
 
-        $result = $client->getCrawler()->filter('div.breadcrumb div.box-tools div.btn-group a.btn');
-        $this->assertEquals(5, count($result));
-
-        foreach ($result as $item) {
-            $this->assertContains('btn btn-default', $item->getAttribute('class'));
-            /** @var \DOMElement $domElement */
-            $domElement = $item->firstChild;
-            $this->assertEquals('i', $domElement->tagName);
-        }
+        $this->assertPageActions($client, [
+            'search search-toggle visible-xs-inline' => '#',
+            'download toolbar-action' => $this->createUrl('/team/timesheet/export'),
+            'visibility' => '#',
+            'create modal-ajax-form' => $this->createUrl('/team/timesheet/create'),
+            'help' => 'https://www.kimai.org/documentation/timesheet.html'
+        ]);
     }
 
     public function testIndexActionWithQuery()
@@ -65,10 +64,10 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $dateRange = ($start)->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime('last day of this month'))->format('Y-m-d');
 
-        $form = $client->getCrawler()->filter('form.navbar-form')->form();
+        $form = $client->getCrawler()->filter('form.header-search')->form();
         $client->submit($form, [
             'state' => 1,
-            'user' => $user->getId(),
+            'users' => [$user->getId()],
             'pageSize' => 25,
             'daterange' => $dateRange,
             'customer' => null,
@@ -81,6 +80,44 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         // make sure the recording css class exist on tr for targeting running record rows
         $node = $client->getCrawler()->filter('section.content div#datatable_timesheet_admin table.table-striped tbody tr.recording');
         self::assertEquals(3, $node->count());
+    }
+
+    public function testIndexActionWithSearchTermQuery()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $start = new \DateTime('first day of this month');
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $fixture = new TimesheetFixtures();
+        $fixture->setAmount(5);
+        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setStartDate($start);
+        $fixture->setCallback(function (Timesheet $timesheet) {
+            $timesheet->setDescription('I am a foobar with tralalalala some more content');
+            $timesheet->setMetaField((new TimesheetMeta())->setName('location')->setValue('homeoffice'));
+            $timesheet->setMetaField((new TimesheetMeta())->setName('feature')->setValue('timetracking'));
+        });
+        $this->importFixture($em, $fixture);
+        $fixture = new TimesheetFixtures();
+        $fixture->setAmount(5);
+        $fixture->setAmountRunning(5);
+        $fixture->setUser($this->getUserByRole($em, User::ROLE_USER));
+        $fixture->setStartDate($start);
+        $this->importFixture($em, $fixture);
+
+        $this->request($client, '/team/timesheet/');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $dateRange = ($start)->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime('last day of this month'))->format('Y-m-d');
+
+        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $client->submit($form, [
+            'searchTerm' => 'location:homeoffice foobar',
+        ]);
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasDataTable($client);
+        $this->assertDataTableRowCount($client, 'datatable_timesheet_admin', 5);
     }
 
     public function testExportAction()
@@ -104,7 +141,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $dateRange = (new \DateTime('-10 days'))->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime())->format('Y-m-d');
 
-        $form = $client->getCrawler()->filter('form.navbar-form')->form();
+        $form = $client->getCrawler()->filter('form.header-search')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/team/timesheet/export'));
         $client->submit($form, [
             'state' => 1,

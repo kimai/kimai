@@ -14,12 +14,201 @@ import KimaiPlugin from "../KimaiPlugin";
 
 export default class KimaiToolbar extends KimaiPlugin {
 
-    init() {
-        const datatable = this.getContainer().getPlugin('datatable');
+    constructor(formSelector, formSubmitActionClass) {
+        super();
+        this.formSelector = formSelector;
+        this.actionClass = formSubmitActionClass;
+    }
 
-        // This catches all clicks on the pagination and prevents the default action, as we want to relad the page via JS
+    getId() {
+        return 'toolbar';
+    }
+
+    init() {
+        const formSelector = this.getSelector();
+        const self = this;
+        const EVENT = self.getContainer().getPlugin('event');
+
+        this._registerPagination(formSelector, EVENT);
+        this._registerSortableTables(formSelector, EVENT);
+        this._registerAlternativeSubmitActions(formSelector, this.actionClass);
+        this._registerSearchButtons(formSelector);
+
+        jQuery('body')
+        // prevent that the dropdown closes, when a form input is changed - eg. a select option was clicked
+            .on('click', formSelector + ' .dropdown-menu', function (event) {
+                const parent = jQuery(event.target).parents('.bootstrap-select');
+                if (parent.length === 0) {
+                    event.stopPropagation();
+                    jQuery(".bootstrap-select").removeClass("open");
+                }
+            })
+            // trying to emulate the normal behaviour fo the bootstrap-select, as using its default implementation
+            // leads to closing the surrounding dropdown menu
+            .on('click', formSelector + ' .bootstrap-select', function (event) {
+                const current = jQuery(this);
+                if (current.hasClass("open")){
+                    jQuery(".bootstrap-select").removeClass("open");
+                } else {
+                    jQuery(".bootstrap-select").not('.bs-container').each(function(index, element) {
+                        var tmp = jQuery(element);
+                        if (tmp.is(current)) {
+                            return;
+                        }
+                        if (tmp.hasClass('open')) {
+                            tmp.removeClass("open");
+                            // the shown dropdown list will not be closed, using toggle hides all other lists BUT closes the containing search-dropdown 
+                            // tmp.find('select.selectpicker').selectpicker('toggle');
+                        }
+                    });
+                    current.addClass("open");
+                }
+                event.stopPropagation();
+            })
+            // close bootstrap-select if a click happened outside (and none of the other clickHandler were called)
+            // if the click happened inside a bootstrap-select, we ignore this
+            .on('click', function(event) {
+                const parent = jQuery(event.target).parents('.bootstrap-select');
+                if (parent.length === 0) {
+                    jQuery(".bootstrap-select").removeClass("open");
+                }
+            })
+        ;
+
+        // Reset the page if filter values are changed, otherwise we might end up with a limited set of data, 
+        // which does not support the given page - and it would be just wrong to stay in the same page
+        jQuery(formSelector +' input').change(function (event) {
+            switch (event.target.id) {
+                case 'order':
+                case 'orderBy':
+                case 'page':
+                    break;
+                default:
+                    jQuery(formSelector + ' input#page').val(1);
+                    break;
+            }
+            self.triggerChange();
+        });
+        
+        // when user selected a new customer or project, reset the pagination back to 1
+        // and then find out if the results should be reloaded
+        jQuery(formSelector + ' select').change(function (event) {
+            let reload = true;
+            switch (event.target.id) {
+                case 'customer':
+                    if (jQuery(formSelector + ' select#project').length > 0) {
+                        reload = false;
+                    }
+                    break;
+
+                case 'project':
+                    if (jQuery(formSelector + ' select#activity').length > 0) {
+                        reload = false;
+                    }
+                    break;
+            }
+            jQuery(formSelector + ' input#page').val(1);
+
+            if (reload) {
+                self.triggerChange();
+            }
+        });
+
+        // close all open selectpicker upon choosing any dropdown option
+        jQuery(formSelector + ' select.selectpicker').on('change', function(event) {
+            jQuery('.bootstrap-select.open').removeClass('open');
+        });
+        
+    }
+
+    /**
+     * The search toggle button is not part of this component, but it is directly connected to it.
+     * @private
+     */
+    _registerSearchButtons(formSelector) {
+        jQuery('body')
+            // only for mobile experience currently: show the search form field
+            .on('click', '.btn-search.search-toggle', function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                jQuery(formSelector).parent('section').toggleClass('search-open');
+                jQuery(formSelector).toggleClass('hidden-xs');
+                jQuery(formSelector + ' input#searchTerm').dropdown('toggle');
+                jQuery(formSelector + ' input#searchTerm').focus();
+            })
+            // hide the search form field
+            .on('click', formSelector + ' a.search-cancel', function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                jQuery(formSelector).parent('section').toggleClass('search-open');
+                jQuery(formSelector + ' input#searchTerm').dropdown('toggle');
+                jQuery(formSelector).toggleClass('hidden-xs');
+            })
+        ;
+    }
+
+    /**
+     * Some actions utilize the filter from the search form and submit it to another URL.
+     * @private
+     */
+    _registerAlternativeSubmitActions(toolbarSelector, actionBtnClass) {
+        document.addEventListener('click', function(event) {
+            let target = event.target;
+            while (target !== null && !target.matches('body')) {
+                if (target.classList.contains(actionBtnClass)) {
+                    const form = document.querySelector(toolbarSelector);
+                    if (form === null) {
+                        return;
+                    }
+                    const prevAction = form.action;
+                    const prevMethod = form.method;
+                    form.target = '_blank';
+                    form.action = target.href;
+                    if (target.dataset.method !== undefined) {
+                        form.method = target.dataset.method;
+                    }
+                    form.submit();
+                    form.target = '';
+                    form.action = prevAction;
+                    form.method = prevMethod;
+
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+                target = target.parentNode;
+            }
+        });        
+    }
+
+    /**
+     * Sortable datatables use hidden fields in the toolbar filter/search form
+     * @private
+     */
+    _registerSortableTables(formSelector, EVENT) {
+        jQuery('body').on('click', 'th.sortable', function(event){
+            var $header = jQuery(event.target);
+            var order = 'DESC';
+            var orderBy = $header.data('order');
+            if ($header.hasClass('sorting_desc')) {
+                order = 'ASC';
+            }
+            jQuery(formSelector + ' input#orderBy').val(orderBy);
+            jQuery(formSelector + ' input#order').val(order);
+            // triggers the page reset - see below
+            jQuery(formSelector + ' input#order').trigger('change');
+            // triggers the datatable reload - search for the event name
+            EVENT.trigger('filter-change');
+        });
+    }
+    
+    /**
+     * This catches all clicks on the pagination and prevents the default action, as we want to reload the page via JS
+     * @private
+     */
+    _registerPagination(formSelector, EVENT) {
         jQuery('body').on('click', 'div.navigation ul.pagination li a', function(event) {
-            let pager = jQuery(".toolbar form input[name='page']");
+            let pager = jQuery(formSelector + " input#page");
             if (pager.length === 0) {
                 return;
             }
@@ -29,41 +218,30 @@ export default class KimaiToolbar extends KimaiPlugin {
             let page = urlParts[urlParts.length-1];
             pager.val(page);
             pager.trigger('change');
+            EVENT.trigger('pagination-change');
             return false;
         });
 
-        // Reset the page if any other value is changed, otherwise we might end up with a limited set
-        // of data which does not support the given page - and it would be just wrong to stay in the same page
-        jQuery('.toolbar form input').change(function (event) {
-            switch (event.target.id) {
-                case 'page':
-                    break;
-                default:
-                    jQuery('.toolbar form input#page').val(1);
-            }
-            datatable.reloadDatatable();
-        });
+    }
+    
+    hide() {
+        jQuery(this.getSelector() + ' .dropdown-toggle').dropdown('toggle');
+    }
 
-        jQuery('.toolbar form select').change(function (event) {
-            let reload = true;
-            switch (event.target.id) {
-                case 'customer':
-                    if (jQuery('.toolbar form select#project').length > 0) {
-                        reload = false;
-                    }
-                    break;
+    /**
+     * Triggers an event, that everyone can listen for.
+     */
+    triggerChange() {
+        this.getContainer().getPlugin('event').trigger('toolbar-change');
+    }
 
-                case 'project':
-                    if (jQuery('.toolbar form select#activity').length > 0) {
-                        reload = false;
-                    }
-                    break;
-            }
-            jQuery('.toolbar form input#page').val(1);
-            if (reload) {
-                datatable.reloadDatatable();
-            }
-        });
+    /**
+     * Returns the CSS selector to target the toolbar form.
+     * 
+     * @returns {string}
+     */
+    getSelector() {
+        return this.formSelector;
     }
 
 }

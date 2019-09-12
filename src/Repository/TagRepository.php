@@ -23,6 +23,18 @@ class TagRepository extends EntityRepository
      * @throws ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
+    public function saveTag(Tag $tag)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($tag);
+        $entityManager->flush();
+    }
+
+    /**
+     * @param Tag $tag
+     * @throws ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function deleteTag(Tag $tag)
     {
         $entityManager = $this->getEntityManager();
@@ -93,7 +105,37 @@ class TagRepository extends EntityRepository
             ->leftJoin('tag.timesheets', 'timesheets')
             ->addGroupBy('tag.id')
             ->addGroupBy('tag.name')
-            ->orderBy('tag.' . $query->getOrderBy(), $query->getOrder());
+        ;
+
+        $orderBy = $query->getOrderBy();
+        switch ($orderBy) {
+            case 'amount':
+                $orderBy = 'amount';
+                break;
+            default:
+                $orderBy = 'tag.' . $orderBy;
+                break;
+        }
+
+        $qb->addOrderBy($orderBy, $query->getOrder());
+
+        if ($query->hasSearchTerm()) {
+            $searchTerm = $query->getSearchTerm();
+            $searchAnd = $qb->expr()->andX();
+
+            if ($searchTerm->hasSearchTerm()) {
+                $searchAnd->add(
+                    $qb->expr()->orX(
+                        $qb->expr()->like('tag.name', ':searchTerm')
+                    )
+                );
+                $qb->setParameter('searchTerm', '%' . $searchTerm->getSearchTerm() . '%');
+            }
+
+            if ($searchAnd->count() > 0) {
+                $qb->andWhere($searchAnd);
+            }
+        }
 
         $paginator = new Pagerfanta(new DoctrineORMAdapter($qb->getQuery(), false));
         $paginator->setMaxPerPage($query->getPageSize());

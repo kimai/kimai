@@ -31,11 +31,7 @@ class UserType extends AbstractType
             'class' => User::class,
             'label' => 'label.user',
             'choice_label' => function (User $user) {
-                if (!empty($user->getAlias())) {
-                    return $user->getAlias() . ' (' . $user->getUsername() . ')';
-                }
-
-                return $user->getUsername();
+                return $user->getDisplayName();
             },
         ]);
 

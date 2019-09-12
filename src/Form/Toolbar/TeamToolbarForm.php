@@ -20,8 +20,11 @@ class TeamToolbarForm extends AbstractToolbarForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->addSearchTermInputField($builder);
         $this->addPageSizeChoice($builder);
         $this->addHiddenPagination($builder);
+        $this->addHiddenOrder($builder);
+        $this->addHiddenOrderBy($builder, TeamQuery::TEAM_ORDER_ALLOWED);
     }
 
     /**

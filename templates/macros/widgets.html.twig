@@ -50,12 +50,12 @@
 {% endmacro %}
 
 {% macro username(user) %}
-    {{ user.alias|default(user.username) }}
+    {{- user.displayName -}}
 {% endmacro %}
 
 {% macro label_user(user) %}
     {% import _self as macro %}
-    {{ macro.label(macro.username(user), 'primary') }}
+    {{ macro.label(user.displayName, 'primary') }}
 {% endmacro %}
 
 {% macro label_activity(activity, url) %}

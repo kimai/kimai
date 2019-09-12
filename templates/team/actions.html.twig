@@ -1,0 +1,37 @@
+{% macro teams(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {'search': {'class': 'search-toggle visible-xs-inline'}} %}
+
+    {% if is_granted('create_team') %}
+        {% set actions = actions|merge({'create': {'url': path('admin_team_create')}}) %}
+    {% endif %}
+
+    {% set actions = actions|merge({'help': {'url': 'teams.html'|docu_link, 'target': '_blank'}}) %}
+
+    {% set event = trigger('actions.teams', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}
+
+{% macro team(team, view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {} %}
+    {% if team.id is not empty %}
+        {% if is_granted('edit', team) %}
+            {% set class = '' %}
+            {% set actions = actions|merge({'edit': {'url': path('admin_team_edit', {'id': team.id}), 'class': class}}) %}
+        {% endif %}
+    {% endif %}
+
+    {% if view == 'index' and is_granted('delete', team) %}
+        {% set actions = actions|merge({'trash': {'url': path('delete_team', {'id' : team.id}), 'class': 'api-link', 'attr': {'data-event': 'kimai.teamDelete kimai.teamUpdate', 'data-method': 'DELETE', 'data-question': 'confirm.delete', 'data-msg-error': 'action.delete.error', 'data-msg-success': 'action.delete.success'}}}) %}
+    {% endif %}
+
+    {% set event = trigger('actions.team', {'actions': actions, 'view': view, 'team': team}) %}
+    {% if view == 'index' %}
+        {{ widgets.table_actions(event.payload.actions) }}
+    {% else %}
+        {{ widgets.entity_actions(event.payload.actions) }}
+    {% endif %}
+{% endmacro %}

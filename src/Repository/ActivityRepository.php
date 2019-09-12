@@ -245,8 +245,22 @@ class ActivityRepository extends EntityRepository
             ->from(Activity::class, 'a')
             ->leftJoin('a.project', 'p')
             ->leftJoin('p.customer', 'c')
-            ->addOrderBy('a.' . $query->getOrderBy(), $query->getOrder())
         ;
+
+        $orderBy = $query->getOrderBy();
+        switch ($orderBy) {
+            case 'project':
+                $orderBy = 'p.name';
+                break;
+            case 'customer':
+                $orderBy = 'c.name';
+                break;
+            default:
+                $orderBy = 'a.' . $orderBy;
+                break;
+        }
+
+        $qb->addOrderBy($orderBy, $query->getOrder());
 
         $where = $qb->expr()->andX();
 
@@ -297,6 +311,37 @@ class ActivityRepository extends EntityRepository
         }
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser());
+
+        if ($query->hasSearchTerm()) {
+            $searchAnd = $qb->expr()->andX();
+            $searchTerm = $query->getSearchTerm();
+
+            foreach ($searchTerm->getSearchFields() as $metaName => $metaValue) {
+                $qb->leftJoin('a.meta', 'meta');
+                $searchAnd->add(
+                    $qb->expr()->andX(
+                        $qb->expr()->eq('meta.name', ':metaName'),
+                        $qb->expr()->like('meta.value', ':metaValue')
+                    )
+                );
+                $qb->setParameter('metaName', $metaName);
+                $qb->setParameter('metaValue', '%' . $metaValue . '%');
+            }
+
+            if ($searchTerm->hasSearchTerm()) {
+                $searchAnd->add(
+                    $qb->expr()->orX(
+                        $qb->expr()->like('a.name', ':searchTerm'),
+                        $qb->expr()->like('a.comment', ':searchTerm')
+                    )
+                );
+                $qb->setParameter('searchTerm', '%' . $searchTerm->getSearchTerm() . '%');
+            }
+
+            if ($searchAnd->count() > 0) {
+                $qb->andWhere($searchAnd);
+            }
+        }
 
         return $qb;
     }

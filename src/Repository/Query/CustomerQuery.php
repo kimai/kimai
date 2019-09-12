@@ -14,8 +14,12 @@ namespace App\Repository\Query;
  */
 class CustomerQuery extends VisibilityQuery
 {
+    public const CUSTOMER_ORDER_ALLOWED = ['id', 'name', 'comment', 'country', 'number'];
+
     public function __construct()
     {
-        $this->setOrderBy('name');
+        $this->setDefaults([
+            'orderBy' => 'name',
+        ]);
     }
 }

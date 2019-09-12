@@ -11,6 +11,8 @@ namespace App\Repository\Query;
 
 use App\Entity\Team;
 use App\Entity\User;
+use App\Utils\SearchTerm;
+use Symfony\Component\Form\FormErrorIterator;
 
 /**
  * Base class for advanced Repository queries.
@@ -27,6 +29,13 @@ class BaseQuery
     public const RESULT_TYPE_PAGER = 'PagerFanta';
     public const RESULT_TYPE_QUERYBUILDER = 'QueryBuilder';
 
+    private $defaults = [
+        'page' => self::DEFAULT_PAGE,
+        'pageSize' => self::DEFAULT_PAGESIZE,
+        'orderBy' => 'id',
+        'order' => self::ORDER_ASC,
+        'searchTerm' => null,
+    ];
     /**
      * @var int
      */
@@ -55,6 +64,10 @@ class BaseQuery
      * @var Team[]
      */
     private $teams = [];
+    /**
+     * @var SearchTerm|null
+     */
+    private $searchTerm;
 
     public function addTeam(Team $team): self
     {
@@ -78,7 +91,7 @@ class BaseQuery
 
     /**
      * @param User $user
-     * @return $this
+     * @return self
      */
     public function setCurrentUser(User $user)
     {
@@ -97,7 +110,7 @@ class BaseQuery
 
     /**
      * @param int $page
-     * @return $this
+     * @return self
      */
     public function setPage($page)
     {
@@ -113,7 +126,7 @@ class BaseQuery
 
     /**
      * @param int $pageSize
-     * @return $this
+     * @return self
      */
     public function setPageSize($pageSize)
     {
@@ -133,7 +146,7 @@ class BaseQuery
      * You need to validate carefully if this value is used from a user-input.
      *
      * @param string $orderBy
-     * @return $this
+     * @return self
      */
     public function setOrderBy($orderBy)
     {
@@ -149,7 +162,7 @@ class BaseQuery
 
     /**
      * @param string $order
-     * @return $this
+     * @return self
      */
     public function setOrder($order)
     {
@@ -188,21 +201,64 @@ class BaseQuery
         return $this;
     }
 
-    /**
-     * Returns whether the query has changed fields, compared to the original state.
-     *
-     * @return bool
-     */
-    public function isDirty(): bool
+    public function hasSearchTerm(): bool
     {
-        if ($this->page !== self::DEFAULT_PAGE) {
-            return true;
+        return null !== $this->searchTerm;
+    }
+
+    public function getSearchTerm(): ?SearchTerm
+    {
+        return $this->searchTerm;
+    }
+
+    /**
+     * @param SearchTerm|null $searchTerm
+     * @return self
+     */
+    public function setSearchTerm(?SearchTerm $searchTerm)
+    {
+        $this->searchTerm = $searchTerm;
+
+        return $this;
+    }
+
+    protected function set($name, $value)
+    {
+        $method = 'set' . ucfirst($name);
+        if (method_exists($this, $method)) {
+            $this->{$method}($value);
+        } elseif (property_exists($this, $name)) {
+            $this->$name = $value;
+        }
+    }
+
+    /**
+     * @param array $defaults
+     * @return self
+     */
+    protected function setDefaults(array $defaults)
+    {
+        $this->defaults = array_merge($this->defaults, $defaults);
+        foreach ($this->defaults as $key => $value) {
+            $this->set($key, $value);
         }
 
-        if ($this->pageSize !== self::DEFAULT_PAGESIZE) {
-            return true;
+        return $this;
+    }
+
+    /**
+     * @param FormErrorIterator $errors
+     * @return self
+     */
+    public function resetByFormError(FormErrorIterator $errors)
+    {
+        foreach ($errors as $error) {
+            $key = $error->getOrigin()->getName();
+            if (array_key_exists($key, $this->defaults)) {
+                $this->set($key, $this->defaults[$key]);
+            }
         }
 
-        return false;
+        return $this;
     }
 }

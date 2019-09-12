@@ -58,6 +58,7 @@ class Configuration implements ConfigurationInterface
                 ->append($this->getLanguagesNode())
                 ->append($this->getCalendarNode())
                 ->append($this->getThemeNode())
+                ->append($this->getIndustryNode())
                 ->append($this->getDashboardNode())
                 ->append($this->getWidgetsNode())
                 ->append($this->getDefaultsNode())
@@ -314,6 +315,9 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('select_type')
                     ->defaultNull()
                 ->end()
+                ->scalarNode('auto_reload_datatable')
+                    ->defaultFalse()
+                ->end()
                 ->booleanNode('show_about')
                     ->defaultTrue()
                 ->end()
@@ -341,8 +345,30 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('title')
                             ->defaultNull()
                         ->end()
+                        ->scalarNode('translation')
+                            ->defaultNull()
+                        ->end()
                     ->end()
                 ->end()
+                ->integerNode('autocomplete_chars')
+                    ->defaultValue(3)
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    protected function getIndustryNode()
+    {
+        $builder = new TreeBuilder('industry');
+        /** @var ArrayNodeDefinition $rootNode */
+        $node = $builder->getRootNode();
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->scalarNode('translation')->defaultNull()->end()
             ->end()
         ;
 

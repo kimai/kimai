@@ -29,7 +29,7 @@ class DefaultCalculator extends AbstractMergedCalculator implements CalculatorIn
 
         foreach ($this->model->getEntries() as $entry) {
             $item = new InvoiceItem();
-            $this->mergeTimesheets($item, $entry);
+            $this->mergeInvoiceItems($item, $entry);
             foreach ($entry->getVisibleMetaFields() as $field) {
                 $item->addAdditionalField($field->getName(), $field->getValue());
             }

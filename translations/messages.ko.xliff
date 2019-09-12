@@ -340,10 +340,6 @@
                 <source>timesheet.title</source>
                 <target state="translated">나의 업무시간</target>
             </trans-unit>
-            <trans-unit id="timesheet.subtitle">
-                <source>timesheet.subtitle</source>
-                <target state="translated">업무기록 관리하기</target>
-            </trans-unit>
             <trans-unit id="timesheet.edit">
                 <source>timesheet.edit</source>
                 <target state="translated">기록 편집하기</target>
@@ -383,10 +379,6 @@
             <trans-unit id="profile.title">
                 <source>profile.title</source>
                 <target state="translated">사용자 프로필</target>
-            </trans-unit>
-            <trans-unit id="profile.subtitle">
-                <source>profile.subtitle</source>
-                <target state="translated">내 설정 편집하기</target>
             </trans-unit>
             <trans-unit id="profile.about_me">
                 <source>profile.about_me</source>
@@ -457,10 +449,6 @@
                 <source>calendar.title</source>
                 <target state="translated">달력</target>
             </trans-unit>
-            <trans-unit id="calendar.subtitle">
-                <source>calendar.subtitle</source>
-                <target state="translated">달력을 사용하여 시간 기록표를 보고 관리합니다.</target>
-            </trans-unit>
 
             <!--
               Admin: Timesheet
@@ -469,10 +457,6 @@
                 <source>admin_timesheet.title</source>
                 <target state="translated">시간 기록표</target>
             </trans-unit>
-            <trans-unit id="admin_timesheet.subtitle">
-                <source>admin_timesheet.subtitle</source>
-                <target state="translated">모든 사용자 기록</target>
-            </trans-unit>
 
             <!--
               Admin: Projects
@@ -480,10 +464,6 @@
             <trans-unit id="admin_project.title">
                 <source>admin_project.title</source>
                 <target state="translated">프로젝트</target>
-            </trans-unit>
-            <trans-unit id="admin_project.subtitle">
-                <source>admin_project.subtitle</source>
-                <target state="translated">그룹내 고객 활동을 결합한 프로젝트</target>
             </trans-unit>
             <trans-unit id="admin_project.short_stats">
                 <source>admin_project.short_stats</source>
@@ -500,10 +480,6 @@
                 <source>admin_activity.title</source>
                 <target state="translated">활동</target>
             </trans-unit>
-            <trans-unit id="admin_activity.subtitle">
-                <source>admin_activity.subtitle</source>
-                <target state="translated">시간 기록에 선택할 수 있는 작업</target>
-            </trans-unit>
             <trans-unit id="admin_activity.short_stats">
                 <source>admin_activity.short_stats</source>
                 <target state="translated">
@@ -518,10 +494,6 @@
             <trans-unit id="admin_customer.title">
                 <source>admin_customer.title</source>
                 <target state="translated">고객</target>
-            </trans-unit>
-            <trans-unit id="admin_customer.subtitle">
-                <source>admin_customer.subtitle</source>
-                <target state="translated">고객은 프로젝트및 활동을 작성하기 위한 데이터가 됩니다.</target>
             </trans-unit>
             <trans-unit id="label.number">
                 <source>label.number</source>
@@ -585,10 +557,6 @@
             <trans-unit id="admin_user.title">
                 <source>admin_user.title</source>
                 <target state="translated">사용자 </target>
-            </trans-unit>
-            <trans-unit id="admin_user.subtitle">
-                <source>admin_user.subtitle</source>
-                <target state="translated">모든 등록 사용자 설정하기</target>
             </trans-unit>
             <trans-unit id="label.alias">
                 <source>label.alias</source>
@@ -743,10 +711,6 @@
             <trans-unit id="admin_invoice_template.title">
                 <source>admin_invoice_template.title</source>
                 <target state="translated">청구서 템플릿</target>
-            </trans-unit>
-            <trans-unit id="admin_invoice_template.subtitle">
-                <source>admin_invoice_template.subtitle</source>
-                <target state="translated">데이터 내보내기로 인보이스 템플릿을 관리하기</target>
             </trans-unit>
             <trans-unit id="invoice.title">
                 <source>invoice.title</source>

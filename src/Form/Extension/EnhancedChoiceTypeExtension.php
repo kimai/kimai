@@ -15,6 +15,7 @@ use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Converts normal select boxes into javascript enhanced versions.
@@ -49,6 +50,10 @@ class EnhancedChoiceTypeExtension extends AbstractTypeExtension
             return;
         }
 
+        if (isset($options['selectpicker']) && false === $options['selectpicker']) {
+            return;
+        }
+
         if (!isset($view->vars['attr'])) {
             $view->vars['attr'] = [];
         }
@@ -57,5 +62,15 @@ class EnhancedChoiceTypeExtension extends AbstractTypeExtension
             $view->vars['attr'],
             ['class' => 'selectpicker', 'data-live-search' => true, 'data-width' => '100%']
         );
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefined(['selectpicker']);
+        $resolver->setAllowedTypes('selectpicker', 'boolean');
+        $resolver->setDefault('selectpicker', true);
     }
 }

@@ -16,6 +16,7 @@ use App\DependencyInjection\Compiler\TwigContextCompilerPass;
 use App\DependencyInjection\Compiler\WidgetCompilerPass;
 use App\Export\RendererInterface as ExportRendererInterface;
 use App\Invoice\CalculatorInterface as InvoiceCalculator;
+use App\Invoice\InvoiceItemRepositoryInterface;
 use App\Invoice\NumberGeneratorInterface;
 use App\Invoice\RendererInterface as InvoiceRendererInterface;
 use App\Ldap\FormLoginLdapFactory;
@@ -46,6 +47,7 @@ class Kernel extends BaseKernel
     public const TAG_INVOICE_RENDERER = 'invoice.renderer';
     public const TAG_INVOICE_NUMBER_GENERATOR = 'invoice.number_generator';
     public const TAG_INVOICE_CALCULATOR = 'invoice.calculator';
+    public const TAG_INVOICE_REPOSITORY = 'invoice.repository';
     public const TAG_TIMESHEET_CALCULATOR = 'timesheet.calculator';
 
     public function getCacheDir()
@@ -65,6 +67,7 @@ class Kernel extends BaseKernel
         $container->registerForAutoconfiguration(InvoiceRendererInterface::class)->addTag(self::TAG_INVOICE_RENDERER);
         $container->registerForAutoconfiguration(NumberGeneratorInterface::class)->addTag(self::TAG_INVOICE_NUMBER_GENERATOR);
         $container->registerForAutoconfiguration(InvoiceCalculator::class)->addTag(self::TAG_INVOICE_CALCULATOR);
+        $container->registerForAutoconfiguration(InvoiceItemRepositoryInterface::class)->addTag(self::TAG_INVOICE_REPOSITORY);
         $container->registerForAutoconfiguration(PluginInterface::class)->addTag(self::TAG_PLUGIN);
         $container->registerForAutoconfiguration(WidgetRendererInterface::class)->addTag(self::TAG_WIDGET_RENDERER);
         $container->registerForAutoconfiguration(WidgetInterface::class)->addTag(self::TAG_WIDGET);

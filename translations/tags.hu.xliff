@@ -6,10 +6,6 @@
                 <source>tags.title</source>
                 <target>Címkék</target>
             </trans-unit>
-            <trans-unit id="tags.subtitle">
-                <source>tags.subtitle</source>
-                <target>Címkékkel szabadon csoportosíthatod a rögzítéseidet</target>
-            </trans-unit>
         </body>
     </file>
 </xliff>

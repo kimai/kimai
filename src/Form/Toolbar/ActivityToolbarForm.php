@@ -24,8 +24,9 @@ class ActivityToolbarForm extends AbstractToolbarForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addPageSizeChoice($builder);
-        $this->addVisibilityChoice($builder);
+        $this->addSearchTermInputField($builder);
+        $this->addCustomerChoice($builder);
+        $this->addProjectChoice($builder);
         $builder->add('globalsOnly', ChoiceType::class, [
             'choices' => [
                 'yes' => 1,
@@ -34,10 +35,13 @@ class ActivityToolbarForm extends AbstractToolbarForm
             'placeholder' => null,
             'required' => false,
             'label' => 'label.globalsOnly',
+            'selectpicker' => $this->getSelectpickerConfig(),
         ]);
-        $this->addCustomerChoice($builder);
-        $this->addProjectChoice($builder);
+        $this->addVisibilityChoice($builder);
+        $this->addPageSizeChoice($builder);
         $this->addHiddenPagination($builder);
+        $this->addHiddenOrder($builder);
+        $this->addHiddenOrderBy($builder, ActivityQuery::ACTIVITY_ORDER_ALLOWED);
     }
 
     /**

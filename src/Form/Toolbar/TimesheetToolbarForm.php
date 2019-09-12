@@ -23,17 +23,20 @@ class TimesheetToolbarForm extends AbstractToolbarForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addTimesheetStateChoice($builder);
-        $this->addPageSizeChoice($builder);
+        $this->addSearchTermInputField($builder);
         if ($options['include_user']) {
-            $this->addUserChoice($builder);
+            $this->addUsersChoice($builder);
         }
         $this->addDateRangeChoice($builder);
         $this->addCustomerChoice($builder);
         $this->addProjectChoice($builder);
         $this->addActivityChoice($builder);
         $this->addTagInputField($builder);
+        $this->addTimesheetStateChoice($builder);
+        $this->addPageSizeChoice($builder);
         $this->addHiddenPagination($builder);
+        $this->addHiddenOrder($builder);
+        $this->addHiddenOrderBy($builder, TimesheetQuery::TIMESHEET_ORDER_ALLOWED);
     }
 
     /**

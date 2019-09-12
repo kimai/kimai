@@ -2,19 +2,19 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
 {% import "macros/toolbar.html.twig" as toolbar %}
-{% import "macros/actions.html.twig" as actions %}
+{% import "timesheet/actions.html.twig" as actions %}
 {% import _self as timesheet %}
 
 {% set tableName = 'timesheet' %}
 {% set canSeeRate = is_granted('view_rate_own_timesheet') %}
 {% set columns = {
-    'date': 'alwaysVisible',
+    'date': {'class': 'alwaysVisible', 'orderBy': 'begin'},
 } %}
 
 {% if showStartEndTime %}
     {% set columns = columns|merge({
-        'starttime': '',
-        'endtime': 'hidden-xs'
+        'starttime': {'class': '', 'orderBy': 'begin'},
+        'endtime': {'class': 'hidden-xs', 'orderBy': 'end'}
     }) %}
 {% endif %}
 {% set columns = columns|merge({'duration': ''}) %}
@@ -26,16 +26,15 @@
     'project': 'hidden-xs hidden-sm hidden-md',
     'activity': 'hidden-xs hidden-sm',
     'description': 'hidden-xs hidden-sm',
-    'tags': 'hidden-xs hidden-sm',
+    'tags': {'class': 'hidden-xs hidden-sm', 'orderBy': false},
     'actions': 'actions alwaysVisible',
 }) %}
 
 {% block page_title %}{{ 'timesheet.title'|trans }}{% endblock %}
-{% block page_subtitle %}{{ 'timesheet.subtitle'|trans }}{% endblock %}
+{% block page_search %}{{ toolbar.dropDownSearch(toolbarForm) }}{% endblock %}
 {% block page_actions %}{{ actions.timesheets('index') }}{% endblock %}
 
 {% block main_before %}
-    {{ toolbar.toolbar(toolbarForm, 'collapseTimesheet', showFilter) }}
     {{ tables.data_table_column_modal(tableName, columns) }}
 {% endblock %}
 
@@ -44,7 +43,7 @@
     {% if entries.count == 0 %}
         {{ widgets.callout('warning', 'error.no_entries_found') }}
     {% else %}
-        {{ tables.data_table_header(tableName, columns, showSummary, 'kimai.timesheetUpdate') }}
+        {{ tables.datatable_header(tableName, columns, query, {'striped': not showSummary, 'reload': 'kimai.timesheetUpdate'}) }}
 
         {% set day = null %}
         {% set dayDuration = 0 %}

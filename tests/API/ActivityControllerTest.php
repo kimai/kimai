@@ -111,9 +111,9 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result);
         $this->assertEquals(5, count($result));
         $this->assertStructure($result[0], false);
-        $this->assertEquals(1, $result[2]['project']);
+        $this->assertEquals(1, $result[4]['project']);
         $this->assertEquals(2, $result[3]['project']);
-        $this->assertEquals(2, $result[4]['project']);
+        $this->assertEquals(2, $result[2]['project']);
     }
 
     public function testGetEntity()
