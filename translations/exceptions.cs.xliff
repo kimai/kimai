@@ -4,11 +4,11 @@
         <body>
             <trans-unit id="access.denied">
                 <source>access.denied</source>
-                <target>P��stup byl odep�en</target>
+                <target>Přístup byl odepřen</target>
             </trans-unit>
             <trans-unit id="stacktrace">
                 <source>stacktrace</source>
-                <target>K probl�mu do�lo zde</target>
+                <target>K problému došlo zde</target>
             </trans-unit>
             <trans-unit id="http_error.title">
                 <source>http_error.title</source>
@@ -21,30 +21,30 @@
             <trans-unit id="http_error.suggestion">
                 <source>http_error.suggestion</source>
                 <target>
-                    Do�lo k neo�ek�van� chyb�, zkuste to znovu.
-                    Pokud se chyba vyskytuje opakovan�, kontaktujte sv�ho spr�vce.
+                    Došlo k neočekávané chybě, zkuste to znovu.
+                    Pokud se chyba vyskytuje opakovaně, kontaktujte svého správce.
                 </target>
             </trans-unit>
             <trans-unit id="http_error_404.description">
                 <source>http_error_404.description</source>
-                <target>Oops! Str�nka neexistuje.</target>
+                <target>Oops! Stránka neexistuje.</target>
             </trans-unit>
             <trans-unit id="http_error_404.suggestion">
                 <source>http_error_404.suggestion</source>
                 <target>
-                    Nena�li jsme str�nku, kterou jste hledali.
-                    M��ete se vr�tit na N�st�nku a za��t znovu.
+                    Nenašli jsme stránku, kterou jste hledali.
+                    Můžete se vrátit na Nástěnku a začít znovu.
                 </target>
             </trans-unit>
             <trans-unit id="http_error_403.description">
                 <source>http_error_403.description</source>
-                <target>Tato str�nka m� omezen� p��stup.</target>
+                <target>Tato stránka má omezený přístup.</target>
             </trans-unit>
             <trans-unit id="http_error_403.suggestion">
                 <source>http_error_403.suggestion</source>
                 <target>
-                    Litujeme, nem�te dostate�n� opr�vn�n� k zobrazen� t�to str�nky.
-                    Pokud se jedn� o chybu, kontaktujte sv�ho spr�vce.
+                    Litujeme, nemáte dostatečná oprávnění k zobrazení této stránky.
+                    Pokud se jedná o chybu, kontaktujte svého správce.
                 </target>
             </trans-unit>
         </body>

@@ -8,19 +8,19 @@
             </trans-unit>
             <trans-unit id="default">
                 <source>default</source>
-                <target>Faktura (v�choz�)</target>
+                <target>Faktura (výchozí)</target>
             </trans-unit>
             <trans-unit id="timesheet">
                 <source>timesheet</source>
-                <target>Pracovn� v�kaz</target>
+                <target>Pracovní výkaz</target>
             </trans-unit>
             <trans-unit id="freelancer">
                 <source>freelancer</source>
-                <target>�ivnostn�k</target>
+                <target>Živnostník</target>
             </trans-unit>
             <trans-unit id="open-spreadsheet">
                 <source>open-spreadsheet</source>
-                <target>V�po�etn� tabulka</target>
+                <target>Výpočetní tabulka</target>
             </trans-unit>
             <trans-unit id="spreadsheet">
                 <source>spreadsheet</source>
@@ -32,7 +32,7 @@
             </trans-unit>
             <trans-unit id="company">
                 <source>company</source>
-                <target>Firemn� faktura</target>
+                <target>Firemní faktura</target>
             </trans-unit>
         </body>
     </file>

@@ -4,15 +4,15 @@
         <body>
             <trans-unit id="This value is not a valid role.">
                 <source>This value is not a valid role.</source>
-                <target>Tato hodnota nen� platn� role.</target>
+                <target>Tato hodnota není platná role.</target>
             </trans-unit>
             <trans-unit id="End date must not be earlier then start date.">
                 <source>End date must not be earlier then start date.</source>
-                <target>Datum ukon�en� nesm� b�t d��ve ne� datum za��tku.</target>
+                <target>Datum ukončení nesmí být dříve než datum začátku.</target>
             </trans-unit>
             <trans-unit id="The begin date cannot be in the future.">
                 <source>The begin date cannot be in the future.</source>
-                <target>Datum za��tku nem��e b�t v budoucnosti.</target>
+                <target>Datum zažátku nemůže být v budoucnosti.</target>
             </trans-unit>
         </body>
     </file>

@@ -8,7 +8,7 @@
             </trans-unit>
             <trans-unit id="back">
                 <source>back</source>
-                <target>Zp�t</target>
+                <target>Zpět</target>
             </trans-unit>
             <trans-unit id="edit">
                 <source>edit</source>
@@ -20,11 +20,11 @@
             </trans-unit>
             <trans-unit id="report">
                 <source>report</source>
-                <target>Hl�en�</target>
+                <target>Hlášení</target>
             </trans-unit>
             <trans-unit id="repeat">
                 <source>repeat</source>
-                <target>Za��t znovu</target>
+                <target>Začít znovu</target>
             </trans-unit>
             <trans-unit id="profile-stats">
                 <source>profile-stats</source>
@@ -32,19 +32,19 @@
             </trans-unit>
             <trans-unit id="settings">
                 <source>settings</source>
-                <target>Nastaven�</target>
+                <target>Nastavení</target>
             </trans-unit>
             <trans-unit id="timesheet">
                 <source>timesheet</source>
-                <target>Pracovn� v�kaz</target>
+                <target>Pracovní výkaz</target>
             </trans-unit>
             <trans-unit id="customer">
                 <source>customer</source>
-                <target>Filtr z�kazn�k�</target>
+                <target>Filtr zákazníků</target>
             </trans-unit>
             <trans-unit id="project">
                 <source>project</source>
-                <target>Filtr projekt�</target>
+                <target>Filtr projektů</target>
             </trans-unit>
             <trans-unit id="activity">
                 <source>activity</source>
@@ -52,27 +52,27 @@
             </trans-unit>
             <trans-unit id="copy">
                 <source>copy</source>
-                <target>Vytvo�it kopii</target>
+                <target>Vytvořit kopii</target>
             </trans-unit>
             <trans-unit id="home">
                 <source>home</source>
-                <target>�vodn� str�nka</target>
+                <target>Úvodní stránka</target>
             </trans-unit>
             <trans-unit id="create-project">
                 <source>create-project</source>
-                <target>Vytvo�it projekt</target>
+                <target>Vytvořit projekt</target>
             </trans-unit>
             <trans-unit id="create-activity">
                 <source>create-activity</source>
-                <target>Vytvo�it aktivitu</target>
+                <target>Vytvořit aktivitu</target>
             </trans-unit>
             <trans-unit id="create-timesheet">
                 <source>create-timesheet</source>
-                <target>Vytvo�it pracovn� v�kaz</target>
+                <target>Vytvořit pracovní výkaz</target>
             </trans-unit>
             <trans-unit id="permissions">
                 <source>permissions</source>
-                <target>Opr�vn�n� skupiny</target>
+                <target>Oprávnění skupiny</target>
             </trans-unit>
         </body>
     </file>

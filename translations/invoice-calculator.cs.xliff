@@ -4,31 +4,31 @@
         <body>
             <trans-unit id="label.invoice_calculator">
                 <source>label.invoice_calculator</source>
-                <target>V�po�et hodnoty</target>
+                <target>Výpočet hodnoty</target>
             </trans-unit>
             <trans-unit id="default">
                 <source>default</source>
-                <target>V�choz�: jeden z�znam na �asov� z�znam</target>
+                <target>Výchozí: jeden záznam na časový záznam</target>
             </trans-unit>
             <trans-unit id="short">
                 <source>short</source>
-                <target>Hodiny: sou�ty z�znam�, celkem jedna polo�ka</target>
+                <target>Hodiny: součty záznamů, celkem jedna položka</target>
             </trans-unit>
             <trans-unit id="user">
                 <source>user</source>
-                <target>U�ivatel: jeden z�znam na u�ivatele</target>
+                <target>Uživatel: jeden záznam na uživatele</target>
             </trans-unit>
             <trans-unit id="activity">
                 <source>activity</source>
-                <target>Aktivity: jeden z�znam na aktivitu</target>
+                <target>Aktivity: jeden záznam na aktivitu</target>
             </trans-unit>
             <trans-unit id="project">
                 <source>project</source>
-                <target>Projekty: jeden z�znam na projekt</target>
+                <target>Projekty: jeden záznam na projekt</target>
             </trans-unit>
             <trans-unit id="date">
                 <source>date</source>
-                <target>Datum: jeden z�znam na den (pou��v� po��te�n� datum)</target>
+                <target>Datum: jeden záznam na den (používá počáteční datum)</target>
             </trans-unit>
         </body>
     </file>

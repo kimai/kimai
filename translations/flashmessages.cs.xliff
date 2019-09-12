@@ -4,51 +4,51 @@
         <body>
             <trans-unit id="warning">
                 <source>warning</source>
-                <target>Varov�n�</target>
+                <target>Varování</target>
             </trans-unit>
             <trans-unit id="timesheet.stop.success">
                 <source>timesheet.stop.success</source>
-                <target>Z�znam �asu zastaven</target>
+                <target>Záznam času zastaven</target>
             </trans-unit>
             <trans-unit id="timesheet.stop.error">
                 <source>timesheet.stop.error</source>
-                <target>Z�znam �asu nelez zastavit</target>
+                <target>Záznam času nelez zastavit</target>
             </trans-unit>
             <trans-unit id="timesheet.start.success">
                 <source>timesheet.start.success</source>
-                <target>Z�znam �asu za�alo</target>
+                <target>Záznam času začalo</target>
             </trans-unit>
             <trans-unit id="timesheet.start.error">
                 <source>timesheet.start.error</source>
-                <target>Z�znam �asu nele za��t</target>
+                <target>Záznam času nele začít</target>
             </trans-unit>
             <trans-unit id="timesheet.start.exceeded_limit">
                 <source>timesheet.start.exceeded_limit</source>
-                <target>Bylo dosa�eno limitu aktivn�ch �asov�ch z�znam�, nejprve pros�m zastavte alespo� jednu aktivitu.</target>
+                <target>Bylo dosaženo limitu aktivních časových záznamů, nejprve prosím zastavte alespoň jednu aktivitu.</target>
             </trans-unit>
             <trans-unit id="timesheet.locked.warning">
                 <source>timesheet.locked.warning</source>
-                <target>Upravujete exportovan� z�znam</target>
+                <target>Upravujete exportovaný záznam</target>
             </trans-unit>
             <trans-unit id="action.update.success">
                 <source>action.update.success</source>
-                <target>Ulo�it zm�ny</target>
+                <target>Uložit změny</target>
             </trans-unit>
             <trans-unit id="action.update.error">
                 <source>action.update.error</source>
-                <target>Zm�ny nelze ulo�it: %reason%</target>
+                <target>Změny nelze uložit: %reason%</target>
             </trans-unit>
             <trans-unit id="action.delete.success">
                 <source>action.delete.success</source>
-                <target>Z�znam byl smaz�n</target>
+                <target>Záznam byl smazán</target>
             </trans-unit>
             <trans-unit id="action.delete.error">
                 <source>action.delete.error</source>
-                <target>Z�znam nelze smazat: %reason%</target>
+                <target>Záznam nelze smazat: %reason%</target>
             </trans-unit>
             <trans-unit id="invoice.first_template">
                 <source>invoice.first_template</source>
-                <target>Ne� budete moci pokra�ovat, mus�te si vytvo�it prvn� �ablonu faktury</target>
+                <target>Než budete moci pokračovat, musíte si vytvořit první šablonu faktury</target>
             </trans-unit>
         </body>
     </file>

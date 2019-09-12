@@ -4,11 +4,11 @@
         <body>
             <trans-unit id="tags.title">
                 <source>tags.title</source>
-                <target>�t�tek</target>
+                <target>Štítek</target>
             </trans-unit>
             <trans-unit id="tags.subtitle">
                 <source>tags.subtitle</source>
-                <target>�t�tky umo��uj� voln� kombinovat pracovn� v�kaz s v�sledky vyhled�v�n�</target>
+                <target>Štítky umožňují volně kombinovat pracovní výkaz s výsledky vyhledávání</target>
             </trans-unit>
         </body>
     </file>

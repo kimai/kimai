@@ -4,11 +4,11 @@
         <body>
             <trans-unit id="label.invoice_number_generator">
                 <source>label.invoice_number_generator</source>
-                <target>Gener�tor faktura�n�ch ��sel</target>
+                <target>Generátor fakturačních čísel</target>
             </trans-unit>
             <trans-unit id="default">
                 <source>default</source>
-                <target>Data (V�choz�)</target>
+                <target>Data (Výchozí)</target>
             </trans-unit>
         </body>
     </file>

@@ -7,7 +7,7 @@
             -->
             <trans-unit id="time_tracking">
                 <source>time_tracking</source>
-                <target>Sledov�n� �asu</target>
+                <target>Sledování času</target>
             </trans-unit>
             <trans-unit id="yes">
                 <source>yes</source>
@@ -23,11 +23,11 @@
             </trans-unit>
             <trans-unit id="This is a mandatory field">
                 <source>This is a mandatory field</source>
-                <target>Toto pole je povinn�</target>
+                <target>Toto pole je povinné</target>
             </trans-unit>
             <trans-unit id="create">
                 <source>create</source>
-                <target>Vytvo�it</target>
+                <target>Vytvořit</target>
             </trans-unit>
             <trans-unit id="confirm.delete">
                 <source>confirm.delete</source>
@@ -36,17 +36,17 @@
             <trans-unit id="admin_entity.delete_confirm">
                 <source>admin_entity.delete_confirm</source>
                 <target>
-                    Tato data budou smaz�na!
-                    Nebo m��ete data pren�st do jin�ho z�znamu:
+                    Tato data budou smazána!
+                    Nebo můžete data prenést do jiného záznamu:
                 </target>
             </trans-unit>
             <trans-unit id="delete.not_in_use">
                 <source>delete.not_in_use</source>
-                <target>Tuto polo�ku lze bezpe�n� smazat.</target>
+                <target>Tuto položku lze bezpečně smazat.</target>
             </trans-unit>
             <trans-unit id="cancel">
                 <source>cancel</source>
-                <target>Zru�it</target>
+                <target>Zrušit</target>
             </trans-unit>
             <trans-unit id="confirm">
                 <source>confirm</source>
@@ -62,15 +62,15 @@
             </trans-unit>
             <trans-unit id="label.password_repeat">
                 <source>label.password_repeat</source>
-                <target>Potvrzen� hesla</target>
+                <target>Potvrzení hesla</target>
             </trans-unit>
             <trans-unit id="label.logout">
                 <source>label.logout</source>
-                <target>Odhl�sit se</target>
+                <target>Odhlásit se</target>
             </trans-unit>
             <trans-unit id="label.user_profile">
                 <source>label.user_profile</source>
-                <target>M�j profil</target>
+                <target>Můj profil</target>
             </trans-unit>
             <trans-unit id="label.api_token">
                 <source>label.api_token</source>
@@ -86,23 +86,23 @@
             -->
             <trans-unit id="menu.homepage">
                 <source>menu.homepage</source>
-                <target>N�st�nka</target>
+                <target>Nástěnka</target>
             </trans-unit>
             <trans-unit id="menu.admin">
                 <source>menu.admin</source>
-                <target>Spr�va</target>
+                <target>Správa</target>
             </trans-unit>
             <trans-unit id="menu.system">
                 <source>menu.system</source>
-                <target>Syst�m</target>
+                <target>Systém</target>
             </trans-unit>
             <trans-unit id="menu.logout">
                 <source>menu.logout</source>
-                <target>Odhl�sit se</target>
+                <target>Odhlásit se</target>
             </trans-unit>
             <trans-unit id="menu.timesheet">
                 <source>menu.timesheet</source>
-                <target>Moje �asy</target>
+                <target>Moje časy</target>
             </trans-unit>
             <trans-unit id="menu.invoice">
                 <source>menu.invoice</source>
@@ -114,11 +114,11 @@
             </trans-unit>
             <trans-unit id="menu.admin_timesheet">
                 <source>menu.admin_timesheet</source>
-                <target>Pracovn� v�kaz</target>
+                <target>Pracovní výkaz</target>
             </trans-unit>
             <trans-unit id="menu.admin_customer">
                 <source>menu.admin_customer</source>
-                <target>Z�kazn�ci</target>
+                <target>Zákazníci</target>
             </trans-unit>
             <trans-unit id="menu.admin_project">
                 <source>menu.admin_project</source>
@@ -130,7 +130,7 @@
             </trans-unit>
             <trans-unit id="menu.admin_user">
                 <source>menu.admin_user</source>
-                <target>U�ivatel�</target>
+                <target>Uživatelé</target>
             </trans-unit>
             <trans-unit id="menu.admin_team">
                 <source>menu.admin_team</source>
@@ -138,15 +138,15 @@
             </trans-unit>
             <trans-unit id="menu.plugin">
                 <source>menu.plugin</source>
-                <target>Dopl�ky</target>
+                <target>Doplňky</target>
             </trans-unit>
             <trans-unit id="menu.system_configuration">
                 <source>menu.system_configuration</source>
-                <target>Nastaven�</target>
+                <target>Nastavení</target>
             </trans-unit>
             <trans-unit id="menu.tags">
                 <source>menu.tags</source>
-                <target>�t�tky</target>
+                <target>Štítky</target>
             </trans-unit>
 
             <!--
@@ -154,7 +154,7 @@
             -->
             <trans-unit id="error.no_entries_found">
                 <source>error.no_entries_found</source>
-                <target>Na z�klad� vybran�ch dat nebyly nalezeny ��dn� z�znamy.</target>
+                <target>Na základě vybraných dat nebyly nalezeny žádné záznamy.</target>
             </trans-unit>
 
             <!--
@@ -166,23 +166,23 @@
             </trans-unit>
             <trans-unit id="label.starttime">
                 <source>label.starttime</source>
-                <target>Za��t</target>
+                <target>Začít</target>
             </trans-unit>
             <trans-unit id="label.endtime">
                 <source>label.endtime</source>
-                <target>Ukon�it</target>
+                <target>Ukončit</target>
             </trans-unit>
             <trans-unit id="label.duration">
                 <source>label.duration</source>
-                <target>Doba trv�n�</target>
+                <target>Doba trvání</target>
             </trans-unit>
             <trans-unit id="label.user">
                 <source>label.user</source>
-                <target>U�ivatel</target>
+                <target>Uživatel</target>
             </trans-unit>
             <trans-unit id="label.username">
                 <source>label.username</source>
-                <target>U�ivatelsk� jm�no</target>
+                <target>Uživatelské jméno</target>
             </trans-unit>
             <trans-unit id="label.description">
                 <source>label.description</source>
@@ -190,11 +190,11 @@
             </trans-unit>
             <trans-unit id="label.name">
                 <source>label.name</source>
-                <target>Jm�no</target>
+                <target>Jméno</target>
             </trans-unit>
             <trans-unit id="label.comment">
                 <source>label.comment</source>
-                <target>Pozn�mka</target>
+                <target>Poznámka</target>
             </trans-unit>
             <trans-unit id="label.id">
                 <source>label.id</source>
@@ -202,15 +202,15 @@
             </trans-unit>
             <trans-unit id="label.visible">
                 <source>label.visible</source>
-                <target>Viditeln�</target>
+                <target>Viditelné</target>
             </trans-unit>
             <trans-unit id="label.budget">
                 <source>label.budget</source>
-                <target>Rozpo�et</target>
+                <target>Rozpočet</target>
             </trans-unit>
             <trans-unit id="label.timeBudget">
                 <source>label.timeBudget</source>
-                <target>Hodinov� rozpo�et</target>
+                <target>Hodinový rozpočet</target>
             </trans-unit>
             <trans-unit id="label.activity">
                 <source>label.activity</source>
@@ -222,19 +222,19 @@
             </trans-unit>
             <trans-unit id="label.tag">
                 <source>label.tag</source>
-                <target>�t�tek</target>
+                <target>Štítek</target>
             </trans-unit>
             <trans-unit id="label.tags">
                 <source>label.tags</source>
-                <target>�t�tek</target>
+                <target>Štítek</target>
             </trans-unit>
             <trans-unit id="label.hourlyRate">
                 <source>label.hourlyRate</source>
-                <target>Hodinov� mzda</target>
+                <target>Hodinová mzda</target>
             </trans-unit>
             <trans-unit id="label.hourly_rate">
                 <source>label.hourly_rate</source>
-                <target>Hodinov� mzda</target>
+                <target>Hodinová mzda</target>
             </trans-unit>
             <trans-unit id="label.skin">
                 <source>label.skin</source>
@@ -254,7 +254,7 @@
             </trans-unit>
             <trans-unit id="label.customer">
                 <source>label.customer</source>
-                <target>Z�kazn�k</target>
+                <target>Zákazník</target>
             </trans-unit>
             <trans-unit id="label.email">
                 <source>label.email</source>
@@ -266,11 +266,11 @@
             </trans-unit>
             <trans-unit id="label.teamlead">
                 <source>label.teamlead</source>
-                <target>Vedouc� teamu</target>
+                <target>Vedoucí teamu</target>
             </trans-unit>
             <trans-unit id="label.create_more">
                 <source>label.create_more</source>
-                <target>Vytvo�it dal�� polo�ku</target>
+                <target>Vytvořit další položku</target>
             </trans-unit>
 
             <!--
@@ -290,7 +290,7 @@
             </trans-unit>
             <trans-unit id="action.save">
                 <source>action.save</source>
-                <target>Ulo�it</target>
+                <target>Uložit</target>
             </trans-unit>
             <trans-unit id="action.reset">
                 <source>action.reset</source>
@@ -298,11 +298,11 @@
             </trans-unit>
             <trans-unit id="action.back">
                 <source>action.back</source>
-                <target>Zp�t</target>
+                <target>Zpět</target>
             </trans-unit>
             <trans-unit id="action.close">
                 <source>action.close</source>
-                <target>Zav��t</target>
+                <target>Zavřít</target>
             </trans-unit>
 
             <!--
@@ -310,11 +310,11 @@
             -->
             <trans-unit id="dashboard.title">
                 <source>dashboard.title</source>
-                <target>N�st�nka</target>
+                <target>Nástěnka</target>
             </trans-unit>
             <trans-unit id="dashboard.subtitle">
                 <source>dashboard.subtitle</source>
-                <target>V�tejte!</target>
+                <target>Vítejte!</target>
             </trans-unit>
             <trans-unit id="dashboard.you">
                 <source>dashboard.you</source>
@@ -322,7 +322,7 @@
             </trans-unit>
             <trans-unit id="dashboard.all">
                 <source>dashboard.all</source>
-                <target>V�ichni u�ivatel�</target>
+                <target>Všichni uživatelé</target>
             </trans-unit>
 
             <!--
@@ -330,7 +330,7 @@
             -->
             <trans-unit id="more.info.link">
                 <source>more.info.link</source>
-                <target>V�ce informac�</target>
+                <target>Více informací</target>
             </trans-unit>
             <trans-unit id="label.toggle_dropdown">
                 <source>label.toggle_dropdown</source>
@@ -342,39 +342,39 @@
             -->
             <trans-unit id="timesheet.title">
                 <source>timesheet.title</source>
-                <target>Moje �asy</target>
+                <target>Moje časy</target>
             </trans-unit>
             <trans-unit id="timesheet.subtitle">
                 <source>timesheet.subtitle</source>
-                <target>Upravit moje �asov� z�znami</target>
+                <target>Upravit moje časové záznami</target>
             </trans-unit>
             <trans-unit id="timesheet.edit">
                 <source>timesheet.edit</source>
-                <target>Upravit z�znam</target>
+                <target>Upravit záznam</target>
             </trans-unit>
             <trans-unit id="label.begin">
                 <source>label.begin</source>
-                <target>Za��t</target>
+                <target>Začít</target>
             </trans-unit>
             <trans-unit id="label.end">
                 <source>label.end</source>
-                <target>Ukon�it</target>
+                <target>Ukončit</target>
             </trans-unit>
             <trans-unit id="label.daterange">
                 <source>label.daterange</source>
-                <target>�asov� rozsah</target>
+                <target>Časový rozsah</target>
             </trans-unit>
             <trans-unit id="modal.columns.title">
                 <source>modal.columns.title</source>
-                <target>Zm�nit viditelnost sloubce</target>
+                <target>Změnit viditelnost sloubce</target>
             </trans-unit>
             <trans-unit id="modal.columns.description">
                 <source>modal.columns.description</source>
-                <target>Po ulo�en� budou neza�krtnut� sloupce skryt� a toto nastaven� bude ulo�eno do souboru cookie prohl�e�e. Pokud cookies sma�ete, nastaven� se zru��.</target>
+                <target>Po uložení budou nezaškrtnuté sloupce skryté a toto nastavení bude uloženo do souboru cookie prohlížeče. Pokud cookies smažete, nastavení se zruší.</target>
             </trans-unit>
             <trans-unit id="label.fixedRate">
                 <source>label.fixedRate</source>
-                <target>Fixn� sazba</target>
+                <target>Fixní sazba</target>
             </trans-unit>
             <trans-unit id="label.color">
                 <source>label.color</source>
@@ -386,19 +386,19 @@
             -->
             <trans-unit id="profile.title">
                 <source>profile.title</source>
-                <target>Profil u�ivatele</target>
+                <target>Profil uživatele</target>
             </trans-unit>
             <trans-unit id="profile.subtitle">
                 <source>profile.subtitle</source>
-                <target>Upravit m� nastaven�</target>
+                <target>Upravit mé nastavení</target>
             </trans-unit>
             <trans-unit id="profile.about_me">
                 <source>profile.about_me</source>
-                <target>O mn�</target>
+                <target>O mně</target>
             </trans-unit>
             <trans-unit id="profile.first_entry">
                 <source>profile.first_entry</source>
-                <target>Za��tek pr�ce</target>
+                <target>Začátek práce</target>
             </trans-unit>
             <trans-unit id="profile.settings">
                 <source>profile.settings</source>
@@ -414,7 +414,7 @@
             </trans-unit>
             <trans-unit id="profile.roles">
                 <source>profile.roles</source>
-                <target>�loha</target>
+                <target>Úloha</target>
             </trans-unit>
             <trans-unit id="profile.teams">
                 <source>profile.teams</source>
@@ -426,24 +426,24 @@
             </trans-unit>
             <trans-unit id="label.theme.collapsed_sidebar">
                 <source>label.theme.collapsed_sidebar</source>
-                <target>Zmen�it postrann� panel</target>
+                <target>Zmenšit postranní panel</target>
             </trans-unit>
             <trans-unit id="label.calendar.initial_view">
                 <source>label.calendar.initial_view</source>
-                <target>Po��te�n� zobrazen� kalend��e</target>
+                <target>Počáteční zobrazení kalendáře</target>
             </trans-unit>
             <trans-unit id="label.login.initial_view">
                 <source>label.login.initial_view</source>
-                <target>Po��te�n� zobrazen� po p�ihl�en�</target>
+                <target>Počáteční zobrazení po přihlášení</target>
             </trans-unit>
             <!-- Options for user-preference label.calendar.initial_view -->
             <trans-unit id="month">
                 <source>month</source>
-                <target>M�s�c</target>
+                <target>Měsíc</target>
             </trans-unit>
             <trans-unit id="agendaWeek">
                 <source>agendaWeek</source>
-                <target>T�den</target>
+                <target>Týden</target>
             </trans-unit>
             <trans-unit id="agendaDay">
                 <source>agendaDay</source>
@@ -451,7 +451,7 @@
             </trans-unit>
             <trans-unit id="label.timesheet.daily_stats">
                 <source>label.timesheet.daily_stats</source>
-                <target>Zobrazit denn� statistiky v pracovn�m v�kaze</target>
+                <target>Zobrazit denní statistiky v pracovním výkaze</target>
             </trans-unit>
 
             <!--
@@ -459,11 +459,11 @@
             -->
             <trans-unit id="calendar.title">
                 <source>calendar.title</source>
-                <target>Kalend��</target>
+                <target>Kalendář</target>
             </trans-unit>
             <trans-unit id="calendar.subtitle">
                 <source>calendar.subtitle</source>
-                <target>Zobrazen� a spr�va pracovn�ho v�kazu v kalend��i</target>
+                <target>Zobrazení a správa pracovního výkazu v kalendáři</target>
             </trans-unit>
 
             <!--
@@ -471,11 +471,11 @@
             -->
             <trans-unit id="admin_timesheet.title">
                 <source>admin_timesheet.title</source>
-                <target>Pracovn� v�kaz</target>
+                <target>Pracovní výkaz</target>
             </trans-unit>
             <trans-unit id="admin_timesheet.subtitle">
                 <source>admin_timesheet.subtitle</source>
-                <target>Z�znamy v�ech u�ivatel�</target>
+                <target>Záznamy všech uživatelů</target>
             </trans-unit>
 
             <!--
@@ -487,13 +487,13 @@
             </trans-unit>
             <trans-unit id="admin_project.subtitle">
                 <source>admin_project.subtitle</source>
-                <target>Projekt kombinuje aktivity pro z�kazn�ka do skupiny</target>
+                <target>Projekt kombinuje aktivity pro zákazníka do skupiny</target>
             </trans-unit>
             <trans-unit id="admin_project.short_stats">
                 <source>admin_project.short_stats</source>
                 <target>
-                    V sou�asn� dob� je projekt %project% pro z�kazn�ka %customer% m� %activities%
-                    �innosti a %records% �asov� z�znam, co� je celkem %duration%.
+                    V současné době je projekt %project% pro zákazníka %customer% má %activities%
+                    činnosti a %records% časový záznam, což je celkem %duration%.
                 </target>
             </trans-unit>
 
@@ -506,13 +506,13 @@
             </trans-unit>
             <trans-unit id="admin_activity.subtitle">
                 <source>admin_activity.subtitle</source>
-                <target>�lohy, kter� lze vybrat pro �asov� z�znamy</target>
+                <target>Úlohy, které lze vybrat pro časové záznamy</target>
             </trans-unit>
             <trans-unit id="admin_activity.short_stats">
                 <source>admin_activity.short_stats</source>
                 <target>
-                    Aktu�ln� aktivita %activity% v projektu %project% pro z�kazn�ka %customer%
-                    m� %records% �asov� z�znam, kter� je celkem %duration%.
+                    Aktuální aktivita %activity% v projektu %project% pro zákazníka %customer%
+                    má %records% časový záznam, který je celkem %duration%.
                 </target>
             </trans-unit>
 
@@ -521,23 +521,23 @@
             -->
             <trans-unit id="admin_customer.title">
                 <source>admin_customer.title</source>
-                <target>Z�kazn�k</target>
+                <target>Zákazník</target>
             </trans-unit>
             <trans-unit id="admin_customer.subtitle">
                 <source>admin_customer.subtitle</source>
-                <target>Va�i z�kazn�ci jsou z�kladem pro vytv��en� projekt� a aktivit</target>
+                <target>Vaši zákazníci jsou základem pro vytváření projektů a aktivit</target>
             </trans-unit>
             <trans-unit id="label.number">
                 <source>label.number</source>
-                <target>��et</target>
+                <target>Účet</target>
             </trans-unit>
             <trans-unit id="label.company">
                 <source>label.company</source>
-                <target>Jm�no spole�nosti</target>
+                <target>Jméno společnosti</target>
             </trans-unit>
             <trans-unit id="label.vat">
                 <source>label.vat</source>
-                <target>Da�</target>
+                <target>Daň</target>
             </trans-unit>
             <trans-unit id="label.contact">
                 <source>label.contact</source>
@@ -549,7 +549,7 @@
             </trans-unit>
             <trans-unit id="label.country">
                 <source>label.country</source>
-                <target>Zem�</target>
+                <target>Země</target>
             </trans-unit>
             <trans-unit id="label.phone">
                 <source>label.phone</source>
@@ -561,25 +561,25 @@
             </trans-unit>
             <trans-unit id="label.mobile">
                 <source>label.mobile</source>
-                <target>Mobiln� telefon</target>
+                <target>Mobilní telefon</target>
             </trans-unit>
             <trans-unit id="label.homepage">
                 <source>label.homepage</source>
-                <target>Dom�c� str�nka</target>
+                <target>Domácí stránka</target>
             </trans-unit>
             <trans-unit id="label.timezone">
                 <source>label.timezone</source>
-                <target>�asov� p�smo</target>
+                <target>Časové pásmo</target>
             </trans-unit>
             <trans-unit id="label.currency">
                 <source>label.currency</source>
-                <target>M�na</target>
+                <target>Měna</target>
             </trans-unit>
             <trans-unit id="admin_customer.short_stats">
                 <source>admin_customer.short_stats</source>
                 <target>
-                    V sou�asn� dob� z�kazn�k %customer% m� %project% projekt s %activity% �innosti, kter� shrnuj�
-                    v %records% �asov�m z�znamu celkem %duration%.
+                    V současné době zákazník %customer% má %project% projekt s %activity% činnosti, které shrnují
+                    v %records% časovém záznamu celkem %duration%.
                 </target>
             </trans-unit>
 
@@ -588,15 +588,15 @@
             -->
             <trans-unit id="admin_user.title">
                 <source>admin_user.title</source>
-                <target>U�ivatel</target>
+                <target>Uživatel</target>
             </trans-unit>
             <trans-unit id="admin_user.subtitle">
                 <source>admin_user.subtitle</source>
-                <target>V�ichni registrovan� u�ivatel� va�� instalace Kimai</target>
+                <target>Všichni registrovaní uživatelé vaší instalace Kimai</target>
             </trans-unit>
             <trans-unit id="label.alias">
                 <source>label.alias</source>
-                <target>Jm�no</target>
+                <target>Jméno</target>
             </trans-unit>
             <trans-unit id="label.title">
                 <source>label.title</source>
@@ -604,11 +604,11 @@
             </trans-unit>
             <trans-unit id="label.avatar">
                 <source>label.avatar</source>
-                <target>Profilov� obr�zek</target>
+                <target>Profilový obrázek</target>
             </trans-unit>
             <trans-unit id="label.active">
                 <source>label.active</source>
-                <target>Aktivn�</target>
+                <target>Aktivní</target>
             </trans-unit>
             <trans-unit id="label.roles">
                 <source>label.roles</source>
@@ -617,7 +617,7 @@
             <trans-unit id="admin_user.short_stats">
                 <source>admin_user.short_stats</source>
                 <target>
-                    V sou�asn� dob� u�ivatel %user% m� %records% �asov�ch z�znam�, kter� �in� celkem %duration%.
+                    V současné době uživatel %user% má %records% časových záznamů, které činí celkem %duration%.
                 </target>
             </trans-unit>
 
@@ -630,7 +630,7 @@
             </trans-unit>
             <trans-unit id="label.required_version">
                 <source>label.required_version</source>
-                <target>Kompatibiln� s</target>
+                <target>Kompatibilní s</target>
             </trans-unit>
 
             <!--
@@ -638,19 +638,19 @@
             -->
             <trans-unit id="ROLE_SUPER_ADMIN">
                 <source>ROLE_SUPER_ADMIN</source>
-                <target>Syst�mov�-Admin</target>
+                <target>Systémový-Admin</target>
             </trans-unit>
             <trans-unit id="ROLE_ADMIN">
                 <source>ROLE_ADMIN</source>
-                <target>Spr�vce</target>
+                <target>Správce</target>
             </trans-unit>
             <trans-unit id="ROLE_TEAMLEAD">
                 <source>ROLE_TEAMLEAD</source>
-                <target>Vedouc� skupiny</target>
+                <target>Vedoucí skupiny</target>
             </trans-unit>
             <trans-unit id="ROLE_USER">
                 <source>ROLE_USER</source>
-                <target>U�ivatel</target>
+                <target>Uživatel</target>
             </trans-unit>
 
             <!--
@@ -658,23 +658,23 @@
             -->
             <trans-unit id="stats.durationToday">
                 <source>stats.durationToday</source>
-                <target>Pracovn� doba dnes</target>
+                <target>Pracovní doba dnes</target>
             </trans-unit>
             <trans-unit id="stats.durationWeek">
                 <source>stats.durationWeek</source>
-                <target>Pracovn� doba tento t�den</target>
+                <target>Pracovní doba tento týden</target>
             </trans-unit>
             <trans-unit id="stats.durationMonth">
                 <source>stats.durationMonth</source>
-                <target>Pracovn� doba tento m�s�c</target>
+                <target>Pracovní doba tento měsíc</target>
             </trans-unit>
             <trans-unit id="stats.durationYear">
                 <source>stats.durationYear</source>
-                <target>Pracovn� doba tento rok</target>
+                <target>Pracovní doba tento rok</target>
             </trans-unit>
             <trans-unit id="stats.durationTotal">
                 <source>stats.durationTotal</source>
-                <target>Pracovn� doba celkem</target>
+                <target>Pracovní doba celkem</target>
             </trans-unit>
             <trans-unit id="stats.yourWorkingHours">
                 <source>stats.yourWorkingHours</source>
@@ -682,55 +682,55 @@
             </trans-unit>
             <trans-unit id="stats.amountToday">
                 <source>stats.amountToday</source>
-                <target>P��jem dnes</target>
+                <target>Příjem dnes</target>
             </trans-unit>
             <trans-unit id="stats.amountWeek">
                 <source>stats.amountWeek</source>
-                <target>P��jem tento t�den</target>
+                <target>Příjem tento týden</target>
             </trans-unit>
             <trans-unit id="stats.amountMonth">
                 <source>stats.amountMonth</source>
-                <target>P��jem tento m�s�c</target>
+                <target>Příjem tento měsíc</target>
             </trans-unit>
             <trans-unit id="stats.amountYear">
                 <source>stats.amountYear</source>
-                <target>P�jem tento rok</target>
+                <target>Přjem tento rok</target>
             </trans-unit>
             <trans-unit id="stats.amountTotal">
                 <source>stats.amountTotal</source>
-                <target>Celkov� p��jem</target>
+                <target>Celkový příjem</target>
             </trans-unit>
             <trans-unit id="stats.userActiveToday">
                 <source>stats.userActiveToday</source>
-                <target>Aktivn� u�ivatel� dnes</target>
+                <target>Aktivní uživatelé dnes</target>
             </trans-unit>
             <trans-unit id="stats.userActiveWeek">
                 <source>stats.userActiveWeek</source>
-                <target>Aktivn� u�ivatel� tento t�den</target>
+                <target>Aktivní uživatelé tento týden</target>
             </trans-unit>
             <trans-unit id="stats.userActiveMonth">
                 <source>stats.userActiveMonth</source>
-                <target>Aktivn� u�ivatel� tento m�s�c</target>
+                <target>Aktivní uživatelé tento měsíc</target>
             </trans-unit>
             <trans-unit id="stats.userActiveYear">
                 <source>stats.userActiveYear</source>
-                <target>Aktivn� u�ivatel� tento rok</target>
+                <target>Aktivní uživatelé tento rok</target>
             </trans-unit>
             <trans-unit id="stats.userActiveTotal">
                 <source>stats.userActiveTotal</source>
-                <target>Aktivn� u�ivatel� celkem</target>
+                <target>Aktivní uživatelé celkem</target>
             </trans-unit>
             <trans-unit id="stats.activeRecordings">
                 <source>stats.activeRecordings</source>
-                <target>Aktivn� evidence</target>
+                <target>Aktivní evidence</target>
             </trans-unit>
             <trans-unit id="stats.userTotal">
                 <source>stats.userTotal</source>
-                <target>U�ivatel</target>
+                <target>Uživatel</target>
             </trans-unit>
             <trans-unit id="stats.activityTotal">
                 <source>stats.activityTotal</source>
-                <target>�innosti</target>
+                <target>Činnosti</target>
             </trans-unit>
             <trans-unit id="stats.projectTotal">
                 <source>stats.projectTotal</source>
@@ -738,7 +738,7 @@
             </trans-unit>
             <trans-unit id="stats.customerTotal">
                 <source>stats.customerTotal</source>
-                <target>Z�kazn�ci</target>
+                <target>Zákazníci</target>
             </trans-unit>
 
             <!--
@@ -746,11 +746,11 @@
             -->
             <trans-unit id="admin_invoice_template.title">
                 <source>admin_invoice_template.title</source>
-                <target>�ablona faktury</target>
+                <target>Šablona faktury</target>
             </trans-unit>
             <trans-unit id="admin_invoice_template.subtitle">
                 <source>admin_invoice_template.subtitle</source>
-                <target>Spravujte sv� �ablony faktur, kter� lze pou��t k exportu dat.</target>
+                <target>Spravujte své šablony faktur, které lze použít k exportu dat.</target>
             </trans-unit>
             <trans-unit id="invoice.title">
                 <source>invoice.title</source>
@@ -758,11 +758,11 @@
             </trans-unit>
             <trans-unit id="invoice.subtitle">
                 <source>invoice.subtitle</source>
-                <target>Vytv��ejte faktury z va�ich zaznamenan�ch polo�ek �asov�ho z�znamu.</target>
+                <target>Vytvářejte faktury z vašich zaznamenaných položek časového záznamu.</target>
             </trans-unit>
             <trans-unit id="invoice.preview">
                 <source>invoice.preview</source>
-                <target>Toto je n�hled dat, kter� se zobraz� ve va�em faktura�n�m dokladu.</target>
+                <target>Toto je náhled dat, která se zobrazí ve vašem fakturačním dokladu.</target>
             </trans-unit>
             <trans-unit id="button.print">
                 <source>button.print</source>
@@ -790,7 +790,7 @@
             </trans-unit>
             <trans-unit id="label.template">
                 <source>label.template</source>
-                <target>�ablona</target>
+                <target>Šablona</target>
             </trans-unit>
             <trans-unit id="label.due_days">
                 <source>label.due_days</source>
@@ -798,7 +798,7 @@
             </trans-unit>
             <trans-unit id="invoice.due_days">
                 <source>invoice.due_days</source>
-                <target>Platebn� metoda</target>
+                <target>Platební metoda</target>
             </trans-unit>
             <trans-unit id="invoice.from">
                 <source>invoice.from</source>
@@ -810,15 +810,15 @@
             </trans-unit>
             <trans-unit id="invoice.number">
                 <source>invoice.number</source>
-                <target>��slo faktury</target>
+                <target>Číslo faktury</target>
             </trans-unit>
             <trans-unit id="invoice.subtotal">
                 <source>invoice.subtotal</source>
-                <target>Mezisou�et</target>
+                <target>Mezisoučet</target>
             </trans-unit>
             <trans-unit id="invoice.tax">
                 <source>invoice.tax</source>
-                <target>Da�</target>
+                <target>Daň</target>
             </trans-unit>
             <trans-unit id="invoice.total">
                 <source>invoice.total</source>
@@ -826,54 +826,54 @@
             </trans-unit>
             <trans-unit id="invoice.service_date">
                 <source>invoice.service_date</source>
-                <target>Datum vyhotoven�</target>
+                <target>Datum vyhotovení</target>
             </trans-unit>
             <trans-unit id="label.amount">
                 <source>label.amount</source>
-                <target>Mno�stv�</target>
+                <target>Množství</target>
             </trans-unit>
             <trans-unit id="label.total_rate">
                 <source>label.total_rate</source>
-                <target>Celkov� cena</target>
+                <target>Celková cena</target>
             </trans-unit>
             <trans-unit id="label.unit_price">
                 <source>label.unit_price</source>
-                <target>Jednotkov� cena</target>
+                <target>Jednotková cena</target>
             </trans-unit>
             <trans-unit id="label.payment_terms">
                 <source>label.payment_terms</source>
-                <target>Platebn� podm�nky</target>
+                <target>Platební podmínky</target>
             </trans-unit>
             <trans-unit id="invoice.signature_user">
                 <source>invoice.signature_user</source>
-                <target>Potvrzen�: Datum / Jm�no / Podpis</target>
+                <target>Potvrzení: Datum / Jméno / Podpis</target>
             </trans-unit>
             <trans-unit id="invoice.signature_customer">
                 <source>invoice.signature_customer</source>
-                <target>Potvrzen�: Datum / Z�kazn�k / Podpis</target>
+                <target>Potvrzení: Datum / Zákazník / Podpis</target>
             </trans-unit>
             <trans-unit id="invoice.total_working_time">
                 <source>invoice.total_working_time</source>
-                <target>Celkov� doba trv�n�</target>
+                <target>Celková doba trvání</target>
             </trans-unit>
             <trans-unit id="label.orderNumber">
                 <source>label.orderNumber</source>
-                <target>��slo objedn�vky</target>
+                <target>Číslo objednávky</target>
             </trans-unit>
             <trans-unit id="label.invoice_tax_number">
                 <source>label.invoice_tax_number</source>
-                <target>DI�:</target>
+                <target>DIČ:</target>
             </trans-unit>
             <trans-unit id="label.invoice_bank_account">
                 <source>label.invoice_bank_account</source>
-                <target>Bankovn� ��et</target>
+                <target>Bankovní účet</target>
             </trans-unit>
             <trans-unit id="label.invoice_salutation">
                 <source>label.invoice_salutation</source>
                 <target>
-                    D�mi a p�nov�,
+                    Dámi a pánové,
 
-                    D�kuji za va�i objedn�vku a vyu�it� m�ch slo�eb:
+                    Děkuji za vaši objednávku a využití mých složeb:
                 </target>
             </trans-unit>
 
@@ -886,19 +886,19 @@
             </trans-unit>
             <trans-unit id="export.subtitle">
                 <source>export.subtitle</source>
-                <target>Exportovat odpracovanou dobu do r�zn�ch form�t�</target>
+                <target>Exportovat odpracovanou dobu do různých formátů</target>
             </trans-unit>
             <trans-unit id="export.period">
                 <source>export.period</source>
-                <target>Obdob�</target>
+                <target>Období</target>
             </trans-unit>
             <trans-unit id="export.document_title">
                 <source>export.document_title</source>
-                <target>Seznam v�daj�</target>
+                <target>Seznam výdajů</target>
             </trans-unit>
             <trans-unit id="export.full_list">
                 <source>export.full_list</source>
-                <target>Pln�� seznam</target>
+                <target>Plnžý seznam</target>
             </trans-unit>
             <trans-unit id="export.summary">
                 <source>export.summary</source>
@@ -906,11 +906,11 @@
             </trans-unit>
             <trans-unit id="export.page_of">
                 <source>export.page_of</source>
-                <target>Str�nka %page% z %pages%</target>
+                <target>Stránka %page% z %pages%</target>
             </trans-unit>
             <trans-unit id="export.date_copyright">
                 <source>export.date_copyright</source>
-                <target>Vytvo�eno %date% s %kimai%</target>
+                <target>Vytvořeno %date% s %kimai%</target>
             </trans-unit>
 
             <!--
@@ -922,11 +922,11 @@
             </trans-unit>
             <trans-unit id="month.2">
                 <source>month.2</source>
-                <target>�nor</target>
+                <target>Únor</target>
             </trans-unit>
             <trans-unit id="month.3">
                 <source>month.3</source>
-                <target>B�ezen</target>
+                <target>Březen</target>
             </trans-unit>
             <trans-unit id="month.4">
                 <source>month.4</source>
@@ -934,15 +934,15 @@
             </trans-unit>
             <trans-unit id="month.5">
                 <source>month.5</source>
-                <target>Kv�ten</target>
+                <target>Květen</target>
             </trans-unit>
             <trans-unit id="month.6">
                 <source>month.6</source>
-                <target>�erven</target>
+                <target>Červen</target>
             </trans-unit>
             <trans-unit id="month.7">
                 <source>month.7</source>
-                <target>�ervenec</target>
+                <target>Červenec</target>
             </trans-unit>
             <trans-unit id="month.8">
                 <source>month.8</source>
@@ -950,11 +950,11 @@
             </trans-unit>
             <trans-unit id="month.9">
                 <source>month.9</source>
-                <target>Z���</target>
+                <target>Září</target>
             </trans-unit>
             <trans-unit id="month.10">
                 <source>month.10</source>
-                <target>��jen</target>
+                <target>Říjen</target>
             </trans-unit>
             <trans-unit id="month.11">
                 <source>month.11</source>
@@ -970,15 +970,15 @@
             -->
             <trans-unit id="active.entries">
                 <source>active.entries</source>
-                <target>Va�e aktivn� m��en� �asu</target>
+                <target>Vaše aktivní měření času</target>
             </trans-unit>
             <trans-unit id="timesheet.all">
                 <source>timesheet.all</source>
-                <target>Zobrazit v�echny z�znamy</target>
+                <target>Zobrazit všechny záznamy</target>
             </trans-unit>
             <trans-unit id="recent.activities">
                 <source>recent.activities</source>
-                <target>Restartujte jednu z va�ich posledn�ch aktivit</target>
+                <target>Restartujte jednu z vašich posledních aktivit</target>
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>
@@ -986,7 +986,7 @@
             </trans-unit>
             <trans-unit id="timesheet.start">
                 <source>timesheet.start</source>
-                <target>Vytvo�it nov� �asov� z�znam</target>
+                <target>Vytvořit nový časový záznam</target>
             </trans-unit>
 
             <!--
@@ -994,31 +994,31 @@
             -->
             <trans-unit id="label.pageSize">
                 <source>label.pageSize</source>
-                <target>Velikost str�nky</target>
+                <target>Velikost stránky</target>
             </trans-unit>
             <trans-unit id="label.entryState">
                 <source>label.entryState</source>
-                <target>Z�znami</target>
+                <target>Záznami</target>
             </trans-unit>
             <trans-unit id="label.exported">
                 <source>label.exported</source>
-                <target>Exportov�no</target>
+                <target>Exportováno</target>
             </trans-unit>
             <trans-unit id="entryState.exported">
                 <source>entryState.exported</source>
-                <target>Vymaz�no</target>
+                <target>Vymazáno</target>
             </trans-unit>
             <trans-unit id="entryState.not_exported">
                 <source>entryState.not_exported</source>
-                <target>Otev��t</target>
+                <target>Otevřít</target>
             </trans-unit>
             <trans-unit id="entryState.all">
                 <source>entryState.all</source>
-                <target>V�e</target>
+                <target>Vše</target>
             </trans-unit>
             <trans-unit id="entryState.running">
                 <source>entryState.running</source>
-                <target>Za��t</target>
+                <target>Začít</target>
             </trans-unit>
             <trans-unit id="entryState.stopped">
                 <source>entryState.stopped</source>
@@ -1026,15 +1026,15 @@
             </trans-unit>
             <trans-unit id="export.clear_all">
                 <source>export.clear_all</source>
-                <target>Ozna�it v�echny zobrazen� z�znamy jako otev�en�?</target>
+                <target>Označit všechny zobrazené záznamy jako otevřené?</target>
             </trans-unit>
             <trans-unit id="export.mark_all">
                 <source>export.mark_all</source>
-                <target>Ozna�it v�echny zobrazen� z�znamy jako odstran�n�?</target>
+                <target>Označit všechny zobrazené záznamy jako odstraněné?</target>
             </trans-unit>
             <trans-unit id="label.globalsOnly">
                 <source>label.globalsOnly</source>
-                <target>Pouze glob�ln�</target>
+                <target>Pouze globální</target>
             </trans-unit>
         </body>
     </file>

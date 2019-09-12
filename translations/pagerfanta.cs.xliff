@@ -4,11 +4,11 @@
         <body>
             <trans-unit id="previous">
                 <source>previous</source>
-                <target>P�edchoz�</target>
+                <target>Předchozí</target>
             </trans-unit>
             <trans-unit id="next">
                 <source>next</source>
-                <target>N�sleduj�c�</target>
+                <target>Následující</target>
             </trans-unit>
         </body>
     </file>
