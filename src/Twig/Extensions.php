@@ -168,7 +168,12 @@ class Extensions extends AbstractExtension
      */
     public function country($country)
     {
-        return Countries::getName($country);
+        $country = strtoupper($country);
+        if (Countries::exists($country)) {
+            return Countries::getName($country);
+        }
+
+        return $country;
     }
 
     /**

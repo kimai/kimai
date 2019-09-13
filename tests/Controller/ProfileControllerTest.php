@@ -113,6 +113,8 @@ class ProfileControllerTest extends ControllerBaseTest
         $tabs = $client->getCrawler()->filter('div.nav-tabs-custom ul.nav-tabs li');
         $this->assertEquals(count($expectedTabs), $tabs->count());
         $foundTabs = [];
+
+        /** @var \DOMElement $tab */
         foreach ($tabs->filter('a') as $tab) {
             $foundTabs[] = $tab->getAttribute('href');
         }

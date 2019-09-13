@@ -60,6 +60,7 @@ class ExportControllerTest extends ControllerBaseTest
         $expected = ['csv', 'html', 'pdf', 'xlsx'];
         $node = $client->getCrawler()->filter('#export-buttons button');
         $this->assertEquals(count($expected), $node->count());
+        /** @var \DOMElement $button */
         foreach ($node->getIterator() as $button) {
             $type = $button->getAttribute('data-type');
             $this->assertContains($type, $expected);
