@@ -24,7 +24,7 @@
         "build/runtime.f02eb7c9.js",
         "build/0.2372f97a.js",
         "build/1.eec3372c.js",
-        "build/calendar.340fd7f1.js"
+        "build/calendar.8464f183.js"
       ],
       "css": [
         "build/calendar.8bb56227.css"
@@ -39,7 +39,7 @@
     "build/app.af6cd671.css": "sha384-N8TrohuaS6twRAMAhyy+5o3qV69cT6KGgsvKiLmHMCmRIV3zssFoM14+pO92w+JL",
     "build/2.ad3e2792.js": "sha384-1aYWOOt09EZyaAlTHQzsuBKU1b+iDuMEen4m8lrRIm7awHvYkP82CWAowcKZ+XuW",
     "build/chart.a0ca6955.js": "sha384-I57c9DtU3AOG2kzKqIZkIu0hi1aGYHRZ5QG4LKC9+9slzJnAMttPGXoL2cQG3m6y",
-    "build/calendar.340fd7f1.js": "sha384-Qjw9gOWikN984imUzpqD0CmdYF6dOFcYVqreXbCBV2eBWovRCOESAgO6OP5Kv7Cx",
+    "build/calendar.8464f183.js": "sha384-27JQ0m1u6lO4g3EYXKKIaPlGnbHKOzhpA11X/k2QM0ytL+RWmBilcjR7d56vleXn",
     "build/calendar.8bb56227.css": "sha384-ta519W5+NY1a8FBh7rD4zORYTfUXCYTLci0Z25nf4BfodmuXqyPVNEe7dSe2/fRd"
   }
 }
