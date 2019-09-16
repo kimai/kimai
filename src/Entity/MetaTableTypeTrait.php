@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Form\Type\YesNoType;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -52,6 +53,11 @@ trait MetaTableTypeTrait
     /**
      * @var string
      */
+    private $label;
+
+    /**
+     * @var string
+     */
     private $type;
 
     /**
@@ -66,7 +72,11 @@ trait MetaTableTypeTrait
 
     public function getName(): ?string
     {
-        return $this->name;
+        if (null === $this->name) {
+            return null;
+        }
+
+        return strtolower($this->name);
     }
 
     public function setName(string $name): MetaTableTypeInterface
@@ -82,6 +92,7 @@ trait MetaTableTypeTrait
     public function getValue()
     {
         switch ($this->type) {
+            case YesNoType::class:
             case CheckboxType::class:
                 return (bool) $this->value;
             case IntegerType::class:
@@ -173,6 +184,22 @@ trait MetaTableTypeTrait
             ->setConstraints($meta->getConstraints())
             ->setIsRequired($meta->isRequired())
             ->setIsVisible($meta->isVisible());
+
+        return $this;
+    }
+
+    public function getLabel(): string
+    {
+        if (null === $this->label) {
+            return $this->name;
+        }
+
+        return $this->label;
+    }
+
+    public function setLabel(string $label): MetaTableTypeInterface
+    {
+        $this->label = $label;
 
         return $this;
     }

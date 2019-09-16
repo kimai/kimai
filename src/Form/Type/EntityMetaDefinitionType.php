@@ -43,7 +43,7 @@ class EntityMetaDefinitionType extends AbstractType
                 }
 
                 $event->getForm()->add('value', $definition->getType(), [
-                    'label' => $definition->getName(),
+                    'label' => $definition->getLabel(),
                     'constraints' => $definition->getConstraints(),
                     'required' => $definition->isRequired(),
                 ]);
