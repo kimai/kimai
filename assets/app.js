@@ -16,6 +16,7 @@ require('bootstrap-select');
 const Moment = require('moment');
 global.moment = Moment;
 require('moment/locale/ar');
+require('moment/locale/cs');
 require('moment/locale/de');
 require('moment/locale/es');
 require('moment/locale/fr');
