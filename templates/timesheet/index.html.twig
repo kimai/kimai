@@ -27,6 +27,13 @@
     'activity': 'hidden-xs hidden-sm',
     'description': 'hidden-xs hidden-sm',
     'tags': {'class': 'hidden-xs hidden-sm', 'orderBy': false},
+}) %}
+{% for field in metaColumns %}
+    {% set columns = columns|merge({
+        (field.name): {'title': field.label, 'class': 'hidden-xs hidden-sm', 'orderBy': false}
+    }) %}
+{% endfor %}
+{% set columns = columns|merge({
     'actions': 'actions alwaysVisible',
 }) %}
 
@@ -54,7 +61,7 @@
                 {% set day = entry.begin|date_short %}
             {% endif %}
             {%- if showSummary and day is not same as(entry.begin|date_short) -%}
-                {{ timesheet.summary(day, dayDuration, dayRate, columns, canSeeRate, showStartEndTime, tableName) }}
+                {{ timesheet.summary(day, dayDuration, dayRate, columns, canSeeRate, showStartEndTime, tableName, metaColumns) }}
                 {% set day = entry.begin|date_short %}
                 {% set dayDuration = 0 %}
                 {% set dayRate = {} %}
@@ -96,6 +103,11 @@
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}">{{ widgets.label_activity(entry.activity) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }} timesheet-description">{{ entry.description|escape|desc2html }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'tags') }}">{{ widgets.tag_list(entry.tags) }}</td>
+                {% for field in metaColumns %}
+                    <td class="{{ tables.data_table_column_class(tableName, columns, field.name) }}">
+                        {{ tables.datatable_meta_column(entry, field) }}
+                    </td>
+                {% endfor %}
                 <td class="actions">
                     {{- actions.timesheet(entry, 'index') -}}
                 </td>
@@ -110,7 +122,7 @@
         {% endfor %}
 
         {% if showSummary %}
-            {{ timesheet.summary(day, dayDuration, dayRate, columns, canSeeRate, showStartEndTime, tableName) }}
+            {{ timesheet.summary(day, dayDuration, dayRate, columns, canSeeRate, showStartEndTime, tableName, metaColumns) }}
         {% endif %}
 
         {{ tables.data_table_footer(entries, 'timesheet_paginated') }}
@@ -118,7 +130,7 @@
 
 {% endblock %}
 
-{% macro summary(day, duration, dayRates, columns, canSeeRate, showStartEndTime, tableName) %}
+{% macro summary(day, duration, dayRates, columns, canSeeRate, showStartEndTime, tableName, metaColumns) %}
     {% import "macros/datatables.html.twig" as tables %}
     <tr class="summary info">
         <td class="text-nowrap">{{ day }}</td>
@@ -142,6 +154,9 @@
         <td class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}"></td>
         <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}"></td>
         <td class="{{ tables.data_table_column_class(tableName, columns, 'tags') }}"></td>
+        {% for field in metaColumns %}
+            <td class="{{ tables.data_table_column_class(tableName, columns, field.name) }}"></td>
+        {% endfor %}
         <td class="actions"></td>
     </tr>
 {% endmacro %}

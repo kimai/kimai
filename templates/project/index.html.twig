@@ -11,8 +11,15 @@
     'orderNumber': 'hidden-xs hidden-sm',
     'team': {'class': '', 'orderBy': false},
     'visible': {'class': '', 'orderBy': false},
-    'actions': 'actions alwaysVisible',
 } %}
+{% for field in metaColumns %}
+    {% set columns = columns|merge({
+        (field.name): {'title': field.label, 'class': 'hidden-xs hidden-sm', 'orderBy': false}
+    }) %}
+{% endfor %}
+{% set columns = columns|merge({
+    'actions': 'actions alwaysVisible',
+}) %}
 
 {% set tableName = 'project_admin' %}
 
@@ -47,6 +54,11 @@
                     {% endif %}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
+                {% for field in metaColumns %}
+                    <td class="{{ tables.data_table_column_class(tableName, columns, field.name) }}">
+                        {{ tables.datatable_meta_column(entry, field) }}
+                    </td>
+                {% endfor %}
                 <td class="actions">
                     {{ actions.project(entry, 'index') }}
                 </td>

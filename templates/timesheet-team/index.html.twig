@@ -25,6 +25,13 @@
     'description': 'hidden-xs hidden-sm',
     'username': {'class': 'hidden-xs', 'orderBy': false},
     'tags': {'class': 'hidden-xs hidden-sm', 'orderBy': false},
+}) %}
+{% for field in metaColumns %}
+    {% set columns = columns|merge({
+        (field.name): {'title': field.label, 'class': 'hidden-xs hidden-sm', 'orderBy': false}
+    }) %}
+{% endfor %}
+{% set columns = columns|merge({
     'actions': 'actions alwaysVisible',
 }) %}
 
@@ -87,6 +94,11 @@
                     {{ widgets.label_user(entry.user) }}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'tags') }}">{{ widgets.tag_list(entry.tags) }}</td>
+                {% for field in metaColumns %}
+                    <td class="{{ tables.data_table_column_class(tableName, columns, field.name) }}">
+                        {{ tables.datatable_meta_column(entry, field) }}
+                    </td>
+                {% endfor %}
                 <td class="actions">
                     {{- actions.timesheet_team(entry, 'index') -}}
                 </td>
