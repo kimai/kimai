@@ -140,4 +140,12 @@ interface MetaTableTypeInterface
      * @return string
      */
     public function getLabel(): string;
+
+    /**
+     * Sets the label shown to the end-user.
+     *
+     * @param string $label
+     * @return MetaTableTypeInterface
+     */
+    public function setLabel(string $label): MetaTableTypeInterface;
 }
