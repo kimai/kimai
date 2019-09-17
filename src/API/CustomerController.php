@@ -156,7 +156,7 @@ class CustomerController extends BaseApiController
         $customer = new Customer();
 
         $event = new CustomerMetaDefinitionEvent($customer);
-        $this->dispatcher->dispatch($event, CustomerMetaDefinitionEvent::class);
+        $this->dispatcher->dispatch($event);
 
         $form = $this->createForm(CustomerApiEditForm::class, $customer);
 
@@ -221,7 +221,7 @@ class CustomerController extends BaseApiController
         }
 
         $event = new CustomerMetaDefinitionEvent($customer);
-        $this->dispatcher->dispatch($event, CustomerMetaDefinitionEvent::class);
+        $this->dispatcher->dispatch($event);
 
         $form = $this->createForm(CustomerApiEditForm::class, $customer);
 
@@ -280,7 +280,7 @@ class CustomerController extends BaseApiController
         }
 
         $event = new CustomerMetaDefinitionEvent($customer);
-        $this->dispatcher->dispatch($event, CustomerMetaDefinitionEvent::class);
+        $this->dispatcher->dispatch($event);
 
         $name = $paramFetcher->get('name');
         $value = $paramFetcher->get('value');

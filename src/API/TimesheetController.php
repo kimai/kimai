@@ -291,7 +291,7 @@ class TimesheetController extends BaseApiController
         $timesheet->setBegin($this->dateTime->createDateTime());
 
         $event = new TimesheetMetaDefinitionEvent($timesheet);
-        $this->dispatcher->dispatch($event, TimesheetMetaDefinitionEvent::class);
+        $this->dispatcher->dispatch($event);
 
         $mode = $this->getTrackingMode();
 
@@ -372,7 +372,7 @@ class TimesheetController extends BaseApiController
         }
 
         $event = new TimesheetMetaDefinitionEvent($timesheet);
-        $this->dispatcher->dispatch($event, TimesheetMetaDefinitionEvent::class);
+        $this->dispatcher->dispatch($event);
 
         $mode = $this->getTrackingMode();
 
@@ -732,7 +732,7 @@ class TimesheetController extends BaseApiController
         }
 
         $event = new TimesheetMetaDefinitionEvent($timesheet);
-        $this->dispatcher->dispatch($event, TimesheetMetaDefinitionEvent::class);
+        $this->dispatcher->dispatch($event);
 
         $name = $paramFetcher->get('name');
         $value = $paramFetcher->get('value');
