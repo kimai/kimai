@@ -26,6 +26,7 @@ abstract class AbstractMetaEntityTest extends TestCase
     public function testDefaultValues()
     {
         $sut = $this->getMetaEntity();
+        self::assertNull($sut->getLabel());
         self::assertNull($sut->getName());
         self::assertNull($sut->getType());
         self::assertNull($sut->getValue());
@@ -40,6 +41,11 @@ abstract class AbstractMetaEntityTest extends TestCase
     {
         $sut = $this->getMetaEntity();
         self::assertInstanceOf(MetaTableTypeInterface::class, $sut->setName('foo-bar'));
+        self::assertEquals('foo-bar', $sut->getName());
+
+        self::assertEquals('foo-bar', $sut->getLabel());
+        self::assertInstanceOf(MetaTableTypeInterface::class, $sut->setLabel('Wohoooo !!!!!'));
+        self::assertEquals('Wohoooo !!!!!', $sut->getLabel());
         self::assertEquals('foo-bar', $sut->getName());
 
         self::assertInstanceOf(MetaTableTypeInterface::class, $sut->setisVisible(true));
