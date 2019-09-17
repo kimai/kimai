@@ -170,7 +170,7 @@ class Activity implements EntityWithMetaFields
     public function getMetaField(string $name): ?MetaTableTypeInterface
     {
         foreach ($this->meta as $field) {
-            if ($field->getName() === $name) {
+            if (strtolower($field->getName()) === strtolower($name)) {
                 return $field;
             }
         }
