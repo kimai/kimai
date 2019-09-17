@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="cs" datatype="plaintext" original="actions.en.xliff">
+        <body>
+            <trans-unit id="stop">
+                <source>stop</source>
+                <target>Stop</target>
+            </trans-unit>
+            <trans-unit id="back">
+                <source>back</source>
+                <target>Zpět</target>
+            </trans-unit>
+            <trans-unit id="edit">
+                <source>edit</source>
+                <target>Upravit</target>
+            </trans-unit>
+            <trans-unit id="trash">
+                <source>trash</source>
+                <target>Odstranit</target>
+            </trans-unit>
+            <trans-unit id="report">
+                <source>report</source>
+                <target>Hlášení</target>
+            </trans-unit>
+            <trans-unit id="repeat">
+                <source>repeat</source>
+                <target>Začít znovu</target>
+            </trans-unit>
+            <trans-unit id="profile-stats">
+                <source>profile-stats</source>
+                <target>Stratistiky</target>
+            </trans-unit>
+            <trans-unit id="settings">
+                <source>settings</source>
+                <target>Nastavení</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target>Pracovní výkaz</target>
+            </trans-unit>
+            <trans-unit id="customer">
+                <source>customer</source>
+                <target>Filtr zákazníků</target>
+            </trans-unit>
+            <trans-unit id="project">
+                <source>project</source>
+                <target>Filtr projektů</target>
+            </trans-unit>
+            <trans-unit id="activity">
+                <source>activity</source>
+                <target>Filtr aktivit</target>
+            </trans-unit>
+            <trans-unit id="copy">
+                <source>copy</source>
+                <target>Vytvořit kopii</target>
+            </trans-unit>
+            <trans-unit id="home">
+                <source>home</source>
+                <target>Úvodní stránka</target>
+            </trans-unit>
+            <trans-unit id="create-project">
+                <source>create-project</source>
+                <target>Vytvořit projekt</target>
+            </trans-unit>
+            <trans-unit id="create-activity">
+                <source>create-activity</source>
+                <target>Vytvořit aktivitu</target>
+            </trans-unit>
+            <trans-unit id="create-timesheet">
+                <source>create-timesheet</source>
+                <target>Vytvořit pracovní výkaz</target>
+            </trans-unit>
+            <trans-unit id="permissions">
+                <source>permissions</source>
+                <target>Oprávnění skupiny</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
