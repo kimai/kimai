@@ -20,7 +20,7 @@ final class ActivityMetaDefinitionEvent extends Event
     /**
      * @var Activity
      */
-    protected $entity;
+    private $entity;
 
     public function __construct(Activity $entity)
     {
