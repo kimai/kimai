@@ -9,11 +9,18 @@
             </div>
             <div class="modal-body">
                 <form name="{{ name }}_visibility">
-                    {% for title, class in columns %}
-                        {% if 'alwaysVisible' not in class %}
+                    {%- for title, headerOptions in columns -%}
+                        {% if not headerOptions is iterable %}
+                            {% set headerOptions = {'class': headerOptions} %}
+                        {% endif %}
+                        {% set headerTitle = ('label.' ~ title)|trans %}
+                        {% if headerOptions.title is defined %}
+                            {% set headerTitle = headerOptions.title %}
+                        {% endif %}
+                        {% if 'alwaysVisible' not in headerOptions.class %}
                             <div class="form-group">
                                 <input type="checkbox" id="column_{{ title }}" name="{{ title }}"{% if is_visible_column(name, title) %} checked="checked"{% endif %}>
-                                <label class="control-label" for="column_{{ title }}">{{ ('label.' ~ title)|trans }}</label>
+                                <label class="control-label" for="column_{{ title }}">{{ headerTitle }}</label>
                             </div>
                         {% endif %}
                     {% endfor %}
