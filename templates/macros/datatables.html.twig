@@ -66,7 +66,9 @@
                                         {% endif %}
                                     {% endif %}
                                     {% set headerTitle = '' %}
-                                    {% if title is not empty and title != 'actions' %}
+                                    {% if headerOptions.title is defined %}
+                                        {% set headerTitle = headerOptions.title %}
+                                    {% elseif title is not empty and title != 'actions' %}
                                         {% set headerTitle = (translationPrefix ~ title)|trans({}, translationDomain) %}
                                     {% endif %}
                                     <th data-field="{{ title }}" {% if not headerOptions.orderBy is same as(false) %}data-order="{{ headerOptions.orderBy }}" {% endif %}class="{{ headerClass }}">{{ headerTitle }}</th>
@@ -167,4 +169,17 @@
     {{ pagerfanta(entries, 'twitter_bootstrap3_translated', { proximity: 1, routeName: route }) }}
 </div>
 {% endif %}
+{% endmacro %}
+
+{% macro datatable_meta_column(entry, field) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set metaField = entry.metaField(field.name) %}
+    {% if not metaField is null %}
+        {% set metaField = metaField.merge(field) %}
+        {% if metaField.value is same as (true) or metaField.value is same as (false) %}
+            {{ widgets.label_boolean(metaField.value) }}
+        {% else %}
+            {{ metaField.value }}
+        {% endif %}
+    {% endif %}
 {% endmacro %}
