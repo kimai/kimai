@@ -10,9 +10,11 @@
 namespace App\Controller;
 
 use App\Configuration\TimesheetConfiguration;
+use App\Entity\MetaTableTypeInterface;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Event\TimesheetMetaDefinitionEvent;
+use App\Event\TimesheetMetaQueryEvent;
 use App\Form\TimesheetEditForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\ActivityRepository;
@@ -122,20 +124,36 @@ abstract class TimesheetAbstractController extends AbstractController
             'query' => $query,
             'toolbarForm' => $form->createView(),
             'showSummary' => $this->includeSummary(),
-            'showStartEndTime' => $this->canSeeStartEndTime()
+            'showStartEndTime' => $this->canSeeStartEndTime(),
+            'metaColumns' => $this->findMetaColumns($query),
         ]);
     }
 
     /**
-     * @param Timesheet $entry
-     * @param Request $request
-     * @param string $renderTemplate
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @param TimesheetQuery $query
+     * @return MetaTableTypeInterface[]
      */
-    protected function edit(Timesheet $entry, Request $request, string $renderTemplate)
+    protected function findMetaColumns(TimesheetQuery $query): array
+    {
+        $event = new TimesheetMetaQueryEvent($query);
+        $this->dispatcher->dispatch($event);
+
+        $columns = [];
+
+        foreach ($event->getFields() as $field) {
+            if (!$field->isVisible()) {
+                continue;
+            }
+            $columns[] = $field;
+        }
+
+        return $columns;
+    }
+
+    protected function edit(Timesheet $entry, Request $request, string $renderTemplate): Response
     {
         $event = new TimesheetMetaDefinitionEvent($entry);
-        $this->dispatcher->dispatch($event, TimesheetMetaDefinitionEvent::class);
+        $this->dispatcher->dispatch($event);
 
         $editForm = $this->getEditForm($entry, $request->get('page'));
         $editForm->handleRequest($request);
@@ -157,14 +175,7 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
-    /**
-     * @param Request $request
-     * @param string $renderTemplate
-     * @param ProjectRepository $projectRepository
-     * @param ActivityRepository $activityRepository
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    protected function create(Request $request, string $renderTemplate, ProjectRepository $projectRepository, ActivityRepository $activityRepository, TagRepository $tagRepository)
+    protected function create(Request $request, string $renderTemplate, ProjectRepository $projectRepository, ActivityRepository $activityRepository, TagRepository $tagRepository): Response
     {
         $entry = new Timesheet();
         $entry->setUser($this->getUser());
@@ -183,7 +194,7 @@ abstract class TimesheetAbstractController extends AbstractController
         if ($request->query->get('tags')) {
             $tagNames = explode(',', $request->query->get('tags'));
             foreach ($tagNames as $tagName) {
-                $tag = $tagRepository->findOneByName($tagName);
+                $tag = $tagRepository->findTagByName($tagName);
                 if (!$tag) {
                     $tag = new Tag();
                     $tag->setName($tagName);
@@ -193,7 +204,7 @@ abstract class TimesheetAbstractController extends AbstractController
         }
 
         $event = new TimesheetMetaDefinitionEvent($entry);
-        $this->dispatcher->dispatch($event, TimesheetMetaDefinitionEvent::class);
+        $this->dispatcher->dispatch($event);
 
         $mode = $this->getTrackingMode();
         $mode->create($entry, $request);
@@ -257,6 +268,7 @@ abstract class TimesheetAbstractController extends AbstractController
         return $this->render($renderTemplate, [
             'entries' => $entries,
             'query' => $query,
+            'metaColumns' => $this->findMetaColumns($query),
         ]);
     }
 

@@ -11,7 +11,9 @@ namespace App\Controller;
 
 use App\Configuration\FormConfiguration;
 use App\Entity\Customer;
+use App\Entity\MetaTableTypeInterface;
 use App\Event\CustomerMetaDefinitionEvent;
+use App\Event\CustomerMetaQueryEvent;
 use App\Form\CustomerEditForm;
 use App\Form\CustomerTeamPermissionForm;
 use App\Form\Toolbar\CustomerToolbarForm;
@@ -93,7 +95,29 @@ class CustomerController extends AbstractController
             'entries' => $entries,
             'query' => $query,
             'toolbarForm' => $form->createView(),
+            'metaColumns' => $this->findMetaColumns($query),
         ]);
+    }
+
+    /**
+     * @param CustomerQuery $query
+     * @return MetaTableTypeInterface[]
+     */
+    protected function findMetaColumns(CustomerQuery $query): array
+    {
+        $event = new CustomerMetaQueryEvent($query);
+        $this->dispatcher->dispatch($event);
+
+        $columns = [];
+
+        foreach ($event->getFields() as $field) {
+            if (!$field->isVisible()) {
+                continue;
+            }
+            $columns[] = $field;
+        }
+
+        return $columns;
     }
 
     /**
@@ -151,9 +175,13 @@ class CustomerController extends AbstractController
      */
     public function budgetAction(Customer $customer)
     {
+        $stats = $this->getRepository()->getCustomerStatistics($customer);
+
+        // TODO sent event with stats
+
         return $this->render('customer/budget.html.twig', [
             'customer' => $customer,
-            'stats' => $this->getRepository()->getCustomerStatistics($customer)
+            'stats' => $stats,
         ]);
     }
 
@@ -224,7 +252,7 @@ class CustomerController extends AbstractController
     protected function renderCustomerForm(Customer $customer, Request $request)
     {
         $event = new CustomerMetaDefinitionEvent($customer);
-        $this->dispatcher->dispatch($event, CustomerMetaDefinitionEvent::class);
+        $this->dispatcher->dispatch($event);
 
         $editForm = $this->createEditForm($customer);
 

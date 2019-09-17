@@ -11,8 +11,10 @@ namespace App\Controller;
 
 use App\Configuration\FormConfiguration;
 use App\Entity\Customer;
+use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
 use App\Event\ProjectMetaDefinitionEvent;
+use App\Event\ProjectMetaQueryEvent;
 use App\Form\ProjectEditForm;
 use App\Form\ProjectTeamPermissionForm;
 use App\Form\Toolbar\ProjectToolbarForm;
@@ -89,7 +91,29 @@ class ProjectController extends AbstractController
             'entries' => $entries,
             'query' => $query,
             'toolbarForm' => $form->createView(),
+            'metaColumns' => $this->findMetaColumns($query),
         ]);
+    }
+
+    /**
+     * @param ProjectQuery $query
+     * @return MetaTableTypeInterface[]
+     */
+    protected function findMetaColumns(ProjectQuery $query): array
+    {
+        $event = new ProjectMetaQueryEvent($query);
+        $this->dispatcher->dispatch($event);
+
+        $columns = [];
+
+        foreach ($event->getFields() as $field) {
+            if (!$field->isVisible()) {
+                continue;
+            }
+            $columns[] = $field;
+        }
+
+        return $columns;
     }
 
     /**
@@ -144,9 +168,13 @@ class ProjectController extends AbstractController
      */
     public function budgetAction(Project $project)
     {
+        $stats = $this->getRepository()->getProjectStatistics($project);
+
+        // TODO sent event with stats
+
         return $this->render('project/budget.html.twig', [
             'project' => $project,
-            'stats' => $this->getRepository()->getProjectStatistics($project)
+            'stats' => $stats
         ]);
     }
 
@@ -218,7 +246,7 @@ class ProjectController extends AbstractController
     protected function renderProjectForm(Project $project, Request $request)
     {
         $event = new ProjectMetaDefinitionEvent($project);
-        $this->dispatcher->dispatch($event, ProjectMetaDefinitionEvent::class);
+        $this->dispatcher->dispatch($event);
 
         $editForm = $this->createEditForm($project);
         $editForm->handleRequest($request);
