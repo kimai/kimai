@@ -133,4 +133,11 @@ interface MetaTableTypeInterface
      * @return MetaTableTypeInterface
      */
     public function setConstraints(array $constraints): MetaTableTypeInterface;
+
+    /**
+     * Returns the label shown to the end-user.
+     *
+     * @return string
+     */
+    public function getLabel(): string;
 }

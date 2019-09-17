@@ -225,7 +225,10 @@ export default class KimaiToolbar extends KimaiPlugin {
     }
     
     hide() {
-        jQuery(this.getSelector() + ' .dropdown-toggle').dropdown('toggle');
+        const toggle = jQuery(this.getSelector() + ' #searchTerm.dropdown-toggle');
+        if (toggle.parent().hasClass('open')) {
+            toggle.dropdown('toggle');
+        }
     }
 
     /**
