@@ -188,7 +188,7 @@ trait MetaTableTypeTrait
         return $this;
     }
 
-    public function getLabel(): string
+    public function getLabel(): ?string
     {
         if (null === $this->label) {
             return $this->name;
