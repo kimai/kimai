@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Form\Type\YesNoType;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -140,6 +141,7 @@ class UserPreference
     public function getValue()
     {
         switch ($this->type) {
+            case YesNoType::class:
             case CheckboxType::class:
                 return (bool) $this->value;
             case IntegerType::class:

@@ -70,6 +70,12 @@ trait MetaTableTypeTrait
      */
     private $constraints = [];
 
+    /**
+     * An array of options for the form element
+     * @var array
+     */
+    private $options = [];
+
     public function getName(): ?string
     {
         if (null === $this->name) {
@@ -183,7 +189,10 @@ trait MetaTableTypeTrait
             ->setType($meta->getType())
             ->setConstraints($meta->getConstraints())
             ->setIsRequired($meta->isRequired())
-            ->setIsVisible($meta->isVisible());
+            ->setIsVisible($meta->isVisible())
+            ->setLabel($meta->getLabel())
+            ->setOptions($meta->getOptions())
+        ;
 
         return $this;
     }
@@ -202,5 +211,17 @@ trait MetaTableTypeTrait
         $this->label = $label;
 
         return $this;
+    }
+
+    public function setOptions(array $options): MetaTableTypeInterface
+    {
+        $this->options = $options;
+
+        return $this;
+    }
+
+    public function getOptions(): array
+    {
+        return $this->options;
     }
 }
