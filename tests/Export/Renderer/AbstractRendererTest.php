@@ -12,7 +12,6 @@ namespace App\Tests\Export\Renderer;
 use App\Configuration\LanguageFormattings;
 use App\Entity\Activity;
 use App\Entity\Customer;
-use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
@@ -56,7 +55,7 @@ abstract class AbstractRendererTest extends KernelTestCase
 
         $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $dateExtension = new DateExtensions($localeSettings);
-        
+
         $dispatcher = new EventDispatcher();
         $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
 

@@ -98,6 +98,5 @@ class CsvRendererTest extends AbstractRendererTest
         self::assertEquals($expected, $all[5]);
         self::assertEquals(count($expected), count($all[0]));
         self::assertEquals('foo', $all[4][11]);
-
     }
 }
