@@ -12,16 +12,21 @@ namespace App\Tests\Export\Renderer;
 use App\Configuration\LanguageFormattings;
 use App\Entity\Activity;
 use App\Entity\Customer;
+use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
+use App\Event\TimesheetMetaQueryEvent;
 use App\Export\RendererInterface;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\DateExtensions;
 use App\Utils\LocaleSettings;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -51,8 +56,11 @@ abstract class AbstractRendererTest extends KernelTestCase
 
         $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $dateExtension = new DateExtensions($localeSettings);
+        
+        $dispatcher = new EventDispatcher();
+        $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
 
-        return new $classname($translator, $dateExtension);
+        return new $classname($translator, $dateExtension, $dispatcher);
     }
 
     /**
@@ -151,5 +159,30 @@ abstract class AbstractRendererTest extends KernelTestCase
         $query->setProject($project);
 
         return $renderer->render($entries, $query);
+    }
+}
+
+class MetaFieldColumnSubscriber implements EventSubscriberInterface
+{
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            TimesheetMetaQueryEvent::class => ['loadTimesheetField', 200],
+        ];
+    }
+
+    public function loadTimesheetField(TimesheetMetaQueryEvent $event)
+    {
+        $event->addField($this->prepareEntity('foo'));
+        $event->addField($this->prepareEntity('foo2'));
+    }
+
+    private function prepareEntity(string $name)
+    {
+        return (new TimesheetMeta())
+            ->setLabel('Working place')
+            ->setName($name)
+            ->setType(TextType::class)
+            ->setIsVisible(true);
     }
 }
