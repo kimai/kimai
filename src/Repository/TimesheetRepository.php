@@ -432,12 +432,7 @@ class TimesheetRepository extends EntityRepository
             $qb->setParameter('user', $user);
         }
 
-        $results = $qb->getQuery()->getResult();
-
-        $loader = new TimesheetLoader($qb->getEntityManager());
-        $loader->loadResults($results);
-
-        return $results;
+        return $this->getHydratedResultsByQuery($qb, false);
     }
 
     /**
@@ -530,16 +525,33 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
+     * When switching $fullyHydrated to true, the call gets even more expensive.
+     * You normally don't need this, unless you want to access deeply nested attributes for many entries!
+     *
      * @param TimesheetQuery $query
+     * @param bool $fullyHydrated
      * @return Timesheet[]
      */
-    public function getTimesheetsForQuery(TimesheetQuery $query): iterable
+    public function getTimesheetsForQuery(TimesheetQuery $query, bool $fullyHydrated = false): iterable
     {
-        // this is using the paginator internally, as it will load all joined entities into the working unit
-        // do not "optimize" to use the query directly, as it would results in hundreds of additional lazy queries
-        $paginator = $this->getPaginatorForQuery($query);
+        $qb = $this->getQueryBuilderForQuery($query);
 
-        return $paginator->getAll();
+        return $this->getHydratedResultsByQuery($qb, $fullyHydrated);
+    }
+
+    /**
+     * @param QueryBuilder $qb
+     * @param bool $fullyHydrated
+     * @return Timesheet[]
+     */
+    protected function getHydratedResultsByQuery(QueryBuilder $qb, bool $fullyHydrated = false): iterable
+    {
+        $results = $qb->getQuery()->getResult();
+
+        $loader = new TimesheetLoader($qb->getEntityManager(), $fullyHydrated);
+        $loader->loadResults($results);
+
+        return $results;
     }
 
     private function getQueryBuilderForQuery(TimesheetQuery $query): QueryBuilder
@@ -738,12 +750,7 @@ class TimesheetRepository extends EntityRepository
             ->orderBy('t.end', 'DESC')
         ;
 
-        $results = $qb->getQuery()->getResult();
-
-        $loader = new TimesheetLoader($qb->getEntityManager());
-        $loader->loadResults($results);
-
-        return $results;
+        return $this->getHydratedResultsByQuery($qb, false);
     }
 
     /**

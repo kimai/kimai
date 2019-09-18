@@ -1,4 +1,5 @@
 {% import "macros/widgets.html.twig" as widgets %}
+{% import "macros/datatables.html.twig" as tables %}
 {% extends 'export/layout.html.twig' %}
 
 {% set columnTitles = {} %}
@@ -13,9 +14,21 @@
     'tags': false,
 } %}
 
-{% for id, metaField in metaFields %}
-    {% set columns = columns|merge({ (metaField): true}) %}
-    {% set columnTitles = columnTitles|merge({ (metaField): (metaField)}) %}
+{% for id, field in timesheetMetaFields %}
+    {% set columns = columns|merge({ ('t_' ~ field.name): true}) %}
+    {% set columnTitles = columnTitles|merge({ ('t_' ~ field.name): (field.label)}) %}
+{% endfor %}
+{% for id, field in customerMetaFields %}
+    {% set columns = columns|merge({ ('c_' ~ field.name): true}) %}
+    {% set columnTitles = columnTitles|merge({ ('c_' ~ field.name): (field.label)}) %}
+{% endfor %}
+{% for id, field in projectMetaFields %}
+    {% set columns = columns|merge({ ('p_' ~ field.name): true}) %}
+    {% set columnTitles = columnTitles|merge({ ('p_' ~ field.name): (field.label)}) %}
+{% endfor %}
+{% for id, field in activityMetaFields %}
+    {% set columns = columns|merge({ ('a_' ~ field.name): true}) %}
+    {% set columnTitles = columnTitles|merge({ ('a_' ~ field.name): (field.label)}) %}
 {% endfor %}
 
 {% set columns = columns|merge({
@@ -293,12 +306,24 @@
                                 {{ entry.tagsAsArray|join(', ') }}
                             {% endif %}
                         </td>
-                        {% for id, metaFieldName in metaFields %}
-                            <td class="column-{{ metaFieldName }} text-nowrap" {% if not columns[metaFieldName] %}style="display: none"{% endif %}>
-                                {% set metaField = entry.metaField(metaFieldName) %}
-                                {% if not metaField is null and metaField.visible %}
-                                    {{ metaField.value }}
-                                {% endif %}
+                        {% for id, field in timesheetMetaFields %}
+                            <td class="column-{{ 't_' ~ field.name }} text-nowrap" {% if not columns['t_' ~ field.name] %}style="display: none"{% endif %}>
+                                {{ tables.datatable_meta_column(entry, field) }}
+                            </td>
+                        {% endfor %}
+                        {% for id, field in customerMetaFields %}
+                            <td class="column-{{ 'c_' ~ field.name }} text-nowrap" {% if not columns['c_' ~ field.name] %}style="display: none"{% endif %}>
+                                {{ tables.datatable_meta_column(entry.project.customer, field) }}
+                            </td>
+                        {% endfor %}
+                        {% for id, field in projectMetaFields %}
+                            <td class="column-{{ 'p_' ~ field.name }} text-nowrap" {% if not columns['p_' ~ field.name] %}style="display: none"{% endif %}>
+                                {{ tables.datatable_meta_column(entry.project, field) }}
+                            </td>
+                        {% endfor %}
+                        {% for id, field in activityMetaFields %}
+                            <td class="column-{{ 'a_' ~ field.name }} text-nowrap" {% if not columns['a_' ~ field.name] %}style="display: none"{% endif %}>
+                                {{ tables.datatable_meta_column(entry.activity, field) }}
                             </td>
                         {% endfor %}
                         <td class="column-hourlyRate text-nowrap" {% if not columns.hourlyRate %}style="display: none"{% endif %}>

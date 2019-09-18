@@ -51,10 +51,6 @@ class CustomerController extends AbstractController
      */
     protected $dispatcher;
 
-    /**
-     * @param CustomerRepository $repository
-     * @param FormConfiguration $configuration
-     */
     public function __construct(CustomerRepository $repository, FormConfiguration $configuration, EventDispatcherInterface $dispatcher)
     {
         $this->repository = $repository;

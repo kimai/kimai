@@ -146,7 +146,7 @@ class ExportController extends AbstractController
         $query->getBegin()->setTime(0, 0, 0);
         $query->getEnd()->setTime(23, 59, 59);
 
-        return $this->timesheetRepository->getTimesheetsForQuery($query);
+        return $this->timesheetRepository->getTimesheetsForQuery($query, true);
     }
 
     protected function getToolbarForm(ExportQuery $query, string $method): FormInterface
