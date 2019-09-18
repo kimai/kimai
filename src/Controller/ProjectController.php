@@ -101,7 +101,7 @@ class ProjectController extends AbstractController
      */
     protected function findMetaColumns(ProjectQuery $query): array
     {
-        $event = new ProjectMetaQueryEvent($query);
+        $event = new ProjectMetaQueryEvent($query, ProjectMetaQueryEvent::PROJECT);
         $this->dispatcher->dispatch($event);
 
         $columns = [];

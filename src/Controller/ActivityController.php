@@ -104,7 +104,7 @@ class ActivityController extends AbstractController
      */
     protected function findMetaColumns(ActivityQuery $query): array
     {
-        $event = new ActivityMetaQueryEvent($query);
+        $event = new ActivityMetaQueryEvent($query, ActivityMetaQueryEvent::ACTIVITY);
         $this->dispatcher->dispatch($event);
 
         $columns = [];

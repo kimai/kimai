@@ -105,7 +105,7 @@ class CustomerController extends AbstractController
      */
     protected function findMetaColumns(CustomerQuery $query): array
     {
-        $event = new CustomerMetaQueryEvent($query);
+        $event = new CustomerMetaQueryEvent($query, CustomerMetaQueryEvent::CUSTOMER);
         $this->dispatcher->dispatch($event);
 
         $columns = [];

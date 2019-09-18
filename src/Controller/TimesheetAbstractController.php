@@ -83,7 +83,7 @@ abstract class TimesheetAbstractController extends AbstractController
         return $this->repository;
     }
 
-    protected function index($page, Request $request, string $renderTemplate)
+    protected function index($page, Request $request, string $renderTemplate, string $location): Response
     {
         $query = new TimesheetQuery();
         $query->setPage($page);
@@ -125,17 +125,18 @@ abstract class TimesheetAbstractController extends AbstractController
             'toolbarForm' => $form->createView(),
             'showSummary' => $this->includeSummary(),
             'showStartEndTime' => $this->canSeeStartEndTime(),
-            'metaColumns' => $this->findMetaColumns($query),
+            'metaColumns' => $this->findMetaColumns($query, $location),
         ]);
     }
 
     /**
      * @param TimesheetQuery $query
+     * @param string $location
      * @return MetaTableTypeInterface[]
      */
-    protected function findMetaColumns(TimesheetQuery $query): array
+    protected function findMetaColumns(TimesheetQuery $query, string $location): array
     {
-        $event = new TimesheetMetaQueryEvent($query);
+        $event = new TimesheetMetaQueryEvent($query, $location);
         $this->dispatcher->dispatch($event);
 
         $columns = [];
@@ -235,12 +236,7 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
-    /**
-     * @param Request $request
-     * @param string $renderTemplate
-     * @return Response
-     */
-    protected function export(Request $request, string $renderTemplate)
+    protected function export(Request $request, string $renderTemplate, string $location): Response
     {
         $query = new TimesheetQuery();
 
@@ -268,7 +264,7 @@ abstract class TimesheetAbstractController extends AbstractController
         return $this->render($renderTemplate, [
             'entries' => $entries,
             'query' => $query,
-            'metaColumns' => $this->findMetaColumns($query),
+            'metaColumns' => $this->findMetaColumns($query, $location),
         ]);
     }
 
