@@ -53,7 +53,7 @@
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
                 {% for field in metaColumns %}
-                    <td class="{{ tables.data_table_column_class(tableName, columns, field.name) }}">
+                    <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, field.name) }}">
                         {{ tables.datatable_meta_column(entry, field) }}
                     </td>
                 {% endfor %}

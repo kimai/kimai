@@ -104,7 +104,7 @@
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }} timesheet-description">{{ entry.description|escape|desc2html }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'tags') }}">{{ widgets.tag_list(entry.tags) }}</td>
                 {% for field in metaColumns %}
-                    <td class="{{ tables.data_table_column_class(tableName, columns, field.name) }}">
+                    <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, field.name) }}">
                         {{ tables.datatable_meta_column(entry, field) }}
                     </td>
                 {% endfor %}

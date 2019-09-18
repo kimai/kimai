@@ -102,6 +102,12 @@
     </span>
 {% endmacro %}
 
+{% macro color_dot(color, tooltip) %}
+    <span class="label-color" data-toggle="tooltip" data-placement="top" title="{{ tooltip }}">
+        <span class="dot" style="background-color:{{ color }}"></span>
+    </span>
+{% endmacro %}
+
 {% macro badge_counter(count, url) %}
     {% if url %}
         <a href="{{ url }}"><span class="badge bg-blue">{{ count }}</span></a>

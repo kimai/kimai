@@ -181,10 +181,36 @@
 {% macro datatable_meta_column(entry, field) %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% set metaField = entry.metaField(field.name) %}
-    {% if not metaField is null %}
+    {% if not metaField is null and metaField.value is not null and metaField.value is not empty %}
         {% set metaField = metaField.merge(field) %}
-        {% if metaField.value is same as (true) or metaField.value is same as (false) %}
+        {% if '\\ColorPickerType' in metaField.type %}
+            {{ widgets.color_dot(metaField.value, metaField.value) }}
+        {% elseif '\\DurationType' in metaField.type %}
+            {{ metaField.value|duration }}
+        {% elseif '\\YesNoType' in metaField.type or '\\CheckBoxType' in metaField.type %}
             {{ widgets.label_boolean(metaField.value) }}
+        {% elseif '\\DatePickerType' in metaField.type %}
+            {{ metaField.value|date_short }}
+        {% elseif '\\DateTimePickerType' in metaField.type %}
+            {{ metaField.value|date_full }}
+        {% elseif '\\CountryType' in metaField.type %}
+            {{ metaField.value|country }}
+        {% elseif '\\CurrencyType' in metaField.type %}
+            {{ metaField.value|currency }}
+        {% elseif '\\LanguageType' in metaField.type %}
+            {{ metaField.value|language }}
+        {% elseif '\\MoneyType' in metaField.type %}
+            {% if class_name(entry) == 'App\\Entity\\Timesheet' %}
+                {{ metaField.value|money(entry.project.customer.currency) }}
+            {% elseif class_name(entry) == 'App\\Entity\\Customer' %}
+                {{ metaField.value|money(entry.currency) }}
+            {% elseif class_name(entry) == 'App\\Entity\\Project' %}
+                {{ metaField.value|money(entry.customer.currency) }}
+            {% elseif class_name(entry) == 'App\\Entity\\Activity' and entry.project is not null %}
+                {{ metaField.value|money(entry.project.customer.currency) }}
+            {% else %}
+                {{ metaField.value }}
+            {% endif %}
         {% else %}
             {{ metaField.value }}
         {% endif %}
