@@ -10,13 +10,14 @@
 namespace App\Event;
 
 use App\Entity\MetaTableTypeInterface;
+use App\Repository\Query\BaseQuery;
 use App\Repository\Query\ProjectQuery;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Dynamically find possible meta fields for a project query.
  */
-final class ProjectMetaQueryEvent extends Event
+final class ProjectMetaQueryEvent extends Event implements MetaQueryEventInterface
 {
     public const EXPORT = 'export';
     public const PROJECT = 'project';
@@ -45,7 +46,7 @@ final class ProjectMetaQueryEvent extends Event
      *
      * @return ProjectQuery
      */
-    public function getQuery(): ProjectQuery
+    public function getQuery(): BaseQuery
     {
         return $this->query;
     }
@@ -60,11 +61,9 @@ final class ProjectMetaQueryEvent extends Event
         return $this->location;
     }
 
-    public function addField(MetaTableTypeInterface $meta): ProjectMetaQueryEvent
+    public function addField(MetaTableTypeInterface $meta)
     {
         $this->fields[] = $meta;
-
-        return $this;
     }
 
     /**

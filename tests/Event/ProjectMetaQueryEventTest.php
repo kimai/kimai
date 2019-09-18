@@ -10,6 +10,7 @@
 namespace App\Tests\Event;
 
 use App\Entity\ProjectMeta;
+use App\Event\MetaQueryEventInterface;
 use App\Event\ProjectMetaQueryEvent;
 use App\Repository\Query\ProjectQuery;
 use PHPUnit\Framework\TestCase;
@@ -24,6 +25,7 @@ class ProjectMetaQueryEventTest extends TestCase
         $query = new ProjectQuery();
         $sut = new ProjectMetaQueryEvent($query, ProjectMetaQueryEvent::EXPORT);
 
+        self::assertInstanceOf(MetaQueryEventInterface::class, $sut);
         self::assertSame($sut->getQuery(), $query);
         self::assertIsArray($sut->getFields());
         self::assertEmpty($sut->getFields());

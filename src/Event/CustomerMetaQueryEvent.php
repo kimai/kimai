@@ -10,13 +10,14 @@
 namespace App\Event;
 
 use App\Entity\MetaTableTypeInterface;
+use App\Repository\Query\BaseQuery;
 use App\Repository\Query\CustomerQuery;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Dynamically find possible meta fields for a customer query.
  */
-final class CustomerMetaQueryEvent extends Event
+final class CustomerMetaQueryEvent extends Event implements MetaQueryEventInterface
 {
     public const EXPORT = 'export';
     public const CUSTOMER = 'customer';
@@ -45,7 +46,7 @@ final class CustomerMetaQueryEvent extends Event
      *
      * @return CustomerQuery
      */
-    public function getQuery(): CustomerQuery
+    public function getQuery(): BaseQuery
     {
         return $this->query;
     }
@@ -60,11 +61,9 @@ final class CustomerMetaQueryEvent extends Event
         return $this->location;
     }
 
-    public function addField(MetaTableTypeInterface $meta): CustomerMetaQueryEvent
+    public function addField(MetaTableTypeInterface $meta)
     {
         $this->fields[] = $meta;
-
-        return $this;
     }
 
     /**

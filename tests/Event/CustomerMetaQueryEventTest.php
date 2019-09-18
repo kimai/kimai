@@ -11,6 +11,7 @@ namespace App\Tests\Event;
 
 use App\Entity\CustomerMeta;
 use App\Event\CustomerMetaQueryEvent;
+use App\Event\MetaQueryEventInterface;
 use App\Repository\Query\CustomerQuery;
 use PHPUnit\Framework\TestCase;
 
@@ -24,6 +25,7 @@ class CustomerMetaQueryEventTest extends TestCase
         $query = new CustomerQuery();
         $sut = new CustomerMetaQueryEvent($query, CustomerMetaQueryEvent::EXPORT);
 
+        self::assertInstanceOf(MetaQueryEventInterface::class, $sut);
         self::assertSame($sut->getQuery(), $query);
         self::assertIsArray($sut->getFields());
         self::assertEmpty($sut->getFields());

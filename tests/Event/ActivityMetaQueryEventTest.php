@@ -11,6 +11,7 @@ namespace App\Tests\Event;
 
 use App\Entity\ActivityMeta;
 use App\Event\ActivityMetaQueryEvent;
+use App\Event\MetaQueryEventInterface;
 use App\Repository\Query\ActivityQuery;
 use PHPUnit\Framework\TestCase;
 
@@ -24,6 +25,7 @@ class ActivityMetaQueryEventTest extends TestCase
         $query = new ActivityQuery();
         $sut = new ActivityMetaQueryEvent($query, ActivityMetaQueryEvent::EXPORT);
 
+        self::assertInstanceOf(MetaQueryEventInterface::class, $sut);
         self::assertSame($sut->getQuery(), $query);
         self::assertIsArray($sut->getFields());
         self::assertEmpty($sut->getFields());

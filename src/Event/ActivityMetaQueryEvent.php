@@ -11,12 +11,13 @@ namespace App\Event;
 
 use App\Entity\MetaTableTypeInterface;
 use App\Repository\Query\ActivityQuery;
+use App\Repository\Query\BaseQuery;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Dynamically find possible meta fields for a activity query.
  */
-final class ActivityMetaQueryEvent extends Event
+final class ActivityMetaQueryEvent extends Event implements MetaQueryEventInterface
 {
     public const EXPORT = 'export';
     public const ACTIVITY = 'activity';
@@ -45,7 +46,7 @@ final class ActivityMetaQueryEvent extends Event
      *
      * @return ActivityQuery
      */
-    public function getQuery(): ActivityQuery
+    public function getQuery(): BaseQuery
     {
         return $this->query;
     }
@@ -60,11 +61,9 @@ final class ActivityMetaQueryEvent extends Event
         return $this->location;
     }
 
-    public function addField(MetaTableTypeInterface $meta): ActivityMetaQueryEvent
+    public function addField(MetaTableTypeInterface $meta)
     {
         $this->fields[] = $meta;
-
-        return $this;
     }
 
     /**

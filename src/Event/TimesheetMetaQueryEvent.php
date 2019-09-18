@@ -10,13 +10,14 @@
 namespace App\Event;
 
 use App\Entity\MetaTableTypeInterface;
+use App\Repository\Query\BaseQuery;
 use App\Repository\Query\TimesheetQuery;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Dynamically find possible meta fields for a timesheet query.
  */
-final class TimesheetMetaQueryEvent extends Event
+final class TimesheetMetaQueryEvent extends Event implements MetaQueryEventInterface
 {
     public const EXPORT = 'export';
     public const TIMESHEET = 'timesheet';
@@ -48,7 +49,7 @@ final class TimesheetMetaQueryEvent extends Event
      *
      * @return TimesheetQuery
      */
-    public function getQuery(): TimesheetQuery
+    public function getQuery(): BaseQuery
     {
         return $this->query;
     }
@@ -63,11 +64,9 @@ final class TimesheetMetaQueryEvent extends Event
         return $this->location;
     }
 
-    public function addField(MetaTableTypeInterface $meta): TimesheetMetaQueryEvent
+    public function addField(MetaTableTypeInterface $meta)
     {
         $this->fields[] = $meta;
-
-        return $this;
     }
 
     /**

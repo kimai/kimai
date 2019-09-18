@@ -143,7 +143,7 @@ class DateExtensionsTest extends TestCase
         $date = new \DateTime('7 January 2010 17:43:21', new \DateTimeZone('Europe/Berlin'));
         $sut = $this->getSut('en', []);
         $this->assertEquals('2010-01-07T17:43:21+01:00', $sut->dateFormat($date, 'c'));
-        $this->assertStringStartsWith('2010-01-07T17:43:21+', $sut->dateFormat('7 January 2010 17:43:21', 'c'));
+        $this->assertStringStartsWith('2010-01-07T17:43:21', $sut->dateFormat('7 January 2010 17:43:21', 'c'));
     }
 
     public function testTime()

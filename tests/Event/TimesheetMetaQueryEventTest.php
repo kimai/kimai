@@ -10,6 +10,7 @@
 namespace App\Tests\Event;
 
 use App\Entity\TimesheetMeta;
+use App\Event\MetaQueryEventInterface;
 use App\Event\TimesheetMetaQueryEvent;
 use App\Repository\Query\TimesheetQuery;
 use PHPUnit\Framework\TestCase;
@@ -24,6 +25,7 @@ class TimesheetMetaQueryEventTest extends TestCase
         $query = new TimesheetQuery();
         $sut = new TimesheetMetaQueryEvent($query, TimesheetMetaQueryEvent::EXPORT);
 
+        self::assertInstanceOf(MetaQueryEventInterface::class, $sut);
         self::assertSame($sut->getQuery(), $query);
         self::assertIsArray($sut->getFields());
         self::assertEmpty($sut->getFields());
