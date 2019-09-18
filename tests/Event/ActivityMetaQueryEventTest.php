@@ -22,11 +22,12 @@ class ActivityMetaQueryEventTest extends TestCase
     public function testGetterAndSetter()
     {
         $query = new ActivityQuery();
-        $sut = new ActivityMetaQueryEvent($query);
+        $sut = new ActivityMetaQueryEvent($query, ActivityMetaQueryEvent::EXPORT);
 
         self::assertSame($sut->getQuery(), $query);
         self::assertIsArray($sut->getFields());
         self::assertEmpty($sut->getFields());
+        self::assertEquals('export', $sut->getLocation());
 
         $sut->addField(new ActivityMeta());
         $sut->addField(new ActivityMeta());

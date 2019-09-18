@@ -18,23 +18,49 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 final class TimesheetMetaQueryEvent extends Event
 {
+    public const EXPORT = 'export';
+    public const TIMESHEET = 'timesheet';
+    public const TEAM_TIMESHEET = 'team-timesheet';
+    public const TIMESHEET_EXPORT = 'timesheet-export';
+    public const TEAM_TIMESHEET_EXPORT = 'team-timesheet-export';
+    
     /**
      * @var TimesheetQuery
      */
     private $query;
     /**
+     * @var string
+     */
+    private $location;
+    /**
      * @var MetaTableTypeInterface[]
      */
     private $fields = [];
 
-    public function __construct(TimesheetQuery $query)
+    public function __construct(TimesheetQuery $query, string $location)
     {
         $this->query = $query;
+        $this->location = $location;
     }
 
+    /**
+     * If you want to filter where your meta-field will be displayed, use the query settings.
+     * 
+     * @return TimesheetQuery
+     */
     public function getQuery(): TimesheetQuery
     {
         return $this->query;
+    }
+
+    /**
+     * If you want to filter where your meta-field will be displayed, check the current location.
+     *
+     * @return string
+     */
+    public function getLocation(): string
+    {
+        return $this->location;
     }
 
     public function addField(MetaTableTypeInterface $meta): TimesheetMetaQueryEvent

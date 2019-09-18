@@ -18,23 +18,46 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 final class CustomerMetaQueryEvent extends Event
 {
+    public const EXPORT = 'export';
+    public const CUSTOMER = 'customer';
+    
     /**
      * @var CustomerQuery
      */
     private $query;
     /**
+     * @var string
+     */
+    private $location;
+    /**
      * @var MetaTableTypeInterface[]
      */
     private $fields = [];
 
-    public function __construct(CustomerQuery $query)
+    public function __construct(CustomerQuery $query, string $location)
     {
         $this->query = $query;
+        $this->location = $location;
     }
 
+    /**
+     * If you want to filter where your meta-field will be displayed, use the query settings.
+     *
+     * @return CustomerQuery
+     */
     public function getQuery(): CustomerQuery
     {
         return $this->query;
+    }
+
+    /**
+     * If you want to filter where your meta-field will be displayed, check the current location.
+     *
+     * @return string
+     */
+    public function getLocation(): string
+    {
+        return $this->location;
     }
 
     public function addField(MetaTableTypeInterface $meta): CustomerMetaQueryEvent

@@ -18,23 +18,46 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 final class ActivityMetaQueryEvent extends Event
 {
+    public const EXPORT = 'export';
+    public const ACTIVITY = 'activity';
+    
     /**
      * @var ActivityQuery
      */
     private $query;
     /**
+     * @var string
+     */
+    private $location;
+    /**
      * @var MetaTableTypeInterface[]
      */
     private $fields = [];
 
-    public function __construct(ActivityQuery $query)
+    public function __construct(ActivityQuery $query, string $location)
     {
         $this->query = $query;
+        $this->location = $location;
     }
 
+    /**
+     * If you want to filter where your meta-field will be displayed, use the query settings.
+     * 
+     * @return ActivityQuery
+     */
     public function getQuery(): ActivityQuery
     {
         return $this->query;
+    }
+
+    /**
+     * If you want to filter where your meta-field will be displayed, check the current location.
+     * 
+     * @return string
+     */
+    public function getLocation(): string 
+    {
+        return $this->location;
     }
 
     public function addField(MetaTableTypeInterface $meta): ActivityMetaQueryEvent

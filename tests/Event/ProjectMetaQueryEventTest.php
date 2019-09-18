@@ -22,11 +22,12 @@ class ProjectMetaQueryEventTest extends TestCase
     public function testGetterAndSetter()
     {
         $query = new ProjectQuery();
-        $sut = new ProjectMetaQueryEvent($query);
+        $sut = new ProjectMetaQueryEvent($query, ProjectMetaQueryEvent::EXPORT);
 
         self::assertSame($sut->getQuery(), $query);
         self::assertIsArray($sut->getFields());
         self::assertEmpty($sut->getFields());
+        self::assertEquals('export', $sut->getLocation());
 
         $sut->addField(new ProjectMeta());
         $sut->addField(new ProjectMeta());

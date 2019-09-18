@@ -22,11 +22,12 @@ class CustomerMetaQueryEventTest extends TestCase
     public function testGetterAndSetter()
     {
         $query = new CustomerQuery();
-        $sut = new CustomerMetaQueryEvent($query);
+        $sut = new CustomerMetaQueryEvent($query, CustomerMetaQueryEvent::EXPORT);
 
         self::assertSame($sut->getQuery(), $query);
         self::assertIsArray($sut->getFields());
         self::assertEmpty($sut->getFields());
+        self::assertEquals('export', $sut->getLocation());
 
         $sut->addField(new CustomerMeta());
         $sut->addField(new CustomerMeta());

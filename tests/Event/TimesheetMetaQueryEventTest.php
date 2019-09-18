@@ -22,11 +22,12 @@ class TimesheetMetaQueryEventTest extends TestCase
     public function testGetterAndSetter()
     {
         $query = new TimesheetQuery();
-        $sut = new TimesheetMetaQueryEvent($query);
+        $sut = new TimesheetMetaQueryEvent($query, TimesheetMetaQueryEvent::EXPORT);
 
         self::assertSame($sut->getQuery(), $query);
         self::assertIsArray($sut->getFields());
         self::assertEmpty($sut->getFields());
+        self::assertEquals('export', $sut->getLocation());
 
         $sut->addField(new TimesheetMeta());
         $sut->addField(new TimesheetMeta());
