@@ -50,7 +50,7 @@ class ExtensionsTest extends TestCase
 
     public function testGetFilters()
     {
-        $filters = ['duration', 'duration_decimal', 'money', 'currency', 'country', 'docu_link'];
+        $filters = ['duration', 'duration_decimal', 'money', 'currency', 'country', 'language', 'docu_link'];
         $sut = $this->getSut($this->localeDe);
         $twigFilters = $sut->getFilters();
         $this->assertCount(count($filters), $twigFilters);
@@ -114,6 +114,20 @@ class ExtensionsTest extends TestCase
         $sut = $this->getSut($this->localeEn);
         foreach ($countries as $locale => $name) {
             $this->assertEquals($name, $sut->country($locale));
+        }
+    }
+
+    public function testLanguage()
+    {
+        $languages = [
+            'de' => 'German',
+            'ru' => 'Russian',
+            'es' => 'Spanish',
+        ];
+
+        $sut = $this->getSut($this->localeEn);
+        foreach ($languages as $locale => $name) {
+            $this->assertEquals($name, $sut->language($locale));
         }
     }
 

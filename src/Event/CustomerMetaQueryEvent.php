@@ -20,7 +20,7 @@ final class CustomerMetaQueryEvent extends Event
 {
     public const EXPORT = 'export';
     public const CUSTOMER = 'customer';
-    
+
     /**
      * @var CustomerQuery
      */

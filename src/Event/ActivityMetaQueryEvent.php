@@ -20,7 +20,7 @@ final class ActivityMetaQueryEvent extends Event
 {
     public const EXPORT = 'export';
     public const ACTIVITY = 'activity';
-    
+
     /**
      * @var ActivityQuery
      */
@@ -42,7 +42,7 @@ final class ActivityMetaQueryEvent extends Event
 
     /**
      * If you want to filter where your meta-field will be displayed, use the query settings.
-     * 
+     *
      * @return ActivityQuery
      */
     public function getQuery(): ActivityQuery
@@ -52,10 +52,10 @@ final class ActivityMetaQueryEvent extends Event
 
     /**
      * If you want to filter where your meta-field will be displayed, check the current location.
-     * 
+     *
      * @return string
      */
-    public function getLocation(): string 
+    public function getLocation(): string
     {
         return $this->location;
     }

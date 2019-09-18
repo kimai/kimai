@@ -23,7 +23,7 @@ final class TimesheetMetaQueryEvent extends Event
     public const TEAM_TIMESHEET = 'team-timesheet';
     public const TIMESHEET_EXPORT = 'timesheet-export';
     public const TEAM_TIMESHEET_EXPORT = 'team-timesheet-export';
-    
+
     /**
      * @var TimesheetQuery
      */
@@ -45,7 +45,7 @@ final class TimesheetMetaQueryEvent extends Event
 
     /**
      * If you want to filter where your meta-field will be displayed, use the query settings.
-     * 
+     *
      * @return TimesheetQuery
      */
     public function getQuery(): TimesheetQuery

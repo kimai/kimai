@@ -42,7 +42,7 @@ final class ProjectMetaQueryEvent extends Event
 
     /**
      * If you want to filter where your meta-field will be displayed, use the query settings.
-     * 
+     *
      * @return ProjectQuery
      */
     public function getQuery(): ProjectQuery
