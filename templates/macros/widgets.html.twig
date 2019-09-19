@@ -300,3 +300,40 @@
         {{ macro.badge(tag.name , 'green') }}
     {% endfor %}
 {% endmacro %}
+
+{% macro form_type_value(type, value, entity) %}
+    {% import _self as widgets %}
+    {% if '\\ColorPickerType' in type %}
+        {{ widgets.color_dot(value, value) }}
+    {% elseif '\\DurationType' in type %}
+        {{ value|duration }}
+    {% elseif '\\YesNoType' in type or '\\CheckBoxType' in type %}
+        {{ widgets.label_boolean(value) }}
+    {% elseif '\\DatePickerType' in type %}
+        {{ value|date_short }}
+    {% elseif '\\DateTimePickerType' in type %}
+        {{ value|date_full }}
+    {% elseif '\\CountryType' in type %}
+        {{ value|country }}
+    {% elseif '\\CurrencyType' in type %}
+        {{ value|currency }}
+    {% elseif '\\LanguageType' in type %}
+        {{ value|language }}
+    {% elseif '\\MoneyType' in type  %}
+        {% if entity is null %}
+            {{ value }}
+        {% elseif class_name(entity) == 'App\\Entity\\Timesheet' %}
+            {{ value|money(entity.project.customer.currency) }}
+        {% elseif class_name(entity) == 'App\\Entity\\Customer' %}
+            {{ value|money(entity.currency) }}
+        {% elseif class_name(entity) == 'App\\Entity\\Project' %}
+            {{ value|money(entity.customer.currency) }}
+        {% elseif class_name(entity) == 'App\\Entity\\Activity' and entity.project is not null %}
+            {{ value|money(entity.project.customer.currency) }}
+        {% else %}
+            {{ value }}
+        {% endif %}
+    {% else %}
+        {{ value }}
+    {% endif %}
+{% endmacro %}
