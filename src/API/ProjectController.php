@@ -162,7 +162,7 @@ class ProjectController extends BaseApiController
         $project = new Project();
 
         $event = new ProjectMetaDefinitionEvent($project);
-        $this->dispatcher->dispatch($event, ProjectMetaDefinitionEvent::class);
+        $this->dispatcher->dispatch($event);
 
         $form = $this->createForm(ProjectApiEditForm::class, $project);
 
@@ -227,7 +227,7 @@ class ProjectController extends BaseApiController
         }
 
         $event = new ProjectMetaDefinitionEvent($project);
-        $this->dispatcher->dispatch($event, ProjectMetaDefinitionEvent::class);
+        $this->dispatcher->dispatch($event);
 
         $form = $this->createForm(ProjectApiEditForm::class, $project);
 
@@ -286,7 +286,7 @@ class ProjectController extends BaseApiController
         }
 
         $event = new ProjectMetaDefinitionEvent($project);
-        $this->dispatcher->dispatch($event, ProjectMetaDefinitionEvent::class);
+        $this->dispatcher->dispatch($event);
 
         $name = $paramFetcher->get('name');
         $value = $paramFetcher->get('value');

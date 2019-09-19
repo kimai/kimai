@@ -42,11 +42,11 @@ class EntityMetaDefinitionType extends AbstractType
                     return;
                 }
 
-                $event->getForm()->add('value', $definition->getType(), [
+                $event->getForm()->add('value', $definition->getType(), array_merge([
                     'label' => $definition->getLabel(),
                     'constraints' => $definition->getConstraints(),
                     'required' => $definition->isRequired(),
-                ]);
+                ], $definition->getOptions()));
             }
         );
     }

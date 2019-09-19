@@ -84,13 +84,13 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
     {
         $data = ['message' => 'Authentication required, missing headers: X-AUTH-USER, X-AUTH-TOKEN'];
 
-        $this->assertEquals(
+        self::assertEquals(
             $data,
             json_decode($response->getContent(), true),
             sprintf('The secure URL %s is not protected.', $url)
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             Response::HTTP_FORBIDDEN,
             $response->getStatusCode(),
             sprintf('The secure URL %s has the wrong status code %s.', $url, $response->getStatusCode())
@@ -107,7 +107,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser($role);
         $client->request($method, $this->createUrl($url));
 
-        $this->assertFalse(
+        self::assertFalse(
             $client->getResponse()->isSuccessful(),
             sprintf('The secure URL %s is not protected for role %s', $url, $role)
         );
@@ -117,9 +117,9 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
             'message' => 'Access denied.'
         ];
 
-        $this->assertEquals(403, $client->getResponse()->getStatusCode());
+        self::assertEquals(403, $client->getResponse()->getStatusCode());
 
-        $this->assertEquals(
+        self::assertEquals(
             $expected,
             json_decode($client->getResponse()->getContent(), true)
         );
@@ -142,9 +142,9 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
             'message' => 'Not found'
         ];
 
-        $this->assertEquals(404, $client->getResponse()->getStatusCode());
+        self::assertEquals(404, $client->getResponse()->getStatusCode());
 
-        $this->assertEquals(
+        self::assertEquals(
             $expected,
             json_decode($client->getResponse()->getContent(), true)
         );
@@ -164,11 +164,11 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
 
         $this->request($client, $url, 'PATCH', [], json_encode($data));
         $response = $client->getResponse();
-        $this->assertFalse($response->isSuccessful());
+        self::assertFalse($response->isSuccessful());
 
-        $this->assertEquals($expectedErrors['code'], $client->getResponse()->getStatusCode());
+        self::assertEquals($expectedErrors['code'], $client->getResponse()->getStatusCode());
 
-        $this->assertEquals(
+        self::assertEquals(
             $expectedErrors,
             json_decode($client->getResponse()->getContent(), true)
         );
@@ -180,16 +180,16 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
 
         $this->request($client, $url, 'DELETE', [], json_encode($data));
         $response = $client->getResponse();
-        $this->assertFalse($response->isSuccessful());
+        self::assertFalse($response->isSuccessful());
 
         $expected = [
             'code' => 404,
             'message' => 'Not found'
         ];
 
-        $this->assertEquals(404, $client->getResponse()->getStatusCode());
+        self::assertEquals(404, $client->getResponse()->getStatusCode());
 
-        $this->assertEquals(
+        self::assertEquals(
             $expected,
             json_decode($client->getResponse()->getContent(), true)
         );
@@ -197,9 +197,9 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
 
     protected function assertApiException(Response $response, string $message)
     {
-        $this->assertFalse($response->isSuccessful());
-        $this->assertEquals(500, $response->getStatusCode());
-        $this->assertEquals(['code' => 500, 'message' => $message], json_decode($response->getContent(), true));
+        self::assertFalse($response->isSuccessful());
+        self::assertEquals(500, $response->getStatusCode());
+        self::assertEquals(['code' => 500, 'message' => $message], json_decode($response->getContent(), true));
     }
 
     protected function assertApiAccessDenied(Client $client, string $url, string $message)
@@ -210,28 +210,35 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
 
     protected function assertApiResponseAccessDenied(Response $response, string $message)
     {
-        $this->assertFalse($response->isSuccessful());
-        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        self::assertFalse($response->isSuccessful());
+        self::assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $expected = ['code' => Response::HTTP_FORBIDDEN, 'message' => $message];
-        $this->assertEquals($expected, json_decode($response->getContent(), true));
+        self::assertEquals($expected, json_decode($response->getContent(), true));
     }
 
     /**
      * @param Response $response
      * @param string[] $failedFields
+     * @param bool $extraFields
      */
-    protected function assertApiCallValidationError(Response $response, array $failedFields)
+    protected function assertApiCallValidationError(Response $response, array $failedFields, bool $extraFields = false)
     {
-        $this->assertFalse($response->isSuccessful());
+        self::assertFalse($response->isSuccessful());
         $result = json_decode($response->getContent(), true);
 
-        $this->assertArrayHasKey('errors', $result);
-        $this->assertArrayHasKey('children', $result['errors']);
+        self::assertArrayHasKey('errors', $result);
+
+        if ($extraFields) {
+            self::assertArrayHasKey('errors', $result['errors']);
+            self::assertEquals($result['errors']['errors'][0], 'This form should not contain extra fields.');
+        }
+
+        self::assertArrayHasKey('children', $result['errors']);
         $data = $result['errors']['children'];
 
         foreach ($failedFields as $fieldName) {
-            $this->assertArrayHasKey($fieldName, $data);
-            $this->assertArrayHasKey('errors', $data[$fieldName]);
+            self::assertArrayHasKey($fieldName, $data);
+            self::assertArrayHasKey('errors', $data[$fieldName]);
         }
     }
 }

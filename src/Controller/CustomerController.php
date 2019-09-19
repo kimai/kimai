@@ -11,7 +11,9 @@ namespace App\Controller;
 
 use App\Configuration\FormConfiguration;
 use App\Entity\Customer;
+use App\Entity\MetaTableTypeInterface;
 use App\Event\CustomerMetaDefinitionEvent;
+use App\Event\CustomerMetaDisplayEvent;
 use App\Form\CustomerEditForm;
 use App\Form\CustomerTeamPermissionForm;
 use App\Form\Toolbar\CustomerToolbarForm;
@@ -49,10 +51,6 @@ class CustomerController extends AbstractController
      */
     protected $dispatcher;
 
-    /**
-     * @param CustomerRepository $repository
-     * @param FormConfiguration $configuration
-     */
     public function __construct(CustomerRepository $repository, FormConfiguration $configuration, EventDispatcherInterface $dispatcher)
     {
         $this->repository = $repository;
@@ -93,7 +91,20 @@ class CustomerController extends AbstractController
             'entries' => $entries,
             'query' => $query,
             'toolbarForm' => $form->createView(),
+            'metaColumns' => $this->findMetaColumns($query),
         ]);
+    }
+
+    /**
+     * @param CustomerQuery $query
+     * @return MetaTableTypeInterface[]
+     */
+    protected function findMetaColumns(CustomerQuery $query): array
+    {
+        $event = new CustomerMetaDisplayEvent($query, CustomerMetaDisplayEvent::CUSTOMER);
+        $this->dispatcher->dispatch($event);
+
+        return $event->getFields();
     }
 
     /**
@@ -151,9 +162,13 @@ class CustomerController extends AbstractController
      */
     public function budgetAction(Customer $customer)
     {
+        $stats = $this->getRepository()->getCustomerStatistics($customer);
+
+        // TODO sent event with stats
+
         return $this->render('customer/budget.html.twig', [
             'customer' => $customer,
-            'stats' => $this->getRepository()->getCustomerStatistics($customer)
+            'stats' => $stats,
         ]);
     }
 
@@ -224,7 +239,7 @@ class CustomerController extends AbstractController
     protected function renderCustomerForm(Customer $customer, Request $request)
     {
         $event = new CustomerMetaDefinitionEvent($customer);
-        $this->dispatcher->dispatch($event, CustomerMetaDefinitionEvent::class);
+        $this->dispatcher->dispatch($event);
 
         $editForm = $this->createEditForm($customer);
 

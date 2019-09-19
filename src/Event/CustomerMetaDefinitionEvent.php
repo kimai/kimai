@@ -20,7 +20,7 @@ final class CustomerMetaDefinitionEvent extends Event
     /**
      * @var Customer
      */
-    protected $entity;
+    private $entity;
 
     public function __construct(Customer $entity)
     {

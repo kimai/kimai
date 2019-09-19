@@ -177,7 +177,7 @@ class ActivityController extends BaseApiController
         $activity = new Activity();
 
         $event = new ActivityMetaDefinitionEvent($activity);
-        $this->dispatcher->dispatch($event, ActivityMetaDefinitionEvent::class);
+        $this->dispatcher->dispatch($event);
 
         $form = $this->createForm(ActivityApiEditForm::class, $activity);
 
@@ -242,7 +242,7 @@ class ActivityController extends BaseApiController
         }
 
         $event = new ActivityMetaDefinitionEvent($activity);
-        $this->dispatcher->dispatch($event, ActivityMetaDefinitionEvent::class);
+        $this->dispatcher->dispatch($event);
 
         $form = $this->createForm(ActivityApiEditForm::class, $activity);
 
@@ -301,7 +301,7 @@ class ActivityController extends BaseApiController
         }
 
         $event = new ActivityMetaDefinitionEvent($activity);
-        $this->dispatcher->dispatch($event, ActivityMetaDefinitionEvent::class);
+        $this->dispatcher->dispatch($event);
 
         $name = $paramFetcher->get('name');
         $value = $paramFetcher->get('value');

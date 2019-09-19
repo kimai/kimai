@@ -69,11 +69,11 @@ class DateExtensionsTest extends TestCase
 
     /**
      * @param string $locale
-     * @param \DateTime $date
+     * @param \DateTime|string $date
      * @param string $result
      * @dataProvider getDateShortData
      */
-    public function testDateShort($locale, \DateTime $date, $result)
+    public function testDateShort($locale, $date, $result)
     {
         $sut = $this->getSut($locale, [
             'de' => ['date' => 'd.m.Y'],
@@ -90,16 +90,17 @@ class DateExtensionsTest extends TestCase
             ['en', new \DateTime('2016-06-23'), '2016-06-23'],
             ['de', new \DateTime('1980-12-14'), '14.12.1980'],
             ['ru', new \DateTime('1980-12-14'), '14.12.1980'],
+            ['ru', '1980-12-14', '14.12.1980'],
         ];
     }
 
     /**
      * @param string $locale
-     * @param \DateTime $date
+     * @param \DateTime|string $date
      * @param string $result
      * @dataProvider getDateTimeData
      */
-    public function testDateTime($locale, \DateTime $date, $result)
+    public function testDateTime($locale, $date, $result)
     {
         $sut = $this->getSut($locale, [
             'de' => ['date_time' => 'd.m.Y H:i:s'],
@@ -113,6 +114,7 @@ class DateExtensionsTest extends TestCase
         return [
             ['en', new \DateTime('7 January 2010'), '2010-01-07 12:01 AM'],
             ['de', (new \DateTime('1980-12-14'))->setTime(13, 27, 55), '14.12.1980 13:27:55'],
+            ['de', '1980-12-14 13:27:55', '14.12.1980 13:27:55'],
         ];
     }
 
@@ -141,6 +143,7 @@ class DateExtensionsTest extends TestCase
         $date = new \DateTime('7 January 2010 17:43:21', new \DateTimeZone('Europe/Berlin'));
         $sut = $this->getSut('en', []);
         $this->assertEquals('2010-01-07T17:43:21+01:00', $sut->dateFormat($date, 'c'));
+        $this->assertStringStartsWith('2010-01-07T17:43:21', $sut->dateFormat('7 January 2010 17:43:21', 'c'));
     }
 
     public function testTime()
@@ -150,6 +153,7 @@ class DateExtensionsTest extends TestCase
 
         $sut = $this->getSut('en', ['en' => ['time' => 'H:i']]);
         $this->assertEquals('17:53', $sut->time($time));
+        $this->assertEquals('17:53', $sut->time('2016-06-23 17:53'));
     }
 
     public function testHour24()
@@ -176,5 +180,6 @@ class DateExtensionsTest extends TestCase
         $dateTime->setTime(12, 29, 47);
 
         $this->assertEquals('2019-08-17 12:29:47', $sut->dateTimeFull($dateTime));
+        $this->assertEquals('2019-08-17 12:29:47', $sut->dateTimeFull('2019-08-17 12:29:47'));
     }
 }

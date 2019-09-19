@@ -9,10 +9,17 @@
     'username': 'hidden-xs',
     'email': 'hidden-xs hidden-sm',
     'title': 'hidden-xs',
+} %}
+{% for pref in preferences %}
+    {% set columns = columns|merge({
+        (pref.name): {'title': pref.label, 'class': 'hidden-xs hidden-sm', 'orderBy': false}
+    }) %}
+{% endfor %}
+{% set columns = columns|merge({
     'roles': {'class': 'hidden-xs', 'orderBy': false},
     'active': {'class': '', 'orderBy': false},
     'actions': 'actions alwaysVisible',
-} %}
+}) %}
 
 {% set tableName = 'user_admin' %}
 
@@ -37,6 +44,14 @@
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'username') }}">{{ entry.username }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'email') }}">{{ entry.email }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'title') }}">{{ entry.title }}</td>
+                {% for pref in preferences %}
+                    <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, pref.name) }}">
+                        {% set metaField = entry.preference(pref.name) %}
+                        {% if not metaField is null and metaField.value is not null and metaField.value is not empty %}
+                            {{ widgets.form_type_value(pref.type, metaField.value, entry) }}
+                        {% endif %}
+                    </td>
+                {% endfor %}
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'roles') }}">
                     {% for role in entry.roles %}
                         {% if role != 'ROLE_USER' %}

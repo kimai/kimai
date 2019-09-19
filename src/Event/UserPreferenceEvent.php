@@ -62,7 +62,7 @@ final class UserPreferenceEvent extends Event
     public function addUserPreference(UserPreference $preference)
     {
         foreach ($this->preferences as $pref) {
-            if ($pref->getName() == $preference->getName()) {
+            if (strtolower($pref->getName()) === strtolower($preference->getName())) {
                 throw new \InvalidArgumentException(
                     'Cannot add preference, one with the name "' . $preference->getName() . '" is already existing'
                 );

@@ -9,9 +9,16 @@
     'customer': 'hidden-xs',
     'project': 'hidden-xs',
     'comment': 'hidden-xs',
+} %}
+{% for field in metaColumns %}
+    {% set columns = columns|merge({
+        (field.name): {'title': field.label, 'class': 'hidden-xs hidden-sm', 'orderBy': false}
+    }) %}
+{% endfor %}
+{% set columns = columns|merge({
     'visible': {'class': '', 'orderBy': false},
     'actions': 'actions alwaysVisible',
-} %}
+}) %}
 
 {% set tableName = 'activity_admin' %}
 
@@ -46,6 +53,11 @@
                     {% endif %}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment|comment2html }}</td>
+                {% for field in metaColumns %}
+                    <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, field.name) }}">
+                        {{ tables.datatable_meta_column(entry, field) }}
+                    </td>
+                {% endfor %}
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
                 <td class="actions">
                     {{ actions.activity(entry, 'index') }}

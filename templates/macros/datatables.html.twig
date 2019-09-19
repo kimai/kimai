@@ -9,11 +9,18 @@
             </div>
             <div class="modal-body">
                 <form name="{{ name }}_visibility">
-                    {% for title, class in columns %}
-                        {% if 'alwaysVisible' not in class %}
+                    {%- for title, headerOptions in columns -%}
+                        {% if not headerOptions is iterable %}
+                            {% set headerOptions = {'class': headerOptions} %}
+                        {% endif %}
+                        {% set headerTitle = ('label.' ~ title)|trans %}
+                        {% if headerOptions.title is defined %}
+                            {% set headerTitle = headerOptions.title %}
+                        {% endif %}
+                        {% if 'alwaysVisible' not in headerOptions.class %}
                             <div class="form-group">
                                 <input type="checkbox" id="column_{{ title }}" name="{{ title }}"{% if is_visible_column(name, title) %} checked="checked"{% endif %}>
-                                <label class="control-label" for="column_{{ title }}">{{ ('label.' ~ title)|trans }}</label>
+                                <label class="control-label" for="column_{{ title }}">{{ headerTitle }}</label>
                             </div>
                         {% endif %}
                     {% endfor %}
@@ -66,7 +73,9 @@
                                         {% endif %}
                                     {% endif %}
                                     {% set headerTitle = '' %}
-                                    {% if title is not empty and title != 'actions' %}
+                                    {% if headerOptions.title is defined %}
+                                        {% set headerTitle = headerOptions.title %}
+                                    {% elseif title is not empty and title != 'actions' %}
                                         {% set headerTitle = (translationPrefix ~ title)|trans({}, translationDomain) %}
                                     {% endif %}
                                     <th data-field="{{ title }}" {% if not headerOptions.orderBy is same as(false) %}data-order="{{ headerOptions.orderBy }}" {% endif %}class="{{ headerClass }}">{{ headerTitle }}</th>
@@ -167,4 +176,13 @@
     {{ pagerfanta(entries, 'twitter_bootstrap3_translated', { proximity: 1, routeName: route }) }}
 </div>
 {% endif %}
+{% endmacro %}
+
+{% macro datatable_meta_column(entry, field) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set metaField = entry.metaField(field.name) %}
+    {% if not metaField is null and metaField.value is not null and metaField.value is not empty %}
+        {% set metaField = metaField.merge(field) %}
+        {{ widgets.form_type_value(metaField.type, metaField.value, entry) }}
+    {% endif %}
 {% endmacro %}

@@ -10,6 +10,7 @@
 namespace App\Tests\Export\Renderer;
 
 use App\Export\Renderer\HtmlRenderer;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment;
 
@@ -23,7 +24,8 @@ class HtmlRendererTest extends AbstractRendererTest
     public function testConfiguration()
     {
         $sut = new HtmlRenderer(
-            $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock()
+            $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock(),
+            new EventDispatcher()
         );
 
         $this->assertEquals('html', $sut->getId());
@@ -41,7 +43,7 @@ class HtmlRendererTest extends AbstractRendererTest
         $request->setLocale('en');
         $stack->push($request);
 
-        $sut = new HtmlRenderer($twig);
+        $sut = new HtmlRenderer($twig, new EventDispatcher());
 
         $response = $this->render($sut);
 

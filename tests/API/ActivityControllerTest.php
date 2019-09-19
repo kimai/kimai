@@ -164,6 +164,20 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertEquals('User cannot create activities', $json['message']);
     }
 
+    public function testPostActionWithInvalidData()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'project' => 100,
+            'unexpected' => 'foo-bar',
+            'visible' => true
+        ];
+        $this->request($client, '/api/activities', 'POST', [], json_encode($data));
+        $response = $client->getResponse();
+        $this->assertApiCallValidationError($response, ['project'], true);
+    }
+
     public function testPatchAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);

@@ -156,6 +156,20 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertEquals('User cannot create projects', $json['message']);
     }
 
+    public function testPostActionWithInvalidData()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'customer' => 100,
+            'xxxxx' => 'whoami',
+            'visible' => true
+        ];
+        $this->request($client, '/api/projects', 'POST', [], json_encode($data));
+        $response = $client->getResponse();
+        $this->assertApiCallValidationError($response, ['customer'], true);
+    }
+
     public function testPatchAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);

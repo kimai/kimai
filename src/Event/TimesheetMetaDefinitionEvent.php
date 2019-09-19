@@ -20,7 +20,7 @@ final class TimesheetMetaDefinitionEvent extends Event
     /**
      * @var Timesheet
      */
-    protected $entity;
+    private $entity;
 
     public function __construct(Timesheet $entity)
     {

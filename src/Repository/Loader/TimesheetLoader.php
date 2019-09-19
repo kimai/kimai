@@ -19,9 +19,9 @@ final class TimesheetLoader implements LoaderInterface
      */
     private $loader;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, bool $hydrateFullTree = false)
     {
-        $this->loader = new TimesheetIdLoader($entityManager);
+        $this->loader = new TimesheetIdLoader($entityManager, $hydrateFullTree);
     }
 
     /**

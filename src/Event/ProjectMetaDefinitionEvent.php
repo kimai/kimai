@@ -20,7 +20,7 @@ final class ProjectMetaDefinitionEvent extends Event
     /**
      * @var Project
      */
-    protected $entity;
+    private $entity;
 
     public function __construct(Project $entity)
     {

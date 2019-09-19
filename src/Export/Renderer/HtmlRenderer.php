@@ -9,9 +9,17 @@
 
 namespace App\Export\Renderer;
 
+use App\Entity\MetaTableTypeInterface;
 use App\Entity\Timesheet;
+use App\Event\ActivityMetaDisplayEvent;
+use App\Event\CustomerMetaDisplayEvent;
+use App\Event\MetaDisplayEventInterface;
+use App\Event\ProjectMetaDisplayEvent;
+use App\Event\TimesheetMetaDisplayEvent;
+use App\Event\UserPreferenceDisplayEvent;
 use App\Export\RendererInterface;
 use App\Repository\Query\TimesheetQuery;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
@@ -23,10 +31,26 @@ final class HtmlRenderer implements RendererInterface
      * @var Environment
      */
     protected $twig;
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $dispatcher;
 
-    public function __construct(Environment $twig)
+    public function __construct(Environment $twig, EventDispatcherInterface $dispatcher)
     {
         $this->twig = $twig;
+        $this->dispatcher = $dispatcher;
+    }
+
+    /**
+     * @param MetaDisplayEventInterface $event
+     * @return MetaTableTypeInterface[]
+     */
+    protected function findMetaColumns(MetaDisplayEventInterface $event): array
+    {
+        $this->dispatcher->dispatch($event);
+
+        return $event->getFields();
     }
 
     /**
@@ -39,18 +63,24 @@ final class HtmlRenderer implements RendererInterface
      */
     public function render(array $timesheets, TimesheetQuery $query): Response
     {
-        $publicMetaFields = [];
-        foreach ($timesheets as $timesheet) {
-            foreach ($timesheet->getVisibleMetaFields() as $metaField) {
-                $publicMetaFields[] = $metaField->getName();
-            }
-        }
+        $timesheetMetaFields = $this->findMetaColumns(new TimesheetMetaDisplayEvent($query, TimesheetMetaDisplayEvent::EXPORT));
+        $customerMetaFields = $this->findMetaColumns(new CustomerMetaDisplayEvent($query, CustomerMetaDisplayEvent::EXPORT));
+        $projectMetaFields = $this->findMetaColumns(new ProjectMetaDisplayEvent($query, ProjectMetaDisplayEvent::EXPORT));
+        $activityMetaFields = $this->findMetaColumns(new ActivityMetaDisplayEvent($query, ActivityMetaDisplayEvent::EXPORT));
+
+        $event = new UserPreferenceDisplayEvent(UserPreferenceDisplayEvent::EXPORT);
+        $this->dispatcher->dispatch($event);
+        $userPreferences = $event->getPreferences();
 
         $content = $this->twig->render('export/renderer/default.html.twig', [
             'entries' => $timesheets,
             'query' => $query,
-            'metaFields' => array_unique($publicMetaFields),
             'summaries' => $this->calculateSummary($timesheets),
+            'timesheetMetaFields' => $timesheetMetaFields,
+            'customerMetaFields' => $customerMetaFields,
+            'projectMetaFields' => $projectMetaFields,
+            'activityMetaFields' => $activityMetaFields,
+            'userPreferences' => $userPreferences,
         ]);
 
         $response = new Response();

@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Form\Type\YesNoType;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -96,18 +97,11 @@ class UserPreference
         return $this;
     }
 
-    /**
-     * @return User
-     */
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    /**
-     * @param User $user
-     * @return UserPreference
-     */
     public function setUser(User $user): UserPreference
     {
         $this->user = $user;
@@ -115,18 +109,11 @@ class UserPreference
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     * @return UserPreference
-     */
     public function setName(string $name): UserPreference
     {
         $this->name = $name;
@@ -140,6 +127,7 @@ class UserPreference
     public function getValue()
     {
         switch ($this->type) {
+            case YesNoType::class:
             case CheckboxType::class:
                 return (bool) $this->value;
             case IntegerType::class:
@@ -169,34 +157,24 @@ class UserPreference
      * @param string $type
      * @return UserPreference
      */
-    public function setType(string $type)
+    public function setType(string $type): UserPreference
     {
         $this->type = $type;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getType()
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnabled(): bool
     {
         return $this->enabled;
     }
 
-    /**
-     * @param bool $enabled
-     * @return UserPreference
-     */
-    public function setEnabled(bool $enabled)
+    public function setEnabled(bool $enabled): UserPreference
     {
         $this->enabled = $enabled;
 
@@ -258,5 +236,14 @@ class UserPreference
     public function getOptions(): array
     {
         return $this->options;
+    }
+
+    public function getLabel(): ?string
+    {
+        if (isset($this->options['label'])) {
+            return $this->options['label'];
+        }
+
+        return $this->name;
     }
 }

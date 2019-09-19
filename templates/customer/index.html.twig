@@ -9,10 +9,17 @@
     'comment': 'hidden-xs',
     'country': 'hidden-xs hidden-sm',
     'number': 'hidden-xs',
+} %}
+{% for field in metaColumns %}
+    {% set columns = columns|merge({
+        (field.name): {'title': field.label, 'class': 'hidden-xs hidden-sm', 'orderBy': false}
+    }) %}
+{% endfor %}
+{% set columns = columns|merge({
     'team': {'class': '', 'orderBy': false},
     'visible': {'class': 'hidden-xs', 'orderBy': false},
     'actions': 'actions alwaysVisible',
-} %}
+}) %}
 
 {% set tableName = 'customer_admin' %}
 
@@ -37,6 +44,11 @@
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment|comment2html }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'country') }}">{{ entry.country|country }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'number') }}">{{ entry.number }}</td>
+                {% for field in metaColumns %}
+                    <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, field.name) }}">
+                        {{ tables.datatable_meta_column(entry, field) }}
+                    </td>
+                {% endfor %}
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'team') }}">
                     {% if entry.teams|length > 0 %}
                         {{ widgets.badge_counter(entry.teams|length) }}

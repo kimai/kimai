@@ -9,7 +9,14 @@
 
 namespace App\Export\Renderer;
 
+use App\Entity\MetaTableTypeInterface;
 use App\Entity\Timesheet;
+use App\Event\ActivityMetaDisplayEvent;
+use App\Event\CustomerMetaDisplayEvent;
+use App\Event\MetaDisplayEventInterface;
+use App\Event\ProjectMetaDisplayEvent;
+use App\Event\TimesheetMetaDisplayEvent;
+use App\Event\UserPreferenceDisplayEvent;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\DateExtensions;
 use DateTime;
@@ -18,6 +25,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -40,11 +48,16 @@ abstract class AbstractSpreadsheetRenderer
      * @var TranslatorInterface
      */
     protected $translator;
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $dispatcher;
 
-    public function __construct(TranslatorInterface $translator, DateExtensions $dateExtension)
+    public function __construct(TranslatorInterface $translator, DateExtensions $dateExtension, EventDispatcherInterface $dispatcher)
     {
         $this->translator = $translator;
         $this->dateExtension = $dateExtension;
+        $this->dispatcher = $dispatcher;
     }
 
     protected function setFormattedDateTime(Worksheet $sheet, $column, $row, ?DateTime $date)
@@ -110,6 +123,17 @@ abstract class AbstractSpreadsheetRenderer
     }
 
     /**
+     * @param MetaDisplayEventInterface $event
+     * @return MetaTableTypeInterface[]
+     */
+    protected function findMetaColumns(MetaDisplayEventInterface $event): array
+    {
+        $this->dispatcher->dispatch($event);
+
+        return $event->getFields();
+    }
+
+    /**
      * @param Timesheet[] $timesheets
      * @param TimesheetQuery $query
      * @return Spreadsheet
@@ -117,14 +141,14 @@ abstract class AbstractSpreadsheetRenderer
      */
     protected function fromArrayToSpreadsheet(array $timesheets, TimesheetQuery $query): Spreadsheet
     {
-        $publicMetaFields = [];
-        foreach ($timesheets as $timesheet) {
-            foreach ($timesheet->getVisibleMetaFields() as $metaField) {
-                $publicMetaFields[] = $metaField->getName();
-            }
-        }
+        $timesheetMetaFields = $this->findMetaColumns(new TimesheetMetaDisplayEvent($query, TimesheetMetaDisplayEvent::EXPORT));
+        $customerMetaFields = $this->findMetaColumns(new CustomerMetaDisplayEvent($query, CustomerMetaDisplayEvent::EXPORT));
+        $projectMetaFields = $this->findMetaColumns(new ProjectMetaDisplayEvent($query, ProjectMetaDisplayEvent::EXPORT));
+        $activityMetaFields = $this->findMetaColumns(new ActivityMetaDisplayEvent($query, ActivityMetaDisplayEvent::EXPORT));
 
-        $publicMetaFields = array_unique($publicMetaFields);
+        $event = new UserPreferenceDisplayEvent(UserPreferenceDisplayEvent::EXPORT);
+        $this->dispatcher->dispatch($event);
+        $userPreferences = $event->getPreferences();
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -146,8 +170,20 @@ abstract class AbstractSpreadsheetRenderer
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.tags'));
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.hourlyRate'));
         $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.fixedRate'));
-        foreach ($publicMetaFields as $metaFieldName) {
-            $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans($metaFieldName));
+        foreach ($timesheetMetaFields as $metaField) {
+            $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans($metaField->getLabel()));
+        }
+        foreach ($customerMetaFields as $metaField) {
+            $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans($metaField->getLabel()));
+        }
+        foreach ($projectMetaFields as $metaField) {
+            $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans($metaField->getLabel()));
+        }
+        foreach ($activityMetaFields as $metaField) {
+            $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans($metaField->getLabel()));
+        }
+        foreach ($userPreferences as $preference) {
+            $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans($preference->getLabel()));
         }
 
         $entryHeaderRow = $recordsHeaderRow + 1;
@@ -205,10 +241,42 @@ abstract class AbstractSpreadsheetRenderer
             $this->setRate($sheet, $entryHeaderColumn, $entryHeaderRow, $timesheet->getFixedRate(), $customerCurrency);
             $entryHeaderColumn++;
 
-            foreach ($publicMetaFields as $metaFieldName) {
-                $metaField = $timesheet->getMetaField($metaFieldName);
+            foreach ($timesheetMetaFields as $metaField) {
+                $metaField = $timesheet->getMetaField($metaField->getName());
                 $metaFieldValue = '';
-                if (null !== $metaField && $metaField->isVisible()) {
+                if (null !== $metaField) {
+                    $metaFieldValue = $metaField->getValue();
+                }
+                $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $metaFieldValue);
+            }
+            foreach ($customerMetaFields as $metaField) {
+                $metaField = $timesheet->getProject()->getCustomer()->getMetaField($metaField->getName());
+                $metaFieldValue = '';
+                if (null !== $metaField) {
+                    $metaFieldValue = $metaField->getValue();
+                }
+                $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $metaFieldValue);
+            }
+            foreach ($projectMetaFields as $metaField) {
+                $metaField = $timesheet->getProject()->getMetaField($metaField->getName());
+                $metaFieldValue = '';
+                if (null !== $metaField) {
+                    $metaFieldValue = $metaField->getValue();
+                }
+                $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $metaFieldValue);
+            }
+            foreach ($activityMetaFields as $metaField) {
+                $metaField = $timesheet->getActivity()->getMetaField($metaField->getName());
+                $metaFieldValue = '';
+                if (null !== $metaField) {
+                    $metaFieldValue = $metaField->getValue();
+                }
+                $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $metaFieldValue);
+            }
+            foreach ($userPreferences as $preference) {
+                $metaField = $timesheet->getUser()->getPreference($preference->getName());
+                $metaFieldValue = '';
+                if (null !== $metaField) {
                     $metaFieldValue = $metaField->getValue();
                 }
                 $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $metaFieldValue);

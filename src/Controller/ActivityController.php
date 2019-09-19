@@ -11,8 +11,10 @@ namespace App\Controller;
 
 use App\Configuration\FormConfiguration;
 use App\Entity\Activity;
+use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
 use App\Event\ActivityMetaDefinitionEvent;
+use App\Event\ActivityMetaDisplayEvent;
 use App\Form\ActivityEditForm;
 use App\Form\Toolbar\ActivityToolbarForm;
 use App\Form\Type\ActivityType;
@@ -92,7 +94,20 @@ class ActivityController extends AbstractController
             'entries' => $entries,
             'query' => $query,
             'toolbarForm' => $form->createView(),
+            'metaColumns' => $this->findMetaColumns($query),
         ]);
+    }
+
+    /**
+     * @param ActivityQuery $query
+     * @return MetaTableTypeInterface[]
+     */
+    protected function findMetaColumns(ActivityQuery $query): array
+    {
+        $event = new ActivityMetaDisplayEvent($query, ActivityMetaDisplayEvent::ACTIVITY);
+        $this->dispatcher->dispatch($event);
+
+        return $event->getFields();
     }
 
     /**
@@ -123,9 +138,13 @@ class ActivityController extends AbstractController
      */
     public function budgetAction(Activity $activity)
     {
+        $stats = $this->getRepository()->getActivityStatistics($activity);
+
+        // TODO sent event with stats
+
         return $this->render('activity/budget.html.twig', [
             'activity' => $activity,
-            'stats' => $this->getRepository()->getActivityStatistics($activity)
+            'stats' => $stats,
         ]);
     }
 
@@ -207,7 +226,7 @@ class ActivityController extends AbstractController
     protected function renderActivityForm(Activity $activity, Request $request)
     {
         $event = new ActivityMetaDefinitionEvent($activity);
-        $this->dispatcher->dispatch($event, ActivityMetaDefinitionEvent::class);
+        $this->dispatcher->dispatch($event);
 
         $editForm = $this->createEditForm($activity);
         $editForm->handleRequest($request);

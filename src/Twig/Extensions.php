@@ -16,6 +16,7 @@ use App\Utils\LocaleSettings;
 use NumberFormatter;
 use Symfony\Component\Intl\Countries;
 use Symfony\Component\Intl\Currencies;
+use Symfony\Component\Intl\Languages;
 use Symfony\Component\Intl\Locales;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -67,6 +68,7 @@ class Extensions extends AbstractExtension
             new TwigFilter('money', [$this, 'money']),
             new TwigFilter('currency', [$this, 'currency']),
             new TwigFilter('country', [$this, 'country']),
+            new TwigFilter('language', [$this, 'language']),
             new TwigFilter('docu_link', [$this, 'documentationLink']),
         ];
     }
@@ -160,6 +162,15 @@ class Extensions extends AbstractExtension
     public function currency($currency)
     {
         return Currencies::getSymbol($currency);
+    }
+
+    /**
+     * @param string $language
+     * @return string
+     */
+    public function language($language)
+    {
+        return Languages::getName($language, $this->locale);
     }
 
     /**

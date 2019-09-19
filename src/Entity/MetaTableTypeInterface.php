@@ -148,4 +148,19 @@ interface MetaTableTypeInterface
      * @return MetaTableTypeInterface
      */
     public function setLabel(string $label): MetaTableTypeInterface;
+
+    /**
+     * Set an array of options for the FormType.
+     *
+     * @param array $options
+     * @return MetaTableTypeInterface
+     */
+    public function setOptions(array $options): MetaTableTypeInterface;
+
+    /**
+     * Returns an array with options for the FormType.
+     *
+     * @return array
+     */
+    public function getOptions(): array;
 }

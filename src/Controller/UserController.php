@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Event\UserPreferenceDisplayEvent;
 use App\Form\Toolbar\UserToolbarForm;
 use App\Form\UserCreateType;
 use App\Repository\Query\UserQuery;
@@ -18,6 +19,7 @@ use App\Repository\UserRepository;
 use App\Security\RolePermissionManager;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -38,11 +40,16 @@ class UserController extends AbstractController
      * @var UserRepository
      */
     protected $repository;
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $dispatcher;
 
-    public function __construct(UserPasswordEncoderInterface $encoder, UserRepository $repository)
+    public function __construct(UserPasswordEncoderInterface $encoder, UserRepository $repository, EventDispatcherInterface $dispatcher)
     {
         $this->encoder = $encoder;
         $this->repository = $repository;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -78,10 +85,14 @@ class UserController extends AbstractController
         /* @var $entries Pagerfanta */
         $entries = $this->getRepository()->findByQuery($query);
 
+        $event = new UserPreferenceDisplayEvent(UserPreferenceDisplayEvent::USERS);
+        $this->dispatcher->dispatch($event);
+
         return $this->render('user/index.html.twig', [
             'entries' => $entries,
             'query' => $query,
             'toolbarForm' => $form->createView(),
+            'preferences' => $event->getPreferences(),
         ]);
     }
 

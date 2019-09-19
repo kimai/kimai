@@ -11,17 +11,28 @@ namespace App\Tests\Export\Renderer;
 
 use App\Configuration\LanguageFormattings;
 use App\Entity\Activity;
+use App\Entity\ActivityMeta;
 use App\Entity\Customer;
+use App\Entity\CustomerMeta;
+use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
+use App\Entity\ProjectMeta;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
+use App\Event\ActivityMetaDisplayEvent;
+use App\Event\CustomerMetaDisplayEvent;
+use App\Event\ProjectMetaDisplayEvent;
+use App\Event\TimesheetMetaDisplayEvent;
 use App\Export\RendererInterface;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\DateExtensions;
 use App\Utils\LocaleSettings;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -52,7 +63,10 @@ abstract class AbstractRendererTest extends KernelTestCase
         $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $dateExtension = new DateExtensions($localeSettings);
 
-        return new $classname($translator, $dateExtension);
+        $dispatcher = new EventDispatcher();
+        $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
+
+        return new $classname($translator, $dateExtension, $dispatcher);
     }
 
     /**
@@ -63,14 +77,18 @@ abstract class AbstractRendererTest extends KernelTestCase
     {
         $customer = new Customer();
         $customer->setName('Customer Name');
+        $customer->setMetaField((new CustomerMeta())->setName('customer-foo')->setValue('customer-bar')->setIsVisible(true));
 
         $project = new Project();
         $project->setName('project name');
         $project->setCustomer($customer);
+        $project->setMetaField((new ProjectMeta())->setName('project-bar')->setValue('project-bar')->setIsVisible(true));
+        $project->setMetaField((new ProjectMeta())->setName('project-foo2')->setValue('project-foo2')->setIsVisible(true));
 
         $activity = new Activity();
         $activity->setName('activity description');
         $activity->setProject($project);
+        $activity->setMetaField((new ActivityMeta())->setName('activity-foo')->setValue('activity-bar')->setIsVisible(true));
 
         $userMethods = ['getId', 'getPreferenceValue', 'getUsername'];
         $user1 = $this->getMockBuilder(User::class)->setMethods($userMethods)->disableOriginalConstructor()->getMock();
@@ -151,5 +169,49 @@ abstract class AbstractRendererTest extends KernelTestCase
         $query->setProject($project);
 
         return $renderer->render($entries, $query);
+    }
+}
+
+class MetaFieldColumnSubscriber implements EventSubscriberInterface
+{
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            TimesheetMetaDisplayEvent::class => ['loadTimesheetField', 200],
+            CustomerMetaDisplayEvent::class => ['loadCustomerField', 200],
+            ProjectMetaDisplayEvent::class => ['loadProjectField', 200],
+            ActivityMetaDisplayEvent::class => ['loadActivityField', 200],
+        ];
+    }
+
+    public function loadTimesheetField(TimesheetMetaDisplayEvent $event)
+    {
+        $event->addField($this->prepareEntity(new TimesheetMeta(), 'foo'));
+        $event->addField($this->prepareEntity(new TimesheetMeta(), 'foo2'));
+    }
+
+    public function loadCustomerField(CustomerMetaDisplayEvent $event)
+    {
+        $event->addField($this->prepareEntity(new CustomerMeta(), 'customer-foo'));
+    }
+
+    public function loadProjectField(ProjectMetaDisplayEvent $event)
+    {
+        $event->addField($this->prepareEntity(new ProjectMeta(), 'project-foo'));
+        $event->addField($this->prepareEntity(new ProjectMeta(), 'project-foo2')->setIsVisible(false));
+    }
+
+    public function loadActivityField(ActivityMetaDisplayEvent $event)
+    {
+        $event->addField($this->prepareEntity(new ActivityMeta(), 'activity-foo'));
+    }
+
+    private function prepareEntity(MetaTableTypeInterface $meta, string $name)
+    {
+        return $meta
+            ->setLabel('Working place')
+            ->setName($name)
+            ->setType(TextType::class)
+            ->setIsVisible(true);
     }
 }
