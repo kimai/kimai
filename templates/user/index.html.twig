@@ -11,9 +11,8 @@
     'title': 'hidden-xs',
 } %}
 {% for pref in preferences %}
-    {% set prefLabel = (pref.options.label is defined ? pref.options.label : pref.name) %}
     {% set columns = columns|merge({
-        (pref.name): {'title': prefLabel, 'class': 'hidden-xs hidden-sm', 'orderBy': false}
+        (pref.name): {'title': pref.label, 'class': 'hidden-xs hidden-sm', 'orderBy': false}
     }) %}
 {% endfor %}
 {% set columns = columns|merge({

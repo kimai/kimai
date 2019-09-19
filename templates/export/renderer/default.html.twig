@@ -30,6 +30,10 @@
     {% set columns = columns|merge({ ('a_' ~ field.name): true}) %}
     {% set columnTitles = columnTitles|merge({ ('a_' ~ field.name): (field.label)}) %}
 {% endfor %}
+{% for id, field in userPreferences %}
+    {% set columns = columns|merge({ ('u_' ~ field.name): true}) %}
+    {% set columnTitles = columnTitles|merge({ ('u_' ~ field.name): (field.label)}) %}
+{% endfor %}
 
 {% set columns = columns|merge({
     'hourlyRate': false,
@@ -324,6 +328,14 @@
                         {% for id, field in activityMetaFields %}
                             <td class="column-{{ 'a_' ~ field.name }} text-nowrap" {% if not columns['a_' ~ field.name] %}style="display: none"{% endif %}>
                                 {{ tables.datatable_meta_column(entry.activity, field) }}
+                            </td>
+                        {% endfor %}
+                        {% for id, field in userPreferences %}
+                            <td class="column-{{ 'u_' ~ field.name }} text-nowrap" {% if not columns['u_' ~ field.name] %}style="display: none"{% endif %}>
+                                {% set metaField = entry.user.preference(field.name) %}
+                                {% if not metaField is null and metaField.value is not null and metaField.value is not empty %}
+                                    {{ widgets.form_type_value(field.type, metaField.value, entry.user) }}
+                                {% endif %}
                             </td>
                         {% endfor %}
                         <td class="column-hourlyRate text-nowrap" {% if not columns.hourlyRate %}style="display: none"{% endif %}>

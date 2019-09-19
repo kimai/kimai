@@ -16,6 +16,7 @@ use App\Event\CustomerMetaQueryEvent;
 use App\Event\MetaQueryEventInterface;
 use App\Event\ProjectMetaQueryEvent;
 use App\Event\TimesheetMetaQueryEvent;
+use App\Event\UserPreferenceDisplayEvent;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\DateExtensions;
 use DateTime;
@@ -153,6 +154,10 @@ abstract class AbstractSpreadsheetRenderer
         $projectMetaFields = $this->findMetaColumns(new ProjectMetaQueryEvent($query, ProjectMetaQueryEvent::EXPORT));
         $activityMetaFields = $this->findMetaColumns(new ActivityMetaQueryEvent($query, ActivityMetaQueryEvent::EXPORT));
 
+        $event = new UserPreferenceDisplayEvent(UserPreferenceDisplayEvent::EXPORT);
+        $this->dispatcher->dispatch($event);
+        $userPreferences = $event->getPreferences();
+
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
@@ -184,6 +189,9 @@ abstract class AbstractSpreadsheetRenderer
         }
         foreach ($activityMetaFields as $metaField) {
             $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans($metaField->getLabel()));
+        }
+        foreach ($userPreferences as $preference) {
+            $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans($preference->getLabel()));
         }
 
         $entryHeaderRow = $recordsHeaderRow + 1;
@@ -267,6 +275,14 @@ abstract class AbstractSpreadsheetRenderer
             }
             foreach ($activityMetaFields as $metaField) {
                 $metaField = $timesheet->getActivity()->getMetaField($metaField->getName());
+                $metaFieldValue = '';
+                if (null !== $metaField) {
+                    $metaFieldValue = $metaField->getValue();
+                }
+                $sheet->setCellValueByColumnAndRow($entryHeaderColumn++, $entryHeaderRow, $metaFieldValue);
+            }
+            foreach ($userPreferences as $preference) {
+                $metaField = $timesheet->getUser()->getPreference($preference->getName());
                 $metaFieldValue = '';
                 if (null !== $metaField) {
                     $metaFieldValue = $metaField->getValue();

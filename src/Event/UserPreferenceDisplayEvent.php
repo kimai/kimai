@@ -9,7 +9,6 @@
 
 namespace App\Event;
 
-use App\Entity\User;
 use App\Entity\UserPreference;
 use Symfony\Contracts\EventDispatcher\Event;
 

@@ -16,6 +16,7 @@ use App\Event\CustomerMetaQueryEvent;
 use App\Event\MetaQueryEventInterface;
 use App\Event\ProjectMetaQueryEvent;
 use App\Event\TimesheetMetaQueryEvent;
+use App\Event\UserPreferenceDisplayEvent;
 use App\Export\RendererInterface;
 use App\Repository\Query\TimesheetQuery;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -75,6 +76,10 @@ final class HtmlRenderer implements RendererInterface
         $projectMetaFields = $this->findMetaColumns(new ProjectMetaQueryEvent($query, ProjectMetaQueryEvent::EXPORT));
         $activityMetaFields = $this->findMetaColumns(new ActivityMetaQueryEvent($query, ActivityMetaQueryEvent::EXPORT));
 
+        $event = new UserPreferenceDisplayEvent(UserPreferenceDisplayEvent::EXPORT);
+        $this->dispatcher->dispatch($event);
+        $userPreferences = $event->getPreferences();
+
         $content = $this->twig->render('export/renderer/default.html.twig', [
             'entries' => $timesheets,
             'query' => $query,
@@ -83,6 +88,7 @@ final class HtmlRenderer implements RendererInterface
             'customerMetaFields' => $customerMetaFields,
             'projectMetaFields' => $projectMetaFields,
             'activityMetaFields' => $activityMetaFields,
+            'userPreferences' => $userPreferences,
         ]);
 
         $response = new Response();
