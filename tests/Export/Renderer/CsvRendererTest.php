@@ -92,6 +92,9 @@ class CsvRendererTest extends AbstractRendererTest
             13 => ' EUR 84.00 ',
             14 => 'meta-bar',
             15 => 'meta-bar2',
+            16 => 'customer-bar',
+            17 => '',
+            18 => 'activity-bar',
         ];
 
         self::assertEquals(7, count($all));

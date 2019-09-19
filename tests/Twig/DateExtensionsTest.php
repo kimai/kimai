@@ -180,5 +180,6 @@ class DateExtensionsTest extends TestCase
         $dateTime->setTime(12, 29, 47);
 
         $this->assertEquals('2019-08-17 12:29:47', $sut->dateTimeFull($dateTime));
+        $this->assertEquals('2019-08-17 12:29:47', $sut->dateTimeFull('2019-08-17 12:29:47'));
     }
 }

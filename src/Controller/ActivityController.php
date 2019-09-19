@@ -110,10 +110,9 @@ class ActivityController extends AbstractController
         $columns = [];
 
         foreach ($event->getFields() as $field) {
-            if (!$field->isVisible()) {
-                continue;
+            if ($field->isVisible()) {
+                $columns[] = $field;
             }
-            $columns[] = $field;
         }
 
         return $columns;

@@ -11,12 +11,19 @@ namespace App\Tests\Export\Renderer;
 
 use App\Configuration\LanguageFormattings;
 use App\Entity\Activity;
+use App\Entity\ActivityMeta;
 use App\Entity\Customer;
+use App\Entity\CustomerMeta;
+use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
+use App\Entity\ProjectMeta;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
+use App\Event\ActivityMetaQueryEvent;
+use App\Event\CustomerMetaQueryEvent;
+use App\Event\ProjectMetaQueryEvent;
 use App\Event\TimesheetMetaQueryEvent;
 use App\Export\RendererInterface;
 use App\Repository\Query\TimesheetQuery;
@@ -70,14 +77,18 @@ abstract class AbstractRendererTest extends KernelTestCase
     {
         $customer = new Customer();
         $customer->setName('Customer Name');
+        $customer->setMetaField((new CustomerMeta())->setName('customer-foo')->setValue('customer-bar')->setIsVisible(true));
 
         $project = new Project();
         $project->setName('project name');
         $project->setCustomer($customer);
+        $project->setMetaField((new ProjectMeta())->setName('project-bar')->setValue('project-bar')->setIsVisible(true));
+        $project->setMetaField((new ProjectMeta())->setName('project-foo2')->setValue('project-foo2')->setIsVisible(true));
 
         $activity = new Activity();
         $activity->setName('activity description');
         $activity->setProject($project);
+        $activity->setMetaField((new ActivityMeta())->setName('activity-foo')->setValue('activity-bar')->setIsVisible(true));
 
         $userMethods = ['getId', 'getPreferenceValue', 'getUsername'];
         $user1 = $this->getMockBuilder(User::class)->setMethods($userMethods)->disableOriginalConstructor()->getMock();
@@ -167,18 +178,37 @@ class MetaFieldColumnSubscriber implements EventSubscriberInterface
     {
         return [
             TimesheetMetaQueryEvent::class => ['loadTimesheetField', 200],
+            CustomerMetaQueryEvent::class => ['loadCustomerField', 200],
+            ProjectMetaQueryEvent::class => ['loadProjectField', 200],
+            ActivityMetaQueryEvent::class => ['loadActivityField', 200],
         ];
     }
 
     public function loadTimesheetField(TimesheetMetaQueryEvent $event)
     {
-        $event->addField($this->prepareEntity('foo'));
-        $event->addField($this->prepareEntity('foo2'));
+        $event->addField($this->prepareEntity(new TimesheetMeta(), 'foo'));
+        $event->addField($this->prepareEntity(new TimesheetMeta(), 'foo2'));
     }
 
-    private function prepareEntity(string $name)
+    public function loadCustomerField(CustomerMetaQueryEvent $event)
     {
-        return (new TimesheetMeta())
+        $event->addField($this->prepareEntity(new CustomerMeta(), 'customer-foo'));
+    }
+
+    public function loadProjectField(ProjectMetaQueryEvent $event)
+    {
+        $event->addField($this->prepareEntity(new ProjectMeta(), 'project-foo'));
+        $event->addField($this->prepareEntity(new ProjectMeta(), 'project-foo2')->setIsVisible(false));
+    }
+
+    public function loadActivityField(ActivityMetaQueryEvent $event)
+    {
+        $event->addField($this->prepareEntity(new ActivityMeta(), 'activity-foo'));
+    }
+
+    private function prepareEntity(MetaTableTypeInterface $meta, string $name)
+    {
+        return $meta
             ->setLabel('Working place')
             ->setName($name)
             ->setType(TextType::class)
