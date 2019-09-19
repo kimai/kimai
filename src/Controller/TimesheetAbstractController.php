@@ -139,15 +139,7 @@ abstract class TimesheetAbstractController extends AbstractController
         $event = new TimesheetMetaQueryEvent($query, $location);
         $this->dispatcher->dispatch($event);
 
-        $columns = [];
-
-        foreach ($event->getFields() as $field) {
-            if ($field->isVisible()) {
-                $columns[] = $field;
-            }
-        }
-
-        return $columns;
+        return $event->getFields();
     }
 
     protected function edit(Timesheet $entry, Request $request, string $renderTemplate): Response

@@ -103,16 +103,8 @@ class CustomerController extends AbstractController
     {
         $event = new CustomerMetaQueryEvent($query, CustomerMetaQueryEvent::CUSTOMER);
         $this->dispatcher->dispatch($event);
-
-        $columns = [];
-
-        foreach ($event->getFields() as $field) {
-            if ($field->isVisible()) {
-                $columns[] = $field;
-            }
-        }
-
-        return $columns;
+        
+        return $event->getFields();
     }
 
     /**

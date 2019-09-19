@@ -106,16 +106,8 @@ class ActivityController extends AbstractController
     {
         $event = new ActivityMetaQueryEvent($query, ActivityMetaQueryEvent::ACTIVITY);
         $this->dispatcher->dispatch($event);
-
-        $columns = [];
-
-        foreach ($event->getFields() as $field) {
-            if ($field->isVisible()) {
-                $columns[] = $field;
-            }
-        }
-
-        return $columns;
+        
+        return $event->getFields();
     }
 
     /**
