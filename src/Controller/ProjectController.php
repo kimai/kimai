@@ -14,7 +14,7 @@ use App\Entity\Customer;
 use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
 use App\Event\ProjectMetaDefinitionEvent;
-use App\Event\ProjectMetaQueryEvent;
+use App\Event\ProjectMetaDisplayEvent;
 use App\Form\ProjectEditForm;
 use App\Form\ProjectTeamPermissionForm;
 use App\Form\Toolbar\ProjectToolbarForm;
@@ -101,7 +101,7 @@ class ProjectController extends AbstractController
      */
     protected function findMetaColumns(ProjectQuery $query): array
     {
-        $event = new ProjectMetaQueryEvent($query, ProjectMetaQueryEvent::PROJECT);
+        $event = new ProjectMetaDisplayEvent($query, ProjectMetaDisplayEvent::PROJECT);
         $this->dispatcher->dispatch($event);
 
         return $event->getFields();

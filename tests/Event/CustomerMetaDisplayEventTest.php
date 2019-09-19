@@ -10,22 +10,22 @@
 namespace App\Tests\Event;
 
 use App\Entity\CustomerMeta;
-use App\Event\CustomerMetaQueryEvent;
-use App\Event\MetaQueryEventInterface;
+use App\Event\CustomerMetaDisplayEvent;
+use App\Event\MetaDisplayEventInterface;
 use App\Repository\Query\CustomerQuery;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Event\CustomerMetaQueryEvent
+ * @covers \App\Event\CustomerMetaDisplayEvent
  */
-class CustomerMetaQueryEventTest extends TestCase
+class CustomerMetaDisplayEventTest extends TestCase
 {
     public function testGetterAndSetter()
     {
         $query = new CustomerQuery();
-        $sut = new CustomerMetaQueryEvent($query, CustomerMetaQueryEvent::EXPORT);
+        $sut = new CustomerMetaDisplayEvent($query, CustomerMetaDisplayEvent::EXPORT);
 
-        self::assertInstanceOf(MetaQueryEventInterface::class, $sut);
+        self::assertInstanceOf(MetaDisplayEventInterface::class, $sut);
         self::assertSame($sut->getQuery(), $query);
         self::assertIsArray($sut->getFields());
         self::assertEmpty($sut->getFields());

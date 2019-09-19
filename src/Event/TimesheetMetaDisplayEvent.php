@@ -17,7 +17,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 /**
  * Dynamically find possible meta fields for a timesheet query.
  */
-final class TimesheetMetaQueryEvent extends Event implements MetaQueryEventInterface
+final class TimesheetMetaDisplayEvent extends Event implements MetaDisplayEventInterface
 {
     public const EXPORT = 'export';
     public const TIMESHEET = 'timesheet';

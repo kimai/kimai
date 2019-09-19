@@ -9,30 +9,30 @@
 
 namespace App\Tests\Event;
 
-use App\Entity\TimesheetMeta;
-use App\Event\MetaQueryEventInterface;
-use App\Event\TimesheetMetaQueryEvent;
-use App\Repository\Query\TimesheetQuery;
+use App\Entity\ActivityMeta;
+use App\Event\ActivityMetaDisplayEvent;
+use App\Event\MetaDisplayEventInterface;
+use App\Repository\Query\ActivityQuery;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Event\TimesheetMetaQueryEvent
+ * @covers \App\Event\ActivityMetaDisplayEvent
  */
-class TimesheetMetaQueryEventTest extends TestCase
+class ActivityMetaDisplayEventTest extends TestCase
 {
     public function testGetterAndSetter()
     {
-        $query = new TimesheetQuery();
-        $sut = new TimesheetMetaQueryEvent($query, TimesheetMetaQueryEvent::EXPORT);
+        $query = new ActivityQuery();
+        $sut = new ActivityMetaDisplayEvent($query, ActivityMetaDisplayEvent::EXPORT);
 
-        self::assertInstanceOf(MetaQueryEventInterface::class, $sut);
+        self::assertInstanceOf(MetaDisplayEventInterface::class, $sut);
         self::assertSame($sut->getQuery(), $query);
         self::assertIsArray($sut->getFields());
         self::assertEmpty($sut->getFields());
         self::assertEquals('export', $sut->getLocation());
 
-        $sut->addField(new TimesheetMeta());
-        $sut->addField(new TimesheetMeta());
+        $sut->addField(new ActivityMeta());
+        $sut->addField(new ActivityMeta());
 
         self::assertCount(2, $sut->getFields());
     }

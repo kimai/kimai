@@ -14,7 +14,7 @@ use App\Entity\Activity;
 use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
 use App\Event\ActivityMetaDefinitionEvent;
-use App\Event\ActivityMetaQueryEvent;
+use App\Event\ActivityMetaDisplayEvent;
 use App\Form\ActivityEditForm;
 use App\Form\Toolbar\ActivityToolbarForm;
 use App\Form\Type\ActivityType;
@@ -104,9 +104,9 @@ class ActivityController extends AbstractController
      */
     protected function findMetaColumns(ActivityQuery $query): array
     {
-        $event = new ActivityMetaQueryEvent($query, ActivityMetaQueryEvent::ACTIVITY);
+        $event = new ActivityMetaDisplayEvent($query, ActivityMetaDisplayEvent::ACTIVITY);
         $this->dispatcher->dispatch($event);
-        
+
         return $event->getFields();
     }
 

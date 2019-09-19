@@ -17,7 +17,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 /**
  * Dynamically find possible meta fields for a customer query.
  */
-final class CustomerMetaQueryEvent extends Event implements MetaQueryEventInterface
+final class CustomerMetaDisplayEvent extends Event implements MetaDisplayEventInterface
 {
     public const EXPORT = 'export';
     public const CUSTOMER = 'customer';

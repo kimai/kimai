@@ -14,7 +14,7 @@ use App\Entity\MetaTableTypeInterface;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Event\TimesheetMetaDefinitionEvent;
-use App\Event\TimesheetMetaQueryEvent;
+use App\Event\TimesheetMetaDisplayEvent;
 use App\Form\TimesheetEditForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\ActivityRepository;
@@ -136,7 +136,7 @@ abstract class TimesheetAbstractController extends AbstractController
      */
     protected function findMetaColumns(TimesheetQuery $query, string $location): array
     {
-        $event = new TimesheetMetaQueryEvent($query, $location);
+        $event = new TimesheetMetaDisplayEvent($query, $location);
         $this->dispatcher->dispatch($event);
 
         return $event->getFields();

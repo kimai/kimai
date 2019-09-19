@@ -10,20 +10,20 @@
 namespace App\Event;
 
 use App\Entity\MetaTableTypeInterface;
-use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\BaseQuery;
+use App\Repository\Query\ProjectQuery;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**
- * Dynamically find possible meta fields for a activity query.
+ * Dynamically find possible meta fields for a project query.
  */
-final class ActivityMetaQueryEvent extends Event implements MetaQueryEventInterface
+final class ProjectMetaDisplayEvent extends Event implements MetaDisplayEventInterface
 {
     public const EXPORT = 'export';
-    public const ACTIVITY = 'activity';
+    public const PROJECT = 'project';
 
     /**
-     * @var ActivityQuery
+     * @var ProjectQuery
      */
     private $query;
     /**
@@ -35,7 +35,7 @@ final class ActivityMetaQueryEvent extends Event implements MetaQueryEventInterf
      */
     private $fields = [];
 
-    public function __construct(ActivityQuery $query, string $location)
+    public function __construct(ProjectQuery $query, string $location)
     {
         $this->query = $query;
         $this->location = $location;
@@ -44,7 +44,7 @@ final class ActivityMetaQueryEvent extends Event implements MetaQueryEventInterf
     /**
      * If you want to filter where your meta-field will be displayed, use the query settings.
      *
-     * @return ActivityQuery
+     * @return ProjectQuery
      */
     public function getQuery(): BaseQuery
     {

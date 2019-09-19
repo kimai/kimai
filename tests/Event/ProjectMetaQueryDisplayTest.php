@@ -10,22 +10,22 @@
 namespace App\Tests\Event;
 
 use App\Entity\ProjectMeta;
-use App\Event\MetaQueryEventInterface;
-use App\Event\ProjectMetaQueryEvent;
+use App\Event\MetaDisplayEventInterface;
+use App\Event\ProjectMetaDisplayEvent;
 use App\Repository\Query\ProjectQuery;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Event\ProjectMetaQueryEvent
+ * @covers \App\Event\ProjectMetaDisplayEvent
  */
-class ProjectMetaQueryEventTest extends TestCase
+class ProjectMetaQueryDisplayTest extends TestCase
 {
     public function testGetterAndSetter()
     {
         $query = new ProjectQuery();
-        $sut = new ProjectMetaQueryEvent($query, ProjectMetaQueryEvent::EXPORT);
+        $sut = new ProjectMetaDisplayEvent($query, ProjectMetaDisplayEvent::EXPORT);
 
-        self::assertInstanceOf(MetaQueryEventInterface::class, $sut);
+        self::assertInstanceOf(MetaDisplayEventInterface::class, $sut);
         self::assertSame($sut->getQuery(), $query);
         self::assertIsArray($sut->getFields());
         self::assertEmpty($sut->getFields());

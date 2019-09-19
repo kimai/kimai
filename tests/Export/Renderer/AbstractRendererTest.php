@@ -21,10 +21,10 @@ use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
-use App\Event\ActivityMetaQueryEvent;
-use App\Event\CustomerMetaQueryEvent;
-use App\Event\ProjectMetaQueryEvent;
-use App\Event\TimesheetMetaQueryEvent;
+use App\Event\ActivityMetaDisplayEvent;
+use App\Event\CustomerMetaDisplayEvent;
+use App\Event\ProjectMetaDisplayEvent;
+use App\Event\TimesheetMetaDisplayEvent;
 use App\Export\RendererInterface;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\DateExtensions;
@@ -177,31 +177,31 @@ class MetaFieldColumnSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            TimesheetMetaQueryEvent::class => ['loadTimesheetField', 200],
-            CustomerMetaQueryEvent::class => ['loadCustomerField', 200],
-            ProjectMetaQueryEvent::class => ['loadProjectField', 200],
-            ActivityMetaQueryEvent::class => ['loadActivityField', 200],
+            TimesheetMetaDisplayEvent::class => ['loadTimesheetField', 200],
+            CustomerMetaDisplayEvent::class => ['loadCustomerField', 200],
+            ProjectMetaDisplayEvent::class => ['loadProjectField', 200],
+            ActivityMetaDisplayEvent::class => ['loadActivityField', 200],
         ];
     }
 
-    public function loadTimesheetField(TimesheetMetaQueryEvent $event)
+    public function loadTimesheetField(TimesheetMetaDisplayEvent $event)
     {
         $event->addField($this->prepareEntity(new TimesheetMeta(), 'foo'));
         $event->addField($this->prepareEntity(new TimesheetMeta(), 'foo2'));
     }
 
-    public function loadCustomerField(CustomerMetaQueryEvent $event)
+    public function loadCustomerField(CustomerMetaDisplayEvent $event)
     {
         $event->addField($this->prepareEntity(new CustomerMeta(), 'customer-foo'));
     }
 
-    public function loadProjectField(ProjectMetaQueryEvent $event)
+    public function loadProjectField(ProjectMetaDisplayEvent $event)
     {
         $event->addField($this->prepareEntity(new ProjectMeta(), 'project-foo'));
         $event->addField($this->prepareEntity(new ProjectMeta(), 'project-foo2')->setIsVisible(false));
     }
 
-    public function loadActivityField(ActivityMetaQueryEvent $event)
+    public function loadActivityField(ActivityMetaDisplayEvent $event)
     {
         $event->addField($this->prepareEntity(new ActivityMeta(), 'activity-foo'));
     }

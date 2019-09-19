@@ -12,7 +12,7 @@ namespace App\Event;
 use App\Entity\MetaTableTypeInterface;
 use App\Repository\Query\BaseQuery;
 
-interface MetaQueryEventInterface
+interface MetaDisplayEventInterface
 {
     /**
      * If you want to filter where your meta-field will be displayed, use the query settings.

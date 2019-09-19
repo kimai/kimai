@@ -11,11 +11,11 @@ namespace App\Export\Renderer;
 
 use App\Entity\MetaTableTypeInterface;
 use App\Entity\Timesheet;
-use App\Event\ActivityMetaQueryEvent;
-use App\Event\CustomerMetaQueryEvent;
-use App\Event\MetaQueryEventInterface;
-use App\Event\ProjectMetaQueryEvent;
-use App\Event\TimesheetMetaQueryEvent;
+use App\Event\ActivityMetaDisplayEvent;
+use App\Event\CustomerMetaDisplayEvent;
+use App\Event\MetaDisplayEventInterface;
+use App\Event\ProjectMetaDisplayEvent;
+use App\Event\TimesheetMetaDisplayEvent;
 use App\Event\UserPreferenceDisplayEvent;
 use App\Export\RendererInterface;
 use App\Repository\Query\TimesheetQuery;
@@ -43,10 +43,10 @@ final class HtmlRenderer implements RendererInterface
     }
 
     /**
-     * @param MetaQueryEventInterface $event
+     * @param MetaDisplayEventInterface $event
      * @return MetaTableTypeInterface[]
      */
-    protected function findMetaColumns(MetaQueryEventInterface $event): array
+    protected function findMetaColumns(MetaDisplayEventInterface $event): array
     {
         $this->dispatcher->dispatch($event);
 
@@ -63,10 +63,10 @@ final class HtmlRenderer implements RendererInterface
      */
     public function render(array $timesheets, TimesheetQuery $query): Response
     {
-        $timesheetMetaFields = $this->findMetaColumns(new TimesheetMetaQueryEvent($query, TimesheetMetaQueryEvent::EXPORT));
-        $customerMetaFields = $this->findMetaColumns(new CustomerMetaQueryEvent($query, CustomerMetaQueryEvent::EXPORT));
-        $projectMetaFields = $this->findMetaColumns(new ProjectMetaQueryEvent($query, ProjectMetaQueryEvent::EXPORT));
-        $activityMetaFields = $this->findMetaColumns(new ActivityMetaQueryEvent($query, ActivityMetaQueryEvent::EXPORT));
+        $timesheetMetaFields = $this->findMetaColumns(new TimesheetMetaDisplayEvent($query, TimesheetMetaDisplayEvent::EXPORT));
+        $customerMetaFields = $this->findMetaColumns(new CustomerMetaDisplayEvent($query, CustomerMetaDisplayEvent::EXPORT));
+        $projectMetaFields = $this->findMetaColumns(new ProjectMetaDisplayEvent($query, ProjectMetaDisplayEvent::EXPORT));
+        $activityMetaFields = $this->findMetaColumns(new ActivityMetaDisplayEvent($query, ActivityMetaDisplayEvent::EXPORT));
 
         $event = new UserPreferenceDisplayEvent(UserPreferenceDisplayEvent::EXPORT);
         $this->dispatcher->dispatch($event);

@@ -13,7 +13,7 @@ use App\Configuration\FormConfiguration;
 use App\Entity\Customer;
 use App\Entity\MetaTableTypeInterface;
 use App\Event\CustomerMetaDefinitionEvent;
-use App\Event\CustomerMetaQueryEvent;
+use App\Event\CustomerMetaDisplayEvent;
 use App\Form\CustomerEditForm;
 use App\Form\CustomerTeamPermissionForm;
 use App\Form\Toolbar\CustomerToolbarForm;
@@ -101,9 +101,9 @@ class CustomerController extends AbstractController
      */
     protected function findMetaColumns(CustomerQuery $query): array
     {
-        $event = new CustomerMetaQueryEvent($query, CustomerMetaQueryEvent::CUSTOMER);
+        $event = new CustomerMetaDisplayEvent($query, CustomerMetaDisplayEvent::CUSTOMER);
         $this->dispatcher->dispatch($event);
-        
+
         return $event->getFields();
     }
 

@@ -10,7 +10,7 @@
 namespace App\Controller;
 
 use App\Entity\Timesheet;
-use App\Event\TimesheetMetaQueryEvent;
+use App\Event\TimesheetMetaDisplayEvent;
 use App\Form\TimesheetAdminEditForm;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
@@ -37,7 +37,7 @@ class TimesheetTeamController extends TimesheetAbstractController
      */
     public function indexAction($page, Request $request)
     {
-        return $this->index($page, $request, 'timesheet-team/index.html.twig', TimesheetMetaQueryEvent::TEAM_TIMESHEET);
+        return $this->index($page, $request, 'timesheet-team/index.html.twig', TimesheetMetaDisplayEvent::TEAM_TIMESHEET);
     }
 
     /**
@@ -48,7 +48,7 @@ class TimesheetTeamController extends TimesheetAbstractController
      */
     public function exportAction(Request $request)
     {
-        return $this->export($request, 'timesheet-team/export.html.twig', TimesheetMetaQueryEvent::TEAM_TIMESHEET_EXPORT);
+        return $this->export($request, 'timesheet-team/export.html.twig', TimesheetMetaDisplayEvent::TEAM_TIMESHEET_EXPORT);
     }
 
     /**
