@@ -94,7 +94,8 @@ class CsvRendererTest extends AbstractRendererTest
             15 => 'meta-bar2',
             16 => 'customer-bar',
             17 => '',
-            18 => 'activity-bar',
+            18 => 'project-foo2',
+            19 => 'activity-bar',
         ];
 
         self::assertEquals(7, count($all));
