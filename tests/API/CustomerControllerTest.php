@@ -101,6 +101,22 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertEquals('User cannot create customers', $json['message']);
     }
 
+    public function testPostActionWithInvalidData()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'visible' => true,
+            'country' => 'XYZ',
+            'currency' => '---',
+            'timezone' => 'foo/bar',
+            'unexpected' => 'field',
+        ];
+        $this->request($client, '/api/customers', 'POST', [], json_encode($data));
+        $response = $client->getResponse();
+        $this->assertApiCallValidationError($response, ['country', 'currency', 'timezone'], true);
+    }
+
     public function testPatchAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
