@@ -41,7 +41,7 @@
             {% endblock %}
             {% block box_footer%}
                 {{ form_widget(form.create, {'attr': {'class': 'btn btn-success'}}) }}
-                {{ form_widget(form.preview, {'attr': {'data-toggle': 'tooltip', 'title': 'limited_entries'|trans({'%max%': preview_max})}}) }}
+                {{ form_widget(form.preview) }}
             {% endblock %}
             {% block box_after %}{{ form_end(form) }}{% endblock %}
         {% endembed %}
@@ -49,7 +49,7 @@
         {{ widgets.callout('danger', 'http_error_403.suggestion'|trans({}, 'exceptions')) }}
     {% endif %}
 
-    {% if preview_show %}
+    {% if preview %}
         {% if model.calculator is empty or model.calculator.entries is empty %}
             {{ widgets.callout('warning', 'error.no_entries_found') }}
         {% else %}

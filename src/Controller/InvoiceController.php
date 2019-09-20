@@ -68,7 +68,6 @@ class InvoiceController extends AbstractController
         }
 
         $showPreview = false;
-        $maxItemsPreview = 500;
         $entries = [];
 
         $query = $this->getDefaultQuery();
@@ -88,7 +87,6 @@ class InvoiceController extends AbstractController
                 $previewButton = $form->get('preview');
                 if ($previewButton->isClicked()) {
                     $showPreview = true;
-                    $query->setPageSize($maxItemsPreview);
                     $entries = $this->getPreviewEntries($query);
                 }
             }
@@ -102,8 +100,7 @@ class InvoiceController extends AbstractController
         return $this->render('invoice/index.html.twig', [
             'model' => $model,
             'form' => $form->createView(),
-            'preview_max' => $maxItemsPreview,
-            'preview_show' => $showPreview,
+            'preview' => $showPreview,
         ]);
     }
 
@@ -209,7 +206,7 @@ class InvoiceController extends AbstractController
             $entries = array_merge($entries, $items);
         }
 
-        return array_slice($entries, 0, $query->getPageSize());
+        return $entries;
     }
 
     /**
