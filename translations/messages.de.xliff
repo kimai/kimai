@@ -736,10 +736,6 @@
                 <source>invoice.filter</source>
                 <target>Rechnungsdaten filtern</target>
             </trans-unit>
-            <trans-unit id="limited_entries">
-                <source>limited_entries</source>
-                <target>Limitiert auf %max% Einträge</target>
-            </trans-unit>
             <trans-unit id="button.preview">
                 <source>button.preview</source>
                 <target>Vorschau</target>

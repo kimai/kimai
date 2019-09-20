@@ -40,7 +40,7 @@ final class UserPreferenceEvent extends Event
     }
 
     /**
-     * Do not set the preferences directly to the user object, but ONLY via addUserPreference()
+     * Do not set the preferences directly to the user object, but ONLY via addPreference()
      * @return User
      */
     public function getUser()
@@ -59,7 +59,7 @@ final class UserPreferenceEvent extends Event
     /**
      * @param UserPreference $preference
      */
-    public function addUserPreference(UserPreference $preference)
+    public function addPreference(UserPreference $preference)
     {
         foreach ($this->preferences as $pref) {
             if (strtolower($pref->getName()) === strtolower($preference->getName())) {
@@ -69,5 +69,15 @@ final class UserPreferenceEvent extends Event
             }
         }
         $this->preferences[] = $preference;
+    }
+
+    /**
+     * @param UserPreference $preference
+     * @deprecated since 1.4, will be removed with 2.0
+     */
+    public function addUserPreference(UserPreference $preference)
+    {
+        @trigger_error('addUserPreference() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
+        $this->addPreference($preference);
     }
 }
