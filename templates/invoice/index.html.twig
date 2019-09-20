@@ -20,6 +20,10 @@
 {% block page_subtitle %}{{ 'invoice.subtitle'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.invoices('index') }}{% endblock %}
 
+{% block main_before %}
+    {{ tables.data_table_column_modal(tableName, columns) }}
+{% endblock %}
+
 {% block main %}
 
     {% if is_granted('create_invoice') %}
