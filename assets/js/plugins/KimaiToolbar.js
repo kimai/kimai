@@ -35,43 +35,17 @@ export default class KimaiToolbar extends KimaiPlugin {
         this._registerSearchButtons(formSelector);
 
         jQuery('body')
-        // prevent that the dropdown closes, when a form input is changed - eg. a select option was clicked
+            // prevent that the dropdown closes, when a form input is changed - eg. a select option was clicked
             .on('click', formSelector + ' .dropdown-menu', function (event) {
-                const parent = jQuery(event.target).parents('.bootstrap-select');
-                if (parent.length === 0) {
-                    event.stopPropagation();
-                    jQuery(".bootstrap-select").removeClass("open");
-                }
-            })
-            // trying to emulate the normal behaviour fo the bootstrap-select, as using its default implementation
-            // leads to closing the surrounding dropdown menu
-            .on('click', formSelector + ' .bootstrap-select', function (event) {
-                const current = jQuery(this);
-                if (current.hasClass("open")){
-                    jQuery(".bootstrap-select").removeClass("open");
-                } else {
-                    jQuery(".bootstrap-select").not('.bs-container').each(function(index, element) {
-                        var tmp = jQuery(element);
-                        if (tmp.is(current)) {
-                            return;
-                        }
-                        if (tmp.hasClass('open')) {
-                            tmp.removeClass("open");
-                            // the shown dropdown list will not be closed, using toggle hides all other lists BUT closes the containing search-dropdown 
-                            // tmp.find('select.selectpicker').selectpicker('toggle');
-                        }
-                    });
-                    current.addClass("open");
-                }
                 event.stopPropagation();
             })
-            // close bootstrap-select if a click happened outside (and none of the other clickHandler were called)
-            // if the click happened inside a bootstrap-select, we ignore this
-            .on('click', function(event) {
-                const parent = jQuery(event.target).parents('.bootstrap-select');
-                if (parent.length === 0) {
-                    jQuery(".bootstrap-select").removeClass("open");
-                }
+            // prevent that a click into the search field will close the dropdown
+            .on('click', '.select2-search__field', function (event) {
+                event.stopPropagation();
+            })
+            // prevent that the dropdown closes when a optgroup header is clicked
+            .on('click', '.select2-results__group', function (event) {
+                event.stopPropagation();
             })
         ;
 

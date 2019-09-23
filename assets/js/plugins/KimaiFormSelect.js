@@ -26,13 +26,19 @@ export default class KimaiFormSelect extends KimaiPlugin {
     activateSelectPicker(selector, container) {
         let options = {};
         if (container !== undefined) {
-            options = {container: container};
+            options = {
+                dropdownParent: $(container),
+            };
         }
-        jQuery(selector + ' ' + this.selector).selectpicker(options);
+        options = {...options, ...{
+            language: this.getContainer().getConfiguration().get('locale'),
+            theme: "bootstrap"
+        }};
+        jQuery(selector + ' ' + this.selector).select2(options);
     }
     
     destroySelectPicker(selector) {
-        jQuery(selector + ' ' + this.selector).selectpicker('destroy');
+        jQuery(selector + ' ' + this.selector).select2('destroy');
     }
     
     updateOptions(selectIdentifier, data) {
@@ -71,7 +77,7 @@ export default class KimaiFormSelect extends KimaiPlugin {
 
         // if the beta test kimai.theme.select_type is active, this will tell the selects to refresh
         if (select.hasClass('selectpicker')) {
-            select.selectpicker('refresh');
+            select.trigger('change.select2');
         }
     }
 }

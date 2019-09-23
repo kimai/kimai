@@ -11,7 +11,20 @@ global.$ = global.jQuery = $;
 
 require('bootstrap-sass');
 require('jquery-slimscroll');
-require('bootstrap-select');
+require('select2');
+require('select2/dist/js/i18n/ar');
+require('select2/dist/js/i18n/cs');
+require('select2/dist/js/i18n/de');
+require('select2/dist/js/i18n/es');
+require('select2/dist/js/i18n/fr');
+require('select2/dist/js/i18n/hu');
+require('select2/dist/js/i18n/it');
+require('select2/dist/js/i18n/ja');
+require('select2/dist/js/i18n/ko');
+require('select2/dist/js/i18n/pt-BR');
+require('select2/dist/js/i18n/ru');
+require('select2/dist/js/i18n/sk');
+require('select2/dist/js/i18n/sv');
 
 const Moment = require('moment');
 global.moment = Moment;
@@ -32,7 +45,7 @@ require('moment/locale/sv');
 require('daterangepicker');
 
 // ------ AdminLTE framework ------
-require('../vendor/kevinpapst/adminlte-bundle/Resources/assets/admin-lte.scss');
+require('./sass/admin-lte.scss');
 require('admin-lte/dist/css/AdminLTE.min.css');
 require('admin-lte/dist/css/skins/_all-skins.css');
 require('../vendor/kevinpapst/adminlte-bundle/Resources/assets/admin-lte-extensions.scss');
