@@ -47,6 +47,10 @@ export default class KimaiToolbar extends KimaiPlugin {
             .on('click', '.select2-results__group', function (event) {
                 event.stopPropagation();
             })
+            // prevent that a click into a daterangepicker will close the dropdown
+            .on('click', '.daterangepicker', function (event) {
+                event.stopPropagation();
+            })
         ;
 
         // Reset the page if filter values are changed, otherwise we might end up with a limited set of data, 
