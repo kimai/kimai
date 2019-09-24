@@ -21,11 +21,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ExportToolbarForm extends AbstractToolbarForm
 {
-    protected function getSelectpickerConfig(): bool
-    {
-        return true;
-    }
-
     /**
      * {@inheritdoc}
      */

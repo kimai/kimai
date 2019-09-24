@@ -21,11 +21,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class InvoiceToolbarForm extends AbstractToolbarForm
 {
-    protected function getSelectpickerConfig(): bool
-    {
-        return true;
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -58,7 +53,6 @@ class InvoiceToolbarForm extends AbstractToolbarForm
         $builder->add('template', InvoiceTemplateType::class, [
             'required' => true,
             'placeholder' => null,
-            'selectpicker' => $this->getSelectpickerConfig(),
         ]);
     }
 
