@@ -151,7 +151,6 @@ class TagRepository extends EntityRepository
         return $paginator;
     }
 
-
     public function getQueryBuilderForFormType(TagFormTypeQuery $query): QueryBuilder
     {
         $qb = $this->createQueryBuilder('tag');
@@ -160,5 +159,4 @@ class TagRepository extends EntityRepository
 
         return $qb;
     }
-    
 }

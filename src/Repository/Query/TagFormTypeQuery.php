@@ -29,5 +29,4 @@ final class TagFormTypeQuery
 
         return $this;
     }
-
 }
