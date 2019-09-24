@@ -10,9 +10,11 @@
 namespace App\Repository;
 
 use App\Entity\Tag;
+use App\Repository\Query\TagFormTypeQuery;
 use App\Repository\Query\TagQuery;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 
@@ -148,4 +150,15 @@ class TagRepository extends EntityRepository
 
         return $paginator;
     }
+
+
+    public function getQueryBuilderForFormType(TagFormTypeQuery $query): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('tag');
+
+        $qb->orderBy('tag.name', 'ASC');
+
+        return $qb;
+    }
+    
 }
