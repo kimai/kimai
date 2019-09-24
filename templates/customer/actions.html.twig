@@ -1,7 +1,8 @@
 {% macro customers(view) %}
     {% import "macros/widgets.html.twig" as widgets %}
 
-    {% set actions = {'visibility': '#modal_customer_admin'} %}
+    {% set actions = {'search': {'class': 'search-toggle visible-xs-inline'}, 'visibility': '#modal_customer_admin'} %}
+
     {% if is_granted('create_customer') %}
         {% set actions = actions|merge({'create': path('admin_customer_create')}) %}
     {% endif %}
