@@ -169,7 +169,7 @@ class SystemConfigurationController extends AbstractController
         $types = $this->getConfigurationTypes();
 
         $event = new SystemConfigurationEvent($types);
-        $this->eventDispatcher->dispatch($event, SystemConfigurationEvent::CONFIGURE);
+        $this->eventDispatcher->dispatch($event);
 
         foreach ($event->getConfigurations() as $configs) {
             foreach ($configs->getConfiguration() as $config) {

@@ -10,7 +10,10 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 ## [1.4](https://github.com/kevinpapst/kimai2/releases/tag/1.4)
 
-[Update as usual](https://www.kimai.org/documentation/updates.html), nothing special for this release if you upgrade from 1.0 / 1.0.1.
+### Possible BC breaks
+
+- Changed to use Javascript select component by default
+- Switched to Symfony 4.3 event types, this will fail in plugins if they did NOT use the official constants for event names (check for deprecations)
 
 ## [1.3](https://github.com/kevinpapst/kimai2/releases/tag/1.3)
 

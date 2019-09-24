@@ -19,7 +19,10 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 final class ConfigureMainMenuEvent extends Event
 {
-    public const CONFIGURE = 'app.main_menu_configure';
+    /**
+     * @deprecated since 1.4, will be removed with 2.0
+     */
+    public const CONFIGURE = ConfigureMainMenuEvent::class;
 
     /**
      * @var Request

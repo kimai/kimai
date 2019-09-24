@@ -17,7 +17,10 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 final class PrepareUserEvent extends Event
 {
-    public const PREPARE = 'app.prepare_user';
+    /**
+     * @deprecated since 1.4, will be removed with 2.0
+     */
+    public const PREPARE = PrepareUserEvent::class;
 
     /**
      * @var User
