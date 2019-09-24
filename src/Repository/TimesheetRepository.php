@@ -750,7 +750,7 @@ class TimesheetRepository extends EntityRepository
             ->orderBy('t.end', 'DESC')
         ;
 
-        return $this->getHydratedResultsByQuery($qb, false);
+        return $this->getHydratedResultsByQuery($qb, true);
     }
 
     /**
