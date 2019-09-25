@@ -11,7 +11,6 @@ namespace App\EventSubscriber;
 
 use App\Event\ConfigureMainMenuEvent;
 use KevinPapst\AdminLTEBundle\Event\SidebarMenuEvent;
-use KevinPapst\AdminLTEBundle\Event\ThemeEvents;
 use KevinPapst\AdminLTEBundle\Model\MenuItemModel;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -48,7 +47,7 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            ThemeEvents::THEME_SIDEBAR_SETUP_MENU => ['onSetupNavbar', 100],
+            SidebarMenuEvent::class => ['onSetupNavbar', 100],
         ];
     }
 
@@ -72,7 +71,7 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
             new MenuItemModel('system', 'menu.system', '')
         );
 
-        $this->eventDispatcher->dispatch($menuEvent, ConfigureMainMenuEvent::CONFIGURE);
+        $this->eventDispatcher->dispatch($menuEvent);
 
         if ($menuEvent->getAdminMenu()->hasChildren()) {
             $event->addItem(new MenuItemModel('admin', 'menu.admin', ''));

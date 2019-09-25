@@ -22,7 +22,7 @@ class PrepareUserEventTest extends TestCase
     {
         $user = new User();
         $sut = new PrepareUserEvent($user);
-        $this->assertEquals('app.prepare_user', PrepareUserEvent::PREPARE);
+        $this->assertEquals(PrepareUserEvent::class, PrepareUserEvent::PREPARE);
         $this->assertSame($user, $sut->getUser());
     }
 }

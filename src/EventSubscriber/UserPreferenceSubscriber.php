@@ -163,7 +163,7 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
         }
 
         $event = new UserPreferenceEvent($user, $this->getDefaultPreferences($user));
-        $this->eventDispatcher->dispatch($event, UserPreferenceEvent::CONFIGURE);
+        $this->eventDispatcher->dispatch($event);
 
         foreach ($event->getPreferences() as $preference) {
             /* @var UserPreference[] $prefs */

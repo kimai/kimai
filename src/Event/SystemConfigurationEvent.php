@@ -17,7 +17,10 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 final class SystemConfigurationEvent extends Event
 {
-    public const CONFIGURE = 'app.system_configuration';
+    /**
+     * @deprecated since 1.4, will be removed with 2.0
+     */
+    public const CONFIGURE = SystemConfigurationEvent::class;
 
     /**
      * @var SystemConfiguration[]
