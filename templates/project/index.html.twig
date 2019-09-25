@@ -12,7 +12,7 @@
 } %}
 {% for field in metaColumns %}
     {% set columns = columns|merge({
-        (field.name): {'title': field.label, 'class': 'hidden-xs hidden-sm', 'orderBy': false}
+        ('mf_' ~ field.name): {'title': field.label, 'class': 'hidden-xs hidden-sm', 'orderBy': false}
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
@@ -47,7 +47,7 @@
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment|comment2html }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'orderNumber') }}">{{ entry.orderNumber }}</td>
                 {% for field in metaColumns %}
-                    <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, field.name) }}">
+                    <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'mf_' ~ field.name) }}">
                         {{ tables.datatable_meta_column(entry, field) }}
                     </td>
                 {% endfor %}

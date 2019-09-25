@@ -211,7 +211,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
 
         $configService = $client->getContainer()->get(SystemConfiguration::class);
         $this->assertEquals(false, $configService->find('timesheet.markdown_content'));
-        $this->assertNull($configService->find('theme.select_type'));
+        $this->assertEquals('selectpicker', $configService->find('theme.select_type'));
 
         $form = $client->getCrawler()->filter('form[name=system_configuration_form_theme]')->form();
         $client->submit($form, [

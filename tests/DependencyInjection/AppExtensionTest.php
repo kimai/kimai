@@ -101,7 +101,7 @@ class AppExtensionTest extends TestCase
             'kimai.theme' => [
                 'active_warning' => 3,
                 'box_color' => 'green',
-                'select_type' => null,
+                'select_type' => 'selectpicker',
                 'show_about' => true,
                 'chart' => [
                     'background_color' => 'rgba(0,115,183,0.7)',
@@ -119,7 +119,7 @@ class AppExtensionTest extends TestCase
                 'auto_reload_datatable' => false,
                 'autocomplete_chars' => 3,
             ],
-            'kimai.theme.select_type' => null,
+            'kimai.theme.select_type' => 'selectpicker',
             'kimai.theme.show_about' => true,
             'kimai.fosuser' => [
                 'registration' => true,
