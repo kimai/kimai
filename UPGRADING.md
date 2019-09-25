@@ -12,8 +12,8 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 ### Possible BC breaks
 
-- Changed to use Javascript select component by default
-- Switched to Symfony 4.3 event types, this will fail in plugins if they did NOT use the official constants for event names (check for deprecations)
+- Activate Javascript select component by default
+- Switched to Symfony 4.3 event types, this could fail in plugins only if they didn't use the official constants for event names
 
 ## [1.3](https://github.com/kevinpapst/kimai2/releases/tag/1.3)
 
