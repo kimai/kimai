@@ -313,7 +313,7 @@ class Configuration implements ConfigurationInterface
                     ->setDeprecated('The node "%node%" at path "%path%" was removed, please delete it from your config.')
                 ->end()
                 ->scalarNode('select_type')
-                    ->defaultNull()
+                    ->defaultValue('selectpicker')
                 ->end()
                 ->scalarNode('auto_reload_datatable')
                     ->defaultFalse()
