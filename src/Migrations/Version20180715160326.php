@@ -20,7 +20,7 @@ use Doctrine\DBAL\Schema\Schema;
  *
  * Changes the table structure of "users" table and migrates from json_array type to serialized array,
  * probably also fixing the higher required MariaDB version.
- * 
+ *
  * This was fixed in earlier migrations for new installations, but it is still in here for users migrating up from a lower version.
  */
 final class Version20180715160326 extends AbstractMigration
