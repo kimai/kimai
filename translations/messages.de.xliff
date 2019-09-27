@@ -56,6 +56,10 @@
                 <source>search</source>
                 <target>Suchen</target>
             </trans-unit>
+            <trans-unit id="my.profile">
+                <source>my.profile</source>
+                <target>Mein Profil</target>
+            </trans-unit>
 
             <!--
               Login / Security

@@ -32,7 +32,7 @@
             </trans-unit>
             <trans-unit id="settings">
                 <source>settings</source>
-                <target>Settings</target>
+                <target>Preferences</target>
             </trans-unit>
             <trans-unit id="timesheet">
                 <source>timesheet</source>

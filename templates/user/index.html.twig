@@ -7,8 +7,8 @@
 {% set columns = {
     'alias': 'alwaysVisible',
     'username': 'hidden-xs',
-    'email': 'hidden-xs hidden-sm',
-    'title': 'hidden-xs',
+    'email': 'hidden-xs hidden-md hidden-sm',
+    'title': 'hidden-xs hidden-sm',
 } %}
 {% for pref in preferences %}
     {% set columns = columns|merge({
@@ -16,7 +16,8 @@
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
-    'roles': {'class': 'hidden-xs', 'orderBy': false},
+    'roles': {'class': 'hidden-xs  hidden-sm', 'orderBy': false},
+    'team': {'class': 'hidden-xs', 'orderBy': false},
     'active': {'class': '', 'orderBy': false},
     'actions': 'actions alwaysVisible',
 }) %}
@@ -40,7 +41,7 @@
 
         {% for entry in entries %}
             <tr{% if is_granted('edit', entry) %} class="open-edit alternative-link" data-href="{{ path('user_profile_edit', {'username': entry.username}) }}"{% endif %}>
-                <td>{{ widgets.username(entry) }}</td>
+                <td>{{ widgets.user_avatar(entry) }} {{ widgets.username(entry) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'username') }}">{{ entry.username }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'email') }}">{{ entry.email }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'title') }}">{{ entry.title }}</td>
@@ -56,6 +57,15 @@
                     {% for role in entry.roles %}
                         {% if role != 'ROLE_USER' %}
                             {{ widgets.label_role(role) }}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'team') }}">
+                    {% for team in entry.teams %}
+                        {% if entry.isTeamleadOf(team) %}
+                            {{ widgets.label_team(team, 'success') }}
+                        {% else %}
+                            {{ widgets.label_team(team) }}
                         {% endif %}
                     {% endfor %}
                 </td>

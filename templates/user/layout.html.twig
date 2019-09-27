@@ -18,6 +18,7 @@
 
         <div class="col-md-3">
             {{ macro.profile_box(user, stats) }}
+            {{ macro.profile_teams(user) }}
             {{ macro.profile_infos(user, stats) }}
         </div>
     </div>
@@ -38,6 +39,30 @@
                 <li><a href="#">{{ 'label.hourlyRate'|trans }} <span class="pull-right badge bg-blue">{{ user.preferenceValue('hourly_rate') }}</span></a></li>
                 {% endif %}
             </ul>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro profile_teams(user) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    <div class="box box-{{ admin_lte_context.widget.type }}">
+        <div class="box-header with-border">
+            <h3 class="box-title">{{ 'label.team'|trans }}</h3>
+        </div>
+        <div class="box-body">
+            <table class="table">
+                {% for team in user.teams %}
+                <tr>
+                    <td>{{ team.name }}</td>
+                    <td>
+                        {{ widgets.label(team.teamlead.displayName, 'success', 'label.teamlead'|trans) }}
+                        {% for user in team.users %}
+                            {{ widgets.label_user(user) }}
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
         </div>
     </div>
 {% endmacro %}

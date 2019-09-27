@@ -117,7 +117,7 @@
     {% import "macros/widgets.html.twig" as widgets %}
     <li class="dropdown user-menu">
         <a href="#" class="dropdown-toggle ddt-large" data-toggle="dropdown">
-            <i class="{{ 'avatar'|icon }} fa-2x"></i>
+            {{ widgets.user_avatar(app.user, false) }}
         </a>
         <ul class="dropdown-menu">
             {% if app.user is not null %}
@@ -125,8 +125,8 @@
                 <li>
                     <a href="{{ path('user_profile', {'username' : app.user.username}) }}">
                         <h4 class="control-sidebar-subheading">
-                            <i class="{{ 'profile-stats'|icon }}"></i>
-                            {{ widgets.username(app.user) }}
+                            <i class="{{ 'avatar'|icon }}"></i>
+                            {{ 'my.profile'|trans }}
                         </h4>
                     </a>
                 </li>
@@ -136,7 +136,7 @@
                     <a href="{{ path('user_profile_edit', {'username' : app.user.username}) }}">
                         <h4 class="control-sidebar-subheading">
                             <i class="{{ 'profile'|icon }}"></i>
-                            {{ 'profile.title'|trans }}
+                            {{ 'action.edit'|trans }}
                         </h4>
                     </a>
                 </li>
