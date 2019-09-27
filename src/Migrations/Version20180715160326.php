@@ -20,6 +20,8 @@ use Doctrine\DBAL\Schema\Schema;
  *
  * Changes the table structure of "users" table and migrates from json_array type to serialized array,
  * probably also fixing the higher required MariaDB version.
+ *
+ * This was fixed in earlier migrations for new installations, but it is still in here for users migrating up from a lower version.
  */
 final class Version20180715160326 extends AbstractMigration
 {
@@ -101,12 +103,12 @@ final class Version20180715160326 extends AbstractMigration
         if ($platform === 'sqlite') {
             $this->addSql('CREATE TEMPORARY TABLE __temp__' . $users . ' AS SELECT id, username, email, enabled, password, roles, alias, registration_date, title, avatar FROM ' . $users);
             $this->addSql('DROP TABLE ' . $users);
-            $this->addSql('CREATE TABLE ' . $users . ' (id INTEGER NOT NULL, alias VARCHAR(60) DEFAULT NULL, registration_date DATETIME DEFAULT NULL, title VARCHAR(50) DEFAULT NULL, avatar VARCHAR(255) DEFAULT NULL, active BOOLEAN NOT NULL, password VARCHAR(254) DEFAULT NULL COLLATE BINARY, roles CLOB NOT NULL COLLATE BINARY --(DC2Type:json_array)
+            $this->addSql('CREATE TABLE ' . $users . ' (id INTEGER NOT NULL, alias VARCHAR(60) DEFAULT NULL, registration_date DATETIME DEFAULT NULL, title VARCHAR(50) DEFAULT NULL, avatar VARCHAR(255) DEFAULT NULL, active BOOLEAN NOT NULL, password VARCHAR(254) DEFAULT NULL COLLATE BINARY, roles CLOB NOT NULL COLLATE BINARY --(DC2Type:array)
             , name VARCHAR(60) NOT NULL COLLATE BINARY, mail VARCHAR(160) NOT NULL COLLATE BINARY, PRIMARY KEY(id))');
             $this->addSql('INSERT INTO ' . $users . ' (id, name, mail, active, password, roles, alias, registration_date, title, avatar) SELECT id, username, email, enabled, password, roles, alias, registration_date, title, avatar FROM __temp__' . $users);
             $this->addSql('DROP TABLE __temp__' . $users);
         } else {
-            $this->addSql('ALTER TABLE ' . $users . ' CHANGE username name VARCHAR(60) NOT NULL COLLATE utf8mb4_unicode_ci, CHANGE email mail VARCHAR(160) NOT NULL COLLATE utf8mb4_unicode_ci, DROP username_canonical, DROP email_canonical, DROP salt, DROP last_login, DROP confirmation_token, DROP password_requested_at, CHANGE password password VARCHAR(254) DEFAULT NULL COLLATE utf8mb4_unicode_ci, CHANGE roles roles JSON NOT NULL COMMENT \'(DC2Type:json_array)\', CHANGE alias alias VARCHAR(60) DEFAULT NULL COLLATE utf8mb4_unicode_ci, CHANGE registration_date registration_date DATETIME DEFAULT NULL, CHANGE title title VARCHAR(50) DEFAULT NULL COLLATE utf8mb4_unicode_ci, CHANGE avatar avatar VARCHAR(255) DEFAULT NULL COLLATE utf8mb4_unicode_ci, CHANGE enabled active TINYINT(1) NOT NULL');
+            $this->addSql('ALTER TABLE ' . $users . ' CHANGE username name VARCHAR(60) NOT NULL COLLATE utf8mb4_unicode_ci, CHANGE email mail VARCHAR(160) NOT NULL COLLATE utf8mb4_unicode_ci, DROP username_canonical, DROP email_canonical, DROP salt, DROP last_login, DROP confirmation_token, DROP password_requested_at, CHANGE password password VARCHAR(254) DEFAULT NULL COLLATE utf8mb4_unicode_ci, CHANGE roles roles LONGTEXT NOT NULL COMMENT \'(DC2Type:array)\', CHANGE alias alias VARCHAR(60) DEFAULT NULL COLLATE utf8mb4_unicode_ci, CHANGE registration_date registration_date DATETIME DEFAULT NULL, CHANGE title title VARCHAR(50) DEFAULT NULL COLLATE utf8mb4_unicode_ci, CHANGE avatar avatar VARCHAR(255) DEFAULT NULL COLLATE utf8mb4_unicode_ci, CHANGE enabled active TINYINT(1) NOT NULL');
         }
 
         $this->addSql('UPDATE ' . $users . ' SET roles = \'["ROLE_SUPER_ADMIN"]\' WHERE roles LIKE "%ROLE_SUPER_ADMIN%"');
