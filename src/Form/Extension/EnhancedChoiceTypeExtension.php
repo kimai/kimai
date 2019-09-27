@@ -54,6 +54,12 @@ class EnhancedChoiceTypeExtension extends AbstractTypeExtension
             return;
         }
 
+        // expanded selects are rendered as checkboxes and using the selectpicker
+        // would display an empty dropdown
+        if (isset($options['expanded']) && true === $options['expanded']) {
+            return;
+        }
+
         if (!isset($view->vars['attr'])) {
             $view->vars['attr'] = [];
         }
