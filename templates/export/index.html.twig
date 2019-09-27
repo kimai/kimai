@@ -77,7 +77,7 @@
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">{{ widgets.label_project(entry.project) }}</td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}">{{ widgets.label_activity(entry.activity) }}</td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }} timesheet-description">
-                        {{ entry.description }}
+                        {{ entry.description|escape|desc2html }}
                     </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }} text-nowrap">
                         {{ rate|money(currency) }}
