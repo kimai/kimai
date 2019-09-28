@@ -12,6 +12,9 @@ namespace App\Repository\Loader;
 use App\Entity\Project;
 use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * @internal
+ */
 final class ProjectIdLoader implements LoaderInterface
 {
     /**
