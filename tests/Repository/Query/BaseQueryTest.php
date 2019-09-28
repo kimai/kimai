@@ -49,7 +49,6 @@ class BaseQueryTest extends TestCase
 
     protected function assertBaseQuery(BaseQuery $sut, $orderBy = 'id')
     {
-        $this->assertResultType($sut);
         $this->assertPage($sut);
         $this->assertPageSize($sut);
         $this->assertOrderBy($sut, $orderBy);
@@ -83,24 +82,6 @@ class BaseQueryTest extends TestCase
         $formErrors = $form->getErrors(true);
 
         $sut->resetByFormError($formErrors);
-    }
-
-    protected function assertResultType(BaseQuery $sut)
-    {
-        self::assertEquals(BaseQuery::RESULT_TYPE_PAGER, $sut->getResultType());
-
-        $sut->setResultType(BaseQuery::RESULT_TYPE_QUERYBUILDER);
-        self::assertEquals(BaseQuery::RESULT_TYPE_QUERYBUILDER, $sut->getResultType());
-
-        $sut->setResultType(BaseQuery::RESULT_TYPE_OBJECTS);
-        self::assertEquals(BaseQuery::RESULT_TYPE_OBJECTS, $sut->getResultType());
-
-        try {
-            $sut->setResultType('foo-bar');
-        } catch (\Exception $exception) {
-            $this->assertInstanceOf(\InvalidArgumentException::class, $exception);
-            self::assertEquals('Unsupported query result type', $exception->getMessage());
-        }
     }
 
     protected function assertTeams(BaseQuery $sut)

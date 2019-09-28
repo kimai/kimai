@@ -24,7 +24,6 @@ class InvoiceQueryTest extends BaseQueryTest
     {
         $sut = new InvoiceQuery();
 
-        $this->assertResultType($sut);
         $this->assertPage($sut);
         $this->assertPageSize($sut);
         $this->assertOrderBy($sut, 'begin');

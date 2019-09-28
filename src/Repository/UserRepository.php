@@ -10,16 +10,20 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Repository\Loader\UserLoader;
+use App\Repository\Paginator\LoaderPaginator;
+use App\Repository\Paginator\PaginatorInterface;
+use App\Repository\Query\BaseQuery;
 use App\Repository\Query\UserFormTypeQuery;
 use App\Repository\Query\UserQuery;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
 class UserRepository extends EntityRepository implements UserLoaderInterface
 {
-    use RepositoryTrait;
-
     public function getById($id): ?User
     {
         @trigger_error('UserRepository::getById is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
@@ -81,8 +85,84 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
     /**
      * @param UserQuery $query
      * @return array|\Doctrine\ORM\QueryBuilder|\Pagerfanta\Pagerfanta
+     * @deprecated since 1.4, use getUsersForQuery() instead
      */
     public function findByQuery(UserQuery $query)
+    {
+        @trigger_error('UserRepository::findByQuery() is deprecated and will be removed with 1.6', E_USER_DEPRECATED);
+        $qb = $this->getQueryBuilderForQuery($query);
+
+        if (BaseQuery::RESULT_TYPE_PAGER === $query->getResultType()) {
+            $paginator = new Pagerfanta(new DoctrineORMAdapter($qb->getQuery(), false));
+            $paginator->setMaxPerPage($query->getPageSize());
+            $paginator->setCurrentPage($query->getPage());
+
+            return $paginator;
+        }
+
+        if (BaseQuery::RESULT_TYPE_OBJECTS === $query->getResultType()) {
+            return $qb->getQuery()->execute();
+        }
+
+        return $qb;
+    }
+
+    /**
+     * @param string $username
+     * @return mixed|null|\Symfony\Component\Security\Core\User\UserInterface
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function loadUserByUsername($username)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u', 'p', 't', 'tu', 'tl')
+            ->leftJoin('u.preferences', 'p')
+            ->leftJoin('u.teams', 't')
+            ->leftJoin('t.users', 'tu')
+            ->leftJoin('t.teamlead', 'tl')
+            ->where('u.username = :username')
+            ->orWhere('u.email = :username')
+            ->setParameter('username', $username)
+            ->getQuery()
+            ->getSingleResult();
+    }
+
+    public function getQueryBuilderForFormType(UserFormTypeQuery $query): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        $qb->andWhere($qb->expr()->eq('u.enabled', ':enabled'));
+        $qb->setParameter('enabled', true, \PDO::PARAM_BOOL);
+
+        $qb->orderBy('u.username', 'ASC');
+
+        $this->addPermissionCriteria($qb, $query->getUser(), $query->getTeams());
+
+        return $qb;
+    }
+
+    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
+    {
+        // make sure that all queries without a user see all user
+        if (null === $user && empty($teams)) {
+            return;
+        }
+
+        // make sure that admins see all user
+        if (null !== $user && ($user->isSuperAdmin() || $user->isAdmin())) {
+            return;
+        }
+
+        if (null !== $user) {
+            $qb->leftJoin('u.teams', 'teams')
+                ->leftJoin('teams.users', 'users')
+                ->andWhere('teams.teamlead = :id')
+                ->setParameter('id', $user);
+        }
+    }
+
+    private function getQueryBuilderForQuery(UserQuery $query): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -144,61 +224,55 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
             }
         }
 
-        return $this->getBaseQueryResult($qb, $query);
-    }
-
-    /**
-     * @param string $username
-     * @return mixed|null|\Symfony\Component\Security\Core\User\UserInterface
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function loadUserByUsername($username)
-    {
-        return $this->createQueryBuilder('u')
-            ->select('u', 'p', 't', 'tu', 'tl')
-            ->leftJoin('u.preferences', 'p')
-            ->leftJoin('u.teams', 't')
-            ->leftJoin('t.users', 'tu')
-            ->leftJoin('t.teamlead', 'tl')
-            ->where('u.username = :username')
-            ->orWhere('u.email = :username')
-            ->setParameter('username', $username)
-            ->getQuery()
-            ->getSingleResult();
-    }
-
-    public function getQueryBuilderForFormType(UserFormTypeQuery $query): QueryBuilder
-    {
-        $qb = $this->createQueryBuilder('u');
-
-        $qb->andWhere($qb->expr()->eq('u.enabled', ':enabled'));
-        $qb->setParameter('enabled', true, \PDO::PARAM_BOOL);
-
-        $qb->orderBy('u.username', 'ASC');
-
-        $this->addPermissionCriteria($qb, $query->getUser(), $query->getTeams());
-
         return $qb;
     }
 
-    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
+    public function getPagerfantaForQuery(UserQuery $query): Pagerfanta
     {
-        // make sure that all queries without a user see all user
-        if (null === $user && empty($teams)) {
-            return;
-        }
+        $paginator = new Pagerfanta($this->getPaginatorForQuery($query));
+        $paginator->setMaxPerPage($query->getPageSize());
+        $paginator->setCurrentPage($query->getPage());
 
-        // make sure that admins see all user
-        if (null !== $user && ($user->isSuperAdmin() || $user->isAdmin())) {
-            return;
-        }
+        return $paginator;
+    }
 
-        if (null !== $user) {
-            $qb->leftJoin('u.teams', 'teams')
-                ->leftJoin('teams.users', 'users')
-                ->andWhere('teams.teamlead = :id')
-                ->setParameter('id', $user);
-        }
+    protected function getPaginatorForQuery(UserQuery $query): PaginatorInterface
+    {
+        $qb = $this->getQueryBuilderForQuery($query);
+        $qb
+            ->resetDQLPart('select')
+            ->resetDQLPart('orderBy')
+            ->select($qb->expr()->countDistinct('u.id'))
+        ;
+        $counter = (int) $qb->getQuery()->getSingleScalarResult();
+
+        $qb = $this->getQueryBuilderForQuery($query);
+
+        return new LoaderPaginator(new UserLoader($qb->getEntityManager()), $qb, $counter);
+    }
+
+    /**
+     * @param UserQuery $query
+     * @return User[]
+     */
+    public function getUsersForQuery(UserQuery $query): iterable
+    {
+        $qb = $this->getQueryBuilderForQuery($query);
+
+        return $this->getHydratedResultsByQuery($qb);
+    }
+
+    /**
+     * @param QueryBuilder $qb
+     * @return User[]
+     */
+    protected function getHydratedResultsByQuery(QueryBuilder $qb): iterable
+    {
+        $results = $qb->getQuery()->getResult();
+
+        $loader = new UserLoader($qb->getEntityManager());
+        $loader->loadResults($results);
+
+        return $results;
     }
 }
