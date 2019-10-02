@@ -43,7 +43,7 @@ class TeamControllerTest extends ControllerBaseTest
             'help' => 'https://www.kimai.org/documentation/teams.html'
         ]);
         $this->assertHasDataTable($client);
-        $this->assertDataTableRowCount($client, 'datatable_admin_teams', 5);
+        $this->assertDataTableRowCount($client, 'datatable_admin_teams', 6);
     }
 
     public function testIndexActionWithSearchTermQuery()
@@ -85,7 +85,7 @@ class TeamControllerTest extends ControllerBaseTest
                 'name' => 'Test Team',
             ]
         ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/teams/1/edit'));
+        $this->assertIsRedirect($client, $this->createUrl('/admin/teams/2/edit'));
         $client->followRedirect();
         $this->assertHasFlashSuccess($client);
         $this->assertHasCustomerAndProjectPermissionBoxes($client);

@@ -30,7 +30,7 @@ class UserControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(5, count($result));
+        $this->assertEquals(7, count($result));
         foreach ($result as $user) {
             $this->assertStructure($user, false);
         }
@@ -58,7 +58,7 @@ class UserControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(6, count($result));
+        $this->assertEquals(8, count($result));
         foreach ($result as $user) {
             $this->assertStructure($user, false);
         }

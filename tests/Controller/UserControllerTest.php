@@ -29,7 +29,7 @@ class UserControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/user/');
         $this->assertHasDataTable($client);
-        $this->assertDataTableRowCount($client, 'datatable_user_admin', 5);
+        $this->assertDataTableRowCount($client, 'datatable_user_admin', 7);
     }
 
     public function testIndexActionWithSearchTermQuery()
