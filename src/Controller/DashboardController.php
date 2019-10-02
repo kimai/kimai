@@ -100,12 +100,14 @@ class DashboardController extends AbstractController
 
                 $add = true;
                 if ($widget instanceof AuthorizedWidget) {
+                    $tmp = false;
                     foreach ($widget->getPermissions() as $perm) {
-                        if (!$this->isGranted($perm)) {
-                            $add = false;
+                        if ($this->isGranted($perm)) {
+                            $tmp = true;
                             break;
                         }
                     }
+                    $add = $tmp;
                 }
 
                 if ($add) {

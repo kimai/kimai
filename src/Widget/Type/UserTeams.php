@@ -12,7 +12,7 @@ namespace App\Widget\Type;
 use App\Entity\User;
 use App\Security\CurrentUser;
 
-class UserTeams extends SimpleWidget
+class UserTeams extends SimpleWidget implements AuthorizedWidget
 {
     public function __construct(CurrentUser $user)
     {
@@ -49,6 +49,6 @@ class UserTeams extends SimpleWidget
      */
     public function getPermissions(): array
     {
-        return ['view_team_member'];
+        return ['view_team_member', 'view_team'];
     }
 }

@@ -12,9 +12,8 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 **Attention**: There is a new directory, which needs to be writable by the webserver: `public/avatars/`.
 
-New permissions (used in new widgets for Dashboard):
+New permission (used in new dashboard widget):
 - `view_team_member` - view the teamlead and members for the teams of the current user
-- `view_team_project_budget` - view the budget for projects linked to the teams of the current user
 
 ### Possible BC breaks
 

@@ -76,6 +76,6 @@ class UserTeamProjects extends SimpleWidget implements AuthorizedWidget
      */
     public function getPermissions(): array
     {
-        return ['view_team_project_budget'];
+        return ['budget_team_project', 'budget_teamlead_project', 'budget_project'];
     }
 }
