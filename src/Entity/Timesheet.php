@@ -251,6 +251,10 @@ class Timesheet implements EntityWithMetaFields, InvoiceItemInterface
      */
     public function setDuration($duration): Timesheet
     {
+        if (null === $duration || $duration < 0) {
+            $duration = 0;
+        }
+
         $this->duration = $duration;
 
         return $this;
@@ -263,6 +267,10 @@ class Timesheet implements EntityWithMetaFields, InvoiceItemInterface
      */
     public function getDuration(): int
     {
+        if (null === $this->duration) {
+            return 0;
+        }
+
         return $this->duration;
     }
 

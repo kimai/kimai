@@ -49,6 +49,16 @@ class TimesheetTest extends TestCase
         $this->assertEquals(0, $sut->getMetaFields()->count());
         $this->assertNull($sut->getMetaField('foo'));
     }
+    
+    public function testDurationCannotBeNull()
+    {
+        $sut = new Timesheet();
+        self::assertEquals(0, $sut->getDuration());
+        $sut->setDuration(null);
+        self::assertEquals(0, $sut->getDuration());
+        $sut->setDuration(-1);
+        self::assertEquals(0, $sut->getDuration());
+    }
 
     protected function getEntity()
     {
