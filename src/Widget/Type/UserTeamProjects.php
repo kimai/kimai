@@ -9,6 +9,7 @@
 
 namespace App\Widget\Type;
 
+use App\Entity\Project;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Repository\ProjectRepository;
@@ -52,8 +53,9 @@ class UserTeamProjects extends SimpleWidget implements AuthorizedWidget
 
         /** @var Team $team */
         foreach ($user->getTeams() as $team) {
+            /** @var Project $project */
             foreach ($team->getProjects() as $project) {
-                if (!$project->isVisible()) {
+                if (!$project->isVisible() || !$project->getCustomer()->isVisible()) {
                     continue;
                 }
                 $projects[$project->getId()] = $project;
