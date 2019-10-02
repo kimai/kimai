@@ -130,7 +130,6 @@ class AvatarService
 
         if ($regenerate || !file_exists($filePath)) {
             if (!is_writable(dirname($filePath))) {
-                // FIXME add logging
                 return false;
             }
             $avatar = new Avatar(self::AVATAR_CONFIG);

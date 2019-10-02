@@ -14,7 +14,7 @@ interface AuthorizedWidget
     /**
      * Return a list of granted syntax string.
      * If ANY of the given permission strings matches, access is granted.
-     * 
+     *
      * @return string[]
      */
     public function getPermissions(): array;

@@ -21,20 +21,22 @@ class ProjectStatisticTest extends TestCase
     public function testDefaultValues()
     {
         $sut = new ProjectStatistic(new Project());
-        $this->assertEquals(0, $sut->getActivityAmount());
-        $this->assertEquals(0, $sut->getRecordAmount());
-        $this->assertEquals(0, $sut->getRecordDuration());
+        self::assertEquals(0, $sut->getActivityAmount());
+        self::assertEquals(0, $sut->getRecordAmount());
+        self::assertEquals(0, $sut->getRecordDuration());
     }
 
     public function testSetter()
     {
-        $sut = new ProjectStatistic(new Project());
+        $project = new Project();
+        $sut = new ProjectStatistic($project);
         $sut->setRecordAmount(7654.298);
         $sut->setRecordDuration(826.10);
         $sut->setActivityAmount(13);
 
-        $this->assertEquals(13, $sut->getActivityAmount());
-        $this->assertEquals(7654, $sut->getRecordAmount());
-        $this->assertEquals(826, $sut->getRecordDuration());
+        self::assertEquals(13, $sut->getActivityAmount());
+        self::assertEquals(7654, $sut->getRecordAmount());
+        self::assertEquals(826, $sut->getRecordDuration());
+        self::assertSame($project, $sut->getProject());
     }
 }
