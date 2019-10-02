@@ -608,7 +608,7 @@ class TimesheetRepository extends EntityRepository
 
         if (!empty($query->getTeams())) {
             foreach ($query->getTeams() as $team) {
-                foreach($team->getUsers() as $teamUser) {
+                foreach ($team->getUsers() as $teamUser) {
                     $user[] = $teamUser;
                 }
             }
