@@ -32,7 +32,7 @@ interface InvoiceItemInterface
 
     public function getEnd(): ?\DateTime;
 
-    public function getDuration(): int;
+    public function getDuration(): ?int;
 
     public function getDescription(): ?string;
 

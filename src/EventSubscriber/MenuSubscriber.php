@@ -159,6 +159,12 @@ final class MenuSubscriber implements EventSubscriberInterface
                 new MenuItemModel('system_configuration', 'menu.system_configuration', 'system_configuration', [], $this->getIcon('configuration'))
             );
         }
+
+        if ($auth->isGranted('system_information')) {
+            $menu->addChild(
+                new MenuItemModel('doctor', 'menu.doctor', 'doctor', [], $this->getIcon('doctor'))
+            );
+        }
     }
 
     private function getIcon(string $icon)

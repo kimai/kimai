@@ -300,10 +300,6 @@
                 <source>dashboard.subtitle</source>
                 <target>Üdv!</target>
             </trans-unit>
-            <trans-unit id="dashboard.you">
-                <source>dashboard.you</source>
-                <target>Az én statiisztikáim</target>
-            </trans-unit>
             <trans-unit id="dashboard.all">
                 <source>dashboard.all</source>
                 <target>Minden felhasználó</target>

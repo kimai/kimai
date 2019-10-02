@@ -158,7 +158,6 @@ class UserFixtures extends Fixture
                 ->setUsername($username)
                 ->setEmail($email)
                 ->setRoles([User::ROLE_USER])
-                ->setAvatar(self::DEFAULT_AVATAR)
                 ->setEnabled(true)
                 ->setPassword($passwordEncoder->encodePassword($user, self::DEFAULT_PASSWORD))
                 ->setPreferences($this->getUserPreferences($user))

@@ -10,7 +10,7 @@
 namespace App\Controller;
 
 use App\Constants;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -32,64 +32,9 @@ class AboutController extends AbstractController
     }
 
     /**
-     * @Route(path="/debug", name="about_debug", methods={"GET"})
-     *
-     * @Security("is_granted('system_information')")
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function debugAction()
-    {
-        $phpInfo = $this->getPhpInfo();
-        unset($phpInfo[0]);
-        unset($phpInfo[1]);
-
-        $ini = [
-            'allow_url_fopen',
-            'allow_url_include',
-            'default_charset',
-            'default_mimetype',
-            'display_errors',
-            'error_log',
-            'error_reporting',
-            'log_errors',
-            'max_execution_time',
-            'memory_limit',
-            'open_basedir',
-            'post_max_size',
-            'sys_temp_dir',
-            'date.timezone',
-        ];
-
-        $settings = [];
-        foreach ($ini as $name) {
-            try {
-                $settings[$name] = ini_get($name);
-            } catch (\Exception $ex) {
-                $settings[$name] = "Couldn't load ini setting: " . $ex->getMessage();
-            }
-        }
-
-        return $this->render('about/system.html.twig', array_merge(
-            [
-            'modules' => get_loaded_extensions(),
-            'dotenv' => [
-                'APP_ENV' => getenv('APP_ENV'),
-                'MAILER_FROM' => getenv('MAILER_FROM'),
-                'CORS_ALLOW_ORIGIN' => getenv('CORS_ALLOW_ORIGIN'),
-            ],
-            'info' => $phpInfo,
-            'settings' => $settings,
-            ]
-        ));
-    }
-
-    /**
      * @Route(path="", name="about", methods={"GET"})
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function license()
+    public function license(): Response
     {
         $filename = $this->projectDirectory . '/LICENSE';
 
@@ -107,42 +52,5 @@ class AboutController extends AbstractController
         return $this->render('about/license.html.twig', [
             'license' => $license
         ]);
-    }
-
-    /**
-     * @author https://php.net/manual/en/function.phpinfo.php#117961
-     * @return array
-     */
-    private function getPhpInfo()
-    {
-        $plainText = function ($input) {
-            return trim(html_entity_decode(strip_tags($input)));
-        };
-
-        ob_start();
-        phpinfo(1);
-
-        $phpinfo = ['phpinfo' => []];
-
-        if (preg_match_all(
-            '#(?:<h2.*?>(?:<a.*?>)?(.*?)(?:<\/a>)?<\/h2>)|' .
-            '(?:<tr.*?><t[hd].*?>(.*?)\s*</t[hd]>(?:<t[hd].*?>(.*?)\s*</t[hd]>(?:<t[hd].*?>(.*?)\s*</t[hd]>)?)?</tr>)#s',
-            ob_get_clean(),
-            $matches,
-            PREG_SET_ORDER
-        )) {
-            foreach ($matches as $match) {
-                $fn = $plainText;
-                if (isset($match[3])) {
-                    $keys1 = array_keys($phpinfo);
-                    $phpinfo[end($keys1)][$fn($match[2])] = isset($match[4]) ? [$fn($match[3]), $fn($match[4])] : $fn($match[3]);
-                } else {
-                    $keys1 = array_keys($phpinfo);
-                    $phpinfo[end($keys1)][] = $fn($match[2]);
-                }
-            }
-        }
-
-        return $phpinfo['phpinfo'];
     }
 }

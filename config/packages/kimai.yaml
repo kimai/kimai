@@ -101,16 +101,17 @@ kimai:
             RATE_OTHER: ['view_rate_other_timesheet','edit_rate_other_timesheet']
             EXPORT: ['create_export','edit_export_own_timesheet','edit_export_other_timesheet']
             TEAMS: ['view_team','create_team','edit_team','delete_team']
+            TEAM_INFO: ['view_team_member', 'view_team_project_budget']
             # some single default definitions for roles 
             SINGLE_USER: []
             SINGLE_TEAMLEAD: ['view_rate_own_timesheet','view_rate_other_timesheet','hourly-rate_own_profile']
             SINGLE_ADMIN: ['hourly-rate_own_profile','edit_exported_timesheet','teams_own_profile']
             SINGLE_SUPER_ADMIN: ['hourly-rate_own_profile','hourly-rate_other_profile','delete_own_profile','roles_own_profile','system_information','system_configuration','plugins','edit_exported_timesheet','teams_own_profile']
-            # link above sets to one set for each user role
-            ROLE_USER: ['@TIMESHEET','@PROFILE']
-            ROLE_TEAMLEAD: ['@ACTIVITIES_TEAM','@PROJECTS_TEAM','@CUSTOMERS_TEAM','@TIMESHEET_OTHER','@INVOICE','@TIMESHEET','@PROFILE','@EXPORT','@TAGS','@SINGLE_TEAMLEAD']
-            ROLE_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_TEMPLATE','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@TAGS','@SINGLE_ADMIN']
-            ROLE_SUPER_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_TEMPLATE','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@PROFILE_OTHER','@USER','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@TAGS','@SINGLE_SUPER_ADMIN']
+            # link above sets to one complete set for each user role
+            ROLE_USER: ['@TIMESHEET','@PROFILE','@TEAM_INFO']
+            ROLE_TEAMLEAD: ['@ACTIVITIES_TEAM','@PROJECTS_TEAM','@CUSTOMERS_TEAM','@TIMESHEET_OTHER','@INVOICE','@TIMESHEET','@PROFILE','@EXPORT','@TAGS','@SINGLE_TEAMLEAD','@TEAM_INFO']
+            ROLE_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_TEMPLATE','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@TAGS','@SINGLE_ADMIN','@TEAM_INFO']
+            ROLE_SUPER_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_TEMPLATE','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@PROFILE_OTHER','@USER','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@TAGS','@SINGLE_SUPER_ADMIN','@TEAM_INFO']
         # mapping "sets" or permissions to user roles ("role name" = [array of "set names"])
         maps:
             ROLE_USER: ['ROLE_USER']
@@ -171,16 +172,21 @@ kimai:
 # --------------------------------------------------------------------------------
     dashboard:
         user_duration:
-            title: dashboard.you
+            title: stats.yourWorkingHours
             order: 10
             permission: ROLE_USER
-            type: 'compoundChart'
+            type: '\App\Widget\Type\CompoundChart'
             widgets: [DailyWorkingTimeChart, userDurationToday, userDurationWeek, userDurationMonth, userDurationYear]
         user_rates:
             title: ~
             order: 20
             permission: view_rate_own_timesheet
             widgets: [userAmountToday, userAmountWeek, userAmountMonth, userAmountYear]
+        user_teams:
+            title: ~
+            order: 15
+            permission: ROLE_USER
+            widgets: [UserTeams, UserTeamProjects]
         duration:
             title: dashboard.all
             order: 30

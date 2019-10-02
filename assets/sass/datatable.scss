@@ -272,6 +272,9 @@ table.dataTable th.sortable {
 }
 
 table.dataTable.table > tbody > tr > td {
+    &.avatars {
+        line-height: 40px;
+    }    
     vertical-align: middle;
     .img-circle {
         max-width: 35px;

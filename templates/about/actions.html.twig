@@ -1,0 +1,8 @@
+{% macro about(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {'about': {'url': path('about')}} %}
+
+    {% set event = trigger('actions.about', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}

@@ -249,10 +249,6 @@
                 <source>dashboard.subtitle</source>
                 <target>مرحباً!</target>
             </trans-unit>
-            <trans-unit id="dashboard.you">
-                <source>dashboard.you</source>
-                <target>إحصائياتي</target>
-            </trans-unit>
             <trans-unit id="dashboard.all">
                 <source>dashboard.all</source>
                 <target>جميع المستخدمين</target>

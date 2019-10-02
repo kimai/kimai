@@ -44,6 +44,10 @@
         {{ macro.label(role, 'danger') }}
     {% elseif role == 'ROLE_ADMIN' %}
         {{ macro.label(role, 'warning') }}
+    {% elseif role == 'ROLE_TEAMLEAD' %}
+        {{ macro.label(role, 'success') }}
+    {% elseif role == 'ROLE_USER' %}
+        {{ macro.label(role, 'gray') }}
     {% else %}
         {{ macro.label(role, 'primary') }}
     {% endif %}
@@ -64,7 +68,7 @@
 {% endmacro %}
 
 {% macro user_avatar(user, tooltip) %}
-    {% set avatar = user.avatar|default(asset(admin_lte_context.default_avatar)) %}
+    {% set avatar = avatar(user, admin_lte_context.default_avatar) %}
     {% set showTooltip = tooltip|default(true) %}
     {% if tooltip is not defined or tooltip is same as (false)%}
     <img src="{{ avatar }}" class="{{ class|default('img-circle') }}" alt="{{ user.displayName }}" />

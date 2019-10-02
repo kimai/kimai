@@ -74,7 +74,7 @@ class ProjectRepository extends EntityRepository
 
     public function getProjectStatistics(Project $project): ProjectStatistic
     {
-        $stats = new ProjectStatistic();
+        $stats = new ProjectStatistic($project);
 
         $qb = $this->getEntityManager()->createQueryBuilder();
 

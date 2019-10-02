@@ -219,10 +219,10 @@ class TimesheetEditForm extends AbstractType
                             /** @var Project $project */
                             $project = $repo->find($project);
                             if (null !== $project) {
-                                if (!$project->getCustomer()->getVisible()) {
+                                if (!$project->getCustomer()->isVisible()) {
                                     $customer = null;
                                     $project = null;
-                                } elseif (!$project->getVisible()) {
+                                } elseif (!$project->isVisible()) {
                                     $project = null;
                                 }
                             }

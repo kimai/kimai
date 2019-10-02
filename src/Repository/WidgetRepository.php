@@ -12,6 +12,8 @@ namespace App\Repository;
 use App\Entity\User;
 use App\Security\CurrentUser;
 use App\Widget\Type\AbstractWidgetType;
+use App\Widget\Type\Counter;
+use App\Widget\Type\YearChart;
 use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 
@@ -79,6 +81,12 @@ class WidgetRepository
         return $this->widgets[$id];
     }
 
+    /**
+     * @param string $name
+     * @param array $widget
+     * @return WidgetInterface
+     * @throws WidgetException
+     */
     protected function create(string $name, array $widget): WidgetInterface
     {
         $user = $this->user;
@@ -88,23 +96,33 @@ class WidgetRepository
 
         if (!isset($widget['type'])) {
             @trigger_error('Using a widget definition without a "type" is deprecated', E_USER_DEPRECATED);
-            $widget['type'] = 'counter';
+            $widget['type'] = Counter::class;
         }
-
-        $widgetClassName = '\\App\\Widget\\Type\\' . ucfirst($widget['type']);
+        $widgetClassName = ucfirst($widget['type']);
         if (!class_exists($widgetClassName)) {
             throw new WidgetException(sprintf('Unknown widget type "%s"', $widgetClassName));
         }
 
-        $model = new \ReflectionClass($widgetClassName);
-        if (!$model->isSubclassOf(AbstractWidgetType::class)) {
-            throw new WidgetException(sprintf('Invalid widget type "%s" does not extend AbstractWidgetType', $widgetClassName));
-        }
-
-        $data = $this->repository->getStatistic($widget['query'], $begin, $end, $theUser);
-
         /** @var AbstractWidgetType $model */
         $model = new $widgetClassName();
+        if (!($model instanceof AbstractWidgetType)) {
+            throw new WidgetException(
+                sprintf(
+                    'Widget type "%s" is not an instance of "%s"',
+                    $widgetClassName,
+                    AbstractWidgetType::class
+                )
+            );
+        }
+
+        try {
+            $data = $this->repository->getStatistic($widget['query'], $begin, $end, $theUser);
+        } catch (\Exception $ex) {
+            throw new WidgetException(
+                'Failed loading widget data: ' . $ex->getMessage()
+            );
+        }
+
         $model
             ->setId($name)
             ->setTitle($widget['title'])
@@ -140,7 +158,7 @@ class WidgetRepository
                 'end' => '23:59:59',
                 'icon' => 'duration',
                 'color' => 'green',
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'userDurationWeek' => [
                 'title' => 'stats.durationWeek',
@@ -150,7 +168,7 @@ class WidgetRepository
                 'end' => 'sunday this week 23:59:59',
                 'icon' => 'duration',
                 'color' => 'blue',
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'userDurationMonth' => [
                 'title' => 'stats.durationMonth',
@@ -160,7 +178,7 @@ class WidgetRepository
                 'end' => 'last day of this month 23:59:59',
                 'icon' => 'duration',
                 'color' => 'purple',
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'userDurationYear' => [
                 'title' => 'stats.durationYear',
@@ -170,7 +188,7 @@ class WidgetRepository
                 'end' => '31 december this year 23:59:59',
                 'icon' => 'duration',
                 'color' => 'yellow',
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'userDurationTotal' => [
                 'title' => 'stats.durationTotal',
@@ -178,7 +196,7 @@ class WidgetRepository
                 'user' => true,
                 'icon' => 'duration',
                 'color' => 'red',
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'userAmountToday' => [
                 'title' => 'stats.amountToday',
@@ -188,7 +206,7 @@ class WidgetRepository
                 'end' => '23:59:59',
                 'icon' => 'money',
                 'color' => 'green',
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'userAmountWeek' => [
                 'title' => 'stats.amountWeek',
@@ -198,7 +216,7 @@ class WidgetRepository
                 'end' => 'sunday this week 23:59:59',
                 'icon' => 'money',
                 'color' => 'blue',
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'userAmountMonth' => [
                 'title' => 'stats.amountMonth',
@@ -208,7 +226,7 @@ class WidgetRepository
                 'end' => 'last day of this month 23:59:59',
                 'icon' => 'money',
                 'color' => 'purple',
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'userAmountYear' => [
                 'title' => 'stats.amountYear',
@@ -218,7 +236,7 @@ class WidgetRepository
                 'end' => '31 december this year 23:59:59',
                 'icon' => 'money',
                 'color' => 'yellow',
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'userAmountTotal' => [
                 'title' => 'stats.amountTotal',
@@ -226,7 +244,7 @@ class WidgetRepository
                 'user' => true,
                 'icon' => 'money',
                 'color' => 'red',
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'durationToday' => [
                 'title' => 'stats.durationToday',
@@ -236,7 +254,7 @@ class WidgetRepository
                 'icon' => 'duration',
                 'color' => 'green',
                 'user' => false,
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'durationWeek' => [
                 'title' => 'stats.durationWeek',
@@ -246,7 +264,7 @@ class WidgetRepository
                 'icon' => 'duration',
                 'color' => 'blue',
                 'user' => false,
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'durationMonth' => [
                 'title' => 'stats.durationMonth',
@@ -256,7 +274,7 @@ class WidgetRepository
                 'icon' => 'duration',
                 'color' => 'purple',
                 'user' => false,
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'durationYear' => [
                 'title' => 'stats.durationYear',
@@ -266,7 +284,7 @@ class WidgetRepository
                 'icon' => 'duration',
                 'color' => 'yellow',
                 'user' => false,
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'durationTotal' => [
                 'title' => 'stats.durationTotal',
@@ -274,7 +292,7 @@ class WidgetRepository
                 'icon' => 'duration',
                 'color' => 'red',
                 'user' => false,
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'amountToday' => [
                 'title' => 'stats.amountToday',
@@ -284,7 +302,7 @@ class WidgetRepository
                 'icon' => 'money',
                 'color' => 'green',
                 'user' => false,
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'amountWeek' => [
                 'title' => 'stats.amountWeek',
@@ -294,7 +312,7 @@ class WidgetRepository
                 'icon' => 'money',
                 'color' => 'blue',
                 'user' => false,
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'amountMonth' => [
                 'title' => 'stats.amountMonth',
@@ -304,7 +322,7 @@ class WidgetRepository
                 'icon' => 'money',
                 'color' => 'purple',
                 'user' => false,
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'amountYear' => [
                 'title' => 'stats.amountYear',
@@ -314,7 +332,7 @@ class WidgetRepository
                 'icon' => 'money',
                 'color' => 'yellow',
                 'user' => false,
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'amountTotal' => [
                 'title' => 'stats.amountTotal',
@@ -322,7 +340,7 @@ class WidgetRepository
                 'icon' => 'money',
                 'color' => 'red',
                 'user' => false,
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'activeUsersToday' => [
                 'title' => 'stats.userActiveToday',
@@ -332,7 +350,7 @@ class WidgetRepository
                 'icon' => 'user',
                 'color' => 'green',
                 'user' => false,
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'activeUsersWeek' => [
                 'title' => 'stats.userActiveWeek',
@@ -342,7 +360,7 @@ class WidgetRepository
                 'icon' => 'user',
                 'color' => 'blue',
                 'user' => false,
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'activeUsersMonth' => [
                 'title' => 'stats.userActiveMonth',
@@ -352,7 +370,7 @@ class WidgetRepository
                 'icon' => 'user',
                 'color' => 'purple',
                 'user' => false,
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'activeUsersYear' => [
                 'title' => 'stats.userActiveYear',
@@ -362,7 +380,7 @@ class WidgetRepository
                 'icon' => 'user',
                 'color' => 'yellow',
                 'user' => false,
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'activeUsersTotal' => [
                 'title' => 'stats.userActiveTotal',
@@ -370,7 +388,7 @@ class WidgetRepository
                 'icon' => 'user',
                 'color' => 'red',
                 'user' => false,
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'activeRecordings' => [
                 'title' => 'stats.activeRecordings',
@@ -378,7 +396,7 @@ class WidgetRepository
                 'icon' => 'duration',
                 'color' => 'red',
                 'user' => false,
-                'type' => 'counter'
+                'type' => Counter::class,
             ],
             'userRecapThisYear' => [
                 'title' => 'stats.yourWorkingHours',
@@ -388,7 +406,7 @@ class WidgetRepository
                 'end' => '31 december this year 23:59:59',
                 'color' => '',
                 'icon' => '',
-                'type' => 'yearChart'
+                'type' => YearChart::class,
             ],
             'userRecapLastYear' => [
                 'title' => 'stats.yourWorkingHours',
@@ -398,7 +416,7 @@ class WidgetRepository
                 'end' => '31 december last year 23:59:59',
                 'color' => 'rgba(0,115,183,0.7)|#3b8bba',
                 'icon' => '',
-                'type' => 'yearChart'
+                'type' => YearChart::class,
             ],
             'userRecapTwoYears' => [
                 'title' => 'stats.yourWorkingHours',
@@ -408,7 +426,7 @@ class WidgetRepository
                 'end' => '31 december this year 23:59:59',
                 'color' => 'rgba(0,115,183,0.6)|#3b8bba;rgba(233,233,233,0.8)|#ccc',
                 'icon' => '',
-                'type' => 'yearChart'
+                'type' => YearChart::class,
             ],
             'userRecapThreeYears' => [
                 'title' => 'stats.yourWorkingHours',
@@ -418,7 +436,7 @@ class WidgetRepository
                 'end' => 'this year last day of december 23:59:59',
                 'color' => 'rgba(0,115,183,0.4)|#3b8bba;rgba(233,233,233,0.7)|#ccc;rgba(210,214,222,0.9)|#c1c7d1',
                 'icon' => '',
-                'type' => 'yearChart'
+                'type' => YearChart::class,
             ],
         ];
     }

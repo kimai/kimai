@@ -316,10 +316,6 @@
                 <source>dashboard.subtitle</source>
                 <target>Vítejte!</target>
             </trans-unit>
-            <trans-unit id="dashboard.you">
-                <source>dashboard.you</source>
-                <target>Moje statistika</target>
-            </trans-unit>
             <trans-unit id="dashboard.all">
                 <source>dashboard.all</source>
                 <target>Všichni uživatelé</target>
@@ -678,7 +674,7 @@
             </trans-unit>
             <trans-unit id="stats.yourWorkingHours">
                 <source>stats.yourWorkingHours</source>
-                <target>Your working hours</target>
+                <target>My working hours</target>
             </trans-unit>
             <trans-unit id="stats.amountToday">
                 <source>stats.amountToday</source>

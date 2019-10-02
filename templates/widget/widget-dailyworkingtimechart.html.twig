@@ -15,14 +15,6 @@
 {{ encore_entry_link_tags('chart') }}
 {{ encore_entry_script_tags('chart') }}
 
-{% if not title is empty %}
-<p class="text-center">
-    <strong>
-       {{ title|trans }}
-    </strong>
-</p>
-{% endif %}
-
 <div class="chart">
     <canvas id="{{ chart_id }}" style="height: {{ kimai_context.chart.height }}px;"></canvas>
 </div>

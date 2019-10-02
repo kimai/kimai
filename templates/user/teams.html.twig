@@ -1,0 +1,54 @@
+{% extends 'user/layout.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+
+{% block main %}
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="box box-{{ admin_lte_context.widget.type }} data_table">
+                <div class="box-body no-padding">
+                    <div class="dataTables_wrapper form-inline dt-bootstrap">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-hover dataTable" role="grid">
+                                    <thead>
+                                    <tr>
+                                        <th>{{ 'label.team'|trans }}</th>
+                                        <th>{{ 'label.teamlead'|trans }}</th>
+                                        <th>{{ 'label.user'|trans }}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for team in user.teams %}
+                                        <tr>
+                                            <td>
+                                                {{ team.name }}
+                                            </td>
+                                            <td>
+                                                {{ widgets.user_avatar(team.teamlead) }}
+                                                {#
+                                                {{ widgets.label(team.teamlead.displayName, 'success', 'label.teamlead'|trans) }}
+                                                #}
+                                            </td>
+                                            <td class="avatars">
+                                                {% for user in team.users %}
+                                                    {{ widgets.user_avatar(user) }}
+                                                    {#
+                                                    {{ widgets.label_user(user) }}
+                                                    #}
+                                                {% endfor %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

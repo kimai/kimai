@@ -10,9 +10,19 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 ## [1.4](https://github.com/kevinpapst/kimai2/releases/tag/1.4)
 
+**Attention**: There is a new directory, which needs to be writable by the webserver: `public/avatars/`.
+
+New permissions (used in new widgets for Dashboard):
+- `view_team_member` - view the teamlead and members for the teams of the current user
+- `view_team_project_budget` - view the budget for projects linked to the teams of the current user
+
 ### Possible BC breaks
 
-- Activate Javascript select component by default
+- Activated Javascript select component by default
+
+### BC breaks for devs
+
+- Dashboard widgets and rows need to define their `type` by FQCN
 - Switched to Symfony 4.3 event types, this could fail in plugins only if they didn't use the official constants for event names
 
 ## [1.3](https://github.com/kevinpapst/kimai2/releases/tag/1.3)

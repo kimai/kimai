@@ -1,0 +1,142 @@
+{% extends 'base.html.twig' %}
+{% import "doctor/actions.html.twig" as actions %}
+
+{% block page_title %}{{ 'menu.doctor'|trans }}{% endblock %}
+{% block page_actions %}{{ actions.doctor('index') }}{% endblock %}
+
+{% block main %}
+
+    {% set permissionOpts = {collapsed: true, boxtype: 'success'} %}
+    {% for name, value in directories %}
+        {% if value is same as (false) %}
+            {% set permissionOpts = {boxtype: 'danger'} %}
+        {% endif %}
+    {% endfor %}
+
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' with permissionOpts %}
+        {% block box_title %}File permissions{% endblock %}
+        {% block box_body %}
+            <p>
+                If you see a warning icon <i class="{{ 'warning'|icon }} text-red"></i> in the list below, you should talk to your administrator.
+                The path is either not readable or not writable and Kimai might not work as expected.
+            </p>
+            <table class="table">
+                {% for name, value in directories %}
+                    <tr>
+                        <th style="width:15%">{{ name }}</th>
+                        <td>
+                            {% if value is same as (false) %}
+                                <i class="{{ 'warning'|icon }} text-red"></i>
+                            {% else %}
+                                <i class="{{ 'success'|icon }} text-green"></i>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endblock %}
+    {% endembed %}
+
+    {% set extensionOpts = {collapsed: true, boxtype: 'success'} %}
+    {% for name, value in extensions %}
+        {% if value is same as (false) %}
+            {% set extensionOpts = {boxtype: 'danger'} %}
+        {% endif %}
+    {% endfor %}
+
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' with extensionOpts %}
+        {% block box_title %}Required PHP extensions{% endblock %}
+        {% block box_body %}
+            <p>
+                If you see a warning icon <i class="{{ 'warning'|icon }} text-red"></i> in the list below, you should talk to your administrator. 
+                There is a missing PHP extension and Kimai might not work as expected.
+            </p>
+            <table class="table">
+                {% for name, value in extensions %}
+                    <tr>
+                        <th style="width:15%">{{ name }}</th>
+                        <td>
+                            {% if value is same as (false) %}
+                                <i class="{{ 'warning'|icon }} text-red"></i>
+                            {% else %}
+                                <i class="{{ 'success'|icon }} text-green"></i>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endblock %}
+    {% endembed %}
+
+    {% set logOpts = {collapsed: true, boxtype: 'success'} %}
+    {% if logSize > 52428800 %}
+        {% set logOpts = {boxtype: 'danger'} %}
+    {% endif %}
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' with logOpts %}
+        {% block box_title %}Logfile (max. {{ logLines }} last lines){% endblock %}
+        {% block box_body %}
+            {% if logSize > 52428800 %}
+                <p>Your logfile is larger than 50 MB, consider deleting it (it will be re-created automatically).</p>
+            {% endif %}
+            <pre>{% for logLine in logs %}
+                {{- logLine -}}
+            {% endfor %}</pre>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' with {collapsed: true} %}
+        {% block box_title %}Environment variables{% endblock %}
+        {% block box_body %}
+            <table class="table">
+                {% for name, value in dotenv %}
+                    <tr>
+                        <th style="width:15%">{{ name }}</th>
+                        <td>{{ value }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' with {collapsed: true} %}
+        {% block box_title %}PHP{% endblock %}
+        {% block box_body %}
+            <table class="table">
+                <tr>
+                    <th style="width:15%">Version</th>
+                    <td>{{ constant('PHP_VERSION') }}</td>
+                </tr>
+                <tr>
+                    <th style="width:15%;max-width:25%">Modules</th>
+                    <td>{{ modules|join(', ') }}</td>
+                </tr>
+                {% for name, value in settings %}
+                    <tr>
+                        <th style="width:15%">{{ name }}</th>
+                        <td>
+                            {% if value is empty %}
+                                <i>unknown</i>
+                            {% else %}
+                                {{ value }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' with {collapsed: true} %}
+        {% block box_title %}Server{% endblock %}
+        {% block box_body %}
+            <table class="table">
+                {% for name, value in info %}
+                    <tr>
+                        <th style="width:15%">{{ name }}</th>
+                        <td>{{ value|raw }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

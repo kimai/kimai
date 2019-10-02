@@ -140,11 +140,11 @@ class TimesheetVoter extends AbstractVoter
             return false;
         }
 
-        if (!$timesheet->getActivity()->getVisible() || !$timesheet->getProject()->getVisible()) {
+        if (!$timesheet->getActivity()->isVisible() || !$timesheet->getProject()->isVisible()) {
             return false;
         }
 
-        if (!$timesheet->getProject()->getCustomer()->getVisible()) {
+        if (!$timesheet->getProject()->getCustomer()->isVisible()) {
             return false;
         }
 

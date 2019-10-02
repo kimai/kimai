@@ -27,10 +27,15 @@ abstract class AbstractMergedCalculator extends AbstractCalculator
 
     protected function mergeInvoiceItems(InvoiceItem $invoiceItem, InvoiceItemInterface $entry)
     {
+        $duration = $invoiceItem->getDuration();
+        if (null !== $entry->getDuration()) {
+            $duration += $entry->getDuration();
+        }
+
         $invoiceItem->setAmount($invoiceItem->getAmount() + 1);
         $invoiceItem->setUser($entry->getUser());
         $invoiceItem->setRate($invoiceItem->getRate() + $entry->getRate());
-        $invoiceItem->setDuration($invoiceItem->getDuration() + $entry->getDuration());
+        $invoiceItem->setDuration($duration);
 
         if (null !== $entry->getFixedRate()) {
             /*

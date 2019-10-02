@@ -54,8 +54,9 @@
                     </td>
                 {% endfor %}
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'roles') }}">
+                    {% set showUserRole = entry.roles|length == 1 %}
                     {% for role in entry.roles %}
-                        {% if role != 'ROLE_USER' %}
+                        {% if showUserRole or role != 'ROLE_USER' %}
                             {{ widgets.label_role(role) }}
                         {% endif %}
                     {% endfor %}

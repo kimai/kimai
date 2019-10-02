@@ -28,36 +28,36 @@ class TimesheetTest extends TestCase
     public function testDefaultValues()
     {
         $sut = new Timesheet();
-        $this->assertNull($sut->getId());
-        $this->assertNull($sut->getBegin());
-        $this->assertNull($sut->getEnd());
-        $this->assertSame(0, $sut->getDuration());
-        $this->assertNull($sut->getUser());
-        $this->assertNull($sut->getActivity());
-        $this->assertNull($sut->getProject());
-        $this->assertNull($sut->getDescription());
-        $this->assertSame(0.00, $sut->getRate());
-        $this->assertNull($sut->getFixedRate());
-        $this->assertNull($sut->getHourlyRate());
-        $this->assertEquals(new ArrayCollection(), $sut->getTags());
-        $this->assertEquals([], $sut->getTagsAsArray());
-        $this->assertInstanceOf(Timesheet::class, $sut->setFixedRate(13.47));
-        $this->assertEquals(13.47, $sut->getFixedRate());
-        $this->assertInstanceOf(Timesheet::class, $sut->setHourlyRate(99));
-        $this->assertEquals(99, $sut->getHourlyRate());
-        $this->assertInstanceOf(Collection::class, $sut->getMetaFields());
-        $this->assertEquals(0, $sut->getMetaFields()->count());
-        $this->assertNull($sut->getMetaField('foo'));
+        self::assertNull($sut->getId());
+        self::assertNull($sut->getBegin());
+        self::assertNull($sut->getEnd());
+        self::assertSame(0, $sut->getDuration());
+        self::assertNull($sut->getUser());
+        self::assertNull($sut->getActivity());
+        self::assertNull($sut->getProject());
+        self::assertNull($sut->getDescription());
+        self::assertSame(0.00, $sut->getRate());
+        self::assertNull($sut->getFixedRate());
+        self::assertNull($sut->getHourlyRate());
+        self::assertEquals(new ArrayCollection(), $sut->getTags());
+        self::assertEquals([], $sut->getTagsAsArray());
+        self::assertInstanceOf(Timesheet::class, $sut->setFixedRate(13.47));
+        self::assertEquals(13.47, $sut->getFixedRate());
+        self::assertInstanceOf(Timesheet::class, $sut->setHourlyRate(99));
+        self::assertEquals(99, $sut->getHourlyRate());
+        self::assertInstanceOf(Collection::class, $sut->getMetaFields());
+        self::assertEquals(0, $sut->getMetaFields()->count());
+        self::assertNull($sut->getMetaField('foo'));
     }
-    
-    public function testDurationCannotBeNull()
+
+    public function testDurationCanBeNull()
     {
         $sut = new Timesheet();
         self::assertEquals(0, $sut->getDuration());
         $sut->setDuration(null);
-        self::assertEquals(0, $sut->getDuration());
+        self::assertNull($sut->getDuration());
         $sut->setDuration(-1);
-        self::assertEquals(0, $sut->getDuration());
+        self::assertEquals(-1, $sut->getDuration());
     }
 
     protected function getEntity()
@@ -94,11 +94,11 @@ class TimesheetTest extends TestCase
         $sut->addTag($tag);
         $sut->addTag($tag1);
 
-        $this->assertEquals([0 => 'bar', 1 => 'foo'], $sut->getTagsAsArray());
-        $this->assertEquals(new ArrayCollection([$tag, $tag1]), $sut->getTags());
+        self::assertEquals([0 => 'bar', 1 => 'foo'], $sut->getTagsAsArray());
+        self::assertEquals(new ArrayCollection([$tag, $tag1]), $sut->getTags());
 
         $sut->removeTag($tag);
-        $this->assertEquals([1 => 'foo'], $sut->getTagsAsArray());
+        self::assertEquals([1 => 'foo'], $sut->getTagsAsArray());
 
         $sut->removeTag($tag1);
         $this->assertEmpty($sut->getTags());
@@ -109,7 +109,7 @@ class TimesheetTest extends TestCase
         $sut = new Timesheet();
         $meta = new TimesheetMeta();
         $meta->setName('foo')->setValue('bar')->setType('test');
-        $this->assertInstanceOf(Timesheet::class, $sut->setMetaField($meta));
+        self::assertInstanceOf(Timesheet::class, $sut->setMetaField($meta));
         self::assertEquals(1, $sut->getMetaFields()->count());
         $result = $sut->getMetaField('foo');
         self::assertSame($result, $meta);
@@ -117,7 +117,7 @@ class TimesheetTest extends TestCase
 
         $meta2 = new TimesheetMeta();
         $meta2->setName('foo')->setValue('bar')->setType('test2');
-        $this->assertInstanceOf(Timesheet::class, $sut->setMetaField($meta2));
+        self::assertInstanceOf(Timesheet::class, $sut->setMetaField($meta2));
         self::assertEquals(1, $sut->getMetaFields()->count());
         self::assertCount(0, $sut->getVisibleMetaFields());
 

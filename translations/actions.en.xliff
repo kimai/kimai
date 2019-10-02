@@ -28,7 +28,7 @@
             </trans-unit>
             <trans-unit id="profile-stats">
                 <source>profile-stats</source>
-                <target>Statistics</target>
+                <target>Profile</target>
             </trans-unit>
             <trans-unit id="settings">
                 <source>settings</source>

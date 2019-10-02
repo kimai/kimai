@@ -160,6 +160,10 @@
                 <source>menu.tags</source>
                 <target>Schlagworte</target>
             </trans-unit>
+            <trans-unit id="menu.doctor">
+                <source>menu.doctor</source>
+                <target>Doktor</target>
+            </trans-unit>
 
             <!--
               Error templates
@@ -328,10 +332,6 @@
                 <source>dashboard.subtitle</source>
                 <target>Willkommen!</target>
             </trans-unit>
-            <trans-unit id="dashboard.you">
-                <source>dashboard.you</source>
-                <target>Meine Statistiken</target>
-            </trans-unit>
             <trans-unit id="dashboard.all">
                 <source>dashboard.all</source>
                 <target>Alle Benutzer</target>
@@ -347,6 +347,22 @@
             <trans-unit id="label.toggle_dropdown">
                 <source>label.toggle_dropdown</source>
                 <target>Menü anzeigen</target>
+            </trans-unit>
+            <trans-unit id="label.my_teams">
+                <source>label.my_teams</source>
+                <target>Meine Teams</target>
+            </trans-unit>
+            <trans-unit id="label.my_team_projects">
+                <source>label.my_team_projects</source>
+                <target>Team Projekte &amp; Budgets</target>
+            </trans-unit>
+            <trans-unit id="label.progress">
+                <source>label.progress</source>
+                <target>Fortschritt</target>
+            </trans-unit>
+            <trans-unit id="label.plus_more">
+                <source>label.plus_more</source>
+                <target>+%count% weitere</target>
             </trans-unit>
 
             <!--
@@ -658,7 +674,7 @@
             </trans-unit>
             <trans-unit id="stats.yourWorkingHours">
                 <source>stats.yourWorkingHours</source>
-                <target>Deine Arbeitszeiten</target>
+                <target>Meine Arbeitszeiten</target>
             </trans-unit>
             <trans-unit id="stats.amountToday">
                 <source>stats.amountToday</source>
@@ -719,6 +735,14 @@
             <trans-unit id="stats.customerTotal">
                 <source>stats.customerTotal</source>
                 <target>Anzahl Kunden</target>
+            </trans-unit>
+            <trans-unit id="stats.percentUsed">
+                <source>stats.percentUsed</source>
+                <target>%percent%% verwendet</target>
+            </trans-unit>
+            <trans-unit id="stats.percentUsedLeft">
+                <source>stats.percentUsedLeft</source>
+                <target>%percent%% verwendet (noch %left% offen)</target>
             </trans-unit>
 
             <!--

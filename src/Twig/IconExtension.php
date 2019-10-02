@@ -75,6 +75,8 @@ final class IconExtension extends AbstractExtension
         'configuration' => 'fas fa-cogs',
         'mail-sent' => 'fas fa-paper-plane',
         'mail' => 'fas fa-envelope-open',
+        'doctor' => 'fas fa-medkit',
+        'success' => 'fas fa-check',
     ];
 
     /**

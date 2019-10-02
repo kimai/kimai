@@ -26,6 +26,7 @@
         "jms/serializer-bundle": "^3.2",
         "kevinpapst/adminlte-bundle": "~3.0",
         "kimai/kimai2-composer": "^0.1",
+        "laravolt/avatar": "^3.0",
         "mpdf/mpdf": "^7.1",
         "nelmio/api-doc-bundle": "^3.2",
         "nelmio/cors-bundle": "^1.5",

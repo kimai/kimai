@@ -147,6 +147,9 @@
     "gedmo/doctrine-extensions": {
         "version": "v2.4.36"
     },
+    "guzzlehttp/psr7": {
+        "version": "1.6.1"
+    },
     "hoa/compiler": {
         "version": "3.17.08.08"
     },
@@ -186,6 +189,18 @@
     "hoa/zformat": {
         "version": "1.17.01.10"
     },
+    "illuminate/cache": {
+        "version": "v6.0.4"
+    },
+    "illuminate/contracts": {
+        "version": "v6.0.4"
+    },
+    "illuminate/support": {
+        "version": "v6.0.4"
+    },
+    "intervention/image": {
+        "version": "2.5.0"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
@@ -212,6 +227,9 @@
     },
     "kimai/kimai2-composer": {
         "version": "0.1"
+    },
+    "laravolt/avatar": {
+        "version": "3.0.0"
     },
     "markbaker/complex": {
         "version": "1.4.6"
@@ -245,6 +263,9 @@
             "version": "1.5",
             "ref": "f0436fc35fca88eada758311f8de43bfb61f1980"
         }
+    },
+    "nesbot/carbon": {
+        "version": "2.24.0"
     },
     "nette/bootstrap": {
         "version": "v3.0.0"
@@ -363,11 +384,17 @@
     "psr/container": {
         "version": "1.0.0"
     },
+    "psr/http-message": {
+        "version": "1.0.1"
+    },
     "psr/log": {
         "version": "1.0.2"
     },
     "psr/simple-cache": {
         "version": "1.0.0"
+    },
+    "ralouphie/getallheaders": {
+        "version": "3.0.3"
     },
     "sebastian/code-unit-reverse-lookup": {
         "version": "1.0.1"

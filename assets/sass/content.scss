@@ -35,3 +35,17 @@ td {
     line-height: 35px;
     margin-right: 15px;
 }
+
+/* Profile */
+.box-profile {
+    img.img-circle {
+        width: 100px;
+    }
+    .profile-username {
+        margin-top: 15px;
+    }
+}
+
+.label-gray {
+    background-color: $gray-lte;
+}

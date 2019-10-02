@@ -10,9 +10,11 @@
 namespace App\Controller;
 
 use App\Event\DashboardEvent;
-use App\Widget\Type\CompoundChart;
+use App\Widget\Type\AbstractContainer;
+use App\Widget\Type\AuthorizedWidget;
 use App\Widget\Type\CompoundRow;
 use App\Widget\WidgetContainerInterface;
+use App\Widget\WidgetException;
 use App\Widget\WidgetService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -67,11 +69,23 @@ class DashboardController extends AbstractController
                 continue;
             }
 
-            // TODO this should be dynamic
-            if ($widgetRow['type'] === 'compoundChart') {
-                $row = new CompoundChart();
-            } else {
-                $row = new CompoundRow();
+            if (!isset($widgetRow['type'])) {
+                $widgetRow['type'] = CompoundRow::class;
+            }
+
+            if (!class_exists($widgetRow['type'])) {
+                throw new WidgetException(sprintf('Unknown widget type "%s"', $widgetRow['type']));
+            }
+
+            $row = new $widgetRow['type']();
+            if (!($row instanceof AbstractContainer)) {
+                throw new WidgetException(
+                    sprintf(
+                        'Expected widget type to be an instanceof "%s", but found "%s"',
+                        AbstractContainer::class,
+                        $widgetRow['type']
+                    )
+                );
             }
 
             $row->setTitle($widgetRow['title'] ?? '');
@@ -82,7 +96,21 @@ class DashboardController extends AbstractController
                     throw new \Exception(sprintf('Unknown widget "%s"', $widgetName));
                 }
 
-                $row->addWidget($this->widgets->getWidget($widgetName));
+                $widget = $this->widgets->getWidget($widgetName);
+
+                $add = true;
+                if ($widget instanceof AuthorizedWidget) {
+                    foreach ($widget->getPermissions() as $perm) {
+                        if (!$this->isGranted($perm)) {
+                            $add = false;
+                            break;
+                        }
+                    }
+                }
+
+                if ($add) {
+                    $row->addWidget($widget);
+                }
             }
 
             $event->addSection($row);
