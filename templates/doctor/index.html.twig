@@ -68,7 +68,7 @@
         {% endblock %}
     {% endembed %}
 
-    {% set logOpts = {collapsed: true, boxtype: 'success'} %}
+    {% set logOpts = {collapsed: true} %}
     {% if logSize > 52428800 %}
         {% set logOpts = {boxtype: 'danger'} %}
     {% endif %}
