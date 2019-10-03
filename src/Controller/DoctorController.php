@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use PackageVersions\Versions;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -75,6 +76,7 @@ class DoctorController extends AbstractController
                 'logs' => $this->getLog(),
                 'logLines' => $logLines,
                 'logSize' => $this->getLogSize(),
+                'composer' => Versions::VERSIONS,
             ]
         ));
     }

@@ -28,6 +28,6 @@ class DoctorControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/doctor');
 
         $result = $client->getCrawler()->filter('.content .box-header');
-        $this->assertEquals(6, count($result));
+        $this->assertEquals(7, count($result));
     }
 }

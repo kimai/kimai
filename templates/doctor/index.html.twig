@@ -85,6 +85,20 @@
     {% endembed %}
 
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' with {collapsed: true} %}
+        {% block box_title %}Composer packages{% endblock %}
+        {% block box_body %}
+            <table class="table">
+                {% for name, value in composer %}
+                    <tr>
+                        <th style="width:15%">{{ name }}</th>
+                        <td>{{ value }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endblock %}
+    {% endembed %}
+    
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' with {collapsed: true} %}
         {% block box_title %}Environment variables{% endblock %}
         {% block box_body %}
             <table class="table">
