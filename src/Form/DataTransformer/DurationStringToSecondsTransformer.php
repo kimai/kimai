@@ -46,7 +46,7 @@ class DurationStringToSecondsTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param string $formatToInt
+     * @param string|null $formatToInt
      * @return int|null
      */
     public function reverseTransform($formatToInt)

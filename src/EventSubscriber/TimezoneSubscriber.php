@@ -52,7 +52,6 @@ class TimezoneSubscriber implements EventSubscriberInterface
             return false;
         }
 
-        /* @var $user User */
         $user = $this->storage->getToken()->getUser();
 
         if (null === $user) {

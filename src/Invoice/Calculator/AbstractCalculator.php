@@ -69,8 +69,8 @@ abstract class AbstractCalculator
     public function getTax(): float
     {
         $vat = $this->getVat();
-        if (0 === $vat) {
-            return 0;
+        if (0.00 === $vat) {
+            return 0.00;
         }
 
         $percent = $vat / 100.00;
