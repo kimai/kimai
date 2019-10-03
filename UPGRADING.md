@@ -13,7 +13,7 @@ Perform EACH version specific task between your version and the new one, otherwi
 **Attention**: There is a new directory, which needs to be writable by the webserver: `public/avatars/`.
 
 New permission (used in new dashboard widget):
-- `view_team_member` - view the teamlead and members for the teams of the current user
+- `view_team_member` - display team assignments (names, teamleads and members) for the current user
 
 ### Possible BC breaks
 
