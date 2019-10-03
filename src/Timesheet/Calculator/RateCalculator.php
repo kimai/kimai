@@ -56,7 +56,10 @@ class RateCalculator implements CalculatorInterface
         $factor = $this->getRateFactor($record);
 
         $hourlyRate = (float) ($hourlyRate * $factor);
-        $rate = Util::calculateRate($hourlyRate, $record->getDuration());
+        $rate = 0;
+        if (null !== $record->getDuration()) {
+            $rate = Util::calculateRate($hourlyRate, $record->getDuration());
+        }
 
         $record->setHourlyRate($hourlyRate);
         $record->setRate($rate);

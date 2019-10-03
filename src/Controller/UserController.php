@@ -83,7 +83,7 @@ class UserController extends AbstractController
         }
 
         /* @var $entries Pagerfanta */
-        $entries = $this->getRepository()->findByQuery($query);
+        $entries = $this->getRepository()->getPagerfantaForQuery($query);
 
         $event = new UserPreferenceDisplayEvent(UserPreferenceDisplayEvent::USERS);
         $this->dispatcher->dispatch($event);

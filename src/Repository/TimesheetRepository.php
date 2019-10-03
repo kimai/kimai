@@ -341,7 +341,10 @@ class TimesheetRepository extends EntityRepository
                 }
 
                 $duration = $newDateBegin->getTimestamp() - $beginTmp->getTimestamp();
-                $durationPercent = $duration / $result->getDuration();
+                $durationPercent = 0;
+                if ($result->getDuration() !== null && $result->getDuration() > 0) {
+                    $durationPercent = $duration / $result->getDuration();
+                }
                 $rate = $result->getRate() * $durationPercent;
 
                 $results[$dateKey]['rate'] += $rate;
@@ -605,7 +608,9 @@ class TimesheetRepository extends EntityRepository
 
         if (!empty($query->getTeams())) {
             foreach ($query->getTeams() as $team) {
-                $user = array_merge($user, $team->getUsers()->toArray());
+                foreach ($team->getUsers() as $teamUser) {
+                    $user[] = $teamUser;
+                }
             }
         }
 

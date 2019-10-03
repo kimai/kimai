@@ -312,10 +312,6 @@
                 <source>dashboard.subtitle</source>
                 <target state="translated">환영합니다!</target>
             </trans-unit>
-            <trans-unit id="dashboard.you">
-                <source>dashboard.you</source>
-                <target state="translated">나의 통계</target>
-            </trans-unit>
             <trans-unit id="dashboard.all">
                 <source>dashboard.all</source>
                 <target state="translated">모든 사용자</target>

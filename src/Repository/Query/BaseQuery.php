@@ -25,8 +25,17 @@ class BaseQuery
     public const DEFAULT_PAGESIZE = 50;
     public const DEFAULT_PAGE = 1;
 
+    /**
+     * @deprecated since 1.4, will be removed with 1.6
+     */
     public const RESULT_TYPE_OBJECTS = 'Objects';
+    /**
+     * @deprecated since 1.4, will be removed with 1.6
+     */
     public const RESULT_TYPE_PAGER = 'PagerFanta';
+    /**
+     * @deprecated since 1.4, will be removed with 1.6
+     */
     public const RESULT_TYPE_QUERYBUILDER = 'QueryBuilder';
 
     private $defaults = [
@@ -54,6 +63,7 @@ class BaseQuery
     private $order = self::ORDER_ASC;
     /**
      * @var string
+     * @deprecated since 1.4, will be removed with 1.6
      */
     private $resultType = self::RESULT_TYPE_PAGER;
     /**
@@ -179,26 +189,9 @@ class BaseQuery
      */
     public function getResultType()
     {
+        @trigger_error('BaseQuery::getResultType() is deprecated and will be removed with 1.6', E_USER_DEPRECATED);
+
         return $this->resultType;
-    }
-
-    /**
-     * @deprecated since 1.0
-     * @param string $resultType
-     * @return $this
-     * @throws \InvalidArgumentException
-     */
-    public function setResultType(string $resultType)
-    {
-        $allowed = [self::RESULT_TYPE_PAGER, self::RESULT_TYPE_QUERYBUILDER, self::RESULT_TYPE_OBJECTS];
-
-        if (!in_array($resultType, $allowed)) {
-            throw new \InvalidArgumentException('Unsupported query result type');
-        }
-
-        $this->resultType = $resultType;
-
-        return $this;
     }
 
     public function hasSearchTerm(): bool

@@ -103,7 +103,7 @@ abstract class AbstractCalculator
     {
         $time = 0;
         foreach ($this->model->getEntries() as $entry) {
-            if (null === $entry->getFixedRate()) {
+            if (null === $entry->getFixedRate() && null !== $entry->getDuration()) {
                 $time += $entry->getDuration();
             }
         }

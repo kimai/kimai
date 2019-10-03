@@ -12,6 +12,9 @@ namespace App\Repository\Loader;
 use App\Entity\Team;
 use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * @internal
+ */
 final class TeamIdLoader implements LoaderInterface
 {
     /**

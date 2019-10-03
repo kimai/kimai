@@ -300,10 +300,6 @@
                 <source>dashboard.subtitle</source>
                 <target>Willkommen! (ようこそ！)</target>
             </trans-unit>
-            <trans-unit id="dashboard.you">
-                <source>dashboard.you</source>
-                <target>あなたの統計情報</target>
-            </trans-unit>
             <trans-unit id="dashboard.all">
                 <source>dashboard.all</source>
                 <target>全ユーザーの統計情報</target>

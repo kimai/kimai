@@ -1,0 +1,60 @@
+{% import "macros/widgets.html.twig" as widgets %}
+{% import "macros/progressbar.html.twig" as progress %}
+
+{% set projectStats = data %}
+{% set title = options.title|default('label.my_team_projects') %}
+{% set widgetId = options.id %}
+
+{% if projectStats|length > 0 %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-{{ admin_lte_context.widget.type }} WidgetUserTeamProjects" id="{{ widgetId }}">
+            {% if not title is empty %}
+            <div class="box-header with-border">
+                <h3 class="box-title">{{ title|trans }}</h3>
+            </div>
+            {% endif %}
+            <div class="box-body">
+                <table class="table table-hover dataTable" role="grid">
+                    <thead>
+                    <tr>
+                        <th>{{ 'label.project'|trans }}</th>
+                        <th class="hidden-xs">{{ 'label.team'|trans }}</th>
+                        <th style="width:50%">{{ 'label.progress'|trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for stats in projectStats %}
+                        {% set project = stats.project %}
+                        <tr>
+                            <td>
+                                {{ widgets.label_project(stats.project) }}
+                                <br>
+                                <small>{{ widgets.label_customer(stats.project.customer) }}</small>
+                            </td>
+                            <td class="hidden-xs">
+                                {% for team in project.teams %}
+                                    {% if app.user.isInTeam(team) %}
+                                        {{ widgets.label_team(team) }}
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td style="width:50%">
+                                {% if project.timeBudget is not empty and project.timeBudget > 0 %}
+                                    {% set budgetLeft = project.timeBudget - stats.recordDuration %}
+                                    {{ progress.progressbar_small(project.timeBudget, stats.recordDuration, budgetLeft, budgetLeft|duration) }}
+                                {% elseif project.budget is not empty and project.budget > 0 %}
+                                    {% set budgetLeft = project.budget - stats.recordRate %}
+                                    {{ progress.progressbar_small(project.budget, stats.recordRate, budgetLeft, budgetLeft|money(project.customer.currency)) }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endif %}

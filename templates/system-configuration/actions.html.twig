@@ -1,0 +1,9 @@
+{% macro system_configuration(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {} %}
+    {% set actions = actions|merge({'help': {'url': 'configurations.html'|docu_link, 'target': '_blank'}}) %}
+
+    {% set event = trigger('actions.system_configuration', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}

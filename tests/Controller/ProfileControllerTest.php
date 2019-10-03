@@ -35,7 +35,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasNoEntriesWithFilter($client);
-        $this->assertHasProfileBox($client, UserFixtures::USERNAME_USER);
+        $this->assertHasProfileBox($client, 'John Doe');
         $this->assertHasAboutMeBox($client, UserFixtures::USERNAME_USER);
     }
 
@@ -68,7 +68,7 @@ class ProfileControllerTest extends ControllerBaseTest
             $this->assertContains('var userProfileChart' . $year . ' = new Chart(', $content);
         }
 
-        $this->assertHasProfileBox($client, UserFixtures::USERNAME_USER);
+        $this->assertHasProfileBox($client, 'John Doe');
         $this->assertHasAboutMeBox($client, UserFixtures::USERNAME_USER);
     }
 
@@ -76,7 +76,7 @@ class ProfileControllerTest extends ControllerBaseTest
     {
         $profileBox = $client->getCrawler()->filter('div.box-body.box-profile');
         $this->assertEquals(1, $profileBox->count());
-        $profileAvatar = $profileBox->filter('img.profile-user-img');
+        $profileAvatar = $profileBox->filter('img.img-circle');
         $this->assertEquals(1, $profileAvatar->count());
         $alt = $profileAvatar->attr('alt');
 

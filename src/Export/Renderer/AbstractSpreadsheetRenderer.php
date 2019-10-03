@@ -105,6 +105,9 @@ abstract class AbstractSpreadsheetRenderer
 
     protected function setDuration(Worksheet $sheet, $column, $row, $duration)
     {
+        if (null === $duration) {
+            $duration = 0;
+        }
         $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=%s/86400', $duration));
         $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(self::DURATION_FORMAT);
     }

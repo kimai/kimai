@@ -300,10 +300,6 @@
                 <source>dashboard.subtitle</source>
                 <target>Bem vindo!</target>
             </trans-unit>
-            <trans-unit id="dashboard.you">
-                <source>dashboard.you</source>
-                <target>Minhas Estatísticas</target>
-            </trans-unit>
             <trans-unit id="dashboard.all">
                 <source>dashboard.all</source>
                 <target>Todos usuários</target>

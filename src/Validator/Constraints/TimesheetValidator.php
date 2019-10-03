@@ -162,7 +162,7 @@ class TimesheetValidator extends ConstraintValidator
                 ->addViolation();
         }
 
-        if (null === $timesheet->getEnd() && $activity->getVisible() === false) {
+        if (null === $timesheet->getEnd() && !$activity->isVisible()) {
             $context->buildViolation('Cannot start a disabled activity.')
                 ->atPath('activity')
                 ->setTranslationDomain('validators')
@@ -170,7 +170,7 @@ class TimesheetValidator extends ConstraintValidator
                 ->addViolation();
         }
 
-        if (null === $timesheet->getEnd() && $project->getVisible() === false) {
+        if (null === $timesheet->getEnd() && !$project->isVisible()) {
             $context->buildViolation('Cannot start a disabled project.')
                 ->atPath('project')
                 ->setTranslationDomain('validators')
@@ -178,7 +178,7 @@ class TimesheetValidator extends ConstraintValidator
                 ->addViolation();
         }
 
-        if (null === $timesheet->getEnd() && $project->getCustomer()->getVisible() === false) {
+        if (null === $timesheet->getEnd() && !$project->getCustomer()->isVisible()) {
             $context->buildViolation('Cannot start a disabled customer.')
                 ->atPath('customer')
                 ->setTranslationDomain('validators')

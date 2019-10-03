@@ -135,12 +135,11 @@ class Extensions extends AbstractExtension
         }
 
         if ($duration instanceof Timesheet) {
-            $seconds = $duration->getDuration();
             if (null === $duration->getEnd()) {
-                $seconds = time() - $duration->getBegin()->getTimestamp();
+                $duration = time() - $duration->getBegin()->getTimestamp();
+            } else {
+                $duration = $duration->getDuration();
             }
-
-            $duration = $seconds;
         }
 
         return (int) $duration;

@@ -13,6 +13,9 @@ use App\Entity\Activity;
 use App\Entity\Project;
 use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * @internal
+ */
 final class ActivityIdLoader implements LoaderInterface
 {
     /**

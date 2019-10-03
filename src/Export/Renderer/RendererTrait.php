@@ -45,10 +45,15 @@ trait RendererTrait
                 ];
             }
 
+            $duration = $timesheet->getDuration();
+            if (null === $duration) {
+                $duration = 0;
+            }
+
             $summary[$id]['rate'] += $timesheet->getRate();
-            $summary[$id]['duration'] += $timesheet->getDuration();
+            $summary[$id]['duration'] += $duration;
             $summary[$id]['activities'][$activityId]['rate'] += $timesheet->getRate();
-            $summary[$id]['activities'][$activityId]['duration'] += $timesheet->getDuration();
+            $summary[$id]['activities'][$activityId]['duration'] += $duration;
         }
 
         asort($summary);

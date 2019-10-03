@@ -249,10 +249,6 @@
                 <source>dashboard.subtitle</source>
                 <target>Benvenuto!</target>
             </trans-unit>
-            <trans-unit id="dashboard.you">
-                <source>dashboard.you</source>
-                <target>Statistiche</target>
-            </trans-unit>
             <trans-unit id="dashboard.all">
                 <source>dashboard.all</source>
                 <target>Tutti gli utenti</target>

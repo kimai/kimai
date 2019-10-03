@@ -166,8 +166,13 @@ class Project implements EntityWithMetaFields
         return $this;
     }
 
+    public function isVisible(): bool
+    {
+        return $this->visible;
+    }
+
     /**
-     * @return bool
+     * @deprecated since 1.4
      */
     public function getVisible(): bool
     {

@@ -6,6 +6,10 @@
  */
 
 .navbar-nav {
+    img.img-circle {
+        max-height: 26px;
+        margin-top: -2px;
+    }
     li>a.ddt-large {
         padding: 15px 12px 11px 10px;
         font-size: 10px;

@@ -270,3 +270,14 @@ div.dataTables_scrollHead table.table-bordered {
 table.dataTable th.sortable {
     padding-left: 22px;
 }
+
+table.dataTable.table > tbody > tr > td {
+    &.avatars {
+        line-height: 40px;
+    }    
+    vertical-align: middle;
+    .img-circle {
+        max-width: 35px;
+        margin-right: 10px;
+    }
+}

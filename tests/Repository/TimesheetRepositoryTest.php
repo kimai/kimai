@@ -16,7 +16,6 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
-use App\Repository\Query\BaseQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\RepositoryException;
 use App\Repository\TimesheetRepository;
@@ -58,7 +57,6 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
         $this->importFixture($em, $fixtures);
 
         $query = new TimesheetQuery();
-        $query->setResultType(BaseQuery::RESULT_TYPE_OBJECTS);
         $query->setUser($user);
         $query->setState(TimesheetQuery::STATE_STOPPED);
 

@@ -1,0 +1,22 @@
+{% macro plugins(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {'shop': {'url': constant('App\\Constants::HOMEPAGE') ~ '/store/', 'target': '_blank'}} %}
+    {% set actions = actions|merge({'help': {'url': 'plugins.html'|docu_link, 'target': '_blank'}}) %}
+
+    {% set event = trigger('actions.plugins', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}
+
+{% macro plugin(plugin, view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {'home': {'url': plugin.metadata.homepage, 'target': '_blank'}} %}
+
+    {% set event = trigger('actions.plugin', {'actions': actions, 'view': view, 'plugin': plugin}) %}
+    {% if view == 'index' %}
+        {{ widgets.table_actions(event.payload.actions) }}
+    {% else %}
+        {{ widgets.entity_actions(event.payload.actions) }}
+    {% endif %}
+{% endmacro %}

@@ -289,10 +289,6 @@
                 <source>dashboard.subtitle</source>
                 <target>Vitajte!</target>
             </trans-unit>
-            <trans-unit id="dashboard.you">
-                <source>dashboard.you</source>
-                <target>Moje štatistiky</target>
-            </trans-unit>
             <trans-unit id="dashboard.all">
                 <source>dashboard.all</source>
                 <target>Všetci používatelia</target>

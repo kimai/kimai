@@ -102,7 +102,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
 
                 $manager->persist($entry);
 
-                if ($i % self::BATCH_SIZE == 0) {
+                if ($i % self::BATCH_SIZE === 0) {
                     $manager->flush();
                     $manager->clear(Timesheet::class);
                 }

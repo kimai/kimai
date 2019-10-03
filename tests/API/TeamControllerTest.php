@@ -40,14 +40,14 @@ class TeamControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(1, count($result));
+        $this->assertEquals(2, count($result));
         $this->assertStructure($result[0], false);
     }
 
     public function testGetEntity()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/api/teams/1');
+        $this->assertAccessIsGranted($client, '/api/teams/2');
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
@@ -56,7 +56,7 @@ class TeamControllerTest extends APIControllerBaseTest
 
     public function testNotFound()
     {
-        $this->assertEntityNotFound(User::ROLE_USER, '/api/teams/2');
+        $this->assertEntityNotFound(User::ROLE_USER, '/api/teams/3');
     }
 
     public function testDeleteActionWithUnknownTeam()
@@ -67,7 +67,7 @@ class TeamControllerTest extends APIControllerBaseTest
     public function testDeleteAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/api/teams/1');
+        $this->assertAccessIsGranted($client, '/api/teams/2');
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);

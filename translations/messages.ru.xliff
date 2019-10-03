@@ -249,10 +249,6 @@
                 <source>dashboard.subtitle</source>
                 <target>Добро пожаловать!</target>
             </trans-unit>
-            <trans-unit id="dashboard.you">
-                <source>dashboard.you</source>
-                <target>Твоя статистика</target>
-            </trans-unit>
             <trans-unit id="dashboard.all">
                 <source>dashboard.all</source>
                 <target>Все пользователи</target>

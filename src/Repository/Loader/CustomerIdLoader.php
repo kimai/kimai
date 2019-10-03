@@ -12,6 +12,9 @@ namespace App\Repository\Loader;
 use App\Entity\Customer;
 use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * @internal
+ */
 final class CustomerIdLoader implements LoaderInterface
 {
     /**

@@ -44,6 +44,10 @@
         {{ macro.label(role, 'danger') }}
     {% elseif role == 'ROLE_ADMIN' %}
         {{ macro.label(role, 'warning') }}
+    {% elseif role == 'ROLE_TEAMLEAD' %}
+        {{ macro.label(role, 'success') }}
+    {% elseif role == 'ROLE_USER' %}
+        {{ macro.label(role, 'gray') }}
     {% else %}
         {{ macro.label(role, 'primary') }}
     {% endif %}
@@ -56,6 +60,21 @@
 {% macro label_user(user) %}
     {% import _self as macro %}
     {{ macro.label(user.displayName, 'primary') }}
+{% endmacro %}
+
+{% macro label_team(team, class) %}
+    {% import _self as macro %}
+    {{ macro.label(team.name, class|default('primary')) }}
+{% endmacro %}
+
+{% macro user_avatar(user, tooltip) %}
+    {% set avatar = avatar(user, admin_lte_context.default_avatar) %}
+    {% set showTooltip = tooltip|default(true) %}
+    {% if tooltip is not defined or tooltip is same as (false)%}
+    <img src="{{ avatar }}" class="{{ class|default('img-circle') }}" alt="{{ user.displayName }}" />
+    {% else %}
+    <img src="{{ avatar }}" class="{{ class|default('img-circle') }}" data-toggle="tooltip" data-placement="top" alt="{{ user.displayName }}" title="{{ user.displayName }}" />
+    {% endif %}
 {% endmacro %}
 
 {% macro label_activity(activity, url) %}

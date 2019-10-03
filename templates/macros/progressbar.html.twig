@@ -29,3 +29,37 @@
         </div>
     </div>
 {% endmacro %}
+
+{% macro progressbar_small(max, current, leftValue, leftFormatted) %}
+    {% set percentReached = 0 %}
+    {% if max > 0 %}
+        {% set percentReached = (current / (max / 100)) %}
+    {% endif %}
+    {% set class = "progress-bar-info" %}
+    {% set width = percentReached|number_format(1, '.', '') %}
+
+    {% if percentReached > 90 %}
+        {% set class = "progress-bar-danger" %}
+    {% elseif percentReached > 70 %}
+        {% set class = "progress-bar-warning" %}
+    {% elseif percentReached > 50 %}
+        {% set class = "progress-bar-success" %}
+    {% elseif percentReached > 30 %}
+        {% set class = "progress-bar-primary" %}
+    {% endif %}
+
+    {% if width > 100 %}
+        {% set width = 100 %}
+    {% endif %}
+
+    <div class="progress-group">
+        <div class="progress progress-sm">
+            <div class="progress-bar {{ class }}" role="progressbar" aria-valuenow="{{ width }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ width }}%"></div>
+        </div>
+        {% if leftValue is not null and leftValue > 0 %}
+            <small>{{ 'stats.percentUsedLeft'|trans({'%percent%': percentReached|number_format(0), '%left%': leftFormatted}) }}</small>
+        {% else %}
+            <small>{{ 'stats.percentUsed'|trans({'%percent%': percentReached|number_format(0)}) }}</small>
+        {% endif %}
+    </div>
+{% endmacro %}

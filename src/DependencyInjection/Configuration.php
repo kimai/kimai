@@ -12,6 +12,7 @@ namespace App\DependencyInjection;
 use App\Entity\Customer;
 use App\Entity\User;
 use App\Timesheet\Rounding\RoundingInterface;
+use App\Widget\Type\CompoundRow;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -435,7 +436,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayPrototype()
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('type')->defaultValue('simple')->end()
+                        ->scalarNode('type')->defaultValue(CompoundRow::class)->end()
                         ->integerNode('order')->defaultValue(0)->end()
                         ->scalarNode('title')->end()
                         ->scalarNode('permission')->defaultNull()->end()

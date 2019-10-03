@@ -48,10 +48,11 @@
 
     <div class="box box-{{ admin_lte_context.widget.type }}">
         <div class="box-body box-profile">
-            {{ macro.avatar(user.avatar, user.username, 'profile-user-img img-responsive img-circle') }}
-            <h3 class="profile-username text-center">{{ widgets.username(user) }}</h3>
-
-            <p class="text-muted text-center">{{ user.title }}</p>
+            <div class="text-center">
+                {{ widgets.user_avatar(user) }}
+                <h3 class="profile-username">{{ widgets.username(user) }}</h3>
+                <p class="text-muted">{{ user.title }}</p>
+            </div>
 
             <ul class="list-group list-group-unbordered">
 

@@ -73,10 +73,6 @@ class UserController extends BaseApiController
     public function cgetAction(ParamFetcherInterface $paramFetcher)
     {
         $query = new UserQuery();
-        $query
-            ->setResultType(UserQuery::RESULT_TYPE_OBJECTS)
-            ->setOrderBy('username')
-        ;
 
         if (null !== ($visible = $paramFetcher->get('visible'))) {
             $query->setVisibility($visible);
@@ -90,7 +86,7 @@ class UserController extends BaseApiController
             $query->setOrderBy($orderBy);
         }
 
-        $data = $this->repository->findByQuery($query);
+        $data = $this->repository->getUsersForQuery($query);
         $view = new View($data, 200);
         $view->getContext()->setGroups(['Default', 'Collection', 'User']);
 

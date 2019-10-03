@@ -138,6 +138,14 @@ class Activity implements EntityWithMetaFields
         return $this;
     }
 
+    public function isVisible(): bool
+    {
+        return $this->visible;
+    }
+
+    /**
+     * @deprecated since 1.4
+     */
     public function getVisible(): bool
     {
         return $this->visible;
