@@ -30,12 +30,11 @@ class ProjectMetaTest extends AbstractMetaEntityTest
         return new ProjectMeta();
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected instanceof Project, received "App\Entity\Customer"
-     */
     public function testSetEntityThrowsException()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected instanceof Project, received "App\Entity\Customer"');
+
         $sut = new ProjectMeta();
         $sut->setEntity(new Customer());
     }

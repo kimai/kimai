@@ -11,18 +11,18 @@ namespace App\Tests\Utils;
 
 use App\Utils\File;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 /**
  * @covers \App\Utils\File
  */
 class FileTest extends TestCase
 {
-    /**
-     * @expectedException \Symfony\Component\Filesystem\Exception\FileNotFoundException
-     * @expectedExceptionMessage Unknown file "/kjhgkjhg/jkhgkjhg"
-     */
     public function testGetPermissionsOnNonExistingFile()
     {
+        $this->expectException(FileNotFoundException::class);
+        $this->expectExceptionMessage('Unknown file "/kjhgkjhg/jkhgkjhg"');
+
         $sut = new File();
         $sut->getPermissions('/kjhgkjhg/jkhgkjhg');
     }

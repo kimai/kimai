@@ -52,22 +52,20 @@ class WidgetExtensionTest extends TestCase
         }
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Widget must either implement WidgetInterface or be a string
-     */
     public function testRenderWidgetForInvalidValue()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Widget must either implement WidgetInterface or be a string');
+
         $sut = $this->getSut();
         $sut->renderWidget(true);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Unknown widget "test" requested
-     */
     public function testRenderWidgetForUnknownWidget()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown widget "test" requested');
+
         $sut = $this->getSut(false);
         $sut->renderWidget('test');
     }

@@ -39,10 +39,10 @@ class PluginCommandTest extends KernelTestCase
 
         $commandTester = $this->getCommandTester([$plugin1, $plugin2], []);
         $output = $commandTester->getDisplay();
-        $this->assertContains(__DIR__, $output);
-        $this->assertContains('BundleDirectory', $output);
-        $this->assertContains('Test-Bundle', $output);
-        $this->assertContains('Another one', $output);
+        $this->assertStringContainsString(__DIR__, $output);
+        $this->assertStringContainsString('BundleDirectory', $output);
+        $this->assertStringContainsString('Test-Bundle', $output);
+        $this->assertStringContainsString('Another one', $output);
     }
 
     protected function getCommandTester(array $plugins, array $options = [])

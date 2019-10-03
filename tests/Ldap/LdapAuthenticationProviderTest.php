@@ -16,6 +16,8 @@ use App\Ldap\LdapManager;
 use App\Ldap\LdapUserProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Exception\AuthenticationServiceException;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserChecker;
 
@@ -39,12 +41,11 @@ class LdapAuthenticationProviderTest extends TestCase
         self::assertTrue($result);
     }
 
-    /**
-     * @expectedException \Symfony\Component\Security\Core\Exception\BadCredentialsException
-     * @expectedExceptionMessage The password in the token is empty. Check `erase_credentials` in your `security.yaml`
-     */
     public function testAuthenticateWithTokenUserButEmptyPasswordThrowsException()
     {
+        $this->expectException(BadCredentialsException::class);
+        $this->expectExceptionMessage('The password in the token is empty. Check `erase_credentials` in your `security.yaml`');
+
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->getMock();
         $config = new LdapConfiguration([]);
         $userProvider = new LdapUserProvider($manager);
@@ -58,12 +59,11 @@ class LdapAuthenticationProviderTest extends TestCase
         $actual = $sut->authenticate($token);
     }
 
-    /**
-     * @expectedException \Symfony\Component\Security\Core\Exception\BadCredentialsException
-     * @expectedExceptionMessage The presented password cannot be empty.
-     */
     public function testAuthenticateWithUsernameReturnsUser()
     {
+        $this->expectException(BadCredentialsException::class);
+        $this->expectExceptionMessage('The presented password cannot be empty.');
+
         $user = (new User())->setUsername('foo')->setEnabled(true);
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->getMock();
         $config = new LdapConfiguration([]);
@@ -78,12 +78,11 @@ class LdapAuthenticationProviderTest extends TestCase
         $actual = $sut->authenticate($token);
     }
 
-    /**
-     * @expectedException \Symfony\Component\Security\Core\Exception\BadCredentialsException
-     * @expectedExceptionMessage The presented password is invalid.
-     */
     public function testAuthenticateWithUsernameThrowsExceptionOnFailedBind()
     {
+        $this->expectException(BadCredentialsException::class);
+        $this->expectExceptionMessage('The presented password is invalid.');
+
         $user = (new User())->setUsername('foo')->setEnabled(true);
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->setMethods(['bind'])->getMock();
         $manager->expects($this->once())->method('bind')->willReturn(false);
@@ -99,12 +98,11 @@ class LdapAuthenticationProviderTest extends TestCase
         $actual = $sut->authenticate($token);
     }
 
-    /**
-     * @expectedException \Symfony\Component\Security\Core\Exception\BadCredentialsException
-     * @expectedExceptionMessage The credentials were changed from another session.
-     */
     public function testAuthenticateWithUserThrowsExceptionOnFailedBind()
     {
+        $this->expectException(BadCredentialsException::class);
+        $this->expectExceptionMessage('The credentials were changed from another session.');
+
         $user = (new User())->setUsername('foo')->setEnabled(true);
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->setMethods(['bind'])->getMock();
         $manager->expects($this->once())->method('bind')->willReturn(false);
@@ -164,12 +162,11 @@ class LdapAuthenticationProviderTest extends TestCase
         self::assertSame($token->getUser(), $user);
     }
 
-    /**
-     * @expectedException \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
-     * @expectedExceptionMessage blub foo bar
-     */
     public function testAuthenticateThrowsExceptionOnLdapNotFound()
     {
+        $this->expectException(UsernameNotFoundException::class);
+        $this->expectExceptionMessage('blub foo bar');
+
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->getMock();
         $config = new LdapConfiguration([]);
         $userProvider = $this->getMockBuilder(LdapUserProvider::class)->disableOriginalConstructor()->setMethods(['loadUserByUsername'])->getMock();
@@ -183,13 +180,12 @@ class LdapAuthenticationProviderTest extends TestCase
         $sut->authenticate($token);
     }
 
-    /**
-     * @expectedException \Symfony\Component\Security\Core\Exception\AuthenticationServiceException
-     * @expectedExceptionMessage server away
-     * @expectedExceptionCode 1234
-     */
     public function testAuthenticateThrowsExceptionOnLdapDown()
     {
+        $this->expectException(AuthenticationServiceException::class);
+        $this->expectExceptionMessage('server away');
+        $this->expectExceptionCode('1234');
+
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->getMock();
         $config = new LdapConfiguration([]);
         $userProvider = $this->getMockBuilder(LdapUserProvider::class)->disableOriginalConstructor()->setMethods(['loadUserByUsername'])->getMock();

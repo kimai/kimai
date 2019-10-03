@@ -26,6 +26,6 @@ class AboutControllerTest extends ControllerBaseTest
 
         $result = $client->getCrawler()->filter('div.box-body pre');
         $this->assertEquals(1, count($result));
-        $this->assertContains('MIT License', $result->text());
+        $this->assertStringContainsString('MIT License', $result->text());
     }
 }
