@@ -48,11 +48,8 @@ class DoctorController extends AbstractController
     /**
      * @var string
      */
-    protected $projectDirectory;
+    private $projectDirectory;
 
-    /**
-     * @param string $projectDirectory
-     */
     public function __construct(string $projectDirectory)
     {
         $this->projectDirectory = $projectDirectory;
@@ -90,6 +87,12 @@ class DoctorController extends AbstractController
             if (extension_loaded($extName)) {
                 $results[$extName] = true;
             }
+        }
+
+        $results['Freetype Support'] = true;
+        // @see AvatarService::hasDependencies()
+        if (!function_exists('imagettfbbox')) {
+            $results['Freetype Support'] = false;
         }
 
         return $results;
