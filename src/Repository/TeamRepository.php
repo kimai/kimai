@@ -11,6 +11,7 @@ namespace App\Repository;
 
 use App\Entity\Team;
 use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Repository\Loader\TeamLoader;
 use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
@@ -128,6 +129,27 @@ class TeamRepository extends EntityRepository
             $qb->setParameter('likeContains', '%' . $query->getSearchTerm() . '%');
         }
 
+        $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
+
         return $qb;
+    }
+
+    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
+    {
+        // make sure that all queries without a user see all user
+        if (null === $user && empty($teams)) {
+            return;
+        }
+
+        // make sure that admins see all user
+        if (null !== $user && ($user->isSuperAdmin() || $user->isAdmin())) {
+            return;
+        }
+
+        if (null !== $user) {
+            $qb
+                ->andWhere('t.teamlead = :id')
+                ->setParameter('id', $user);
+        }
     }
 }

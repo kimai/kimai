@@ -53,6 +53,7 @@ class TeamController extends AbstractController
     {
         $query = new TeamQuery();
         $query->setPage($page);
+        $query->setCurrentUser($this->getUser());
 
         $form = $this->getToolbarForm($query);
         $form->setData($query);
