@@ -122,7 +122,7 @@ class AvatarService
 
     public function generateAvatar(User $profile, bool $regenerate = false): bool
     {
-        if (!extension_loaded('gd')) {
+        if (!$this->hasDependencies()) {
             return false;
         }
 
@@ -151,5 +151,10 @@ class AvatarService
         }
 
         return $this->getAvatarUrl($profile);
+    }
+
+    public function hasDependencies(): bool
+    {
+        return extension_loaded('gd') && function_exists('imagettfbbox');
     }
 }
