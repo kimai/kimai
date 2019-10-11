@@ -15,87 +15,87 @@
             </trans-unit>
             <trans-unit id="form_customer">
                 <source>form_customer</source>
-                <target>Müşteri oluştur—varsayılan değerler</target>
+                <target state="translated">Müşteri oluştur—varsayılan değerler</target>
             </trans-unit>
             <trans-unit id="form_user">
                 <source>form_user</source>
-                <target>User—default values</target>
+                <target state="translated">Kullanıcı—varsayılan değerler</target>
             </trans-unit>
             <trans-unit id="theme">
                 <source>theme</source>
-                <target>Theme</target>
+                <target state="translated">Tema</target>
             </trans-unit>
             <trans-unit id="calendar">
                 <source>calendar</source>
-                <target>Calendar</target>
+                <target state="translated">Takvim</target>
             </trans-unit>
             <trans-unit id="label.theme.markdown_content">
                 <source>label.theme.markdown_content</source>
-                <target>Allow markdown-formattings in descriptions and comments</target>
+                <target state="translated">Yorum ve açıklamalarda markdown formatına izin ver</target>
             </trans-unit>
             <trans-unit id="label.timesheet.mode">
                 <source>label.timesheet.mode</source>
-                <target>Timetracking mode</target>
+                <target state="translated">Zaman takip modu</target>
             </trans-unit>
             <trans-unit id="label.timesheet.mode_default">
                 <source>label.timesheet.mode_default</source>
-                <target>[Default] start and end times can be edited</target>
+                <target state="translated">[Varsayılan] başlangıç ve bitiş saatleri düzenlenebilir</target>
             </trans-unit>
             <trans-unit id="label.timesheet.mode_duration_only">
                 <source>label.timesheet.mode_duration_only</source>
-                <target>[Duration] replaces the end time with a duration input-field</target>
+                <target state="translated">[Süre] bitiş zamanını, süre alanıyla değiştirir</target>
             </trans-unit>
             <trans-unit id="label.timesheet.mode_duration_fixed_begin">
                 <source>label.timesheet.mode_duration_fixed_begin</source>
-                <target>[Duration] configurable fixed start-time, only duration can be changed</target>
+                <target state="translated">[Süre] ayarlanabilir sabit başlangıç saati, yalnızca süre değiştirilebilir</target>
             </trans-unit>
             <trans-unit id="label.timesheet.mode_punch">
                 <source>label.timesheet.mode_punch</source>
-                <target>[Time-clock] user can start and stop records, but not edit the times or duration</target>
+                <target state="translated">[Time-clock] user can start and stop records, but not edit the times or duration</target>
             </trans-unit>
             <trans-unit id="label.timesheet.rules.allow_future_times">
                 <source>label.timesheet.rules.allow_future_times</source>
-                <target>Allow time entries in the future</target>
+                <target state="translated">Allow time entries in the future</target>
             </trans-unit>
             <trans-unit id="label.timesheet.active_entries.hard_limit">
                 <source>label.timesheet.active_entries.hard_limit</source>
-                <target>Permitted number of simultaneously running time entries</target>
+                <target state="translated">İzin verilen eşzamanlı zaman kaydı sayısı</target>
             </trans-unit>
             <trans-unit id="label.timesheet.active_entries.soft_limit">
                 <source>label.timesheet.active_entries.soft_limit</source>
-                <target>Number of running time entries from which a warning is displayed</target>
+                <target state="translated">Number of running time entries from which a warning is displayed</target>
             </trans-unit>
             <trans-unit id="label.theme.select_type">
                 <source>label.theme.select_type</source>
-                <target>Type of select-boxes in forms</target>
+                <target state="translated">Formlardaki seçim listesi türü</target>
             </trans-unit>
             <trans-unit id="label.theme.autocomplete_chars">
                 <source>label.theme.autocomplete_chars</source>
-                <target>Minimum number of letters to start auto-completion</target>
+                <target state="translated">Otomatik tamamlama için gerekli en az harf adedi</target>
             </trans-unit>
             <trans-unit id="label.calendar.week_numbers">
                 <source>label.calendar.week_numbers</source>
-                <target>Display week numbers</target>
+                <target state="translated">Hafta numaralarını göster</target>
             </trans-unit>
             <trans-unit id="label.calendar.weekends">
                 <source>label.calendar.weekends</source>
-                <target>Display weekends</target>
+                <target state="translated">Haftasonlarını göster</target>
             </trans-unit>
             <trans-unit id="label.calendar.businessHours.begin">
                 <source>label.calendar.businessHours.begin</source>
-                <target>Start of normal business hours (will be highlighted)</target>
+                <target state="translated">Normal mesai saati başlangıcı (vurgulanacak)</target>
             </trans-unit>
             <trans-unit id="label.calendar.businessHours.end">
                 <source>label.calendar.businessHours.end</source>
-                <target>End of normal business hours (will be highlighted)</target>
+                <target state="translated">Normal mesai saati bitişi (vurgulanacak)</target>
             </trans-unit>
             <trans-unit id="label.calendar.visibleHours.begin">
                 <source>label.calendar.visibleHours.begin</source>
-                <target>Start of visible time range</target>
+                <target state="translated">Görünür zaman aralığı başlangıcı</target>
             </trans-unit>
             <trans-unit id="label.calendar.visibleHours.end">
                 <source>label.calendar.visibleHours.end</source>
-                <target>End of visible time range</target>
+                <target state="translated">Görünür zaman aralığı bitişi</target>
             </trans-unit>
         </body>
     </file>
