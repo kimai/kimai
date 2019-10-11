@@ -109,7 +109,7 @@
             </trans-unit>
             <trans-unit id="menu.logout">
                 <source>menu.logout</source>
-                <target state="translated">ÇIkış</target>
+                <target state="translated">Çıkış</target>
             </trans-unit>
             <trans-unit id="menu.timesheet">
                 <source>menu.timesheet</source>
