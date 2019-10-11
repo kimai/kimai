@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?><xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file datatype="plaintext" original="invoice-renderer.en.xliff" source-language="en" target-language="en">
+        <body>
+            <trans-unit id="label.invoice_renderer">
+                <source>label.invoice_renderer</source>
+                <target state="translated">Fatura dökümanı</target>
+            </trans-unit>
+            <trans-unit id="default">
+                <source>default</source>
+                <target state="translated">Fatura (şablon)</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target state="translated">Çizelge</target>
+            </trans-unit>
+            <trans-unit id="freelancer">
+                <source>freelancer</source>
+                <target state="translated">Serbest çalışan</target>
+            </trans-unit>
+            <trans-unit id="open-spreadsheet">
+                <source>open-spreadsheet</source>
+                <target>Calc Spreadsheet</target>
+            </trans-unit>
+            <trans-unit id="spreadsheet">
+                <source>spreadsheet</source>
+                <target state="translated">Excel</target>
+            </trans-unit>
+            <trans-unit id="export">
+                <source>export</source>
+                <target state="translated">Veriyi dışa aktar</target>
+            </trans-unit>
+            <trans-unit id="company">
+                <source>company</source>
+                <target state="translated">Şirket fatura</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
