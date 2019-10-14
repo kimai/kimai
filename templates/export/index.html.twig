@@ -49,7 +49,7 @@
                     </button>
                 {% endfor %}
             </div>
-            {{ form_widget(form.preview, {'attr': {'data-toggle': 'tooltip', 'title': 'limited_entries'|trans({'%max%': preview_max})}}) }}
+            {{ form_widget(form.preview) }}
         {% endblock %}
         {% block box_after %}{{ form_end(form) }}{% endblock %}
     {% endembed %}
