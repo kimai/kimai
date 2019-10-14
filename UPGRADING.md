@@ -43,7 +43,7 @@ New permission (used in new dashboard widget):
 - Maximum activity name length lowered to 150 character
 - Added new permission: `manage_invoice_template`
   - Removed permissions: `view_invoice_template`, `create_invoice_template`, `edit_invoice_template`, `delete_invoice_template`
-- Removed permission: `create_export` (using `create_export` only)
+- Removed permission: `view_export` (using `create_export` only)
 - Custom export renderer need to check for usage of `Timesheet::getEnd()` as running entries can now be exported as well
 
 ## [1.1](https://github.com/kevinpapst/kimai2/releases/tag/1.1)
