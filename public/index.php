@@ -15,7 +15,7 @@ if (!isset($_SERVER['APP_ENV'])) {
     (new Dotenv(true))->load(__DIR__.'/../.env');
 }
 
-$env = $_SERVER['APP_ENV'] ?? 'dev';
+$env = $_SERVER['APP_ENV'] ?? 'prod';
 $debug = $_SERVER['APP_DEBUG'] ?? ('prod' !== $env);
 
 if ($debug) {
