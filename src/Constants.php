@@ -17,7 +17,7 @@ class Constants
     /**
      * The current release version
      */
-    public const VERSION = '1.4';
+    public const VERSION = '1.4.2';
     /**
      * The current release status, either "stable" or "dev"
      */
