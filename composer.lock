@@ -3106,16 +3106,16 @@
         },
         {
             "name": "kevinpapst/adminlte-bundle",
-            "version": "3.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/AdminLTEBundle.git",
-                "reference": "d1e0d21b497b7bf864138aba4b645379e6b51b83"
+                "reference": "67b9e12c8b224790bf61d5255fc1fc4cf74988d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/d1e0d21b497b7bf864138aba4b645379e6b51b83",
-                "reference": "d1e0d21b497b7bf864138aba4b645379e6b51b83",
+                "url": "https://api.github.com/repos/kevinpapst/AdminLTEBundle/zipball/67b9e12c8b224790bf61d5255fc1fc4cf74988d2",
+                "reference": "67b9e12c8b224790bf61d5255fc1fc4cf74988d2",
                 "shasum": ""
             },
             "require": {
@@ -3167,7 +3167,7 @@
                 }
             ],
             "description": "Admin theme bundle for Symfony 4 based on AdminLTE 2.4.8 with FOSUserBundle support",
-            "time": "2019-09-25T16:11:41+00:00"
+            "time": "2019-10-15T10:18:57+00:00"
         },
         {
             "name": "kimai/kimai2-composer",
