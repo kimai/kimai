@@ -13,6 +13,7 @@ use App\Entity\Customer;
 use App\Entity\User;
 use App\Timesheet\Rounding\RoundingInterface;
 use App\Widget\Type\CompoundRow;
+use App\Widget\Type\Counter;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -416,7 +417,7 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('end')->end()
                     ->scalarNode('icon')->defaultValue('')->end()
                     ->scalarNode('color')->defaultValue('')->end()
-                    ->scalarNode('type')->defaultValue('counter')->end()
+                    ->scalarNode('type')->defaultValue(Counter::class)->end()
                 ->end()
             ->end()
         ;
