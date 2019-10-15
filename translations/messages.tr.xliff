@@ -269,7 +269,7 @@
             </trans-unit>
             <trans-unit id="label.customer">
                 <source>label.customer</source>
-                <target state="translated">Müşter</target>
+                <target state="translated">Müşteri</target>
             </trans-unit>
             <trans-unit id="label.email">
                 <source>label.email</source>
