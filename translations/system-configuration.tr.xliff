@@ -63,7 +63,7 @@
             </trans-unit>
             <trans-unit id="label.timesheet.active_entries.soft_limit">
                 <source>label.timesheet.active_entries.soft_limit</source>
-                <target state="translated">Number of running time entries from which a warning is displayed</target>
+                <target state="translated">Bir uyarı görüntülenmeden önce çalışan zaman çizelgesi kayıtlarının sayısı</target>
             </trans-unit>
             <trans-unit id="label.theme.select_type">
                 <source>label.theme.select_type</source>
