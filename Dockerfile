@@ -33,7 +33,8 @@ RUN apt update && \
         zip && \
     apt remove -y wget && \
     apt -y autoremove && \
-    apt clean
+    apt clean && \
+    cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
 FROM tmp_kimai2_base
 
