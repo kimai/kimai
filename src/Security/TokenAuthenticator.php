@@ -45,7 +45,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function supports(Request $request)
     {
-        // API docs can only be access, when the user is logged in 
+        // API docs can only be access, when the user is logged in
         if (strpos($request->getRequestUri(), '/api/doc') !== false) {
             return false;
         }
