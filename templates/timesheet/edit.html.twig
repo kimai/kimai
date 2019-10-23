@@ -9,9 +9,166 @@
     {% if timesheet.exported %}
         {{ widgets.alert('warning', ('timesheet.locked.warning'|trans({}, 'flashmessages')), ('warning'|trans({}, 'flashmessages')), 'warning') }}
     {% endif %}
-    {{ include(app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig', {
+    {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+    {% set formOptions = {
         'title': (timesheet.id ? 'timesheet.edit'|trans : 'create'|trans),
         'form': form,
         'back': path('timesheet')
-    }) }}
+    } %}
+    {% embed formEditTemplate with formOptions %}
+        {% set length = 6 %}
+        {% if form.begin is defined and form.end is defined and form.duration is defined %}
+            {% set length = 5 %}
+        {% elseif form.begin is defined and form.end is defined and form.duration is not defined %}
+            {% set length = 6 %}
+        {% elseif form.begin is defined and form.end is not defined and form.duration is defined %}
+            {% set length = 10 %}
+        {% elseif form.begin is not defined and form.end is defined and form.duration is defined %}
+            {% set length = 10 %}
+        {% endif %}
+        {% block form_body %}
+            {% if form.begin is defined or form.end is defined or form.duration is defined %}
+            <div class="row">
+                {% if form.begin is defined %}
+                    <div class="col-md-{{ length }}">
+                        {{ form_row(form.begin) }}
+                    </div>
+                {% endif %}
+                {% if form.end is defined %}
+                    <div class="col-md-{{ length }}">
+                        {{ form_row(form.end) }}
+                    </div>
+                {% endif %}
+                {% if form.duration is defined %}
+                    <div class="col-md-2">
+                        {{ form_row(form.duration) }}
+                    </div>
+                {% endif %}
+            </div>
+            {% endif %}
+            {{ form_widget(form) }}
+        {% endblock %}
+        {% block form_after %}
+            {% if form.begin is defined and form.end is defined and form.duration is defined %}
+                <script type="text/javascript">
+                    $('body').on('blur change', '#timesheet_edit_form_begin', function(ev) {
+                        changedBegin($(this).val());
+                        recalculateDuration();
+                    });
+
+                    $('body').on('blur change', '#timesheet_edit_form_end', function(ev) {
+                        changedEnd($(this).val());
+                        recalculateDuration();
+                    });
+
+                    $('body').on('blur change', '#timesheet_edit_form_duration', function(ev) {
+                        changedDuration($(this).val());
+                        recalculateDuration();
+                    });
+                    
+                    function changedBegin(value)
+                    {
+                        var endField = document.getElementById('timesheet_edit_form_end');
+                        var format = endField.dataset.format;
+                        
+                        var momentBegin = moment(value, format);
+                        if (!momentBegin.isValid()) {
+                            return;
+                        }
+
+                        var durationField = document.getElementById('timesheet_edit_form_duration');
+                        var duration = moment.duration(durationField.value);
+                        if (!duration.isValid()) {
+                            durationField.value = '00:00';
+                            duration = 0;
+                        }
+
+                        // calculate duration ONLY if:
+                        // - duration is empty
+                        // - OR duration is zero
+                        // - AND end is not empty
+                        if ((durationField.value === '' || durationField.value === '00:00') && endField.value !== '') {
+                            var momentEnd = moment(endField.value, format);
+                            var durationMoment = moment.duration(momentEnd.diff(momentBegin));
+                            var hours = Math.floor(durationMoment.asHours());
+                            if (hours < 10) {
+                                hours = '0' + hours;
+                            }
+                            durationField.value = hours + ':' + ('0' + durationMoment.minutes()).slice(-2);
+                        }
+
+                        duration = moment.duration(durationField.value);
+                        if (duration.isValid()) {
+                            endField.value = momentBegin.add(duration.asSeconds(), 'seconds').format(format);
+                        }
+                    }
+                    
+                    function changedEnd(value)
+                    {
+                        var beginField = document.getElementById('timesheet_edit_form_begin');
+                        var format = beginField.dataset.format;
+
+                        var momentEnd = moment(value, format);
+                        if (!momentEnd.isValid()) {
+                            return;
+                        }
+                        
+                        var durationField = document.getElementById('timesheet_edit_form_duration');
+                        var duration = moment.duration(durationField.value);
+                        if (!duration.isValid()) {
+                            durationField.value = '00:00';
+                            duration = 0;
+                        }
+
+                        // calculate duration ONLY if:
+                        // - duration is empty
+                        // - OR duration is zero
+                        // - AND begin is not empty
+                        if ((durationField.value === '' || durationField.value === '00:00') && beginField.value !== '') {
+                            var momentBegin = moment(beginField.value, format);
+                            var durationMoment = moment.duration(momentEnd.diff(momentBegin));
+                            var hours = Math.floor(durationMoment.asHours());
+                            if (hours < 10) {
+                                hours = '0' + hours;
+                            }
+                            durationField.value = hours + ':' + ('0' + durationMoment.minutes()).slice(-2);
+                        }
+
+                        duration = moment.duration(durationField.value);
+                        if (duration.isValid()) {
+                            beginField.value = momentEnd.subtract(duration.asSeconds(), 'seconds').format(format);
+                        }
+                    }
+
+                    function changedDuration(value)
+                    {
+                        var momentDuration = moment.duration(value);
+                        if (!momentDuration.isValid() || momentDuration.asSeconds() === 0) {
+                            return;
+                        }
+                        
+                        var beginField = document.getElementById('timesheet_edit_form_begin');
+                        var endField = document.getElementById('timesheet_edit_form_end');
+                        var format = endField.dataset.format;
+                        var begin = beginField.value;
+                        var end = endField.value;
+                        var duration = momentDuration.asSeconds();
+
+                        if (begin === '' && end === '') {
+                            beginField.value = moment().format(format); 
+                            endField.value = moment(beginField.value, format).add(duration, 'seconds').format(format); 
+                        } else if (begin === '' && end !== '') {
+                            beginField.value = moment(end, format).subtract(duration, 'seconds').format(format);
+                        } else if (begin !== '') {
+                            endField.value = moment(beginField.value, format).add(duration, 'seconds').format(format); 
+                        }
+                    }
+                    
+                    function recalculateDuration()
+                    {
+                    }
+                </script>
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}
