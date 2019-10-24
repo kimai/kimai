@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?><xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file datatype="plaintext" original="invoice-calculator.en.xliff" source-language="en" target-language="tr">
+        <body>
+            <trans-unit id="label.invoice_calculator">
+                <source>label.invoice_calculator</source>
+                <target state="translated">Toplam hesabı</target>
+            </trans-unit>
+            <trans-unit id="default">
+                <source>default</source>
+                <target state="translated">Varsayılan: her zaman kaydı için bir kayıt</target>
+            </trans-unit>
+            <trans-unit id="short">
+                <source>short</source>
+                <target state="translated">Saat: toplamı kaydeder, tamamı için bir kayıt</target>
+            </trans-unit>
+            <trans-unit id="user">
+                <source>user</source>
+                <target state="translated">Kullanıcı: her kullanıcı için bir kayıt</target>
+            </trans-unit>
+            <trans-unit id="activity">
+                <source>activity</source>
+                <target state="translated">Aktivite: her aktivite için bir kayıt</target>
+            </trans-unit>
+            <trans-unit id="project">
+                <source>project</source>
+                <target state="translated">Proje: her proje için bir kayıt</target>
+            </trans-unit>
+            <trans-unit id="date">
+                <source>date</source>
+                <target state="translated">Tarih: her gün için bir kayıt (başlangıç tarihini kullanır)</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
