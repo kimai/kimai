@@ -24,22 +24,24 @@ class ProjectTest extends TestCase
     public function testDefaultValues()
     {
         $sut = new Project();
-        $this->assertNull($sut->getId());
-        $this->assertNull($sut->getCustomer());
-        $this->assertNull($sut->getName());
-        $this->assertNull($sut->getOrderNumber());
-        $this->assertNull($sut->getComment());
-        $this->assertTrue($sut->getVisible());
-        $this->assertNull($sut->getFixedRate());
-        $this->assertNull($sut->getHourlyRate());
-        $this->assertNull($sut->getColor());
-        $this->assertEquals(0.0, $sut->getBudget());
-        $this->assertEquals(0, $sut->getTimeBudget());
-        $this->assertInstanceOf(Collection::class, $sut->getMetaFields());
-        $this->assertEquals(0, $sut->getMetaFields()->count());
-        $this->assertNull($sut->getMetaField('foo'));
-        $this->assertInstanceOf(Collection::class, $sut->getTeams());
-        $this->assertEquals(0, $sut->getTeams()->count());
+        self::assertNull($sut->getId());
+        self::assertNull($sut->getCustomer());
+        self::assertNull($sut->getName());
+        self::assertNull($sut->getOrderNumber());
+        self::assertNull($sut->getOrderDate());
+        self::assertNull($sut->getComment());
+        self::assertTrue($sut->getVisible());
+        self::assertTrue($sut->isVisible());
+        self::assertNull($sut->getFixedRate());
+        self::assertNull($sut->getHourlyRate());
+        self::assertNull($sut->getColor());
+        self::assertEquals(0.0, $sut->getBudget());
+        self::assertEquals(0, $sut->getTimeBudget());
+        self::assertInstanceOf(Collection::class, $sut->getMetaFields());
+        self::assertEquals(0, $sut->getMetaFields()->count());
+        self::assertNull($sut->getMetaField('foo'));
+        self::assertInstanceOf(Collection::class, $sut->getTeams());
+        self::assertEquals(0, $sut->getTeams()->count());
     }
 
     public function testSetterAndGetter()
@@ -47,35 +49,41 @@ class ProjectTest extends TestCase
         $sut = new Project();
 
         $customer = (new Customer())->setName('customer');
-        $this->assertInstanceOf(Project::class, $sut->setCustomer($customer));
-        $this->assertSame($customer, $sut->getCustomer());
+        self::assertInstanceOf(Project::class, $sut->setCustomer($customer));
+        self::assertSame($customer, $sut->getCustomer());
 
-        $this->assertInstanceOf(Project::class, $sut->setName('123456789'));
-        $this->assertEquals('123456789', (string) $sut);
+        self::assertInstanceOf(Project::class, $sut->setName('123456789'));
+        self::assertEquals('123456789', (string) $sut);
 
-        $this->assertInstanceOf(Project::class, $sut->setOrderNumber('123456789'));
-        $this->assertEquals('123456789', $sut->getOrderNumber());
+        self::assertInstanceOf(Project::class, $sut->setOrderNumber('123456789'));
+        self::assertEquals('123456789', $sut->getOrderNumber());
 
-        $this->assertInstanceOf(Project::class, $sut->setComment('a comment'));
-        $this->assertEquals('a comment', $sut->getComment());
+        $dateTime = new \DateTime('-1 year');
+        self::assertInstanceOf(Project::class, $sut->setOrderDate($dateTime));
+        self::assertSame($dateTime, $sut->getOrderDate());
+        self::assertInstanceOf(Project::class, $sut->setOrderDate(null));
+        self::assertNull($sut->getOrderDate());
 
-        $this->assertInstanceOf(Project::class, $sut->setColor('#fffccc'));
-        $this->assertEquals('#fffccc', $sut->getColor());
+        self::assertInstanceOf(Project::class, $sut->setComment('a comment'));
+        self::assertEquals('a comment', $sut->getComment());
 
-        $this->assertInstanceOf(Project::class, $sut->setVisible(false));
-        $this->assertFalse($sut->getVisible());
+        self::assertInstanceOf(Project::class, $sut->setColor('#fffccc'));
+        self::assertEquals('#fffccc', $sut->getColor());
 
-        $this->assertInstanceOf(Project::class, $sut->setFixedRate(13.47));
-        $this->assertEquals(13.47, $sut->getFixedRate());
+        self::assertInstanceOf(Project::class, $sut->setVisible(false));
+        self::assertFalse($sut->getVisible());
 
-        $this->assertInstanceOf(Project::class, $sut->setHourlyRate(99));
-        $this->assertEquals(99, $sut->getHourlyRate());
+        self::assertInstanceOf(Project::class, $sut->setFixedRate(13.47));
+        self::assertEquals(13.47, $sut->getFixedRate());
 
-        $this->assertInstanceOf(Project::class, $sut->setBudget(12345.67));
-        $this->assertEquals(12345.67, $sut->getBudget());
+        self::assertInstanceOf(Project::class, $sut->setHourlyRate(99));
+        self::assertEquals(99, $sut->getHourlyRate());
 
-        $this->assertInstanceOf(Project::class, $sut->setTimeBudget(937321));
-        $this->assertEquals(937321, $sut->getTimeBudget());
+        self::assertInstanceOf(Project::class, $sut->setBudget(12345.67));
+        self::assertEquals(12345.67, $sut->getBudget());
+
+        self::assertInstanceOf(Project::class, $sut->setTimeBudget(937321));
+        self::assertEquals(937321, $sut->getTimeBudget());
     }
 
     public function testMetaFields()
@@ -83,7 +91,7 @@ class ProjectTest extends TestCase
         $sut = new Project();
         $meta = new ProjectMeta();
         $meta->setName('foo')->setValue('bar')->setType('test');
-        $this->assertInstanceOf(Project::class, $sut->setMetaField($meta));
+        self::assertInstanceOf(Project::class, $sut->setMetaField($meta));
         self::assertEquals(1, $sut->getMetaFields()->count());
         $result = $sut->getMetaField('foo');
         self::assertSame($result, $meta);
@@ -91,7 +99,7 @@ class ProjectTest extends TestCase
 
         $meta2 = new ProjectMeta();
         $meta2->setName('foo')->setValue('bar')->setType('test2');
-        $this->assertInstanceOf(Project::class, $sut->setMetaField($meta2));
+        self::assertInstanceOf(Project::class, $sut->setMetaField($meta2));
         self::assertEquals(1, $sut->getMetaFields()->count());
         self::assertCount(0, $sut->getVisibleMetaFields());
 
