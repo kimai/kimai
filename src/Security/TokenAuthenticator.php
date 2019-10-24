@@ -45,11 +45,13 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function supports(Request $request)
     {
-        if (strpos($request->getRequestUri(), '/api/doc') === 0) {
+        // API docs can only be access, when the user is logged in
+        if (strpos($request->getRequestUri(), '/api/doc') !== false) {
             return false;
         }
 
-        if (strpos($request->getRequestUri(), '/api/') === 0) {
+        // only try to use this authenticator, when the URL contains the /api/ path
+        if (strpos($request->getRequestUri(), '/api/') !== false) {
             // javascript requests can set a header to disable this authenticator and use the existing session
             return !$request->headers->has(self::HEADER_JAVASCRIPT);
         }
