@@ -43,7 +43,7 @@ class DoctrineCompilerPass implements CompilerPassInterface
             $engine = getenv('DATABASE_ENGINE');
         }
 
-        if (null === $engine) {
+        if (false === $engine) {
             throw new \Exception(
                 'Could not detect database engine. Please set the environment config DATABASE_ENGINE ' .
                 'to one of: "' . implode(', ', $this->allowedEngines) . '" in your .env file, e.g. DATABASE_ENGINE=sqlite'

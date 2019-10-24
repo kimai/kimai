@@ -122,7 +122,6 @@ class ProjectController extends BaseApiController
      */
     public function getAction($id)
     {
-        /** @var Project $data */
         $data = $this->repository->find($id);
 
         if (null === $data) {

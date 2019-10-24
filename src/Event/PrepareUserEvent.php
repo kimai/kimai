@@ -21,24 +21,17 @@ final class PrepareUserEvent extends Event
      * @deprecated since 1.4, will be removed with 2.0
      */
     public const PREPARE = PrepareUserEvent::class;
-
     /**
      * @var User
      */
-    protected $user;
+    private $user;
 
-    /**
-     * @param User $user
-     */
     public function __construct(User $user)
     {
         $this->user = $user;
     }
 
-    /**
-     * @return User
-     */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }

@@ -15,6 +15,7 @@ use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Timesheet\TrackingMode\PunchInOutMode;
 use App\Timesheet\TrackingModeService;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 /**
  * @covers \App\Timesheet\TrackingModeService
@@ -54,12 +55,11 @@ class TrackingModeServiceTest extends TestCase
         self::assertInstanceOf(PunchInOutMode::class, $sut->getActiveMode());
     }
 
-    /**
-     * @expectedException \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
-     * @expectedExceptionMessage You have requested a non-existent service "xxxxxx"
-     */
     public function testGetActiveModeThrowsExceptionOnlyInvalidMode()
     {
+        $this->expectException(ServiceNotFoundException::class);
+        $this->expectExceptionMessage('You have requested a non-existent service "xxxxxx"');
+
         $loader = new TestConfigLoader([]);
         $dateTime = (new UserDateTimeFactoryFactory($this))->create();
         $configuration = new TimesheetConfiguration($loader, ['mode' => 'xxxxxx']);

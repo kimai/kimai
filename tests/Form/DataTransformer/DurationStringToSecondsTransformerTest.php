@@ -11,6 +11,7 @@ namespace App\Tests\Form\DataTransformer;
 
 use App\Form\DataTransformer\DurationStringToSecondsTransformer;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 
 /**
  * @covers \App\Form\DataTransformer\DurationStringToSecondsTransformer
@@ -22,7 +23,7 @@ class DurationStringToSecondsTransformerTest extends TestCase
      */
     private $sut;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->sut = new DurationStringToSecondsTransformer();
     }
@@ -55,10 +56,11 @@ class DurationStringToSecondsTransformerTest extends TestCase
 
     /**
      * @dataProvider getInvalidTestDataTransform
-     * @expectedException \Symfony\Component\Form\Exception\TransformationFailedException
      */
     public function testInvalidTransformThrowsException($transform)
     {
+        $this->expectException(TransformationFailedException::class);
+
         $this->sut->transform($transform);
     }
 
@@ -91,10 +93,11 @@ class DurationStringToSecondsTransformerTest extends TestCase
 
     /**
      * @dataProvider getInvalidTestDataReverseTransform
-     * @expectedException \Symfony\Component\Form\Exception\TransformationFailedException
      */
     public function testInvalidReverseTransformThrowsException($transform)
     {
+        $this->expectException(TransformationFailedException::class);
+
         $this->sut->reverseTransform($transform);
     }
 }

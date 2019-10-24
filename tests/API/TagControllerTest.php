@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class TagControllerTest extends APIControllerBaseTest
 {
-    public function setUp()
+    protected function setUp(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');

@@ -30,12 +30,11 @@ class ActivityMetaTest extends AbstractMetaEntityTest
         return new ActivityMeta();
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected instanceof Activity, received "App\Entity\Timesheet"
-     */
     public function testSetEntityThrowsException()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected instanceof Activity, received "App\Entity\Timesheet"');
+
         $sut = new ActivityMeta();
         $sut->setEntity(new Timesheet());
     }

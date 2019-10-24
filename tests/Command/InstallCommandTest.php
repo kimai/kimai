@@ -57,13 +57,13 @@ class InstallCommandTest extends KernelTestCase
 
         $result = $commandTester->getDisplay();
 
-        self::assertContains('var/cache/', $result);
-        self::assertContains('var/data/', $result);
-        self::assertContains('var/log/', $result);
-        self::assertContains('var/plugins/', $result);
-        self::assertContains('var/sessions/', $result);
+        self::assertStringContainsString('var/cache/', $result);
+        self::assertStringContainsString('var/data/', $result);
+        self::assertStringContainsString('var/log/', $result);
+        self::assertStringContainsString('var/plugins/', $result);
+        self::assertStringContainsString('var/sessions/', $result);
         self::assertEquals(5, substr_count($result, 'missing: read owner,read group,write group'));
-        self::assertContains('[WARNING] Aborting installation to review the permissions for above mentioned', $result);
+        self::assertStringContainsString('[WARNING] Aborting installation to review the permissions for above mentioned', $result);
         self::assertEquals(InstallCommand::ERROR_PERMISSIONS, $commandTester->getStatusCode());
     }
 
@@ -79,17 +79,17 @@ class InstallCommandTest extends KernelTestCase
         $result = $commandTester->getDisplay();
 
         // create database is skipped
-        self::assertContains('[NOTE] Database is existing and connection could be established', $result);
+        self::assertStringContainsString('[NOTE] Database is existing and connection could be established', $result);
 
         // create schema is skipped
-        self::assertContains('[NOTE] It seems as if you already have the required tables in your database,', $result);
-        self::assertContains('skipping schema creation', $result);
+        self::assertStringContainsString('[NOTE] It seems as if you already have the required tables in your database,', $result);
+        self::assertStringContainsString('skipping schema creation', $result);
 
         // make sure migrations run always
-        self::assertContains('Application Migrations', $result);
-        self::assertContains('No migrations to execute.', $result);
+        self::assertStringContainsString('Application Migrations', $result);
+        self::assertStringContainsString('No migrations to execute.', $result);
 
-        self::assertContains(
+        self::assertStringContainsString(
             sprintf('[OK] Congratulations! Kimai 2 (%s %s) was successful installed!', Constants::VERSION, Constants::STATUS),
             $result
         );

@@ -56,11 +56,10 @@ abstract class AbstractContainerTest extends TestCase
         self::assertEquals('bar', $sut->getWidgets()[0]->getTitle());
     }
 
-    /**
-     * @expectedException \BadMethodCallException
-     */
     public function testSetOptionNotImplemented()
     {
+        $this->expectException(\BadMethodCallException::class);
+
         $sut = $this->createSut();
         $sut->setOption('dfsdf', []);
     }

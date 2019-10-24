@@ -13,6 +13,7 @@ use App\Validator\Constraints\Duration;
 use App\Validator\Constraints\DurationValidator;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
@@ -48,11 +49,10 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @expectedException \Symfony\Component\Validator\Exception\UnexpectedTypeException
-     */
     public function testConstraintIsInvalid()
     {
+        $this->expectException(UnexpectedTypeException::class);
+
         $this->validator->validate('foo', new NotBlank());
     }
 

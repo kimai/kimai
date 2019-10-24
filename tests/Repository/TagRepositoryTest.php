@@ -19,7 +19,7 @@ use App\Tests\DataFixtures\TagFixtures;
  */
 class TagRepositoryTest extends AbstractRepositoryTest
 {
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $em = $this->getEntityManager();

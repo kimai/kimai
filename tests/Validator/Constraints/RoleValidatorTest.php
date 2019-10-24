@@ -14,6 +14,7 @@ use App\Tests\Mocks\Security\RoleServiceFactory;
 use App\Validator\Constraints\Role;
 use App\Validator\Constraints\RoleValidator;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
@@ -39,11 +40,10 @@ class RoleValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @expectedException \Symfony\Component\Validator\Exception\UnexpectedTypeException
-     */
     public function testConstraintIsInvalid()
     {
+        $this->expectException(UnexpectedTypeException::class);
+
         $this->validator->validate('foo', new NotBlank());
     }
 

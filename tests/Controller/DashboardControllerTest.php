@@ -66,9 +66,9 @@ class DashboardControllerTest extends ControllerBaseTest
 
         $content = $client->getResponse()->getContent();
 
-        $this->assertContains('<li class="dropdown user-menu">', $content);
-        $this->assertContains('<a href="/en/profile/' . $user->getUsername() . '">', $content);
-        $this->assertContains('<a href="/en/profile/' . $user->getUsername() . '/prefs">', $content);
-        $this->assertContains('<a href="/en/logout">', $content);
+        $this->assertStringContainsString('<li class="dropdown user-menu">', $content);
+        $this->assertStringContainsString('<a href="/en/profile/' . $user->getUsername() . '">', $content);
+        $this->assertStringContainsString('<a href="/en/profile/' . $user->getUsername() . '/prefs">', $content);
+        $this->assertStringContainsString('<a href="/en/logout">', $content);
     }
 }

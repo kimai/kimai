@@ -144,10 +144,6 @@ class TimesheetQuery extends ActivityQuery
      */
     public function setState($state)
     {
-        if (!is_int($state) && $state !== (int) $state) {
-            return $this;
-        }
-
         $state = (int) $state;
         if (in_array($state, [self::STATE_ALL, self::STATE_RUNNING, self::STATE_STOPPED], true)) {
             $this->state = $state;
@@ -170,10 +166,6 @@ class TimesheetQuery extends ActivityQuery
      */
     public function setExported($exported)
     {
-        if (!is_int($exported) && $exported !== (int) $exported) {
-            return $this;
-        }
-
         $exported = (int) $exported;
         if (in_array($exported, [self::STATE_ALL, self::STATE_EXPORTED, self::STATE_NOT_EXPORTED], true)) {
             $this->exported = $exported;
@@ -182,10 +174,7 @@ class TimesheetQuery extends ActivityQuery
         return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getBegin()
+    public function getBegin(): ?\DateTime
     {
         return $this->dateRange->getBegin();
     }
@@ -201,10 +190,7 @@ class TimesheetQuery extends ActivityQuery
         return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getEnd()
+    public function getEnd(): ?\DateTime
     {
         return $this->dateRange->getEnd();
     }

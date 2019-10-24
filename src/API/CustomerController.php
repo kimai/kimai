@@ -117,7 +117,6 @@ class CustomerController extends BaseApiController
      */
     public function getAction($id)
     {
-        /** @var Customer $data */
         $data = $this->repository->find($id);
 
         if (null === $data) {

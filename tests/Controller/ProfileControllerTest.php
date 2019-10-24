@@ -64,8 +64,8 @@ class ProfileControllerTest extends ControllerBaseTest
 
         foreach ($dates as $start) {
             $year = $start->format('Y');
-            $this->assertContains('<h3 class="box-title">' . $year . '</h3>', $content);
-            $this->assertContains('var userProfileChart' . $year . ' = new Chart(', $content);
+            $this->assertStringContainsString('<h3 class="box-title">' . $year . '</h3>', $content);
+            $this->assertStringContainsString('var userProfileChart' . $year . ' = new Chart(', $content);
         }
 
         $this->assertHasProfileBox($client, 'John Doe');
@@ -87,8 +87,8 @@ class ProfileControllerTest extends ControllerBaseTest
     {
         $content = $client->getResponse()->getContent();
 
-        $this->assertContains('<h3 class="box-title">About me</h3>', $content);
-        $this->assertContains('<span class="pull-right badge bg-blue">' . $username . '</span>', $content);
+        $this->assertStringContainsString('<h3 class="box-title">About me</h3>', $content);
+        $this->assertStringContainsString('<span class="pull-right badge bg-blue">' . $username . '</span>', $content);
     }
 
     public function getTabTestData()

@@ -13,18 +13,18 @@ use App\Entity\User;
 use App\Ldap\LdapManager;
 use App\Ldap\LdapUserProvider;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
 /**
  * @covers \App\Ldap\LdapUserProvider
  */
 class LdapUserProviderTest extends TestCase
 {
-    /**
-     * @expectedException \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
-     * @expectedExceptionMessage User "test" not found
-     */
     public function testLoadUserByUsernameReturnsNull()
     {
+        $this->expectException(UsernameNotFoundException::class);
+        $this->expectExceptionMessage('User "test" not found');
+
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->setMethods(['findUserByUsername'])->getMock();
         $manager->expects($this->once())->method('findUserByUsername')->willReturn(null);
 
