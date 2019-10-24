@@ -12,6 +12,7 @@ namespace App\Form;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Form\Type\CustomerType;
+use App\Form\Type\DateTimePickerType;
 use App\Repository\CustomerRepository;
 use App\Repository\Query\CustomerFormTypeQuery;
 use Symfony\Component\Form\AbstractType;
@@ -56,6 +57,10 @@ class ProjectEditForm extends AbstractType
             ])
             ->add('orderNumber', TextType::class, [
                 'label' => 'label.orderNumber',
+                'required' => false,
+            ])
+            ->add('orderDate', DateTimePickerType::class, [
+                'label' => 'label.orderDate',
                 'required' => false,
             ])
             ->add('customer', CustomerType::class, [
