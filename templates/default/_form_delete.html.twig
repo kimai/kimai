@@ -7,7 +7,9 @@
     </div>
     {{ form_start(form) }}
     <div class="box-body">
-        {{ form_widget(form) }}
+        {% block form_body %}
+            {{ form_widget(form) }}
+        {% endblock %}
     </div>
     <div class="box-footer">
         <input type="submit" value="{{ 'action.delete'|trans }}" class="btn btn-danger" />

@@ -1,18 +1,39 @@
-{% embed 'embeds/modal.html.twig' %}
-    {% block modal_id %}form_modal{% endblock %}
-    {% block modal_before %}{{ form_start(form) }}{% endblock %}
-    {% block modal_title %}
-        {{ title }}
-        {% if form.vars.docu_chapter is defined and form.vars.docu_chapter is not empty %}
-            <a href="{{ form.vars.docu_chapter|docu_link }}" target="_blank"><i class="{{ 'help'|icon }}"></i></a>
-        {% endif %}
-    {% endblock %}
-    {% block modal_body %}
-        {{ form_widget(form) }}
-    {% endblock %}
-    {% block modal_footer %}
-        <button type="submit" class="btn btn-primary pull-left modal-form-save" data-loading-text="{{ 'action.save'|trans }}..." id="{{ block('modal_id') }}_save">{{ 'action.save'|trans }}</button>
-        <button type="button" class="btn btn-default btn-cancel" data-dismiss="modal">{{ 'action.close'|trans }}</button>
-    {% endblock %}
-    {% block modal_end %}{{ form_end(form) }}{% endblock %}
-{% endembed %}
+{# 
+REQUIRED CHANGES NEED TO BE DONE IN THESE FILES:
+ - embeds/modal.html.twig 
+ - default/_form_modal.html.twig 
+ #}
+<div class="modal {% block modal_class %}{% endblock %}" id="{% block modal_id %}form_modal{% endblock %}" tabindex="-1" role="dialog" aria-labelledby="{{ block('modal_id') }}_label">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            {% block form_before %}{% endblock %}
+            {% block modal_before %}{{ form_start(form) }}{% endblock %}
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'action.close'|trans }}"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="{{ block('modal_id') }}_label">
+                    {% block modal_title %}
+                        {{ title }}
+                        {% if form.vars.docu_chapter is defined and form.vars.docu_chapter is not empty %}
+                            <a href="{{ form.vars.docu_chapter|docu_link }}" target="_blank"><i class="{{ 'help'|icon }}"></i></a>
+                        {% endif %}
+                    {% endblock %}
+                </h4>
+            </div>
+            <div class="modal-body">
+                {% block modal_body %}
+                    {% block form_body %}
+                        {{ form_widget(form) }}
+                    {% endblock %}
+                {% endblock %}
+            </div>
+            <div class="modal-footer">
+                {% block modal_footer %}
+                    <button type="submit" class="btn btn-primary pull-left modal-form-save" data-loading-text="{{ 'action.save'|trans }}..." id="{{ block('modal_id') }}_save">{{ 'action.save'|trans }}</button>
+                    <button type="button" class="btn btn-default btn-cancel" data-dismiss="modal">{{ 'action.close'|trans }}</button>
+                {% endblock %}
+            </div>
+            {% block modal_end %}{{ form_end(form) }}{% endblock %}
+            {% block form_after %}{% endblock %}
+        </div>
+    </div>
+</div>

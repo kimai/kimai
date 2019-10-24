@@ -127,6 +127,16 @@ class TimesheetEditForm extends AbstractType
             $this->addEnd($builder, $dateTimeOptions);
         }
 
+        if ($options['allow_begin_datetime'] && $options['allow_end_datetime']) {
+            $builder->add('duration', DurationType::class, [
+                'required' => false,
+                'attr' => [
+                    'placeholder' => '00:00',
+                    'pattern' => '[0-9]{2,3}:[0-9]{2}'
+                ]
+            ]);
+        }
+
         if ($this->showCustomer($options, $isNew, $customerCount)) {
             $this->addCustomer($builder, $customer);
         }
@@ -326,6 +336,9 @@ class TimesheetEditForm extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'label.description',
                 'required' => false,
+                'attr' => [
+                    'autofocus' => 'autofocus'
+                ]
             ]);
     }
 
