@@ -2,6 +2,7 @@
     {% form_theme form form_theme %}
 {% endif %}
 <div class="box box-primary">
+    {% block form_before %}{% endblock %}
     {{ form_start(form) }}
     <div class="box-header with-border">
         <h3 class="box-title">
@@ -12,7 +13,9 @@
         </h3>
     </div>
     <div class="box-body">
-         {{ form_widget(form) }}
+        {% block form_body %}
+            {{ form_widget(form) }}
+        {% endblock %}
     </div>
     <div class="box-footer">
         <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
@@ -24,4 +27,5 @@
         {% endif %}
     </div>
     {{ form_end(form) }}
+    {% block form_after %}{% endblock %}
 </div>

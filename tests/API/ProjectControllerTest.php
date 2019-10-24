@@ -282,7 +282,7 @@ class ProjectControllerTest extends APIControllerBaseTest
 
         if ($full) {
             $expectedKeys = array_merge($expectedKeys, [
-                'comment', 'budget', 'timeBudget', 'orderNumber'
+                'comment', 'budget', 'timeBudget', 'orderNumber', 'orderDate'
             ]);
         }
 

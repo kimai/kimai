@@ -140,6 +140,7 @@ trait RendererTrait
                 'project.name' => $project->getName(),
                 'project.comment' => $project->getComment(),
                 'project.order_number' => $project->getOrderNumber(),
+                'project.order_date' => null !== $project->getOrderDate() ? $this->getFormattedDateTime($project->getOrderDate()) : '',
                 'project.fixed_rate' => $project->getFixedRate(),
                 'project.hourly_rate' => $project->getHourlyRate(),
             ]);

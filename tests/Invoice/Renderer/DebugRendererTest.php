@@ -101,6 +101,7 @@ class DebugRendererTest extends TestCase
                 'project.id',
                 'project.name',
                 'project.comment',
+                'project.order_date',
                 'project.order_number',
                 'project.fixed_rate',
                 'project.hourly_rate',
