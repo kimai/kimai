@@ -22,6 +22,7 @@ use App\Repository\TimesheetRepository;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Timesheet\TrackingModeService;
 use App\Timesheet\UserDateTimeFactory;
+use App\Utils\SearchTerm;
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
@@ -42,7 +43,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 /**
  * @RouteResource("Timesheet")
  *
- * @Security("is_granted('ROLE_USER')")
+ * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
 class TimesheetController extends BaseApiController
 {
@@ -124,6 +125,7 @@ class TimesheetController extends BaseApiController
      * @Rest\QueryParam(name="exported", requirements="0|1", strict=true, nullable=true, description="Use this flag if you want to filter for export state. Allowed values: 0=not exported, 1=exported (default: all)")
      * @Rest\QueryParam(name="active", requirements="0|1", strict=true, nullable=true, description="Filter for running/active records. Allowed values: 0=stopped, 1=active (default: all)")
      * @Rest\QueryParam(name="full", requirements="true", strict=true, nullable=true, description="Allows to fetch fully serialized objects including subresources (TimesheetSubCollection). Allowed values: true (default: false)")
+     * @Rest\QueryParam(name="term", requirements="[a-zA-Z0-9 \-,:]+", strict=true, nullable=true, description="Free search term")
      *
      * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
      *
@@ -202,6 +204,10 @@ class TimesheetController extends BaseApiController
             } elseif ($exported === 0) {
                 $query->setExported(TimesheetQuery::STATE_NOT_EXPORTED);
             }
+        }
+
+        if (!empty($term = $paramFetcher->get('term'))) {
+            $query->setSearchTerm(new SearchTerm($term));
         }
 
         /** @var Pagerfanta $data */

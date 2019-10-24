@@ -16,6 +16,7 @@ use App\Event\CustomerMetaDefinitionEvent;
 use App\Form\API\CustomerApiEditForm;
 use App\Repository\CustomerRepository;
 use App\Repository\Query\CustomerQuery;
+use App\Utils\SearchTerm;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -31,7 +32,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 /**
  * @RouteResource("Customer")
  *
- * @Security("is_granted('ROLE_USER')")
+ * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
 class CustomerController extends BaseApiController
 {
@@ -69,7 +70,9 @@ class CustomerController extends BaseApiController
      * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter activities (1=visible, 2=hidden, 3=both)")
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: ASC)")
      * @Rest\QueryParam(name="orderBy", requirements="id|name", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, name (default: name)")
+     * @Rest\QueryParam(name="term", requirements="[a-zA-Z0-9 \-,:]+", strict=true, nullable=true, description="Free search term")
      *
+     * @param ParamFetcherInterface $paramFetcher
      * @return Response
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher)
@@ -87,6 +90,10 @@ class CustomerController extends BaseApiController
 
         if (null !== ($visible = $paramFetcher->get('visible'))) {
             $query->setVisibility($visible);
+        }
+
+        if (!empty($term = $paramFetcher->get('term'))) {
+            $query->setSearchTerm(new SearchTerm($term));
         }
 
         $data = $this->repository->getCustomersForQuery($query);
