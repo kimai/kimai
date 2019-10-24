@@ -868,6 +868,10 @@
                 <source>label.orderNumber</source>
                 <target>Order number</target>
             </trans-unit>
+            <trans-unit id="label.orderDate">
+                <source>label.orderDate</source>
+                <target>Order date</target>
+            </trans-unit>
             <trans-unit id="label.invoice_tax_number">
                 <source>label.invoice_tax_number</source>
                 <target>VAT no.:</target>

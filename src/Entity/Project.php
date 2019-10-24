@@ -36,7 +36,6 @@ class Project implements EntityWithMetaFields
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
     /**
      * @var Customer
      *
@@ -45,7 +44,6 @@ class Project implements EntityWithMetaFields
      * @Assert\NotNull()
      */
     private $customer;
-
     /**
      * @var string
      *
@@ -56,7 +54,6 @@ class Project implements EntityWithMetaFields
      * @Assert\Length(min=2, max=150)
      */
     private $name;
-
     /**
      * @var string
      *
@@ -64,14 +61,18 @@ class Project implements EntityWithMetaFields
      * @Assert\Length(max=20)
      */
     private $orderNumber;
-
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="order_date", type="datetime", nullable=true)
+     */
+    private $orderDate;
     /**
      * @var string
      *
      * @ORM\Column(name="comment", type="text", nullable=true)
      */
     private $comment;
-
     /**
      * @var bool
      *
@@ -172,28 +173,33 @@ class Project implements EntityWithMetaFields
     }
 
     /**
-     * @deprecated since 1.4
+     * @deprecated since 1.4, use isVisible() instead
      */
     public function getVisible(): bool
     {
         return $this->visible;
     }
 
-    /**
-     * @return string|null
-     */
     public function getOrderNumber(): ?string
     {
         return $this->orderNumber;
     }
 
-    /**
-     * @param string $orderNumber
-     * @return Project
-     */
-    public function setOrderNumber($orderNumber): Project
+    public function setOrderNumber(?string $orderNumber): Project
     {
         $this->orderNumber = $orderNumber;
+
+        return $this;
+    }
+
+    public function getOrderDate(): ?\DateTime
+    {
+        return $this->orderDate;
+    }
+
+    public function setOrderDate(?\DateTime $orderDate): Project
+    {
+        $this->orderDate = $orderDate;
 
         return $this;
     }
