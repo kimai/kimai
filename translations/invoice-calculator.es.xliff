@@ -8,19 +8,27 @@
             </trans-unit>
             <trans-unit id="default">
                 <source>default</source>
-                <target>Tarifa por horas (default)</target>
+                <target>Por defecto: una posición para cada registro</target>
             </trans-unit>
             <trans-unit id="short">
                 <source>short</source>
-                <target>Tarifa por horas - version mínima (sólo un registro)</target>
+                <target>Horas: suma total de horas de todos los registros en una sola posición</target>
             </trans-unit>
             <trans-unit id="user">
                 <source>user</source>
-                <target>Usuario agrupado - un registro por usuario</target>
+                <target>Usuarios: una posición por usuario</target>
             </trans-unit>
             <trans-unit id="activity">
                 <source>activity</source>
-                <target>Actividad agrupada - un registro por actividad</target>
+                <target>Actividades: una posición por actividad</target>
+            </trans-unit>
+            <trans-unit id="project">
+                <source>project</source>
+                <target>Proyecto: una posición por proyecto</target>
+            </trans-unit>
+            <trans-unit id="date">
+                <source>date</source>
+                <target>Fecha: una posición por día (en base a la fecha de inicio)</target>
             </trans-unit>
         </body>
     </file>
