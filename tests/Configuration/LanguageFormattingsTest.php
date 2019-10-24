@@ -97,12 +97,11 @@ class LanguageFormattingsTest extends TestCase
         $this->assertEquals(['de', 'en', 'pt_BR', 'it', 'fr', 'es', 'ru', 'ar', 'hu'], $sut->getAvailableLanguages());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Unknown locale given: xx
-     */
     public function testInvalidLocaleWithGivenLocale()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown locale given: xx');
+
         $sut = $this->getSut($this->getDefaultSettings());
         $sut->getDateFormat('xx');
     }
@@ -163,12 +162,11 @@ class LanguageFormattingsTest extends TestCase
         $this->assertEquals('H:i:s', $sut->getTimeFormat('en'));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Unknown setting for locale en: date_time_type
-     */
     public function testUnknownSetting()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown setting for locale en: date_time_type');
+
         $sut = $this->getSut(['en' => [
             'xxx' => 'dd.MM.yyyy HH:mm',
         ]]);

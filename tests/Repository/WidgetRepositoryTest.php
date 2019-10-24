@@ -14,6 +14,7 @@ use App\Repository\TimesheetRepository;
 use App\Repository\WidgetRepository;
 use App\Tests\Mocks\Security\CurrentUserFactory;
 use App\Widget\Type\CompoundChart;
+use App\Widget\WidgetException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -32,12 +33,11 @@ class WidgetRepositoryTest extends TestCase
         $this->assertTrue($sut->has('test'));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Cannot find widget "foo".
-     */
     public function testGetWidgetThrowsExceptionOnNonExistingWidget()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Cannot find widget "foo".');
+
         $repoMock = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->getMock();
         $userMock = (new CurrentUserFactory($this))->create(new User());
 
@@ -45,12 +45,11 @@ class WidgetRepositoryTest extends TestCase
         $sut->get('foo');
     }
 
-    /**
-     * @expectedException \App\Widget\WidgetException
-     * @expectedExceptionMessage Unknown widget type "FooBar"
-     */
     public function testGetWidgetThrowsExceptionOnInvalidType()
     {
+        $this->expectException(WidgetException::class);
+        $this->expectExceptionMessage('Unknown widget type "FooBar"');
+
         $repoMock = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->getMock();
         $userMock = (new CurrentUserFactory($this))->create(new User());
 
@@ -58,12 +57,11 @@ class WidgetRepositoryTest extends TestCase
         $sut->get('test');
     }
 
-    /**
-     * @expectedException \App\Widget\WidgetException
-     * @expectedExceptionMessage Widget type "App\Widget\Type\CompoundChart" is not an instance of "App\Widget\Type\AbstractWidgetType"
-     */
     public function testGetWidgetTriggersExceptionOnWrongClass()
     {
+        $this->expectException(WidgetException::class);
+        $this->expectExceptionMessage('Widget type "App\Widget\Type\CompoundChart" is not an instance of "App\Widget\Type\AbstractWidgetType"');
+
         $repoMock = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->getMock();
         $userMock = (new CurrentUserFactory($this))->create(new User());
 

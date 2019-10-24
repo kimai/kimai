@@ -247,7 +247,6 @@ class TimesheetController extends BaseApiController
      */
     public function getAction($id)
     {
-        /** @var Timesheet $data */
         $data = $this->repository->find($id);
 
         if (null === $data) {
@@ -545,7 +544,6 @@ class TimesheetController extends BaseApiController
      */
     public function stopAction($id)
     {
-        /** @var Timesheet $timesheet */
         $timesheet = $this->repository->find($id);
 
         if (null === $timesheet) {
@@ -590,7 +588,6 @@ class TimesheetController extends BaseApiController
      */
     public function restartAction($id, ParamFetcherInterface $paramFetcher, ValidatorInterface $validator)
     {
-        /** @var Timesheet $timesheet */
         $timesheet = $this->repository->find($id);
 
         if (null === $timesheet) {
@@ -678,7 +675,6 @@ class TimesheetController extends BaseApiController
      */
     public function exportAction($id)
     {
-        /** @var Timesheet $timesheet */
         $timesheet = $this->repository->find($id);
 
         if (null === $timesheet) {

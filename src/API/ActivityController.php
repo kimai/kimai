@@ -138,7 +138,6 @@ class ActivityController extends BaseApiController
      */
     public function getAction($id)
     {
-        /** @var Activity $data */
         $data = $this->repository->find($id);
 
         if (null === $data) {

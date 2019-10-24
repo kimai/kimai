@@ -81,7 +81,6 @@ class TeamController extends BaseApiController
      */
     public function getAction($id)
     {
-        /** @var Team $data */
         $data = $this->repository->find($id);
 
         if (null === $data) {

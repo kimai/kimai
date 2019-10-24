@@ -24,7 +24,7 @@ class Duration
     /**
      * Transforms seconds into a duration string.
      *
-     * @param int $seconds
+     * @param int|null $seconds
      * @param string $format
      * @return string|null
      */

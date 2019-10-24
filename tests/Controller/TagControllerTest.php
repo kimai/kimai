@@ -17,7 +17,7 @@ use App\Tests\DataFixtures\TagFixtures;
  */
 class TagControllerTest extends ControllerBaseTest
 {
-    public function setUp()
+    protected function setUp(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');

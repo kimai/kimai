@@ -36,11 +36,10 @@ class UserPreferenceEventTest extends TestCase
         $this->assertEquals([$pref], $sut->getPreferences());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testDuplicatePreferenceThrowsException()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $user = new User();
         $user->setAlias('foo');
         $pref = new UserPreference();

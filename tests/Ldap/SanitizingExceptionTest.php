@@ -24,8 +24,8 @@ class SanitizingExceptionTest extends TestCase
 
         self::assertInstanceOf(\Exception::class, $sut);
 
-        self::assertNotContains('bar', $sut->getMessage());
-        self::assertNotContains('bar', (string) $sut);
+        self::assertStringNotContainsString('bar', $sut->getMessage());
+        self::assertStringNotContainsString('bar', (string) $sut);
         self::assertEquals('Could not find user foo with password **** in your LDAP', $sut->getMessage());
     }
 }

@@ -36,7 +36,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
      */
     protected $dateTime;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->importFixtureForUser(User::ROLE_USER);
         $this->dateTime = (new UserDateTimeFactoryFactory($this))->create(self::TEST_TIMEZONE);

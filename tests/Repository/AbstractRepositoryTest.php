@@ -28,7 +28,7 @@ abstract class AbstractRepositoryTest extends KernelTestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $kernel = self::bootKernel();
 
@@ -48,7 +48,7 @@ abstract class AbstractRepositoryTest extends KernelTestCase
     /**
      * {@inheritdoc}
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 

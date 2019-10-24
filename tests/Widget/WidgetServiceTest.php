@@ -12,6 +12,7 @@ namespace App\Tests\Widget;
 use App\Repository\WidgetRepository;
 use App\Widget\Renderer\SimpleWidgetRenderer;
 use App\Widget\Type\More;
+use App\Widget\WidgetException;
 use App\Widget\WidgetService;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
@@ -50,12 +51,11 @@ class WidgetServiceTest extends TestCase
         self::assertSame($renderer, $found);
     }
 
-    /**
-     * @expectedException \App\Widget\WidgetException
-     * @expectedExceptionMessage No renderer available for widget "App\Widget\Type\More"
-     */
     public function testFindRendererThrowsException()
     {
+        $this->expectException(WidgetException::class);
+        $this->expectExceptionMessage('No renderer available for widget "App\Widget\Type\More"');
+
         $repository = $this->getMockBuilder(WidgetRepository::class)->disableOriginalConstructor()->getMock();
 
         $sut = new WidgetService($repository, []);

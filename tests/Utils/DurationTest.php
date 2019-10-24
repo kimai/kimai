@@ -96,10 +96,11 @@ class DurationTest extends TestCase
 
     /**
      * @dataProvider getParseDurationInvalidData
-     * @expectedException \InvalidArgumentException
      */
     public function testParseDurationThrowsInvalidArgumentException($duration, $mode)
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $sut = new Duration();
         $sut->parseDuration($duration, $mode);
     }

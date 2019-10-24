@@ -26,7 +26,7 @@ class CreateUserCommandTest extends KernelTestCase
      */
     protected $application;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
@@ -46,8 +46,8 @@ class CreateUserCommandTest extends KernelTestCase
         $commandTester = $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar');
 
         $output = $commandTester->getDisplay();
-        $this->assertContains('[ERROR] plainPassword (foobar)', $output);
-        $this->assertContains('The password is too short.', $output);
+        $this->assertStringContainsString('[ERROR] plainPassword (foobar)', $output);
+        $this->assertStringContainsString('The password is too short.', $output);
     }
 
     public function testCreateUser()
@@ -55,7 +55,7 @@ class CreateUserCommandTest extends KernelTestCase
         $commandTester = $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar12');
 
         $output = $commandTester->getDisplay();
-        $this->assertContains('[OK] Success! Created user: MyTestUser', $output);
+        $this->assertStringContainsString('[OK] Success! Created user: MyTestUser', $output);
 
         $container = self::$kernel->getContainer();
         $user = $container->get('doctrine')->getRepository(User::class)->loadUserByUsername('MyTestUser');
@@ -82,10 +82,10 @@ class CreateUserCommandTest extends KernelTestCase
     {
         $commandTester = $this->createUser('xx', '', 'ROLE_USER', '');
         $output = $commandTester->getDisplay();
-        $this->assertContains('[ERROR] email ()', $output);
-        $this->assertContains('Please enter an email', $output);
-        $this->assertContains('[ERROR] plainPassword ()', $output);
-        $this->assertContains('Please enter a password', $output);
+        $this->assertStringContainsString('[ERROR] email ()', $output);
+        $this->assertStringContainsString('Please enter an email', $output);
+        $this->assertStringContainsString('[ERROR] plainPassword ()', $output);
+        $this->assertStringContainsString('Please enter a password', $output);
     }
 
     public function testUserAlreadyExisting()
@@ -94,8 +94,8 @@ class CreateUserCommandTest extends KernelTestCase
         $commandTester = $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar');
 
         $output = $commandTester->getDisplay();
-        $this->assertContains('[ERROR] username (mytestuser)', $output);
-        $this->assertContains('The username is already used', $output);
+        $this->assertStringContainsString('[ERROR] username (mytestuser)', $output);
+        $this->assertStringContainsString('The username is already used', $output);
     }
 
     public function testUserEmail()
@@ -103,7 +103,7 @@ class CreateUserCommandTest extends KernelTestCase
         $commandTester = $this->createUser('MyTestUser', 'ROLE_USER', 'ROLE_USER', 'foobar12');
 
         $output = $commandTester->getDisplay();
-        $this->assertContains('[ERROR] email (ROLE_USER)', $output);
-        $this->assertContains('The email is not valid', $output);
+        $this->assertStringContainsString('[ERROR] email (ROLE_USER)', $output);
+        $this->assertStringContainsString('The email is not valid', $output);
     }
 }
