@@ -53,97 +53,115 @@
                 <script type="text/javascript">
                     $('body').on('blur change', '#timesheet_edit_form_begin', function(ev) {
                         changedBegin($(this).val());
-                        recalculateDuration();
                     });
 
                     $('body').on('blur change', '#timesheet_edit_form_end', function(ev) {
                         changedEnd($(this).val());
-                        recalculateDuration();
                     });
 
                     $('body').on('blur change', '#timesheet_edit_form_duration', function(ev) {
                         changedDuration($(this).val());
-                        recalculateDuration();
                     });
                     
+                    {#
+                        Ruleset: 
+                        - invalid begin => skip
+                        - empty end => set end to begin (only if duration > 0 = running record)
+                        - invalid end => skip
+                        - calculate duration 
+                    #}
                     function changedBegin(value)
                     {
                         var endField = document.getElementById('timesheet_edit_form_end');
+                        var durationField = document.getElementById('timesheet_edit_form_duration');
                         var format = endField.dataset.format;
-                        
+                        var momentDuration = moment.duration(durationField.value);
+
                         var momentBegin = moment(value, format);
                         if (!momentBegin.isValid()) {
                             return;
                         }
-
-                        var durationField = document.getElementById('timesheet_edit_form_duration');
-                        var duration = moment.duration(durationField.value);
-                        if (!duration.isValid()) {
-                            durationField.value = '00:00';
-                            duration = 0;
+                        
+                        if (endField.value === '' && momentDuration.asSeconds() > 0) {
+                            endField.value = value;
                         }
 
-                        // calculate duration ONLY if:
-                        // - duration is empty
-                        // - OR duration is zero
-                        // - AND end is not empty
-                        if ((durationField.value === '' || durationField.value === '00:00') && endField.value !== '') {
-                            var momentEnd = moment(endField.value, format);
-                            var durationMoment = moment.duration(momentEnd.diff(momentBegin));
-                            var hours = Math.floor(durationMoment.asHours());
-                            if (hours < 10) {
-                                hours = '0' + hours;
-                            }
-                            durationField.value = hours + ':' + ('0' + durationMoment.minutes()).slice(-2);
+                        var momentEnd = moment(endField.value, format);
+                        if (!momentEnd.isValid()) {
+                            return;
+                        }
+                        
+                        if (momentEnd.isBefore(momentBegin)) {
+                            endField.value = momentBegin.add(momentDuration).format(format);
                         }
 
-                        duration = moment.duration(durationField.value);
-                        if (duration.isValid()) {
-                            endField.value = momentBegin.add(duration.asSeconds(), 'seconds').format(format);
+                        momentBegin = moment(value, format);
+                        momentEnd = moment(endField.value, format);
+                        
+                        var durationMoment = moment.duration(momentEnd.diff(momentBegin));
+                        var hours = Math.floor(durationMoment.asHours());
+                        if (hours < 10) {
+                            hours = '0' + hours;
                         }
+                        
+                        durationField.value = hours + ':' + ('0' + durationMoment.minutes()).slice(-2);
                     }
-                    
+
+                    {#
+                        Ruleset: 
+                        - invalid end => skip
+                        - empty begin => set begin to end
+                        - invalid begin => skip
+                        - calculate duration 
+                    #}
                     function changedEnd(value)
                     {
                         var beginField = document.getElementById('timesheet_edit_form_begin');
+                        var durationField = document.getElementById('timesheet_edit_form_duration');
                         var format = beginField.dataset.format;
+                        var momentDuration = moment.duration(durationField.value);
 
                         var momentEnd = moment(value, format);
                         if (!momentEnd.isValid()) {
                             return;
                         }
+
+                        if (beginField.value === '') {
+                            beginField.value = value;
+                        }
+
+                        var momentBegin = moment(beginField.value, format);
+                        if (!momentBegin.isValid()) {
+                            return;
+                        }
+
+                        if (momentEnd.isBefore(momentBegin)) {
+                            beginField.value = momentEnd.subtract(momentDuration).format(format);
+                        }
+
+                        momentBegin = moment(beginField.value, format);
+                        momentEnd = moment(value, format);
+
+                        var durationMoment = moment.duration(momentEnd.diff(momentBegin));
+                        var hours = Math.floor(durationMoment.asHours());
+                        if (hours < 10) {
+                            hours = '0' + hours;
+                        }
                         
-                        var durationField = document.getElementById('timesheet_edit_form_duration');
-                        var duration = moment.duration(durationField.value);
-                        if (!duration.isValid()) {
-                            durationField.value = '00:00';
-                            duration = 0;
-                        }
-
-                        // calculate duration ONLY if:
-                        // - duration is empty
-                        // - OR duration is zero
-                        // - AND begin is not empty
-                        if ((durationField.value === '' || durationField.value === '00:00') && beginField.value !== '') {
-                            var momentBegin = moment(beginField.value, format);
-                            var durationMoment = moment.duration(momentEnd.diff(momentBegin));
-                            var hours = Math.floor(durationMoment.asHours());
-                            if (hours < 10) {
-                                hours = '0' + hours;
-                            }
-                            durationField.value = hours + ':' + ('0' + durationMoment.minutes()).slice(-2);
-                        }
-
-                        duration = moment.duration(durationField.value);
-                        if (duration.isValid()) {
-                            beginField.value = momentEnd.subtract(duration.asSeconds(), 'seconds').format(format);
-                        }
+                        durationField.value = hours + ':' + ('0' + durationMoment.minutes()).slice(-2);
                     }
 
+                    {#
+                        Ruleset: 
+                        - invalid duration => skip
+                        - if begin and end are empty: set begin to now and end to duration
+                        - if begin is empty and end is not empty: set begin to end minus duration
+                        - if begin is not empty and end is empty and duration is > 0 (running records = 0): set end to begin plus duration
+                    #}
                     function changedDuration(value)
                     {
                         var momentDuration = moment.duration(value);
-                        if (!momentDuration.isValid() || momentDuration.asSeconds() === 0) {
+                        if (!momentDuration.isValid()) {
                             return;
                         }
                         
@@ -159,7 +177,7 @@
                             endField.value = moment(beginField.value, format).add(duration, 'seconds').format(format); 
                         } else if (begin === '' && end !== '') {
                             beginField.value = moment(end, format).subtract(duration, 'seconds').format(format);
-                        } else if (begin !== '') {
+                        } else if (begin !== '' && duration > 0) {
                             endField.value = moment(beginField.value, format).add(duration, 'seconds').format(format); 
                         }
                     }
