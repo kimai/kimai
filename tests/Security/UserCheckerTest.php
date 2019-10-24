@@ -12,6 +12,7 @@ namespace App\Tests\Security;
 use App\Entity\User;
 use App\Security\UserChecker;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Security\Core\Exception\DisabledException;
 use Symfony\Component\Security\Core\User\User as SymfonyUser;
 
 /**
@@ -43,21 +44,19 @@ class UserCheckerTest extends TestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @expectedException \Symfony\Component\Security\Core\Exception\DisabledException
-     * @expectedExceptionMessage User account is disabled.
-     */
     public function testDisabledCannotLoginInCheckPreAuth()
     {
+        $this->expectException(DisabledException::class);
+        $this->expectExceptionMessage('User account is disabled.');
+
         (new UserChecker())->checkPreAuth((new User())->setEnabled(false));
     }
 
-    /**
-     * @expectedException \Symfony\Component\Security\Core\Exception\DisabledException
-     * @expectedExceptionMessage User account is disabled.
-     */
     public function testDisabledCannotLoginInCheckPostAuth()
     {
+        $this->expectException(DisabledException::class);
+        $this->expectExceptionMessage('User account is disabled.');
+
         (new UserChecker())->checkPostAuth((new User())->setEnabled(false));
     }
 }

@@ -21,6 +21,7 @@ use App\Validator\Constraints\Timesheet as TimesheetConstraint;
 use App\Validator\Constraints\TimesheetValidator;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
@@ -46,11 +47,10 @@ class TimesheetValidatorTest extends ConstraintValidatorTestCase
         return new TimesheetValidator($authMock, $config, $service);
     }
 
-    /**
-     * @expectedException \Symfony\Component\Validator\Exception\UnexpectedTypeException
-     */
     public function testConstraintIsInvalid()
     {
+        $this->expectException(UnexpectedTypeException::class);
+
         $this->validator->validate('foo', new NotBlank());
     }
 

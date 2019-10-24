@@ -65,6 +65,7 @@ class TagController extends BaseApiController
      *
      * @Rest\QueryParam(name="name", strict=true, nullable=true, description="Search term to filter tag list")
      *
+     * @param ParamFetcherInterface $paramFetcher
      * @return Response
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher)

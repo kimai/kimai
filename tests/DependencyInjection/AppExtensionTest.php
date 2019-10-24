@@ -10,6 +10,7 @@
 namespace App\Tests\DependencyInjection;
 
 use App\DependencyInjection\AppExtension;
+use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -23,7 +24,7 @@ class AppExtensionTest extends TestCase
      */
     private $extension;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->extension = new AppExtension();
@@ -233,13 +234,14 @@ class AppExtensionTest extends TestCase
     }
 
     /**
-     * @expectedException \PHPUnit\Framework\Error\Notice
-     * @expectedExceptionMessage Found ambiguous configuration. Please remove "kimai.timesheet.duration_only" and set "kimai.timesheet.mode" instead.
      * @expectedDeprecation Configuration "kimai.timesheet.duration_only" is deprecated, please remove it
      * @group legacy
      */
     public function testDurationOnlyDeprecationIsTriggered()
     {
+        $this->expectException(Notice::class);
+        $this->expectExceptionMessage('Found ambiguous configuration. Please remove "kimai.timesheet.duration_only" and set "kimai.timesheet.mode" instead.');
+
         $minConfig = $this->getMinConfig();
         $minConfig['kimai']['timesheet']['duration_only'] = true;
         $minConfig['kimai']['timesheet']['mode'] = 'punch';
@@ -349,12 +351,11 @@ class AppExtensionTest extends TestCase
         $this->assertEquals(['yyyy', 'xxxx'], $config);
     }
 
-    /**
-     * @expectedException \PHPUnit\Framework\Error\Notice
-     * @expectedExceptionMessage Found invalid "kimai" configuration: The child node "data_dir" at path "kimai" must be configured.
-     */
     public function testInvalidConfiguration()
     {
+        $this->expectException(Notice::class);
+        $this->expectExceptionMessage('Found invalid "kimai" configuration: The child node "data_dir" at path "kimai" must be configured.');
+
         $this->extension->load([], $container = $this->getContainer());
     }
 

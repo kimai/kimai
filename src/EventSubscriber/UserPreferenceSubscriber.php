@@ -151,10 +151,6 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
      */
     public function loadUserPreferences(PrepareUserEvent $event)
     {
-        if (!$this->canHandleEvent($event)) {
-            return;
-        }
-
         $user = $event->getUser();
 
         $prefs = [];
@@ -181,18 +177,5 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
         }
 
         $user->setPreferences(array_values($prefs));
-    }
-
-    /**
-     * @param PrepareUserEvent $event
-     * @return bool
-     */
-    protected function canHandleEvent(PrepareUserEvent $event): bool
-    {
-        if (null === ($user = $event->getUser())) {
-            return false;
-        }
-
-        return ($user instanceof User);
     }
 }

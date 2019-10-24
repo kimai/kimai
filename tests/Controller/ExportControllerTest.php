@@ -75,7 +75,7 @@ class ExportControllerTest extends ControllerBaseTest
         $response = $client->getResponse();
         $this->assertFalse($response->isSuccessful());
         $this->assertEquals(404, $response->getStatusCode());
-        $this->assertContains('Missing export renderer', $response->getContent());
+        $this->assertStringContainsString('Missing export renderer', $response->getContent());
     }
 
     public function testExportActionWithInvalidRenderer()
@@ -97,7 +97,7 @@ class ExportControllerTest extends ControllerBaseTest
         $response = $client->getResponse();
         $this->assertFalse($response->isSuccessful());
         $this->assertEquals(404, $response->getStatusCode());
-        $this->assertContains('Unknown export renderer', $response->getContent());
+        $this->assertStringContainsString('Unknown export renderer', $response->getContent());
     }
 
     public function testExportAction()
@@ -135,9 +135,9 @@ class ExportControllerTest extends ControllerBaseTest
         $this->assertEquals(1, $node->count());
 
         // poor mans assertions ;-)
-        $this->assertContains('export_print', $node->getIterator()[0]->getAttribute('class'));
-        $this->assertContains('<h2>List of expenses</h2>', $response->getContent());
-        $this->assertContains('<h3>Summary</h3>', $response->getContent());
+        $this->assertStringContainsString('export_print', $node->getIterator()[0]->getAttribute('class'));
+        $this->assertStringContainsString('<h2>List of expenses</h2>', $response->getContent());
+        $this->assertStringContainsString('<h3>Summary</h3>', $response->getContent());
 
         $node = $client->getCrawler()->filter('section.export div#export-records table.dataTable tbody tr');
         // 20 rows + the summary footer

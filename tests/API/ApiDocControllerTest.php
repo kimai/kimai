@@ -26,14 +26,14 @@ class ApiDocControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/doc');
-        $this->assertContains('<title>Kimai 2 - API Docs</title>', $client->getResponse()->getContent());
+        $this->assertStringContainsString('<title>Kimai 2 - API Docs</title>', $client->getResponse()->getContent());
     }
 
     public function testGetJsonDocs()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/doc.json');
-        $this->assertContains('"title":"Kimai 2 - API Docs"', $client->getResponse()->getContent());
+        $this->assertStringContainsString('"title":"Kimai 2 - API Docs"', $client->getResponse()->getContent());
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);

@@ -12,6 +12,7 @@ namespace App\Tests\Ldap;
 use App\Configuration\LdapConfiguration;
 use App\Entity\User;
 use App\Ldap\LdapDriver;
+use App\Ldap\LdapDriverException;
 use App\Ldap\LdapManager;
 use App\Ldap\LdapUserHydrator;
 use App\Security\RoleService;
@@ -77,12 +78,11 @@ class LdapManagerTest extends TestCase
         self::assertNull($actual);
     }
 
-    /**
-     * @expectedException \App\Ldap\LdapDriverException
-     * @expectedExceptionMessage This search must only return a single user
-     */
     public function testFindUserByUsernameOnMultiResults()
     {
+        $this->expectException(LdapDriverException::class);
+        $this->expectExceptionMessage('This search must only return a single user');
+
         $expected = [
             'count' => 3
         ];
@@ -138,12 +138,11 @@ class LdapManagerTest extends TestCase
         self::assertNull($actual);
     }
 
-    /**
-     * @expectedException \App\Ldap\LdapDriverException
-     * @expectedExceptionMessage This search must only return a single user
-     */
     public function testFindUserByOnMultiResults()
     {
+        $this->expectException(LdapDriverException::class);
+        $this->expectExceptionMessage('This search must only return a single user');
+
         $expected = [
             'count' => 3
         ];
@@ -232,12 +231,11 @@ class LdapManagerTest extends TestCase
         self::assertEquals($userOrig, $user);
     }
 
-    /**
-     * @expectedException \App\Ldap\LdapDriverException
-     * @expectedExceptionMessage This search must only return a single user
-     */
     public function testUpdateUserOnMultiResults()
     {
+        $this->expectException(LdapDriverException::class);
+        $this->expectExceptionMessage('This search must only return a single user');
+
         $user = (new User())->setUsername('foobar');
         $user->setPreferenceValue('ldap.dn', 'xxxxxxx');
 

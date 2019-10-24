@@ -305,7 +305,7 @@ class TimesheetEditForm extends AbstractType
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
             function (FormEvent $event) {
-                /** @var Timesheet $data */
+                /** @var Timesheet|null $data */
                 $data = $event->getData();
                 if (null === $data || null === $data->getEnd()) {
                     $event->getForm()->get('duration')->setData(null);

@@ -14,6 +14,7 @@ use App\Security\AclDecisionManager;
 use App\Security\RolePermissionManager;
 use App\Tests\Mocks\Security\RoleServiceFactory;
 use App\Voter\AbstractVoter;
+use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 
 abstract class AbstractVoterTest extends TestCase
@@ -53,7 +54,7 @@ abstract class AbstractVoterTest extends TestCase
         $user = $this->getMockBuilder(User::class)->getMock();
         $user->method('getId')->willReturn($id);
         $user->method('getRoles')->willReturn($roles);
-        $user->method('getTeams')->willReturn([]);
+        $user->method('getTeams')->willReturn(new ArrayCollection());
 
         return $user;
     }

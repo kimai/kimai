@@ -19,7 +19,7 @@ class UserQuery extends VisibilityQuery
     /**
      * @var string|null
      */
-    protected $role;
+    private $role;
 
     public function __construct()
     {
@@ -37,12 +37,12 @@ class UserQuery extends VisibilityQuery
     }
 
     /**
-     * @param string $role
+     * @param string|null $role
      * @return UserQuery
      */
     public function setRole($role)
     {
-        if (false !== strpos($role, 'ROLE_') || null === $role) {
+        if (null === $role || false !== strpos($role, 'ROLE_')) {
             $this->role = $role;
         }
 

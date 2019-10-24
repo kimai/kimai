@@ -46,7 +46,7 @@ class TimesheetValidator extends ConstraintValidator
     }
 
     /**
-     * @param TimesheetEntity $value
+     * @param TimesheetEntity|mixed $value
      * @param Constraint $constraint
      */
     public function validate($value, Constraint $constraint)

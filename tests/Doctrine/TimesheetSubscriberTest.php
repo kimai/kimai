@@ -25,12 +25,11 @@ class TimesheetSubscriberTest extends TestCase
         $this->assertTrue(in_array(Events::onFlush, $events));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Invalid TimesheetCalculator implementation given. Expected CalculatorInterface but received stdClass
-     */
     public function testConstructThrowsExceptionOnInvalidParam()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid TimesheetCalculator implementation given. Expected CalculatorInterface but received stdClass');
+
         new TimesheetSubscriber([new \stdClass()]);
     }
 }

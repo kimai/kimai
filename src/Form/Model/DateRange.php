@@ -11,49 +11,35 @@ namespace App\Form\Model;
 
 use DateTime;
 
-class DateRange
+final class DateRange
 {
     /**
      * @var DateTime
      */
-    protected $begin;
+    private $begin;
     /**
      * @var DateTime
      */
-    protected $end;
+    private $end;
 
-    /**
-     * @return DateTime
-     */
     public function getBegin(): ?DateTime
     {
         return $this->begin;
     }
 
-    /**
-     * @param DateTime $begin
-     * @return DateRange
-     */
-    public function setBegin(DateTime $begin)
+    public function setBegin(DateTime $begin): DateRange
     {
         $this->begin = $begin;
 
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
     public function getEnd(): ?DateTime
     {
         return $this->end;
     }
 
-    /**
-     * @param DateTime $end
-     * @return DateRange
-     */
-    public function setEnd(DateTime $end)
+    public function setEnd(DateTime $end): DateRange
     {
         $this->end = $end;
 

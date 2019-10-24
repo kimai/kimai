@@ -11,6 +11,7 @@ namespace App\Tests\DependencyInjection;
 
 use App\DependencyInjection\Configuration;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 /**
  * @covers \App\DependencyInjection\Configuration
@@ -43,30 +44,27 @@ class ConfigurationTest extends TestCase
         return $node->finalize($normalizedConfig);
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     * @expectedExceptionMessage Invalid configuration for path "kimai.data_dir": Data directory does not exist
-     */
     public function testValidateDataDir()
     {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('Invalid configuration for path "kimai.data_dir": Data directory does not exist');
+
         $this->assertConfig($this->getMinConfig('sdfsdfsdfds'), []);
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     * @expectedExceptionMessage Invalid configuration for path "kimai.plugin_dir": Plugin directory does not exist
-     */
     public function testValidatePluginDir()
     {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('Invalid configuration for path "kimai.plugin_dir": Plugin directory does not exist');
+
         $this->assertConfig($this->getMinConfig('/tmp/', 'sdfsdfs'), []);
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     * @expectedExceptionMessage Invalid configuration for path "kimai.ldap": The "ldap.user.baseDn" config must be set if LDAP is activated.
-     */
     public function testValidateLdapConfigUserBaseDn()
     {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('Invalid configuration for path "kimai.ldap": The "ldap.user.baseDn" config must be set if LDAP is activated.');
+
         $config = $this->getMinConfig();
         $config['ldap'] = [
             'connection' => [
@@ -77,12 +75,11 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, []);
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     * @expectedExceptionMessage Invalid configuration for path "kimai.ldap.connection": The ldap.connection.useSsl and ldap.connection.useStartTls options are mutually exclusive.
-     */
     public function testValidateLdapConfig()
     {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('Invalid configuration for path "kimai.ldap.connection": The ldap.connection.useSsl and ldap.connection.useStartTls options are mutually exclusive.');
+
         $config = $this->getMinConfig();
         $config['ldap'] = [
             'connection' => [
@@ -94,12 +91,11 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, []);
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     * @expectedExceptionMessage Invalid configuration for path "kimai.ldap.user.filter": The ldap.user.filter must be enclosed by a matching number of parentheses "()" and must NOT contain a "%s" replacer
-     */
     public function testValidateLdapFilterIncludingReplacer()
     {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('Invalid configuration for path "kimai.ldap.user.filter": The ldap.user.filter must be enclosed by a matching number of parentheses "()" and must NOT contain a "%s" replacer');
+
         $config = $this->getMinConfig();
         $config['ldap'] = [
             'user' => [
@@ -110,12 +106,11 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, []);
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     * @expectedExceptionMessage Invalid configuration for path "kimai.ldap.user.filter": The ldap.user.filter must be enclosed by a matching number of parentheses "()" and must NOT contain a "%s" replacer
-     */
     public function testValidateLdapFilterMissingStartingParenthesis()
     {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('Invalid configuration for path "kimai.ldap.user.filter": The ldap.user.filter must be enclosed by a matching number of parentheses "()" and must NOT contain a "%s" replacer');
+
         $config = $this->getMinConfig();
         $config['ldap'] = [
             'user' => [
@@ -126,12 +121,11 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, []);
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     * @expectedExceptionMessage Invalid configuration for path "kimai.ldap.user.filter": The ldap.user.filter must be enclosed by a matching number of parentheses "()" and must NOT contain a "%s" replacer
-     */
     public function testValidateLdapFilterInvalidParenthesisCounter()
     {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('Invalid configuration for path "kimai.ldap.user.filter": The ldap.user.filter must be enclosed by a matching number of parentheses "()" and must NOT contain a "%s" replacer');
+
         $config = $this->getMinConfig();
         $config['ldap'] = [
             'user' => [
@@ -142,12 +136,11 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, []);
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     * @expectedExceptionMessage Invalid configuration for path "kimai.ldap.connection.accountFilterFormat": The accountFilterFormat must be enclosed by a matching number of parentheses "()" and contain one "%s" replacer for the username
-     */
     public function testValidateLdapAccountFilterFormatMissingUserAttributeReplacer()
     {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('Invalid configuration for path "kimai.ldap.connection.accountFilterFormat": The accountFilterFormat must be enclosed by a matching number of parentheses "()" and contain one "%s" replacer for the username');
+
         $config = $this->getMinConfig();
         $config['ldap'] = [
             'connection' => [
@@ -158,12 +151,11 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, []);
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     * @expectedExceptionMessage Invalid configuration for path "kimai.ldap.connection.accountFilterFormat": The accountFilterFormat must be enclosed by a matching number of parentheses "()" and contain one "%s" replacer for the username
-     */
     public function testValidateLdapAccountFilterFormatMissingStartingParenthesis()
     {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('Invalid configuration for path "kimai.ldap.connection.accountFilterFormat": The accountFilterFormat must be enclosed by a matching number of parentheses "()" and contain one "%s" replacer for the username');
+
         $config = $this->getMinConfig();
         $config['ldap'] = [
             'connection' => [
@@ -174,12 +166,11 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, []);
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     * @expectedExceptionMessage Invalid configuration for path "kimai.ldap.connection.accountFilterFormat": The accountFilterFormat must be enclosed by a matching number of parentheses "()" and contain one "%s" replacer for the username
-     */
     public function testValidateLdapAccountFilterFormatInvalidParenthesisCounter()
     {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('Invalid configuration for path "kimai.ldap.connection.accountFilterFormat": The accountFilterFormat must be enclosed by a matching number of parentheses "()" and contain one "%s" replacer for the username');
+
         $config = $this->getMinConfig();
         $config['ldap'] = [
             'connection' => [

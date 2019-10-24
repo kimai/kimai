@@ -66,7 +66,7 @@ class XlsxRendererTest extends TestCase
         /*
         $content = file_get_contents($file->getRealPath());
         $this->assertNotContains('${', $content);
-        $this->assertContains(',"1,947.99" ', $content);
+        $this->assertStringContainsString(',"1,947.99" ', $content);
         $this->assertEquals(6, substr_count($content, PHP_EOL));
         $this->assertEquals(5, substr_count($content, 'activity description'));
         $this->assertEquals(1, substr_count($content, ',"kevin",'));

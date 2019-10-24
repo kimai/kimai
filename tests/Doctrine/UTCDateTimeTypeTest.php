@@ -13,6 +13,7 @@ use App\Doctrine\UTCDateTimeType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\DBAL\Platforms\SqlitePlatform;
+use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
 use PHPUnit\Framework\TestCase;
 
@@ -83,10 +84,11 @@ class UTCDateTimeTypeTest extends TestCase
 
     /**
      * @dataProvider getPlatforms
-     * @expectedException \Doctrine\DBAL\Types\ConversionException
      */
     public function testConvertToPHPValueWithInvalidValue(AbstractPlatform $platform)
     {
+        $this->expectException(ConversionException::class);
+
         Type::overrideType(Type::DATETIME, UTCDateTimeType::class);
         /** @var UTCDateTimeType $type */
         $type = Type::getType(Type::DATETIME);

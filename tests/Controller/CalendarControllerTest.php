@@ -48,10 +48,10 @@ class CalendarControllerTest extends ControllerBaseTest
         $this->assertEquals(1, $calendar->count());
 
         $content = $client->getResponse()->getContent();
-        $this->assertContains("googleCalendarId: 'de.german#holiday@group.v.calendar.google.com',", $content);
-        $this->assertContains("name: 'holidays'", $content);
-        $this->assertContains("googleCalendarId: 'en.german#holiday@group.v.calendar.google.com',", $content);
-        $this->assertContains("name: 'holidays_en'", $content);
+        $this->assertStringContainsString("googleCalendarId: 'de.german#holiday@group.v.calendar.google.com',", $content);
+        $this->assertStringContainsString("name: 'holidays'", $content);
+        $this->assertStringContainsString("googleCalendarId: 'en.german#holiday@group.v.calendar.google.com',", $content);
+        $this->assertStringContainsString("name: 'holidays_en'", $content);
     }
 
     protected function getDefaultSettings()
