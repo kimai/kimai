@@ -13,6 +13,7 @@ namespace App\API;
 
 use App\Repository\Query\UserQuery;
 use App\Repository\UserRepository;
+use App\Utils\SearchTerm;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -26,7 +27,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 /**
  * @RouteResource("User")
  *
- * @Security("is_granted('ROLE_USER')")
+ * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
 class UserController extends BaseApiController
 {
@@ -65,9 +66,11 @@ class UserController extends BaseApiController
      * @Rest\QueryParam(name="visible", requirements="1|2|3", strict=true, nullable=true, description="Visibility status to filter users. Allowed values: 1=visible, 2=hidden, 3=all (default: 1)")
      * @Rest\QueryParam(name="orderBy", requirements="id|username|alias|email", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, username, alias, email (default: username)")
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: ASC)")
+     * @Rest\QueryParam(name="term", requirements="[a-zA-Z0-9 \-,:]+", strict=true, nullable=true, description="Free search term")
      *
      * @Security("is_granted('view_user')")
      *
+     * @param ParamFetcherInterface $paramFetcher
      * @return Response
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher)
@@ -84,6 +87,10 @@ class UserController extends BaseApiController
 
         if (null !== ($orderBy = $paramFetcher->get('orderBy'))) {
             $query->setOrderBy($orderBy);
+        }
+
+        if (!empty($term = $paramFetcher->get('term'))) {
+            $query->setSearchTerm(new SearchTerm($term));
         }
 
         $data = $this->repository->getUsersForQuery($query);
