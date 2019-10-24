@@ -70,6 +70,10 @@
                 <source>create-timesheet</source>
                 <target>Crear parte de horas</target>
             </trans-unit>
+            <trans-unit id="permissions">
+                <source>permissions</source>
+                <target>Permisos del equipo</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

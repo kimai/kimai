@@ -18,6 +18,10 @@
                 <source>form_customer</source>
                 <target>Crear cliente - valores por defecto</target>
             </trans-unit>
+            <trans-unit id="form_user">
+                <source>form_user</source>
+                <target>Valores por defecto - usuario</target>
+            </trans-unit>
             <trans-unit id="theme">
                 <source>theme</source>
                 <target>Apariencia</target>
@@ -65,6 +69,10 @@
             <trans-unit id="label.theme.select_type">
                 <source>label.theme.select_type</source>
                 <target>Tipo de cajas de selección en formularios</target>
+            </trans-unit>
+            <trans-unit id="label.theme.autocomplete_chars">
+                <source>label.theme.autocomplete_chars</source>
+                <target>Número mínimo de letras para iniciar el autocompletado</target>
             </trans-unit>
             <trans-unit id="label.calendar.week_numbers">
                 <source>label.calendar.week_numbers</source>
