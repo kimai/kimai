@@ -20,7 +20,7 @@
                         {% endif %}
                         {% if 'alwaysVisible' not in headerOptions.class %}
                             <div class="form-group">
-                                <input type="checkbox" id="column_{{ title }}" name="{{ title }}"{% if is_visible_column(name, title) %} checked="checked"{% endif %}>
+                                <input type="checkbox" id="column_{{ title }}" name="{{ title }}"{% if is_visible_column(name, title, columns) %} checked="checked"{% endif %}>
                                 <label class="control-label" for="column_{{ title }}">{{ headerTitle }}</label>
                             </div>
                         {% endif %}
@@ -105,15 +105,17 @@
                 {% endif %}
             {% endfor %}
         {% else %}
-            {% if not is_visible_column(name, column) %}
+            {% if not is_visible_column(name, column, columns) %}
                 {% set classes = classes ~ ' hidden' %}
             {% elseif not is_datatable_configured(name) %}
+                {# needs to be a foreach, as classes like "hidden-xs" would match in: if 'hidden' in classes #}
                 {% for tmp in classes|split(' ') %}
                     {% if 'hidden' == tmp %}
                         {% set classes = classes|replace({(tmp): ''}) %}
                     {% endif %}
                 {% endfor %}
             {% else %}
+                {# needs to be a foreach, as classes like "hidden-xs" would match in: if 'hidden' in classes #}
                 {% for tmp in classes|split(' ') %}
                     {% if 'hidden' in tmp %}
                         {% set classes = classes|replace({(tmp): ''}) %}
