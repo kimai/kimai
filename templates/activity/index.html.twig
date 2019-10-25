@@ -8,7 +8,7 @@
     'name': 'alwaysVisible',
     'customer': 'hidden-xs',
     'project': 'hidden-xs',
-    'comment': 'hidden-xs',
+    'comment': 'hidden-xs hidden-sm',
 } %}
 {% for field in metaColumns %}
     {% set columns = columns|merge({
@@ -16,7 +16,7 @@
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
-    'visible': {'class': '', 'orderBy': false},
+    'visible': {'class': 'text-center', 'orderBy': false},
     'actions': 'actions alwaysVisible',
 }) %}
 
