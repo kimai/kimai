@@ -43,6 +43,7 @@ trait EntityFormTrait
                 ])
                 ->add('timeBudget', DurationType::class, [
                     'label' => 'label.timeBudget',
+                    'icon' => 'clock',
                     'required' => false,
                 ])
             ;
