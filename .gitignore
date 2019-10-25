@@ -5,7 +5,9 @@
 /bin/*
 !bin/console
 /config/packages/local.yaml
+/config/packages/*-local.yaml
 /config/packages/*/local.yaml
+/config/packages/*/*-local.yaml
 
 public/avatars/*.png
 

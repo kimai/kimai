@@ -24,7 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Dashboard controller for the admin area.
  *
  * @Route(path="/dashboard")
- * @Security("is_granted('ROLE_USER')")
+ * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
 class DashboardController extends AbstractController
 {

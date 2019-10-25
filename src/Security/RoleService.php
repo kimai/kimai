@@ -20,6 +20,7 @@ final class RoleService
      */
     private $roleNames = [];
 
+    // FIXME must be dynamic
     public function __construct(array $roles)
     {
         $this->roles = $roles;

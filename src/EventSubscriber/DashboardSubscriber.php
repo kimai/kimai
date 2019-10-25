@@ -82,10 +82,6 @@ class DashboardSubscriber implements EventSubscriberInterface
      */
     public function onDashboardEvent(DashboardEvent $event)
     {
-        if (!$this->security->isGranted(User::ROLE_ADMIN)) {
-            return;
-        }
-
         $section = new CompoundRow();
         $section->setTitle('ROLE_ADMIN');
         $section->setOrder(100);
