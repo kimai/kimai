@@ -54,8 +54,8 @@
         {% if is_granted('preferences', user) %}
             {% set actions = actions|merge({'settings': {'url': path('user_profile_preferences', {'username' : user.username})}}) %}
         {% endif %}
-        {% if is_granted('view_other_timesheet') %}
-            {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'user' : user.id})}) %}
+        {% if is_granted('view_other_timesheet') and user.enabled %}
+            {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'users': [user.id]})}) %}
         {% endif %}
         {% if view == 'index' and is_granted('delete', user) %}
             {% set actions = actions|merge({'trash': {'url': path('admin_user_delete', {'id': user.id}), 'class': 'modal-ajax-form'}}) %}
