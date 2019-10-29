@@ -110,14 +110,14 @@ class AvatarService
 
     private function getAvatarUrl(User $profile): string
     {
-        return '/avatars/' . md5($profile->getId() . '_' . $profile->getDisplayName()) . '.png';
+        return md5($profile->getId() . '_' . $profile->getDisplayName()) . '.png';
     }
 
     private function getImagePath(User $profile): string
     {
-        $avatarPath = realpath($this->projectDirectory . '/public/');
+        $avatarPath = realpath($this->projectDirectory . '/public/avatars/');
 
-        return $avatarPath . $this->getAvatarUrl($profile);
+        return $avatarPath . '/' . $this->getAvatarUrl($profile);
     }
 
     public function generateAvatar(User $profile, bool $regenerate = false): bool
