@@ -9,7 +9,7 @@
 
 namespace App\Configuration;
 
-class ThemeConfiguration implements SystemBundleConfiguration
+class ThemeConfiguration implements SystemBundleConfiguration, \ArrayAccess
 {
     use StringAccessibleConfigTrait;
 

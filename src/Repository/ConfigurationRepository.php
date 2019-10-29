@@ -47,6 +47,11 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
                 $entity = $this->findOneBy(['name' => $configuration->getName()]);
                 $value = $configuration->getValue();
 
+                if (null === $value && null !== $entity) {
+                    $em->remove($entity);
+                    continue;
+                }
+
                 if (null === $entity) {
                     $entity = new Configuration();
                     $entity->setName($configuration->getName());

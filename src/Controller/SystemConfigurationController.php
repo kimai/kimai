@@ -312,6 +312,30 @@ class SystemConfigurationController extends AbstractController
                         ->setType(TextType::class)
                         ->setConstraints([new DateTime(['format' => 'H:i']), new NotNull()]),
                 ]),
+            (new SystemConfigurationModel())
+                ->setSection(SystemConfigurationModel::SECTION_BRANDING)
+                ->setConfiguration([
+                    (new Configuration())
+                        ->setName('theme.branding.logo')
+                        ->setTranslationDomain('system-configuration')
+                        ->setRequired(false)
+                        ->setType(TextType::class),
+                    (new Configuration())
+                        ->setName('theme.branding.company')
+                        ->setTranslationDomain('system-configuration')
+                        ->setRequired(false)
+                        ->setType(TextType::class),
+                    (new Configuration())
+                        ->setName('theme.branding.mini')
+                        ->setTranslationDomain('system-configuration')
+                        ->setRequired(false)
+                        ->setType(TextType::class),
+                    (new Configuration())
+                        ->setName('theme.branding.title')
+                        ->setTranslationDomain('system-configuration')
+                        ->setRequired(false)
+                        ->setType(TextType::class),
+                ]),
         ];
     }
 }
