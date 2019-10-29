@@ -29,6 +29,3 @@ framework:
     #validation:
         # possible values: 'loose', 'strict', 'html5'
         #email_validation_mode: 'html5'
-
-    assets:
-        json_manifest_path: '%kernel.project_dir%/public/build/manifest.json'
