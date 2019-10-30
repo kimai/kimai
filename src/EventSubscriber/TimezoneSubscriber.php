@@ -42,7 +42,7 @@ class TimezoneSubscriber implements EventSubscriberInterface
 
         /** @var User $user */
         $user = $this->storage->getToken()->getUser();
-        $timezone = $user->getPreferenceValue('timezone', date_default_timezone_get());
+        $timezone = $user->getTimezone();
         date_default_timezone_set($timezone);
     }
 

@@ -1042,7 +1042,7 @@ class KimaiImporterCommand extends Command
             }
 
             $user = $this->users[$oldRecord['userID']];
-            $timezone = $user->getPreferenceValue('timezone', date_default_timezone_get());
+            $timezone = $user->getTimezone();
             $dateTimezone = new \DateTimeZone('UTC');
 
             $begin = new \DateTime('@' . $oldRecord['start']);
