@@ -24,8 +24,8 @@ class UserDateTimeFactory
         $timezone = date_default_timezone_get();
 
         $user = $user->getUser();
-        if ($user instanceof User && null !== $user->getPreferenceValue('timezone')) {
-            $timezone = $user->getPreferenceValue('timezone');
+        if ($user instanceof User) {
+            $timezone = $user->getTimezone();
         }
 
         $this->timezone = new \DateTimeZone($timezone);
