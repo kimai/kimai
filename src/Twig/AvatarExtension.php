@@ -54,6 +54,6 @@ class AvatarExtension extends AbstractExtension
             return $this->packages->getUrl($default);
         }
 
-        return $this->packages->getUrl($url);
+        return $this->packages->getUrl($url, 'avatars');
     }
 }
