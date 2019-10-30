@@ -53,6 +53,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
             ['form[name=system_configuration_form_form_user]', $this->createUrl('/admin/system-config/update/form_user')],
             ['form[name=system_configuration_form_theme]', $this->createUrl('/admin/system-config/update/theme')],
             ['form[name=system_configuration_form_calendar]', $this->createUrl('/admin/system-config/update/calendar')],
+            ['form[name=system_configuration_form_branding]', $this->createUrl('/admin/system-config/update/branding')],
         ];
     }
 

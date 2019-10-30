@@ -54,13 +54,15 @@ class SystemConfigurationType extends AbstractType
                     $type = HiddenType::class;
                 }
 
-                $event->getForm()->add('value', $type, [
+                $options = [
                     'label' => 'label.' . ($preference->getLabel() ?? $preference->getName()),
                     'constraints' => $preference->getConstraints(),
                     'required' => $required,
                     'disabled' => !$preference->isEnabled(),
                     'translation_domain' => $preference->getTranslationDomain(),
-                ]);
+                ];
+
+                $event->getForm()->add('value', $type, array_merge($options, $preference->getOptions()));
             }
         );
         $builder->add('name', HiddenType::class);
