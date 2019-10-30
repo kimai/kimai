@@ -7,7 +7,10 @@ home:
 
 homeLocale:
     path: /{_locale}
+    requirements:
+        _locale: '%app_locales%'
     defaults:
         _controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
+        _locale: '%locale%'
         route: homepage
         permanent: true

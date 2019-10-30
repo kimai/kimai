@@ -71,7 +71,10 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
             new MenuItemModel('system', 'menu.system', '')
         );
 
-        $this->eventDispatcher->dispatch($menuEvent);
+        // error pages don't have a user and will fail when is_granted() is called
+        if (null !== $event->getRequest()->getUser()) {
+            $this->eventDispatcher->dispatch($menuEvent);
+        }
 
         if ($menuEvent->getAdminMenu()->hasChildren()) {
             $event->addItem(new MenuItemModel('admin', 'menu.admin', ''));
