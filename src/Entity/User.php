@@ -256,12 +256,14 @@ class User extends BaseUser implements UserInterface
         return null;
     }
 
-    /**
-     * @return string
-     */
     public function getLocale(): string
     {
         return $this->getPreferenceValue(UserPreference::LOCALE, User::DEFAULT_LANGUAGE);
+    }
+
+    public function getTimezone(): string
+    {
+        return $this->getPreferenceValue(UserPreference::TIMEZONE, date_default_timezone_get());
     }
 
     /**

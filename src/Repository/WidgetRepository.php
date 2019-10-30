@@ -90,8 +90,9 @@ class WidgetRepository
     protected function create(string $name, array $widget): WidgetInterface
     {
         $user = $this->user;
-        $begin = !empty($widget['begin']) ? new \DateTime($widget['begin']) : null;
-        $end = !empty($widget['end']) ? new \DateTime($widget['end']) : null;
+        $timezone = new \DateTimeZone($user->getTimezone());
+        $begin = !empty($widget['begin']) ? new \DateTime($widget['begin'], $timezone) : null;
+        $end = !empty($widget['end']) ? new \DateTime($widget['end'], $timezone) : null;
         $theUser = $widget['user'] ? $user : null;
 
         if (!isset($widget['type'])) {
