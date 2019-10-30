@@ -34,6 +34,10 @@ final class Configuration
      */
     private $type;
     /**
+     * @var array
+     */
+    private $options = [];
+    /**
      * @var bool
      */
     private $enabled = true;
@@ -152,6 +156,18 @@ final class Configuration
     public function setRequired(bool $required): Configuration
     {
         $this->required = $required;
+
+        return $this;
+    }
+
+    public function getOptions(): array
+    {
+        return $this->options;
+    }
+
+    public function setOptions(array $options): Configuration
+    {
+        $this->options = $options;
 
         return $this;
     }

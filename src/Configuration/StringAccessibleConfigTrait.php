@@ -26,9 +26,6 @@ trait StringAccessibleConfigTrait
      */
     protected $initialized = false;
 
-    /**
-     * @param array $settings
-     */
     public function __construct(ConfigLoaderInterface $repository, array $settings)
     {
         $this->repository = $repository;
@@ -119,5 +116,46 @@ trait StringAccessibleConfigTrait
         }
 
         return $config[$search];
+    }
+
+    /**
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        try {
+            $this->find($offset);
+        } catch (\Exception $ex) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function offsetGet($offset)
+    {
+        return $this->find($offset);
+    }
+
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     * @throws \BadMethodCallException
+     */
+    public function offsetSet($offset, $value)
+    {
+        throw new \BadMethodCallException('SystemBundleConfiguration does not support offsetSet()');
+    }
+
+    /**
+     * @param mixed $offset
+     * @throws \BadMethodCallException
+     */
+    public function offsetUnset($offset)
+    {
+        throw new \BadMethodCallException('SystemBundleConfiguration does not support offsetUnset()');
     }
 }
