@@ -36,28 +36,20 @@ class TimezoneSubscriber implements EventSubscriberInterface
 
     public function setTimezone(RequestEvent $event)
     {
-        if (!$this->canHandleEvent()) {
-            return;
-        }
-
-        /** @var User $user */
-        $user = $this->storage->getToken()->getUser();
-        $timezone = $user->getTimezone();
-        date_default_timezone_set($timezone);
-    }
-
-    protected function canHandleEvent(): bool
-    {
         if (null === $this->storage->getToken()) {
-            return false;
+            return;
         }
 
         $user = $this->storage->getToken()->getUser();
 
         if (null === $user) {
-            return false;
+            return;
         }
 
-        return ($user instanceof User);
+        if ($user instanceof User) {
+            /** @var User $user */
+            $user = $this->storage->getToken()->getUser();
+            date_default_timezone_set($user->getTimezone());
+        }
     }
 }
