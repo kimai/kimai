@@ -32,3 +32,16 @@
         {{ block('form_widget_simple') }}
     {%- endif -%}
 {%- endblock datetime_widget %}
+
+{% block text_widget -%}
+    {% if icon is not empty %}
+    <div class="input-group">
+        <div class="input-group-addon">
+            <i class="{{ icon|icon }}"></i>
+        </div>
+        {{ block('form_widget_simple') }}
+    </div>
+    {% else %}
+        {{ block('form_widget_simple') }}
+    {% endif %}
+{%- endblock text_widget %}

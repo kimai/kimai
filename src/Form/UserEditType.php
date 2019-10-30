@@ -10,6 +10,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Form\Type\AvatarType;
 use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -36,8 +37,7 @@ class UserEditType extends AbstractType
                 'label' => 'label.title',
                 'required' => false,
             ])
-            ->add('avatar', TextType::class, [
-                'label' => 'label.avatar',
+            ->add('avatar', AvatarType::class, [
                 'required' => false,
             ])
             ->add('email', EmailType::class, [
