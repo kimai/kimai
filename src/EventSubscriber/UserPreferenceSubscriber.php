@@ -57,7 +57,7 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            PrepareUserEvent::PREPARE => ['loadUserPreferences', 200]
+            PrepareUserEvent::class => ['loadUserPreferences', 200]
         ];
     }
 

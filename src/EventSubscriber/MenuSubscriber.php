@@ -42,7 +42,7 @@ final class MenuSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            ConfigureMainMenuEvent::CONFIGURE => ['onMainMenuConfigure', 100],
+            ConfigureMainMenuEvent::class => ['onMainMenuConfigure', 100],
         ];
     }
 
