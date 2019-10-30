@@ -6,9 +6,52 @@
 {% block page_actions %}{{ actions.activity(activity, 'edit') }}{% endblock %}
 
 {% block main %}
-    {{ include(app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig', {
+    {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+    {% set formOptions = {
         'title': activity.name|default('create'|trans),
         'form': form,
         'back': path('admin_activity')
-    }) }}
+    } %}
+    {% embed formEditTemplate with formOptions %}
+        {% block form_body %}
+            <div class="row">
+                <div class="col-md-10">
+                    {{ form_row(form.name) }}
+                </div>
+                <div class="col-md-2">
+                    {{ form_row(form.color) }}
+                </div>
+            </div>
+            {{ form_row(form.comment) }}
+            {{ form_row(form.customer) }}
+            {{ form_row(form.project) }}
+            <fieldset>
+                {#<legend>Financial data</legend>#}
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.fixedRate) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.hourlyRate) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.budget) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.timeBudget) }}
+                    </div>
+                </div>
+            </fieldset>
+            {{ form_row(form.visible) }}
+            {% if form.metaFields is defined and form.metaFields is not empty %}
+                <fieldset>
+                    {#<legend>Custom fields</legend>#}
+                    {{ form_row(form.metaFields) }}
+                </fieldset>
+            {% endif %}
+            {{ form_widget(form) }}
+        {% endblock %}
+    {% endembed %}    
 {% endblock %}
