@@ -1,33 +1,51 @@
-{% extends 'base.html.twig' %}
+{% extends '@AdminLTE/layout/security-layout.html.twig' %}
 
-{% block page_title %}{{ 'http_error.title'|trans({}, 'exceptions') }}{% endblock %}
-{% block page_subtitle %}{{ status_code }}{% endblock %}
-
-{% block main %}
-    {% set errorTitleKey = "http_error_#{status_code}.description" %}
+{% set errorTitleKey = "http_error_#{status_code}.description" %}
+{% set errorTitleTrans = errorTitleKey|trans({ '%status_code%': status_code }, 'exceptions') %}
+{% if errorTitleKey == errorTitleTrans %}
+    {% set errorTitleKey = 'http_error.description' %}
     {% set errorTitleTrans = errorTitleKey|trans({ '%status_code%': status_code }, 'exceptions') %}
-    {% if errorTitleKey == errorTitleTrans %}
-        {% set errorTitleKey = 'http_error.description' %}
-        {% set errorTitleTrans = errorTitleKey|trans({ '%status_code%': status_code }, 'exceptions') %}
-    {% endif %}
+{% endif %}
 
-    {% set errorMessageKey = "http_error_#{status_code}.suggestion" %}
+{% set errorMessageKey = "http_error_#{status_code}.suggestion" %}
+{% set errorMessageTrans = errorMessageKey|trans({ '%status_code%': status_code }, 'exceptions') %}
+{% if errorMessageKey == errorMessageTrans %}
+    {% set errorMessageKey = 'http_error.suggestion' %}
     {% set errorMessageTrans = errorMessageKey|trans({ '%status_code%': status_code }, 'exceptions') %}
-    {% if errorMessageKey == errorMessageTrans %}
-        {% set errorMessageKey = 'http_error.suggestion' %}
-        {% set errorMessageTrans = errorMessageKey|trans({ '%status_code%': status_code }, 'exceptions') %}
-    {% endif %}
+{% endif %}
 
-    <div class="error-page">
-        <h2 class="headline {% block error_class %}text-yellow{% endblock %}"> {{ status_code }}</h2>
+{% block logo_login %}{% include 'partials/logo_login.html.twig' %}{% endblock %}
+{% block title %}{{ status_code }} - {{ 'http_error.title'|trans({}, 'exceptions') }}{% endblock %}
 
-        {% block error_content %}
-        <div class="error-content">
-            <h3>{% block error_icon %}{% endblock %} {{ errorTitleTrans }}</h3>
-            <p>{{ errorMessageTrans }}</p>
-            <a class="btn btn-primary" href="javascript:window.history.back();">{{ 'action.back'|trans }}</a>
-        </div>
-        {% endblock %}
-
-    </div>
+{% block head %}
+    {{ parent() }}
+    {% include 'partials/head.html.twig' %}
 {% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
+
+{% block login_box_icon %}{% block error_icon %}{% endblock %}{% endblock %}
+
+{% block login_box_msg %}
+    {{ errorTitleTrans }}
+{% endblock %}
+
+{% block login_form %}
+    {% block error_content %}
+        <p>
+            {{ errorMessageTrans }}
+        </p>
+        <p>
+            <a class="btn btn-primary" href="{{ path('dashboard') }}">{{ 'dashboard.title'|trans }}</a>
+        </p>
+    {% endblock %}
+{% endblock %}
+
+{% block login_social_auth %}{% endblock %}
+{% block login_actions %}{% endblock %}
