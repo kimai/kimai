@@ -27,7 +27,7 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
      */
     private $eventDispatcher;
     /**
-     * @var TokenStorageInterface 
+     * @var TokenStorageInterface
      */
     private $tokenStorage;
 
