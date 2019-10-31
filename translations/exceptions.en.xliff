@@ -16,35 +16,34 @@
             </trans-unit>
             <trans-unit id="http_error.description">
                 <source>http_error.description</source>
-                <target>Oops! An error occured.</target>
+                <target>Something is wrong</target>
             </trans-unit>
             <trans-unit id="http_error.suggestion">
                 <source>http_error.suggestion</source>
                 <target>
-                    An unexpected error occured, please try again.
-                    You may have found a bug, so please contact your administrator if the problem
-                    doesn't go away after you tried it again.
+                    A critical error occurred, please try again.
+                    You may have found a software problem, please contact your administrator if the problem persists.
                 </target>
             </trans-unit>
             <trans-unit id="http_error_404.description">
                 <source>http_error_404.description</source>
-                <target>Oops! Page not found.</target>
+                <target>Page not found</target>
             </trans-unit>
             <trans-unit id="http_error_404.suggestion">
                 <source>http_error_404.suggestion</source>
                 <target>
                     We could not find the page you were looking for.
-                    Meanwhile, you may return to your dashboard and start over.
+                    Please return to your dashboard and start over.
                 </target>
             </trans-unit>
             <trans-unit id="http_error_403.description">
                 <source>http_error_403.description</source>
-                <target>This page is restricted.</target>
+                <target>Page is restricted</target>
             </trans-unit>
             <trans-unit id="http_error_403.suggestion">
                 <source>http_error_403.suggestion</source>
                 <target>
-                    Sorry, but you do not have sufficient permissions to see this page.
+                    Sorry, but you don't have sufficient permissions to see this page.
                     Please talk to your administrator if you think this is an error.
                 </target>
             </trans-unit>
