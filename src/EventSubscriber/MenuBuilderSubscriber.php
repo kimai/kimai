@@ -14,10 +14,11 @@ use KevinPapst\AdminLTEBundle\Event\SidebarMenuEvent;
 use KevinPapst\AdminLTEBundle\Model\MenuItemModel;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Class MenuBuilder configures the main navigation.
+ * @internal
  */
 class MenuBuilderSubscriber implements EventSubscriberInterface
 {
@@ -26,19 +27,14 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
      */
     private $eventDispatcher;
     /**
-     * @var AuthorizationCheckerInterface
+     * @var TokenStorageInterface
      */
-    private $security;
+    private $tokenStorage;
 
-    /**
-     * MenuBuilderSubscriber constructor.
-     * @param EventDispatcherInterface $dispatcher
-     * @param AuthorizationCheckerInterface $security
-     */
-    public function __construct(EventDispatcherInterface $dispatcher, AuthorizationCheckerInterface $security)
+    public function __construct(EventDispatcherInterface $dispatcher, TokenStorageInterface $storage)
     {
         $this->eventDispatcher = $dispatcher;
-        $this->security = $security;
+        $this->tokenStorage = $storage;
     }
 
     /**
@@ -72,7 +68,7 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
         );
 
         // error pages don't have a user and will fail when is_granted() is called
-        if (null !== $event->getRequest()->getUser()) {
+        if (null !== $this->tokenStorage->getToken()) {
             $this->eventDispatcher->dispatch($menuEvent);
         }
 
