@@ -8,9 +8,6 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
-What are BC breaks? In short: BC means ** Backward compatibility**. Changes are called BC breaks if the change important behaviour, 
-confuse users or even break things (like plugins that need to be updated as well).
-
 ## [1.5](https://github.com/kevinpapst/kimai2/releases/tag/1.4)
 
 Short and simple: [Update as usual](https://www.kimai.org/documentation/updates.html).
