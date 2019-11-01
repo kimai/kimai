@@ -10,37 +10,36 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 ## [1.5](https://github.com/kevinpapst/kimai2/releases/tag/1.4)
 
-Short and simple: [Update as usual](https://www.kimai.org/documentation/updates.html).
+[Update as usual](https://www.kimai.org/documentation/updates.html)
 
 ## [1.4](https://github.com/kevinpapst/kimai2/releases/tag/1.4)
 
-**Attention**: There is a new directory, which needs to be writable by the webserver: `public/avatars/`.
+**There is a new directory, which needs to be writable by the webserver: `public/avatars/`.**
 
 New permission (used in new dashboard widget):
 - `view_team_member` - display team assignments (names, teamleads and members) for the current user
 
-### Possible BC breaks
+Activated Javascript select component by default (check mobile devices).
 
-- Activated Javascript select component by default
-
-### BC breaks for devs
+### Developer: BC breaks
 
 - Dashboard widgets and rows need to define their `type` by FQCN
-- Switched to Symfony 4.3 event types, this could fail in plugins only if they didn't use the official constants for event names
+- Switched to Symfony 4.3 event types, this could fail in plugins, but only if they didn't use the official constants for event names
 
 ## [1.3](https://github.com/kevinpapst/kimai2/releases/tag/1.3)
 
-### Possible BC breaks
+Added `manage_tag` permission for new tag features
+
+### Developer: BC breaks
 
 - Refactored toolbars and search, plugins needs to be checked 
-- Added `manage_tag` permission for new tag features
 - Invoices now supports multiple repositories, some method signatures had to be changed (eg. `calculateSumIdentifier()`)  
 
 ## [1.2](https://github.com/kevinpapst/kimai2/releases/tag/1.2)
 
-### Possible BC breaks
+**If you are still using 0.7 or below, you need to upgrade to 1.1 before upgrading to this version.**
 
-- Deleted timezone conversion command. If you are still using 0.7 or below, you need to upgrade to 1.1 before upgrading to this version.
+- Deleted timezone conversion command. 
 - Minimum password length raised from 5 to 8 character (applies only for password changes and new users)
 - Maximum customer name length lowered to 150 character
 - Maximum project name length lowered to 150 character
@@ -48,15 +47,14 @@ New permission (used in new dashboard widget):
 - Added new permission: `manage_invoice_template`
   - Removed permissions: `view_invoice_template`, `create_invoice_template`, `edit_invoice_template`, `delete_invoice_template`
 - Removed permission: `view_export` (using `create_export` only)
+
+### Developer: BC breaks
+
 - Custom export renderer need to check for usage of `Timesheet::getEnd()` as running entries can now be exported as well
 
 ## [1.1](https://github.com/kevinpapst/kimai2/releases/tag/1.1)
 
 [Update as usual](https://www.kimai.org/documentation/updates.html), nothing special for this release if you upgrade from 1.0 / 1.0.1.
-
-## [1.0.1](https://github.com/kevinpapst/kimai2/releases/tag/1.0.1)
-
-[Update as usual](https://www.kimai.org/documentation/updates.html), nothing special for this release if you upgrade from 1.0.
 
 ## [1.0](https://github.com/kevinpapst/kimai2/releases/tag/1.0)
 
