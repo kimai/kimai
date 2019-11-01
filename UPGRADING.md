@@ -13,7 +13,7 @@ confuse users or even break things (like plugins that need to be updated as well
 
 ## [1.5](https://github.com/kevinpapst/kimai2/releases/tag/1.4)
 
-[Update as usual](https://www.kimai.org/documentation/updates.html), nothing special for this release if you upgrade from 1.0 / 1.0.1.
+Short and simple: [Update as usual](https://www.kimai.org/documentation/updates.html).
 
 ## [1.4](https://github.com/kevinpapst/kimai2/releases/tag/1.4)
 
