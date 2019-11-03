@@ -35,7 +35,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * This command can change anytime or even get deleted, don't rely on it!
  *
- * @internal 
+ * @internal
  * @codeCoverageIgnore
  */
 class CsvImporterCommand extends Command
