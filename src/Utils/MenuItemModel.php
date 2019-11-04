@@ -14,15 +14,15 @@ use KevinPapst\AdminLTEBundle\Model\MenuItemModel as BaseMenuItemModel;
 class MenuItemModel extends BaseMenuItemModel
 {
     private $childRoutes = [];
-    
+
     public function setChildRoutes(array $routes): MenuItemModel
     {
         $this->childRoutes = $routes;
-        
+
         return $this;
     }
-    
-    public function isChildRoute(string $route): bool 
+
+    public function isChildRoute(string $route): bool
     {
         return in_array($route, $this->childRoutes);
     }
