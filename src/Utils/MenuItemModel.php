@@ -22,6 +22,13 @@ class MenuItemModel extends BaseMenuItemModel
         return $this;
     }
 
+    public function addChildRoute(string $route): MenuItemModel
+    {
+        $this->childRoutes[] = $route;
+
+        return $this;
+    }
+
     public function isChildRoute(string $route): bool
     {
         return in_array($route, $this->childRoutes);
