@@ -232,7 +232,7 @@ class CsvImporterCommand extends Command
             try {
                 $user = $this->getUser($record['User']);
             } catch (\Exception $ex) {
-                $io->error(sprintf('Unknown user %s in row %s', $ex->getUsername(), $row));
+                $io->error(sprintf('Unknown user %s in row %s', $record['User'], $row));
                 $doImport = false;
                 $errors++;
             }
