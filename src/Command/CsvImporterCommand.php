@@ -231,7 +231,7 @@ class CsvImporterCommand extends Command
 
             try {
                 $user = $this->getUser($record['User']);
-            } catch (UnknownUserException $ex) {
+            } catch (\Exception $ex) {
                 $io->error(sprintf('Unknown user %s in row %s', $ex->getUsername(), $row));
                 $doImport = false;
                 $errors++;
@@ -329,9 +329,12 @@ class CsvImporterCommand extends Command
     private function getUser($user): User
     {
         if (!array_key_exists($user, $this->userCache)) {
-            $tmpUser = $this->users->loadUserByUsername($user);
+            $tmpUser = $this->users->findOneBy(['username' => $user]);
             if (null === $tmpUser) {
-                throw new UnknownUserException($user);
+                $tmpUser = $this->users->findOneBy(['email' => $user]);
+                if (null === $tmpUser) {
+                    throw new UnknownUserException($user);
+                }
             }
             $this->userCache[$user] = $tmpUser;
         }
