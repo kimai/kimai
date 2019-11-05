@@ -50,7 +50,11 @@
     {{ 'export.page_of'|trans({'%page%': '{PAGENO}', '%pages%': '{nb}'}) }}
     </td>
     <td align="right">
-    {{ kimai_context.branding.company }} &ndash; {{ now|date_full }}
+    {% if kimai_context.branding.company is not empty %}
+        {{ kimai_context.branding.company }} &ndash; {{ now|date_full }}
+    {% else %}
+        {{ 'export.date_copyright'|trans({'%date%': now|date_full, '%kimai%': '<a href="' ~ constant('App\\Constants::HOMEPAGE') ~ '">' ~ constant('App\\Constants::SOFTWARE') ~ '</a>'})|raw }}
+    {% endif %}
     </td>
 </tr>
 </table>

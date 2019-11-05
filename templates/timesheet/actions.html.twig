@@ -9,7 +9,7 @@
         {% elseif exporterIds|length > 1 %}
             {% set children = {} %}
             {% for exporter in exporterIds %}
-                {% set children = children|merge({(exporter): {'title': ('button.' ~ exporter)|trans, 'url': path('timesheet_export', {'exporter': exporter}), 'class': 'toolbar-action'}}) %}
+                {% set children = children|merge({(exporter): {'title': ('button.' ~ exporter)|trans, 'url': path('timesheet_export', {'exporter': exporter}), 'class': 'toolbar-action exporter-' ~ exporter}}) %}
             {% endfor %}
             {% set actions = actions|merge({'download': {'children': children}}) %}
         {% endif %}

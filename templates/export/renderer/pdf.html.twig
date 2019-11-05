@@ -50,7 +50,11 @@
     {{ 'export.page_of'|trans({'%page%': '{PAGENO}', '%pages%': '{nb}'}) }}
     </td>
     <td align="right">
-    {{ 'export.date_copyright'|trans({'%date%': now|date_short ~ ' ' ~ now|date('H:i'), '%kimai%': '<a href="' ~ constant('App\\Constants::HOMEPAGE') ~ '">' ~ constant('App\\Constants::SOFTWARE') ~ '</a>'})|raw }}
+    {% if kimai_context.branding.company is not empty %}
+        {{ kimai_context.branding.company }} &ndash; {{ now|date_full }}
+    {% else %}
+        {{ 'export.date_copyright'|trans({'%date%': now|date_full, '%kimai%': '<a href="' ~ constant('App\\Constants::HOMEPAGE') ~ '">' ~ constant('App\\Constants::SOFTWARE') ~ '</a>'})|raw }}
+    {% endif %}
     </td>
 </tr>
 </table>
@@ -134,7 +138,6 @@ mpdf-->
     <tbody>
     {% for entry in entries %}
         {% set duration = duration + entry.duration %}
-        {% set rate = rate + entry.rate %}
         {% if currency is same as(false) %}
             {% set currency = entry.project.customer.currency %}
         {% endif %}
@@ -157,7 +160,10 @@ mpdf-->
                 {% endif %}
             </td>
             <td class="duration">{{ entry.duration|duration }}</td>
-            <td class="cost">{{ entry.rate|money(entry.project.customer.currency) }}</td>
+            <td class="cost">
+                {% set rate = rate + entry.rate %}
+                {{ entry.rate|money(entry.project.customer.currency) }}
+            </td>
         </tr>
     {% endfor %}
     <tr class="summary">

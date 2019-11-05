@@ -36,7 +36,10 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertHasNoEntriesWithFilter($client);
         $this->assertPageActions($client, [
             'search search-toggle visible-xs-inline' => '#',
-            'download toolbar-action' => $this->createUrl('/timesheet/export'),
+            'toolbar-action exporter-csv' => $this->createUrl('/timesheet/export/csv'),
+            'toolbar-action exporter-print' => $this->createUrl('/timesheet/export/print'),
+            'toolbar-action exporter-pdf' => $this->createUrl('/timesheet/export/pdf'),
+            'toolbar-action exporter-xlsx' => $this->createUrl('/timesheet/export/xlsx'),
             'visibility' => '#',
             'create modal-ajax-form' => $this->createUrl('/timesheet/create'),
             'help' => 'https://www.kimai.org/documentation/timesheet.html'

@@ -9,13 +9,14 @@
 
 namespace App\Export\Timesheet;
 
-use App\Export\Base\PDFRenderer as BasePDFRenderer;
+use App\Export\Base\XlsxRenderer as BaseXlsxRenderer;
 use App\Export\TimesheetExportInterface;
+use App\Repository\Query\TimesheetQuery;
 
-final class PDFRenderer extends BasePDFRenderer implements TimesheetExportInterface
+final class XlsxRenderer extends BaseXlsxRenderer implements TimesheetExportInterface
 {
-    protected function getTemplate(): string
+    protected function isRenderRate(TimesheetQuery $query): bool
     {
-        return 'timesheet/export-pdf.html.twig';
+        return false;
     }
 }
