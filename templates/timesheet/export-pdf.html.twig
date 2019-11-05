@@ -1,0 +1,147 @@
+<html>
+<head>
+    <style>
+        body {font-family: sans-serif;
+            font-size: 10pt;
+        }
+        p {	margin: 0pt; }
+        table.items {
+            border: 0.1mm solid #000000;
+        }
+        td { vertical-align: top; }
+        .items td {
+            border-left: 0.1mm solid #000000;
+            border-right: 0.1mm solid #000000;
+        }
+        .items tr.even {
+            background-color: #e0ebff;
+        }
+        .items tr.summary {
+            background-color: #efefef;
+        }
+        .items tr.summary td {
+            font-weight: bold;
+            border-top: 0.1mm solid #000000;
+            border-bottom: 0.1mm solid #000000;
+        }
+        table thead td {
+            background-color: #ececec;
+            text-align: center;
+            border: 0.1mm solid #000000;
+            font-variant: small-caps;
+        }
+        .items td.totals {
+            font-weight: bold;
+            text-align: right;
+            border: 0.1mm solid #000000;
+        }
+        .items td.duration,
+        .items td.cost {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<!--mpdf
+<htmlpagefooter name="myfooter">
+<table style="border-top: 1px solid #000000; font-size: 9pt; padding-top: 3mm; width: 100%">
+<tr>
+    <td align="left">
+    {{ 'export.page_of'|trans({'%page%': '{PAGENO}', '%pages%': '{nb}'}) }}
+    </td>
+    <td align="right">
+    {{ kimai_context.branding.company }} &ndash; {{ now|date_full }}
+    </td>
+</tr>
+</table>
+</htmlpagefooter>
+<sethtmlpagefooter name="myfooter" value="on" />
+mpdf-->
+{% set showUserColumn = true %}
+{% set showRateColumn = true %}
+{% if query.user %}
+    {% set showUserColumn = false %}
+    {% set showRateColumn = is_granted('view_rate_own_timesheet') %}
+{% endif %}
+<h2 style="margin-bottom: 0; padding-bottom: 0">{{ 'export.document_title'|trans }}</h2>
+<p>
+    {{ 'export.period'|trans }}:
+    {{ query.begin|date_short }} - {{ query.end|date_short }}
+    {% if not showUserColumn %}
+        <br>
+        {{ 'label.user'|trans }}: {{ query.user.displayName }} 
+    {% endif %}
+</p>
+
+{% set duration = 0 %}
+{% set rate = 0 %}
+{% set currency = false %}
+<table class="items" width="100%" style="font-size: 9pt; border-collapse: collapse; margin-top: 20px" cellpadding="8">
+    <thead>
+    <tr>
+        <td>{{ 'label.date'|trans }}</td>
+        {% if showUserColumn %}
+        <td>{{ 'label.user'|trans }}</td>
+        {% endif %}
+        <td width="">{{ 'label.description'|trans }}</td>
+        <td>{{ 'label.duration'|trans }}</td>
+        {% if showRateColumn %}
+        <td>{{ 'label.rate'|trans }}</td>
+        {% endif %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for entry in entries %}
+        {% set duration = duration + entry.duration %}
+        {% if currency is same as(false) %}
+            {% set currency = entry.project.customer.currency %}
+        {% endif %}
+        {% if currency is not same as(entry.project.customer.currency) %}
+            {% set currency = null %}
+        {% endif %}
+        <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
+            <td>
+                {{ entry.begin|date_time }}
+                {% if entry.end %}
+                    <br>
+                    {{ entry.end|date_time }}
+                {% endif %}
+            </td>
+            {% if showUserColumn %}
+                <td>{{ entry.user.displayName }}</td>
+            {% endif %}
+            <td>
+                {{ entry.project.customer.name }} - {{ entry.project.name }} - {{ entry.activity.name }}
+                {% if entry.description is not empty %}
+                    <br>
+                    <i>{{ entry.description|escape|desc2html }}</i>
+                {% endif %}
+            </td>
+            <td class="duration">{{ entry.duration|duration }}</td>
+            {% if showRateColumn %}
+            <td class="cost">
+                {% if is_granted('view_rate', entry) %}
+                    {% set rate = rate + entry.rate %}
+                    {{ entry.rate|money(entry.project.customer.currency) }}
+                {% else %}
+                    &ndash;
+                {% endif %}
+            </td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    <tr class="summary">
+        {% if showUserColumn %}
+            <td colspan="3"></td>
+        {% else %}
+            <td colspan="2"></td>
+        {% endif %}
+        <td class="totals duration">{{ duration|duration }}</td>
+        {% if showRateColumn %}
+        <td class="totals cost">{{ rate|money(currency) }}</td>
+        {% endif %}
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

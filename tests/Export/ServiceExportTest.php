@@ -22,35 +22,24 @@ class ServiceExportTest extends TestCase
 {
     public function testEmptyObject()
     {
-        $sut = new ServiceExport([]);
+        $sut = new ServiceExport();
         $this->assertEmpty($sut->getRenderer());
     }
 
     public function testUnknownRendererReturnsNull()
     {
-        $sut = new ServiceExport([]);
+        $sut = new ServiceExport();
         $this->assertNull($sut->getRendererById('default'));
     }
 
     public function testAdd()
     {
-        $sut = new ServiceExport([]);
+        $sut = new ServiceExport();
 
         $sut->addRenderer(new HtmlRenderer(
             $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock(),
             new EventDispatcher()
         ));
-
-        $this->assertEquals(1, count($sut->getRenderer()));
-    }
-
-    public function testAddViaConstruct()
-    {
-        $renderer = [new HtmlRenderer(
-            $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock(),
-            new EventDispatcher()
-        )];
-        $sut = new ServiceExport($renderer);
 
         $this->assertEquals(1, count($sut->getRenderer()));
     }

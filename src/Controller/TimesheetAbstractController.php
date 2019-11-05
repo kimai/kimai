@@ -15,6 +15,7 @@ use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Event\TimesheetMetaDefinitionEvent;
 use App\Event\TimesheetMetaDisplayEvent;
+use App\Export\ServiceExport;
 use App\Form\TimesheetEditForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\ActivityRepository;
@@ -53,19 +54,25 @@ abstract class TimesheetAbstractController extends AbstractController
      * @var EventDispatcherInterface
      */
     protected $dispatcher;
+    /**
+     * @var ServiceExport
+     */
+    protected $exportService;
 
     public function __construct(
         UserDateTimeFactory $dateTime,
         TimesheetConfiguration $configuration,
         TimesheetRepository $repository,
         TrackingModeService $service,
-        EventDispatcherInterface $dispatcher
+        EventDispatcherInterface $dispatcher,
+        ServiceExport $exportService
     ) {
         $this->dateTime = $dateTime;
         $this->configuration = $configuration;
         $this->repository = $repository;
         $this->trackingModeService = $service;
         $this->dispatcher = $dispatcher;
+        $this->exportService = $exportService;
     }
 
     protected function getTrackingMode(): TrackingModeInterface
@@ -227,7 +234,7 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
-    protected function export(Request $request, string $renderTemplate, string $location): Response
+    protected function export(Request $request, string $exporterId): Response
     {
         $query = new TimesheetQuery();
 
@@ -252,11 +259,13 @@ abstract class TimesheetAbstractController extends AbstractController
 
         $entries = $this->getRepository()->getTimesheetsForQuery($query);
 
-        return $this->render($renderTemplate, [
-            'entries' => $entries,
-            'query' => $query,
-            'metaColumns' => $this->findMetaColumns($query, $location),
-        ]);
+        $exporter = $this->exportService->getTimesheetExporterById($exporterId);
+
+        if (null === $exporter) {
+            throw $this->createNotFoundException('Invalid timesheet exporter given');
+        }
+
+        return $exporter->render($entries, $query);
     }
 
     protected function prepareQuery(TimesheetQuery $query)
