@@ -11,10 +11,12 @@ namespace App\Tests\Timesheet\Calculator;
 
 use App\Entity\Timesheet;
 use App\Timesheet\Calculator\DurationCalculator;
+use App\Timesheet\RoundingService;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Timesheet\Calculator\DurationCalculator
+ * @covers \App\Timesheet\RoundingService
  */
 class DurationCalculatorTest extends TestCase
 {
@@ -24,7 +26,7 @@ class DurationCalculatorTest extends TestCase
         $record->setBegin(new \DateTime());
         $this->assertEquals(0, $record->getDuration());
 
-        $sut = new DurationCalculator([]);
+        $sut = new DurationCalculator(new RoundingService([]));
         $sut->calculate($record);
         $this->assertEquals(0, $record->getDuration());
     }
@@ -39,7 +41,7 @@ class DurationCalculatorTest extends TestCase
         $record->setEnd($end);
         $this->assertEquals(0, $record->getDuration());
 
-        $sut = new DurationCalculator($rules);
+        $sut = new DurationCalculator(new RoundingService($rules));
         $sut->calculate($record);
         $this->assertEquals($expectedDuration, $record->getDuration());
     }

@@ -45,7 +45,7 @@ kimai:
         rounding:
             default:
                 days: ['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
-                begin: 1
+                begin: 15
                 end: 1
                 duration: 0
                 mode: default

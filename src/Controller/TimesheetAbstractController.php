@@ -171,7 +171,6 @@ abstract class TimesheetAbstractController extends AbstractController
     {
         $entry = new Timesheet();
         $entry->setUser($this->getUser());
-        $entry->setBegin($this->dateTime->createDateTime());
 
         if ($request->query->get('project')) {
             $project = $projectRepository->find($request->query->get('project'));

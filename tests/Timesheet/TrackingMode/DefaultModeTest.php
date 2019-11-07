@@ -10,8 +10,10 @@
 namespace App\Tests\Timesheet\TrackingMode;
 
 use App\Configuration\TimesheetConfiguration;
+use App\Entity\Timesheet;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
+use App\Timesheet\RoundingService;
 use App\Timesheet\TrackingMode\DefaultMode;
 
 /**
@@ -19,6 +21,12 @@ use App\Timesheet\TrackingMode\DefaultMode;
  */
 class DefaultModeTest extends AbstractTrackingModeTest
 {
+    protected function assertDefaultBegin(Timesheet $timesheet)
+    {
+        self::assertNotNull($timesheet->getBegin());
+        self::assertInstanceOf(\DateTime::class, $timesheet->getBegin());
+    }
+
     /**
      * @return DefaultMode
      */
@@ -28,7 +36,7 @@ class DefaultModeTest extends AbstractTrackingModeTest
         $dateTime = (new UserDateTimeFactoryFactory($this))->create();
         $configuration = new TimesheetConfiguration($loader, ['default_begin' => '13:47']);
 
-        return new DefaultMode($dateTime, $configuration);
+        return new DefaultMode($dateTime, $configuration, new RoundingService([]));
     }
 
     public function testDefaultValues()
