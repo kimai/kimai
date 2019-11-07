@@ -35,6 +35,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class AbstractRendererTest extends KernelTestCase
@@ -66,7 +67,10 @@ abstract class AbstractRendererTest extends KernelTestCase
         $dispatcher = new EventDispatcher();
         $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
 
-        return new $classname($translator, $dateExtension, $dispatcher);
+        $authMock = $this->getMockBuilder(AuthorizationCheckerInterface::class)->getMock();
+        $authMock->method('isGranted')->willReturn(true);
+
+        return new $classname($translator, $dateExtension, $dispatcher, $authMock);
     }
 
     /**
