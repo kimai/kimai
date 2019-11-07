@@ -7,18 +7,18 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Export\Renderer;
+namespace App\Tests\Export\Timesheet;
 
-use App\Export\Renderer\CsvRenderer;
+use App\Export\Timesheet\CsvRenderer;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * @covers \App\Export\Base\CsvRenderer
  * @covers \App\Export\Base\AbstractSpreadsheetRenderer
  * @covers \App\Export\Base\RendererTrait
- * @covers \App\Export\Renderer\CsvRenderer
- * @covers \App\Export\Renderer\AbstractSpreadsheetRenderer
- * @covers \App\Export\Renderer\RendererTrait
+ * @covers \App\Export\Timesheet\CsvRenderer
+ * @covers \App\Export\Timesheet\AbstractSpreadsheetRenderer
+ * @covers \App\Export\Timesheet\RendererTrait
  * @group integration
  */
 class CsvRendererTest extends AbstractRendererTest
@@ -28,8 +28,6 @@ class CsvRendererTest extends AbstractRendererTest
         $sut = $this->getAbstractRenderer(CsvRenderer::class);
 
         $this->assertEquals('csv', $sut->getId());
-        $this->assertEquals('csv', $sut->getTitle());
-        $this->assertEquals('csv', $sut->getIcon());
     }
 
     public function getTestModel()

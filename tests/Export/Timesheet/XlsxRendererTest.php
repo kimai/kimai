@@ -7,18 +7,18 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Export\Renderer;
+namespace App\Tests\Export\Timesheet;
 
-use App\Export\Renderer\XlsxRenderer;
+use App\Export\Timesheet\XlsxRenderer;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * @covers \App\Export\Base\XlsxRenderer
  * @covers \App\Export\Base\AbstractSpreadsheetRenderer
  * @covers \App\Export\Base\RendererTrait
- * @covers \App\Export\Renderer\XlsxRenderer
- * @covers \App\Export\Renderer\AbstractSpreadsheetRenderer
- * @covers \App\Export\Renderer\RendererTrait
+ * @covers \App\Export\Timesheet\XlsxRenderer
+ * @covers \App\Export\Timesheet\AbstractSpreadsheetRenderer
+ * @covers \App\Export\Timesheet\RendererTrait
  * @group integration
  */
 class XlsxRendererTest extends AbstractRendererTest
@@ -28,8 +28,6 @@ class XlsxRendererTest extends AbstractRendererTest
         $sut = $this->getAbstractRenderer(XlsxRenderer::class);
 
         $this->assertEquals('xlsx', $sut->getId());
-        $this->assertEquals('xlsx', $sut->getTitle());
-        $this->assertEquals('xlsx', $sut->getIcon());
     }
 
     public function testRender()

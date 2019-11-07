@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Export\Renderer;
+namespace App\Tests\Export\Timesheet;
 
-use App\Export\Renderer\PDFRenderer;
+use App\Export\Timesheet\PDFRenderer;
 use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Utils\HtmlToPdfConverter;
 use App\Utils\MPdfConverter;
@@ -19,8 +19,8 @@ use Twig\Environment;
 /**
  * @covers \App\Export\Base\PDFRenderer
  * @covers \App\Export\Base\RendererTrait
- * @covers \App\Export\Renderer\PDFRenderer
- * @covers \App\Export\Renderer\RendererTrait
+ * @covers \App\Export\Timesheet\PDFRenderer
+ * @covers \App\Export\Timesheet\RendererTrait
  * @group integration
  */
 class PdfRendererTest extends AbstractRendererTest
@@ -39,8 +39,6 @@ class PdfRendererTest extends AbstractRendererTest
         );
 
         $this->assertEquals('pdf', $sut->getId());
-        $this->assertEquals('pdf', $sut->getTitle());
-        $this->assertEquals('pdf', $sut->getIcon());
     }
 
     public function testRender()
