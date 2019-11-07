@@ -145,7 +145,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $dateRange = (new \DateTime('-10 days'))->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime())->format('Y-m-d');
 
         $form = $client->getCrawler()->filter('form.header-search')->form();
-        $form->getFormNode()->setAttribute('action', $this->createUrl('/team/timesheet/export'));
+        $form->getFormNode()->setAttribute('action', $this->createUrl('/team/timesheet/export/print'));
         $client->submit($form, [
             'state' => 1,
             'pageSize' => 25,
