@@ -17,6 +17,10 @@ final class CsvRenderer extends BaseCsvRenderer implements TimesheetExportInterf
 {
     protected function isRenderRate(TimesheetQuery $query): bool
     {
-        return false;
+        if (null !== $query->getUser()) {
+            return $this->voter->isGranted('view_rate_own_timesheet');
+        }
+
+        return true;
     }
 }

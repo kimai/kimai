@@ -29,6 +29,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -55,12 +56,17 @@ abstract class AbstractSpreadsheetRenderer
      * @var EventDispatcherInterface
      */
     protected $dispatcher;
+    /**
+     * @var AuthorizationCheckerInterface
+     */
+    protected $voter;
 
-    public function __construct(TranslatorInterface $translator, DateExtensions $dateExtension, EventDispatcherInterface $dispatcher)
+    public function __construct(TranslatorInterface $translator, DateExtensions $dateExtension, EventDispatcherInterface $dispatcher, AuthorizationCheckerInterface $voter)
     {
         $this->translator = $translator;
         $this->dateExtension = $dateExtension;
         $this->dispatcher = $dispatcher;
+        $this->voter = $voter;
     }
 
     protected function isRenderRate(TimesheetQuery $query): bool
