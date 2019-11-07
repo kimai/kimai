@@ -10,6 +10,7 @@
 namespace App\EventSubscriber;
 
 use App\Event\ConfigureMainMenuEvent;
+use App\Utils\MenuItemModel as KimaiMenuItemModel;
 use KevinPapst\AdminLTEBundle\Event\SidebarMenuEvent;
 use KevinPapst\AdminLTEBundle\Model\MenuItemModel;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -104,6 +105,13 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
             } else {
                 if ($item->getRoute() == $route) {
                     $item->setIsActive(true);
+                    continue;
+                }
+                if ($item instanceof KimaiMenuItemModel) {
+                    if ($item->isChildRoute($route)) {
+                        $item->setIsActive(true);
+                        continue;
+                    }
                 }
             }
         }
