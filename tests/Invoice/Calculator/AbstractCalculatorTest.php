@@ -50,15 +50,15 @@ abstract class AbstractCalculatorTest extends TestCase
         $template = new InvoiceTemplate();
         $template->setVat(19);
 
-        $user = $this->getMockBuilder(User::class)->setMethods(['getId'])->disableOriginalConstructor()->getMock();
+        $user = $this->getMockBuilder(User::class)->onlyMethods(['getId'])->disableOriginalConstructor()->getMock();
         $user->method('getId')->willReturn(1);
 
-        $project = $this->getMockBuilder(Project::class)->setMethods(['getId', 'getCustomer', 'getName'])->disableOriginalConstructor()->getMock();
+        $project = $this->getMockBuilder(Project::class)->onlyMethods(['getId', 'getCustomer', 'getName'])->disableOriginalConstructor()->getMock();
         $project->method('getId')->willReturn(1);
         $project->method('getCustomer')->willReturn($customer);
         $project->method('getName')->willReturn('project description');
 
-        $activity = $this->getMockBuilder(Activity::class)->setMethods(['getId', 'getProject', 'getName'])->disableOriginalConstructor()->getMock();
+        $activity = $this->getMockBuilder(Activity::class)->onlyMethods(['getId', 'getProject', 'getName'])->disableOriginalConstructor()->getMock();
         $activity->method('getId')->willReturn(1);
         $activity->method('getProject')->willReturn($project);
         $activity->method('getName')->willReturn('activity description');

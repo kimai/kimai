@@ -32,7 +32,7 @@ class CompoundRowRendererTest extends TestCase
 
     public function testRenderWithCounter()
     {
-        $twig = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->setMethods(['render'])->getMock();
+        $twig = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->onlyMethods(['render'])->getMock();
         $twig->expects($this->once())->method('render')->willReturnCallback(function ($name, $options) {
             return json_encode([$name, $options]);
         });

@@ -66,7 +66,7 @@ class WidgetServiceTest extends TestCase
     {
         $widget = new More();
 
-        $repository = $this->getMockBuilder(WidgetRepository::class)->disableOriginalConstructor()->setMethods(['has', 'get'])->getMock();
+        $repository = $this->getMockBuilder(WidgetRepository::class)->disableOriginalConstructor()->onlyMethods(['has', 'get'])->getMock();
         $repository->expects($this->once())->method('has')->willReturn(true);
         $repository->expects($this->once())->method('get')->willReturn($widget);
 
