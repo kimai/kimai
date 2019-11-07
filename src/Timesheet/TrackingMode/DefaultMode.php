@@ -15,7 +15,7 @@ use App\Timesheet\RoundingService;
 use App\Timesheet\UserDateTimeFactory;
 use Symfony\Component\HttpFoundation\Request;
 
-class DefaultMode extends AbstractTrackingMode
+final class DefaultMode extends AbstractTrackingMode
 {
     /**
      * @var RoundingService
@@ -64,7 +64,16 @@ class DefaultMode extends AbstractTrackingMode
 
         if (null === $timesheet->getBegin()) {
             $timesheet->setBegin($this->dateTime->createDateTime());
-            $this->rounding->roundBegin($timesheet);
+        }
+
+        $this->rounding->roundBegin($timesheet);
+
+        if (null !== $timesheet->getEnd()) {
+            $this->rounding->roundEnd($timesheet);
+
+            if (null !== $timesheet->getDuration()) {
+                $this->rounding->roundDuration($timesheet);
+            }
         }
     }
 }

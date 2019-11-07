@@ -38,9 +38,8 @@ class TimesheetValidatorTest extends ConstraintValidatorTestCase
             'rules' => [
                 'allow_future_times' => false,
             ],
-            'mode' => 'default',
         ]);
-        $service = (new TrackingModeServiceFactory($this))->create();
+        $service = (new TrackingModeServiceFactory($this))->create('default');
 
         return new TimesheetValidator($authMock, $config, $service);
     }
