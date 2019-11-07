@@ -14,8 +14,4 @@ use App\Export\TimesheetExportInterface;
 
 final class PDFRenderer extends BasePDFRenderer implements TimesheetExportInterface
 {
-    protected function getTemplate(): string
-    {
-        return 'timesheet/export-pdf.html.twig';
-    }
 }
