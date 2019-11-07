@@ -95,6 +95,10 @@ class Kernel extends BaseKernel
             return;
         }
 
+        if ($this->environment === 'test' && getenv('TEST_WITH_BUNDLES') === false) {
+            return;
+        }
+
         $finder = new Finder();
         $finder->ignoreUnreadableDirs()->directories()->name('*Bundle');
         /** @var SplFileInfo $bundleDir */
@@ -176,6 +180,10 @@ class Kernel extends BaseKernel
 
         // load application routes
         $routes->import($confDir . '/routes' . self::CONFIG_EXTS, '/', 'glob');
+
+        if ($this->environment === 'test' && getenv('TEST_WITH_BUNDLES') === false) {
+            return;
+        }
 
         // load plugin routes
         $pluginsDir = $this->getProjectDir() . '/var/plugins';
