@@ -68,14 +68,14 @@ class BaseQueryTest extends TestCase
 
     private function getFormBuilder(string $name)
     {
-        return new FormBuilder($name, null, new EventDispatcher(), $this->getMockBuilder(FormFactoryInterface::class)->getMock(), []);
+        return new FormBuilder($name, null, new EventDispatcher(), $this->createMock(FormFactoryInterface::class), []);
     }
 
     protected function resetByFormError(BaseQuery $sut, array $invalidFields)
     {
         $formBuilder = $this->getFormBuilder('form');
         $formBuilder->setCompound(true);
-        $formBuilder->setDataMapper($this->getMockBuilder(DataMapperInterface::class)->getMock());
+        $formBuilder->setDataMapper($this->createMock(DataMapperInterface::class));
 
         $form = $formBuilder->getForm();
 

@@ -22,7 +22,7 @@ class MarkdownExtensionTest extends TestCase
 {
     public function testGetFilters()
     {
-        $loader = $this->getMockBuilder(ConfigLoaderInterface::class)->getMock();
+        $loader = $this->createMock(ConfigLoaderInterface::class);
         $config = new TimesheetConfiguration($loader, ['markdown_content' => true]);
         $sut = new MarkdownExtension(new Markdown(), $config);
         $filters = $sut->getFilters();
@@ -34,7 +34,7 @@ class MarkdownExtensionTest extends TestCase
 
     public function testMarkdownToHtml()
     {
-        $loader = $this->getMockBuilder(ConfigLoaderInterface::class)->getMock();
+        $loader = $this->createMock(ConfigLoaderInterface::class);
         $config = new TimesheetConfiguration($loader, ['markdown_content' => true]);
         $sut = new MarkdownExtension(new Markdown(), $config);
         $this->assertEquals('<p><em>test</em></p>', $sut->markdownToHtml('*test*'));
@@ -43,7 +43,7 @@ class MarkdownExtensionTest extends TestCase
 
     public function testTimesheetContent()
     {
-        $loader = $this->getMockBuilder(ConfigLoaderInterface::class)->getMock();
+        $loader = $this->createMock(ConfigLoaderInterface::class);
         $config = new TimesheetConfiguration($loader, ['markdown_content' => false]);
         $sut = new MarkdownExtension(new Markdown(), $config);
         $this->assertEquals(

@@ -24,7 +24,7 @@ class WidgetRepositoryTest extends TestCase
 {
     public function testHasWidget()
     {
-        $repoMock = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->getMock();
+        $repoMock = $this->createMock(TimesheetRepository::class);
         $userMock = (new CurrentUserFactory($this))->create(new User());
 
         $sut = new WidgetRepository($repoMock, $userMock, ['test' => []]);
@@ -38,7 +38,7 @@ class WidgetRepositoryTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Cannot find widget "foo".');
 
-        $repoMock = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->getMock();
+        $repoMock = $this->createMock(TimesheetRepository::class);
         $userMock = (new CurrentUserFactory($this))->create(new User());
 
         $sut = new WidgetRepository($repoMock, $userMock, ['test' => []]);
@@ -50,7 +50,7 @@ class WidgetRepositoryTest extends TestCase
         $this->expectException(WidgetException::class);
         $this->expectExceptionMessage('Unknown widget type "FooBar"');
 
-        $repoMock = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->getMock();
+        $repoMock = $this->createMock(TimesheetRepository::class);
         $userMock = (new CurrentUserFactory($this))->create(new User());
 
         $sut = new WidgetRepository($repoMock, $userMock, ['test' => ['type' => 'FooBar', 'user' => false]]);
@@ -62,7 +62,7 @@ class WidgetRepositoryTest extends TestCase
         $this->expectException(WidgetException::class);
         $this->expectExceptionMessage('Widget type "App\Widget\Type\CompoundChart" is not an instance of "App\Widget\Type\AbstractWidgetType"');
 
-        $repoMock = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->getMock();
+        $repoMock = $this->createMock(TimesheetRepository::class);
         $userMock = (new CurrentUserFactory($this))->create(new User());
 
         $sut = new WidgetRepository($repoMock, $userMock, ['test' => ['type' => CompoundChart::class, 'user' => false]]);
@@ -74,7 +74,7 @@ class WidgetRepositoryTest extends TestCase
      */
     public function testGetWidget($data, $query, $dataType)
     {
-        $repoMock = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->getMock();
+        $repoMock = $this->createMock(TimesheetRepository::class);
         $repoMock->method('getStatistic')->willReturn($data);
 
         $userMock = (new CurrentUserFactory($this))->create(new User());

@@ -34,16 +34,13 @@ class SqliteSessionInitSubscriberTest extends TestCase
         $sut = new SqliteSessionInitSubscriber();
 
         $platformMock = $this->getMockBuilder(SqlitePlatform::class)
-            ->setMethods(['getName'])
+            ->onlyMethods(['getName'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $platformMock->expects($this->once())->method('getName')->willReturn('sqlite');
 
-        $connectionMock = $this->getMockBuilder(Connection::class)
-            ->setMethods(['getDatabasePlatform', 'getConnection', 'exec'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $connectionMock = $this->createMock(Connection::class);
 
         $connectionMock->expects($this->once())->method('getDatabasePlatform')->willReturn($platformMock);
         $connectionMock->expects($this->once())->method('exec')->with('PRAGMA foreign_keys = ON;');
@@ -57,16 +54,13 @@ class SqliteSessionInitSubscriberTest extends TestCase
         $sut = new SqliteSessionInitSubscriber();
 
         $platformMock = $this->getMockBuilder(MySqlPlatform::class)
-            ->setMethods(['getName'])
+            ->onlyMethods(['getName'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $platformMock->expects($this->once())->method('getName')->willReturn('mysql');
 
-        $connectionMock = $this->getMockBuilder(Connection::class)
-            ->setMethods(['getDatabasePlatform', 'getConnection', 'exec'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $connectionMock = $this->createMock(Connection::class);
 
         $connectionMock->expects($this->once())->method('getDatabasePlatform')->willReturn($platformMock);
         $connectionMock->expects($this->never())->method('exec')->with('PRAGMA foreign_keys = ON;');

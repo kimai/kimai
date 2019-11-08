@@ -68,7 +68,7 @@ install:
   - composer require zendframework/zend-ldap
 
 script:
-  - if [[ $CODECOVERAGE == 1 ]]; then vendor/bin/phpunit tests/ --coverage-clover=coverage.xml; fi;
+  - if [[ $CODECOVERAGE == 1 ]]; then TEST_WITH_BUNDLES=1 vendor/bin/phpunit tests/ --coverage-clover=coverage.xml; fi;
   - if [[ $CODECOVERAGE == 0 ]]; then vendor/bin/phpunit tests/; fi;
   - if [[ $DB == 'sqlite' ]]; then cp tests/.env.dist.sqlite .env; fi;
   - if [[ $DB == "mysql" || $DB == "mariadb" ]]; then cp tests/.env.dist.mysql .env; fi;

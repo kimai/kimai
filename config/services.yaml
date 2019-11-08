@@ -74,9 +74,6 @@ services:
     App\Plugin\PluginManager:
         arguments: [!tagged kimai.plugin]
 
-    App\Export\ServiceExport:
-        arguments: [!tagged export.renderer]
-
     App\Widget\WidgetService:
         arguments:
             $renderer: !tagged widget.renderer

@@ -39,16 +39,16 @@ class ProjectInvoiceCalculatorTest extends AbstractCalculatorTest
         $template = new InvoiceTemplate();
         $template->setVat(19);
 
-        $user = $this->getMockBuilder(User::class)->setMethods(['getId'])->disableOriginalConstructor()->getMock();
+        $user = $this->getMockBuilder(User::class)->onlyMethods(['getId'])->disableOriginalConstructor()->getMock();
         $user->method('getId')->willReturn(1);
 
-        $project1 = $this->getMockBuilder(Project::class)->setMethods(['getId'])->disableOriginalConstructor()->getMock();
+        $project1 = $this->getMockBuilder(Project::class)->onlyMethods(['getId'])->disableOriginalConstructor()->getMock();
         $project1->method('getId')->willReturn(1);
 
-        $project2 = $this->getMockBuilder(Project::class)->setMethods(['getId'])->disableOriginalConstructor()->getMock();
+        $project2 = $this->getMockBuilder(Project::class)->onlyMethods(['getId'])->disableOriginalConstructor()->getMock();
         $project2->method('getId')->willReturn(2);
 
-        $project3 = $this->getMockBuilder(Project::class)->setMethods(['getId'])->disableOriginalConstructor()->getMock();
+        $project3 = $this->getMockBuilder(Project::class)->onlyMethods(['getId'])->disableOriginalConstructor()->getMock();
         $project3->method('getId')->willReturn(3);
 
         $timesheet = new Timesheet();
