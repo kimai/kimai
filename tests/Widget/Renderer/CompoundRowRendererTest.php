@@ -24,7 +24,7 @@ class CompoundRowRendererTest extends TestCase
 {
     public function testSupports()
     {
-        $twig = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock();
+        $twig = $this->createMock(Environment::class);
         $sut = new CompoundRowRenderer($twig);
         self::assertTrue($sut->supports(new CompoundRow()));
         self::assertFalse($sut->supports(new CompoundChart()));

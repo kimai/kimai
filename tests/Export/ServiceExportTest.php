@@ -11,6 +11,7 @@ namespace App\Tests\Export;
 
 use App\Export\Renderer\HtmlRenderer;
 use App\Export\ServiceExport;
+use App\Export\Timesheet\HtmlRenderer as HtmlExporter;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Twig\Environment;
@@ -23,24 +24,33 @@ class ServiceExportTest extends TestCase
     public function testEmptyObject()
     {
         $sut = new ServiceExport();
-        $this->assertEmpty($sut->getRenderer());
+
+        self::assertEmpty($sut->getRenderer());
+        self::assertNull($sut->getRendererById('default'));
+
+        self::assertEmpty($sut->getTimesheetExporter());
+        self::assertNull($sut->getTimesheetExporterById('default'));
     }
 
-    public function testUnknownRendererReturnsNull()
+    public function testAddRenderer()
     {
         $sut = new ServiceExport();
-        $this->assertNull($sut->getRendererById('default'));
+
+        $renderer = new HtmlRenderer($this->createMock(Environment::class), new EventDispatcher());
+        $sut->addRenderer($renderer);
+
+        self::assertEquals(1, count($sut->getRenderer()));
+        self::assertSame($renderer, $sut->getRendererById('html'));
     }
 
-    public function testAdd()
+    public function testAddTimesheetExporter()
     {
         $sut = new ServiceExport();
 
-        $sut->addRenderer(new HtmlRenderer(
-            $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock(),
-            new EventDispatcher()
-        ));
+        $exporter = new HtmlExporter($this->createMock(Environment::class), new EventDispatcher());
+        $sut->addTimesheetExporter($exporter);
 
-        $this->assertEquals(1, count($sut->getRenderer()));
+        self::assertEquals(1, count($sut->getTimesheetExporter()));
+        self::assertSame($exporter, $sut->getTimesheetExporterById('print'));
     }
 }

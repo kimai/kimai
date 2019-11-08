@@ -33,9 +33,9 @@ class PdfRendererTest extends AbstractRendererTest
     public function testConfiguration()
     {
         $sut = new PDFRenderer(
-            $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock(),
+            $this->createMock(Environment::class),
             $this->getDateTimeFactory(),
-            $this->getMockBuilder(HtmlToPdfConverter::class)->getMock()
+            $this->createMock(HtmlToPdfConverter::class)
         );
 
         $this->assertEquals('pdf', $sut->getId());

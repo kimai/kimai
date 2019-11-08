@@ -21,7 +21,7 @@ class QueryBuilderPaginatorTest extends TestCase
 {
     public function testPaginator()
     {
-        $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
+        $em = $this->createMock(EntityManager::class);
         $qb = new QueryBuilder($em);
         $sut = new QueryBuilderPaginator($qb, 10);
 

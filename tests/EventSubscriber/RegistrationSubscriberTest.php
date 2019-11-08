@@ -46,7 +46,7 @@ class RegistrationSubscriberTest extends TestCase
         $form = $this->getMockBuilder(FormInterface::class)->getMock();
         $form->method('getData')->willReturn($user);
 
-        $request = $this->getMockBuilder(Request::class)->getMock();
+        $request = $this->createMock(Request::class);
 
         $event = new FormEvent($form, $request);
 

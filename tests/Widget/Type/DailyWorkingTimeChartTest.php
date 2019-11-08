@@ -29,7 +29,7 @@ class DailyWorkingTimeChartTest extends TestCase
 {
     public function createSut(): AbstractWidgetType
     {
-        $repository = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->getMock();
+        $repository = $this->createMock(TimesheetRepository::class);
         $mockFactory = new UserDateTimeFactoryFactory($this);
         $userFactory = new CurrentUserFactory($this);
         $user = $userFactory->create(new User(), 'Europe/Berlin');

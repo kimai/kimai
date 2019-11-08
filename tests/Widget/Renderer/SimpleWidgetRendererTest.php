@@ -24,7 +24,7 @@ class SimpleWidgetRendererTest extends TestCase
 {
     public function testSupports()
     {
-        $twig = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock();
+        $twig = $this->createMock(Environment::class);
         $sut = new SimpleWidgetRenderer($twig);
         self::assertTrue($sut->supports(new SimpleWidget()));
     }

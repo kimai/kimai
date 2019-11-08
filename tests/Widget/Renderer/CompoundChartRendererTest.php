@@ -24,7 +24,7 @@ class CompoundChartRendererTest extends TestCase
 {
     public function testSupports()
     {
-        $twig = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock();
+        $twig = $this->createMock(Environment::class);
         $sut = new CompoundChartRenderer($twig);
         self::assertTrue($sut->supports(new CompoundChart()));
         self::assertFalse($sut->supports(new CompoundRow()));

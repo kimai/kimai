@@ -61,7 +61,7 @@ abstract class AbstractRendererTest extends KernelTestCase
 
         $localeSettings = new LocaleSettings($requestStack, new LanguageFormattings($languages));
 
-        $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $translator = $this->createMock(TranslatorInterface::class);
         $dateExtension = new DateExtensions($localeSettings);
 
         $dispatcher = new EventDispatcher();

@@ -26,7 +26,7 @@ class HtmlRendererTest extends AbstractRendererTest
     public function testConfiguration()
     {
         $sut = new HtmlRenderer(
-            $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock(),
+            $this->createMock(Environment::class),
             new EventDispatcher()
         );
 
