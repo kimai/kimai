@@ -24,7 +24,7 @@ class WidgetExtensionTest extends TestCase
 {
     protected function getSut($hasWidget = null, $getWidget = null, $renderer = null): WidgetExtension
     {
-        $service = $this->getMockBuilder(WidgetService::class)->disableOriginalConstructor()->setMethods(['hasWidget', 'getWidget', 'findRenderer'])->getMock();
+        $service = $this->getMockBuilder(WidgetService::class)->disableOriginalConstructor()->onlyMethods(['hasWidget', 'getWidget', 'findRenderer'])->getMock();
         if (null !== $hasWidget) {
             $service->expects($this->once())->method('hasWidget')->willReturn($hasWidget);
         }

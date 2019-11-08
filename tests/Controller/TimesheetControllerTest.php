@@ -36,7 +36,10 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertHasNoEntriesWithFilter($client);
         $this->assertPageActions($client, [
             'search search-toggle visible-xs-inline' => '#',
-            'download toolbar-action' => $this->createUrl('/timesheet/export'),
+            'toolbar-action exporter-csv' => $this->createUrl('/timesheet/export/csv'),
+            'toolbar-action exporter-print' => $this->createUrl('/timesheet/export/print'),
+            'toolbar-action exporter-pdf' => $this->createUrl('/timesheet/export/pdf'),
+            'toolbar-action exporter-xlsx' => $this->createUrl('/timesheet/export/xlsx'),
             'visibility' => '#',
             'create modal-ajax-form' => $this->createUrl('/timesheet/create'),
             'help' => 'https://www.kimai.org/documentation/timesheet.html'
@@ -133,7 +136,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $dateRange = (new \DateTime('-10 days'))->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime())->format('Y-m-d');
 
         $form = $client->getCrawler()->filter('form.header-search')->form();
-        $form->getFormNode()->setAttribute('action', $this->createUrl('/timesheet/export'));
+        $form->getFormNode()->setAttribute('action', $this->createUrl('/timesheet/export/print'));
         $client->submit($form, [
             'state' => 1,
             'pageSize' => 25,

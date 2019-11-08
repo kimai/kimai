@@ -11,10 +11,12 @@ namespace App;
 
 use App\DependencyInjection\AppExtension;
 use App\DependencyInjection\Compiler\DoctrineCompilerPass;
+use App\DependencyInjection\Compiler\ExportServiceCompilerPass;
 use App\DependencyInjection\Compiler\InvoiceServiceCompilerPass;
 use App\DependencyInjection\Compiler\TwigContextCompilerPass;
 use App\DependencyInjection\Compiler\WidgetCompilerPass;
 use App\Export\RendererInterface as ExportRendererInterface;
+use App\Export\TimesheetExportInterface;
 use App\Invoice\CalculatorInterface as InvoiceCalculator;
 use App\Invoice\InvoiceItemRepositoryInterface;
 use App\Invoice\NumberGeneratorInterface;
@@ -51,6 +53,7 @@ class Kernel extends BaseKernel
     public const TAG_INVOICE_CALCULATOR = 'invoice.calculator';
     public const TAG_INVOICE_REPOSITORY = 'invoice.repository';
     public const TAG_TIMESHEET_CALCULATOR = 'timesheet.calculator';
+    public const TAG_TIMESHEET_EXPORTER = 'timesheet.exporter';
     public const TAG_TIMESHEET_TRACKING_MODE = 'timesheet.tracking_mode';
     public const TAG_TIMESHEET_ROUNDING_MODE = 'timesheet.rounding_mode';
 
@@ -75,6 +78,7 @@ class Kernel extends BaseKernel
         $container->registerForAutoconfiguration(PluginInterface::class)->addTag(self::TAG_PLUGIN);
         $container->registerForAutoconfiguration(WidgetRendererInterface::class)->addTag(self::TAG_WIDGET_RENDERER);
         $container->registerForAutoconfiguration(WidgetInterface::class)->addTag(self::TAG_WIDGET);
+        $container->registerForAutoconfiguration(TimesheetExportInterface::class)->addTag(self::TAG_TIMESHEET_EXPORTER);
         $container->registerForAutoconfiguration(TrackingModeInterface::class)->addTag(self::TAG_TIMESHEET_TRACKING_MODE);
         $container->registerForAutoconfiguration(RoundingInterface::class)->addTag(self::TAG_TIMESHEET_ROUNDING_MODE);
 
@@ -94,6 +98,10 @@ class Kernel extends BaseKernel
 
         $pluginsDir = $this->getProjectDir() . '/var/plugins';
         if (!file_exists($pluginsDir)) {
+            return;
+        }
+
+        if ($this->environment === 'test' && getenv('TEST_WITH_BUNDLES') === false) {
             return;
         }
 
@@ -155,6 +163,7 @@ class Kernel extends BaseKernel
         $container->addCompilerPass(new DoctrineCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new TwigContextCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new InvoiceServiceCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
+        $container->addCompilerPass(new ExportServiceCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new WidgetCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
     }
 
@@ -177,6 +186,10 @@ class Kernel extends BaseKernel
 
         // load application routes
         $routes->import($confDir . '/routes' . self::CONFIG_EXTS, '/', 'glob');
+
+        if ($this->environment === 'test' && getenv('TEST_WITH_BUNDLES') === false) {
+            return;
+        }
 
         // load plugin routes
         $pluginsDir = $this->getProjectDir() . '/var/plugins';

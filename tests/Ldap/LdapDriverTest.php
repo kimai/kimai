@@ -31,7 +31,7 @@ class LdapDriverTest extends TestCase
 
     public function testBindSuccess()
     {
-        $zendLdap = $this->getMockBuilder(Ldap::class)->disableOriginalConstructor()->setMethods(['bind'])->getMock();
+        $zendLdap = $this->getMockBuilder(Ldap::class)->disableOriginalConstructor()->onlyMethods(['bind'])->getMock();
         $zendLdap->expects($this->once())->method('bind')->willReturnSelf();
 
         $user = new User();
@@ -42,7 +42,7 @@ class LdapDriverTest extends TestCase
 
     public function testBindException()
     {
-        $zendLdap = $this->getMockBuilder(Ldap::class)->disableOriginalConstructor()->setMethods(['bind'])->getMock();
+        $zendLdap = $this->getMockBuilder(Ldap::class)->disableOriginalConstructor()->onlyMethods(['bind'])->getMock();
         $zendLdap->expects($this->once())->method('bind')->willThrowException(new LdapException());
 
         $user = new User();
@@ -53,7 +53,7 @@ class LdapDriverTest extends TestCase
 
     public function testSearchSuccess()
     {
-        $zendLdap = $this->getMockBuilder(Ldap::class)->disableOriginalConstructor()->setMethods(['bind', 'searchEntries'])->getMock();
+        $zendLdap = $this->getMockBuilder(Ldap::class)->disableOriginalConstructor()->onlyMethods(['bind', 'searchEntries'])->getMock();
         $zendLdap->expects($this->once())->method('bind');
         $zendLdap->expects($this->once())->method('searchEntries')->willReturn([1, 2, 3]);
 
@@ -67,7 +67,7 @@ class LdapDriverTest extends TestCase
         $this->expectException(LdapDriverException::class);
         $this->expectExceptionMessage('An error occurred with the search operation.');
 
-        $zendLdap = $this->getMockBuilder(Ldap::class)->disableOriginalConstructor()->setMethods(['bind', 'searchEntries'])->getMock();
+        $zendLdap = $this->getMockBuilder(Ldap::class)->disableOriginalConstructor()->onlyMethods(['bind', 'searchEntries'])->getMock();
         $zendLdap->expects($this->once())->method('bind');
         $zendLdap->expects($this->once())->method('searchEntries')->willThrowException(
             new LdapException($zendLdap, '', LdapException::LDAP_SERVER_DOWN)
