@@ -17,6 +17,7 @@ use App\Form\UserPasswordType;
 use App\Form\UserPreferencesForm;
 use App\Form\UserRolesType;
 use App\Form\UserTeamsType;
+use App\Repository\TeamRepository;
 use App\Repository\TimesheetRepository;
 use App\Voter\UserVoter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -38,21 +39,21 @@ class ProfileController extends AbstractController
     /**
      * @var EventDispatcherInterface
      */
-    protected $dispatcher;
-
+    private $dispatcher;
     /**
      * @var UserPasswordEncoderInterface
      */
-    protected $encoder;
-
+    private $encoder;
     /**
-     * @param UserPasswordEncoderInterface $encoder
-     * @param EventDispatcherInterface $dispatcher
+     * @var TeamRepository
      */
-    public function __construct(UserPasswordEncoderInterface $encoder, EventDispatcherInterface $dispatcher)
+    private $teams;
+
+    public function __construct(UserPasswordEncoderInterface $encoder, EventDispatcherInterface $dispatcher, TeamRepository $teams)
     {
         $this->encoder = $encoder;
         $this->dispatcher = $dispatcher;
+        $this->teams = $teams;
     }
 
     /**
@@ -283,7 +284,7 @@ class ProfileController extends AbstractController
             $apiTokenForm = $apiTokenForm ?: $this->createApiTokenForm($user);
             $forms['api-token'] = $apiTokenForm->createView();
         }
-        if ($this->isGranted(UserVoter::TEAMS, $user)) {
+        if ($this->isGranted(UserVoter::TEAMS, $user) && $this->teams->count([]) > 0) {
             $teamsForm = $teamsForm ?: $this->createTeamsForm($user);
             $forms['teams'] = $teamsForm->createView();
         }

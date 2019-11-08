@@ -16,6 +16,7 @@ use App\Repository\ProjectRepository;
 use App\Repository\TagRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -31,7 +32,7 @@ class TimesheetController extends TimesheetAbstractController
      *
      * @param int $page
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function indexAction($page, Request $request)
     {
@@ -39,15 +40,16 @@ class TimesheetController extends TimesheetAbstractController
     }
 
     /**
-     * @Route(path="/export", name="timesheet_export", methods={"GET"})
+     * @Route(path="/export/{exporter}", name="timesheet_export", methods={"GET"})
      * @Security("is_granted('export_own_timesheet')")
      *
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param string $exporter
+     * @return Response
      */
-    public function exportAction(Request $request)
+    public function exportAction(Request $request, string $exporter)
     {
-        return $this->export($request, 'timesheet/export.html.twig', TimesheetMetaDisplayEvent::TIMESHEET_EXPORT);
+        return $this->export($request, $exporter);
     }
 
     /**
@@ -80,7 +82,7 @@ class TimesheetController extends TimesheetAbstractController
     /**
      * Used for the initial page rendering.
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function activeEntriesAction()
     {

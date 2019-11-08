@@ -34,7 +34,7 @@ class TimesheetValidatorTest extends ConstraintValidatorTestCase
         $authMock = $this->getMockBuilder(AuthorizationCheckerInterface::class)->getMock();
         $authMock->method('isGranted')->willReturn($isGranted);
 
-        $loader = $this->getMockBuilder(ConfigLoaderInterface::class)->getMock();
+        $loader = $this->createMock(ConfigLoaderInterface::class);
         $config = new TimesheetConfiguration($loader, [
             'rules' => [
                 'allow_future_times' => false,

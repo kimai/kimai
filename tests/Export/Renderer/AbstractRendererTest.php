@@ -35,6 +35,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class AbstractRendererTest extends KernelTestCase
@@ -60,13 +61,16 @@ abstract class AbstractRendererTest extends KernelTestCase
 
         $localeSettings = new LocaleSettings($requestStack, new LanguageFormattings($languages));
 
-        $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $translator = $this->createMock(TranslatorInterface::class);
         $dateExtension = new DateExtensions($localeSettings);
 
         $dispatcher = new EventDispatcher();
         $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
 
-        return new $classname($translator, $dateExtension, $dispatcher);
+        $authMock = $this->getMockBuilder(AuthorizationCheckerInterface::class)->getMock();
+        $authMock->method('isGranted')->willReturn(true);
+
+        return new $classname($translator, $dateExtension, $dispatcher, $authMock);
     }
 
     /**
@@ -91,12 +95,12 @@ abstract class AbstractRendererTest extends KernelTestCase
         $activity->setMetaField((new ActivityMeta())->setName('activity-foo')->setValue('activity-bar')->setIsVisible(true));
 
         $userMethods = ['getId', 'getPreferenceValue', 'getUsername'];
-        $user1 = $this->getMockBuilder(User::class)->setMethods($userMethods)->disableOriginalConstructor()->getMock();
+        $user1 = $this->getMockBuilder(User::class)->onlyMethods($userMethods)->disableOriginalConstructor()->getMock();
         $user1->method('getId')->willReturn(1);
         $user1->method('getPreferenceValue')->willReturn('50');
         $user1->method('getUsername')->willReturn('foo-bar');
 
-        $user2 = $this->getMockBuilder(User::class)->setMethods($userMethods)->disableOriginalConstructor()->getMock();
+        $user2 = $this->getMockBuilder(User::class)->onlyMethods($userMethods)->disableOriginalConstructor()->getMock();
         $user2->method('getId')->willReturn(2);
         $user2->method('getUsername')->willReturn('hello-world');
 

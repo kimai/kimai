@@ -301,7 +301,22 @@
     <div class="btn-group">
         {%- apply spaceless -%}
         {%- for icon,values in actions  %}
-            {{ macro.action_button(icon, values, type) }}
+            {% if values.children is defined %}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        {{ macro.icon(icon) }}&nbsp;
+                        <span class="caret"></span>
+                        <span class="sr-only">{{ 'label.toggle_dropdown'|trans }}</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        {% for childIcon,childValues in values.children %}
+                            <li>{{ macro.action_button(childIcon, childValues, false) }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% else %}
+                {{ macro.action_button(icon, values, type) }}
+            {% endif %}
         {% endfor -%}
         {% endapply %}
     </div>

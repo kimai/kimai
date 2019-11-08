@@ -207,7 +207,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertPageActions(Client $client, array $buttons)
     {
-        $node = $client->getCrawler()->filter('section.content-header div.breadcrumb div.box-tools div.btn-group a.btn');
+        $node = $client->getCrawler()->filter('section.content-header div.breadcrumb div.box-tools div.btn-group a');
 
         /** @var \DOMElement $element */
         foreach ($node->getIterator() as $element) {
