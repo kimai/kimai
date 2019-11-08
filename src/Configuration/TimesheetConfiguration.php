@@ -50,7 +50,7 @@ class TimesheetConfiguration implements SystemBundleConfiguration
 
     public function getDefaultRoundingDays(): string
     {
-        return (string) $this->find('rounding.default.weekdays');
+        return (string) $this->find('rounding.default.days');
     }
 
     public function getDefaultRoundingMode(): string

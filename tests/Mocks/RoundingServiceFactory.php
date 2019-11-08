@@ -26,7 +26,7 @@ class RoundingServiceFactory extends AbstractMockFactory
         if (null === $rules) {
             $rules = [
                 'default' => [
-                    'weekdays' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday',
+                    'days' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday',
                     'begin' => 0,
                     'end' => 0,
                     'duration' => 0,

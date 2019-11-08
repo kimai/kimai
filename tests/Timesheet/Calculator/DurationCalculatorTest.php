@@ -62,7 +62,7 @@ class DurationCalculatorTest extends TestCase
             [
                 [
                     'default' => [
-                        'weekdays' => $day,
+                        'days' => $day,
                         'begin' => 15,
                         'end' => 15,
                         'duration' => 0,
@@ -76,7 +76,7 @@ class DurationCalculatorTest extends TestCase
             [
                 [
                     'default' => [
-                        'weekdays' => $day,
+                        'days' => $day,
                         'begin' => 0,
                         'end' => 0,
                         'duration' => 0,
@@ -90,7 +90,7 @@ class DurationCalculatorTest extends TestCase
             [
                 [
                     'default' => [
-                        'weekdays' => $day,
+                        'days' => $day,
                         'begin' => 1,
                         'end' => 1,
                         'duration' => 0,
@@ -104,7 +104,7 @@ class DurationCalculatorTest extends TestCase
             [
                 [
                     'default' => [
-                        'weekdays' => $day,
+                        'days' => $day,
                         'begin' => 0,
                         'end' => 0,
                         'duration' => 30,
@@ -118,14 +118,14 @@ class DurationCalculatorTest extends TestCase
             [
                 [
                     'default' => [
-                        'weekdays' => $day,
+                        'days' => $day,
                         'begin' => 15,
                         'end' => 0,
                         'duration' => 0,
                         'mode' => 'default',
                     ],
-                    'weekdays' => [
-                        'weekdays' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday',
+                    'foo' => [
+                        'days' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday',
                         'begin' => 0,
                         'end' => 1,
                         'duration' => 30,
@@ -139,14 +139,14 @@ class DurationCalculatorTest extends TestCase
             [
                 [
                     'default' => [
-                        'weekdays' => $day,
+                        'days' => $day,
                         'begin' => 15,
                         'end' => 0,
                         'duration' => 30,
                         'mode' => 'default',
                     ],
-                    'weekdays' => [
-                        'weekdays' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday',
+                    'foo' => [
+                        'days' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday',
                         'begin' => 0,
                         'end' => 1,
                         'duration' => 0,
@@ -160,14 +160,14 @@ class DurationCalculatorTest extends TestCase
             [
                 [
                     'default' => [
-                        'weekdays' => $day,
+                        'days' => $day,
                         'begin' => 0,
                         'end' => 0,
                         'duration' => 1,
                         'mode' => 'default',
                     ],
-                    'weekdays' => [
-                        'weekdays' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday',
+                    'foo' => [
+                        'days' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday',
                         'begin' => 0,
                         'end' => 0,
                         'duration' => 1,
@@ -181,14 +181,14 @@ class DurationCalculatorTest extends TestCase
             [
                 [
                     'default' => [
-                        'weekdays' => $day,
+                        'days' => $day,
                         'begin' => 1,
                         'end' => 1,
                         'duration' => 1,
                         'mode' => 'default',
                     ],
-                    'weekdays' => [
-                        'weekdays' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday',
+                    'foo' => [
+                        'days' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday',
                         'begin' => 1,
                         'end' => 1,
                         'duration' => 1,
@@ -202,14 +202,14 @@ class DurationCalculatorTest extends TestCase
             [
                 [
                     'default' => [
-                        'weekdays' => $day,
+                        'days' => $day,
                         'begin' => 0,
                         'end' => 0,
                         'duration' => 0,
                         'mode' => 'default',
                     ],
-                    'weekdays' => [
-                        'weekdays' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday',
+                    'foo' => [
+                        'days' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday',
                         'begin' => 0,
                         'end' => 0,
                         'duration' => 0,

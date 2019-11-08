@@ -135,7 +135,7 @@ class AppExtensionTest extends TestCase
                         'end' => 1,
                         'duration' => 0,
                         'mode' => 'default',
-                        'weekdays' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday'
+                        'days' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday'
                     ]
                 ],
                 'rates' => [],
@@ -155,7 +155,7 @@ class AppExtensionTest extends TestCase
                         'end' => 1,
                         'duration' => 0,
                         'mode' => 'default',
-                        'weekdays' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday'
+                        'days' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday'
                     ]
             ],
             'kimai.ldap' => [

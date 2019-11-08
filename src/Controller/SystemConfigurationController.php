@@ -246,7 +246,7 @@ class SystemConfigurationController extends AbstractController
                             new GreaterThanOrEqual(['value' => 0])
                         ]),
                     (new Configuration())
-                        ->setName('timesheet.rounding.default.weekdays')
+                        ->setName('timesheet.rounding.default.days')
                         ->setType(WeekDaysType::class)
                         ->setTranslationDomain('system-configuration'),
                 ]),

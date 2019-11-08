@@ -40,20 +40,9 @@ class AppExtension extends Extension
             }
         }
 
-        // fix the rounding configuration, which was an array before 1.6 - but was changed to a comma separated string which can be used in system configurations
+        // we use a comma sepearated string internally, to be able to use it in combination with the database configuration system
         foreach ($config['timesheet']['rounding'] as $name => $settings) {
-            if (!empty($settings['weekdays']) && !empty($settings['days'])) {
-                $name = 'kimai.timesheet.rounding.' . $name;
-                trigger_error(sprintf('Found ambiguous configuration: remove "%s.days" and use "%s.weekdays" instead.', $name, $name));
-            }
-
-            if (!array_key_exists('weekdays', $settings) || empty($settings['weekdays'])) {
-                $config['timesheet']['rounding'][$name]['weekdays'] = implode(',', $settings['days']);
-            }
-
-            if (array_key_exists('days', $config['timesheet']['rounding'][$name])) {
-                unset($config['timesheet']['rounding'][$name]['days']);
-            }
+            $config['timesheet']['rounding'][$name]['days'] = implode(',', $settings['days']);
         }
 
         // safe alternatives to %kernel.project_dir%

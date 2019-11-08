@@ -138,8 +138,8 @@
                 <source>label.timesheet.rounding.default.mode</source>
                 <target>Rounding mode</target>
             </trans-unit>
-            <trans-unit id="label.timesheet.rounding.default.weekdays">
-                <source>label.timesheet.rounding.default.weekdays</source>
+            <trans-unit id="label.timesheet.rounding.default.days">
+                <source>label.timesheet.rounding.default.days</source>
                 <target>Days of the week when rounding will be applied</target>
             </trans-unit>
             <trans-unit id="Monday">

@@ -46,7 +46,7 @@ kimai:
         # Find out more about rounding rules at https://www.kimai.org/documentation/timesheet.html
         # rounding:
         #    default:
-        #        weekdays: 'monday,tuesday,wednesday,thursday,friday,saturday,sunday'
+        #        days: ['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
         #        begin: 1
         #        end: 1
         #        duration: 0

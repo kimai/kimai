@@ -49,19 +49,19 @@ final class RoundingService
         if (empty($this->rulesCache)) {
             $this->rulesCache = $this->rules;
             if (empty($this->rulesCache) || array_key_exists('default', $this->rulesCache)) {
-                $this->rulesCache['default']['weekdays'] = $this->configuration->getDefaultRoundingDays();
+                $this->rulesCache['default']['days'] = $this->configuration->getDefaultRoundingDays();
                 $this->rulesCache['default']['begin'] = $this->configuration->getDefaultRoundingBegin();
                 $this->rulesCache['default']['end'] = $this->configuration->getDefaultRoundingEnd();
                 $this->rulesCache['default']['duration'] = $this->configuration->getDefaultRoundingDuration();
                 $this->rulesCache['default']['mode'] = $this->configuration->getDefaultRoundingMode();
             }
 
+            // see AppExtension, conversion from string to array due to system configuration ont allowing to store arrays
             foreach ($this->rulesCache as $key => $settings) {
-                $days = explode(',', $settings['weekdays']);
+                $days = explode(',', $settings['days']);
                 $days = array_map('trim', $days);
                 $days = array_map('strtolower', $days);
                 $this->rulesCache[$key]['days'] = $days;
-                unset($this->rulesCache[$key]['weekdays']);
             }
         }
 
