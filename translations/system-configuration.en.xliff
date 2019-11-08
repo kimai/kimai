@@ -98,6 +98,26 @@
                 <source>label.calendar.visibleHours.end</source>
                 <target>End of visible time range</target>
             </trans-unit>
+            <trans-unit id="branding">
+                <source>branding</source>
+                <target>Branding</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.logo">
+                <source>label.theme.branding.logo</source>
+                <target>Logo (Image URL, replaces the company in login screen)</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.company">
+                <source>label.theme.branding.company</source>
+                <target>Company</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.mini">
+                <source>label.theme.branding.mini</source>
+                <target>Mini Logo (collapsed sidebar)</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.title">
+                <source>label.theme.branding.title</source>
+                <target>Browser Title</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

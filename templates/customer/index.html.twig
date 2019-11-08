@@ -16,8 +16,12 @@
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
-    'team': {'class': '', 'orderBy': false},
-    'visible': {'class': 'hidden-xs', 'orderBy': false},
+    'email': {'class': 'text-center hidden hidden-xs', 'orderBy': false},
+    'homepage': {'class': 'text-center hidden hidden-xs', 'orderBy': false},
+    'mobile': {'class': 'text-center hidden hidden-xs', 'orderBy': false},
+    'phone': {'class': 'text-center hidden hidden-xs', 'orderBy': false},
+    'team': {'class': 'text-center', 'orderBy': false},
+    'visible': {'class': 'text-center', 'orderBy': false},
     'actions': 'actions alwaysVisible',
 }) %}
 
@@ -49,6 +53,34 @@
                         {{ tables.datatable_meta_column(entry, field) }}
                     </td>
                 {% endfor %}
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'email') }}">
+                    {% if entry.email is not empty %}
+                        <a href="mailto:{{ entry.email }}"><i class="{{ 'mail'|icon }}"></i></a>
+                    {% else %}
+                        &ndash;
+                    {% endif %}
+                </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'homepage') }}">
+                    {% if entry.homepage is not empty %}
+                        <a href="{{ entry.homepage }}" target="_blank"><i class="{{ 'home'|icon }}"></i></a>
+                    {% else %}
+                        &ndash;
+                    {% endif %}
+                </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'mobile') }}">
+                    {% if entry.mobile is not empty %}
+                        <a href="tel:{{ entry.mobile }}"><i class="{{ 'mobile'|icon }}"></i></a>
+                    {% else %}
+                        &ndash;
+                    {% endif %}
+                </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'phone') }}">
+                    {% if entry.phone is not empty %}
+                        <a href="tel:{{ entry.phone }}"><i class="{{ 'phone'|icon }}"></i></a>
+                    {% else %}
+                        &ndash;
+                    {% endif %}
+                </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'team') }}">
                     {% if entry.teams|length > 0 %}
                         {{ widgets.badge_counter(entry.teams|length) }}
