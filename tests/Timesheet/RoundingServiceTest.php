@@ -10,7 +10,7 @@
 namespace App\Tests\Timesheet;
 
 use App\Entity\Timesheet;
-use App\Timesheet\RoundingService;
+use App\Tests\Mocks\RoundingServiceFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -24,7 +24,7 @@ class RoundingServiceTest extends TestCase
         $record->setBegin(new \DateTime());
         $this->assertEquals(0, $record->getDuration());
 
-        $sut = new RoundingService([]);
+        $sut = (new RoundingServiceFactory($this))->create();
         $sut->applyRoundings($record);
         $this->assertEquals(0, $record->getDuration());
     }
@@ -39,7 +39,7 @@ class RoundingServiceTest extends TestCase
         $record->setEnd($end);
         $this->assertEquals(0, $record->getDuration());
 
-        $sut = new RoundingService($rules);
+        $sut = (new RoundingServiceFactory($this))->create($rules);
         $sut->roundBegin($record);
         $this->assertEquals($expectedStart, $record->getBegin());
         $sut->roundEnd($record);
@@ -60,7 +60,7 @@ class RoundingServiceTest extends TestCase
 
         return [
             [
-                [],
+                null,
                 $start,
                 (clone $start)->setTimestamp($start->getTimestamp() + 1837),
                 $start,
@@ -70,7 +70,7 @@ class RoundingServiceTest extends TestCase
             [
                 [
                     'default' => [
-                        'days' => [$day],
+                        'weekdays' => $day,
                         'begin' => 15,
                         'end' => 15,
                         'duration' => 0,
@@ -86,7 +86,7 @@ class RoundingServiceTest extends TestCase
             [
                 [
                     'default' => [
-                        'days' => [$day],
+                        'weekdays' => $day,
                         'begin' => 0,
                         'end' => 0,
                         'duration' => 0,
@@ -102,7 +102,7 @@ class RoundingServiceTest extends TestCase
             [
                 [
                     'default' => [
-                        'days' => [$day],
+                        'weekdays' => $day,
                         'begin' => 1,
                         'end' => 1,
                         'duration' => 0,
@@ -118,7 +118,7 @@ class RoundingServiceTest extends TestCase
             [
                 [
                     'default' => [
-                        'days' => [$day],
+                        'weekdays' => $day,
                         'begin' => 0,
                         'end' => 0,
                         'duration' => 30,
@@ -134,14 +134,14 @@ class RoundingServiceTest extends TestCase
             [
                 [
                     'default' => [
-                        'days' => [$day],
+                        'weekdays' => $day,
                         'begin' => 15,
                         'end' => 0,
                         'duration' => 0,
                         'mode' => 'default',
                     ],
                     'weekdays' => [
-                        'days' => ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
+                        'weekdays' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday',
                         'begin' => 0,
                         'end' => 1,
                         'duration' => 30,
@@ -157,14 +157,14 @@ class RoundingServiceTest extends TestCase
             [
                 [
                     'default' => [
-                        'days' => [$day],
+                        'weekdays' => $day,
                         'begin' => 15,
                         'end' => 0,
                         'duration' => 30,
                         'mode' => 'default',
                     ],
                     'weekdays' => [
-                        'days' => ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
+                        'weekdays' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday',
                         'begin' => 0,
                         'end' => 1,
                         'duration' => 0,
@@ -180,14 +180,14 @@ class RoundingServiceTest extends TestCase
             [
                 [
                     'default' => [
-                        'days' => [$day],
+                        'weekdays' => $day,
                         'begin' => 0,
                         'end' => 0,
                         'duration' => 1,
                         'mode' => 'default',
                     ],
                     'weekdays' => [
-                        'days' => ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
+                        'weekdays' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday',
                         'begin' => 0,
                         'end' => 0,
                         'duration' => 1,
@@ -203,14 +203,14 @@ class RoundingServiceTest extends TestCase
             [
                 [
                     'default' => [
-                        'days' => [$day],
+                        'weekdays' => $day,
                         'begin' => 1,
                         'end' => 1,
                         'duration' => 1,
                         'mode' => 'default',
                     ],
                     'weekdays' => [
-                        'days' => ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
+                        'weekdays' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday',
                         'begin' => 1,
                         'end' => 1,
                         'duration' => 1,
@@ -226,14 +226,14 @@ class RoundingServiceTest extends TestCase
             [
                 [
                     'default' => [
-                        'days' => [$day],
+                        'weekdays' => $day,
                         'begin' => 0,
                         'end' => 0,
                         'duration' => 0,
                         'mode' => 'default',
                     ],
                     'weekdays' => [
-                        'days' => ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
+                        'weekdays' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday',
                         'begin' => 0,
                         'end' => 0,
                         'duration' => 0,

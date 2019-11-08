@@ -129,7 +129,15 @@ class AppExtensionTest extends TestCase
             'kimai.timesheet' => [
                 'mode' => 'default',
                 'markdown_content' => false,
-                'rounding' => [],
+                'rounding' => [
+                    'default' => [
+                        'begin' => 1,
+                        'end' => 1,
+                        'duration' => 0,
+                        'mode' => 'default',
+                        'weekdays' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday'
+                    ]
+                ],
                 'rates' => [],
                 'active_entries' => [
                     'soft_limit' => 1,
@@ -141,7 +149,15 @@ class AppExtensionTest extends TestCase
                 'default_begin' => 'now',
             ],
             'kimai.timesheet.rates' => [],
-            'kimai.timesheet.rounding' => [],
+            'kimai.timesheet.rounding' => [
+                    'default' => [
+                        'begin' => 1,
+                        'end' => 1,
+                        'duration' => 0,
+                        'mode' => 'default',
+                        'weekdays' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday'
+                    ]
+            ],
             'kimai.ldap' => [
                 'user' => [
                     'baseDn' => null,
@@ -240,7 +256,7 @@ class AppExtensionTest extends TestCase
     public function testDurationOnlyDeprecationIsTriggered()
     {
         $this->expectException(Notice::class);
-        $this->expectExceptionMessage('Found ambiguous configuration. Please remove "kimai.timesheet.duration_only" and set "kimai.timesheet.mode" instead.');
+        $this->expectExceptionMessage('Found ambiguous configuration: remove "kimai.timesheet.duration_only" and set "kimai.timesheet.mode" instead.');
 
         $minConfig = $this->getMinConfig();
         $minConfig['kimai']['timesheet']['duration_only'] = true;

@@ -12,8 +12,8 @@ namespace App\Tests\Timesheet\TrackingMode;
 use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet;
 use App\Tests\Configuration\TestConfigLoader;
+use App\Tests\Mocks\RoundingServiceFactory;
 use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
-use App\Timesheet\RoundingService;
 use App\Timesheet\TrackingMode\DefaultMode;
 
 /**
@@ -36,7 +36,7 @@ class DefaultModeTest extends AbstractTrackingModeTest
         $dateTime = (new UserDateTimeFactoryFactory($this))->create();
         $configuration = new TimesheetConfiguration($loader, ['default_begin' => '13:47']);
 
-        return new DefaultMode($dateTime, $configuration, new RoundingService([]));
+        return new DefaultMode($dateTime, $configuration, (new RoundingServiceFactory($this))->create());
     }
 
     public function testDefaultValues()

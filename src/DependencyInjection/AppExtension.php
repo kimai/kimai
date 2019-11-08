@@ -36,7 +36,23 @@ class AppExtension extends Extension
         if (isset($config['timesheet']['duration_only'])) {
             @trigger_error('Configuration "kimai.timesheet.duration_only" is deprecated, please remove it', E_USER_DEPRECATED);
             if (true === $config['timesheet']['duration_only'] && 'duration_only' !== $config['timesheet']['mode']) {
-                trigger_error('Found ambiguous configuration. Please remove "kimai.timesheet.duration_only" and set "kimai.timesheet.mode" instead.');
+                trigger_error('Found ambiguous configuration: remove "kimai.timesheet.duration_only" and set "kimai.timesheet.mode" instead.');
+            }
+        }
+
+        // fix the rounding configuration, which was an array before 1.6 - but was changed to a comma separated string which can be used in system configurations
+        foreach ($config['timesheet']['rounding'] as $name => $settings) {
+            if (!empty($settings['weekdays']) && !empty($settings['days'])) {
+                $name = 'kimai.timesheet.rounding.' . $name;
+                trigger_error(sprintf('Found ambiguous configuration: remove "%s.days" and use "%s.weekdays" instead.', $name, $name));
+            }
+
+            if (!array_key_exists('weekdays', $settings) || empty($settings['weekdays'])) {
+                $config['timesheet']['rounding'][$name]['weekdays'] = implode(',', $settings['days']);
+            }
+
+            if (array_key_exists('days', $config['timesheet']['rounding'][$name])) {
+                unset($config['timesheet']['rounding'][$name]['days']);
             }
         }
 

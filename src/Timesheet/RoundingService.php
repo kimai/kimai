@@ -9,33 +9,72 @@
 
 namespace App\Timesheet;
 
+use App\Configuration\TimesheetConfiguration;
 use App\Entity\Timesheet;
 use App\Timesheet\Rounding\RoundingInterface;
 
-/**
- * This service takes the configuration %kimai.timesheet.rounding% as argument,
- * so its rounding behaviour can be customized.
- */
 final class RoundingService
 {
     /**
      * @var array
      */
-    private $roundings;
+    private $rules;
+    /**
+     * @var array
+     */
+    private $rulesCache;
+    /**
+     * @var TimesheetConfiguration
+     */
+    private $configuration;
+    /**
+     * @var RoundingInterface[]
+     */
+    private $roundingModes;
 
-    public function __construct(array $roundings)
+    /**
+     * @param TimesheetConfiguration $configuration
+     * @param RoundingInterface[] $roundingModes
+     * @param array $rules
+     */
+    public function __construct(TimesheetConfiguration $configuration, iterable $roundingModes, array $rules)
     {
-        $this->roundings = $roundings;
+        $this->configuration = $configuration;
+        $this->roundingModes = $roundingModes;
+        $this->rules = $rules;
+    }
+
+    private function getRoundingRules(): array
+    {
+        if (empty($this->rulesCache)) {
+            $this->rulesCache = $this->rules;
+            if (empty($this->rulesCache) || array_key_exists('default', $this->rulesCache)) {
+                $this->rulesCache['default']['weekdays'] = $this->configuration->getDefaultRoundingDays();
+                $this->rulesCache['default']['begin'] = $this->configuration->getDefaultRoundingBegin();
+                $this->rulesCache['default']['end'] = $this->configuration->getDefaultRoundingEnd();
+                $this->rulesCache['default']['duration'] = $this->configuration->getDefaultRoundingDuration();
+                $this->rulesCache['default']['mode'] = $this->configuration->getDefaultRoundingMode();
+            }
+
+            foreach ($this->rulesCache as $key => $settings) {
+                $days = explode(',', $settings['weekdays']);
+                $days = array_map('trim', $days);
+                $days = array_map('strtolower', $days);
+                $this->rulesCache[$key]['days'] = $days;
+                unset($this->rulesCache[$key]['weekdays']);
+            }
+        }
+
+        return $this->rulesCache;
     }
 
     public function roundBegin(Timesheet $record): void
     {
-        foreach ($this->roundings as $rounding) {
+        foreach ($this->getRoundingRules() as $rounding) {
             $weekday = $record->getBegin()->format('l');
-            $days = array_map('strtolower', $rounding['days']);
 
-            if (in_array(strtolower($weekday), $days)) {
-                $rounder = $this->createRounder($rounding['mode']);
+            if (in_array(strtolower($weekday), $rounding['days'])) {
+                $rounder = $this->getRoundingMode($rounding['mode']);
                 $rounder->roundBegin($record, $rounding['begin']);
             }
         }
@@ -43,12 +82,11 @@ final class RoundingService
 
     public function roundEnd(Timesheet $record): void
     {
-        foreach ($this->roundings as $rounding) {
+        foreach ($this->getRoundingRules() as $rounding) {
             $weekday = $record->getEnd()->format('l');
-            $days = array_map('strtolower', $rounding['days']);
 
-            if (in_array(strtolower($weekday), $days)) {
-                $rounder = $this->createRounder($rounding['mode']);
+            if (in_array(strtolower($weekday), $rounding['days'])) {
+                $rounder = $this->getRoundingMode($rounding['mode']);
                 $rounder->roundEnd($record, $rounding['end']);
             }
         }
@@ -56,12 +94,11 @@ final class RoundingService
 
     public function roundDuration(Timesheet $record): void
     {
-        foreach ($this->roundings as $rounding) {
+        foreach ($this->getRoundingRules() as $rounding) {
             $weekday = $record->getEnd()->format('l');
-            $days = array_map('strtolower', $rounding['days']);
 
-            if (in_array(strtolower($weekday), $days)) {
-                $rounder = $this->createRounder($rounding['mode']);
+            if (in_array(strtolower($weekday), $rounding['days'])) {
+                $rounder = $this->getRoundingMode($rounding['mode']);
                 $rounder->roundDuration($record, $rounding['duration']);
             }
         }
@@ -69,12 +106,15 @@ final class RoundingService
 
     public function applyRoundings(Timesheet $record): void
     {
-        foreach ($this->roundings as $rounding) {
-            $weekday = $record->getEnd()->format('l');
-            $days = array_map('strtolower', $rounding['days']);
+        if (null === $record->getEnd()) {
+            return;
+        }
 
-            if (in_array(strtolower($weekday), $days)) {
-                $rounder = $this->createRounder($rounding['mode']);
+        foreach ($this->getRoundingRules() as $rounding) {
+            $weekday = $record->getEnd()->format('l');
+
+            if (in_array(strtolower($weekday), $rounding['days'])) {
+                $rounder = $this->getRoundingMode($rounding['mode']);
                 $rounder->roundBegin($record, $rounding['begin']);
                 $rounder->roundEnd($record, $rounding['end']);
 
@@ -86,18 +126,22 @@ final class RoundingService
         }
     }
 
-    private function createRounder(string $mode): RoundingInterface
+    /**
+     * @return RoundingInterface[]
+     */
+    public function getRoundingModes(): iterable
     {
-        $class = 'App\\Timesheet\\Rounding\\' . ucfirst($mode) . 'Rounding';
-        if (!class_exists($class)) {
-            throw new \InvalidArgumentException(sprintf('Unknown rounding mode %s. Missing class: %s', $mode, $class));
+        return $this->roundingModes;
+    }
+
+    public function getRoundingMode(string $id): RoundingInterface
+    {
+        foreach ($this->roundingModes as $mode) {
+            if ($mode->getId() === $id) {
+                return $mode;
+            }
         }
 
-        $rounder = new $class();
-        if (!$rounder instanceof RoundingInterface) {
-            throw new \InvalidArgumentException(sprintf('Invalid rounding mode %s is expected to implement: %s', $mode, RoundingInterface::class));
-        }
-
-        return $rounder;
+        throw new \InvalidArgumentException('Unknown rounding mode: ' . $id);
     }
 }

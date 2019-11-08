@@ -16,8 +16,10 @@ use App\Form\Model\SystemConfiguration as SystemConfigurationModel;
 use App\Form\SystemConfigurationForm;
 use App\Form\Type\EnhancedSelectboxType;
 use App\Form\Type\LanguageType;
+use App\Form\Type\RoundingModeType;
 use App\Form\Type\SkinType;
 use App\Form\Type\TrackingModeType;
+use App\Form\Type\WeekDaysType;
 use App\Repository\ConfigurationRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -214,6 +216,39 @@ class SystemConfigurationController extends AbstractController
                         ->setConstraints([
                             new GreaterThanOrEqual(['value' => 1])
                         ]),
+                ]),
+            (new SystemConfigurationModel())
+                ->setSection(SystemConfigurationModel::SECTION_ROUNDING)
+                ->setConfiguration([
+                    (new Configuration())
+                        ->setName('timesheet.rounding.default.mode')
+                        ->setType(RoundingModeType::class)
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration())
+                        ->setName('timesheet.rounding.default.begin')
+                        ->setType(IntegerType::class)
+                        ->setTranslationDomain('system-configuration')
+                        ->setConstraints([
+                            new GreaterThanOrEqual(['value' => 0])
+                        ]),
+                    (new Configuration())
+                        ->setName('timesheet.rounding.default.end')
+                        ->setType(IntegerType::class)
+                        ->setTranslationDomain('system-configuration')
+                        ->setConstraints([
+                            new GreaterThanOrEqual(['value' => 0])
+                        ]),
+                    (new Configuration())
+                        ->setName('timesheet.rounding.default.duration')
+                        ->setType(IntegerType::class)
+                        ->setTranslationDomain('system-configuration')
+                        ->setConstraints([
+                            new GreaterThanOrEqual(['value' => 0])
+                        ]),
+                    (new Configuration())
+                        ->setName('timesheet.rounding.default.weekdays')
+                        ->setType(WeekDaysType::class)
+                        ->setTranslationDomain('system-configuration'),
                 ]),
             (new SystemConfigurationModel())
                 ->setSection(SystemConfigurationModel::SECTION_FORM_CUSTOMER)
