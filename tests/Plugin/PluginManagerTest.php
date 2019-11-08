@@ -39,7 +39,7 @@ class PluginManagerTest extends TestCase
         $sut = new PluginManager([]);
 
         $plugin = $this->getMockBuilder(PluginInterface::class)
-            ->setMethods(['getName', 'getPath'])
+            ->onlyMethods(['getName', 'getPath'])
             ->getMock();
 
         $plugin->method('getName')->willReturn('foo');

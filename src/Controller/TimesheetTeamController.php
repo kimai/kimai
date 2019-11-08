@@ -18,6 +18,7 @@ use App\Repository\Query\TimesheetQuery;
 use App\Repository\TagRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -33,7 +34,7 @@ class TimesheetTeamController extends TimesheetAbstractController
      *
      * @param int $page
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function indexAction($page, Request $request)
     {
@@ -41,14 +42,15 @@ class TimesheetTeamController extends TimesheetAbstractController
     }
 
     /**
-     * @Route(path="/export", name="admin_timesheet_export", methods={"GET"})
+     * @Route(path="/export/{exporter}", name="admin_timesheet_export", methods={"GET"})
      *
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param string $exporter
+     * @return Response
      */
-    public function exportAction(Request $request)
+    public function exportAction(Request $request, string $exporter)
     {
-        return $this->export($request, 'timesheet-team/export.html.twig', TimesheetMetaDisplayEvent::TEAM_TIMESHEET_EXPORT);
+        return $this->export($request, $exporter);
     }
 
     /**

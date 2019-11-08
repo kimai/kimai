@@ -25,7 +25,7 @@ class WidgetServiceTest extends TestCase
 {
     public function testConstruct()
     {
-        $repository = $this->getMockBuilder(WidgetRepository::class)->disableOriginalConstructor()->getMock();
+        $repository = $this->createMock(WidgetRepository::class);
 
         $sut = new WidgetService($repository, []);
         self::assertFalse($sut->hasWidget('sdfsdf'));
@@ -39,7 +39,7 @@ class WidgetServiceTest extends TestCase
 
     public function testFindRenderer()
     {
-        $repository = $this->getMockBuilder(WidgetRepository::class)->disableOriginalConstructor()->getMock();
+        $repository = $this->createMock(WidgetRepository::class);
 
         $renderer = new SimpleWidgetRenderer(new Environment(new FilesystemLoader()));
         $sut = new WidgetService($repository, [$renderer]);
@@ -56,7 +56,7 @@ class WidgetServiceTest extends TestCase
         $this->expectException(WidgetException::class);
         $this->expectExceptionMessage('No renderer available for widget "App\Widget\Type\More"');
 
-        $repository = $this->getMockBuilder(WidgetRepository::class)->disableOriginalConstructor()->getMock();
+        $repository = $this->createMock(WidgetRepository::class);
 
         $sut = new WidgetService($repository, []);
         $sut->findRenderer(new More());
@@ -66,7 +66,7 @@ class WidgetServiceTest extends TestCase
     {
         $widget = new More();
 
-        $repository = $this->getMockBuilder(WidgetRepository::class)->disableOriginalConstructor()->setMethods(['has', 'get'])->getMock();
+        $repository = $this->getMockBuilder(WidgetRepository::class)->disableOriginalConstructor()->onlyMethods(['has', 'get'])->getMock();
         $repository->expects($this->once())->method('has')->willReturn(true);
         $repository->expects($this->once())->method('get')->willReturn($widget);
 

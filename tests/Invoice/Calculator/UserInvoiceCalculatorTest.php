@@ -40,13 +40,13 @@ class UserInvoiceCalculatorTest extends AbstractCalculatorTest
         $activity = new Activity();
         $activity->setName('activity description');
 
-        $user1 = $this->getMockBuilder(User::class)->setMethods(['getId'])->disableOriginalConstructor()->getMock();
+        $user1 = $this->getMockBuilder(User::class)->onlyMethods(['getId'])->disableOriginalConstructor()->getMock();
         $user1->method('getId')->willReturn(1);
 
-        $user2 = $this->getMockBuilder(User::class)->setMethods(['getId'])->disableOriginalConstructor()->getMock();
+        $user2 = $this->getMockBuilder(User::class)->onlyMethods(['getId'])->disableOriginalConstructor()->getMock();
         $user2->method('getId')->willReturn(2);
 
-        $user3 = $this->getMockBuilder(User::class)->setMethods(['getId'])->disableOriginalConstructor()->getMock();
+        $user3 = $this->getMockBuilder(User::class)->onlyMethods(['getId'])->disableOriginalConstructor()->getMock();
         $user3->method('getId')->willReturn(3);
 
         $timesheet = new Timesheet();

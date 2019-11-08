@@ -30,7 +30,7 @@ class InstallCommandTest extends KernelTestCase
 
     protected function getCommand($permission = 0777): Command
     {
-        $fileMock = $this->getMockBuilder(File::class)->setMethods(['getPermissions'])->getMock();
+        $fileMock = $this->getMockBuilder(File::class)->onlyMethods(['getPermissions'])->getMock();
         $fileMock->expects($this->exactly(5))->method('getPermissions')->willReturn($permission);
 
         $kernel = self::bootKernel();
