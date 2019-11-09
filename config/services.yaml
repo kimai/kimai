@@ -129,7 +129,8 @@ services:
     # ================================================================================
 
     App\Security\RoleService:
-        arguments: ['%security.role_hierarchy.roles%']
+        arguments:
+            $roles: '%security.role_hierarchy.roles%'
 
     App\Security\RolePermissionManager:
         arguments:
@@ -197,6 +198,11 @@ services:
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Role']
 
+    App\Repository\RolePermissionRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\RolePermission']
+    
     App\Repository\InvoiceDocumentRepository:
         class: App\Repository\InvoiceDocumentRepository
         arguments: ['%kimai.invoice.documents%']

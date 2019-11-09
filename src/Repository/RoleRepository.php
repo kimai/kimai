@@ -9,13 +9,39 @@
 
 namespace App\Repository;
 
-use App\Configuration\ConfigLoaderInterface;
-use App\Entity\Configuration;
-use App\Form\Model\SystemConfiguration;
+use App\Entity\Role;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
-use Doctrine\ORM\Query;
 
 class RoleRepository extends EntityRepository
 {
+    /**
+     * @return Role[]
+     */
+    public function findAll()
+    {
+        return parent::findAll();
+    }
+
+    public function saveRole(Role $role)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($role);
+        $entityManager->flush();
+    }
+
+    public function deleteRole(Role $role)
+    {
+        $em = $this->getEntityManager();
+        $em->beginTransaction();
+
+        try {
+            $em->remove($role);
+            $em->flush();
+            $em->commit();
+        } catch (ORMException $ex) {
+            $em->rollback();
+            throw $ex;
+        }
+    }
 }

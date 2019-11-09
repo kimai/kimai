@@ -16,11 +16,12 @@ use App\Form\UserCreateType;
 use App\Repository\Query\UserQuery;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
-use App\Security\RolePermissionManager;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -64,12 +65,8 @@ class UserController extends AbstractController
      * @Route(path="/", defaults={"page": 1}, name="admin_user", methods={"GET"})
      * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_user_paginated", methods={"GET"})
      * @Security("is_granted('view_user')")
-     *
-     * @param int $page
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction($page, Request $request)
+    public function indexAction($page, Request $request): Response
     {
         $query = new UserQuery();
         $query->setPage($page);
@@ -99,11 +96,8 @@ class UserController extends AbstractController
     /**
      * @Route(path="/create", name="admin_user_create", methods={"GET", "POST"})
      * @Security("is_granted('create_user')")
-     *
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request): Response
     {
         $user = new User();
         $user->setEnabled(true);
@@ -144,14 +138,8 @@ class UserController extends AbstractController
     /**
      * @Route(path="/{id}/delete", name="admin_user_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', userToDelete)")
-     *
-     * @param User $userToDelete
-     * @param Request $request
-     * @param TimesheetRepository $repository
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function deleteAction(User $userToDelete, Request $request, TimesheetRepository $repository)
+    public function deleteAction(User $userToDelete, Request $request, TimesheetRepository $repository): Response
     {
         // $userToDelete MUST not be called $user, as $user is always the current user!
         $stats = $repository->getUserStatistics($userToDelete);
@@ -189,27 +177,7 @@ class UserController extends AbstractController
         );
     }
 
-    /**
-     * @Route(path="/permissions", name="admin_user_permissions", methods={"GET", "POST"})
-     * @Security("is_granted('role_permissions')")
-     *
-     * @param RolePermissionManager $manager
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function permissions(RolePermissionManager $manager)
-    {
-        return $this->render('user/permissions.html.twig', [
-            'roles' => $manager->getRoles(),
-            'permissions' => $manager->getPermissions(),
-            'manager' => $manager,
-        ]);
-    }
-
-    /**
-     * @param UserQuery $query
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    protected function getToolbarForm(UserQuery $query)
+    protected function getToolbarForm(UserQuery $query): FormInterface
     {
         return $this->createForm(UserToolbarForm::class, $query, [
             'action' => $this->generateUrl('admin_user', [
@@ -219,11 +187,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @param User $user
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    private function createEditForm(User $user)
+    private function createEditForm(User $user): FormInterface 
     {
         return $this->createForm(UserCreateType::class, $user, [
             'action' => $this->generateUrl('admin_user_create'),

@@ -616,7 +616,19 @@
                     Momentan existieren für den Benutzer %user% insgesamt %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen.
                 </target>
             </trans-unit>
-
+            <trans-unit id="user_permissions.title">
+                <source>user_permissions.title</source>
+                <target>Benutzer Berechtigungen</target>
+            </trans-unit>
+            <trans-unit id="user_role.title">
+                <source>user_role.title</source>
+                <target>Benutzer Rolle</target>
+            </trans-unit>
+            <trans-unit id="Allowed character: A-Z and _">
+                <source>Allowed character: A-Z and _</source>
+                <target>Erlaubte Zeichen: A-Z und _</target>
+            </trans-unit>
+            
             <!--
               Admin: Plugins
             -->

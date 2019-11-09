@@ -14,27 +14,51 @@ use App\Entity\Configuration;
 use App\Form\Model\SystemConfiguration;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
-use Doctrine\ORM\Query;
 
 class ConfigurationRepository extends EntityRepository implements ConfigLoaderInterface
 {
+    private static $cache = null;
+
+    private function clearCache()
+    {
+        static::$cache = null;
+    }
+
+    private function prefillCache()
+    {
+        if (null !== static::$cache) {
+            return;
+        }
+
+        /** @var Configuration[] $configs */
+        $configs = $this->findAll();
+        static::$cache = [];
+        foreach ($configs as $config) {
+            $key = substr($config->getName(), 0, strpos($config->getName(), '.'));
+            if (!array_key_exists($key, static::$cache)) {
+                static::$cache[$key] = [];
+            }
+            static::$cache[$key][] = $config;
+        }
+    }
+
     /**
      * @param string $prefix
      * @return Configuration[]
      */
     public function getConfiguration(?string $prefix = null): array
     {
+        $this->prefillCache();
+
         if (null === $prefix) {
-            return $this->findAll();
+            return array_values(static::$cache);
         }
 
-        $qb = $this->createQueryBuilder('c');
-        $qb
-            ->select('c')
-            ->where($qb->expr()->like('c.name', ':prefix'))
-            ->setParameter(':prefix', $prefix . '%');
+        if (!array_key_exists($prefix, static::$cache)) {
+            return [];
+        }
 
-        return $qb->getQuery()->getResult(Query::HYDRATE_OBJECT);
+        return static::$cache[$prefix];
     }
 
     public function saveSystemConfiguration(SystemConfiguration $model)
@@ -68,5 +92,7 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
             $em->rollback();
             throw $ex;
         }
+
+        $this->clearCache();
     }
 }
