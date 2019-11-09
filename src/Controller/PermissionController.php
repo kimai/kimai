@@ -148,7 +148,7 @@ final class PermissionController extends AbstractController
                 $permission->setRole($role);
                 $permission->setPermission($name);
             }
-            $permission->setValue((bool) $value);
+            $permission->setAllowed((bool) $value);
 
             $rolePermissionRepository->saveRolePermission($permission);
             $this->flashSuccess('action.update.success');

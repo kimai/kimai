@@ -32,7 +32,7 @@ class RolePermissionRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('rp');
 
-        $qb->select('r.name as role,rp.permission,rp.value')
+        $qb->select('r.name as role,rp.permission,rp.allowed')
             ->leftJoin('rp.role', 'r');
 
         return $qb->getQuery()->execute([], AbstractQuery::HYDRATE_ARRAY);

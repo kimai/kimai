@@ -50,10 +50,10 @@ class RolePermission
     /**
      * @var bool
      *
-     * @ORM\Column(name="value", type="boolean", nullable=false, options={"default": false})
+     * @ORM\Column(name="allowed", type="boolean", nullable=false, options={"default": false})
      * @Assert\NotNull()
      */
-    private $value = false;
+    private $allowed = false;
 
     public function getId(): ?int
     {
@@ -84,22 +84,17 @@ class RolePermission
         return $this;
     }
 
-    public function isValue(): bool
-    {
-        return $this->value;
-    }
-
     /**
      * Alias for isValue()
      */
     public function isAllowed(): bool
     {
-        return $this->value;
+        return $this->allowed;
     }
 
-    public function setValue(bool $value): RolePermission
+    public function setAllowed(bool $allowed): RolePermission
     {
-        $this->value = $value;
+        $this->allowed = $allowed;
 
         return $this;
     }

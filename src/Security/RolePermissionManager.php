@@ -36,7 +36,7 @@ final class RolePermissionManager
         foreach ($all as $item) {
             $perm = $item['permission'];
             $role = strtoupper($item['role']);
-            $isAllowed = $item['value'];
+            $isAllowed = $item['allowed'];
 
             // see permissions.html.twig for this special case
             if ($role === User::ROLE_SUPER_ADMIN && in_array($perm, ['role_permissions', 'view_user'])) {

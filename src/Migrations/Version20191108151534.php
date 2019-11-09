@@ -53,7 +53,7 @@ final class Version20191108151534 extends AbstractMigration
         $rolePermissions->addColumn('id', 'integer', ['autoincrement' => true, 'notnull' => true]);
         $rolePermissions->addColumn('role_id', 'integer', ['length' => 11, 'notnull' => true]);
         $rolePermissions->addColumn('permission', 'string', ['notnull' => true, 'length' => 50]);
-        $rolePermissions->addColumn('value', 'boolean', ['notnull' => true, 'default' => false]);
+        $rolePermissions->addColumn('allowed', 'boolean', ['notnull' => true, 'default' => false]);
         $rolePermissions->setPrimaryKey(['id']);
         $rolePermissions->addUniqueIndex(['role_id', 'permission'], 'role_permission');
         $rolePermissions->addForeignKeyConstraint('kimai2_roles', ['role_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_D263A3B8D60322AC');
