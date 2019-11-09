@@ -60,13 +60,6 @@ class RolePermission
         return $this->id;
     }
 
-    public function setId(int $id): RolePermission
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
     public function getRole(): ?Role
     {
         return $this->role;
