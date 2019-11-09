@@ -30,15 +30,15 @@ use Symfony\Component\Routing\Annotation\Route;
 final class PermissionController extends AbstractController
 {
     /**
-     * @var RoleService 
+     * @var RoleService
      */
     private $roleService;
     /**
-     * @var RolePermissionManager 
+     * @var RolePermissionManager
      */
     private $manager;
     /**
-     * @var RoleRepository 
+     * @var RoleRepository
      */
     private $roleRepository;
 
@@ -61,7 +61,7 @@ final class PermissionController extends AbstractController
         foreach ($all as $role) {
             $existing[] = $role->getName();
         }
-        
+
         $existing = array_map('strtoupper', $existing);
 
         // automatically import all hard coded (default) roles into the database table

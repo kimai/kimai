@@ -49,6 +49,7 @@ class RoleType extends AbstractType
                         $roleName = str_replace('-', '_', $roleName);
                         $roleName = strtoupper($roleName);
                     }
+
                     return $roleName;
                 },
                 function ($roleName) {

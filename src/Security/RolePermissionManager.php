@@ -66,7 +66,7 @@ final class RolePermissionManager
     public function hasPermission(string $role, string $permission): bool
     {
         $role = strtoupper($role);
-        
+
         if (!isset($this->permissions[$role])) {
             return false;
         }

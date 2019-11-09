@@ -187,7 +187,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    private function createEditForm(User $user): FormInterface 
+    private function createEditForm(User $user): FormInterface
     {
         return $this->createForm(UserCreateType::class, $user, [
             'action' => $this->generateUrl('admin_user_create'),

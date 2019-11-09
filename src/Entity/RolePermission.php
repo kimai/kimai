@@ -97,7 +97,7 @@ class RolePermission
     }
 
     /**
-     * Alias for isValue() 
+     * Alias for isValue()
      */
     public function isAllowed(): bool
     {
