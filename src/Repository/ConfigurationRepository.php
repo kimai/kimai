@@ -17,28 +17,30 @@ use Doctrine\ORM\ORMException;
 
 class ConfigurationRepository extends EntityRepository implements ConfigLoaderInterface
 {
-    private static $cache = null;
+    private static $cacheByPrefix = null;
+    private static $cacheAll = [];
 
     private function clearCache()
     {
-        static::$cache = null;
+        static::$cacheByPrefix = null;
     }
 
     private function prefillCache()
     {
-        if (null !== static::$cache) {
+        if (null !== static::$cacheByPrefix) {
             return;
         }
 
         /** @var Configuration[] $configs */
         $configs = $this->findAll();
-        static::$cache = [];
+        static::$cacheByPrefix = [];
         foreach ($configs as $config) {
             $key = substr($config->getName(), 0, strpos($config->getName(), '.'));
-            if (!array_key_exists($key, static::$cache)) {
-                static::$cache[$key] = [];
+            if (!array_key_exists($key, static::$cacheByPrefix)) {
+                static::$cacheByPrefix[$key] = [];
             }
-            static::$cache[$key][] = $config;
+            static::$cacheByPrefix[$key][] = $config;
+            static::$cacheAll[] = $config;
         }
     }
 
@@ -51,14 +53,14 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
         $this->prefillCache();
 
         if (null === $prefix) {
-            return array_values(static::$cache);
+            return static::$cacheAll;
         }
 
-        if (!array_key_exists($prefix, static::$cache)) {
+        if (!array_key_exists($prefix, static::$cacheByPrefix)) {
             return [];
         }
 
-        return static::$cache[$prefix];
+        return static::$cacheByPrefix[$prefix];
     }
 
     public function saveSystemConfiguration(SystemConfiguration $model)
