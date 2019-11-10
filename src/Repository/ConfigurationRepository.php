@@ -14,27 +14,53 @@ use App\Entity\Configuration;
 use App\Form\Model\SystemConfiguration;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
-use Doctrine\ORM\Query;
 
 class ConfigurationRepository extends EntityRepository implements ConfigLoaderInterface
 {
+    private static $cacheByPrefix = null;
+    private static $cacheAll = [];
+
+    private function clearCache()
+    {
+        static::$cacheByPrefix = null;
+    }
+
+    private function prefillCache()
+    {
+        if (null !== static::$cacheByPrefix) {
+            return;
+        }
+
+        /** @var Configuration[] $configs */
+        $configs = $this->findAll();
+        static::$cacheByPrefix = [];
+        foreach ($configs as $config) {
+            $key = substr($config->getName(), 0, strpos($config->getName(), '.'));
+            if (!array_key_exists($key, static::$cacheByPrefix)) {
+                static::$cacheByPrefix[$key] = [];
+            }
+            static::$cacheByPrefix[$key][] = $config;
+            static::$cacheAll[] = $config;
+        }
+    }
+
     /**
      * @param string $prefix
      * @return Configuration[]
      */
     public function getConfiguration(?string $prefix = null): array
     {
+        $this->prefillCache();
+
         if (null === $prefix) {
-            return $this->findAll();
+            return static::$cacheAll;
         }
 
-        $qb = $this->createQueryBuilder('c');
-        $qb
-            ->select('c')
-            ->where($qb->expr()->like('c.name', ':prefix'))
-            ->setParameter(':prefix', $prefix . '%');
+        if (!array_key_exists($prefix, static::$cacheByPrefix)) {
+            return [];
+        }
 
-        return $qb->getQuery()->getResult(Query::HYDRATE_OBJECT);
+        return static::$cacheByPrefix[$prefix];
     }
 
     public function saveSystemConfiguration(SystemConfiguration $model)
@@ -68,5 +94,7 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
             $em->rollback();
             throw $ex;
         }
+
+        $this->clearCache();
     }
 }

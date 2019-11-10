@@ -9,6 +9,9 @@
 
 namespace App\Security;
 
+use App\Entity\Role;
+use App\Repository\RoleRepository;
+
 final class RoleService
 {
     /**
@@ -19,13 +22,18 @@ final class RoleService
      * @var string[]
      */
     private $roleNames = [];
+    /**
+     * @var RoleRepository
+     */
+    private $repository;
 
-    public function __construct(array $roles)
+    public function __construct(RoleRepository $repository, array $roles)
     {
+        $this->repository = $repository;
         $this->roles = $roles;
     }
 
-    public function getAvailableNames(): array
+    private function cacheNames()
     {
         if (empty($this->roleNames)) {
             $roles = [];
@@ -38,9 +46,24 @@ final class RoleService
                 }
             }
 
+            /** @var Role $item */
+            foreach ($this->repository->findAll() as $item) {
+                $roles[] = $item->getName();
+            }
+
             $this->roleNames = array_values(array_unique($roles));
         }
+    }
+
+    public function getAvailableNames(): array
+    {
+        $this->cacheNames();
 
         return $this->roleNames;
+    }
+
+    public function getSystemRoles(): array
+    {
+        return $this->roles;
     }
 }

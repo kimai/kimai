@@ -12,7 +12,7 @@ namespace App\Tests\Ldap;
 use App\Configuration\LdapConfiguration;
 use App\Entity\User;
 use App\Ldap\LdapUserHydrator;
-use App\Security\RoleService;
+use App\Tests\Mocks\Security\RoleServiceFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -33,7 +33,7 @@ class LdapUserHydratorTest extends TestCase
             'role' => [],
         ]);
 
-        $sut = new LdapUserHydrator($config, new RoleService([]));
+        $sut = new LdapUserHydrator($config, (new RoleServiceFactory($this))->create([]));
         $user = $sut->hydrate(['dn' => 'blub']);
         self::assertInstanceOf(User::class, $user);
         self::assertEmpty($user->getUsername());
@@ -71,7 +71,7 @@ class LdapUserHydratorTest extends TestCase
             'dn' => 'blub',
         ];
 
-        $sut = new LdapUserHydrator($config, new RoleService([]));
+        $sut = new LdapUserHydrator($config, (new RoleServiceFactory($this))->create([]));
         $user = $sut->hydrate($ldapEntry);
 
         self::assertInstanceOf(User::class, $user);
@@ -113,7 +113,7 @@ class LdapUserHydratorTest extends TestCase
             'dn' => 'blub',
         ];
 
-        $sut = new LdapUserHydrator($config, new RoleService([]));
+        $sut = new LdapUserHydrator($config, (new RoleServiceFactory($this))->create([]));
         $user = new User();
         $user->setPassword('foobar');
         $sut->hydrateUser($user, $ldapEntry);
@@ -176,11 +176,13 @@ class LdapUserHydratorTest extends TestCase
             'count' => 4
         ];
 
-        $sut = new LdapUserHydrator($config, new RoleService([
+        $roles = [
             'ROLE_TEAMLEAD' => ['ROLE_USER'],
             'ROLE_ADMIN' => ['ROLE_TEAMLEAD'],
             'ROLE_SUPER_ADMIN' => ['ROLE_ADMIN']
-        ]));
+        ];
+
+        $sut = new LdapUserHydrator($config, (new RoleServiceFactory($this))->create($roles));
         $user = new User();
         $sut->hydrateRoles($user, $ldapGroups);
         self::assertEquals(['ROLE_TEAMLEAD', 'ROLE_ADMIN', 'ROLE_USER'], $user->getRoles());

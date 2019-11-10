@@ -525,7 +525,6 @@ class Configuration implements ConfigurationInterface
                     ->requiresAtLeastOneElement()
                     ->useAttributeAsKey('key')
                     ->arrayPrototype()
-                        ->useAttributeAsKey('key')
                         ->isRequired()
                         ->scalarPrototype()->end()
                         ->defaultValue([])

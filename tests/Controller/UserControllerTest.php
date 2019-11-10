@@ -30,6 +30,13 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/user/');
         $this->assertHasDataTable($client);
         $this->assertDataTableRowCount($client, 'datatable_user_admin', 7);
+        $this->assertPageActions($client, [
+            'search search-toggle visible-xs-inline' => '#',
+            'visibility' => '#',
+            'permissions' => $this->createUrl('/admin/permissions'),
+            'create' => $this->createUrl('/admin/user/create'),
+            'help' => 'https://www.kimai.org/documentation/users.html'
+        ]);
     }
 
     public function testIndexActionWithSearchTermQuery()
@@ -219,19 +226,5 @@ class UserControllerTest extends ControllerBaseTest
                 ]
             ],
         ];
-    }
-
-    public function testPermissionsIsSecure()
-    {
-        $this->assertUrlIsSecured('/admin/user/permissions');
-        $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/admin/user/permissions');
-    }
-
-    public function testPermissions()
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/user/permissions');
-        $this->assertHasDataTable($client);
-        $this->assertDataTableRowCount($client, 'datatable_user_admin_permissions', 83);
     }
 }

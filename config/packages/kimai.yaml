@@ -175,7 +175,7 @@ kimai:
         user_duration:
             title: stats.yourWorkingHours
             order: 10
-            permission: ROLE_USER
+            permission: view_own_timesheet
             type: '\App\Widget\Type\CompoundChart'
             widgets: [DailyWorkingTimeChart, userDurationToday, userDurationWeek, userDurationMonth, userDurationYear]
         user_rates:

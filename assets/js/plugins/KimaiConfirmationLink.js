@@ -10,15 +10,12 @@ import KimaiPlugin from "../KimaiPlugin";
 /**
  * Needs to be initialized with a class name.
  *
- * A link like <a href=# class=remoteLink> can be activated with:
- * new KimaiAPILink('remoteLink')
- *
  * Allows to assign the given selector to any element, which then is used as click-handler
  * calling an API method and trigger the event from data-event attribute afterwards.
  *
  * @param selector
  */
-export default class KimaiAPILink extends KimaiPlugin {
+export default class KimaiConfirmationLink extends KimaiPlugin {
 
     constructor(selector) {
         super();
@@ -41,11 +38,9 @@ export default class KimaiAPILink extends KimaiPlugin {
                     if (attributes.question !== undefined) {
                         self.getContainer().getPlugin('alert').question(attributes.question, function(value) {
                             if (value) {
-                                self._callApi(url, attributes);
+                                document.location = url;
                             }
                         });
-                    } else {
-                        self._callApi(url, attributes);
                     }
 
                     event.preventDefault();
@@ -55,41 +50,6 @@ export default class KimaiAPILink extends KimaiPlugin {
                 target = target.parentNode;
             }
         });
-    }
-
-    _callApi(url, attributes)
-    {
-        const method = attributes['method'];
-        const eventName = attributes['event'];
-        const API = this.getContainer().getPlugin('api');
-        const eventing = this.getContainer().getPlugin('event');
-        const alert = this.getContainer().getPlugin('alert');
-        const successHandle = function(result) {
-            eventing.trigger(eventName);
-            if (attributes.msgSuccess) {
-                alert.success(attributes.msgSuccess);
-            }
-        };
-        const errorHandle = function(xhr, err) {
-            let message = 'action.update.error';
-            if (attributes.msgError) {
-                message = attributes.msgError;
-            }
-            if (xhr.responseJSON && xhr.responseJSON.message) {
-                err = xhr.responseJSON.message;
-            }
-            alert.error(message, err);
-        };
-
-        if (method === 'PATCH') {
-            let data = {};
-            if (attributes.payload) {
-                data  = attributes.payload;
-            }
-            API.patch(url, data, successHandle, errorHandle);
-        } else if (method === 'DELETE') {
-            API.delete(url, successHandle, errorHandle);
-        }
     }
 
 }

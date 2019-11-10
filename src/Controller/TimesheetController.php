@@ -78,23 +78,4 @@ class TimesheetController extends TimesheetAbstractController
     {
         return $this->create($request, 'timesheet/edit.html.twig', $projectRepository, $activityRepository, $tagRepository);
     }
-
-    /**
-     * Used for the initial page rendering.
-     *
-     * @return Response
-     */
-    public function activeEntriesAction()
-    {
-        $user = $this->getUser();
-        $activeEntries = $this->getRepository()->getActiveEntries($user);
-
-        return $this->render(
-            'navbar/active-entries.html.twig',
-            [
-                'entries' => $activeEntries,
-                'soft_limit' => $this->getSoftLimit(),
-            ]
-        );
-    }
 }

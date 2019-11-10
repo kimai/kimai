@@ -616,6 +616,18 @@
                     Currently the user %user% has %records% time-records which sum up to a total of %duration%.
                 </target>
             </trans-unit>
+            <trans-unit id="user_permissions.title">
+                <source>user_permissions.title</source>
+                <target>User permissions</target>
+            </trans-unit>
+            <trans-unit id="user_role.title">
+                <source>user_role.title</source>
+                <target>User role</target>
+            </trans-unit>
+            <trans-unit id="Allowed character: A-Z and _">
+                <source>Allowed character: A-Z and _</source>
+                <target>Allowed character: A-Z and _</target>
+            </trans-unit>
 
             <!--
               Admin: Plugins

@@ -8,6 +8,15 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
+## [1.6](https://github.com/kevinpapst/kimai2/releases/tag/1.6)
+
+- New functionality to manage permissions via Admin UI were added. Please move your permission settings from [local.yaml to your database](https://www.kimai.org/documentation/permissions.html)
+- New database tables were created, don't forget to [run the migrations](https://www.kimai.org/documentation/updates.html)
+
+### Developer
+
+Please add default permissions to your [plugin](https://www.kimai.org/documentation/plugins.html).
+
 ## [1.5](https://github.com/kevinpapst/kimai2/releases/tag/1.5)
 
 [Update as usual](https://www.kimai.org/documentation/updates.html)
