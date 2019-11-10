@@ -84,7 +84,7 @@ final class PermissionController extends AbstractController
     }
 
     /**
-     * @Route(path="/roles", name="admin_user_roles", methods={"GET", "POST"})
+     * @Route(path="/roles/create", name="admin_user_roles", methods={"GET", "POST"})
      * @Security("is_granted('role_permissions')")
      */
     public function createRole(Request $request): Response
