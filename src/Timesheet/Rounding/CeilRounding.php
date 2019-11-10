@@ -11,8 +11,13 @@ namespace App\Timesheet\Rounding;
 
 use App\Entity\Timesheet;
 
-class CeilRounding implements RoundingInterface
+final class CeilRounding implements RoundingInterface
 {
+    public function getId(): string
+    {
+        return 'ceil';
+    }
+
     /**
      * @param Timesheet $record
      * @param int $minutes

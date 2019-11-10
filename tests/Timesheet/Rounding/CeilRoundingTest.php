@@ -31,6 +31,7 @@ class CeilRoundingTest extends TestCase
         $record->setDuration($record->getEnd()->getTimestamp() - $record->getBegin()->getTimestamp());
 
         $sut = new CeilRounding();
+        self::assertEquals('ceil', $sut->getId());
         $sut->roundBegin($record, $roundBegin);
         $sut->roundEnd($record, $roundEnd);
         $record->setDuration($record->getEnd()->getTimestamp() - $record->getBegin()->getTimestamp());
