@@ -121,9 +121,16 @@ class DashboardController extends AbstractController
         $this->eventDispatcher->dispatch($event);
 
         $sections = $event->getSections();
+        $clearedSections = [];
+        /** @var WidgetContainerInterface $section */
+        foreach ($sections as $key => $section){
+            if (!empty($section->getWidgets())) {
+                $clearedSections[] = $section;
+            }
+        }
 
         uasort(
-            $sections,
+            $clearedSections,
             function (WidgetContainerInterface $a, WidgetContainerInterface $b) {
                 if ($a->getOrder() == $b->getOrder()) {
                     return 0;
@@ -134,7 +141,7 @@ class DashboardController extends AbstractController
         );
 
         return $this->render('dashboard/index.html.twig', [
-            'widgets' => $sections
+            'widgets' => $clearedSections
         ]);
     }
 }

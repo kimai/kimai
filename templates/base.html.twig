@@ -93,7 +93,7 @@
             </li>
         {% endif %}
         {% block navbar_extensions %}{% endblock %}
-        {{ render(controller('App\\Controller\\TimesheetController::activeEntriesAction')) }}
+        {{ render(controller('App\\Controller\\LayoutController::activeEntriesAction')) }}
     {% endif %}
 {% endblock %}
 
