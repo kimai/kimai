@@ -15,7 +15,7 @@ use App\Ldap\LdapDriver;
 use App\Ldap\LdapDriverException;
 use App\Ldap\LdapManager;
 use App\Ldap\LdapUserHydrator;
-use App\Security\RoleService;
+use App\Tests\Mocks\Security\RoleServiceFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -50,11 +50,13 @@ class LdapManagerTest extends TestCase
             'role' => $roleConfig,
         ]);
 
-        $hydrator = new LdapUserHydrator($config, new RoleService([
+        $roles = [
             'ROLE_TEAMLEAD' => ['ROLE_USER'],
             'ROLE_ADMIN' => ['ROLE_TEAMLEAD'],
             'ROLE_SUPER_ADMIN' => ['ROLE_ADMIN']
-        ]));
+        ];
+
+        $hydrator = new LdapUserHydrator($config, (new RoleServiceFactory($this))->create($roles));
 
         return new LdapManager($driver, $hydrator, $config);
     }

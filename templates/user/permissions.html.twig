@@ -7,28 +7,40 @@
 {% set columns = {
     'label.name': 'alwaysVisible',
 } %}
-
+{% set canEditPedrmissions = is_granted('role_permissions') %}
 {% for role in roles %}
+    {% set options = {'class': 'alwaysVisible text-center'} %}
+    {% if canEditPedrmissions and role.name not in system_roles|keys %}
+        {% set widget %}
+        &nbsp;<a href="{{ path('admin_user_role_delete', {'id': role.id}) }}" class="confirmation-link" data-question="confirm.delete" data-msg-error="action.delete.error" data-msg-success="action.delete.success">{{ widgets.icon('trash') }}</a>
+        {% endset %}
+        {% set options = options|merge({'html_after': widget}) %}
+    {% endif %}
     {% set columns = columns|merge({
-        (role): 'alwaysVisible text-center',
+        (role.name|trans): options,
     }) %}
 {% endfor %}
 
 {% set tableName = 'user_admin_permissions' %}
 
-{% block page_title %}{{ 'admin_user.title'|trans }}{% endblock %}
+{% block page_title %}{{ 'user_permissions.title'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.user_permissions('index') }}{% endblock %}
 
 {% block main %}
-
-    {{ tables.data_table_header_options(tableName, columns, {'translationPrefix': ''}) }}
+    {{ tables.datatable_header(tableName, columns, null, {'translationPrefix': ''}) }}
 
     {% for permission in permissions|sort %}
         <tr>
             <td>{{ permission }}</td>
             {% for role in roles %}
+                {% set value = manager.permission(role.name, permission) %}
                 <td class="text-center">
-                    {{ widgets.label_boolean(manager.permission(role, permission)) }}
+                    {# see RolePermissionManager for this special case #}
+                    {% if (permission != 'role_permissions' and permission != 'view_user') or role.name != 'ROLE_SUPER_ADMIN' %}
+                        <a href="{{ path('admin_user_permission_save', {'id': role.id, 'name': permission, 'value': (value ? '0' : '1')}) }}">{{ widgets.label_boolean(value) }}</a>
+                    {% else %}
+                        {{ widgets.label_boolean(value) }}
+                    {% endif %}
                 </td>
             {% endfor %}
         </tr>
@@ -36,4 +48,13 @@
 
     {{ tables.data_table_footer(permissions) }}
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        document.addEventListener('kimai.userRoleUpdate', function() {
+            document.location.reload();
+        });
+    </script>
 {% endblock %}

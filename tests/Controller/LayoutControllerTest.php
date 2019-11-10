@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
 /**
  * @group integration
  */
-class LayoutTest extends ControllerBaseTest
+class LayoutControllerTest extends ControllerBaseTest
 {
     public function testNavigationMenus()
     {
@@ -71,5 +71,27 @@ class LayoutTest extends ControllerBaseTest
         $this->assertStringContainsString('<li id="calendar"', $content);
         $this->assertStringContainsString('<a href="/en/calendar/">', $content);
         $this->assertStringContainsString('<span>Calendar</span>', $content);
+    }
+
+    public function testActiveEntries()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $this->getUserByRole($em, User::ROLE_USER);
+
+        $this->request($client, '/layou/active_entries');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+
+        self::assertStringContainsString('<li class="dropdown messages-menu" style="display:none">', $content);
+        self::assertStringContainsString('<ul class="dropdown-menu"', $content);
+        self::assertStringContainsString('data-api="', $content);
+        self::assertStringContainsString('data-href="', $content);
+        self::assertStringContainsString('data-icon=', $content);
+        self::assertStringContainsString('data-format=', $content);
+        self::assertStringContainsString('<ul class="menu">', $content);
+        self::assertStringContainsString('<li class="messages-menu-empty" style="">', $content);
     }
 }
