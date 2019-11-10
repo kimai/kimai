@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class LayoutController extends AbstractController
 {
-    public function activeEntriesAction(TimesheetRepository $repository, TimesheetConfiguration $configuration): Response
+    public function activeEntries(TimesheetRepository $repository, TimesheetConfiguration $configuration): Response
     {
         $user = $this->getUser();
         $activeEntries = $repository->getActiveEntries($user);

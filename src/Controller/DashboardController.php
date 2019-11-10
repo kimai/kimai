@@ -123,7 +123,7 @@ class DashboardController extends AbstractController
         $sections = $event->getSections();
         $clearedSections = [];
         /** @var WidgetContainerInterface $section */
-        foreach ($sections as $key => $section){
+        foreach ($sections as $key => $section) {
             if (!empty($section->getWidgets())) {
                 $clearedSections[] = $section;
             }
