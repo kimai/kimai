@@ -58,6 +58,12 @@ final class RolePermissionManager
         }
     }
 
+    /**
+     * Only permissions which were registered through the Symfony configuration stack will be acknowledged here.
+     *
+     * @param string $permission
+     * @return bool
+     */
     public function isRegisteredPermission(string $permission): bool
     {
         return in_array($permission, $this->knownPermissions);
@@ -74,6 +80,11 @@ final class RolePermissionManager
         return in_array($permission, $this->permissions[$role]);
     }
 
+    /**
+     * Only permissions which were registered through the Symfony configuration stack will be returned here.
+     *
+     * @return array
+     */
     public function getPermissions(): array
     {
         return $this->knownPermissions;
