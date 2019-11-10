@@ -9,8 +9,25 @@
 
 namespace App\Timesheet\TrackingMode;
 
-class DefaultMode extends AbstractTrackingMode
+use App\Configuration\TimesheetConfiguration;
+use App\Entity\Timesheet;
+use App\Timesheet\RoundingService;
+use App\Timesheet\UserDateTimeFactory;
+use Symfony\Component\HttpFoundation\Request;
+
+final class DefaultMode extends AbstractTrackingMode
 {
+    /**
+     * @var RoundingService
+     */
+    private $rounding;
+
+    public function __construct(UserDateTimeFactory $dateTime, TimesheetConfiguration $configuration, RoundingService $rounding)
+    {
+        parent::__construct($dateTime, $configuration);
+        $this->rounding = $rounding;
+    }
+
     public function canEditBegin(): bool
     {
         return true;
@@ -39,5 +56,24 @@ class DefaultMode extends AbstractTrackingMode
     public function canSeeBeginAndEndTimes(): bool
     {
         return true;
+    }
+
+    public function create(Timesheet $timesheet, Request $request): void
+    {
+        parent::create($timesheet, $request);
+
+        if (null === $timesheet->getBegin()) {
+            $timesheet->setBegin($this->dateTime->createDateTime());
+        }
+
+        $this->rounding->roundBegin($timesheet);
+
+        if (null !== $timesheet->getEnd()) {
+            $this->rounding->roundEnd($timesheet);
+
+            if (null !== $timesheet->getDuration()) {
+                $this->rounding->roundDuration($timesheet);
+            }
+        }
     }
 }

@@ -7,18 +7,16 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Timesheet\Calculator;
+namespace App\Tests\Timesheet;
 
 use App\Entity\Timesheet;
 use App\Tests\Mocks\RoundingServiceFactory;
-use App\Timesheet\Calculator\DurationCalculator;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Timesheet\Calculator\DurationCalculator
  * @covers \App\Timesheet\RoundingService
  */
-class DurationCalculatorTest extends TestCase
+class RoundingServiceTest extends TestCase
 {
     public function testCalculateWithEmptyEnd()
     {
@@ -26,23 +24,31 @@ class DurationCalculatorTest extends TestCase
         $record->setBegin(new \DateTime());
         $this->assertEquals(0, $record->getDuration());
 
-        $sut = new DurationCalculator((new RoundingServiceFactory($this))->create());
-        $sut->calculate($record);
+        $sut = (new RoundingServiceFactory($this))->create();
+        $sut->applyRoundings($record);
         $this->assertEquals(0, $record->getDuration());
     }
 
     /**
      * @dataProvider getTestData
      */
-    public function testCalculate($rules, $start, $end, $expectedDuration)
+    public function testCalculate($rules, $start, $end, $expectedStart, $expectedEnd, $expectedDuration)
     {
         $record = new Timesheet();
         $record->setBegin($start);
         $record->setEnd($end);
         $this->assertEquals(0, $record->getDuration());
 
-        $sut = new DurationCalculator((new RoundingServiceFactory($this))->create($rules));
-        $sut->calculate($record);
+        $sut = (new RoundingServiceFactory($this))->create($rules);
+        $sut->roundBegin($record);
+        $this->assertEquals($expectedStart, $record->getBegin());
+        $sut->roundEnd($record);
+        $this->assertEquals($expectedEnd, $record->getEnd());
+
+        // set the proper duration
+        $record->setDuration($record->getEnd()->getTimestamp() - $record->getBegin()->getTimestamp());
+
+        $sut->roundDuration($record);
         $this->assertEquals($expectedDuration, $record->getDuration());
     }
 
@@ -55,6 +61,8 @@ class DurationCalculatorTest extends TestCase
         return [
             [
                 null,
+                $start,
+                (clone $start)->setTimestamp($start->getTimestamp() + 1837),
                 $start,
                 (clone $start)->setTimestamp($start->getTimestamp() + 1837),
                 1837
@@ -71,6 +79,8 @@ class DurationCalculatorTest extends TestCase
                 ],
                 (clone $start)->setTime(12, 17, 35),
                 (clone $start)->setTime(13, 32, 52),
+                (clone $start)->setTime(12, 15, 00),
+                (clone $start)->setTime(13, 45, 00),
                 5400
             ],
             [
@@ -83,6 +93,8 @@ class DurationCalculatorTest extends TestCase
                         'mode' => 'default',
                     ],
                 ],
+                (clone $start)->setTime(12, 17, 35),
+                (clone $start)->setTime(13, 32, 52),
                 (clone $start)->setTime(12, 17, 35),
                 (clone $start)->setTime(13, 32, 52),
                 4517
@@ -99,6 +111,8 @@ class DurationCalculatorTest extends TestCase
                 ],
                 (clone $start)->setTime(12, 17, 35),
                 (clone $start)->setTime(13, 32, 52),
+                (clone $start)->setTime(12, 17, 00),
+                (clone $start)->setTime(13, 33, 00),
                 4560
             ],
             [
@@ -111,6 +125,8 @@ class DurationCalculatorTest extends TestCase
                         'mode' => 'default',
                     ],
                 ],
+                (clone $start)->setTime(12, 10, 51),
+                (clone $start)->setTime(14, 40, 52),
                 (clone $start)->setTime(12, 10, 51),
                 (clone $start)->setTime(14, 40, 52),
                 10800
@@ -134,6 +150,8 @@ class DurationCalculatorTest extends TestCase
                 ],
                 (clone $start)->setTime(12, 27, 35), // 12:15
                 (clone $start)->setTime(14, 32, 52), // 14:33 => 2:18 => 2:30
+                (clone $start)->setTime(12, 15, 00), // 12:15
+                (clone $start)->setTime(14, 33, 00), // 14:33 => 2:18 => 2:30
                 9000
             ],
             [
@@ -155,7 +173,9 @@ class DurationCalculatorTest extends TestCase
                 ],
                 (clone $start)->setTime(12, 27, 35), // 12:15
                 (clone $start)->setTime(14, 32, 52), // 14:33 => 2:18 (second duration will not be rounded)
-                8280
+                (clone $start)->setTime(12, 15, 00), // 12:15
+                (clone $start)->setTime(14, 33, 00), // 14:33 => 2:18 (second duration will not be rounded)
+                9000
             ],
             [
                 [
@@ -174,6 +194,8 @@ class DurationCalculatorTest extends TestCase
                         'mode' => 'default',
                     ],
                 ],
+                (clone $start)->setTime(12, 27, 35), // no diff, to test ...
+                (clone $start)->setTime(12, 27, 35), // ... that no rounding is applied
                 (clone $start)->setTime(12, 27, 35), // no diff, to test ...
                 (clone $start)->setTime(12, 27, 35), // ... that no rounding is applied
                 0
@@ -197,6 +219,8 @@ class DurationCalculatorTest extends TestCase
                 ],
                 (clone $start)->setTime(12, 27, 00), // no diff, to test ...
                 (clone $start)->setTime(12, 27, 00), // ... that no rounding is applied
+                (clone $start)->setTime(12, 27, 00), // no diff, to test ...
+                (clone $start)->setTime(12, 27, 00), // ... that no rounding is applied
                 0
             ],
             [
@@ -216,6 +240,8 @@ class DurationCalculatorTest extends TestCase
                         'mode' => 'default',
                     ],
                 ],
+                (clone $start)->setTime(12, 27, 35), // no diff, to test ...
+                (clone $start)->setTime(12, 27, 35), // ... that no rounding is applied
                 (clone $start)->setTime(12, 27, 35), // no diff, to test ...
                 (clone $start)->setTime(12, 27, 35), // ... that no rounding is applied
                 0

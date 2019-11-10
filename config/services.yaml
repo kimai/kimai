@@ -118,11 +118,17 @@ services:
     # TIMESHEET RECORD CALCULATOR
     # ================================================================================
 
-    App\Timesheet\Calculator\DurationCalculator:
-        arguments: ['%kimai.timesheet.rounding%']
+    App\Timesheet\RoundingService:
+        arguments:
+            $roundingModes: !tagged timesheet.rounding_mode
+            $rules: '%kimai.timesheet.rounding%'
 
     App\Timesheet\Calculator\RateCalculator:
         arguments: ['%kimai.timesheet.rates%']
+
+    App\Timesheet\TrackingModeService:
+        arguments: 
+            $modes: !tagged timesheet.tracking_mode
 
     # ================================================================================
     # SECURITY & VOTER

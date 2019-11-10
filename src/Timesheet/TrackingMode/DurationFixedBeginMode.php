@@ -14,16 +14,16 @@ use App\Entity\Timesheet;
 use App\Timesheet\UserDateTimeFactory;
 use Symfony\Component\HttpFoundation\Request;
 
-class DurationFixedBeginMode implements TrackingModeInterface
+final class DurationFixedBeginMode implements TrackingModeInterface
 {
     /**
      * @var UserDateTimeFactory
      */
-    protected $dateTime;
+    private $dateTime;
     /**
      * @var TimesheetConfiguration
      */
-    protected $configuration;
+    private $configuration;
 
     public function __construct(UserDateTimeFactory $dateTime, TimesheetConfiguration $configuration)
     {

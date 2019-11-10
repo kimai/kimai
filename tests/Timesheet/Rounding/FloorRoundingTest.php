@@ -31,6 +31,7 @@ class FloorRoundingTest extends TestCase
         $record->setDuration($record->getEnd()->getTimestamp() - $record->getBegin()->getTimestamp());
 
         $sut = new FloorRounding();
+        self::assertEquals('floor', $sut->getId());
         $sut->roundBegin($record, $roundBegin);
         $sut->roundEnd($record, $roundEnd);
         $record->setDuration($record->getEnd()->getTimestamp() - $record->getBegin()->getTimestamp());

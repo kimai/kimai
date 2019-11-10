@@ -33,4 +33,9 @@ interface RoundingInterface
      * @param int $minutes
      */
     public function roundDuration(Timesheet $record, $minutes);
+
+    /**
+     * @return string
+     */
+    public function getId(): string;
 }

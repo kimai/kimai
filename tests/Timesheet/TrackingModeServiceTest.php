@@ -9,11 +9,8 @@
 
 namespace App\Tests\Timesheet;
 
-use App\Configuration\TimesheetConfiguration;
-use App\Tests\Configuration\TestConfigLoader;
-use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
+use App\Tests\Mocks\TrackingModeServiceFactory;
 use App\Timesheet\TrackingMode\PunchInOutMode;
-use App\Timesheet\TrackingModeService;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
@@ -24,11 +21,7 @@ class TrackingModeServiceTest extends TestCase
 {
     public function testDefaultTrackingModesAreRegistered()
     {
-        $loader = new TestConfigLoader([]);
-        $dateTime = (new UserDateTimeFactoryFactory($this))->create();
-        $configuration = new TimesheetConfiguration($loader, ['mode' => 'punch']);
-
-        $sut = new TrackingModeService($dateTime, $configuration);
+        $sut = (new TrackingModeServiceFactory($this))->create('punch');
 
         $modes = $sut->getModes();
         self::assertGreaterThanOrEqual(4, $modes);
@@ -46,11 +39,7 @@ class TrackingModeServiceTest extends TestCase
 
     public function testGetActiveMode()
     {
-        $loader = new TestConfigLoader([]);
-        $dateTime = (new UserDateTimeFactoryFactory($this))->create();
-        $configuration = new TimesheetConfiguration($loader, ['mode' => 'punch']);
-
-        $sut = new TrackingModeService($dateTime, $configuration);
+        $sut = (new TrackingModeServiceFactory($this))->create('punch');
 
         self::assertInstanceOf(PunchInOutMode::class, $sut->getActiveMode());
     }
@@ -60,11 +49,7 @@ class TrackingModeServiceTest extends TestCase
         $this->expectException(ServiceNotFoundException::class);
         $this->expectExceptionMessage('You have requested a non-existent service "xxxxxx"');
 
-        $loader = new TestConfigLoader([]);
-        $dateTime = (new UserDateTimeFactoryFactory($this))->create();
-        $configuration = new TimesheetConfiguration($loader, ['mode' => 'xxxxxx']);
-
-        $sut = new TrackingModeService($dateTime, $configuration);
+        $sut = (new TrackingModeServiceFactory($this))->create('xxxxxx');
 
         $sut->getActiveMode();
     }
