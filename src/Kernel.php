@@ -24,6 +24,8 @@ use App\Invoice\RendererInterface as InvoiceRendererInterface;
 use App\Ldap\FormLoginLdapFactory;
 use App\Plugin\PluginInterface;
 use App\Timesheet\CalculatorInterface as TimesheetCalculator;
+use App\Timesheet\Rounding\RoundingInterface;
+use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Widget\WidgetInterface;
 use App\Widget\WidgetRendererInterface;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -52,6 +54,8 @@ class Kernel extends BaseKernel
     public const TAG_INVOICE_REPOSITORY = 'invoice.repository';
     public const TAG_TIMESHEET_CALCULATOR = 'timesheet.calculator';
     public const TAG_TIMESHEET_EXPORTER = 'timesheet.exporter';
+    public const TAG_TIMESHEET_TRACKING_MODE = 'timesheet.tracking_mode';
+    public const TAG_TIMESHEET_ROUNDING_MODE = 'timesheet.rounding_mode';
 
     public function getCacheDir()
     {
@@ -75,6 +79,8 @@ class Kernel extends BaseKernel
         $container->registerForAutoconfiguration(WidgetRendererInterface::class)->addTag(self::TAG_WIDGET_RENDERER);
         $container->registerForAutoconfiguration(WidgetInterface::class)->addTag(self::TAG_WIDGET);
         $container->registerForAutoconfiguration(TimesheetExportInterface::class)->addTag(self::TAG_TIMESHEET_EXPORTER);
+        $container->registerForAutoconfiguration(TrackingModeInterface::class)->addTag(self::TAG_TIMESHEET_TRACKING_MODE);
+        $container->registerForAutoconfiguration(RoundingInterface::class)->addTag(self::TAG_TIMESHEET_ROUNDING_MODE);
 
         /** @var SecurityExtension $extension */
         $extension = $container->getExtension('security');

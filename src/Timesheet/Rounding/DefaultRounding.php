@@ -11,8 +11,13 @@ namespace App\Timesheet\Rounding;
 
 use App\Entity\Timesheet;
 
-class DefaultRounding implements RoundingInterface
+final class DefaultRounding implements RoundingInterface
 {
+    public function getId(): string
+    {
+        return 'default';
+    }
+
     /**
      * @param Timesheet $record
      * @param int $minutes

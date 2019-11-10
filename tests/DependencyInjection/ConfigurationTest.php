@@ -220,7 +220,15 @@ class ConfigurationTest extends TestCase
                 'default_begin' => 'now',
                 'mode' => 'default',
                 'markdown_content' => false,
-                'rounding' => [],
+                'rounding' => [
+                    'default' => [
+                        'begin' => 1,
+                        'end' => 1,
+                        'duration' => 0,
+                        'mode' => 'default',
+                        'days' => ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+                    ]
+                ],
                 'rates' => [],
                 'active_entries' => [
                     'soft_limit' => 1,

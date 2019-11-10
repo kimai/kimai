@@ -31,6 +31,7 @@ class ClosestRoundingTest extends TestCase
         $record->setDuration($record->getEnd()->getTimestamp() - $record->getBegin()->getTimestamp());
 
         $sut = new ClosestRounding();
+        self::assertEquals('closest', $sut->getId());
         $sut->roundBegin($record, $roundBegin);
         $sut->roundEnd($record, $roundEnd);
         $record->setDuration($record->getEnd()->getTimestamp() - $record->getBegin()->getTimestamp());

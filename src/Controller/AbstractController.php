@@ -41,6 +41,14 @@ abstract class AbstractController extends BaseAbstractController implements Serv
     }
 
     /**
+     * @return User|null
+     */
+    protected function getUser()
+    {
+        return parent::getUser();
+    }
+
+    /**
      * Adds a "successful" flash message to the stack.
      *
      * @param string $translationKey
