@@ -116,6 +116,10 @@ class Kernel extends BaseKernel
                 continue;
             }
 
+            if (file_exists($bundleDir->getRealPath() . '/.disabled')) {
+                continue;
+            }
+
             $pluginClass = 'KimaiPlugin\\' . $bundleName . '\\' . $bundleName;
             if (!class_exists($pluginClass)) {
                 continue;
