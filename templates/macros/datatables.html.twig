@@ -193,27 +193,13 @@
     </div>
 </div>
 {% if multi_update_form is not null %}
-{% form_theme multi_update_form '@AdminLTE/layout/form-theme-horizontal.html.twig' %}
-<div class="box box-secondary" id="multi_update_form" style="display: none">
+<div id="multi_update_form" style="display: none">
     {{ form_start(multi_update_form) }}
-    <div class="box-header with-border">
-        <h3 class="box-title" data-title="{{ 'update_multiple'|trans }}">
-            {{ 'update_multiple'|trans }}
-        </h3>
-    </div>
-    {% if multi_update_form.children|length > 2 %}
-    <div class="box-body">
-        {{ form_widget(multi_update_form) }}
-    </div>
-    {% endif %}
-    <div class="box-footer">
-        {# the CSRF token is always one element and the hidden IDs the other one #}
-        {% if multi_update_form.children|length > 2 %}
-            <button type="submit" class="btn btn-primary">{{ 'action.save'|trans }}</button>
-        {% endif %}
-        {% if multi_update_form.vars.attr['data-delete'] is defined %}
-        <button data-href="{{ multi_update_form.vars.attr['data-delete'] }}" type="submit" class="confirmation-link btn btn-warning" data-question="confirm.delete">{{ 'action.delete'|trans }}</button>
-        {% endif %}
+    <label class="col-sm-1 control-label" for="multi_update_table_action">
+        <span class="pull-left"><i class="fas fa-level-up-alt fa-2x fa-rotate-90"></i></span>
+    </label>
+    <div class="col-sm-11">
+        {{ form_widget(multi_update_form.action) }}
     </div>
     {{ form_end(multi_update_form) }}
 </div>

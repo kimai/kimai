@@ -34,7 +34,7 @@ import KimaiFormSelect from "./plugins/KimaiFormSelect";
 import KimaiForm from "./plugins/KimaiForm";
 import KimaiDatePicker from "./plugins/KimaiDatePicker";
 import KimaiConfirmationLink from "./plugins/KimaiConfirmationLink";
-import KimaiMultiUpdateForm from "./plugins/KimaiMultiUpdateForm";
+import KimaiMultiUpdateTable from "./plugins/KimaiMultiUpdateTable";
 
 export default class KimaiLoader {
 
@@ -68,7 +68,7 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiAutocomplete('.js-autocomplete'));
         kimai.registerPlugin(new KimaiForm());
         kimai.registerPlugin(new KimaiThemeInitializer());
-        kimai.registerPlugin(new KimaiMultiUpdateForm());
+        kimai.registerPlugin(new KimaiMultiUpdateTable());
         //kimai.registerPlugin(new KimaiPauseRecord('li.messages-menu ul.menu li'));
 
         // notify all listeners that Kimai plugins can now be registered

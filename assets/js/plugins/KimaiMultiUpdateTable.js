@@ -12,7 +12,7 @@
 import KimaiPlugin from '../KimaiPlugin';
 import jQuery from "jquery";
 
-export default class KimaiMultiUpdateForm extends KimaiPlugin {
+export default class KimaiMultiUpdateTable extends KimaiPlugin {
 
     init() {
         const self = this;
@@ -26,6 +26,14 @@ export default class KimaiMultiUpdateForm extends KimaiPlugin {
                 self.toggleForm();
             })
         ;
+
+        jQuery('#multi_update_table_action')
+            .on('change', function(event) {
+                const selected = jQuery(this).val();
+                if (selected !== '') {
+                    jQuery('#multi_update_form form').attr('action', selected).submit();
+                }
+            });
     }
     
     toggleForm() 
@@ -37,13 +45,7 @@ export default class KimaiMultiUpdateForm extends KimaiPlugin {
             ids[i] = $(this).val();
         });
 
-        const header = jQuery('#multi_update_form h3');
-        header.text(header.attr('data-title').replace(/%counter%/, checked.length));
-        
-        const form = jQuery('#multi_update_form form');
-        const id = form.attr('name') + '_' + form.data('entities');
-        console.log(id);
-        jQuery('#'+id).val(ids.join(','));
+        jQuery('#multi_update_table_entities').val(ids.join(','));
 
         if (checked.length > 0) {
             jQuery('#multi_update_form').show();
