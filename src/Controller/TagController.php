@@ -12,8 +12,6 @@ namespace App\Controller;
 use App\Entity\Tag;
 use App\Form\MultiUpdate\MultiUpdateTable;
 use App\Form\MultiUpdate\MultiUpdateTableDTO;
-use App\Form\MultiUpdate\Tag as MultiUpdateTag;
-use App\Form\MultiUpdate\TagDTO;
 use App\Form\TagEditForm;
 use App\Form\Toolbar\TagToolbarForm;
 use App\Repository\Query\TagQuery;
@@ -152,7 +150,7 @@ class TagController extends AbstractController
     {
         $dto = new MultiUpdateTableDTO();
         $dto->addDelete($this->generateUrl('tags_multi_delete'));
-        
+
         return $this->createForm(MultiUpdateTable::class, $dto, [
             'action' => $this->generateUrl('tags'),
             'repository' => $repository,

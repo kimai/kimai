@@ -9,7 +9,6 @@
 
 namespace App\Form\MultiUpdate;
 
-use App\Repository\TagRepository;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
@@ -30,7 +29,7 @@ class MultiUpdateTable extends AbstractType
         $repository = $options['repository'];
         /** @var MultiUpdateTableDTO $dto */
         $dto = $options['data'];
-        
+
         $builder->add('entities', HiddenType::class, [
             'required' => false,
         ]);
@@ -40,7 +39,7 @@ class MultiUpdateTable extends AbstractType
                 function ($ids) {
                     return implode(',', $ids);
                 },
-                function ($ids) use ($repository){
+                function ($ids) use ($repository) {
                     if (empty($ids)) {
                         return [];
                     }
@@ -49,7 +48,7 @@ class MultiUpdateTable extends AbstractType
                 }
             )
         );
-        
+
         $builder->add('action', ChoiceType::class, [
             'mapped' => false,
             'required' => false,
@@ -65,7 +64,7 @@ class MultiUpdateTable extends AbstractType
         $resolver->setDefined(['repository']);
         $resolver->setAllowedTypes('repository', EntityRepository::class);
         $resolver->setRequired('repository');
-        
+
         $resolver->setDefaults([
             'data_class' => MultiUpdateTableDTO::class,
             'csrf_protection' => true,

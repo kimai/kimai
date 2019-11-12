@@ -54,21 +54,21 @@ class MultiUpdateTableDTO
     public function addAction(string $label, string $url): MultiUpdateTableDTO
     {
         $this->actions[$label] = $url;
-        
+
         return $this;
     }
 
     public function addDelete(string $url): MultiUpdateTableDTO
     {
         $this->actions['action.delete'] = $url;
-        
+
         return $this;
     }
 
     public function addUpdate(string $url): MultiUpdateTableDTO
     {
         $this->actions['action.update'] = $url;
-        
+
         return $this;
     }
 
@@ -80,7 +80,7 @@ class MultiUpdateTableDTO
     public function setAction(string $action): MultiUpdateTableDTO
     {
         $this->action = $action;
-        
+
         return $this;
     }
 }
