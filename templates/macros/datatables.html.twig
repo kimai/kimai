@@ -184,7 +184,7 @@
     {{ macro.data_table_header_options(name, columns, {'skipStripped': skipStripped, 'reloadEvent': reloadEvent}) }}
 {% endmacro %}
 
-{% macro data_table_footer(entries, route) %}
+{% macro data_table_footer(entries, route, multi_update_form) %}
                         </tbody>
                     </table>
                 </div>
@@ -192,6 +192,32 @@
         </div>
     </div>
 </div>
+{% if multi_update_form is not null %}
+{% form_theme multi_update_form '@AdminLTE/layout/form-theme-horizontal.html.twig' %}
+<div class="box box-secondary" id="multi_update_form" style="display: none">
+    {{ form_start(multi_update_form) }}
+    <div class="box-header with-border">
+        <h3 class="box-title" data-title="{{ 'update_multiple'|trans }}">
+            {{ 'update_multiple'|trans }}
+        </h3>
+    </div>
+    {% if multi_update_form.children|length > 2 %}
+    <div class="box-body">
+        {{ form_widget(multi_update_form) }}
+    </div>
+    {% endif %}
+    <div class="box-footer">
+        {# the CSRF token is always one element and the hidden IDs the other one #}
+        {% if multi_update_form.children|length > 2 %}
+            <button type="submit" class="btn btn-primary">{{ 'action.save'|trans }}</button>
+        {% endif %}
+        {% if multi_update_form.vars.attr['data-delete'] is defined %}
+        <button data-href="{{ multi_update_form.vars.attr['data-delete'] }}" type="submit" class="confirmation-link btn btn-warning" data-question="confirm.delete">{{ 'action.delete'|trans }}</button>
+        {% endif %}
+    </div>
+    {{ form_end(multi_update_form) }}
+</div>
+{% endif %}
 {% if route is not empty and entries is not null%}
 <div class="navigation text-center no-print">
     {{ pagerfanta(entries, 'twitter_bootstrap3_translated', { proximity: 1, routeName: route }) }}
@@ -206,4 +232,12 @@
         {% set metaField = metaField.merge(field) %}
         {{ widgets.form_type_value(metaField.type, metaField.value, entry) }}
     {% endif %}
+{% endmacro %}
+
+{% macro datatable_multiupdate_all() %}
+    <input type="checkbox" id="multi_update_all" class="multiupdater">
+{% endmacro %}
+
+{% macro datatable_multiupdate_row(id) %}
+    <input type="checkbox" name="id" value="{{ id }}" class="multi_update_single multiupdater">
 {% endmacro %}

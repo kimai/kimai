@@ -30,15 +30,30 @@ export default class KimaiConfirmationLink extends KimaiPlugin {
                 if (target.classList.contains(self.selector)) {
                     const attributes = target.dataset;
 
+                    // is this a link? 
                     let url = attributes['href'];
+                    // or another HTML element with a custom href 
                     if (!url) {
                         url = target.getAttribute('href');
+                    }
+                    
+                    // or is this a button?
+                    let form = null;
+                    if (target.type === 'submit' && target.form !== undefined) {
+                        form = target.form;
                     }
 
                     if (attributes.question !== undefined) {
                         self.getContainer().getPlugin('alert').question(attributes.question, function(value) {
                             if (value) {
-                                document.location = url;
+                                if (form === null) {
+                                    document.location = url;
+                                } else {
+                                    if (url !== null) {
+                                        form.action = url;
+                                    }
+                                    form.submit();
+                                }
                             }
                         });
                     }

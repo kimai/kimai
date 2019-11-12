@@ -37,6 +37,9 @@ table.dataTable {
         &.open-edit {
             cursor: pointer;
         }
+        th.multiCheckbox {
+            width: 15px;
+        }
     }
     td {
         /*
