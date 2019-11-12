@@ -29,25 +29,44 @@ export default class KimaiMultiUpdateTable extends KimaiPlugin {
 
         jQuery('#multi_update_table_action')
             .on('change', function(event) {
-                const selected = jQuery(this).val();
-                if (selected !== '') {
-                    jQuery('#multi_update_form form').attr('action', selected).submit();
+                const selectedItem = jQuery(this);
+                const selectedVal = selectedItem.val();
+
+                if (selectedVal === '') {
+                    return;
                 }
+                
+                const form = jQuery('#multi_update_form form');
+                const selectedText = selectedItem.text();
+                const ids = self.getSelectedIds();
+                const question = form.attr('data-question').replace(/%action%/, selectedText).replace(/%count%/, ids.length);
+                
+                self.getContainer().getPlugin('alert').question(question, function(value) {
+                    if (value) {
+                        form.attr('action', selectedVal).submit();
+                    } else {
+                        selectedItem.val('').trigger('change');
+                    }
+                });
             });
+    }
+    
+    getSelectedIds()
+    {
+        let ids = [];
+        jQuery('.multi_update_single:checked').each(function(i){
+            ids[i] = $(this).val();
+        });
+
+        return ids;
     }
     
     toggleForm() 
     {
-        const checked = jQuery('.multi_update_single:checked');
-
-        var ids = [];
-        checked.each(function(i){
-            ids[i] = $(this).val();
-        });
-
+        const ids = this.getSelectedIds();
         jQuery('#multi_update_table_entities').val(ids.join(','));
 
-        if (checked.length > 0) {
+        if (ids.length > 0) {
             jQuery('#multi_update_form').show();
         } else {
             jQuery('#multi_update_form').hide();

@@ -60,6 +60,10 @@
                 <source>my.profile</source>
                 <target>My profile</target>
             </trans-unit>
+            <trans-unit id="update_multiple">
+                <source>update_multiple</source>
+                <target>%action% %count% entries?</target>
+            </trans-unit>
 
             <!--
               Login / Security

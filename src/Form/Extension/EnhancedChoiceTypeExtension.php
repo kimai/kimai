@@ -63,11 +63,13 @@ class EnhancedChoiceTypeExtension extends AbstractTypeExtension
         if (!isset($view->vars['attr'])) {
             $view->vars['attr'] = [];
         }
+        
+        $extendedOptions = ['class' => 'selectpicker', 'data-width' => '100%'];
+        if (!$options['search']) {
+            $extendedOptions['data-minimum-results-for-search'] = 'Infinity';
+        }
 
-        $view->vars['attr'] = array_merge(
-            $view->vars['attr'],
-            ['class' => 'selectpicker', 'data-live-search' => true, 'data-width' => '100%']
-        );
+        $view->vars['attr'] = array_merge($view->vars['attr'], $extendedOptions);
     }
 
     /**
@@ -78,5 +80,9 @@ class EnhancedChoiceTypeExtension extends AbstractTypeExtension
         $resolver->setDefined(['selectpicker']);
         $resolver->setAllowedTypes('selectpicker', 'boolean');
         $resolver->setDefault('selectpicker', true);
+
+        $resolver->setDefined(['search']);
+        $resolver->setAllowedTypes('search', 'boolean');
+        $resolver->setDefault('search', true);
     }
 }
