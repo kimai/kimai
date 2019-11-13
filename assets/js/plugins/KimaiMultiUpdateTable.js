@@ -29,7 +29,7 @@ export default class KimaiMultiUpdateTable extends KimaiPlugin {
 
         jQuery('#multi_update_table_action')
             .on('change', function(event) {
-                const selectedItem = jQuery(this);
+                const selectedItem = jQuery('#multi_update_table_action option:selected');
                 const selectedVal = selectedItem.val();
 
                 if (selectedVal === '') {
