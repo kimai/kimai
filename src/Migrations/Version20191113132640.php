@@ -15,15 +15,15 @@ use App\Doctrine\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
- * Adds missing foreign keys on tag table.
+ * Fixes foreign keys on tag table.
  *
- * @version 1.2
+ * @version 1.6
  */
-final class Version20190729162655 extends AbstractMigration
+final class Version20191113132640 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Adds missing foreign keys on tag table';
+        return 'Fixes foreign keys on tag table';
     }
 
     protected function isSupportingForeignKeys(): bool
@@ -46,9 +46,12 @@ final class Version20190729162655 extends AbstractMigration
         $timesheetTags = $schema->getTable('kimai2_timesheet_tags');
 
         if (!$timesheetTags->hasForeignKey('FK_732EECA9ABDD46BE')) {
+            $timesheetTags->removeForeignKey('FK_732EECA9ABDD46BE');
             $timesheetTags->addForeignKeyConstraint('kimai2_timesheet', ['timesheet_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_732EECA9ABDD46BE');
         }
+
         if (!$timesheetTags->hasForeignKey('FK_732EECA9BAD26311')) {
+            $timesheetTags->removeForeignKey('FK_732EECA9BAD26311');
             $timesheetTags->addForeignKeyConstraint('kimai2_tags', ['tag_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_732EECA9BAD26311');
         }
     }
