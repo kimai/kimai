@@ -195,10 +195,10 @@
 {% if multi_update_form is not null %}
 <div id="multi_update_form" style="display: none">
     {{ form_start(multi_update_form, {'attr': {'data-question': 'update_multiple'|trans}}) }}
-    <label class="col-sm-1 control-label" for="multi_update_table_action">
+    <label class="col-sm-1 col-xs-2 control-label" for="multi_update_table_action">
         <span class="pull-left"><i class="fas fa-level-up-alt fa-2x fa-rotate-90"></i></span>
     </label>
-    <div class="col-sm-11">
+    <div class="col-sm-11 col-xs-10">
         {{ form_widget(multi_update_form.action) }}
     </div>
     {{ form_end(multi_update_form) }}
