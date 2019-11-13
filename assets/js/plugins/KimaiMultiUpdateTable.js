@@ -25,10 +25,7 @@ export default class KimaiMultiUpdateTable extends KimaiPlugin {
             .on('change', '.multi_update_single', function(event) {
                 self.toggleForm();
             })
-        ;
-
-        jQuery('#multi_update_table_action')
-            .on('change', function(event) {
+            .on('change', '#multi_update_table_action', function(event) {
                 const selectedItem = jQuery('#multi_update_table_action option:selected');
                 const selectedVal = selectedItem.val();
 
@@ -45,7 +42,7 @@ export default class KimaiMultiUpdateTable extends KimaiPlugin {
                     if (value) {
                         form.attr('action', selectedVal).submit();
                     } else {
-                        selectedItem.val('').trigger('change');
+                        jQuery('#multi_update_table_action').val('').trigger('change');
                     }
                 });
             });

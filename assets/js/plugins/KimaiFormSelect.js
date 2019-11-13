@@ -44,6 +44,7 @@ export default class KimaiFormSelect extends KimaiPlugin {
     updateOptions(selectIdentifier, data) {
         let select = jQuery(selectIdentifier);
         let emptyOption = jQuery(selectIdentifier + ' option[value=""]');
+        const selectedValue = select.val();
 
         select.find('option').remove().end().find('optgroup').remove().end();
 
@@ -71,6 +72,9 @@ export default class KimaiFormSelect extends KimaiPlugin {
 
         select.append(htmlOptions);
         select.append(emptyOptions);
+
+        // if available, re-select the previous selected option (mostly usable for global activities)
+        select.val(selectedValue);
 
         // if we don't trigger the change, the other selects won't be resetted
         select.trigger('change');
