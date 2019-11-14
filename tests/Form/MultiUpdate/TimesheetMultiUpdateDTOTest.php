@@ -34,6 +34,7 @@ class TimesheetMultiUpdateDTOTest extends TestCase
         self::assertNull($sut->getCustomer());
         self::assertEquals([], $sut->getTags());
         self::assertNull($sut->getUser());
+        self::assertFalse($sut->isReplaceTags());
     }
 
     public function testSetterAndGetter()
@@ -66,6 +67,9 @@ class TimesheetMultiUpdateDTOTest extends TestCase
 
         self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setTags(['foo', '0815']));
         self::assertEquals(['foo', '0815'], $sut->getTags());
+
+        self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setReplaceTags(true));
+        self::assertTrue($sut->isReplaceTags());
 
         $user = (new User())->setUsername('sdfsdfsd');
         self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setUser($user));

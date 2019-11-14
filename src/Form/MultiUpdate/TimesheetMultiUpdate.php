@@ -25,6 +25,7 @@ use App\Repository\TimesheetRepository;
 use Doctrine\Common\Collections\Criteria;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -161,6 +162,16 @@ class TimesheetMultiUpdate extends AbstractType
                 ]);
             }
         );
+
+        $builder->add('replaceTags', ChoiceType::class, [
+            'label' => false,
+            'required' => true,
+            'expanded' => true,
+            'choices' => [
+                'label.replaceTags' => true,
+                'label.appendTags' => false,
+            ]
+        ]);
 
         $builder->add('tags', TagsInputType::class, [
             'required' => false,

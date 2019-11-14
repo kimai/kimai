@@ -317,6 +317,12 @@ abstract class TimesheetAbstractController extends AbstractController
             /** @var Timesheet $timesheet */
             $execute = false;
             foreach ($dto->getEntities() as $timesheet) {
+                if ($dto->isReplaceTags()) {
+                    foreach ($timesheet->getTags() as $tag) {
+                        $timesheet->removeTag($tag);
+                    }
+                    $execute = true;
+                }
                 foreach ($dto->getTags() as $tag) {
                     $timesheet->addTag($tag);
                     $execute = true;

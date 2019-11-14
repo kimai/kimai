@@ -26,6 +26,10 @@ class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO
      */
     private $tags = [];
     /**
+     * @var bool
+     */
+    private $replaceTags = false;
+    /**
      * @var Customer|null
      */
     private $customer;
@@ -117,6 +121,18 @@ class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO
     public function setExported(bool $exported): TimesheetMultiUpdateDTO
     {
         $this->exported = $exported;
+
+        return $this;
+    }
+
+    public function isReplaceTags(): bool
+    {
+        return $this->replaceTags;
+    }
+
+    public function setReplaceTags(bool $replaceTags): TimesheetMultiUpdateDTO
+    {
+        $this->replaceTags = $replaceTags;
 
         return $this;
     }

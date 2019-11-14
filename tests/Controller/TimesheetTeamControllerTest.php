@@ -322,6 +322,8 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
             'timesheet_multi_update' => [
                 'user' => $newUser->getId(),
                 'exported' => true,
+                'replaceTags' => true,
+                'tags' => 'test, foo-bar, tralalala'
             ]
         ]);
 
@@ -330,8 +332,8 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         /** @var Timesheet[] $timesheets */
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
         self::assertCount(10, $timesheets);
-        $ids = [];
         foreach ($timesheets as $timesheet) {
+            self::assertCount(3, $timesheet->getTags());
             self::assertEquals($newUser->getId(), $timesheet->getUser()->getId());
             self::assertTrue($timesheet->isExported());
         }

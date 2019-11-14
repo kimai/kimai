@@ -408,6 +408,14 @@
                 <source>label.color</source>
                 <target>Color</target>
             </trans-unit>
+            <trans-unit id="label.replaceTags">
+                <source>label.replaceTags</source>
+                <target>Replace tags</target>
+            </trans-unit>
+            <trans-unit id="label.appendTags">
+                <source>label.appendTags</source>
+                <target>Append tags</target>
+            </trans-unit>
 
             <!--
               User profile
