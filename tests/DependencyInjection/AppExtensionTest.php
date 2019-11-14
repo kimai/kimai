@@ -375,5 +375,43 @@ class AppExtensionTest extends TestCase
         $this->extension->load([], $container = $this->getContainer());
     }
 
+    public function testWithBundleConfiguration()
+    {
+        $bundleConfig = [
+            'foo-bundle' => ['test'],
+        ];
+        $container = $this->getContainer();
+        $container->setParameter('kimai.bundles.config', $bundleConfig);
+
+        $this->extension->load($this->getMinConfig(), $container);
+        $config = $container->getParameter('kimai.config');
+        self::assertEquals(['test'], $config['foo-bundle']);
+    }
+
+    public function testWithBundleConfigurationFailsOnDuplicatedKey()
+    {
+        $this->expectException(Notice::class);
+        $this->expectExceptionMessage('Invalid bundle configuration "timesheet" found, skipping');
+
+        $bundleConfig = [
+            'timesheet' => ['test'],
+        ];
+        $container = $this->getContainer();
+        $container->setParameter('kimai.bundles.config', $bundleConfig);
+
+        $this->extension->load($this->getMinConfig(), $container);
+    }
+
+    public function testWithBundleConfigurationFailsOnNonArray()
+    {
+        $this->expectException(Notice::class);
+        $this->expectExceptionMessage('Invalid bundle configuration found, skipping all bundle configuration');
+
+        $container = $this->getContainer();
+        $container->setParameter('kimai.bundles.config', 'asdasd');
+
+        $this->extension->load($this->getMinConfig(), $container);
+    }
+
     // TODO test permissions
 }
