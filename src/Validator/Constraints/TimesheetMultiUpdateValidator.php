@@ -10,7 +10,7 @@
 namespace App\Validator\Constraints;
 
 use App\Configuration\TimesheetConfiguration;
-use App\Form\MultiUpdate\TimesheetDTO;
+use App\Form\MultiUpdate\TimesheetMultiUpdateDTO;
 use App\Validator\Constraints\TimesheetMultiUpdate as TimesheetConstraint;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraint;
@@ -40,7 +40,7 @@ class TimesheetMultiUpdateValidator extends ConstraintValidator
     }
 
     /**
-     * @param TimesheetDTO|mixed $value
+     * @param TimesheetMultiUpdateDTO|mixed $value
      * @param Constraint $constraint
      */
     public function validate($value, Constraint $constraint)
@@ -49,7 +49,7 @@ class TimesheetMultiUpdateValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\TimesheetMultiUpdate');
         }
 
-        if (!is_object($value) || !($value instanceof TimesheetDTO)) {
+        if (!is_object($value) || !($value instanceof TimesheetMultiUpdateDTO)) {
             return;
         }
 
@@ -57,10 +57,10 @@ class TimesheetMultiUpdateValidator extends ConstraintValidator
     }
 
     /**
-     * @param TimesheetDTO $dto
+     * @param TimesheetMultiUpdateDTO $dto
      * @param ExecutionContextInterface $context
      */
-    protected function validateActivityAndProject(TimesheetDTO $dto, ExecutionContextInterface $context)
+    protected function validateActivityAndProject(TimesheetMultiUpdateDTO $dto, ExecutionContextInterface $context)
     {
         $activity = $dto->getActivity();
         $project = $dto->getProject();

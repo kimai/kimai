@@ -18,8 +18,8 @@ use App\Event\TimesheetMetaDisplayEvent;
 use App\Export\ServiceExport;
 use App\Form\MultiUpdate\MultiUpdateTable;
 use App\Form\MultiUpdate\MultiUpdateTableDTO;
-use App\Form\MultiUpdate\Timesheet as MultiUpdateTimesheet;
-use App\Form\MultiUpdate\TimesheetDTO;
+use App\Form\MultiUpdate\TimesheetMultiUpdate;
+use App\Form\MultiUpdate\TimesheetMultiUpdateDTO;
 use App\Form\TimesheetEditForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\ActivityRepository;
@@ -286,7 +286,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
     protected function multiUpdate(Request $request, string $renderTemplate)
     {
-        $dto = new TimesheetDTO();
+        $dto = new TimesheetMultiUpdateDTO();
 
         // initial request from the listing posts a different form
         $form = $this->getMultiUpdateActionForm();
@@ -390,9 +390,9 @@ abstract class TimesheetAbstractController extends AbstractController
         $query->setUser($this->getUser());
     }
 
-    protected function getMultiUpdateForm(TimesheetDTO $multiUpdate): FormInterface
+    protected function getMultiUpdateForm(TimesheetMultiUpdateDTO $multiUpdate): FormInterface
     {
-        return  $this->createForm(MultiUpdateTimesheet::class, $multiUpdate, [
+        return  $this->createForm(TimesheetMultiUpdate::class, $multiUpdate, [
             'action' => $this->generateUrl($this->getMultiUpdateRoute(), []),
             'method' => 'POST',
             'include_exported' => $this->isGranted($this->getPermissionEditExport()),

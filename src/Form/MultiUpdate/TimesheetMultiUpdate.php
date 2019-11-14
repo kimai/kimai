@@ -31,7 +31,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class Timesheet extends AbstractType
+class TimesheetMultiUpdate extends AbstractType
 {
     /**
      * @var TimesheetRepository
@@ -59,7 +59,7 @@ class Timesheet extends AbstractType
         $customerCount = $this->customers->countCustomer(true);
 
         if (isset($options['data'])) {
-            /** @var TimesheetDTO $entry */
+            /** @var TimesheetMultiUpdateDTO $entry */
             $entry = $options['data'];
 
             $activity = $entry->getActivity();
@@ -210,7 +210,7 @@ class Timesheet extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => TimesheetDTO::class,
+            'data_class' => TimesheetMultiUpdateDTO::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'timesheet_multiupdate',

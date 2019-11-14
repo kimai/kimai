@@ -279,4 +279,61 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $em->clear(Timesheet::class);
         self::assertEquals(0, $em->getRepository(Timesheet::class)->count([]));
     }
+
+    public function testMultiUpdate()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $this->getUserByRole($em, User::ROLE_TEAMLEAD);
+        $fixture = new TimesheetFixtures();
+        $fixture->setAmount(10);
+        $fixture->setUser($user);
+        $this->importFixture($em, $fixture);
+
+        $this->assertAccessIsGranted($client, '/team/timesheet/');
+
+        $form = $client->getCrawler()->filter('form[name=multi_update_table]')->form();
+        $node = $form->getFormNode();
+        $node->setAttribute('action', $this->createUrl('/team/timesheet/multi-update'));
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var Timesheet[] $timesheets */
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        self::assertCount(10, $timesheets);
+        $ids = [];
+        foreach ($timesheets as $timesheet) {
+            self::assertFalse($timesheet->isExported());
+            self::assertEquals($user->getId(), $timesheet->getUser()->getId());
+            $ids[] = $timesheet->getId();
+        }
+
+        $client->submit($form, [
+            'multi_update_table' => [
+                'action' => $this->createUrl('/team/timesheet/multi-update'),
+                'entities' => implode(',', $ids)
+            ]
+        ]);
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $newUser = $this->getUserByRole($em, User::ROLE_USER);
+        $form = $client->getCrawler()->filter('form[name=timesheet_multi_update]')->form();
+        $client->submit($form, [
+            'timesheet_multi_update' => [
+                'user' => $newUser->getId(),
+                'exported' => true,
+            ]
+        ]);
+
+        $em->clear(Timesheet::class);
+
+        /** @var Timesheet[] $timesheets */
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        self::assertCount(10, $timesheets);
+        $ids = [];
+        foreach ($timesheets as $timesheet) {
+            self::assertEquals($newUser->getId(), $timesheet->getUser()->getId());
+            self::assertTrue($timesheet->isExported());
+        }
+    }
 }

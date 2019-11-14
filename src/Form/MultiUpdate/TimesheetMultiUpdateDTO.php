@@ -19,7 +19,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @App\Validator\Constraints\TimesheetMultiUpdate
  */
-class TimesheetDTO extends MultiUpdateTableDTO
+class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO
 {
     /**
      * @var Tag[]|ArrayCollection|iterable
@@ -51,7 +51,7 @@ class TimesheetDTO extends MultiUpdateTableDTO
         return $this->customer;
     }
 
-    public function setCustomer(Customer $customer): TimesheetDTO
+    public function setCustomer(Customer $customer): TimesheetMultiUpdateDTO
     {
         $this->customer = $customer;
 
@@ -63,7 +63,7 @@ class TimesheetDTO extends MultiUpdateTableDTO
         return $this->project;
     }
 
-    public function setProject(Project $project): TimesheetDTO
+    public function setProject(Project $project): TimesheetMultiUpdateDTO
     {
         $this->project = $project;
 
@@ -75,7 +75,7 @@ class TimesheetDTO extends MultiUpdateTableDTO
         return $this->activity;
     }
 
-    public function setActivity(Activity $activity): TimesheetDTO
+    public function setActivity(Activity $activity): TimesheetMultiUpdateDTO
     {
         $this->activity = $activity;
 
@@ -90,7 +90,7 @@ class TimesheetDTO extends MultiUpdateTableDTO
         return $this->tags;
     }
 
-    public function setTags(iterable $tags): TimesheetDTO
+    public function setTags(iterable $tags): TimesheetMultiUpdateDTO
     {
         $this->tags = $tags;
 
@@ -102,7 +102,7 @@ class TimesheetDTO extends MultiUpdateTableDTO
         return $this->user;
     }
 
-    public function setUser(User $user): TimesheetDTO
+    public function setUser(User $user): TimesheetMultiUpdateDTO
     {
         $this->user = $user;
 
@@ -114,7 +114,7 @@ class TimesheetDTO extends MultiUpdateTableDTO
         return $this->exported;
     }
 
-    public function setExported(bool $exported): TimesheetDTO
+    public function setExported(bool $exported): TimesheetMultiUpdateDTO
     {
         $this->exported = $exported;
 
