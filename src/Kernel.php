@@ -96,15 +96,25 @@ class Kernel extends BaseKernel
             }
         }
 
+        foreach ($this->getBundleDirectories() as $bundleDir) {
+            $bundleName = $bundleDir->getRelativePathname();
+            $pluginClass = 'KimaiPlugin\\' . $bundleName . '\\' . $bundleName;
+            yield new $pluginClass();
+        }
+    }
+
+    private function getBundleDirectories(): array
+    {
         $pluginsDir = $this->getProjectDir() . '/var/plugins';
         if (!file_exists($pluginsDir)) {
-            return;
+            return [];
         }
 
         if ($this->environment === 'test' && getenv('TEST_WITH_BUNDLES') === false) {
-            return;
+            return [];
         }
 
+        $directories = [];
         $finder = new Finder();
         $finder->ignoreUnreadableDirs()->directories()->name('*Bundle');
         /** @var SplFileInfo $bundleDir */
@@ -116,13 +126,19 @@ class Kernel extends BaseKernel
                 continue;
             }
 
+            if (file_exists($bundleDir->getRealPath() . '/.disabled')) {
+                continue;
+            }
+
             $pluginClass = 'KimaiPlugin\\' . $bundleName . '\\' . $bundleName;
             if (!class_exists($pluginClass)) {
                 continue;
             }
 
-            yield new $pluginClass();
+            $directories[] = $bundleDir;
         }
+
+        return $directories;
     }
 
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
@@ -187,17 +203,10 @@ class Kernel extends BaseKernel
         // load application routes
         $routes->import($confDir . '/routes' . self::CONFIG_EXTS, '/', 'glob');
 
-        if ($this->environment === 'test' && getenv('TEST_WITH_BUNDLES') === false) {
-            return;
+        /** @var SplFileInfo $bundleDir */
+        foreach ($this->getBundleDirectories() as $bundleDir) {
+            $routes->import($bundleDir->getRealPath() . '/Resources/config/routes' . self::CONFIG_EXTS, '/', 'glob');
         }
-
-        // load plugin routes
-        $pluginsDir = $this->getProjectDir() . '/var/plugins';
-        if (!file_exists($pluginsDir)) {
-            return;
-        }
-
-        $routes->import($pluginsDir . '/*Bundle/Resources/config/routes' . self::CONFIG_EXTS, '/', 'glob');
     }
 
     protected function configureFosUserRoutes(RouteCollectionBuilder $routes)
