@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+    {% set formEditTemplate = 'default/_form.html.twig' %}
+    {% set formOptions = {
+        'title': 'update_multiple'|trans({'%action%': 'action.edit'|trans, '%count%': dto.entities|length}),
+        'form': form,
+    } %}
+    {% embed formEditTemplate with formOptions %}
+    {% endembed %}
+
+{% endblock %}
