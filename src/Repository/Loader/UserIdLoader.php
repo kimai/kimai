@@ -48,6 +48,14 @@ final class UserIdLoader implements LoaderInterface
             ->getQuery()
             ->execute();
 
+        $qb = $em->createQueryBuilder();
+        $qb->select('PARTIAL u.{id}', 'preferences')
+            ->from(User::class, 'u')
+            ->leftJoin('u.preferences', 'preferences')
+            ->andWhere($qb->expr()->in('u.id', $ids))
+            ->getQuery()
+            ->execute();
+
         $teamIds = [];
         foreach ($users as $user) {
             foreach ($user->getTeams() as $team) {
