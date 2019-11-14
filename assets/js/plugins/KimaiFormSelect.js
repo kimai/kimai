@@ -24,6 +24,7 @@ export default class KimaiFormSelect extends KimaiPlugin {
     }
 
     activateSelectPicker(selector, container) {
+        const elementSelector = this.selector;
         let options = {};
         if (container !== undefined) {
             options = {
@@ -34,7 +35,13 @@ export default class KimaiFormSelect extends KimaiPlugin {
             language: this.getContainer().getConfiguration().get('locale'),
             theme: "bootstrap"
         }};
-        jQuery(selector + ' ' + this.selector).select2(options);
+        jQuery(selector + ' ' + elementSelector).select2(options);
+
+        jQuery('body').on('reset', 'form', function(event){
+            setTimeout(function() {
+                jQuery(event.target).find(elementSelector).trigger('change');
+            }, 10);
+        });
     }
     
     destroySelectPicker(selector) {
