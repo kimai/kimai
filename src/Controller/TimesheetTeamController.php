@@ -80,9 +80,32 @@ class TimesheetTeamController extends TimesheetAbstractController
         return $this->create($request, 'timesheet-team/edit.html.twig', $projectRepository, $activityRepository, $tagRepository);
     }
 
+    /**
+     * @Route(path="/multi-update", name="admin_timesheet_multi_update", methods={"POST"})
+     * @Security("is_granted('edit_other_timesheet')")
+     */
+    public function multiUpdateAction(Request $request)
+    {
+        return $this->multiUpdate($request, 'timesheet-team/multi-update.html.twig');
+    }
+
+    /**
+     * @Route(path="/multi-delete", name="admin_timesheet_multi_delete", methods={"POST"})
+     * @Security("is_granted('delete_other_timesheet')")
+     */
+    public function multiDeleteAction(Request $request)
+    {
+        return $this->multiDelete($request);
+    }
+
     protected function prepareQuery(TimesheetQuery $query)
     {
         $query->setCurrentUser($this->getUser());
+    }
+
+    protected function getPermissionEditExport(): string
+    {
+        return 'edit_export_other_timesheet';
     }
 
     protected function getCreateFormClassName(): string
@@ -113,6 +136,16 @@ class TimesheetTeamController extends TimesheetAbstractController
     protected function getCreateRoute(): string
     {
         return 'admin_timesheet_create';
+    }
+
+    protected function getMultiUpdateRoute(): string
+    {
+        return 'admin_timesheet_multi_update';
+    }
+
+    protected function getMultiDeleteRoute(): string
+    {
+        return 'admin_timesheet_multi_delete';
     }
 
     protected function canSeeStartEndTime(): bool

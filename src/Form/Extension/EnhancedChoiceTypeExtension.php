@@ -63,7 +63,7 @@ class EnhancedChoiceTypeExtension extends AbstractTypeExtension
         if (!isset($view->vars['attr'])) {
             $view->vars['attr'] = [];
         }
-        
+
         $extendedOptions = ['class' => 'selectpicker', 'data-width' => '100%'];
         if (!$options['search']) {
             $extendedOptions['data-minimum-results-for-search'] = 'Infinity';

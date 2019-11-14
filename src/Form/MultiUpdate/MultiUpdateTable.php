@@ -53,7 +53,7 @@ class MultiUpdateTable extends AbstractType
             'mapped' => false,
             'required' => false,
             'choices' => $dto->getActions(),
-            'search' => false, 
+            'search' => false,
         ]);
     }
 
