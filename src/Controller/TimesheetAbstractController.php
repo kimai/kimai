@@ -315,31 +315,39 @@ abstract class TimesheetAbstractController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var Timesheet $timesheet */
+            $execute = false;
             foreach ($dto->getEntities() as $timesheet) {
                 foreach ($dto->getTags() as $tag) {
                     $timesheet->addTag($tag);
+                    $execute = true;
                 }
                 if (null !== $dto->getActivity()) {
                     $timesheet->setActivity($dto->getActivity());
+                    $execute = true;
                 }
                 if (null !== $dto->getProject()) {
                     $timesheet->setProject($dto->getProject());
+                    $execute = true;
                 }
                 if (null !== $dto->getUser()) {
                     $timesheet->setUser($dto->getUser());
+                    $execute = true;
                 }
                 if (null !== $dto->isExported()) {
                     $timesheet->setExported($dto->isExported());
+                    $execute = true;
                 }
             }
 
-            try {
-                $this->repository->saveMultiple($dto->getEntities());
-                $this->flashSuccess('action.update.success');
+            if ($execute) {
+                try {
+                    $this->repository->saveMultiple($dto->getEntities());
+                    $this->flashSuccess('action.update.success');
 
-                return $this->redirectToRoute($this->getTimesheetRoute());
-            } catch (\Exception $ex) {
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                    return $this->redirectToRoute($this->getTimesheetRoute());
+                } catch (\Exception $ex) {
+                    $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                }
             }
         }
 
