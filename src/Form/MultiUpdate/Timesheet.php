@@ -9,7 +9,6 @@
 
 namespace App\Form\MultiUpdate;
 
-use App\Entity\Project;
 use App\Form\Type\ActivityType;
 use App\Form\Type\CustomerType;
 use App\Form\Type\ProjectType;
@@ -187,7 +186,7 @@ class Timesheet extends AbstractType
             new CallbackTransformer(
                 function ($timesheets) {
                     $ids = [];
-                    /** @var Timesheet $timesheet */
+                    /** @var \App\Entity\Timesheet $timesheet */
                     foreach ($timesheets as $timesheet) {
                         $ids[] = $timesheet->getId();
                     }

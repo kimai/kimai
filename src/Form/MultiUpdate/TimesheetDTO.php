@@ -22,7 +22,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class TimesheetDTO extends MultiUpdateTableDTO
 {
     /**
-     * @var Tag[]
+     * @var Tag[]|ArrayCollection|iterable
      */
     private $tags = [];
     /**
@@ -83,17 +83,13 @@ class TimesheetDTO extends MultiUpdateTableDTO
     }
 
     /**
-     * @return Tag[]|ArrayCollection
+     * @return Tag[]|ArrayCollection|iterable
      */
     public function getTags(): iterable
     {
         return $this->tags;
     }
 
-    /**
-     * @param Tag[]|ArrayCollection $tags
-     * @return TimesheetDTO
-     */
     public function setTags(iterable $tags): TimesheetDTO
     {
         $this->tags = $tags;
