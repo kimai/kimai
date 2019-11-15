@@ -28,23 +28,14 @@ class UserQuery extends VisibilityQuery
         ]);
     }
 
-    /**
-     * @return string|null
-     */
-    public function getRole()
+    public function getRole(): ?string
     {
         return $this->role;
     }
 
-    /**
-     * @param string|null $role
-     * @return UserQuery
-     */
-    public function setRole($role)
+    public function setRole(?string $role): UserQuery
     {
-        if (null === $role || false !== strpos($role, 'ROLE_')) {
-            $this->role = $role;
-        }
+        $this->role = $role;
 
         return $this;
     }

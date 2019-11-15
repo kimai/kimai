@@ -159,4 +159,25 @@ class TagRepository extends EntityRepository
 
         return $qb;
     }
+
+    /**
+     * @param Tag[] $tags
+     * @throws \Exception
+     */
+    public function multiDelete(iterable $tags): void
+    {
+        $em = $this->getEntityManager();
+        $em->beginTransaction();
+
+        try {
+            foreach ($tags as $tag) {
+                $em->remove($tag);
+            }
+            $em->flush();
+            $em->commit();
+        } catch (\Exception $ex) {
+            $em->rollback();
+            throw $ex;
+        }
+    }
 }

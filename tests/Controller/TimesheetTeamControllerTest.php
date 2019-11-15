@@ -240,4 +240,102 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertEquals('foo-bar', $timesheet->getDescription());
         $this->assertEquals($teamlead->getId(), $timesheet->getUser()->getId());
     }
+
+    public function testMultiDeleteAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $this->getUserByRole($em, User::ROLE_TEAMLEAD);
+        $fixture = new TimesheetFixtures();
+        $fixture->setAmount(10);
+        $fixture->setUser($user);
+        $this->importFixture($em, $fixture);
+
+        $this->assertAccessIsGranted($client, '/team/timesheet/');
+
+        $form = $client->getCrawler()->filter('form[name=multi_update_table]')->form();
+        $node = $form->getFormNode();
+        $node->setAttribute('action', $this->createUrl('/team/timesheet/multi-delete'));
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var Timesheet[] $timesheets */
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        self::assertCount(10, $timesheets);
+        $ids = [];
+        foreach ($timesheets as $timesheet) {
+            $ids[] = $timesheet->getId();
+        }
+
+        $client->submit($form, [
+            'multi_update_table' => [
+                'action' => $this->createUrl('/team/timesheet/multi-delete'),
+                'entities' => implode(',', $ids)
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/team/timesheet/'));
+        $client->followRedirect();
+
+        $em->clear(Timesheet::class);
+        self::assertEquals(0, $em->getRepository(Timesheet::class)->count([]));
+    }
+
+    public function testMultiUpdate()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $this->getUserByRole($em, User::ROLE_TEAMLEAD);
+        $fixture = new TimesheetFixtures();
+        $fixture->setAmount(10);
+        $fixture->setUser($user);
+        $this->importFixture($em, $fixture);
+
+        $this->assertAccessIsGranted($client, '/team/timesheet/');
+
+        $form = $client->getCrawler()->filter('form[name=multi_update_table]')->form();
+        $node = $form->getFormNode();
+        $node->setAttribute('action', $this->createUrl('/team/timesheet/multi-update'));
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var Timesheet[] $timesheets */
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        self::assertCount(10, $timesheets);
+        $ids = [];
+        foreach ($timesheets as $timesheet) {
+            self::assertFalse($timesheet->isExported());
+            self::assertEquals($user->getId(), $timesheet->getUser()->getId());
+            $ids[] = $timesheet->getId();
+        }
+
+        $client->submit($form, [
+            'multi_update_table' => [
+                'action' => $this->createUrl('/team/timesheet/multi-update'),
+                'entities' => implode(',', $ids)
+            ]
+        ]);
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $newUser = $this->getUserByRole($em, User::ROLE_USER);
+        $form = $client->getCrawler()->filter('form[name=timesheet_multi_update]')->form();
+        $client->submit($form, [
+            'timesheet_multi_update' => [
+                'user' => $newUser->getId(),
+                'exported' => true,
+                'replaceTags' => true,
+                'tags' => 'test, foo-bar, tralalala'
+            ]
+        ]);
+
+        $em->clear(Timesheet::class);
+
+        /** @var Timesheet[] $timesheets */
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        self::assertCount(10, $timesheets);
+        foreach ($timesheets as $timesheet) {
+            self::assertCount(3, $timesheet->getTags());
+            self::assertEquals($newUser->getId(), $timesheet->getUser()->getId());
+            self::assertTrue($timesheet->isExported());
+        }
+    }
 }

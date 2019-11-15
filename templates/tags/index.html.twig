@@ -15,6 +15,7 @@
     {% else %}
 
         {% set columns = {
+            'id': {'class': 'alwaysVisible multiCheckbox', 'orderBy': false, 'title': false, 'html_before': tables.datatable_multiupdate_all()},
             'name': '',
             'amount': '',
             'actions': 'actions alwaysVisible',
@@ -31,6 +32,7 @@
             {% endif %}
 
             <tr{% if manageAllowed %} class="modal-ajax-form open-edit" data-href="{{ path('tags_edit', {'id': tag.id}) }}"{% endif %}>
+                <td class="text-nowrap">{{ tables.datatable_multiupdate_row(tag.id) }}</td>
                 <td>{{ tag.name }}</td>
                 <td>{{ widgets.label(tag.amount, type) }}</td>
                 <td class="actions">
@@ -38,7 +40,7 @@
                 </td>
             </tr>
         {% endfor %}
-        {{ tables.data_table_footer(tags, 'tags_paginated') }}
+        {{ tables.data_table_footer(tags, 'tags_paginated', multiUpdateForm) }}
 
     {% endif %}
 

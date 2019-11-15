@@ -68,6 +68,27 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
+     * @param Timesheet[] $timesheets
+     * @throws \Exception
+     */
+    public function deleteMultiple(iterable $timesheets): void
+    {
+        $em = $this->getEntityManager();
+        $em->beginTransaction();
+
+        try {
+            foreach ($timesheets as $timesheet) {
+                $em->remove($timesheet);
+            }
+            $em->flush();
+            $em->commit();
+        } catch (\Exception $ex) {
+            $em->rollback();
+            throw $ex;
+        }
+    }
+
+    /**
      * @param Timesheet $timesheet
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
@@ -77,6 +98,27 @@ class TimesheetRepository extends EntityRepository
         $entityManager = $this->getEntityManager();
         $entityManager->persist($timesheet);
         $entityManager->flush();
+    }
+
+    /**
+     * @param Timesheet[] $timesheets
+     * @throws \Exception
+     */
+    public function saveMultiple(array $timesheets): void
+    {
+        $em = $this->getEntityManager();
+        $em->beginTransaction();
+
+        try {
+            foreach ($timesheets as $timesheet) {
+                $em->persist($timesheet);
+            }
+            $em->flush();
+            $em->commit();
+        } catch (\Exception $ex) {
+            $em->rollback();
+            throw $ex;
+        }
     }
 
     /**

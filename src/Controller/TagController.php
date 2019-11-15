@@ -10,12 +10,15 @@
 namespace App\Controller;
 
 use App\Entity\Tag;
+use App\Form\MultiUpdate\MultiUpdateTable;
+use App\Form\MultiUpdate\MultiUpdateTableDTO;
 use App\Form\TagEditForm;
 use App\Form\Toolbar\TagToolbarForm;
 use App\Repository\Query\TagQuery;
 use App\Repository\TagRepository;
 use Doctrine\ORM\ORMException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -54,6 +57,7 @@ class TagController extends AbstractController
             'tags' => $tags,
             'query' => $query,
             'toolbarForm' => $form->createView(),
+            'multiUpdateForm' => $this->getMultiUpdateForm($repository)->createView(),
         ]);
     }
 
@@ -116,6 +120,41 @@ class TagController extends AbstractController
         return $this->render('tags/edit.html.twig', [
             'tag' => $tag,
             'form' => $editForm->createView()
+        ]);
+    }
+
+    /**
+     * @Route(path="/multi-delete", name="tags_multi_delete", methods={"POST"})
+     * @Security("is_granted('delete_tag')")
+     */
+    public function multiDelete(TagRepository $repository, Request $request)
+    {
+        $form = $this->getMultiUpdateForm($repository);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                /** @var MultiUpdateTableDTO $dto */
+                $dto = $form->getData();
+                $repository->multiDelete($dto->getEntities());
+                $this->flashSuccess('action.delete.success');
+            } catch (\Exception $ex) {
+                $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
+            }
+        }
+
+        return $this->redirectToRoute('tags');
+    }
+
+    protected function getMultiUpdateForm(TagRepository $repository): FormInterface
+    {
+        $dto = new MultiUpdateTableDTO();
+        $dto->addDelete($this->generateUrl('tags_multi_delete'));
+
+        return $this->createForm(MultiUpdateTable::class, $dto, [
+            'action' => $this->generateUrl('tags'),
+            'repository' => $repository,
+            'method' => 'POST',
         ]);
     }
 
