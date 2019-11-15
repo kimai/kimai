@@ -64,3 +64,14 @@
     {% endif %}
     {%- endapply -%}
 {% endmacro %}
+
+{% macro timesheets_multi_update(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {} %}
+    {% set actions = actions|merge({'back': path('timesheet')}) %}
+    {% set actions = actions|merge({'help': {'url': 'timesheet.html'|docu_link, 'target': '_blank'}}) %}
+
+    {% set event = trigger('actions.timesheets_multi_update', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}

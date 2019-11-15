@@ -62,3 +62,14 @@
         {{ widgets.entity_actions(event.payload.actions) }}
     {% endif %}
 {% endmacro %}
+
+{% macro timesheets_team_multi_update(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {} %}
+    {% set actions = actions|merge({'back': path('admin_timesheet')}) %}
+    {% set actions = actions|merge({'help': {'url': 'timesheet.html'|docu_link, 'target': '_blank'}}) %}
+
+    {% set event = trigger('actions.timesheets_team_multi_update', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
+{% endmacro %}
