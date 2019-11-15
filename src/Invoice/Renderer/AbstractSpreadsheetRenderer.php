@@ -51,7 +51,7 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
         foreach (Worksheet::getInvalidCharacters() as $char) {
             $title = str_replace($char, ' ', $title);
         }
-        
+
         $worksheet->setTitle($title);
 
         $entryRow = 0;

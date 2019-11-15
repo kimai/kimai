@@ -89,7 +89,7 @@ trait RendererTestTrait
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
 
         $template = new InvoiceTemplate();
-        $template->setTitle('a test invoice template title');
+        $template->setTitle('a very *long* test invoice / template title with [special] character');
         $template->setVat(19);
 
         $project = new Project();
