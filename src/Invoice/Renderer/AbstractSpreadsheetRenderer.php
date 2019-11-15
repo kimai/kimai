@@ -46,7 +46,13 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
             $this->addTemplateRows($worksheet, $invoiceItemCount);
         }
 
-        $worksheet->setTitle($model->getTemplate()->getTitle());
+        // cleanup the title, PHP Office doesn't allow arbitrary strings
+        $title = substr($model->getTemplate()->getTitle(), 0, 31);
+        foreach (Worksheet::getInvalidCharacters() as $char) {
+            $title = str_replace($char, ' ', $title);
+        }
+        
+        $worksheet->setTitle($title);
 
         $entryRow = 0;
 
