@@ -21,7 +21,7 @@
 
     {% set tableName = 'invoice_template' %}
 
-    {{ tables.data_table_header(tableName, columns) }}
+    {{ tables.datatable_header(tableName, columns, null, {'reload': 'kimai.invoiceTemplateUpdate'}) }}
 
     {% for entry in entries %}
         <tr class="modal-ajax-form open-edit" data-href="{{ path('admin_invoice_template_edit', {'id' : entry.id}) }}">

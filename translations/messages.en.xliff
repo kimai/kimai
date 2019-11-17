@@ -551,6 +551,10 @@
                 <source>label.vat</source>
                 <target>Tax</target>
             </trans-unit>
+            <trans-unit id="label.vat_id">
+                <source>label.vat_id</source>
+                <target>VAT-ID</target>
+            </trans-unit>
             <trans-unit id="label.contact">
                 <source>label.contact</source>
                 <target>Contact</target>
