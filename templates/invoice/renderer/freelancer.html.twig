@@ -4,30 +4,18 @@
 
 {% block invoice %}
 
-{# You can overwrite these settings in your config/packages/local.yaml under the key "twig.globals.company" #}
-{% set company = company|default({
-    name: 'Kimai Inc.',
-    homepage: 'www.kimai.org',
-    email: 'kimai@example.com',
-    phone: '0123-4567890',
-    tax_number: 'YourTaxNumber',
-    signature: '/build/images/signature.png',
-    address: 'Kimai Inc.
-        Example road 42
-        D – 12345 City
-    ',
-    bank_account: '
-        Kimai Inc.
-        IBAN: DE00 0000 0000 0000 0000 00
-        BIC: XXXXXXXX (a bank name)
-    '
-}) %}
+{% set signature = null %}
+{# You can overwrite these settings in your config/packages/local.yaml under the key "twig.globals.company" - previously '/build/images/signature.png' #}
+{% set company = company|default({signature: null}) %}
+{% if company.signature is defined and company.signature is not empty %}
+    {% set signature = company.signature %}
+{% endif %}
 
-<div class="row" id="freelancer-invoice" style="page:invoiceFreelancer;">
+<div class="row" id="freelancer-invoice">
     <div class="col-xs-12">
         <header>
             <address>
-                <p contenteditable="true">{{ model.template.address }}</p>
+                <p contenteditable="true">{{ model.template.address|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}</p>
             </address>
         </header>
         <article class="address">
@@ -36,6 +24,10 @@
                 <p>
                     <strong>{{ model.customer.company|default(model.customer.name) }}</strong><br>
                     {{ model.customer.address|nl2br }}
+                    {% if model.customer.vatId is not empty %}
+                    <br>
+                    {{ 'label.vat_id'|trans }}: {{ model.customer.vatId }}
+                    {% endif %}
                 </p>
             </address>
             <table class="meta">
@@ -56,6 +48,14 @@
                         <th>{{ 'label.orderNumber'|trans }}</th>
                         <td contenteditable="true">
                             {{ model.query.project.orderNumber }}
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if model.template.vatId is not empty %}
+                    <tr>
+                        <th>{{ 'label.vat_id'|trans }}:</th>
+                        <td>
+                            {{ model.template.vatId }}
                         </td>
                     </tr>
                 {% endif %}
@@ -118,44 +118,44 @@
             </table>
         </article>
         {% if model.template.paymentTerms is not empty %}
-            <article class="footer">
+            <article class="paymentTerms">
                 <p contenteditable="true">
-                    {{ model.template.paymentTerms|trim|nl2br }}
+                    {{ model.template.paymentTerms|nl2br|md2html }}
                 </p>
-                {% if company.signature is defined %}
-                    <img src="{{ company.signature }}">
+                {% if signature is not empty %}
+                    <img src="{{ signature }}">
                 {% endif %}
             </article>
         {% endif %}
-        <footer>
-            <table>
-                <thead>
-                <tr>
-                    <th>{{ 'label.address'|trans }}</th>
-                    <th>{{ 'label.invoice_bank_account'|trans }}</th>
-                    <th>{{ 'label.contact'|trans }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td contenteditable="true">
-                        {{ company.address|nl2br }}
-                        {{ 'label.invoice_tax_number'|trans }} {{ company.tax_number }}
-                    </td>
-                    <td contenteditable="true">
-                        {{ company.bank_account|nl2br }}
-                    </td>
-                    <td contenteditable="true">
-                        {{ company.phone }}
-                        <br/>
-                        {{ company.email }}
-                        <br/>
-                        {{ company.homepage }}
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+        <footer class="footer">
+            <div class="row">
+                <div class="col-sm-4" contenteditable="true">
+                    <p>
+                        <strong>{{ 'label.address'|trans }}</strong>
+                    </p>
+                    <p>
+                        {{ model.template.address|nl2br }}
+                    </p>
+                </div>
+                <div class="col-sm-4 text-center" contenteditable="true">
+                    <p>
+                        <strong>{{ 'label.invoice_bank_account'|trans }}</strong>
+                    </p>
+                    <p>
+                        {{ model.template.paymentDetails|nl2br }}
+                    </p>
+                </div>
+                <div class="col-sm-4 text-right" contenteditable="true">
+                    <p>
+                        <strong>{{ 'label.contact'|trans }}</strong>
+                    </p>
+                    <p>
+                        {{ model.template.contact|nl2br }}
+                    </p>
+                </div>
+            </div>
         </footer>
     </div>
 </div>
+
 {% endblock %}

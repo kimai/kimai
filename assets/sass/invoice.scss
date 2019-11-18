@@ -5,301 +5,284 @@
  * file that was distributed with this source code.
  */
 
-.invoice {
-    margin: 0;
-    border: none;
-}
-
-@media (min-width: $screen-sm-min) {
+body.invoice_print {
+    background-color: #eee;
+    
     .invoice {
-        margin: 25px;
+        margin: 105px auto 30px auto;
+        padding: 50px 65px;
+        min-height: 297mm;
+        position: relative;
+        max-width: 210mm;
+        box-shadow: 0 0 20px rgba(80,80,80,0.7);
     }
-}
-
-.page-header-small{
-    font-size: 14px;
-}
-
-div.invoice-address {
-    margin-top: 30px;
-    margin-bottom: 30px;
-}
-
-table.invoice-records {}
-table.invoice-meta th {
-    padding-right: 40px;
-}
-table.invoice-sum th {
-    width: 70%;
-}
-table.invoice-sum th, table.invoice-sum td  {
-    text-align: right;
-}
-
-/* ================================ FREELANCER INVOICE ================================ */
-
-#freelancer-invoice {
-    font: 15px/1 $font-family-sans-serif;
-    box-sizing: border-box;
-
-    h1 {
-        font: bold 100% sans-serif;
-        letter-spacing: 0.5em;
-        text-align: center;
-        text-transform: uppercase;
+    
+    .page-header h3 {
+        border-color: #ddd;
     }
-
-    h2 {
-        font: bold 1.5em sans-serif;
-        margin-bottom: 1em;
+    
+    div.invoice-address {
+        margin-top: 30px;
+        margin-bottom: 30px;
     }
-
-    /* table */
-
-    table {
-        table-layout: fixed;
-        width: 100%;
+    
+    table.invoice-meta th {
+        padding-right: 40px;
     }
-
-    table {
-        border-collapse: separate;
-        border-spacing: 0;
+    table.invoice-sum th {
+        width: 70%;
     }
-
-    /* header */
-
-    header {
-    }
-
-    header:after {
-        clear: both;
-        content: "";
-        display: table;
-        font-size: 1em;
-    }
-
-    header address {
-        float: left;
-        font-style: normal;
-        line-height: 1.25;
-        margin: 0 1em 1em 0;
-        font-weight: bold;
-        font-size: 0.7em;
-    }
-
-    article address {
-        font-size: 1em;
-        float: left;
-        margin: 1em 0;
-    }
-
-    article.address {
-        margin-bottom: 1.5em;
-    }
-
-    article.footer {
-        margin-top: 60px;
-    }
-
-    /* article */
-
-    article, table.meta, table.inventory {
-        margin: 1em 0;
-    }
-
-    article:after {
-        clear: both;
-        content: "";
-        display: table;
-    }
-
-    article h1 {
-        clip: rect(0 0 0 0);
-        position: absolute;
-    }
-
-    article p {
-        margin-bottom: 20px;
-    }
-
-    /* table meta & balance */
-
-    table.meta:after, table.balance:after {
-        clear: both;
-        content: "";
-        display: table;
-    }
-
-    /* table meta */
-
-    table.meta {
-        float: right;
-        width: 50%;
-        font-size: 85%;
-
-        th {
-            text-align: right;
-            font-weight: normal;
-        }
-
-        td {
-            width: 120px;
-            text-align: right;
-        }
-    }
-
-    /* table balance */
-
-    table.balance {
-        float: right;
-        th {
-            text-align: right;
-            font-weight: normal;
-        }
-
-        td {
-            width: 140px;
-            text-align: right;
-        }
-
-        .total {
-            font-weight: bold;
-        }
-    }
-
-    /* table items */
-
-    table.inventory {
-        clear: both;
-        width: 100%;
-        margin-top: 2em;
-        border-bottom: 1px solid #000;
-    }
-
-    table.inventory th {
-        font-weight: bold;
-        border-width: 0 0 1px 0;
-        border-bottom: 1px solid #000;
-    }
-    table.inventory th,
-    table.inventory td {
-        padding: 5px;
-    }
-
-    table.inventory td:nth-child(1),
-    table.inventory th:nth-child(1) {
-        text-align: left;
-    }
-
-    table.inventory td:nth-child(2),
-    table.inventory th:nth-child(2) {
-        text-align: center;
-        width: 20%;
-    }
-
-    table.inventory td:nth-child(3),
-    table.inventory th:nth-child(3) {
-        text-align: center;
-        width: 20%;
-    }
-
-    table.inventory td:nth-child(4),
-    table.inventory th:nth-child(4) {
+    table.invoice-sum th, table.invoice-sum td  {
         text-align: right;
-        width: 20%;
+    }
+    
+    .invoice-items {
+        margin-top: 2em;
+        margin-bottom: 3em;
+    
+        .table {
+            thead th {
+                font-weight: bold;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 15px
+            }
+            tfoot {
+                border-top: 1px solid #ddd;
+                
+                tr:first-child th,
+                tr:first-child td {
+                    padding-top: 15px
+                }
+                tr {
+                    th,td {
+                        border:none;
+                        padding: 4px 8px;
+                    }
+                }
+            }
+        }
+    
     }
 
-    /* footer */
-
-    footer {
+    .footer {
+        border-top: 1px solid #ccc;
         margin-top: 50px;
-    }
-
-    footer table {
-        border-top: 1px solid #000;
         font-size: 0.8em;
-        padding-top: 5px;
+        padding-top: 10px;
+        width: 100%;
     }
 
-    footer th {
-        text-align: left;
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
-
-    footer table th:nth-child(1) {
-        width: 32%;
-    }
-
-    footer table th:nth-child(3) {
-        width: 28%;
-    }
-
-    footer td {
-        text-align: left;
-        vertical-align: bottom;
-    }
-
-    /* aside */
-
-    aside {
-        position: absolute;
-        top: 10in;
-        width: 7.5in;
-    }
-
-    aside h1 {
-        border: none;
-        border-width: 0 0 1px;
-        margin: 0 0 1em;
-    }
-
-    aside h1 {
-        border-color: #999;
-        border-bottom-style: solid;
-    }
-
-    aside p {
-        font-size: 85%;
-    }
-
-    aside div {
-        margin-top: 15px;
-    }
-
-    aside div p {
-        line-height: 1.4;
-    }
-
-    aside p span {
-        width: 130px;
-        font-weight: bold;
-        display: inline-block;
-    }
-}
-
-@media print {
-    * {
-        -webkit-print-color-adjust: exact;
-    }
-    body, .wrapper, #freelancer-invoice {
-        margin: 0;
-        padding: 0;
-    }
-
+    /* ================================ FREELANCER INVOICE ================================ */
+    
     #freelancer-invoice {
-        margin: 1em 2em;
-
-        span:empty {
-            display: none;
+        
+        box-sizing: border-box;
+    
+        h1 {
+            font: bold 100% sans-serif;
+            letter-spacing: 0.5em;
+            text-align: center;
+            text-transform: uppercase;
+        }
+    
+        h2 {
+            font: bold 1.5em sans-serif;
+            margin-bottom: 1em;
+        }
+    
+        /* table */
+    
+        table {
+            table-layout: fixed;
+            width: 100%;
+        }
+    
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+    
+        /* header */
+    
+        header {
+            &:after {
+                clear: both;
+                content: "";
+                display: table;
+                font-size: 1em;
+            }
+    
+            address {
+                float: left;
+                font-style: normal;
+                line-height: 1.25;
+                margin: 0 1em 1em 0;
+                font-size: 0.7em;
+            }
+        }
+    
+        article address {
+            font-size: 1em;
+            float: left;
+            margin: 1em 0;
+        }
+    
+        article.address {
+            margin-bottom: 1.5em;
+        }
+    
+        /* article */
+    
+        article, table.meta, table.inventory {
+            margin: 1em 0;
+        }
+    
+        article:after {
+            clear: both;
+            content: "";
+            display: table;
+        }
+    
+        article h1 {
+            clip: rect(0 0 0 0);
+            position: absolute;
+        }
+    
+        article p {
+            margin-bottom: 20px;
+        }
+    
+        /* table meta & balance */
+    
+        table.meta:after, table.balance:after {
+            clear: both;
+            content: "";
+            display: table;
+        }
+    
+        /* table meta */
+    
+        table.meta {
+            float: right;
+            width: 50%;
+            font-size: 85%;
+    
+            th {
+                text-align: right;
+                font-weight: normal;
+            }
+    
+            td {
+                width: 120px;
+                text-align: right;
+            }
+        }
+    
+        /* table balance */
+    
+        table.balance {
+            float: right;
+            th {
+                text-align: right;
+                font-weight: normal;
+            }
+    
+            td {
+                width: 140px;
+                text-align: right;
+                line-height: 22px;
+            }
+    
+            .total {
+                font-weight: bold;
+            }
+        }
+    
+        /* table items */
+    
+        table.inventory {
+            clear: both;
+            width: 100%;
+            margin-top: 2em;
+            border-bottom: 1px solid #000;
+        }
+    
+        table.inventory th,
+        table.inventory td {
+            padding: 5px;
+        }
+    
+        table.inventory thead th {
+            font-weight: bold;
+            border-width: 0 0 1px 0;
+            border-bottom: 1px solid #000;
+            padding-bottom: 15px
+        }
+    
+        table.inventory tbody tr:first-child td {
+            padding-top: 15px
+        }
+    
+        table.inventory tbody tr:last-child td {
+            padding-bottom: 15px
+        }
+    
+        table.inventory td:nth-child(1),
+        table.inventory th:nth-child(1) {
+            text-align: left;
+        }
+    
+        table.inventory td:nth-child(2),
+        table.inventory th:nth-child(2) {
+            text-align: center;
+            width: 20%;
+        }
+    
+        table.inventory td:nth-child(3),
+        table.inventory th:nth-child(3) {
+            text-align: center;
+            width: 20%;
+        }
+    
+        table.inventory td:nth-child(4),
+        table.inventory th:nth-child(4) {
+            text-align: right;
+            width: 20%;
         }
 
-        .add, .cut {
-            display: none;
+        .footer {
+            border-color: #000;
         }
     }
 
-    .invoice {
-        width: unset;
+    /* ================================ PRINTING RULES ================================ */
+
+    @media print {
+        * {
+            -webkit-print-color-adjust: exact;
+        }
+        body, .wrapper {
+            margin: 0;
+            padding: 0;
+            background-color: white;
+        }
+        #freelancer-invoice {
+            span:empty {
+                display: none;
+            }
+            .add, .cut {
+                display: none;
+            }
+        }
+        .invoice {
+            margin: 1em 2em;
+            font-size: 90%;
+            width: unset;
+            padding: 0;
+            min-height: unset;
+            position: unset;
+            max-width: unset;
+            box-shadow: unset;
+        }
     }
 }

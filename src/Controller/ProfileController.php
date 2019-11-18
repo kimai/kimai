@@ -302,10 +302,6 @@ class ProfileController extends AbstractController
 
     private function createPreferencesForm(User $user): FormInterface
     {
-        // we need to prepare the user preferences, which is done via an EventSubscriber
-        $event = new PrepareUserEvent($user);
-        $this->dispatcher->dispatch($event);
-
         return $this->createForm(
             UserPreferencesForm::class,
             $user,

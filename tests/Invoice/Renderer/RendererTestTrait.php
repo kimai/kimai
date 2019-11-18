@@ -47,10 +47,16 @@ trait RendererTestTrait
      * @param string $filename
      * @return InvoiceDocument
      */
-    protected function getInvoiceDocument(string $filename)
+    protected function getInvoiceDocument(string $filename, bool $testOnly = false)
     {
+        if (!$testOnly) {
+            return new InvoiceDocument(
+                new \SplFileInfo($this->getInvoiceTemplatePath() . $filename)
+            );
+        }
+
         return new InvoiceDocument(
-            new \SplFileInfo($this->getInvoiceTemplatePath() . $filename)
+            new \SplFileInfo(__DIR__ . '/../templates/' . $filename)
         );
     }
 

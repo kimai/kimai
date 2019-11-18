@@ -10,6 +10,8 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 ## [1.6](https://github.com/kevinpapst/kimai2/releases/tag/1.6)
 
+- Moved CSV, ODS and XSLX invoice templates to [another repository](https://github.com/Keleo/kimai2-invoice-templates) - if you use them, add them manually (see [invoice documentation](https://www.kimai.org/documentation/invoices.html))
+- Added new invoice fields (VAT, bank account) and customer fields (VAT), check if you want to update your settings 
 - New functionality to manage permissions via Admin UI were added. Please move your permission settings from [local.yaml to your database](https://www.kimai.org/documentation/permissions.html)
 - New database tables were created, don't forget to [run the migrations](https://www.kimai.org/documentation/updates.html)
 
