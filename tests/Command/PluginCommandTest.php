@@ -29,11 +29,11 @@ class PluginCommandTest extends KernelTestCase
 
     public function testWithPlugins()
     {
-        $plugin1 = $this->getMockBuilder(PluginInterface::class)->setMethods(['getName', 'getPath'])->getMock();
+        $plugin1 = $this->getMockBuilder(PluginInterface::class)->onlyMethods(['getName', 'getPath'])->getMock();
         $plugin1->expects($this->exactly(3))->method('getName')->willReturn('Test-Bundle');
         $plugin1->expects($this->once())->method('getPath')->willReturn(__DIR__);
 
-        $plugin2 = $this->getMockBuilder(PluginInterface::class)->setMethods(['getName', 'getPath'])->getMock();
+        $plugin2 = $this->getMockBuilder(PluginInterface::class)->onlyMethods(['getName', 'getPath'])->getMock();
         $plugin2->expects($this->exactly(3))->method('getName')->willReturn('Another one');
         $plugin2->expects($this->once())->method('getPath')->willReturn('BundleDirectory');
 

@@ -6915,10 +6915,10 @@ svgo@^1.0.0:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-sweetalert2@^8.11.7:
-  version "8.14.1"
-  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-8.14.1.tgz#591bb63056198f28c7118dde105ba4ae7a24e612"
-  integrity sha512-5kL0iJYG2LP62xPqPuwDwpDWeTKD4AEvV7e5OM2q794F3ko/yFyPHzOGjnRGa3SqkS8U9syt5OvZyLZ27nGMog==
+sweetalert2@^9.3:
+  version "9.3.4"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-9.3.4.tgz#2fc1fcd8538ea6613cbc80bc49e6d13f1b0150f6"
+  integrity sha512-nyW+SAZUkiKpbKSDE33J9nF5UQnc7IGC1eDHeW80HkhsggvkmQN0Clq7PHXb1roLkBLJryb2evVLDc9jZmptRQ==
 
 syntax-error@^1.1.1:
   version "1.4.0"

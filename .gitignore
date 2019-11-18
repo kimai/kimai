@@ -5,7 +5,9 @@
 /bin/*
 !bin/console
 /config/packages/local.yaml
+/config/packages/*-local.yaml
 /config/packages/*/local.yaml
+/config/packages/*/*-local.yaml
 
 public/avatars/*.png
 
@@ -20,6 +22,8 @@ templates/invoice/renderer/.~lock*
 
 /var/invoices/*
 
+/var/packages/*
+!var/packages/.gitkeep
 /var/plugins/*
 !var/plugins/.gitkeep
 

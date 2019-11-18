@@ -3,6 +3,10 @@
 {% extends 'invoice/layout.html.twig' %}
 
 {% block invoice %}
+    {% set showUserColumn = true %}
+    {% if query.user %}
+        {% set showUserColumn = false %}
+    {% endif %}
 
     <div class="row">
         <div class="col-xs-12">
@@ -10,16 +14,20 @@
                 <span contenteditable="true">
                     {% if query.begin is not empty and query.end is not empty %}
                         {% if query.begin|date('m') != query.end|date('m') or query.begin|date('Y') != query.end|date('Y') %}
-                            {{ query.begin|date_short }} - {{ query.end|date_short }}:
+                            {{ query.begin|date_short }} - {{ query.end|date_short }}
                         {% elseif query.end is not empty %}
-                            {{ query.end|month_name|trans }} {{ query.end|date('Y') }}:
+                            {{ query.end|month_name|trans }} {{ query.end|date('Y') }}
                         {% elseif query.begin is not empty %}
-                            {{ query.begin|month_name|trans }} {{ query.begin|date('Y') }}:
+                            {{ query.begin|month_name|trans }} {{ query.begin|date('Y') }}
                         {% endif %}
                     {% endif %}
-                    {{ widgets.username(query.user) }}
                 </span>
             </h2>
+            {% if not showUserColumn %}
+                <p>
+                {{ 'label.user'|trans }}: {{ widgets.username(query.user) }}
+                </p>
+            {% endif %}
         </div>
     </div>
 
@@ -29,6 +37,9 @@
                 <thead>
                 <tr>
                     <th>{{ 'label.date'|trans }}</th>
+                    {% if showUserColumn %}
+                        <th>{{ 'label.username'|trans }}</th>
+                    {% endif %}
                     <th>{{ 'label.description'|trans }}</th>
                     {% for field in metaColumns %}
                         <th>{{ field.label|trans }}</th>
@@ -42,11 +53,14 @@
                     {% set timeWorked = timeWorked + entry.duration %}
                     <tr>
                         <td class="text-nowrap">{{ entry.begin|date_short }}</td>
+                        {% if showUserColumn %}
+                            <td>{{ widgets.username(entry.user) }}</td>
+                        {% endif %}
                         <td>
                             {% if entry.description is not empty %}
-                            <div>
-                                {{ entry.description|escape|desc2html }}
-                            </div>
+                                <div>
+                                    {{ entry.description|escape|desc2html }}
+                                </div>
                             {% endif %}
                             <span class="small">
                                 {{ 'label.activity'|trans }}: {{ entry.activity.name }} |
@@ -64,6 +78,9 @@
                 <tfoot>
                 <tr>
                     <th></th>
+                    {% if showUserColumn %}
+                        <th></th>
+                    {% endif %}
                     {% for field in metaColumns %}
                         <th></th>
                     {% endfor %}

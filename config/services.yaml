@@ -74,9 +74,6 @@ services:
     App\Plugin\PluginManager:
         arguments: [!tagged kimai.plugin]
 
-    App\Export\ServiceExport:
-        arguments: [!tagged export.renderer]
-
     App\Widget\WidgetService:
         arguments:
             $renderer: !tagged widget.renderer
@@ -121,18 +118,25 @@ services:
     # TIMESHEET RECORD CALCULATOR
     # ================================================================================
 
-    App\Timesheet\Calculator\DurationCalculator:
-        arguments: ['%kimai.timesheet.rounding%']
+    App\Timesheet\RoundingService:
+        arguments:
+            $roundingModes: !tagged timesheet.rounding_mode
+            $rules: '%kimai.timesheet.rounding%'
 
     App\Timesheet\Calculator\RateCalculator:
         arguments: ['%kimai.timesheet.rates%']
+
+    App\Timesheet\TrackingModeService:
+        arguments: 
+            $modes: !tagged timesheet.tracking_mode
 
     # ================================================================================
     # SECURITY & VOTER
     # ================================================================================
 
     App\Security\RoleService:
-        arguments: ['%security.role_hierarchy.roles%']
+        arguments:
+            $roles: '%security.role_hierarchy.roles%'
 
     App\Security\RolePermissionManager:
         arguments:
@@ -195,6 +199,16 @@ services:
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Configuration']
 
+    App\Repository\RoleRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\Role']
+
+    App\Repository\RolePermissionRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\RolePermission']
+    
     App\Repository\InvoiceDocumentRepository:
         class: App\Repository\InvoiceDocumentRepository
         arguments: ['%kimai.invoice.documents%']

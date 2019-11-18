@@ -11,10 +11,12 @@ namespace App;
 
 use App\DependencyInjection\AppExtension;
 use App\DependencyInjection\Compiler\DoctrineCompilerPass;
+use App\DependencyInjection\Compiler\ExportServiceCompilerPass;
 use App\DependencyInjection\Compiler\InvoiceServiceCompilerPass;
 use App\DependencyInjection\Compiler\TwigContextCompilerPass;
 use App\DependencyInjection\Compiler\WidgetCompilerPass;
 use App\Export\RendererInterface as ExportRendererInterface;
+use App\Export\TimesheetExportInterface;
 use App\Invoice\CalculatorInterface as InvoiceCalculator;
 use App\Invoice\InvoiceItemRepositoryInterface;
 use App\Invoice\NumberGeneratorInterface;
@@ -22,6 +24,8 @@ use App\Invoice\RendererInterface as InvoiceRendererInterface;
 use App\Ldap\FormLoginLdapFactory;
 use App\Plugin\PluginInterface;
 use App\Timesheet\CalculatorInterface as TimesheetCalculator;
+use App\Timesheet\Rounding\RoundingInterface;
+use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Widget\WidgetInterface;
 use App\Widget\WidgetRendererInterface;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -49,6 +53,9 @@ class Kernel extends BaseKernel
     public const TAG_INVOICE_CALCULATOR = 'invoice.calculator';
     public const TAG_INVOICE_REPOSITORY = 'invoice.repository';
     public const TAG_TIMESHEET_CALCULATOR = 'timesheet.calculator';
+    public const TAG_TIMESHEET_EXPORTER = 'timesheet.exporter';
+    public const TAG_TIMESHEET_TRACKING_MODE = 'timesheet.tracking_mode';
+    public const TAG_TIMESHEET_ROUNDING_MODE = 'timesheet.rounding_mode';
 
     public function getCacheDir()
     {
@@ -71,6 +78,9 @@ class Kernel extends BaseKernel
         $container->registerForAutoconfiguration(PluginInterface::class)->addTag(self::TAG_PLUGIN);
         $container->registerForAutoconfiguration(WidgetRendererInterface::class)->addTag(self::TAG_WIDGET_RENDERER);
         $container->registerForAutoconfiguration(WidgetInterface::class)->addTag(self::TAG_WIDGET);
+        $container->registerForAutoconfiguration(TimesheetExportInterface::class)->addTag(self::TAG_TIMESHEET_EXPORTER);
+        $container->registerForAutoconfiguration(TrackingModeInterface::class)->addTag(self::TAG_TIMESHEET_TRACKING_MODE);
+        $container->registerForAutoconfiguration(RoundingInterface::class)->addTag(self::TAG_TIMESHEET_ROUNDING_MODE);
 
         /** @var SecurityExtension $extension */
         $extension = $container->getExtension('security');
@@ -86,11 +96,25 @@ class Kernel extends BaseKernel
             }
         }
 
+        foreach ($this->getBundleDirectories() as $bundleDir) {
+            $bundleName = $bundleDir->getRelativePathname();
+            $pluginClass = 'KimaiPlugin\\' . $bundleName . '\\' . $bundleName;
+            yield new $pluginClass();
+        }
+    }
+
+    private function getBundleDirectories(): array
+    {
         $pluginsDir = $this->getProjectDir() . '/var/plugins';
         if (!file_exists($pluginsDir)) {
-            return;
+            return [];
         }
 
+        if ($this->environment === 'test' && getenv('TEST_WITH_BUNDLES') === false) {
+            return [];
+        }
+
+        $directories = [];
         $finder = new Finder();
         $finder->ignoreUnreadableDirs()->directories()->name('*Bundle');
         /** @var SplFileInfo $bundleDir */
@@ -102,13 +126,19 @@ class Kernel extends BaseKernel
                 continue;
             }
 
+            if (file_exists($bundleDir->getRealPath() . '/.disabled')) {
+                continue;
+            }
+
             $pluginClass = 'KimaiPlugin\\' . $bundleName . '\\' . $bundleName;
             if (!class_exists($pluginClass)) {
                 continue;
             }
 
-            yield new $pluginClass();
+            $directories[] = $bundleDir;
         }
+
+        return $directories;
     }
 
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
@@ -149,6 +179,7 @@ class Kernel extends BaseKernel
         $container->addCompilerPass(new DoctrineCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new TwigContextCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new InvoiceServiceCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
+        $container->addCompilerPass(new ExportServiceCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new WidgetCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
     }
 
@@ -172,13 +203,10 @@ class Kernel extends BaseKernel
         // load application routes
         $routes->import($confDir . '/routes' . self::CONFIG_EXTS, '/', 'glob');
 
-        // load plugin routes
-        $pluginsDir = $this->getProjectDir() . '/var/plugins';
-        if (!file_exists($pluginsDir)) {
-            return;
+        /** @var SplFileInfo $bundleDir */
+        foreach ($this->getBundleDirectories() as $bundleDir) {
+            $routes->import($bundleDir->getRealPath() . '/Resources/config/routes' . self::CONFIG_EXTS, '/', 'glob');
         }
-
-        $routes->import($pluginsDir . '/*Bundle/Resources/config/routes' . self::CONFIG_EXTS, '/', 'glob');
     }
 
     protected function configureFosUserRoutes(RouteCollectionBuilder $routes)

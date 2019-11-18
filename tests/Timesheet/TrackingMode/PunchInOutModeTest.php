@@ -10,6 +10,7 @@
 namespace App\Tests\Timesheet\TrackingMode;
 
 use App\Entity\Timesheet;
+use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
 use App\Timesheet\TrackingMode\PunchInOutMode;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +22,8 @@ class PunchInOutModeTest extends TestCase
 {
     public function testDefaultValues()
     {
-        $sut = new PunchInOutMode();
+        $dateTime = (new UserDateTimeFactoryFactory($this))->create();
+        $sut = new PunchInOutMode($dateTime);
 
         self::assertFalse($sut->canEditBegin());
         self::assertFalse($sut->canEditEnd());
@@ -33,13 +35,25 @@ class PunchInOutModeTest extends TestCase
 
     public function testCreate()
     {
+        $startingTime = new \DateTime('22:54');
         $timesheet = new Timesheet();
-        $timesheet->setBegin(new \DateTime('22:54'));
+        $timesheet->setBegin($startingTime);
         $request = new Request();
-        $timesheetNew = clone $timesheet;
 
-        $sut = new PunchInOutMode();
+        $dateTime = (new UserDateTimeFactoryFactory($this))->create();
+        $sut = new PunchInOutMode($dateTime);
         $sut->create($timesheet, $request);
-        self::assertEquals($timesheet, $timesheetNew);
+        self::assertEquals($timesheet->getBegin(), $startingTime);
+    }
+
+    public function testCreateWithoutBegin()
+    {
+        $timesheet = new Timesheet();
+        $request = new Request();
+
+        $dateTime = (new UserDateTimeFactoryFactory($this))->create();
+        $sut = new PunchInOutMode($dateTime);
+        $sut->create($timesheet, $request);
+        self::assertInstanceOf(\DateTime::class, $timesheet->getBegin());
     }
 }

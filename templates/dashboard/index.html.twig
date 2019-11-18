@@ -18,8 +18,12 @@
 
 {% block main %}
 
-    {% for row in widgets %}
-        {{ render_widget(row) }}
-    {% endfor %}
+    {% if widgets is empty %}
+        {{ widgets.callout('warning', 'error.no_entries_found') }}
+    {% else %}
+        {% for row in widgets %}
+            {{ render_widget(row) }}
+        {% endfor %}
+    {% endif %}
 
 {% endblock %}

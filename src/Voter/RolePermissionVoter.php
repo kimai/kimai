@@ -30,13 +30,7 @@ class RolePermissionVoter extends AbstractVoter
             return false;
         }
 
-        // and which is not neither a user role like USER_ADMIN
-        // nor an implicit role like IS_REMEMBERED / IS_FULLY_AUTHENTICATED
-        if (strpos($attribute, 'ROLE_') === false && strpos($attribute, 'IS_') === false) {
-            return $this->isRegisteredPermission($attribute);
-        }
-
-        return false;
+        return $this->isRegisteredPermission($attribute);
     }
 
     /**
@@ -53,12 +47,6 @@ class RolePermissionVoter extends AbstractVoter
             return false;
         }
 
-        foreach ($user->getRoles() as $role) {
-            if ($this->hasPermission($role, $attribute)) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->hasRolePermission($user, $attribute);
     }
 }

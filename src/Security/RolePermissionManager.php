@@ -9,32 +9,61 @@
 
 namespace App\Security;
 
-class RolePermissionManager
+use App\Entity\User;
+use App\Repository\RolePermissionRepository;
+
+final class RolePermissionManager
 {
     /**
      * @var array
      */
-    protected $permissions = [];
+    private $permissions = [];
     /**
      * @var string[]
      */
-    protected $knownPermissions = [];
-    /**
-     * @var RoleService
-     */
-    private $roles;
+    private $knownPermissions = [];
 
-    public function __construct(RoleService $roles, array $permissions)
+    public function __construct(RolePermissionRepository $repository, array $permissions)
     {
-        $this->roles = $roles;
         $this->permissions = $permissions;
 
         foreach ($permissions as $role => $perms) {
             $this->knownPermissions = array_merge($this->knownPermissions, $perms);
         }
         $this->knownPermissions = array_unique($this->knownPermissions);
+
+        $all = $repository->getAllAsArray();
+        foreach ($all as $item) {
+            $perm = $item['permission'];
+            $role = strtoupper($item['role']);
+            $isAllowed = $item['allowed'];
+
+            // see permissions.html.twig for this special case
+            if ($role === User::ROLE_SUPER_ADMIN && in_array($perm, ['role_permissions', 'view_user'])) {
+                continue;
+            }
+
+            if (!$isAllowed) {
+                if (array_key_exists($role, $this->permissions)) {
+                    if (($key = array_search($perm, $this->permissions[$role])) !== false) {
+                        unset($this->permissions[$role][$key]);
+                    }
+                }
+            } else {
+                if (!array_key_exists($role, $this->permissions)) {
+                    $this->permissions[$role] = [];
+                }
+                $this->permissions[$role][] = $perm;
+            }
+        }
     }
 
+    /**
+     * Only permissions which were registered through the Symfony configuration stack will be acknowledged here.
+     *
+     * @param string $permission
+     * @return bool
+     */
     public function isRegisteredPermission(string $permission): bool
     {
         return in_array($permission, $this->knownPermissions);
@@ -42,6 +71,8 @@ class RolePermissionManager
 
     public function hasPermission(string $role, string $permission): bool
     {
+        $role = strtoupper($role);
+
         if (!isset($this->permissions[$role])) {
             return false;
         }
@@ -49,11 +80,11 @@ class RolePermissionManager
         return in_array($permission, $this->permissions[$role]);
     }
 
-    public function getRoles(): array
-    {
-        return $this->roles->getAvailableNames();
-    }
-
+    /**
+     * Only permissions which were registered through the Symfony configuration stack will be returned here.
+     *
+     * @return array
+     */
     public function getPermissions(): array
     {
         return $this->knownPermissions;

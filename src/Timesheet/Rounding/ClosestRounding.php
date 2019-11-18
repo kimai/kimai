@@ -11,8 +11,13 @@ namespace App\Timesheet\Rounding;
 
 use App\Entity\Timesheet;
 
-class ClosestRounding implements RoundingInterface
+final class ClosestRounding implements RoundingInterface
 {
+    public function getId(): string
+    {
+        return 'closest';
+    }
+
     /**
      * @param Timesheet $record
      * @param int $minutes

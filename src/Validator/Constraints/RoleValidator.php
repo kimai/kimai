@@ -41,7 +41,8 @@ class RoleValidator extends ConstraintValidator
             $roles = [$roles];
         }
 
-        $allowedRoles = $this->service->getAvailableNames();
+        // the fos user entity uppercases the roles by default
+        $allowedRoles = array_map('strtoupper', $this->service->getAvailableNames());
 
         foreach ($roles as $role) {
             if (!is_string($role) || !in_array($role, $allowedRoles)) {

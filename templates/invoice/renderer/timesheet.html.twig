@@ -52,7 +52,7 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row invoice-items">
     <div class="col-xs-12 table-responsive">
         <table class="table table-striped">
             <thead>
@@ -97,22 +97,21 @@
     </div>
 </div>
 
-<div class="row" style="padding: 60px 0">
+<div class="row">
     <div class="col-xs-12">
         {% if model.template.paymentTerms is not empty %}
             <p class="lead">{{ 'label.payment_terms'|trans }}</p>
 
-            <p class="text-muted well well-sm no-shadow" contenteditable="true">
+            <p class="text-muted well well-sm no-shadow" contenteditable="true" style="margin-bottom: 100px">
                 {{ model.template.paymentTerms|trim|nl2br }}
             </p>
         {% endif %}
-
 
         <div class="table-responsive">
             <table class="table">
                 <tbody>
                 <tr>
-                    <th style="width:50%;padding-bottom: 60px">{{ 'invoice.signature_user'|trans }}</th>
+                    <th style="padding-bottom: 60px">{{ 'invoice.signature_user'|trans }}</th>
                 </tr>
                 <tr>
                     <th>{{ 'invoice.signature_customer'|trans }}</th>

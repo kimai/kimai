@@ -33,9 +33,13 @@ table.dataTable {
         &.summary td {
             font-weight: bold;
             border-bottom: 1px solid #ccc;
+            background-color: #eaeaea;
         }
         &.open-edit {
             cursor: pointer;
+        }
+        th.multiCheckbox {
+            width: 15px;
         }
     }
     td {

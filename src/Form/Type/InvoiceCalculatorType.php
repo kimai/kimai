@@ -50,6 +50,7 @@ class InvoiceCalculatorType extends AbstractType
                 return $renderer;
             },
             'translation_domain' => 'invoice-calculator',
+            'search' => false,
         ]);
     }
 

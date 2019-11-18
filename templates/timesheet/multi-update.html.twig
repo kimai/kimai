@@ -1,0 +1,7 @@
+{% extends 'timesheet/layout-multi-update.html.twig' %}
+
+{% block page_title %}{{ 'timesheet.title'|trans }}{% endblock %}
+{% block page_actions %}
+    {% import "timesheet/actions.html.twig" as actions %}
+    {{ actions.timesheets_multi_update('multi-update') }}
+{% endblock %}

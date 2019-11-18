@@ -38,7 +38,7 @@ trait StringAccessibleConfigTrait
      */
     protected function getConfigurations(ConfigLoaderInterface $repository): array
     {
-        return $repository->getConfiguration($this->getPrefix() . '.');
+        return $repository->getConfiguration($this->getPrefix());
     }
 
     protected function prepare()

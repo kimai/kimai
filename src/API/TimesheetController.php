@@ -19,6 +19,7 @@ use App\Form\API\TimesheetApiEditForm;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TagRepository;
 use App\Repository\TimesheetRepository;
+use App\Timesheet\RoundingService;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Timesheet\TrackingModeService;
 use App\Timesheet\UserDateTimeFactory;
@@ -75,6 +76,10 @@ class TimesheetController extends BaseApiController
      * @var EventDispatcherInterface
      */
     private $dispatcher;
+    /**
+     * @var RoundingService
+     */
+    private $roundingService;
 
     public function __construct(
         ViewHandlerInterface $viewHandler,
@@ -83,7 +88,8 @@ class TimesheetController extends BaseApiController
         TimesheetConfiguration $configuration,
         TagRepository $tagRepository,
         TrackingModeService $trackingModeService,
-        EventDispatcherInterface $dispatcher
+        EventDispatcherInterface $dispatcher,
+        RoundingService $roundingService
     ) {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
@@ -92,6 +98,7 @@ class TimesheetController extends BaseApiController
         $this->tagRepository = $tagRepository;
         $this->trackingModeService = $trackingModeService;
         $this->dispatcher = $dispatcher;
+        $this->roundingService = $roundingService;
     }
 
     protected function getTrackingMode(): TrackingModeInterface
@@ -293,12 +300,12 @@ class TimesheetController extends BaseApiController
     {
         $timesheet = new Timesheet();
         $timesheet->setUser($this->getUser());
-        $timesheet->setBegin($this->dateTime->createDateTime());
 
         $event = new TimesheetMetaDefinitionEvent($timesheet);
         $this->dispatcher->dispatch($event);
 
         $mode = $this->getTrackingMode();
+        $mode->create($timesheet, $request);
 
         $form = $this->createForm(TimesheetApiEditForm::class, $timesheet, [
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
@@ -608,6 +615,7 @@ class TimesheetController extends BaseApiController
             ->setActivity($timesheet->getActivity())
             ->setProject($timesheet->getProject())
         ;
+        $this->roundingService->roundBegin($copyTimesheet);
 
         if (null !== ($copy = $paramFetcher->get('copy'))) {
             if (in_array($copy, ['rates', 'all'])) {

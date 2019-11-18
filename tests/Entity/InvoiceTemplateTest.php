@@ -17,36 +17,63 @@ use PHPUnit\Framework\TestCase;
  */
 class InvoiceTemplateTest extends TestCase
 {
-    protected function assertIsFluent($actual)
+    public function testDefaultValues()
     {
-        $this->assertInstanceOf(InvoiceTemplate::class, $actual);
+        $sut = new InvoiceTemplate();
+
+        self::assertNull($sut->getVatId());
+        self::assertNull($sut->getPaymentDetails());
+        self::assertNull($sut->getPaymentTerms());
+        self::assertNull($sut->getContact());
+        self::assertEquals(0.00, $sut->getVat());
+        self::assertNull($sut->getId());
+        self::assertNull($sut->getName());
+        self::assertNull($sut->getAddress());
+        self::assertNull($sut->getTitle());
+        self::assertNull($sut->getCompany());
+        self::assertEquals('default', $sut->getCalculator());
+        self::assertEquals('default', $sut->getNumberGenerator());
+        self::assertEquals('default', $sut->getRenderer());
+        self::assertEquals(30, $sut->getDueDays());
     }
 
-    protected function getEntity()
+    public function testSetNullForOptionalValues()
     {
-        $entity = new InvoiceTemplate();
+        $sut = new InvoiceTemplate();
 
-        return $entity;
+        self::assertInstanceOf(InvoiceTemplate::class, $sut->setPaymentDetails(null));
+        self::assertInstanceOf(InvoiceTemplate::class, $sut->setVatId(null));
+        self::assertInstanceOf(InvoiceTemplate::class, $sut->setContact(null));
+        self::assertInstanceOf(InvoiceTemplate::class, $sut->setAddress(null));
+        self::assertInstanceOf(InvoiceTemplate::class, $sut->setPaymentTerms(null));
     }
 
-    public function testSetGetPaymentTerms()
+    public function testSetterAndGetter()
     {
-        $sut = $this->getEntity();
+        $sut = new InvoiceTemplate();
 
-        $this->assertNull($sut->getPaymentTerms());
-        $this->assertIsFluent($sut->setPaymentTerms(null));
-        $this->assertIsFluent($sut->setPaymentTerms(''));
-        $this->assertIsFluent($sut->setPaymentTerms('foo bar'));
-        $this->assertEquals('foo bar', $sut->getPaymentTerms());
+        self::assertInstanceOf(InvoiceTemplate::class, $sut->setPaymentTerms('foo bar'));
+        self::assertEquals('foo bar', $sut->getPaymentTerms());
+
+        self::assertInstanceOf(InvoiceTemplate::class, $sut->setPaymentDetails('iuasdzgf isdfhvlksdjfbnvl ksdfbglisbdf'));
+        self::assertEquals('iuasdzgf isdfhvlksdjfbnvl ksdfbglisbdf', $sut->getPaymentDetails());
+
+        self::assertInstanceOf(InvoiceTemplate::class, $sut->setContact('hello world'));
+        self::assertEquals('hello world', $sut->getContact());
+
+        self::assertInstanceOf(InvoiceTemplate::class, $sut->setVat(7.31));
+        self::assertEquals(7.31, $sut->getVat());
+
+        self::assertInstanceOf(InvoiceTemplate::class, $sut->setVatId('1234567890'));
+        self::assertEquals('1234567890', $sut->getVatId());
     }
 
     public function testToString()
     {
-        $sut = $this->getEntity();
+        $sut = new InvoiceTemplate();
 
-        $this->assertNull($sut->__toString());
-        $this->assertIsFluent($sut->setName('a template name'));
-        $this->assertEquals('a template name', $sut->__toString());
-        $this->assertEquals('a template name', (string) $sut);
+        self::assertInstanceOf(InvoiceTemplate::class, $sut->setName('a template name'));
+        self::assertEquals('a template name', $sut->__toString());
+        self::assertEquals('a template name', (string) $sut);
     }
 }

@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseAbstractController;
 use Symfony\Component\Translation\DataCollectorTranslator;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
@@ -26,7 +27,10 @@ abstract class AbstractController extends BaseAbstractController implements Serv
     public const DOMAIN_FLASH = 'flashmessages';
     public const DOMAIN_ERROR = 'exceptions';
 
-    public const ROLE_ADMIN = 'ROLE_ADMIN';
+    /**
+     * @deprecated since 1.6, will be removed with 2.0
+     */
+    public const ROLE_ADMIN = User::ROLE_ADMIN;
 
     /**
      * @return DataCollectorTranslator
@@ -34,6 +38,14 @@ abstract class AbstractController extends BaseAbstractController implements Serv
     private function getTranslator()
     {
         return $this->container->get('translator');
+    }
+
+    /**
+     * @return User|null
+     */
+    protected function getUser()
+    {
+        return parent::getUser();
     }
 
     /**

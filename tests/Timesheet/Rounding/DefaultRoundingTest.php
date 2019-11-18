@@ -31,6 +31,7 @@ class DefaultRoundingTest extends TestCase
         $record->setDuration($record->getEnd()->getTimestamp() - $record->getBegin()->getTimestamp());
 
         $sut = new DefaultRounding();
+        self::assertEquals('default', $sut->getId());
         $sut->roundBegin($record, $roundBegin);
         $sut->roundEnd($record, $roundEnd);
         $record->setDuration($record->getEnd()->getTimestamp() - $record->getBegin()->getTimestamp());

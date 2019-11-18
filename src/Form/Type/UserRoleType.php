@@ -44,7 +44,7 @@ class UserRoleType extends AbstractType
         $resolver->setDefault('choices', function (Options $options) {
             $roles = [];
             foreach ($this->roles->getAvailableNames() as $name) {
-                $roles[$name] = $name;
+                $roles[$name] = strtoupper($name);
             }
 
             if ($options['include_default'] !== true && isset($roles[User::DEFAULT_ROLE])) {

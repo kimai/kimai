@@ -47,4 +47,29 @@ class TimesheetConfiguration implements SystemBundleConfiguration
     {
         return (int) $this->find('active_entries.soft_limit');
     }
+
+    public function getDefaultRoundingDays(): string
+    {
+        return (string) $this->find('rounding.default.days');
+    }
+
+    public function getDefaultRoundingMode(): string
+    {
+        return (string) $this->find('rounding.default.mode');
+    }
+
+    public function getDefaultRoundingBegin(): int
+    {
+        return (int) $this->find('rounding.default.begin');
+    }
+
+    public function getDefaultRoundingEnd(): int
+    {
+        return (int) $this->find('rounding.default.end');
+    }
+
+    public function getDefaultRoundingDuration(): int
+    {
+        return (int) $this->find('rounding.default.duration');
+    }
 }

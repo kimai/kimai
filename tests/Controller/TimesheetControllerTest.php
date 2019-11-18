@@ -36,7 +36,10 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertHasNoEntriesWithFilter($client);
         $this->assertPageActions($client, [
             'search search-toggle visible-xs-inline' => '#',
-            'download toolbar-action' => $this->createUrl('/timesheet/export'),
+            'toolbar-action exporter-csv' => $this->createUrl('/timesheet/export/csv'),
+            'toolbar-action exporter-print' => $this->createUrl('/timesheet/export/print'),
+            'toolbar-action exporter-pdf' => $this->createUrl('/timesheet/export/pdf'),
+            'toolbar-action exporter-xlsx' => $this->createUrl('/timesheet/export/xlsx'),
             'visibility' => '#',
             'create modal-ajax-form' => $this->createUrl('/timesheet/create'),
             'help' => 'https://www.kimai.org/documentation/timesheet.html'
@@ -133,7 +136,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $dateRange = (new \DateTime('-10 days'))->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime())->format('Y-m-d');
 
         $form = $client->getCrawler()->filter('form.header-search')->form();
-        $form->getFormNode()->setAttribute('action', $this->createUrl('/timesheet/export'));
+        $form->getFormNode()->setAttribute('action', $this->createUrl('/timesheet/export/print'));
         $client->submit($form, [
             'state' => 1,
             'pageSize' => 25,
@@ -320,5 +323,99 @@ class TimesheetControllerTest extends ControllerBaseTest
         /** @var Timesheet $timesheet */
         $timesheet = $em->getRepository(Timesheet::class)->find(1);
         $this->assertEquals('foo-bar', $timesheet->getDescription());
+    }
+
+    public function testMultiDeleteAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $this->getUserByRole($em, User::ROLE_USER);
+        $fixture = new TimesheetFixtures();
+        $fixture->setAmount(10);
+        $fixture->setUser($user);
+        $this->importFixture($em, $fixture);
+
+        $this->assertAccessIsGranted($client, '/timesheet/');
+
+        $form = $client->getCrawler()->filter('form[name=multi_update_table]')->form();
+        $node = $form->getFormNode();
+        $node->setAttribute('action', $this->createUrl('/timesheet/multi-delete'));
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var Timesheet[] $timesheets */
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        self::assertCount(10, $timesheets);
+        $ids = [];
+        foreach ($timesheets as $timesheet) {
+            $ids[] = $timesheet->getId();
+        }
+
+        $client->submit($form, [
+            'multi_update_table' => [
+                'action' => $this->createUrl('/timesheet/multi-delete'),
+                'entities' => implode(',', $ids)
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
+        $client->followRedirect();
+
+        $em->clear(Timesheet::class);
+        self::assertEquals(0, $em->getRepository(Timesheet::class)->count([]));
+    }
+
+    public function testMultiUpdate()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $this->getUserByRole($em, User::ROLE_SUPER_ADMIN);
+        $fixture = new TimesheetFixtures();
+        $fixture->setAmount(10);
+        $fixture->setUser($user);
+        $this->importFixture($em, $fixture);
+
+        $this->assertAccessIsGranted($client, '/timesheet/');
+
+        $form = $client->getCrawler()->filter('form[name=multi_update_table]')->form();
+        $node = $form->getFormNode();
+        $node->setAttribute('action', $this->createUrl('/timesheet/multi-update'));
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var Timesheet[] $timesheets */
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        self::assertCount(10, $timesheets);
+        $ids = [];
+        foreach ($timesheets as $timesheet) {
+            self::assertEmpty($timesheet->getTags());
+            self::assertFalse($timesheet->isExported());
+            $ids[] = $timesheet->getId();
+        }
+
+        $client->submit($form, [
+            'multi_update_table' => [
+                'action' => $this->createUrl('/timesheet/multi-update'),
+                'entities' => implode(',', $ids)
+            ]
+        ]);
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_multi_update]')->form();
+        $client->submit($form, [
+            'timesheet_multi_update' => [
+                'exported' => true,
+                'tags' => 'test, foo-bar'
+            ]
+        ]);
+
+        $em->clear(Timesheet::class);
+
+        /** @var Timesheet[] $timesheets */
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        self::assertCount(10, $timesheets);
+        foreach ($timesheets as $timesheet) {
+            self::assertCount(2, $timesheet->getTags());
+            self::assertTrue($timesheet->isExported());
+        }
     }
 }

@@ -40,12 +40,24 @@ class InvoiceTemplateForm extends AbstractType
             ->add('company', TextType::class, [
                 'label' => 'label.company',
             ])
+            ->add('vatId', TextType::class, [
+                'label' => 'label.vat_id',
+                'required' => false,
+            ])
             ->add('address', TextareaType::class, [
                 'label' => 'label.address',
                 'required' => false,
             ])
+            ->add('contact', TextareaType::class, [
+                'label' => 'label.contact',
+                'required' => false,
+            ])
             ->add('paymentTerms', TextareaType::class, [
                 'label' => 'label.payment_terms',
+                'required' => false,
+            ])
+            ->add('paymentDetails', TextareaType::class, [
+                'label' => 'label.invoice_bank_account',
                 'required' => false,
             ])
             ->add('dueDays', TextType::class, [
@@ -71,6 +83,11 @@ class InvoiceTemplateForm extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'admin_invoice_template',
+            'attr' => [
+                'data-form-event' => 'kimai.invoiceTemplateUpdate',
+                'data-msg-success' => 'action.update.success',
+                'data-msg-error' => 'action.update.error',
+            ],
         ]);
     }
 }
