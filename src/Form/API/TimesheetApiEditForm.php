@@ -23,7 +23,7 @@ class TimesheetApiEditForm extends TimesheetEditForm
         parent::buildForm($builder, $options);
 
         $builder->remove('metaFields');
-        
+
         if ($builder->has('user')) {
             $builder->get('user')->setRequired(false);
         }
