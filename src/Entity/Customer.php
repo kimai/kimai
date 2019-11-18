@@ -82,6 +82,14 @@ class Customer implements EntityWithMetaFields
     /**
      * @var string
      *
+     * @ORM\Column(name="vat_id", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
+     */
+    private $vatId;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="contact", type="string", length=255, nullable=true)
      * @Assert\Length(max=255)
      */
@@ -270,6 +278,18 @@ class Customer implements EntityWithMetaFields
     public function getCompany(): ?string
     {
         return $this->company;
+    }
+
+    public function getVatId(): ?string
+    {
+        return $this->vatId;
+    }
+
+    public function setVatId(?string $vatId): Customer
+    {
+        $this->vatId = $vatId;
+
+        return $this;
     }
 
     public function setContact(?string $contact): Customer

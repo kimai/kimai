@@ -56,6 +56,7 @@ class InvoiceRendererType extends AbstractType
             },
             'translation_domain' => 'invoice-renderer',
             'docu_chapter' => 'invoices.html',
+            'search' => false,
         ]);
     }
 

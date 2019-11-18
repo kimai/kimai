@@ -114,6 +114,9 @@ trait RendererTrait
             'template.title' => $model->getTemplate()->getTitle(),
             'template.payment_terms' => $model->getTemplate()->getPaymentTerms(),
             'template.due_days' => $model->getTemplate()->getDueDays(),
+            'template.vat_id' => $model->getTemplate()->getVatId(),
+            'template.contact' => $model->getTemplate()->getContact(),
+            'template.payment_details' => $model->getTemplate()->getPaymentDetails(),
 
             'query.begin' => $this->getFormattedDateTime($model->getQuery()->getBegin()),
             'query.day' => $model->getQuery()->getBegin()->format('d'),
@@ -164,6 +167,7 @@ trait RendererTrait
                 'customer.name' => $customer->getName(),
                 'customer.contact' => $customer->getContact(),
                 'customer.company' => $customer->getCompany(),
+                'customer.vat' => $customer->getVatId(),
                 'customer.number' => $customer->getNumber(),
                 'customer.country' => $customer->getCountry(),
                 'customer.homepage' => $customer->getHomepage(),
