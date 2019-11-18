@@ -310,12 +310,13 @@ class TimesheetController extends BaseApiController
         $form = $this->createForm(TimesheetApiEditForm::class, $timesheet, [
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
+            'include_user' => $this->isGranted('create_other_timesheet'),
             'allow_begin_datetime' => $mode->canUpdateTimesWithAPI(),
             'allow_end_datetime' => $mode->canUpdateTimesWithAPI(),
             'date_format' => self::DATE_FORMAT,
         ]);
 
-        $form->submit($request->request->all());
+        $form->submit($request->request->all(), false);
 
         if ($form->isValid()) {
             if (null === $timesheet->getEnd()) {
@@ -391,6 +392,7 @@ class TimesheetController extends BaseApiController
         $form = $this->createForm(TimesheetApiEditForm::class, $timesheet, [
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
+            'include_user' => $this->isGranted('edit', $timesheet),
             'allow_begin_datetime' => $mode->canUpdateTimesWithAPI(),
             'allow_end_datetime' => $mode->canUpdateTimesWithAPI(),
             'date_format' => self::DATE_FORMAT,
