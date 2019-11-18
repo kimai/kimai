@@ -50,6 +50,8 @@ final class Version20191116110124 extends AbstractMigration
         $invoiceTemplates->addColumn('vat_id', 'string', ['length' => 50, 'notnull' => false, 'default' => null]);
         $invoiceTemplates->addColumn('contact', 'text', ['notnull' => false, 'default' => null]);
         $invoiceTemplates->addColumn('payment_details', 'text', ['notnull' => false, 'default' => null]);
+
+        $this->addSql("UPDATE kimai2_invoice_templates SET renderer = 'default' WHERE renderer IN ('export', 'open-spreadsheet', 'spreadsheet')");
     }
 
     public function down(Schema $schema): void

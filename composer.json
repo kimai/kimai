@@ -76,6 +76,12 @@
         "symfony/thanks": "^1.0",
         "symfony/web-server-bundle": "^4.0"
     },
+    "repositories": [
+        {
+            "type": "artifact",
+            "url": "var/packages/"
+        }
+    ],    
     "config": {
         "platform": {
             "php": "7.2"
