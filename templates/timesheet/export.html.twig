@@ -2,6 +2,7 @@
 {% import "macros/datatables.html.twig" as tables %}
 {% extends 'invoice/layout.html.twig' %}
 
+{% block title %}{{ 'menu.export'|trans }}{% endblock %}
 {% block invoice %}
     {% set showUserColumn = true %}
     {% if query.user %}
