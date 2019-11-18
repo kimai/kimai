@@ -22,7 +22,8 @@ templates/invoice/renderer/.~lock*
 
 /var/invoices/*
 
-/var/packages/
+/var/packages/*
+!var/packages/.gitkeep
 /var/plugins/*
 !var/plugins/.gitkeep
 
