@@ -49,10 +49,10 @@
             <fieldset id="general">
                 <ul>
                     <li><label for="name"><?php echo $this->translate('project') ?>*:</label>
-                        <?php echo $this->formText('name', $this->project['name'], ['required' => 'required', 'style' => 'width:620px']); ?>
+                        <?php echo $this->formText('name', $this->project['name'], ['required' => 'required', 'class' => 'input-width']); ?>
                     </li>
                     <li><label for="customerID"><?php echo $this->translate('customer') ?>:</label>
-                        <?php echo $this->formSelect('customerID', $this->project['customerID'], ['class' => 'formfield', 'style' => 'width:620px'], $this->customers); ?>
+                        <?php echo $this->formSelect('customerID', $this->project['customerID'], ['class' => 'formfield', 'class' => 'input-width'], $this->customers); ?>
                     </li>
                     <li><label for="visible"><?php echo $this->translate('visibility') ?>:</label>
                         <?php echo $this->formCheckbox('visible', '1', ['checked' => $this->project['visible'] || !$this->id]); ?>
@@ -142,7 +142,7 @@
                             'id' => 'projectGroups',
                             'multiple' => 'multiple',
                             'size' => 5,
-                            'style' => 'width:620px'
+                            'class' => 'input-width'
                         ], $this->groups); ?>
                     </li>
                 </ul>
@@ -154,7 +154,7 @@
                             'cols' => 30,
                             'rows' => 5,
                             'class' => 'comment',
-                            'style' => 'width:620px'
+                            'class' => 'input-width'
                         ]); ?>
                     </li>
                 </ul>

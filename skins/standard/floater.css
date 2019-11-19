@@ -67,6 +67,10 @@
 	border: 3px double #bbb;
 }
 
+#floater_innerwrap .input-width {
+	width: calc(100% - 125px);
+}
+
 #floater_innerwrap select[disabled],
 #floater_innerwrap input[disabled],
 #floater_innerwrap button[disabled],

@@ -45,7 +45,7 @@
                 <ul>
                     <li>
                         <label for="name"><?php echo $this->translate('activity') ?>:</label>
-                        <?php echo $this->formText('name', $this->activity['name'], ['style' => 'width:620px']); ?>
+                        <?php echo $this->formText('name', $this->activity['name'], ['class' => 'input-width']); ?>
                     </li>
                     <li>
                         <label for="defaultRate"><?php echo $this->translate('default_rate') ?>:</label>
@@ -118,7 +118,7 @@
                             'id' => 'activityGroups',
                             'multiple' => 'multiple',
                             'size' => 5,
-                            'style' => 'width:620px'
+                            'class' => 'input-width'
                         ], $this->groups); ?>
                     </li>
                 </ul>
@@ -131,7 +131,7 @@
                             'cols' => 30,
                             'rows' => 5,
                             'class' => 'comment',
-                            'style' => 'width:620px'
+                            'class' => 'input-width'
                         ]); ?>
                     </li>
                 </ul>
