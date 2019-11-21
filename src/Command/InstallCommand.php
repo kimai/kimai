@@ -10,7 +10,6 @@
 namespace App\Command;
 
 use App\Constants;
-use App\Utils\File;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
@@ -39,17 +38,12 @@ final class InstallCommand extends Command
      * @var Connection
      */
     private $connection;
-    /**
-     * @var File
-     */
-    private $file;
 
-    public function __construct(string $projectDirectory, Connection $connection, File $files)
+    public function __construct(string $projectDirectory, Connection $connection)
     {
         parent::__construct();
         $this->rootDir = $projectDirectory;
         $this->connection = $connection;
-        $this->file = $files;
     }
 
     /**

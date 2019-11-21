@@ -9,7 +9,7 @@
 
 namespace App\Tests\Command;
 
-use App\Command\InstallCommand;
+use App\Command\UpdateCommand;
 use App\Constants;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -17,10 +17,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
- * @covers \App\Command\InstallCommand
+ * @covers \App\Command\UpdateCommand
  * @group integration
  */
-class InstallCommandTest extends KernelTestCase
+class UpdateCommandTest extends KernelTestCase
 {
     /**
      * @var Application
@@ -33,15 +33,15 @@ class InstallCommandTest extends KernelTestCase
         $this->application = new Application($kernel);
         $container = self::$kernel->getContainer();
 
-        $this->application->add(new InstallCommand(
+        $this->application->add(new UpdateCommand(
             $container->getParameter('kernel.project_dir'),
             $container->get('doctrine')->getConnection()
         ));
 
-        return $this->application->find('kimai:install');
+        return $this->application->find('kimai:update');
     }
 
-    public function testFullRunWithEverythingPreInstalled()
+    public function testFullRun()
     {
         $command = $this->getCommand();
         $commandTester = new CommandTester($command);
@@ -52,15 +52,13 @@ class InstallCommandTest extends KernelTestCase
 
         $result = $commandTester->getDisplay();
 
-        self::assertStringContainsString('Kimai installation running', $result);
-        // create database is skipped
-        self::assertStringContainsString('[NOTE] Database is existing and connection could be established', $result);
+        self::assertStringContainsString('Kimai updates running', $result);
         // make sure migrations run always
         self::assertStringContainsString('Application Migrations', $result);
         self::assertStringContainsString('No migrations to execute.', $result);
 
         self::assertStringContainsString(
-            sprintf('[OK] Congratulations! Successfully installed Kimai 2 version %s (%s)', Constants::VERSION, Constants::STATUS),
+            sprintf('[OK] Congratulations! Successfully updated Kimai 2 to version %s (%s)', Constants::VERSION, Constants::STATUS),
             $result
         );
 
