@@ -100,7 +100,7 @@
             </trans-unit>
             <trans-unit id="label.calendar.slot_duration">
                 <source>label.calendar.slot_duration</source>
-                <target>Length of a slot for week- and day view (format: hh:mm:ss)</target>
+                <target>Slot duration for week- and day view (format: hh:mm:ss)</target>
             </trans-unit>
             <trans-unit id="branding">
                 <source>branding</source>
