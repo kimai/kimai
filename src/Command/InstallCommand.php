@@ -23,7 +23,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * Command used to do the basic installation steps for Kimai.
  */
-class InstallCommand extends Command
+final class InstallCommand extends Command
 {
     public const ERROR_PERMISSIONS = 1;
     public const ERROR_CACHE_CLEAN = 2;
@@ -34,15 +34,15 @@ class InstallCommand extends Command
     /**
      * @var string
      */
-    protected $rootDir;
+    private $rootDir;
     /**
      * @var Connection
      */
-    protected $connection;
+    private $connection;
     /**
      * @var File
      */
-    protected $file;
+    private $file;
 
     public function __construct(string $projectDirectory, Connection $connection, File $files)
     {
