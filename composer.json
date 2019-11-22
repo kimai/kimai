@@ -126,8 +126,14 @@
         "kimai:code-check":  [
             "@kimai:codestyle",
             "@kimai:phpstan",
+            "@kimai:code-lint",
             "@kimai:tests-unit",
             "@kimai:tests-integration"
+        ],
+        "kimai:code-lint":  [
+            "bin/console lint:yaml config --parse-tags",
+            "bin/console lint:twig templates",
+            "bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction"
         ],
         "kimai:tests": "vendor/bin/phpunit tests/",
         "kimai:tests-unit": "vendor/bin/phpunit --exclude-group integration tests/",
