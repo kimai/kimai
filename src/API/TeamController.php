@@ -17,6 +17,7 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,9 +56,10 @@ class TeamController extends BaseApiController
      *
      * @Security("is_granted('view_team')")
      *
-     * @return Response
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function cgetAction(ParamFetcherInterface $paramFetcher)
+    public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         $data = $this->repository->findAll();
 
@@ -76,10 +78,10 @@ class TeamController extends BaseApiController
      *      @SWG\Schema(ref="#/definitions/TeamEntity"),
      * )
      *
-     * @param int $id
-     * @return Response
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function getAction($id)
+    public function getAction(int $id): Response
     {
         $data = $this->repository->find($id);
 
@@ -112,10 +114,10 @@ class TeamController extends BaseApiController
      *
      * @Security("is_granted('delete_team')")
      *
-     * @param int $id
-     * @return Response
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id): Response
     {
         $team = $this->repository->find($id);
 

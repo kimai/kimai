@@ -22,6 +22,7 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -75,10 +76,10 @@ class ActivityController extends BaseApiController
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: ASC)")
      * @Rest\QueryParam(name="term", requirements="[a-zA-Z0-9 \-,:]+", strict=true, nullable=true, description="Free search term")
      *
-     * @param ParamFetcherInterface $paramFetcher
-     * @return Response
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function cgetAction(ParamFetcherInterface $paramFetcher)
+    public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         $query = new ActivityQuery();
 
@@ -133,10 +134,10 @@ class ActivityController extends BaseApiController
      *      required=true,
      * )
      *
-     * @param int $id
-     * @return Response
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function getAction($id)
+    public function getAction(int $id): Response
     {
         $data = $this->repository->find($id);
 
@@ -168,13 +169,10 @@ class ActivityController extends BaseApiController
      *      @SWG\Schema(ref="#/definitions/ActivityEditForm")
      * )
      *
-     * @param Request $request
-     * @return Response
-     * @throws \App\Repository\RepositoryException
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function postAction(Request $request)
+    public function postAction(Request $request): Response
     {
         if (!$this->isGranted('create_activity')) {
             throw new AccessDeniedHttpException('User cannot create activities');
@@ -229,13 +227,10 @@ class ActivityController extends BaseApiController
      *      required=true,
      * )
      *
-     * @param Request $request
-     * @param string $id
-     * @return Response
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function patchAction(Request $request, string $id)
+    public function patchAction(Request $request, int $id): Response
     {
         $activity = $this->repository->find($id);
 
@@ -288,13 +283,10 @@ class ActivityController extends BaseApiController
      * @Rest\RequestParam(name="name", strict=true, nullable=false, description="The meta-field name")
      * @Rest\RequestParam(name="value", strict=true, nullable=false, description="The meta-field value")
      *
-     * @param int $id
-     * @param ParamFetcherInterface $paramFetcher
-     * @return Response
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function metaAction($id, ParamFetcherInterface $paramFetcher)
+    public function metaAction(int $id, ParamFetcherInterface $paramFetcher): Response
     {
         $activity = $this->repository->find($id);
 
