@@ -106,7 +106,7 @@ class UserController extends BaseApiController
      *
      * @SWG\Response(
      *      response=200,
-     *      description="Return one user entity. Required permission: view_user",
+     *      description="Return one user entity.",
      *      @SWG\Schema(ref="#/definitions/UserEntity"),
      * )
      * @SWG\Parameter(
@@ -133,6 +133,28 @@ class UserController extends BaseApiController
         }
 
         $view = new View($user, 200);
+        $view->getContext()->setGroups(['Default', 'Entity', 'User']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Return the current user entity
+     *
+     * @SWG\Response(
+     *      response=200,
+     *      description="Return the current user entity.",
+     *      @SWG\Schema(ref="#/definitions/UserEntity"),
+     * )
+     *
+     * @Rest\Get(path="/users/me")
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function meAction(): Response
+    {
+        $view = new View($this->getUser(), 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'User']);
 
         return $this->viewHandler->handle($view);
