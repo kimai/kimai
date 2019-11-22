@@ -116,7 +116,7 @@
                 weekNumbers: {% if config.showWeekNumbers %}true{% else %}false{% endif %},
                 allDaySlot: false,
                 navLinks: true,
-                locale: '{{ app.request.locale }}',
+                locale: '{{ app.request.locale|replace({'_': '-'})|lower }}',
                 /*
                 // TODO calculate height properly instead of relying on the default aspectRatio
                 height: function() {
