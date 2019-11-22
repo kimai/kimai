@@ -197,6 +197,10 @@ export default class KimaiAjaxModalForm extends KimaiClickHandlerReducedInTableR
                         err = '[' + xhr.status +'] ' + xhr.statusText;
                     }
                     alert.error(message, err);
+                    // this is useful for changing form fields and retrying to save (and in development to test form changes)
+                    setTimeout(function() {
+                        btn.button('reset');
+                    }, 1500);
                 }
             });
         });

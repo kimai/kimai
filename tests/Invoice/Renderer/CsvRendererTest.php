@@ -33,7 +33,7 @@ class CsvRendererTest extends TestCase
         $this->assertFalse($sut->supports($this->getInvoiceDocument('timesheet.html.twig')));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('foo.html.twig')));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('company.docx')));
-        $this->assertTrue($sut->supports($this->getInvoiceDocument('export.csv')));
+        $this->assertTrue($sut->supports($this->getInvoiceDocument('export.csv', true)));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('spreadsheet.xlsx')));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('open-spreadsheet.ods')));
     }
@@ -51,7 +51,7 @@ class CsvRendererTest extends TestCase
     {
         /** @var CsvRenderer $sut */
         $sut = $this->getAbstractRenderer(CsvRenderer::class);
-        $document = $this->getInvoiceDocument('export.csv');
+        $document = $this->getInvoiceDocument('export.csv', true);
         /** @var BinaryFileResponse $response */
         $response = $sut->render($document, $model);
 

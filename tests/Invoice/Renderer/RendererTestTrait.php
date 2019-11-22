@@ -47,10 +47,16 @@ trait RendererTestTrait
      * @param string $filename
      * @return InvoiceDocument
      */
-    protected function getInvoiceDocument(string $filename)
+    protected function getInvoiceDocument(string $filename, bool $testOnly = false)
     {
+        if (!$testOnly) {
+            return new InvoiceDocument(
+                new \SplFileInfo($this->getInvoiceTemplatePath() . $filename)
+            );
+        }
+
         return new InvoiceDocument(
-            new \SplFileInfo($this->getInvoiceTemplatePath() . $filename)
+            new \SplFileInfo(__DIR__ . '/../templates/' . $filename)
         );
     }
 
@@ -89,7 +95,7 @@ trait RendererTestTrait
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
 
         $template = new InvoiceTemplate();
-        $template->setTitle('a test invoice template title');
+        $template->setTitle('a very *long* test invoice / template title with [special] character');
         $template->setVat(19);
 
         $project = new Project();

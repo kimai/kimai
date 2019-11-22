@@ -66,6 +66,24 @@ class TimesheetController extends TimesheetAbstractController
     }
 
     /**
+     * @Route(path="/multi-update", name="timesheet_multi_update", methods={"POST"})
+     * @Security("is_granted('edit_own_timesheet')")
+     */
+    public function multiUpdateAction(Request $request)
+    {
+        return $this->multiUpdate($request, 'timesheet/multi-update.html.twig');
+    }
+
+    /**
+     * @Route(path="/multi-delete", name="timesheet_multi_delete", methods={"POST"})
+     * @Security("is_granted('delete_own_timesheet')")
+     */
+    public function multiDeleteAction(Request $request)
+    {
+        return $this->multiDelete($request);
+    }
+
+    /**
      * @Route(path="/create", name="timesheet_create", methods={"GET", "POST"})
      * @Security("is_granted('create_own_timesheet')")
      *

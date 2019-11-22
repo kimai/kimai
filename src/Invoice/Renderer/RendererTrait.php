@@ -10,7 +10,6 @@
 namespace App\Invoice\Renderer;
 
 use App\Entity\InvoiceDocument;
-use App\Entity\UserPreference;
 use App\Invoice\InvoiceItem;
 use App\Invoice\InvoiceModel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -57,7 +56,7 @@ trait RendererTrait
 
     /**
      * @param int $amount
-     * @param string $currency
+     * @param string|null $currency
      * @return mixed
      */
     abstract protected function getFormattedMoney($amount, $currency);
@@ -90,18 +89,24 @@ trait RendererTrait
         $project = $model->getQuery()->getProject();
         $activity = $model->getQuery()->getActivity();
         $currency = $model->getCalculator()->getCurrency();
+        $tax = $model->getCalculator()->getTax();
+        $total = $model->getCalculator()->getTotal();
+        $subtotal = $model->getCalculator()->getSubtotal();
 
         $values = [
             'invoice.due_date' => $this->getFormattedDateTime($model->getDueDate()),
             'invoice.date' => $this->getFormattedDateTime($model->getInvoiceDate()),
             'invoice.number' => $model->getNumberGenerator()->getInvoiceNumber(),
-            'invoice.currency' => $model->getCalculator()->getCurrency(),
+            'invoice.currency' => $currency,
             'invoice.vat' => $model->getCalculator()->getVat(),
-            'invoice.tax' => $this->getFormattedMoney($model->getCalculator()->getTax(), $currency),
+            'invoice.tax' => $this->getFormattedMoney($tax, $currency),
+            'invoice.tax_nc' => $this->getFormattedMoney($tax, null),
             'invoice.total_time' => $this->getFormattedDuration($model->getCalculator()->getTimeWorked()),
             'invoice.duration_decimal' => $this->getFormattedDecimalDuration($model->getCalculator()->getTimeWorked()),
-            'invoice.total' => $this->getFormattedMoney($model->getCalculator()->getTotal(), $currency),
-            'invoice.subtotal' => $this->getFormattedMoney($model->getCalculator()->getSubtotal(), $currency),
+            'invoice.total' => $this->getFormattedMoney($total, $currency),
+            'invoice.total_nc' => $this->getFormattedMoney($total, null),
+            'invoice.subtotal' => $this->getFormattedMoney($subtotal, $currency),
+            'invoice.subtotal_nc' => $this->getFormattedMoney($subtotal, null),
 
             'template.name' => $model->getTemplate()->getName(),
             'template.company' => $model->getTemplate()->getCompany(),
@@ -109,6 +114,9 @@ trait RendererTrait
             'template.title' => $model->getTemplate()->getTitle(),
             'template.payment_terms' => $model->getTemplate()->getPaymentTerms(),
             'template.due_days' => $model->getTemplate()->getDueDays(),
+            'template.vat_id' => $model->getTemplate()->getVatId(),
+            'template.contact' => $model->getTemplate()->getContact(),
+            'template.payment_details' => $model->getTemplate()->getPaymentDetails(),
 
             'query.begin' => $this->getFormattedDateTime($model->getQuery()->getBegin()),
             'query.day' => $model->getQuery()->getBegin()->format('d'),
@@ -159,6 +167,7 @@ trait RendererTrait
                 'customer.name' => $customer->getName(),
                 'customer.contact' => $customer->getContact(),
                 'customer.company' => $customer->getCompany(),
+                'customer.vat' => $customer->getVatId(),
                 'customer.number' => $customer->getNumber(),
                 'customer.country' => $customer->getCountry(),
                 'customer.homepage' => $customer->getHomepage(),
@@ -205,8 +214,9 @@ trait RendererTrait
 
         $user = $invoiceItem->getUser();
 
+        // this should never happen!
         if (empty($hourlyRate)) {
-            $hourlyRate = $user->getPreferenceValue(UserPreference::HOURLY_RATE);
+            $hourlyRate = 0;
         }
 
         $activity = $invoiceItem->getActivity();
@@ -222,7 +232,9 @@ trait RendererTrait
             'entry.description' => $description,
             'entry.amount' => $amount,
             'entry.rate' => $this->getFormattedMoney($hourlyRate, $currency),
+            'entry.rate_nc' => $this->getFormattedMoney($hourlyRate, null),
             'entry.total' => $this->getFormattedMoney($rate, $currency),
+            'entry.total_nc' => $this->getFormattedMoney($rate, null),
             'entry.currency' => $currency,
             'entry.duration' => $invoiceItem->getDuration(),
             'entry.duration_decimal' => $this->getFormattedDecimalDuration($invoiceItem->getDuration()),

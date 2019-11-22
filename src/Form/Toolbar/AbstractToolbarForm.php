@@ -103,6 +103,7 @@ abstract class AbstractToolbarForm extends AbstractType
             'required' => false,
             'placeholder' => null,
             'label' => $label,
+            'search' => false
         ]);
     }
 
@@ -110,6 +111,7 @@ abstract class AbstractToolbarForm extends AbstractType
     {
         $builder->add('pageSize', PageSizeType::class, [
             'required' => false,
+            'search' => false
         ]);
     }
 
@@ -218,6 +220,7 @@ abstract class AbstractToolbarForm extends AbstractType
         ]);
     }
 
+    // TODO add a system setting to control if tags can be created on the fly
     protected function addTagSelectField(FormBuilderInterface $builder)
     {
         $builder->add('tags', TagsSelectType::class, [
@@ -237,6 +240,7 @@ abstract class AbstractToolbarForm extends AbstractType
             'label' => 'label.entryState',
             'required' => false,
             'placeholder' => null,
+            'search' => false,
             'choices' => [
                 'entryState.all' => TimesheetQuery::STATE_ALL,
                 'entryState.running' => TimesheetQuery::STATE_RUNNING,
@@ -251,6 +255,7 @@ abstract class AbstractToolbarForm extends AbstractType
             'label' => 'label.exported',
             'required' => false,
             'placeholder' => null,
+            'search' => false,
             'choices' => [
                 'entryState.all' => TimesheetQuery::STATE_ALL,
                 'entryState.exported' => TimesheetQuery::STATE_EXPORTED,

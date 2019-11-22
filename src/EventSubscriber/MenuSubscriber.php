@@ -63,7 +63,7 @@ final class MenuSubscriber implements EventSubscriberInterface
 
         if ($auth->isGranted('view_own_timesheet')) {
             $timesheets = new MenuItemModel('timesheet', 'menu.timesheet', 'timesheet', [], $this->getIcon('timesheet'));
-            $timesheets->setChildRoutes(['timesheet_export', 'timesheet_edit', 'timesheet_create']);
+            $timesheets->setChildRoutes(['timesheet_export', 'timesheet_edit', 'timesheet_create', 'timesheet_multi_update']);
             $menu->addItem($timesheets);
             $menu->addItem(
                 new MenuItemModel('calendar', 'calendar.title', 'calendar', [], $this->getIcon('calendar'))
@@ -71,9 +71,9 @@ final class MenuSubscriber implements EventSubscriberInterface
         }
 
         if ($auth->isGranted('view_invoice')) {
-            $menu->addItem(
-                new MenuItemModel('invoice', 'menu.invoice', 'invoice', [], $this->getIcon('invoice'))
-            );
+            $invoice = new MenuItemModel('invoice', 'menu.invoice', 'invoice', [], $this->getIcon('invoice'));
+            $invoice->setChildRoutes(['admin_invoice_template', 'admin_invoice_template_edit', 'admin_invoice_template_create']);
+            $menu->addItem($invoice);
         }
 
         if ($auth->isGranted('create_export')) {
@@ -89,7 +89,7 @@ final class MenuSubscriber implements EventSubscriberInterface
 
         if ($auth->isGranted('view_other_timesheet')) {
             $timesheets = new MenuItemModel('timesheet_admin', 'menu.admin_timesheet', 'admin_timesheet', [], $this->getIcon('timesheet-team'));
-            $timesheets->setChildRoutes(['admin_timesheet_export', 'admin_timesheet_edit', 'admin_timesheet_create']);
+            $timesheets->setChildRoutes(['admin_timesheet_export', 'admin_timesheet_edit', 'admin_timesheet_create', 'admin_timesheet_multi_update']);
             $menu->addChild($timesheets);
         }
 

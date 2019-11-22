@@ -34,7 +34,7 @@ class XlsxRendererTest extends TestCase
         $this->assertFalse($sut->supports($this->getInvoiceDocument('foo.html.twig')));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('company.docx')));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('export.csv')));
-        $this->assertTrue($sut->supports($this->getInvoiceDocument('spreadsheet.xlsx')));
+        $this->assertTrue($sut->supports($this->getInvoiceDocument('spreadsheet.xlsx', true)));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('open-spreadsheet.ods')));
     }
 
@@ -52,7 +52,7 @@ class XlsxRendererTest extends TestCase
         /** @var XlsxRenderer $sut */
         $sut = $this->getAbstractRenderer(XlsxRenderer::class);
         $model = $this->getInvoiceModel();
-        $document = $this->getInvoiceDocument('spreadsheet.xlsx');
+        $document = $this->getInvoiceDocument('spreadsheet.xlsx', true);
         /** @var BinaryFileResponse $response */
         $response = $sut->render($document, $model);
 

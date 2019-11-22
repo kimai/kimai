@@ -9,6 +9,7 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\Tag;
 use App\Entity\User;
 use App\Tests\DataFixtures\TagFixtures;
 
@@ -94,5 +95,36 @@ class TagControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/tags/1/edit');
         $editForm = $client->getCrawler()->filter('form[name=tag_edit_form]')->form();
         $this->assertEquals('Test 2 updated', $editForm->get('tag_edit_form[name]')->getValue());
+    }
+
+    public function testMultiDeleteAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $this->assertAccessIsGranted($client, '/admin/tags/');
+
+        $form = $client->getCrawler()->filter('form[name=multi_update_table]')->form();
+        $node = $form->getFormNode();
+        $node->setAttribute('action', $this->createUrl('/admin/tags/multi-delete'));
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var Tag[] $tags */
+        $tags = $em->getRepository(Tag::class)->findAll();
+        self::assertCount(10, $tags);
+        $ids = [];
+        foreach ($tags as $tag) {
+            $ids[] = $tag->getId();
+        }
+
+        $client->submit($form, [
+            'multi_update_table' => [
+                'action' => $this->createUrl('/admin/tags/multi-delete'),
+                'entities' => implode(',', $ids)
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/tags/'));
+        $client->followRedirect();
+
+        $em->clear(Tag::class);
+        self::assertEquals(0, $em->getRepository(Tag::class)->count([]));
     }
 }

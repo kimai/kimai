@@ -16,6 +16,10 @@ use App\Entity\Timesheet;
 use App\Event\TimesheetMetaDefinitionEvent;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Export\ServiceExport;
+use App\Form\MultiUpdate\MultiUpdateTable;
+use App\Form\MultiUpdate\MultiUpdateTableDTO;
+use App\Form\MultiUpdate\TimesheetMultiUpdate;
+use App\Form\MultiUpdate\TimesheetMultiUpdateDTO;
 use App\Form\TimesheetEditForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\ActivityRepository;
@@ -130,6 +134,7 @@ abstract class TimesheetAbstractController extends AbstractController
             'page' => $query->getPage(),
             'query' => $query,
             'toolbarForm' => $form->createView(),
+            'multiUpdateForm' => $this->getMultiUpdateActionForm()->createView(),
             'showSummary' => $this->includeSummary(),
             'showStartEndTime' => $this->canSeeStartEndTime(),
             'metaColumns' => $this->findMetaColumns($query, $location),
@@ -174,6 +179,24 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
+    protected function getTags(TagRepository $tagRepository, $tagNames)
+    {
+        $tags = [];
+        if (!is_array($tagNames)) {
+            $tagNames = explode(',', $tagNames);
+        }
+        foreach ($tagNames as $tagName) {
+            $tag = $tagRepository->findTagByName($tagName);
+            if (!$tag) {
+                $tag = new Tag();
+                $tag->setName($tagName);
+            }
+            $tags[] = $tag;
+        }
+
+        return $tags;
+    }
+
     protected function create(Request $request, string $renderTemplate, ProjectRepository $projectRepository, ActivityRepository $activityRepository, TagRepository $tagRepository): Response
     {
         $entry = new Timesheet();
@@ -190,13 +213,7 @@ abstract class TimesheetAbstractController extends AbstractController
         }
 
         if ($request->query->get('tags')) {
-            $tagNames = explode(',', $request->query->get('tags'));
-            foreach ($tagNames as $tagName) {
-                $tag = $tagRepository->findTagByName($tagName);
-                if (!$tag) {
-                    $tag = new Tag();
-                    $tag->setName($tagName);
-                }
+            foreach ($this->getTags($tagRepository, $request->query->get('tags')) as $tag) {
                 $entry->addTag($tag);
             }
         }
@@ -267,9 +284,140 @@ abstract class TimesheetAbstractController extends AbstractController
         return $exporter->render($entries, $query);
     }
 
+    protected function multiUpdate(Request $request, string $renderTemplate)
+    {
+        $dto = new TimesheetMultiUpdateDTO();
+
+        // initial request from the listing posts a different form
+        $form = $this->getMultiUpdateActionForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $dto->setEntities($form->getData()->getEntities());
+        }
+
+        $form = $this->getMultiUpdateForm($dto);
+        $form->handleRequest($request);
+
+        // remove all, which are not allowed to be edited
+        $timesheets = [];
+        /** @var Timesheet $timesheet */
+        foreach ($dto->getEntities() as $timesheet) {
+            if (!$this->isGranted('edit', $timesheet)) {
+                continue;
+            }
+            $timesheets[] = $timesheet;
+        }
+        $dto->setEntities($timesheets);
+
+        if (count($dto->getEntities()) === 0) {
+            return $this->redirectToRoute($this->getTimesheetRoute());
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Timesheet $timesheet */
+            $execute = false;
+            foreach ($dto->getEntities() as $timesheet) {
+                if ($dto->isReplaceTags()) {
+                    foreach ($timesheet->getTags() as $tag) {
+                        $timesheet->removeTag($tag);
+                    }
+                    $execute = true;
+                }
+                foreach ($dto->getTags() as $tag) {
+                    $timesheet->addTag($tag);
+                    $execute = true;
+                }
+                if (null !== $dto->getActivity()) {
+                    $timesheet->setActivity($dto->getActivity());
+                    $execute = true;
+                }
+                if (null !== $dto->getProject()) {
+                    $timesheet->setProject($dto->getProject());
+                    $execute = true;
+                }
+                if (null !== $dto->getUser()) {
+                    $timesheet->setUser($dto->getUser());
+                    $execute = true;
+                }
+                if (null !== $dto->isExported()) {
+                    $timesheet->setExported($dto->isExported());
+                    $execute = true;
+                }
+            }
+
+            if ($execute) {
+                try {
+                    $this->repository->saveMultiple($dto->getEntities());
+                    $this->flashSuccess('action.update.success');
+
+                    return $this->redirectToRoute($this->getTimesheetRoute());
+                } catch (\Exception $ex) {
+                    $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                }
+            }
+        }
+
+        return $this->render($renderTemplate, [
+            'form' => $form->createView(),
+            'dto' => $dto,
+        ]);
+    }
+
+    protected function multiDelete(Request $request)
+    {
+        $form = $this->getMultiUpdateActionForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $dto = $form->getData();
+            $timesheets = [];
+            /** @var Timesheet $timesheet */
+            foreach ($dto->getEntities() as $timesheet) {
+                if (!$this->isGranted('delete', $timesheet)) {
+                    continue;
+                }
+                $timesheets[] = $timesheet;
+            }
+            $dto->setEntities($timesheets);
+
+            try {
+                $this->repository->deleteMultiple($dto->getEntities());
+                $this->flashSuccess('action.delete.success');
+            } catch (\Exception $ex) {
+                $this->flashError('action.delete.error', ['%reason%' => $ex->getMessage()]);
+            }
+        }
+
+        return $this->redirectToRoute($this->getTimesheetRoute());
+    }
+
     protected function prepareQuery(TimesheetQuery $query)
     {
         $query->setUser($this->getUser());
+    }
+
+    protected function getMultiUpdateForm(TimesheetMultiUpdateDTO $multiUpdate): FormInterface
+    {
+        return  $this->createForm(TimesheetMultiUpdate::class, $multiUpdate, [
+            'action' => $this->generateUrl($this->getMultiUpdateRoute(), []),
+            'method' => 'POST',
+            'include_exported' => $this->isGranted($this->getPermissionEditExport()),
+            'include_user' => $this->includeUserInForms(),
+        ]);
+    }
+
+    protected function getMultiUpdateActionForm(): FormInterface
+    {
+        $dto = new MultiUpdateTableDTO();
+
+        $dto->addUpdate($this->generateUrl($this->getMultiUpdateRoute()));
+        $dto->addDelete($this->generateUrl($this->getMultiDeleteRoute()));
+
+        return $this->createForm(MultiUpdateTable::class, $dto, [
+            'action' => $this->generateUrl($this->getTimesheetRoute()),
+            'repository' => $this->getRepository(),
+            'method' => 'POST',
+        ]);
     }
 
     protected function getCreateForm(Timesheet $entry, TrackingModeInterface $mode): FormInterface
@@ -325,6 +473,11 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
+    protected function getPermissionEditExport(): string
+    {
+        return 'edit_export_own_timesheet';
+    }
+
     protected function getCreateFormClassName(): string
     {
         return TimesheetEditForm::class;
@@ -358,6 +511,16 @@ abstract class TimesheetAbstractController extends AbstractController
     protected function getCreateRoute(): string
     {
         return 'timesheet_create';
+    }
+
+    protected function getMultiUpdateRoute(): string
+    {
+        return 'timesheet_multi_update';
+    }
+
+    protected function getMultiDeleteRoute(): string
+    {
+        return 'timesheet_multi_delete';
     }
 
     protected function canSeeStartEndTime(): bool
