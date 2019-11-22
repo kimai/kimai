@@ -119,11 +119,8 @@ class UserController extends BaseApiController
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
-     *
-     * @param int $id
-     * @return Response
      */
-    public function getAction($id): Response
+    public function getAction(int $id): Response
     {
         $user = $this->repository->find($id);
 
