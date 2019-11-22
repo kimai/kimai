@@ -16,7 +16,9 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use Swagger\Annotations as SWG;
+use Symfony\Component\HttpFoundation\Response;
 
 class StatusController extends BaseApiController
 {
@@ -43,8 +45,11 @@ class StatusController extends BaseApiController
      * )
      *
      * @Rest\Get(path="/ping")
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function pingAction()
+    public function pingAction(): Response
     {
         $view = new View(['message' => 'pong'], 200);
 
@@ -61,8 +66,11 @@ class StatusController extends BaseApiController
      * )
      *
      * @Rest\Get(path="/version")
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function versionAction()
+    public function versionAction(): Response
     {
         return $this->viewHandler->handle(new View(new Version(), 200));
     }

@@ -19,6 +19,7 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Response;
@@ -70,10 +71,10 @@ class UserController extends BaseApiController
      *
      * @Security("is_granted('view_user')")
      *
-     * @param ParamFetcherInterface $paramFetcher
-     * @return Response
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function cgetAction(ParamFetcherInterface $paramFetcher)
+    public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         $query = new UserQuery();
 
@@ -116,10 +117,13 @@ class UserController extends BaseApiController
      *      required=true,
      * )
      *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     *
      * @param int $id
      * @return Response
      */
-    public function getAction($id)
+    public function getAction($id): Response
     {
         $user = $this->repository->find($id);
 
