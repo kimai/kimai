@@ -19,6 +19,7 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Response;
@@ -70,10 +71,10 @@ class UserController extends BaseApiController
      *
      * @Security("is_granted('view_user')")
      *
-     * @param ParamFetcherInterface $paramFetcher
-     * @return Response
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function cgetAction(ParamFetcherInterface $paramFetcher)
+    public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         $query = new UserQuery();
 
@@ -105,7 +106,7 @@ class UserController extends BaseApiController
      *
      * @SWG\Response(
      *      response=200,
-     *      description="Return one user entity. Required permission: view_user",
+     *      description="Return one user entity.",
      *      @SWG\Schema(ref="#/definitions/UserEntity"),
      * )
      * @SWG\Parameter(
@@ -116,10 +117,10 @@ class UserController extends BaseApiController
      *      required=true,
      * )
      *
-     * @param int $id
-     * @return Response
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function getAction($id)
+    public function getAction(int $id): Response
     {
         $user = $this->repository->find($id);
 
@@ -132,6 +133,28 @@ class UserController extends BaseApiController
         }
 
         $view = new View($user, 200);
+        $view->getContext()->setGroups(['Default', 'Entity', 'User']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Return the current user entity
+     *
+     * @SWG\Response(
+     *      response=200,
+     *      description="Return the current user entity.",
+     *      @SWG\Schema(ref="#/definitions/UserEntity"),
+     * )
+     *
+     * @Rest\Get(path="/users/me")
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function meAction(): Response
+    {
+        $view = new View($this->getUser(), 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'User']);
 
         return $this->viewHandler->handle($view);
