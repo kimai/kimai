@@ -126,8 +126,15 @@
         "kimai:code-check":  [
             "@kimai:codestyle",
             "@kimai:phpstan",
+            "@kimai:code-lint",
             "@kimai:tests-unit",
             "@kimai:tests-integration"
+        ],
+        "kimai:code-lint":  [
+            "bin/console lint:yaml config --parse-tags",
+            "bin/console lint:twig templates",
+            "bin/console lint:xliff translations",
+            "bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction"
         ],
         "kimai:tests": "vendor/bin/phpunit tests/",
         "kimai:tests-unit": "vendor/bin/phpunit --exclude-group integration tests/",
@@ -146,7 +153,7 @@
         "symfony": {
             "id": "01C3FWRDJJEX9K6Y3A4XDFXPBR",
             "allow-contrib": true,
-            "require": "4.3.*"
+            "require": "4.4.*"
         }
     }
 }
