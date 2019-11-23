@@ -231,6 +231,9 @@
     "laravolt/avatar": {
         "version": "3.0.0"
     },
+    "league/csv": {
+        "version": "9.4.1"
+    },
     "markbaker/complex": {
         "version": "1.4.6"
     },
