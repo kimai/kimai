@@ -116,6 +116,16 @@ trait MetaTableTypeTrait
      */
     public function setValue($value): MetaTableTypeInterface
     {
+        // unchecked checkboxes / false bool would save an empty string in the database
+        // those cannot be searched in the database
+        if (null !== $value) {
+            switch ($this->type) {
+                case YesNoType::class:
+                case CheckboxType::class:
+                    $value = (int) $value;
+            }
+        }
+
         $this->value = $value;
 
         return $this;
