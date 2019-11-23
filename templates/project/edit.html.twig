@@ -42,6 +42,7 @@
                         {{ form_row(form.hourlyRate) }}
                     </div>
                 </div>
+                {% if form.budget is defined %}
                 <div class="row">
                     <div class="col-md-6">
                         {{ form_row(form.budget) }}
@@ -50,6 +51,7 @@
                         {{ form_row(form.timeBudget) }}
                     </div>
                 </div>
+                {% endif %}
             </fieldset>
             {{ form_row(form.visible) }}
             {% if form.metaFields is defined and form.metaFields is not empty %}

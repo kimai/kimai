@@ -60,9 +60,9 @@ export default class KimaiSelectDataAPI extends KimaiPlugin {
     _updateSelect(selectName, data) {
         const options = {};
         for (const apiData of data) {
-            let title = apiData.parentTitle;
-            if (title === null) {
-                title = '__empty__';
+            let title = '__empty__';
+            if (apiData.hasOwnProperty('parentTitle')) {
+                title = apiData.parentTitle;
             }
             if (!options.hasOwnProperty(title)) {
                 options[title] = [];
