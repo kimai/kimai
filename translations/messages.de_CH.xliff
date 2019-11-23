@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="de" target-language="de-CH" datatype="plaintext" original="messages.en.xliff">
+        <body>
+            <trans-unit id="action.close">
+                <source>action.close</source>
+                <target>Schliessen</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
