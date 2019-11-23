@@ -243,6 +243,8 @@ class CustomerRepository extends EntityRepository
                     $qb->expr()->orX(
                         $qb->expr()->like('c.name', ':searchTerm'),
                         $qb->expr()->like('c.comment', ':searchTerm'),
+                        $qb->expr()->like('c.company', ':searchTerm'),
+                        $qb->expr()->like('c.vatId', ':searchTerm'),
                         $qb->expr()->like('c.number', ':searchTerm'),
                         $qb->expr()->like('c.contact', ':searchTerm'),
                         $qb->expr()->like('c.phone', ':searchTerm'),

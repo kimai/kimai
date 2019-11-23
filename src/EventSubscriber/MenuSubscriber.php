@@ -71,9 +71,9 @@ final class MenuSubscriber implements EventSubscriberInterface
         }
 
         if ($auth->isGranted('view_invoice')) {
-            $menu->addItem(
-                new MenuItemModel('invoice', 'menu.invoice', 'invoice', [], $this->getIcon('invoice'))
-            );
+            $invoice = new MenuItemModel('invoice', 'menu.invoice', 'invoice', [], $this->getIcon('invoice'));
+            $invoice->setChildRoutes(['admin_invoice_template', 'admin_invoice_template_edit', 'admin_invoice_template_create']);
+            $menu->addItem($invoice);
         }
 
         if ($auth->isGranted('create_export')) {

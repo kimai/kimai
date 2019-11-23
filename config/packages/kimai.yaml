@@ -229,6 +229,12 @@ kimai:
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
             duration: '%%h:%%m h'
+        de_CH:
+            date_time_type: 'dd.MM.yyyy HH:mm'
+            date_type: 'dd.MM.yyyy'
+            date: 'd.m.Y'
+            date_time: 'd.m. H:i'
+            duration: '%%h:%%m h'
         en:
             date_time_type: 'yyyy-MM-dd HH:mm'
             date_type: 'yyyy-MM-dd'
@@ -271,6 +277,12 @@ kimai:
             date: 'Y-m-d'
             date_time: 'm-d H:i'
             duration: '%%h:%%m h'
+        nl:
+            date_time_type: 'dd.MM.yyyy HH:mm'
+            date_type: 'dd.MM.yyyy'
+            date: 'd.m.Y'
+            date_time: 'd.m. H:i'
+            duration: '%%hu%%m'
         pt_BR:
             date_time_type: 'dd-MM-yyyy HH:mm'
             date_type: 'dd-MM-yyyy'

@@ -56,6 +56,10 @@ class CustomerEditForm extends AbstractType
                 'label' => 'label.company',
                 'required' => false,
             ])
+            ->add('vatId', TextType::class, [
+                'label' => 'label.vat_id',
+                'required' => false,
+            ])
             ->add('contact', TextType::class, [
                 'label' => 'label.contact',
                 'required' => false,

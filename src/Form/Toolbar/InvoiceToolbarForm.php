@@ -41,7 +41,7 @@ class InvoiceToolbarForm extends AbstractToolbarForm
         ]);
         $builder->add('create', SubmitType::class, [
             'label' => 'button.print',
-            'attr' => ['formtarget' => 'invoice'],
+            'attr' => ['formtarget' => '_blank'],
         ]);
         $builder->add('preview', SubmitType::class, [
             'label' => 'button.preview',

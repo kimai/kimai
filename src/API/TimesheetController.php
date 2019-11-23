@@ -30,6 +30,7 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
@@ -136,11 +137,10 @@ class TimesheetController extends BaseApiController
      *
      * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
      *
-     * @param ParamFetcherInterface $paramFetcher
-     * @return Response
-     * @throws \Exception
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function cgetAction(ParamFetcherInterface $paramFetcher)
+    public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         $query = new TimesheetQuery();
         $query->setUser($this->getUser());
@@ -249,10 +249,10 @@ class TimesheetController extends BaseApiController
      *
      * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
      *
-     * @param int $id
-     * @return Response
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function getAction($id)
+    public function getAction(int $id): Response
     {
         $data = $this->repository->find($id);
 
@@ -290,13 +290,10 @@ class TimesheetController extends BaseApiController
      *
      * @Security("is_granted('create_own_timesheet')")
      *
-     * @param Request $request
-     * @return Response
-     * @throws \App\Repository\RepositoryException
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function postAction(Request $request)
+    public function postAction(Request $request): Response
     {
         $timesheet = new Timesheet();
         $timesheet->setUser($this->getUser());
@@ -368,11 +365,10 @@ class TimesheetController extends BaseApiController
      *      required=true,
      * )
      *
-     * @param Request $request
-     * @param int $id the timesheet to update
-     * @return Response
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function patchAction(Request $request, int $id)
+    public function patchAction(Request $request, int $id): Response
     {
         $timesheet = $this->repository->find($id);
 
@@ -433,10 +429,10 @@ class TimesheetController extends BaseApiController
      *      required=true,
      * )
      *
-     * @param int $id
-     * @return Response
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id): Response
     {
         $timesheet = $this->repository->find($id);
 
@@ -472,10 +468,11 @@ class TimesheetController extends BaseApiController
      * @Rest\QueryParam(name="size", requirements="\d+", strict=true, nullable=true, description="The amount of entries (default: 10)")
      *
      * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
-     * @return Response
-     * @throws \Doctrine\ORM\Query\QueryException
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function recentAction(ParamFetcherInterface $paramFetcher)
+    public function recentAction(ParamFetcherInterface $paramFetcher): Response
     {
         $user = $this->getUser();
         $begin = $this->dateTime->createDateTime('-1 year');
@@ -517,9 +514,11 @@ class TimesheetController extends BaseApiController
      * )
      *
      * @Security("is_granted('view_own_timesheet')")
-     * @return Response
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function activeAction()
+    public function activeAction(): Response
     {
         $data = $this->repository->getActiveEntries($this->getUser());
 
@@ -545,13 +544,10 @@ class TimesheetController extends BaseApiController
      *      required=true,
      * )
      *
-     * @param int $id
-     * @return Response
-     * @throws \App\Repository\RepositoryException
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function stopAction($id)
+    public function stopAction(int $id): Response
     {
         $timesheet = $this->repository->find($id);
 
@@ -589,13 +585,10 @@ class TimesheetController extends BaseApiController
      *
      * @Rest\RequestParam(name="copy", requirements="all|tags|rates|meta|description", strict=true, nullable=true, description="Whether data should be copied to the new entry. Allowed values: all, tags, rates, description, meta (default: nothing is copied)")
      *
-     * @param int $id
-     * @return Response
-     * @throws \App\Repository\RepositoryException
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function restartAction($id, ParamFetcherInterface $paramFetcher, ValidatorInterface $validator)
+    public function restartAction(int $id, ParamFetcherInterface $paramFetcher, ValidatorInterface $validator): Response
     {
         $timesheet = $this->repository->find($id);
 
@@ -678,12 +671,10 @@ class TimesheetController extends BaseApiController
      *      required=true,
      * )
      *
-     * @param int $id
-     * @return Response
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function exportAction($id)
+    public function exportAction(int $id): Response
     {
         $timesheet = $this->repository->find($id);
 
@@ -725,13 +716,10 @@ class TimesheetController extends BaseApiController
      * @Rest\RequestParam(name="name", strict=true, nullable=false, description="The meta-field name")
      * @Rest\RequestParam(name="value", strict=true, nullable=false, description="The meta-field value")
      *
-     * @param int $id
-     * @param ParamFetcherInterface $paramFetcher
-     * @return Response
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function metaAction($id, ParamFetcherInterface $paramFetcher)
+    public function metaAction(int $id, ParamFetcherInterface $paramFetcher): Response
     {
         $timesheet = $this->repository->find($id);
 

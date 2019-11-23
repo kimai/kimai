@@ -50,6 +50,7 @@ class InvoiceNumberGeneratorType extends AbstractType
                 return $renderer;
             },
             'translation_domain' => 'invoice-numbergenerator',
+            'search' => false,
         ]);
     }
 

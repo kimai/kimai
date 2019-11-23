@@ -13,13 +13,13 @@ namespace App\API;
 
 use App\Entity\Tag;
 use App\Form\API\TagApiEditForm;
-use App\Form\TagEditForm;
 use App\Repository\TagRepository;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,10 +65,10 @@ class TagController extends BaseApiController
      *
      * @Rest\QueryParam(name="name", strict=true, nullable=true, description="Search term to filter tag list")
      *
-     * @param ParamFetcherInterface $paramFetcher
-     * @return Response
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function cgetAction(ParamFetcherInterface $paramFetcher)
+    public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         $filter = $paramFetcher->get('name');
 
@@ -98,13 +98,10 @@ class TagController extends BaseApiController
      *      @SWG\Schema(ref="#/definitions/TagEditForm")
      * )
      *
-     * @param Request $request
-     * @return Response
-     * @throws \App\Repository\RepositoryException
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function postAction(Request $request)
+    public function postAction(Request $request): Response
     {
         if (!$this->isGranted('manage_tag')) {
             throw new AccessDeniedHttpException('User cannot create tags');
@@ -150,10 +147,10 @@ class TagController extends BaseApiController
      *
      * @Security("is_granted('delete_tag')")
      *
-     * @param int $id
-     * @return Response
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id): Response
     {
         $tag = $this->repository->find($id);
 
