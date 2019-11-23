@@ -21,11 +21,13 @@ kimai:
 # --------------------------------------------------------------------------------
 # TIME-TRACKING
 # All configs related to time-tracking, timesheets and record management
+# Most settings can be configured in the System configuration screen     
 # --------------------------------------------------------------------------------
     timesheet:
 
-        # renders timesheet descriptions with markdown
-        markdown_content: false
+        # Allows to render timesheet descriptions with markdown
+        # This setting can be changed through the Administration screen
+        # markdown_content: false
 
         # The time-tracking mode that should be used.
         # See https://www.kimai.org/documentation/timesheet.html#tracking-modes
@@ -42,36 +44,36 @@ kimai:
         # Rounding rules are used to round the begin & end dates and the duration for timesheet records.
         # The "default" rule will round "begin" down and "end" up to the full minute, the "duration" will not be rounded.
         # Find out more about rounding rules at https://www.kimai.org/documentation/timesheet.html
-        rounding:
-            default:
-                days: ['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
-                begin: 1
-                end: 1
-                duration: 0
-                mode: default
+        # rounding:
+        #    default:
+        #        days: ['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
+        #        begin: 1
+        #        end: 1
+        #        duration: 0
+        #        mode: default
 
-#       # If you want to apply different hourly rates for specific weekdays, you can uncomment the "rates" configuration.
-#       # The "weekend" rule will add 50% to each timesheet entry that will be recorded on "saturdays" or "sundays".
-#       # See documentation at: https://www.kimai.org/documentation/timesheet.html#rate-calculation
-#        rates:
-#            weekend:
-#                days: ['saturday','sunday']
-#                factor: 1.5
-#
-#        # If you want to limit the max. active entries per user, you can do it here.
-#        # The soft_limit is used as theme setting and displays a warning color if the user has reached X active recordings
-#        # The hard_limit is used to detect how many active records are allowed per user:
-#        # - by default a user can only have one active time-record: it is automatically stopped when a new one is started
-#        # - when hard_limit is > 1 and the user is trying to start a new entry after reaching the limit, a warning is shown
-#        #   and the user has to stop an active entry first
-#        active_entries:
-#            soft_limit: 1
-#            hard_limit: 3
-#
-#        # Rules that define timesheet validation and behaviour
-#        rules:
-#            # whether records in the future can be created
-#            allow_future_times: true
+        # If you want to apply different hourly rates for specific weekdays, you can uncomment the "rates" configuration.
+        # The "weekend" rule will add 50% to each timesheet entry that will be recorded on "saturdays" or "sundays".
+        # See documentation at: https://www.kimai.org/documentation/timesheet.html#rate-calculation
+        # rates:
+        #    weekend:
+        #        days: ['saturday','sunday']
+        #        factor: 1.5
+
+        # If you want to limit the max. active entries per user, you can do it here.
+        # The soft_limit is used as theme setting and displays a warning color if the user has reached X active recordings
+        # The hard_limit is used to detect how many active records are allowed per user:
+        # - by default a user can only have one active time-record: it is automatically stopped when a new one is started
+        # - when hard_limit is > 1 and the user is trying to start a new entry after reaching the limit, a warning is shown
+        #   and the user has to stop an active entry first
+        # active_entries:
+        #    soft_limit: 1
+        #    hard_limit: 3
+
+        # Rules that define timesheet validation and behaviour
+        # allow_future_times: whether records in the future can be created
+        # rules:
+        #    allow_future_times: true
 # --------------------------------------------------------------------------------
 
 
@@ -173,7 +175,7 @@ kimai:
         user_duration:
             title: stats.yourWorkingHours
             order: 10
-            permission: ROLE_USER
+            permission: view_own_timesheet
             type: '\App\Widget\Type\CompoundChart'
             widgets: [DailyWorkingTimeChart, userDurationToday, userDurationWeek, userDurationMonth, userDurationYear]
         user_rates:
@@ -227,6 +229,12 @@ kimai:
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
             duration: '%%h:%%m h'
+        de_CH:
+            date_time_type: 'dd.MM.yyyy HH:mm'
+            date_type: 'dd.MM.yyyy'
+            date: 'd.m.Y'
+            date_time: 'd.m. H:i'
+            duration: '%%h:%%m h'
         en:
             date_time_type: 'yyyy-MM-dd HH:mm'
             date_type: 'yyyy-MM-dd'
@@ -269,6 +277,12 @@ kimai:
             date: 'Y-m-d'
             date_time: 'm-d H:i'
             duration: '%%h:%%m h'
+        nl:
+            date_time_type: 'dd.MM.yyyy HH:mm'
+            date_type: 'dd.MM.yyyy'
+            date: 'd.m.Y'
+            date_time: 'd.m. H:i'
+            duration: '%%hu%%m'
         pt_BR:
             date_time_type: 'dd-MM-yyyy HH:mm'
             date_type: 'dd-MM-yyyy'

@@ -17,8 +17,10 @@ use App\Entity\User;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
@@ -54,8 +56,11 @@ class ConfigurationController extends BaseApiController
      * )
      *
      * @Rest\Get(path="/config/i18n")
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
      */
-    public function i18nAction()
+    public function i18nAction(): Response
     {
         /** @var User $user */
         $user = $this->getUser();

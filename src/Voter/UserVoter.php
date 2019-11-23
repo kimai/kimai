@@ -82,15 +82,8 @@ class UserVoter extends AbstractVoter
 
                 return $this->hasRolePermission($user, 'delete_user');
 
-            // used in templates and ProfileController
             case self::VIEW:
             case self::EDIT:
-                // always allow the user to edit these own settings
-                if ($subject->getId() === $user->getId()) {
-                    return true;
-                }
-                // no break on purpose
-
             case self::PREFERENCES:
             case self::PASSWORD:
             case self::API_TOKEN:

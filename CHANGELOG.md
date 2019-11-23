@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.5](https://github.com/kevinpapst/kimai2/tree/1.5) (2019-11-03)
+[Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.4.2...1.5)
+
 ## [1.4.2](https://github.com/kevinpapst/kimai2/tree/1.4) (2019-10-14)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.4.1...1.4.2)
 

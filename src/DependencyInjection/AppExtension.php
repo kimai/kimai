@@ -36,8 +36,13 @@ class AppExtension extends Extension
         if (isset($config['timesheet']['duration_only'])) {
             @trigger_error('Configuration "kimai.timesheet.duration_only" is deprecated, please remove it', E_USER_DEPRECATED);
             if (true === $config['timesheet']['duration_only'] && 'duration_only' !== $config['timesheet']['mode']) {
-                trigger_error('Found ambiguous configuration. Please remove "kimai.timesheet.duration_only" and set "kimai.timesheet.mode" instead.');
+                trigger_error('Found ambiguous configuration: remove "kimai.timesheet.duration_only" and set "kimai.timesheet.mode" instead.');
             }
+        }
+
+        // we use a comma sepearated string internally, to be able to use it in combination with the database configuration system
+        foreach ($config['timesheet']['rounding'] as $name => $settings) {
+            $config['timesheet']['rounding'][$name]['days'] = implode(',', $settings['days']);
         }
 
         // safe alternatives to %kernel.project_dir%
@@ -55,8 +60,6 @@ class AppExtension extends Extension
         $this->createThemeParameter($config['theme'], $container);
         $this->createUserParameter($config['user'], $container);
 
-        $container->setParameter('kimai.config', $config);
-
         $container->setParameter('kimai.timesheet', $config['timesheet']);
         $container->setParameter('kimai.timesheet.rates', $config['timesheet']['rates']);
         $container->setParameter('kimai.timesheet.rounding', $config['timesheet']['rounding']);
@@ -72,6 +75,22 @@ class AppExtension extends Extension
             $localTranslations[] = $config['industry']['translation'];
         }
         $container->setParameter('kimai.i18n_domains', $localTranslations);
+
+        // this should happen always at the end, so bundles do not mess with the base configuration
+        if ($container->hasParameter('kimai.bundles.config')) {
+            $bundleConfig = $container->getParameter('kimai.bundles.config');
+            if (!is_array($bundleConfig)) {
+                trigger_error('Invalid bundle configuration found, skipping all bundle configuration');
+            }
+            foreach ($bundleConfig as $key => $value) {
+                if (array_key_exists($key, $config)) {
+                    trigger_error(sprintf('Invalid bundle configuration "%s" found, skipping', $key));
+                    continue;
+                }
+                $config[$key] = $value;
+            }
+        }
+        $container->setParameter('kimai.config', $config);
     }
 
     protected function setLdapParameter(array $config, ContainerBuilder $container)

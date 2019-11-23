@@ -24,7 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Dashboard controller for the admin area.
  *
  * @Route(path="/dashboard")
- * @Security("is_granted('ROLE_USER')")
+ * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
 class DashboardController extends AbstractController
 {
@@ -121,9 +121,16 @@ class DashboardController extends AbstractController
         $this->eventDispatcher->dispatch($event);
 
         $sections = $event->getSections();
+        $clearedSections = [];
+        /** @var WidgetContainerInterface $section */
+        foreach ($sections as $key => $section) {
+            if (!empty($section->getWidgets())) {
+                $clearedSections[] = $section;
+            }
+        }
 
         uasort(
-            $sections,
+            $clearedSections,
             function (WidgetContainerInterface $a, WidgetContainerInterface $b) {
                 if ($a->getOrder() == $b->getOrder()) {
                     return 0;
@@ -134,7 +141,7 @@ class DashboardController extends AbstractController
         );
 
         return $this->render('dashboard/index.html.twig', [
-            'widgets' => $sections
+            'widgets' => $clearedSections
         ]);
     }
 }

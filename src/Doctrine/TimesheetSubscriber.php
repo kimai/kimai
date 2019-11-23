@@ -26,18 +26,10 @@ class TimesheetSubscriber implements EventSubscriber
     protected $calculator;
 
     /**
-     * @param iterable $calculators
+     * @param CalculatorInterface[] $calculators
      */
     public function __construct(iterable $calculators)
     {
-        foreach ($calculators as $calculator) {
-            if (!($calculator instanceof CalculatorInterface)) {
-                throw new \InvalidArgumentException(
-                    'Invalid TimesheetCalculator implementation given. Expected CalculatorInterface but received ' .
-                    get_class($calculator)
-                );
-            }
-        }
         $this->calculator = $calculators;
     }
 

@@ -10,28 +10,28 @@
 namespace App\Timesheet;
 
 use App\Configuration\TimesheetConfiguration;
-use App\Timesheet\TrackingMode\DefaultMode;
-use App\Timesheet\TrackingMode\DurationFixedBeginMode;
-use App\Timesheet\TrackingMode\DurationOnlyMode;
-use App\Timesheet\TrackingMode\PunchInOutMode;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
-class TrackingModeService
+final class TrackingModeService
 {
     /**
-     * @var UserDateTimeFactory
+     * @var TrackingModeInterface[]
      */
-    protected $dateTime;
+    private $modes = [];
     /**
      * @var TimesheetConfiguration
      */
-    protected $configuration;
+    private $configuration;
 
-    public function __construct(UserDateTimeFactory $dateTime, TimesheetConfiguration $configuration)
+    /**
+     * @param TimesheetConfiguration $configuration
+     * @param TrackingModeInterface[] $modes
+     */
+    public function __construct(TimesheetConfiguration $configuration, iterable $modes)
     {
-        $this->dateTime = $dateTime;
         $this->configuration = $configuration;
+        $this->modes = $modes;
     }
 
     /**
@@ -39,12 +39,7 @@ class TrackingModeService
      */
     public function getModes(): iterable
     {
-        return [
-            new DefaultMode($this->dateTime, $this->configuration),
-            new PunchInOutMode(),
-            new DurationOnlyMode($this->dateTime, $this->configuration),
-            new DurationFixedBeginMode($this->dateTime, $this->configuration),
-        ];
+        return $this->modes;
     }
 
     public function getActiveMode(): TrackingModeInterface

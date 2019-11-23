@@ -35,7 +35,7 @@ class OdsRendererTest extends TestCase
         $this->assertFalse($sut->supports($this->getInvoiceDocument('company.docx')));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('export.csv')));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('spreadsheet.xlsx')));
-        $this->assertTrue($sut->supports($this->getInvoiceDocument('open-spreadsheet.ods')));
+        $this->assertTrue($sut->supports($this->getInvoiceDocument('open-spreadsheet.ods', true)));
     }
 
     public function getTestModel()
@@ -52,7 +52,7 @@ class OdsRendererTest extends TestCase
         /** @var OdsRenderer $sut */
         $sut = $this->getAbstractRenderer(OdsRenderer::class);
         $model = $this->getInvoiceModel();
-        $document = $this->getInvoiceDocument('open-spreadsheet.ods');
+        $document = $this->getInvoiceDocument('open-spreadsheet.ods', true);
         /** @var BinaryFileResponse $response */
         $response = $sut->render($document, $model);
 

@@ -15,7 +15,7 @@ use App\Doctrine\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
- * Creates user team tables.
+ * Adds missing foreign keys on tag table.
  *
  * @version 1.2
  */
@@ -23,7 +23,7 @@ final class Version20190729162655 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Fixes foreign keys on tag table';
+        return 'Adds missing foreign keys on tag table';
     }
 
     protected function isSupportingForeignKeys(): bool

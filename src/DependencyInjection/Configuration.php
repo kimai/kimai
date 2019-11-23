@@ -98,17 +98,15 @@ class Configuration implements ConfigurationInterface
                     ->arrayPrototype()
                         ->children()
                             ->arrayNode('days')
-                                ->requiresAtLeastOneElement()
                                 ->useAttributeAsKey('key')
-                                ->isRequired()
                                 ->scalarPrototype()->end()
-                                ->defaultValue([])
+                                ->defaultValue(['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'])
                             ->end()
                             ->integerNode('begin')
-                                ->defaultValue(0)
+                                ->defaultValue(1)
                             ->end()
                             ->integerNode('end')
-                                ->defaultValue(0)
+                                ->defaultValue(1)
                             ->end()
                             ->integerNode('duration')
                                 ->defaultValue(0)
@@ -131,7 +129,15 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                     ->end()
-                    ->defaultValue([])
+                    ->defaultValue([
+                        'default' => [
+                            'days' => ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
+                            'begin' => 1,
+                            'end' => 1,
+                            'duration' => 0,
+                            'mode' => 'default'
+                        ]
+                    ])
                 ->end()
                 ->arrayNode('rates')
                     ->requiresAtLeastOneElement()
@@ -519,7 +525,6 @@ class Configuration implements ConfigurationInterface
                     ->requiresAtLeastOneElement()
                     ->useAttributeAsKey('key')
                     ->arrayPrototype()
-                        ->useAttributeAsKey('key')
                         ->isRequired()
                         ->scalarPrototype()->end()
                         ->defaultValue([])

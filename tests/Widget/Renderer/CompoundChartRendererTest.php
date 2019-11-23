@@ -24,7 +24,7 @@ class CompoundChartRendererTest extends TestCase
 {
     public function testSupports()
     {
-        $twig = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock();
+        $twig = $this->createMock(Environment::class);
         $sut = new CompoundChartRenderer($twig);
         self::assertTrue($sut->supports(new CompoundChart()));
         self::assertFalse($sut->supports(new CompoundRow()));
@@ -32,7 +32,7 @@ class CompoundChartRendererTest extends TestCase
 
     public function testRenderWithCounter()
     {
-        $twig = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->setMethods(['render'])->getMock();
+        $twig = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->onlyMethods(['render'])->getMock();
         $twig->expects($this->once())->method('render')->willReturnCallback(function ($name, $options) {
             return json_encode([$name, $options]);
         });

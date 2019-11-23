@@ -5,7 +5,7 @@
  * file that was distributed with this source code.
  */
 
-import KimaiClickHandlerReducedInTableRow from "./KimaiClickHandlerReducedInTableRow";
+import KimaiPlugin from "../KimaiPlugin";
 
 /**
  * Needs to be initialized with a class name.
@@ -18,7 +18,7 @@ import KimaiClickHandlerReducedInTableRow from "./KimaiClickHandlerReducedInTabl
  *
  * @param selector
  */
-export default class KimaiAPILink extends KimaiClickHandlerReducedInTableRow {
+export default class KimaiAPILink extends KimaiPlugin {
 
     constructor(selector) {
         super();

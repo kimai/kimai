@@ -1,0 +1,14 @@
+{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+{% import "user/actions.html.twig" as actions %}
+
+{% block page_title %}{{ 'user_role.title'|trans }}{% endblock %}
+{% block page_actions %}{{ actions.user_permissions('role') }}{% endblock %}
+
+{% block main %}
+    {{ include(app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig', {
+        'title': (role.id ? 'action.edit'|trans : 'create'|trans) ~ ': ' ~ 'user_role.title'|trans,
+        'form': form,
+        'back': path('admin_user_permissions')
+    }) }}
+{% endblock %}

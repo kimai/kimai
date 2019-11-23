@@ -46,7 +46,7 @@ class CustomerFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        $faker = Factory::create();
+        $faker = Factory::create('at_AT');
 
         $amountCustomers = rand(self::MIN_CUSTOMERS, self::MAX_CUSTOMERS);
         for ($c = 1; $c <= $amountCustomers; $c++) {
@@ -100,6 +100,7 @@ class CustomerFixtures extends Fixture
             ->setCountry($faker->countryCode)
             ->setTimezone($faker->timezone)
             ->setVisible($visible)
+            ->setVatId($faker->vat)
         ;
 
         if (rand(0, 3) % 3) {

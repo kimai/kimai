@@ -25,7 +25,14 @@
             {{ form_row(form.comment) }}
             <fieldset>
                 {#<legend>Company data</legend>#}
-                {{ form_row(form.company) }}
+                <div class="row">
+                    <div class="col-md-8">
+                        {{ form_row(form.company) }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_row(form.vatId) }}
+                    </div>
+                </div>
                 {{ form_row(form.address) }}
                 <div class="row">
                     <div class="col-md-4">

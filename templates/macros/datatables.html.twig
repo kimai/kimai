@@ -39,7 +39,13 @@
 {% endmacro %}
 
 {% macro datatable_header(tableName, columns, query, options) %}
-    {% set orderBy = options.orderBy|default(query.orderBy) %}
+    {% if query is not null %}
+        {% set orderBy = options.orderBy|default(query.orderBy) %}
+        {% set order = query.order|lower %}
+    {% else %}
+        {% set orderBy = false %}
+        {% set order = false %}
+    {% endif %}
     {% set striped = options.striped|default(true) %}
     {% set reloadEvent = options.reload|default('') %}
     {% set translationDomain = options.translationDomain|default('messages') %}
@@ -63,12 +69,16 @@
                                         {% set headerOptions = {'class': headerOptions} %}
                                     {% endif %}
                                     {% if not headerOptions.orderBy is defined %}
-                                        {% set headerOptions = headerOptions|merge({'orderBy': title}) %}
+                                        {% if orderBy is same as(false) %}
+                                            {% set headerOptions = headerOptions|merge({'orderBy': false}) %}
+                                        {% else %}
+                                            {% set headerOptions = headerOptions|merge({'orderBy': title}) %}
+                                        {% endif %}
                                     {% endif %}
                                     {% set headerClass = macro.data_table_column_class(tableName, columns, title) %}
                                     {% if title != 'actions' and not headerOptions.orderBy is same as(false) %}
                                         {% if orderBy == headerOptions.orderBy %}
-                                            {% set headerClass = headerClass ~ ' sortable sorting_' ~ (query.order|lower) %}
+                                            {% set headerClass = headerClass ~ ' sortable sorting_' ~ (order) %}
                                         {% else %}
                                             {% set headerClass = headerClass ~ ' sortable sorting' %}
                                         {% endif %}
@@ -79,7 +89,15 @@
                                     {% elseif title is not empty and title != 'actions' %}
                                         {% set headerTitle = (translationPrefix ~ title)|trans({}, translationDomain) %}
                                     {% endif %}
-                                    <th data-field="{{ title }}" {% if not headerOptions.orderBy is same as(false) %}data-order="{{ headerOptions.orderBy }}" {% endif %}class="{{ headerClass }}">{{ headerTitle }}</th>
+                                    <th data-field="{{ title }}" {% if not headerOptions.orderBy is same as(false) %}data-order="{{ headerOptions.orderBy }}" {% endif %}class="{{ headerClass }}">
+                                        {% if headerOptions.html_before is defined %}
+                                            {{ headerOptions.html_before|raw }}
+                                        {% endif %}
+                                        {{ headerTitle }}
+                                        {% if headerOptions.html_after is defined %}
+                                            {{ headerOptions.html_after|raw }}
+                                        {% endif %}
+                                    </th>
                                 {%- endfor -%}
                                 </tr>
                             </thead>
@@ -166,7 +184,7 @@
     {{ macro.data_table_header_options(name, columns, {'skipStripped': skipStripped, 'reloadEvent': reloadEvent}) }}
 {% endmacro %}
 
-{% macro data_table_footer(entries, route) %}
+{% macro data_table_footer(entries, route, multi_update_form) %}
                         </tbody>
                     </table>
                 </div>
@@ -174,6 +192,18 @@
         </div>
     </div>
 </div>
+{% if multi_update_form is not null %}
+<div id="multi_update_form" style="display: none">
+    {{ form_start(multi_update_form, {'attr': {'data-question': 'update_multiple'|trans}}) }}
+    <label class="col-sm-1 col-xs-2 control-label" for="multi_update_table_action">
+        <span class="pull-left"><i class="fas fa-level-up-alt fa-2x fa-rotate-90"></i></span>
+    </label>
+    <div class="col-sm-11 col-xs-10">
+        {{ form_widget(multi_update_form.action) }}
+    </div>
+    {{ form_end(multi_update_form) }}
+</div>
+{% endif %}
 {% if route is not empty and entries is not null%}
 <div class="navigation text-center no-print">
     {{ pagerfanta(entries, 'twitter_bootstrap3_translated', { proximity: 1, routeName: route }) }}
@@ -188,4 +218,12 @@
         {% set metaField = metaField.merge(field) %}
         {{ widgets.form_type_value(metaField.type, metaField.value, entry) }}
     {% endif %}
+{% endmacro %}
+
+{% macro datatable_multiupdate_all() %}
+    <input type="checkbox" id="multi_update_all" class="multiupdater">
+{% endmacro %}
+
+{% macro datatable_multiupdate_row(id) %}
+    <input type="checkbox" name="id" value="{{ id }}" class="multi_update_single multiupdater">
 {% endmacro %}

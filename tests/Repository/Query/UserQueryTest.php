@@ -30,10 +30,6 @@ class UserQueryTest extends BaseQueryTest
     protected function assertRole(UserQuery $sut)
     {
         $this->assertNull($sut->getRole());
-
-        $sut->setRole('foo-bar');
-        $this->assertNull($sut->getRole());
-
         $sut->setRole('ROLE_USER');
         $this->assertEquals('ROLE_USER', $sut->getRole());
     }

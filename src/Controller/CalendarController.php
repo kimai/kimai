@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Controller used to display calendars.
  *
  * @Route(path="/calendar")
- * @Security("is_granted('ROLE_USER')")
+ * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
 class CalendarController extends AbstractController
 {

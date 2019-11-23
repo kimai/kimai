@@ -3,7 +3,16 @@
 
     {% set actions = {'search': {'class': 'search-toggle visible-xs-inline'}} %}
     {% if is_granted('export_own_timesheet') %}
-        {% set actions = actions|merge({'download': {'url': path('timesheet_export'), 'class': 'toolbar-action'}}) %}
+        {% set exporterIds = timesheet_exporter() %}
+        {% if exporterIds|length == 1 %}
+            {% set actions = actions|merge({'download': {'url': path('timesheet_export', {'exporter': exporterIds.0}), 'class': 'toolbar-action'}}) %}
+        {% elseif exporterIds|length > 1 %}
+            {% set children = {} %}
+            {% for exporter in exporterIds %}
+                {% set children = children|merge({(exporter): {'title': ('button.' ~ exporter)|trans, 'url': path('timesheet_export', {'exporter': exporter}), 'class': 'toolbar-action exporter-' ~ exporter}}) %}
+            {% endfor %}
+            {% set actions = actions|merge({'download': {'children': children}}) %}
+        {% endif %}
     {% endif %}
     {% set actions = actions|merge({'visibility': {'modal': '#modal_timesheet'}}) %}
     {% if is_granted('create_own_timesheet') %}
@@ -54,4 +63,15 @@
         {{ widgets.entity_actions(event.payload.actions) }}
     {% endif %}
     {%- endapply -%}
+{% endmacro %}
+
+{% macro timesheets_multi_update(view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+
+    {% set actions = {} %}
+    {% set actions = actions|merge({'back': path('timesheet')}) %}
+    {% set actions = actions|merge({'help': {'url': 'timesheet.html'|docu_link, 'target': '_blank'}}) %}
+
+    {% set event = trigger('actions.timesheets_multi_update', {'actions': actions, 'view': view}) %}
+    {{ widgets.page_actions(event.payload.actions) }}
 {% endmacro %}

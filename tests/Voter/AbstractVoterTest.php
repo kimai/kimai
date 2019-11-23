@@ -10,9 +10,9 @@
 namespace App\Tests\Voter;
 
 use App\Entity\User;
+use App\Repository\RolePermissionRepository;
 use App\Security\AclDecisionManager;
 use App\Security\RolePermissionManager;
-use App\Tests\Mocks\Security\RoleServiceFactory;
 use App\Voter\AbstractVoter;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
@@ -97,9 +97,10 @@ abstract class AbstractVoterTest extends TestCase
             ];
         }
 
-        $factory = new RoleServiceFactory($this);
-        $roleService = $factory->create();
+        $repository = $this->getMockBuilder(RolePermissionRepository::class)->onlyMethods(['getAllAsArray'])->disableOriginalConstructor()->getMock();
+        $repository->method('getAllAsArray')->willReturn([]);
 
-        return new RolePermissionManager($roleService, $permissions);
+        /* @var RolePermissionRepository $repository */
+        return new RolePermissionManager($repository, $permissions);
     }
 }

@@ -23,85 +23,89 @@ class CustomerTest extends TestCase
     public function testDefaultValues()
     {
         $sut = new Customer();
-        $this->assertNull($sut->getId());
-        $this->assertNull($sut->getName());
-        $this->assertNull($sut->getNumber());
-        $this->assertNull($sut->getComment());
-        $this->assertTrue($sut->getVisible());
+        self::assertNull($sut->getId());
+        self::assertNull($sut->getName());
+        self::assertNull($sut->getNumber());
+        self::assertNull($sut->getComment());
+        self::assertTrue($sut->getVisible());
 
-        $this->assertNull($sut->getCompany());
-        $this->assertNull($sut->getContact());
-        $this->assertNull($sut->getAddress());
-        $this->assertNull($sut->getCountry());
-        $this->assertEquals('EUR', $sut->getCurrency());
-        $this->assertEquals('EUR', Customer::DEFAULT_CURRENCY);
-        $this->assertNull($sut->getPhone());
-        $this->assertNull($sut->getFax());
-        $this->assertNull($sut->getMobile());
-        $this->assertNull($sut->getEmail());
-        $this->assertNull($sut->getHomepage());
-        $this->assertNull($sut->getTimezone());
+        self::assertNull($sut->getCompany());
+        self::assertNull($sut->getVatId());
+        self::assertNull($sut->getContact());
+        self::assertNull($sut->getAddress());
+        self::assertNull($sut->getCountry());
+        self::assertEquals('EUR', $sut->getCurrency());
+        self::assertEquals('EUR', Customer::DEFAULT_CURRENCY);
+        self::assertNull($sut->getPhone());
+        self::assertNull($sut->getFax());
+        self::assertNull($sut->getMobile());
+        self::assertNull($sut->getEmail());
+        self::assertNull($sut->getHomepage());
+        self::assertNull($sut->getTimezone());
 
-        $this->assertNull($sut->getFixedRate());
-        $this->assertNull($sut->getHourlyRate());
-        $this->assertNull($sut->getColor());
-        $this->assertEquals(0.0, $sut->getBudget());
-        $this->assertEquals(0, $sut->getTimeBudget());
-        $this->assertInstanceOf(Collection::class, $sut->getMetaFields());
-        $this->assertEquals(0, $sut->getMetaFields()->count());
-        $this->assertNull($sut->getMetaField('foo'));
-        $this->assertInstanceOf(Collection::class, $sut->getTeams());
-        $this->assertEquals(0, $sut->getTeams()->count());
+        self::assertNull($sut->getFixedRate());
+        self::assertNull($sut->getHourlyRate());
+        self::assertNull($sut->getColor());
+        self::assertEquals(0.0, $sut->getBudget());
+        self::assertEquals(0, $sut->getTimeBudget());
+        self::assertInstanceOf(Collection::class, $sut->getMetaFields());
+        self::assertEquals(0, $sut->getMetaFields()->count());
+        self::assertNull($sut->getMetaField('foo'));
+        self::assertInstanceOf(Collection::class, $sut->getTeams());
+        self::assertEquals(0, $sut->getTeams()->count());
     }
 
     public function testSetterAndGetter()
     {
         $sut = new Customer();
-        $this->assertInstanceOf(Customer::class, $sut->setName('foo-bar'));
-        $this->assertEquals('foo-bar', $sut->getName());
-        $this->assertEquals('foo-bar', (string) $sut);
+        self::assertInstanceOf(Customer::class, $sut->setName('foo-bar'));
+        self::assertEquals('foo-bar', $sut->getName());
+        self::assertEquals('foo-bar', (string) $sut);
 
-        $this->assertInstanceOf(Customer::class, $sut->setVisible(false));
-        $this->assertFalse($sut->getVisible());
+        self::assertInstanceOf(Customer::class, $sut->setVisible(false));
+        self::assertFalse($sut->getVisible());
 
-        $this->assertInstanceOf(Customer::class, $sut->setComment('hello world'));
-        $this->assertEquals('hello world', $sut->getComment());
+        self::assertInstanceOf(Customer::class, $sut->setComment('hello world'));
+        self::assertEquals('hello world', $sut->getComment());
 
-        $this->assertInstanceOf(Customer::class, $sut->setColor('#fffccc'));
-        $this->assertEquals('#fffccc', $sut->getColor());
+        self::assertInstanceOf(Customer::class, $sut->setColor('#fffccc'));
+        self::assertEquals('#fffccc', $sut->getColor());
 
-        $this->assertInstanceOf(Customer::class, $sut->setCompany('test company'));
-        $this->assertEquals('test company', $sut->getCompany());
+        self::assertInstanceOf(Customer::class, $sut->setCompany('test company'));
+        self::assertEquals('test company', $sut->getCompany());
 
-        $this->assertInstanceOf(Customer::class, $sut->setContact('test contact'));
-        $this->assertEquals('test contact', $sut->getContact());
+        self::assertInstanceOf(Customer::class, $sut->setContact('test contact'));
+        self::assertEquals('test contact', $sut->getContact());
 
-        $this->assertInstanceOf(Customer::class, $sut->setPhone('0123456789'));
-        $this->assertEquals('0123456789', $sut->getPhone());
+        self::assertInstanceOf(Customer::class, $sut->setPhone('0123456789'));
+        self::assertEquals('0123456789', $sut->getPhone());
 
-        $this->assertInstanceOf(Customer::class, $sut->setFax('asdfghjkl'));
-        $this->assertEquals('asdfghjkl', $sut->getFax());
+        self::assertInstanceOf(Customer::class, $sut->setFax('asdfghjkl'));
+        self::assertEquals('asdfghjkl', $sut->getFax());
 
-        $this->assertInstanceOf(Customer::class, $sut->setMobile('76576534'));
-        $this->assertEquals('76576534', $sut->getMobile());
+        self::assertInstanceOf(Customer::class, $sut->setMobile('76576534'));
+        self::assertEquals('76576534', $sut->getMobile());
 
-        $this->assertInstanceOf(Customer::class, $sut->setEmail('test@example.com'));
-        $this->assertEquals('test@example.com', $sut->getEmail());
+        self::assertInstanceOf(Customer::class, $sut->setEmail('test@example.com'));
+        self::assertEquals('test@example.com', $sut->getEmail());
 
-        $this->assertInstanceOf(Customer::class, $sut->setHomepage('https://www.example.com'));
-        $this->assertEquals('https://www.example.com', $sut->getHomepage());
+        self::assertInstanceOf(Customer::class, $sut->setHomepage('https://www.example.com'));
+        self::assertEquals('https://www.example.com', $sut->getHomepage());
 
-        $this->assertInstanceOf(Customer::class, $sut->setFixedRate(13.47));
-        $this->assertEquals(13.47, $sut->getFixedRate());
+        self::assertInstanceOf(Customer::class, $sut->setFixedRate(13.47));
+        self::assertEquals(13.47, $sut->getFixedRate());
 
-        $this->assertInstanceOf(Customer::class, $sut->setHourlyRate(99));
-        $this->assertEquals(99, $sut->getHourlyRate());
+        self::assertInstanceOf(Customer::class, $sut->setHourlyRate(99));
+        self::assertEquals(99, $sut->getHourlyRate());
 
-        $this->assertInstanceOf(Customer::class, $sut->setBudget(12345.67));
-        $this->assertEquals(12345.67, $sut->getBudget());
+        self::assertInstanceOf(Customer::class, $sut->setBudget(12345.67));
+        self::assertEquals(12345.67, $sut->getBudget());
 
-        $this->assertInstanceOf(Customer::class, $sut->setTimeBudget(937321));
-        $this->assertEquals(937321, $sut->getTimeBudget());
+        self::assertInstanceOf(Customer::class, $sut->setTimeBudget(937321));
+        self::assertEquals(937321, $sut->getTimeBudget());
+
+        self::assertInstanceOf(Customer::class, $sut->setVatId('ID 1234567890'));
+        self::assertEquals('ID 1234567890', $sut->getVatId());
     }
 
     public function testMetaFields()
@@ -109,7 +113,7 @@ class CustomerTest extends TestCase
         $sut = new Customer();
         $meta = new CustomerMeta();
         $meta->setName('foo')->setValue('bar')->setType('test');
-        $this->assertInstanceOf(Customer::class, $sut->setMetaField($meta));
+        self::assertInstanceOf(Customer::class, $sut->setMetaField($meta));
         self::assertEquals(1, $sut->getMetaFields()->count());
         $result = $sut->getMetaField('foo');
         self::assertSame($result, $meta);
@@ -117,7 +121,7 @@ class CustomerTest extends TestCase
 
         $meta2 = new CustomerMeta();
         $meta2->setName('foo')->setValue('bar')->setType('test2');
-        $this->assertInstanceOf(Customer::class, $sut->setMetaField($meta2));
+        self::assertInstanceOf(Customer::class, $sut->setMetaField($meta2));
         self::assertEquals(1, $sut->getMetaFields()->count());
         self::assertCount(0, $sut->getVisibleMetaFields());
 

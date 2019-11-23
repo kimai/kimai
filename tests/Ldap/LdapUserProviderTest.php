@@ -25,7 +25,7 @@ class LdapUserProviderTest extends TestCase
         $this->expectException(UsernameNotFoundException::class);
         $this->expectExceptionMessage('User "test" not found');
 
-        $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->setMethods(['findUserByUsername'])->getMock();
+        $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->onlyMethods(['findUserByUsername'])->getMock();
         $manager->expects($this->once())->method('findUserByUsername')->willReturn(null);
 
         $sut = new LdapUserProvider($manager);
@@ -37,7 +37,7 @@ class LdapUserProviderTest extends TestCase
         $user = new User();
         $user->setUsername('foobar');
 
-        $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->setMethods(['findUserByUsername'])->getMock();
+        $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->onlyMethods(['findUserByUsername'])->getMock();
         $manager->expects($this->once())->method('findUserByUsername')->willReturn($user);
 
         $sut = new LdapUserProvider($manager);
@@ -52,7 +52,7 @@ class LdapUserProviderTest extends TestCase
         $user->setUsername('foobar');
         $user->setPreferenceValue('ldap.dn', 'sdfdsf');
 
-        $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->setMethods(['updateUser'])->getMock();
+        $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->onlyMethods(['updateUser'])->getMock();
 
         $sut = new LdapUserProvider($manager);
         $actual = $sut->refreshUser($user);

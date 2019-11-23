@@ -1,3 +1,11 @@
+{% set showUserColumn = true %}
+{% set showRateColumn = true %}
+{% if query.user %}
+    {# this is only triggered, if a user exports from his personal timesheet screen#}
+    {% set showUserColumn = false %}
+    {% set showRateColumn = is_granted('view_rate_own_timesheet') %}
+    {# TODO if exporting via the admin screen, users without view_rate_own_timesheet might still see their own rates, maybe merge view_rate_own_timesheet and view_rate_other_timesheet into a new view_rate permission? #}
+{% endif %}
 <html>
 <head>
     <style>
@@ -48,9 +56,17 @@
 <tr>
     <td align="left">
     {{ 'export.page_of'|trans({'%page%': '{PAGENO}', '%pages%': '{nb}'}) }}
+    {% if not showUserColumn %}
+        &ndash;
+        {{ 'label.user'|trans }}: {{ query.user.displayName }} 
+    {% endif %}
     </td>
     <td align="right">
-    {{ 'export.date_copyright'|trans({'%date%': now|date_short ~ ' ' ~ now|date('H:i'), '%kimai%': '<a href="' ~ constant('App\\Constants::HOMEPAGE') ~ '">' ~ constant('App\\Constants::SOFTWARE') ~ '</a>'})|raw }}
+    {% if kimai_context.branding.company is not empty %}
+        {{ kimai_context.branding.company }} &ndash; {{ now|date_full }}
+    {% else %}
+        {{ 'export.date_copyright'|trans({'%date%': now|date_full, '%kimai%': '<a href="' ~ constant('App\\Constants::HOMEPAGE') ~ '">' ~ constant('App\\Constants::SOFTWARE') ~ '</a>'})|raw }}
+    {% endif %}
     </td>
 </tr>
 </table>
@@ -62,6 +78,7 @@ mpdf-->
     {{ 'export.period'|trans }}:
     {{ query.begin|date_short }} - {{ query.end|date_short }}
 </p>
+
 <h3>{{ 'export.summary'|trans }}</h3>
 <table class="items" width="100%" style="font-size: 9pt; border-collapse: collapse; " cellpadding="8">
     <thead>
@@ -69,7 +86,9 @@ mpdf-->
         <td>{{ 'label.customer'|trans }}</td>
         <td>{{ 'label.project'|trans }}</td>
         <td>{{ 'label.duration'|trans }}</td>
+        {% if showRateColumn %}
         <td>{{ 'label.rate'|trans }}</td>
+        {% endif %}
     </tr>
     </thead>
     <tbody>
@@ -87,7 +106,9 @@ mpdf-->
                 <tr class="summary">
                     <td colspan="2"></td>
                     <td class="totals duration">{{ customerDuration|duration }}</td>
+                    {% if showRateColumn %}
                     <td class="totals cost">{{ customerRate|money(customerCurrency) }}</td>
+                    {% endif %}
                 </tr>
             {% set customerCurrency = summary.currency %}
             {% set customer = summary.customer %}
@@ -99,7 +120,9 @@ mpdf-->
             <td>{{ summary.customer }}</td>
             <td>{{ summary.project }}</td>
             <td class="duration">{{ summary.duration|duration }}</td>
+            {% if showRateColumn %}
             <td class="cost">{{ summary.rate|money(summary.currency) }}</td>
+            {% endif %}
         </tr>
         {% set customerDuration = customerDuration + summary.duration %}
         {% set customerRate = customerRate + summary.rate %}
@@ -109,7 +132,9 @@ mpdf-->
     <tr class="summary">
         <td colspan="2"></td>
         <td class="totals duration">{{ customerDuration|duration }}</td>
+        {% if showRateColumn %}
         <td class="totals cost">{{ customerRate|money(customerCurrency) }}</td>
+        {% endif %}
     </tr>
     {% endif %}
     </tbody>
@@ -126,15 +151,19 @@ mpdf-->
     <thead>
     <tr>
         <td>{{ 'label.date'|trans }}</td>
+        {% if showUserColumn %}
+        <td>{{ 'label.user'|trans }}</td>
+        {% endif %}
         <td width="">{{ 'label.description'|trans }}</td>
         <td>{{ 'label.duration'|trans }}</td>
+        {% if showRateColumn %}
         <td>{{ 'label.rate'|trans }}</td>
+        {% endif %}
     </tr>
     </thead>
     <tbody>
     {% for entry in entries %}
         {% set duration = duration + entry.duration %}
-        {% set rate = rate + entry.rate %}
         {% if currency is same as(false) %}
             {% set currency = entry.project.customer.currency %}
         {% endif %}
@@ -149,6 +178,9 @@ mpdf-->
                     {{ entry.end|date_time }}
                 {% endif %}
             </td>
+            {% if showUserColumn %}
+                <td>{{ entry.user.displayName }}</td>
+            {% endif %}
             <td>
                 {{ entry.project.customer.name }} - {{ entry.project.name }} - {{ entry.activity.name }}
                 {% if entry.description is not empty %}
@@ -157,13 +189,28 @@ mpdf-->
                 {% endif %}
             </td>
             <td class="duration">{{ entry.duration|duration }}</td>
-            <td class="cost">{{ entry.rate|money(entry.project.customer.currency) }}</td>
+            {% if showRateColumn %}
+            <td class="cost">
+                {% if is_granted('view_rate', entry) %}
+                {% set rate = rate + entry.rate %}
+                {{ entry.rate|money(entry.project.customer.currency) }}
+                {% else %}
+                    &ndash;
+                {% endif %}
+            </td>
+            {% endif %}
         </tr>
     {% endfor %}
     <tr class="summary">
+        {% if showUserColumn %}
+            <td colspan="3"></td>
+        {% else %}
         <td colspan="2"></td>
+        {% endif %}
         <td class="totals duration">{{ duration|duration }}</td>
+        {% if showRateColumn %}
         <td class="totals cost">{{ rate|money(currency) }}</td>
+        {% endif %}
     </tr>
     </tbody>
 </table>

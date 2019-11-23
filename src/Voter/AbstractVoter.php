@@ -29,10 +29,6 @@ abstract class AbstractVoter extends Voter
      */
     protected $roleManager;
 
-    /**
-     * @param AclDecisionManager $decisionManager
-     * @param RolePermissionManager $roleManager
-     */
     public function __construct(AclDecisionManager $decisionManager, RolePermissionManager $roleManager)
     {
         $this->decisionManager = $decisionManager;

@@ -16,6 +16,7 @@ use App\Repository\ProjectRepository;
 use App\Repository\TagRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -31,7 +32,7 @@ class TimesheetController extends TimesheetAbstractController
      *
      * @param int $page
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function indexAction($page, Request $request)
     {
@@ -39,15 +40,16 @@ class TimesheetController extends TimesheetAbstractController
     }
 
     /**
-     * @Route(path="/export", name="timesheet_export", methods={"GET"})
+     * @Route(path="/export/{exporter}", name="timesheet_export", methods={"GET"})
      * @Security("is_granted('export_own_timesheet')")
      *
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param string $exporter
+     * @return Response
      */
-    public function exportAction(Request $request)
+    public function exportAction(Request $request, string $exporter)
     {
-        return $this->export($request, 'timesheet/export.html.twig', TimesheetMetaDisplayEvent::TIMESHEET_EXPORT);
+        return $this->export($request, $exporter);
     }
 
     /**
@@ -64,6 +66,24 @@ class TimesheetController extends TimesheetAbstractController
     }
 
     /**
+     * @Route(path="/multi-update", name="timesheet_multi_update", methods={"POST"})
+     * @Security("is_granted('edit_own_timesheet')")
+     */
+    public function multiUpdateAction(Request $request)
+    {
+        return $this->multiUpdate($request, 'timesheet/multi-update.html.twig');
+    }
+
+    /**
+     * @Route(path="/multi-delete", name="timesheet_multi_delete", methods={"POST"})
+     * @Security("is_granted('delete_own_timesheet')")
+     */
+    public function multiDeleteAction(Request $request)
+    {
+        return $this->multiDelete($request);
+    }
+
+    /**
      * @Route(path="/create", name="timesheet_create", methods={"GET", "POST"})
      * @Security("is_granted('create_own_timesheet')")
      *
@@ -75,24 +95,5 @@ class TimesheetController extends TimesheetAbstractController
     public function createAction(Request $request, ProjectRepository $projectRepository, ActivityRepository $activityRepository, TagRepository $tagRepository)
     {
         return $this->create($request, 'timesheet/edit.html.twig', $projectRepository, $activityRepository, $tagRepository);
-    }
-
-    /**
-     * Used for the initial page rendering.
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function activeEntriesAction()
-    {
-        $user = $this->getUser();
-        $activeEntries = $this->getRepository()->getActiveEntries($user);
-
-        return $this->render(
-            'navbar/active-entries.html.twig',
-            [
-                'entries' => $activeEntries,
-                'soft_limit' => $this->getSoftLimit(),
-            ]
-        );
     }
 }

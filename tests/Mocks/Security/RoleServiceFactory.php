@@ -9,13 +9,20 @@
 
 namespace App\Tests\Mocks\Security;
 
+use App\Entity\Role;
 use App\Entity\User;
+use App\Repository\RoleRepository;
 use App\Security\RoleService;
 use App\Tests\Mocks\AbstractMockFactory;
 
 class RoleServiceFactory extends AbstractMockFactory
 {
-    public function create($roles = null): RoleService
+    /**
+     * @param string[]|null $roles
+     * @param Role[]|null $repositoryRoles
+     * @return RoleService
+     */
+    public function create(?array $roles = null, ?array $repositoryRoles = []): RoleService
     {
         if (null === $roles) {
             $roles = [
@@ -26,6 +33,10 @@ class RoleServiceFactory extends AbstractMockFactory
             ];
         }
 
-        return new RoleService($roles);
+        $repository = $this->getMockBuilder(RoleRepository::class)->onlyMethods(['findAll'])->disableOriginalConstructor()->getMock();
+        $repository->method('findAll')->willReturn($repositoryRoles);
+
+        /* @var RoleRepository $repository */
+        return new RoleService($repository, $roles);
     }
 }

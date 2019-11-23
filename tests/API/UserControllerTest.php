@@ -72,6 +72,22 @@ class UserControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertStructure($result);
+        self::assertEquals('1', $result['id']);
+        self::assertEquals('CFO', $result['title']);
+        self::assertEquals('Clara Haynes', $result['alias']);
+    }
+
+    public function testGetMyProfile()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/api/users/me');
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertStructure($result);
+        self::assertEquals('6', $result['id']);
+        self::assertEquals('Super Administrator', $result['title']);
+        self::assertEquals('', $result['alias']);
     }
 
     public function testNotFound()

@@ -15,8 +15,7 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
-use App\Tests\Mocks\Security\UserDateTimeFactoryFactory;
-use App\Timesheet\TrackingModeService;
+use App\Tests\Mocks\TrackingModeServiceFactory;
 use App\Validator\Constraints\Timesheet as TimesheetConstraint;
 use App\Validator\Constraints\TimesheetValidator;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -34,15 +33,13 @@ class TimesheetValidatorTest extends ConstraintValidatorTestCase
         $authMock = $this->getMockBuilder(AuthorizationCheckerInterface::class)->getMock();
         $authMock->method('isGranted')->willReturn($isGranted);
 
-        $loader = $this->getMockBuilder(ConfigLoaderInterface::class)->getMock();
+        $loader = $this->createMock(ConfigLoaderInterface::class);
         $config = new TimesheetConfiguration($loader, [
             'rules' => [
                 'allow_future_times' => false,
             ],
-            'mode' => 'default',
         ]);
-        $dateTime = (new UserDateTimeFactoryFactory($this))->create();
-        $service = new TrackingModeService($dateTime, $config);
+        $service = (new TrackingModeServiceFactory($this))->create('default');
 
         return new TimesheetValidator($authMock, $config, $service);
     }

@@ -15,7 +15,7 @@ use App\Ldap\LdapDriver;
 use App\Ldap\LdapDriverException;
 use App\Ldap\LdapManager;
 use App\Ldap\LdapUserHydrator;
-use App\Security\RoleService;
+use App\Tests\Mocks\Security\RoleServiceFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -50,11 +50,13 @@ class LdapManagerTest extends TestCase
             'role' => $roleConfig,
         ]);
 
-        $hydrator = new LdapUserHydrator($config, new RoleService([
+        $roles = [
             'ROLE_TEAMLEAD' => ['ROLE_USER'],
             'ROLE_ADMIN' => ['ROLE_TEAMLEAD'],
             'ROLE_SUPER_ADMIN' => ['ROLE_ADMIN']
-        ]));
+        ];
+
+        $hydrator = new LdapUserHydrator($config, (new RoleServiceFactory($this))->create($roles));
 
         return new LdapManager($driver, $hydrator, $config);
     }
@@ -65,7 +67,7 @@ class LdapManagerTest extends TestCase
             'count' => 0
         ];
 
-        $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->setMethods(['search'])->getMock();
+        $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->onlyMethods(['search'])->getMock();
         $driver->expects($this->once())->method('search')->willReturnCallback(function ($baseDn, $filter) use ($expected) {
             self::assertEquals('ou=users, dc=kimai, dc=org', $baseDn);
             self::assertEquals('(&(&(objectClass=inetOrgPerson))(uid=foo))', $filter);
@@ -87,7 +89,7 @@ class LdapManagerTest extends TestCase
             'count' => 3
         ];
 
-        $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->setMethods(['search'])->getMock();
+        $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->onlyMethods(['search'])->getMock();
         $driver->expects($this->once())->method('search')->willReturnCallback(function ($baseDn, $filter) use ($expected) {
             self::assertEquals('ou=users, dc=kimai, dc=org', $baseDn);
             self::assertEquals('(&(&(objectClass=inetOrgPerson))(uid=foo))', $filter);
@@ -106,7 +108,7 @@ class LdapManagerTest extends TestCase
             'count' => 1,
         ];
 
-        $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->setMethods(['search'])->getMock();
+        $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->onlyMethods(['search'])->getMock();
         $driver->expects($this->once())->method('search')->willReturnCallback(function ($baseDn, $filter) use ($expected) {
             self::assertEquals('ou=users, dc=kimai, dc=org', $baseDn);
             self::assertEquals('(&(&(objectClass=inetOrgPerson))(uid=foo))', $filter);
@@ -125,7 +127,7 @@ class LdapManagerTest extends TestCase
             'count' => 0
         ];
 
-        $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->setMethods(['search'])->getMock();
+        $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->onlyMethods(['search'])->getMock();
         $driver->expects($this->once())->method('search')->willReturnCallback(function ($baseDn, $filter) use ($expected) {
             self::assertEquals('ou=users, dc=kimai, dc=org', $baseDn);
             self::assertEquals('(&(&(objectClass=inetOrgPerson))(uid=foo))', $filter);
@@ -147,7 +149,7 @@ class LdapManagerTest extends TestCase
             'count' => 3
         ];
 
-        $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->setMethods(['search'])->getMock();
+        $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->onlyMethods(['search'])->getMock();
         $driver->expects($this->once())->method('search')->willReturnCallback(function ($baseDn, $filter) use ($expected) {
             self::assertEquals('ou=users, dc=kimai, dc=org', $baseDn);
             self::assertEquals('(&(&(objectClass=inetOrgPerson))(uid=foo))', $filter);
@@ -166,7 +168,7 @@ class LdapManagerTest extends TestCase
             'count' => 1,
         ];
 
-        $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->setMethods(['search'])->getMock();
+        $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->onlyMethods(['search'])->getMock();
         $driver->expects($this->once())->method('search')->willReturnCallback(function ($baseDn, $filter) use ($expected) {
             self::assertEquals('ou=users, dc=kimai, dc=org', $baseDn);
             self::assertEquals('(&(&(objectClass=inetOrgPerson))(träl=alß#\\\aa=XY\5cZ0)(test=fu=n))', $filter);
@@ -183,7 +185,7 @@ class LdapManagerTest extends TestCase
     {
         $user = (new User())->setUsername('foobar');
 
-        $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->setMethods(['bind'])->getMock();
+        $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->onlyMethods(['bind'])->getMock();
         $driver->expects($this->once())->method('bind')->willReturnCallback(function ($bindUser, $password) use ($user) {
             self::assertSame($user, $bindUser);
             self::assertEquals('a-very-secret-secret', $password);
@@ -210,7 +212,7 @@ class LdapManagerTest extends TestCase
             ],
         ];
 
-        $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->setMethods(['search'])->getMock();
+        $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->onlyMethods(['search'])->getMock();
         $driver->expects($this->exactly(2))->method('search')->willReturnCallback(function ($baseDn, $filter) use ($expected) {
             if ($baseDn === 'ou=users, dc=kimai, dc=org') {
                 self::assertEquals('(&(&(objectClass=inetOrgPerson))(uid=foobar))', $filter);
@@ -249,7 +251,7 @@ class LdapManagerTest extends TestCase
             ],
         ];
 
-        $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->setMethods(['search'])->getMock();
+        $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->onlyMethods(['search'])->getMock();
         $driver->expects($this->exactly(2))->method('search')->willReturnCallback(function ($baseDn, $filter) use ($expected) {
             if ($baseDn === 'ou=users, dc=kimai, dc=org') {
                 self::assertEquals('(&(&(objectClass=inetOrgPerson))(uid=foobar))', $filter);
@@ -284,7 +286,7 @@ class LdapManagerTest extends TestCase
             ],
         ];
 
-        $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->setMethods(['search'])->getMock();
+        $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->onlyMethods(['search'])->getMock();
         $driver->expects($this->exactly(2))->method('search')->willReturnCallback(function ($baseDn, $filter) use ($expected) {
             if ($baseDn === 'ou=users, dc=kimai, dc=org') {
                 self::assertEquals('(&(&(objectClass=inetOrgPerson))(uid=foobar))', $filter);
@@ -418,7 +420,7 @@ class LdapManagerTest extends TestCase
             'count' => 4
         ];
 
-        $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->setMethods(['search'])->getMock();
+        $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->onlyMethods(['search'])->getMock();
         $driver->expects($this->exactly(3))->method('search')->willReturnCallback(function ($baseDn, $filter, $attributes) use ($expectedUsers, $expectedGroups, $expectedGroupQuery, $expected) {
             if ($baseDn === 'ou=users, dc=kimai, dc=org') {
                 self::assertEquals('(&(&(objectClass=inetOrgPerson))(uid=Karl-Heinz))', $filter);

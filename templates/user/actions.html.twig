@@ -9,7 +9,7 @@
         {% set actions = actions|merge({'back': path('admin_user')}) %}
     {% endif %}
 
-    {% if view != 'permissions' and is_granted('role_permissions') %}
+    {% if is_granted('role_permissions') %}
         {% set actions = actions|merge({'permissions': path('admin_user_permissions')}) %}
     {% endif %}
 
@@ -33,7 +33,18 @@
     {% import "macros/widgets.html.twig" as widgets %}
     {% set actions = {} %}
 
-    {% set actions = actions|merge({'back': path('admin_user')}) %}
+    {% if is_granted('view_user') %}
+        {% set actions = actions|merge({'back': path('admin_user')}) %}
+    {% endif %}
+    
+    {% if view != 'index' and is_granted('role_permissions') %}
+        {% set actions = actions|merge({'permissions': path('admin_user_permissions')}) %}
+    {% endif %}
+
+    {% if view != 'role' and is_granted('role_permissions') %}
+        {% set actions = actions|merge({'roles': {'url': path('admin_user_roles'), 'class': 'modal-ajax-form'}}) %}
+    {% endif %}
+
     {% set actions = actions|merge({'help': {'url': 'permissions.html'|docu_link, 'target': '_blank'}}) %}
 
     {% set event = trigger('actions.user_permissions', {'actions': actions, 'view': view}) %}
