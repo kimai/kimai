@@ -246,14 +246,11 @@ class ImportProjectCommand extends Command
                 $this->projects->saveProject($project);
 
                 if (null !== $team) {
-                    $customer->addTeam($team);
                     $project->addTeam($team);
-                    $team->addCustomer($customer);
                     $team->addProject($project);
 
                     $this->teams->saveTeam($team);
                     $this->projects->saveProject($project);
-                    $this->customers->saveCustomer($customer);
                 }
             } catch (\Exception $ex) {
                 $io->error(sprintf('Failed importing project row %s with: %s', $row, $ex->getMessage()));
