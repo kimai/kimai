@@ -225,7 +225,7 @@ class TimesheetEditForm extends AbstractType
                     'group_by' => null,
                     'query_builder' => function (ProjectRepository $repo) use ($builder, $project, $customer, $isNew) {
                         // is there a better wa to prevent starting a record with a hidden project ?
-                        if ($isNew && !is_object($project)) {
+                        if ($isNew && !empty($project) && (is_int($project) || is_string($project))) {
                             /** @var Project $project */
                             $project = $repo->find($project);
                             if (null !== $project) {
