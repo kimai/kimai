@@ -33,19 +33,19 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- * This command can change anytime or even get deleted, don't rely on it!
+ * This command can change anytime, don't rely on its API for the future!
  *
  * @internal
  * @codeCoverageIgnore
  */
-class CsvImporterCommand extends Command
+class ImportTimesheetCommand extends Command
 {
-    protected static $defaultName = 'kimai:csv-importer';
+    protected static $defaultName = 'kimai:import:timesheet';
 
     public const DEFAULT_BEGIN = '00:00';
     public const DEFAULT_CUSTOMER = 'Imported customer - %s';
 
-    private $supportedHeader = [
+    private static $supportedHeader = [
         'Date',
         'From',
         'To',
@@ -110,6 +110,10 @@ class CsvImporterCommand extends Command
      * @var string
      */
     private $dateTime = '';
+    /**
+     * @var string 
+     */
+    private $begin = self::DEFAULT_BEGIN;
 
     public function __construct(CustomerRepository $customers, ProjectRepository $projects, ActivityRepository $activities, UserRepository $users, TimesheetRepository $timesheets, FormConfiguration $configuration)
     {
@@ -129,12 +133,17 @@ class CsvImporterCommand extends Command
     {
         $this
             ->setName(self::$defaultName)
-            ->setDescription('Basic CSV importer for Kimai')
-            ->setHelp('This command helps to import CSV files, which are formatted like CSV exports. Imported customer, projects and activities will be matched by name.')
+            ->setDescription('Import timesheets from CSV file')
+            ->setHelp(
+                'This command allows to import timesheets from a CSV file, which are formatted like CSV exports.' . PHP_EOL .  
+                'Imported customer, projects and activities will be matched by name.' . PHP_EOL . 
+                'Supported columns names: ' . implode(', ', self::$supportedHeader) . PHP_EOL
+            )
             ->addOption('timezone', null, InputOption::VALUE_OPTIONAL, 'The timezone to be used. Supports: "valid timezone names", the string "user" (using the configured users timezone) and the string "server" (PHP default timezone)', 'user')
             ->addOption('customer', null, InputOption::VALUE_OPTIONAL, 'A customer ID or name to assign for empty entries. Defaults to creating a new customer which is used for all un-linked projects')
             ->addOption('activity', null, InputOption::VALUE_OPTIONAL, 'Whether new activities should be "global" or "project" specific. Allowed values are "global" and "project"', 'project')
             ->addOption('delimiter', null, InputOption::VALUE_OPTIONAL, 'The CSV field delimiter', ',')
+            ->addOption('begin', null, InputOption::VALUE_OPTIONAL, 'Default begin if none was provided in the format HH:MM', self::DEFAULT_BEGIN)
             ->addOption('comment', null, InputOption::VALUE_OPTIONAL, 'A description to be added to created customers, projects and activities. %s will be replaced with the current datetime', 'Imported at %s')
             ->addArgument('file', InputArgument::REQUIRED, 'The CSV file to be imported')
         ;
@@ -149,7 +158,7 @@ class CsvImporterCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $io->title('Kimai CSV Importer');
+        $io->title('Kimai importer: Timesheets');
 
         $csvFile = $input->getArgument('file');
         if (!file_exists($csvFile)) {
@@ -166,6 +175,7 @@ class CsvImporterCommand extends Command
 
         $this->dateTime = (new \DateTime())->format('Y.m.d H:i');
         $this->comment = sprintf($input->getOption('comment'), $this->dateTime);
+        $this->begin = $input->getOption('begin');
 
         $timezone = $input->getOption('timezone');
         switch ($timezone) {
@@ -206,7 +216,7 @@ class CsvImporterCommand extends Command
                 sprintf(
                     'Found invalid CSV. The header:' . PHP_EOL . '%s' . PHP_EOL . 'did not match the expected structure: ' . PHP_EOL . '%s',
                     implode(', ', $header),
-                    implode(', ', $this->supportedHeader)
+                    implode(', ', self::$supportedHeader)
                 )
             );
 
@@ -272,7 +282,7 @@ class CsvImporterCommand extends Command
                 }
 
                 if (empty($record['From']) && empty($record['To'])) {
-                    $begin = new \DateTime($record['Date'] . ' ' . self::DEFAULT_BEGIN, $timezone);
+                    $begin = new \DateTime($record['Date'] . ' ' . $this->begin, $timezone);
                     $end = (new \DateTime())->setTimezone($timezone)->setTimestamp($begin->getTimestamp() + $duration);
                 } elseif (empty($record['From'])) {
                     $end = new \DateTime($record['Date'] . ' ' . $record['To'], $timezone);
@@ -495,7 +505,7 @@ class CsvImporterCommand extends Command
 
     private function validateHeader(array $header)
     {
-        $result = array_diff($this->supportedHeader, $header);
+        $result = array_diff(self::$supportedHeader, $header);
 
         return empty($result);
     }
