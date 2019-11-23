@@ -56,7 +56,7 @@ export default class KimaiFormSelect extends KimaiPlugin {
             terms.forEach(function(item, index) {
                 if (original.indexOf(item) > -1) {
                     foundOne = true;
-                }else {
+                } else {
                     foundAll = false;
                     missingTerms.push(item);
                 }
@@ -72,9 +72,9 @@ export default class KimaiFormSelect extends KimaiPlugin {
                 // If the parent already contains one or more search terms, proceed only with the missing ones
                 // First: Clone the original params object...
                 let newParams = jQuery.extend(true, {}, params);
-                if(foundOne) {
+                if (foundOne) {
                     newParams.term = missingTerms.join(' ');
-                }else {
+                } else {
                     newParams.term = params.term;
                 }
 
@@ -89,7 +89,7 @@ export default class KimaiFormSelect extends KimaiPlugin {
                     let matches = matcher(newParams, child);
 
                     // If there wasn't a match, remove the object in the array
-                    if (matches == null) {
+                    if (matches === null) {
                         match.children.splice(c, 1);
                     }
                 }
