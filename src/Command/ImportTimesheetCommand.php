@@ -111,7 +111,7 @@ class ImportTimesheetCommand extends Command
      */
     private $dateTime = '';
     /**
-     * @var string 
+     * @var string
      */
     private $begin = self::DEFAULT_BEGIN;
 
@@ -135,8 +135,8 @@ class ImportTimesheetCommand extends Command
             ->setName(self::$defaultName)
             ->setDescription('Import timesheets from CSV file')
             ->setHelp(
-                'This command allows to import timesheets from a CSV file, which are formatted like CSV exports.' . PHP_EOL .  
-                'Imported customer, projects and activities will be matched by name.' . PHP_EOL . 
+                'This command allows to import timesheets from a CSV file, which are formatted like CSV exports.' . PHP_EOL .
+                'Imported customer, projects and activities will be matched by name.' . PHP_EOL .
                 'Supported columns names: ' . implode(', ', self::$supportedHeader) . PHP_EOL
             )
             ->addOption('timezone', null, InputOption::VALUE_OPTIONAL, 'The timezone to be used. Supports: "valid timezone names", the string "user" (using the configured users timezone) and the string "server" (PHP default timezone)', 'user')
@@ -214,7 +214,10 @@ class ImportTimesheetCommand extends Command
         if (!$this->validateHeader($header)) {
             $io->error(
                 sprintf(
-                    'Found invalid CSV. The header:' . PHP_EOL . '%s' . PHP_EOL . 'did not match the expected structure: ' . PHP_EOL . '%s',
+                    'Found invalid CSV. The header: ' . PHP_EOL .
+                    '%s' . PHP_EOL .
+                    'did not match the expected structure: ' . PHP_EOL .
+                    '%s',
                     implode(', ', $header),
                     implode(', ', self::$supportedHeader)
                 )
@@ -427,7 +430,7 @@ class ImportTimesheetCommand extends Command
                     $tmpCustomer = $tmpCustomer[0];
                 }
 
-                if (null !== $tmpCustomer) {
+                if ($tmpCustomer instanceof Customer) {
                     $this->customerCache[$customer] = $tmpCustomer;
                 }
             }
