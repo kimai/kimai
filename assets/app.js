@@ -33,6 +33,7 @@ global.moment = Moment;
 require('moment/locale/ar');
 require('moment/locale/cs');
 require('moment/locale/de');
+require('moment/locale/de-ch');
 require('moment/locale/es');
 require('moment/locale/fr');
 require('moment/locale/hu');
