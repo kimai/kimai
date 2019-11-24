@@ -147,25 +147,26 @@ class CreateReleaseCommand extends Command
         }
 
         $commands = array_merge($commands, [
-            'Create tar' => 'cd ' . $tmpDir . ' && tar -czf ' . $directory . '/' . $tar . ' .',
-            'Create zip' => 'cd ' . $tmpDir . ' && zip -r ' . $directory . '/' . $zip . ' .',
+            // 'Create tar' => 'cd ' . $tmpDir . ' && tar -czf ' . $directory . '/' . $tar . ' .',
+            'Create release zip' => 'cd ' . $tmpDir . ' && zip -q -r ' . $directory . '/' . $zip . ' .',
             'Remove tmp directory' => 'rm -rf ' . $tmpDir,
         ]);
 
         $exitCode = 0;
         foreach ($commands as $title => $command) {
-            $io->success($title);
             passthru($command, $exitCode);
             if ($exitCode !== 0) {
                 $io->error('Failed with command: ' . $command);
 
                 return -1;
+            } else {
+                $io->success($title);
             }
         }
 
         $io->success(
-            'New release packages available at: ' . PHP_EOL .
-            $directory . '/' . $tar . PHP_EOL .
+            'New release package available at: ' . PHP_EOL .
+            // $directory . '/' . $tar . PHP_EOL .
             $directory . '/' . $zip
         );
 
