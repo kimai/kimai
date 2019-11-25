@@ -32,7 +32,7 @@ final class Version20180924111853 extends AbstractMigration
         $invoiceTemplates = $this->getTableName('invoice_templates');
 
         $this->addSql('UPDATE ' . $invoiceTemplates . ' SET name=SUBSTRING(name, 1, 60)');
-        
+
         if ($platform === 'sqlite') {
             $this->addSql('DROP INDEX UNIQ_1626CFE95E237E06');
             $this->addSql('CREATE TEMPORARY TABLE __temp__' . $invoiceTemplates . ' AS SELECT id, name, title, company, address, due_days, vat, calculator, number_generator, renderer, payment_terms FROM ' . $invoiceTemplates);
