@@ -78,10 +78,8 @@
                 {% if entry.fixedRate %}
                     {% set rate = entry.fixedRate %}
                     {% set duration = entry.amount %}
-                {% elseif entry.hourlyRate is not null %}
-                    {% set rate = entry.hourlyRate %}
                 {% else %}
-                    {% set rate = app.user.getPreferenceValue('hourly_rate') %}
+                    {% set rate = entry.hourlyRate %}
                 {% endif %}
                 <tr>
                     <td nowrap class="text-nowrap">{{ entry.begin|date_short }}</td>

@@ -12,6 +12,7 @@ namespace App\Invoice\Calculator;
 use App\Entity\Timesheet;
 use App\Invoice\InvoiceItem;
 use App\Invoice\InvoiceItemInterface;
+use App\Invoice\InvoiceItemWithAmountInterface;
 
 abstract class AbstractMergedCalculator extends AbstractCalculator
 {
@@ -32,7 +33,11 @@ abstract class AbstractMergedCalculator extends AbstractCalculator
             $duration += $entry->getDuration();
         }
 
-        $invoiceItem->setAmount($invoiceItem->getAmount() + 1);
+        $amount = 1;
+        if ($entry instanceof InvoiceItemWithAmountInterface) {
+            $amount = $entry->getAmount();
+        }
+        $invoiceItem->setAmount($invoiceItem->getAmount() + $amount);
         $invoiceItem->setUser($entry->getUser());
         $invoiceItem->setRate($invoiceItem->getRate() + $entry->getRate());
         $invoiceItem->setDuration($duration);
