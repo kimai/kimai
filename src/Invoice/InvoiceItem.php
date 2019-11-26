@@ -13,7 +13,10 @@ use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\User;
 
-class InvoiceItem
+/**
+ * @internal
+ */
+final class InvoiceItem
 {
     /**
      * @var float
@@ -28,7 +31,7 @@ class InvoiceItem
      */
     private $rate = 0.00;
     /**
-     * @var int
+     * @var float
      */
     private $amount = 0;
     /**
@@ -141,12 +144,12 @@ class InvoiceItem
         return $this;
     }
 
-    public function getAmount(): int
+    public function getAmount(): float
     {
         return $this->amount;
     }
 
-    public function setAmount(int $amount): InvoiceItem
+    public function setAmount(float $amount): InvoiceItem
     {
         $this->amount = $amount;
 

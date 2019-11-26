@@ -61,7 +61,7 @@
                 {% endif %}
             </table>
         </article>
-        <article>
+        <article class="invoice-items">
             <h2>{{ model.template.title|default('timesheet'|trans({}, 'invoice-renderer')) }}</h2>
             <p contenteditable="true">
                 {{ 'label.invoice_salutation'|trans|nl2br }}
@@ -70,9 +70,9 @@
                 <thead>
                     <tr>
                         <th>{{ 'label.description'|trans }}</th>
-                        <th>{{ 'label.unit_price'|trans }}</th>
-                        <th>{{ 'label.amount'|trans }}</th>
-                        <th>{{ 'label.total_rate'|trans }}</th>
+                        <th class="text-right">{{ 'label.unit_price'|trans }}</th>
+                        <th class="text-right">{{ 'label.amount'|trans }}</th>
+                        <th class="text-right">{{ 'label.total_rate'|trans }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -80,11 +80,9 @@
                     {% set duration = entry.duration|duration %}
                     {% if entry.fixedRate is not null %}
                         {% set rate = entry.fixedRate %}
-                        {% set duration = entry.amount %}
-                    {% elseif entry.hourlyRate is not null %}
-                        {% set rate = entry.hourlyRate %}
+                        {% set duration = entry.amount|amount %}
                     {% else %}
-                        {% set rate = app.user.getPreferenceValue('hourly_rate') %}
+                        {% set rate = entry.hourlyRate %}
                     {% endif %}
 
                     <tr>
@@ -95,9 +93,9 @@
                                 {{ entry.activity.name }} / {{ entry.project.name }}
                             {% endif %}
                         </td>
-                        <td contenteditable="true">{{ rate|money(model.calculator.currency) }}</td>
-                        <td contenteditable="true">{{ duration }}</td>
-                        <td>{{ entry.rate|money(model.calculator.currency) }}</td>
+                        <td class="text-right">{{ rate|money(model.calculator.currency) }}</td>
+                        <td class="text-right">{{ duration }}</td>
+                        <td class="text-right">{{ entry.rate|money(model.calculator.currency) }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -119,9 +117,9 @@
         </article>
         {% if model.template.paymentTerms is not empty %}
             <article class="paymentTerms">
-                <p contenteditable="true">
+                <div contenteditable="true">
                     {{ model.template.paymentTerms|nl2br|md2html }}
-                </p>
+                </div>
                 {% if signature is not empty %}
                     <img src="{{ signature }}">
                 {% endif %}

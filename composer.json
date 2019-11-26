@@ -31,7 +31,7 @@
         "mpdf/mpdf": "^7.1",
         "nelmio/api-doc-bundle": "^3.2",
         "nelmio/cors-bundle": "^1.5",
-        "ocramius/proxy-manager": "2.1.1",
+        "ocramius/proxy-manager": "^2.1.1",
         "phpoffice/phpspreadsheet": "^1.4",
         "phpoffice/phpword": "^0.15.0",
         "psr/log": "^1.1",
@@ -124,11 +124,14 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
-        "kimai:code-check":  [
+        "kimai:pre-commit":  [
             "@kimai:codestyle",
             "@kimai:phpstan",
             "@kimai:code-lint",
-            "@kimai:tests-unit",
+            "@kimai:tests-unit"
+        ],
+        "kimai:code-check":  [
+            "@kimai:pre-commit",
             "@kimai:tests-integration"
         ],
         "kimai:code-lint":  [

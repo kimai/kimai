@@ -8,7 +8,7 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
-## [1.6](https://github.com/kevinpapst/kimai2/releases/tag/1.6)
+## [1.6](https://github.com/kevinpapst/kimai2/releases/tag/1.6) and [1.6.1](https://github.com/kevinpapst/kimai2/releases/tag/1.6.1)
 
 **New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
 

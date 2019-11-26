@@ -42,7 +42,8 @@ class ImportTimesheetCommand extends Command
 {
     protected static $defaultName = 'kimai:import:timesheet';
 
-    public const DEFAULT_BEGIN = '00:00';
+    // if we use 00:00 we might run into summer/winter time problems which happen between 02:00 and 03:00
+    public const DEFAULT_BEGIN = '04:00';
     public const DEFAULT_CUSTOMER = 'Imported customer - %s';
 
     private static $supportedHeader = [
