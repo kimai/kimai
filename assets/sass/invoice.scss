@@ -93,7 +93,6 @@ body.invoice_print {
         /* table */
     
         table {
-            table-layout: fixed;
             width: 100%;
         }
     
@@ -124,19 +123,14 @@ body.invoice_print {
         article address {
             font-size: 1em;
             float: left;
-            margin: 1em 0;
         }
-    
+
         article.address {
-            margin-bottom: 1.5em;
+            margin:1em 0 1.5em 0;
         }
-    
+
         /* article */
-    
-        article, table.meta, table.inventory {
-            margin: 1em 0;
-        }
-    
+
         article:after {
             clear: both;
             content: "";
@@ -182,6 +176,7 @@ body.invoice_print {
     
         table.balance {
             float: right;
+            margin-top: 1em;
             th {
                 text-align: right;
                 font-weight: normal;
@@ -225,29 +220,6 @@ body.invoice_print {
     
         table.inventory tbody tr:last-child td {
             padding-bottom: 15px
-        }
-    
-        table.inventory td:nth-child(1),
-        table.inventory th:nth-child(1) {
-            text-align: left;
-        }
-    
-        table.inventory td:nth-child(2),
-        table.inventory th:nth-child(2) {
-            text-align: center;
-            width: 20%;
-        }
-    
-        table.inventory td:nth-child(3),
-        table.inventory th:nth-child(3) {
-            text-align: center;
-            width: 20%;
-        }
-    
-        table.inventory td:nth-child(4),
-        table.inventory th:nth-child(4) {
-            text-align: right;
-            width: 20%;
         }
 
         .footer {
