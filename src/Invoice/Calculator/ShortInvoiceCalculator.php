@@ -45,9 +45,8 @@ class ShortInvoiceCalculator extends AbstractMergedCalculator implements Calcula
         if (count($keys) > 1) {
             $invoiceItem->setAmount(1);
             $invoiceItem->setFixedRate($invoiceItem->getRate());
+            $invoiceItem->setHourlyRate($invoiceItem->getRate());
         }
-        // removed as it produces invalid values for all records that are not exactly 1 hour
-        //$invoiceItem->setHourlyRate($invoiceItem->getRate());
 
         return [$invoiceItem];
     }
