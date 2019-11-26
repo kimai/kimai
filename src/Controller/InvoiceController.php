@@ -287,6 +287,9 @@ class InvoiceController extends AbstractController
                 ->setPaymentTerms($copyFrom->getPaymentTerms())
                 ->setAddress($copyFrom->getAddress())
                 ->setNumberGenerator($copyFrom->getNumberGenerator())
+                ->setContact($copyFrom->getContact())
+                ->setPaymentDetails($copyFrom->getPaymentDetails())
+                ->setVatId($copyFrom->getVatId())
             ;
         }
 
