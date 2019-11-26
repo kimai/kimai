@@ -124,11 +124,14 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
-        "kimai:code-check":  [
+        "kimai:pre-commit":  [
             "@kimai:codestyle",
             "@kimai:phpstan",
             "@kimai:code-lint",
             "@kimai:tests-unit",
+        ],
+        "kimai:code-check":  [
+            "@kimai:pre-commit",
             "@kimai:tests-integration"
         ],
         "kimai:code-lint":  [
