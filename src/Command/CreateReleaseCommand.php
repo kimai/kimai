@@ -103,15 +103,12 @@ class CreateReleaseCommand extends Command
         $io->success('Prepare new packages for Kimai ' . $version . ' in ' . $tmpDir);
 
         $gitCmd = sprintf(self::CLONE_CMD, $version);
-        $tar = 'kimai-release-' . $version;
         $zip = 'kimai-release-' . $version;
 
         if ($version === Constants::VERSION && Constants::STATUS !== 'stable') {
-            $tar .= '_' . Constants::STATUS;
             $zip .= '_' . Constants::STATUS;
         }
 
-        $tar .= '.tar.gz';
         $zip .= '.zip';
 
         $prefix = 'APP_ENV=prod DATABASE_URL=sqlite:///%kernel.project_dir%/var/data/kimai.sqlite';
@@ -147,7 +144,6 @@ class CreateReleaseCommand extends Command
         }
 
         $commands = array_merge($commands, [
-            // 'Create tar' => 'cd ' . $tmpDir . ' && tar -czf ' . $directory . '/' . $tar . ' .',
             'Create release zip' => 'cd ' . $tmpDir . ' && zip -q -r ' . $directory . '/' . $zip . ' .',
             'Remove tmp directory' => 'rm -rf ' . $tmpDir,
         ]);
@@ -166,7 +162,6 @@ class CreateReleaseCommand extends Command
 
         $io->success(
             'New release package available at: ' . PHP_EOL .
-            // $directory . '/' . $tar . PHP_EOL .
             $directory . '/' . $zip
         );
 
