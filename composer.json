@@ -128,7 +128,7 @@
             "@kimai:codestyle",
             "@kimai:phpstan",
             "@kimai:code-lint",
-            "@kimai:tests-unit",
+            "@kimai:tests-unit"
         ],
         "kimai:code-check":  [
             "@kimai:pre-commit",
