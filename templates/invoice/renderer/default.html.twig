@@ -68,13 +68,13 @@
                     <th>{{ 'label.date'|trans }}</th>
                     <th>{{ 'label.description'|trans }}</th>
                     <th>{{ 'label.unit_price'|trans }}</th>
-                    <th class="text-center">{{ 'label.hours'|trans }}</th>
+                    <th class="text-center">{{ 'label.amount'|trans }}</th>
                     <th class="text-right">{{ 'label.total_rate'|trans }}</th>
                 </tr>
             </thead>
             <tbody>
             {% for entry in model.calculator.entries %}
-                {% set duration = entry.duration|duration %}
+                {% set duration = entry.duration|duration_decimal %}
                 {% if entry.fixedRate %}
                     {% set rate = entry.fixedRate %}
                     {% set duration = entry.amount %}
