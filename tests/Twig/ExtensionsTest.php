@@ -50,7 +50,7 @@ class ExtensionsTest extends TestCase
 
     public function testGetFilters()
     {
-        $filters = ['duration', 'duration_decimal', 'money', 'currency', 'country', 'language', 'docu_link'];
+        $filters = ['duration', 'duration_decimal', 'money', 'currency', 'country', 'language', 'amount', 'docu_link'];
         $sut = $this->getSut($this->localeDe);
         $twigFilters = $sut->getFilters();
         $this->assertCount(count($filters), $twigFilters);
@@ -163,6 +163,32 @@ class ExtensionsTest extends TestCase
             ['14 ¥', 13.75, 'JPY', 'de'],
             ['13 933 ¥', 13933.49, 'JPY', 'ru'],
             ['1.234.567,89 $', 1234567.891234567890000, 'USD', 'de'],
+        ];
+    }
+
+    /**
+     * @dataProvider getAmountData
+     */
+    public function testAmount($result, $amount, $locale)
+    {
+        $sut = $this->getSut($this->localeEn, $locale);
+        $this->assertEquals($result, $sut->amount($amount));
+    }
+
+    public function getAmountData()
+    {
+        return [
+            ['0', null, 'de'],
+            ['2.345,01', 2345.01, 'de'],
+            ['2.345', 2345, 'de'],
+            ['2,345', 2345, 'en'],
+            ['2’345.17', 2345.17, 'de_CH'],
+            ['2,345.009', 2345.009, 'en'],
+            ['2.345,009', 2345.009, 'de'],
+            ['13.75', 13.75, 'en'],
+            ['13,75', 13.75, 'de'],
+            ['13 933,49', 13933.49, 'ru'],
+            ['1.234.567,891', 1234567.891234567890000, 'de'],
         ];
     }
 

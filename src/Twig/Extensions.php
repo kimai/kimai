@@ -69,6 +69,7 @@ class Extensions extends AbstractExtension
             new TwigFilter('currency', [$this, 'currency']),
             new TwigFilter('country', [$this, 'country']),
             new TwigFilter('language', [$this, 'language']),
+            new TwigFilter('amount', [$this, 'amount']),
             new TwigFilter('docu_link', [$this, 'documentationLink']),
         ];
     }
@@ -126,6 +127,15 @@ class Extensions extends AbstractExtension
         $duration = $this->getSecondsForDuration($duration);
 
         return $this->getNumberFormatter()->format(number_format($duration / 3600, 2));
+    }
+
+    /**
+     * @param string|float $amount
+     * @return bool|false|string
+     */
+    public function amount($amount)
+    {
+        return $this->getNumberFormatter()->format($amount);
     }
 
     private function getSecondsForDuration($duration): int
