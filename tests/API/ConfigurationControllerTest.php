@@ -16,7 +16,7 @@ use App\Entity\User;
  */
 class ConfigurationControllerTest extends APIControllerBaseTest
 {
-    public function testI18nIsSecure()
+    public function testIsSecure()
     {
         $this->assertUrlIsSecured('/api/config/i18n');
     }

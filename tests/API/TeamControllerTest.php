@@ -30,6 +30,8 @@ class TeamControllerTest extends APIControllerBaseTest
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/api/teams');
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/api/teams');
+        $this->assertUrlIsSecuredForRole(User::ROLE_TEAMLEAD, '/api/teams');
     }
 
     public function testGetCollection()

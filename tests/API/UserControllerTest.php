@@ -19,6 +19,8 @@ class UserControllerTest extends APIControllerBaseTest
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/api/users');
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/api/users');
+        $this->assertUrlIsSecuredForRole(User::ROLE_TEAMLEAD, '/api/users');
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/api/users');
     }
 

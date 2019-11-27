@@ -33,7 +33,7 @@ class TagControllerTest extends APIControllerBaseTest
 
     public function testIsSecure()
     {
-        $this->assertUrlIsSecured('/api/teams');
+        $this->assertUrlIsSecured('/api/tags');
     }
 
     public function testGetCollection()
