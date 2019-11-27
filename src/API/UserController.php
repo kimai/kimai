@@ -133,7 +133,7 @@ class UserController extends BaseApiController
         }
 
         $view = new View($user, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'User']);
+        $view->getContext()->setGroups(['Default', 'Entity', 'User', 'User_Entity']);
 
         return $this->viewHandler->handle($view);
     }
@@ -155,7 +155,7 @@ class UserController extends BaseApiController
     public function meAction(): Response
     {
         $view = new View($this->getUser(), 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'User']);
+        $view->getContext()->setGroups(['Default', 'Entity', 'User', 'User_Entity']);
 
         return $this->viewHandler->handle($view);
     }

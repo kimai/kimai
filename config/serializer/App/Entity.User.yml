@@ -10,21 +10,21 @@ App\Entity\User:
             groups: [Default]
         title:
             include: true
-            groups: [Entity]
+            groups: [User_Entity]
         avatar:
             include: true
-            groups: [Entity]
+            groups: [User_Entity]
         teams:
             include: true
-            groups: [Entity]
+            groups: [User_Entity]
     virtual_properties:
         getLanguage:
             serialized_name: language
             exp: "object.getPreferenceValue('language') === null ? null : object.getPreferenceValue('language')"
             type: string
-            groups: [Entity]
+            groups: [User_Entity]
         getTimezone:
             serialized_name: timezone
             exp: "object.getPreferenceValue('timezone') === null ? null : object.getPreferenceValue('timezone')"
             type: string
-            groups: [Entity]
+            groups: [User_Entity]

@@ -56,7 +56,7 @@ class TeamControllerTest extends APIControllerBaseTest
 
     public function testNotFound()
     {
-        $this->assertEntityNotFound(User::ROLE_USER, '/api/teams/3');
+        $this->assertEntityNotFound(User::ROLE_ADMIN, '/api/teams/3');
     }
 
     public function testDeleteActionWithUnknownTeam()
@@ -80,7 +80,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
         $this->assertEmpty($client->getResponse()->getContent());
 
-        $this->assertEntityNotFound(User::ROLE_USER, '/api/teams/' . $id);
+        $this->assertEntityNotFound(User::ROLE_ADMIN, '/api/teams/' . $id);
     }
 
     protected function assertStructure(array $result, $full = true)
@@ -90,7 +90,9 @@ class TeamControllerTest extends APIControllerBaseTest
         ];
 
         if ($full) {
-            $expectedKeys = array_merge($expectedKeys, []);
+            $expectedKeys = array_merge($expectedKeys, [
+                'teamlead', 'users'
+            ]);
         }
 
         $actual = array_keys($result);

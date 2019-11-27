@@ -94,7 +94,7 @@ class TeamController extends BaseApiController
         }
 
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Team']);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Team', 'Team_Entity']);
 
         return $this->viewHandler->handle($view);
     }
