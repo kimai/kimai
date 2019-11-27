@@ -1,6 +1,6 @@
 App\Entity\User:
     exclusion_policy: All
-    custom_accessor_order: [id, alias, title, avatar, language, timezone]
+    custom_accessor_order: [id, alias, title, avatar, language, timezone, teams]
     properties:
         id:
             include: true
@@ -12,6 +12,9 @@ App\Entity\User:
             include: true
             groups: [Entity]
         avatar:
+            include: true
+            groups: [Entity]
+        teams:
             include: true
             groups: [Entity]
     virtual_properties:
