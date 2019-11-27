@@ -24,6 +24,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @RouteResource("Team")
+ *
+ * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
 class TeamController extends BaseApiController
 {
@@ -77,6 +79,8 @@ class TeamController extends BaseApiController
      *      description="Returns one team entity",
      *      @SWG\Schema(ref="#/definitions/TeamEntity"),
      * )
+     *
+     * @Security("is_granted('view_team')")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
