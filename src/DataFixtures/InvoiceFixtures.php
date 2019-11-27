@@ -114,7 +114,6 @@ class InvoiceFixtures extends Fixture
     protected function generateAddress(Generator $faker)
     {
         return
-            'Kimai Inc.' . PHP_EOL .
             $faker->streetAddress . PHP_EOL .
             $faker->city . ', ' . $faker->stateAbbr . ' ' . $faker->postcode
         ;

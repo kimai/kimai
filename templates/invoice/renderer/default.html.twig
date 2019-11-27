@@ -110,7 +110,7 @@
                     <td class="text-right">{{ model.calculator.tax|money(model.calculator.currency) }}</td>
                 </tr>
                 <tr>
-                    <td colspan="4" class="text-right">
+                    <td colspan="4" class="text-right text-nowrap">
                         <strong>{{ 'invoice.total'|trans }}</strong>
                     </td>
                     <td class="text-right">
@@ -134,7 +134,7 @@
 
 <footer class="footer">
     <p>
-        <strong>{{ 'label.address'|trans }}</strong>: {{ model.template.address|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}
+        <strong>{{ 'label.address'|trans }}</strong>: {{ model.template.company }} &ndash; {{ model.template.address|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}
         <br>
         <strong>{{ 'label.invoice_bank_account'|trans }}</strong>: {{ model.template.paymentDetails|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}
         <br>
