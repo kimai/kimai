@@ -53,7 +53,7 @@ class AppExtension extends Extension
         $container->setParameter('kimai.calendar', $config['calendar']);
         $container->setParameter('kimai.dashboard', $config['dashboard']);
         $container->setParameter('kimai.widgets', $config['widgets']);
-        $container->setParameter('kimai.invoice.documents', $config['invoice']['documents']);
+        $container->setParameter('kimai.invoice.documents', array_merge($config['invoice']['documents'], $config['invoice']['defaults']));
         $container->setParameter('kimai.defaults', $config['defaults']);
 
         $this->createPermissionParameter($config['permissions'], $container);
