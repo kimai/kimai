@@ -212,6 +212,7 @@ class ProfileController extends AbstractController
         $event = new PrepareUserEvent($profile);
         $this->dispatcher->dispatch($event);
 
+        /** @var \ArrayIterator $iterator */
         $iterator = $profile->getPreferences()->getIterator();
         $iterator->uasort(function (UserPreference $a, UserPreference $b) {
             return ($a->getOrder() < $b->getOrder()) ? -1 : 1;
