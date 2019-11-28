@@ -11,48 +11,47 @@ namespace App\Invoice;
 
 use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
+use App\Entity\User;
 use App\Repository\Query\InvoiceQuery;
 
 /**
  * InvoiceModel is the ONLY value that a RendererInterface receives for generating the invoice,
  * besides the InvoiceDocument which is used as a "template".
  */
-class InvoiceModel
+final class InvoiceModel
 {
     /**
      * @var Customer|null
      */
-    protected $customer;
-
+    private $customer;
     /**
      * @var InvoiceQuery
      */
-    protected $query;
-
+    private $query;
     /**
      * @var InvoiceItemInterface[]
      */
-    protected $entries = [];
-
+    private $entries = [];
     /**
      * @var InvoiceTemplate
      */
-    protected $template;
-
+    private $template;
     /**
      * @var CalculatorInterface
      */
-    protected $calculator;
-
+    private $calculator;
     /**
      * @var NumberGeneratorInterface
      */
-    protected $generator;
-
+    private $generator;
     /**
      * @var \DateTime
      */
-    protected $invoiceDate;
+    private $invoiceDate;
+    /**
+     * @var User
+     */
+    private $user;
 
     public function __construct()
     {
@@ -182,5 +181,22 @@ class InvoiceModel
     public function getCalculator(): ?CalculatorInterface
     {
         return $this->calculator;
+    }
+
+    /**
+     * Returns the user who is currently creating the invoice.
+     *
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): InvoiceModel
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }

@@ -101,6 +101,12 @@ class DebugRendererTest extends TestCase
             'activity.fixed_rate',
             'activity.hourly_rate',
             'activity.meta.foo-activity',
+            'user.alias',
+            'user.email',
+            'user.name',
+            'user.title',
+            'user.meta.hello',
+            'user.meta.kitty',
         ];
 
         if ($hasProject) {

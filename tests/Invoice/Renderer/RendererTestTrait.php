@@ -21,6 +21,7 @@ use App\Entity\ProjectMeta;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
+use App\Entity\UserPreference;
 use App\Invoice\Calculator\DefaultCalculator;
 use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
@@ -90,6 +91,14 @@ trait RendererTestTrait
 
     protected function getInvoiceModel(): InvoiceModel
     {
+        $user = new User();
+        $user->setUsername('one-user');
+        $user->setTitle('user title');
+        $user->setAlias('genious alias');
+        $user->setEmail('fantastic@four');
+        $user->addPreference((new UserPreference())->setName('kitty')->setValue('kat'));
+        $user->addPreference((new UserPreference())->setName('hello')->setValue('world'));
+
         $customer = new Customer();
         $customer->setCurrency('EUR');
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
@@ -190,6 +199,7 @@ trait RendererTestTrait
         $model->setTemplate($template);
         $model->setEntries($entries);
         $model->setQuery($query);
+        $model->setUser($user);
 
         $calculator = new DefaultCalculator();
         $calculator->setModel($model);
@@ -206,6 +216,14 @@ trait RendererTestTrait
 
     protected function getInvoiceModelOneEntry(): InvoiceModel
     {
+        $user = new User();
+        $user->setUsername('one-user');
+        $user->setTitle('user title');
+        $user->setAlias('genious alias');
+        $user->setEmail('fantastic@four');
+        $user->addPreference((new UserPreference())->setName('kitty')->setValue('kat'));
+        $user->addPreference((new UserPreference())->setName('hello')->setValue('world'));
+
         $customer = new Customer();
         $customer->setCurrency('USD');
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
@@ -253,6 +271,7 @@ trait RendererTestTrait
         $model->setTemplate($template);
         $model->setEntries($entries);
         $model->setQuery($query);
+        $model->setUser($user);
 
         $calculator = new DefaultCalculator();
         $calculator->setModel($model);

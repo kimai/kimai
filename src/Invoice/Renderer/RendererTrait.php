@@ -10,6 +10,7 @@
 namespace App\Invoice\Renderer;
 
 use App\Entity\InvoiceDocument;
+use App\Entity\UserPreference;
 use App\Invoice\InvoiceItem;
 use App\Invoice\InvoiceModel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -125,6 +126,24 @@ trait RendererTrait
             'query.month_number' => $model->getQuery()->getBegin()->format('m'),
             'query.year' => $model->getQuery()->getBegin()->format('Y'),
         ];
+
+        if (null !== $model->getUser()) {
+            $user = $model->getUser();
+
+            /** @var UserPreference $metaField */
+            foreach ($user->getPreferences() as $metaField) {
+                $values = array_merge($values, [
+                    'user.meta.' . $metaField->getName() => $metaField->getValue(),
+                ]);
+            }
+
+            $values = array_merge($values, [
+                'user.name' => $user->getUsername(),
+                'user.email' => $user->getEmail(),
+                'user.title' => $user->getTitle(),
+                'user.alias' => $user->getAlias(),
+            ]);
+        }
 
         if (null !== $activity) {
             $values = array_merge($values, [
