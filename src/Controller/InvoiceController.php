@@ -115,7 +115,13 @@ class InvoiceController extends AbstractController
         $query->setEnd($end);
         $query->setExported(InvoiceQuery::STATE_NOT_EXPORTED);
         $query->setState(InvoiceQuery::STATE_STOPPED);
+        // limit access to data from teams
         $query->setCurrentUser($this->getUser());
+
+        if (!$this->isGranted('view_other_timesheer')) {
+            // limit access to own data
+            $query->setUser($this->getUser());
+        }
 
         return $query;
     }
@@ -219,6 +225,7 @@ class InvoiceController extends AbstractController
         $model = new InvoiceModel();
         $model
             ->setQuery($query)
+            ->setUser($this->getUser())
             ->setCustomer($query->getCustomer())
         ;
 
@@ -340,6 +347,7 @@ class InvoiceController extends AbstractController
         return $this->createForm(InvoiceToolbarForm::class, $query, [
             'action' => $this->generateUrl('invoice', []),
             'method' => $method,
+            'include_user' => $this->isGranted('view_other_timesheet'),
             'attr' => [
                 'id' => 'invoice-print-form'
             ],
