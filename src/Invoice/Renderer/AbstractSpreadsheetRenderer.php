@@ -40,7 +40,7 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
         $spreadsheet = IOFactory::load($document->getFilename());
         $worksheet = $spreadsheet->getActiveSheet();
         $entries = $model->getCalculator()->getEntries();
-        $replacer = $this->modelToReplacer($model);
+        $replacer = $model->toArray();
         $invoiceItemCount = count($entries);
         if ($invoiceItemCount > 1) {
             $this->addTemplateRows($worksheet, $invoiceItemCount);
@@ -63,19 +63,17 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
                 $value = $cell->getValue();
                 if (stripos($value, '${entry.') !== false) {
                     if ($sheetValues === false) {
-                        $sheetValues = $this->invoiceItemToArray($invoiceItem);
+                        $sheetValues = $model->itemToArray($invoiceItem);
                     }
-                    $searcher = str_replace('${', '', $value);
-                    $searcher = str_replace('}', '', $searcher);
-                    if (isset($sheetValues[$searcher])) {
-                        $cell->setValue($sheetValues[$searcher]);
+                    foreach($sheetValues as $sKey => $sValue) {
+                        $value = str_replace('${'.$sKey.'}', $sValue, $value);
                     }
+                    $cell->setValue($value);
                 } elseif (stripos($value, '${') !== false) {
-                    $searcher = str_replace('${', '', $value);
-                    $searcher = str_replace('}', '', $searcher);
-                    if (isset($replacer[$searcher])) {
-                        $cell->setValue($replacer[$searcher]);
+                    foreach($replacer as $rKey => $rValue) {
+                        $value = str_replace('${'.$rKey.'}', $rValue, $value);
                     }
+                    $cell->setValue($value);
                 }
             }
 
@@ -126,8 +124,11 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
         // fill up all new rows with template values
         $templateRow = $invoiceItemCount + $startRow;
         $iterator = $worksheet->getRowIterator($templateRow - 1, $templateRow);
+        $styleColumns = [];
         $templateColumns = [];
-        foreach ($iterator->current()->getCellIterator() as $cell) {
+        $tmpRow = $iterator->current();
+        foreach ($tmpRow->getCellIterator() as $cell) {
+            $styleColumns[$cell->getColumn()] = $worksheet->getStyle($cell->getColumn() . $tmpRow->getRowIndex());
             $templateColumns[$cell->getColumn()] = $cell->getValue();
         }
 
@@ -135,6 +136,7 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
         foreach ($iterator as $row) {
             foreach ($row->getCellIterator() as $cell) {
                 $cell->setValue($templateColumns[$cell->getColumn()]);
+                $worksheet->duplicateStyle($styleColumns[$cell->getColumn()], $cell->getColumn() . $row->getRowIndex());
             }
         }
     }
