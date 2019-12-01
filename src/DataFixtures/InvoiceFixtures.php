@@ -69,7 +69,7 @@ class InvoiceFixtures extends Fixture
 
         $paymentTerms_alt =
             $faker->firstName . ', thank you very much. We really appreciate your business.' . PHP_EOL .
-            'Please send payments before the due date.I would like to thank you for your confidence and will gladly be there for you in the future.'
+            'Please send payments before the due date. I would like to thank you for your confidence and will gladly be there for you in the future.'
         ;
 
         $paymentTerms_de =
