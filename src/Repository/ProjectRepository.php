@@ -283,6 +283,18 @@ class ProjectRepository extends EntityRepository
         return $qb;
     }
 
+    public function countProjectsForQuery(ProjectQuery $query): int
+    {
+        $qb = $this->getQueryBuilderForQuery($query);
+        $qb
+            ->resetDQLPart('select')
+            ->resetDQLPart('orderBy')
+            ->select($qb->expr()->countDistinct('p.id'))
+        ;
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
+
     public function getPagerfantaForQuery(ProjectQuery $query): Pagerfanta
     {
         $paginator = new Pagerfanta($this->getPaginatorForQuery($query));
@@ -294,14 +306,7 @@ class ProjectRepository extends EntityRepository
 
     private function getPaginatorForQuery(ProjectQuery $query): PaginatorInterface
     {
-        $qb = $this->getQueryBuilderForQuery($query);
-        $qb
-            ->resetDQLPart('select')
-            ->resetDQLPart('orderBy')
-            ->select($qb->expr()->countDistinct('p.id'))
-        ;
-        $counter = (int) $qb->getQuery()->getSingleScalarResult();
-
+        $counter = $this->countProjectsForQuery($query);
         $qb = $this->getQueryBuilderForQuery($query);
 
         return new LoaderPaginator(new ProjectLoader($qb->getEntityManager()), $qb, $counter);

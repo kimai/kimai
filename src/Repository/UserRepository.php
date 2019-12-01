@@ -236,7 +236,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         return $paginator;
     }
 
-    protected function getPaginatorForQuery(UserQuery $query): PaginatorInterface
+    public function countUsersForQuery(UserQuery $query): int
     {
         $qb = $this->getQueryBuilderForQuery($query);
         $qb
@@ -244,8 +244,13 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
             ->resetDQLPart('orderBy')
             ->select($qb->expr()->countDistinct('u.id'))
         ;
-        $counter = (int) $qb->getQuery()->getSingleScalarResult();
 
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
+
+    protected function getPaginatorForQuery(UserQuery $query): PaginatorInterface
+    {
+        $counter = $this->countUsersForQuery($query);
         $qb = $this->getQueryBuilderForQuery($query);
 
         return new LoaderPaginator(new UserLoader($qb->getEntityManager()), $qb, $counter);

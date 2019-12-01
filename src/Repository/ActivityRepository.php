@@ -346,6 +346,18 @@ class ActivityRepository extends EntityRepository
         return $qb;
     }
 
+    public function countActivitiesForQuery(ActivityQuery $query): int
+    {
+        $qb = $this->getQueryBuilderForQuery($query);
+        $qb
+            ->resetDQLPart('select')
+            ->resetDQLPart('orderBy')
+            ->select($qb->expr()->countDistinct('a.id'))
+        ;
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
+
     public function getPagerfantaForQuery(ActivityQuery $query): Pagerfanta
     {
         $paginator = new Pagerfanta($this->getPaginatorForQuery($query));
@@ -357,14 +369,7 @@ class ActivityRepository extends EntityRepository
 
     protected function getPaginatorForQuery(ActivityQuery $query): PaginatorInterface
     {
-        $qb = $this->getQueryBuilderForQuery($query);
-        $qb
-            ->resetDQLPart('select')
-            ->resetDQLPart('orderBy')
-            ->select($qb->expr()->countDistinct('a.id'))
-        ;
-        $counter = (int) $qb->getQuery()->getSingleScalarResult();
-
+        $counter = $this->countActivitiesForQuery($query);
         $qb = $this->getQueryBuilderForQuery($query);
 
         return new LoaderPaginator(new ActivityLoader($qb->getEntityManager()), $qb, $counter);

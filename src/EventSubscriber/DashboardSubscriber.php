@@ -14,6 +14,10 @@ use App\Event\DashboardEvent;
 use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
+use App\Repository\Query\ActivityQuery;
+use App\Repository\Query\CustomerQuery;
+use App\Repository\Query\ProjectQuery;
+use App\Repository\Query\UserQuery;
 use App\Repository\UserRepository;
 use App\Widget\Type\CompoundRow;
 use App\Widget\Type\More;
@@ -82,6 +86,7 @@ class DashboardSubscriber implements EventSubscriberInterface
      */
     public function onDashboardEvent(DashboardEvent $event)
     {
+        $user = $event->getUser();
         $section = new CompoundRow();
         $section->setTitle('ROLE_ADMIN');
         $section->setOrder(100);
@@ -91,7 +96,7 @@ class DashboardSubscriber implements EventSubscriberInterface
                 (new More())
                     ->setId('userTotal')
                     ->setTitle('stats.userTotal')
-                    ->setData($this->user->countUser())
+                    ->setData($this->user->countUsersForQuery((new UserQuery())->setCurrentUser($user)))
                     ->setOptions([
                         'route' => 'admin_user',
                         'icon' => 'user',
@@ -105,7 +110,7 @@ class DashboardSubscriber implements EventSubscriberInterface
                 (new More())
                     ->setId('customerTotal')
                     ->setTitle('stats.customerTotal')
-                    ->setData($this->customer->countCustomer())
+                    ->setData($this->customer->countCustomersForQuery((new CustomerQuery())->setCurrentUser($user)))
                     ->setOptions([
                         'route' => 'admin_customer',
                         'icon' => 'customer',
@@ -119,7 +124,7 @@ class DashboardSubscriber implements EventSubscriberInterface
                 (new More())
                     ->setId('projectTotal')
                     ->setTitle('stats.projectTotal')
-                    ->setData($this->project->countProject())
+                    ->setData($this->project->countProjectsForQuery((new ProjectQuery())->setCurrentUser($user)))
                     ->setOptions([
                         'route' => 'admin_project',
                         'icon' => 'project',
@@ -133,7 +138,7 @@ class DashboardSubscriber implements EventSubscriberInterface
                 (new More())
                     ->setId('activityTotal')
                     ->setTitle('stats.activityTotal')
-                    ->setData($this->activity->countActivity())
+                    ->setData($this->activity->countActivitiesForQuery((new ActivityQuery())->setCurrentUser($user)))
                     ->setOptions([
                         'route' => 'admin_activity',
                         'icon' => 'activity',
