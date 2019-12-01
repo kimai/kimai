@@ -88,7 +88,7 @@ class DashboardSubscriber implements EventSubscriberInterface
     {
         $user = $event->getUser();
         $section = new CompoundRow();
-        $section->setTitle('ROLE_ADMIN');
+        $section->setTitle('');
         $section->setOrder(100);
 
         if ($this->security->isGranted('view_user')) {
