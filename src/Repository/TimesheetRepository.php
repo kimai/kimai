@@ -642,10 +642,7 @@ class TimesheetRepository extends EntityRepository
             if (!$currentUser->isSuperAdmin() && !$currentUser->isAdmin()) {
                 // make sure that the user himself is in the list of users, if he is part of a team
                 // if teams are used and the user is not a teamlead, the list of users would be empty and then leading to NOT limit the select by user IDs
-                // if no teams are used, then the user can still see all records (this is here due to BC reasons, the if might be deleted)
-                if (!empty($currentUser->getTeams())) {
-                    $user[] = $currentUser;
-                }
+                $user[] = $currentUser;
 
                 foreach ($currentUser->getTeams() as $team) {
                     if ($currentUser->isTeamleadOf($team)) {
