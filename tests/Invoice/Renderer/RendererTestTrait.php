@@ -23,6 +23,8 @@ use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Invoice\Calculator\DefaultCalculator;
+use App\Invoice\DefaultInvoiceFormatter;
+use App\Invoice\InvoiceFormatter;
 use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Invoice\Renderer\AbstractRenderer;
@@ -67,6 +69,11 @@ trait RendererTestTrait
      */
     protected function getAbstractRenderer(string $classname)
     {
+        return new $classname();
+    }
+
+    protected function getFormatter(): InvoiceFormatter
+    {
         $requestStack = new RequestStack();
         $languages = [
             'en' => [
@@ -86,7 +93,7 @@ trait RendererTestTrait
         $dateExtension = new DateExtensions($localeSettings);
         $extensions = new Extensions($localeSettings);
 
-        return new $classname($translator, $dateExtension, $extensions);
+        return new DefaultInvoiceFormatter($translator, $dateExtension, $extensions);
     }
 
     protected function getInvoiceModel(): InvoiceModel
@@ -194,7 +201,7 @@ trait RendererTestTrait
         $query->setEnd(new \DateTime());
         $query->setProject($project);
 
-        $model = new InvoiceModel();
+        $model = new InvoiceModel($this->getFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
         $model->setEntries($entries);
@@ -266,7 +273,7 @@ trait RendererTestTrait
         $query->setBegin(new \DateTime());
         $query->setEnd(new \DateTime());
 
-        $model = new InvoiceModel();
+        $model = new InvoiceModel($this->getFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
         $model->setEntries($entries);

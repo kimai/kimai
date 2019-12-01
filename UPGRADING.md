@@ -12,10 +12,11 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 **New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
 
-- Invoice improvements:
+- Invoice changes:
   - Moved CSV, ODS and XSLX invoice templates to [another repository](https://github.com/Keleo/kimai2-invoice-templates). Using them? Install them manually (see [invoice documentation](https://www.kimai.org/documentation/invoices.html)).
   - Added new invoice fields (VAT, contact, payment details) and customer field (VAT). Used the twig settings before? Move them to the respective invoice template settings.
 - Permissions can be managed via Admin UI. Please move your permission settings from [local.yaml to your database](https://www.kimai.org/documentation/permissions.html).
+- Important permission change: regular users with the `view_other_timesheet` permission could see all timesheets. This was a legacy from the time before team permissions were introduced. If you rely on this behavior, you need to create a team with all users and the teamlead being the user who needs access to all timesheets. 
 
 ### Developer
 

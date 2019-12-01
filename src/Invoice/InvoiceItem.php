@@ -18,6 +18,11 @@ use App\Entity\User;
  */
 final class InvoiceItem
 {
+    public const TYPE_TIMESHEET = 'timesheet';
+    public const CATEGORY_TIMESHEET_WORK = 'work';
+    public const TYPE_MIXED = 'mixed';
+    public const CATEGORY_MIXED = 'mixed';
+
     /**
      * @var float
      */
@@ -66,6 +71,14 @@ final class InvoiceItem
      * @var array
      */
     private $additionalFields = [];
+    /**
+     * @var string
+     */
+    private $type;
+    /**
+     * @var string
+     */
+    private $category;
 
     public function addAdditionalField(string $name, ?string $value): InvoiceItem
     {
@@ -212,6 +225,30 @@ final class InvoiceItem
     public function setUser(?User $user): InvoiceItem
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): InvoiceItem
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category): InvoiceItem
+    {
+        $this->category = $category;
 
         return $this;
     }

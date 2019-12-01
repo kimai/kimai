@@ -13,6 +13,7 @@ use App\Entity\Timesheet;
 use App\Invoice\InvoiceItem;
 use App\Invoice\InvoiceItemInterface;
 use App\Invoice\InvoiceItemWithAmountInterface;
+use App\Invoice\InvoiceItemWithTypeInterface;
 
 abstract class AbstractMergedCalculator extends AbstractCalculator
 {
@@ -37,6 +38,25 @@ abstract class AbstractMergedCalculator extends AbstractCalculator
         if ($entry instanceof InvoiceItemWithAmountInterface) {
             $amount = $entry->getAmount();
         }
+
+        if ($entry instanceof InvoiceItemWithTypeInterface) {
+            $type = $entry->getInvoiceType();
+            $category = $entry->getInvoiceCategory();
+        } else {
+            $type = InvoiceItem::TYPE_TIMESHEET;
+            $category = InvoiceItem::CATEGORY_TIMESHEET_WORK;
+        }
+
+        if (null !== $invoiceItem->getType() && $type !== $invoiceItem->getType()) {
+            $type = InvoiceItem::TYPE_MIXED;
+        }
+        if (null !== $invoiceItem->getCategory() && $category !== $invoiceItem->getCategory()) {
+            $category = InvoiceItem::CATEGORY_MIXED;
+        }
+
+        $invoiceItem->setType($type);
+        $invoiceItem->setCategory($category);
+
         $invoiceItem->setAmount($invoiceItem->getAmount() + $amount);
         $invoiceItem->setUser($entry->getUser());
         $invoiceItem->setRate($invoiceItem->getRate() + $entry->getRate());

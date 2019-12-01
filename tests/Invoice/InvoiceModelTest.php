@@ -25,7 +25,7 @@ class InvoiceModelTest extends TestCase
 {
     public function testEmptyObject()
     {
-        $sut = new InvoiceModel();
+        $sut = new InvoiceModel(new DebugFormatter());
 
         self::assertNull($sut->getQuery());
         self::assertNull($sut->getCustomer());
@@ -42,7 +42,7 @@ class InvoiceModelTest extends TestCase
 
     public function testSetter()
     {
-        $sut = new InvoiceModel();
+        $sut = new InvoiceModel(new DebugFormatter());
 
         $query = new InvoiceQuery();
         self::assertInstanceOf(InvoiceModel::class, $sut->setQuery($query));
