@@ -60,7 +60,6 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
         $entryRow = 0;
 
         foreach ($worksheet->getRowIterator() as $row) {
-            $invoiceItem = $entries[$entryRow];
             $sheetValues = false;
             foreach ($row->getCellIterator() as $cell) {
                 $value = $cell->getValue();
@@ -70,8 +69,8 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
                 }
 
                 if (stripos($value, '${entry.') !== false) {
-                    if ($sheetValues === false) {
-                        $sheetValues = $model->itemToArray($invoiceItem);
+                    if ($sheetValues === false && isset($entries[$entryRow])) {
+                        $sheetValues = $model->itemToArray($entries[$entryRow]);
                     }
                     $replacer = $sheetValues;
                 } elseif (stripos($value, '${') !== false) {
