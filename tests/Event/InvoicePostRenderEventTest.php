@@ -32,7 +32,7 @@ class InvoicePostRenderEventTest extends TestCase
         $sut = new InvoicePostRenderEvent($model, $document, $renderer, $response);
 
         self::assertSame($model, $sut->getModel());
-        self::assertSame($document, $sut->getRenderer());
+        self::assertSame($document, $sut->getDocument());
         self::assertSame($renderer, $sut->getRenderer());
         self::assertSame($response, $sut->getResponse());
     }

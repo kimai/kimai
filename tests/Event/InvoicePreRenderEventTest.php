@@ -30,7 +30,7 @@ class InvoicePreRenderEventTest extends TestCase
         $sut = new InvoicePreRenderEvent($model, $document, $renderer);
 
         self::assertSame($model, $sut->getModel());
-        self::assertSame($document, $sut->getRenderer());
+        self::assertSame($document, $sut->getDocument());
         self::assertSame($renderer, $sut->getRenderer());
     }
 }
