@@ -11,6 +11,7 @@ namespace App\Tests\Invoice\NumberGenerator;
 
 use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
+use App\Tests\Invoice\DebugFormatter;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -21,7 +22,7 @@ class DateNumberGeneratorTest extends TestCase
     public function testGetInvoiceNumber()
     {
         $sut = new DateNumberGenerator();
-        $sut->setModel(new InvoiceModel());
+        $sut->setModel(new InvoiceModel(new DebugFormatter()));
 
         $this->assertEquals(date('ymd'), $sut->getInvoiceNumber());
         $this->assertEquals('default', $sut->getId());

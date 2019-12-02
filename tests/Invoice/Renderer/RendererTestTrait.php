@@ -21,7 +21,10 @@ use App\Entity\ProjectMeta;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
+use App\Entity\UserPreference;
 use App\Invoice\Calculator\DefaultCalculator;
+use App\Invoice\DefaultInvoiceFormatter;
+use App\Invoice\InvoiceFormatter;
 use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Invoice\Renderer\AbstractRenderer;
@@ -66,6 +69,11 @@ trait RendererTestTrait
      */
     protected function getAbstractRenderer(string $classname)
     {
+        return new $classname();
+    }
+
+    protected function getFormatter(): InvoiceFormatter
+    {
         $requestStack = new RequestStack();
         $languages = [
             'en' => [
@@ -85,11 +93,19 @@ trait RendererTestTrait
         $dateExtension = new DateExtensions($localeSettings);
         $extensions = new Extensions($localeSettings);
 
-        return new $classname($translator, $dateExtension, $extensions);
+        return new DefaultInvoiceFormatter($translator, $dateExtension, $extensions);
     }
 
     protected function getInvoiceModel(): InvoiceModel
     {
+        $user = new User();
+        $user->setUsername('one-user');
+        $user->setTitle('user title');
+        $user->setAlias('genious alias');
+        $user->setEmail('fantastic@four');
+        $user->addPreference((new UserPreference())->setName('kitty')->setValue('kat'));
+        $user->addPreference((new UserPreference())->setName('hello')->setValue('world'));
+
         $customer = new Customer();
         $customer->setCurrency('EUR');
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
@@ -185,11 +201,12 @@ trait RendererTestTrait
         $query->setEnd(new \DateTime());
         $query->setProject($project);
 
-        $model = new InvoiceModel();
+        $model = new InvoiceModel($this->getFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
         $model->setEntries($entries);
         $model->setQuery($query);
+        $model->setUser($user);
 
         $calculator = new DefaultCalculator();
         $calculator->setModel($model);
@@ -206,6 +223,14 @@ trait RendererTestTrait
 
     protected function getInvoiceModelOneEntry(): InvoiceModel
     {
+        $user = new User();
+        $user->setUsername('one-user');
+        $user->setTitle('user title');
+        $user->setAlias('genious alias');
+        $user->setEmail('fantastic@four');
+        $user->addPreference((new UserPreference())->setName('kitty')->setValue('kat'));
+        $user->addPreference((new UserPreference())->setName('hello')->setValue('world'));
+
         $customer = new Customer();
         $customer->setCurrency('USD');
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
@@ -248,11 +273,12 @@ trait RendererTestTrait
         $query->setBegin(new \DateTime());
         $query->setEnd(new \DateTime());
 
-        $model = new InvoiceModel();
+        $model = new InvoiceModel($this->getFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
         $model->setEntries($entries);
         $model->setQuery($query);
+        $model->setUser($user);
 
         $calculator = new DefaultCalculator();
         $calculator->setModel($model);

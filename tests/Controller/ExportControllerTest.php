@@ -9,6 +9,7 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
@@ -35,15 +36,79 @@ class ExportControllerTest extends ControllerBaseTest
         $this->assertHasNoEntriesWithFilter($client);
     }
 
-    public function testIndexActionWithEntries()
+    public function testIndexActionWithEntriesAndTeams()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $teamlead = $this->getUserByRole($em, User::ROLE_TEAMLEAD);
+        $user = $this->getUserByRole($em, User::ROLE_USER);
+        /** @var Team $team */
+        $team = new Team();
+        $team->setName('fooo');
+        $team->setTeamLead($teamlead);
+        $team->addUser($user);
+        $em->persist($team);
+        $em->persist($user);
+        $em->persist($teamlead);
+        $em->flush();
+
+        $user = $this->getUserByRole($em, User::ROLE_USER);
+
+        $begin = new \DateTime('first day of this month');
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setUser($user)
+            ->setAmount(20)
+            ->setStartDate($begin)
+            ->setCallback(function (Timesheet $timesheet) use ($team, $em) {
+                $team->addProject($timesheet->getProject());
+                $em->persist($team);
+            })
+        ;
+        $this->importFixture($em, $fixture);
+
+        $teamlead = $this->getUserByRole($em, User::ROLE_TEAMLEAD);
+
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setUser($teamlead)
+            ->setAmount(2)
+            ->setStartDate($begin)
+        ;
+        $this->importFixture($em, $fixture);
+        $em->flush();
+
+        $this->request($client, '/export/?preview=');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        // make sure all existing records are displayed
+        $this->assertHasDataTable($client);
+        $this->assertDataTableRowCount($client, 'datatable_export', 22);
+
+        // assert export type buttons are available
+        $expected = ['csv', 'html', 'pdf', 'xlsx'];
+        $node = $client->getCrawler()->filter('#export-buttons button');
+        $this->assertEquals(count($expected), $node->count());
+        /** @var \DOMElement $button */
+        foreach ($node->getIterator() as $button) {
+            $type = $button->getAttribute('data-type');
+            $this->assertContains($type, $expected);
+        }
+    }
+
+    public function testIndexActionWithEntriesForTeamleadDoesNotShowUserWithoutTeam()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
 
         $begin = new \DateTime('first day of this month');
+        $user = $this->getUserByRole($em, User::ROLE_USER);
+
+        // these should be ignored, becuase teamlead and user do NOT share a team!
         $fixture = new TimesheetFixtures();
         $fixture
-            ->setUser($this->getUserByRole($em, User::ROLE_USER))
+            ->setUser($user)
             ->setAmount(20)
             ->setStartDate($begin)
         ;
@@ -53,8 +118,24 @@ class ExportControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         // make sure all existing records are displayed
+        $this->assertHasNoEntriesWithFilter($client);
+
+        $teamlead = $this->getUserByRole($em, User::ROLE_TEAMLEAD);
+
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setUser($teamlead)
+            ->setAmount(2)
+            ->setStartDate($begin)
+        ;
+        $this->importFixture($em, $fixture);
+
+        $this->request($client, '/export/?preview=');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        // make sure all existing records are displayed
         $this->assertHasDataTable($client);
-        $this->assertDataTableRowCount($client, 'datatable_export', 20);
+        $this->assertDataTableRowCount($client, 'datatable_export', 2);
 
         // assert export type buttons are available
         $expected = ['csv', 'html', 'pdf', 'xlsx'];
@@ -102,7 +183,7 @@ class ExportControllerTest extends ControllerBaseTest
 
     public function testExportAction()
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         /** @var EntityManager $em */
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
 

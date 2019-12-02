@@ -28,7 +28,9 @@ class InvoiceToolbarForm extends AbstractToolbarForm
     {
         $this->addSearchTermInputField($builder);
         $this->addTemplateChoice($builder);
-        $this->addUsersChoice($builder);
+        if ($options['include_user']) {
+            $this->addUsersChoice($builder);
+        }
         $this->addDateRangeChoice($builder);
         $this->addCustomerChoice($builder, true);
         $this->addProjectChoice($builder);
@@ -64,6 +66,7 @@ class InvoiceToolbarForm extends AbstractToolbarForm
         $resolver->setDefaults([
             'data_class' => InvoiceQuery::class,
             'csrf_protection' => false,
+            'include_user' => true,
         ]);
     }
 }

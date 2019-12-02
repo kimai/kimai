@@ -99,6 +99,7 @@ class InvoiceTemplate
      *
      * @ORM\Column(name="calculator", type="string", length=20, nullable=false)
      * @Assert\NotBlank()
+     * @Assert\Length(max=20)
      */
     private $calculator = 'default';
     /**
@@ -106,6 +107,7 @@ class InvoiceTemplate
      *
      * @ORM\Column(name="number_generator", type="string", length=20, nullable=false)
      * @Assert\NotBlank()
+     * @Assert\Length(max=20)
      */
     private $numberGenerator = 'default';
 
@@ -114,6 +116,7 @@ class InvoiceTemplate
      *
      * @ORM\Column(name="renderer", type="string", length=20, nullable=false)
      * @Assert\NotBlank()
+     * @Assert\Length(max=20)
      */
     private $renderer = 'default';
 

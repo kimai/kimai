@@ -119,12 +119,16 @@ class TimesheetValidator extends ConstraintValidator
                 ->addViolation();
         }
 
-        if (false === $this->configuration->isAllowFutureTimes() && time() < $timesheet->getBegin()->getTimestamp()) {
-            $context->buildViolation('The begin date cannot be in the future.')
-                ->atPath('begin')
-                ->setTranslationDomain('validators')
-                ->setCode(TimesheetConstraint::BEGIN_IN_FUTURE_ERROR)
-                ->addViolation();
+        if (false === $this->configuration->isAllowFutureTimes()) {
+            // allow configured default rounding time + 1 minute - see #1295
+            $allowedDiff = ($this->configuration->getDefaultRoundingBegin() * 60) + 60;
+            if ((time() + $allowedDiff) < $timesheet->getBegin()->getTimestamp()) {
+                $context->buildViolation('The begin date cannot be in the future.')
+                    ->atPath('begin')
+                    ->setTranslationDomain('validators')
+                    ->setCode(TimesheetConstraint::BEGIN_IN_FUTURE_ERROR)
+                    ->addViolation();
+            }
         }
     }
 

@@ -19,7 +19,7 @@ use PhpOffice\PhpWord\TemplateProcessor;
 use Symfony\Component\HttpFoundation\File\Stream;
 use Symfony\Component\HttpFoundation\Response;
 
-class DocxRenderer extends AbstractRenderer implements RendererInterface
+final class DocxRenderer extends AbstractRenderer implements RendererInterface
 {
     /**
      * @param InvoiceDocument $document
@@ -35,7 +35,7 @@ class DocxRenderer extends AbstractRenderer implements RendererInterface
         $xmlEscaper = new Xml();
         $template = new TemplateProcessor($document->getFilename());
 
-        foreach ($this->modelToReplacer($model) as $search => $replace) {
+        foreach ($model->toArray() as $search => $replace) {
             $replace = $xmlEscaper->escape($replace);
             $replace = str_replace(PHP_EOL, '</w:t><w:br /><w:t xml:space="preserve">', $replace);
 
@@ -45,12 +45,18 @@ class DocxRenderer extends AbstractRenderer implements RendererInterface
         try {
             $template->cloneRow('entry.description', count($model->getCalculator()->getEntries()));
         } catch (OfficeException $ex) {
-            $template->cloneRow('entry.row', count($model->getCalculator()->getEntries()));
+            try {
+                $template->cloneRow('entry.row', count($model->getCalculator()->getEntries()));
+            } catch (OfficeException $ex) {
+                @trigger_error(
+                    sprintf('Invoice document (%s) did not contain a clone row, was that on purpose?', $document->getFilename())
+                );
+            }
         }
 
         $i = 1;
         foreach ($model->getCalculator()->getEntries() as $entry) {
-            $values = $this->invoiceItemToArray($entry);
+            $values = $model->itemToArray($entry);
             foreach ($values as $search => $replace) {
                 $replace = $xmlEscaper->escape($replace);
                 $replace = str_replace(PHP_EOL, '</w:t><w:br /><w:t xml:space="preserve">', $replace);

@@ -19,6 +19,8 @@ class UserControllerTest extends APIControllerBaseTest
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/api/users');
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/api/users');
+        $this->assertUrlIsSecuredForRole(User::ROLE_TEAMLEAD, '/api/users');
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/api/users');
     }
 
@@ -118,7 +120,7 @@ class UserControllerTest extends APIControllerBaseTest
         if ($full) {
             $expectedKeys = array_merge(
                 $expectedKeys,
-                ['title', 'avatar', 'roles', 'language', 'timezone']
+                ['title', 'avatar', 'teams', 'roles', 'language', 'timezone']
             );
         }
 

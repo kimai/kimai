@@ -11,14 +11,12 @@ namespace App\Tests\Invoice\Renderer;
 
 use App\Entity\InvoiceDocument;
 use App\Invoice\InvoiceModel;
-use App\Invoice\Renderer\RendererTrait;
+use App\Invoice\Renderer\AbstractRenderer;
 use App\Invoice\RendererInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class DebugRenderer implements RendererInterface
+class DebugRenderer extends AbstractRenderer implements RendererInterface
 {
-    use RendererTrait;
-
     /**
      * @return string[]
      */
@@ -36,60 +34,6 @@ class DebugRenderer implements RendererInterface
     }
 
     /**
-     * @param \DateTime $date
-     * @return mixed
-     */
-    protected function getFormattedDateTime(\DateTime $date)
-    {
-        return $date->format('d.m.Y');
-    }
-
-    /**
-     * @param \DateTime $date
-     * @return mixed
-     */
-    protected function getFormattedTime(\DateTime $date)
-    {
-        return $date->format('H:i');
-    }
-
-    /**
-     * @param mixed $amount
-     * @return mixed
-     */
-    protected function getFormattedMoney($amount)
-    {
-        return $amount;
-    }
-
-    /**
-     * @param \DateTime $date
-     * @return mixed
-     */
-    protected function getFormattedMonthName(\DateTime $date)
-    {
-        return $date->format('m');
-    }
-
-    /**
-     * @param mixed $seconds
-     * @return mixed
-     */
-    protected function getFormattedDuration($seconds)
-    {
-        return $seconds;
-    }
-
-    /**
-     * @param mixed $seconds
-     * @return mixed
-     */
-    protected function getFormattedDecimalDuration($seconds)
-    {
-        return $seconds;
-    }
-
-    /**
      * Render the given InvoiceDocument with the data from the InvoiceModel into a stupid array for testing only.
      *
      * @param InvoiceDocument $document
@@ -99,12 +43,12 @@ class DebugRenderer implements RendererInterface
     public function render(InvoiceDocument $document, InvoiceModel $model): Response
     {
         $result = [
-            'model' => $this->modelToReplacer($model),
+            'model' => $model->toArray(),
             'entries' => [],
         ];
 
         foreach ($model->getCalculator()->getEntries() as $entry) {
-            $result['entries'][] = $this->timesheetToArray($entry);
+            $result['entries'][] = $model->itemToArray($entry);
         }
 
         return new Response(json_encode($result));

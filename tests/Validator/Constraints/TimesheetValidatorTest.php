@@ -38,6 +38,11 @@ class TimesheetValidatorTest extends ConstraintValidatorTestCase
             'rules' => [
                 'allow_future_times' => false,
             ],
+            'rounding' => [
+                'default' => [
+                    'begin' => 1
+                ]
+            ]
         ]);
         $service = (new TrackingModeServiceFactory($this))->create('default');
 

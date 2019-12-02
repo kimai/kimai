@@ -24,6 +24,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @RouteResource("Team")
+ *
+ * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
 class TeamController extends BaseApiController
 {
@@ -78,6 +80,8 @@ class TeamController extends BaseApiController
      *      @SWG\Schema(ref="#/definitions/TeamEntity"),
      * )
      *
+     * @Security("is_granted('view_team')")
+     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
@@ -90,7 +94,7 @@ class TeamController extends BaseApiController
         }
 
         $view = new View($data, 200);
-        $view->getContext()->setGroups(['Default', 'Entity', 'Team']);
+        $view->getContext()->setGroups(['Default', 'Entity', 'Team', 'Team_Entity']);
 
         return $this->viewHandler->handle($view);
     }

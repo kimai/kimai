@@ -118,9 +118,13 @@ class TimesheetTeamController extends TimesheetAbstractController
         return TimesheetAdminEditForm::class;
     }
 
-    protected function includeUserInForms(): bool
+    protected function includeUserInForms(string $formName): bool
     {
-        return true;
+        if ($formName === 'toolbar') {
+            return true;
+        }
+
+        return $this->isGranted('edit_other_timesheet');
     }
 
     protected function getTimesheetRoute(): string

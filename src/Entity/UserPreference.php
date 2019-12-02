@@ -77,6 +77,10 @@ class UserPreference
      * @var array
      */
     private $options = [];
+    /**
+     * @var int
+     */
+    private $order = 1000;
 
     /**
      * @return int
@@ -245,5 +249,17 @@ class UserPreference
         }
 
         return $this->name;
+    }
+
+    public function getOrder(): int
+    {
+        return $this->order;
+    }
+
+    public function setOrder(int $order): UserPreference
+    {
+        $this->order = $order;
+
+        return $this;
     }
 }

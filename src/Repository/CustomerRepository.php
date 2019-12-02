@@ -272,7 +272,7 @@ class CustomerRepository extends EntityRepository
         return $paginator;
     }
 
-    protected function getPaginatorForQuery(CustomerQuery $query): PaginatorInterface
+    public function countCustomersForQuery(CustomerQuery $query): int
     {
         $qb = $this->getQueryBuilderForQuery($query);
         $qb
@@ -280,8 +280,13 @@ class CustomerRepository extends EntityRepository
             ->resetDQLPart('orderBy')
             ->select($qb->expr()->countDistinct('c.id'))
         ;
-        $counter = (int) $qb->getQuery()->getSingleScalarResult();
 
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
+
+    protected function getPaginatorForQuery(CustomerQuery $query): PaginatorInterface
+    {
+        $counter = $this->countCustomersForQuery($query);
         $qb = $this->getQueryBuilderForQuery($query);
 
         return new LoaderPaginator(new CustomerLoader($qb->getEntityManager()), $qb, $counter);

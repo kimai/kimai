@@ -4,18 +4,11 @@
 
 {% block invoice %}
 
-{% set signature = null %}
-{# You can overwrite these settings in your config/packages/local.yaml under the key "twig.globals.company" - previously '/build/images/signature.png' #}
-{% set company = company|default({signature: null}) %}
-{% if company.signature is defined and company.signature is not empty %}
-    {% set signature = company.signature %}
-{% endif %}
-
 <div class="row" id="freelancer-invoice">
     <div class="col-xs-12">
         <header>
             <address>
-                <p contenteditable="true">{{ model.template.address|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}</p>
+                <p contenteditable="true">{{ model.template.company }} &ndash; {{ model.template.address|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}</p>
             </address>
         </header>
         <article class="address">
@@ -93,9 +86,9 @@
                                 {{ entry.activity.name }} / {{ entry.project.name }}
                             {% endif %}
                         </td>
-                        <td class="text-right">{{ rate|money(model.calculator.currency) }}</td>
-                        <td class="text-right">{{ duration }}</td>
-                        <td class="text-right">{{ entry.rate|money(model.calculator.currency) }}</td>
+                        <td class="text-right text-nowrap">{{ rate|money(model.calculator.currency) }}</td>
+                        <td class="text-right text-nowrap">{{ duration }}</td>
+                        <td class="text-right text-nowrap">{{ entry.rate|money(model.calculator.currency) }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -120,9 +113,6 @@
                 <div contenteditable="true">
                     {{ model.template.paymentTerms|nl2br|md2html }}
                 </div>
-                {% if signature is not empty %}
-                    <img src="{{ signature }}">
-                {% endif %}
             </article>
         {% endif %}
         <footer class="footer">
@@ -132,6 +122,7 @@
                         <strong>{{ 'label.address'|trans }}</strong>
                     </p>
                     <p>
+                        {{ model.template.company }}<br>
                         {{ model.template.address|nl2br }}
                     </p>
                 </div>
