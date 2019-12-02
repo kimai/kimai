@@ -38,11 +38,16 @@ class InvoiceModelTest extends TestCase
 
         self::assertNull($sut->getTemplate());
         self::assertInstanceOf(\DateTime::class, $sut->getInvoiceDate());
+
+        self::assertNull($sut->getFormatter());
     }
 
     public function testSetter()
     {
-        $sut = new InvoiceModel(new DebugFormatter());
+        $formatter = new DebugFormatter();
+        $sut = new InvoiceModel($formatter);
+
+        self::assertSame($formatter, $sut->getFormatter());
 
         $query = new InvoiceQuery();
         self::assertInstanceOf(InvoiceModel::class, $sut->setQuery($query));
