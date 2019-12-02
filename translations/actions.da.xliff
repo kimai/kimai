@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="da" datatype="plaintext" original="none">
+        <body>
+            <trans-unit id="stop">
+                <source>stop</source>
+                <target>Stop</target>
+            </trans-unit>
+            <trans-unit id="back">
+                <source>back</source>
+                <target>Tilbage</target>
+            </trans-unit>
+            <trans-unit id="edit">
+                <source>edit</source>
+                <target>Redigér</target>
+            </trans-unit>
+            <trans-unit id="trash">
+                <source>trash</source>
+                <target>Slet</target>
+            </trans-unit>
+            <trans-unit id="report">
+                <source>report</source>
+                <target>Rapportér</target>
+            </trans-unit>
+            <trans-unit id="repeat">
+                <source>repeat</source>
+                <target>Start igen</target>
+            </trans-unit>
+            <trans-unit id="profile-stats">
+                <source>profile-stats</source>
+                <target>Profil</target>
+            </trans-unit>
+            <trans-unit id="settings">
+                <source>settings</source>
+                <target>Indstillinger</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target>Timeseddel</target>
+            </trans-unit>
+            <trans-unit id="customer">
+                <source>customer</source>
+                <target>Filtrer kunder</target>
+            </trans-unit>
+            <trans-unit id="project">
+                <source>project</source>
+                <target>Filtrer projekter</target>
+            </trans-unit>
+            <trans-unit id="activity">
+                <source>activity</source>
+                <target>Filtrer aktiviteter</target>
+            </trans-unit>
+            <trans-unit id="copy">
+                <source>copy</source>
+                <target>Kopier</target>
+            </trans-unit>
+            <trans-unit id="home">
+                <source>home</source>
+                <target>Hjem</target>
+            </trans-unit>
+            <trans-unit id="create-project">
+                <source>create-project</source>
+                <target>Opret projekt</target>
+            </trans-unit>
+            <trans-unit id="create-activity">
+                <source>create-activity</source>
+                <target>Opret aktivitet</target>
+            </trans-unit>
+            <trans-unit id="create-timesheet">
+                <source>create-timesheet</source>
+                <target>Opret timeseddel</target>
+            </trans-unit>
+            <trans-unit id="permissions">
+                <source>permissions</source>
+                <target>Hold tilladelser</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
