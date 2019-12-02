@@ -28,6 +28,8 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * @RouteResource("Tag")
+ *
+ * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
 class TagController extends BaseApiController
 {

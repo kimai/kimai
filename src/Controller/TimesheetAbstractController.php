@@ -402,7 +402,7 @@ abstract class TimesheetAbstractController extends AbstractController
             'action' => $this->generateUrl($this->getMultiUpdateRoute(), []),
             'method' => 'POST',
             'include_exported' => $this->isGranted($this->getPermissionEditExport()),
-            'include_user' => $this->includeUserInForms(),
+            'include_user' => $this->includeUserInForms('multi'),
         ]);
     }
 
@@ -426,7 +426,7 @@ abstract class TimesheetAbstractController extends AbstractController
             'action' => $this->generateUrl($this->getCreateRoute()),
             'include_rate' => $this->isGranted('edit_rate', $entry),
             'include_exported' => $this->isGranted('edit_export', $entry),
-            'include_user' => $this->includeUserInForms(),
+            'include_user' => $this->includeUserInForms('create'),
             'allow_begin_datetime' => $mode->canEditBegin(),
             'allow_end_datetime' => $mode->canEditEnd(),
             'allow_duration' => $mode->canEditDuration(),
@@ -450,7 +450,7 @@ abstract class TimesheetAbstractController extends AbstractController
             ]),
             'include_rate' => $this->isGranted('edit_rate', $entry),
             'include_exported' => $this->isGranted('edit_export', $entry),
-            'include_user' => $this->includeUserInForms(),
+            'include_user' => $this->includeUserInForms('edit'),
             'allow_begin_datetime' => $mode->canEditBegin(),
             'allow_end_datetime' => $mode->canEditEnd(),
             'allow_duration' => $mode->canEditDuration(),
@@ -469,7 +469,7 @@ abstract class TimesheetAbstractController extends AbstractController
                 'page' => $query->getPage(),
             ]),
             'method' => 'GET',
-            'include_user' => $this->includeUserInForms(),
+            'include_user' => $this->includeUserInForms('toolbar'),
         ]);
     }
 
@@ -493,7 +493,7 @@ abstract class TimesheetAbstractController extends AbstractController
         return (bool) $this->getUser()->getPreferenceValue('timesheet.daily_stats', false);
     }
 
-    protected function includeUserInForms(): bool
+    protected function includeUserInForms(string $formName): bool
     {
         return false;
     }

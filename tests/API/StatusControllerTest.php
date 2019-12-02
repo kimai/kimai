@@ -20,6 +20,7 @@ class StatusControllerTest extends APIControllerBaseTest
     public function testIsSecure()
     {
         $this->assertUrlIsSecured('/api/ping');
+        $this->assertUrlIsSecured('/api/version');
     }
 
     public function testPing()

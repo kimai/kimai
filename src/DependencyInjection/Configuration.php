@@ -211,13 +211,17 @@ class Configuration implements ConfigurationInterface
         $node
             ->addDefaultsIfNotSet()
             ->children()
-                ->arrayNode('documents')
-                    ->requiresAtLeastOneElement()
+                ->arrayNode('defaults')
                     ->scalarPrototype()->end()
                     ->defaultValue([
                         'var/invoices/',
                         'templates/invoice/renderer/'
                     ])
+                ->end()
+                ->arrayNode('documents')
+                    ->requiresAtLeastOneElement()
+                    ->scalarPrototype()->end()
+                    ->defaultValue([])
                 ->end()
             ->end()
         ;

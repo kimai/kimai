@@ -25,7 +25,8 @@ class InvoiceModelTest extends TestCase
 {
     public function testEmptyObject()
     {
-        $sut = new InvoiceModel();
+        $formatter = new DebugFormatter();
+        $sut = new InvoiceModel($formatter);
 
         self::assertNull($sut->getQuery());
         self::assertNull($sut->getCustomer());
@@ -38,11 +39,13 @@ class InvoiceModelTest extends TestCase
 
         self::assertNull($sut->getTemplate());
         self::assertInstanceOf(\DateTime::class, $sut->getInvoiceDate());
+
+        self::assertSame($formatter, $sut->getFormatter());
     }
 
     public function testSetter()
     {
-        $sut = new InvoiceModel();
+        $sut = new InvoiceModel(new DebugFormatter());
 
         $query = new InvoiceQuery();
         self::assertInstanceOf(InvoiceModel::class, $sut->setQuery($query));

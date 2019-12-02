@@ -31,6 +31,11 @@ class TagControllerTest extends APIControllerBaseTest
         $this->importFixture($em, $fixture);
     }
 
+    public function testIsSecure()
+    {
+        $this->assertUrlIsSecured('/api/tags');
+    }
+
     public function testGetCollection()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);

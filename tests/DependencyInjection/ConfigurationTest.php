@@ -244,6 +244,8 @@ class ConfigurationTest extends TestCase
             ],
             'invoice' => [
                 'documents' => [
+                ],
+                'defaults' => [
                     0 => 'var/invoices/',
                     1 => 'templates/invoice/renderer/',
                 ],

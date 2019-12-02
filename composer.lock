@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4c71764ce6f4c135070a2f7e7a0c62b6",
+    "content-hash": "c08938efb681d04751323b133c8d8199",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -4525,16 +4525,16 @@
         },
         {
             "name": "phpoffice/phpword",
-            "version": "0.15.0",
+            "version": "0.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPOffice/PHPWord.git",
-                "reference": "dfa2f36cad2b632b7ab1c56473e4f5db9a7caf7f"
+                "reference": "b8346af548d399acd9e30fc76ab0c55c2fec03a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PHPWord/zipball/dfa2f36cad2b632b7ab1c56473e4f5db9a7caf7f",
-                "reference": "dfa2f36cad2b632b7ab1c56473e4f5db9a7caf7f",
+                "url": "https://api.github.com/repos/PHPOffice/PHPWord/zipball/b8346af548d399acd9e30fc76ab0c55c2fec03a5",
+                "reference": "b8346af548d399acd9e30fc76ab0c55c2fec03a5",
                 "shasum": ""
             },
             "require": {
@@ -4566,7 +4566,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.16-dev"
+                    "dev-develop": "0.18-dev"
                 }
             },
             "autoload": {
@@ -4588,16 +4588,16 @@
                     "homepage": "http://gabrielbull.com/"
                 },
                 {
+                    "name": "Franck Lefevre",
+                    "homepage": "https://rootslabs.net/blog/"
+                },
+                {
                     "name": "Ivan Lanin",
                     "homepage": "http://ivan.lanin.org"
                 },
                 {
                     "name": "Roman Syroeshko",
                     "homepage": "http://ru.linkedin.com/pub/roman-syroeshko/34/a53/994/"
-                },
-                {
-                    "name": "Franck Lefevre",
-                    "homepage": "https://rootslabs.net/blog/"
                 },
                 {
                     "name": "Antoine de Troostembergh"
@@ -4630,7 +4630,7 @@
                 "word",
                 "writer"
             ],
-            "time": "2018-07-14T16:59:43+00:00"
+            "time": "2019-10-01T20:43:33+00:00"
         },
         {
             "name": "psr/cache",

@@ -104,6 +104,7 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
             (new UserPreference())
                 ->setName(UserPreference::HOURLY_RATE)
                 ->setValue(0)
+                ->setOrder(100)
                 ->setType(MoneyType::class)
                 ->setEnabled($enableHourlyRate)
                 ->setOptions($hourlyRateOptions)
@@ -112,36 +113,43 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
             (new UserPreference())
                 ->setName(UserPreference::TIMEZONE)
                 ->setValue($this->getDefaultTimezone())
+                ->setOrder(200)
                 ->setType(TimezoneType::class),
 
             (new UserPreference())
                 ->setName(UserPreference::LOCALE)
                 ->setValue($this->getDefaultLanguage())
+                ->setOrder(300)
                 ->setType(LanguageType::class),
 
             (new UserPreference())
                 ->setName(UserPreference::SKIN)
                 ->setValue($this->getDefaultTheme())
+                ->setOrder(400)
                 ->setType(SkinType::class),
 
             (new UserPreference())
                 ->setName('theme.collapsed_sidebar')
                 ->setValue(false)
+                ->setOrder(500)
                 ->setType(CheckboxType::class),
 
             (new UserPreference())
                 ->setName('calendar.initial_view')
                 ->setValue(CalendarViewType::DEFAULT_VIEW)
+                ->setOrder(600)
                 ->setType(CalendarViewType::class),
 
             (new UserPreference())
                 ->setName('login.initial_view')
                 ->setValue(InitialViewType::DEFAULT_VIEW)
+                ->setOrder(700)
                 ->setType(InitialViewType::class),
 
             (new UserPreference())
                 ->setName('timesheet.daily_stats')
                 ->setValue(false)
+                ->setOrder(800)
                 ->setType(CheckboxType::class),
         ];
     }
@@ -153,29 +161,22 @@ class UserPreferenceSubscriber implements EventSubscriberInterface
     {
         $user = $event->getUser();
 
-        $prefs = [];
-        foreach ($user->getPreferences() as $preference) {
-            $prefs[$preference->getName()] = $preference;
-        }
-
         $event = new UserPreferenceEvent($user, $this->getDefaultPreferences($user));
         $this->eventDispatcher->dispatch($event);
 
         foreach ($event->getPreferences() as $preference) {
-            /* @var UserPreference[] $prefs */
-            if (isset($prefs[$preference->getName()])) {
-                /* @var UserPreference $pref */
-                $prefs[$preference->getName()]
+            $userPref = $user->getPreference($preference->getName());
+            if (null !== $userPref) {
+                $userPref
                     ->setType($preference->getType())
                     ->setConstraints($preference->getConstraints())
                     ->setEnabled($preference->isEnabled())
                     ->setOptions($preference->getOptions())
+                    ->setOrder($preference->getOrder())
                 ;
             } else {
-                $prefs[$preference->getName()] = $preference;
+                $user->addPreference($preference);
             }
         }
-
-        $user->setPreferences(array_values($prefs));
     }
 }

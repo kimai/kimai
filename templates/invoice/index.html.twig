@@ -37,7 +37,9 @@
                 {{ form_row(form.customer) }}
                 {{ form_row(form.project) }}
                 {{ form_row(form.activity) }}
-                {{ form_row(form.users) }}
+                {% if form.users is defined %}
+                    {{ form_row(form.users) }}
+                {% endif %}
                 {{ form_row(form.tags) }}
                 {{ form_row(form.exported) }}
                 {{ form_row(form.template) }}

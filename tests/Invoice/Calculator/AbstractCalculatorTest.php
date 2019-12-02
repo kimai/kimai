@@ -18,6 +18,7 @@ use App\Entity\User;
 use App\Invoice\CalculatorInterface;
 use App\Invoice\InvoiceModel;
 use App\Repository\Query\InvoiceQuery;
+use App\Tests\Invoice\DebugFormatter;
 use PHPUnit\Framework\TestCase;
 
 abstract class AbstractCalculatorTest extends TestCase
@@ -28,7 +29,7 @@ abstract class AbstractCalculatorTest extends TestCase
         $template = new InvoiceTemplate();
         $query = new InvoiceQuery();
 
-        $model = new InvoiceModel();
+        $model = new InvoiceModel(new DebugFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
         $model->setQuery($query);
@@ -80,7 +81,7 @@ abstract class AbstractCalculatorTest extends TestCase
             ->setActivity($activity)
             ->setProject($project);
 
-        $model = new InvoiceModel();
+        $model = new InvoiceModel(new DebugFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
         $model->setEntries([$timesheet]);

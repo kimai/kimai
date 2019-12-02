@@ -45,6 +45,9 @@ class AppExtension extends Extension
             $config['timesheet']['rounding'][$name]['days'] = implode(',', $settings['days']);
         }
 
+        $config['invoice']['documents'] = array_merge($config['invoice']['documents'], $config['invoice']['defaults']);
+        unset($config['invoice']['defaults']);
+
         // safe alternatives to %kernel.project_dir%
         $container->setParameter('kimai.data_dir', $config['data_dir']);
         $container->setParameter('kimai.plugin_dir', $config['plugin_dir']);

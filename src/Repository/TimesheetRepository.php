@@ -640,6 +640,10 @@ class TimesheetRepository extends EntityRepository
             $currentUser = $query->getCurrentUser();
 
             if (!$currentUser->isSuperAdmin() && !$currentUser->isAdmin()) {
+                // make sure that the user himself is in the list of users, if he is part of a team
+                // if teams are used and the user is not a teamlead, the list of users would be empty and then leading to NOT limit the select by user IDs
+                $user[] = $currentUser;
+
                 foreach ($currentUser->getTeams() as $team) {
                     if ($currentUser->isTeamleadOf($team)) {
                         $query->addTeam($team);
