@@ -189,7 +189,7 @@ class BaseQuery
      */
     public function getResultType()
     {
-        @trigger_error('BaseQuery::getResultType() is deprecated and will be removed with 1.6', E_USER_DEPRECATED);
+        @trigger_error('BaseQuery::getResultType() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
 
         return $this->resultType;
     }
@@ -253,5 +253,28 @@ class BaseQuery
         }
 
         return $this;
+    }
+
+    public function copyTo(BaseQuery $query): BaseQuery
+    {
+        $query->setDefaults($this->defaults);
+        if (null !== $this->getCurrentUser()) {
+            $query->setCurrentUser($this->getCurrentUser());
+        }
+        $query->setOrder($this->getOrder());
+        $query->setOrderBy($this->getOrderBy());
+        $query->setSearchTerm($this->getSearchTerm());
+        $query->setPage($this->getPage());
+        $query->setPageSize($this->getPageSize());
+
+        foreach ($this->getTeams() as $team) {
+            $query->addTeam($team);
+        }
+
+        if ($this instanceof VisibilityInterface && $query instanceof VisibilityInterface) {
+            $query->setVisibility($this->getVisibility());
+        }
+
+        return $query;
     }
 }

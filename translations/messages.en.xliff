@@ -516,6 +516,14 @@
                     activities and %records% time-records, which sum up to a total of %duration%.
                 </target>
             </trans-unit>
+            <trans-unit id="label.project_start">
+                <source>label.project_start</source>
+                <target>Project start</target>
+            </trans-unit>
+            <trans-unit id="label.project_end">
+                <source>label.project_end</source>
+                <target>Project end</target>
+            </trans-unit>
 
             <!--
               Admin: Activity

@@ -68,6 +68,18 @@ class Project implements EntityWithMetaFields
      */
     private $orderDate;
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="start", type="datetime", nullable=true)
+     */
+    private $start;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="end", type="datetime", nullable=true)
+     */
+    private $end;
+    /**
      * @var string
      *
      * @ORM\Column(name="comment", type="text", nullable=true)
@@ -200,6 +212,30 @@ class Project implements EntityWithMetaFields
     public function setOrderDate(?\DateTime $orderDate): Project
     {
         $this->orderDate = $orderDate;
+
+        return $this;
+    }
+
+    public function getStart(): ?\DateTime
+    {
+        return $this->start;
+    }
+
+    public function setStart(?\DateTime $start): Project
+    {
+        $this->start = $start;
+
+        return $this;
+    }
+
+    public function getEnd(): ?\DateTime
+    {
+        return $this->end;
+    }
+
+    public function setEnd(?\DateTime $end): Project
+    {
+        $this->end = $end;
 
         return $this;
     }

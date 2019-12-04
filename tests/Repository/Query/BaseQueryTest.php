@@ -31,7 +31,7 @@ class BaseQueryTest extends TestCase
     }
 
     /**
-     * @expectedDeprecation BaseQuery::getResultType() is deprecated and will be removed with 1.6
+     * @expectedDeprecation BaseQuery::getResultType() is deprecated and will be removed with 2.0
      * @group legacy
      */
     public function testDeprecations()

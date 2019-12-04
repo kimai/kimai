@@ -16,6 +16,7 @@ use App\Event\ProjectMetaDefinitionEvent;
 use App\Form\API\ProjectApiEditForm;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
+use App\Timesheet\UserDateTimeFactory;
 use App\Utils\SearchTerm;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
@@ -29,6 +30,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Validator\Constraints;
 
 /**
  * @RouteResource("Project")
@@ -49,16 +51,21 @@ class ProjectController extends BaseApiController
      * @var EventDispatcherInterface
      */
     private $dispatcher;
+    /**
+     * @var UserDateTimeFactory
+     */
+    private $dateTime;
 
-    public function __construct(ViewHandlerInterface $viewHandler, ProjectRepository $repository, EventDispatcherInterface $dispatcher)
+    public function __construct(ViewHandlerInterface $viewHandler, ProjectRepository $repository, EventDispatcherInterface $dispatcher, UserDateTimeFactory $dateTime)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
         $this->dispatcher = $dispatcher;
+        $this->dateTime = $dateTime;
     }
 
     /**
-     * Returns a collection of projects
+     * Returns a collection of projects.
      *
      * @SWG\Response(
      *      response=200,
@@ -69,7 +76,9 @@ class ProjectController extends BaseApiController
      *      )
      * )
      * @Rest\QueryParam(name="customer", requirements="\d+", strict=true, nullable=true, description="Customer ID to filter projects")
-     * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter projects (1=visible, 2=hidden, 3=both)")
+     * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter projects. Allowed values: 1=visible, 2=hidden, 3=both (default; 1)")
+     * @Rest\QueryParam(name="start", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only projects that started before this date will be included. Allowed format: HTML5 (default: now)")
+     * @Rest\QueryParam(name="end", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only projects that ended after this date will be included. Allowed format: HTML5 (default: now)")
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: ASC)")
      * @Rest\QueryParam(name="orderBy", requirements="id|name|customer", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, name, customer (default: name)")
      * @Rest\QueryParam(name="term", requirements="[a-zA-Z0-9 \-,:]+", strict=true, nullable=true, description="Free search term")
@@ -96,6 +105,20 @@ class ProjectController extends BaseApiController
 
         if (null !== ($visible = $paramFetcher->get('visible'))) {
             $query->setVisibility($visible);
+        }
+
+        $now = $this->dateTime->createDateTime();
+
+        if (null !== ($begin = $paramFetcher->get('start'))) {
+            $query->setProjectStart($this->dateTime->createDateTime($begin));
+        } else {
+            $query->setProjectStart($now);
+        }
+
+        if (null !== ($end = $paramFetcher->get('end'))) {
+            $query->setProjectEnd($this->dateTime->createDateTime($end));
+        } else {
+            $query->setProjectEnd($now);
         }
 
         if (!empty($term = $paramFetcher->get('term'))) {

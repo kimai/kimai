@@ -11,7 +11,7 @@ namespace App\Tests\Repository\Query;
 
 use App\Entity\Customer;
 use App\Repository\Query\ProjectQuery;
-use App\Repository\Query\VisibilityQuery;
+use App\Repository\Query\VisibilityInterface;
 
 /**
  * @covers \App\Repository\Query\ProjectQuery
@@ -23,7 +23,7 @@ class ProjectQueryTest extends BaseQueryTest
         $sut = new ProjectQuery();
 
         $this->assertBaseQuery($sut, 'name');
-        $this->assertInstanceOf(VisibilityQuery::class, $sut);
+        $this->assertInstanceOf(VisibilityInterface::class, $sut);
 
         $this->assertNull($sut->getCustomer());
 
@@ -38,5 +38,21 @@ class ProjectQueryTest extends BaseQueryTest
         $this->assertEquals(99, $sut->getCustomer());
 
         $this->assertResetByFormError(new ProjectQuery(), 'name');
+
+        self::assertNull($sut->getProjectStart());
+        self::assertNull($sut->getProjectEnd());
+    }
+
+    public function testSetter()
+    {
+        $sut = new ProjectQuery();
+
+        $start = new \DateTime();
+        $sut->setProjectStart($start);
+        self::assertSame($start, $sut->getProjectStart());
+
+        $end = new \DateTime('-1 day');
+        $sut->setProjectEnd($end);
+        self::assertSame($end, $sut->getProjectEnd());
     }
 }

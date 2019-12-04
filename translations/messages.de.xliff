@@ -516,6 +516,14 @@
                     Tätigkeiten und %records% Zeiteinträge, welche sich auf eine Gesamtdauer von %duration% belaufen.
                 </target>
             </trans-unit>
+            <trans-unit id="label.project_start">
+                <source>label.project_start</source>
+                <target>Projekt Start</target>
+            </trans-unit>
+            <trans-unit id="label.project_end">
+                <source>label.project_end</source>
+                <target>Projekt Ende</target>
+            </trans-unit>
 
             <!--
               Admin: Activity

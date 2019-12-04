@@ -182,6 +182,22 @@ class ProjectRepository extends EntityRepository
 
         $qb->andWhere($qb->expr()->eq('p.visible', ':visible'));
         $qb->andWhere($qb->expr()->eq('c.visible', ':customer_visible'));
+
+        $now = new \DateTime();
+        $qb->andWhere(
+            $qb->expr()->orX(
+                $qb->expr()->lte('p.start', ':start'),
+                $qb->expr()->isNull('p.start')
+            )
+        )->setParameter('start', $now);
+
+        $qb->andWhere(
+            $qb->expr()->orX(
+                $qb->expr()->gte('p.end', ':end'),
+                $qb->expr()->isNull('p.end')
+            )
+        )->setParameter('end', $now);
+
         $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
         $qb->setParameter('customer_visible', true, \PDO::PARAM_BOOL);
 
@@ -244,6 +260,24 @@ class ProjectRepository extends EntityRepository
         if (null !== $query->getCustomer()) {
             $qb->andWhere('p.customer = :customer')
                 ->setParameter('customer', $query->getCustomer());
+        }
+
+        if (null !== $query->getProjectStart()) {
+            $qb->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->lte('p.start', ':start'),
+                    $qb->expr()->isNull('p.start')
+                )
+            )->setParameter('start', $query->getProjectStart());
+        }
+
+        if (null !== $query->getProjectEnd()) {
+            $qb->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->gte('p.end', ':end'),
+                    $qb->expr()->isNull('p.end')
+                )
+            )->setParameter('end', $query->getProjectEnd());
         }
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser());
