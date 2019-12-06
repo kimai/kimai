@@ -11,7 +11,6 @@ namespace App\Widget\Renderer;
 
 use App\Widget\Type\SimpleWidget;
 use App\Widget\WidgetInterface;
-use ReflectionClass;
 
 class SimpleWidgetRenderer extends AbstractTwigRenderer
 {
