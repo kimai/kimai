@@ -184,7 +184,7 @@
             </trans-unit>
             <trans-unit id="Default">
                 <source>Default</source>
-                <target>Standard: Start werden nach oben, Ende und Dauer nach oben gerundet</target>
+                <target>Standard: Start werden nach unten, Ende und Dauer nach oben gerundet</target>
             </trans-unit>
             <trans-unit id="Floor">
                 <source>Floor</source>
