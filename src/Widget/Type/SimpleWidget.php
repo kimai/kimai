@@ -11,4 +11,10 @@ namespace App\Widget\Type;
 
 class SimpleWidget extends AbstractWidgetType
 {
+    public function getTemplateName(): string
+    {
+        $name = (new \ReflectionClass($this))->getShortName();
+
+        return sprintf('widget/widget-%s.html.twig', strtolower($name));
+    }
 }
