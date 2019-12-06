@@ -28,6 +28,7 @@ require('select2/dist/js/i18n/ru');
 require('select2/dist/js/i18n/sk');
 require('select2/dist/js/i18n/sv');
 require('select2/dist/js/i18n/tr');
+require('select2/dist/js/i18n/zh-CN');
 
 const Moment = require('moment');
 global.moment = Moment;
@@ -48,6 +49,7 @@ require('moment/locale/ru');
 require('moment/locale/sk');
 require('moment/locale/sv');
 require('moment/locale/tr');
+require('moment/locale/zh-cn');
 
 require('daterangepicker');
 
