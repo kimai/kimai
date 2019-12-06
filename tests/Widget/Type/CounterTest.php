@@ -15,6 +15,7 @@ use App\Widget\Type\SimpleWidget;
 
 /**
  * @covers \App\Widget\Type\Counter
+ * @covers \App\Widget\Type\SimpleWidget
  */
 class CounterTest extends AbstractWidgetTypeTest
 {
@@ -32,5 +33,11 @@ class CounterTest extends AbstractWidgetTypeTest
     {
         $sut = $this->createSut();
         self::assertInstanceOf(SimpleWidget::class, $sut);
+    }
+
+    public function testTemplateName()
+    {
+        $sut = new Counter();
+        self::assertEquals('widget/widget-counter.html.twig', $sut->getTemplateName());
     }
 }
