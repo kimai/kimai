@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="zh_CN" datatype="plaintext" original="system-configuration.en.xliff">
+        <body>
+            <trans-unit id="title">
+                <source>title</source>
+                <target>设置</target>
+            </trans-unit>
+            <trans-unit id="subtitle">
+                <source>subtitle</source>
+                <target>修改您的时间追踪器的全球设置</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target>时间表</target>
+            </trans-unit>
+            <trans-unit id="form_customer">
+                <source>form_customer</source>
+                <target>创建客户-默认值</target>
+            </trans-unit>
+            <trans-unit id="form_user">
+                <source>form_user</source>
+                <target>用户—默认值</target>
+            </trans-unit>
+            <trans-unit id="theme">
+                <source>theme</source>
+                <target>主题</target>
+            </trans-unit>
+            <trans-unit id="calendar">
+                <source>calendar</source>
+                <target>日历</target>
+            </trans-unit>
+            <trans-unit id="label.theme.markdown_content">
+                <source>label.theme.markdown_content</source>
+                <target>在描述区和评论区允许更改格式。</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode">
+                <source>label.timesheet.mode</source>
+                <target>时间追踪模式</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_default">
+                <source>label.timesheet.mode_default</source>
+                <target>[默认] 开始时间和结束时间可编辑</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_duration_only">
+                <source>label.timesheet.mode_duration_only</source>
+                <target>[持续时间]用持续时间输入栏代替结束时间</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_duration_fixed_begin">
+                <source>label.timesheet.mode_duration_fixed_begin</source>
+                <target>[持续时间] 可配置的固定开始时间，只有持续时间可以更改</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.mode_punch">
+                <source>label.timesheet.mode_punch</source>
+                <target>[打卡钟] 用户可以开始或停止记录，但是不能编辑时间或持续时间</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rules.allow_future_times">
+                <source>label.timesheet.rules.allow_future_times</source>
+                <target>在未来允许时间条目</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.active_entries.hard_limit">
+                <source>label.timesheet.active_entries.hard_limit</source>
+                <target>允许可同时运行的时间条目数量</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.active_entries.soft_limit">
+                <source>label.timesheet.active_entries.soft_limit</source>
+                <target>展示警告信息的运行时间条目数量</target>
+            </trans-unit>
+            <trans-unit id="label.theme.select_type">
+                <source>label.theme.select_type</source>
+                <target>表格中筛选框的类型</target>
+            </trans-unit>
+            <trans-unit id="label.theme.autocomplete_chars">
+                <source>label.theme.autocomplete_chars</source>
+                <target>开启自动完成需达到的最少字母数</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.week_numbers">
+                <source>label.calendar.week_numbers</source>
+                <target>显示周数字</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.weekends">
+                <source>label.calendar.weekends</source>
+                <target>显示周末</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.begin">
+                <source>label.calendar.businessHours.begin</source>
+                <target>正常工作时间的开始时间（将被高亮）</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.businessHours.end">
+                <source>label.calendar.businessHours.end</source>
+                <target>正常工作时间的结束时间（将被高亮）</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.begin">
+                <source>label.calendar.visibleHours.begin</source>
+                <target>可见时间范围的开始时间</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.visibleHours.end">
+                <source>label.calendar.visibleHours.end</source>
+                <target>可见时间范围的结束时间</target>
+            </trans-unit>
+            <trans-unit id="label.calendar.slot_duration">
+                <source>label.calendar.slot_duration</source>
+                <target>周和日查看的空隙持续时间（格式：时:分:秒）</target>
+            </trans-unit>
+            <trans-unit id="branding">
+                <source>branding</source>
+                <target>品牌</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.logo">
+                <source>label.theme.branding.logo</source>
+                <target>标识 (图片链接，在登录界面替换公司)</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.company">
+                <source>label.theme.branding.company</source>
+                <target>公司</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.mini">
+                <source>label.theme.branding.mini</source>
+                <target>小标识（折叠侧面菜单）</target>
+            </trans-unit>
+            <trans-unit id="label.theme.branding.title">
+                <source>label.theme.branding.title</source>
+                <target>浏览器名称</target>
+            </trans-unit>
+            <trans-unit id="rounding">
+                <source>rounding</source>
+                <target>时间取整</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.begin">
+                <source>label.timesheet.rounding.default.begin</source>
+                <target>开始时间以分钟取整 (0 = 不活跃)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.end">
+                <source>label.timesheet.rounding.default.end</source>
+                <target>结束时间以分钟取整 (0 = 不活跃)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.duration">
+                <source>label.timesheet.rounding.default.duration</source>
+                <target>持续时间以分钟取整 (0 = 不活跃)</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.mode">
+                <source>label.timesheet.rounding.default.mode</source>
+                <target>取整模式</target>
+            </trans-unit>
+            <trans-unit id="label.timesheet.rounding.default.days">
+                <source>label.timesheet.rounding.default.days</source>
+                <target>取整模式适用时一周工作天数</target>
+            </trans-unit>
+            <trans-unit id="Monday">
+                <source>Monday</source>
+                <target>周一</target>
+            </trans-unit>
+            <trans-unit id="Tuesday">
+                <source>Tuesday</source>
+                <target>周二</target>
+            </trans-unit>
+            <trans-unit id="Wednesday">
+                <source>Wednesday</source>
+                <target>周三</target>
+            </trans-unit>
+            <trans-unit id="Thursday">
+                <source>Thursday</source>
+                <target>周四</target>
+            </trans-unit>
+            <trans-unit id="Friday">
+                <source>Friday</source>
+                <target>周五</target>
+            </trans-unit>
+            <trans-unit id="Saturday">
+                <source>Saturday</source>
+                <target>周六</target>
+            </trans-unit>
+            <trans-unit id="Sunday">
+                <source>Sunday</source>
+                <target>周日</target>
+            </trans-unit>
+            <trans-unit id="Ceil">
+                <source>Ceil</source>
+                <target>进一取整法: 开始时间, 结束时间以及持续时间都将取整处理</target>
+            </trans-unit>
+            <trans-unit id="Closest">
+                <source>Closest</source>
+                <target>最近值: 数学取整至最近值</target>
+            </trans-unit>
+            <trans-unit id="Default">
+                <source>Default</source>
+                <target>标准：开始时间会向下取整，结束时间和持续时间会向上取整</target>
+            </trans-unit>
+            <trans-unit id="Floor">
+                <source>Floor</source>
+                <target>Floor: 开始时间，结束时间和持续时间会向下取整</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

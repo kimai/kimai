@@ -2,7 +2,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    app_locales: ar|cs|de|de_CH|da|en|es|fr|hu|it|ja|ko|nl|pt_BR|ru|sk|sv|tr|zh
+    app_locales: ar|cs|de|de_CH|da|en|es|fr|hu|it|ja|ko|nl|pt_BR|ru|sk|sv|tr|zh_CN
 
 services:
     # default configuration for services in *this* file
