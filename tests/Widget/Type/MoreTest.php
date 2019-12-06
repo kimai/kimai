@@ -33,4 +33,10 @@ class MoreTest extends AbstractWidgetTypeTest
         $sut = $this->createSut();
         self::assertInstanceOf(SimpleWidget::class, $sut);
     }
+
+    public function testTemplateName()
+    {
+        $sut = new More();
+        self::assertEquals('widget/widget-more.html.twig', $sut->getTemplateName());
+    }
 }

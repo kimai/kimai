@@ -33,4 +33,10 @@ class CounterTest extends AbstractWidgetTypeTest
         $sut = $this->createSut();
         self::assertInstanceOf(SimpleWidget::class, $sut);
     }
+
+    public function testTemplateName()
+    {
+        $sut = new Counter();
+        self::assertEquals('widget/widget-counter.html.twig', $sut->getTemplateName());
+    }
 }
