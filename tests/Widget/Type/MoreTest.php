@@ -15,6 +15,7 @@ use App\Widget\Type\SimpleWidget;
 
 /**
  * @covers \App\Widget\Type\More
+ * @covers \App\Widget\Type\SimpleWidget
  */
 class MoreTest extends AbstractWidgetTypeTest
 {
