@@ -9,7 +9,6 @@
 
 namespace App\Configuration;
 
-use App\Constants;
 use App\Utils\MomentFormatConverter;
 
 final class LanguageFormattings
@@ -143,10 +142,10 @@ final class LanguageFormattings
      * @param string $locale
      * @return string
      */
-    protected function getConfig(string $key, string $locale): string
+    private function getConfig(string $key, string $locale): string
     {
         if (!isset($this->settings[$locale])) {
-            $locale = Constants::DEFAULT_LOCALE;
+            throw new \InvalidArgumentException(sprintf('Unknown locale given: %s', $locale));
         }
 
         if (!isset($this->settings[$locale][$key])) {
