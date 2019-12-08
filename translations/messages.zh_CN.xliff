@@ -62,7 +62,7 @@
             </trans-unit>
             <trans-unit id="update_multiple">
                 <source>update_multiple</source>
-                <target>%行动% %数量% 条目?</target>
+                <target>%action% %count%  条目?</target>
             </trans-unit>
 
             <!--
@@ -366,7 +366,7 @@
             </trans-unit>
             <trans-unit id="label.plus_more">
                 <source>label.plus_more</source>
-                <target>+%数量% 更多</target>
+                <target>+%count% 更多</target>
             </trans-unit>
 
             <!--
@@ -512,8 +512,8 @@
             <trans-unit id="admin_project.short_stats">
                 <source>admin_project.short_stats</source>
                 <target>
-                    目前项目%项目% 对于客户%客户% 有 %活动%
-                    活动 以及 %记录% 时间记录, 总体共计%持续时间%.
+                    目前项目 %project% 对于客户 %customer% 有 %activities%
+                    活动 以及 %records% 时间记录, 总体共计 %duration%.
                 </target>
             </trans-unit>
 
@@ -527,8 +527,8 @@
             <trans-unit id="admin_activity.short_stats">
                 <source>admin_activity.short_stats</source>
                 <target>
-                    目前活动 %活动% 在项目里 %项目% 对于客户 %客户%
-                    有 %记录% 时间记录, 总体共计 %持续时间%.
+                    目前活动 %activity% 在项目里 %project% 对于客户 %customer%
+                    有 %records% 时间记录, 总体共计 %duration%.
                 </target>
             </trans-unit>
 
@@ -594,7 +594,7 @@
             <trans-unit id="admin_customer.short_stats">
                 <source>admin_customer.short_stats</source>
                 <target>
-                    目前客户 %客户% 有 %项目% 项目有 %活动% 活动, 总体共计 %记录% 时间记录共计 %持续时间%.
+                    目前客户 %customer% 有 %project%  项目有 %activity% 活动, 总体共计 %records% 时间记录共计 %duration%.
                 </target>
             </trans-unit>
 
@@ -628,7 +628,7 @@
             <trans-unit id="admin_user.short_stats">
                 <source>admin_user.short_stats</source>
                 <target>
-                    目前该用户 %用户% 有 %记录% 时间记录 总体共计 %持续时间%.
+                    目前该用户 %user% 有 %records% 时间记录 总体共计 %duration%.
                 </target>
             </trans-unit>
             <trans-unit id="user_permissions.title">
@@ -765,11 +765,11 @@
             </trans-unit>
             <trans-unit id="stats.percentUsed">
                 <source>stats.percentUsed</source>
-                <target>%百分比%% 已用</target>
+                <target>%percent%% 已用</target>
             </trans-unit>
             <trans-unit id="stats.percentUsedLeft">
                 <source>stats.percentUsedLeft</source>
-                <target>%百分比%% 已用 (%剩余% 仍然可用)</target>
+                <target>%percent%% 已用 (%left% 仍然可用)</target>
             </trans-unit>
 
             <!--
@@ -949,11 +949,11 @@
             </trans-unit>
             <trans-unit id="export.page_of">
                 <source>export.page_of</source>
-                <target>页码 %页码% 的 %页码%</target>
+                <target>页码 %page% 的 %pages%</target>
             </trans-unit>
             <trans-unit id="export.date_copyright">
                 <source>export.date_copyright</source>
-                <target>创建了 %日期% 与 %kimai%</target>
+                <target>创建了 %date% 与 %kimai%</target>
             </trans-unit>
 
             <!--
@@ -1025,7 +1025,7 @@
             </trans-unit>
             <trans-unit id="recent.activities.format">
                 <source>recent.activities.format</source>
-                <target>%活动% 在 %项目% 对于 %用户%</target>
+                <target>%activity% 在 %project% 对于 %customer%</target>
             </trans-unit>
             <trans-unit id="timesheet.start">
                 <source>timesheet.start</source>

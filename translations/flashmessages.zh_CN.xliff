@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="zh-CN" datatype="plaintext" original="flashmessages.en.xliff">
+        <body>
+            <trans-unit id="warning">
+                <source>warning</source>
+                <target>警告</target>
+            </trans-unit>
+            <trans-unit id="timesheet.stop.success">
+                <source>timesheet.stop.success</source>
+                <target>时间记录终止</target>
+            </trans-unit>
+            <trans-unit id="timesheet.stop.error">
+                <source>timesheet.stop.error</source>
+                <target>无法终止时间记录</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.success">
+                <source>timesheet.start.success</source>
+                <target>时间记录开始</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.error">
+                <source>timesheet.start.error</source>
+                <target>时间记录无法开始</target>
+            </trans-unit>
+            <trans-unit id="timesheet.start.exceeded_limit">
+                <source>timesheet.start.exceeded_limit</source>
+                <target>活动时间记录已达到限制，请先停止至少一次运行时间测量</target>
+            </trans-unit>
+            <trans-unit id="timesheet.locked.warning">
+                <source>timesheet.locked.warning</source>
+                <target>您正在编辑导出的记录</target>
+            </trans-unit>
+            <trans-unit id="action.update.success">
+                <source>action.update.success</source>
+                <target>保存更改</target>
+            </trans-unit>
+            <trans-unit id="action.update.error">
+                <source>action.update.error</source>
+                <target>更改无法保存: %reason%</target>
+            </trans-unit>
+            <trans-unit id="action.delete.success">
+                <source>action.delete.success</source>
+                <target>条目已被删除</target>
+            </trans-unit>
+            <trans-unit id="action.delete.error">
+                <source>action.delete.error</source>
+                <target>无法删除条目: %reason%</target>
+            </trans-unit>
+            <trans-unit id="invoice.first_template">
+                <source>invoice.first_template</source>
+                <target>您必须先创立一个自己的发票模板</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
