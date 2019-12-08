@@ -67,7 +67,7 @@
     {{ macro.label(team.name, class|default('primary')) }}
 {% endmacro %}
 
-{% macro user_avatar(user, tooltip) %}
+{% macro user_avatar(user, tooltip, class) %}
     {% set avatar = avatar(user, admin_lte_context.default_avatar) %}
     {% set showTooltip = tooltip|default(true) %}
     {% if tooltip is not defined or tooltip is same as (false)%}
