@@ -11,6 +11,7 @@ global.$ = global.jQuery = $;
 
 require('bootstrap-sass');
 require('jquery-slimscroll');
+
 require('select2');
 require('select2/dist/js/i18n/ar');
 require('select2/dist/js/i18n/cs');
@@ -50,6 +51,9 @@ require('moment/locale/sv');
 require('moment/locale/tr');
 
 require('daterangepicker');
+
+const Sortable = require('sortablejs/Sortable.min');
+global.Sortable = Sortable;
 
 // ------ AdminLTE framework ------
 require('./sass/admin-lte.scss');
