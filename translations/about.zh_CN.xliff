@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="zh-CN" datatype="plaintext" original="about.en.xliff">
+        <body>
+            <trans-unit id="about.title">
+                <source>about.title</source>
+                <target>关于Kimai</target>
+            </trans-unit>
+            <trans-unit id="support">
+                <source>support</source>
+                <target>支持</target>
+            </trans-unit>
+            <trans-unit id="website">
+                <source>website</source>
+                <target>主页</target>
+            </trans-unit>
+            <trans-unit id="help">
+                <source>help</source>
+                <target>文件</target>
+            </trans-unit>
+            <trans-unit id="tab.thanks">
+                <source>tab.thanks</source>
+                <target>特别鸣谢</target>
+            </trans-unit>
+            <trans-unit id="donate">
+                <source>donate</source>
+                <target>为Kimai的未来捐款</target>
+            </trans-unit>
+            <trans-unit id="published_under">
+                <source>published_under</source>
+                <target>%kimai% 能够发布是因为</target>
+            </trans-unit>
+            <trans-unit id="special_thanks">
+                <source>special_thanks</source>
+                <target>特别鸣谢 …</target>
+            </trans-unit>
+            <trans-unit id="library_authors">
+                <source>library_authors</source>
+                <target>… 这些软件库里的作者们，如果没有你们，Kimai不可能建成 👍</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

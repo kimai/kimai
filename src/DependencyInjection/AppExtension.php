@@ -9,6 +9,7 @@
 
 namespace App\DependencyInjection;
 
+use App\Constants;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -52,7 +53,9 @@ class AppExtension extends Extension
         $container->setParameter('kimai.data_dir', $config['data_dir']);
         $container->setParameter('kimai.plugin_dir', $config['plugin_dir']);
 
-        $container->setParameter('kimai.languages', $config['languages']);
+        $this->setLanguageFormats($config['languages'], $container);
+        unset($config['languages']);
+
         $container->setParameter('kimai.calendar', $config['calendar']);
         $container->setParameter('kimai.dashboard', $config['dashboard']);
         $container->setParameter('kimai.widgets', $config['widgets']);
@@ -94,6 +97,29 @@ class AppExtension extends Extension
             }
         }
         $container->setParameter('kimai.config', $config);
+    }
+
+    protected function setLanguageFormats(array $config, ContainerBuilder $container)
+    {
+        $locales = explode('|', $container->getParameter('app_locales'));
+
+        // make sure all allowed locales are registered
+        foreach ($locales as $locale) {
+            if (!array_key_exists($locale, $config)) {
+                $config[$locale] = $config[Constants::DEFAULT_LOCALE];
+            }
+        }
+
+        // make sure all keys are registered for every locale
+        foreach ($config as $locale => $settings) {
+            if ($locale === Constants::DEFAULT_LOCALE) {
+                continue;
+            }
+            // pre-fill all formats with the default locale settings
+            $config[$locale] = array_merge($config[Constants::DEFAULT_LOCALE], $config[$locale]);
+        }
+
+        $container->setParameter('kimai.languages', $config);
     }
 
     protected function setLdapParameter(array $config, ContainerBuilder $container)

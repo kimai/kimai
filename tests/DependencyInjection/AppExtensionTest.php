@@ -36,6 +36,7 @@ class AppExtensionTest extends TestCase
     private function getContainer()
     {
         $container = new ContainerBuilder();
+        $container->setParameter('app_locales', 'de|en|tr|zh_CN');
 
         return $container;
     }
@@ -44,6 +45,15 @@ class AppExtensionTest extends TestCase
     {
         return [
             'kimai' => [
+                'languages' => [
+                    'en' => [
+                        'date_type' => 'dd. MM. yyyy',
+                        'date' => 'A-m-d'
+                    ],
+                    'tr' => [
+                        'date' => 'X-m-d'
+                    ],
+                ],
                 'data_dir' => '/tmp/',
                 'plugin_dir' => '/tmp/',
                 'timesheet' => [],
@@ -60,7 +70,46 @@ class AppExtensionTest extends TestCase
         $expected = [
             'kimai.data_dir' => '/tmp/',
             'kimai.plugin_dir' => '/tmp/',
-            'kimai.languages' => [],
+            'kimai.languages' => [
+                'en' => [
+                    'date_time_type' => 'yyyy-MM-dd HH:mm',
+                    'date_type' => 'dd. MM. yyyy',
+                    'date' => 'A-m-d',
+                    'date_time' => 'm-d H:i',
+                    'duration' => '%%h:%%m h',
+                    'time' => 'H:i',
+                    '24_hours' => true,
+                ],
+                'de' => [
+                    'date_time_type' => 'yyyy-MM-dd HH:mm',
+                    'date_type' => 'dd. MM. yyyy',
+                    'date' => 'A-m-d',
+                    'date_time' => 'm-d H:i',
+                    'duration' => '%%h:%%m h',
+                    'time' => 'H:i',
+                    '24_hours' => true,
+                ],
+                'tr' => [
+                    'date_time_type' => 'yyyy-MM-dd HH:mm',
+                    // this value if pre-filled by the Configuration object, as "tr" is defined in the min config
+                    // and the other languages (not defined in min config) are "only" copied during runtime from "en"
+                    'date_type' => 'yyyy-MM-dd',
+                    'date' => 'X-m-d',
+                    'date_time' => 'm-d H:i',
+                    'duration' => '%%h:%%m h',
+                    'time' => 'H:i',
+                    '24_hours' => true,
+                ],
+                'zh_CN' => [
+                    'date_time_type' => 'yyyy-MM-dd HH:mm',
+                    'date_type' => 'dd. MM. yyyy',
+                    'date' => 'A-m-d',
+                    'date_time' => 'm-d H:i',
+                    'duration' => '%%h:%%m h',
+                    'time' => 'H:i',
+                    '24_hours' => true,
+                ],
+            ],
             'kimai.calendar' => [
                 'week_numbers' => true,
                 'day_limit' => 4,
