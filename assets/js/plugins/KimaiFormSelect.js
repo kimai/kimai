@@ -105,7 +105,7 @@ export default class KimaiFormSelect extends KimaiPlugin {
         }
 
         options = {...options, ...{
-            language: this.getContainer().getConfiguration().get('locale'),
+            language: this.getContainer().getConfiguration().get('locale').replace('_', '-'),
             theme: "bootstrap",
             matcher: matcher
         }};

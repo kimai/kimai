@@ -10,30 +10,26 @@
 namespace App\Utils;
 
 use App\Configuration\LanguageFormattings;
+use App\Constants;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Use this class, when you want information about formats for the "current request locale".
  */
-class LocaleSettings
+final class LocaleSettings
 {
     /**
      * @var LanguageFormattings
      */
-    protected $formats;
-
+    private $formats;
     /**
      * @var string
      */
-    protected $locale = 'en';
+    private $locale = Constants::DEFAULT_LOCALE;
 
-    /**
-     * @param RequestStack $requestStack
-     * @param LanguageFormattings $formats
-     */
     public function __construct(RequestStack $requestStack, LanguageFormattings $formats)
     {
-        // It can be null in a console command
+        // request is null in a console command
         if (null !== $requestStack->getMasterRequest()) {
             $this->locale = $requestStack->getMasterRequest()->getLocale();
         }
