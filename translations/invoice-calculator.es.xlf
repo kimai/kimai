@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="es" datatype="plaintext" original="invoice-calculator.en.xlf">
+        <body>
+            <trans-unit id="label.invoice_calculator">
+                <source>label.invoice_calculator</source>
+                <target>Cálculo de suma</target>
+            </trans-unit>
+            <trans-unit id="default">
+                <source>default</source>
+                <target>Por defecto: una posición para cada registro</target>
+            </trans-unit>
+            <trans-unit id="short">
+                <source>short</source>
+                <target>Horas: suma total de horas de todos los registros en una sola posición</target>
+            </trans-unit>
+            <trans-unit id="user">
+                <source>user</source>
+                <target>Usuarios: una posición por usuario</target>
+            </trans-unit>
+            <trans-unit id="activity">
+                <source>activity</source>
+                <target>Actividades: una posición por actividad</target>
+            </trans-unit>
+            <trans-unit id="project">
+                <source>project</source>
+                <target>Proyecto: una posición por proyecto</target>
+            </trans-unit>
+            <trans-unit id="date">
+                <source>date</source>
+                <target>Fecha: una posición por día (en base a la fecha de inicio)</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

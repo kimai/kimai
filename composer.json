@@ -137,6 +137,7 @@
         "kimai:code-lint":  [
             "bin/console lint:yaml config --parse-tags",
             "bin/console lint:twig templates",
+            "bin/console lint:xliff translations",
             "bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction"
         ],
         "kimai:tests": "vendor/bin/phpunit tests/",

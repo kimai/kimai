@@ -38,4 +38,8 @@ class Constants
      * Homepage, used in multiple views
      */
     public const HOMEPAGE = 'https://www.kimai.org';
+    /**
+     * Application wide default locale.
+     */
+    public const DEFAULT_LOCALE = 'en';
 }
