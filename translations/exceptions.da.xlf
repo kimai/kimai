@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="da" datatype="plaintext" original="exceptions.en.xlf">
+        <body>
+            <trans-unit id="access.denied">
+                <source>access.denied</source>
+                <target>Adgang nægtet</target>
+            </trans-unit>
+            <trans-unit id="stacktrace">
+                <source>stacktrace</source>
+                <target>Problemet opstod her</target>
+            </trans-unit>
+            <trans-unit id="http_error.title">
+                <source>http_error.title</source>
+                <target>Fejl</target>
+            </trans-unit>
+            <trans-unit id="http_error.description">
+                <source>http_error.description</source>
+                <target>Noget gik galt</target>
+            </trans-unit>
+            <trans-unit id="http_error.suggestion">
+                <source>http_error.suggestion</source>
+                <target>
+                    En kritisk fejl opstod, prøv venligst igen.
+                    Du har muligvis fundet en softwarefejl, kontakt venligst din administrator hvis problemet fortsætter.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_404.description">
+                <source>http_error_404.description</source>
+                <target>Side ikke fundet</target>
+            </trans-unit>
+            <trans-unit id="http_error_404.suggestion">
+                <source>http_error_404.suggestion</source>
+                <target>
+                    Vi kunne ikke finde siden du leder efter.
+                    Gå venligst tilbage til dit dashboard og start forfra.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_403.description">
+                <source>http_error_403.description</source>
+                <target>Siden er begrænset.</target>
+            </trans-unit>
+            <trans-unit id="http_error_403.suggestion">
+                <source>http_error_403.suggestion</source>
+                <target>
+                    Beklager, men du har ikke tilladelse til at se denne side.
+                    Kontakt din administrator hvis du mener, at dette er en fejl.
+                </target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

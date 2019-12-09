@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="cs" datatype="plaintext" original="about.en.xlf">
+        <body>
+            <trans-unit id="about.title">
+                <source>about.title</source>
+                <target>O Kimai</target>
+            </trans-unit>
+            <trans-unit id="about.subtitle">
+                <source>about.subtitle</source>
+                <target>Systémové informace</target>
+            </trans-unit>
+            <trans-unit id="support">
+                <source>support</source>
+                <target>Podpora</target>
+            </trans-unit>
+            <trans-unit id="website">
+                <source>website</source>
+                <target>Úvodní stránka</target>
+            </trans-unit>
+            <trans-unit id="help">
+                <source>help</source>
+                <target>Dokumentace</target>
+            </trans-unit>
+            <trans-unit id="tab.thanks">
+                <source>tab.thanks</source>
+                <target>Zvláštní poděkování</target>
+            </trans-unit>
+            <trans-unit id="donate">
+                <source>donate</source>
+                <target>Podpořte budoucnost Kimai</target>
+            </trans-unit>
+            <trans-unit id="published_under">
+                <source>published_under</source>
+                <target>%kimai% je zveřejněno pod</target>
+            </trans-unit>
+            <trans-unit id="special_thanks">
+                <source>special_thanks</source>
+                <target>Zvláští poděkování patří …</target>
+            </trans-unit>
+            <trans-unit id="library_authors">
+                <source>library_authors</source>
+                <target>… autoři následujících softwarových knihoven, Kimai, by bez tebe nebyo možné 👍</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
