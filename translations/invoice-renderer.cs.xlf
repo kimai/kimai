@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="cs" datatype="plaintext" original="invoice-renderer.en.xlf">
+        <body>
+            <trans-unit id="label.invoice_renderer">
+                <source>label.invoice_renderer</source>
+                <target>Faktura</target>
+            </trans-unit>
+            <trans-unit id="default">
+                <source>default</source>
+                <target>Faktura (výchozí)</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target>Pracovní výkaz</target>
+            </trans-unit>
+            <trans-unit id="freelancer">
+                <source>freelancer</source>
+                <target>Živnostník</target>
+            </trans-unit>
+            <trans-unit id="open-spreadsheet">
+                <source>open-spreadsheet</source>
+                <target>Výpočetní tabulka</target>
+            </trans-unit>
+            <trans-unit id="spreadsheet">
+                <source>spreadsheet</source>
+                <target>Tabulka</target>
+            </trans-unit>
+            <trans-unit id="export">
+                <source>export</source>
+                <target>Export dat</target>
+            </trans-unit>
+            <trans-unit id="company">
+                <source>company</source>
+                <target>Firemní faktura</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

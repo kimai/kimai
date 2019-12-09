@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="tr" datatype="plaintext" original="actions.en.xlf">
+        <body>
+            <trans-unit id="stop">
+                <source>stop</source>
+                <target state="translated">Dur</target>
+            </trans-unit>
+            <trans-unit id="back">
+                <source>back</source>
+                <target state="translated">Geri</target>
+            </trans-unit>
+            <trans-unit id="edit">
+                <source>edit</source>
+                <target state="translated">Düzenle</target>
+            </trans-unit>
+            <trans-unit id="trash">
+                <source>trash</source>
+                <target state="translated">Sil</target>
+            </trans-unit>
+            <trans-unit id="report">
+                <source>report</source>
+                <target state="translated">Rapor</target>
+            </trans-unit>
+            <trans-unit id="repeat">
+                <source>repeat</source>
+                <target state="translated">Tekrarla</target>
+            </trans-unit>
+            <trans-unit id="profile-stats">
+                <source>profile-stats</source>
+                <target state="translated">Profil</target>
+            </trans-unit>
+            <trans-unit id="settings">
+                <source>settings</source>
+                <target state="translated">Ayarlar</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target state="translated">Zaman Çizelgesi</target>
+            </trans-unit>
+            <trans-unit id="customer">
+                <source>customer</source>
+                <target state="translated">Müşterileri Filtrele</target>
+            </trans-unit>
+            <trans-unit id="project">
+                <source>project</source>
+                <target state="translated">Projeleri Filtrele</target>
+            </trans-unit>
+            <trans-unit id="activity">
+                <source>activity</source>
+                <target state="translated">Aktiviteleri Filtrele</target>
+            </trans-unit>
+            <trans-unit id="copy">
+                <source>copy</source>
+                <target state="translated">Kopya oluştur</target>
+            </trans-unit>
+            <trans-unit id="home">
+                <source>home</source>
+                <target state="translated">Anasayfa</target>
+            </trans-unit>
+            <trans-unit id="create-project">
+                <source>create-project</source>
+                <target state="translated">Yeni proje</target>
+            </trans-unit>
+            <trans-unit id="create-activity">
+                <source>create-activity</source>
+                <target state="translated">Yeni aktivite</target>
+            </trans-unit>
+            <trans-unit id="create-timesheet">
+                <source>create-timesheet</source>
+                <target state="translated">Yeni zaman çizelgesi</target>
+            </trans-unit>
+            <trans-unit id="permissions">
+                <source>permissions</source>
+                <target state="translated">Takım izinleri</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

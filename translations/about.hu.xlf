@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="hu" datatype="plaintext" original="about.en.xlf">
+        <body>
+            <trans-unit id="about.title">
+                <source>about.title</source>
+                <target>A Kimai névjegye</target>
+            </trans-unit>
+            <trans-unit id="support">
+                <source>support</source>
+                <target>Támogatás</target>
+            </trans-unit>
+            <trans-unit id="website">
+                <source>website</source>
+                <target>Weboldal</target>
+            </trans-unit>
+            <trans-unit id="help">
+                <source>help</source>
+                <target>Súgó</target>
+            </trans-unit>
+            <trans-unit id="tab.thanks">
+                <source>tab.thanks</source>
+                <target>Köszönet</target>
+            </trans-unit>
+            <trans-unit id="donate">
+                <source>donate</source>
+                <target>Támogasd a Kimai jövőjét</target>
+            </trans-unit>
+            <trans-unit id="published_under">
+                <source>published_under</source>
+                <target>%kimai% licensz</target>
+            </trans-unit>
+            <trans-unit id="special_thanks">
+                <source>special_thanks</source>
+                <target>Külön köszönet …</target>
+            </trans-unit>
+            <trans-unit id="library_authors">
+                <source>library_authors</source>
+                <target>… a következő szoftver-könyvtárak fejlesztőinek, Kimai nem jöhetett volna létre nélkületek 👍</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,6 +1,6 @@
 # ========== KIMAI ==========
-# IDE
 .idea/
+.DS_Store
 
 /bin/*
 !bin/console
