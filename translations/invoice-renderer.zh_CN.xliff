@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="zh-CN" datatype="plaintext" original="invoice-renderer.en.xliff">
+        <body>
+            <trans-unit id="label.invoice_renderer">
+                <source>label.invoice_renderer</source>
+                <target>发票文件</target>
+            </trans-unit>
+            <trans-unit id="default">
+                <source>default</source>
+                <target>发票（默认）</target>
+            </trans-unit>
+            <trans-unit id="timesheet">
+                <source>timesheet</source>
+                <target>时间表</target>
+            </trans-unit>
+            <trans-unit id="freelancer">
+                <source>freelancer</source>
+                <target>兼职人员</target>
+            </trans-unit>
+            <trans-unit id="open-spreadsheet">
+                <source>open-spreadsheet</source>
+                <target>电子表格</target>
+            </trans-unit>
+            <trans-unit id="spreadsheet">
+                <source>spreadsheet</source>
+                <target>Excel表格</target>
+            </trans-unit>
+            <trans-unit id="export">
+                <source>export</source>
+                <target>数据输出</target>
+            </trans-unit>
+            <trans-unit id="company">
+                <source>company</source>
+                <target>公司发票</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

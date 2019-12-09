@@ -40,7 +40,7 @@ export default class KimaiLoader {
 
     constructor(configurations, translations) {
         // set the current locale for all javascript components
-        moment.locale(configurations['locale']);
+        moment.locale(configurations['locale'].replace('_', '-').toLowerCase());
 
         const kimai = new KimaiContainer(
             new KimaiConfiguration(configurations),

@@ -11,20 +11,17 @@ namespace App\Configuration;
 
 use App\Utils\MomentFormatConverter;
 
-class LanguageFormattings
+final class LanguageFormattings
 {
     /**
      * @var array
      */
-    protected $settings;
+    private $settings;
     /**
      * @var MomentFormatConverter
      */
-    protected $momentFormatter;
+    private $momentFormatter;
 
-    /**
-     * @param array $languageSettings
-     */
     public function __construct(array $languageSettings)
     {
         $this->settings = $languageSettings;
@@ -145,7 +142,7 @@ class LanguageFormattings
      * @param string $locale
      * @return string
      */
-    protected function getConfig(string $key, string $locale): string
+    private function getConfig(string $key, string $locale): string
     {
         if (!isset($this->settings[$locale])) {
             throw new \InvalidArgumentException(sprintf('Unknown locale given: %s', $locale));
