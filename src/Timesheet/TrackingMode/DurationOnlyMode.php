@@ -44,7 +44,7 @@ final class DurationOnlyMode extends AbstractTrackingMode
         return false;
     }
 
-    public function create(Timesheet $timesheet, Request $request): void
+    public function create(Timesheet $timesheet, ?Request $request = null): void
     {
         if (null === $timesheet->getBegin()) {
             $timesheet->setBegin($this->dateTime->createDateTime());
