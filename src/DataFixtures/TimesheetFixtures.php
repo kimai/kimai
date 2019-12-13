@@ -35,8 +35,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
     public const MIN_TIMESHEETS_PER_USER = 50;
     public const MAX_TIMESHEETS_PER_USER = 500;
     public const MAX_TIMESHEETS_TOTAL = 5000;
-    public const MIN_RUNNING_TIMESHEETS_PER_USER = 0;
-    public const MAX_RUNNING_TIMESHEETS_PER_USER = 3;
+    public const MAX_RUNNING_TIMESHEETS_PER_USER = 2;
     public const TIMERANGE_DAYS = 1095; // 3 years
     public const TIMERANGE_RUNNING = 1047; // in minutes = 17:45 hours
     public const MIN_MINUTES_PER_ENTRY = 15;
@@ -79,7 +78,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
             // random amount of timesheet entries for every user
             $timesheetForUser = rand(self::MIN_TIMESHEETS_PER_USER, self::MAX_TIMESHEETS_PER_USER);
             for ($i = 1; $i <= $timesheetForUser; $i++) {
-                if ($all > self::MAX_TIMESHEETS_TOTAL) {
+                if ($all > self::MAX_TIMESHEETS_TOTAL && $i > self::MIN_TIMESHEETS_PER_USER) {
                     break;
                 }
 
@@ -109,7 +108,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
             }
 
             // create active recordings for test user
-            $activeEntries = rand(self::MIN_RUNNING_TIMESHEETS_PER_USER, self::MAX_RUNNING_TIMESHEETS_PER_USER);
+            $activeEntries = rand(0, self::MAX_RUNNING_TIMESHEETS_PER_USER);
             for ($i = 0; $i < $activeEntries; $i++) {
                 $entry = $this->createTimesheetEntry(
                     $user,
