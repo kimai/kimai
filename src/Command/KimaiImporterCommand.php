@@ -161,25 +161,25 @@ class KimaiImporterCommand extends Command
         if (trim(strlen($password)) < 6) {
             $io->error('Password length is not sufficient, at least 6 character are required');
 
-            return;
+            return 1;
         }
 
         $country = $input->getArgument('country');
         if (2 != trim(strlen($country))) {
             $io->error('Country code needs to be exactly 2 character');
 
-            return;
+            return 1;
         }
 
         $currency = $input->getArgument('currency');
         if (3 != trim(strlen($currency))) {
             $io->error('Currency code needs to be exactly 3 character');
 
-            return;
+            return 1;
         }
 
         if (!$this->checkDatabaseVersion($io, self::MIN_VERSION, self::MIN_REVISION)) {
-            return;
+            return 1;
         }
 
         $bytesStart = memory_get_usage(true);
@@ -190,7 +190,7 @@ class KimaiImporterCommand extends Command
         } catch (\Exception $ex) {
             $io->error('Failed to load users: ' . $ex->getMessage());
 
-            return;
+            return 1;
         }
 
         try {
@@ -198,7 +198,7 @@ class KimaiImporterCommand extends Command
         } catch (\Exception $ex) {
             $io->error('Failed to load customers: ' . $ex->getMessage());
 
-            return;
+            return 1;
         }
 
         try {
@@ -206,7 +206,7 @@ class KimaiImporterCommand extends Command
         } catch (\Exception $ex) {
             $io->error('Failed to load projects: ' . $ex->getMessage());
 
-            return;
+            return 1;
         }
 
         try {
@@ -214,7 +214,7 @@ class KimaiImporterCommand extends Command
         } catch (\Exception $ex) {
             $io->error('Failed to load activities: ' . $ex->getMessage());
 
-            return;
+            return 1;
         }
 
         try {
@@ -222,7 +222,7 @@ class KimaiImporterCommand extends Command
         } catch (\Exception $ex) {
             $io->error('Failed to load activities-project mapping: ' . $ex->getMessage());
 
-            return;
+            return 1;
         }
 
         try {
@@ -230,7 +230,7 @@ class KimaiImporterCommand extends Command
         } catch (\Exception $ex) {
             $io->error('Failed to load timeSheet: ' . $ex->getMessage());
 
-            return;
+            return 1;
         }
 
         try {
@@ -238,7 +238,7 @@ class KimaiImporterCommand extends Command
         } catch (\Exception $ex) {
             $io->error('Failed to load fixedRates: ' . $ex->getMessage());
 
-            return;
+            return 1;
         }
 
         try {
@@ -246,7 +246,7 @@ class KimaiImporterCommand extends Command
         } catch (\Exception $ex) {
             $io->error('Failed to load rates: ' . $ex->getMessage());
 
-            return;
+            return 1;
         }
 
         $bytesCached = memory_get_usage(true);
@@ -262,7 +262,7 @@ class KimaiImporterCommand extends Command
         } catch (\Exception $ex) {
             $io->error('Failed to import users: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-            return;
+            return 1;
         }
 
         try {
@@ -272,7 +272,7 @@ class KimaiImporterCommand extends Command
         } catch (\Exception $ex) {
             $io->error('Failed to import customers: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-            return;
+            return 1;
         }
 
         try {
@@ -282,7 +282,7 @@ class KimaiImporterCommand extends Command
         } catch (\Exception $ex) {
             $io->error('Failed to import projects: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-            return;
+            return 1;
         }
 
         try {
@@ -292,7 +292,7 @@ class KimaiImporterCommand extends Command
         } catch (\Exception $ex) {
             $io->error('Failed to import activities: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-            return;
+            return 1;
         }
 
         try {
@@ -302,10 +302,8 @@ class KimaiImporterCommand extends Command
         } catch (\Exception $ex) {
             $io->error('Failed to import timesheet records: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-            return;
+            return 1;
         }
-
-        // TODO support expenses - new database required
 
         $bytesImported = memory_get_usage(true);
 
@@ -317,6 +315,8 @@ class KimaiImporterCommand extends Command
             'Total consumption for importing ' . $allImports . ' new database entries: ' .
             $this->bytesHumanReadable($bytesImported - $bytesStart)
         );
+        
+        return 0;
     }
 
     /**

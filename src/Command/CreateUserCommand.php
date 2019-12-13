@@ -130,14 +130,13 @@ class CreateUserCommand extends Command
             $entityManager->persist($user);
             $entityManager->flush();
             $io->success('Success! Created user: ' . $user->getUsername());
-
-            return 0;
         } catch (\Exception $ex) {
             $io->error('Failed to create user: ' . $user->getUsername());
             $io->error('Reason: ' . $ex->getMessage());
+            return 2;
         }
 
-        return 2;
+        return 0;
     }
 
     /**
