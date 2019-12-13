@@ -73,6 +73,7 @@ require('./sass/app.scss');
 
 // ------ Kimai itself ------
 require('./js/KimaiWebLoader.js');
+global.KimaiPaginatedBoxWidget = require('./js/widgets/KimaiPaginatedBoxWidget').default;
 
 // ------ Autocomplete for tags only ------
 require('jquery-ui/ui/widgets/autocomplete');
