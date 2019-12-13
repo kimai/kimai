@@ -79,6 +79,23 @@ class BaseQuery
      */
     private $searchTerm;
 
+    /**
+     * @param Team[] $teams
+     * @return $this
+     */
+    public function setTeams(?array $teams): self
+    {
+        $this->teams = [];
+
+        if (null !== $teams) {
+            foreach ($teams as $team) {
+                $this->addTeam($team);
+            }
+        }
+
+        return $this;
+    }
+
     public function addTeam(Team $team): self
     {
         $this->teams[$team->getId()] = $team;
