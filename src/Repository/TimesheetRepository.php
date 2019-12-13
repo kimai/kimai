@@ -22,6 +22,7 @@ use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\TimesheetQuery;
 use DateTime;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
@@ -219,13 +220,13 @@ class TimesheetRepository extends EntityRepository
         if (!empty($begin)) {
             $qb
                 ->andWhere($qb->expr()->gt('t.begin', ':from'))
-                ->setParameter('from', $begin, Type::DATETIME);
+                ->setParameter('from', $begin, Types::DATETIME_MUTABLE);
         }
 
         if (!empty($end)) {
             $qb
                 ->andWhere($qb->expr()->lt('t.end', ':to'))
-                ->setParameter('to', $end, Type::DATETIME);
+                ->setParameter('to', $end, Types::DATETIME_MUTABLE);
         }
 
         if (null !== $user) {
@@ -286,14 +287,14 @@ class TimesheetRepository extends EntityRepository
 
         if (!empty($begin)) {
             $qb->where($qb->expr()->gt('t.begin', ':from'));
-            $qb->setParameter('from', $begin, Type::DATETIME);
+            $qb->setParameter('from', $begin, Types::DATETIME_MUTABLE);
         } else {
             $qb->where($qb->expr()->isNotNull('t.begin'));
         }
 
         if (!empty($end)) {
             $qb->andWhere($qb->expr()->lt('t.end', ':to'))
-                ->setParameter('to', $end, Type::DATETIME);
+                ->setParameter('to', $end, Types::DATETIME_MUTABLE);
         } else {
             $qb->andWhere($qb->expr()->isNotNull('t.end'));
         }
