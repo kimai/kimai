@@ -175,7 +175,12 @@ abstract class AbstractToolbarForm extends AbstractType
                         $query = new ActivityFormTypeQuery();
 
                         if (isset($data['activity']) && !empty($data['activity'])) {
-                            $query->setActivity($data['activity']);
+                            $activity = $data['activity'];
+                            if (is_string($data['activity'])) {
+                                $activity = $repo->find($data['activity']);
+                            }
+                            
+                            $query->setActivity($activity);
                         }
                         if (isset($data['project']) && !empty($data['project'])) {
                             $query->setProject($data['project']);
