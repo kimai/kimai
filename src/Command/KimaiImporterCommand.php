@@ -11,8 +11,11 @@ namespace App\Command;
 
 use App\Doctrine\TimesheetSubscriber;
 use App\Entity\Activity;
+use App\Entity\ActivityMeta;
 use App\Entity\Customer;
+use App\Entity\CustomerMeta;
 use App\Entity\Project;
+use App\Entity\ProjectMeta;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
@@ -23,6 +26,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Types\DateTimeType;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -140,7 +144,7 @@ class KimaiImporterCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // do not convert the times, Kimai 1 stored them already in UTC
-        Type::overrideType(Type::DATETIME, DateTimeType::class);
+        Type::overrideType(Types::DATETIME_MUTABLE, DateTimeType::class);
 
         // don't calculate rates ... this was done in Kimai 1
         $this->deactivateLifecycleCallbacks($this->getDoctrine()->getConnection());
@@ -616,6 +620,13 @@ class KimaiImporterCommand extends Command
                 ->setCountry(strtoupper($country))
                 ->setCurrency(strtoupper($currency))
             ;
+            
+            $metaField = new CustomerMeta();
+            $metaField->setName('_imported_id');
+            $metaField->setValue($oldCustomer['customerID']);
+            $metaField->setIsVisible(false);
+            
+            $customer->setMetaField($metaField);
 
             if (!$this->validateImport($io, $customer)) {
                 throw new \Exception('Failed to validate customer: ' . $customer->getName());
@@ -683,6 +694,13 @@ class KimaiImporterCommand extends Command
                 ->setVisible($isActive)
                 ->setBudget($oldProject['budget'] ?: 0)
             ;
+
+            $metaField = new ProjectMeta();
+            $metaField->setName('_imported_id');
+            $metaField->setValue($oldProject['projectID']);
+            $metaField->setIsVisible(false);
+
+            $project->setMetaField($metaField);
 
             foreach ($fixedRates as $fixedRow) {
                 if ($fixedRow['activityID'] !== null || $fixedRow['projectID'] === null) {
@@ -843,6 +861,13 @@ class KimaiImporterCommand extends Command
             $project = $this->projects[$projectId];
             $activity->setProject($project);
         }
+
+        $metaField = new ActivityMeta();
+        $metaField->setName('_imported_id');
+        $metaField->setValue($oldActivity['activityID']);
+        $metaField->setIsVisible(false);
+
+        $activity->setMetaField($metaField);
 
         foreach ($fixedRates as $fixedRow) {
             if ($fixedRow['activityID'] === null) {
@@ -1075,7 +1100,7 @@ class KimaiImporterCommand extends Command
             ;
 
             if (!$this->validateImport($io, $timesheet)) {
-                $io->error('Failed to validate timesheet record: ' . $oldRecord['timeEntryID'] . ' - skipping!');
+                $io->caution('Failed to validate timesheet record: ' . $oldRecord['timeEntryID'] . ' - skipping!');
                 $failed++;
                 continue;
             }
