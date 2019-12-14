@@ -18,7 +18,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class ProjectValidator extends ConstraintValidator
 {
-
     /**
      * @param Project|mixed $value
      * @param Constraint $constraint
@@ -38,7 +37,7 @@ class ProjectValidator extends ConstraintValidator
 
     protected function validateProject(Project $project, ExecutionContextInterface $context)
     {
-        if (null !== $project->getStart() && null !== $project->getEnd() && $project->getEnd()->getTimestamp() < $project->getStart()->getTimestamp()) {
+        if (null !== $project->getStart() && null !== $project->getEnd() && $project->getStart()->getTimestamp() > $project->getEnd()->getTimestamp()) {
             $context->buildViolation('End date must not be earlier then start date.')
                 ->atPath('end')
                 ->setTranslationDomain('validators')
