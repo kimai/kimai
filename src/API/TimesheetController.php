@@ -631,7 +631,7 @@ class TimesheetController extends BaseApiController
             throw new BadRequestHttpException($errors[0]->getPropertyPath() . ' = ' . $errors[0]->getMessage());
         }
 
-        $this->service->saveNewTimesheet($timesheet);
+        $this->service->saveNewTimesheet($copyTimesheet);
 
         $view = new View($copyTimesheet, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
