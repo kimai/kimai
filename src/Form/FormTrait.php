@@ -125,6 +125,7 @@ trait FormTrait
                         if (!empty($activity) && is_string($activity)) {
                             $activity = $repo->find($activity);
                         }
+
                         return $repo->getQueryBuilderForFormType(new ActivityFormTypeQuery($activity, $data['project']));
                     },
                 ]);

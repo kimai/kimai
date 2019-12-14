@@ -179,7 +179,7 @@ abstract class AbstractToolbarForm extends AbstractType
                             if (is_string($data['activity'])) {
                                 $activity = $repo->find($data['activity']);
                             }
-                            
+
                             $query->setActivity($activity);
                         }
                         if (isset($data['project']) && !empty($data['project'])) {

@@ -22,23 +22,23 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 final class TimesheetService
 {
     /**
-     * @var TimesheetRepository 
+     * @var TimesheetRepository
      */
     private $repository;
     /**
-     * @var TimesheetConfiguration 
+     * @var TimesheetConfiguration
      */
     private $configuration;
     /**
-     * @var TrackingModeService 
+     * @var TrackingModeService
      */
     private $trackingModeService;
     /**
-     * @var EventDispatcherInterface 
+     * @var EventDispatcherInterface
      */
     private $dispatcher;
     /**
-     * @var AuthorizationCheckerInterface 
+     * @var AuthorizationCheckerInterface
      */
     private $auth;
 
@@ -58,7 +58,7 @@ final class TimesheetService
 
     /**
      * Calls prepareNewTimesheet() automatically.
-     * 
+     *
      * @param User $user
      * @param Request|null $request
      * @return Timesheet
@@ -67,14 +67,14 @@ final class TimesheetService
     {
         $timesheet = new Timesheet();
         $timesheet->setUser($user);
-        
+
         if (null !== $request) {
             $this->prepareNewTimesheet($timesheet, $request);
         }
-        
+
         return $timesheet;
     }
-    
+
     public function prepareNewTimesheet(Timesheet $timesheet, ?Request $request = null)
     {
         if (null !== $timesheet->getId()) {
@@ -89,7 +89,7 @@ final class TimesheetService
 
         return $timesheet;
     }
-    
+
     public function saveNewTimesheet(Timesheet $timesheet)
     {
         if (null !== $timesheet->getId()) {
@@ -107,7 +107,7 @@ final class TimesheetService
         }
 
         $this->repository->save($timesheet);
-        
+
         return $timesheet;
     }
 
@@ -115,5 +115,4 @@ final class TimesheetService
     {
         return $this->repository->stopRecording($timesheet);
     }
-
 }

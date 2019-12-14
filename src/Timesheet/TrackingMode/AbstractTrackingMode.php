@@ -36,7 +36,7 @@ abstract class AbstractTrackingMode implements TrackingModeInterface
         if (null === $request) {
             return;
         }
-        
+
         $this->setBeginEndFromRequest($timesheet, $request);
         $this->setFromToFromRequest($timesheet, $request);
     }

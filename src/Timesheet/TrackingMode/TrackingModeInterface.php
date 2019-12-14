@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * A tracking-mode defines the behaviour of the user timesheet.
  * It is NOT used for the timesheet administration.
- * 
+ *
  * @internal do not implement this interface in your bundle, but rather drop a PR to add it to Kimai core
  */
 interface TrackingModeInterface

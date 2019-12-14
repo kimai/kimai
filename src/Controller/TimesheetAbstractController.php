@@ -9,7 +9,6 @@
 
 namespace App\Controller;
 
-use App\Configuration\TimesheetConfiguration;
 use App\Entity\MetaTableTypeInterface;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
@@ -60,7 +59,7 @@ abstract class TimesheetAbstractController extends AbstractController
      */
     protected $exportService;
     /**
-     * @var TimesheetService 
+     * @var TimesheetService
      */
     private $service;
 

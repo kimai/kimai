@@ -83,7 +83,7 @@ class TimesheetController extends BaseApiController
      */
     private $roundingService;
     /**
-     * @var TimesheetService 
+     * @var TimesheetService
      */
     private $service;
 

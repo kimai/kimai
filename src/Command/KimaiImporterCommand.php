@@ -315,7 +315,7 @@ class KimaiImporterCommand extends Command
             'Total consumption for importing ' . $allImports . ' new database entries: ' .
             $this->bytesHumanReadable($bytesImported - $bytesStart)
         );
-        
+
         return 0;
     }
 
@@ -620,12 +620,12 @@ class KimaiImporterCommand extends Command
                 ->setCountry(strtoupper($country))
                 ->setCurrency(strtoupper($currency))
             ;
-            
+
             $metaField = new CustomerMeta();
             $metaField->setName('_imported_id');
             $metaField->setValue($oldCustomer['customerID']);
             $metaField->setIsVisible(false);
-            
+
             $customer->setMetaField($metaField);
 
             if (!$this->validateImport($io, $customer)) {

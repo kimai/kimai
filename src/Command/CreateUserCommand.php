@@ -133,6 +133,7 @@ class CreateUserCommand extends Command
         } catch (\Exception $ex) {
             $io->error('Failed to create user: ' . $user->getUsername());
             $io->error('Reason: ' . $ex->getMessage());
+
             return 2;
         }
 
