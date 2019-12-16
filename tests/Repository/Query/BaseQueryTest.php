@@ -100,6 +100,16 @@ class BaseQueryTest extends TestCase
 
         self::assertInstanceOf(BaseQuery::class, $sut->addTeam(new Team()));
         self::assertEquals(1, count($sut->getTeams()));
+
+        $sut->setTeams(null);
+        self::assertEmpty($sut->getTeams());
+        $sut->setTeams([]);
+        self::assertEmpty($sut->getTeams());
+
+        $team = new Team();
+        self::assertInstanceOf(BaseQuery::class, $sut->setTeams([$team]));
+        self::assertEquals(1, count($sut->getTeams()));
+        self::assertSame($team, $sut->getTeams()[0]);
     }
 
     protected function assertPage(BaseQuery $sut)

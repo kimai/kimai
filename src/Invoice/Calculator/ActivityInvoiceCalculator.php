@@ -33,10 +33,6 @@ class ActivityInvoiceCalculator extends AbstractSumInvoiceCalculator implements 
 
     protected function mergeSumTimesheet(InvoiceItem $invoiceItem, InvoiceItemInterface $entry)
     {
-        if (null === $entry->getActivity()) {
-            throw new \Exception('Cannot work with invoice items that do not have an activity');
-        }
-
         $invoiceItem->setActivity($entry->getActivity());
         $invoiceItem->setDescription($entry->getActivity()->getName());
     }

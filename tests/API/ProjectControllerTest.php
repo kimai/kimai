@@ -105,7 +105,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         yield ['/api/projects', ['customer' => '2', 'visible' => VisibilityInterface::SHOW_VISIBLE], []];
         yield ['/api/projects', ['customer' => '2', 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
         // customer is invisible, so nothing should be returned
-        yield ['/api/projects', ['customer' => '2', 'visible' => VisibilityInterface::SHOW_HIDDEN], []];
+        yield ['/api/projects', ['customer' => '2', 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11T23:59:59', 'end' => '2030-12-11T23:59:59'], []];
     }
 
     public function testGetEntity()
