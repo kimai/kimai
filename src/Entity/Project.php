@@ -83,6 +83,16 @@ class Project implements EntityWithMetaFields
     /**
      * @var string
      *
+     * @ORM\Column(name="timezone", type="string", length=64, nullable=true)
+     */
+    private $timezone;
+    /**
+     * @var bool
+     */
+    private $localized = false;
+    /**
+     * @var string
+     *
      * @ORM\Column(name="comment", type="text", nullable=true)
      */
     private $comment;
@@ -205,8 +215,41 @@ class Project implements EntityWithMetaFields
         return $this;
     }
 
+    /**
+     * Make sure begin and end date have the correct timezone.
+     * This will be called once for each item after being loaded from the database.
+     */
+    protected function localizeDates()
+    {
+        if ($this->localized) {
+            return;
+        }
+
+        if (null === $this->timezone) {
+            $this->timezone = date_default_timezone_get();
+        }
+
+        $timezone = new \DateTimeZone($this->timezone);
+
+        if (null !== $this->orderDate) {
+            $this->orderDate->setTimeZone($timezone);
+        }
+
+        if (null !== $this->start) {
+            $this->start->setTimeZone($timezone);
+        }
+
+        if (null !== $this->end) {
+            $this->end->setTimeZone($timezone);
+        }
+
+        $this->localized = true;
+    }
+
     public function getOrderDate(): ?\DateTime
     {
+        $this->localizeDates();
+
         return $this->orderDate;
     }
 
@@ -214,11 +257,17 @@ class Project implements EntityWithMetaFields
     {
         $this->orderDate = $orderDate;
 
+        if (null !== $orderDate) {
+            $this->timezone = $orderDate->getTimezone()->getName();
+        }
+
         return $this;
     }
 
     public function getStart(): ?\DateTime
     {
+        $this->localizeDates();
+
         return $this->start;
     }
 
@@ -226,17 +275,27 @@ class Project implements EntityWithMetaFields
     {
         $this->start = $start;
 
+        if (null !== $start) {
+            $this->timezone = $start->getTimezone()->getName();
+        }
+
         return $this;
     }
 
     public function getEnd(): ?\DateTime
     {
+        $this->localizeDates();
+
         return $this->end;
     }
 
     public function setEnd(?\DateTime $end): Project
     {
         $this->end = $end;
+
+        if (null !== $end) {
+            $this->timezone = $end->getTimezone()->getName();
+        }
 
         return $this;
     }

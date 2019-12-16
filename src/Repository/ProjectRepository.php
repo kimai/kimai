@@ -262,6 +262,13 @@ class ProjectRepository extends EntityRepository
                 ->setParameter('customer', $query->getCustomer());
         }
 
+        // TODO there should be a range selection to be able to select all projects that were active between from and to
+        // begin = null and end = null
+        // begin = null and end <= to
+        // begin < to and end = null
+        // begin > from and end < to
+        // more rules ...
+
         if (null !== $query->getProjectStart()) {
             $qb->andWhere(
                 $qb->expr()->orX(

@@ -39,6 +39,8 @@ class CustomerType extends AbstractType
             'choice_label' => 'name',
             'query_builder_for_user' => true,
             'project_enabled' => false,
+            'start_date_param' => '%begin%',
+            'end_date_param' => '%end%',
             'project_visibility' => ProjectQuery::SHOW_VISIBLE,
         ]);
 
@@ -58,8 +60,8 @@ class CustomerType extends AbstractType
                 return [
                     'select' => 'project',
                     'route' => 'get_projects',
-                    'route_params' => ['customer' => '-s-', 'visible' => $options['project_visibility']],
-                    'empty_route_params' => ['visible' => $options['project_visibility']],
+                    'route_params' => ['customer' => '%customer%', 'visible' => $options['project_visibility'], 'start' => $options['start_date_param'], 'end' => $options['end_date_param']],
+                    'empty_route_params' => ['visible' => $options['project_visibility'], 'start' => $options['start_date_param'], 'end' => $options['end_date_param']],
                 ];
             }
 

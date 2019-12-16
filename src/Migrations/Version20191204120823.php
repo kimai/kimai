@@ -31,11 +31,13 @@ final class Version20191204120823 extends AbstractMigration
         $projects = $schema->getTable('kimai2_projects');
         $projects->addColumn('start', 'datetime', ['notnull' => false]);
         $projects->addColumn('end', 'datetime', ['notnull' => false]);
+        $projects->addColumn('timezone', 'string', ['notnull' => false, 'length' => 64]);
     }
 
     public function down(Schema $schema): void
     {
         $projects = $schema->getTable('kimai2_projects');
+        $projects->dropColumn('timezone');
         $projects->dropColumn('end');
         $projects->dropColumn('start');
     }

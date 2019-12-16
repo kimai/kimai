@@ -83,6 +83,8 @@ abstract class AbstractToolbarForm extends AbstractType
                 $event->getForm()->add('customer', CustomerType::class, [
                     'required' => $required,
                     'project_enabled' => true,
+                    'end_date_param' => '%daterange%',
+                    'start_date_param' => '%daterange%',
                     'query_builder' => function (CustomerRepository $repo) use ($builder, $data) {
                         $query = new CustomerFormTypeQuery();
                         $query->setUser($builder->getOption('user'));

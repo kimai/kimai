@@ -83,7 +83,7 @@ class ProjectType extends AbstractType
                 return [
                     'select' => 'activity',
                     'route' => 'get_activities',
-                    'route_params' => ['project' => '-s-', 'visible' => $options['activity_visibility']],
+                    'route_params' => ['project' => '%project%', 'visible' => $options['activity_visibility']],
                     'empty_route_params' => ['globals' => 'true', 'visible' => $options['activity_visibility']],
                 ];
             }

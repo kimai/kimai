@@ -11,6 +11,7 @@
 
 import jQuery from 'jquery';
 import KimaiPlugin from "../KimaiPlugin";
+import moment from 'moment';
 
 export default class KimaiSelectDataAPI extends KimaiPlugin {
 
@@ -32,29 +33,70 @@ export default class KimaiSelectDataAPI extends KimaiPlugin {
         const API = this.getContainer().getPlugin('api');
 
         jQuery('body').on('change', selector, function(event) {
-            let apiUrl = jQuery(this).attr('data-api-url').replace('-s-', jQuery(this).val());
-            const targetSelect = '#' + jQuery(this).attr('data-related-select');
+            const targetSelect = '#' + this.dataset['relatedSelect'];
 
             // if the related target select does not exist, we do not need to load the related data
             if (jQuery(targetSelect).length === 0) {
                 return;
             }
 
+            let formPrefix = jQuery(targetSelect).parents('form').first().attr('name');
+            if (formPrefix === undefined || formPrefix === null) {
+                formPrefix = '';
+            }
+            
+            let newApiUrl = self._buildUrlWithFormFields(this.dataset['apiUrl'], formPrefix);
+
             if (jQuery(this).val() === '') {
-                if (jQuery(this).attr('data-empty-url') === undefined) {
+                if (this.dataset['emptyUrl'] === undefined) {
                     self._updateSelect(targetSelect, {});
                     jQuery(targetSelect).attr('disabled', 'disabled');
                     return;
                 }
-                apiUrl = jQuery(this).attr('data-empty-url').replace('-s-', jQuery(this).val());
+                newApiUrl = self._buildUrlWithFormFields(this.dataset['emptyUrl'], formPrefix);
             }
 
             jQuery(targetSelect).removeAttr('disabled');
 
-            API.get(apiUrl, {}, function(data){
+            API.get(newApiUrl, {}, function(data){
                 self._updateSelect(targetSelect, data);
             });
         });
+    }
+    
+    _buildUrlWithFormFields(apiUrl, formPrefix) {
+        let newApiUrl = apiUrl;
+
+        apiUrl.split('?')[1].split('&').forEach(item => {
+            let [key, value] = item.split('=');
+            let decoded = decodeURIComponent(value);
+            let test = decoded.match(/%(.*)%/);
+            if (test !== null) {
+                let targetField = jQuery('#' + formPrefix + test[1]);
+                let newValue = '';
+                if (targetField.length > 0 && targetField.val() !== null) {
+                    newValue = targetField.val();
+                    
+                    if (newValue !== '') {
+                        // having that special case here is far from being perfect... but for now it works ;-)
+                        if (targetField.data('daterangepicker') !== undefined) {
+                            if (key === 'begin' || key === 'start' || targetField.data('daterangepicker').singleDatePicker) {
+                                newValue = targetField.data('daterangepicker').startDate.format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
+                            } else if (key === 'end') {
+                                newValue = targetField.data('daterangepicker').endDate.format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
+                            }
+                        } else if (targetField.data('format') !== undefined) {
+                            if (moment(newValue, targetField.data('format')).isValid()) {
+                                newValue = moment(newValue, targetField.data('format')).format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
+                            }
+                        } 
+                    }
+                }
+                newApiUrl = newApiUrl.replace(value, newValue);
+            }
+        });
+
+        return newApiUrl;
     }
 
     _updateSelect(selectName, data) {
