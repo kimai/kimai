@@ -15,7 +15,7 @@ Perform EACH version specific task between your version and the new one, otherwi
 ### Hosting
 
 New feature requires the timezone date within MySQL/MariaDB. 
-This is especially important for self-hosted systems [where you need to import the data manually](https://mariadb.com/kb/en/library/mysql_tzinfo_to_sql/). 
+This is especially important for self-hosted systems [where you need to import the data manually](https://mariadb.com/kb/en/library/mysql_tzinfo_to_sql/).
 
 ### Developer
 
