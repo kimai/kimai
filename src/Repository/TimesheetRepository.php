@@ -22,7 +22,6 @@ use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\TimesheetQuery;
 use DateTime;
 use Doctrine\DBAL\Types\Type;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
@@ -219,14 +218,14 @@ class TimesheetRepository extends EntityRepository
 
         if (!empty($begin)) {
             $qb
-                ->andWhere($qb->expr()->gt('t.begin', ':from'))
-                ->setParameter('from', $begin, Types::DATETIME_MUTABLE);
+                ->andWhere($qb->expr()->gte($this->getDatetimeFieldSql('t.begin'), ':from'))
+                ->setParameter('from', $begin);
         }
 
         if (!empty($end)) {
             $qb
-                ->andWhere($qb->expr()->lt('t.end', ':to'))
-                ->setParameter('to', $end, Types::DATETIME_MUTABLE);
+                ->andWhere($qb->expr()->lte($this->getDatetimeFieldSql('t.end'), ':to'))
+                ->setParameter('to', $end);
         }
 
         if (null !== $user) {
@@ -286,15 +285,15 @@ class TimesheetRepository extends EntityRepository
         ;
 
         if (!empty($begin)) {
-            $qb->where($qb->expr()->gt('t.begin', ':from'));
-            $qb->setParameter('from', $begin, Types::DATETIME_MUTABLE);
+            $qb->andWhere($qb->expr()->gte($this->getDatetimeFieldSql('t.begin'), ':from'))
+                ->setParameter('from', $begin);
         } else {
-            $qb->where($qb->expr()->isNotNull('t.begin'));
+            $qb->andWhere($qb->expr()->isNotNull('t.begin'));
         }
 
         if (!empty($end)) {
-            $qb->andWhere($qb->expr()->lt('t.end', ':to'))
-                ->setParameter('to', $end, Types::DATETIME_MUTABLE);
+            $qb->andWhere($qb->expr()->lte($this->getDatetimeFieldSql('t.end'), ':to'))
+                ->setParameter('to', $end);
         } else {
             $qb->andWhere($qb->expr()->isNotNull('t.end'));
         }
@@ -675,7 +674,7 @@ class TimesheetRepository extends EntityRepository
         }
 
         if (null !== $query->getBegin()) {
-            $qb->andWhere('t.begin >= :begin')
+            $qb->andWhere($qb->expr()->gte($this->getDatetimeFieldSql('t.begin'), ':begin'))
                 ->setParameter('begin', $query->getBegin());
         }
 
@@ -686,7 +685,7 @@ class TimesheetRepository extends EntityRepository
         }
 
         if (null !== $query->getEnd()) {
-            $qb->andWhere('t.begin <= :end')
+            $qb->andWhere($qb->expr()->lte($this->getDatetimeFieldSql('t.begin'), ':end'))
                 ->setParameter('end', $query->getEnd());
         }
 
@@ -783,7 +782,7 @@ class TimesheetRepository extends EntityRepository
         }
 
         if (null !== $startFrom) {
-            $qb->andWhere($qb->expr()->gt('t.begin', ':begin'))
+            $qb->andWhere($qb->expr()->gte($this->getDatetimeFieldSql('t.begin'), ':begin'))
                 ->setParameter('begin', $startFrom);
         }
 
@@ -824,5 +823,10 @@ class TimesheetRepository extends EntityRepository
             ->execute();
 
         $em->commit();
+    }
+
+    private function getDatetimeFieldSql(string $field): string
+    {
+        return sprintf('CONVERT_TZ(%s, \'UTC\', t.timezone)', $field);
     }
 }

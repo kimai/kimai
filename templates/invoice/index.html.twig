@@ -33,6 +33,7 @@
             {% block box_title %}{{ 'invoice.filter'|trans }}{% endblock %}
             {% block box_before %}{{ form_start(form) }}{% endblock %}
             {% block box_body %}
+                {{ form_errors(form) }}
                 {{ form_row(form.searchTerm) }}
                 {{ form_row(form.daterange) }}
                 {{ form_row(form.customer) }}
