@@ -151,6 +151,7 @@ class Timesheet implements EntityWithMetaFields, InvoiceItemInterface
      *      @ORM\JoinColumn(name="tag_id", referencedColumnName="id", onDelete="CASCADE")
      *  }
      * )
+     * @Assert\Valid()
      */
     private $tags;
 
