@@ -70,18 +70,10 @@ class DoctrineCompilerPass implements CompilerPassInterface
         $engine = $this->findEngine();
 
         $configDir = realpath(
-            $container->getParameter('kernel.project_dir') . '/vendor/beberlei/doctrineextensions/config/'
+            $container->getParameter('kernel.project_dir') . '/config/packages/doctrine/'
         );
 
-        if (!file_exists($configDir)) {
-            @trigger_error('Using deprecated doctrine extensions config directory', E_USER_DEPRECATED);
-
-            $configDir = realpath(
-                $container->getParameter('kernel.project_dir') . '/vendor/beberlei/DoctrineExtensions/config/'
-            );
-        }
-
-        $configFile = $configDir . '/' . $engine . '.yml';
+        $configFile = $configDir . '/' . $engine . '.yaml';
 
         if (!file_exists($configFile)) {
             throw new \Exception('Could not find config file for database engine. Looked at ' . $configFile);
