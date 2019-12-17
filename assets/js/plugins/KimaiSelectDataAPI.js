@@ -40,9 +40,11 @@ export default class KimaiSelectDataAPI extends KimaiPlugin {
                 return;
             }
 
-            let formPrefix = jQuery(targetSelect).parents('form').first().attr('name');
+            let formPrefix = jQuery(this).parents('form').first().attr('name');
             if (formPrefix === undefined || formPrefix === null) {
                 formPrefix = '';
+            } else {
+                formPrefix += '_';
             }
             
             let newApiUrl = self._buildUrlWithFormFields(this.dataset['apiUrl'], formPrefix);
@@ -74,25 +76,29 @@ export default class KimaiSelectDataAPI extends KimaiPlugin {
             if (test !== null) {
                 let targetField = jQuery('#' + formPrefix + test[1]);
                 let newValue = '';
-                if (targetField.length > 0 && targetField.val() !== null) {
-                    newValue = targetField.val();
-                    
-                    if (newValue !== '') {
-                        // having that special case here is far from being perfect... but for now it works ;-)
-                        if (targetField.data('daterangepicker') !== undefined) {
-                            if (key === 'begin' || key === 'start' || targetField.data('daterangepicker').singleDatePicker) {
-                                newValue = targetField.data('daterangepicker').startDate.format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
-                            } else if (key === 'end') {
-                                newValue = targetField.data('daterangepicker').endDate.format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
-                            }
-                        } else if (targetField.data('format') !== undefined) {
-                            if (moment(newValue, targetField.data('format')).isValid()) {
-                                newValue = moment(newValue, targetField.data('format')).format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
-                            }
-                        } 
+                if (targetField.length === 0) {
+                    console.log('ERROR: Cannot find field with name "' + test[1] + '" by selector: #' + formPrefix + test[1]);
+                } else {
+                    if (targetField.val() !== null) {
+                        newValue = targetField.val();
+                        
+                        if (newValue !== '') {
+                            // having that special case here is far from being perfect... but for now it works ;-)
+                            if (targetField.data('daterangepicker') !== undefined) {
+                                if (key === 'begin' || key === 'start' || targetField.data('daterangepicker').singleDatePicker) {
+                                    newValue = targetField.data('daterangepicker').startDate.format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
+                                } else if (key === 'end') {
+                                    newValue = targetField.data('daterangepicker').endDate.format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
+                                }
+                            } else if (targetField.data('format') !== undefined) {
+                                if (moment(newValue, targetField.data('format')).isValid()) {
+                                    newValue = moment(newValue, targetField.data('format')).format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
+                                }
+                            } 
+                        }
                     }
+                    newApiUrl = newApiUrl.replace(value, newValue);
                 }
-                newApiUrl = newApiUrl.replace(value, newValue);
             }
         });
 
