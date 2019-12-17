@@ -360,7 +360,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
         $client->followRedirect();
 
-        $em->clear(Timesheet::class);
+        $em->clear();
         self::assertEquals(0, $em->getRepository(Timesheet::class)->count([]));
     }
 
@@ -404,11 +404,12 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'timesheet_multi_update' => [
                 'exported' => true,
-                'tags' => 'test, foo-bar'
+                'tags' => 'test, foo-bar',
+                'fixedRate' => 13,
             ]
         ]);
 
-        $em->clear(Timesheet::class);
+        $em->clear();
 
         /** @var Timesheet[] $timesheets */
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
@@ -416,6 +417,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         foreach ($timesheets as $timesheet) {
             self::assertCount(2, $timesheet->getTags());
             self::assertTrue($timesheet->isExported());
+            self::assertEquals(13, $timesheet->getFixedRate());
         }
     }
 }
