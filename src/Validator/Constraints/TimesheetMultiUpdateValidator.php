@@ -54,6 +54,18 @@ class TimesheetMultiUpdateValidator extends ConstraintValidator
         }
 
         $this->validateActivityAndProject($value, $this->context);
+        
+        if (null !== $value->getFixedRate() && null !== $value->getHourlyRate()) {
+            $this->context->buildViolation('Cannot set hourly rate and fixed rate at the same time')
+                ->atPath('fixedRate')
+                ->setTranslationDomain('validators')
+                ->addViolation();
+            
+            $this->context->buildViolation('Cannot set hourly rate and fixed rate at the same time')
+                ->atPath('hourlyRate')
+                ->setTranslationDomain('validators')
+                ->addViolation();
+        }
     }
 
     /**
