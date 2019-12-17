@@ -551,7 +551,7 @@ class TimesheetController extends BaseApiController
             throw new AccessDeniedHttpException('You are not allowed to stop this timesheet');
         }
 
-        $this->repository->stopRecording($timesheet);
+        $this->service->stopTimesheet($timesheet);
 
         $view = new View($timesheet, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
