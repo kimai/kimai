@@ -533,7 +533,7 @@ class KimaiImporterCommand extends Command
                     ->setValue($pref['value']);
                 $user->addPreference($newPref);
             }
-            
+
             // set default values if they were not set in the the user preferences
             $defaults = ['language' => $language, 'timezone' => $timezone];
             foreach ($defaults as $key => $default) {
