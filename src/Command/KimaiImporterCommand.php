@@ -31,6 +31,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -129,12 +130,14 @@ class KimaiImporterCommand extends Command
             ->addArgument(
                 'connection',
                 InputArgument::REQUIRED,
-                'The database connection as URL, e.g.: mysql://user:password@127.0.0.1:3306/kimai?charset=latin1'
+                'The database connection as URL, e.g.: mysql://user:password@127.0.0.1:3306/kimai?charset=utf8'
             )
             ->addArgument('prefix', InputArgument::REQUIRED, 'The database prefix for the old Kimai v1 tables')
             ->addArgument('password', InputArgument::REQUIRED, 'The new password for all imported user')
             ->addArgument('country', InputArgument::OPTIONAL, 'The default country for customer (2-character uppercase)', 'DE')
             ->addArgument('currency', InputArgument::OPTIONAL, 'The default currency for customer (code like EUR, CHF, GBP or USD)', 'EUR')
+            ->addOption('timezone', null, InputOption::VALUE_OPTIONAL, 'Default timezone for imported users', date_default_timezone_get())
+            ->addOption('language', null, InputOption::VALUE_OPTIONAL, 'Default language for imported users', User::DEFAULT_LANGUAGE)
         ;
     }
 
@@ -256,7 +259,7 @@ class KimaiImporterCommand extends Command
         $allImports = 0;
 
         try {
-            $counter = $this->importUsers($io, $password, $users, $rates);
+            $counter = $this->importUsers($io, $password, $users, $rates, $input->getOption('timezone'), $input->getOption('language'));
             $allImports += $counter;
             $io->success('Imported users: ' . $counter);
         } catch (\Exception $ex) {
@@ -480,10 +483,12 @@ class KimaiImporterCommand extends Command
      * @param string $password
      * @param array $users
      * @param array $rates
+     * @param string $timezone
+     * @param string $language
      * @return int
      * @throws \Exception
      */
-    protected function importUsers(SymfonyStyle $io, $password, $users, $rates)
+    protected function importUsers(SymfonyStyle $io, $password, $users, $rates, $timezone, $language)
     {
         $counter = 0;
         $entityManager = $this->getDoctrine()->getManager();
@@ -527,6 +532,14 @@ class KimaiImporterCommand extends Command
                     ->setName($prefsToImport[$key])
                     ->setValue($pref['value']);
                 $user->addPreference($newPref);
+            }
+            
+            // set default values if they were not set in the the user preferences
+            $defaults = ['language' => $language, 'timezone' => $timezone];
+            foreach ($defaults as $key => $default) {
+                if (null === $user->getPreferenceValue($key)) {
+                    $user->setPreferenceValue($key, $default);
+                }
             }
 
             // find hourly rate
@@ -1107,7 +1120,6 @@ class KimaiImporterCommand extends Command
 
             try {
                 $entityManager->persist($timesheet);
-                $entityManager->flush();
                 if ($this->debug) {
                     $io->success('Created timesheet record: ' . $timesheet->getId());
                 }
@@ -1119,10 +1131,14 @@ class KimaiImporterCommand extends Command
 
             $io->write('.');
             if (0 == $counter % 80) {
-                $io->writeln(' (' . $counter . '/' . $total . ')');
+                $entityManager->flush();
                 $entityManager->clear(Timesheet::class);
+                $io->writeln(' (' . $counter . '/' . $total . ')');
             }
         }
+
+        $entityManager->flush();
+        $entityManager->clear(Timesheet::class);
 
         for ($i = 0; $i < 80 - ($counter % 80); $i++) {
             $io->write(' ');
