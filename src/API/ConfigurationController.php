@@ -13,6 +13,7 @@ namespace App\API;
 
 use App\API\Model\I18n;
 use App\Configuration\LanguageFormattings;
+use App\Configuration\TimesheetConfiguration;
 use App\Entity\User;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
@@ -35,15 +36,21 @@ class ConfigurationController extends BaseApiController
      * @var LanguageFormattings
      */
     protected $formats;
+    /**
+     * @var TimesheetConfiguration
+     */
+    protected $timesheetConfiguration;
 
     /**
      * @param ViewHandlerInterface $viewHandler
      * @param LanguageFormattings $formats
+     * @param TimesheetConfiguration $timesheetConfiguration
      */
-    public function __construct(ViewHandlerInterface $viewHandler, LanguageFormattings $formats)
+    public function __construct(ViewHandlerInterface $viewHandler, LanguageFormattings $formats, TimesheetConfiguration $timesheetConfiguration)
     {
         $this->viewHandler = $viewHandler;
         $this->formats = $formats;
+        $this->timesheetConfiguration = $timesheetConfiguration;
     }
 
     /**
@@ -74,10 +81,41 @@ class ConfigurationController extends BaseApiController
             ->setDate($this->formats->getDateFormat($locale))
             ->setDuration($this->formats->getDurationFormat($locale))
             ->setTime($this->formats->getTimeFormat($locale))
-            ->setIs24hours($this->formats->isTwentyFourHours($locale))
-        ;
+            ->setIs24hours($this->formats->isTwentyFourHours($locale));
 
         $view = new View($model, 200);
+        $view->getContext()->setGroups(['Default', 'Config']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Returns the instance specific timesheet configuration
+     *
+     * @SWG\Response(
+     *      response=200,
+     *      description="Returns the instance specific timesheet configuration"
+     * )
+     *
+     * @Rest\Get(path="/config/timesheet")
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function trackingModeAction(): Response
+    {
+        $configValues = [];
+        $exposingFunctionPrefix = 'get';
+        $allClassMethods = get_class_methods($this->timesheetConfiguration);
+        $gettersInClass = array_filter($allClassMethods, function ($method) use ($exposingFunctionPrefix) {
+            return strpos($method, $exposingFunctionPrefix) !== false;
+        });
+
+        foreach ($gettersInClass as $method) {
+            array_push($configValues, [lcfirst(ltrim($method, $exposingFunctionPrefix)) => call_user_func([$this->timesheetConfiguration, $method])]);
+        }
+
+        $view = new View($configValues, 200);
         $view->getContext()->setGroups(['Default', 'Config']);
 
         return $this->viewHandler->handle($view);

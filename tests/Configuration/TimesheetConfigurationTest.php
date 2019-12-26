@@ -70,8 +70,8 @@ class TimesheetConfigurationTest extends TestCase
         $sut = $this->getSut($this->getDefaultSettings(), []);
         $this->assertEquals(99, $sut->getActiveEntriesHardLimit());
         $this->assertEquals(15, $sut->getActiveEntriesSoftLimit());
-        $this->assertEquals(false, $sut->isAllowFutureTimes());
-        $this->assertEquals(false, $sut->isMarkdownEnabled());
+        $this->assertEquals(false, $sut->getIsAllowFutureTimes());
+        $this->assertEquals(false, $sut->getIsMarkdownEnabled());
         $this->assertEquals('duration_only', $sut->getTrackingMode());
         $this->assertEquals('now', $sut->getDefaultBeginTime());
     }
@@ -81,8 +81,8 @@ class TimesheetConfigurationTest extends TestCase
         $sut = $this->getSut($this->getDefaultSettings(), $this->getDefaultLoaderSettings());
         $this->assertEquals(7, $sut->getActiveEntriesHardLimit());
         $this->assertEquals(3, $sut->getActiveEntriesSoftLimit());
-        $this->assertEquals(true, $sut->isAllowFutureTimes());
-        $this->assertEquals(true, $sut->isMarkdownEnabled());
+        $this->assertEquals(true, $sut->getIsAllowFutureTimes());
+        $this->assertEquals(true, $sut->getIsMarkdownEnabled());
         $this->assertEquals('default', $sut->getTrackingMode());
         $this->assertEquals('07:00', $sut->getDefaultBeginTime());
     }

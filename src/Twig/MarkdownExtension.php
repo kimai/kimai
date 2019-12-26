@@ -62,7 +62,7 @@ class MarkdownExtension extends AbstractExtension
             return '';
         }
 
-        if ($this->configuration->isMarkdownEnabled()) {
+        if ($this->configuration->getIsMarkdownEnabled()) {
             return $this->markdown->toHtml($content, false);
         }
 

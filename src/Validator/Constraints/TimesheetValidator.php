@@ -119,7 +119,7 @@ class TimesheetValidator extends ConstraintValidator
                 ->addViolation();
         }
 
-        if (false === $this->configuration->isAllowFutureTimes()) {
+        if (false === $this->configuration->getIsAllowFutureTimes()) {
             // allow configured default rounding time + 1 minute - see #1295
             $allowedDiff = ($this->configuration->getDefaultRoundingBegin() * 60) + 60;
             if ((time() + $allowedDiff) < $timesheet->getBegin()->getTimestamp()) {
