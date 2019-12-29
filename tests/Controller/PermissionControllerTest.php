@@ -141,7 +141,7 @@ class PermissionControllerTest extends ControllerBaseTest
         self::assertEquals(1, $permission->getRole()->getId());
 
         // flush the cache to prevent wrong results
-        $em->clear(RolePermission::class);
+        $em->clear();
 
         // update the permission
         $this->request($client, '/admin/permissions/roles/1/view_user/0');

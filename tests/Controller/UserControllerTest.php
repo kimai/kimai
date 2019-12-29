@@ -164,7 +164,7 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertHasFlashDeleteSuccess($client);
 
         // SQLIte does not necessarly support onCascade delete, so these timesheet will stay after deletion
-        // $em->clear(Timesheet::class);
+        // $em->clear();
         // $timesheets = $em->getRepository(Timesheet::class)->count([]);
         // $this->assertEquals(0, $timesheets);
 

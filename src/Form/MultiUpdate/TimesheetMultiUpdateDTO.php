@@ -49,6 +49,14 @@ class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO
      * @var bool|null
      */
     private $exported = null;
+    /**
+     * @var float
+     */
+    private $fixedRate;
+    /**
+     * @var float
+     */
+    private $hourlyRate;
 
     public function getCustomer(): ?Customer
     {
@@ -133,6 +141,30 @@ class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO
     public function setReplaceTags(bool $replaceTags): TimesheetMultiUpdateDTO
     {
         $this->replaceTags = $replaceTags;
+
+        return $this;
+    }
+
+    public function getFixedRate(): ?float
+    {
+        return $this->fixedRate;
+    }
+
+    public function setFixedRate(?float $fixedRate): TimesheetMultiUpdateDTO
+    {
+        $this->fixedRate = $fixedRate;
+
+        return $this;
+    }
+
+    public function getHourlyRate(): ?float
+    {
+        return $this->hourlyRate;
+    }
+
+    public function setHourlyRate(?float $hourlyRate): TimesheetMultiUpdateDTO
+    {
+        $this->hourlyRate = $hourlyRate;
 
         return $this;
     }
