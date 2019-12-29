@@ -143,8 +143,12 @@ class ExportController extends AbstractController
      */
     protected function getEntries(ExportQuery $query): array
     {
-        $query->getBegin()->setTime(0, 0, 0);
-        $query->getEnd()->setTime(23, 59, 59);
+        if (null !== $query->getBegin()) {
+            $query->getBegin()->setTime(0, 0, 0);
+        }
+        if (null !== $query->getEnd()) {
+            $query->getEnd()->setTime(23, 59, 59);
+        }
 
         return $this->timesheetRepository->getTimesheetsForQuery($query, true);
     }
