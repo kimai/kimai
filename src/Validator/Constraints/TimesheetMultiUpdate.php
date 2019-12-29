@@ -27,7 +27,7 @@ class TimesheetMultiUpdate extends Constraint
     public const HOURLY_RATE_FIXED_RATE = 'ts-multi-update-90';
 
     protected static $errorNames = [
-        self::MISSING_ACTIVITY_ERROR => 'A timesheet must have an activity.',
+        self::MISSING_ACTIVITY_ERROR => 'You need to choose an activity, if the project should be changed.',
         self::MISSING_PROJECT_ERROR => 'A timesheet must have a project.',
         self::ACTIVITY_PROJECT_MISMATCH_ERROR => 'Project mismatch: chosen project does not match the activity project.',
         self::DISABLED_ACTIVITY_ERROR => 'Cannot start a disabled activity.',

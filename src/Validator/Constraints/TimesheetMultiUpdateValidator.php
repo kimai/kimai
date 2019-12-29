@@ -60,7 +60,7 @@ final class TimesheetMultiUpdateValidator extends ConstraintValidator
 
         // non global activity without project
         if (null !== $activity && null !== $activity->getProject() && null === $project) {
-            $context->buildViolation('Missing project')
+            $context->buildViolation('Missing project.')
                 ->atPath('project')
                 ->setTranslationDomain('validators')
                 ->setCode(TimesheetMultiUpdateConstraint::MISSING_PROJECT_ERROR)
@@ -71,8 +71,8 @@ final class TimesheetMultiUpdateValidator extends ConstraintValidator
 
         // only project was chosen
         if (null === $activity && null !== $project) {
-            $context->buildViolation('Missing activity')
-                ->atPath('project')
+            $context->buildViolation('You need to choose an activity, if the project should be changed.')
+                ->atPath('activity')
                 ->setTranslationDomain('validators')
                 ->setCode(TimesheetMultiUpdateConstraint::MISSING_ACTIVITY_ERROR)
                 ->addViolation();

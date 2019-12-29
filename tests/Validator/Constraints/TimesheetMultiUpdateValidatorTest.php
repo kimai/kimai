@@ -57,6 +57,36 @@ class TimesheetMultiUpdateValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
+    public function testProjectWithoutActivity()
+    {
+        $timesheet = new TimesheetMultiUpdateDTO();
+        $timesheet
+            ->setProject(new Project())
+        ;
+
+        $this->validator->validate($timesheet, new TimesheetMultiUpdateConstraint(['message' => 'myMessage']));
+
+        $this->buildViolation('You need to choose an activity, if the project should be changed.')
+            ->atPath('property.path.activity')
+            ->setCode(TimesheetMultiUpdateConstraint::MISSING_ACTIVITY_ERROR)
+            ->assertRaised();
+    }
+
+    public function testActivityWithoutProject()
+    {
+        $timesheet = new TimesheetMultiUpdateDTO();
+        $timesheet
+            ->setActivity((new Activity())->setProject(new Project()))
+        ;
+
+        $this->validator->validate($timesheet, new TimesheetMultiUpdateConstraint(['message' => 'myMessage']));
+
+        $this->buildViolation('Missing project.')
+            ->atPath('property.path.project')
+            ->setCode(TimesheetMultiUpdateConstraint::MISSING_PROJECT_ERROR)
+            ->assertRaised();
+    }
+
     public function testHourlyRateAndFixedRateInParallelAreNotAllowed()
     {
         $timesheet = new TimesheetMultiUpdateDTO();
@@ -76,7 +106,7 @@ class TimesheetMultiUpdateValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testDisabledValuesDuringStart()
+    public function testDisabledValues()
     {
         $customer = new Customer();
         $customer->setVisible(false);
