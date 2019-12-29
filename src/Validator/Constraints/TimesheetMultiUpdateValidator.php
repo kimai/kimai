@@ -9,43 +9,22 @@
 
 namespace App\Validator\Constraints;
 
-use App\Configuration\TimesheetConfiguration;
 use App\Form\MultiUpdate\TimesheetMultiUpdateDTO;
-use App\Validator\Constraints\TimesheetMultiUpdate as TimesheetConstraint;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use App\Validator\Constraints\TimesheetMultiUpdate as TimesheetMultiUpdateConstraint;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class TimesheetMultiUpdateValidator extends ConstraintValidator
+final class TimesheetMultiUpdateValidator extends ConstraintValidator
 {
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    protected $auth;
-    /**
-     * @var TimesheetConfiguration
-     */
-    protected $configuration;
-
-    /**
-     * @param AuthorizationCheckerInterface $auth
-     * @param TimesheetConfiguration $configuration
-     */
-    public function __construct(AuthorizationCheckerInterface $auth, TimesheetConfiguration $configuration)
-    {
-        $this->auth = $auth;
-        $this->configuration = $configuration;
-    }
-
     /**
      * @param TimesheetMultiUpdateDTO|mixed $value
      * @param Constraint $constraint
      */
     public function validate($value, Constraint $constraint)
     {
-        if (!($constraint instanceof TimesheetConstraint)) {
+        if (!($constraint instanceof TimesheetMultiUpdateConstraint)) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\TimesheetMultiUpdate');
         }
 
@@ -54,6 +33,20 @@ class TimesheetMultiUpdateValidator extends ConstraintValidator
         }
 
         $this->validateActivityAndProject($value, $this->context);
+
+        if (null !== $value->getFixedRate() && null !== $value->getHourlyRate()) {
+            $this->context->buildViolation('Cannot set hourly rate and fixed rate at the same time.')
+                ->atPath('fixedRate')
+                ->setTranslationDomain('validators')
+                ->setCode(TimesheetMultiUpdateConstraint::HOURLY_RATE_FIXED_RATE)
+                ->addViolation();
+
+            $this->context->buildViolation('Cannot set hourly rate and fixed rate at the same time.')
+                ->atPath('hourlyRate')
+                ->setTranslationDomain('validators')
+                ->setCode(TimesheetMultiUpdateConstraint::HOURLY_RATE_FIXED_RATE)
+                ->addViolation();
+        }
     }
 
     /**
@@ -67,20 +60,24 @@ class TimesheetMultiUpdateValidator extends ConstraintValidator
 
         // non global activity without project
         if (null !== $activity && null !== $activity->getProject() && null === $project) {
-            $context->buildViolation('Missing project')
+            $context->buildViolation('Missing project.')
                 ->atPath('project')
                 ->setTranslationDomain('validators')
-                ->setCode(TimesheetConstraint::MISSING_PROJECT_ERROR)
+                ->setCode(TimesheetMultiUpdateConstraint::MISSING_PROJECT_ERROR)
                 ->addViolation();
+
+            return;
         }
 
         // only project was chosen
         if (null === $activity && null !== $project) {
-            $context->buildViolation('Missing activity')
-                ->atPath('project')
+            $context->buildViolation('You need to choose an activity, if the project should be changed.')
+                ->atPath('activity')
                 ->setTranslationDomain('validators')
-                ->setCode(TimesheetConstraint::MISSING_ACTIVITY_ERROR)
+                ->setCode(TimesheetMultiUpdateConstraint::MISSING_ACTIVITY_ERROR)
                 ->addViolation();
+
+            return;
         }
 
         if (null !== $activity) {
@@ -88,15 +85,17 @@ class TimesheetMultiUpdateValidator extends ConstraintValidator
                 $context->buildViolation('Project mismatch, project specific activity and timesheet project are different.')
                     ->atPath('project')
                     ->setTranslationDomain('validators')
-                    ->setCode(TimesheetConstraint::ACTIVITY_PROJECT_MISMATCH_ERROR)
+                    ->setCode(TimesheetMultiUpdateConstraint::ACTIVITY_PROJECT_MISMATCH_ERROR)
                     ->addViolation();
+
+                return;
             }
 
             if (!$activity->isVisible()) {
                 $context->buildViolation('Cannot assign a disabled activity.')
                     ->atPath('activity')
                     ->setTranslationDomain('validators')
-                    ->setCode(TimesheetConstraint::DISABLED_ACTIVITY_ERROR)
+                    ->setCode(TimesheetMultiUpdateConstraint::DISABLED_ACTIVITY_ERROR)
                     ->addViolation();
             }
         }
@@ -106,7 +105,7 @@ class TimesheetMultiUpdateValidator extends ConstraintValidator
                 $context->buildViolation('Cannot assign a disabled project.')
                     ->atPath('project')
                     ->setTranslationDomain('validators')
-                    ->setCode(TimesheetConstraint::DISABLED_PROJECT_ERROR)
+                    ->setCode(TimesheetMultiUpdateConstraint::DISABLED_PROJECT_ERROR)
                     ->addViolation();
             }
 
@@ -114,7 +113,7 @@ class TimesheetMultiUpdateValidator extends ConstraintValidator
                 $context->buildViolation('Cannot assign a disabled customer.')
                     ->atPath('customer')
                     ->setTranslationDomain('validators')
-                    ->setCode(TimesheetConstraint::DISABLED_CUSTOMER_ERROR)
+                    ->setCode(TimesheetMultiUpdateConstraint::DISABLED_CUSTOMER_ERROR)
                     ->addViolation();
             }
         }

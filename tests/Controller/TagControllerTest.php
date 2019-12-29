@@ -124,7 +124,7 @@ class TagControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, $this->createUrl('/admin/tags/'));
         $client->followRedirect();
 
-        $em->clear(Tag::class);
+        $em->clear();
         self::assertEquals(0, $em->getRepository(Tag::class)->count([]));
     }
 }
