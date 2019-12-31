@@ -83,7 +83,7 @@
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }} text-nowrap">
                         {{ rate|money(currency) }}
                     </td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }} text-nowrap">
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }} text-nowrap" data-duration="{{ entry.duration }}">
                         {{ duration }}
                     </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'total_rate') }} text-nowrap">

@@ -3,7 +3,8 @@ root = true
 
 ; Unix-style newlines
 [*]
-end_of_line = LF
+end_of_line = lf
+charset = utf-8
 
 [*.php]
 indent_style = space
