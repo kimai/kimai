@@ -47,12 +47,12 @@ class TeamFixtures extends Fixture implements DependentFixtureInterface
 
     /**
      * @param ObjectManager $manager
-     * @return User[]
+     * @return array<int|string, User>
      */
-    protected function getAllUsers(ObjectManager $manager)
+    protected function getAllUsers(ObjectManager $manager): array
     {
         $all = [];
-        /* @var User[] $entries */
+        /** @var User[] $entries */
         $entries = $manager->getRepository(User::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
@@ -63,13 +63,13 @@ class TeamFixtures extends Fixture implements DependentFixtureInterface
 
     /**
      * @param ObjectManager $manager
-     * @return Project[]
+     * @return array<int|string, Project>
      */
-    protected function getAllProjects(ObjectManager $manager)
+    protected function getAllProjects(ObjectManager $manager): array
     {
         $all = [];
 
-        /* @var Project[] $entries */
+        /** @var Project[] $entries */
         $entries = $manager->getRepository(Project::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;

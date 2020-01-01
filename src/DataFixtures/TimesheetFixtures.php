@@ -143,12 +143,12 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
 
     /**
      * @param ObjectManager $manager
-     * @return Tag[]
+     * @return array<int|string, Tag>
      */
-    protected function getAllTags(ObjectManager $manager)
+    protected function getAllTags(ObjectManager $manager): array
     {
         $all = [];
-        /* @var Tag[] $entries */
+        /** @var Tag[] $entries */
         $entries = $manager->getRepository(Tag::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
@@ -159,12 +159,12 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
 
     /**
      * @param ObjectManager $manager
-     * @return User[]
+     * @return array<int|string, User>
      */
-    protected function getAllUsers(ObjectManager $manager)
+    protected function getAllUsers(ObjectManager $manager): array
     {
         $all = [];
-        /* @var User[] $entries */
+        /** @var User[] $entries */
         $entries = $manager->getRepository(User::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
@@ -175,12 +175,12 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
 
     /**
      * @param ObjectManager $manager
-     * @return Project[]
+     * @return array<int|string, Project>
      */
-    protected function getAllProjects(ObjectManager $manager)
+    protected function getAllProjects(ObjectManager $manager): array
     {
         $all = [];
-        /* @var Project[] $entries */
+        /** @var Project[] $entries */
         $entries = $manager->getRepository(Project::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
@@ -191,12 +191,12 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface
 
     /**
      * @param ObjectManager $manager
-     * @return Activity[]
+     * @return array<int|string, Activity>
      */
-    protected function getAllActivities(ObjectManager $manager)
+    protected function getAllActivities(ObjectManager $manager): array
     {
         $all = [];
-        /* @var Activity[] $entries */
+        /** @var Activity[] $entries */
         $entries = $manager->getRepository(Activity::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;

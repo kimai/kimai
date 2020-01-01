@@ -10,6 +10,7 @@ parameters:
         - '#Access to an undefined property Faker\\Generator::\$catchPhrase.#'
         - '#Access to an undefined property Faker\\Generator::\$bs.#'
         - '#Call to static method PHPUnit\\Framework\\Assert::assertSame\(\) with App\\Entity\\[a-zA-Z0-9]+ and null will always evaluate to false.#'
+        - '#Method *::getUserByName\(\) should return App\\Entity\\User\|null but returns object|null.#'
     excludes_analyse:
         - %rootDir%/../../../tests/Ldap/LdapDriverTest.php
     inferPrivatePropertyTypeFromConstructor: true

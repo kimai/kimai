@@ -117,12 +117,12 @@ final class ActivityFixtures extends Fixture
 
     /**
      * @param ObjectManager $manager
-     * @return Project[]
+     * @return array<int|string, Project>
      */
-    protected function getAllProjects(ObjectManager $manager)
+    protected function getAllProjects(ObjectManager $manager): array
     {
         $all = [];
-        /* @var User[] $entries */
+        /** @var Project[] $entries */
         $entries = $manager->getRepository(Project::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;

@@ -11,7 +11,6 @@ namespace App\Tests\DataFixtures;
 
 use App\Entity\Customer;
 use App\Entity\Project;
-use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
@@ -99,12 +98,12 @@ final class ProjectFixtures extends Fixture
 
     /**
      * @param ObjectManager $manager
-     * @return Customer[]
+     * @return array<int|string, Customer>
      */
-    protected function getAllCustomers(ObjectManager $manager)
+    protected function getAllCustomers(ObjectManager $manager): array
     {
         $all = [];
-        /* @var User[] $entries */
+        /** @var Customer[] $entries */
         $entries = $manager->getRepository(Customer::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;

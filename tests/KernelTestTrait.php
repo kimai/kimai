@@ -34,12 +34,7 @@ trait KernelTestTrait
         $executor->execute($loader->getFixtures(), true);
     }
 
-    /**
-     * @param EntityManager $em
-     * @param string $username
-     * @return User|null
-     */
-    protected function getUserByName(EntityManager $em, string $username)
+    protected function getUserByName(EntityManager $em, string $username): ?User
     {
         return $em->getRepository(User::class)->findOneBy(['username' => $username]);
     }
