@@ -27,7 +27,7 @@ use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Types\DateTimeType;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -44,7 +44,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  * This command is way to messy and complex to be tested ... so we use something, which I actually don't like:
  * @codeCoverageIgnore
  */
-class KimaiImporterCommand extends Command
+final class KimaiImporterCommand extends Command
 {
     // minimum required Kimai and database version, lower versions are not supported by this command
     public const MIN_VERSION = '1.0.1';
@@ -62,7 +62,7 @@ class KimaiImporterCommand extends Command
     protected $validator;
     /**
      * Connection to the Kimai v2 database to write imported data to
-     * @var RegistryInterface
+     * @var ManagerRegistry
      */
     protected $doctrine;
     /**
@@ -101,16 +101,8 @@ class KimaiImporterCommand extends Command
      */
     protected $oldActivities = [];
 
-    /**
-     * @param UserPasswordEncoderInterface $encoder
-     * @param RegistryInterface $registry
-     * @param ValidatorInterface $validator
-     */
-    public function __construct(
-        UserPasswordEncoderInterface $encoder,
-        RegistryInterface $registry,
-        ValidatorInterface $validator
-    ) {
+    public function __construct(UserPasswordEncoderInterface $encoder, ManagerRegistry $registry, ValidatorInterface $validator)
+    {
         $this->encoder = $encoder;
         $this->doctrine = $registry;
         $this->validator = $validator;
@@ -426,7 +418,7 @@ class KimaiImporterCommand extends Command
     }
 
     /**
-     * @return RegistryInterface
+     * @return ManagerRegistry
      */
     protected function getDoctrine()
     {
