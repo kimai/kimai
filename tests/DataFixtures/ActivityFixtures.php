@@ -11,7 +11,6 @@ namespace App\Tests\DataFixtures;
 
 use App\Entity\Activity;
 use App\Entity\Project;
-use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;

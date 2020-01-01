@@ -20,7 +20,8 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Timesheet\Util;
-use Doctrine\Common\Persistence\ObjectManager;
+use DateTime;
+use DateTimeZone;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
@@ -28,6 +29,8 @@ use Doctrine\DBAL\Types\DateTimeType;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
+use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -35,6 +38,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -182,7 +186,7 @@ final class KimaiImporterCommand extends Command
         // pre-load all data to make sure we can fully import everything
         try {
             $users = $this->fetchAllFromImport('users');
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $io->error('Failed to load users: ' . $ex->getMessage());
 
             return 1;
@@ -190,7 +194,7 @@ final class KimaiImporterCommand extends Command
 
         try {
             $customer = $this->fetchAllFromImport('customers');
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $io->error('Failed to load customers: ' . $ex->getMessage());
 
             return 1;
@@ -198,7 +202,7 @@ final class KimaiImporterCommand extends Command
 
         try {
             $projects = $this->fetchAllFromImport('projects');
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $io->error('Failed to load projects: ' . $ex->getMessage());
 
             return 1;
@@ -206,7 +210,7 @@ final class KimaiImporterCommand extends Command
 
         try {
             $activities = $this->fetchAllFromImport('activities');
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $io->error('Failed to load activities: ' . $ex->getMessage());
 
             return 1;
@@ -214,7 +218,7 @@ final class KimaiImporterCommand extends Command
 
         try {
             $activityToProject = $this->fetchAllFromImport('projects_activities');
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $io->error('Failed to load activities-project mapping: ' . $ex->getMessage());
 
             return 1;
@@ -222,7 +226,7 @@ final class KimaiImporterCommand extends Command
 
         try {
             $records = $this->fetchAllFromImport('timeSheet');
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $io->error('Failed to load timeSheet: ' . $ex->getMessage());
 
             return 1;
@@ -230,7 +234,7 @@ final class KimaiImporterCommand extends Command
 
         try {
             $fixedRates = $this->fetchAllFromImport('fixedRates');
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $io->error('Failed to load fixedRates: ' . $ex->getMessage());
 
             return 1;
@@ -238,7 +242,7 @@ final class KimaiImporterCommand extends Command
 
         try {
             $rates = $this->fetchAllFromImport('rates');
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $io->error('Failed to load rates: ' . $ex->getMessage());
 
             return 1;
@@ -254,7 +258,7 @@ final class KimaiImporterCommand extends Command
             $counter = $this->importUsers($io, $password, $users, $rates, $input->getOption('timezone'), $input->getOption('language'));
             $allImports += $counter;
             $io->success('Imported users: ' . $counter);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $io->error('Failed to import users: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
             return 1;
@@ -264,7 +268,7 @@ final class KimaiImporterCommand extends Command
             $counter = $this->importCustomers($io, $customer, $country, $currency);
             $allImports += $counter;
             $io->success('Imported customers: ' . $counter);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $io->error('Failed to import customers: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
             return 1;
@@ -274,7 +278,7 @@ final class KimaiImporterCommand extends Command
             $counter = $this->importProjects($io, $projects, $fixedRates, $rates);
             $allImports += $counter;
             $io->success('Imported projects: ' . $counter);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $io->error('Failed to import projects: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
             return 1;
@@ -284,7 +288,7 @@ final class KimaiImporterCommand extends Command
             $counter = $this->importActivities($io, $activities, $activityToProject, $fixedRates, $rates);
             $allImports += $counter;
             $io->success('Imported activities: ' . $counter);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $io->error('Failed to import activities: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
             return 1;
@@ -294,7 +298,7 @@ final class KimaiImporterCommand extends Command
             $counter = $this->importTimesheetRecords($io, $records, $fixedRates, $rates);
             $allImports += $counter;
             $io->success('Imported timesheet records: ' . $counter);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $io->error('Failed to import timesheet records: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
             return 1;
@@ -322,7 +326,6 @@ final class KimaiImporterCommand extends Command
      * @param string $requiredVersion
      * @param string $requiredRevision
      * @return bool
-     * @throws \Doctrine\DBAL\DBALException
      */
     protected function checkDatabaseVersion(SymfonyStyle $io, $requiredVersion, $requiredRevision)
     {
@@ -435,7 +438,7 @@ final class KimaiImporterCommand extends Command
         $errors = $this->validator->validate($object);
 
         if ($errors->count() > 0) {
-            /** @var \Symfony\Component\Validator\ConstraintViolation $error */
+            /** @var ConstraintViolation $error */
             foreach ($errors as $error) {
                 $io->error(
                     (string) $error
@@ -478,7 +481,7 @@ final class KimaiImporterCommand extends Command
      * @param string $timezone
      * @param string $language
      * @return int
-     * @throws \Exception
+     * @throws Exception
      */
     protected function importUsers(SymfonyStyle $io, $password, $users, $rates, $timezone, $language)
     {
@@ -502,7 +505,7 @@ final class KimaiImporterCommand extends Command
             $user->setPassword($pwd);
 
             if (!$this->validateImport($io, $user)) {
-                throw new \Exception('Failed to validate user: ' . $user->getUsername());
+                throw new Exception('Failed to validate user: ' . $user->getUsername());
             }
 
             // find and migrate user preferences
@@ -552,7 +555,7 @@ final class KimaiImporterCommand extends Command
                     $io->success('Created user: ' . $user->getUsername());
                 }
                 ++$counter;
-            } catch (\Exception $ex) {
+            } catch (Exception $ex) {
                 $io->error('Failed to create user: ' . $user->getUsername());
                 $io->error('Reason: ' . $ex->getMessage());
             }
@@ -593,7 +596,7 @@ final class KimaiImporterCommand extends Command
      * @param string $country
      * @param string $currency
      * @return int
-     * @throws \Exception
+     * @throws Exception
      */
     protected function importCustomers(SymfonyStyle $io, $customers, $country, $currency)
     {
@@ -634,7 +637,7 @@ final class KimaiImporterCommand extends Command
             $customer->setMetaField($metaField);
 
             if (!$this->validateImport($io, $customer)) {
-                throw new \Exception('Failed to validate customer: ' . $customer->getName());
+                throw new Exception('Failed to validate customer: ' . $customer->getName());
             }
 
             try {
@@ -644,7 +647,7 @@ final class KimaiImporterCommand extends Command
                     $io->success('Created customer: ' . $customer->getName());
                 }
                 ++$counter;
-            } catch (\Exception $ex) {
+            } catch (Exception $ex) {
                 $io->error('Reason: ' . $ex->getMessage());
                 $io->error('Failed to create customer: ' . $customer->getName());
             }
@@ -675,7 +678,7 @@ final class KimaiImporterCommand extends Command
      * @param array $fixedRates
      * @param array $rates
      * @return int
-     * @throws \Exception
+     * @throws Exception
      */
     protected function importProjects(SymfonyStyle $io, $projects, array $fixedRates, array $rates)
     {
@@ -726,7 +729,7 @@ final class KimaiImporterCommand extends Command
             }
 
             if (!$this->validateImport($io, $project)) {
-                throw new \Exception('Failed to validate project: ' . $project->getName());
+                throw new Exception('Failed to validate project: ' . $project->getName());
             }
 
             try {
@@ -736,7 +739,7 @@ final class KimaiImporterCommand extends Command
                     $io->success('Created project: ' . $project->getName() . ' for customer: ' . $customer->getName());
                 }
                 ++$counter;
-            } catch (\Exception $ex) {
+            } catch (Exception $ex) {
                 $io->error('Failed to create project: ' . $project->getName());
                 $io->error('Reason: ' . $ex->getMessage());
             }
@@ -771,7 +774,7 @@ final class KimaiImporterCommand extends Command
      * @param array $fixedRates
      * @param array $rates
      * @return int
-     * @throws \Exception
+     * @throws Exception
      */
     protected function importActivities(SymfonyStyle $io, array $activities, array $activityToProject, array $fixedRates, array $rates)
     {
@@ -804,7 +807,7 @@ final class KimaiImporterCommand extends Command
             }
             foreach ($oldActivityMapping[$oldActivity['activityID']] as $projectId) {
                 if (!isset($this->projects[$projectId])) {
-                    throw new \Exception(
+                    throw new Exception(
                         'Invalid project linked to activity ' . $oldActivity['name'] . ': ' . $projectId
                     );
                 }
@@ -825,7 +828,7 @@ final class KimaiImporterCommand extends Command
      * @param array $rates
      * @param int $projectId
      * @return Activity
-     * @throws \Exception
+     * @throws Exception
      */
     protected function createActivity(
         SymfonyStyle $io,
@@ -849,7 +852,7 @@ final class KimaiImporterCommand extends Command
         }
 
         if (null !== $projectId && !isset($this->projects[$projectId])) {
-            throw new \Exception(
+            throw new Exception(
                 sprintf('Did not find project [%s], skipping activity creation [%s] %s', $projectId, $activityId, $name)
             );
         }
@@ -901,7 +904,7 @@ final class KimaiImporterCommand extends Command
         }
 
         if (!$this->validateImport($io, $activity)) {
-            throw new \Exception('Failed to validate activity: ' . $activity->getName());
+            throw new Exception('Failed to validate activity: ' . $activity->getName());
         }
 
         try {
@@ -910,7 +913,7 @@ final class KimaiImporterCommand extends Command
             if ($this->debug) {
                 $io->success('Created activity: ' . $activity->getName());
             }
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $io->error('Failed to create activity: ' . $activity->getName());
             $io->error('Reason: ' . $ex->getMessage());
         }
@@ -951,7 +954,7 @@ final class KimaiImporterCommand extends Command
      * @param array $fixedRates
      * @param array $rates
      * @return int
-     * @throws \Exception
+     * @throws Exception
      */
     protected function importTimesheetRecords(SymfonyStyle $io, array $records, array $fixedRates, array $rates)
     {
@@ -1040,7 +1043,7 @@ final class KimaiImporterCommand extends Command
                         $io->success('Created deactivated user: ' . $user->getUsername());
                     }
                     $userCounter++;
-                } catch (\Exception $ex) {
+                } catch (Exception $ex) {
                     $io->error('Failed to create user: ' . $user->getUsername());
                     $io->error('Reason: ' . $ex->getMessage());
                     $failed++;
@@ -1073,11 +1076,11 @@ final class KimaiImporterCommand extends Command
 
             $user = $this->users[$oldRecord['userID']];
             $timezone = $user->getTimezone();
-            $dateTimezone = new \DateTimeZone('UTC');
+            $dateTimezone = new DateTimeZone('UTC');
 
-            $begin = new \DateTime('@' . $oldRecord['start']);
+            $begin = new DateTime('@' . $oldRecord['start']);
             $begin->setTimezone($dateTimezone);
-            $end = new \DateTime('@' . $oldRecord['end']);
+            $end = new DateTime('@' . $oldRecord['end']);
             $end->setTimezone($dateTimezone);
 
             // ---------- workaround for localizeDates ----------
@@ -1116,7 +1119,7 @@ final class KimaiImporterCommand extends Command
                     $io->success('Created timesheet record: ' . $timesheet->getId());
                 }
                 ++$counter;
-            } catch (\Exception $ex) {
+            } catch (Exception $ex) {
                 $io->error('Failed to create timesheet record: ' . $ex->getMessage());
                 $failed++;
             }

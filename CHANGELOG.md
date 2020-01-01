@@ -1,28 +1,44 @@
 # Change Log
 
-## [1.7](https://github.com/kevinpapst/kimai2/tree/1.7) (2019-12-??)
+## [1.7](https://github.com/kevinpapst/kimai2/tree/1.7) (2020-01-0?)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.6.2...1.7)
+
+Release notes including the changelog can be found [here](https://github.com/kevinpapst/kimai2/releases/tag/1.7)
 
 ## [1.6.2](https://github.com/kevinpapst/kimai2/tree/1.6.2) (2019-12-02)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.6.1...1.6.2)
 
+Release notes including the changelog can be found [here](https://github.com/kevinpapst/kimai2/releases/tag/1.6.2)
+
 ## [1.6.1](https://github.com/kevinpapst/kimai2/tree/1.6.1) (2019-11-26)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.6...1.6.1)
+
+Release notes including the changelog can be found [here](https://github.com/kevinpapst/kimai2/releases/tag/1.6.1)
 
 ## [1.6](https://github.com/kevinpapst/kimai2/tree/1.6) (2019-11-24)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.5...1.6)
 
+Release notes including the changelog can be found [here](https://github.com/kevinpapst/kimai2/releases/tag/1.6)
+
 ## [1.5](https://github.com/kevinpapst/kimai2/tree/1.5) (2019-11-03)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.4.2...1.5)
+
+Release notes including the changelog can be found [here](https://github.com/kevinpapst/kimai2/releases/tag/1.5)
 
 ## [1.4.2](https://github.com/kevinpapst/kimai2/tree/1.4) (2019-10-14)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.4.1...1.4.2)
 
+Release notes including the changelog can be found [here](https://github.com/kevinpapst/kimai2/releases/tag/1.4.2)
+
 ## [1.4.1](https://github.com/kevinpapst/kimai2/tree/1.4) (2019-10-07)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.4...1.4.1)
 
+Release notes including the changelog can be found [here](https://github.com/kevinpapst/kimai2/releases/tag/1.4.1)
+
 ## [1.4](https://github.com/kevinpapst/kimai2/tree/1.4) (2019-10-03)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.3...1.4)
+
+Release notes including the changelog can be found [here](https://github.com/kevinpapst/kimai2/releases/tag/1.4)
 
 ## [1.3](https://github.com/kevinpapst/kimai2/tree/1.3) (2019-09-11)
 [Full Changelog](https://github.com/kevinpapst/kimai2/compare/1.2...1.3)
