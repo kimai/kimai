@@ -26,6 +26,7 @@ nelmio_api_doc:
             - { alias: TeamEntity,                type: App\Entity\Team,                          groups: [Default, Entity, Team, Team_Entity] }
             - { alias: TeamCollection,            type: App\Entity\Team,                          groups: [Default, Collection, Team] }
             - { alias: I18nConfig,                type: App\API\Model\I18n,                       groups: [Default] }
+            - { alias: TimesheetConfig,           type: App\API\Model\TimesheetConfig,            groups: [Default] }
     areas:
         path_patterns:
             - ^/api(?!/doc)

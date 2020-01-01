@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace App\API;
 
 use App\API\Model\I18n;
+use App\API\Model\TimesheetConfig;
 use App\Configuration\LanguageFormattings;
 use App\Configuration\TimesheetConfiguration;
 use App\Entity\User;
@@ -94,7 +95,8 @@ class ConfigurationController extends BaseApiController
      *
      * @SWG\Response(
      *      response=200,
-     *      description="Returns the instance specific timesheet configuration"
+     *      description="Returns the instance specific timesheet configuration",
+     *      @SWG\Schema(ref="#/definitions/TimesheetConfig")
      * )
      *
      * @Rest\Get(path="/config/timesheet")
@@ -104,18 +106,15 @@ class ConfigurationController extends BaseApiController
      */
     public function trackingModeAction(): Response
     {
-        $configValues = [];
-        $exposingFunctionPrefix = 'get';
-        $allClassMethods = get_class_methods($this->timesheetConfiguration);
-        $gettersInClass = array_filter($allClassMethods, function ($method) use ($exposingFunctionPrefix) {
-            return strpos($method, $exposingFunctionPrefix) !== false;
-        });
+        $model = new TimesheetConfig();
+        $model
+            ->setTrackingMode($this->timesheetConfiguration->getTrackingMode())
+            ->setDefaultBeginTime($this->timesheetConfiguration->getDefaultBeginTime())
+            ->setActiveEntriesHardLimit($this->timesheetConfiguration->getActiveEntriesHardLimit())
+            ->setActiveEntriesSoftLimit($this->timesheetConfiguration->getActiveEntriesSoftLimit())
+            ->setIsAllowFutureTimes($this->timesheetConfiguration->isAllowFutureTimes());
 
-        foreach ($gettersInClass as $method) {
-            array_push($configValues, [lcfirst(ltrim($method, $exposingFunctionPrefix)) => call_user_func([$this->timesheetConfiguration, $method])]);
-        }
-
-        $view = new View($configValues, 200);
+        $view = new View($model, 200);
         $view->getContext()->setGroups(['Default', 'Config']);
 
         return $this->viewHandler->handle($view);
