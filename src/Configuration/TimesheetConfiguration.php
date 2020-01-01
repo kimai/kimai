@@ -18,7 +18,7 @@ class TimesheetConfiguration implements SystemBundleConfiguration
         return 'timesheet';
     }
 
-    public function getIsAllowFutureTimes(): bool
+    public function isAllowFutureTimes(): bool
     {
         return (bool) $this->find('rules.allow_future_times');
     }
@@ -33,7 +33,7 @@ class TimesheetConfiguration implements SystemBundleConfiguration
         return (string) $this->find('default_begin');
     }
 
-    public function getIsMarkdownEnabled(): bool
+    public function isMarkdownEnabled(): bool
     {
         return (bool) $this->find('markdown_content');
     }
