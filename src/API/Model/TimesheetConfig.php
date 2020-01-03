@@ -44,10 +44,6 @@ final class TimesheetConfig
         return $this->trackingMode;
     }
 
-    /**
-     * @param string $trackingMode
-     * @return TimesheetConfig
-     */
     public function setTrackingMode(string $trackingMode): TimesheetConfig
     {
         $this->trackingMode = $trackingMode;
@@ -55,18 +51,11 @@ final class TimesheetConfig
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getDefaultBeginTime(): string
     {
         return $this->defaultBeginTime;
     }
 
-    /**
-     * @param string $defaultBeginTime
-     * @return TimesheetConfig
-     */
     public function setDefaultBeginTime(string $defaultBeginTime): TimesheetConfig
     {
         $this->defaultBeginTime = $defaultBeginTime;
@@ -74,18 +63,11 @@ final class TimesheetConfig
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getActiveEntriesHardLimit(): int
     {
         return $this->activeEntriesHardLimit;
     }
 
-    /**
-     * @param int $activeEntriesHardLimit
-     * @return TimesheetConfig
-     */
     public function setActiveEntriesHardLimit(int $activeEntriesHardLimit): TimesheetConfig
     {
         $this->activeEntriesHardLimit = $activeEntriesHardLimit;
@@ -93,18 +75,11 @@ final class TimesheetConfig
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getActiveEntriesSoftLimit(): int
     {
         return $this->activeEntriesSoftLimit;
     }
 
-    /**
-     * @param int $activeEntriesSoftLimit
-     * @return TimesheetConfig
-     */
     public function setActiveEntriesSoftLimit(int $activeEntriesSoftLimit): TimesheetConfig
     {
         $this->activeEntriesSoftLimit = $activeEntriesSoftLimit;
@@ -112,18 +87,11 @@ final class TimesheetConfig
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isAllowFutureTimes(): bool
     {
         return $this->isAllowFutureTimes;
     }
 
-    /**
-     * @param bool $isAllowFutureTimes
-     * @return TimesheetConfig
-     */
     public function setIsAllowFutureTimes(bool $isAllowFutureTimes): TimesheetConfig
     {
         $this->isAllowFutureTimes = $isAllowFutureTimes;

@@ -82,7 +82,8 @@ final class ConfigurationController extends BaseApiController
             ->setDate($this->formats->getDateFormat($locale))
             ->setDuration($this->formats->getDurationFormat($locale))
             ->setTime($this->formats->getTimeFormat($locale))
-            ->setIs24hours($this->formats->isTwentyFourHours($locale));
+            ->setIs24hours($this->formats->isTwentyFourHours($locale))
+        ;
 
         $view = new View($model, 200);
         $view->getContext()->setGroups(['Default', 'Config']);
@@ -112,7 +113,8 @@ final class ConfigurationController extends BaseApiController
             ->setDefaultBeginTime($this->timesheetConfiguration->getDefaultBeginTime())
             ->setActiveEntriesHardLimit($this->timesheetConfiguration->getActiveEntriesHardLimit())
             ->setActiveEntriesSoftLimit($this->timesheetConfiguration->getActiveEntriesSoftLimit())
-            ->setIsAllowFutureTimes($this->timesheetConfiguration->isAllowFutureTimes());
+            ->setIsAllowFutureTimes($this->timesheetConfiguration->isAllowFutureTimes())
+        ;
 
         $view = new View($model, 200);
         $view->getContext()->setGroups(['Default', 'Config']);
