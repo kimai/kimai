@@ -11,30 +11,30 @@ declare(strict_types=1);
 
 namespace App\API\Model;
 
-class TimesheetConfig
+final class TimesheetConfig
 {
     /**
      * See here: https://www.kimai.org/documentation/timesheet.html#tracking-modes
      *
      * @var string
      */
-    protected $trackingMode = '';
+    private $trackingMode = 'default';
     /**
      * @var string
      */
-    protected $defaultBeginTime = '';
+    private $defaultBeginTime = 'now';
     /**
      * @var int
      */
-    protected $activeEntriesHardLimit;
+    private $activeEntriesHardLimit = 1;
     /**
      * @var int
      */
-    protected $activeEntriesSoftLimit;
+    private $activeEntriesSoftLimit = 1;
     /**
      * @var bool
      */
-    protected $isAllowFutureTimes;
+    private $isAllowFutureTimes = true;
 
     /**
      * @return string
@@ -51,6 +51,7 @@ class TimesheetConfig
     public function setTrackingMode(string $trackingMode): TimesheetConfig
     {
         $this->trackingMode = $trackingMode;
+
         return $this;
     }
 
@@ -69,6 +70,7 @@ class TimesheetConfig
     public function setDefaultBeginTime(string $defaultBeginTime): TimesheetConfig
     {
         $this->defaultBeginTime = $defaultBeginTime;
+
         return $this;
     }
 
@@ -87,6 +89,7 @@ class TimesheetConfig
     public function setActiveEntriesHardLimit(int $activeEntriesHardLimit): TimesheetConfig
     {
         $this->activeEntriesHardLimit = $activeEntriesHardLimit;
+
         return $this;
     }
 
@@ -105,6 +108,7 @@ class TimesheetConfig
     public function setActiveEntriesSoftLimit(int $activeEntriesSoftLimit): TimesheetConfig
     {
         $this->activeEntriesSoftLimit = $activeEntriesSoftLimit;
+
         return $this;
     }
 
@@ -123,6 +127,7 @@ class TimesheetConfig
     public function setIsAllowFutureTimes(bool $isAllowFutureTimes): TimesheetConfig
     {
         $this->isAllowFutureTimes = $isAllowFutureTimes;
+
         return $this;
     }
 }

@@ -27,20 +27,20 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
-class ConfigurationController extends BaseApiController
+final class ConfigurationController extends BaseApiController
 {
     /**
      * @var ViewHandlerInterface
      */
-    protected $viewHandler;
+    private $viewHandler;
     /**
      * @var LanguageFormattings
      */
-    protected $formats;
+    private $formats;
     /**
      * @var TimesheetConfiguration
      */
-    protected $timesheetConfiguration;
+    private $timesheetConfiguration;
 
     /**
      * @param ViewHandlerInterface $viewHandler
@@ -104,7 +104,7 @@ class ConfigurationController extends BaseApiController
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
-    public function trackingModeAction(): Response
+    public function timesheetConfigAction(): Response
     {
         $model = new TimesheetConfig();
         $model

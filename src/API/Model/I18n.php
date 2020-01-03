@@ -11,49 +11,49 @@ declare(strict_types=1);
 
 namespace App\API\Model;
 
-class I18n
+final class I18n
 {
     /**
      * Format used for 'begin' and 'end'
      *
      * @var string
      */
-    protected $formDateTime = '';
+    private $formDateTime = '';
     /**
      * Format used for toolbar queries
      *
      * @var string
      */
-    protected $formDate = '';
+    private $formDate = '';
     /**
      * Format used to display date-time values (see PHP function date_format)
      *
      * @var string
      */
-    protected $dateTime = '';
+    private $dateTime = '';
     /**
      * Format used to display date values (see PHP function date_format)
      *
      * @var string
      */
-    protected $date = '';
+    private $date = '';
     /**
      * Format used to display times (see PHP function date_format)
      *
      * @var string
      */
-    protected $time = '';
+    private $time = '';
     /**
      * Format used to display durations (replace: %h with hours, %m with minutes, %s with seconds)
      *
      * @var string
      */
-    protected $duration = '';
+    private $duration = '';
     /**
      * Whether a twenty-four hour format is used (true) or 12-hours AM/PM format (false)
      * @var bool
      */
-    protected $is24hours = true;
+    private $is24hours = true;
 
     /**
      * @return string
