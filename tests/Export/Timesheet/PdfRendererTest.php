@@ -20,7 +20,6 @@ use Twig\Environment;
  * @covers \App\Export\Base\PDFRenderer
  * @covers \App\Export\Base\RendererTrait
  * @covers \App\Export\Timesheet\PDFRenderer
- * @covers \App\Export\Timesheet\RendererTrait
  * @group integration
  */
 class PdfRendererTest extends AbstractRendererTest

@@ -26,15 +26,15 @@ class BaseQuery
     public const DEFAULT_PAGE = 1;
 
     /**
-     * @deprecated since 1.4, will be removed with 1.6
+     * @deprecated since 1.4, will be removed with 2.0
      */
     public const RESULT_TYPE_OBJECTS = 'Objects';
     /**
-     * @deprecated since 1.4, will be removed with 1.6
+     * @deprecated since 1.4, will be removed with 2.0
      */
     public const RESULT_TYPE_PAGER = 'PagerFanta';
     /**
-     * @deprecated since 1.4, will be removed with 1.6
+     * @deprecated since 1.4, will be removed with 2.0
      */
     public const RESULT_TYPE_QUERYBUILDER = 'QueryBuilder';
 
@@ -63,7 +63,7 @@ class BaseQuery
     private $order = self::ORDER_ASC;
     /**
      * @var string
-     * @deprecated since 1.4, will be removed with 1.6
+     * @deprecated since 1.4, will be removed with 2.0
      */
     private $resultType = self::RESULT_TYPE_PAGER;
     /**
