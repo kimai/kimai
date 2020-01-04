@@ -204,26 +204,26 @@ class TimesheetValidatorTest extends ConstraintValidatorTestCase
     public function getProjectStartEndTestData()
     {
         yield [new \DateTime(), new \DateTime(), [
-            ['begin', TimesheetConstraint::PROJECT_NOT_STARTED, 'The chosen project has not started at that time.'],
-            ['end', TimesheetConstraint::PROJECT_NOT_STARTED, 'The chosen project has not started at that time.'],
+            ['begin', TimesheetConstraint::PROJECT_NOT_STARTED, 'The project has not started at that time.'],
+            ['end', TimesheetConstraint::PROJECT_NOT_STARTED, 'The project has not started at that time.'],
         ]];
 
         yield [new \DateTime('-9 hour'), new \DateTime('-2 hour'), [
-            ['begin', TimesheetConstraint::PROJECT_NOT_STARTED, 'The chosen project has not started at that time.'],
-            ['end', TimesheetConstraint::PROJECT_ALREADY_ENDED, 'The chosen project is over at that time.'],
+            ['begin', TimesheetConstraint::PROJECT_NOT_STARTED, 'The project has not started at that time.'],
+            ['end', TimesheetConstraint::PROJECT_ALREADY_ENDED, 'The project is finished at that time.'],
         ]];
 
         yield [new \DateTime('-19 hour'), new \DateTime('-12 hour'), [
-            ['begin', TimesheetConstraint::PROJECT_ALREADY_ENDED, 'The chosen project is over at that time.'],
-            ['end', TimesheetConstraint::PROJECT_ALREADY_ENDED, 'The chosen project is over at that time.'],
+            ['begin', TimesheetConstraint::PROJECT_ALREADY_ENDED, 'The project is finished at that time.'],
+            ['end', TimesheetConstraint::PROJECT_ALREADY_ENDED, 'The project is finished at that time.'],
         ]];
 
         yield [new \DateTime('-19 hour'), new \DateTime('-2 hour'), [
-            ['end', TimesheetConstraint::PROJECT_ALREADY_ENDED, 'The chosen project is over at that time.'],
+            ['end', TimesheetConstraint::PROJECT_ALREADY_ENDED, 'The project is finished at that time.'],
         ]];
 
         yield [new \DateTime('-9 hour'), new \DateTime(), [
-            ['begin', TimesheetConstraint::PROJECT_NOT_STARTED, 'The chosen project has not started at that time.'],
+            ['begin', TimesheetConstraint::PROJECT_NOT_STARTED, 'The project has not started at that time.'],
         ]];
     }
 

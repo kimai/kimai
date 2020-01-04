@@ -77,8 +77,8 @@ class ProjectController extends BaseApiController
      * )
      * @Rest\QueryParam(name="customer", requirements="\d+", strict=true, nullable=true, description="Customer ID to filter projects")
      * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter projects. Allowed values: 1=visible, 2=hidden, 3=both (default; 1)")
-     * @Rest\QueryParam(name="start", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only projects that started before this date will be included. Allowed format: HTML5 (default: now)")
-     * @Rest\QueryParam(name="end", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only projects that ended after this date will be included. Allowed format: HTML5 (default: now)")
+     * @Rest\QueryParam(name="start", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only projects that started before this date will be included. Allowed format: HTML5 (default: now, if end is also empty)")
+     * @Rest\QueryParam(name="end", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only projects that ended after this date will be included. Allowed format: HTML5 (default: now, if start is also empty)")
      * @Rest\QueryParam(name="ignoreDates", requirements="1", strict=true, nullable=true, description="If set, start and end are completely ignored. Allowed values: 1 (default: off)")
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: ASC)")
      * @Rest\QueryParam(name="orderBy", requirements="id|name|customer", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, name, customer (default: name)")
@@ -109,22 +109,22 @@ class ProjectController extends BaseApiController
         }
 
         $ignoreDates = false;
-        if (null !== ($ignoreDates = $paramFetcher->get('ignoreDates'))) {
-            $ignoreDates = intval($ignoreDates) === 1;
+        if (null !== $paramFetcher->get('ignoreDates')) {
+            $ignoreDates = intval($paramFetcher->get('ignoreDates')) === 1;
         }
 
         if (!$ignoreDates) {
-            $now = $this->dateTime->createDateTime();
-
-            if (null !== ($begin = $paramFetcher->get('start'))) {
+            if (null !== ($begin = $paramFetcher->get('start')) && !empty($begin)) {
                 $query->setProjectStart($this->dateTime->createDateTime($begin));
-            } else {
-                $query->setProjectStart($now);
             }
 
-            if (null !== ($end = $paramFetcher->get('end'))) {
+            if (null !== ($end = $paramFetcher->get('end')) && !empty($end)) {
                 $query->setProjectEnd($this->dateTime->createDateTime($end));
-            } else {
+            }
+
+            if (empty($begin) && empty($end)) {
+                $now = $this->dateTime->createDateTime();
+                $query->setProjectStart($now);
                 $query->setProjectEnd($now);
             }
         }

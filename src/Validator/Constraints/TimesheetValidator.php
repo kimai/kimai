@@ -201,13 +201,13 @@ class TimesheetValidator extends ConstraintValidator
 
             if (null !== $timesheetStart) {
                 if (null !== $projectBegin && $timesheetStart->getTimestamp() < $projectBegin->getTimestamp()) {
-                    $context->buildViolation('The chosen project has not started at that time.')
+                    $context->buildViolation('The project has not started at that time.')
                         ->atPath('begin')
                         ->setTranslationDomain('validators')
                         ->setCode(TimesheetConstraint::PROJECT_NOT_STARTED)
                         ->addViolation();
                 } elseif (null !== $projectEnd && $timesheetStart->getTimestamp() > $projectEnd->getTimestamp()) {
-                    $context->buildViolation('The chosen project is over at that time.')
+                    $context->buildViolation('The project is finished at that time.')
                         ->atPath('begin')
                         ->setTranslationDomain('validators')
                         ->setCode(TimesheetConstraint::PROJECT_ALREADY_ENDED)
@@ -217,13 +217,13 @@ class TimesheetValidator extends ConstraintValidator
 
             if (null !== $timesheetEnd) {
                 if (null !== $projectEnd && $timesheetEnd->getTimestamp() > $projectEnd->getTimestamp()) {
-                    $context->buildViolation('The chosen project is over at that time.')
+                    $context->buildViolation('The project is finished at that time.')
                         ->atPath('end')
                         ->setTranslationDomain('validators')
                         ->setCode(TimesheetConstraint::PROJECT_ALREADY_ENDED)
                         ->addViolation();
                 } elseif (null !== $projectBegin && $timesheetEnd->getTimestamp() < $projectBegin->getTimestamp()) {
-                    $context->buildViolation('The chosen project has not started at that time.')
+                    $context->buildViolation('The project has not started at that time.')
                         ->atPath('end')
                         ->setTranslationDomain('validators')
                         ->setCode(TimesheetConstraint::PROJECT_NOT_STARTED)

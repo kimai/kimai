@@ -42,8 +42,8 @@ class Timesheet extends Constraint
         self::DISABLED_PROJECT_ERROR => 'Cannot start a disabled project.',
         self::DISABLED_CUSTOMER_ERROR => 'Cannot start a disabled customer.',
         self::START_DISALLOWED => 'You are not allowed to start this timesheet record.',
-        self::PROJECT_NOT_STARTED => 'The chosen project has not started at that time.',
-        self::PROJECT_ALREADY_ENDED => 'The chosen project is over at that time.',
+        self::PROJECT_NOT_STARTED => 'The project has not started at that time.',
+        self::PROJECT_ALREADY_ENDED => 'The project is finished at that time.',
     ];
 
     public $message = 'This timesheet has invalid settings.';

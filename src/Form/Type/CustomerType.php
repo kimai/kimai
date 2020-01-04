@@ -41,6 +41,7 @@ class CustomerType extends AbstractType
             'project_enabled' => false,
             'start_date_param' => '%begin%',
             'end_date_param' => '%end%',
+            'ignore_date' => false,
             'project_visibility' => ProjectQuery::SHOW_VISIBLE,
         ]);
 
@@ -57,11 +58,29 @@ class CustomerType extends AbstractType
 
         $resolver->setDefault('api_data', function (Options $options) {
             if (true === $options['project_enabled']) {
+                $routeParams = ['customer' => '%customer%', 'visible' => $options['project_visibility']];
+                $emptyRouteParams = ['visible' => $options['project_visibility']];
+
+                if (!$options['ignore_date']) {
+                    if (!empty($options['start_date_param'])) {
+                        $routeParams['start'] = $options['start_date_param'];
+                        $emptyRouteParams['start'] = $options['start_date_param'];
+                    }
+
+                    if (!empty($options['end_date_param'])) {
+                        $routeParams['end'] = $options['end_date_param'];
+                        $emptyRouteParams['end'] = $options['end_date_param'];
+                    }
+                } else {
+                    $routeParams['ignoreDates'] = 1;
+                    $emptyRouteParams['ignoreDates'] = 1;
+                }
+
                 return [
                     'select' => 'project',
                     'route' => 'get_projects',
-                    'route_params' => ['customer' => '%customer%', 'visible' => $options['project_visibility'], 'start' => $options['start_date_param'], 'end' => $options['end_date_param']],
-                    'empty_route_params' => ['visible' => $options['project_visibility'], 'start' => $options['start_date_param'], 'end' => $options['end_date_param']],
+                    'route_params' => $routeParams,
+                    'empty_route_params' => $emptyRouteParams,
                 ];
             }
 

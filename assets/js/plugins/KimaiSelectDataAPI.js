@@ -77,7 +77,8 @@ export default class KimaiSelectDataAPI extends KimaiPlugin {
                 let targetField = jQuery('#' + formPrefix + test[1]);
                 let newValue = '';
                 if (targetField.length === 0) {
-                    console.log('ERROR: Cannot find field with name "' + test[1] + '" by selector: #' + formPrefix + test[1]);
+                    // debug: this case for example happens in duration only mode, when the end field is not found
+                    //console.log('ERROR: Cannot find field with name "' + test[1] + '" by selector: #' + formPrefix + test[1]);
                 } else {
                     if (targetField.val() !== null) {
                         newValue = targetField.val();
@@ -97,8 +98,8 @@ export default class KimaiSelectDataAPI extends KimaiPlugin {
                             } 
                         }
                     }
-                    newApiUrl = newApiUrl.replace(value, newValue);
                 }
+                newApiUrl = newApiUrl.replace(value, newValue);
             }
         });
 
