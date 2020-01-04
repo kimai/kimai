@@ -70,8 +70,8 @@ class ActivityVoter extends AbstractVoter
             return true;
         }
 
-        $project = $subject->getProject();
-        if (null === $project) {
+        // new and global activities have no project
+        if (null === ($project = $subject->getProject())) {
             return false;
         }
 
