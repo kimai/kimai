@@ -12,7 +12,9 @@ declare(strict_types=1);
 namespace App\API;
 
 use App\API\Model\I18n;
+use App\API\Model\TimesheetConfig;
 use App\Configuration\LanguageFormattings;
+use App\Configuration\TimesheetConfiguration;
 use App\Entity\User;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
@@ -25,25 +27,31 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
-class ConfigurationController extends BaseApiController
+final class ConfigurationController extends BaseApiController
 {
     /**
      * @var ViewHandlerInterface
      */
-    protected $viewHandler;
+    private $viewHandler;
     /**
      * @var LanguageFormattings
      */
-    protected $formats;
+    private $formats;
+    /**
+     * @var TimesheetConfiguration
+     */
+    private $timesheetConfiguration;
 
     /**
      * @param ViewHandlerInterface $viewHandler
      * @param LanguageFormattings $formats
+     * @param TimesheetConfiguration $timesheetConfiguration
      */
-    public function __construct(ViewHandlerInterface $viewHandler, LanguageFormattings $formats)
+    public function __construct(ViewHandlerInterface $viewHandler, LanguageFormattings $formats, TimesheetConfiguration $timesheetConfiguration)
     {
         $this->viewHandler = $viewHandler;
         $this->formats = $formats;
+        $this->timesheetConfiguration = $timesheetConfiguration;
     }
 
     /**
@@ -75,6 +83,37 @@ class ConfigurationController extends BaseApiController
             ->setDuration($this->formats->getDurationFormat($locale))
             ->setTime($this->formats->getTimeFormat($locale))
             ->setIs24hours($this->formats->isTwentyFourHours($locale))
+        ;
+
+        $view = new View($model, 200);
+        $view->getContext()->setGroups(['Default', 'Config']);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Returns the instance specific timesheet configuration
+     *
+     * @SWG\Response(
+     *      response=200,
+     *      description="Returns the instance specific timesheet configuration",
+     *      @SWG\Schema(ref="#/definitions/TimesheetConfig")
+     * )
+     *
+     * @Rest\Get(path="/config/timesheet")
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     */
+    public function timesheetConfigAction(): Response
+    {
+        $model = new TimesheetConfig();
+        $model
+            ->setTrackingMode($this->timesheetConfiguration->getTrackingMode())
+            ->setDefaultBeginTime($this->timesheetConfiguration->getDefaultBeginTime())
+            ->setActiveEntriesHardLimit($this->timesheetConfiguration->getActiveEntriesHardLimit())
+            ->setActiveEntriesSoftLimit($this->timesheetConfiguration->getActiveEntriesSoftLimit())
+            ->setIsAllowFutureTimes($this->timesheetConfiguration->isAllowFutureTimes())
         ;
 
         $view = new View($model, 200);
