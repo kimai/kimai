@@ -33,6 +33,7 @@ class TimesheetToolbarForm extends AbstractToolbarForm
         $this->addActivityChoice($builder);
         $this->addTagInputField($builder);
         $this->addTimesheetStateChoice($builder);
+        $this->addExportStateChoice($builder);
         $this->addPageSizeChoice($builder);
         $this->addHiddenPagination($builder);
         $this->addHiddenOrder($builder);

@@ -91,7 +91,7 @@
                     </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }} text-center">{{ rate|money(model.calculator.currency) }}</td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'amount') }} text-center text-nowrap">{{ amount }}</td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }} text-center text-nowrap">{{ duration }}</td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }} text-center text-nowrap" data-duration="{{ entry.duration }}">{{ duration }}</td>
                     <td class="text-right text-nowrap">{{ entry.rate|money(model.calculator.currency) }}</td>
                 </tr>
             {% endfor %}

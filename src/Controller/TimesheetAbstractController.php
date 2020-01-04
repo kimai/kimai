@@ -323,6 +323,15 @@ abstract class TimesheetAbstractController extends AbstractController
                     $timesheet->setExported($dto->isExported());
                     $execute = true;
                 }
+                if (null !== $dto->getHourlyRate()) {
+                    $timesheet->setFixedRate(null);
+                    $timesheet->setHourlyRate($dto->getHourlyRate());
+                    $execute = true;
+                } elseif (null !== $dto->getFixedRate()) {
+                    $timesheet->setFixedRate($dto->getFixedRate());
+                    $timesheet->setHourlyRate(null);
+                    $execute = true;
+                }
             }
 
             if ($execute) {

@@ -124,10 +124,10 @@ abstract class AbstractToolbarForm extends AbstractType
         ]);
     }
 
-    protected function addDateRangeChoice(FormBuilderInterface $builder, $allowEmpty = true)
+    protected function addDateRangeChoice(FormBuilderInterface $builder, $allowEmpty = true, $required = false)
     {
         $builder->add('daterange', DateRangeType::class, [
-            'required' => false,
+            'required' => $required,
             'allow_empty' => $allowEmpty,
         ]);
     }

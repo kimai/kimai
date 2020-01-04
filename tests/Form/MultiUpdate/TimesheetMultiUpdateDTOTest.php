@@ -35,6 +35,8 @@ class TimesheetMultiUpdateDTOTest extends TestCase
         self::assertEquals([], $sut->getTags());
         self::assertNull($sut->getUser());
         self::assertFalse($sut->isReplaceTags());
+        self::assertNull($sut->getFixedRate());
+        self::assertNull($sut->getHourlyRate());
     }
 
     public function testSetterAndGetter()
@@ -86,5 +88,11 @@ class TimesheetMultiUpdateDTOTest extends TestCase
         $customer = (new Customer())->setName('sdfsdfsd');
         self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setCustomer($customer));
         self::assertSame($customer, $sut->getCustomer());
+
+        self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setFixedRate(12.78));
+        self::assertEquals(12.78, $sut->getFixedRate());
+
+        self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setHourlyRate(123.45));
+        self::assertEquals(123.45, $sut->getHourlyRate());
     }
 }

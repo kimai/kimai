@@ -14,6 +14,7 @@ use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Form\Type\DateRangeType;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use App\Timesheet\Util;
 
 /**
  * @group integration
@@ -276,7 +277,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, $this->createUrl('/team/timesheet/'));
         $client->followRedirect();
 
-        $em->clear(Timesheet::class);
+        $em->clear();
         self::assertEquals(0, $em->getRepository(Timesheet::class)->count([]));
     }
 
@@ -323,11 +324,12 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
                 'user' => $newUser->getId(),
                 'exported' => true,
                 'replaceTags' => true,
-                'tags' => 'test, foo-bar, tralalala'
+                'tags' => 'test, foo-bar, tralalala',
+                'hourlyRate' => 13.78,
             ]
         ]);
 
-        $em->clear(Timesheet::class);
+        $em->clear();
 
         /** @var Timesheet[] $timesheets */
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
@@ -336,6 +338,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
             self::assertCount(3, $timesheet->getTags());
             self::assertEquals($newUser->getId(), $timesheet->getUser()->getId());
             self::assertTrue($timesheet->isExported());
+            self::assertEquals(Util::calculateRate(13.78, $timesheet->getDuration()), $timesheet->getRate());
         }
     }
 }
