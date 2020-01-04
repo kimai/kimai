@@ -1,9 +1,5 @@
 {% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "timesheet/actions.html.twig" as actions %}
-
-{% block page_title %}{{ 'timesheet.title'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.timesheet(timesheet, 'edit') }}{% endblock %}
 
 {% block main %}
     {% if timesheet.exported %}
@@ -13,7 +9,7 @@
     {% set formOptions = {
         'title': (timesheet.id ? 'timesheet.edit'|trans : 'create'|trans),
         'form': form,
-        'back': path('timesheet')
+        'back': path(route_back)
     } %}
     {% embed formEditTemplate with formOptions %}
         {% set length = 6 %}
@@ -44,6 +40,31 @@
                         {{ form_row(form.duration) }}
                     </div>
                 {% endif %}
+            </div>
+            {% endif %}
+            {% if form.customer is defined %}
+                {{ form_row(form.customer) }}
+            {% endif %}
+            {% if form.project is defined %}
+                {{ form_row(form.project) }}
+            {% endif %}
+            {% if form.activity is defined %}
+                {{ form_row(form.activity) }}
+            {% endif %}
+            {% if form.description is defined %}
+                {{ form_row(form.description) }}
+            {% endif %}
+            {% if form.tags is defined %}
+                {{ form_row(form.tags) }}
+            {% endif %}
+            {% if form.fixedRate is defined and form.hourlyRate is defined %}
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.fixedRate) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.hourlyRate) }}
+                </div>
             </div>
             {% endif %}
             {{ form_widget(form) }}
