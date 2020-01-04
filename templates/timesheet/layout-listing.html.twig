@@ -3,8 +3,12 @@
 {% import "macros/datatables.html.twig" as tables %}
 {% import "macros/toolbar.html.twig" as toolbar %}
 
-{% set showSummary = showSummary|default(false) %}
-{% set showStartEndTime = showStartEndTime|default(true) %}
+{% if not showSummary is defined %}
+    {% set showSummary = false %}
+{% endif %}
+{% if not showStartEndTime is defined %}
+    {% set showStartEndTime = true %}
+{% endif %}
 
 {% set columns = {
     'id': {'class': 'alwaysVisible multiCheckbox', 'orderBy': false, 'title': false, 'html_before': tables.datatable_multiupdate_all()},
