@@ -32,8 +32,8 @@ class InvoiceToolbarForm extends AbstractToolbarForm
             $this->addUsersChoice($builder);
         }
         $this->addDateRangeChoice($builder);
-        $this->addCustomerChoice($builder, true);
-        $this->addProjectChoice($builder);
+        $this->addCustomerChoice($builder, ['required' => true, 'start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true, 'placeholder' => '']);
+        $this->addProjectChoice($builder, ['ignore_date' => true]);
         $this->addActivityChoice($builder);
         $this->addTagInputField($builder);
         $this->addExportStateChoice($builder);

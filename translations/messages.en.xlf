@@ -358,7 +358,7 @@
             </trans-unit>
             <trans-unit id="label.my_team_projects">
                 <source>label.my_team_projects</source>
-                <target>Team Projects &amp; budgets</target>
+                <target>Team projects &amp; budgets</target>
             </trans-unit>
             <trans-unit id="label.progress">
                 <source>label.progress</source>
@@ -515,6 +515,14 @@
                     Currently the project %project% for the customer %customer% has %activities%
                     activities and %records% time-records, which sum up to a total of %duration%.
                 </target>
+            </trans-unit>
+            <trans-unit id="label.project_start">
+                <source>label.project_start</source>
+                <target>Project start</target>
+            </trans-unit>
+            <trans-unit id="label.project_end">
+                <source>label.project_end</source>
+                <target>Project end</target>
             </trans-unit>
 
             <!--

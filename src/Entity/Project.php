@@ -22,6 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
+ * @App\Validator\Constraints\Project
  *
  * columns={"customer_id","visible","name"} => IDX_407F12069395C3F37AB0E8595E237E06 => project administration without filter
  * columns={"customer_id","visible","id"}   => IDX_407F12069395C3F37AB0E859BF396750 => used in joins between project and customer, eg. dropdowns and activity administration page
@@ -67,6 +68,28 @@ class Project implements EntityWithMetaFields
      * @ORM\Column(name="order_date", type="datetime", nullable=true)
      */
     private $orderDate;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="start", type="datetime", nullable=true)
+     */
+    private $start;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="end", type="datetime", nullable=true)
+     */
+    private $end;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="timezone", type="string", length=64, nullable=true)
+     */
+    private $timezone;
+    /**
+     * @var bool
+     */
+    private $localized = false;
     /**
      * @var string
      *
@@ -192,14 +215,87 @@ class Project implements EntityWithMetaFields
         return $this;
     }
 
+    /**
+     * Make sure begin and end date have the correct timezone.
+     * This will be called once for each item after being loaded from the database.
+     */
+    protected function localizeDates()
+    {
+        if ($this->localized) {
+            return;
+        }
+
+        if (null === $this->timezone) {
+            $this->timezone = date_default_timezone_get();
+        }
+
+        $timezone = new \DateTimeZone($this->timezone);
+
+        if (null !== $this->orderDate) {
+            $this->orderDate->setTimeZone($timezone);
+        }
+
+        if (null !== $this->start) {
+            $this->start->setTimeZone($timezone);
+        }
+
+        if (null !== $this->end) {
+            $this->end->setTimeZone($timezone);
+        }
+
+        $this->localized = true;
+    }
+
     public function getOrderDate(): ?\DateTime
     {
+        $this->localizeDates();
+
         return $this->orderDate;
     }
 
     public function setOrderDate(?\DateTime $orderDate): Project
     {
         $this->orderDate = $orderDate;
+
+        if (null !== $orderDate) {
+            $this->timezone = $orderDate->getTimezone()->getName();
+        }
+
+        return $this;
+    }
+
+    public function getStart(): ?\DateTime
+    {
+        $this->localizeDates();
+
+        return $this->start;
+    }
+
+    public function setStart(?\DateTime $start): Project
+    {
+        $this->start = $start;
+
+        if (null !== $start) {
+            $this->timezone = $start->getTimezone()->getName();
+        }
+
+        return $this;
+    }
+
+    public function getEnd(): ?\DateTime
+    {
+        $this->localizeDates();
+
+        return $this->end;
+    }
+
+    public function setEnd(?\DateTime $end): Project
+    {
+        $this->end = $end;
+
+        if (null !== $end) {
+            $this->timezone = $end->getTimezone()->getName();
+        }
 
         return $this;
     }

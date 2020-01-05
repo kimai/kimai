@@ -104,7 +104,7 @@ abstract class AbstractMergedCalculator extends AbstractCalculator
             $invoiceItem->setProject($entry->getProject());
         }
 
-        if (empty($invoiceItem->getDescription())) {
+        if (empty($invoiceItem->getDescription()) && null !== $entry->getActivity()) {
             $invoiceItem->setDescription($entry->getActivity()->getName());
         }
     }

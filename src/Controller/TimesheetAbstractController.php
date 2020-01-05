@@ -9,7 +9,6 @@
 
 namespace App\Controller;
 
-use App\Configuration\TimesheetConfiguration;
 use App\Entity\MetaTableTypeInterface;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
@@ -27,6 +26,7 @@ use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TagRepository;
 use App\Repository\TimesheetRepository;
+use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Timesheet\TrackingModeService;
 use App\Timesheet\UserDateTimeFactory;
@@ -43,10 +43,6 @@ abstract class TimesheetAbstractController extends AbstractController
      */
     protected $dateTime;
     /**
-     * @var TimesheetConfiguration
-     */
-    protected $configuration;
-    /**
      * @var TimesheetRepository
      */
     protected $repository;
@@ -62,36 +58,30 @@ abstract class TimesheetAbstractController extends AbstractController
      * @var ServiceExport
      */
     protected $exportService;
+    /**
+     * @var TimesheetService
+     */
+    private $service;
 
     public function __construct(
         UserDateTimeFactory $dateTime,
-        TimesheetConfiguration $configuration,
         TimesheetRepository $repository,
-        TrackingModeService $service,
+        TrackingModeService $trackingModeService,
         EventDispatcherInterface $dispatcher,
-        ServiceExport $exportService
+        ServiceExport $exportService,
+        TimesheetService $timesheetService
     ) {
         $this->dateTime = $dateTime;
-        $this->configuration = $configuration;
         $this->repository = $repository;
-        $this->trackingModeService = $service;
+        $this->trackingModeService = $trackingModeService;
         $this->dispatcher = $dispatcher;
         $this->exportService = $exportService;
+        $this->service = $timesheetService;
     }
 
     protected function getTrackingMode(): TrackingModeInterface
     {
         return $this->trackingModeService->getActiveMode();
-    }
-
-    protected function getSoftLimit(): int
-    {
-        return $this->configuration->getActiveEntriesSoftLimit();
-    }
-
-    protected function getRepository(): TimesheetRepository
-    {
-        return $this->repository;
     }
 
     protected function index($page, Request $request, string $renderTemplate, string $location): Response
@@ -127,7 +117,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
         $this->prepareQuery($query);
 
-        $pager = $this->getRepository()->getPagerfantaForQuery($query);
+        $pager = $this->repository->getPagerfantaForQuery($query);
 
         return $this->render($renderTemplate, [
             'entries' => $pager,
@@ -164,7 +154,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->getRepository()->save($entry);
+                $this->repository->save($entry);
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute($this->getTimesheetRoute(), ['page' => $request->get('page', 1)]);
@@ -199,8 +189,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
     protected function create(Request $request, string $renderTemplate, ProjectRepository $projectRepository, ActivityRepository $activityRepository, TagRepository $tagRepository): Response
     {
-        $entry = new Timesheet();
-        $entry->setUser($this->getUser());
+        $entry = $this->service->createNewTimesheet($this->getUser());
 
         if ($request->query->get('project')) {
             $project = $projectRepository->find($request->query->get('project'));
@@ -218,24 +207,15 @@ abstract class TimesheetAbstractController extends AbstractController
             }
         }
 
-        $event = new TimesheetMetaDefinitionEvent($entry);
-        $this->dispatcher->dispatch($event);
+        $this->service->prepareNewTimesheet($entry, $request);
 
         $mode = $this->getTrackingMode();
-        $mode->create($entry, $request);
-
         $createForm = $this->getCreateForm($entry, $mode);
         $createForm->handleRequest($request);
 
         if ($createForm->isSubmitted() && $createForm->isValid()) {
             try {
-                if (null === $entry->getEnd()) {
-                    $this->getRepository()->stopActiveEntries(
-                        $entry->getUser(),
-                        $this->configuration->getActiveEntriesHardLimit()
-                    );
-                }
-                $this->getRepository()->save($entry);
+                $this->service->saveNewTimesheet($entry);
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute($this->getTimesheetRoute());
@@ -273,7 +253,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
         $this->prepareQuery($query);
 
-        $entries = $this->getRepository()->getTimesheetsForQuery($query);
+        $entries = $this->repository->getTimesheetsForQuery($query);
 
         $exporter = $this->exportService->getTimesheetExporterById($exporterId);
 
@@ -300,13 +280,20 @@ abstract class TimesheetAbstractController extends AbstractController
 
         // remove all, which are not allowed to be edited
         $timesheets = [];
+        $disallowed = 0;
         /** @var Timesheet $timesheet */
         foreach ($dto->getEntities() as $timesheet) {
             if (!$this->isGranted('edit', $timesheet)) {
+                $disallowed++;
                 continue;
             }
             $timesheets[] = $timesheet;
         }
+
+        if ($disallowed > 0) {
+            $this->flashWarning(sprintf('You are missing the permission to edit %s timesheets', $disallowed));
+        }
+
         $dto->setEntities($timesheets);
 
         if (count($dto->getEntities()) === 0) {
@@ -343,6 +330,7 @@ abstract class TimesheetAbstractController extends AbstractController
                     $timesheet->setExported($dto->isExported());
                     $execute = true;
                 }
+                // setting both values allows to erase wrong
                 if (null !== $dto->getHourlyRate()) {
                     $timesheet->setFixedRate(null);
                     $timesheet->setHourlyRate($dto->getHourlyRate());
@@ -411,6 +399,7 @@ abstract class TimesheetAbstractController extends AbstractController
             'action' => $this->generateUrl($this->getMultiUpdateRoute(), []),
             'method' => 'POST',
             'include_exported' => $this->isGranted($this->getPermissionEditExport()),
+            'include_rate' => $this->isGranted($this->getPermissionEditRate()),
             'include_user' => $this->includeUserInForms('multi'),
         ]);
     }
@@ -424,7 +413,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
         return $this->createForm(MultiUpdateTable::class, $dto, [
             'action' => $this->generateUrl($this->getTimesheetRoute()),
-            'repository' => $this->getRepository(),
+            'repository' => $this->repository,
             'method' => 'POST',
         ]);
     }
@@ -485,6 +474,11 @@ abstract class TimesheetAbstractController extends AbstractController
     protected function getPermissionEditExport(): string
     {
         return 'edit_export_own_timesheet';
+    }
+
+    protected function getPermissionEditRate(): string
+    {
+        return 'edit_rate_own_timesheet';
     }
 
     protected function getCreateFormClassName(): string

@@ -10,8 +10,20 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 ## [1.7](https://github.com/kevinpapst/kimai2/releases/tag/1.7)
 
-New feature requires the timezone date within MySQL/MariaDB. 
-This is especially important for self-hosted systems [where you need to import the data manually](https://mariadb.com/kb/en/library/mysql_tzinfo_to_sql/). 
+**New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
+
+### Plugins
+
+- Expenses plugin needs to be updated, due to incompatibilities in the underlying frameworks.
+
+### Hosting
+
+- New feature requires the timezone date within MySQL/MariaDB. This is especially important for self-hosted systems: [you need to import the data manually](https://mariadb.com/kb/en/library/mysql_tzinfo_to_sql/).
+
+### Developer
+
+- Projects now have a start and end date and the API will only return those, which are either unconfigured or currently active, you might want to reload the list of projects once the user entered begin and end datetime OR use the new `ignoreDates` parameter.
+- Doctrine bundle was updated to v2, check your code for [the usage of RegistryInterface and ObjectManager](https://github.com/doctrine/DoctrineBundle/blob/master/UPGRADE-2.0.md)
 
 ## [1.6](https://github.com/kevinpapst/kimai2/releases/tag/1.6), [1.6.1](https://github.com/kevinpapst/kimai2/releases/tag/1.6.1), [1.6.2](https://github.com/kevinpapst/kimai2/releases/tag/1.6.2)
 

@@ -68,7 +68,7 @@ class VersionCommand extends Command
             return 0;
         }
 
-        $io->writeln('Kimai 2 - ' . Constants::VERSION . ' ' . Constants::STATUS . ' (' . Constants::NAME . ') by Kevin Papst and contributors.');
+        $io->writeln(Constants::SOFTWARE . ' - ' . Constants::VERSION . ' ' . Constants::STATUS . ' (' . Constants::NAME . ') by Kevin Papst and contributors.');
 
         return 0;
     }

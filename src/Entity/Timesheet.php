@@ -141,7 +141,7 @@ class Timesheet implements EntityWithMetaFields, InvoiceItemInterface
     /**
      * @var Tag[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="timesheets", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", inversedBy="timesheets", cascade={"persist"})
      * @ORM\JoinTable(
      *  name="kimai2_timesheet_tags",
      *  joinColumns={

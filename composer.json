@@ -73,9 +73,7 @@
         "symfony/css-selector": "^4.0",
         "symfony/maker-bundle": "^1.12",
         "symfony/phpunit-bridge": "^4.0",
-        "symfony/profiler-pack": "^1.0",
-        "symfony/thanks": "^1.0",
-        "symfony/web-server-bundle": "^4.0"
+        "symfony/profiler-pack": "^1.0"
     },
     "repositories": [
         {

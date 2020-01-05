@@ -138,12 +138,12 @@ final class TeamFixtures extends Fixture
 
     /**
      * @param ObjectManager $manager
-     * @return Customer[]
+     * @return array<int|string, Customer>
      */
     private function getAllCustomers(ObjectManager $manager)
     {
         $all = [];
-        /* @var Customer[] $entries */
+        /** @var Customer[] $entries */
         $entries = $manager->getRepository(Customer::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
@@ -154,12 +154,12 @@ final class TeamFixtures extends Fixture
 
     /**
      * @param ObjectManager $manager
-     * @return User[]
+     * @return array<int|string, User>
      */
-    private function getAllUsers(ObjectManager $manager)
+    private function getAllUsers(ObjectManager $manager): array
     {
         $all = [];
-        /* @var User[] $entries */
+        /** @var User[] $entries */
         $entries = $manager->getRepository(User::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;

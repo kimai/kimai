@@ -9,7 +9,7 @@
 
 namespace App\Form\Type;
 
-use App\Repository\Query\VisibilityQuery;
+use App\Repository\Query\VisibilityInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,9 +27,9 @@ class VisibilityType extends AbstractType
         $resolver->setDefaults([
             'label' => 'label.visible',
             'choices' => [
-                'both' => VisibilityQuery::SHOW_BOTH,
-                'yes' => VisibilityQuery::SHOW_VISIBLE,
-                'no' => VisibilityQuery::SHOW_HIDDEN,
+                'both' => VisibilityInterface::SHOW_BOTH,
+                'yes' => VisibilityInterface::SHOW_VISIBLE,
+                'no' => VisibilityInterface::SHOW_HIDDEN,
             ],
         ]);
     }

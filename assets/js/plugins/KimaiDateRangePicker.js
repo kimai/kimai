@@ -61,6 +61,8 @@ export default class KimaiDateRangePicker extends KimaiPlugin {
 
             jQuery(this).on('apply.daterangepicker', function(ev, picker) {
                 jQuery(this).val(picker.startDate.format(localeFormat) + ' - ' + picker.endDate.format(localeFormat));
+                jQuery(this).data('begin', picker.startDate.format(localeFormat));
+                jQuery(this).data('end', picker.endDate.format(localeFormat));
                 jQuery(this).trigger("change");
             });
         });

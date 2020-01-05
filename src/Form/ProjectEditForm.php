@@ -63,6 +63,14 @@ class ProjectEditForm extends AbstractType
                 'label' => 'label.orderDate',
                 'required' => false,
             ])
+            ->add('start', DateTimePickerType::class, [
+                'label' => 'label.project_start',
+                'required' => false,
+            ])
+            ->add('end', DateTimePickerType::class, [
+                'label' => 'label.project_end',
+                'required' => false,
+            ])
             ->add('customer', CustomerType::class, [
                 'query_builder' => function (CustomerRepository $repo) use ($builder, $customer) {
                     $query = new CustomerFormTypeQuery($customer);

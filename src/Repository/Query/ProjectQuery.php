@@ -14,18 +14,27 @@ use App\Entity\Customer;
 /**
  * Can be used for advanced queries with the: ProjectRepository
  */
-class ProjectQuery extends CustomerQuery
+class ProjectQuery extends BaseQuery implements VisibilityInterface
 {
-    public const PROJECT_ORDER_ALLOWED = ['id', 'name', 'comment', 'customer', 'orderNumber'];
+    use VisibilityTrait;
+
+    public const PROJECT_ORDER_ALLOWED = ['id', 'name', 'comment', 'customer', 'orderNumber', 'projectStart', 'projectEnd'];
 
     /**
      * @var Customer|int|null
      */
     private $customer;
+    /**
+     * @var \DateTime
+     */
+    private $projectStart;
+    /**
+     * @var \DateTime
+     */
+    private $projectEnd;
 
     public function __construct()
     {
-        parent::__construct();
         $this->setDefaults([
             'orderBy' => 'name',
         ]);
@@ -46,6 +55,30 @@ class ProjectQuery extends CustomerQuery
     public function setCustomer($customer = null)
     {
         $this->customer = $customer;
+
+        return $this;
+    }
+
+    public function getProjectStart(): ?\DateTime
+    {
+        return $this->projectStart;
+    }
+
+    public function setProjectStart(?\DateTime $projectStart): ProjectQuery
+    {
+        $this->projectStart = $projectStart;
+
+        return $this;
+    }
+
+    public function getProjectEnd(): ?\DateTime
+    {
+        return $this->projectEnd;
+    }
+
+    public function setProjectEnd(?\DateTime $projectEnd): ProjectQuery
+    {
+        $this->projectEnd = $projectEnd;
 
         return $this;
     }

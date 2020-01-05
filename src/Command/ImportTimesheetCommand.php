@@ -448,6 +448,7 @@ class ImportTimesheetCommand extends Command
                 if (is_int($customer)) {
                     $tmpFallback = $this->customers->find($fallback);
                 } else {
+                    /** @var Customer|null $tmpFallback */
                     $tmpFallback = $this->customers->findOneBy(['name' => $fallback]);
                 }
             }

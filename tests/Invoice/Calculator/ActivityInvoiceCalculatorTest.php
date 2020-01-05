@@ -33,6 +33,33 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
         $this->assertEmptyModel(new ActivityInvoiceCalculator());
     }
 
+    public function testExceptionNoActivity()
+    {
+        $this->expectException('Exception');
+        $this->expectExceptionMessage('Cannot work with invoice items that do not have an activity');
+        $timesheet = new Timesheet();
+
+        $sut = new ActivityInvoiceCalculator();
+        $model = $this->getEmptyModel();
+        $model->addEntries([$timesheet]);
+        $sut->setModel($model);
+        $sut->getEntries();
+    }
+
+    public function testExceptionNoId()
+    {
+        $this->expectException('Exception');
+        $this->expectExceptionMessage('Cannot handle un-persisted activities');
+        $timesheet = new Timesheet();
+        $timesheet->setActivity(new Activity());
+
+        $sut = new ActivityInvoiceCalculator();
+        $model = $this->getEmptyModel();
+        $model->addEntries([$timesheet]);
+        $sut->setModel($model);
+        $sut->getEntries();
+    }
+
     public function testWithMultipleEntries()
     {
         $customer = new Customer();

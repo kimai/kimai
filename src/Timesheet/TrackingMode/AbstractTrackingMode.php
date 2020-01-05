@@ -31,8 +31,12 @@ abstract class AbstractTrackingMode implements TrackingModeInterface
         $this->configuration = $configuration;
     }
 
-    public function create(Timesheet $timesheet, Request $request): void
+    public function create(Timesheet $timesheet, ?Request $request = null): void
     {
+        if (null === $request) {
+            return;
+        }
+
         $this->setBeginEndFromRequest($timesheet, $request);
         $this->setFromToFromRequest($timesheet, $request);
     }

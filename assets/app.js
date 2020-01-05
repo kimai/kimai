@@ -11,6 +11,7 @@ global.$ = global.jQuery = $;
 
 require('bootstrap-sass');
 require('jquery-slimscroll');
+
 require('select2');
 require('select2/dist/js/i18n/ar');
 require('select2/dist/js/i18n/cs');
@@ -53,6 +54,9 @@ require('moment/locale/zh-cn');
 
 require('daterangepicker');
 
+const Sortable = require('sortablejs/Sortable.min');
+global.Sortable = Sortable;
+
 // ------ AdminLTE framework ------
 require('./sass/admin-lte.scss');
 require('admin-lte/dist/css/AdminLTE.min.css');
@@ -69,6 +73,7 @@ require('./sass/app.scss');
 
 // ------ Kimai itself ------
 require('./js/KimaiWebLoader.js');
+global.KimaiPaginatedBoxWidget = require('./js/widgets/KimaiPaginatedBoxWidget').default;
 
 // ------ Autocomplete for tags only ------
 require('jquery-ui/ui/widgets/autocomplete');
