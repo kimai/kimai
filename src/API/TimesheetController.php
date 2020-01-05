@@ -318,7 +318,6 @@ class TimesheetController extends BaseApiController
         $form->submit($request->request->all(), false);
 
         if ($form->isValid()) {
-            $this->service->saveNewTimesheet($timesheet);
             try {
                 $this->service->saveNewTimesheet($timesheet);
             } catch (\Exception $ex) {
