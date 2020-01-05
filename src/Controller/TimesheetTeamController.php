@@ -107,7 +107,7 @@ class TimesheetTeamController extends TimesheetAbstractController
     {
         return 'edit_export_other_timesheet';
     }
-    
+
     protected function getPermissionEditRate(): string
     {
         return 'edit_rate_other_timesheet';
