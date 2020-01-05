@@ -319,6 +319,15 @@ class TimesheetController extends BaseApiController
 
         if ($form->isValid()) {
             $this->service->saveNewTimesheet($timesheet);
+            try {
+                $this->service->saveNewTimesheet($timesheet);
+            } catch (\Exception $ex) {
+                if ($ex->getMessage() === 'timesheet.start.exceeded_limit') {
+                    throw new BadRequestHttpException('Too many active timesheets');
+                } else {
+                    throw $ex;
+                }
+            }
 
             $view = new View($timesheet, 200);
             $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);

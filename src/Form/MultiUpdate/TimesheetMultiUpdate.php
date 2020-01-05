@@ -196,13 +196,15 @@ class TimesheetMultiUpdate extends AbstractType
             ]);
         }
 
-        $builder
-            ->add('fixedRate', FixedRateType::class, [
-                'currency' => $currency,
-            ])
-            ->add('hourlyRate', HourlyRateType::class, [
-                'currency' => $currency,
-            ]);
+        if ($options['include_rate']) {
+            $builder
+                ->add('fixedRate', FixedRateType::class, [
+                    'currency' => $currency,
+                ])
+                ->add('hourlyRate', HourlyRateType::class, [
+                    'currency' => $currency,
+                ]);
+        }
 
         $builder->add('entities', HiddenType::class, [
             'required' => false,
@@ -241,6 +243,7 @@ class TimesheetMultiUpdate extends AbstractType
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'timesheet_multiupdate',
             'include_user' => false,
+            'include_rate' => false,
             'include_exported' => false,
         ]);
     }

@@ -280,13 +280,20 @@ abstract class TimesheetAbstractController extends AbstractController
 
         // remove all, which are not allowed to be edited
         $timesheets = [];
+        $disallowed = 0;
         /** @var Timesheet $timesheet */
         foreach ($dto->getEntities() as $timesheet) {
             if (!$this->isGranted('edit', $timesheet)) {
+                $disallowed++;
                 continue;
             }
             $timesheets[] = $timesheet;
         }
+
+        if ($disallowed > 0) {
+            $this->flashWarning(sprintf('You are missing the permission to edit %s timesheets', $disallowed));
+        }
+
         $dto->setEntities($timesheets);
 
         if (count($dto->getEntities()) === 0) {
@@ -323,6 +330,7 @@ abstract class TimesheetAbstractController extends AbstractController
                     $timesheet->setExported($dto->isExported());
                     $execute = true;
                 }
+                // setting both values allows to erase wrong
                 if (null !== $dto->getHourlyRate()) {
                     $timesheet->setFixedRate(null);
                     $timesheet->setHourlyRate($dto->getHourlyRate());
@@ -391,6 +399,7 @@ abstract class TimesheetAbstractController extends AbstractController
             'action' => $this->generateUrl($this->getMultiUpdateRoute(), []),
             'method' => 'POST',
             'include_exported' => $this->isGranted($this->getPermissionEditExport()),
+            'include_rate' => $this->isGranted($this->getPermissionEditRate()),
             'include_user' => $this->includeUserInForms('multi'),
         ]);
     }
@@ -465,6 +474,11 @@ abstract class TimesheetAbstractController extends AbstractController
     protected function getPermissionEditExport(): string
     {
         return 'edit_export_own_timesheet';
+    }
+
+    protected function getPermissionEditRate(): string
+    {
+        return 'edit_rate_own_timesheet';
     }
 
     protected function getCreateFormClassName(): string
