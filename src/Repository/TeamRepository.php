@@ -61,6 +61,25 @@ class TeamRepository extends EntityRepository
         $entityManager->flush();
     }
 
+    /**
+     * Returns a query builder that is used for TeamType and your own 'query_builder' option.
+     *
+     * @param TeamQuery $query
+     * @return QueryBuilder
+     */
+    public function getQueryBuilderForFormType(TeamQuery $query): QueryBuilder
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('t')
+            ->from(Team::class, 't')
+            ->orderBy('t.name', 'ASC');
+
+        $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
+
+        return $qb;
+    }
+
     public function getPagerfantaForQuery(TeamQuery $query): Pagerfanta
     {
         $paginator = new Pagerfanta($this->getPaginatorForQuery($query));
@@ -134,6 +153,11 @@ class TeamRepository extends EntityRepository
         return $qb;
     }
 
+    /**
+     * @param QueryBuilder $qb
+     * @param User|null $user
+     * @param Team[] $teams
+     */
     private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
     {
         // make sure that all queries without a user see all user
@@ -146,10 +170,21 @@ class TeamRepository extends EntityRepository
             return;
         }
 
+        $or = $qb->expr()->orX();
+
         if (null !== $user) {
-            $qb
-                ->andWhere('t.teamlead = :id')
-                ->setParameter('id', $user);
+            $or->add($qb->expr()->eq('t.teamlead', ':id'));
+            $qb->setParameter('id', $user);
         }
+
+        if (!empty($teams)) {
+            $ids = [];
+            foreach ($teams as $team) {
+                $ids[] = $team->getId();
+            }
+            $or->add($qb->expr()->in('t.id', $ids));
+        }
+
+        $qb->andWhere($or);
     }
 }

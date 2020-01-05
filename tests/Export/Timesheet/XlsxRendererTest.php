@@ -17,8 +17,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  * @covers \App\Export\Base\AbstractSpreadsheetRenderer
  * @covers \App\Export\Base\RendererTrait
  * @covers \App\Export\Timesheet\XlsxRenderer
- * @covers \App\Export\Timesheet\AbstractSpreadsheetRenderer
- * @covers \App\Export\Timesheet\RendererTrait
  * @group integration
  */
 class XlsxRendererTest extends AbstractRendererTest

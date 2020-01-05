@@ -12,8 +12,10 @@ namespace App\Repository\Query;
 /**
  * Can be used for advanced queries with the: UserRepository
  */
-class UserQuery extends VisibilityQuery
+class UserQuery extends BaseQuery implements VisibilityInterface
 {
+    use VisibilityTrait;
+
     public const USER_ORDER_ALLOWED = ['id', 'alias', 'username', 'title', 'email'];
 
     /**

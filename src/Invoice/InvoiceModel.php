@@ -364,24 +364,22 @@ final class InvoiceModel
             $amount = $invoiceItem->getAmount();
         }
 
-        if (empty($description)) {
-            $description = $invoiceItem->getActivity()->getName();
-        }
-
+        $activity = $invoiceItem->getActivity();
+        $project = $invoiceItem->getProject();
+        $customer = $project->getCustomer();
+        $currency = $customer->getCurrency();
         $user = $invoiceItem->getUser();
+        $begin = $invoiceItem->getBegin();
+        $end = $invoiceItem->getEnd();
+
+        if (empty($description) && null !== $activity) {
+            $description = $activity->getName();
+        }
 
         // this should never happen!
         if (empty($appliedRate)) {
             $appliedRate = 0;
         }
-
-        $activity = $invoiceItem->getActivity();
-        $project = $invoiceItem->getProject();
-        $customer = $project->getCustomer();
-        $currency = $customer->getCurrency();
-
-        $begin = $invoiceItem->getBegin();
-        $end = $invoiceItem->getEnd();
 
         $values = [
             'entry.row' => '',

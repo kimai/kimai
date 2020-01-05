@@ -92,6 +92,12 @@ final class ActivityFormTypeQuery
 
     public function isGlobalsOnly(): bool
     {
-        return null === $this->activity && null === $this->project;
+        return
+            (
+                null === $this->activity ||
+                ($this->activity instanceof Activity && null === $this->activity->getProject())
+            )
+            &&
+            null === $this->project;
     }
 }

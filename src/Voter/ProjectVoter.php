@@ -90,8 +90,13 @@ class ProjectVoter extends AbstractVoter
             }
         }
 
+        // new projects have no customer
+        if (null === ($customer = $subject->getCustomer())) {
+            return false;
+        }
+
         /** @var Team $team */
-        foreach ($subject->getCustomer()->getTeams() as $team) {
+        foreach ($customer->getTeams() as $team) {
             if ($hasTeamleadPermission && $user->isTeamleadOf($team)) {
                 return true;
             }

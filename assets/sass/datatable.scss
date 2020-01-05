@@ -23,7 +23,7 @@ section.content .overlay > .fas,
 section.content > .overlay,
 .box > .loading-img,
 .overlay-wrapper > .loading-img {
-    position: absolute;
+    position: fixed; /* see #1330 */
     top: 0;
     left: 0;
     width: 100%;

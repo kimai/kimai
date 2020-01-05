@@ -20,6 +20,7 @@ use App\Repository\Query\TimesheetQuery;
 use App\Repository\TagRepository;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\RoundingService;
+use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Timesheet\TrackingModeService;
 use App\Timesheet\UserDateTimeFactory;
@@ -81,6 +82,10 @@ class TimesheetController extends BaseApiController
      * @var RoundingService
      */
     private $roundingService;
+    /**
+     * @var TimesheetService
+     */
+    private $service;
 
     public function __construct(
         ViewHandlerInterface $viewHandler,
@@ -90,7 +95,8 @@ class TimesheetController extends BaseApiController
         TagRepository $tagRepository,
         TrackingModeService $trackingModeService,
         EventDispatcherInterface $dispatcher,
-        RoundingService $roundingService
+        RoundingService $roundingService,
+        TimesheetService $service
     ) {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
@@ -100,6 +106,7 @@ class TimesheetController extends BaseApiController
         $this->trackingModeService = $trackingModeService;
         $this->dispatcher = $dispatcher;
         $this->roundingService = $roundingService;
+        $this->service = $service;
     }
 
     protected function getTrackingMode(): TrackingModeInterface
@@ -295,14 +302,9 @@ class TimesheetController extends BaseApiController
      */
     public function postAction(Request $request): Response
     {
-        $timesheet = new Timesheet();
-        $timesheet->setUser($this->getUser());
-
-        $event = new TimesheetMetaDefinitionEvent($timesheet);
-        $this->dispatcher->dispatch($event);
+        $timesheet = $this->service->createNewTimesheet($this->getUser(), $request);
 
         $mode = $this->getTrackingMode();
-        $mode->create($timesheet, $request);
 
         $form = $this->createForm(TimesheetApiEditForm::class, $timesheet, [
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
@@ -316,17 +318,15 @@ class TimesheetController extends BaseApiController
         $form->submit($request->request->all(), false);
 
         if ($form->isValid()) {
-            if (null === $timesheet->getEnd()) {
-                if (!$this->isGranted('start', $timesheet)) {
-                    throw new AccessDeniedHttpException('You are not allowed to start this timesheet record');
+            try {
+                $this->service->saveNewTimesheet($timesheet);
+            } catch (\Exception $ex) {
+                if ($ex->getMessage() === 'timesheet.start.exceeded_limit') {
+                    throw new BadRequestHttpException('Too many active timesheets');
+                } else {
+                    throw $ex;
                 }
-                $this->repository->stopActiveEntries(
-                    $timesheet->getUser(),
-                    $this->configuration->getActiveEntriesHardLimit()
-                );
             }
-
-            $this->repository->save($timesheet);
 
             $view = new View($timesheet, 200);
             $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
@@ -559,7 +559,7 @@ class TimesheetController extends BaseApiController
             throw new AccessDeniedHttpException('You are not allowed to stop this timesheet');
         }
 
-        $this->repository->stopRecording($timesheet);
+        $this->service->stopTimesheet($timesheet);
 
         $view = new View($timesheet, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);
@@ -600,13 +600,10 @@ class TimesheetController extends BaseApiController
             throw new AccessDeniedHttpException('You are not allowed to re-start this timesheet');
         }
 
-        /** @var User $user */
-        $user = $this->getUser();
+        $copyTimesheet = $this->service->createNewTimesheet($this->getUser());
 
-        $copyTimesheet = new Timesheet();
         $copyTimesheet
             ->setBegin($this->dateTime->createDateTime())
-            ->setUser($user)
             ->setActivity($timesheet->getActivity())
             ->setProject($timesheet->getProject())
         ;
@@ -642,12 +639,7 @@ class TimesheetController extends BaseApiController
             throw new BadRequestHttpException($errors[0]->getPropertyPath() . ' = ' . $errors[0]->getMessage());
         }
 
-        $this->repository->stopActiveEntries(
-            $user,
-            $this->configuration->getActiveEntriesHardLimit()
-        );
-
-        $this->repository->save($copyTimesheet);
+        $this->service->saveNewTimesheet($copyTimesheet);
 
         $view = new View($copyTimesheet, 200);
         $view->getContext()->setGroups(['Default', 'Entity', 'Timesheet']);

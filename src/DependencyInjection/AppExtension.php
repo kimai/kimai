@@ -33,7 +33,7 @@ class AppExtension extends Extension
             throw $e;
         }
 
-        // @deprecated since 0.9, duration_only will be removed with 1.0
+        // @deprecated since 0.9, duration_only will be removed with 2.0
         if (isset($config['timesheet']['duration_only'])) {
             @trigger_error('Configuration "kimai.timesheet.duration_only" is deprecated, please remove it', E_USER_DEPRECATED);
             if (true === $config['timesheet']['duration_only'] && 'duration_only' !== $config['timesheet']['mode']) {

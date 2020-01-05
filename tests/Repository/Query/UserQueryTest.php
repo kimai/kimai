@@ -10,7 +10,7 @@
 namespace App\Tests\Repository\Query;
 
 use App\Repository\Query\UserQuery;
-use App\Repository\Query\VisibilityQuery;
+use App\Repository\Query\VisibilityInterface;
 
 /**
  * @covers \App\Repository\Query\UserQuery
@@ -21,7 +21,7 @@ class UserQueryTest extends BaseQueryTest
     {
         $sut = new UserQuery();
         $this->assertBaseQuery($sut, 'username');
-        $this->assertInstanceOf(VisibilityQuery::class, $sut);
+        $this->assertInstanceOf(VisibilityInterface::class, $sut);
         $this->assertRole($sut);
 
         $this->assertResetByFormError(new UserQuery(), 'username');

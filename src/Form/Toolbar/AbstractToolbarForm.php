@@ -71,18 +71,20 @@ abstract class AbstractToolbarForm extends AbstractType
         ]);
     }
 
-    protected function addCustomerChoice(FormBuilderInterface $builder, bool $required = false)
+    protected function addCustomerChoice(FormBuilderInterface $builder, array $options = [])
     {
         // just a fake field for having this field at the right position in the frontend
         $builder->add('customer', HiddenType::class);
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($builder, $required) {
+            function (FormEvent $event) use ($builder, $options) {
                 $data = $event->getData();
-                $event->getForm()->add('customer', CustomerType::class, [
-                    'required' => $required,
+                $event->getForm()->add('customer', CustomerType::class, array_merge([
+                    'required' => false,
                     'project_enabled' => true,
+                    'end_date_param' => '%daterange%',
+                    'start_date_param' => '%daterange%',
                     'query_builder' => function (CustomerRepository $repo) use ($builder, $data) {
                         $query = new CustomerFormTypeQuery();
                         $query->setUser($builder->getOption('user'));
@@ -92,7 +94,7 @@ abstract class AbstractToolbarForm extends AbstractType
 
                         return $repo->getQueryBuilderForFormType($query);
                     },
-                ]);
+                ], $options));
             }
         );
     }
@@ -130,19 +132,19 @@ abstract class AbstractToolbarForm extends AbstractType
         ]);
     }
 
-    protected function addProjectChoice(FormBuilderInterface $builder)
+    protected function addProjectChoice(FormBuilderInterface $builder, array $options = [])
     {
         // just a fake field for having this field at the right position in the frontend
         $builder->add('project', HiddenType::class);
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($builder) {
+            function (FormEvent $event) use ($builder, $options) {
                 $data = $event->getData();
-                $event->getForm()->add('project', ProjectType::class, [
+                $event->getForm()->add('project', ProjectType::class, array_merge([
                     'required' => false,
                     'activity_enabled' => true,
-                    'query_builder' => function (ProjectRepository $repo) use ($builder, $data) {
+                    'query_builder' => function (ProjectRepository $repo) use ($builder, $data, $options) {
                         $query = new ProjectFormTypeQuery();
                         $query->setUser($builder->getOption('user'));
 
@@ -152,10 +154,13 @@ abstract class AbstractToolbarForm extends AbstractType
                         if (isset($data['project']) && !empty($data['project'])) {
                             $query->setProject($data['project']);
                         }
+                        if (isset($options['ignore_date']) && true === $options['ignore_date']) {
+                            $query->setIgnoreDate(true);
+                        }
 
                         return $repo->getQueryBuilderForFormType($query);
                     },
-                ]);
+                ], $options));
             }
         );
     }
@@ -175,7 +180,12 @@ abstract class AbstractToolbarForm extends AbstractType
                         $query = new ActivityFormTypeQuery();
 
                         if (isset($data['activity']) && !empty($data['activity'])) {
-                            $query->setActivity($data['activity']);
+                            $activity = $data['activity'];
+                            if (is_string($data['activity'])) {
+                                $activity = $repo->find($data['activity']);
+                            }
+
+                            $query->setActivity($activity);
                         }
                         if (isset($data['project']) && !empty($data['project'])) {
                             $query->setProject($data['project']);

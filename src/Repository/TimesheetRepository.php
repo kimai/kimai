@@ -827,6 +827,11 @@ class TimesheetRepository extends EntityRepository
 
     private function getDatetimeFieldSql(string $field): string
     {
-        return sprintf('CONVERT_TZ(%s, \'UTC\', t.timezone)', $field);
+        // this would change the selected data for queries that join across multiple timezones
+        // but due to tax laws, this is disabled - exports/invoices should *always* include the data from
+        // the own timezone, not from the original users timezone
+        // return sprintf('CONVERT_TZ(%s, \'UTC\', t.timezone)', $field);
+
+        return $field;
     }
 }

@@ -36,6 +36,10 @@ final class ProjectFormTypeQuery
      * @var array<Team>
      */
     private $teams = [];
+    /**
+     * @var bool
+     */
+    private $ignoreDate = false;
 
     /**
      * @param Project|int|null $project
@@ -123,6 +127,18 @@ final class ProjectFormTypeQuery
     public function setProjectToIgnore(Project $projectToIgnore): ProjectFormTypeQuery
     {
         $this->projectToIgnore = $projectToIgnore;
+
+        return $this;
+    }
+
+    public function isIgnoreDate(): bool
+    {
+        return $this->ignoreDate;
+    }
+
+    public function setIgnoreDate(bool $ignoreDate): ProjectFormTypeQuery
+    {
+        $this->ignoreDate = $ignoreDate;
 
         return $this;
     }

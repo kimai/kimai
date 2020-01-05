@@ -83,7 +83,7 @@
                             {% if entry.description is not empty %}
                                 {{ entry.description|nl2br }}
                             {% else %}
-                                {{ entry.activity.name }} / {{ entry.project.name }}
+                                {% if entry.activity is not null %}{{ entry.activity.name }} / {% endif %}{{ entry.project.name }}
                             {% endif %}
                         </td>
                         <td class="text-right text-nowrap">{{ rate|money(model.calculator.currency) }}</td>

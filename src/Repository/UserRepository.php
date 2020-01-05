@@ -89,7 +89,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
      */
     public function findByQuery(UserQuery $query)
     {
-        @trigger_error('UserRepository::findByQuery() is deprecated and will be removed with 1.6', E_USER_DEPRECATED);
+        @trigger_error('UserRepository::findByQuery() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
         $qb = $this->getQueryBuilderForQuery($query);
 
         if (BaseQuery::RESULT_TYPE_PAGER === $query->getResultType()) {

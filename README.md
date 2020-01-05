@@ -21,7 +21,7 @@ It is built with modern technologies such as Symfony, Bootstrap, RESTful API, Do
 ### Requirements
 
 - PHP 7.2 or higher
-- Database (MySQL/MariaDB with timezone data, SQLite for development) 
+- Database (MySQL/MariaDB with timezone data, SQLite for development)
 - Webserver (nginx, Apache)
 - A modern browser
 - [Other libraries](https://www.kimai.org/download/)

@@ -11,43 +11,10 @@ namespace App\Repository\Query;
 
 /**
  * Query class for Repositories with a visibility field.
+ *
+ * @deprecated since 1.7, will be removed with 2.0
  */
-class VisibilityQuery extends BaseQuery
+class VisibilityQuery extends BaseQuery implements VisibilityInterface
 {
-    public const SHOW_VISIBLE = 1;
-    public const SHOW_HIDDEN = 2;
-    public const SHOW_BOTH = 3;
-
-    public const ALLOWED_VISIBILITY_STATES = [
-        self::SHOW_BOTH,
-        self::SHOW_VISIBLE,
-        self::SHOW_HIDDEN,
-    ];
-
-    /**
-     * @var int
-     */
-    private $visibility = self::SHOW_VISIBLE;
-
-    /**
-     * @return int
-     */
-    public function getVisibility()
-    {
-        return $this->visibility;
-    }
-
-    /**
-     * @param int $visibility
-     * @return $this
-     */
-    public function setVisibility($visibility)
-    {
-        $visibility = (int) $visibility;
-        if (in_array($visibility, self::ALLOWED_VISIBILITY_STATES, true)) {
-            $this->visibility = $visibility;
-        }
-
-        return $this;
-    }
+    use VisibilityTrait;
 }

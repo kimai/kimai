@@ -39,3 +39,13 @@
         }
     }
 }
+
+/* 
+Simplify focus detection, when using keyboard tab navigation
+Deactivated, as it looks weird when the link is clicked 
+*/
+/*
+.sidebar-menu > li > a:focus {
+    text-decoration: underline;
+}
+*/
