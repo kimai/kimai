@@ -450,12 +450,12 @@ abstract class AbstractSpreadsheetRenderer
     }
 
     /**
-     * @param ExportItemInterface[] $timesheets
+     * @param ExportItemInterface[] $exportItems
      * @param TimesheetQuery $query
      * @return Spreadsheet
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    protected function fromArrayToSpreadsheet(array $timesheets, TimesheetQuery $query): Spreadsheet
+    protected function fromArrayToSpreadsheet(array $exportItems, TimesheetQuery $query): Spreadsheet
     {
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -463,7 +463,7 @@ abstract class AbstractSpreadsheetRenderer
         $recordsHeaderColumn = 1;
         $recordsHeaderRow = 1;
 
-        $columns = $this->getColumns($timesheets, $query, $this->columns);
+        $columns = $this->getColumns($exportItems, $query, $this->columns);
 
         foreach ($columns as $label => $settings) {
             if (isset($settings['header'])) {
@@ -479,7 +479,7 @@ abstract class AbstractSpreadsheetRenderer
         $durationColumn = null;
         $rateColumn = null;
 
-        foreach ($timesheets as $timesheet) {
+        foreach ($exportItems as $exportItem) {
             $entryHeaderColumn = 1;
 
             foreach ($columns as $label => $settings) {
@@ -493,7 +493,7 @@ abstract class AbstractSpreadsheetRenderer
                     throw new \RuntimeException(sprintf('Missing renderer for export column %s', $label));
                 }
 
-                $amount = $settings['render']($sheet, $entryHeaderRow, $entryHeaderColumn, $timesheet);
+                $amount = $settings['render']($sheet, $entryHeaderRow, $entryHeaderColumn, $exportItem);
                 $entryHeaderColumn += (null === $amount) ? 1 : $amount;
             }
 
@@ -522,15 +522,15 @@ abstract class AbstractSpreadsheetRenderer
     }
 
     /**
-     * @param ExportItemInterface[] $timesheets
+     * @param ExportItemInterface[] $exportItems
      * @param TimesheetQuery $query
      * @return Response
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
-    public function render(array $timesheets, TimesheetQuery $query): Response
+    public function render(array $exportItems, TimesheetQuery $query): Response
     {
-        $spreadsheet = $this->fromArrayToSpreadsheet($timesheets, $query);
+        $spreadsheet = $this->fromArrayToSpreadsheet($exportItems, $query);
         $filename = $this->saveSpreadsheet($spreadsheet);
 
         return $this->getFileResponse($filename, 'kimai-export' . $this->getFileExtension());

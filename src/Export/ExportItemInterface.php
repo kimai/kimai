@@ -22,7 +22,7 @@ interface ExportItemInterface extends InvoiceItemInterface
     public function getType(): string;
 
     /**
-     * A name representation for the category of this type
+     * A name representation for the category of this type.
      *
      * @return string
      */

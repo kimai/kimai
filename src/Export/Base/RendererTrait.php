@@ -14,14 +14,14 @@ use App\Export\ExportItemInterface;
 trait RendererTrait
 {
     /**
-     * @param ExportItemInterface[] $timesheets
+     * @param ExportItemInterface[] $exportItems
      * @return array
      */
-    protected function calculateSummary(array $timesheets)
+    protected function calculateSummary(array $exportItems)
     {
         $summary = [];
 
-        foreach ($timesheets as $timesheet) {
+        foreach ($exportItems as $exportItem) {
             $customerId = 'none';
             $customerName = '';
             $currency = null;
@@ -30,17 +30,17 @@ trait RendererTrait
             $activityId = 'none';
             $activityName = '';
 
-            if (null !== $timesheet->getProject()) {
-                $customerId = $timesheet->getProject()->getCustomer()->getId();
-                $customerName = $timesheet->getProject()->getCustomer()->getName();
-                $projectId = $timesheet->getProject()->getId();
-                $projectName = $timesheet->getProject()->getName();
-                $currency = $timesheet->getProject()->getCustomer()->getCurrency();
+            if (null !== $exportItem->getProject()) {
+                $customerId = $exportItem->getProject()->getCustomer()->getId();
+                $customerName = $exportItem->getProject()->getCustomer()->getName();
+                $projectId = $exportItem->getProject()->getId();
+                $projectName = $exportItem->getProject()->getName();
+                $currency = $exportItem->getProject()->getCustomer()->getCurrency();
             }
 
-            if (null !== $timesheet->getActivity()) {
-                $activityId = $timesheet->getActivity()->getId();
-                $activityName = $timesheet->getActivity()->getName();
+            if (null !== $exportItem->getActivity()) {
+                $activityId = $exportItem->getActivity()->getId();
+                $activityName = $exportItem->getActivity()->getName();
             }
 
             $id = $customerId . '_' . $projectId;
@@ -65,14 +65,14 @@ trait RendererTrait
                 ];
             }
 
-            $duration = $timesheet->getDuration();
+            $duration = $exportItem->getDuration();
             if (null === $duration) {
                 $duration = 0;
             }
 
-            $summary[$id]['rate'] += $timesheet->getRate();
+            $summary[$id]['rate'] += $exportItem->getRate();
             $summary[$id]['duration'] += $duration;
-            $summary[$id]['activities'][$activityId]['rate'] += $timesheet->getRate();
+            $summary[$id]['activities'][$activityId]['rate'] += $exportItem->getRate();
             $summary[$id]['activities'][$activityId]['duration'] += $duration;
         }
 
