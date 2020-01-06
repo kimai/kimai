@@ -11,7 +11,6 @@ namespace App\Export\Timesheet;
 
 use App\Export\Base\XlsxRenderer as BaseXlsxRenderer;
 use App\Export\TimesheetExportInterface;
-use App\Repository\Query\TimesheetQuery;
 
 final class XlsxRenderer extends BaseXlsxRenderer implements TimesheetExportInterface
 {

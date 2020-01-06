@@ -11,7 +11,6 @@ namespace App\Export\Timesheet;
 
 use App\Export\Base\CsvRenderer as BaseCsvRenderer;
 use App\Export\TimesheetExportInterface;
-use App\Repository\Query\TimesheetQuery;
 
 final class CsvRenderer extends BaseCsvRenderer implements TimesheetExportInterface
 {
