@@ -9,7 +9,7 @@
 
 namespace App\Entity;
 
-use App\Invoice\InvoiceItemInterface;
+use App\Export\ExportItemInterface;
 use DateTime;
 use DateTimeZone;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -39,8 +39,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  * columns={"start_time","end_time"}        => IDX_4F60C6B1502DF58741561401         => ???
  * columns={"start_time","end_time","user"} => IDX_4F60C6B1502DF587415614018D93D649 => ???
  */
-class Timesheet implements EntityWithMetaFields, InvoiceItemInterface
+class Timesheet implements EntityWithMetaFields, ExportItemInterface
 {
+    public const TYPE_TIMESHEET = 'timesheet';
+    public const CATEGORY_WORK = 'work';
+
     /**
      * @var int
      *
@@ -385,7 +388,7 @@ class Timesheet implements EntityWithMetaFields, InvoiceItemInterface
     /**
      * @return string[]
      */
-    public function getTagsAsArray()
+    public function getTagsAsArray(): array
     {
         return array_map(
             function (Tag $element) {
@@ -435,6 +438,18 @@ class Timesheet implements EntityWithMetaFields, InvoiceItemInterface
         $this->timezone = $timezone;
 
         return $this;
+    }
+
+    public function getType(): string
+    {
+        // this will be improved in a future version
+        return self::TYPE_TIMESHEET;
+    }
+
+    public function getCategory(): string
+    {
+        // this will be improved in a future version
+        return self::CATEGORY_WORK;
     }
 
     /**

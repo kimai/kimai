@@ -12,9 +12,14 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 **New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
 
-### Plugins
+### ExpenseBundle
 
-- Expenses plugin needs to be updated, due to incompatibilities in the underlying frameworks.
+**ATTENTION** due to incompatibilities in the underlying frameworks users of the ExpenseBundle need to do one more step:
+
+If you use the ExpensePlugin, you should delete it before updating: `rm -r var/plugins/ExpenseBundle`.
+You will run into an error otherwise during the update.
+
+After the Kimai update was successful, you have to re-install the latest version, which is compatible with Kimai 1.7 only. 
 
 ### Hosting
 

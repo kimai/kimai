@@ -9,14 +9,13 @@
 
 namespace App\Export;
 
-use App\Entity\Timesheet;
 use App\Repository\Query\TimesheetQuery;
 use Symfony\Component\HttpFoundation\Response;
 
 interface RendererInterface
 {
     /**
-     * @param Timesheet[] $timesheets
+     * @param ExportItemInterface[] $timesheets
      * @param TimesheetQuery $query
      * @return Response
      */
