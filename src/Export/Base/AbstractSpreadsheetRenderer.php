@@ -96,7 +96,11 @@ abstract class AbstractSpreadsheetRenderer
 
     protected function isRenderRate(TimesheetQuery $query): bool
     {
-        return true;
+        if (null !== $query->getUser()) {
+            return $this->voter->isGranted('view_rate_own_timesheet');
+        }
+
+        return $this->voter->isGranted('view_rate_other_timesheet');
     }
 
     protected function setFormattedDateTime(Worksheet $sheet, $column, $row, ?DateTime $date)

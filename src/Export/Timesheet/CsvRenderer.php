@@ -15,12 +15,4 @@ use App\Repository\Query\TimesheetQuery;
 
 final class CsvRenderer extends BaseCsvRenderer implements TimesheetExportInterface
 {
-    protected function isRenderRate(TimesheetQuery $query): bool
-    {
-        if (null !== $query->getUser()) {
-            return $this->voter->isGranted('view_rate_own_timesheet');
-        }
-
-        return true;
-    }
 }

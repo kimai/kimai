@@ -15,8 +15,4 @@ use App\Repository\Query\TimesheetQuery;
 
 final class XlsxRenderer extends BaseXlsxRenderer implements TimesheetExportInterface
 {
-    protected function isRenderRate(TimesheetQuery $query): bool
-    {
-        return false;
-    }
 }
