@@ -291,7 +291,9 @@
                         <td class="column-project" {% if not columns.project %}style="display: none"{% endif %}>{{ entry.project.name }}
                         </td>
                         <td class="column-activity" {% if not columns.activity %}style="display: none"{% endif %}>
-                            {{ entry.activity.name }}
+                            {% if entry.activity is not null %}
+                                {{ entry.activity.name }}
+                            {% endif %}
                         </td>
                         <td class="column-description" {% if not columns.description %}style="display: none"{% endif %}>
                             {% if entry.description is not empty %}
@@ -327,7 +329,9 @@
                         {% endfor %}
                         {% for id, field in activityMetaFields %}
                             <td class="column-{{ 'a_' ~ field.name }} text-nowrap" {% if not columns['a_' ~ field.name] %}style="display: none"{% endif %}>
-                                {{ tables.datatable_meta_column(entry.activity, field) }}
+                                {% if entry.activity is not null %}
+                                    {{ tables.datatable_meta_column(entry.activity, field) }}
+                                {% endif %}
                             </td>
                         {% endfor %}
                         {% for id, field in userPreferences %}
