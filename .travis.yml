@@ -9,11 +9,12 @@ matrix:
   include:
     - stage: Code quality
       env: CODECOVERAGE=0 DB=sqlite
-      php: '7.2'
+      php: '7.3'
       script:
           - composer validate --no-check-all --strict
           - composer kimai:codestyle
           - composer kimai:phpstan
+          - composer kimai:code-lint
     - stage: Test
       php: '7.2'
       env: CODECOVERAGE=0 DB=mysql
