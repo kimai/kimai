@@ -54,7 +54,6 @@ security:
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     access_control:
-        - { path: '^/(%app_locales%)/admin/', roles: IS_AUTHENTICATED_FULLY }
         - { path: '^/(%app_locales%)$', role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/(%app_locales%)/login', role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/(%app_locales%)/register', role: IS_AUTHENTICATED_ANONYMOUSLY }
