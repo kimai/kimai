@@ -14,6 +14,9 @@ use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
 use App\Entity\User;
 
+/**
+ * @deprecated will be removed with 2.0 - use ExportItemInterface instead
+ */
 interface InvoiceItemInterface
 {
     public function getActivity(): ?Activity;

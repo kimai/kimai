@@ -4,7 +4,7 @@
 {% set tableName = 'timesheet_admin' %}
 {% set paginationRoute = 'admin_timesheet_paginated' %}
 {% set editRoute = 'admin_timesheet_edit' %}
-{% set canSeeRate = true %}
+{% set canSeeRate = is_granted('view_rate_other_timesheet') %}
 {% set canSeeUsername = true %}
 {% set allowMarkdown = false %}
 

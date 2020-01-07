@@ -12,9 +12,14 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 **New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
 
-### Plugins
+### ExpenseBundle
 
-- Expenses plugin needs to be updated, due to incompatibilities in the underlying frameworks.
+**ATTENTION** due to incompatibilities in the underlying frameworks users of the ExpenseBundle need to do one more step:
+
+If you use the ExpensePlugin, you should delete it before updating: `rm -r var/plugins/ExpenseBundle`.
+You will run into an error otherwise during the update.
+
+After the Kimai update was successful, you have to re-install the latest version, which is compatible with Kimai 1.7 only. 
 
 ### Hosting
 
@@ -24,6 +29,7 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 - Projects now have a start and end date and the API will only return those, which are either unconfigured or currently active, you might want to reload the list of projects once the user entered begin and end datetime OR use the new `ignoreDates` parameter.
 - Doctrine bundle was updated to v2, check your code for [the usage of RegistryInterface and ObjectManager](https://github.com/doctrine/DoctrineBundle/blob/master/UPGRADE-2.0.md)
+- Removed the webserver bundle and the command `server:run` - see [docs](https://www.kimai.org/documentation/developers.html)
 
 ## [1.6](https://github.com/kevinpapst/kimai2/releases/tag/1.6), [1.6.1](https://github.com/kevinpapst/kimai2/releases/tag/1.6.1), [1.6.2](https://github.com/kevinpapst/kimai2/releases/tag/1.6.2)
 

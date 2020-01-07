@@ -10,13 +10,16 @@
 namespace App\Invoice\Calculator;
 
 use App\Entity\Timesheet;
+use App\Export\ExportItemInterface;
 use App\Invoice\InvoiceItem;
 use App\Invoice\InvoiceItemInterface;
 use App\Invoice\InvoiceItemWithAmountInterface;
-use App\Invoice\InvoiceItemWithTypeInterface;
 
 abstract class AbstractMergedCalculator extends AbstractCalculator
 {
+    public const TYPE_MIXED = 'mixed';
+    public const CATEGORY_MIXED = 'mixed';
+
     /**
      * @deprecated since 1.3 - will be removed with 2.0
      */
@@ -39,19 +42,19 @@ abstract class AbstractMergedCalculator extends AbstractCalculator
             $amount = $entry->getAmount();
         }
 
-        if ($entry instanceof InvoiceItemWithTypeInterface) {
-            $type = $entry->getInvoiceType();
-            $category = $entry->getInvoiceCategory();
-        } else {
-            $type = InvoiceItem::TYPE_TIMESHEET;
-            $category = InvoiceItem::CATEGORY_TIMESHEET_WORK;
+        $type = Timesheet::TYPE_TIMESHEET;
+        $category = Timesheet::CATEGORY_WORK;
+
+        if ($entry instanceof ExportItemInterface) {
+            $type = $entry->getType();
+            $category = $entry->getCategory();
         }
 
         if (null !== $invoiceItem->getType() && $type !== $invoiceItem->getType()) {
-            $type = InvoiceItem::TYPE_MIXED;
+            $type = self::TYPE_MIXED;
         }
         if (null !== $invoiceItem->getCategory() && $category !== $invoiceItem->getCategory()) {
-            $category = InvoiceItem::CATEGORY_MIXED;
+            $category = self::CATEGORY_MIXED;
         }
 
         $invoiceItem->setType($type);

@@ -91,6 +91,8 @@ class TimesheetQuery extends ActivityQuery
     }
 
     /**
+     * Limit the data exclusively to the user (eg. users own timesheets).
+     *
      * @return User|null
      */
     public function getUser()
@@ -99,6 +101,8 @@ class TimesheetQuery extends ActivityQuery
     }
 
     /**
+     * Limit the data exclusively to the user (eg. users own timesheets).
+     *
      * @param User|int|null $user
      * @return TimesheetQuery
      */
