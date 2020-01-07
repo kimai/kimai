@@ -12,23 +12,23 @@
     <div class="row">
         <div class="col-xs-12">
             <h2 class="page-header">
-                <span contenteditable="true">
-                    {% if query.begin is not empty and query.end is not empty %}
-                        {% if query.begin|date('m') != query.end|date('m') or query.begin|date('Y') != query.end|date('Y') %}
-                            {{ query.begin|date_short }} - {{ query.end|date_short }}
-                        {% elseif query.end is not empty %}
-                            {{ query.end|month_name|trans }} {{ query.end|date('Y') }}
-                        {% elseif query.begin is not empty %}
-                            {{ query.begin|month_name|trans }} {{ query.begin|date('Y') }}
-                        {% endif %}
-                    {% endif %}
-                </span>
+                {% if not showUserColumn %}
+                    {{ widgets.username(query.user) }}:
+                {% endif %}
+                {% if query.begin is not empty %}
+                    {{ query.begin|date_short }}
+                {% else %}
+                    {% set last = entries|last %}
+                    {{ last.begin|date_short }}
+                {% endif %}
+                &ndash;
+                {% if query.end is not empty %}
+                    {{ query.end|date_short }}
+                {% else %}
+                    {% set first = entries|first %}
+                    {{ first.end|date_short }}
+                {% endif %}
             </h2>
-            {% if not showUserColumn %}
-                <p>
-                {{ 'label.user'|trans }}: {{ widgets.username(query.user) }}
-                </p>
-            {% endif %}
         </div>
     </div>
 
@@ -43,7 +43,7 @@
                     {% endif %}
                     <th>{{ 'label.description'|trans }}</th>
                     {% for field in metaColumns %}
-                        <th>{{ field.label|trans }}</th>
+                        <th class="text-nowrap">{{ field.label|trans }}</th>
                     {% endfor %}
                     <th>{{ 'label.hours'|trans }}</th>
                 </tr>
@@ -64,7 +64,7 @@
                                 </div>
                             {% endif %}
                             <span class="small">
-                                {{ 'label.activity'|trans }}: {{ entry.activity.name }} |
+                                {% if entry.activity is not null %}{{ 'label.activity'|trans }}: {{ entry.activity.name }} |{% endif %}
                                 {{ 'label.project'|trans }}: {{ entry.project.name }} |
                                 {{ 'label.customer'|trans }}: {{ entry.project.customer.name }}
                             </span>
@@ -86,7 +86,7 @@
                         <th></th>
                     {% endfor %}
                     <th>{{ 'invoice.total_working_time'|trans }}</th>
-                    <th>{{ timeWorked|duration }}</th>
+                    <th class="text-nowrap">{{ timeWorked|duration }}</th>
                 </tr>
                 </tfoot>
             </table>

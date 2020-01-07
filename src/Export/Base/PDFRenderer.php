@@ -9,7 +9,7 @@
 
 namespace App\Export\Base;
 
-use App\Entity\Timesheet;
+use App\Export\ExportItemInterface;
 use App\Repository\Query\TimesheetQuery;
 use App\Timesheet\UserDateTimeFactory;
 use App\Utils\HtmlToPdfConverter;
@@ -47,7 +47,7 @@ class PDFRenderer
     }
 
     /**
-     * @param Timesheet[] $timesheets
+     * @param ExportItemInterface[] $timesheets
      * @param TimesheetQuery $query
      * @return Response
      * @throws \Twig\Error\LoaderError

@@ -18,11 +18,6 @@ use App\Entity\User;
  */
 final class InvoiceItem
 {
-    public const TYPE_TIMESHEET = 'timesheet';
-    public const CATEGORY_TIMESHEET_WORK = 'work';
-    public const TYPE_MIXED = 'mixed';
-    public const CATEGORY_MIXED = 'mixed';
-
     /**
      * @var float
      */

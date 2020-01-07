@@ -9,28 +9,48 @@
 
 namespace App\Export\Base;
 
-use App\Entity\Timesheet;
+use App\Export\ExportItemInterface;
 
 trait RendererTrait
 {
     /**
-     * @param Timesheet[] $timesheets
+     * @param ExportItemInterface[] $exportItems
      * @return array
      */
-    protected function calculateSummary(array $timesheets)
+    protected function calculateSummary(array $exportItems)
     {
         $summary = [];
 
-        foreach ($timesheets as $timesheet) {
-            $id = $timesheet->getProject()->getCustomer()->getId() . '_' . $timesheet->getProject()->getId();
-            $activityId = $timesheet->getActivity()->getId();
+        foreach ($exportItems as $exportItem) {
+            $customerId = 'none';
+            $customerName = '';
+            $currency = null;
+            $projectId = 'none';
+            $projectName = '';
+            $activityId = 'none';
+            $activityName = '';
+
+            if (null !== $exportItem->getProject()) {
+                $customerId = $exportItem->getProject()->getCustomer()->getId();
+                $customerName = $exportItem->getProject()->getCustomer()->getName();
+                $projectId = $exportItem->getProject()->getId();
+                $projectName = $exportItem->getProject()->getName();
+                $currency = $exportItem->getProject()->getCustomer()->getCurrency();
+            }
+
+            if (null !== $exportItem->getActivity()) {
+                $activityId = $exportItem->getActivity()->getId();
+                $activityName = $exportItem->getActivity()->getName();
+            }
+
+            $id = $customerId . '_' . $projectId;
 
             if (!isset($summary[$id])) {
                 $summary[$id] = [
-                    'customer' => $timesheet->getProject()->getCustomer()->getName(),
-                    'project' => $timesheet->getProject()->getName(),
+                    'customer' => $customerName,
+                    'project' => $projectName,
                     'activities' => [],
-                    'currency' => $timesheet->getProject()->getCustomer()->getCurrency(),
+                    'currency' => $currency,
                     'rate' => 0,
                     'duration' => 0,
                 ];
@@ -38,21 +58,21 @@ trait RendererTrait
 
             if (!isset($summary[$id]['activities'][$activityId])) {
                 $summary[$id]['activities'][$activityId] = [
-                    'activity' => $timesheet->getActivity()->getName(),
-                    'currency' => $timesheet->getProject()->getCustomer()->getCurrency(),
+                    'activity' => $activityName,
+                    'currency' => $currency,
                     'rate' => 0,
                     'duration' => 0,
                 ];
             }
 
-            $duration = $timesheet->getDuration();
+            $duration = $exportItem->getDuration();
             if (null === $duration) {
                 $duration = 0;
             }
 
-            $summary[$id]['rate'] += $timesheet->getRate();
+            $summary[$id]['rate'] += $exportItem->getRate();
             $summary[$id]['duration'] += $duration;
-            $summary[$id]['activities'][$activityId]['rate'] += $timesheet->getRate();
+            $summary[$id]['activities'][$activityId]['rate'] += $exportItem->getRate();
             $summary[$id]['activities'][$activityId]['duration'] += $duration;
         }
 
