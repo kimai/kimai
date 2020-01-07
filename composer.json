@@ -28,7 +28,7 @@
         "kimai/kimai2-composer": "^0.1",
         "laravolt/avatar": "^3.0",
         "league/csv": "^9.4",
-        "mpdf/mpdf": "^7.1",
+        "mpdf/mpdf": "^8.0",
         "nelmio/api-doc-bundle": "^3.2",
         "nelmio/cors-bundle": "^1.5",
         "ocramius/proxy-manager": "^2.1.1",
