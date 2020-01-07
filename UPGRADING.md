@@ -29,6 +29,7 @@ After the Kimai update was successful, you have to re-install the latest version
 
 - Projects now have a start and end date and the API will only return those, which are either unconfigured or currently active, you might want to reload the list of projects once the user entered begin and end datetime OR use the new `ignoreDates` parameter.
 - Doctrine bundle was updated to v2, check your code for [the usage of RegistryInterface and ObjectManager](https://github.com/doctrine/DoctrineBundle/blob/master/UPGRADE-2.0.md)
+- Removed the webserver bundle and the command `server:run` - see [docs](https://www.kimai.org/documentation/developers.html)
 
 ## [1.6](https://github.com/kevinpapst/kimai2/releases/tag/1.6), [1.6.1](https://github.com/kevinpapst/kimai2/releases/tag/1.6.1), [1.6.2](https://github.com/kevinpapst/kimai2/releases/tag/1.6.2)
 
