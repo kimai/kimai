@@ -93,6 +93,40 @@ class TeamController extends AbstractController
         return $this->renderEditScreen($team, $request);
     }
 
+    /**
+     * @Route(path="/{id}/edit_member", name="admin_team_member", methods={"GET", "POST"})
+     * @Security("is_granted('edit', team)")
+     */
+    public function editMemberAction(Team $team, Request $request)
+    {
+        $editForm = $this->createForm(TeamEditForm::class, $team, [
+            'action' => $this->generateUrl('admin_team_member', ['id' => $team->getId()]),
+            'method' => 'POST',
+        ]);
+
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            try {
+                // make sure that the teamlead is always part of the team, otherwise permission checks
+                // and filtering might not work as expected!
+                $team->addUser($team->getTeamLead());
+
+                $this->repository->saveTeam($team);
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
+            } catch (ORMException $ex) {
+                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+            }
+        }
+
+        return $this->render('team/edit_member.html.twig', [
+            'team' => $team,
+            'form' => $editForm->createView(),
+        ]);
+    }
+
     private function renderEditScreen(Team $team, Request $request): Response
     {
         $customerForm = null;

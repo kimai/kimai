@@ -123,6 +123,30 @@ class TeamControllerTest extends ControllerBaseTest
         $this->assertEquals('Test Team 2', $editForm->get('team_edit_form[name]')->getValue());
     }
 
+    public function testEditMemberAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $fixture = new TeamFixtures();
+        $fixture->setAmount(2);
+        $this->importFixture($em, $fixture);
+
+        $this->assertAccessIsGranted($client, '/admin/teams/1/edit_member');
+        $form = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
+        $this->assertNotEmpty($form->get('team_edit_form[name]')->getValue());
+        $client->submit($form, [
+            'team_edit_form' => [
+                'name' => 'Test Team 2'
+            ]
+        ]);
+        // TODO assign users
+        $this->assertIsRedirect($client, $this->createUrl('/admin/teams/1/edit'));
+        $client->followRedirect();
+        $editForm = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
+        $this->assertEquals('Test Team 2', $editForm->get('team_edit_form[name]')->getValue());
+    }
+
     public function testEditCustomerAccessAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
