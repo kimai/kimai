@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="fi" datatype="plaintext" original="exceptions.en.xliff">
+        <body>
+            <trans-unit id="access.denied">
+                <source>access.denied</source>
+                <target>Pääsy estetty</target>
+            </trans-unit>
+            <trans-unit id="stacktrace">
+                <source>stacktrace</source>
+                <target>Ongelma ilmeni</target>
+            </trans-unit>
+            <trans-unit id="http_error.title">
+                <source>http_error.title</source>
+                <target>Virhe</target>
+            </trans-unit>
+            <trans-unit id="http_error.description">
+                <source>http_error.description</source>
+                <target>Jotain on pielessä</target>
+            </trans-unit>
+            <trans-unit id="http_error.suggestion">
+                <source>http_error.suggestion</source>
+                <target>
+                    Kriittinen virhe tapahtui. Yritä uudelleen.
+                    Olet mahdollisesti löytänyt ohjelmointivirheen. Ota yhteyttä ylläpitoon jos ongelma jatkuu.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_404.description">
+                <source>http_error_404.description</source>
+                <target>Sivua ei löydy</target>
+            </trans-unit>
+            <trans-unit id="http_error_404.suggestion">
+                <source>http_error_404.suggestion</source>
+                <target>
+                    Emme löytäneet etsimääsi sivua.
+                    Palaa käyttöliittymän alkuun ja yritä uudelleen.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error_403.description">
+                <source>http_error_403.description</source>
+                <target>Pääsy evätty.</target>
+            </trans-unit>
+            <trans-unit id="http_error_403.suggestion">
+                <source>http_error_403.suggestion</source>
+                <target>
+                    Pahoittelemme, mutta sinulla ei ole käyttöoikeuksia tälle sivustolle.
+                    Ota yhteyttä ylläpitoon jos pidät tätä virheenä.
+                </target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
